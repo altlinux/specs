@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.4
-%define kernel_sublevel .163
+%define kernel_base_version	4.14
+%define kernel_sublevel .86
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,10 +17,10 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-%define nprocs 8 
+%define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	5
+%define kgcc_version	%__gcc_version_base
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def"
@@ -50,9 +50,6 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 
-Patch1: nonpreemptive-kernel.patch
-Patch2: pae-kernel.patch
-
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
 %else
@@ -64,10 +61,12 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
+BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel 
 # for check
@@ -79,7 +78,7 @@ Provides:  kernel-modules-alsa = %version-%release
 
 
 %if_enabled docs
-BuildRequires: xmlto transfig ghostscript
+BuildRequires: python-module-sphinx perl-Pod-Usage 
 %endif
 
 %if_enabled ccache
@@ -109,10 +108,11 @@ Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
-The "un" variant of kernel packages is a low latency desktop oriented
-2.6.x kernel which should support wide range of hardware,
-but it is not 'official' ALT Linux kernel and you can use it for you
-own risk.
+There are some kernel variants in ALT systems:
+* std-def: standard longterm kernel
+* std-pae: legacy i686 kernel with 64G memory support
+* std-debug: kernel with some DEBUG options enabled
+* un-def: more modern then std-def and with forced preemption enabled
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -305,6 +305,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
+Requires: libelf-devel
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -338,13 +339,6 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
-%if "%base_flavour" == "std"
-%patch1 -p1
-%endif
-
-%if "%sub_flavour" == "pae"
-%patch2 -p1
-%endif
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -356,6 +350,8 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
+chmod +x tools/objtool/sync-check.sh
+
 %build
 export ARCH=%base_arch
 export NPROCS=%nprocs
@@ -365,7 +361,24 @@ echo "Building Kernel $KernelVer"
 
 %make_build mrproper
 
-cp -vf config-%_target_cpu .config
+
+#configuration construction
+
+CONFIGS=config-%_target_cpu
+
+%if "%base_flavour" == "std"
+CONFIGS="$CONFIGS config-std"
+%endif
+
+%if "%sub_flavour" == "pae"
+CONFIGS="$CONFIGS config-pae"
+%endif
+
+%if "%sub_flavour" == "debug"
+CONFIGS="$CONFIGS config-debug"
+%endif
+
+scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
 #%make_build include/linux/version.h
@@ -389,7 +402,7 @@ install -Dp -m644 arch/%base_arch/boot/bzImage \
 install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
-make modules_install INSTALL_MOD_PATH=%buildroot INSTALL_FW_PATH=%buildroot/lib/firmware/$KernelVer
+make modules_install INSTALL_MOD_PATH=%buildroot
 find %buildroot -name '*.ko' | xargs gzip
 
 mkdir -p %buildroot%kbuild_dir/arch/x86
@@ -460,6 +473,8 @@ KbuildFiles="
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
+	scripts/gcc-plugins/*.so
+	tools/objtool/objtool
 
 
 	.config
@@ -498,8 +513,6 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
-	-maxdepth 1 -type f -not -name '*.html' -delete
 %endif # if_enabled docs
 
 
@@ -520,7 +533,7 @@ int main()
 }
 __EOF__
 echo init | cpio -H newc -o | gzip -9n > initrd.img
-timeout 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
+timeout --foreground 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -533,7 +546,6 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-/lib/firmware/*
 %dir %modules_dir/
 %defattr(0600,root,root,0700)
 %modules_dir/*
@@ -543,9 +555,6 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/gpu/drm
 %exclude %modules_dir/kernel/drivers/ide/
 %exclude %modules_dir/kernel/arch/x86/kvm
-%exclude %modules_dir/kernel/net/netfilter/ipset
-/lib/firmware/*
-%exclude %modules_dir/kernel/net/netfilter/xt_set.ko*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -611,449 +620,460 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Dec 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.86-alt1
+- v4.14.86  (Fixes: CVE-2018-1128, CVE-2018-1129)
+
+* Sun Dec 02 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.85-alt1
+- v4.14.85  (Fixes: CVE-2000-1134, CVE-2007-3852, CVE-2008-0525, CVE-2009-0416,
+  CVE-2011-4834, CVE-2015-1838, CVE-2015-7442, CVE-2016-7489)
+
+* Tue Nov 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.84-alt1
+- v4.14.84
+
+* Fri Nov 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.83-alt1
+- v4.14.83
+
+* Thu Nov 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.82-alt1
+- v4.14.82  (Fixes: CVE-2018-10940, CVE-2018-16658)
+
+* Wed Nov 14 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.81-alt1
+- v4.14.81
+
 * Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.163-alt1
 - v4.4.163
 
-* Sat Oct 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.162-alt1
-- v4.4.162  (Fixes: CVE-2018-10879)
+* Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.80-alt1
+- v4.14.80
 
-* Mon Oct 15 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.161-alt1
-- v4.4.161  (Fixes: CVE-2018-10879, CVE-2018-10880, CVE-2018-7755)
+* Mon Nov 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.79-alt1
+- v4.14.79
 
-* Mon Oct 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.159-alt1
-- v4.4.159  (Fixes: CVE-2018-14633)
+* Sat Oct 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.78-alt1
+- v4.14.78
 
-* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.158-alt1
-- v4.4.158
+* Thu Oct 18 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.77-alt1
+- v4.14.77
 
-* Thu Sep 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.157-alt1
-- v4.4.157
+* Mon Oct 15 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.76-alt1
+- v4.14.76  (Fixes: CVE-2018-15471)
 
-* Mon Sep 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.156-alt1
-- v4.4.156  (Fixes: CVE-2018-6554, CVE-2018-6555)
+* Thu Oct 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.74-alt1
+- v4.14.74  (Fixes: CVE-2018-7755)
 
-* Mon Sep 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.155-alt1
-- v4.4.155
+* Mon Oct 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.73-alt1
+- v4.14.73  (Fixes: CVE-2018-14633)
 
-* Wed Sep 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.154-alt1
-- v4.4.154
+* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.72-alt1
+- v4.14.72
 
-* Wed Aug 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.153-alt1
-- v4.4.153
+* Thu Sep 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.71-alt1
+- v4.14.71
 
-* Wed Aug 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.151-alt1
-- v4.4.151
+* Mon Sep 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.70-alt1
+- v4.14.70  (Fixes: CVE-2018-6554, CVE-2018-6555)
 
-* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.150-alt1.1
+* Mon Sep 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.69-alt1
+- v4.14.69
+
+* Wed Sep 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.68-alt1
+- v4.14.68
+
+* Wed Aug 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.67-alt1
+- v4.14.67
+
+* Wed Aug 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.66-alt1
+- v4.14.66
+
+* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.65-alt1.1
 - modules building fixed
 
-* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.150-alt1
-- v4.4.150  (Fixes: CVE-2018-9363)
+* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.65-alt1
+- v4.14.65  (Fixes: CVE-2018-9363)
 
-* Thu Aug 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.148-alt1
-- v4.4.148
+* Thu Aug 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.63-alt1
+- v4.14.63  (Fixes: CVE-2018-3620)
 
-* Thu Aug 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.147-alt1
-- v4.4.147
+* Thu Aug 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.62-alt1
+- v4.14.62
 
-* Tue Aug 07 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.146-alt1
-- v4.4.146
+* Tue Aug 07 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.61-alt1
+- v4.14.61
 
-* Sat Aug 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.145-alt1
-- v4.4.145
+* Sat Aug 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.60-alt1
+- v4.14.60
 
-* Sun Jul 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.143-alt1
-- v4.4.143
+* Sun Jul 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.57-alt1
+- v4.14.57
 
-* Fri Jul 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.142-alt1
-- v4.4.142
+* Tue Jul 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.56-alt1
+- v4.14.56
 
-* Tue Jul 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.141-alt1
-- v4.4.141
+* Wed Jul 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.55-alt1
+- v4.14.55  (Fixes: CVE-2018-10876, CVE-2018-10877, CVE-2018-10879, CVE-2018-10880,
+  CVE-2018-10881, CVE-2018-10882, CVE-2018-10883)
 
-* Wed Jul 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.140-alt1
-- v4.4.140  (Fixes: CVE-2018-10876, CVE-2018-10877, CVE-2018-10881, CVE-2018-10882,
-  CVE-2018-10883)
+* Mon Jul 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.54-alt1
+- v4.14.54
 
-* Wed Jul 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.139-alt1
-- v4.4.139
+* Thu Jul 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.53-alt1
+- v4.14.53
 
-* Tue Jun 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.138-alt1
-- v4.4.138  (Fixes: CVE-2018-10853)
+* Wed Jul 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.9.111-alt1
+- v4.9.111
 
-* Fri Jun 08 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.136-alt1
-- v4.4.136
+* Sun Apr 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.32-alt1
+- v4.14.32  (Fixes: CVE-2017-8824)
 
-* Thu May 31 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.135-alt1
-- v4.4.135
+* Thu Mar 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.31-alt1
+- v4.14.31
 
-* Wed May 30 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.134-alt1
-- v4.4.134  (Fixes: CVE-2018-6412)
+* Sun Mar 25 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.30-alt1
+- v4.14.30
 
-* Mon May 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.133-alt1
-- v4.4.133
+* Thu Mar 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.29-alt1
+- v4.14.29
 
-* Wed May 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.132-alt1
-- v4.4.132
+* Mon Mar 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.28-alt1
+- v4.14.28  (Fixes: CVE-2018-1000004)
 
-* Sun May 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.131-alt1
-- v4.4.131  (Fixes: CVE-2018-1093)
+* Mon Mar 12 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.26-alt1
+- v4.14.26
 
-* Tue Apr 24 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.129-alt1
-- v4.4.129  (Fixes: CVE-2018-1092)
+* Tue Mar 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.24-alt1
+- v4.14.24
 
-* Mon Apr 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.128-alt1
-- v4.4.128
+* Wed Feb 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.23-alt1
+- v4.14.23
 
-* Mon Apr 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.127-alt1
-- v4.4.127
+* Tue Feb 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.22-alt1
+- v4.14.22
 
-* Sun Apr 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.126-alt1
-- v4.4.126  (Fixes: CVE-2017-8824)
+* Mon Feb 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.21-alt1
+- v4.14.21
 
-* Thu Mar 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.125-alt1
-- v4.4.125
+* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.20-alt1
+- v4.14.20  (Fixes: CVE-2017-16995, CVE-2017-16996, CVE-2017-5715, CVE-2017-5754,
+  CVE-2017-8824)
 
-* Sun Mar 25 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.124-alt1
-- v4.4.124
+* Mon Feb 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.17-alt1
+- v4.14.17
 
-* Thu Mar 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.123-alt1
-- v4.4.123  (Fixes: CVE-2016-0728, CVE-2017-1000405, CVE-2017-15265, CVE-2017-8824)
+* Wed Jan 31 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.16-alt1
+- v4.14.16  (Fixes: CVE-2017-5715)
 
-* Tue Mar 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.120-alt1
-- v4.4.120
+* Wed Jan 24 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.15-alt1
+- v4.14.15
 
-* Wed Feb 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.119-alt1
-- v4.4.119
+* Wed Jan 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.14-alt1
+- v4.14.14  (Fixes: CVE-2017-1000410, CVE-2017-17741, CVE-2017-5753)
 
-* Tue Feb 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.118-alt1
-- v4.4.118
+* Wed Jan 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.13-alt1
+- v4.14.13
 
-* Fri Feb 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.117-alt1
-- v4.4.117
+* Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.12-alt1
+- v4.14.12
 
-* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.116-alt1
-- v4.4.116  (Fixes: CVE-2017-8824)
+* Fri Dec 29 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.10-alt1
+- v4.14.10
 
-* Mon Feb 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.115-alt1
-- v4.4.115  (Fixes: CVE-2017-5715)
+* Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.9-alt1
+- v4.14.9  (Fixes: CVE-2017-16995, CVE-2017-16996)
 
-* Wed Jan 31 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.114-alt1
-- v4.4.114
-
-* Wed Jan 24 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.113-alt1
-- v4.4.113
-
-* Wed Jan 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.112-alt1
-- v4.4.112  (Fixes: CVE-2017-1000410, CVE-2017-17741, CVE-2017-5753)
-
-* Wed Jan 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.111-alt1
-- v4.4.111
-
-* Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.110-alt1
-- v4.4.110
-
-* Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.108-alt1
-- v4.4.108
-
-* Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.107-alt1.1
+* Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.8-alt1.1
 - SMACK enabled
-- kernel.unprivileged_bpf_disabled set by default
+- kernel.unprivileged_bpf_disabled set by default  (Fixes: CVE-2017-16995, CVE-2017-16996)
 
-* Wed Dec 20 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.107-alt1
-- v4.4.107
+* Wed Dec 20 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.8-alt1
+- v4.14.8
 
-* Sun Dec 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.106-alt1
-- v4.4.106   (Fixes: CVE-2017-0861, CVE-2017-1000407)
+* Sun Dec 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.7-alt1
+- v4.14.7
 
-* Mon Dec 11 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.105-alt1
-- v4.4.105
+* Fri Dec 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.6-alt1
+- v4.14.6   (Fixes: CVE-2017-0861, CVE-2017-1000407)
 
-* Wed Dec 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.104-alt1
-- v4.4.104   (Fixes: CVE-2017-8824)
+* Mon Dec 11 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.5-alt1
+- v4.14.5
 
-* Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.103-alt1.1.1
-- separate drm modules for old cards into subpackage
-- package modules_dir/kernel/drivers/staging/media
+* Wed Dec 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.4-alt1
+- v4.14.4   (Fixes: CVE-2011-1161, CVE-2017-8824)
 
-* Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.103-alt1.1
+* Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.16-alt1.1
 - temporary fix for HugeDirtyCowPOC (fixes CVE-2017-1000405)
 
-* Thu Nov 30 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.103-alt1
-- v4.4.103
+* Mon Nov 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.0-alt1
+- v4.14.0
 
-* Fri Nov 24 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.102-alt1
-- v4.4.102
+* Wed Nov 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.12-alt1
+- v4.13.12
 
-* Wed Nov 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.100-alt1
-- v4.4.100   (Fixes: CVE-2017-7518)
+* Thu Nov 02 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.11-alt1
+- v4.13.11   (Fixes: CVE-2017-12193)
 
-* Sat Nov 18 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.99-alt1
-- v4.4.99   (Fixes: CVE-2017-13080)
+* Fri Oct 27 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.10-alt1.1
+- v4.13.10
 
-* Wed Nov 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.98-alt1
-- v4.4.98
+* Sun Oct 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.9-alt1.1
+- v4.13.9
 
-* Wed Nov 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.97-alt1
-- v4.4.97
+* Wed Oct 18 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.8-alt1.1
+- v4.13.8   (Fixes: CVE-2017-12188, CVE-2017-15265)
 
-* Thu Nov 02 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.96-alt1
-- v4.4.96   (Fixes: CVE-2017-12193)
-
-* Fri Oct 27 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.95-alt1.1
-- v4.4.95
-
-* Sun Oct 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.94-alt1.1
-- v4.4.94
-
-* Wed Oct 18 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.93-alt1.1
-- v4.4.93   (Fixes: CVE-2017-0786, CVE-2017-15265)
-
-* Tue Oct 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.92-alt1.1
+* Tue Oct 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.7-alt1.1
 - Local root in alsa fixed (Fixes: CVE-2017-15265)
 
-* Fri Oct 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.92-alt1
-- v4.4.92
+* Sun Oct 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.7-alt1
+- v4.13.7   (Fixes: CVE-2017-5123)
 
-* Sun Oct 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.91-alt1
-- v4.4.91
+* Fri Oct 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.6-alt1
+- v4.13.6   (Fixes: CVE-2017-0786, CVE-2017-1000255)
 
-* Thu Oct 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.90-alt1
-- v4.4.90   (Fixes: CVE-2017-1000252, CVE-2017-12153, CVE-2017-12154)
+* Thu Oct 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.5-alt1
+- v4.13.5   (Fixes: CVE-2017-1000252, CVE-2017-12153, CVE-2017-12154)
 
-* Wed Sep 27 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.89-alt1
-- v4.4.89 
+* Wed Sep 27 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.4-alt1
+- v4.13.4 
 
-* Thu Sep 14 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.88-alt1
-- v4.4.88
+* Wed Sep 20 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.3-alt1
+- v4.13.3
 
-* Thu Sep 07 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.87-alt1
-- v4.4.87
+* Thu Sep 14 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.2-alt1
+- v4.13.2
 
-* Mon Sep 04 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.86-alt1
-- v4.4.86
+* Thu Sep 14 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.0-alt1
+- v4.13.0
 
-* Wed Aug 30 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.85-alt1
-- v4.4.85
+* Tue Sep 12 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.12-alt1
+- v4.12.12
 
-* Fri Aug 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.84-alt1
-- v4.4.84
+* Wed Aug 30 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.10-alt1
+- v4.12.10
 
-* Mon Aug 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.4.83-alt1
-- v4.4.82 -> 4.4.83.
+* Fri Aug 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.9-alt1
+- v4.12.9
+
+* Wed Aug 16 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.12.8-alt1
+- v4.12.7 -> v4.12.8.
 - Synced %%check with std-def.
+- Changed kernel-doc to a noarch subpackage.
 - Restricted access to %%modules_dir/ (see #5969).
 
-* Sun Aug 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.82-alt1
-- v4.4.82
+* Sun Aug 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.7-alt1
+- v4.12.7
 
-* Sat Aug 12 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.81-alt1
-- v4.4.81
+* Sat Aug 12 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.6-alt1
+- v4.12.6
 
-* Mon Aug 07 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.80-alt1
-- v4.4.80
+* Sun Aug 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.5-alt1
+- v4.12.5
 
-* Thu Jul 27 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.4.79-alt1
-- v4.4.77 -> v4.4.79.
+* Thu Jul 27 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.12.4-alt1
+- v4.12.2 -> v4.12.4.
 
-* Sat Jul 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.77-alt1
-- v4.4.77
+* Sat Jul 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.2-alt1
+- v4.12.2
 
-* Thu Jul 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.76-alt1
-- v4.4.76
+* Thu Jul 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.1-alt1
+- v4.12.1
 
-* Mon Jul 03 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.75-alt1
-- v4.4.75
+* Tue Jul 04 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.0-alt1
+- v4.12
 
-* Tue Jun 27 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.74-alt1
-- v4.4.74
+* Thu Jun 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.11.6-alt1
+- 4.11.6
 
-* Sat Jun 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.73-alt1
-- v4.4.73
+* Wed May 24 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.11.2-alt1
+- v4.11.2
 
-* Thu Jun 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.72-alt1
-- v4.4.72
+* Mon May 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.11.1-alt1
+- v4.11.1
 
-* Thu Jun 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.71-alt1
-- v4.4.71
+* Mon May 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.17-alt1
+- v4.10.17
 
-* Fri May 26 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.70-alt1
-- v4.4.70
+* Mon May 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.16-alt1
+- v4.10.16
 
-* Mon May 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.69-alt1
-- v4.4.69
+* Wed May 10 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.15-alt1
+- v4.10.15
 
-* Mon May 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.68-alt1
-- v4.4.68
+* Sat Apr 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.12-alt1
+- v4.10.12
 
-* Wed May 10 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.67-alt1
-- v4.4.67
+* Wed Apr 19 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.11-alt1
+- v4.10.11
 
-* Sat Apr 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.63-alt1
-- v4.4.63
+* Thu Apr 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.10-alt1
+- v4.10.10
 
-* Thu Apr 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.61-alt1
-- v4.4.61
+* Sun Apr 09 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.9-alt1
+- v4.10.9
 
-* Sun Apr 09 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.60-alt1
-- v4.4.60
+* Fri Mar 31 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.8-alt1
+- v4.10.8
 
-* Fri Mar 31 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.59-alt1
-- v4.4.59
+* Sun Mar 26 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.10.6-alt1
+- v4.10.6
 
-* Sun Mar 26 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.57-alt1
-- v4.4.57
+* Wed Mar 22 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.10.5-alt1
+- v4.10.5
 
-* Wed Mar 22 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.56-alt1
-- v4.4.56
+* Sun Mar 19 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.10.4-alt1
+- v4.10.4
 
-* Sun Mar 19 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.55-alt1
-- v4.4.55
+* Fri Mar 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.10.3-alt1
+- 4.10.3
+- in-kernel ipset returned
 
-* Wed Mar 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.54-alt1
-- v4.4.54
+* Sun Mar 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.10.2-alt1
+- 4.10.2
 
-* Sun Mar 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.53-alt1
-- v4.4.53
+* Sun Mar 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.14-alt1
+- v4.9.14
 
-* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.52-alt1
-- v4.4.52
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.10.1-alt1
+- 4.10.1
 
-* Fri Feb 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.51-alt1
-- v4.4.51
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.13-alt1
+- v4.9.13
 
-* Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.50-alt1
-- v4.4.50
+* Fri Feb 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.12-alt1
+- v4.9.12
 
-* Wed Feb 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.49-alt1
-- v4.4.49
+* Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.11-alt1
+- v4.9.11
 
-* Thu Feb 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.48-alt1
-- v4.4.48
+* Wed Feb 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.10-alt1
+- v4.9.10
 
-* Sun Feb 05 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.47-alt1.1
-- v4.4.47
+* Thu Feb 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.9-alt1
+- v4.9.9
 
-* Wed Feb 01 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.46-alt1.1
-- v4.4.46
+* Sun Feb 05 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.8-alt1
+- v4.9.8
 
-* Thu Jan 26 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.45-alt1.1
-- v4.4.45
+* Wed Feb 01 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.7-alt1
+- v4.9.7
 
-* Fri Jan 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.44-alt1.1
-- v4.4.44
+* Thu Jan 26 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.6-alt1
+- v4.9.6
 
-* Mon Jan 16 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.43-alt1.1
-- v4.4.43
+* Fri Jan 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.5-alt1
+- v4.9.5
 
-* Thu Jan 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.42-alt1.1
-- v4.4.42
+* Wed Jan 18 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.4-alt1
+- v4.9.4
 
-* Tue Jan 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.41-alt1.1
-- v4.4.41
+* Thu Jan 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.3-alt1
+- v4.9.3
 
-* Sat Jan 07 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.40-alt1.1
-- v4.4.40
+* Tue Jan 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.17-alt1
+- v4.8.17
 
-* Fri Dec 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1.1
-- memory sanitize patch added
+* Sat Jan 07 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.16-alt1
+- v4.8.16
 
-* Fri Dec 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1
-- v4.4.39
+* Fri Dec 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.15-alt1
+- v4.8.15
 
-* Sun Dec 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.38-alt1
-- v4.4.38
+* Sun Dec 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.14-alt1
+- v4.8.14
 
-* Fri Dec 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.37-alt1
-- v4.4.37
+* Fri Dec 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.13-alt1
+- v4.8.13
 
-* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.36-alt1
-- v4.4.36
+* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.12-alt1
+- v4.8.12
 
-* Sat Nov 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.35-alt1
-- v4.4.35
+* Sat Nov 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.11-alt1
+- v4.8.11
 
-* Mon Nov 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.34-alt1
-- v4.4.34
+* Mon Nov 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.10-alt1
+- v4.8.10
 
-* Sun Nov 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.33-alt1
-- v4.4.33
+* Sun Nov 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.9-alt1
+- v4.8.9
 
-* Tue Nov 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.32-alt1
-- v4.4.32
+* Tue Nov 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.8-alt1
+- v4.8.8
 
-* Thu Nov 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.31-alt1
-- v4.4.31
+* Thu Nov 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.7-alt1
+- v4.8.7
 
-* Tue Nov 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.30-alt1
-- v4.4.30
+* Tue Nov 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.6-alt1
+- v4.8.6
 
-* Fri Oct 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.28-alt1
-- v4.4.28
+* Fri Oct 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.5-alt1
+- v4.8.5
+- secured /proc/interrupts
 
-* Sat Oct 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.27-alt1
-- v4.4.27
+* Tue Oct 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.4-alt1
+- v4.8.4
 
-* Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.26-alt1
-- v4.4.26
+* Sat Oct 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.10-alt1
+- v4.7.10
 
-* Mon Oct 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.25-alt1
-- v4.4.25
+* Mon Oct 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.1-alt1
+- v4.8.1
 
-* Sun Oct 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.24-alt1
-- v4.4.24
+* Thu Oct 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.0-alt1
+- v4.8
+- gcc5 as kgcc
+- gcc plugin activated (uses gcc-c++, libgmp-devel, mpc-devel)
 
-* Fri Sep 30 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.23-alt1
-- v4.4.23
+* Fri Sep 30 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.6-alt1
+- v4.7.6
 
-* Sat Sep 24 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.22-alt1
-- v4.4.22
+* Sat Sep 24 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.5-alt1
+- v4.7.5
 
-* Thu Sep 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.21-alt1
-- v4.4.21
+* Thu Sep 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.4-alt1
+- v4.7.4
 
-* Wed Sep 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.20-alt1
-- v4.4.20
+* Wed Sep 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.3-alt1
+- v4.7.3
 
-* Sat Aug 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.19-alt1
-- v4.4.19
+* Sat Aug 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.2-alt1
+- v4.7.2
 
-* Wed Aug 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.18-alt1
-- v4.4.18
+* Thu Aug 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.1-alt1
+- v4.7.1
 
-* Mon Aug 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.17-alt1
-- v4.4.17
+* Wed Aug 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.7-alt1
+- v4.6.7
 
-* Thu Jul 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.16-alt1
-- v4.4.16
+* Mon Jul 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.0-alt1
+- v4.7
 
-* Mon Jul 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.15-alt1
-- v4.4.15
+* Mon Jul 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.4-alt1
+- v4.6.4
 
-* Sat Jun 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.14-alt1
-- v4.4.14
+* Sat Jun 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.3-alt1
+- v4.6.3
 
-* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.13-alt1
-- v4.4.13
+* Fri Jun 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.2-alt1
+- 4.6.2
 
-* Thu Jun 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.12-alt1
-- v4.4.12
+* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.7-alt1
+- v4.5.7
 
-* Mon May 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.11-alt1
-- v4.4.11
+* Thu May 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.0-alt1
+- 4.6.0
 
-* Thu May 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.10-alt1
-- 4.4.10
+* Thu May 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.4-alt1
+- 4.5.4
 
-* Wed May 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.9-alt1
-- 4.4.9
+* Fri May 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.3-alt1
+- 4.5.3
 
-* Wed Apr 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.8-alt1
-- 4.4.8
-- 4.4 as std-def
+* Wed Apr 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.2-alt1
+- 4.5.2
 
-* Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.21-alt1
-- 4.1.21
+* Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.1-alt1
+- 4.5.1
+
+* Tue Mar 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.0-alt1
+- 4.5
 
 * Thu Mar 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.5-alt1
 - 4.4.5
