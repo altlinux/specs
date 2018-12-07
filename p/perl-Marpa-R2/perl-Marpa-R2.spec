@@ -9,8 +9,8 @@ BuildRequires: perl(YAML/XS.pm) perl(autodie.pm) perl(base.pm) perl(charnames.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 4.000000
-Release: alt2
+Version: 6.000000
+Release: alt1
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -43,6 +43,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 6.000000-alt1
+- automated CPAN update
+
 * Thu Jan 11 2018 Michael Shigorin <mike@altlinux.org> 4.000000-alt2
 - E2K: autoreconf first (it's not about bootstrap at all)
 
