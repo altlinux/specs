@@ -1,17 +1,16 @@
 %global oname cliff
 
-%def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.4.0
-Release: alt2
+Version: 2.13.0
+Release: alt1
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Patch: python-module-cliff-2.4.0-alt-tests.patch
 
 BuildArch: noarch
 
@@ -22,37 +21,38 @@ Requires: python-module-yaml >= 3.10.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-pyparsing >= 2.0.7
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-prettytable >= 0.7.2
+BuildRequires: python-module-pyparsing >= 2.1.0
 BuildRequires: python-module-argparse
 BuildRequires: python-module-cmd2 >= 0.6.7
-BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-unicodecsv >= 0.8.0
 BuildRequires: python-module-yaml >= 3.10.0
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-sphinx >= 1.1.2
-BuildRequires: python-module-oslosphinx >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
 
 # Required for the test suite
 BuildRequires: python-module-nose
 BuildRequires: python-module-mock
+BuildRequires: python-module-testtools
 
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-pyparsing >= 2.0.7
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-prettytable >= 0.7.2
+BuildRequires: python3-module-pyparsing >= 2.1.0
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-cmd2 >= 0.6.7
-BuildRequires: python3-module-stevedore  >= 1.17.1
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-stevedore  >= 1.20.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-mock
-%endif
+BuildRequires: python3-module-testtools
 
 %description
 cliff is a framework for building command line programs. It uses setuptools
@@ -94,7 +94,6 @@ Documentation for the Command Line Interface Formulation Framework.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -105,32 +104,27 @@ rm -f test-requirements.txt requirements.txt
 # Remove bundled egg info
 rm -rf *.egg-info
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
-sphinx-build doc/source html
+#sphinx-build doc/source html
 # remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
+#rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 PYTHONPATH=. nosetests
@@ -149,7 +143,6 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
@@ -157,12 +150,14 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
-%files doc
-%doc html
+#%files doc
+#%doc html
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt1
+- 2.13.0
+
 * Mon Nov 19 2018 Leontiy Volodin <lvol@altlinux.org> 2.4.0-alt2
 - fixed build
 - added patch for tests
