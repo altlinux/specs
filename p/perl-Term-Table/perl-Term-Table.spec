@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,8 +7,8 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Term-Table
-Version:        0.012
-Release:        alt1_1
+Version:        0.013
+Release:        alt1
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Term-Table/
@@ -67,11 +68,14 @@ export TERM=xterm
 #make test
 
 %files
-%doc LICENSE
+%doc LICENSE README.md
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_1
 - new version
 
