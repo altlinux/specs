@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-F77
 Name: perl-%dist
-Version: 1.20
+Version: 1.22
 Release: alt1
 
 Summary: Simple interface to F77 libs
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/C/CH/CHM/ExtUtils-F77-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KG/KGB/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ of Fortran runtime libraries. The problem is their location
 and name varies with each OS/compiler combination!
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -55,6 +55,9 @@ __EOF__
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
