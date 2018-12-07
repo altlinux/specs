@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Pod-POM-View-Restructured
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Pod/POM.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.000001
+Version: 1.000002
 Release: alt1
 Summary: View for Pod::POM that outputs reStructuredText
 Group: Development/Perl
@@ -45,6 +45,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.000002-alt1
+- automated CPAN update
+
 * Mon Apr 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.000001-alt1
 - automated CPAN update
 
