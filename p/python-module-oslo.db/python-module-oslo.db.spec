@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.17.1
-Release: alt2
+Version: 4.40.0
+Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
 License: ASL 2.0
@@ -17,22 +17,23 @@ Provides: python-module-oslo-db = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-alembic >= 0.9.6
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-migrate >= 0.9.6 python-module-migrate-tests
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-migrate >= 0.11.0 python-module-migrate-tests
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-six >= 1.10.0
 
-BuildRequires: python-module-fixtures >= 1.3.1
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-fixtures >= 3.0.0
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-doc8 >= 0.6.0
+BuildRequires: python-module-oslo.context >= 2.9.0
 BuildRequires: python-module-eventlet
 BuildRequires: python-module-oslotest
 
@@ -47,20 +48,20 @@ Requires: python-module-stevedore
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-alembic >= 0.8.4
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-alembic >= 0.9.6
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-migrate python3-module-migrate-tests
 BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-six >= 1.10.0
 
 BuildRequires: python3-module-testresources python3-module-testscenarios
 %endif
@@ -128,9 +129,9 @@ popd
 %endif
 
 # generate html docs
-python setup.py build_sphinx
+#python setup.py build_sphinx
 # remove the sphinx-build leftovers
-rm -rf doc/build/html/.{doctrees,buildinfo}
+#rm -rf doc/build/html/.{doctrees,buildinfo}
 
 %install
 %python_install
@@ -146,8 +147,8 @@ popd
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/*/test*
 
-%files doc
-%doc doc/build/html
+#%files doc
+#%doc doc/build/html
 
 %files tests
 %python_sitelibdir/*/test*
@@ -165,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 4.40.0-alt1
+- 4.40.0
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.17.1-alt2
 - rebuild with python3.6
 
