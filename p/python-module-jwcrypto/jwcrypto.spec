@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 
@@ -94,6 +94,9 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests*
 %python3_sitelibdir/%mname-%version-py*.egg-info
 
 %changelog
+* Fri Dec 07 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.0 -> 0.6.0.
+
 * Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
 - 0.4.2 -> 0.5.0
 
