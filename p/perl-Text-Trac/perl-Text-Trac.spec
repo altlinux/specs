@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define module Text-Trac
 
 Name: perl-%module
-Version: 0.19
+Version: 0.22
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -51,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
