@@ -1,10 +1,11 @@
 %define oname pytest-sugar
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.git20141126.2.1
+Version: 0.9.2
+Release: alt1
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
 Group: Development/Python
@@ -15,13 +16,19 @@ Url: https://pypi.python.org/pypi/pytest-sugar/
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
+BuildRequires: python-module-packaging >= 14.1
+BuildRequires: python-module-pytest >= 2.9
 BuildRequires: python-module-py
+BuildRequires: python-module-termcolor >= 1.1.0
+BuildRequires: python-module-pytest-xdist
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-packaging >= 14.1
 BuildRequires: python3-module-py
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest >= 2.9
+BuildRequires: python3-module-termcolor >= 1.1.0
+BuildRequires: python3-module-pytest-xdist
 %endif
 
 %py_provides pytest_sugar
@@ -88,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1.git20141126.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
