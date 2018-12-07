@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.0.27
+Version: 3.0.28
 Release: alt1
 
 Summary: A full featured system information script
@@ -8,8 +8,8 @@ Summary(ru): Скрипт вывода полной информации об о
 License: GPLv3
 Group: Monitoring
 URL: https://smxi.org
-# Source-git: https://github.com/smxi/inxi.git
-Source: %name-%version.tar
+# Source-url: https://github.com/smxi/inxi/archive/%version-1.tar.gz
+Source: %name-%version.tar.gz
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -51,6 +51,9 @@ install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Fri Dec 07 2018 Leontiy Volodin <lvol@altlinux.org> 3.0.28-alt1
+- New version
+
 * Mon Oct 29 2018 Leontiy Volodin <lvol@altlinux.org> 3.0.27-alt1
 - New version
 - Change project URL
