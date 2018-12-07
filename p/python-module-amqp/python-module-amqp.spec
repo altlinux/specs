@@ -3,9 +3,9 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.2.2
+Version: 2.3.2
 Epoch: 1
-Release: alt1.1
+Release: alt1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -18,11 +18,13 @@ BuildRequires: python-module-alabaster python-module-html5lib python-module-obje
 BuildRequires: python2.7(vine) python2.7(case)
 BuildRequires: python-module-unittest2
 BuildRequires: python-module-mock
+BuildRequires: python-module-pytest-sugar >= 0.9.1
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-sugar >= 0.9.1
 BuildRequires: python3(vine) python3(case)
 %endif
 
@@ -132,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.3.2-alt1
+- Updated to upstream version 2.3.2.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.2.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
