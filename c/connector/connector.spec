@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -53,6 +53,9 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Dec 07 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.3-alt1
+- keyring: some fixes
+
 * Tue Dec 04 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.2-alt1
 - Added on/off for logging
 - Fixed tray update after save first connection
