@@ -1,6 +1,6 @@
 Name: rage
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: EFL Video Player
 License: BSD
@@ -18,7 +18,7 @@ Requires: gst-plugins-bad1.0
 Requires: gst-plugins-ugly1.0
 Requires: gst-libav
 
-BuildRequires: meson
+BuildRequires(pre): meson
 BuildRequires: efl-libs-devel >= 1.18.0
 BuildRequires: libelementary-devel >= 1.18.0
 
@@ -77,9 +77,12 @@ Here is a list of all the things it can do:
 %_libdir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name/
-%_iconsdir/%name.png
+%_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Fri Dec 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt2
+- build current snapshot
+
 * Fri Dec 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
