@@ -22,7 +22,7 @@
 
 Name: sssd
 Version: 2.0.0
-Release: alt2.gitf0603645f
+Release: alt3.gitf0603645f
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -109,7 +109,6 @@ BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel li
 BuildRequires: libsystemd-devel
 %endif
 %ifnarch e2k e2kv4 mipsel
-BuildRequires: selinux-policy-targeted
 %endif
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
@@ -931,6 +930,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %endif
 
 %changelog
+* Fri Dec 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.0.0-alt3.gitf0603645f
+- Remove build requires for selinux-policy-targeted
+
 * Thu Oct 25 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2.gitf0603645f
 - Applied an upstream snapshot due to a huge amount of issues in 2.0.0.
 - Fixed start under a non-privileged user (Closes: #35545).
