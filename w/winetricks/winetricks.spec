@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20180815
+Version: 20181203
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -62,9 +62,13 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.appdata.xml
+%_datadir/bash-completion/completions/winetricks
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Dec 07 2018 Vitaly Lipatov <lav@altlinux.ru> 20181203-alt1
+- new version 20181203 (with rpmrb script)
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 20180815-alt1
 - new version (20180815) with rpmgs script
 
