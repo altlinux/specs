@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 4.0.3
-Release: alt1
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -61,7 +61,7 @@ BuildRequires: libXi-devel libXdamage-devel
 BuildRequires: libjson-glib-devel libjson-glib-gir-devel
 BuildRequires: libgbm-devel
 BuildRequires: libwayland-server-devel libwayland-egl-devel
-BuildRequires: libdrm-devel
+BuildRequires: libdrm-devel libGL-devel
 BuildRequires: libxcb-devel libXtst-devel
 BuildRequires: libgudev-devel libinput-devel
 
@@ -194,6 +194,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.3-alt2
+- add libGL-devel BR, do not rely on indirect deps
+
 * Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
 - 4.0.3-3-gc3ffb54
 
