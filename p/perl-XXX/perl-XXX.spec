@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-podlators
@@ -5,13 +6,13 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-XXX
-Version:        0.31
-Release:        alt1_6
+Version:        0.32
+Release:        alt1
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/XXX
-Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/XXX-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -58,11 +59,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE CONTRIBUTING
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_6
 - update to new release by fcimport
 
