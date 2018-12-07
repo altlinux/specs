@@ -1,3 +1,8 @@
+%ifarch %ix86 x86_64
+%def_without bootstrap
+%else
+%def_with bootstrap
+%endif
 
 %define common_lisp_controller 0
 
@@ -11,14 +16,14 @@
 Name: sbcl
 Summary: Steel Bank Common Lisp
 Version: 1.4.12
-Release: alt1
+Release: alt2
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
 License: BSD
 Url: http://sbcl.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-source.tar.bz2
 
-ExclusiveArch: %arm %ix86 x86_64 ppc sparcv9
+ExclusiveArch: armh aarch64 %ix86 x86_64 ppc sparcv9
 
 # Pre-generated html docs
 Source1: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-documentation-html.tar.bz2
@@ -27,8 +32,6 @@ Source1: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-documen
 #Source10: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.0.15-x86-linux-binary.tar.bz2
 %ifarch %ix86
 %define sbcl_arch x86
-BuildRequires: sbcl
-# or
 #define sbcl_bootstrap_src -b 10
 %endif
 
@@ -36,8 +39,6 @@ BuildRequires: sbcl
 #Source20: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-x86-64-linux-binary.tar.bz2
 %ifarch x86_64
 %define sbcl_arch x86-64
-BuildRequires: sbcl
-# or
 #define sbcl_bootstrap_src -b 20
 #define sbcl_bootstrap_dir sbcl-1.2.0-x86-64-linux
 %endif
@@ -48,8 +49,6 @@ BuildRequires: sbcl
 #Source30: sbcl-1.0.1-patched-powerpc-linux.tar.bz2
 %ifarch ppc
 %define sbcl_arch ppc
-BuildRequires: sbcl
-# or
 #define sbcl_bootstrap_src -b 30
 %endif
 
@@ -57,30 +56,23 @@ BuildRequires: sbcl
 #Source40: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-0.9.17-sparc-linux-binary.tar.bz2
 %ifarch sparcv9
 %define sbcl_arch sparc
-BuildRequires: sbcl
-# or
 #define sbcl_bootstrap_src -b 40
 %endif
 
-## arm section
-#Source50: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-armel-linux-binary.tar.bz2
-%ifarch armv5tel
+#Source60: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.4.11-armhf-linux-binary.tar.bz2
+Source60: sbcl-1.4.11-armhf-linux-binary.tar.bz2
+%ifarch armh
 %define sbcl_arch arm
-BuildRequires: sbcl
-# or
-#define sbcl_bootstrap_src -b 50
-#define sbcl_bootstrap_dir sbcl-1.2.0-armel-linux
+%define sbcl_bootstrap_src -b 60
+%define sbcl_bootstrap_dir sbcl-1.4.11-armhf-linux
 %endif
 
-#Source60: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-armhf-linux-binary.tar.bz2
-# generated on a fedora20 arm box, sf bootstrap missing sb-gmp
-#Source60: sbcl-1.2.0-armhf-linux-binary-2.tar.bz2
-%ifarch armv6hl armv7hl
-%define sbcl_arch arm
-BuildRequires: sbcl
-# or
-#define sbcl_bootstrap_src -b 60
-#define sbcl_bootstrap_dir sbcl-1.2.0-armhf-vfp
+#Source70: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
+Source70: sbcl-1.4.2-arm64-linux-binary.tar.bz2
+%ifarch aarch64
+%define sbcl_arch arm64
+%define sbcl_bootstrap_src -b 70
+%define sbcl_bootstrap_dir sbcl-1.4.2-arm64-linux
 %endif
 
 %if 0%{?common_lisp_controller}
@@ -98,7 +90,7 @@ Patch2: sbcl-1.1.13-personality.patch
 Patch3: sbcl-1.3.2-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
 Patch7: sbcl-1.4.2-runtime.patch
-
+Patch8: concurrency-tests-frlock.patch
 ## upstreamable patches
 Patch50: sbcl-1.3.0-generate_version.patch
 
@@ -106,6 +98,12 @@ Patch50: sbcl-1.3.0-generate_version.patch
 
 
 ## upstream patches
+
+%if_with bootstrap
+BuildRequires: patchelf
+%else
+BuildRequires: sbcl
+%endif
 
 # %%check/tests
 BuildRequires: ed /proc sbcl /usr/bin/tex
@@ -132,8 +130,9 @@ pushd sbcl-%version
 %patch2 -p1 -b .personality
 %patch3 -p1 -b .optflags
 %{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
-%ifarch x86_64
+%ifarch aarch64 x86_64
 %patch7 -p1
+%patch8 -p2
 %endif
 %patch50 -p1 -b .generate_version
 
@@ -144,6 +143,11 @@ find . -name '*.c' | xargs chmod 644
 
 # set version.lisp-expr
 sed -i.rpmver -e "s|\"%version\"|\"%version-%release\"|" version.lisp-expr
+
+%ifarch aarch64
+f=%sbcl_bootstrap_dir/src/runtime/sbcl
+[ -f ../$f ] && patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 ../$f
+%endif
 
 # make %%doc items available in parent dir to make life easier
 cp -alf BUGS COPYING README CREDITS NEWS TLA TODO PRINCIPLES ..
@@ -271,6 +275,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt2
+- bootstrap on arm arches
+
 * Wed Oct 03 2018 Ilya Mashkin <oddity@altlinux.ru> 1.4.12-alt1
 - 1.4.12
 
