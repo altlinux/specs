@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1
-Release: alt2.git20150117.2
+Version: 2.4.1
+Release: alt1
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
 Url: http://routes.groovie.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/bbangert/routes
 Source: %oname-%version.tar.gz
@@ -18,12 +17,14 @@ BuildArch: noarch
 Requires: python-module-repoze.lru
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-repoze.lru python-module-webob
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-sphinx-devel python-module-Pygments
+BuildRequires: python-module-repoze.lru python-module-webob
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-six
 %endif
 
 %description
@@ -122,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.1-alt2.git20150117.2
 - (NMU) rebuild with python3.6
 
