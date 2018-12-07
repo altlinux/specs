@@ -2,7 +2,7 @@
 %define module Mail-IMAPClient
 
 Name: perl-%module
-Version: 3.39
+Version: 3.40
 Release: alt1
 
 Summary: This module provides methods implementing the IMAP protocol
@@ -35,6 +35,9 @@ scripts to interact with IMAP message stores.
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.40-alt1
+- automated CPAN update
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 3.39-alt1
 - automated CPAN update
 
