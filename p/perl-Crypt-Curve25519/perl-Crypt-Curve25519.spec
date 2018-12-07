@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.06
-Release: alt2
+Release: alt3
 
 Summary: Generate shared secret using elliptic-curve Diffie-Hellman function
 License: %perl_license
@@ -23,9 +23,9 @@ Generate shared secret using elliptic-curve Diffie-Hellman function
 
 %prep
 %setup -n %{dist}-%{version}
-%ifarch e2k
+%ifarch %e2k
 # see mcst#1802; check with lcc >= 1.24; s/uint128_t/uintmax_t/g fails tests
-sed -i 's,=\$x64,=0,;' Makefile.PL
+cc --version | grep -q '^lcc:1.24' || sed -i 's,=\$x64,=0,;' Makefile.PL
 %endif
 
 %build
@@ -40,6 +40,9 @@ sed -i 's,=\$x64,=0,;' Makefile.PL
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Dec 07 2018 Michael Shigorin <mike@altlinux.org> 0.06-alt3
+- use %%e2k; adapt for (future) lcc-1.24, hopefully
+
 * Fri Dec 22 2017 Michael Shigorin <mike@altlinux.org> 0.06-alt2
 - E2K: avoid uint128_t use for now
 
