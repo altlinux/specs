@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Shell-Guess
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Test/More.pm) perl(Unix/Process.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
-Release: alt2
+Version: 0.09
+Release: alt1
 Summary: Make an educated guess about the shell in use
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/pod/Shell::Guess
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/S*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2
 - to Sisyphus
 
