@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-alembic
-Version: 0.8.10
-Release: alt1.1
+Version: 1.0.5
+Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
 
@@ -28,18 +28,22 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-mako
 BuildRequires: python-module-argparse
-BuildRequires: python-module-SQLAlchemy >= 0.7.6
+BuildRequires: python-module-SQLAlchemy >= 0.9.0
 BuildRequires: python-module-editor >= 0.3
+BuildRequires: python-module-dateutil
 
 BuildRequires: python-module-nose
 BuildRequires: python-module-mock
 BuildRequires: python-module-SQLAlchemy-tests
+BuildRequires: python-module-pytest
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-mako python3-module-nose
 BuildRequires: python3-module-SQLAlchemy python3-module-setuptools
 BuildRequires: python3-module-argparse
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -158,6 +162,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.10-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
