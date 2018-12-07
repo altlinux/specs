@@ -1,10 +1,8 @@
 %define oname oslo.middleware
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 3.23.2
-Release: alt1.1
+Version: 3.36.0
+Release: alt1
 Summary: OpenStack oslo.middleware library
 Group: Development/Python
 License: ASL 2.0
@@ -17,39 +15,42 @@ Provides: python-module-oslo-middleware = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-jinja2 >= 2.8
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-webob >= 1.2.3
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-jinja2 >= 2.10
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-webob >= 1.7.1
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-statsd >= 3.2.1
 
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-fixtures >= 3.0.0
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-jinja2 >= 2.8
-BuildRequires: python3-module-webob >= 1.2.3
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-jinja2 >= 2.10
+BuildRequires: python3-module-webob >= 1.7.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-statsd >= 3.2.1
-%endif
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-fixtures >= 3.0.0
 
 %description
 Oslo middleware library includes components that can be injected into
@@ -97,18 +98,15 @@ Documentation for the Oslo middleware handling library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
 sphinx-build doc/source html
@@ -117,11 +115,10 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
@@ -131,19 +128,20 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.23.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
