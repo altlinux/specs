@@ -4,7 +4,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.21.4
+Version: 1.21.5
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -26,7 +26,6 @@ Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
 Patch3: %name-pjl-as-ps.patch
-Patch4: %name-1.21.4-poppler71.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -122,7 +121,6 @@ serial backend for cups
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 
 %build
 # work-around Rpath
@@ -229,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Dec 07 2018 Anton Farygin <rider@altlinux.ru> 1.21.5-alt1
+- new version 1.21.5
+
 * Mon Nov 26 2018 Anton Farygin <rider@altlinux.ru> 1.21.4-alt1
 - new version 1.21.4
 
