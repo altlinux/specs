@@ -3,18 +3,16 @@
 
 # asyncio for python3 only
 %add_python_req_skip asyncio
-%add_findreq_skiplist %python_sitelibdir/%oname/async.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/test_async.py
 
 Name: python-module-%oname
-Version: 4.1.0
+Version: 4.12.0
 Release: alt1
 Summary: Retrying library
 Group: Development/Python
 License: ASL 2.0
 Url: https://github.com/jd/tenacity
 Source: %oname-%version.tar.gz
-
+Patch: tenacity-fix-py2.patch
 BuildArch: noarch
 
 BuildRequires: python-devel
@@ -68,6 +66,7 @@ This package contains tests for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rf %oname.egg-info
@@ -93,7 +92,6 @@ pushd ../python3
 popd
 %endif
 
-
 %files
 %doc README.rst LICENSE AUTHORS ChangeLog
 %python_sitelibdir/*
@@ -112,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 4.1.0-alt1
 - initial build
 
