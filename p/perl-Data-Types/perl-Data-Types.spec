@@ -15,7 +15,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %define _enable_test 1
 
 Name: perl-Data-Types
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Data-Types - validating and converting data types functions for Perl5 
@@ -51,6 +51,9 @@ applications.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
