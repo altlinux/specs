@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.0.2
-Release:    alt2
+Release:    alt3
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -22,6 +22,7 @@ BuildPreReq: rpm-build-ubt
 
 Requires: clojure
 Requires: puppet
+Requires: ruby-puppetserver-ca-cli
 
 
 %description
@@ -146,6 +147,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Fri Dec 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt3
+- requires fixed
+
 * Fri Nov 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt2
 - puppetserver ca added
 
