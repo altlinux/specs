@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-XS
 Name: perl-%dist
-Version: 3.04
+Version: 4.0
 Release: alt1
 Epoch: 2
 
@@ -36,6 +36,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 2:4.0-alt1
+- automated CPAN update
+
 * Fri Nov 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:3.04-alt1
 - 4.0 -> 3.04 (4.0 pre-release, do not use other than for testing)
 
