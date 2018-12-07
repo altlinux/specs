@@ -1,6 +1,6 @@
 Name: sudo
-Version: 1.8.25p1
-Release: alt2
+Version: 1.8.26
+Release: alt1
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -122,7 +122,7 @@ fi
 if [ $1 -gt 1 -a ! -f "/var/run/control/sudowheel" ]; then
     echo disabled > "/var/run/control/sudowheel"
 fi
-%post_control -s disabled sudoreplay
+%post_control -s disabled sudowheel
 
 %triggerpostun -- %name < 1:1.8.0
 cp -a %_sysconfdir/sudoers %_sysconfdir/sudoers.rpmsave
@@ -178,6 +178,10 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Fri Dec 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.26-alt1
+- Update to last autumn release
+- Fix post script for sudowheel control (closes: 35611)
+
 * Thu Nov 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.25p1-alt2
 - Reapply replace libsudo_util.so to libexecdir (avoid rpath in binaries)
 - Set sudowheel control with rule "ALL=(ALL) ALL" for wheel users disabled
