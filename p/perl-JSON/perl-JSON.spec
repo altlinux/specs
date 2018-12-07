@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON
 Name: perl-%dist
-Version: 2.97001
+Version: 4.00
 Release: alt1
 
 Summary: Parse and convert to JSON (JavaScript Object Notation)
@@ -37,6 +37,9 @@ and Perl data structure into each other.
 %perl_vendor_privlib/JSON*
 
 %changelog
+* Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.00-alt1
+- automated CPAN update
+
 * Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 2.97001-alt1
 - automated CPAN update
 
