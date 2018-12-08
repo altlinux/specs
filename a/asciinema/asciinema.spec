@@ -1,5 +1,5 @@
 Name: asciinema
-Version: 1.4.0
+Version: 2.0.1
 Release: alt1
 Summary: Terminal session recorder
 License: GPLv3
@@ -30,5 +30,11 @@ install -pDm644 man/%name.1 %buildroot%_man1dir/%name.1
 %doc CONTRIBUTING.md CHANGELOG.md README.md 
 
 %changelog
+* Sat Dec  8 2018 Terechkov Evgenii <evg@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
+* Mon Feb 19 2018 Terechkov Evgenii <evg@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Sun Sep  3 2017 Terechkov Evgenii <evg@altlinux.org> 1.4.0-alt1
 - Initial build for ALT Linux Sisyphus
