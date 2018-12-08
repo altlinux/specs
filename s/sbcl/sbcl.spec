@@ -1,4 +1,4 @@
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh aarch64
 %def_without bootstrap
 %else
 %def_with bootstrap
@@ -16,7 +16,7 @@
 Name: sbcl
 Summary: Steel Bank Common Lisp
 Version: 1.4.12
-Release: alt2
+Release: alt3
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
 License: BSD
@@ -60,19 +60,17 @@ Source1: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-documen
 %endif
 
 #Source60: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.4.11-armhf-linux-binary.tar.bz2
-Source60: sbcl-1.4.11-armhf-linux-binary.tar.bz2
 %ifarch armh
 %define sbcl_arch arm
-%define sbcl_bootstrap_src -b 60
-%define sbcl_bootstrap_dir sbcl-1.4.11-armhf-linux
+#define sbcl_bootstrap_src -b 60
+#define sbcl_bootstrap_dir sbcl-1.4.11-armhf-linux
 %endif
 
 #Source70: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
-Source70: sbcl-1.4.2-arm64-linux-binary.tar.bz2
 %ifarch aarch64
 %define sbcl_arch arm64
-%define sbcl_bootstrap_src -b 70
-%define sbcl_bootstrap_dir sbcl-1.4.2-arm64-linux
+#define sbcl_bootstrap_src -b 70
+#define sbcl_bootstrap_dir sbcl-1.4.2-arm64-linux
 %endif
 
 %if 0%{?common_lisp_controller}
@@ -275,6 +273,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt3
+- drop bootstrap hacks for arm arches
+
 * Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt2
 - bootstrap on arm arches
 
