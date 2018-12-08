@@ -1,56 +1,66 @@
 %define sname automaton
 
-%def_with python3
-
 Name: python-module-%sname
-Version: 1.4.0
-Release: alt1.1
+Version: 1.15.0
+Release: alt1
 Summary: Friendly state machines for python
 Group: Development/Python
 License: ASL 2.0
 Url: https://wiki.openstack.org/wiki/Oslo#automaton
-Source: %name-%version.tar
+Source: %sname-%version.tar.gz
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx >= 1.1.2
-BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-prettytable >= 0.7.2
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-oslotest >= 1.10.0
-BuildRequires: python-module-testrepository >= 0.0.18
-BuildRequires: python-module-testscenarios >= 0.4
-BuildRequires: python-module-testtools >= 1.4.0
+BuildRequires: python-module-oslotest >= 3.2.0
+BuildRequires: python-module-testtools >= 2.2.0
+BuildRequires: python-module-doc8 >= 0.6.0
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx >= 1.1.2
-BuildRequires: python3-module-oslosphinx >= 2.5.0
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-prettytable >= 0.7
-%endif
+BuildRequires: python3-module-prettytable >= 0.7.2
 
 BuildArch: noarch
 
 %description
 Friendly state machines for python.
 
-%if_with python3
+%package tests
+Summary: Tests for %sname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %sname.
+
 %package -n python3-module-%sname
 Summary: Friendly state machines for python.
 Group: Development/Python3
 
 %description -n python3-module-%sname
 Friendly state machines for python.
-%endif
+
+%package -n python3-module-%sname-tests
+Summary: Tests for %sname
+Group: Development/Python3
+Requires: python3-module-%sname = %EVR
+
+%description -n python3-module-%sname-tests
+This package contains tests for %sname.
 
 
 %package doc
@@ -61,37 +71,27 @@ Group: Development/Documentation
 Friendly state machines for python (documentation)
 
 %prep
-%setup
+%setup -n %sname-%version
 
 # Remove bundled egg-info
 rm -rf %sname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
-
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
 
 # generate html docs
 sphinx-build doc/source html
@@ -103,16 +103,25 @@ rm -rf html/.{doctrees,buildinfo}
 
 %files
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
 
-%if_with python3
+%files tests
+%python_sitelibdir/*/tests
+
 %files -n python3-module-%sname
 %python3_sitelibdir/*
-%endif
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%sname-tests
+%python3_sitelibdir/*/tests
 
 %files doc
 %doc html README.rst
 
 %changelog
+* Sat Dec 08 2018 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
