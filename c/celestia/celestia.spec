@@ -1,11 +1,16 @@
 Name: celestia
-Version: 1.6.1
-Release: alt6
+Version: 1.6.9.git
+Release: alt1
+
+Summary: A real-time visual space simulation
+
 License: GPL
 Group: Education
-Summary: A real-time visual space simulation
 URL: http://www.shatters.net/celestia/
-Source: %{name}-%{version}.tar.gz
+
+# Source-url: https://github.com/CelestiaProject/Celestia/archive/master.zip
+Source: %name-%version.tar
+
 Patch1: celestia-1.4.0-desktop-fix.patch
 Patch2: celestia-1.6.1-alt-gcc4.6.patch
 Patch3: celestia-1.6.1-alt-DSO.patch
@@ -16,13 +21,19 @@ Patch7: celestia-1.6.1-alt-fix-subdir-build.patch
 Patch8: celestia-1.6.1-alt-lua5.2.patch
 Patch9: celestia-1.6.1-alt-fix-build-2.patch
 
-BuildRequires: fontconfig freetype2 gcc-c++ kdelibs-devel libtqt-devel
-BuildRequires: libjpeg-devel libpng-devel libqt3-devel
-BuildRequires: libqt3-settings libstdc++-devel xml-utils
-BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools
-BuildRequires: zlib-devel liblua5-devel libtheora-devel
+BuildRequires: cmake gcc-c++ libstdc++-devel
+BuildRequires: qt5-base-devel qt5-imageformats
+BuildRequires: libGLEW-devel libXi-devel libXmu-devel libfreeglut-devel
 
-BuildRequires: libGConf2-devel GConf libgtk+2-devel glib-devel libgtkglext-devel
+BuildRequires: eigen3
+
+BuildRequires: libjpeg-devel libpng-devel libtheora-devel
+BuildRequires: zlib-devel liblua5-devel libssl-devel
+
+BuildRequires: libgtk+2-devel libgtkglext-devel
+
+# drop some warnings from build log
+%add_optflags -Wno-int-in-bool-context
 
 %description
 Celestia is a free real-time space simulation that
@@ -35,7 +46,7 @@ travelthroughout the solar system, to any of over
 %package common
 Group: Education
 Summary: A real-time visual space simulation (common part)
-Requires: celestia-ui = %version-%release
+Requires: celestia-ui = %EVR
 Obsoletes: celestia
 
 %description common
@@ -48,16 +59,16 @@ confine you to the surface of the Earth. You can
 travelthroughout the solar system, to any of over
 100,000 stars, or even beyondthe galaxy.
 
-%package kde
+%package qt
 Group: Education
-Summary: A real-time visual space simulation (KDE frontend)
-Requires: celestia-common = %version-%release
+Summary: A real-time visual space simulation (Qt5 frontend)
+Requires: celestia-common = %EVR
 Provides: celestia-ui = %version-%release
 Provides: celestia
 Obsoletes: celestia
 
-%description kde
-This is a KDE3 frontend to Celestia
+%description qt
+This is a Qt5 frontend to Celestia
 
 Celestia is a free real-time space simulation that
 lets you experienceour universe in three dimensions.
@@ -67,14 +78,30 @@ travelthroughout the solar system, to any of over
 100,000 stars, or even beyondthe galaxy.
 
 
-%package gnome
+%package gtk
 Group: Education
-Summary: A real-time visual space simulation (GNOME frontend)
-Requires: celestia-common = %version-%release
+Summary: A real-time visual space simulation (GTK frontend)
+Requires: celestia-common = %EVR
 Provides: celestia-ui = %version-%release
 
-%description gnome
-This is a GNOME frontend ro Celestia
+%description gtk
+This is a GTK frontend to Celestia
+
+Celestia is a free real-time space simulation that
+lets you experienceour universe in three dimensions.
+Unlike most planetarium software, Celestia does not
+confine you to the surface of the Earth. You can
+travelthroughout the solar system, to any of over
+100,000 stars, or even beyondthe galaxy.
+
+%package glut
+Group: Education
+Summary: A real-time visual space simulation (GLUT frontend)
+Requires: celestia-common = %EVR
+Provides: celestia-ui = %version-%release
+
+%description glut
+This is a GLUT frontend to Celestia
 
 Celestia is a free real-time space simulation that
 lets you experienceour universe in three dimensions.
@@ -85,88 +112,74 @@ travelthroughout the solar system, to any of over
 
 
 %prep
-%setup -q
-%patch1 -p0
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
-%patch7 -p2
-%patch8 -p2
-%patch9 -p2
+%setup
 
 %build
-%autoreconf
-
-PATH=$PATH:/usr/lib/kde3/
-export PATH
-%add_optflags -fpermissive
-
-%define _configure_script ../configure
-
-mkdir build-kde
-pushd build-kde
-  %configure --disable-rpath --with-kde --without-arts
-  %make_build echo=echo
-popd
-
-mkdir build-gnome
-pushd build-gnome
-  %configure --disable-rpath --with-gtk --without-arts
-  %make_build echo=echo
-popd
+# -DENABLE_SPICE=ON
+%cmake_insource -DENABLE_GTK=ON -DGIT_COMMIT=\"%version-%release\"
+%make_build
 
 %install
-export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
-export GCONF_SCHEMA_FILE_DIR="%{buildroot}%{_sysconfdir}/gconf/schemas"
-make -C build-kde install DESTDIR=%buildroot echo=echo
-make -C build-gnome install DESTDIR=%buildroot echo=echo
-find %buildroot%_datadir -name %{name}.desktop -exec rm {} \;
+%makeinstall_std
 mkdir -p %buildroot%_desktopdir
-install src/celestia/kde/data/%{name}.desktop %buildroot%_desktopdir/
-install -D -m 644 src/celestia/gtk/data/%{name}.png %buildroot%_liconsdir/%{name}.png
-install -m 755 build-kde/src/celestia/celestia %buildroot/%_bindir/celestia-kde
-install -m 755 build-gnome/src/celestia/celestia %buildroot/%_bindir/celestia-gnome
-rm %buildroot/%_bindir/celestia
+install src/celestia/kde/data/%name.desktop %buildroot%_desktopdir/
+install -D -m 644 src/celestia/gtk/data/%name.png %buildroot%_liconsdir/%name.png
+install -D -m 644 src/celestia/gtk/data/%name.svg %buildroot%_iconsdir/hicolor/scalable/%name.svg
 
 install -d %buildroot/etc/alternatives/packages.d
-cat >%buildroot/etc/alternatives/packages.d/%name-kde <<__EOF__
-%_bindir/celestia      %_bindir/celestia-kde 20
+cat >%buildroot/etc/alternatives/packages.d/%name-qt <<__EOF__
+%_bindir/celestia      %_bindir/celestia-qt 20
 __EOF__
 
-cat >%buildroot/etc/alternatives/packages.d/%name-gnome <<__EOF__
-%_bindir/celestia      %_bindir/celestia-gnome 10
+cat >%buildroot/etc/alternatives/packages.d/%name-gtk <<__EOF__
+%_bindir/celestia      %_bindir/celestia-gtk 10
 __EOF__
 
-%find_lang %{name}
+cat >%buildroot/etc/alternatives/packages.d/%name-glut <<__EOF__
+%_bindir/celestia      %_bindir/celestia-glut 30
+__EOF__
+
+%find_lang %name
+
+rm -fv %buildroot%_libdir/libcelmodel.a
 
 %pre
 [ ! -d %_datadir/apps/%name ] || rm -fr %_datadir/apps/%name
 
 
 %files -f %{name}.lang common
-%_datadir/apps/*
-%_datadir/applnk/*
-%_datadir/config/*
+#_datadir/apps/*
+#_datadir/applnk/*
+#_datadir/config/*
+%_bindir/makestardb
+%_bindir/makexindex
+%_bindir/startextdump
 %_datadir/locale/*/*/celestia_constellations.mo
-%_datadir/mimelnk/*
-%_datadir/services/*
-%_datadir/%{name}
-%_pixmapsdir/%{name}.png
-%_liconsdir/%{name}.png
-%_desktopdir/%{name}.desktop
-%doc ChangeLog TRANSLATORS README NEWS 
+#_datadir/mimelnk/*
+#_datadir/services/*
+%_datadir/%name/
+%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/%name.svg
+%_desktopdir/%name.desktop
+%doc ChangeLog TRANSLATORS README NEWS
 
-%files gnome
-%_bindir/celestia-gnome
-/etc/alternatives/packages.d/%name-gnome
+%files gtk
+%_bindir/celestia-gtk
+/etc/alternatives/packages.d/%name-gtk
 
-%files kde
-%_bindir/celestia-kde
-/etc/alternatives/packages.d/%name-kde
+%files glut
+%_bindir/celestia-glut
+/etc/alternatives/packages.d/%name-glut
+
+%files qt
+%_bindir/celestia-qt
+/etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Sat Dec 08 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.9.git-alt1
+- new version (1.6.9.git) with rpmgs script
+- cleanup spec, build gtk, glut, qt builds
+
 * Wed Aug 29 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.6.1-alt6
 - build without ancient libgnome-ui
 
