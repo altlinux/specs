@@ -1,36 +1,39 @@
 %global pypi_name mox3
-
-%def_with python3
+%def_disable check
 
 Name: python-module-%pypi_name
-Version: 0.20.0
-Release: alt2
+Version: 0.26.0
+Release: alt1
 Summary: Mock object framework for Python
 License: Apache-2.0
 Group: Development/Python
 Url: http://docs.openstack.org/developer/%pypi_name
 Source: https://tarballs.openstack.org/%pypi_name/%pypi_name-%version.tar.gz
-Patch: python-module-mox3-0.20.0-alt-tests.patch
 
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel
-BuildRequires: python-module-pbr python-module-sphinx-devel
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-pbr >= 2.0.0 python-module-sphinx-devel
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-fixtures python-module-testtools
+BuildRequires: python-module-fixtures >= 3.0.0 python-module-testtools >= 2.2.0
 BuildRequires: python-module-mimeparse python-module-extras
 BuildRequires: python-module-testrepository python-module-subunit-tests
 BuildRequires: python-module-discover python-module-coverage
 BuildRequires: python-module-hacking python-module-d2to1
 BuildRequires: python-module-flake8 pyflakes python-tools-pep8
 BuildRequires: python-module-requests
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno
 BuildRequires: python3-module-fixtures python3-module-testtools
 BuildRequires: python3-module-mimeparse python3-module-extras
 BuildRequires: python3-module-testrepository python3-module-subunit-tests
@@ -39,7 +42,6 @@ BuildRequires: python3-module-hacking python3-module-d2to1
 BuildRequires: python3-module-flake8 python3-pyflakes python3-tools-pep8
 BuildRequires: python3-module-oslosphinx python3-module-sphinx
 BuildRequires: python3-module-requests
-%endif
 
 %description
 Mox3 is an unofficial port of the Google mox framework
@@ -98,11 +100,8 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
@@ -110,11 +109,10 @@ ln -s ../objects.inv doc/source/
 %build
 %python_build
 
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -126,23 +124,22 @@ sphinx-build -b html -d build/doctrees . build/html
 cp -fR build/pickle %buildroot%python_sitelibdir/%pypi_name/
 popd
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 python setup.py test
 rm -fR build
 py.test
-%if_with python3
+
+
 pushd ../python3
 python3 setup.py test
 rm -fR build
 py.test3
 popd
-%endif
+
 
 %files
 %doc COPYING.txt ChangeLog AUTHORS README.rst doc/source/build/html
@@ -156,7 +153,6 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%pypi_name
 %doc COPYING.txt ChangeLog AUTHORS README.rst doc/source/build/html
 %python3_sitelibdir/*
@@ -164,9 +160,11 @@ popd
 
 %files -n python3-module-%pypi_name-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Sat Dec 08 2018 Alexey Shabalin <shaba@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Mon Nov 19 2018 Leontiy Volodin <lvol@altlinux.org> 0.20.0-alt2
 - Fixed build
 - Added patch for tests
