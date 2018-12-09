@@ -1,7 +1,7 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.21.3.10
+Version: 3.21.3.11
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -125,6 +125,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.11-alt1
+- New version.
+
 * Tue Nov 27 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.10-alt1
 - New version.
 
