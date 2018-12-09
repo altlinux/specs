@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: Use portend to monitor TCP ports for bound or unbound states
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
+- New version.
+
 * Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.3-alt1
 - New version.
 
