@@ -1,6 +1,6 @@
 Name: liblttng-ust
 Version: 2.10.2
-Release: alt1
+Release: alt2
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
@@ -17,8 +17,6 @@ BuildRequires: libuuid-devel
 
 # for man pages
 BuildRequires: asciidoc xmlto
-
-ExclusiveArch: aarch64 %ix86 x86_64
 
 %description
 This library may be used by user space applications to generate tracepoints within the kernel LTT subsystem.
@@ -84,6 +82,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.2-alt2
+- drop ExclusiveArch (ALT bug 35661)
+
 * Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.2-alt1
 - new version 2.10.2 (with rpmrb script)
 
