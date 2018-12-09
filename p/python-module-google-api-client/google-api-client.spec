@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 Summary: Google API Client Library for Python
 License: ASL
@@ -98,6 +98,9 @@ rm -f docs/build
 %endif
 
 %changelog
+* Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
+- New version.
+
 * Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.5-alt1
 - New version.
 
