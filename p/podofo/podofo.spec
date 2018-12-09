@@ -1,7 +1,7 @@
 %define major 0.9
 Name: podofo
 Version: %major.6
-Release: alt1
+Release: alt2
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -51,11 +51,14 @@ Development files for the PoDoFo library.
 
 %prep
 %setup
+# fix broken copying rule
+mkdir test/TokenizerTest/objects
 
 %build
 %cmake_insource -G "Unix Makefiles" \
 	-DPODOFO_BUILD_SHARED:BOOL=TRUE \
-	-DFREETYPE_INCLUDE_DIR:FILEPATH=%_includedir/freetype2
+	-DFREETYPE_INCLUDE_DIR:FILEPATH=%_includedir/freetype2 \
+	-D_FILE_OFFSET_BITS=64
 %make_build VERBOSE=1
 
 %install
@@ -80,6 +83,10 @@ Development files for the PoDoFo library.
 %_libdir/*.so
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt2
+- fix build with cmake 3.13.1 (ALT bug 35732)
+- build with -D_FILE_OFFSET_BITS=64
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
 - new version 0.9.6 (with rpmrb script)
 
