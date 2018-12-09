@@ -1,7 +1,7 @@
 %define  modulename service_identity
 
 Name:    python-module-%modulename
-Version: 17.0.0
+Version: 18.1.0
 Release: alt1
 
 Summary: Service Identity Verification for Python
@@ -37,5 +37,8 @@ verifying whether a certificate is valid for the intended purposes.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 18.1.0-alt1
+- New version.
+
 * Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 17.0.0-alt1
 - Initial build for Sisyphus
