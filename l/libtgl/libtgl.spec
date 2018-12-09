@@ -1,6 +1,6 @@
 Name: libtgl
 Version: 2.0.3.0.ffb04caca71
-Release: alt3
+Release: alt4
 
 Summary: library that handles telegram api and protocol
 
@@ -50,6 +50,7 @@ developing applications that use %name.
 
 %build
 %configure --enable-libevent
+%__subst "s|-Werror||" Makefile
 %make_build
 
 %install
@@ -73,6 +74,9 @@ cp -a crypto/*.h %buildroot%_includedir/tgl/crypto/
 %_includedir/tgl/crypto/*.h
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt4
+- fix build (drop -Werror)
+
 * Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt3
 - fix build with OpenSSL 1.1
 
