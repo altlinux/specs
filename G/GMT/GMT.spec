@@ -29,7 +29,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        5.4.4
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -217,6 +217,9 @@ done
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_4
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_3
 - update to new release by fcimport
 
