@@ -1,6 +1,6 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 # END SourceDeps(oneline)
 %define oldname pycanberra
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -15,14 +15,13 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.16.git%{shortcommit}
+Release:       alt2_0.18.git%{shortcommit}
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
 BuildArch:     noarch
 
-BuildRequires: python-devel
 BuildRequires: python3-devel
 
 # This will break at run time when libcanberra bumps its soname :(
@@ -50,16 +49,8 @@ A very basic (and incomplete) wrapper of libcanberra for Python 3.
 
 
 %install
-install -d %{buildroot}%{python_sitelibdir_noarch}
-install -p -m 0644 pycanberra.py %{buildroot}%{python_sitelibdir_noarch}
+install -D -p -m 0644 pycanberra.py -t %{buildroot}%{python3_sitelibdir_noarch}/
 
-install -d %{buildroot}%{python3_sitelibdir_noarch}
-install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
-
-
-%files
-%doc COPYING README
-%{python_sitelibdir_noarch}/pycanberra.py*
 
 %files -n python3-module-canberra
 %doc COPYING README
@@ -68,6 +59,9 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.18.git88c53cd
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.16.git88c53cd
 - update to new release by fcimport
 
