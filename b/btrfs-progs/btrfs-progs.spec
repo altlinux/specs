@@ -1,6 +1,6 @@
 Name: btrfs-progs
-Version: 4.19
-Release: alt2
+Version: 4.19.1
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -79,6 +79,9 @@ ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 %_includedir/*
 
 %changelog
+* Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 4.19.1-alt1
+- 4.19.1
+
 * Mon Nov 26 2018 Anton Farygin <rider@altlinux.ru> 4.19-alt2
 - added symlink %_bindir/btrfs to /sbin/btrfs (closes: #35641)
 - added udev rules for frendly names in /dev/mapper (closes: #35646)
