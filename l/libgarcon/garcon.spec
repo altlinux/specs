@@ -3,7 +3,7 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -184,6 +184,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/pkgconfig/%_name-gtk3-1.pc
 
 %changelog
+* Mon Dec 10 2018 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt1
+- Updated to 0.6.2.
+
 * Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
 - Patch from upstream:
   + fix: some menu icons are too big (Bug #13785)
