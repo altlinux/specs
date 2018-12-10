@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.08
+Version: 1.09
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
@@ -9,7 +9,7 @@ License: %gpl3plus
 Group: Games/Adventure
 
 URL: http://flarerpg.org/
-# https://github.com/clintbellanger/flare-engine.git
+# https://github.com/flareteam/flare-engine.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -50,6 +50,9 @@ cd -
 %_man6dir/*
 
 %changelog
+* Mon Dec 10 2018 Mikhail Efremov <sem@altlinux.org> 1.09-alt1
+- Updated to 1.09.
+
 * Tue Sep 18 2018 Mikhail Efremov <sem@altlinux.org> 1.08-alt1
 - Updated to 1.08.
 
