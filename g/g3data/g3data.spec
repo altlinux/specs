@@ -1,6 +1,6 @@
 Name: g3data
 Version: 1.5.4
-Release: alt2
+Release: alt3
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -41,6 +41,11 @@ sed -i -e 's/g3data-icon.xpm/g3data-icon/'\
 %_liconsdir/*
 
 %changelog
+* Mon Dec 10 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.5.4-alt3
+- two GUI patches:
+  - expand images properly
+  - use correct action in save_as dialog
+
 * Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.5.4-alt2
 - fix g3data.desktop categories (to remove Repocop warning)
 
