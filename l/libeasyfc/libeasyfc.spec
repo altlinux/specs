@@ -5,18 +5,19 @@ BuildRequires: /usr/bin/gtkdocize pkgconfig(freetype2)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libeasyfc
-Version:	0.13.1
-Release:	alt1_4
+Version:	0.14.0
+Release:	alt1_3
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
 License:	LGPLv3+
 URL:		http://tagoh.bitbucket.org/libeasyfc/
 Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-freetype.patch
 
-BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel libharfbuzz-utils
+BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.12.93 libharfbuzz-devel libharfbuzz-utils
 BuildRequires:	gettext gettext-tools
-Requires:	fontconfig >= 2.10.92
+Requires:	fontconfig >= 2.12.93
 Source44: import.info
 
 %description
@@ -38,7 +39,7 @@ This package contains an interface for GObject.
 Summary:	Development files for libeasyfc
 Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 Requires:	libgio
 
 %description	devel
@@ -52,7 +53,7 @@ applications with libeasyfc.
 Summary:	Development files for libeasyfc-gobject
 Group:		Development/Other
 Requires:	%{name}-gobject = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 Requires:	libgio
 
 %description	gobject-devel
@@ -64,6 +65,7 @@ applications with libeasyfc-gobject.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -76,8 +78,12 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="/usr/bin/install -p"
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
+
+
+
 %files
-%doc README AUTHORS COPYING ChangeLog
+%doc README AUTHORS ChangeLog
+%doc --no-dereference COPYING
 %{_libdir}/libeasyfc.so.*
 
 %files	gobject
@@ -98,6 +104,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_3
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_4
 - update to new release by fcimport
 
