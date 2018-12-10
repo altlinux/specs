@@ -6,8 +6,8 @@
 %define _pseudouser_group    _teamd
 
 Name: libteam
-Version: 1.27
-Release: alt2
+Version: 1.28
+Release: alt1
 
 Summary: Library for controlling team network device
 License: %lgpl2plus
@@ -25,7 +25,7 @@ BuildRequires: libdaemon-devel
 BuildRequires: libjansson-devel
 BuildRequires: libdbus-devel
 BuildRequires: libcap-devel
-%{?_with_python:BuildRequires: python-module-setuptools swig}
+%{?_with_python:BuildRequires: python3-devel python3-module-setuptools swig}
 %{?_enable_zmq:BuildRequires: libzeromq-devel}
 %{?_with_docs:BuildRequires: doxygen}
 
@@ -87,15 +87,14 @@ Requires: %name = %version-%release
 This package contains team network device control daemon.
 
 %if_with python
-%package -n python-module-team
-Summary: Team network device library bindings for Python
-Group: Development/Python
+%package -n python3-module-team
+Summary: Team network device library bindings for Python3
+Group: Development/Python3
 Requires: %name = %version-%release
-%setup_python_module %name
 
-%description -n python-module-team
+%description -n python3-module-team
 This package contains a module that permits applications
-written in the Python programming language to use the interface
+written in the Python3 programming language to use the interface
 supplied by team network device library.
 %endif
 
@@ -129,7 +128,7 @@ chmod -x _tmpdoc2/examples/*.py
 %endif
 %if_with python
 cd binding/python
-%python_build
+%python3_build
 %endif
 
 %install
@@ -138,8 +137,8 @@ install -pDm 0644 teamd/dbus/teamd.conf %buildroot%_datadir/dbus-1/system.d/team
 install -pDm 0644 teamd/redhat/systemd/teamd@.service %buildroot%_unitdir/teamd@.service
 %if_with python
 cd binding/python
-%python_install
-install -pm 0644 team/capi.py %buildroot%python_sitelibdir/team/
+%python3_install
+install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %endif
 
 %pre -n teamd
@@ -183,12 +182,17 @@ install -pm 0644 team/capi.py %buildroot%python_sitelibdir/team/
 %_man8dir/teamd*.8*
 
 %if_with python
-%files -n python-module-team
+%files -n python3-module-team
 %doc _tmpdoc2/examples
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Dec 10 2018 Mikhail Efremov <sem@altlinux.org> 1.28-alt1
+- Use python3 in shebangs.
+- Build python3 module instead of python2.
+- 1.27 -> 1.28.
+
 * Fri Oct 06 2017 Mikhail Efremov <sem@altlinux.org> 1.27-alt2
 - Fix python module build.
 - Switch to _teamd user.
