@@ -1,19 +1,16 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-az
 Summary: Azerbaijani hunspell dictionaries
 %global upstreamid 20040827
 Version: 0.%{upstreamid}
-Release: alt2_16
+Release: alt2_19
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/az/aspell6-az-0.02-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
-BuildRequires: aspell libhunspell-devel hunspell-utils
+BuildRequires: aspell libaspell hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -25,7 +22,7 @@ Azerbaijani hunspell dictionaries.
 %setup -q -n aspell6-az-0.02-0
 
 %build
-export LANG=az_AZ.utf8
+export LANG=C.UTF-8
 preunzip az.cwl
 wordlist2hunspell az.wl az_AZ
 for i in Copyright doc/Crawler.txt; do
@@ -49,6 +46,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20040827-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040827-alt2_16
 - update to new release by fcimport
 
