@@ -9,8 +9,8 @@ BuildRequires: gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.5.3
-Release:        alt1_2
+Version:        0.5.4
+Release:        alt1_1
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
@@ -64,6 +64,7 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 %files -n       %{devname}
 %{_includedir}/%{name}/
 %{_libdir}/%{name}.so
+%{_libdir}/cmake/liblcf/
 %{_libdir}/pkgconfig/%{name}.pc
 
 #----------------------------------------------------------------------
@@ -84,6 +85,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1_1
+- update by mgaimport
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_2
 - update by mgaimport
 
