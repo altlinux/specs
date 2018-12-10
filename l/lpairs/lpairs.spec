@@ -3,27 +3,23 @@ BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		lpairs
-Summary:	Classical memory game with cards
-Version:	1.0.4
-Release:	alt3_20
-License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
-Group: 		Games/Other
-URL:		http://lgames.sourceforge.net/index.php?project=LPairs
-#moved to .rpmmacros
-#Packager:	Marcin Zajaczkowski <mszpak ATT wp DOTT pl>
-Source0:	http://downloads.sourceforge.net/lgames/lpairs-%{version}.tar.gz
+Name:           lpairs
+Summary:        Classical memory game with cards
+Version:        1.0.5
+Release:        alt1_1
+License:        GPLv2+ and CC-BY-SA and Freely redistributable without restriction
+Group:          Games/Other
+URL:            https://lgames.sourceforge.net/index.php?project=LPairs
+Source0:        https://downloads.sourceforge.net/lgames/lpairs-%{version}.tar.gz
 #there is a problem with data dir
-#the Author said it would be hard for him to fix it at autoconf level
-Patch0:		lpairs-1.0.3-datadir.diff
-Patch1:		lpairs-1.0.4-desktop.diff
-#SDL is required by soname dependency
-#Requires:	SDL >= 1.0
-BuildRequires:	desktop-file-utils
-BuildRequires: 	libSDL-devel
+#the author said it would be hard for him to fix it at autoconf level
+Patch0:         lpairs-1.0.3-datadir.diff
+Patch1:         lpairs-1.0.4-desktop.diff
+BuildRequires:  gcc
+BuildRequires:  desktop-file-utils
+BuildRequires:  libSDL-devel
 BuildRequires:  gettext gettext-tools
 Source44: import.info
-#bison?
 
 %description
 LPairs is a classical memory game. This means you have to find pairs of
@@ -52,20 +48,19 @@ mkdir -p %{buildroot}%{_datadir}/pixmaps
 cp lpairs.png %{buildroot}%{_datadir}/pixmaps/
 
 desktop-file-install --dir %{buildroot}%{_datadir}/applications \
-	lpairs.desktop
+        lpairs.desktop
 
 %files -f %{name}.lang
 %{_bindir}/lpairs
 %{_datadir}/%{name}
-#there is no high scores for now
-#%config(noreplace) %attr(664, games, games) %{_var}/lib/games/lpairs.hscr
 %doc AUTHORS ChangeLog COPYING README
-#TODO is in German also not in UTF-8
-#doc TODO
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_20
 - update to new release by fcimport
 
