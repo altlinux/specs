@@ -24,7 +24,7 @@
 Name: maxima
 Version: 5.42.1
 %define maxima_version 5.42.1
-Release: alt1
+Release: alt2
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -58,10 +58,6 @@ Source10: http://starship.python.net/crew/mike/TixMaxima/macref.pdf
 Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.pdf
 
 
-ExcludeArch: aarch64
-
-
-
 %description
 Maxima is a full symbolic computation program.  It is full featured
 doing symbolic manipulation of polynomials, matrices, rational
@@ -79,7 +75,6 @@ Provides: maxima = %version-%release
 Requires: gnuplot >= 4.0.0 rlwrap maxima-bin = %version-%release
 BuildRequires: sed perl texlive-collection-latexrecommended texinfo automake_1.7
 AutoReq: yes, noshell
-ExcludeArch: aarch64
 %description common
 This package contains common files needed to run Maxima with
 any lisp interpreter, documentation etc.
@@ -92,7 +87,6 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release 
 BuildRequires: clisp
-ExcludeArch: aarch64
 %description bin-clisp
 Maxima binaries compiled with clisp.
 %endif
@@ -104,7 +98,6 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release libreadline libncurses terminfo libgpm
 BuildRequires: gcl >= 2.6.5
-ExcludeArch: aarch64
 %description bin-gcl
 Maxima binaries compiled with GCL (GNU Common Lisp).
 %endif
@@ -116,7 +109,6 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release
 BuildRequires: cmucl
-ExcludeArch: aarch64
 %description bin-cmucl
 Maxima binaries compiled with CMUCL (CMU Common Lisp).
 %endif
@@ -129,7 +121,6 @@ Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release sbcl >= 1.4.12
 BuildRequires: sbcl >= 1.4.12
 BuildRequires: /proc
-ExcludeArch: aarch64
 %description bin-sbcl
 Maxima binaries compiled with SBCL (Steel Bank Common Lisp).
 %endif
@@ -138,7 +129,6 @@ Maxima binaries compiled with SBCL (Steel Bank Common Lisp).
 %package -n emacs-maxima
 Summary: Emacs Maxima modes
 Group: Editors
-ExcludeArch: aarch64
 Requires:  emacs emacs-mode-auctex 
 #Requires: maxima-common = %version-%release
 
@@ -155,7 +145,6 @@ Set of Maxima emacs modes.
 Summary: Maxima graphical frontend
 Group: Sciences/Mathematics
 Requires: maxima-common = %version-%release tk tcl
-ExcludeArch: aarch64
 %description xmaxima
 Maxima graphical frontend written in Tcl/Tk.
 %endif
@@ -164,7 +153,6 @@ Maxima graphical frontend written in Tcl/Tk.
 %package lang-es
 Summary: Maxima Spanish language pack
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 #Requires: maxima-common = %version-%release
 BuildArch: noarch
 
@@ -176,7 +164,6 @@ Maxima Spanish language pack.
 %package lang-es-utf8
 Summary: Maxima Spanish language pack (UTF-8)
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 
 #Requires: maxima-common = %version-%release
 
@@ -190,7 +177,6 @@ Maxima Spanish language pack (UTF-8).
 %package lang-pt
 Summary: Maxima Portuguese language pack
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 
 #Requires: maxima-common = %version-%release
 
@@ -204,7 +190,6 @@ Maxima Portuguese language pack.
 %package lang-pt-utf8
 Summary: Maxima Portuguese language pack (UTF-8)
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 
 #Requires: maxima-common = %version-%release
 
@@ -218,7 +203,6 @@ Maxima Portuguese language pack (UTF-8).
 %package lang-pt_BR
 Summary: Maxima Brazilian Portuguese language pack
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 
 #Requires: maxima-common = %version-%release
 
@@ -232,7 +216,6 @@ Maxima Brazilian Portuguese language pack.
 %package lang-pt_BR-utf8
 Summary: Maxima Brazilian Portuguese language pack (UTF-8)
 Group: Sciences/Mathematics
-ExcludeArch: aarch64
 #Requires: maxima-common = %version-%release
 BuildArch: noarch
 
@@ -246,7 +229,6 @@ Summary: Maxima book
 Group: Sciences/Mathematics
 BuildRequires: ghostscript
 BuildArch: noarch
-ExcludeArch: aarch64
 %description book
 Maxima book
 %endif
@@ -289,7 +271,7 @@ sed -i -e \
 
 # remove CVS crud
 find -name CVS -type d | xargs --no-run-if-empty rm -rv
-
+cp -pv /usr/share/gnu-config/* .
 
 
 %build
@@ -598,6 +580,10 @@ cd %maxima_dir
 
 
 %changelog
+* Thu Dec 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.42.1-alt2
+- rebuilt with recent libffcall
+- enabled build on aarch64
+
 * Sat Nov 24 2018 Ilya Mashkin <oddity@altlinux.ru> 5.42.1-alt1
 - 5.42.1
 

@@ -1,25 +1,22 @@
 Name: clisp
-Version: 2.48
-Release: alt1.qa1
-Serial: 1
+Version: 2.49.92
+Release: alt1
+Epoch: 1
 
 Summary: Common Lisp (ANSI CL) implementation
 License: GPL
 Group: Development/Lisp
 Url: http://clisp.cons.org/
 
-Packager: Ilya Mashkin <oddity at altlinux dot ru>
+Source: %name-%version.tar
 
-Source: clisp-%version.tar.bz2
-
-# Automatically added by buildreq on Tue Oct 21 2008
-BuildRequires: gcc gcc-fortran ghostscript-utils glibc-devel-static
-BuildRequires: groff-base imake libICE-devel libX11-devel libncurses-devel libreadline-devel libfcgi-devel libffcall-devel libgdbm-devel gettext
-BuildRequires: libsigsegv-devel termutils xorg-cf-files libsigsegv
-
-BuildRequires: libtinfo-devel libffi-devel diffutils
-BuildRequires: pcre-devel postgresql-devel zlib-devel
-
+# core
+BuildRequires: libsigsegv-devel libffcall-devel libreadline-devel libtinfo-devel
+# modules
+BuildRequires: libdb6-devel libgdbm-devel libpcre-devel postgresql-devel zlib-devel
+BuildRequires: libX11-devel libXpm-devel libXext-devel libXau-devel
+# check
+BuildRequires: /proc /dev/pts
 
 %description
 Common Lisp is a high-level, general-purpose programming language.
@@ -44,51 +41,42 @@ An X11 interface is available through CLX, Garnet, CLUE/CLIO.
 GNU CLISP runs Maxima, ACL2 and many other Common Lisp packages.
 
 %prep
-%setup -q
+%setup
 
 %build
-#set_automake_version 1.10
-#set_autoconf_version 2.5
+sh configure --prefix=%prefix --libdir=%_libdir \
+	--with-module=asdf \
+	--with-module=berkeley-db \
+	--with-module=clx/new-clx \
+	--with-module=gdbm \
+	--with-module=pcre \
+	--with-module=postgresql \
+	--with-module=rawsock \
+	--with-module=zlib
 
-#export CXX=g++-4.1
-
-CC="gcc -falign-functions=4"`echo "%optflags" | %__sed -e "s:%optflags_default::"`
-export CC
-./configure --with-libsigsegv-prefix=${prefix} --prefix=%prefix
-##./configure --prefix=%prefix --host=%_target_platform
-
-(cd src
-./makemake --with-readline --with-libsigsegv --with-gettext --with-dynamic-ffi > Makefile
-%make config.lisp
-%make
-%make check
-%make testsuite
-)
+%make_build
 
 %install
-(cd src
-make prefix=%prefix DESTDIR=%buildroot \
-      docdir=%_docdir/%name-%version \
-      lispdocdir=%_docdir/%name-%version \
-      libdir=%_libdir \
-      mandir=%_mandir install
-)
+%makeinstall_std
+rm -vfr %buildroot%_libdir/clisp-%version/build-aux/
 
+%find_lang --output=%name.lang --append clisp clisplow
 
-%find_lang %name
-%find_lang --append --output=%name.lang %{name}low
+%check
+make check
 
 %files -f %name.lang
-%_bindir/clisp
-%_libdir/clisp*
-%_emacslispdir/*
-%exclude %_libdir/clisp*/full
-%_datadir/aclocal/clisp.m4
-%_mandir/man?/*
 %_docdir/%name-%version
-%exclude %_datadir/vim
+%_bindir/clisp
+%_bindir/clisp-link
+%_libdir/clisp-%version
+%_datadir/aclocal/clisp.m4
+%_man1dir/*
 
 %changelog
+* Thu Dec 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.49.92-alt1
+- 2.49.92 released
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.48-alt1.qa1
 - NMU: rebuilt with libsigsegv.so.2.
 

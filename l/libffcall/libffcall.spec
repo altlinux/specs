@@ -1,101 +1,38 @@
-# vim: set ft=spec: -*- mode: rpm-spec; -*-
-# $Id: libffcall,v 1.5 2004/07/15 06:29:38 raorn Exp $
+Name: libffcall
+Version: 2.1
+Release: alt1
 
-%def_enable static
-
-%define	lname	ffcall
-%define	version	1.10
-%define	release	alt3
-
-Name: lib%lname
-Version: %version
-Release: %release
 Summary: Foreign Function Call Libraries
-Group: System/Libraries
 License: GPL
-URL: http://www.haible.de/bruno/packages-ffcall.html
+Group: System/Libraries
+Url: https://www.gnu.org/software/libffcall/
 
-Source: http://www.haible.de/bruno/gnu/%lname-%version.tar.gz
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
+Source: %name-%version.tar
 
-%{?_enable_static:BuildPreReq: glibc-devel-static}
-
-%description
-This is a collection of four libraries which can be used to build
-foreign function call interfaces in embedded interpreters.
-
-The four packages are:
-
-    avcall - calling C functions with variable arguments
-
-    vacall - C functions accepting variable argument prototypes
-
-    trampoline - closures as first-class C functions
-
-    callback - closures with variable arguments as first-class C functions
-               (a reentrant combination of vacall and trampoline)
+%define desc This is a library which can be used to build foreign function\
+call interfaces in embedded interpreters.
 
 %package devel
 Summary: Development headers for Foreign Function Call Libraries
 Group: Development/C
 Requires: %name = %version-%release
 
+%description
+%desc
+
 %description devel
-This is a collection of four libraries which can be used to build
-foreign function call interfaces in embedded interpreters.
-
-The four packages are:
-
-    avcall - calling C functions with variable arguments
-
-    vacall - C functions accepting variable argument prototypes
-
-    trampoline - closures as first-class C functions
-
-    callback - closures with variable arguments as first-class C functions
-               (a reentrant combination of vacall and trampoline)
-
+%desc
 This package contains development headers for FFCall libraries
 
-%if_enabled static
-%package devel-static
-Summary: Development headers for Foreign Function Call Libraries
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-This is a collection of four libraries which can be used to build
-foreign function call interfaces in embedded interpreters.
-
-The four packages are:
-
-    avcall - calling C functions with variable arguments
-
-    vacall - C functions accepting variable argument prototypes
-
-    trampoline - closures as first-class C functions
-
-    callback - closures with variable arguments as first-class C functions
-               (a reentrant combination of vacall and trampoline)
-
-This package contains static verions of FFCall libraries
-%endif
-
 %prep
-%setup -q -n %lname-%version
+%setup
 
 %build
-# SMP b0rken...
-%define __nprocs 1
-%{?!_enable_static:export lt_cv_prog_cc_static_works=no}
-%configure \
-	--enable-shared \
-	%{subst_enable static}
-%make_build
+%configure --disable-static
+make
 
 %install
-%__mkdir_p %buildroot{%_includedir,%_libdir,%_mandir,%_datadir}
-%makeinstall
+%makeinstall_std
 
 %files
 %doc COPYING NEWS PLATFORMS README
@@ -107,12 +44,10 @@ This package contains static verions of FFCall libraries
 %_libdir/*.so
 %_mandir/man?/*
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Thu Dec 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
+- 2.1 released
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt3
 - Rebuilt for debuginfo
 
