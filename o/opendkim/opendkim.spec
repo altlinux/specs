@@ -9,20 +9,26 @@ BuildRequires: %_bindir/gcov %_bindir/gprof %_bindir/lcov %_bindir/rrdtool libev
 %global bigname OPENDKIM
 
 Name: opendkim
-Version: 2.10.3
-Release: alt4
+Version: 2.11.0
+Release: alt1
 
 Summary: A DomainKeys Identified Mail (DKIM) milter to sign and/or verify mail
 
 Group: System/Servers
 License: BSD and Sendmail
-Url: http://%name.org/
+Url: http://opendkim.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar
+# Source-url: http://downloads.sourceforge.net/%name/%name-%version.Alpha0.tar
+Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+# https://sourceforge.net/p/opendkim/patches/35/
+# https://sourceforge.net/p/opendkim/patches/37/
+# Patches rediffed and combined (both modify configure)
+Patch0: %{name}.ticket35+37.patch
+
+Requires: lib%name = %EVR
 
 # skip libbsd-devel (can be used for bsd/string.h)
 
@@ -59,6 +65,7 @@ required for developing applications against libopendkim.
 
 %prep
 %setup
+%patch -p1
 
 %build
 # Always use system libtool instead of pacakge-provided one to
@@ -208,6 +215,12 @@ KeyFile	%_sysconfdir/%name/keys/default.private
 ##  because it is often the identity key used by reputation systems and thus
 ##  somewhat security sensitive.
 OversignHeaders	From
+
+##  Instructs the DKIM library to maintain its own local cache of keys and
+##  policies retrieved from DNS, rather than relying on the nameserver for
+##  caching service. Useful if the nameserver being used by the filter is
+##  not local.
+# QueryCache	yes
 EOF
 
 cat > %buildroot%_sysconfdir/sysconfig/%name << 'EOF'
@@ -287,6 +300,7 @@ A valid private key must exist in the location expected by %_sysconfdir/%name.co
 A matching public key must be included in your domain's DNS records before remote systems can validate
 your outgoing mail's DKIM signature.
 
+
 Generating Keys Automatically
 =============================
 To automatically create a pair of default keys for the local domain, do:
@@ -299,6 +313,7 @@ ownership and permissions.
 
 NOTE: The default key generation script MUST be run by a privileged user (or root). Otherwise, the resulting
 private key ownership and permissions will not be correct.
+
 
 Generating Keys Manually
 ========================
@@ -356,6 +371,7 @@ After=network.target nss-lookup.target syslog.target
 to:
 
 After=network.target nss-lookup.target syslog.target mariadb.service postgresql.service
+
 
 Additional Configuration Help
 =============================
@@ -435,6 +451,9 @@ exit 0
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0 (with rpmrb script)
+
 * Sun Aug 14 2016 Vitaly Lipatov <lav@altlinux.ru> 2.10.3-alt4
 - build without libbsd-devel
 - fix configure localstatedir
