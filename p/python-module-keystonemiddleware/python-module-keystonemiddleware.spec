@@ -1,10 +1,10 @@
 %define oname keystonemiddleware
 
-%def_with python3
+%def_with docs
 
 Name: python-module-%oname
-Version: 4.14.0
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 Summary: Middleware for OpenStack Identity
 Group: Development/Python
 License: ASL 2.0
@@ -15,46 +15,52 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-keystoneauth1 >= 2.17.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-positional >= 1.1.1
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-oslo.cache >= 1.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-pycadf >= 1.1.0
 BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-webob >= 1.6.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-webob >= 1.7.1
 
-%if_with python3
+BuildRequires: python-module-doc8 >= 0.6.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python-module-oslo.messaging >= 5.29.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-keystoneauth1 >= 2.17.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-positional >= 1.1.1
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-oslo.cache >= 1.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-pycadf >= 1.1.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-webob >= 1.6.0
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-oslo.messaging >= 5.2.0
-%endif
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-webob >= 1.7.1
+
+BuildRequires: python3-module-doc8 >= 0.6.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python3-module-oslo.messaging >= 5.29.0
 
 %description
 This package contains middleware modules designed to provide authentication
@@ -85,46 +91,45 @@ Requires: python3-module-%oname = %EVR
 %description -n python3-module-%oname-tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for the Middleware for OpenStack Identity
 Group: Development/Documentation
 
 %description doc
 Documentation for the Middleware for OpenStack Identity
+%endif
 
 %prep
 %setup -n %oname-%version
 rm -f requirements.txt
 # Remove bundled egg-info
 rm -rf %oname.egg-info
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
-
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+%if_with docs
 # generate html docs
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 # remove the sphinx-build leftovers
-rm -rf doc/build/html/.{doctrees,buildinfo}
+rm -rf build/sphinx/html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
+
 
 %files
 %doc README.rst LICENSE
@@ -134,19 +139,22 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+
+%if_with docs
+%files doc
+%doc LICENSE build/sphinx/html
 %endif
 
-%files doc
-%doc LICENSE doc/build/html
-
 %changelog
+* Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.14.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
