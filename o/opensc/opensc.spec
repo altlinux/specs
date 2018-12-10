@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.19.0
-Release: alt2.rc1
+Release: alt3
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -116,6 +116,9 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %endif
 
 %changelog
+* Mon Dec 10 2018 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt3
+- New release version 0.19.0.
+
 * Fri Sep 14 2018 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt2.rc1
 - Workaround format-truncation error in card-gids.c using a larger
   buffer (patch).
