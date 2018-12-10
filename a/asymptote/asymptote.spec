@@ -1,6 +1,6 @@
 Name: asymptote
-Version: 2.44
-Release: alt2
+Version: 2.46
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
@@ -17,16 +17,19 @@ Patch: asymptote-1.91-alt-DSO.patch
 Patch1: asymptote-1.91-alt-glibc-2.16.patch
 Patch2: asymptote-2.28-alt-gsl1.16.patch
 
-# manually removed: libsubversion-auth-gnome-keyring libsubversion-auth-kwallet subversion tetex-core
-# Automatically added by buildreq on Sat Feb 20 2010
-BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libGLUT-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
+BuildRequires: flex gcc-c++ libfftw3-devel libfreeglut-devel libgsl-devel libreadline-devel libtirpc-devel zlib-devel
 
 BuildRequires: libgc-devel >= 7.4.2
 
-BuildRequires(pre): rpm-build-tex
+BuildRequires(pre): rpm-build-tex rpm-build-python3
 BuildRequires: texlive-collection-latexrecommended ghostscript-utils /proc
+BuildRequires: python-module-PyQt5 python-module-PyXML python3-module-mpl_toolkits python3-module-yieldfrom
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+BuildRequires: texi2dvi
+
+%add_python3_lib_path %_datadir/%name/GUI/
+%add_python3_req_skip configs
 
 %description
 Asymptote is a powerful descriptive vector graphics language for technical
@@ -44,6 +47,8 @@ Documentation and examples for %name.
 
 %prep
 %setup
+%__subst "s|/lib |/%_lib |" configure.ac
+%__subst "s|-lgc |-lgc -lgccpp |" configure.ac
 #patch0 -p2
 #patch1 -p2
 #patch2 -p2
@@ -59,11 +64,13 @@ rm -fv *.tar.gz
 	--with-latex=%_texmfmain/tex/latex \
 	--with-context=%_texmfmain/tex/context/third \
 	--enable-gc=system \
-	--disable-gsl
+	--enable-gsl
 %make_build
 
 %install
 %makeinstall_std
+# TODO: conflicts with  texlive-collection-basic-2018-alt1_5.noarch
+mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 
 %files
 %doc BUGS LICENSE README TODO
@@ -80,6 +87,10 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.46-alt1
+- new version 2.46 (with rpmrb script)
+- build with gsl support
+
 * Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.44-alt2
 - NMU: rebuilt with libGLUT.
 
