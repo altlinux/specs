@@ -1,3 +1,4 @@
+Group: Graphical desktop/Other
 %define oldname google-croscore-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -13,25 +14,22 @@ portability across platforms.
 
 
 Name:           fonts-ttf-google-croscore
-Version:        1.23.0
-Release:        alt2_10
+Version:        1.31.0
+Release:        alt1_2
 Summary:        The width-compatible fonts for improved on-screen readability
 
-Group:          Graphical desktop/Other
 License:        ASL 2.0
 #URL:            
-Source0:        http://gsdview.appspot.com/chromeos-localmirror/distfiles/croscorefonts-%{version}.tar.gz
+Source0:        http://gsdview.appspot.com/chromeos-localmirror/distfiles/croscorefonts-%{version}.tar.bz2
+
 Source1:        62-%{fontname}-arimo-fontconfig.conf
 Source2:        62-%{fontname}-cousine-fontconfig.conf
 Source3:        62-%{fontname}-tinos-fontconfig.conf
 Source4:        30-0-%{fontname}-arimo-fontconfig.conf
 Source5:        30-0-%{fontname}-cousine-fontconfig.conf
 Source6:        30-0-%{fontname}-tinos-fontconfig.conf
-#Symbol font is not Unicode compatible
-#https://bugzilla.redhat.com/show_bug.cgi?id=1037882
-#Source7:        62-%{fontname}-symbolneu-fontconfig.conf
 
-# Upstream has not provided license text in this 1.23.0 release
+# Upstream has not provided license text in their tarball release
 # Add ASL2.0 license text in LICENSE-2.0.txt file
 Source8:        LICENSE-2.0.txt
 
@@ -52,10 +50,13 @@ Source44: import.info
 Group: System/Fonts/True type
 Summary:        Common files of %{oldname}
 
+# As upstream stopped distributing SymbolNeu font, let's obsolete this subpackage.
+Obsoletes:      google-croscore-symbolneu-fonts < 1.31.0-1
+
 %description -n fonts-ttf-google-croscore-common
 This package consists of files used by other %{oldname} packages.
 
-# Repeat for every font family
+
 %package -n fonts-ttf-google-croscore-arimo
 Group: System/Fonts/True type
 Summary:       The croscore Arimo family fonts 
@@ -72,6 +73,7 @@ address document portability across platforms.
 %files -n fonts-ttf-google-croscore-arimo
 %{_fontconfig_templatedir}/*-%{fontname}-arimo.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-arimo.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Arimo*.ttf
 %{_datadir}/appdata/%{fontname}-arimo.metainfo.xml
 
@@ -91,6 +93,7 @@ address document portability across platforms.
 %files -n fonts-ttf-google-croscore-cousine
 %{_fontconfig_templatedir}/*-%{fontname}-cousine.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-cousine.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Cousine*.ttf
 %{_datadir}/appdata/%{fontname}-cousine.metainfo.xml
 
@@ -110,20 +113,9 @@ address document portability across platforms.
 %files -n fonts-ttf-google-croscore-tinos
 %{_fontconfig_templatedir}/*-%{fontname}-tinos.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-tinos.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Tinos*.ttf
 %{_datadir}/appdata/%{fontname}-tinos.metainfo.xml
-
-%package -n fonts-ttf-google-croscore-symbolneu
-Group: System/Fonts/True type
-Summary:       The croscore Symbol Neu family fonts
-Requires:       %{name}-common = %{version}-%{release}
-
-%description -n fonts-ttf-google-croscore-symbolneu
-%common_desc
-Symbol Neu is a metrically compatible font to Symbol.
-
-%files -n fonts-ttf-google-croscore-symbolneu
-%{_fontbasedir}/*/%{_fontstem}/SymbolNeu.ttf
 
 %prep
 %setup -q -n croscorefonts-%{version}
@@ -152,14 +144,11 @@ install -m 0644 -p %{SOURCE5} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf30}-cousine.conf
 install -m 0644 -p %{SOURCE6} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf30}-tinos.conf
-#install -m 0644 -p %{SOURCE7} \
-#        %{buildroot}%{_fontconfig_templatedir}/%{fontconf62}-symbolneu.conf
 
 for fconf in %{fontconf62}-arimo.conf %{fontconf30}-arimo.conf \
              %{fontconf62}-cousine.conf %{fontconf30}-cousine.conf \
-             %{fontconf62}-tinos.conf %{fontconf30}-tinos.conf \
-#       %{fontconf62}-symbolneu.conf; do
-        do
+             %{fontconf62}-tinos.conf %{fontconf30}-tinos.conf
+do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -207,9 +196,12 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files -n fonts-ttf-google-croscore-common
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.31.0-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_10
 - update to new release by fcimport
 
