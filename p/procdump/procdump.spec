@@ -1,5 +1,5 @@
 Name:     procdump
-Version:  1.0
+Version:  1.0.1
 Release:  alt1
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
@@ -26,8 +26,8 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 %prep
 %setup
 
-%__subst "s|^INSTALLDIR=.*|INSTALLDIR=%buildroot%_bindir|g" Makefile
-%__subst "s|^MANDIR=.*|MANDIR=%buildroot%_man1dir|g" Makefile
+#__subst "s|^INSTALLDIR=.*|INSTALLDIR=%buildroot%_bindir|g" Makefile
+#__subst "s|^MANDIR=.*|MANDIR=%buildroot%_man1dir|g" Makefile
 %__subst "s|^CFLAGS=\(.*\)|CFLAGS=\1 %optflags|g" Makefile
 
 %build
@@ -35,7 +35,7 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 %make_build build
 
 %install
-mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/
+#mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/
 %makeinstall_std
 
 #check
@@ -47,5 +47,8 @@ mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Tue Dec 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Sisyphus
