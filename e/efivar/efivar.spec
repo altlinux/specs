@@ -1,16 +1,16 @@
 Name: efivar
-Version: 36
-Release: alt1%ubt
+Version: 37
+Release: alt1
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
 Url: https://github.com/rhinstaller/efivar
 Requires: %name-libs = %version-%release
 ExclusiveArch: %ix86 x86_64 aarch64
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libpopt-devel libabigail
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 %description
 efivar provides a simple command line interface to the UEFI variable facility.
@@ -34,7 +34,8 @@ Group: Development/C
 development headers required to use libefivar.
 
 %prep
-%setup 
+%setup
+%patch0 -p1
 
 %build
 make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM_LD_FLAGS -flto"
@@ -57,18 +58,24 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM
 %_libdir/*.so.*
 
 %changelog
-* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 36-alt1%ubt
+* Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 37-alt1
 - new version
 
-* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 35-alt1%ubt
+* Mon Oct 22 2018 Anton Farygin <rider@altlinux.ru> 36-alt2
+- build from upstream git
+
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 36-alt1
 - new version
 
-* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 34-alt1%ubt
+* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 35-alt1
 - new version
 
-* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 32-alt1%ubt
+* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 34-alt1
 - new version
 
-* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 31-alt1%ubt
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 32-alt1
+- new version
+
+* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 31-alt1
 - first build for ALT
 
