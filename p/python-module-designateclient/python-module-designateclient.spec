@@ -1,52 +1,52 @@
 %define oname designateclient
-%def_with python3
 
-Name: python-module-%oname
-Version: 2.6.0
-Release: alt2
+Name:    python-module-%oname
+Version: 2.10.0
+Release: alt1
 Summary: Openstack DNS (Designate) API Client
 License: Apache-2.0
-Group: Development/Python
-Url: http://docs.openstack.org/developer/python-%oname
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Group:   Development/Python
+Url:     http://docs.openstack.org/developer/python-%oname
+Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-cliff >= 2.3.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-cliff >= 2.8.0
 BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-osc-lib >= 1.2.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-osc-lib >= 1.8.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-requests >= 2.14.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-oslotest >= 1.10.0
-BuildRequires: python-module-subunit >= 0.0.18
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-oslotest >= 3.2.0
 BuildRequires: python-module-requests-mock >= 1.1
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-cliff >= 2.3.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-cliff >= 2.8.0
 BuildRequires: python3-module-jsonschema >= 2.0.0
-BuildRequires: python3-module-osc-lib >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
+BuildRequires: python3-module-osc-lib >= 1.8.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.17.1
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-%endif
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+
 
 %description
 This is a client for the OpenStack Designate API. There's a Python API
@@ -90,40 +90,36 @@ rm -f test-requirements.txt requirements.txt
 
 # Remove bundled egg-info
 rm -rf python_designateclient.egg-info
-%if_with python3
+
+# Prevent doc build warnings from causing a build failure
+sed -i '/warning-is-error/d' setup.cfg
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
-
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/designate %buildroot%_bindir/designate.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/designate %buildroot%_bindir/python3-designate
-%endif
-
-%python_install
-
 
 # Build HTML docs and man page
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 
 # Fix hidden-file-or-dir warnings
 rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 
 %files
 %doc README.rst
-%_bindir/designate
+%_bindir/designate.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/functionaltests
@@ -132,9 +128,8 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/functionaltests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-designate
+%_bindir/designate
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/functionaltests
@@ -142,12 +137,14 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/functionaltests
-%endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.6.0-alt2
 - rebuild with python3.6
 
