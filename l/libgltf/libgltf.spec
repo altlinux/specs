@@ -3,22 +3,24 @@ BuildRequires: boost-devel-headers gcc-c++ libpng-devel pkgconfig(cppunit) pkgco
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# WARNING: This package is synced with FC
 %global major 1
-%define libname libgltf%{apiversion}%{major}
+%define libname libgltf%{apiversion}_%{major}
 %define devname libgltf-devel
 %global apiversion 0.1
 
 Name: libgltf
 Version: 0.1.0
-Release: alt1_2
+Release: alt1_3
 Summary: A library for rendering glTF models
 Group: System/Libraries
 
 License: MPLv2.0
 URL: https://wiki.documentfoundation.org/Development/libgltf
 Source: http://dev-www.libreoffice.org/src/%{name}/%{name}-%{version}.tar.gz
+Patch0: GLM_ENABLE_EXPERIMENTAL.patch
 
-BuildRequires: boost-devel
+BuildRequires: boost-complete
 BuildRequires: libglm-devel
 BuildRequires: pkgconfig(epoxy)
 Source44: import.info
@@ -60,9 +62,10 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-
+%patch0 -p1
 
 %build
+autoreconf -fi
 %configure --disable-silent-rules --disable-static --disable-werror
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -76,7 +79,8 @@ rm -f %{buildroot}/%{_libdir}/*.la
 
 
 %files -n %libname
-%doc AUTHORS COPYING NEWS
+%doc AUTHORS NEWS
+%doc --no-dereference COPYING
 %{_libdir}/%{name}-%{apiversion}.so.%{major}
 %{_libdir}/%{name}-%{apiversion}.so.%{major}.*
 
@@ -88,6 +92,9 @@ rm -f %{buildroot}/%{_libdir}/*.la
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_3
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_2
 - new version
 
