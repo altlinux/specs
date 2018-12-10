@@ -1,29 +1,32 @@
 %def_with pulse
-%def_with qt4
-%define oname openal-soft
+%def_with qt5
 
 Name: openal
-Version: 1.17.2
-Release: alt2
+Version: 1.19.1
+Release: alt1
 
 Summary: Open Audio Library
+
 License: LGPLv2
 Group: Sound
-
 Url: http://kcat.strangesoft.net/openal.html
-# Source-url: http://kcat.strangesoft.net/openal-releases/openal-soft-%{version}.tar.bz2
-Source: %oname-%version.tar
+
+# Source-url: https://github.com/kcat/openal-soft/archive/openal-soft-%version.tar.gz
+Source: %name-%version.tar
+
 Patch0: openal-soft-1.17-alt-config.patch
 Patch1: openal-soft-arm_neon-only-for-32bit.patch
 
-# Automatically added by buildreq on Sun Dec 11 2016
-# optimized out: cmake cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base
 BuildRequires: gcc-c++ cmake
+
 BuildRequires: libalsa-devel
-%{?_with_qt4:BuildRequires: qt4-devel}
+%{?_with_qt5:BuildRequires: qt5-base-devel}
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
-%{?!_with_bootstrap:BuildRequires: libjack-devel libportaudio2-devel libfluidsynth-devel}
-BuildRequires: libSDL2-devel libSDL2_mixer-devel
+%if_without bootstrap
+BuildRequires: libjack-devel libportaudio2-devel}
+BuildRequires: libavdevice-devel libswresample-devel libswscale-devel
+BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL_sound-devel
+%endif
 
 %description
 OpenAL Soft is a cross-platform software implementation of the OpenAL 3D
@@ -58,16 +61,22 @@ applications which will use OpenAL, a free 3D audio library.
 %package qt
 Summary: Qt frontend for configuring OpenAL Soft
 Group: Sound
-Requires: lib%{name}1 = %version-%release
+Requires: lib%{name}1 = %EVR
 
 %description qt
 The %{name}-qt package contains alsoft-config, a Qt-based tool
 for configuring OpenAL features.
 
+%package tools
+Summary: OpenAL Soft cli tools
+Group: Sound
+Requires: lib%{name}1 = %EVR
+
+%description tools
+The %{name}-tools package contains various OpenAL command line tools.
+
 %prep
-%setup -n %oname-%version
-%patch0 -p2
-%patch1 -p1
+%setup
 %ifarch %e2k
 sed -i 's,-Winline,,' CMakeLists.txt
 %endif
@@ -91,9 +100,6 @@ mkdir -p %buildroot%_sysconfdir/%name/
 install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 
 %files -n lib%{name}1
-%_bindir/altonegen
-%_bindir/makehrtf
-%_bindir/bsincgen
 %_bindir/openal-info
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/alsoft.conf
@@ -101,17 +107,40 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %_libdir/*.so.1
 %_libdir/*.so.1.*.*
 
+%if_without bootstrap
+%files tools
+/usr/bin/alffplay
+/usr/bin/alhrtf
+/usr/bin/allatency
+/usr/bin/alloopback
+/usr/bin/almultireverb
+/usr/bin/alplay
+/usr/bin/alreverb
+/usr/bin/alstream
+
+%_bindir/altonegen
+%_bindir/alrecord
+%_bindir/makehrtf
+#_bindir/bsincgen
+%endif
+
 %files -n lib%name-devel
 %_includedir/AL/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/OpenAL/OpenALConfig-relwithdebinfo.cmake
+%_libdir/cmake/OpenAL/OpenALConfig.cmake
 
-%if_with qt4
+%if_with qt5
 %files qt
 %_bindir/alsoft-config
 %endif
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19.1-alt1
+- new version 1.19.1 (with rpmrb script)
+- switch to Qt5, build tools subpackage
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.17.2-alt2
 - qt knob renamed to qt4 (still on by default)
 - replaced e2k arch name with %%e2k macro (grenka@)
