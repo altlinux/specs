@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.7.1
-Release:	alt3_6jpp8
+Release:	alt4_6jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 # will become arched again with rust on board
 BuildArch:  noarch
@@ -41,6 +41,7 @@ URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
 Source1:    Messages_ru.properties
 Patch0:     1473-1480.patch
+Patch10:    translation-desktop-files.patch
 
 BuildRequires:  javapackages-tools
 #for deprecated add_maven_depmap, see https://www.spinics.net/lists/fedora-devel/msg233211.html
@@ -157,6 +158,7 @@ This package contains ziped sources of the IcedTea-Web project.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1
+%patch10 -p2
 cp -f %SOURCE1 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
 
 %build
@@ -349,6 +351,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Fri Dec 07 2018 Ivan Razzhivin <underwit@altlinux.org> 1.7.1-alt4_6jpp8
+- add russian translation to desktop files
+
 * Thu Nov 15 2018 Ivan Razzhivin <underwit@altlinux.org> 1.7.1-alt3_6jpp8
 - add russian translation
 
