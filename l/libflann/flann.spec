@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: boost-devel boost-mpi-devel gcc-c++ openmpi-devel texlive-latex-base unzip
+BuildRequires: /usr/bin/dpkg /usr/bin/latex /usr/bin/mex /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel unzip
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
@@ -11,7 +11,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt2_15
+Release:        alt2_18
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -23,9 +23,9 @@ Source0:        http://www.cs.ubc.ca/~mariusm/uploads/FLANN/%{oldname}-%{version
 Patch0:         flann-1.8.4-fixpyflann.patch
 # Fix build failures with c++11/gcc6
 Patch1:         flann-1.8.4-gcc6.patch
-
-Patch10: flann-1.8.4-alt-cmake.patch
-
+# Add a file to shared library targets
+Patch2:         flann-1.8.4-srcfile.patch
+BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  zlib-devel
 
@@ -49,7 +49,7 @@ Group: Development/Other
 Requires: %{name} = %{version}-%{release}
 # flann/flann_mpi.hpp requires boost/mpi.hpp, which is a convenience header
 # inside of the boost-devel package
-Requires: boost-devel-headers boost-python-headers
+Requires: boost-complete
 Provides: flann-devel = %{version}-%{release}
 
 %description devel
@@ -86,7 +86,7 @@ Python 3 bindings for flann
 %setup -q -n %{oldname}-%{version}-src
 %patch0 -p0 -b .fixpyflann
 %patch1 -p0 -b .gcc6
-%patch10 -p2
+%patch2 -p0 -b .srcfile
 
 # Fix library install directory
 sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
@@ -146,6 +146,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt2_15
 - NMU: fixed build with new cmake.
 
