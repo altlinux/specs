@@ -1,33 +1,28 @@
 %define oname barbicanclient
-%def_with python3
 
 Name:       python-module-%oname
-Version:    4.6.0
+Version:    4.7.1
 Release:    alt1
 Summary:    Client Library for OpenStack Barbican Key Management API
 License:    ASL 2.0
-Url: http://docs.openstack.org/developer/python-%oname
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Url:        http://docs.openstack.org/developer/python-%oname
+Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 Group:      Development/Python
 
 BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-cliff >= 2.3.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-cliff >= 2.8.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-openstackdocstheme
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
@@ -40,8 +35,9 @@ BuildRequires: python3-module-keystoneauth1 >= 2.18.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-openstackdocstheme
-%endif
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno
 
 %description
 There is a Python library for accessing the API (barbicanclient module),
@@ -90,56 +86,54 @@ rm -rf python_barbicanclient.egg-info
 # let RPM handle deps
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/barbican %buildroot%_bindir/barbican.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/barbican %buildroot%_bindir/python3-barbican
-%endif
-
-%python_install
 
 # Build HTML docs and man page
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 rm -f doc/build/html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%_bindir/barbican
+%_bindir/barbican.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-barbican
+%_bindir/barbican
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.1-alt1
+- 4.7.1
+
+* Tue Oct 09 2018 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
+- Autoupdated to 4.7.0.
+
 * Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - new version 4.6.0
 
