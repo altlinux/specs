@@ -1,6 +1,6 @@
 Name: xfce4-appfinder
-Version: 4.13.1
-Release: alt2
+Version: 4.13.2
+Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
@@ -55,9 +55,12 @@ Desktop entry format.
 %doc README AUTHORS
 %_bindir/*
 %_desktopdir/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 10 2018 Mikhail Efremov <sem@altlinux.org> 4.13.2-alt1
+- Updated to 4.13.2.
+
 * Tue Sep 04 2018 Mikhail Efremov <sem@altlinux.org> 4.13.1-alt2
 - Ignore menu items without name (closes: #35328).
 
