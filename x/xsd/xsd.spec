@@ -7,14 +7,12 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.0.0
-Release: alt2_23
+Release: alt2_25
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
 URL: http://www.codesynthesis.com/products/xsd/
 Source0: http://www.codesynthesis.com/download/xsd/4.0/xsd-%{version}+dep.tar.bz2
-
-Obsoletes: xsd-devel <= 0:4.0.0-9
 
 # Sent suggestion to upstream via e-mail 20090707
 # http://anonscm.debian.org/cgit/collab-maint/xsd.git/tree/debian/patches/0001-xsd_xsdcxx-rename.patch
@@ -31,12 +29,9 @@ Patch2: %{name}-xerces_3-2.patch
 BuildRequires: m4, libxerces-c-devel, libcutl-devel, gcc-c++
 %if 0%{?rhel}
 BuildRequires: boost148-devel
+Requires: boost148
 %else
 BuildRequires: boost-complete
-%endif
-
-%if 0%{?rhel}
-Requires: boost148
 %endif
 Source44: import.info
 
@@ -59,11 +54,9 @@ This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n xsd-%{version}+dep
-%patch0 -p1 -b .xsdcxx-rename
+%patch0 -p0
 %patch1 -p0
-%if 0%{?fedora} > 27
-%patch2 -p1
-%endif
+%patch2 -p0
 
 ##Unbundle libcutl
 rm -rf libcutl
@@ -72,12 +65,12 @@ rm -rf libcutl
 %if 0%{?rhel} < 7
 %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
-make verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
+%make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
 
 %install
 rm -rf apidocdir
 
-make install DESTDIR=$RPM_BUILD_ROOT LDFLAGS="%{__global_ldflags}" install_prefix=$RPM_BUILD_ROOT%{_prefix} \
+%makeinstall_std LDFLAGS="%{__global_ldflags}" install_prefix=$RPM_BUILD_ROOT%{_prefix} \
  install_bin_dir=$RPM_BUILD_ROOT%{_bindir} install_man_dir=$RPM_BUILD_ROOT%{_mandir} EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 
 # Split API documentation to -doc subpackage.
@@ -123,7 +116,6 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %endif
 
 %files
-%{!?_licensedir:%global license %doc}
 %doc docdir/README docdir/NEWS docdir/FLOSSE
 %doc --no-dereference docdir/GPLv2 docdir/LICENSE
 %{_bindir}/xsdcxx
@@ -131,12 +123,14 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %{_includedir}/xsd/
 
 %files doc
-%{!?_licensedir:%global license %doc}
 %doc docdir/README docdir/NEWS docdir/FLOSSE
 %doc --no-dereference docdir/GPLv2 docdir/LICENSE
 %doc apidocdir/*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_25
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_23
 - use boost-complete
 
