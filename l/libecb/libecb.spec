@@ -1,12 +1,12 @@
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global snapshot 20161208
+%global snapshot 20181119
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_4
+Release:    alt1_1
 Summary:    Compiler built-ins
 Group:      Development/Other
 License:    BSD or GPLv2+
@@ -55,12 +55,15 @@ install -d %{buildroot}%{_mandir}/man3
 install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 
 %files devel
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{_includedir}/*
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20181119-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_4
 - update to new release by fcimport
 
