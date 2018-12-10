@@ -1,6 +1,6 @@
 Name: xfce4-mpc-plugin
-Version: 0.5.0
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: MPD Client Plugin
 License: %bsdstyle
@@ -47,6 +47,9 @@ Xfce panel.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Mon Dec 10 2018 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
+- Updated to 0.5.1.
+
 * Tue Sep 04 2018 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt2
 - Don't build the package on aarch64.
 
