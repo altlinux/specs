@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.2.6
+Version: 18.3.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -311,6 +311,7 @@ d=%buildroot%_libdir
 %endif
 
 %files -n xorg-dri-swrast
+%_datadir/drirc.d
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/gallium_dri.so
 %ifarch %ix86 x86_64 aarch64
@@ -329,7 +330,6 @@ d=%buildroot%_libdir
 
 %ifarch %ix86 x86_64
 %files -n xorg-dri-intel
-%config(noreplace) %_sysconfdir/drirc
 %_libdir/X11/modules/dri/i9?5_dri.so
 %ifarch x86_64
 %_libdir/libvulkan_intel.so
@@ -374,6 +374,9 @@ d=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Dec 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.3.0-alt1
+- 18.3.0
+
 * Mon Dec 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.2.6-alt1
 - 18.2.6
 
