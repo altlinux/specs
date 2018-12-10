@@ -1,10 +1,8 @@
-%define _disable_ld_as_needed 1
-%define _disable_ld_no_undefined 1
-%define debug_package %nil
+%define _unpackaged_files_terminate_build 1
 
-%define sover 6.10.1
+%define sover 6.12
 Name: racket
-Version: 6.10.1
+Version: 6.12
 Release: alt1
 
 Summary: Racket programming language
@@ -14,26 +12,27 @@ Group: Development/Scheme
 Url: https://racket-lang.org/
 
 Source: %name-%version.tar
-Source1: drscheme.png
+Patch1: %name-alt-debuginfo.patch
 
-Patch1: %name-%version-alt-debuginfo.patch
+# do not scan collects for requires and provides
+%add_findreq_skiplist  %_libdir/%name/collects/*/*
+%add_findreq_skiplist  %_libdir/%name/collects/*/*/*
+%add_findprov_skiplist %_libdir/%name/collects/*/*
+%add_findprov_skiplist %_libdir/%name/collects/*/*/*
 
-# do not scan collects for requires
-%add_findreq_skiplist %_libdir/%name/collects/*/*
-%add_findreq_skiplist %_libdir/%name/collects/*/*/*
+Provides: plt = %EVR
+Obsoletes: plt < %EVR
 
-Provides: plt = %version-%release
-Obsoletes: plt < %version-%release
-
+BuildRequires: /proc
 BuildRequires: gcc-c++ zlib-devel libjpeg-devel libpng-devel
 BuildRequires: libcairo-devel libXaw-devel libXext-devel libXft-devel
-BuildRequires: gcc-fortran libpango-devel /proc chrpath
+BuildRequires: gcc-fortran libpango-devel
 BuildRequires: desktop-file-utils libffi-devel libgc-devel
 BuildRequires: libgtk+3-devel libgtkglext-devel libwxGTK3.1-devel
-BuildRequires: libssl-devel zlib-devel 
+BuildRequires: libssl-devel zlib-devel
 
-Requires: lib%name = %version-%release
-Requires: %name-data = %version-%release
+Requires: lib%name = %EVR
+Requires: %name-data = %EVR
 
 %description
 Depending on how you look at it, Racket is
@@ -48,7 +47,6 @@ Depending on how you look at it, Racket is
 %package data
 Summary: Data for Racket
 Group: Development/Scheme
-BuildArch: noarch
 
 %description data
 Depending on how you look at it, Racket is
@@ -65,7 +63,7 @@ This package contains data for Racket.
 %package doc
 Summary: Documentation for Racket
 Group: Documentation
-#BuildArch: noarch
+BuildArch: noarch
 
 %description doc
 Depending on how you look at it, Racket is
@@ -98,9 +96,9 @@ This package contains shared libraries of Racket.
 %package -n lib%name-devel
 Summary: Development files of Racket
 Group: Development/Scheme
-Requires: lib%name = %version-%release
-Provides: libmzscheme-devel = %version-%release
-Obsoletes: libmzscheme-devel < %version-%release
+Requires: lib%name = %EVR
+Provides: libmzscheme-devel = %EVR
+Obsoletes: libmzscheme-devel < %EVR
 
 %description -n lib%name-devel
 Depending on how you look at it, Racket is
@@ -114,26 +112,12 @@ Depending on how you look at it, Racket is
 
 This package contains development files of Racket.
 
-%define __arch_install_post %nil
-
 %prep
 %setup
 %patch1 -p2
 
-cat << __EOF__ > drscheme.desktop
-[Desktop Entry]
-Type=Application
-Name=DrScheme
-Comment=The Racket programming environment
-Icon=drscheme
-Exec=drscheme
-Categories=Development;Education;IDE;Science;ComputerScience;
-__EOF__
-
 %build
 pushd src
-#sed -i "s|^\(LIBRACKET_DEP\)=.*|\1=\"$PWD/racket/libmzgc.la -lgc\"|" \
-#	configure
 %ifarch %ix86
 %add_optflags -march=i686 -mtune=i686
 %endif
@@ -158,11 +142,10 @@ fi
 %makeinstall_std -C src -j$NP docdir=%_docdir/%name-%version
 
 install -p -m644 README %buildroot%_docdir/%name-%version/
-install -pD -m644 %SOURCE1 %buildroot%_niconsdir/drscheme.png
-install -pD -m644 drscheme.desktop \
-	%buildroot%_desktopdir/drscheme.desktop
-
 sed -i 's|%buildroot||g' %buildroot%_desktopdir/*.desktop
+
+# remove static libraries
+rm -f %buildroot%_libdir/*.a
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -170,7 +153,6 @@ sed -i 's|%buildroot||g' %buildroot%_desktopdir/*.desktop
 %_bindir/*
 %_libdir/%name
 %_desktopdir/*
-%_niconsdir/*
 %_man1dir/*
 %_sysconfdir/*
 
@@ -191,6 +173,9 @@ sed -i 's|%buildroot||g' %buildroot%_desktopdir/*.desktop
 %_includedir/*
 
 %changelog
+* Mon Dec 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12-alt1
+- Updated to upstream version 6.12 (Closes: #35721)
+
 * Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.10.1-alt1
 - Updated to upstream version 6.10.1.
 
