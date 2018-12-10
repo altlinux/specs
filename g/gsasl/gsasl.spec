@@ -3,7 +3,7 @@
 Name: gsasl
 %define libname lib%name
 Version: 1.8.0
-Release: alt2
+Release: alt3
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -47,6 +47,11 @@ sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
 # These gnulib tests fail.
 sed -i -r 's/^(TESTS \+= .*)test-(lock|thread_create)/\1/' gltests/Makefile.am
 
+# Use gnulib largefile module in the library as well.
+ln gl/m4/largefile.m4 lib/gl/m4/
+sed -i '/AC_REQUIRE(\[gl_USE_SYSTEM_EXTENSIONS\])/a AC_REQUIRE([AC_SYS_LARGEFILE])' \
+	lib/gl/m4/gnulib-comp.m4
+
 %build
 %autoreconf
 %configure \
@@ -88,6 +93,9 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Mon Dec 10 2018 Dmitry V. Levin <ldv@altlinux.org> 1.8.0-alt3
+- Built the library with LFS support.
+
 * Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt2
 - Fixed build: disable couple of gnulib tests.
 
