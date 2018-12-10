@@ -55,7 +55,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4
+Release: alt5
 
 Summary: Boost libraries
 License: Boost Software License
@@ -190,6 +190,10 @@ Provides: %name-intrusive-devel = %epoch:%version-%release
 Obsoletes: %name-intrusive-devel < %epoch:%version-%release
 Provides: %name-units-devel = %epoch:%version-%release
 Obsoletes: %name-units-devel < %epoch:%version-%release
+
+Provides: %name-process-devel = %epoch:%version-%release
+Obsoletes: %name-process-devel < %epoch:%version-%release
+
 
 %description devel
 The Boost web site provides free peer-reviewed portable C++ source
@@ -1964,6 +1968,9 @@ done
 
 
 %changelog
+* Mon Dec 10 2018 Ivan A. Melnikov <iv@altlinux.org> 1:1.67.0-alt5
+- Make boost-devel replace boost-process-devel.
+
 * Mon Jul 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt4
 - Rebuilt with numpy support (Closes: #35190).
 
