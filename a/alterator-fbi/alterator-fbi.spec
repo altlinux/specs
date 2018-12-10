@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.39
-Release: alt3
+Version: 5.40
+Release: alt1
 
 Source: %name-%version.tar
 Patch: alterator-fbi-5.39-call-cc-via-reset.patch
@@ -152,6 +152,10 @@ fi ||:
 
 
 %changelog
+* Mon Dec 10 2018 Paul Wolneykien <manowar@altlinux.org> 5.40-alt1
+- Use platform-based procedure to initialize the pseudo-random
+  generator.
+
 * Tue Dec 26 2017 Paul Wolneykien <manowar@altlinux.org> 5.39-alt3
 - Require alterator >= 5.1-alt7 (e2k).
 - Delimit a partial continuation with "with-ahttpd-session"
