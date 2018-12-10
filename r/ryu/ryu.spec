@@ -1,6 +1,6 @@
 Name: ryu
-Version: 4.14
-Release: alt1.1
+Version: 4.30
+Release: alt1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
 License: ASL 2.0
@@ -23,7 +23,7 @@ BuildRequires: python-module-routes
 BuildRequires: python-module-tinyrpc
 BuildRequires: python-module-six >= 1.4.0
 BuildRequires: python-module-webob >= 1.2
-
+BuildRequires: python-module-openvswitch
 
 %description
 Ryu is a component-based software defined networking framework.
@@ -111,6 +111,9 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 4.30-alt1
+- 4.30
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.14-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
