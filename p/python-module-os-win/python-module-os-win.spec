@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.2
-Release: alt1.1
+Version: 4.0.1
+Release: alt1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -15,35 +15,35 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.concurrency >= 3.25.0
+BuildRequires: python-module-oslo.config >= 5.1.0
+BuildRequires: python-module-oslo.log >= 3.26.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-reno >= 0.1.1
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.concurrency >= 3.25.0
+BuildRequires: python3-module-oslo.config >= 5.1.0
+BuildRequires: python3-module-oslo.log >= 3.26.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
 %endif
 
 %description
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
