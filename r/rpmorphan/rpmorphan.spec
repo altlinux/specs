@@ -1,5 +1,5 @@
 Name: rpmorphan
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Find orphaned RPM packages
@@ -67,6 +67,9 @@ rm -f %buildroot%_logdir/*
 %_var/lib/rpmorphan/keep
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19-alt1
+- new version 1.19 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt1
 - new version 1.18 (with rpmrb script)
 
