@@ -35,11 +35,11 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.019
 Version:        2.19.0
-Release:        alt1_1
+Release:        alt1_3
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CH/CHM/PDL-%{cpan_version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHM/PDL-%{cpan_version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 Patch1:         perl-PDL-2.8.0-hdf.patch
@@ -54,10 +54,11 @@ BuildRequires:  coreutils
 BuildRequires:  libfftw-devel
 BuildRequires:  findutils
 BuildRequires:  libfreeglut-devel
+BuildRequires:  gcc-c++
 BuildRequires:  gcc-fortran
 BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
-BuildRequires:  hdf-static hdf-devel
+BuildRequires:  hdf-devel
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  perl-devel
@@ -178,10 +179,10 @@ Provides:       perl(PGPLOT.pm) = %{version}
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|Tk\|Win32.DDE.Client\)\\)$/d
-%filter_from_provides /^perl(Inline\\)$/d
-%filter_from_provides /^perl(Win32.*\\)$/d
-%filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\)\\)$/d
+%filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|Tk\|Win32.DDE.Client\).pm)/d
+%filter_from_provides /^perl(Inline.pm)/d
+%filter_from_provides /^perl(Win32.*.pm)/d
+%filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\).pm)/d
 Patch33: PDL-2.018-alt-link-Slatec-hack.patch
 
 %description
@@ -244,6 +245,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt1_3
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt1_1
 - update to new release by fcimport
 
