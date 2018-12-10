@@ -1,6 +1,6 @@
 Name: seafile
-Version: 6.2.5
-Release: alt2
+Version: 6.2.9
+Release: alt1
 
 Summary: Full-fledged cloud storage platform
 
@@ -81,7 +81,7 @@ developing applications that use lib%name.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 cp %SOURCE1 .
 # remove buildroot from .pc file
 %__subst 's/(DESTDIR)//' lib/libseafile.pc.in
@@ -111,6 +111,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.9-alt1
+- new version 6.2.9 (with rpmrb script)
+
 * Mon Nov 05 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.5-alt2
 - fix build with curl 7.62
 
