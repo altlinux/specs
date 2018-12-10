@@ -1,10 +1,8 @@
 %define oname oslo.versionedobjects
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.21.1
-Release: alt1.1
+Version: 1.33.3
+Release: alt1
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python
 License: ASL 2.0
@@ -15,44 +13,48 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.messaging >= 5.14.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.messaging >= 5.29.0
+BuildRequires: python-module-oslo.serialization >= 1.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-webob >= 1.6.0
-BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-fixtures >= 1.3.1
-BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-webob >= 1.7.1
+BuildRequires: python-module-netaddr >= 0.7.18
+BuildRequires: python-module-fixtures >= 3.0.0
+BuildRequires: python-module-jsonschema >= 2.6.0
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.messaging >= 5.14.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-oslo.serialization >= 1.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-webob >= 1.6.0
-BuildRequires: python3-module-netaddr >= 0.7.13
-BuildRequires: python3-module-fixtures >= 1.3.1
-%endif
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-webob >= 1.7.1
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-jsonschema >= 2.6.0
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 
 %description
 oslo.versionedobjects library deals with DB schema being at different versions
@@ -103,18 +105,15 @@ Documentation for the Oslo versionedobjects library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
 sphinx-build doc/source html
@@ -123,11 +122,10 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
@@ -137,19 +135,20 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.33.3-alt1
+- 1.33.3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.21.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
