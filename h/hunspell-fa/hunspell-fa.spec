@@ -1,19 +1,16 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-fa
 Summary: Farsi hunspell dictionaries
 %global upstreamid 20070116
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_19
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/fa/aspell6-fa-0.11-0.tar.bz2
 URL: http://aspell.net/
 License: GPLv2+
 BuildArch: noarch
-BuildRequires: aspell libhunspell-devel hunspell-utils
+BuildRequires: aspell libaspell hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -25,7 +22,7 @@ Farsi hunspell dictionaries.
 %setup -q -n aspell6-fa-0.11-0
 
 %build
-export LANG=fa_IR.utf8
+export LANG=C.UTF-8
 preunzip -d *.cwl
 cat *.wl > farsi.wordlist
 wordlist2hunspell farsi.wordlist fa_IR
@@ -40,6 +37,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_15
 - update to new release by fcimport
 
