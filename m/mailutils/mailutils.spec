@@ -21,7 +21,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
-Release: alt1
+Release: alt2
 %define srcdir %name-%version
 %endif
 
@@ -55,7 +55,7 @@ Requires: libreadline
 
 # Automatically added by buildreq on Mon Feb 06 2012
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig guile18 libX11-locales libgdk-pixbuf libgmp-devel libgpg-error libltdl7-devel libncurses-devel libstdc++-devel libtinfo-devel python-base python-modules
-BuildRequires: bzlib-devel emacs-git flex gcc-c++ glibc-devel libdb4-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libpam-devel libreadline-devel libtokyocabinet-devel python-devel zlib-devel
+BuildRequires: bzlib-devel flex gcc-c++ glibc-devel libdb4-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libpam-devel libreadline-devel libtokyocabinet-devel python-devel zlib-devel
 
 BuildRequires: /dev/pts
 BuildRequires: emacs-X11
@@ -458,6 +458,9 @@ done
 %endif
 
 %changelog
+* Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.5-alt2
+- Removed emacs-git from BuildRequires (fixed FTBFS)
+
 * Tue Nov 13 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.5-alt1
 - New version
 - Included info files to doc package (was excluded since 2.99.91-alt1)
