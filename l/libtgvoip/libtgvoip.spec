@@ -1,9 +1,10 @@
 # see LIBTGVOIP_VERSION in VoIPController.h for a version
-%def_without webrtc
-%define soname 0.3
+
+%def_without systemwebrtc
+%define soname 0.4
 Name: libtgvoip
-Version: 2.2.2
-Release: alt2
+Version: 2.4
+Release: alt1
 
 Summary: VoIP library for Telegram clients
 
@@ -13,7 +14,7 @@ License: Unlicense
 Url: https://github.com/telegramdesktop/libtgvoip
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/telegramdesktop/libtgvoip.git
+# Source-git: https://github.com/grishka/libtgvoip.git
 Source: %name-%version.tar
 
 BuildRequires: gyp gcc-c++ libopus-devel libssl-devel libalsa-devel libpulseaudio-devel
@@ -42,7 +43,7 @@ developing applications that use %name.
 %__subst "s|.*dependencies.*|'link_settings': { 'libraries': ['-ldl', '-lpthread', '-lopus', '-lcrypto'], },|g" libtgvoip.gyp
 
 # TODO
-%if_with webrtc
+%if_with systemwebrtc
 rm -rf webrtc_dsp/
 %__subst "s|<(tgvoip_src_loc)/webrtc_dsp|/usr/include/webrtc_audio_processing|" libtgvoip.gyp
 %endif
@@ -74,8 +75,10 @@ install -m644 -D out/Debug/lib.target/libtgvoip.so.%soname %buildroot%_libdir/li
 install -m644 -D %name.pc %buildroot%_pkgconfigdir/%name.pc
 ln -s libtgvoip.so.%soname %buildroot%_libdir/libtgvoip.so
 mkdir -p %buildroot%_includedir/tgvoip/audio/
+mkdir -p %buildroot%_includedir/tgvoip/video/
 cp -a *.h %buildroot%_includedir/tgvoip/
 cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
+cp -a video/*.h %buildroot%_includedir/tgvoip/video/
 
 %files
 %_libdir/libtgvoip.so.%soname
@@ -86,9 +89,22 @@ cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 %dir %_includedir/tgvoip/
 %_includedir/tgvoip/*.h
 %_includedir/tgvoip/audio/
+%_includedir/tgvoip/video/
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
+- new version 2.4 - merge with 78e584c443b93ce2 (used in TG 1.5.0)
+- pack include/tgvoip/video/
+
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
+- new version 2.3 (with rpmrb script)
+
+* Sat Sep 08 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.4-alt1
+- new version (2.2.4) from upsteam git
+ + added --enable-audio-callback to configure
+ + fixes
+
 * Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt2
 - rebuild with openssl 1.1
 
