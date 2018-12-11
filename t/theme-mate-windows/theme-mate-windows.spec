@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  1.0
+Version:  1.1
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -49,5 +49,8 @@ install -Dm0644 applications.list \
 %_datadir/linuxmint/mintMenu/applications.list-themed
 
 %changelog
+* Mon Dec 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Set window manager theme to Clearlooks-Phenix.
+
 * Sun Jun 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
