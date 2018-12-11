@@ -18,9 +18,9 @@
 %def_disable oracle # libs not present in sisyphus
 %def_disable tests
 
-%define git d3a2b96
-%define majver 2.6
-%define minver 1
+#%%define git d3a2b96
+%define majver 2.7
+%define minver 0
 %define rel alt1
 
 Name: jabberd2
@@ -37,11 +37,8 @@ License: %gpl2plus
 Url: http://jabberd2.org/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-%ifndef git
-Source: https://github.com/jabberd2/jabberd2/releases/download/jabberd-%version/jabberd-%version.tar.gz
-%else
-Source: jabberd-%version.tar
-%endif
+Source:  jabberd-%version.tar
+
 Source1: jabberd-alt-configdir.tar
 Source2: jabberd.cfg
 Source3: jabberd2-init_d.tar
@@ -63,7 +60,7 @@ Requires: jabber-common >= 0.2 su coreutils xmlstarlet libudns
 Obsoletes: jabberd2-router jabberd2-resolver
 
 %if_enabled ssl
-BuildRequires: libssl-devel >= 0.9.6b
+BuildRequires: openssl-devel >= 0.9.6b
 %endif
 
 %if_enabled cyrus
@@ -485,6 +482,11 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Mon Dec 10 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Built new version.
+- Built with openssl1.1.
+- Built with libidn1.35.
+
 * Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.6.1-alt1.git.d3a2b96
 - Updated to 2.6.1
 
