@@ -1,12 +1,14 @@
 Name: x11spice
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: x11spice connects a running X server as a Spice server
 Group: Networking/Remote access
 License: GPLv3
 Url: https://gitlab.com/spice/x11spice/
 Source0: %name-%version.tar
+Patch1:  %name-alt-show-ip-address.patch
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: libxcb-devel libxcbutil-devel libgtk+3-devel libspice-server-devel libpixman-devel libaudit-devel
 
 %description
@@ -17,6 +19,7 @@ notably that of scan.c, was inspired by the code in x11vnc.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %ifarch %ix86
@@ -38,6 +41,9 @@ export CFLAGS="-Wno-error=address -Wno-pointer-to-int-cast -Wno-int-to-pointer-c
 %_man1dir/*
 
 %changelog
+* Tue Dec 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2
+- Show IP address(es) in dialog.
+
 * Wed Feb 28 2018 Lenar Shakirov <snejok@altlinux.ru> 1.1.0-alt1
 - Initial build for ALT
 
