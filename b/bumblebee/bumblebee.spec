@@ -11,7 +11,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt10
+Release: alt11
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -118,6 +118,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt11
+- disable service if Optimus not found
+
 * Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt10
 - remove -noxdrvswitch for new xorg-server
 
