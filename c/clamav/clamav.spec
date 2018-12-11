@@ -1,5 +1,6 @@
-%def_without	milter
+%def_with	milter
 %def_without	llvm
+%def_with	systemd
 
 %def_with ownconfdir
 
@@ -13,7 +14,7 @@
 
 Name: clamav
 Version: 0.100.2
-Release: alt1
+Release: alt2
 %define abiversion 7
 
 Summary: Clam Antivirus scanner
@@ -75,6 +76,8 @@ BuildRequires: libcurl-devel libjson-c-devel
 %{?_with_llvm:BuildRequires: gcc-c++ llvm-devel }
 
 %{?_with_milter:BuildRequires: sendmail-devel}
+
+%{?_with_systemd:BuildRequires: libsystemd-devel}
 
 # for snapshots
 %{?snap: BuildRequires: automake}
@@ -195,6 +198,7 @@ install -pD %_sourcedir/clamav.sysconfig %buildroot/etc/sysconfig/clamd
 %if_with milter
 sed -e 's|@@CLAMAVCONFDIR@@|%clamconfdir|' < %_sourcedir/clamav-milter.sysconfig > %buildroot/etc/sysconfig/clamav-milter
 install -m644 %_sourcedir/clamav-milter.conf %buildroot%clamconfdir/
+rm -f %buildroot%clamconfdir/clamav-milter.conf.sample
 install -m755 %_sourcedir/clamav-milter.init %buildroot/etc/rc.d/init.d/clamav-milter
 #install -m644 %_sourcedir/clamav-milter.whitelist %buildroot%clamconfdir/
 #install -m644 %_sourcedir/clamav-milter.msg %buildroot%clamconfdir/
@@ -296,6 +300,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %attr(3771,root,mail) %dir %_logdir/clamav
 %attr(640,mail,root) %ghost %_logdir/clamav/clamd.log
 
+%if_with systemd
+%_unitdir/clamav-daemon.*
+%endif
+
 %files -n lib%{name}%{abiversion}
 %_libdir/lib*.so.*
 
@@ -312,6 +320,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %config(noreplace) %_sysconfdir/cron.d/freshclam
 %config(noreplace) %_sysconfdir/logrotate.d/freshclam
 %attr(644,mail,mail) %ghost %_logdir/clamav/freshclam.log
+
+%if_with systemd
+%_unitdir/clamav-freshclam.service
+%endif
 
 %files -n lib%{name}-devel
 %_bindir/clamav-config
@@ -334,6 +346,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.2-alt2
+- enabled building clamav-milter subpackage as backup for mailfromd
+- built with libsystemd-devel (packaged unit files)
+
 * Wed Oct 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.2-alt1
 - 0.100.2 (CVE-2018-15378, CVE-2018-14680, CVE-2018-14681, CVE-2018-14682)
 
