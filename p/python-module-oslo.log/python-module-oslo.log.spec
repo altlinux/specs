@@ -1,10 +1,8 @@
 %define oname oslo.log
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 3.20.1
-Release: alt1.1
+Version: 3.39.2
+Release: alt1
 Summary: OpenStack oslo.log library
 Group: Development/Python
 License: ASL 2.0
@@ -17,40 +15,42 @@ Provides: python-module-oslo-log = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-pyinotify >= 0.9.6
-BuildRequires: python-module-dateutil >= 2.4.2
+BuildRequires: python-module-dateutil >= 2.5.3
 BuildRequires: python-module-monotonic >= 0.6
 
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-pyinotify >= 0.9.6
-BuildRequires: python3-module-dateutil >= 2.4.2
+BuildRequires: python3-module-dateutil >= 2.5.3
 BuildRequires: python3-module-monotonic >= 0.6
-%endif
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 
 %description
 OpenStack logging configuration library provides standardized configuration for
@@ -99,56 +99,55 @@ rm -rf %oname.egg-info
 
 sed 's/requests.packages.urllib3/urllib3/' -i oslo_log/_options.py
 
-%if_with python3
+sed -i '/warning-is-error/d' setup.cfg
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/convert-json %buildroot%_bindir/python2-convert-json
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/convert-json %buildroot%_bindir/python3-convert-json
-%endif
-%python_install
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
-%_bindir/convert-json
+%_bindir/python2-convert-json
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-convert-json
+%_bindir/convert-json
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 3.39.2-alt1
+- 3.39.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.20.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
