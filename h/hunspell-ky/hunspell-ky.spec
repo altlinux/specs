@@ -1,19 +1,16 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-ky
 Summary: Kirghiz hunspell dictionaries
 %global upstreamid 20090415
 Version: 0.%{upstreamid}
-Release: alt2_14
+Release: alt2_17
 Source: http://ftp.gnu.org/gnu/aspell/dict/ky/aspell6-ky-0.01-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/
 License: GPLv2+
 BuildArch: noarch
-BuildRequires: aspell libhunspell-devel hunspell-utils
+BuildRequires: aspell libaspell hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -25,7 +22,7 @@ Kirghiz hunspell dictionaries.
 %setup -q -n aspell6-ky-0.01-0
 
 %build
-export LANG=ky_KG.utf8
+export LANG=C.UTF-8
 preunzip -d *.cwl
 cat *.wl > kirghiz.wordlist
 wordlist2hunspell kirghiz.wordlist ky_KG
@@ -41,6 +38,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20090415-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20090415-alt2_14
 - update to new release by fcimport
 
