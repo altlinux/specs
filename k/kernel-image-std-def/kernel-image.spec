@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.14
-%define kernel_sublevel .86
+%define kernel_sublevel .87
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,7 +17,6 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-%define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
@@ -354,7 +353,7 @@ chmod +x tools/objtool/sync-check.sh
 
 %build
 export ARCH=%base_arch
-export NPROCS=%nprocs
+export NPROCS=%__nprocs
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -533,7 +532,7 @@ int main()
 }
 __EOF__
 echo init | cpio -H newc -o | gzip -9n > initrd.img
-timeout --foreground 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
+timeout --foreground 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log &&
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -620,6 +619,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Dec 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.87-alt1
+- v4.14.87
+
 * Thu Dec 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.86-alt1
 - v4.14.86  (Fixes: CVE-2018-1128, CVE-2018-1129)
 
@@ -638,6 +640,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Wed Nov 14 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.81-alt1
 - v4.14.81
+
+* Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.163-alt1
+- v4.4.163
 
 * Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.80-alt1
 - v4.14.80
