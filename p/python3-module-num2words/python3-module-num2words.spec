@@ -1,7 +1,7 @@
 %define  modulename num2words
 
 Name:    python3-module-%modulename
-Version: 0.5.7
+Version: 0.5.8
 Release: alt1
 
 Summary: Modules to convert numbers to words. 42 --> forty-two
@@ -36,6 +36,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Dec 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1
+- New version.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.7-alt1
 - New version.
 
