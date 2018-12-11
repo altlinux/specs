@@ -1,8 +1,8 @@
 %define oname subunit
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt4
+Version: 1.3.0
+Release: alt1
 
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
@@ -20,7 +20,6 @@ BuildRequires: python-module-testtools
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python-tools-2to3
 BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3(hypothesis) python3(fixtures)
@@ -106,21 +105,21 @@ cp -a . ../python3
 %python_build
 
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 
 %install
+%python_install
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i py2_$i
+done
+popd
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i py3_$i
-done
-popd
 
-%python_install
 
 %check
 python setup.py test
@@ -131,8 +130,7 @@ popd
 
 %files
 %doc NEWS README.rst
-%_bindir/*
-%exclude %_bindir/py3_*
+%_bindir/py2_*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -141,7 +139,8 @@ popd
 
 %files -n python3-module-%oname
 %doc NEWS README.rst
-%_bindir/py3_*
+%_bindir/*
+%exclude %_bindir/py2_*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -150,6 +149,9 @@ popd
 
 
 %changelog
+* Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt4
 - rebuild with python3.6
 
