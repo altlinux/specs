@@ -1,3 +1,4 @@
+
 %define formats rom
 # PCI IDs (vendor,product) of the ROMS we want for QEMU
 #
@@ -16,7 +17,7 @@
 
 Name: ipxe
 Version: %date
-Release: alt1.git%{hash}
+Release: alt2.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -24,7 +25,8 @@ License: GPLv2 with additional permissions and BSD
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
-ExclusiveArch: %{ix86} x86_64
+ExclusiveArch: x86_64
+
 Provides: gpxe
 Obsoletes: gpxe
 
@@ -33,7 +35,6 @@ Patch: %name-%version.patch
 
 Requires: ipxe-bootimgs
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
-BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 BuildRequires: liblzma-devel
 
 %description
@@ -113,7 +114,6 @@ make_ipxe() {
 	NO_WERROR=1 \
 	V=1 \
 	GITVERSION=%hash \
-	CROSS_COMPILE=x86_64-linux-gnu- \
         "$@"
 }
 
@@ -210,6 +210,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 1:20180825-alt2.git133f4c47
+- disable cross build
+
 * Tue Nov 27 2018 Alexey Shabalin <shaba@altlinux.org> 1:20180825-alt1.git133f4c47
 - update to latest upstream snapshot
 
