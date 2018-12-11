@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt12%ubt
+Release: alt14
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -40,6 +40,9 @@ Patch12: grub-2.02-ubuntu-efi-setup.patch
 Patch13: grub-2.02-check_writes-alt.patch
 Patch14: grub-2.02-alt-luks-use-uuid.patch
 Patch15: grub-2.02-alt-fedora-linuxefi.patch
+Patch16: grub-2.02-suse-fix-build-with-gcc8.patch
+Patch17: grub-2.02-fix-binutils-break-grub-efi-build.patch
+Patch18: grub-2.02-upstream-default-ptimer.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -47,7 +50,6 @@ BuildRequires: libdevmapper-devel
 BuildRequires: texinfo
 BuildRequires: pesign >= 0.109-alt4
 BuildRequires: rpm-macros-uefi
-BuildRequires(pre): rpm-build-ubt
 
 # fonts: choose one
 
@@ -161,6 +163,9 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch13 -p2
 %patch14 -p2
 %patch15 -p2
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
@@ -393,7 +398,15 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
-* Mon Jun 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt12%ubt
+* Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt14
+- added patch from upstream with changes for default pit time source to ptimer
+
+* Thu Nov 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt13
+- fix FTBFS by adding suse-fix-build-with-gcc8 patch
+- fix FTBFS by adding fix-binutils-break-grub-efi-build patch
+- remove ubt
+
+* Mon Jun 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt12
 - add ia32 EFI binary to x86_64 package
 - add a patch adopted from fedora one introducing linuxefi/initrdefi commands
 - add ia32 grub modules to package
@@ -401,25 +414,25 @@ grub-efi-autoupdate || {
   + rename x64 EFI binary to grubx64.efi
   + add grub-efi-autoupdate ia32 EFI compatibility
 
-* Wed May 30 2018 Oleg Solovyov <mcpain@altlinux.org> 2.02-alt11%ubt
+* Wed May 30 2018 Oleg Solovyov <mcpain@altlinux.org> 2.02-alt11
 - LVM+LUKS fixes:
   + write UUID to grub.cfg after installation
   + don't skip devices under /dev/mapper/
 
-* Fri May 25 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt10%ubt
+* Fri May 25 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt10
 - removed xxd requires from efi firmware setup script
 
-* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt9%ubt
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt9
 - fixed config generation errors on EFI platform (closes: #34852)
 
-* Sun May 13 2018 Leonid Krivoshein <klark@altlinux.org> 2.02-alt8%ubt
+* Sun May 13 2018 Leonid Krivoshein <klark@altlinux.org> 2.02-alt8
 - write to read-only grub device problem fixed.
 
-* Mon Apr 16 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt7%ubt
+* Mon Apr 16 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt7
 - revert back the LVM+LUKS fixes from alt6
 
-* Mon Apr 16 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt6%ubt
-- add %%ubt for backporting
+* Mon Apr 16 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt6
+- add ubt for backporting
 
 * Mon Apr 16 2018 Oleg Solovyov <mcpain@altlinux.org> 2.02-alt6
 - LVM+LUKS fixes:
@@ -445,8 +458,8 @@ grub-efi-autoupdate || {
 - renamed from grub2 to grub
 - added strong requires to efibootmgr >= 15
 
-* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt1%ubt
-- add %%ubt for backporting process
+* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt1
+- add ubt for backporting process
 
 * Mon Jun 05 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.02-alt1
 - 2.02 released
