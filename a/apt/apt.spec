@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt58
+Release: alt59
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -22,8 +22,8 @@ Patch: apt-%version-%release.patch
 # still useful?
 Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
 
-Requires: libapt = %version-%release
-Requires: rpm >= 4.0.4-alt28, /etc/apt/pkgpriorities, apt-conf
+Requires: libapt = %EVR
+Requires: rpm >= 4.13.0.1-alt2, /etc/apt/pkgpriorities, apt-conf
 # for methods.
 Requires: gzip, bzip2, xz
 Requires: gnupg, alt-gpgkeys
@@ -45,33 +45,32 @@ BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ libreadline-devel librpm-de
 %package -n libapt
 Summary: APT's core libraries
 Group: System/Libraries
-# rpm built with liblua5.3
-PreReq: librpm7 >= 4.13.0-alt7
+PreReq: librpm7 >= 4.13.0.1-alt2
 
 %package -n libapt-devel
 Summary: Development files and documentation for APT's core libs
 Summary(ru_RU.UTF-8): Файлы и документация для разработчиков, использующих библиотеки APT
 Group: Development/C
-Requires: libapt = %version-%release, librpm-devel >= 4.0.4-alt28
+Requires: libapt = %EVR, librpm-devel >= 4.13.0.1-alt2
 
 %package -n libapt-devel-static
 Summary: Development static library for APT's libs
 Summary(ru_RU.UTF-8): Статическая библиотека APT для разработчиков, использующих библиотеки APT
 Group: Development/C
-Requires: libapt-devel = %version-%release, librpm-devel-static >= 4.0.4-alt28
+Requires: libapt-devel = %EVR, librpm-devel-static >= 4.13.0.1-alt2
 
 %package utils
 Summary: Utilities to create APT repositories (the indices)
 Summary(ru_RU.UTF-8): Утилиты для построения APT-репозиториев (индексов)
 Group: Development/Other
-Requires: %name = %version-%release, mktemp >= 1:1.3.1, getopt
+Requires: %name = %EVR, mktemp >= 1:1.3.1, getopt
 Requires: gnupg, sed
 
 %package rsync
 Summary: rsync method support for APT
 Summary(ru_RU.UTF-8): Поддержка метода rsync для APT
 Group: Development/Other
-Requires: %name = %version-%release, rsync >= 2.5.5-alt3
+Requires: %name = %EVR, rsync >= 2.5.5-alt3
 
 # {{{ descriptions 
 %define risk_usage_en This package is still under development.
@@ -279,6 +278,13 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt59
+- Fixed crash on fail to read package file.
+- Implemented following actions and commands (closes: #34036):
+  "apt-get autoremove", "apt-mark showmanual [package1 ...]", "apt-mark showauto [package1 ...]",
+  "apt-mark manual package1 [package2 ...]", "apt-mark auto package1 [package2 ...]",
+  "apt-mark showstate [package1 ...]".
+
 * Fri Dec 15 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt58
 - cherry-picked from Debian 0.7.22 (git://anonscm.debian.org/git/apt/apt.git)
   some fixes for http download method (ALT: 18925)
