@@ -1,5 +1,5 @@
 Name: supertuxkart-data
-Version: 0.9.2
+Version: 0.9.3git20181210
 Release: alt1
 
 License: GPL
@@ -9,9 +9,7 @@ Group: Games/Arcade
 BuildArch: noarch
 
 # svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets stk-assets
-Source: %name-%version.tar
-
-Requires: supertuxkart >= %version
+Source: %name-%version.tar.xz
 
 %description
 SuperTuxCart is a kart racing game
@@ -51,6 +49,12 @@ rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 %_datadir/supertuxkart/data
 
 %changelog
+* Tue Dec 11 2018 Leontiy Volodin <lvol@altlinux.org> 0.9.3git20181210-alt1
+- Update to unreleased version (from git)
+
+* Wed Oct 31 2018 Leontiy Volodin <lvol@altlinux.org> 0.9.3-alt1
+- Update to upstream version 0.9.3
+
 * Fri Jul 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
 - Update to upstream version 0.9.2
 - Move data into separate package
