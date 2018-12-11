@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.3.0
+Version:        60.4.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -333,6 +333,16 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Dec 11 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
+- New ESR version (60.4.0)
+- Fixed:
+  + CVE-2018-17466 Buffer overflow and out-of-bounds read in ANGLE library with TextureStorage11
+  + CVE-2018-18492 Use-after-free with select element
+  + CVE-2018-18493 Buffer overflow in accelerated 2D canvas with Skia
+  + CVE-2018-18494 Same-origin policy violation using location attribute and performance.getEntries to steal cross-origin URLs
+  + CVE-2018-18498 Integer overflow when calculating buffer sizes for images
+  + CVE-2018-12405 Memory safety bugs fixed in Firefox 64 and Firefox ESR 60.4
+
 * Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.0-alt1
 - New ESR version (60.3.0).
 - Fixed:
