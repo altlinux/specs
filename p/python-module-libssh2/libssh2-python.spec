@@ -1,18 +1,17 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python-module-setuptools python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
 %define oldname libssh2-python
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global __provides_exclude_from ^(%{python_sitelibdir}/.*\\.so)$
 %global __provides_exclude_from ^(%{python3_sitelibdir}/.*\\.so)$
 
 Summary:        Python binding for the libssh2 library
 Name:           python-module-libssh2
 Version:        0.7.1
-Release:        alt1_20
+Release:        alt1_22
 License:        LGPLv2+
 URL:            https://github.com/wallunit/ssh4py
 # The source for the package was pulled from upstream's vcs.  Use the
@@ -21,7 +20,7 @@ URL:            https://github.com/wallunit/ssh4py
 #  cd ssh4py ; python setup.py sdist
 Source0:        https://github.com/wallunit/ssh4py/zipball/0.7.1/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  python-devel
+BuildRequires:  gcc
 BuildRequires:  python3-devel
 BuildRequires:  libssh2-devel
 BuildRequires:  libssl-devel
@@ -40,10 +39,6 @@ Source44: import.info
 Group: Development/Other
 Summary:        %summary
 %{?python_provide:%python_provide python3-libssh2}
-# Remove before F30
-Provides:       libssh2-python = %{version}-%{release}
-Provides:       libssh2-python = %{version}-%{release}
-Obsoletes:      libssh2-python < %{version}-%{release}
 
 %description -n python3-module-libssh2 
 
@@ -54,28 +49,23 @@ Obsoletes:      libssh2-python < %{version}-%{release}
 
 
 %build
-%python_build
 %python3_build
 
 
 %install
-%python_install
 %python3_install
-mv %{buildroot}%{python3_sitelibdir}/libssh2.*.so %{buildroot}%{python3_sitelibdir}/libssh2.so
 
-
-%files -n python-module-libssh2
-%doc README.txt COPYING
-%{python_sitelibdir}/libssh2.so
-%{python_sitelibdir}/libssh2*-*.egg-info
 
 %files -n python3-module-libssh2
 %doc README.txt COPYING
-%{python3_sitelibdir}/libssh2.so
+%{python3_sitelibdir}/libssh2.*.so
 %{python3_sitelibdir}/libssh2*-*.egg-info
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_22
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_20
 - update to new release by fcimport
 
