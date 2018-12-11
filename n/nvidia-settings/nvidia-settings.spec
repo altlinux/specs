@@ -1,6 +1,8 @@
+%def_with translation
+
 Name: nvidia-settings
 Version: 410.73
-Release: alt2
+Release: alt3
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -13,10 +15,13 @@ Source2: %name-32.png
 Source3: %name-48.png
 Source4: nvidia-settings.sh
 Source5: nvidia-settings.desktop
+Source100: gettext.h
+Source101: ru.po
 
 Patch1: xlibs.patch
 Patch2: cflags.patch
 Patch3: alt-ui-modules-dir.patch
+Patch100: nvidia-settings-410.73-alt-integrate-translation.patch
 
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
@@ -55,6 +60,13 @@ Development files for %name
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%if_with translation
+mkdir -p po/msg
+%patch100 -p2
+install -p -m644 %SOURCE100 src/gtk+-2.x/gettext.h
+install -p -m644 %SOURCE101 po/msg/ru.po
+%endif
+
 sed -i 's|@GUI_LIB_PREFIX@|%_libdir/nvidia-settings|' src/nvidia-settings.c
 
 sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib|' utils.mk
@@ -97,8 +109,9 @@ install -m 0644 src/libXNVCtrl/libXNVCtrl.a %buildroot/%_libdir/
 mkdir -p %buildroot/%_includedir/NVCtrl/
 install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc doc/*.txt
 %_man1dir/%name.*
 %_bindir/%name
@@ -113,6 +126,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Tue Dec 11 2018 Ivan Razzhivin <underwit@altlinux.org> 410.73-alt3
+- add the ability to translate the GUI
+
 * Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt2
 - obsolete libXNVCtrl-devel
 
