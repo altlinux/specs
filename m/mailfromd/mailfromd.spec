@@ -1,18 +1,18 @@
 #%%define %_libexecdir %_sbindir
-%define snapshot 0
+%define snapshot 1
 
 Name: mailfromd
 
-%define baseversion 8.4
+%define baseversion 8.6.90
 
 %if %snapshot
-%define snapshotdate 20170306
+%define snapshotdate 20181109
 Version: %baseversion
-Release: alt2.%snapshotdate.1
+Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt6
+Release: alt1
 %define srcdir %name-%version
 %endif
 
@@ -141,11 +141,10 @@ National Language files for mailfromd (Polish and Ukrainian)
 %patch1 -p1
 
 #Errata
-
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+#patch10 -p1
+#patch11 -p1
+#patch12 -p1
+#patch13 -p1
 
 gzip ChangeLog
 
@@ -162,6 +161,8 @@ LIBS="-lresolv" \
     --enable-ipv6 \
 #   --enable-syslog-async \
     #
+
+./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-config.status
 
 # NO SMP BUILD
 %make V=1
@@ -302,7 +303,7 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %attr(3775,root,mail) %dir %_localstatedir/mailfromd-clamav
 
 %files doc
-%doc COPYING README AUTHORS INSTALL NEWS THANKS ChangeLog.gz
+%doc COPYING README* AUTHORS INSTALL NEWS THANKS ChangeLog.gz
 %_infodir/*
 
 %files mfl
@@ -311,6 +312,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.6.90-alt0.20181109.1
+- new version, disabled errata patches
+- packaged report of config.status
+
 * Wed Nov 22 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt6
 - applied upstream's commit b3eb87d520
 
