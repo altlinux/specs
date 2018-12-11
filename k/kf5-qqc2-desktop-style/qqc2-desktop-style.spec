@@ -1,7 +1,7 @@
 %define rname qqc2-desktop-style
 
 Name: kf5-%rname
-Version: 5.52.0
+Version: 5.53.0
 Release: alt1
 %K5init altplace
 
@@ -30,7 +30,7 @@ developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
-%patch -p2
+%patch -p1
 
 %build
 %K5build
@@ -47,6 +47,9 @@ developing applications that use %name.
 %_libdir/cmake/KF5QQC2DeskopStyle/
 
 %changelog
+* Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt1
+- new version
+
 * Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.52.0-alt1
 - new version
 
