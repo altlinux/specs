@@ -34,7 +34,7 @@
 
 Name: pidgin
 Version: 2.13.0
-Release: alt2
+Release: alt3
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -331,7 +331,6 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot%_sysconfdir/purple/prefs.xml
 find %buildroot%_libdir -name \*.la -delete
 # remove non-plugin unrequired library symlinks
 rm -f %buildroot%_libdir/purple-2/liboscar.so
-rm -f %buildroot%_libdir/purple-2/libjabber.so
 rm -f %buildroot%_libdir/purple-2/libymsg.so
 
 %find_lang --with-gnome %name
@@ -457,6 +456,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 12 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.13.0-alt3
+- fixed libpurple's error: '/usr/bin/ld: cannot find -ljabber'
+
 * Thu Nov 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt2
 - Rebuild without libidn support, because it's deprecated.
 
