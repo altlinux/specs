@@ -1,9 +1,8 @@
 %define oname openstackclient
-%def_with python3
 
 Name: python-module-%oname
-Version: 3.8.1
-Release: alt1.1
+Version: 3.16.2
+Release: alt1
 Summary: OpenStack Command-line Client
 Group: Development/Python
 License: ASL 2.0
@@ -13,67 +12,82 @@ Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.
 BuildArch: noarch
 
 Requires: python-module-cliff >= 2.3.0
-Requires: python-module-keystoneauth1 >= 2.18.0
-Requires: python-module-openstacksdk >= 0.9.13
-Requires: python-module-osc-lib >= 1.2.0
-Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.utils >= 3.18.0
-Requires: python-module-glanceclient >= 2.5.0
-Requires: python-module-keystoneclient >= 3.8.0
-Requires: python-module-novaclient >= 6.0.0
-Requires: python-module-cinderclient >= 1.6.0
-
-Requires: python-module-neutronclient >= 2.6.0
+Requires: python-module-keystoneauth1 >= 3.4.0
+Requires: python-module-openstacksdk >= 0.11.2
+Requires: python-module-osc-lib >= 1.10.0
+Requires: python-module-oslo.i18n >= 3.15.3
+Requires: python-module-oslo.utils >= 3.33.0
+Requires: python-module-glanceclient >= 2.8.0
+Requires: python-module-keystoneclient >= 3.17.0
+Requires: python-module-novaclient >= 9.1.0
+Requires: python-module-cinderclient >= 3.3.0
+Requires: python-module-neutronclient >= 6.7.0
 Requires: python-module-requests >= 2.10.0
 Requires: python-module-stevedore >= 1.16.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-cliff >= 2.3.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-openstacksdk >= 0.9.13
-BuildRequires: python-module-osc-lib >= 1.2.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-glanceclient >= 2.5.0
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-novaclient >= 6.0.0
-BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-babel >= 2.3.4
+BuildRequires: python-module-cliff >= 2.8.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-openstacksdk >= 0.11.2
+BuildRequires: python-module-osc-lib >= 1.10.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-glanceclient >= 2.8.0
+BuildRequires: python-module-keystoneclient >= 3.17.0
+BuildRequires: python-module-novaclient >= 9.1.0
+BuildRequires: python-module-cinderclient >= 3.3.0
+BuildRequires: python-module-neutronclient >= 6.7.0
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-stevedore >= 1.20.0
 
 # for build doc
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+
 BuildRequires: python-module-mock
 BuildRequires: python-module-requests-mock
 BuildRequires: python-module-fixtures
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-os-client-config
+BuildRequires: python-module-os-client-config >= 1.28.0
 BuildRequires: python-module-osprofiler >= 1.4.0
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-cliff >= 2.3.0
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
-BuildRequires: python3-module-openstacksdk >= 0.9.13
-BuildRequires: python3-module-osc-lib >= 1.2.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-glanceclient >= 2.5.0
-BuildRequires: python3-module-keystoneclient >= 3.8.0
-BuildRequires: python3-module-novaclient >= 6.0.0
-BuildRequires: python3-module-cinderclient >= 1.6.0
-BuildRequires: python3-module-neutronclient >= 2.6.0
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-stevedore >= 1.16.0
-%endif
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-cliff >= 2.8.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-openstacksdk >= 0.11.2
+BuildRequires: python3-module-osc-lib >= 1.10.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-glanceclient >= 2.8.0
+BuildRequires: python3-module-keystoneclient >= 3.17.0
+BuildRequires: python3-module-novaclient >= 9.1.0
+BuildRequires: python3-module-cinderclient >= 3.3.0
+BuildRequires: python3-module-neutronclient >= 6.7.0
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-stevedore >= 1.20.0
+
+
+# for build doc
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-requests-mock
+BuildRequires: python3-module-fixtures
+BuildRequires: python3-module-os-client-config >= 1.28.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
 
 %description
 python-openstackclient is a unified command-line client for the OpenStack APIs.
@@ -126,28 +140,24 @@ rm -rf requirements.txt test-requirements.txt
 # Remove bundled egg-info
 rm -rf *.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/openstack %buildroot%_bindir/openstack.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/openstack %buildroot%_bindir/python3-openstack
-%endif
 
-%python_install
+
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html doc/source html
@@ -160,7 +170,7 @@ rm -fr html/.doctrees html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%_bindir/openstack
+%_bindir/openstack.py2
 %python_sitelibdir/*
 %_man1dir/openstack.1*
 %exclude %python_sitelibdir/*/tests
@@ -171,17 +181,19 @@ rm -fr html/.doctrees html/.buildinfo
 %files doc
 %doc html
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-openstack
+%_bindir/openstack
+%_man1dir/openstack.1*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
