@@ -1,5 +1,7 @@
+%def_without nautilus
+
 Name: tortoisehg
-Version: 4.8
+Version: 4.8.1
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -7,7 +9,7 @@ Summary: Mercurial GUI command line tool thg
 License: GPLv2
 # - few files are however under the more permissive GPLv2+
 Group: Development/Other
-Url: https://tortoisehg.bitbucket.org/
+Url: https://tortoisehg.bitbucket.io
 
 Source: %name-%version.tar
 
@@ -30,6 +32,7 @@ BuildArch: noarch
 This package contains the thg command line tool, which provides a graphical
 user interface to the Mercurial distributed revision control system.
 
+%if_with nautilus
 %package nautilus
 Summary: Mercurial GUI plug-in to the Nautilus file manager
 Group: Development/Other
@@ -41,6 +44,7 @@ Mercurial distributed revision control system available in the file manager
 with a graphical interface.
 
 Note that the nautilus extension has been deprecated upstream.
+%endif
 
 %prep
 %setup
@@ -82,10 +86,16 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %_datadir/pixmaps/thg_logo.svg
 %_datadir/applications/thg.desktop
 
+%if_with nautilus
 %files nautilus
 %_datadir/nautilus-python/extensions/nautilus-thg.py*
+%endif
 
 %changelog
+* Wed Dec 12 2018 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
+- Build new version.
+- Build without nautilus plugin, because it doesn't work.
+
 * Sat Nov 17 2018 Grigory Ustinov <grenka@altlinux.org> 4.8-alt1
 - Build new version.
 
