@@ -1,61 +1,50 @@
-%def_with python3
 %define oname monascaclient
 
 Name:       python-module-%oname
-Version:    1.10.0
+Version:    1.12.1
 Release:    alt1
 Summary:    Python API and CLI for OpenStack Monasca
 License:    ASL 2.0
-Url: http://docs.openstack.org/developer/python-%oname
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Url:        http://docs.openstack.org/developer/python-%oname
+Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 Group:      Development/Python
 
 BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-argparse
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-keystoneclient >= 3.8.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-osc-lib >= 1.8.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-yaml >= 3.10.0
+BuildRequires: python-module-prettytable >= 0.7.2
+BuildRequires: python-module-yaml >= 3.12
 
-%if_with python3
+BuildRequires: python-module-sphinx >= 1.6.5
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-doc8 >= 0.6.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-argparse
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.middleware >= 3.0.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.service >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-keystoneclient >= 3.8.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-osc-lib >= 1.8.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-prettytable  >= 0.7.1
-BuildRequires: python3-module-yaml >= 3.10.0
-%endif
+BuildRequires: python3-module-prettytable >= 0.7.2
+BuildRequires: python3-module-yaml >= 3.12
+
+BuildRequires: python3-module-sphinx >= 1.6.5
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-doc8 >= 0.6.0
 
 %description
 This is a client library for Monasca built to interface with the Monasca API. It
@@ -106,59 +95,56 @@ monasca.
 # Let RPM handle the dependencies
 rm -f {,test-}requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/monasca %buildroot%_bindir/monasca.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/monasca %buildroot%_bindir/python3-monasca
-%endif
-
-%python_install
 
 # Build HTML docs and man page
-#export PYTHONPATH="$( pwd ):$PYTHONPATH"
-#sphinx-build -b html doc/source html
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
+sphinx-build -b html doc/source html
 
 # Fix hidden-file-or-dir warnings
-#rm -fr html/.doctrees html/.buildinfo
+rm -fr html/.doctrees html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%_bindir/monasca
+%_bindir/monasca.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-monasca
+%_bindir/monasca
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
-#%files doc
-#%doc LICENSE html
+%files doc
+%doc LICENSE html
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- Updated to 1.12.1.
+- Added building docs.
+
 * Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
