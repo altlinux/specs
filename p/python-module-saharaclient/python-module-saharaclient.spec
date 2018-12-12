@@ -1,8 +1,7 @@
 %define oname saharaclient
-%def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 Summary: Python API and CLI for OpenStack  Sahara
 
@@ -15,39 +14,40 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-osc-lib >= 1.2.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-openstackclient >= 3.3.0
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-openstackdocstheme
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-osc-lib >= 1.11.0
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-openstackclient >= 3.12.0
+BuildRequires: python-module-requests >= 2.14.0
+BuildRequires: python-module-six >= 1.10.0
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
-BuildRequires: python3-module-osc-lib >= 1.2.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-openstackclient >= 3.3.0
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-openstackdocstheme
-%endif
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-osc-lib >= 1.11.0
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-openstackclient >= 3.12.0
+BuildRequires: python3-module-requests >= 2.14.0
+BuildRequires: python3-module-six >= 1.10.0
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 
 %description
 This is a client for the OpenStack Sahara API. There's a Python API (the
@@ -99,28 +99,23 @@ rm -rf *.egg-info
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 rm -rf {,test-}requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
-
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+
+%python_install
+
 pushd ../python3
 %python3_install
 popd
-%endif
-
-%python_install
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html doc/source html
@@ -134,19 +129,20 @@ sphinx-build -b html doc/source html
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - new version 1.5.0
 
