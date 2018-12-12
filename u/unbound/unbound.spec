@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Wed Dec 12 2018 Alexei Takaseev <taf@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Wed Dec 05 2018 Alexei Takaseev <taf@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
