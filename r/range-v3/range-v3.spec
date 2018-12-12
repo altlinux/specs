@@ -1,7 +1,7 @@
 Name: range-v3
 
 Summary: Experimental range library for C++11/14/17
-Version: 0.3.6
+Version: 0.4.0
 Release: alt1
 
 License: Boost
@@ -43,6 +43,9 @@ cp -a include/* "%buildroot%_includedir/%name"
 %_includedir/%name
 
 %changelog
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
+- new version 0.4.0 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.3.6-alt1
 - new version 0.3.6 (with rpmrb script)
 
