@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.2.3
-Release: alt8
+Version: 5.3.5
+Release: alt10
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -47,6 +47,7 @@ Patch12: qemu-server-lsi.patch
 Patch13: pve-manager-lsi.patch
 Patch14: pve-container-lxc.patch
 Patch15: pve-manager-ceph.patch
+Patch16: pve-manager-logrotate.patch
 Patch18: pve-container-lxcnetdelbr.patch
 Patch19: pve-manager-snapshot-resize.patch
 Patch20: pve-manager-rem-package-ver-btn.patch
@@ -59,24 +60,24 @@ Patch26: pve-ha-manager-watchdog.patch
 Patch27: pve-widget-toolkit-alt.patch
 Patch28: pve-widget-toolkit-alt-utils.patch
 Patch29: pve-manager-widgettoolkit.patch
-Patch30: qemu-server-perl-alt.patch
+Patch30: pve-manager-perl-T.patch
 Patch31: qemu-server-qemu-3-0-0-alt.patch
 Patch32: pve-manager-alt-rm-pve-version.patch
-Patch33: pve-container-pct-T.patch
+Patch33: qemu-server-vga-map.patch
 Patch34: qemu-server-alt-bootsplash.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
-BuildRequires: perl(Template.pm) perl(IPC/Run.pm)
+BuildRequires: perl(Template.pm) perl(IPC/Run.pm) perl(Term/ReadLine.pm) libjson-c-devel
 
 %description
 This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.24
+Version: 2.0.31
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc >= 2.1.0 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
@@ -86,7 +87,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.12
+Version: 3.0.16
 Group: System/Servers
 Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -103,7 +104,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.27
+Version: 5.0.43
 Group: System/Servers
 Requires: socat genisoimage cloud-init pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -114,7 +115,7 @@ This package contains the Qemu Server tools used by PVE
 
 %package -n pve-guest-common
 Summary: PVE common guest-related modules
-Version: 2.0.17
+Version: 2.0.18
 Group: System/Servers
 
 %description -n pve-guest-common
@@ -149,6 +150,7 @@ This is used to implement the PVE REST API
 %patch13 -p0 -b .megasas-gen2-2
 %patch14 -p0 -b .lxc
 %patch15 -p0 -b .ceph
+%patch16 -p0 -b .logrotate
 %patch18 -p0 -b .lxcnetdelbr
 %patch19 -p0 -b .resize
 %patch20 -p0 -b .rembtn
@@ -161,10 +163,10 @@ This is used to implement the PVE REST API
 %patch27 -p0 -b .alt
 %patch28 -p0 -b .alt
 %patch29 -p0 -b .widgettoolkit
-%patch30 -p0 -b .perl-compat
+%patch30 -p0 -b .T
 %patch31 -p0 -b .qemu-3-0-0
 %patch32 -p0 -b .rm-version
-%patch33 -p0 -b .T
+%patch33 -p0 -b .vga-map
 %patch34 -p0 -b .bootsplash
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
@@ -207,7 +209,7 @@ install -pD -m0644 pve-ha-manager/debian/pve-ha-manager.default %buildroot%_sysc
 
 mkdir -p %buildroot/lib/tmpfiles.d
 cat << __EOF__ > %buildroot/lib/tmpfiles.d/%name.conf
-d /var/run/pveproxy 0700 www-data www-data -
+d /run/pveproxy 0700 www-data www-data -
 f /var/lock/pveproxy.lck 0644 www-data www-data
 f /var/lock/spiceproxy.lck 0644 www-data www-data
 __EOF__
@@ -254,6 +256,7 @@ __EOF__
 %_sysconfdir/bash_completion.d/pvesubscription
 %_sysconfdir/bash_completion.d/spiceproxy
 %_sysconfdir/bash_completion.d/vzdump
+%_sysconfdir/bash_completion.d/pvesh
 %_sysconfdir/logrotate.d/pve
 %config(noreplace) %_sysconfdir/vzdump.conf
 #systemd_unitdir/pvebanner.service
@@ -323,11 +326,19 @@ __EOF__
 %perl_vendor_privlib/PVE/API2/VZDump.pm
 %perl_vendor_privlib/PVE/API2/Replication.pm
 %perl_vendor_privlib/PVE/API2/ReplicationConfig.pm
+%perl_vendor_privlib/PVE/API2/Hardware.pm
+%perl_vendor_privlib/PVE/API2/Scan.pm
+%dir %perl_vendor_privlib/PVE/API2/Hardware
+%dir %perl_vendor_privlib/PVE/API2/Ceph
+%perl_vendor_privlib/PVE/API2/Hardware/PCI.pm
+%perl_vendor_privlib/PVE/API2/Ceph/FS.pm
+%perl_vendor_privlib/PVE/API2/Ceph/MDS.pm
 %perl_vendor_privlib/PVE/CLI/pveceph.pm
 %perl_vendor_privlib/PVE/CLI/pvenode.pm
 %perl_vendor_privlib/PVE/CLI/pvesr.pm
 %perl_vendor_privlib/PVE/CLI/pvesubscription.pm
 %perl_vendor_privlib/PVE/CLI/vzdump.pm
+%perl_vendor_privlib/PVE/CLI/pvesh.pm
 %perl_vendor_privlib/PVE/Service/pvedaemon.pm
 %perl_vendor_privlib/PVE/Service/pveproxy.pm
 %perl_vendor_privlib/PVE/Service/pvestatd.pm
@@ -443,9 +454,11 @@ __EOF__
 %_sysconfdir/bash_completion.d/qm
 %_sysconfdir/bash_completion.d/qmrestore
 %config(noreplace) %_sysconfdir/modules-load.d/qemu-server.conf
+%systemd_unitdir/qmeventd.service
 %_prefix/lib/qemu-server
 %_sbindir/qm
 %_sbindir/qmrestore
+%_sbindir/qmeventd
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
 %dir %perl_vendor_privlib/PVE/API2/Qemu
@@ -467,11 +480,13 @@ __EOF__
 %perl_vendor_privlib/PVE/QemuServer/ImportDisk.pm
 %perl_vendor_privlib/PVE/QemuServer/OVF.pm
 %perl_vendor_privlib/PVE/QemuServer/Cloudinit.pm
+%perl_vendor_privlib/PVE/QemuServer/Agent.pm
 %_datadir/qemu-server
 %_localstatedir/qemu-server
 %_man1dir/qm.1*
 %_man1dir/qmrestore.1*
 %_man5dir/*m.conf.5*
+%_man8dir/qmeventd.8*
 
 %files -n pve-guest-common
 %perl_vendor_privlib/PVE/VZDump/Plugin.pm
@@ -487,6 +502,22 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.3.5-alt10
+- pve-manager 5.3-5
+- pve-container 2.0-31
+- pve-firewall 3.0-16
+- qemu-server 5.0-43
+- pve-widget-toolkit 1.0-22
+- extjs 6.0-1-2
+- pve-i18n 1.0-9
+
+* Mon Nov 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.3.3-alt9
+- pve-manager 5.3-3
+- pve-container 2.0-30
+- pve-firewall 3.0-15
+- qemu-server 5.0-42
+- pve-guest-common 2.0-18
+
 * Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt8
 - pve-http-server 2.0-11
 
