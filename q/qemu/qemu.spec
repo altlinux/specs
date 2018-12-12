@@ -25,7 +25,7 @@
 %def_enable vhost_net
 %def_enable vhost_scsi
 %def_enable vhost_vsock
-%def_disable opengl
+%def_enable opengl
 %def_enable guest_agent
 %def_enable tools
 %def_enable spice
@@ -104,7 +104,7 @@
 
 Name: qemu
 Version: 3.0.0
-Release: alt3
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -1591,6 +1591,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Tue Dec 11 2018 Ilfat Aminov <aminov@altlinux.org> 3.0.0-alt4
+- Enable OpenGL support
+
 * Tue Nov 20 2018 Lenar Shakirov <snejok@altlinux.ru> 3.0.0-alt3
 - qemu-kvm.sh fixed on i?86 systems
 
