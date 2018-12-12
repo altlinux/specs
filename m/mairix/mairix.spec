@@ -1,16 +1,18 @@
 Name: mairix
-Version: 0.17.1
-Release: alt1.qa3
+Version: 0.24
+Release: alt1
 
 Summary: A maildir indexer and searcher
+
 License: GPL
 Group: Networking/Mail
-Url: http://www.rc0.org.uk/%name
-Source: http://www.rc0.org.uk/%name/%name-%{version}.tar.gz
+Url: http://www.rpcurnow.force9.co.uk/mairix/
 
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Jul 14 2005
 BuildRequires: flex samba-common texlive-collection-basic texlive-collection-latexrecommended
+BuildRequires: openssl-devel zlib-devel bzlib-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -20,24 +22,28 @@ and performing fast searches on the resulting index.  The output is a new
 maildir folder containing symbolic links to the matched messages.
 
 %prep
-%setup -q
+%setup
 
 %build
-./configure --prefix=/usr
+./configure --prefix=/usr \
+            --mandir=%_mandir
+
 %make_build
-make docs
+#make docs
 
 %install
-%makeinstall
-%__install -d %buildroot%_infodir
-%__install -p mairix.info %buildroot%_infodir
+%makeinstall_std
 
 %files
+%doc README
 %_bindir/%name
-%_infodir/*.info*
-%doc README mairix.txt mairix.html mairix.dvi mairix.pdf dotmairixrc.eg
+%_man1dir/*
+%_man5dir/*
 
 %changelog
+* Wed Dec 12 2018 Grigory Ustinov <grenka@altlinux.org> 0.24-alt1
+- Build new version (Closes: #24353).
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.17.1-alt1.qa3
 - NMU: rebuild with texlive instead of tetex
 
