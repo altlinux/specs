@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 5.0.27
-Release: alt2
+Version: 5.0.31
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -18,9 +18,7 @@ Source2: pve-apiclient.tar.xz
 Patch0: %name.patch
 Patch1: pve-access-control.patch
 Patch2: pve-cluster-install_vzdump_cron_config.patch
-Patch3: pve-cluster-corosync.patch
-Patch4: pve-cluster-pmxcfs-open.patch
-Patch5: pve-cluster-alt-perl.patch
+Patch3: pve-cluster-pmxcfs-open.patch
 
 Source3: pve-firsttime
 
@@ -36,7 +34,7 @@ on all nodes.
 
 %package -n pve-access-control
 Summary: PVE access control library
-Version: 5.0.8
+Version: 5.1.3
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -49,20 +47,13 @@ control function used by PVE.
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
-%build
-cd data
-%autoreconf
-%configure
-%make
 
 %install
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
 install -pD -m644 debian/sysctl.d/pve.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
 cd data
-%make DESTDIR=%buildroot install
+%make -C PVE/Cluster DESTDIR=%buildroot install
+%make PERL_DOC_INC_DIRS=" .. . ../../pve-access-control ../../pve-apiclient" DESTDIR=%buildroot install
 cd ../pve-access-control
 %make DESTDIR=%buildroot install
 cd ../pve-apiclient
@@ -90,7 +81,7 @@ __EOF__
 cat << __EOF__ > %buildroot%_datadir/doc/%name/rrdcached.sysconfig
 RRDCACHED_USER="root"
 OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
-SOCKFILE="/var/run/rrdcached.sock"
+SOCKFILE="/run/rrdcached.sock"
 SOCKPERMS=0660
 __EOF__
 
@@ -133,6 +124,8 @@ fi
 %dir %perl_vendor_privlib/PVE/APIClient
 %perl_vendor_privlib/PVE/APIClient/Exception.pm
 %perl_vendor_privlib/PVE/APIClient/LWP.pm
+%dir %perl_vendor_privlib/PVE/Cluster
+%perl_vendor_privlib/PVE/Cluster/IPCConst.pm
 %dir %_localstatedir/%name
 %_man1dir/pvecm.1*
 %_man5dir/datacenter.cfg.5*
@@ -155,6 +148,15 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.31-alt1
+- pve-cluster 5.0-3
+- pve-access-control 5.1-3
+
+* Mon Nov 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.30-alt1
+- pve-cluster 5.0-30
+- pve-access-control 5.1-1
+- pve-apiclient 2.0-4
+
 * Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.27-alt2
 - removed ubt
 

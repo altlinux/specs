@@ -1,7 +1,7 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
 Version: 1.0.5
-Release: alt1%ubt
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -28,10 +28,13 @@ This package contains librados perl binding used by PVE
 %perl_vendor_autolib/PVE
 
 %changelog
-* Wed Jul 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.5-alt1%ubt
+* Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.5-alt2
+- removed ubt
+
+* Wed Jul 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.5-alt1.S1
 - 1.0-5
 
-* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt2%ubt
+* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt2.S1
 - rebuild
 
 * Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt0.M80C.1

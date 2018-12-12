@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 5.2.3
+Version: 5.3.1
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -48,6 +48,7 @@ mkdir -p %buildroot%_datadir/%name/{api-viewer,images/screenshot}
 install -m644 *.html %buildroot%_datadir/%name/
 install -m644 api-viewer/apidoc.js %buildroot%_datadir/%name/api-viewer/
 install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
+install -m644 images/*.svg %buildroot%_datadir/%name/images/
 install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screenshot/
 
 %files
@@ -58,6 +59,12 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.3.1-alt1
+- 5.3-1
+
+* Mon Nov 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.10-alt1
+- 5.2-10
+
 * Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt1
 - 5.2-3
 

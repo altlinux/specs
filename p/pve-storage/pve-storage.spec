@@ -1,7 +1,7 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 5.0.23
-Release: alt2
+Version: 5.0.33
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -9,12 +9,11 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 
-Requires: nfs-utils open-iscsi clvm glusterfs3-client smartmontools gdisk parted hdparm
-Requires: multipath-tools ceph >= 12.2.1 zfs-utils >= 0.6.5.8-alt1.M80P.1
+Requires: nfs-utils open-iscsi glusterfs3-client smartmontools gdisk parted hdparm
+Requires: multipath-tools ceph >= 12.2.1 zfs-utils
 
 Source: pve-storage.tar.xz
 Patch: pve-storage-alt.patch
-Patch1: pve-storage-RBD-size-format.patch
 
 BuildRequires: librados2-perl pve-common pve-cluster pve-doc-generator pve-access-control xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm)
@@ -25,7 +24,6 @@ This package contains the storage management library used by PVE
 %prep
 %setup -q -n %name
 %patch -p1
-%patch1 -p1 -b .iB
 
 %install
 %make DESTDIR=%buildroot install
@@ -43,6 +41,12 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Dec 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt1
+- 5.0-33
+
+* Mon Nov 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.31-alt1
+- 5.0-31
+
 * Thu Sep 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt2
 - fixed parse RBD size format
 
