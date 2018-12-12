@@ -18,9 +18,9 @@
 # version-release
 
 %define nv_version 410
-%define nv_release 73
+%define nv_release 78
 %define nv_minor %nil
-%define pkg_rel alt207
+%define pkg_rel alt208
 %define set_gl_nvidia_ver 1.0.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -309,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Dec 12 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt208
+- new version
+
 * Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt207
 - fix create kernel module symlinks
 
