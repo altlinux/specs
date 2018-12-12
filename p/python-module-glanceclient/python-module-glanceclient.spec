@@ -1,17 +1,16 @@
 %define oname glanceclient
-%def_with python3
 
-Name: python-module-%oname
-Version: 2.6.0
-Release: alt1.1
+Name:    python-module-%oname
+Version: 2.13.0
+Release: alt1
 Summary: Python API and CLI for OpenStack Glance
 
-Group: Development/Python
+Group:   Development/Python
 License: ASL 2.0
-Url: http://docs.openstack.org/developer/python-%oname
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Url:     http://docs.openstack.org/developer/python-%oname
+Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
-Patch: workaround-requests.patch
+Patch:   workaround-requests.patch
 
 BuildArch: noarch
 
@@ -20,47 +19,51 @@ Requires: python-module-requests >= 2.12.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-OpenSSL >= 0.11
-BuildRequires: python-module-warlock >= 1.0.1
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-keystoneauth1 >= 3.6.2
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-warlock >= 1.2.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-wrapt >= 1.7.0
+BuildRequires: python-module-OpenSSL >= 17.1.0
 
 BuildRequires: python-module-mock >= 2.0
 BuildRequires: python-module-subunit python-module-subunit-tests
-BuildRequires: python-module-os-client-config >= 1.22.0
+BuildRequires: python-module-os-client-config >= 1.28.0
 BuildRequires: python-module-testrepository >= 0.0.18
-BuildRequires: python-module-testtools >= 1.4.0
+BuildRequires: python-module-testtools >= 2.2.0
 BuildRequires: python-module-testscenarios >= 0.4
 BuildRequires: python-module-fixtures >= 3.0.0
-BuildRequires: python-module-requests-mock >= 1.1
-BuildRequires: python-module-pbr-tests
+BuildRequires: python-module-requests-mock >= 1.2.0
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-sphinxcontrib-apidoc
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
-BuildRequires: python3-module-OpenSSL >= 0.11
-BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-keystoneauth1 >= 3.6.2
+BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-warlock >= 1.0.1
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-wrapt >= 1.7.0
-%endif
+BuildRequires: python3-module-OpenSSL >= 17.1.0
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 This is a client for the OpenStack Glance API. There's a Python API (the
@@ -114,40 +117,34 @@ rm -rf python_glanceclient.egg-info
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 rm -rf {,test-}requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
-
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
-
-python setup.py build_sphinx
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/glance %buildroot%_bindir/glance.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/glance %buildroot%_bindir/python3-glance
-%endif
 
-%python_install
 
+sphinx-build -b html doc/source doc/build/html
 # generate man page
 sphinx-build -b man doc/source man
-install -p -D -m 644 man/glance.1 %buildroot%_mandir/man1/glance.1
+install -p -D -m 644 man/glance.1 %buildroot%_man1dir/glance.1
 
 %files
 %doc README.rst
 %doc LICENSE
-%_bindir/glance
+%_bindir/glance.py2
 %python_sitelibdir/*
 %_man1dir/glance*
 %exclude %python_sitelibdir/*/tests
@@ -155,20 +152,24 @@ install -p -D -m 644 man/glance.1 %buildroot%_mandir/man1/glance.1
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-glance
+%_bindir/glance
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt1
+- 2.13.0
+
+* Tue Oct 09 2018 Grigory Ustinov <grenka@altlinux.org> 2.12.1-alt1
+- Updated to 2.12.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
