@@ -1,6 +1,6 @@
 Name: ucl
 Version: 1.03
-Release: alt3.qa2
+Release: alt4
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: The UCL Compression Library
 License: GPL
@@ -62,9 +62,10 @@ UCL supports in-place decompression.
 This package contains the %name development library and header files.
 
 %prep
-%setup -q
+%setup
 
 %build
+%add_optflags "-std=c90"
 %configure --enable-shared --disable-static
 %make_build
 
@@ -80,6 +81,9 @@ This package contains the %name development library and header files.
 %_includedir/*
 
 %changelog
+* Fri Dec 07 2018 Grigory Ustinov <grenka@altlinux.org> 1.03-alt4
+- Fixed FTBFS (use c90 standart).
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.03-alt3.qa2
 - NMU: rebuilt for debuginfo.
 
