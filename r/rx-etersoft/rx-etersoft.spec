@@ -2,7 +2,7 @@
 %define hooksroot rx-etersoft
 Name: rx-etersoft
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Freenx application/thin-client server
 Group: Networking/Remote access
@@ -190,6 +190,9 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Wed Dec 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt2
+- remove license check from GPL code
+
 * Fri Nov 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - (rxreport): added .xsession-errors files
 - added 'sess_id' variable processing in getparam_sessionid
