@@ -4,7 +4,7 @@
 Name: rust
 Epoch: 1
 Version: %rust_ver
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -195,6 +195,37 @@ patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/rustc
 sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/builder.rs
 %endif
 
+patch -p2 <<'EOF'
+diff --git a/rustc-1.30.0-src/src/etc/rust-gdb b/rustc-1.30.0-src/src/etc/rust-gdb
+index 743952a5bef..a495ddb12f0 100755
+--- a/rustc-1.30.0-src/src/etc/rust-gdb
++++ b/rustc-1.30.0-src/src/etc/rust-gdb
+@@ -13,8 +13,7 @@
+ set -e
+ 
+ # Find out where the pretty printer Python module is
+-RUSTC_SYSROOT=`rustc --print=sysroot`
+-GDB_PYTHON_MODULE_DIRECTORY="$RUSTC_SYSROOT/lib/rustlib/etc"
++GDB_PYTHON_MODULE_DIRECTORY=%_libdir/rustlib/etc
+ 
+ # Run GDB with the additional arguments that load the pretty printers
+ # Set the environment variable `RUST_GDB` to overwrite the call to a
+diff --git a/rustc-1.30.0-src/src/etc/rust-gdbgui b/rustc-1.30.0-src/src/etc/rust-gdbgui
+index 7e179ba927d..a7c224668d7 100755
+--- a/rustc-1.30.0-src/src/etc/rust-gdbgui
++++ b/rustc-1.30.0-src/src/etc/rust-gdbgui
+@@ -41,8 +41,7 @@ icon to start your program running.
+ fi
+ 
+ # Find out where the pretty printer Python module is
+-RUSTC_SYSROOT=`rustc --print=sysroot`
+-GDB_PYTHON_MODULE_DIRECTORY="$RUSTC_SYSROOT/lib/rustlib/etc"
++GDB_PYTHON_MODULE_DIRECTORY=%_libdir/rustlib/etc
+ 
+ # Set the environment variable `RUST_GDB` to overwrite the call to a
+ # different/specific command (defaults to `gdb`).
+EOF
+
 %build
 cat > config.toml <<EOF
 [build]
@@ -307,6 +338,9 @@ rm -rf %rustdir
 %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Wed Dec 12 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:1.30.0-alt2
+- rust-gdb: fix %%_libdir path (to find the pretty-printers in Python).
+
 * Mon Oct 29 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.30.0-alt1
 - 1.30.0
 
