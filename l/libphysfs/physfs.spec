@@ -1,7 +1,7 @@
 %define uname physfs
 Name: libphysfs
-Version: 2.0.2
-Release: alt1.1
+Version: 3.0.1
+Release: alt1
 
 Summary: PhysicsFS file abstraction layer for games
 License: zlib license
@@ -9,9 +9,7 @@ Group: System/Libraries
 Url: http://www.icculus.org/physfs/
 Provides: %uname = %version
 Source0: http://icculus.org/physfs/downloads/physfs-%version.tar.gz
-
-Patch0: physfs-1.0.2-alt-interface.patch
-Patch1: physfs-2.0.2-alt-no-Werror.patch
+Patch: physfs-3.0.1-dirfix.patch
 
 # Automatically added by buildreq on Sat Oct 24 2009
 BuildRequires: doxygen gcc-c++ libncurses-devel libreadline-devel zlib-devel cmake
@@ -46,33 +44,35 @@ This package contains the development headers, libraries, and documentaion to
 build programs using PhysicsFS.
 
 %prep
-%setup -q -n %uname-%version
-%patch1 -p2
+%setup -n %uname-%version
+%patch -p1
 
 %build
-%cmake \
+%cmake_insource \
 	-DPHYSFS_BUILD_STATIC:BOOL=OFF
+
+%make_build
 
 doxygen
 
-cd BUILD
-%make_build
-
 %install
-cd BUILD
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc CHANGELOG.txt CREDITS.txt INSTALL.txt LICENSE.txt TODO.txt
+%doc docs/CHANGELOG.txt docs/CREDITS.txt docs/INSTALL.txt LICENSE.txt docs/TODO.txt
 %_libdir/*so.*[0-9]
 
 %files devel
 %_bindir/test_physfs
 %doc docs/*
 %_libdir/*.so
+%_libdir/pkgconfig/physfs.pc
 %_includedir/physfs.h
 
 %changelog
+* Wed Nov 07 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Build new version.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.1
 - Fixed build
 
