@@ -1,8 +1,8 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.62.0
-Release: alt3
+Version: 7.63.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -149,6 +149,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Dec 12 2018 Anton Farygin <rider@altlinux.ru> 7.63.0-alt1
+- 7.63.0
+
 * Wed Nov 14 2018 Anton Farygin <rider@altlinux.ru> 7.62.0-alt3
 - enabled idn support (closes: #34103)
 - enabled ldap support
