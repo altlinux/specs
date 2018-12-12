@@ -2,18 +2,17 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 0.12.2
-Release: alt4
+Version: 1.0.2
+Release: alt1
 
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 License: BSD
 Group: Development/Python
 
 URL: http://flask.pocoo.org/
-#https://github.com/pallets/flask
 BuildArch: noarch
 
-Source: Flask-%version.tar
+Source: Flask-%version.tar.gz
 
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-werkzeug
@@ -21,8 +20,10 @@ BuildRequires: python-module-simplejson
 BuildRequires: python-module-jinja2
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-simplejson
+BuildRequires: python3-module-jinja2
 
 %py_requires click.testing
 
@@ -39,6 +40,8 @@ technologies and more.
 %package -n python3-module-%modname
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 Group: Development/Python3
+
+%py3_requires click.testing
 
 %description -n python3-module-%modname
 Flask is called a "micro-framework" because the idea to keep the core
@@ -63,26 +66,30 @@ pushd ../python3
 popd
 
 %install
+%python_install
+pushd %buildroot%_bindir
+mv %modname %modname.py2
+popd
+
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot/%_bindir
-mv %modname %modname.py3
-popd
 
-%python_install
 
 %files
 %doc AUTHORS README.rst LICENSE
-%_bindir/%modname
-%python_sitelibdir_noarch/*
+%_bindir/%modname.py2
+%python_sitelibdir/*
 
 %files -n python3-module-%modname
 %doc AUTHORS README.rst LICENSE
-%python3_sitelibdir_noarch/*
-%_bindir/%modname.py3
+%python3_sitelibdir/*
+%_bindir/%modname
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.2-alt4
 - Updated runtime dependencies.
 
