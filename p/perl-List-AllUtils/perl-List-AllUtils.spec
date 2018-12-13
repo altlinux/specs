@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-List-AllUtils
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: List-AllUtils - Perl module
@@ -46,10 +46,13 @@ None.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING.md LICENSE README.md Changes
+%doc CONTRIBUTING.md LICENSE README.md Changes CODE_OF_CONDUCT.md
 %perl_vendor_privlib/List/*
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
