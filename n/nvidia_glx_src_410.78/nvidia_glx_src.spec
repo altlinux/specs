@@ -22,7 +22,7 @@
 
 # version-release
 %define nv_version 410
-%define nv_release 73
+%define nv_release 78
 %define nv_minor %nil
 %define pkg_rel alt192
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
@@ -43,7 +43,7 @@
 %else
 %def_enable kernelsource
 %define subd ./
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %endif
 #
 %def_disable package_wfb
@@ -352,8 +352,8 @@ fi
 %endif
 
 %changelog
-* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt192
-- don't package libnvidia-egl-wayland
+* Wed Dec 12 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt192
+- new version
 
 * Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt191
 - fix package 32-bit libs
