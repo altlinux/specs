@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Shell-Config-Generate
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Shell/Guess.pm) perl(Test2/API.pm) perl(Test2/Mock.pm) perl(Test2/V0.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.31
-Release: alt2
+Version: 0.33
+Release: alt1
 Summary: Portably generate config for any shell
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/pod/Shell::Config::Generate
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2
 - to Sisyphus
 
