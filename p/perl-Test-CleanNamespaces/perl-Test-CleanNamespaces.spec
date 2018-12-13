@@ -6,7 +6,7 @@ BuildRequires: perl(Class/MOP/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMake
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.23
+Version: 0.24
 Release: alt1
 Summary: Check for uncleaned imports
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
