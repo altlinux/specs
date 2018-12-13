@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit c613a317a18b36ce1dafc24eeeb7b887c092a8a5
+%global commit d812109ebf3b904c9fcd8bc17f6d9b246232743b
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	5.3.0
+Version:	5.4.2
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -19,7 +19,6 @@ License:	ASL 2.0
 URL:		https://grafana.com
 
 Source: %name-%version.tar
-#Source2: %name-%version.linux-x64.tar
 Patch: %name-%version.patch
 
 Source100: %name-server.sysconfig
@@ -33,6 +32,7 @@ Source104: %name.tmpfiles
 ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: npm yarn
+BuildRequires: node node-devel
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
 
@@ -43,26 +43,23 @@ Grafana is an open source, feature rich metrics dashboard and graph editor
 for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %prep
-%setup -q
-#tar -xf %SOURCE2
-%patch -p1
-
-%build
-# Important!!!
-# The %%builddir/.gopath created by the hands. It contains the dependencies required for your project.
-# This is necessary because the gdm cannot work with the vendor directory and always tries to update
-# all dependencies from the external servers. So, we can't use Makefile to compile.
-#
-# $ export GOPATH="$PWD/.gopath"
-# $ git rm -rf -- "$GOPATH"
-# $ mkdir -p "$GOPATH"
-# $ make
-# $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add --force "$GOPATH"
 # Build the Front-end Assets
 # $ npm install yarn
 # $ ./node_modules/.bin/yarn install --pure-lockfile
 # $ npm run build
+# $ git add -f node_modules
+# $ git commit -n --no-post-rewrite -m "add node js modules"
+
+%setup -q
+%patch -p1
+
+# add symlink to node headers
+node_ver=$(node -v | sed -e "s/v//")
+mkdir -p node_modules/.node-gyp/$node_ver/include
+ln -s %_includedir/node node_modules/.node-gyp/$node_ver/include/node
+echo "9" > node_modules/.node-gyp/$node_ver/installVersion
+
+%build
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -155,6 +152,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 5.4.2-alt1
+- 5.4.2
+
 * Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
