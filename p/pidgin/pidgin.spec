@@ -17,8 +17,7 @@
 %def_enable dot
 %def_enable doxygen
 %def_enable relnot
-# disable idn, because it's deprecated, waiting for idn2 support
-%def_disable idn
+%def_enable idn
 %def_enable farstream
 %def_enable gstreamer
 %def_enable screensaver
@@ -34,7 +33,7 @@
 
 Name: pidgin
 Version: 2.13.0
-Release: alt3
+Release: alt4
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -456,6 +455,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 13 2018 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt4
+- Rebuild with libidn support.
+
 * Wed Dec 12 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.13.0-alt3
 - fixed libpurple's error: '/usr/bin/ld: cannot find -ljabber'
 
