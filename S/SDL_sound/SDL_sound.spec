@@ -1,6 +1,6 @@
 Name: SDL_sound
 Version: 1.0.3
-Release: alt3.hg20120815.1
+Release: alt4
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
@@ -9,6 +9,7 @@ Group: System/Libraries
 URL: http://icculus.org/SDL_sound/
 # hg clone http://hg.icculus.org/icculus/SDL_sound/
 Source: %name-%version.tar
+Patch: SDL_sound-1.0.3-debian-libphysfs.patch
 
 BuildRequires: doxygen libSDL-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
 %ifnarch %arm
@@ -65,6 +66,7 @@ Static library for develop SDL_sound applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -I%_includedir/smpeg
@@ -117,6 +119,9 @@ cp -a *.txt docs/html %buildroot%docdir/
 %docdir/html
 
 %changelog
+* Thu Dec 13 2018 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt4
+- Fixed errors in physfsrwops.h (thanks debian)
+
 * Tue Jan 13 2015 Fr. Br. George <george@altlinux.ru> 1.0.3-alt3.hg20120815.1
 - Rebuild with libSDL instead of incorrrectly selected libSDL2
 
