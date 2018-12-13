@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.3.4
-Release: alt1
+Release: alt2
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -318,6 +318,8 @@ fi
 %exclude %_man1dir/x2gobroker-daemon.1*
 %_man8dir/x2gobroker-keygen.8*
 %_man8dir/x2gobroker-testagent.8*
+%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
+%attr(00750,x2gobroker,x2gobroker) %_sharedstatedir/x2gobroker
 
 %files -n python-module-x2gobroker
 %config(noreplace) %_sysconfdir/x2go
@@ -326,8 +328,6 @@ fi
 %config %_sysconfdir/pam.d/*
 %config %_sysconfdir/default/python-x2gobroker
 %python_sitelibdir_noarch/x2gobroker*
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
-%attr(00750,x2gobroker,x2gobroker) %_sharedstatedir/x2gobroker
 
 %files authservice
 %_unitdir/x2gobroker-authservice.service
@@ -335,14 +335,13 @@ fi
 %config %_sysconfdir/default/x2gobroker-authservice
 %_sbindir/x2gobroker-authservice
 %_man8dir/x2gobroker-authservice.8*
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
 
 %files loadchecker
 %_unitdir/x2gobroker-loadchecker.service
+%config %_sysconfdir/default/x2gobroker-loadchecker
 %config %_logrotatedir/x2gobroker-loadchecker
 %_sbindir/x2gobroker-loadchecker
 %_man8dir/x2gobroker-loadchecker.8*
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
 
 %files daemon
 %_bindir/x2gobroker-daemon
@@ -352,7 +351,6 @@ fi
 %_man8dir/x2gobroker-daemon-debug.8*
 %config %_logrotatedir/x2gobroker-daemon
 %config %_sysconfdir/default/x2gobroker-daemon
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
 
 %files ssh
 %attr(04510,x2gobroker,x2gobroker-users) %_bindir/x2gobroker-ssh
@@ -361,21 +359,20 @@ fi
 
 %files wsgi
 %_sysconfdir/apache2
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
 %config %_sysconfdir/x2go/x2gobroker-wsgi.apache.conf
 %config %_sysconfdir/x2go/x2gobroker-wsgi.apache.vhost
 %config %_logrotatedir/x2gobroker-wsgi
 
 %files agent
-%attr(02750,x2gobroker,x2gobroker) %_logdir/x2gobroker
-%attr(00750,x2gobroker,x2gobroker) %_sharedstatedir/x2gobroker
-%dir %_libdir/x2go
 %attr(04710,root,x2gobroker) %_libdir/x2go/x2gobroker-agent
 %_libdir/x2go/x2gobroker-agent.pl
 %_sbindir/x2gobroker-pubkeyauthorizer
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Thu Dec 13 2018 Oleg Solovyov <mcpain@altlinux.org> 0.0.3.4-alt2
+- fix files
+
 * Fri Nov 30 2018 Oleg Solovyov <mcpain@altlinux.org> 0.0.3.4-alt1
 - initial build for ALT Sisyphus
 
