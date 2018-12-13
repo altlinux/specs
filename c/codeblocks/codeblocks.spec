@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 17.12
-Release: alt4
+Release: alt5
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -23,7 +23,7 @@ Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-FortranProject_fix_build_gcc7_failed.patch
 
 BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
-Requires: automake >= 1.7 wxGTK >= 2.8.12 gcc gcc-c++ gdb xterm
+Requires: automake >= 1.7 wxGTK gcc gcc-c++ gdb xterm gamin mythes-en
 
 # Automatically added by buildreq on Mon Jan 22 2018
 # optimized out: boost-devel-headers fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 xorg-xproto-devel zlib-devel
@@ -281,6 +281,10 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Thu Dec 13 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt5
+- Add dependency on gamin (Closes: #35764).
+- Add dependency on mythes-en (Closes: #35765).
+
 * Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt4
 - Fixed FTBFS (removed xdg macro).
 - Fixed bogus date in changelog.
