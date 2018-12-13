@@ -1,7 +1,7 @@
 %global oname Dancer2
 
 Name: perl-Dancer2
-Version: 0.206000
+Version: 0.207000
 Release: alt1
 
 Summary: Lightweight yet powerful web application framework
@@ -37,6 +37,9 @@ BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.p
 %doc AUTHORS Changes LICENSE *.md
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.207000-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.206000-alt1
 - automated CPAN update
 
