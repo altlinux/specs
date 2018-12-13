@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	15
+%define drelease	16
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -252,6 +252,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Dec 13 2018 Anton Farygin <rider@altlinux.ru> 6.9.10.16-alt1
+- new version 6.9.10.16
+
 * Wed Dec 05 2018 Anton Farygin <rider@altlinux.ru> 6.9.10.15-alt1
 - new version 6.9.10.15
 
