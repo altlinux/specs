@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Carp-Clan
 Name: perl-%dist
-Version: 6.06
+Version: 6.07
 Release: alt1
 
 Summary: Report errors from perspective of caller of a "clan" of modules
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/K/KE/KENTNL/Carp-Clan-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +27,7 @@ pattern to characterize the package names of the "clan" of modules
 which shall never be blamed for any error.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,12 +36,15 @@ which shall never be blamed for any error.
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes README CONTRIBUTING
 %dir	%perl_vendor_privlib/Carp
 	%perl_vendor_privlib/Carp/Clan.pm
-%doc	%perl_vendor_privlib/Carp/Clan.pod
+#%doc	%perl_vendor_privlib/Carp/Clan.pod
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1
 - automated CPAN update
 
