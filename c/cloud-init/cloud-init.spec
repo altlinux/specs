@@ -1,6 +1,6 @@
 Name:    cloud-init
-Version: 0.7.9
-Release: alt3.git.5beecd
+Version: 18.4
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -26,7 +26,7 @@ BuildArch: noarch
 BuildRequires: /proc
 
 BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker
-BuildRequires: python-module-yaml python2.7(Cheetah) python-module-oauth
+BuildRequires: python-module-yaml python-module-oauth
 BuildRequires: systemd-devel
 # For tests
 BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj python-module-mock python-module-oauthlib
@@ -69,9 +69,6 @@ mkdir -p %buildroot%_libexecdir
 mv %buildroot/usr/libexec/%name %buildroot%_libexecdir/
 mkdir -p %buildroot%_sharedstatedir/cloud
 
-# Don't ship the tests
-rm -r %buildroot%python_sitelibdir/tests
-
 # Remove non-ALTLinux templates
 rm -f %buildroot%_sysconfdir/cloud/templates/*.debian.*
 rm -f %buildroot%_sysconfdir/cloud/templates/*.freebsd.*
@@ -80,7 +77,7 @@ rm -f %buildroot%_sysconfdir/cloud/templates/*.suse.*
 rm -f %buildroot%_sysconfdir/cloud/templates/*.ubuntu.*
 
 %check
-make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
+make unittest noseopts=" -v -e test_dhclient_run_with_tmpdir"
 
 %post
 %post_service cloud-config
@@ -103,6 +100,7 @@ make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
 %_sysconfdir/NetworkManager/dispatcher.d/hook-network-manager
+%_sysconfdir/bash_completion.d/%name
 /lib/udev/rules.d/66-azure-ephemeral.rules
 %_initdir/*
 %_unitdir/*
@@ -115,6 +113,10 @@ make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu Dec 13 2018 Mikhail Gordeev <obirvalger@altlinux.org> 18.4-alt1
+- Update to 18.4
+- Add support of networkd
+
 * Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.9-alt3.git.5beecd
 - Updated build dependencies.
 
