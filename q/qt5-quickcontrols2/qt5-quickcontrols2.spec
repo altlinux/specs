@@ -3,8 +3,8 @@
 #qml_add_req_skip HelperWidgets
 
 Name: qt5-quickcontrols2
-Version: 5.11.2
-Release: alt1%ubt
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - module with set of QtQuick Controls 2
@@ -128,6 +128,9 @@ syncqt.pl-qt5 -version %version
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 

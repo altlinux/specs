@@ -2,8 +2,8 @@
 %global qt_module qt3d
 
 Name: qt5-3d
-Version: 5.11.2
-Release: alt1%ubt
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Qt3D QML bindings and C++ APIs
@@ -206,6 +206,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 

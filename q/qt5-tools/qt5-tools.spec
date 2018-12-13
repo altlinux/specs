@@ -10,8 +10,8 @@
 %define minor 9
 %define bugfix 2
 Name: qt5-tools
-Version: 5.11.2
-Release: alt1%ubt
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -329,6 +329,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 
