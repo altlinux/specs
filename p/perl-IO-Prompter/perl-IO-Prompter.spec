@@ -2,19 +2,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Contextual/Return.pm) perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/More.pm) perl(diagnostics.pm)
 # END SourceDeps(oneline)
-%define module_version 0.004014
 %define module_name IO-Prompter
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.004014
+Version: 0.004015
 Release: alt1
 Summary: Prompt for input, read it, clean it, return it.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/IO-Prompter-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCONWAY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -70,7 +69,7 @@ designed to be a drop-in replacement for `readline' or `<>'.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -83,6 +82,9 @@ designed to be a drop-in replacement for `readline' or `<>'.
 %perl_vendor_privlib/I*
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.004015-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1
 - automated CPAN update
 
