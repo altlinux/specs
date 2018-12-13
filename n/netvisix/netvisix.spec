@@ -12,88 +12,71 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-%define hash 7f2d83bca3ae
+%define hash 969fbcbcd74f
 %define src_name bitbatzen-netvisix
 
-Name: netvisix
-Version: 1.2.0
-Release: alt1
-
-Summary: Visualizes the network packet flow between hosts
-License: GPLv3+
-Group: Monitoring
-
-Url: https://bitbucket.org/bitbatzen/netvisix
-Source0: https://bitbucket.org/bitbatzen/netvisix/get/default.tar.bz2#/%src_name-%hash.tar.bz2
-Source1: %name.policy
-Source2: icon.png
+Name:           netvisix
+Version:        1.3.0
+Release:        alt1
+Summary:        Visualizes the network packet flow between hosts
+License:        GPL-3.0+
+Group:          Monitoring
+Url:            https://bitbucket.org/bitbatzen/netvisix
+Source0:        https://bitbucket.org/bitbatzen/netvisix/get/default.tar.bz2#/%src_name-%hash.tar.bz2
+Source1:        %name.policy
+Source2:        icon.png
 # PATCH-FIX-OPENSUSE libtins.patch avvissu@yandex.ru -- Use package from openSUSE instead of static library
-Patch: netvisix-1.1.0_libtins.patch
-
-BuildRequires: dos2unix
-BuildRequires: gcc-c++
-BuildRequires: icon-theme-hicolor
-BuildRequires: libpcap-devel
-#BuildRequires: update-desktop-files
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5Widgets) >= 5.2.0
-BuildRequires: pkgconfig(libtins)
-BuildRequires: polkit
+Patch0:         %name-1.1.0_libtins.patch
+# PATCH-FIX-OPENSUSE fix build error in Tumbleweed
+Patch1:         %name-include.patch
+BuildRequires:  dos2unix
+BuildRequires:  gcc-c++
+BuildRequires:  icon-theme-hicolor
+BuildRequires:  libpcap-devel
+BuildRequires:  qt5-base-devel
+BuildRequires:  libtins-devel
+BuildRequires:  polkit
 
 %description
-Netvisix listens on your local network interface and visualizes
-the network packet flow between hosts. Per host packet statistics
-are available either.
+Netvisix listens on your local network interface and visualizes the network
+packet flow between hosts. Also packet statistics per host are available.
 
-Supported Protocols (colored and handled in statistics):
-ARP, IPv4, IPv6, ICMP, ICMPv6, IGMP, TCP, UDP, DNS, DHCP, DHCPv6
+Supported Protocols (colored and handeld in statistics): ARP, IPv4, IPv6, ICMP,
+ICMPv6, IGMP, TCP, UDP, DNS, DHCP, DHCPv6
 
 %prep
 %setup -n %src_name-%hash
-%patch -p1
+
+# Make sure, that libtins is not used
+rm -rf libtins
+
+%patch0 -p1
+%patch1 -p1
 
 dos2unix -k README.md
 
 # Fix files is compiled without RPM_OPT_FLAG
-find . -type f -name \*.pro | while read FILE; do
-echo "QMAKE_CXXFLAGS += %optflags" >> "$FILE"; done
+find . -type f -name \*.pro | while read file; do
+echo "QMAKE_CXXFLAGS += %optflags %(pkg-config --cflags-only-I libtins)" >> "$file"; done
 
 %build
 pushd Build
 qmake-qt5 ../Netvisix/Netvisix.pro
-make %{?_smp_mflags} PREFIX=%_prefix
+make PREFIX=/usr
 popd
 
 %install
-install -pDm755 Build/Netvisix %buildroot%_bindir/%name
-install -pDm644 %SOURCE1 %buildroot%_datadir/polkit-1/actions/org.opensuse.policykit.%name.policy
-install -pDm644 %SOURCE2 %buildroot%_datadir/pixmaps/%name.png
-#suse_update_desktop_file -c %name Netvisix "Visualizes the network packet flow" 'pkexec %_bindir/%name' %name Qt Network Monitor
+install -Dm 0755 Build/Netvisix %buildroot%_bindir/%name
+install -Dm 0644 %SOURCE2 %buildroot%_datadir/pixmaps/%name.png
 
 %files
 %doc AUTHOR COPYING README*
 %_bindir/%name
-#_datadir/polkit-1/actions/org.opensuse.policykit.%name.policy
 %_datadir/pixmaps/%name.png
-#_desktopdir/%name.desktop
-
-# TODO:
-# - adapt pkexec/.desktop part too
 
 %changelog
+* Thu Dec 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Build new version.
+
 * Sat May 23 2015 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1
 - built for ALT Linux (based on openSUSE package)
-
-* Fri May 22 2015 avvissu@yandex.ru
-- Update to 1.2.0:
-  * add http protocol handling
-  * improved dns/hostname handling
-* Fri May 15 2015 avvissu@yandex.ru
-- Update to 1.1.0:
-  * added hostname lookup (optional)
-  * minor display changes
-- Add BuildRequires: pkgconfig(Qt5Network)
-* Thu May  7 2015 avvissu@yandex.ru
-- Initial release
