@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 12.0.0
-Release: alt2
+Release: alt3
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
@@ -23,6 +23,8 @@ BuildPreReq: python3-module-setuptools python3-devel
 BuildPreReq: python-module-pytest
 BuildPreReq: python-module-pytest-sugar
 BuildPreReq: python-module-setuptools_scm
+
+%py_requires ctypes entrypoints json logging pluggy secretstorage
 
 %description
 The Python keyring lib provides an easy way to access the system 
@@ -110,6 +112,9 @@ popd
 
 
 %changelog
+* Thu Dec 13 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt3
+- Updated deps for Python2.7
+
 * Thu Dec 06 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt2
 - Updated deps (ALT #35655)
 
