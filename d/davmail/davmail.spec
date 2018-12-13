@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 %define _enable_debug_packages %nil
 %define debug_package %nil
-%global _davsvn 2652
+%global _davsvn 2801
 
 %ifarch %ix86
 %global davarch x86
@@ -11,7 +11,7 @@
 %endif
 
 Name:     davmail
-Version:  4.9.0
+Version:  5.0.0
 Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
@@ -63,10 +63,10 @@ install -p -m664 dist/lib/* %buildroot%_datadir/%name/lib/
 install -p -m664 dist/*.jar %buildroot%_datadir/%name/
 install -p -Dm644 src/etc/%name.properties %buildroot%_sysconfdir/%name/%name.properties
 
-sed -i 's/\r//' releaseguide.txt releasenotes.txt
+sed -i 's/\r//' releaseguide.txt
 
 %files
-%doc releaseguide.txt releasenotes.txt
+%doc releaseguide.txt
 %_sysconfdir/%name/
 %_bindir/%name
 %_datadir/%name/
@@ -74,6 +74,9 @@ sed -i 's/\r//' releaseguide.txt releasenotes.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Dec 13 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Thu Oct 18 2018 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
 - New version.
 
