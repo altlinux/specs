@@ -1,5 +1,5 @@
 Name:           kamoso
-Version:        18.11.90
+Version:        18.12.0
 Release:        alt1
 
 Group:          Video
@@ -70,6 +70,9 @@ install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.k
 %doc %_K5doc/*/%name
 
 %changelog
+* Fri Dec 14 2018 Andrey Cherepanov <cas@altlinux.org> 18.12.0-alt1
+- New version.
+
 * Fri Nov 30 2018 Andrey Cherepanov <cas@altlinux.org> 18.11.90-alt1
 - New version.
 
