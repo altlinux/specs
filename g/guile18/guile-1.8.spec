@@ -5,11 +5,11 @@
 
 Name: %{iname}18
 Version: %sversion.7
-Release: alt6
-Serial: 1
+Release: alt7
+Epoch: 1
 
 Summary: A GNU implementation of Scheme for application extensibility
-License: GPL
+License: LGPL-2.1-or-later
 Group: Development/Scheme
 Url: http://www.gnu.org/software/guile/
 
@@ -21,8 +21,8 @@ Patch3: guile-1.8.7-testsuite2.patch
 Patch4: guile-1.8.7-mkdir-umask.patch
 Patch5: guile-1.8.7-overflow.patch
 
-BuildRequires(pre): /proc /dev/pts
 BuildRequires: libgmp-devel libltdl-devel libncurses-devel libreadline-devel
+BuildRequires: /proc /dev/pts
 
 %add_findreq_skiplist %_datadir/%iname/%sversion/scripts/*
 
@@ -35,7 +35,7 @@ as a library during the building of extensible programs.
 %package devel
 Summary: A GNU implementation of Scheme for application extensibility
 Group: Development/Scheme
-Requires: %name = %serial:%version-%release
+Requires: %name = %EVR
 Requires: libgmp-devel
 Conflicts: guile14-devel guile16-devel
 
@@ -48,7 +48,7 @@ as a library during the building of extensible programs.
 Install this package if you are going to develop extendable programs.
 
 %prep
-%setup -q -n %iname-%version
+%setup -n %iname-%version
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
@@ -58,6 +58,7 @@ Install this package if you are going to develop extendable programs.
 %__subst -p 's/^libguile_la_LDFLAGS = .*/& $(GUILE_CFLAGS)/' libguile/Makefile*
 
 %build
+%add_optflags -fwrapv
 %autoreconf
 
 %configure --with-threads --enable-error-on-warning=no --disable-static
@@ -96,6 +97,9 @@ make check
 %_libdir/pkgconfig/%iname-%sversion.pc
 
 %changelog
+* Fri Dec 14 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.7-alt7
+- Fixed build (see rhbz#1307394).
+
 * Thu Aug 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.8.7-alt6
 - get rid of alternatives
 
