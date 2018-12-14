@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.6.2
-Release: alt2
+Release: alt3
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -44,7 +44,7 @@ BuildRequires: ruby
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
-BuildRequires: node node-gyp npm
+BuildRequires: node node-gyp npm node-devel
 BuildRequires: ronn
 BuildRequires: groff-base
 
@@ -294,6 +294,13 @@ Configures an OpenNebula node providing kvm.
 %prep
 %setup
 
+
+# add symlink to node headers
+node_ver=$(node -v | sed -e "s/v//")
+mkdir -p src/sunstone/public/node_modules/.node-gyp/$node_ver/include
+ln -s %_includedir/node src/sunstone/public/node_modules/.node-gyp/$node_ver/include/node
+echo "9" > src/sunstone/public/node_modules/.node-gyp/$node_ver/installVersion
+
 %build
 export PATH="$PATH:$PWD/src/sunstone/public/node_modules/.bin"
 export npm_config_devdir="$PWD/src/sunstone/public/node_modules/.node-gyp"
@@ -511,6 +518,7 @@ fi
 %_libexecdir/one/ruby/vcenter_driver/*
 
 %_libexecdir/one/ruby/OpenNebula.rb
+%_libexecdir/one/ruby/scripts_common.rb
 
 %_libexecdir/one/ruby/cloud/CloudClient.rb
 %_libexecdir/one/ruby/cloud/CloudAuth.rb
@@ -635,7 +643,6 @@ fi
 %_libexecdir/one/ruby/one_vnm.rb
 %_libexecdir/one/ruby/opennebula_driver.rb
 %_libexecdir/one/ruby/OpenNebulaDriver.rb
-%_libexecdir/one/ruby/scripts_common.rb
 %_libexecdir/one/ruby/ssh_stream.rb
 %_libexecdir/one/ruby/VirtualMachineDriver.rb
 %_libexecdir/one/sh/*
@@ -706,6 +713,10 @@ fi
 ################################################################################
 
 %changelog
+* Fri Dec 14 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt3
+- move scripts_common.rb to ruby package for allow install sunstone without server package
+- build with system node headers from node-devel package
+
 * Wed Nov 14 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt2
 - update Requires
 
