@@ -29,7 +29,7 @@
 
 Name: glusterfs3
 Version: %major.15
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -64,7 +64,8 @@ Patch0: %name-%version-%release.patch
 # manually removed: -static i586-glibc-devel i586-libssl-devel python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: gnu-config i586-glibc-core i586-glibc-pthread i586-libcrypto10 libcom_err-devel libdevmapper-devel libdevmapper-event libibverbs-devel libkrb5-devel libncurses-devel libssl-devel libtinfo-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-ctypes python3-base userspace-rcu
-BuildRequires: flex glib2-devel glibc-devel-static libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 zlib-devel
+BuildRequires: flex glib2-devel glibc-devel-static libacl-devel libaio-devel libattr-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 zlib-devel
+# liblvm2-devel 
 
 BuildPreReq: libssl-devel
 
@@ -312,8 +313,7 @@ echo "v%version-%release" >VERSION
             --with-systemddir=%_unitdir \
             --localstatedir=/var/ \
             --libexecdir=%_libexecdir \
-            --enable-qemu-block \
-            --enable-bd-xlator
+            --enable-qemu-block
 
 # Remove rpath
 %__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -575,6 +575,9 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 %preun_service glusterd
 
 %changelog
+* Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.15-alt2
+- disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.15-alt1
 - new version 3.12.15 (with rpmrb script)
 - CVE-2018-10907, CVE-2018-10904, CVE-2018-10911 CVE-2018-10913, CVE-2018-10923, CVE-2018-10930
