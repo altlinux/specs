@@ -1,5 +1,5 @@
 Name:           pcsc-tools
-Version:        1.5.3
+Version:        1.5.4
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -12,8 +12,10 @@ Source1:	%name.watch
 BuildRequires:  desktop-file-utils
 BuildRequires:  libpcsclite-devel >= 1.2.9
 BuildRequires:  perl-pcsc
-BuildRequires:  perl-Gtk2
+BuildRequires:  perl-Gtk3
 Requires:       pcsc-lite
+
+%add_findreq_skiplist %_bindir/gscriptor
 
 %description
 The pcsc-tools package contains some useful tools for a PC/SC user:
@@ -25,6 +27,7 @@ To Reset), scriptor sends commands to a smart card.
 Summary:	GUI tool to be used with smart cards and PC/SC
 Group:          System/Configuration/Hardware
 Requires:	pcsc-tools = %version-%release
+Requires:       perl-Gtk3
 
 %description gui
 The pcsc-tools-gui package contains gscriptor sends commands to a smart
@@ -58,6 +61,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Fri Dec 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- New version.
+
 * Tue Apr 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
 - New version.
 
