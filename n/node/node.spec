@@ -36,7 +36,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -300,6 +300,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 10.14.2-alt1
+- new version 10.14.2 (with rpmrb script)
+- 2018-12-11, Version 10.14.2 'Dubnium' (LTS), @MylesBorins prepared by @codebytere
+
 * Fri Nov 30 2018 Vitaly Lipatov <lav@altlinux.ru> 10.14.1-alt1
 - new version 10.14.1 (with rpmrb script)
 - disable internal doc
