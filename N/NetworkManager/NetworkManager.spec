@@ -1,10 +1,10 @@
-%define git_hash .gitba83251bba87
+%define git_hash .git1445b5b2966d
 #define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %if_with libnm_glib
 %define nm_glib_sover 4
@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.14.5
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -82,7 +82,6 @@ BuildRequires(pre): rpm-build-licenses
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 libnl-devel libwireless-devel ppp-devel
@@ -771,6 +770,16 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Dec 14 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt2.git1445b5b2966d
+- Disable libnm-glib build.
+- Start NM _after_ network.service.
+- Update 'not set to disconndcted' patch.
+- Fix 'not set to disconndcted' patch (closes: #35341).
+- Revert "Require /proc for tests".
+- etcnet-alt: Use g_[s]list_free_full() (closes: #35698).
+- etcnet-alt: Fix indentation in nms-etcnet-alt-shvar.c.
+- Upstream git snapshot (nm-1-14 branch).
+
 * Thu Nov 01 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt1.gitba83251bba87
 - Upstream git snapshot (nm-1-14 branch) (fixes: CVE-2018-15688).
 
