@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.56
+Version: 1.0.0.59
 Release: alt1%ubt
 
 Summary: Launcher for the Steam software distribution service
@@ -80,6 +80,9 @@ savegame and screenshot functionality, and many social features.
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Fri Dec 14 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.0.59-alt1%ubt
+- Version 1.0.0.59
+
 * Thu Aug 30 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.0.56-alt1%ubt
 - Version 1.0.0.56
 
