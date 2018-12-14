@@ -1,5 +1,4 @@
 %define		_oldname	sylpheed-claws
-%def_disable	gtk3
 %def_disable 	debug
 
 %def_disable 	appdata
@@ -31,8 +30,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.17.1
-Release: 	alt3
+Version:	3.17.2
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -54,11 +53,7 @@ BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2
 # For experimental SNI support
 BuildRequires: libetpan-devel >= 1.9.1-alt3
 BuildRequires: libnettle-devel
-%if_enabled gtk3
-BuildRequires: libgtk+3-devel
-%else
 BuildRequires: libgtk+2-devel
-%endif
 %{?_enable_svg:BuildRequires: librsvg-devel}
 %{?_enable_networkmanager:BuildRequires: libnm-devel}
 
@@ -72,11 +67,7 @@ BuildRequires: libcurl-devel
 
 # For plugin-fancy
 %if_enabled fancy
-%if_enabled gtk3
-BuildRequires: libwebkitgtk3-devel
-%else
 BuildRequires: libwebkitgtk2-devel
-%endif
 BuildRequires: libsoup-gnome-devel
 %endif
 
@@ -101,11 +92,7 @@ BuildRequires: perl-devel sed
 %def_disable indicator
 %def_enable hotkeys
 BuildRequires: libnotify-devel
-%if_enabled gtk3
-BuildRequires: libcanberra-gtk3-devel
-%else
 BuildRequires: libcanberra-gtk2-devel
-%endif
 %{?_enable_indicator:BuildRequires: libindicate-devel >=  0.3.0}
 %{?_enable_hotkeys:BuildRequires: libgio-devel >= 2.15.6}
 
@@ -610,7 +597,6 @@ export LDFLAGS=-pie
 		--disable-manual \
 		--disable-jpilot \
 		%{subst_enable appdata} \
-		%{subst_enable gtk3} \
 		%{subst_enable svg} \
 		%{subst_enable networkmanager} \
 		%if_disabled archive
@@ -662,7 +648,6 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %files -f %name.lang
 %doc AUTHORS ChangeLog* COPYING INSTALL NEWS README* TODO* RELEASE_NOTES 
 %_bindir/%name
-%_bindir/%_oldname
 %_man1dir/%name.1.*
 %_desktopdir/*.desktop
 %if_enabled appdata
@@ -884,6 +869,11 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Fri Dec 14 2018 Mikhail Efremov <sem@altlinux.org> 3.17.2-alt1
+- Drop sylpheed-claws symlink.
+- Drop gtk3 support from spec.
+- Updated to 3.17.2.
+
 * Tue Oct 30 2018 Mikhail Efremov <sem@altlinux.org> 3.17.1-alt3
 - Add experimental SNI support.
 
