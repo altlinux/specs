@@ -60,7 +60,7 @@
 
 Name: virtualbox
 Version: 5.2.22
-Release: alt3
+Release: alt4
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -450,6 +450,9 @@ cp -a \
     iPxeBaseBin \
     xpidl \
     *.r0 \
+%ifarch %ix86
+    *.rc \
+%endif
     *.so \
     *.fd \
     *.py \
@@ -802,6 +805,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed Dec 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt4
+- Add lost VMMRC.rc due manual install on ix86
+
 * Tue Dec 04 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt3
 - Merge with branch c8.1 for common build
 
