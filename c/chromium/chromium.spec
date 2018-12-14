@@ -28,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        70.0.3538.77
+Version:        71.0.3578.98
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -72,10 +72,9 @@ Patch018: 0018-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
 Patch019: 0019-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
 Patch020: 0020-FEDORA-Fix-gcc-round.patch
 Patch021: 0021-FEDORA-Fix-memcpy.patch
-Patch022: 0022-ARCHLINUX-chromium-widevine-r2.patch
+Patch022: 0022-ALT-remove-obsolete-option.patch
 Patch023: 0023-ALT-openh264-always-pic-on-x86.patch
 Patch024: 0024-ALT-allow-to-override-clang-through-env-variables.patch
-Patch025: 0025-ALT-Define-utf8_t.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -109,6 +108,7 @@ BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(atk-bridge-2.0)
+BuildRequires:  pkgconfig(atspi-2)
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(dbus-glib-1)
@@ -231,7 +231,6 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -244,8 +243,10 @@ done
 touch third_party/blink/tools/blinkpy/__init__.py
 
 # unknown warning option '-Wno-ignored-pragma-optimize'
+# unknown warning option '-Wno-defaulted-function-deleted'
 sed -i \
 	-e '/"-Wno-ignored-pragma-optimize"/d' \
+	-e '/"-Wno-defaulted-function-deleted"/d' \
 	build/config/compiler/BUILD.gn
 
 sed -i \
@@ -280,6 +281,8 @@ export CHROMIUM_RPATH="%_libdir/%name"
 CHROMIUM_GN_DEFINES=
 gn_arg() { CHROMIUM_GN_DEFINES="$CHROMIUM_GN_DEFINES $*"; }
 
+#gn_arg custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
+#gn_arg host_toolchain=\"//build/toolchain/linux/unbundle:default\"
 gn_arg is_official_build=true
 gn_arg is_desktop_linux=true
 gn_arg use_custom_libcxx=false
@@ -487,6 +490,11 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Fri Dec 14 2018 Alexey Gladkov <legion@altlinux.ru> 71.0.3578.98-alt1
+- New version (71.0.3578.98).
+- Security fixes:
+  - CVE-2018-17481: Use after free in PDFium.
+
 * Wed Nov 07 2018 Alexey Gladkov <legion@altlinux.ru> 70.0.3538.77-alt1
 - New version (70.0.3538.77).
 
