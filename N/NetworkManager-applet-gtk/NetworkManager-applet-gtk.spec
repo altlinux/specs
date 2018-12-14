@@ -8,7 +8,7 @@
 %def_with team
 %def_without selinux
 %def_with gcr
-%def_with libnm_gtk
+%def_without libnm_gtk
 
 %ifarch %e2k
 %define more_warnings no
@@ -18,7 +18,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.8.18
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -249,6 +249,9 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Fri Dec 14 2018 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt2
+- Disable libnm-gtk build.
+
 * Mon Sep 10 2018 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt1
 - Updated to 1.8.18.
 
