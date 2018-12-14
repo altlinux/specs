@@ -2,7 +2,7 @@
 %define zmgid_final _webserver
 
 Name: zoneminder
-Version: 1.32.2
+Version: 1.32.3
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -145,6 +145,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Fri Dec 14 2018 Anton Farygin <rider@altlinux.ru> 1.32.3-alt1
+- 1.32.3
+
 * Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 1.32.2-alt1
 - 1.32.2
 
