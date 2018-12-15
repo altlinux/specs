@@ -1,12 +1,13 @@
 Name: jtdx
-Version: 18.1.0.87
-Release: alt1.S1
+Version: 18.1.106
+Release: alt1
 Summary: JTDX means "JT modes for DXing"
 License: GPLv3
 Group: Engineering
 Url: http://ru.jtdx.tech
 Source: %name-%version.tar
-Patch1: %name-18.0-alt-cmake.patch
+Patch1: %name-18.1.106-alt-cmake.patch
+Patch2: gcc8-fix-compile.patch
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -67,38 +68,25 @@ Data files for %name
 %prep
 %setup
 %patch1 -p2
-
-pushd wsjtx
+%patch2 -p2
 
 # convert CR + LF to LF
 dos2unix *.ui *.iss *.rc *.txt
-popd
 
 %build
-pushd wsjtx
 %cmake -DWSJT_GENERATE_DOCS=OFF
 %cmake_build
-popd
 
 %install
-pushd wsjtx
 %cmakeinstall_std
-popd
 
 cp CALL3.TXT %buildroot%_datadir/%name
 cp Release* %buildroot%_docdir/%name
 
-mv %buildroot%_pixmapsdir/wsjtx_icon.png \
-   %buildroot%_pixmapsdir/jtdx_icon.png
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
     convert %buildroot%_pixmapsdir/jtdx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/jtdx_icon.png
 done
-
-sed -i 's/Name=wsjtx/Name=%name/g' %buildroot%_desktopdir/wsjtx.desktop
-sed -i 's/Exec=wsjtx/Exec=%name/g' %buildroot%_desktopdir/wsjtx.desktop
-sed -i 's/wsjtx_icon/jtdx_icon/g' %buildroot%_desktopdir/wsjtx.desktop
-mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/*
@@ -114,6 +102,9 @@ mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Sat Dec 15 2018 Anton Midyukov <antohami@altlinux.org> 18.1.106-alt1
+- Version 18.1.106
+
 * Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 18.1.0.87-alt1.S1
 - Version 18.1.0.87
 
