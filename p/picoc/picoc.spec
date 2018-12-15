@@ -1,16 +1,17 @@
 Name: picoc
-Version: 2.1
+Version: 2.1.9
 Release: alt1
 
 Summary: PicoC is a very small C interpreter for scripting
 
 License: New BSD License
 Group: Development/C
-Url: http://code.google.com/p/picoc/
+Url: https://gitlab.com/zsaleeba/picoc
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://picoc.googlecode.com/files//%name-%version.tar
+# Source-url: https://gitlab.com/zsaleeba/picoc/-/archive/master/picoc-master.tar.bz2
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Oct 25 2013
 BuildRequires: libreadline-devel
@@ -46,6 +47,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Dec 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- build latest git
+
 * Fri Oct 25 2013 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
 - initial build for ALT Linux Sisyphus
 
