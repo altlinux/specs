@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.12
+Version: 7.2.13
 Release: alt1
 
 %define php7_name      %name
@@ -352,6 +352,19 @@ subst 's,@_php7_version@,%_php7_version,'   %buildroot/%_sysconfdir/rpm/macros.d
 subst 's,@php7_major@,%_php7_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
 subst 's,@php7_release@,%php7_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
 subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
+mkdir -p  %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name.filetrigger << EOF
+#!/bin/sh
+LC_ALL=C egrep -qs '^%php7_extdir' || exit 0
+if [ -x %php7_postin ]; then
+    export php_servicedir=%php7_servicedir
+    export php_sysconfdir=%php7_sysconfdir
+    export php_extconf=%php7_extconf
+    export sapiList=cli
+    %php7_postin ||:
+fi
+EOF
+chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
 
 %post
 %php7_sapi_postin
@@ -380,6 +393,7 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %_man1dir/php7.*
 %_man1dir/phpdbg7.*
 %_man1dir/phar7*.1*
+%_rpmlibdir/%name.filetrigger
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
 %doc NEWS README.* php.ini-* EXTENSIONS
 %doc UPGRADING*
@@ -416,6 +430,10 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
+* Fri Dec 14 2018 Anton Farygin <rider@altlinux.ru> 7.2.13-alt1
+- 7.2.13
+- added filetrigger for cli sapi and it's modules
+
 * Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 7.2.12-alt1
 - 7.2.12
 - added patches from debian for using the default system timezone (closes: #34771)

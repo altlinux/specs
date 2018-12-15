@@ -2,7 +2,7 @@
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
-Release:	%php7_release
+Release:	%php7_release.1
 
 Summary:	MySQL Improved Extension for PHP
 
@@ -14,6 +14,7 @@ URL:		http://www.php.net/manual/en/ref.mysqli.php
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
 Patch0: php7-force_libmysqlclient_r.patch
+Patch1: php7-mysql8-transition.patch
 Conflicts: php7-mysqlnd-mysqli
 
 BuildRequires(pre): rpm-build-php7 
@@ -27,6 +28,7 @@ MySQLi (improved) - new MySQL interface for PHP and MySQL 4.1.3+
 %setup -T -c
 cp -pr -- %php7_extsrcdir/%php7_extension/* .
 %patch0 -p0
+%patch1 -p0
 
 %build
 phpize
@@ -61,6 +63,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Fri Dec 07 2018 Nikolai Kostrigin <nickel@altlinux.org> 7.2.12-alt1.1
+- Fix build with MySQL8 client library
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
