@@ -121,6 +121,7 @@ LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
 %php7_sapi_postin
 /sbin/service condrestart php7-fpm ||:
 EOF
+chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 
 
 # Make alternatives support.
@@ -138,7 +139,7 @@ mkdir -p %buildroot%_runtimedir/php7-fpm
 install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/php7-fpm
 
 mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
-echo 'd /var/run/php7-fpm 0750 root _webserver' >> %buildroot%_sysconfdir/tmpfiles.d/php7-fpm.conf
+echo 'd /run/php7-fpm 0750 root _webserver' >> %buildroot%_sysconfdir/tmpfiles.d/php7-fpm.conf
 
 mkdir -p  %buildroot%_unitdir
 install -m 0644 %SOURCE5 %buildroot%_unitdir/php7-fpm.service
