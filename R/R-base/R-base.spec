@@ -1,6 +1,6 @@
 Name: R-base
-Version: 3.5.0
-Release: alt2
+Version: 3.5.1
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -114,7 +114,7 @@ rm -fv %buildroot%_infodir/dir*
 export TZ=""
 make check
 
-%files
+%files 
 	%doc doc/NEWS README
 	%_bindir/R
 	%_bindir/Rscript
@@ -156,7 +156,7 @@ make check
 %define R_library() \
 %dir	%R_library_path/%1 \
 	%R_library_path/%1/* \
-%doc	%R_library_path/%1/html
+%doc	%R_library_path/%1/html 
 
 # avoid dependency on R-devel
 %add_findreq_skiplist %R_library_path/*/include/*.h
@@ -192,6 +192,8 @@ make check
 	%R_library survival
 	%R_library parallel
 
+	%R_library_path/translations
+
 %dir	%Rhome/modules
 	%Rhome/modules/*.so*
 %dir	%Rhome/share
@@ -205,7 +207,7 @@ make check
 %package -n R-full
 Summary: Meta-package that installs all components of R Statitical Environment
 Group: Development/Other
-Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %version-%release gcc-c++ gcc-fortran liblapack-devel
+Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %version-%release gcc-c++ gcc-fortran liblapack-devel make
 
 %description -n R-full
 Meta-package that installs all components of R Statitical Environment
@@ -332,6 +334,11 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Fri Oct 26 2018 Kirill Maslinsky <kirill@altlinux.org> 3.5.1-alt1
+- Version 3.5.1
+- add dependency on make to R-full
+- add localization files
+
 * Fri Jun 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt2
 - Provided compatibility symlink for R-studio.
 
