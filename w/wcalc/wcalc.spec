@@ -1,6 +1,6 @@
 Name: wcalc
-Version: 2.4
-Release: alt3
+Version: 2.5
+Release: alt1
 
 Summary: A flexible command-line calculator
 Summary(ru_RU.UTF-8): Гибкий калькулятор командной строки
@@ -42,6 +42,9 @@ Wcalc - это консольный калькулятор, работающий
 %_man1dir/*
 
 %changelog
+* Sat Dec 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
+- new version 2.5 (with rpmrb script)
+
 * Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt3
 - rebuild with new libgmp
 - cleanup spec
