@@ -2,7 +2,7 @@
 
 Name: libxbsql
 Version: 0.11
-Release: alt5.1
+Release: alt5.2
 
 Summary: An SQL wrapper for Xbase
 Summary(uk_UA.UTF-8): SQL-обгортка для Xbase
@@ -107,6 +107,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/*.so
 
 %changelog
+* Sat Dec 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt5.2
+- rebuild with libreadline7
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt5.1
 - Removed bad RPATH
 
