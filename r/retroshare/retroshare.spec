@@ -1,6 +1,6 @@
 Name: retroshare
 Version: 0.6.4
-Release: alt4
+Release: alt5
 
 Summary: Secure communication with friends
 
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 # backported upstream patch from master
 Patch100:retroshare-0.6.4-qt-5.11.patch
+patch101:retroshare-0.6.4-gcc8.patch
 
 # manually removed: ruby ruby-stdlibs selinux-policy i586-libxcb  python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
 # Automatically added by buildreq on Tue Jan 03 2017
@@ -78,6 +79,7 @@ This package provides a plugin for RetroShare, a secured Friend-to-Friend commun
 %prep
 %setup
 %patch100 -p1
+%patch101 -p1
 
 # https://svnweb.freebsd.org/ports?view=revision&revision=468858
 # fix build with ffmpeg 4.0 (replace CODEC_, skip CODEC_ID)
@@ -112,6 +114,9 @@ desktop-file-validate %buildroot%_desktopdir/retroshare.desktop
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt5
+- fix build with gcc8
+
 * Wed Sep 19 2018 Alexey Shabalin <shaba@altlinux.org> 0.6.4-alt4
 - fixed build
 
