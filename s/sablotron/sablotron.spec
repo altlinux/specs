@@ -1,20 +1,18 @@
-# $Id: sablotron.spec 4586 2006-07-26 21:05:33Z dries $
-# Authority: dag
-# Upstream: <sablist$gingerall,cz>
-
 %define real_name Sablot
 
-Summary: XSLT, XPath and DOM processor
 Name: sablotron
 Version: 1.0.3
-Release: alt1.1.qa1
+Release: alt2
+
+Summary: XSLT, XPath and DOM processor
+
 License: GPL
 Group: System/Base
-Url: http://www.gingerall.org/sablotron.html
+Url: https://github.com/hyperthunk/Sablotron
 
 Packager: Boris Savelev <boris@altlinux.org>
 
-Source: http://download-1.gingerall.cz/download/sablot/Sablot-%version.tar.gz
+Source: http://download-1.gingerall.cz/download/sablot/Sablot-%version.tar
 Patch: lib%name-alt-link.patch
 
 # Automatically added by buildreq on Wed May 13 2009
@@ -53,6 +51,8 @@ This package contains the static libraries for %name.
 %patch0 -p2
 
 %build
+touch NEWS AUTHORS ChangeLog
+%autoreconf
 export CPLUS_INCLUDE_PATH="%_includedir/js"
 export SABLOT_GPL="1"
 %configure \
@@ -63,6 +63,7 @@ export SABLOT_GPL="1"
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_datadir/doc/html/
 
 %files
 %doc README* RELEASE doc/misc/DEBUGGER doc/misc/NOTES src/TODO
@@ -82,6 +83,9 @@ export SABLOT_GPL="1"
 %_libdir/libsablot.a
 
 %changelog
+* Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt2
+- cleanup spec, rebuild with libreadline7
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
