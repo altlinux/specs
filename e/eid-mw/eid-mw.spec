@@ -1,8 +1,8 @@
-%define mainline_ver 4.4.1
+%define mainline_ver 4.4.13
 
 Name: eid-mw
 Version: %mainline_ver
-Release: alt1.1
+Release: alt1
 Summary: low-level support for Belgian Electronic Identity Card
 License: LGPLv3
 Group: Office
@@ -121,23 +121,34 @@ echo "echo %mainline_ver" > .version
 
 %build
 %autoreconf
-%configure
+%configure --enable-p11v220 --enable-webextension
 %make_build -j1
 
 %install
 %makeinstall_std
+
+# some json files for firefox extensions are installed with hardcoded path
+# move it to proper lib dir
+if [ "/usr/lib/" != "%{_libdir}/" ] && [ -d %{buildroot}/usr/lib/mozilla ]; then
+    mv %{buildroot}/usr/lib/mozilla %{buildroot}%{_libdir}/
+fi
 
 pushd %buildroot%firefox_noarch_extensionsdir
 mkdir -p %cid
 pushd %cid
 unzip ../%cid.xpi
 popd
-rm -f *.xpi
+rm -f %cid.xpi
 popd
 
 %find_lang eid-viewer
 %find_lang dialogs-beid
 cat eid-viewer.lang dialogs-beid.lang > all.lang
+
+rm -f %{buildroot}/etc/xdg/autostart/beid-update-nssdb.desktop
+rm -f %{buildroot}/usr/bin/beid-update-nssdb
+rm -f %{buildroot}/usr/lib64/libbeidpkcs11.a
+rm -f %{buildroot}/usr/lib64/libeidviewer.a
 
 %postun -n firefox-beid
 if [ "$1" = 0 ]; then
@@ -150,6 +161,7 @@ fi
 %_libdir/libbeidpkcs11.so.*
 %_libdir/pkcs11/*.so
 %_datadir/p11-kit/modules/beid.module
+%_libdir/mozilla/pkcs11-modules/*.json
 
 %files -n libbeidpkcs11-devel
 %_includedir/beid
@@ -179,6 +191,10 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sun Dec 16 2018 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.13-alt1
+- updated to version 4.4.13
+- switched to webextension firefox addon
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
