@@ -2,8 +2,8 @@ Name:    libomniORB
 License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
-Version: 4.2.2
-Release: alt0.1
+Version: 4.2.3
+Release: alt1
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -128,6 +128,9 @@ for the omniORB package (COS module).
 	--with-omniORB-config=%_sysconfdir/omniORB.cfg \
 	--with-omniNames-logdir=%_logdir/omniORB
 
+# altlinux specific
+find . -type f -name '*.py' -print0 | xargs -0 %__subst 's|env python|env python2.7|g'
+
 %make EnableZIOP=1
 
 %install
@@ -136,6 +139,10 @@ unset target ||:
 # end
 
 %makeinstall_std EnableZIOP=1
+
+# altlinux specific
+# find %buildroot -type f -name '*.py' -print0 | xargs -0 %__subst 's|env python|env python2.7|g'
+
 
 install -d -m 755 %buildroot%_logdir/omniORB
 install -d -m 755 %buildroot%_man1dir
@@ -212,6 +219,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Sun Dec 16 2018 Pavel Vainerman <pv@altlinux.ru> 4.2.3-alt1
+- new release
+
 * Wed Aug 29 2018 Pavel Vainerman <pv@altlinux.ru> 4.2.2-alt0.1
 - new release
 
