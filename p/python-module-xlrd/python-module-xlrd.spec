@@ -1,5 +1,5 @@
 Name:           python-module-xlrd
-Version:        1.1.0
+Version:        1.2.0
 Release:        alt1
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
@@ -43,7 +43,7 @@ cp -a * ../python3 ||:
 
 %build
 %python_build
-make -C docs html man
+make -C docs man
 pushd ../python3
 %python3_build
 popd
@@ -67,18 +67,22 @@ rm -rf %buildroot%_bindir/runxlrd.py* \
   %buildroot/%python3_sitelibdir/xlrd/examples
 
 %files
-%doc docs/_build/html/* xlrd/examples
+%doc examples
 %_bindir/*
 %python_sitelibdir/xlrd/*
 %python_sitelibdir/*egg-info
 %_man1dir/xlrd.1*
 
 %files -n python3-module-xlrd
-%doc docs/_build/html/* xlrd/examples
+%doc examples
 %python3_sitelibdir/xlrd/*
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sun Dec 16 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+- Do not generate html documentation.
+
 * Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version
 - Generate and package documentation amn man page
