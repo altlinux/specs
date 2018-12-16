@@ -1,6 +1,6 @@
 Name:    cloud-init
 Version: 18.4
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -113,6 +113,9 @@ make unittest noseopts=" -v -e test_dhclient_run_with_tmpdir"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Sun Dec 16 2018 Mikhail Gordeev <obirvalger@altlinux.org> 18.4-alt2
+- Allow services works only in virtualization
+
 * Thu Dec 13 2018 Mikhail Gordeev <obirvalger@altlinux.org> 18.4-alt1
 - Update to 18.4
 - Add support of networkd
