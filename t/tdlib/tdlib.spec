@@ -1,23 +1,19 @@
 # TODO: use system sqlite
 
 # Enable or disable clang compiler...
-%global clang 0
-
-# Applying workaround to RHBZ#1559007...
-%if 0%{?clang}
-%global optflags %(echo %optflags | sed -e 's/-mcet//g' -e 's/-fcf-protection//g')
-%endif
+%def_with clang
 
 Name: tdlib
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
-
 Group: Development/C++
-Url: https://github.com/%name/td
+Url: https://github.com/tdlib/td
+
+ExcludeArch: %ix86
 
 # Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -37,9 +33,10 @@ BuildRequires: cmake
 
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
-%if 0%{?clang}
+%if_with clang
 BuildRequires: clang
 BuildRequires: llvm
+%remove_optflags -frecord-gcc-switches
 %endif
 
 # Building with default settings require at least 16 GB of free RAM.
@@ -57,13 +54,13 @@ programming language.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name%{?_isa} = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
 
 %package static
 Summary: Static libraries for %name
 Group: Development/C++
-Requires: %name%{?_isa} = %{?epoch:%epoch:}%version-%release
-Requires: %name-devel%{?_isa} = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
+Requires: %name-devel = %EVR
 
 %description devel
 %summary.
@@ -84,7 +81,7 @@ sed -e 's@DESTINATION lib@DESTINATION %_lib@g' -e 's@lib/@%_lib/@g' -i CMakeList
 %__subst 's@DESTINATION lib@DESTINATION %_lib@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
 %build
-%if 0%{?clang}
+%if_with clang
 export CC=clang
 export CXX=clang++
 %endif
@@ -113,6 +110,10 @@ rm -fv %buildroot%_libdir/*.a
 #%_libdir/libtd*.a
 
 %changelog
+* Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt2
+- build with clang
+- disable i586 build
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - initial build for ALT Sisyphus
 
