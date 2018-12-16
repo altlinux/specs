@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,10 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Mon Dec 10 2018 Alexey Appolonov <alexey@altlinux.org> 0.17.1-alt1
+- Simple line (not "left part - tie symbols - right part" structure)
+  can be printed with LineEnd method of TPrinter.
+
 * Fri Nov 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt1
 - Ability to check controversy between the permission modes;
 - Ability to get all names of variables of the ini-file section;
