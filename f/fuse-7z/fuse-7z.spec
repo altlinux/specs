@@ -1,30 +1,25 @@
-%define oname 7z
-
 Name: fuse-7z
-Version: 0.2
-Release: alt3
+Version: 0.2nggit
+Release: alt1
 
 Summary: A FUSE filesystem that uses the 7-zip library to interacts with all kind of archives
 
 Group: System/Kernel and hardware
 License: GPL v3
-Url: https://github.com/exmakhina/fuse-7z
+Url: https://github.com/kedazo/fuse-7z-ng
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/exmakhina/fuse-7z.git
+# Source-url: https://github.com/kedazo/fuse-7z-ng/archive/master.zip
 Source: %name-%version.tar
-Patch: fuse-7z-0.1-alt-link.patch
+Patch1: fuze-7z-fix.patch
 
 Requires: %{get_dep fuse}
 
-# we use /usr/lib64/p7zip/7z.so from it
-Requires: p7zip
+# TODO
+%add_optflags -DFUSE_STAT="struct stat"
 
-# manually removed: rpm-build-java rpm-build-mono rpm-build-seamonkey rpm-macros-fillup xorg-sdk  python-module-mwlib python-module-paste
-# Automatically added by buildreq on Fri Aug 17 2012
-# optimized out: libstdc++-devel pkg-config python-base python-module-distribute python-module-peak python-module-zope python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging
-BuildRequires: gcc-c++ libfuse-devel waf
+BuildRequires: cmake gcc-c++ libfuse-devel lib7zip-devel
 
 %description
 A FUSE filesystem that uses the 7-zip library to interacts with all kind
@@ -36,30 +31,28 @@ Contributions are welcome.
 
 %prep
 %setup
-# TODO: fix in upstream
-#patch -p1
+%patch1 -p2
+# TODO
+mv -v cmake/FindFuse.cmake cmake/FindFUSE.cmake
+%__subst "s|fuse-7z-ng|%name|" CMakeLists.txt src/main.cpp
 
 %build
-waf configure
-waf
-
-cat <<EOF >wrapper/fuse-7z
-#!/bin/sh
-LD_LIBRARY_PATH=%_libdir/p7zip exec %_libexecdir/%name/fuse-7z "\$@"
-EOF
+%cmake_insource
+%make_build
 
 %install
-install -D build/fuse-7z %buildroot%_libexecdir/%name/fuse-7z
-install -D wrapper/fuse-7z %buildroot%_bindir/fuse-7z
-#exeinto /usr/libexec/fuse-7z
-#doexe build/fuse-7z
+install -D fuse_7z_ng %buildroot%_bindir/fuse-7z
 
 %files
 %doc README
 %_bindir/fuse-7z
-%_libexecdir/%name/
+#_libexecdir/%name/
 
 %changelog
+* Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2nggit-alt1
+- new version (0.2nggit) with rpmgs script
+- change upstream to fuse-7z-ng
+
 * Fri Oct 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt3
 - update Url, fix shell wrapper (against speces in name)
 
