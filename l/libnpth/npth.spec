@@ -1,20 +1,23 @@
+# BEGIN SourceDeps(oneline):
+#BuildRequires: libdispatch-objc2-devel
+# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname npth
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libnpth
-Version:        1.5
-Release:        alt2
+Version:        1.6
+Release:        alt1_1
 Summary:        The New GNU Portable Threads library
 License:        LGPLv2+
-URL:            http://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
+URL:            https://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
 Source:         https://gnupg.org/ftp/gcrypt/npth/%{oldname}-%{version}.tar.bz2
 #Source1:        ftp://ftp.gnupg.org/gcrypt/npth/npth-%{version}.tar.bz2.sig
 # Manual page is re-used and changed pth-config.1 from pth-devel package
 Source2:        npth-config.1
 
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 Source44: import.info
 Provides: npth = %{version}-%{release}
 
@@ -44,18 +47,17 @@ developing applications that use %{oldname}.
 %make_build
 
 %install
-%makeinstall_std INSTALL='install -p'
-
-mkdir -p %{buildroot}%{_mandir}/man1/
-install -pm0644 %{S:2} %{buildroot}%{_mandir}/man1/
-
+%makeinstall_std
+install -Dpm0644 -t %{buildroot}%{_mandir}/man1 %{S:2}
 find %{buildroot} -name '*.la' -delete -print
 
 %check
 make check
 
+
+
 %files
-%doc COPYING.LIB
+%doc --no-dereference COPYING.LIB
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
@@ -67,6 +69,9 @@ make check
 %{_datadir}/aclocal/%{oldname}.m4
 
 %changelog
+* Mon Dec 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
+- new version
+
 * Sun Feb 04 2018 Fr. Br. George <george@altlinux.ru> 1.5-alt2
 - Remove unused buildreq
 
