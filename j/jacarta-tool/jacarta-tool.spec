@@ -2,7 +2,7 @@
 
 Summary: JaCarta PKCS#11 Tool
 Name: jacarta-tool
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 License: GPLv2
 Url: http://git.altlinux.org/people/krash/public/jacarta-tool.git
@@ -30,6 +30,9 @@ JaCarta PKCS#11 Tool.
 %_bindir/*
 
 %changelog
+* Mon Dec 17 2018 Leonid Krashenko <krash@altlinux.org> 0.0.6-alt1
+- Updated to jacarta-tool 0.0.6.
+
 * Mon Dec 03 2018 Leonid Krashenko <krash@altlinux.org> 0.0.5-alt1
 - Updated to jacarta-tool 0.0.5.
 
