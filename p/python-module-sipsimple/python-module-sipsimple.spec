@@ -2,8 +2,8 @@
 %def_enable bundled_pjsip
 
 Name:    python-module-%modulename
-Version: 3.1.1
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
 License: GPLv3
@@ -30,7 +30,6 @@ BuildRequires: libpjsip-devel
 %endif
 
 Source:  python-%modulename-%version.tar
-Patch0: python-module-sipsimple-alt-ffmpeg-4.patch
 Patch1: python-module-sipsimple-aarch64-webrtc-define.patch
 
 %description
@@ -41,7 +40,6 @@ types can be easily added by using an extensible high-level API.
 
 %prep
 %setup -n python-%modulename-%version
-%patch0 -p1
 %patch1 -p1
 chmod +x deps/pjsip/*configure
 
@@ -56,6 +54,9 @@ chmod +x deps/pjsip/*configure
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Dec 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version.
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 3.1.1-alt2
 - rebuilt for ffmpeg-4.0
 - fixed built on aarch64
