@@ -1,9 +1,9 @@
-%define kernel_base_version 4.19
+%define kernel_base_version 4.20
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -33,7 +33,6 @@ Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch18: 0018-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch19: 0019-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
 Patch20: 0020-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
-Patch21: 0021-uapi-fix-linux-kfd_ioctl.h-userspace-compilation-err.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -172,7 +171,6 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
 
 # No exceptions, please!
 sed -i 's/^no-export-headers/#&/' include/uapi/linux/Kbuild
@@ -309,6 +307,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Mon Dec 17 2018 Dmitry V. Levin <ldv@altlinux.org> 4.20-alt1
+- v4.19 -> v4.20.
+
 * Fri Nov 23 2018 Dmitry V. Levin <ldv@altlinux.org> 4.19-alt2
 - Added subpackages with header files for all architectures
   supported by the kernel (by glebfm@ and me).
