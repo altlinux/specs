@@ -4,7 +4,7 @@
 
 Name: libldb
 Version: 1.4.3
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -205,6 +205,9 @@ make test
 %endif
 
 %changelog
+* Mon Dec 17 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt2
+- Merge with branch p8_e2k for common build
+
 * Thu Nov 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
 - Update to the 1.4.3 release for samba-4.9.2
 
