@@ -8,8 +8,8 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Coro
-Version:        6.52
-Release:        alt1_4.1
+Version:        6.54
+Release:        alt1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -156,6 +156,9 @@ make test
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Mon Dec 17 2018 Igor Vlasenko <viy@altlinux.ru> 1:6.54-alt1
+- automated CPAN update
+
 * Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 1:6.52-alt1_4.1
 - automated CPAN update
 
