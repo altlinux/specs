@@ -1,10 +1,8 @@
 %define oname oslo.config
 
-%def_with python3
-
 Name:       python-module-%oname
-Version:    3.22.1
-Release:    alt2
+Version:    6.4.1
+Release:    alt1
 Summary:    OpenStack common configuration library
 
 Group:      Development/Python
@@ -21,32 +19,39 @@ Obsoletes: python-module-oslo-config < %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-sphinx >= 1.2.1
-BuildRequires: python-module-oslosphinx >= 4.7.0
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-netaddr >= 0.7.18
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-rfc3986 >= 0.3.1
 BuildRequires: python-module-fixtures >= 3.0.0
-BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-mock >= 2.0
+BuildRequires: python-module-requests >= 2.18.0
+BuildRequires: python-module-enum34 >= 1.0.4
 
-%if_with python3
+BuildRequires: python-module-sphinx >= 1.2.1
+BuildRequires: python-module-openstackdocstheme
+BuildRequires: python-module-reno >= 2.5.0
+
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.3
-BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-argparse
-BuildRequires: python3-module-netaddr >= 0.7.13
-BuildRequires: python3-module-fixtures
-BuildRequires: python3-module-stevedore >= 1.17.1
-%endif
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-rfc3986 >= 0.3.1
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-mock >= 2.0
+BuildRequires: python3-module-requests >= 2.18.0
+
+BuildRequires: python3-module-sphinx >= 1.2.1
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-reno >= 2.5.0
 
 %description
 The Oslo project intends to produce a python library containing
@@ -103,63 +108,60 @@ Documentation for the oslo-config library.
 # Remove bundled egg-info
 #rm -rf %{oname}.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
 # generate html docs
-python setup.py build_sphinx
+#sphinx-build -W -b html doc/source doc/build/html
+python3 setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf doc/build/html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/oslo-config-generator \
+   %buildroot%_bindir/oslo-config-generator.py2
+
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/oslo-config-generator \
-   %buildroot%_bindir/python3-oslo-config-generator
 popd
-%endif
 
-%python_install
 
 #%check
 
 %files
 %doc README.rst
-%_bindir/oslo-config-generator
+%_bindir/oslo-config-generator.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-oslo-config-generator
+%_bindir/oslo-config-generator
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE build/sphinx/html
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 6.4.1-alt1
+- 6.4.1
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.22.1-alt2
 - rebuild with python3.6
 
