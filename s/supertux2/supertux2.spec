@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.6.0
-Release: alt1.beta1
+Release: alt1.rc1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -9,7 +9,7 @@ Url: https://www.supertux.org/
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-# Source-url: https://github.com/SuperTux/supertux/releases/download/v0.6.0-beta.1/SuperTux-v0.6.0-beta.1-Source.tar.gz
+# Source-url: https://github.com/SuperTux/supertux/releases/download/v0.6.0-rc.1/SuperTux-v0.6.0-rc.1-Source.tar.gz
 Source: SuperTux-v%version-Source.tar.gz
 
 Source1: supertux-16x16.png
@@ -92,6 +92,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Dec 17 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt1.rc1
+- 0.6.0 pre-release (rc1)
+
 * Thu Dec 06 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt1.beta1
 - 0.6.0 pre-release (beta1)
 - Fixed post-install files
