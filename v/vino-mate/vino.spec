@@ -2,7 +2,7 @@
 
 Name: vino-mate
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: A remote desktop system for MATE
 License: GPL
@@ -14,7 +14,7 @@ Source: %name-%version.tar.xz
 Patch0: vino-3.8.1-fc-allocation.patch
 Patch1: vino-3.8.1-alt-fixed_MATE.patch
 
-BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
+BuildRequires: intltool gnome-common desktop-file-utils libnm-devel
 BuildRequires: libgio-devel libgtk+3-devel libsoup-devel libdbus-devel
 BuildRequires: libXdamage-devel libXtst-devel libSM-devel xorg-cf-files xorg-inputproto-devel
 BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel libsecret-devel
@@ -60,6 +60,9 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Mon Dec 17 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.8.1-alt4
+- updated buildreqs
+
 * Tue Oct 17 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.8.1-alt3
 - renamed to vino-mate
  + fixed url and description
