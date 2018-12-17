@@ -4,9 +4,10 @@
 
 Name: qtiplot
 Version: 0.9.8.9
-Release: alt7.svn20120124
+Release: alt8.svn20120124
 
 Summary: WYSIWYG tool to make two- and three-dimensional plots of scientific data
+ExclusiveArch:  %ix86 x86_64
 Group: Sciences/Other
 License: GPL
 Url: http://soft.proindependent.com/%name.html
@@ -36,6 +37,9 @@ Patch9: %name-0.9.8.9-alt-gcc6_indents.patch
 Patch10: %name-0.9.8.9-debian-gsl2.patch
 # https://bugs.gentoo.org/609280#c1
 Patch11: %name-0.9.8.9-gentoo-sip-4.19.patch
+Patch12: %name-0.9.8.9-alt-disable_pdf.patch
+# https://salsa.debian.org/science-team/qtiplot/blob/master/debian/patches/20_fix_FTBFS_sip4.19.patch
+Patch13: %name-0.9.8.9-debian-fix_FTBFS_sip4.19.patch
 
 BuildPreReq: texlive-latex-extra
 
@@ -68,7 +72,6 @@ various graphics formats. It also can make some kind of data processing.
 Summary: Data files for QtiPlot
 Group: Sciences/Other
 BuildArch: noarch
-Requires: %name = %version-%release
 
 %description data
 qtiplot is a program for scientific data visualizing. It can produce
@@ -88,7 +91,6 @@ Conflicts: %name < %version-%release
 This package contains manual for QtiPlot, the program for scientific
 data manipulation and visualization. The manual is in HTML format.
 
-Requires: %name
 Obsoletes: %name-manual
 Conflicts: %name-manual
 
@@ -102,7 +104,6 @@ BuildArch: noarch
 This package contains manual for QtiPlot, the program for scientific
 data manipulation and visualization. The manual is in PDF format.
 
-Requires: %name
 Obsoletes: %name-manual
 Conflicts: %name-manual
 
@@ -115,6 +116,8 @@ Conflicts: %name-manual
 %patch9 -p1
 %patch10 -p1
 %patch11 -p0
+%patch12 -p1
+%patch13 -p1
 
 subst "s/lupdate/lupdate-qt4/;s/lrelease/lrelease-qt4/;\
 s/#system(lupdate/system(lupdate/;s/#system(lrelease/system(lrelease/" \
@@ -159,7 +162,7 @@ install -pD -m644 %name.1 %buildroot%_man1dir
 tar xzvf %SOURCE6 -C $RPM_BUILD_ROOT%_datadir/%name
 
 #mv -f %buildroot%_docdir/%name/manual %buildroot%pkgdocdir/
-install -p -m644 manual/%name-manual-en.pdf %buildroot%pkgdocdir/manual
+#install -p -m644 manual/%name-manual-en.pdf %buildroot%pkgdocdir/manual
 
 install -pD -m644 %SOURCE1  %buildroot%_datadir/mime/packages/%name.xml
 
@@ -203,10 +206,18 @@ mv %buildroot%_libexecdir/%name/plugins/* \
 %files -n %name-manual-html
 %pkgdocdir/manual/html
 
-%files -n %name-manual-pdf
-%pkgdocdir/manual/*.pdf
+#files -n %name-manual-pdf
+#pkgdocdir/manual/*.pdf
 
 %changelog
+* Mon Dec 17 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt8.svn20120124
+- Fixed FTBFS:
+  + disabled pdf generation and qtiplot-manual-pdf subpackage;
+  + fixed build with sip4;
+  + built exclusively for %%ix86, x86_64;
+  + qtiplot-data, qtiplot-manual-html, qtiplot-manual-pdf: drop
+    dependecy on qtiplot subpackage.
+
 * Sun Jan 14 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt7.svn20120124
 - Built for Sisyphus again.
 
