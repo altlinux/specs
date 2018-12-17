@@ -1,10 +1,10 @@
 %define oname os-xenapi
 
-%def_with python3
+%filter_from_requires /xen/d
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.1
+Version: 0.3.4
+Release: alt1
 Summary: XenAPI library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -15,31 +15,38 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-paramiko >= 2.0.0
 
-%if_with python3
+# doc
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx >= 4.7.0
+BuildRequires: python-module-reno >= 2.5.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-%endif
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-paramiko >= 2.0.0
+
+# doc
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx >= 4.7.0
+BuildRequires: python3-module-reno >= 2.5.0
 
 %description
 XenAPI library for OpenStack projects.
@@ -60,7 +67,7 @@ Group: Development/Documentation
 Documentation for OpenStack %oname library
 
 %package -n python3-module-%oname
-Summary: Windows Hyper-V library for OpenStack projects
+Summary: XenAPI library for OpenStack projects
 Group: Development/Python3
 
 %description -n python3-module-%oname
@@ -79,21 +86,17 @@ This package contains tests for %oname.
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
@@ -101,12 +104,10 @@ rm -fr doc/build/html/.buildinfo
 %python_install
 rm -rf %buildroot%python_sitelibdir/*/dom0
 
-%if_with python3
 pushd ../python3
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/*/dom0
 popd
-%endif
 
 %files
 %python_sitelibdir/*
@@ -118,16 +119,17 @@ popd
 %files doc
 %doc README.rst doc/build/html
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

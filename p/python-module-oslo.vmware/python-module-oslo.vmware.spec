@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.17.1
-Release: alt1.1
+Version: 2.31.0
+Release: alt1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -16,40 +16,43 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-yaml >= 3.10.0
-BuildRequires: python-module-lxml >= 2.3
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-netaddr >= 0.7.18
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-yaml >= 3.12
+BuildRequires: python-module-lxml >= 3.4.1
 BuildRequires: python-module-suds-jurko >= 0.6
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-urllib3 >= 1.15.1
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-urllib3 >= 1.21.1
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-netaddr >= 0.7.13
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-yaml >= 3.10.0
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-yaml >= 3.12
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-suds-jurko >= 0.6
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-urllib3 >= 1.15.1
-BuildRequires: python3-module-lxml >= 2.3
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-urllib3 >= 1.21.1
+BuildRequires: python3-module-lxml >= 3.4.1
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 
 %endif
 
@@ -148,6 +151,9 @@ popd
 %doc html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.31.0-alt1
+- 2.31.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.17.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
