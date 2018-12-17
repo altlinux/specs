@@ -1,6 +1,6 @@
 Name: gutenprint
-Version: 5.2.14
-Release: alt1.qa1
+Version: 5.3.1
+Release: alt1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 Group: Publishing
@@ -10,9 +10,9 @@ Url: http://gimp-print.sourceforge.net/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: http://download.sourceforge.net/gimp-print/%name-%version.tar.bz2
-Patch0: gutenprint-5.2.14-alt-fixes.patch
+Patch0: gutenprint-5.3.1-alt-fixes.patch
 Patch1: gutenprint-5.2.9-alt-makefile.patch
-Patch2: gutenprint-5.2.14-alt-LFS.patch
+Patch2: gutenprint-5.3.1-alt-LFS.patch
 
 BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
 BuildRequires: libusb-devel
@@ -117,7 +117,7 @@ mkdir m4local
 mkdir -p %buildroot%_docdir
 mv %buildroot%_datadir/%name/doc %buildroot%docdir
 find %buildroot%_libdir/%name/ -name \*.la -delete
-chmod +rx %buildroot%_prefix/lib/cups/backend/gutenprint52+usb
+chmod +rx %buildroot%_prefix/lib/cups/backend/gutenprint*+usb
 %find_lang %name
 %set_verify_elf_method strict
 
@@ -158,7 +158,7 @@ fi
 %_sysconfdir/cups/*
 %_bindir/cups-*
 %_sbindir/cups-*
-%_prefix/lib/cups/backend/gutenprint52+usb
+%_prefix/lib/cups/backend/gutenprint*+usb
 %_prefix/lib/cups/driver/%{name}*
 %_prefix/lib/cups/filter/*
 %_datadir/cups/usb/net.sf.gimp-print.usb-quirks
@@ -169,6 +169,9 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Mon Dec 17 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.3.1-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.2.14-alt1.qa1
 - NMU: applied repocop patch
 
