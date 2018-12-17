@@ -1,6 +1,8 @@
+# TODO: drop sqlite
+
 Name: bro
-Version: 2.3.1
-Release: alt8
+Version: 2.6
+Release: alt1
 
 Summary: A Network Intrusion Detection System and Analysis Framework
 
@@ -8,10 +10,12 @@ Group: Networking/Other
 License: BSD
 Url: http://bro.org
 
-Source0: http://www.bro.org/downloads/release/%name-%version.tar
+Source0: http://www.bro.org/downloads/%name-%version.tar
 Source1: bro.service
 Source3: bro.init
 Source2: bro-logrotate.conf
+
+%add_verify_elf_skiplist /usr/lib/broctl/broker/_broker.so
 
 # Fix for the usage of configure with cmake. This is Fedora specific.
 Patch0: bro-2.3-configure.patch
@@ -48,6 +52,13 @@ BuildRequires: python-tools-scripts
 BuildRequires: libGeoIP-devel
 BuildRequires: systemd
 BuildRequires: gcc-c++
+
+BuildRequires: libcaf-devel
+BuildRequires: librocksdb-devel
+
+# part ofr bro
+BuildRequires: libbroker-devel
+
 # Unfortunately there is check for sendmail during prep
 #BuildRequires:    sendmail
 
@@ -84,9 +95,17 @@ Group: Networking/Other
 %description -n binpac-devel
 This package contains the header files for binpac.
 
+%package -n libbro-devel
+Summary: Development file for bro
+Group: Networking/Other
+
+%description -n libbro-devel
+This package contains the header files for bro.
+
 %package -n broctl
 Summary: A control tool for bro
 Group: Networking/Other
+Requires: %name = %EVR
 
 %description -n broctl
 BroControl is an interactive interface for managing a Bro installation which
@@ -96,7 +115,7 @@ allows you to, e.g., start/stop the monitoring or update its configuration.
 Summary: The bro client communication library
 Group: Networking/Other
 
-Requires: %name = %version-%release
+#Requires: %name = %EVR
 
 %description -n broccoli
 Broccoli is the "Bro client communications library". It allows you to create
@@ -141,38 +160,49 @@ This package contains the documentation for bro.
 
 %prep
 %setup
-%patch0 -p1 -b .configure
+#patch0 -p1 -b .configure
 %patch1 -p1 -b .cmake
-%patch2 -p1 -b .path
-%patch3 -p1
+#patch2 -p1 -b .path
+#patch3 -p1
+
+# use system lib
+rm -rf src/3rdparty/caf/ aux/broker/3rdparty/caf/
+
+# disable rpath
+find -name CommonCMakeConfig.cmake | xargs sed -i "s|.*SetupRPATH.*||"
+
+# TODO
+find -name CMakeLists.txt | xargs sed -i "s|DESTINATION lib|DESTINATION %_lib|"
+sed -i "s|INSTALL_LIB_DIR lib|INSTALL_LIB_DIR %_lib|" CMakeLists.txt
+# never use private glibc symbols directly
+sed -i "s|libresolv.a||" cmake/FindBIND.cmake
 
 # Paths for broctl broctl/bin/broctl.in
-sed -ibak "s|/lib/broctl|%python_sitelibdir/BroControl|g" aux/broctl/BroControl/options.py
-sed -ibak "s|/lib|%_libdir/bro|g" aux/broctl/BroControl/options.py
+#sed -ibak "s|/lib|%_lib/bro|g" aux/broctl/BroControl/options.py
 
 # Shebang
 sed -i -e '1i#! /bin/bash' aux/broctl/bin/set-bro-path
 sed -i -e '1i#! /bin/awk' aux/broctl/bin/helpers/to-bytes.awk
 
 %build
+which ccache 2>/dev/null && ccache_opt=--ccache
 ./configure \
     --prefix=%prefix \
-    --libdir=%_libdir \
     --conf-files-dir=%_sysconfdir/bro \
-    --python-install-dir=%python_sitelibdir \
-    --disable-rpath \
-    --enable-debug \
+    --with-caf=%prefix \
+    --with-broker=%prefix \
+    $ccache_opt \
     --enable-mobile-ipv6 \
-    --enable-jemalloc \
-    --enable-binpac
-%make
-%make doc
+    --enable-jemalloc
+%make_build
+#make doc
 
 # Fix doc related rpmlint issues
-rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/.tmp
-rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/.buildinfo
-rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/_static/broxygen-extra.js
-find %_builddir/%name-%version/build/doc/ -size 0 -delete
+#rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/.tmp
+#rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/.buildinfo
+#rm -rf %_builddir/%name-%version/build/doc/sphinx_output/html/_static/broxygen-extra.js
+#find %_builddir/%name-%version/build/doc/ -size 0 -delete
+
 #sed -i "s|\r||g" %_builddir/%name-%version/build/doc/sphinx_output/html/objects.inv
 #f="%_builddir/%name-%version/build/doc/sphinx_output/html/objects.inv"
 #iconv --from=ISO-8859-1 --to=UTF-8 $f > $f.new && \
@@ -181,6 +211,8 @@ find %_builddir/%name-%version/build/doc/ -size 0 -delete
 
 %install
 %makeinstall DESTDIR=%buildroot INSTALL="install -p"
+
+#sed -i "s|/usr/lib/broctl|%python_sitelibdir/broctl|g" %buildroot%_bindir/broctl
 
 # Install service file
 install -D -c -m 644 %SOURCE1 %buildroot%_unitdir/bro.service
@@ -214,20 +246,25 @@ popd
 %__install -D -d -m 755 %buildroot%_localstatedir/lib/bro/host
 
 # Fix broctl python location
-mv %buildroot/usr/lib/broctl/BroControl/ %buildroot%python_sitelibdir/BroControl/
-mv %buildroot/usr/lib/broctl/plugins %buildroot%python_sitelibdir/BroControl/plugins
-
-# Move static library to default location
-%if %_arch == "x86_64"
-mkdir -p %buildroot%_libdir
-mv %buildroot/usr/lib/libbinpac.a %buildroot%_libdir/libbinpac.a
-%endif
+mkdir -p %buildroot%python_sitelibdir/broctl/
+mv %buildroot%_libdir/broctl/BroControl %buildroot%python_sitelibdir/broctl/BroControl
+mv %buildroot%_libdir/broctl/plugins %buildroot%python_sitelibdir/broctl/plugins
 
 # Remove devel, junk, and zero length files
 find "%buildroot%prefix" -iname "*.la" -delete;
 #find "%buildroot%prefix" -iname "*.[ha]" -delete;
 find "%buildroot" -iname "*.log" -delete;
 rm -rf %buildroot%_includedir/binpac.h.in
+
+# TODO
+#__subst "s|/spool|/../var/spool|" %buildroot/%python_sitelibdir/broctl/BroControl/options.py
+rm -f %buildroot%_datadir/broctl/scripts/broctl-config.sh
+
+touch %buildroot%_spooldir/bro/broctl-config.sh
+%_ln_sr %_spooldir/bro/broctl-config.sh %buildroot%_datadir/broctl/scripts/broctl-config.sh
+
+rm -rf %buildroot/usr/spool/
+rm -rf %buildroot%_datadir/bro/cmake/
 
 %preun
 %preun_service %name
@@ -239,7 +276,7 @@ fi
 %post
 # first version of a package is installed
 if [ $1 = 1 ]; then
-if ! [ -e "%_spooldir/bro/broctl-config.sh" ]; then
+if ! [ -s "%_spooldir/bro/broctl-config.sh" ]; then
 broctl install
 fi
 fi
@@ -249,50 +286,63 @@ fi
 %doc CHANGES COPYING NEWS README VERSION
 %_bindir/bro
 %_bindir/bro-cut
+%_bindir/bifcl
 %config(noreplace) %_sysconfdir/bro/networks.cfg
 %config(noreplace) %_sysconfdir/bro/node.cfg
 %_unitdir/bro.service
 %_initdir/%name
 %_datadir/bro/
+%_man1dir/*.*
+%_man8dir/*.*
 
 %config(noreplace) %_sysconfdir/logrotate.d/bro
 #%ghost %_localstatedir/run/bro
-%ghost %_localstatedir/log/bro
-%ghost %_localstatedir/lib/bro
-%ghost %_localstatedir/spool/bro
+%_localstatedir/log/bro
+%_localstatedir/lib/bro
+%_spooldir/bro/
 
 %files -n binpac
 %doc CHANGES COPYING README
 %_bindir/binpac
 
 %files -n binpac-devel
-%_includedir/binpac*.h
+%_includedir/binpac/
 %_libdir/libbinpac.a
 
 %files -n broctl
 %config(noreplace) %_sysconfdir/bro/broctl.cfg
 %_bindir/broctl
-%python_sitelibdir/BroControl
+%python_sitelibdir/broctl/
 %_datadir/broctl/
 
-%files -n broccoli
-%config(noreplace) %_sysconfdir/bro/broccoli.conf
-%_libdir/libbroccoli.so.*
+%files -n libbro-devel
+%_bindir/bro-config
+%_includedir/bro/
 
-%files -n broccoli-devel
-%_bindir/broccoli-config
-%_libdir/libbroccoli.so
-%_includedir/broccoli.h
-%exclude %_libdir/libbroccoli.a
+#%files -n broccoli
+#%config(noreplace) %_sysconfdir/bro/broccoli.conf
+#%_libdir/libbroccoli.so.*
 
-%files -n python-module-broccoli
-%python_sitelibdir/*broccoli*
+#%files -n broccoli-devel
+#%_bindir/broccoli-config
+#%_libdir/libbroccoli.so
+#%_includedir/broccoli.h
+#%exclude %_libdir/libbroccoli.a
 
-%files doc
-%doc doc/LICENSE doc/README
-%doc build/doc/sphinx_output/html
+#%files -n python-module-broccoli
+#python_sitelibdir/*broccoli*
+
+#files doc
+#%doc doc/LICENSE doc/README
+#%doc build/doc/sphinx_output/html
 
 %changelog
+* Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- new version 2.6 (with rpmrb script)
+
+* Mon Sep 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
+- new version 2.5.5 (with rpmrb script)
+
 * Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt8
 - replace rpm-build-intro with rpm-macros-intro-conflicts
 
