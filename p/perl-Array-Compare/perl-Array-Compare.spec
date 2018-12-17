@@ -10,7 +10,7 @@
 %define _enable_test 1
 
 Name: perl-Array-Compare
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Array::Compare - perl module comparing arrays
@@ -53,6 +53,9 @@ differing columns.
 %doc Changes README
 
 %changelog
+* Mon Dec 17 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1
+- automated CPAN update
+
 * Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1
 - automated CPAN update
 
