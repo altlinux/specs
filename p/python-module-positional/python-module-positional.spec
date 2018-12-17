@@ -1,10 +1,8 @@
 %define oname positional
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.1
+Version: 1.2.1
+Release: alt1
 
 %setup_python_module %oname
 
@@ -22,12 +20,11 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-wrapt
 
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-wrapt
-%endif
 
 %description
 `positional` provides a decorator which enforces only some args may be passed
@@ -63,28 +60,21 @@ This package contains tests for %oname.
 %prep
 %setup -n %oname-%version
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
-
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc README.rst
@@ -94,7 +84,6 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc README.rst
 %python3_sitelibdir/*
@@ -102,9 +91,11 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
