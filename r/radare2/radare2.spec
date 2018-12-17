@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 2.8.0
+Version: 3.1.3
 Release: alt1
 License: %lgpl3plus
 Group: Development/Tools
@@ -8,7 +8,7 @@ Url: http://radare.org/
 Source: %name-%version.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel
+BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash
 
 # bundled sdb ./shlr/sdb/README.md
 # bundled js0n ./shlr/sdb/src/json/README
@@ -34,7 +34,7 @@ Development files for %name package.
 %setup
 
 %build
-%configure --with-syscapstone --with-sysmagic --with-syszip
+%configure --with-syscapstone --with-sysmagic --with-syszip --with-sysxxhash
 sed -i -- 's|-lm|-lm\ -L\.\./util -lr_util|g' libr/hash/Makefile
 LDFLAGS="-lutil -ldl -lpthread -lm" DESTDIR=%buildroot CFLAGS="%optflags -fPIC -I../include" LIBDIR=%_libdir PREFIX=%prefix DATADIR=%_datadir %make_build
 
@@ -59,6 +59,9 @@ cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 %_libdir/%name/
 
 %changelog
+* Mon Dec 17 2018 Nikita Ermakov <arei@altlinux.org> 3.1.3-alt1
+- Updated to 3.1.3.
+
 * Mon Nov 12 2018 Nikita Ermakov <arei@altlinux.org> 2.8.0-alt1
 - Updated to 2.8.0.
 
