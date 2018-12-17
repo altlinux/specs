@@ -1,10 +1,8 @@
 %define oname oslo.serialization
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 2.16.0
-Release: alt1.1
+Version: 2.27.0
+Release: alt1
 Summary: OpenStack oslo.serialization library
 Group: Development/Python
 License: ASL 2.0
@@ -17,28 +15,30 @@ Provides: python-module-oslo-serialization = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-msgpack >= 0.4.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-msgpack >= 0.5.2
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-pytz >= 2013.6
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
 
-%if_with python3
+# doc
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-msgpack >= 0.4.0
-BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-msgpack >= 0.5.2
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-pytz >= 2013.6
+
+# doc
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-%endif
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 
 %description
 The OpenStack Oslo serialization handling library.
@@ -81,18 +81,16 @@ Documentation for the Oslo serialization handling library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
+
 
 # generate html docs
 sphinx-build doc/source html
@@ -101,11 +99,10 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
@@ -115,19 +112,20 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 2.27.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.16.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
