@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.9.0
-Release: alt1.1
+Version: 3.2.0
+Release: alt1
 Epoch: 1
 Summary: Taskflow structured state management library
 
@@ -16,25 +16,27 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+
 BuildRequires: python-module-SQLAlchemy-Utils
 BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-enum34
-BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-fasteners >= 0.7
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-enum34 >= 1.0.4
+BuildRequires: python-module-futurist >= 1.2.0
+BuildRequires: python-module-fasteners >= 0.7.0
 BuildRequires: python-module-networkx >= 1.10 python-module-networkx-tests
 BuildRequires: python-module-contextlib2 >= 0.4.0
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-futures >= 3.0
-BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-automaton >= 0.5.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-cachetools >= 1.1.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-futures >= 3.0.0
+BuildRequires: python-module-jsonschema >= 2.6.0
+BuildRequires: python-module-automaton >= 1.9.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-tenacity >= 4.4.0
+BuildRequires: python-module-cachetools >= 2.0.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 
 
@@ -44,14 +46,15 @@ BuildRequires: python-module-oslotest >= 1.10.0
 BuildRequires: python-module-mock >= 1.2
 BuildRequires: python-module-testtools >= 1.4.0
 BuildRequires: python-module-testscenarios >= 0.4
-BuildRequires: python-module-kombu >= 3.0.25
-#BuildRequires: python-module-doc8
+BuildRequires: python-module-kombu >= 4.0.0
+BuildRequires: python-module-doc8 >= 0.6
 BuildRequires: python-module-kazoo >= 2.2
 BuildRequires: python-module-redis-py >= 2.10.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-psycopg2 >= 2.5
-BuildRequires: python-module-pymysql >= 0.6.2
+BuildRequires: python-module-SQLAlchemy-Utils >= 0.30.11
+BuildRequires: python-module-alembic >= 0.8.10
+BuildRequires: python-module-psycopg2 >= 2.6.2
+BuildRequires: python-module-pymysql >= 0.7.6
 BuildRequires: python-module-eventlet >= 0.18.2
 
 
@@ -144,11 +147,9 @@ pushd ../python3
 popd
 %endif
 
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python setup.py build_sphinx
+#python setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+#rm -fr doc/build/html/.buildinfo
 
 %install
 %python_install
@@ -168,8 +169,8 @@ popd
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/test.*
 
-%files doc
-%doc doc/build/html
+#%files doc
+#%doc doc/build/html
 
 %if_with python3
 %files -n python3-module-%oname
@@ -183,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1:3.2.0-alt1
+- 3.2.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.9.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
