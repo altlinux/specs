@@ -1,9 +1,8 @@
 %define oname openstacksdk
-%def_with python3
 
 Name: python-module-%oname
-Version: 0.9.13
-Release: alt1.1
+Version: 0.17.2
+Release: alt1
 Summary: An SDK for building applications to work with OpenStack
 
 Group: Development/Python
@@ -15,30 +14,32 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-os-client-config >= 1.22.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
+#BuildRequires: python-module-os-client-config >= 1.22.0
+#BuildRequires: python-module-os-service-types >= 1.2.0
+BuildRequires: python-module-keystoneauth1
+BuildRequires: python-module-deprecation >= 1.0
 
 # for build doc
 BuildRequires: python-module-mock
 BuildRequires: python-module-requests-mock
 BuildRequires: python-module-fixtures
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-openstackdocstheme
 BuildRequires: python-module-reno
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-os-client-config >= 1.22.0
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
-%endif
+#BuildRequires: python3-module-os-client-config >= 1.22.0
+#BuildRequires: python3-module-os-service-types >= 1.2.0
+BuildRequires: python3-module-keystoneauth1
+BuildRequires: python3-module-deprecation >= 1.0
 
 %description
 The python-openstacksdk is a collection of libraries for building applications to work with OpenStack clouds.
@@ -96,27 +97,24 @@ rm -rf requirements.txt test-requirements.txt
 # Remove bundled egg-info
 rm -rf *.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/openstack-inventory %buildroot%_bindir/openstack-inventory.py2
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
-%python_install
 
 #export PYTHONPATH="$( pwd ):$PYTHONPATH"
 #sphinx-build -b html doc/source html
@@ -127,29 +125,33 @@ popd
 
 %files
 %doc LICENSE README.rst
+%_bindir/openstack-inventory.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
-%doc examples openstack/tests/examples
+%doc examples
 %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/tests/examples
+%exclude %python_sitelibdir/*/tests/functional/examples
 
 #%files doc
 #%doc html
 
-%if_with python3
 %files -n python3-module-%oname
+%_bindir/openstack-inventory
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
+
 %files -n python3-module-%oname-tests
-%doc examples openstack/tests/examples
+%doc examples
 %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/tests/examples
-%endif
+%exclude %python3_sitelibdir/*/tests/functional/examples
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 0.17.2-alt1
+- 0.17.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.13-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
