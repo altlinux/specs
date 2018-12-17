@@ -1,18 +1,40 @@
 %define TOOL_CHAIN_TAG GCC49
 %define openssl_ver 1.1.0e
-%def_enable aarch64
-%def_disable arm
+
+%def_disable cross
+
+%ifarch %{ix86} x86_64
+%def_enable build_ovmf_ia32
+%ifarch x86_64
+%def_enable build_ovmf_x64
+%endif
+%endif
+
+%ifarch aarch64
+%def_enable build_aavmf_aarch64
+%endif
+
+%ifarch %{arm}
+%def_enable build_aavmf_arm
+%endif
+
+%if_enabled cross
+%def_enable build_ovmf_x64
+%def_enable build_ovmf_ia32
+%def_enable build_aavmf_aarch64
+%def_enable build_aavmf_arm
+%endif
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20170720
-Release: alt3%ubt
+Version: 20181113
+Release: alt1
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
 Source: %name-%version.tar
 
-Source2: https://www.openssl.org/source/openssl-%openssl_ver.tar.gz
+Source2: openssl.tar
 Source3: Logo.bmp
 
 Patch1: %name-%version.patch
@@ -20,13 +42,20 @@ Patch1: %name-%version.patch
 License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
-ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++-x86_64-linux-gnu gcc-c++
+%if_enabled cross
+ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64
+%else
+ExclusiveArch:  x86_64 aarch64
+%endif
+
+%if_enabled cross
+BuildRequires: gcc-c++-x86_64-linux-gnu
 %{?_enable_aarch64:BuildRequires: gcc-c++-aarch64-linux-gnu}
 %{?_enable_arm:BuildRequires: gcc-c++-arm-linux-gnu}
-BuildRequires: iasl nasm
+%endif
+
+BuildRequires: iasl nasm gcc-c++
 BuildRequires: python-devel python-modules-sqlite3
 BuildRequires: libuuid-devel
 
@@ -67,16 +96,32 @@ Group: Emulators
 Requires: ipxe-roms-qemu
 Requires: seavgabios
 License: BSD License (no advertising) with restrictions on use and redistribution
+%if_enabled cross
 BuildArch: noarch
+%endif
 
 %description ovmf
 EFI Development Kit II
 Open Virtual Machine Firmware
 
+%package ovmf-ia32
+Summary: Open Virtual Machine Firmware
+Group: Emulators
+License:        BSD and OpenSSL
+%if_enabled cross
+BuildArch:      noarch
+%endif
+
+%description ovmf-ia32
+EFI Development Kit II
+Open Virtual Machine Firmware (ia32)
+
 %package aarch64
 Summary: AARCH64 Virtual Machine Firmware
 Group: Emulators
+%if_enabled cross
 BuildArch:      noarch
+%endif
 
 %description aarch64
 EFI Development Kit II
@@ -85,7 +130,9 @@ AARCH64 UEFI Firmware
 %package arm
 Summary: ARM Virtual Machine Firmware
 Group: Emulators
+%if_enabled cross
 BuildArch:      noarch
+%endif
 
 %description arm
 EFI Development Kit II
@@ -121,38 +168,17 @@ rm -rf BaseTools/Bin \
 	Vlv2TbltDevicePkg/*.exe \
 	ArmPkg/Library/GccLto/liblto-*.a
 
+# Ensure old shell and binary packages are not used
+rm -rf EdkShellBinPkg
+rm -rf EdkShellPkg
+rm -rf FatBinPkg
+rm -rf ShellBinPkg
+
 # add openssl
-tar -C CryptoPkg/Library/OpensslLib -xf %SOURCE2
-#(cd CryptoPkg/Library/OpensslLib/openssl-%openssl_ver;
-# patch -p1 < ../EDKII_openssl-%openssl_ver.patch)
-#(cd CryptoPkg/Library/OpensslLib; ./Install.sh)
-pushd CryptoPkg/Library/OpensslLib
- ln -s openssl-%openssl_ver openssl
-popd
-
-# fix build target.txt
-sed -i \
-	"s|^TOOL_CHAIN_TAG[ ]*=.*|TOOL_CHAIN_TAG = %TOOL_CHAIN_TAG|; \
-	 s|^TARGET[ ]*=.*|TARGET = RELEASE|; \
-	 s|^ACTIVE_PLATFORM[[ ]*=.*|ACTIVE_PLATFORM = MdeModulePkg/MdeModulePkg.dsc|; \
-	 s|^TARGET_ARCH[ ]*=.*|TARGET_ARCH = IA32 X64|" \
-	 BaseTools/Conf/target.template
-
-sed -i \
-	"s|^DEFINE UNIXGCC_X64_PETOOLS_PREFIX|DEFINE UNIXGCC_X64_PETOOLS_PREFIX = x86_64-linux-gnu-|; \
-	 s|^DEFINE UNIXGCC_IA32_PETOOLS_PREFIX|DEFINE UNIXGCC_IA32_PETOOLS_PREFIX = x86_64-linux-gnu-|; \
-	 s|DEF(GCC48_X64_PREFIX)make|make|; \
-	 s|DEF(GCC48_IA32_PREFIX)make|make|; \
-	 s|DEF(GCC49_X64_PREFIX)make|make|; \
-	 s|DEF(GCC49_IA32_PREFIX)make|make|; \
-	 s|DEF(GCC5_X64_PREFIX)make|make|; \
-	 s|DEF(GCC5_IA32_PREFIX)make|make|" \
-	 BaseTools/Conf/tools_def.template
+mkdir -p CryptoPkg/Library/OpensslLib/openssl
+tar -xf %SOURCE2 -C CryptoPkg/Library/OpensslLib/openssl --strip-components 1
 
 %build
-export %{TOOL_CHAIN_TAG}_BIN="x86_64-linux-gnu-"
-export X64_PETOOLS_PREFIX="x86_64-linux-gnu-"
-export IA32_PETOOLS_PREFIX="x86_64-linux-gnu-"
 
 source ./edksetup.sh
 
@@ -160,12 +186,16 @@ source ./edksetup.sh
 CC_FLAGS="-t %TOOL_CHAIN_TAG"
 
 # common features
-#CC_FLAGS="${CC_FLAGS} -b DEBUG"
+#CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} -b RELEASE"
+#CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
 
 # ovmf features
 OVMF_FLAGS="${CC_FLAGS}"
+OVMF_FLAGS="${OVMF_FLAGS} -D TLS_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D HTTP_BOOT_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_IP6_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
@@ -180,6 +210,7 @@ OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
 #ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 ARM_FLAGS="${ARM_FLAGS} -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
+
 
 unset MAKEFLAGS
 
@@ -196,46 +227,55 @@ unset MAKEFLAGS
 #source ./edksetup.sh
 
 # build ovmf
+%if_enabled cross
 export %{TOOL_CHAIN_TAG}_IA32_PREFIX="x86_64-linux-gnu-"
 export %{TOOL_CHAIN_TAG}_X64_PREFIX="x86_64-linux-gnu-"
 export %{TOOL_CHAIN_TAG}_AARCH64_PREFIX="aarch64-linux-gnu-"
 export %{TOOL_CHAIN_TAG}_ARM_PREFIX="arm-linux-gnu-"
+%endif
 
+# build ovmf (x64)
+%if_enabled build_ovmf_x64
 mkdir -p OVMF
 build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
-#build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
 cp Build/OvmfX64/*/FV/OVMF_*.fd OVMF
 rm -rf Build/OvmfX64
-
 # build ovmf with secure boot
 build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
 cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
+%endif
 
 # build shell
 %ifarch x86_64
 build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
 %endif
 
-unset %{TOOL_CHAIN_TAG}_BIN
+# build ovmf-ia32
+%if_enabled build_ovmf_ia32
+mkdir -p ovmf-ia32
+build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
+cp Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/
+rm -rf Build/OvmfIa32
+# build ovmf-ia32 with secure boot
+build ${OVMF_SB_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
+cp Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/OVMF_CODE.secboot.fd
+%endif
 
-PATH_TEMP="$PATH"
 
-%if_enabled aarch64
 # build aarch64 firmware
-export PATH="%_libexecdir/aarch64-linux-gnu/bin:$PATH_TEMP"
+%if_enabled build_aavmf_aarch64
 mkdir -p AAVMF
-build $ARM_FLAGS -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd AAVMF
 dd of="AAVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
 dd of="AAVMF/QEMU_EFI-pflash.raw" if="AAVMF/QEMU_EFI.fd" conv=notrunc
 dd of="AAVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
-export PATH="$PATH_TEMP"
 %endif
 
-%if_enabled arm
 # build arm firmware
+%if_enabled build_aavmf_arm
 mkdir -p AVMF
-build $ARM_FLAGS -a ARM -p ArmVirtPkg/ArmVirtQemu.dsc
+build ${ARM_FLAGS} -a ARM -p ArmVirtPkg/ArmVirtQemu.dsc
 cp Build/ArmVirtQemu-ARM/DEBUG_*/FV/*.fd AVMF
 dd of="AVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
 dd of="AVMF/QEMU_EFI-pflash.raw" if="AVMF/QEMU_EFI.fd" conv=notrunc
@@ -294,13 +334,18 @@ install -pm0644 -D Build/Shell/RELEASE_%TOOL_CHAIN_TAG/X64/Shell.efi \
 
 #install OVMF
 mkdir -p %buildroot%_datadir/%name
+%if_enabled build_ovmf_x64
 cp -a OVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/OVMF %buildroot%_datadir/%name/ovmf
-%if_enabled aarch64
+%endif
+%if_enabled build_ovmf_ia32
+cp -a ovmf-ia32 %buildroot%_datadir/%name
+%endif
+%if_enabled build_aavmf_aarch64
 cp -a AAVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/%name/aarch64
 %endif
-%if_enabled arm
+%if_enabled build_aavmf_arm
 cp -a AVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
@@ -343,20 +388,28 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %files tools-doc
 %doc BaseTools/UserManuals/*.rtf
 
+%if_enabled build_ovmf_x64
 %files ovmf
 #%doc FatBinPkg/License.txt
 %doc OvmfPkg/License.txt
 %_datadir/OVMF
 %dir %_datadir/%name
 %_datadir/%name/ovmf
+%endif
 
-%if_enabled aarch64
+%if_enabled build_ovmf_ia32
+%files ovmf-ia32
+%doc OvmfPkg/License.txt
+%_datadir/%name/ovmf-ia32
+%endif
+
+%if_enabled build_aavmf_aarch64
 %files aarch64
 %_datadir/AAVMF
 %_datadir/%name/aarch64
 %endif
 
-%if_enabled arm
+%if_enabled build_aavmf_arm
 %files arm
 %_datadir/AVMF
 %_datadir/%name/arm
@@ -368,6 +421,9 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %changelog
+* Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 20181113-alt1
+- edk2-stable201811
+
 * Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3%ubt
 - snapshot of UDK2017 branch
 

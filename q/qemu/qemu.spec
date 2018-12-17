@@ -2,6 +2,9 @@
 # vim600: set fdm=marker:
 
 # {{{ macros define
+
+%def_disable edk2_cross
+
 %def_enable user_static
 
 %def_enable sdl
@@ -59,6 +62,8 @@
 %def_disable xen
 %def_enable mpath
 %def_enable libxml2
+%def_disable libpmem
+%def_enable libudev
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -103,8 +108,8 @@
 # }}}
 
 Name: qemu
-Version: 3.0.0
-Release: alt4
+Version: 3.1.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -172,10 +177,10 @@ BuildRequires: libuuid-devel
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.2.3}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
-%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 2.9.10}
-%{?_enable_nettle:BuildRequires: libnettle-devel}
-%{?_enable_gcrypt:BuildRequires: libgcrypt-devel}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.14.0 libvte3-devel >= 0.32.0}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 3.1.18}
+%{?_enable_nettle:BuildRequires: libnettle-devel >= 2.7.1}
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.5.0}
 BuildRequires: libtasn1-devel
 %{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
@@ -191,6 +196,8 @@ BuildRequires: libtasn1-devel
 %{?_enable_vxhs:BuildRequires: libvxhs-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
 %{?_enable_libxml2:BuildRequires: libxml2-devel}
+%{?_enable_libpmem:BuildRequires: libpmem-devel}
+%{?_enable_libudev:BuildRequires: libudev-devel}
 
 %global requires_all_modules         \
 Requires: %name-block-curl = %EVR    \
@@ -546,7 +553,13 @@ Conflicts: %name-system < 2.10.1-alt1
 Requires: seavgabios
 Requires: seabios >= 1.7.4-alt2
 Requires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd
+%if_enabled edk2_cross
 Requires: edk2-ovmf
+%else
+%ifarch x86_64
+Requires: edk2-ovmf
+%endif
+%endif
 %if_enabled seccomp
 Requires: libseccomp >= 2.2.3
 %endif
@@ -958,7 +971,14 @@ Summary: QEMU system emulator for AArch64
 Group: Emulators
 Requires: %name-common = %EVR
 Conflicts: %name-system < 2.10.1-alt1
+%if_enabled edk2_cross
 Requires: edk2-aarch64
+%else
+%ifarch aarch64
+Requires: edk2-aarch64
+%endif
+%endif
+
 %description system-aarch64-core
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -1032,26 +1052,26 @@ export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 run_configure() {
 # non-GNU configure
 ./configure \
-    --disable-git-update \
-    --prefix=%prefix \
-    --sysconfdir=%_sysconfdir \
-    --libdir=%_libdir \
-    --mandir=%_mandir \
-    --libexecdir=%_libexecdir \
-    --localstatedir=%_localstatedir \
-    --with-pkgversion=%name-%version-%release \
+	--disable-git-update \
+	--prefix=%prefix \
+	--sysconfdir=%_sysconfdir \
+	--libdir=%_libdir \
+	--mandir=%_mandir \
+	--libexecdir=%_libexecdir \
+	--localstatedir=%_localstatedir \
+	--with-pkgversion=%name-%version-%release \
 %ifarch s390 %mips64
-    --enable-tcg-interpreter \
+	--enable-tcg-interpreter \
 %endif
-    --extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
-    --extra-cflags="%optflags" \
-    --disable-werror \
-    --disable-debug-tcg \
-    --disable-sparse \
-    --disable-strip \
-    --enable-kvm \
-    --python=/usr/bin/python3 \
-     "$@"
+	--extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
+	--extra-cflags="%optflags" \
+	--disable-werror \
+	--disable-debug-tcg \
+	--disable-sparse \
+	--disable-strip \
+	--enable-kvm \
+	--python=/usr/bin/python3 \
+	 "$@"
 }
 
 %if_enabled user_static
@@ -1060,7 +1080,7 @@ run_configure \
 	--disable-pie \
 	--static \
 	--disable-system \
-    --enable-linux-user \
+	--enable-linux-user \
 	--disable-xfsctl \
 	--disable-smartcard \
 	--disable-usb-redir \
@@ -1070,7 +1090,7 @@ run_configure \
 	--disable-rbd \
 	--disable-libnfs \
 	--disable-glusterfs \
-    --disable-libxml2 \
+	--disable-libxml2 \
 	--disable-libssh2 \
 	--disable-gnutls \
 	--disable-nettle \
@@ -1116,15 +1136,15 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 
 # non-GNU configure
 run_configure \
-    --enable-system \
-    --enable-linux-user \
-    --enable-pie \
-    --enable-modules \
-    %{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
+	--enable-system \
+	--enable-linux-user \
+	--enable-pie \
+	--enable-modules \
+	%{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
-	%{?_enable_gtk:--enable-gtk --with-gtkabi=3.0 --enable-vte} \
+	%{?_enable_gtk:--enable-gtk --enable-vte} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
@@ -1141,7 +1161,7 @@ run_configure \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
 	%{subst_enable xen} \
-    %{?_enable_vhost_crypto:--enable-vhost-crypto} \
+	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
 	%{?_enable_vhost_vsock:--enable-vhost-vsock} \
@@ -1154,7 +1174,7 @@ run_configure \
 	%{subst_enable rbd} \
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
-    %{subst_enable libxml2} \
+	%{subst_enable libxml2} \
 	%{subst_enable libssh2} \
 	%{?_enable_live_block_migration:--enable-live-block-migration} \
 	%{subst_enable rdma} \
@@ -1171,7 +1191,8 @@ run_configure \
 	%{subst_enable bzip2} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
-    --disable-xen
+	%{subst_enable libpmem} \
+	--disable-xen
 
 %make_build V=1 $buildldflags
 
@@ -1591,6 +1612,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Tue Dec 11 2018 Ilfat Aminov <aminov@altlinux.org> 3.0.0-alt4
 - Enable OpenGL support
 
