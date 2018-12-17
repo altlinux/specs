@@ -1,10 +1,10 @@
 %define oname stevedore
 
-%def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.20.1
-Release: alt1.1
+Version: 1.29.0
+Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
 License: ASL 2.0
@@ -16,26 +16,28 @@ BuildRequires(pre): rpm-macros-sphinx
 
 BuildRequires: python-devel python-module-argparse
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8 python-module-six >= 1.9
+BuildRequires: python-module-pbr >= 2.0.0 python-module-six >= 1.10
 BuildRequires: python-module-argparse
 BuildRequires: python-module-Pillow python-module-oslotest
 BuildRequires: python-module-discover python-module-testrepository
 BuildRequires: python-module-coverage python-module-mock
 BuildRequires: python-module-mox3 python-module-mimeparse
 BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno
-%if_with python3
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-argparse
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8 python3-module-six >= 1.9
+BuildRequires: python3-module-pbr >= 2.0.0 python3-module-six >= 1.10
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-Pillow python3-module-oslotest
 BuildRequires: python3-module-discover python3-module-testrepository
 BuildRequires: python3-module-coverage python3-module-mock
 BuildRequires: python3-module-mox3 python3-module-mimeparse
-%endif
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 
 %py_provides %oname
 
@@ -92,9 +94,7 @@ This package contains tests for %oname.
 %prep
 %setup -n %oname-%version
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
@@ -102,20 +102,16 @@ ln -s ../objects.inv doc/source/
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 export PYTHONPATH=$PWD
 %make -C doc pickle
@@ -123,19 +119,19 @@ export PYTHONPATH=$PWD
 
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
-#%check
-#python setup.py test
-#rm -fR build
-#export PYTHONPATH=$PWD
-#py.test
-#%if_with python3
-#pushd ../python3
-#python3 setup.py test
-#rm -fR build
-#export PYTHONPATH=$PWD
-#py.test-%_python3_version
-#popd
-#%endif
+%check
+python setup.py test
+rm -fR build
+export PYTHONPATH=$PWD
+py.test
+
+pushd ../python3
+python3 setup.py test
+rm -fR build
+export PYTHONPATH=$PWD
+py.test-%_python3_version
+popd
+
 
 %files
 %doc README.rst LICENSE
@@ -155,7 +151,7 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %files docs
 %doc doc/build/html/*
 
-%if_with python3
+
 %files -n python3-module-%oname
 %doc README.rst LICENSE
 %python3_sitelibdir/%oname
@@ -166,9 +162,12 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/example
-%endif
+
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.29.0-alt1
+- 1.29.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.20.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
