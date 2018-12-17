@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.48.2
-Release: alt1.1
+Version: 1.62.0
+Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python
 License: ASL 2.0
@@ -17,9 +17,6 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.16.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-enum34
 BuildRequires: python-module-voluptuous >= 0.8.9
 BuildRequires: python-module-msgpack >= 0.4.0
@@ -31,6 +28,9 @@ BuildRequires: python-module-oslo.utils >= 3.15.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 
 # for doc
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-openstackdocstheme >= 1.11.0
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-pymemcache
 BuildRequires: python-module-pymysql
 BuildRequires: python-module-sysv_ipc
@@ -112,11 +112,10 @@ popd
 %endif
 
 # disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
 python setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
-
+rm -fr build/sphinx/html/.buildinfo
 
 %install
 %python_install
@@ -144,9 +143,12 @@ popd
 %endif
 
 %files doc
-%doc doc/build/html
+%doc build/sphinx/html
 
 %changelog
+* Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.62.0-alt1
+- 1.62.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.48.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
