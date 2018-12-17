@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.10
+Version:        3.12
 Release:        alt1_1
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
@@ -19,7 +19,7 @@ Source3:        gnat-project.sh
 Source4:        gnat-project.csh
 Source5:        configure
 Source6:        LICENSE
-BuildArch:      noarch
+#BuildArch:      noarch
 
 BuildRequires:  sed
 Requires:       setup
@@ -87,6 +87,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.10-alt1_1
 - update to new release by fcimport
 
