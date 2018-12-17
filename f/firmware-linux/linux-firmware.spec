@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20181026
+Version: 20181107
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,26 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Dec 17 2018 Cronbuild Service <cronbuild@altlinux.org> 20181107-alt1
+- upstream changes (GIT 211de16):
+  + brcm: provide new firmwares for BCM4366 chipset (thx Arend van Spriel)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.1910.622 (thx Shalom Toledo)
+  + cavium: Update firmware for CNN55XX crypto driver (thx Nagadheeraj, Rottela)
+  + amdgpu: update vega12 fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: update vega10 fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: update raven fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: update polaris11 fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: update polaris10 fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: add firmware for vega12 (thx Alex Deucher)
+  + amdgpu: Add new polaris MC firmwares (thx Alex Deucher)
+  + amdgpu: Add new polaris SMC firmwares (thx Alex Deucher)
+  + Update AMD cpu microcode (thx Allen, John)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.10.A.13 (thx Louis Peens)
+  + microchip: add firmware for VSC8574 and VSC8584 Ethernet PHYs (thx Quentin Schulz)
+  + intel: Update Cannonlake audio firmware. (thx Cezary Rojewski)
+  + nfp: update Agilio SmartNIC firmware to rev 2.1.16 (thx Ciaran Toal)
+  + cxgb4: update firmware to revision 1.21.5.0 (thx Ganesh Goudar)
+
 * Mon Nov 05 2018 Cronbuild Service <cronbuild@altlinux.org> 20181026-alt1
 - upstream changes (GIT 1baa348):
   + qed: Add 8.37.7.0 firmware image (thx Mody, Rasesh)
