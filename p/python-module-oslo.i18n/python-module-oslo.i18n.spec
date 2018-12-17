@@ -1,10 +1,8 @@
 %define oname oslo.i18n
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 3.12.0
-Release: alt1.1
+Version: 3.21.0
+Release: alt1
 Summary: OpenStack i18n library
 Group: Development/Python
 License: ASL 2.0
@@ -16,25 +14,28 @@ Provides: python-module-oslo-i18n = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-sphinx >= 1.2.1
-BuildRequires: python-module-oslosphinx >= 4.7.0
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-fixtures
+BuildRequires: python-module-six >= 1.10.0
+
 BuildRequires: python-module-oslo.config >= 3.14.0
-%if_with python3
+
+BuildRequires: python-module-sphinx >= 1.2.1
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-fixtures
-%endif
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-six >= 1.10.0
+
+BuildRequires: python3-module-oslo.config >= 3.14.0
+
+BuildRequires: python3-module-sphinx >= 1.2.1
+BuildRequires: python3-module-reno >= 1.8.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 
 %description
 The oslo.i18n library contain utilities for working with internationalization
@@ -90,33 +91,31 @@ This package contains tests for %oname.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
+sed -i '/warning-is-error/d' setup.cfg
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 
 # generate html docs
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf doc/build/html/.{doctrees,buildinfo}
 
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc AUTHORS ChangeLog CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
@@ -126,19 +125,20 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 3.21.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.12.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
