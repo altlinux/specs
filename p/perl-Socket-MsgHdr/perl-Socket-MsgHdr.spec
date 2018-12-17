@@ -2,13 +2,13 @@
 %define sname socket-msghdr
 
 Name: perl-Socket-MsgHdr
-Version: 0.04
+Version: 0.05
 Release: alt1
 Summary: Sendmsg, recvmsg and ancillary data operations
 License: GPL+ or Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Socket-MsgHdr/
-Source: %sname-%version.tar
+Source0: http://www.cpan.org/authors/id/F/FE/FELIPE/Socket-MsgHdr-%{version}.tar.gz
 
 BuildRequires: findutils
 BuildRequires: make
@@ -29,7 +29,7 @@ and recvmsg. Like their C counterparts, these functions accept few
 parameters, instead stuffing a lot of information into a complex structure.
 
 %prep
-%setup -n %sname-%version
+%setup -q -n Socket-MsgHdr-%{version}
 
 %build
 %perl_vendor_build
@@ -38,10 +38,13 @@ parameters, instead stuffing a lot of information into a complex structure.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendorarch/auto/Socket/MsgHdr*
 %perl_vendorarch/Socket*
 
 %changelog
+* Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.04-alt1
 - initial build for ALT
