@@ -1,6 +1,8 @@
+# no libatlas-devel
+ExclusiveArch: %ix86 x86_64
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ liblapack-devel openmpi-devel
+BuildRequires: openmpi-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,7 +11,7 @@ Version:        1.13.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_1
+Release:        alt1_8
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Other
@@ -17,8 +19,9 @@ License:        BSD
 
 URL:            http://ceres-solver.org/
 Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
-# Temporary workaround for bogus gflags-config.cmake, see #1359776
-Patch1:         ceres-solver_gflags.patch
+# Partial backport of bbe790e0f3ba9e9565862067198d2760ab669ec8: fix possible out of bounds array access
+Patch2:         ceres-solver_bounds.patch
+
 %if 0%{?rhel} > 0 && 0%{?rhel} < 7
 # Exclude ppc64 because suitesparse is not available on ppc64
 # https://lists.fedoraproject.org/pipermail/epel-devel/2015-May/011193.html
@@ -30,11 +33,12 @@ BuildRequires:  ccmake cmake ctest
 %else
 BuildRequires:  ctest cmake
 %endif
+BuildRequires:  gcc-c++
 
 # Need -static package per guidelines for handling dependencies on header-only
 # libraries.
 # http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Header_Only_Libraries
-BuildRequires:  eigen3-devel >= 3.2.1
+BuildRequires:  eigen3 >= 3.2.1
 
 # suitesparse < 3.4.0-9 ships without *.hpp C++ headers
 # https://bugzilla.redhat.com/show_bug.cgi?id=1001869
@@ -45,7 +49,7 @@ BuildRequires:  tbb-devel
 
 # Use atlas for BLAS and LAPACK
 BuildRequires:  libatlas-devel
-BuildRequires:  libgflags-devel
+BuildRequires:  libgflags-devel >= 2.2.1
 # Build against miniglog on RHEL6 until glog package is added to EPEL6
 %if (0%{?rhel} != 06)
 BuildRequires:  libglog-devel >= 0.3.1
@@ -94,7 +98,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch2 -p1
 
 %build
 mkdir build
@@ -135,6 +139,9 @@ CTEST_OUTPUT_ON_FAILURE=1 make -C build test
 
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1_8
+- update to new release by fcimport
+
 * Tue Jan 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1_1
 - new version
 
