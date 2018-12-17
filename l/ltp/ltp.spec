@@ -1,6 +1,6 @@
 Name: ltp
 Version: 20180926
-Release: alt1.git3ceb9157b
+Release: alt2.git3ceb9157b
 Summary: Linux Test Project
 License: GPLv2
 Group: System/Kernel and hardware
@@ -28,7 +28,7 @@ source contributors are encouraged to join.
 
 %build
 make autotools
-./configure
+./configure CFLAGS=""
 %make_build
 
 %install
@@ -46,6 +46,9 @@ ln -s ../libexec/ltp/testcases/bin/oom01 bin/
 %_bindir/oom01
 
 %changelog
+* Mon Dec 17 2018 Oleg Solovyov <mcpain@altlinux.org> 20180926-alt2.git3ceb9157b
+- disable debuginfo
+
 * Mon Dec 03 2018 Oleg Solovyov <mcpain@altlinux.org> 20180926-alt1.git3ceb9157b
 - first build for ALT
 
