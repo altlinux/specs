@@ -1,10 +1,8 @@
 %define oname oslo.rootwrap
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 5.4.1
-Release: alt1.1
+Version: 5.14.1
+Release: alt1
 Summary: Oslo Rootwrap
 
 Group: Development/Python
@@ -19,18 +17,27 @@ Obsoletes: python-module-oslo-rootwrap < %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
 
-%if_with python3
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-mock >= 2.0.0
+BuildRequires: python-module-fixtures >= 3.0.0
+
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-%endif
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-mock >= 2.0.0
+BuildRequires: python3-module-fixtures >= 3.0.0
 
 %description
 The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
@@ -76,19 +83,15 @@ Documentation for the Oslo rootwrap handling library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 
 # generate html docs
@@ -97,43 +100,43 @@ sphinx-build doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/oslo-rootwrap \
+   %buildroot%_bindir/oslo-rootwrap.py2
+mv %buildroot%_bindir/oslo-rootwrap-daemon \
+   %buildroot%_bindir/oslo-rootwrap-daemon.py2
+
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/oslo-rootwrap \
-   %buildroot%_bindir/python3-oslo-rootwrap
-mv %buildroot%_bindir/oslo-rootwrap-daemon \
-   %buildroot%_bindir/python3-oslo-rootwrap-daemon
 popd
-%endif
 
-%python_install
 
 %files
 %doc README.rst LICENSE
 %python_sitelibdir/*
-%_bindir/oslo-rootwrap
-%_bindir/oslo-rootwrap-daemon
+%_bindir/oslo-rootwrap.py2
+%_bindir/oslo-rootwrap-daemon.py2
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%_bindir/python3-oslo-rootwrap
-%_bindir/python3-oslo-rootwrap-daemon
+%_bindir/oslo-rootwrap
+%_bindir/oslo-rootwrap-daemon
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Sat Dec 08 2018 Alexey Shabalin <shaba@altlinux.org> 5.14.1-alt1
+- 5.14.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.4.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
