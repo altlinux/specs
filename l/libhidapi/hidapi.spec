@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/fox-config gcc-c++ libusb-compat-devel pkgconfig(fox)
+BuildRequires: /usr/bin/fox-config libusb-compat-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname hidapi
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/fox-config gcc-c++ libusb-compat-devel pkgconfig(fox)
 
 Name:           libhidapi
 Version:        0.8.0
-Release:        alt1_0.6.%{shortcommit}
+Release:        alt1_0.10.%{shortcommit}
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
 Group:          Development/Other
@@ -19,10 +19,12 @@ URL:            http://www.signal11.us/oss/hidapi/
 
 Source0:        https://github.com/signal11/hidapi/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
-BuildRequires: autoconf-common
-BuildRequires: automake-common
-BuildRequires: libtool-common
-BuildRequires: libsystemd-devel libudev-devel
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: libtool
+BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: m4
 Source44: import.info
@@ -58,6 +60,8 @@ make install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_libdir}/*.la
 rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 
+
+
 %files
 %doc AUTHORS.txt README.txt LICENSE*.txt
 %{_libdir}/libhidapi-*.so.*
@@ -70,6 +74,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_0.10.d17db57
+- update to new release by fcimport
+
 * Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1_0.6.d17db57
 - Rebuild with stable libfox-1.6.x.
 
