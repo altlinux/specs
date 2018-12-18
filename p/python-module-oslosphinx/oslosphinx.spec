@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.10.0
-Release: alt1.1
+Version: 4.18.0
+Release: alt1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx-devel >= 1.2.1
 BuildRequires: python-module-hacking >= 0.10.0
 BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -32,6 +33,7 @@ BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx-devel >= 1.2.1
 BuildRequires: python3-module-hacking >= 0.10.0
 BuildRequires: python3-module-reno >= 1.8.0
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %py_provides %oname
@@ -124,6 +126,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 22 2018 Grigory Ustinov <grenka@altlinux.org> 4.18.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.10.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
