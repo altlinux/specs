@@ -1,26 +1,24 @@
-%def_with python3
 
 %define oname pyroute2
 
 Name: python-module-%oname
-Version: 0.4.15
-Release: alt1.1.qa1
+Version: 0.5.1
+Release: alt1
 Summary: Python Netlink library
 Group: Development/Python
 License: GPLv2+, ASL 2.0
-Url: http://github.com/mbr/tinyrpc
+Url: https://github.com/svinota/pyroute2
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+#BuildRequires: python-module-setuptools
+BuildRequires: python-modules-distutils
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-%endif
+#BuildRequires: python3-module-setuptools
 
 %description
 Pyroute2 is a pure Python netlink library.
@@ -65,29 +63,26 @@ Documentation for Python Netlink library.
 %prep
 %setup -n %oname-%version
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 # install tests
 cp -pr tests %buildroot%python_sitelibdir/%oname/
-%if_with python3
+
 pushd ../python3
 %python3_install
 cp -pr tests %buildroot%python3_sitelibdir/%oname/
 popd
-%endif
+
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
@@ -103,7 +98,6 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc README.md
 %python3_sitelibdir/*
@@ -111,12 +105,14 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc docs/html examples
 
 %changelog
+* Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.15-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
