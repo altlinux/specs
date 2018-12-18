@@ -4,7 +4,7 @@
 
 Name: perl-Jevix
 Version: 0.9.7
-Release: alt1
+Release: alt2
 
 Summary: HTML/XHTML filter and typograph for Perl
 
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Feb 03 2010 (-bi)
 BuildRequires: perl-Encode
+BuildArch: noarch
 
 %description
 HTML/XHTML filter and typograph for Perl
@@ -35,6 +36,9 @@ cp -a Jevix/ %buildroot%perl_vendor_privlib/
 %perl_vendor_privlib/Jevix/
 
 %changelog
+* Tue Dec 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2
+- set as noarch package
+
 * Wed Feb 03 2010 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - initial build for ALT Linux Sisyphus
 
