@@ -1,10 +1,8 @@
 %define oname oslo.policy
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.18.0
-Release: alt1.1
+Version: 1.38.1
+Release: alt1
 Summary: RBAC policy enforcement library for OpenStack
 Group: Development/Python
 License: ASL 2.0
@@ -15,32 +13,36 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-yaml >= 3.10.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.21.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-yaml >= 3.12
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-stevedore >= 1.20.0
 
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-yaml >= 3.10.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.17.1
-%endif
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.21.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-yaml >= 3.12
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme
 
 %description
 RBAC policy enforcement library for OpenStack
@@ -81,18 +83,15 @@ Documentation for the Oslo policy handling library.
 # Remove bundled egg-info
 #rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
 sphinx-build doc/source html
@@ -100,40 +99,40 @@ sphinx-build doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+for bin_files in oslopolicy-list-redundant oslopolicy-policy-generator oslopolicy-sample-generator oslopolicy-checker; do
+    mv %buildroot%_bindir/$bin_files %buildroot%_bindir/$bin_files.py2
+done
+
 pushd ../python3
 %python3_install
-for bin_files in oslopolicy-list-redundant oslopolicy-policy-generator oslopolicy-sample-generator oslopolicy-checker; do
-    mv %buildroot%_bindir/$bin_files %buildroot%_bindir/python3-$bin_files
-done
 popd
-%endif
-%python_install
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
-%_bindir/*
-%exclude %_bindir/python3-*
+%_bindir/*.py2
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%_bindir/python3-*
+%_bindir/*
+%exclude %_bindir/*.py2
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.38.1-alt1
+- 1.38.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.18.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
