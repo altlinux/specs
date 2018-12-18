@@ -1,11 +1,9 @@
 %global oname oslo.messaging
 
-%def_with python3
-
 Name:       python-module-%oname
 Epoch:      1
-Version:    5.17.2
-Release:    alt1.1
+Version:    8.1.2
+Release:    alt1
 Summary:    OpenStack common messaging library
 
 Group:      Development/Python
@@ -19,65 +17,64 @@ BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-futurist >= 1.2.0
+BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.service >= 1.24.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-monotonic >= 0.6
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-cachetools >= 1.1.0
-BuildRequires: python-module-webob >= 1.6.0
-BuildRequires: python-module-yaml >= 3.10.0
-BuildRequires: python-module-amqp >= 1:1.4.0
-BuildRequires: python-module-kombu >= 1:3.0.25
-BuildRequires: python-module-pika >= 0.10.0
-BuildRequires: python-module-pika-pool >= 0.1.3
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-cachetools >= 2.0.0
+BuildRequires: python-module-webob >= 1.7.1
+BuildRequires: python-module-yaml >= 3.12
+BuildRequires: python-module-amqp >= 1:2.3.0
+BuildRequires: python-module-kombu >= 1:4.0.0
 BuildRequires: python-module-fixtures >= 3.0.0
 BuildRequires: python-module-futures >= 3.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-oslo.middleware >= 3.0.0
+BuildRequires: python-module-tenacity >= 4.4.0
+BuildRequires: python-module-oslo.middleware >= 3.31.0
 BuildRequires: python-module-kafka
 
-BuildRequires: python-module-sphinx >= 1.2.1
-BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-futurist >= 0.11.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
-BuildRequires: python3-module-oslo.context >= 0.2.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.service >= 1.0.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-cachetools >= 1.0.0
-BuildRequires: python3-module-stevedore >= 1.17.1
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.9.0
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.service >= 1.24.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-cachetools >= 2.0.0
+BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-monotonic >= 0.6
-BuildRequires: python3-module-yaml >= 3.10.0
-BuildRequires: python3-module-amqp >= 1:1.4.0
-BuildRequires: python3-module-kombu >= 1:3.0.25
-BuildRequires: python3-module-pika >= 0.10.0
-BuildRequires: python3-module-pika-pool >= 0.1.3
+BuildRequires: python3-module-yaml >= 3.12
+BuildRequires: python3-module-amqp >= 1:2.3.0
+BuildRequires: python3-module-kombu >= 1:4.0.0
 BuildRequires: python3-module-fixtures
-BuildRequires: python3-module-tenacity >= 3.2.1
-BuildRequires: python3-module-oslo.middleware >= 3.0.0
+BuildRequires: python3-module-tenacity >= 4.4.0
+BuildRequires: python3-module-oslo.middleware >= 3.31.0
 BuildRequires: python3-module-kafka
-%endif
+
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+
 
 %description
 The Oslo project intends to produce a python library containing
@@ -142,56 +139,57 @@ Documentation for the oslo.messaging library.
 # to distutils requires_dist config
 #rm -rf {test-,}requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+
 # generate html docs
 sphinx-build doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/oslo-messaging-send-notification %buildroot%_bindir/oslo-messaging-send-notification.py2
+mv %buildroot%_bindir/oslo-messaging-zmq-broker %buildroot%_bindir/oslo-messaging-zmq-broker.py2
+mv %buildroot%_bindir/oslo-messaging-zmq-proxy %buildroot%_bindir/oslo-messaging-zmq-proxy.py2
+
 pushd ../python3
 %python3_install
 popd
-%endif
-%python_install
 
 %files
 %doc README.rst LICENSE
+%_bindir/*.py2
 %python_sitelibdir/*
-%_bindir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
+%_bindir/*
+%exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html LICENSE
 
 %changelog
+* Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1:8.1.2-alt1
+- 8.1.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:5.17.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
