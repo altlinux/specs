@@ -5,8 +5,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.20.2
-Release: alt2
+Version: 1.20.3
+Release: alt1
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -197,6 +197,9 @@ find %buildroot%_libdir -name \*.la -delete
 # -default subpackage to pull in backend deps
 
 %changelog
+* Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
+- 1.20.3
+
 * Wed Nov 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt2
 - updated build dependencies
 
