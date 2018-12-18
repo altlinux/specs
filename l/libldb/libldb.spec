@@ -2,9 +2,15 @@
 %def_with check
 %def_with python3
 
+%ifarch %ix86 mips mipsel
+%def_without mdb
+%else
+%def_with mdb
+%endif
+
 Name: libldb
 Version: 1.4.3
-Release: alt2
+Release: alt3
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -20,7 +26,7 @@ BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-styl
 BuildRequires: libtdb-devel >= 1.3.16
 BuildRequires: libtalloc-devel >= 2.1.14
 BuildRequires: libtevent-devel >= 0.9.37
-%ifnarch %ix86
+%if_with mdb
 BuildRequires: liblmdb-devel >= 0.9.16
 %endif
 
@@ -35,7 +41,7 @@ BuildRequires: python3-module-tevent
 Requires: libtdb >= 1.3.16
 Requires: libtalloc >= 2.1.14
 Requires: libtevent >= 0.9.37
-%ifnarch %ix86
+%if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
 
@@ -100,7 +106,7 @@ Development files for the Python3 bindings for the LDB library
 %patch -p2
 %patch1 -p1
 
-%ifarch %ix86
+%if_without mdb
 %patch2 -p2
 %endif
 
@@ -116,7 +122,7 @@ Development files for the Python3 bindings for the LDB library
 %if_with python3
                 --extra-python=python3 \
 %endif
-%ifarch %ix86
+%if_without mdb
                 --without-ldb-lmdb \
 %endif
 		--with-privatelibdir=%_libdir/ldb
@@ -138,7 +144,7 @@ make test
 %dir %_libdir/ldb/modules/ldb
 
 %_libdir/ldb/libldb-key-value.so
-%ifnarch %ix86
+%if_with mdb
 %_libdir/ldb/libldb-mdb-int.so
 %endif
 
@@ -152,7 +158,7 @@ make test
 %_libdir/ldb/modules/ldb/skel.so
 %_libdir/ldb/modules/ldb/tdb.so
 %_libdir/ldb/modules/ldb/ldb.so
-%ifnarch %ix86
+%if_with mdb
 %_libdir/ldb/modules/ldb/mdb.so
 %endif
 
@@ -205,6 +211,9 @@ make test
 %endif
 
 %changelog
+* Tue Dec 18 2018 Ivan A. Melnikov <iv@altlinux.org> 1.4.3-alt3
+- Disable lmdb support on mips32
+
 * Mon Dec 17 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt2
 - Merge with branch p8_e2k for common build
 
