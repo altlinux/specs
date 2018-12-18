@@ -1,8 +1,8 @@
 %define rname caja-extensions
 
 Name: mate-file-manager-extensions
-Version: 1.20.1
-Release: alt1.qa1
+Version: 1.20.2
+Release: alt1
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -29,7 +29,7 @@ BuildArch: noarch
 %package -n mate-file-manager-image-converter
 Group: Graphical desktop/MATE
 Summary: MATE file manager image converter extension
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-image-converter
 The caja-image-converter extension allows you to
@@ -38,7 +38,7 @@ re-size/rotate images from Caja.
 %package -n mate-file-manager-open-terminal
 Group: Graphical desktop/MATE
 Summary: Mate-file-manager extension for an open terminal shortcut
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-open-terminal
 The caja-open-terminal extension provides a right-click "Open
@@ -47,7 +47,7 @@ Terminal" option for mate-file-manager users who prefer that option.
 %package -n mate-file-manager-sendto
 Group: Graphical desktop/MATE
 Summary: MATE file manager sendto
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-sendto
 The caja-sendto extension provides 'send to' functionality
@@ -63,7 +63,7 @@ Development libraries and headers for caja-sendto
 %package -n mate-file-manager-share
 Group: Graphical desktop/MATE
 Summary: Easy sharing folder via Samba (CIFS protocol)
-Requires: %name-common = %EVR samba
+Requires: %name-common = %epoch:%version-%release samba
 
 %description -n mate-file-manager-share
 Caja extension designed for easier folders
@@ -72,7 +72,7 @@ sharing via Samba (CIFS protocol) in *NIX systems.
 %package -n mate-file-manager-beesu
 Group: Graphical desktop/MATE
 Summary: MATE file manager beesu
-Requires: %name-common = %EVR beesu
+Requires: %name-common = %epoch:%version-%release beesu
 
 %description -n mate-file-manager-beesu
 Caja beesu extension for open files as superuser
@@ -80,7 +80,7 @@ Caja beesu extension for open files as superuser
 %package -n mate-file-manager-wallpaper
 Group: Graphical desktop/MATE
 Summary: MATE file manager wallpaper
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-wallpaper
 Caja wallpaper extension, allows to quickly set wallpaper.
@@ -88,7 +88,7 @@ Caja wallpaper extension, allows to quickly set wallpaper.
 %package -n caja-xattr-tags
 Group: Graphical desktop/MATE
 Summary: MATE file manager xattr-tags
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n caja-xattr-tags
 Caja xattr-tags extension, allows to quickly set xattr-tags
@@ -168,6 +168,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20.1-alt1.qa1
 - NMU: applied repocop patch
 
