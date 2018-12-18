@@ -1,6 +1,6 @@
 Name: libcmis
 Version: 0.5.2
-Release: alt3.git.738528
+Release: alt4.git.172e837
 
 Summary: A C++ client library for the CMIS interface
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -71,6 +71,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Mon Dec 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.2-alt4.git.172e837
+- NMU: upstream master snapshot 172e83762b2b4b300073212ffd841dc90680bb86
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 0.5.2-alt3.git.738528
 - E2K: no more difference
 
