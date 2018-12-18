@@ -2,7 +2,7 @@
 %define rname engrampa
 
 Name: mate-file-archiver
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop file archiver
@@ -11,6 +11,7 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+Provides: %rname = %epoch:%version-%release
 Requires: p7zip zip
 
 Source: %rname-%version.tar
@@ -25,6 +26,7 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
 %package -n mate-file-manager-archiver
 Summary: Mate-file-manager extension for mount archiver
 Group: Graphical desktop/MATE
+Requires: %name = %epoch:%version-%release
 
 %description -n mate-file-manager-archiver
 Mate-file-manager extension for mount archiver
@@ -67,6 +69,9 @@ Mate-file-manager extension for mount archiver
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
 - 1.20.1
 
