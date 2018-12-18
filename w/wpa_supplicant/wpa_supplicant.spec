@@ -1,8 +1,6 @@
-%def_disable privsep
-
 Name: wpa_supplicant
-Version: 2.6
-Release: alt3
+Version: 2.7
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -16,7 +14,7 @@ Requires: dbus
 
 BuildRequires: libdbus-devel libnl-devel >= 3.2.21
 BuildRequires: docbook-utils libncurses-devel libpcsclite-devel libreadline-devel libssl-devel
-BuildRequires: gcc-c++ inkscape libqt4-devel libxml2-devel
+BuildRequires: gcc-c++ inkscape libxml2-devel qt5-base-devel qt5-tools
 
 %description
 wpa_supplicant is an implementation of the WPA Supplicant component,
@@ -46,8 +44,7 @@ This package provides GUI to wpa_supplicant
 
 %prep
 %setup -c -a1
-sed -e '' %{?_enable_privsep:-e 's,^.\+CONFIG_PRIVSEP=.\+,CONFIG_PRIVSEP=y,'} \
-    < %name/defconfig > %name/.config
+cp %name/defconfig %name/.config
 
 %build
 make -C %name
@@ -58,10 +55,6 @@ install -pm0644 -D %name/%name.conf %buildroot%_sysconfdir/wpa_supplicant.conf
 install -pm0755 -D %name/wpa_supplicant %buildroot%_sbindir/wpa_supplicant
 install -pm0755 %name/wpa_cli %buildroot%_sbindir
 install -pm0755 -D %name/wpa_gui-qt4/wpa_gui %buildroot%_bindir/wpa_gui
-
-%if_enabled privsep
-install -pm0755 %name/wpa_priv %buildroot%_sbindir
-%endif
 
 mkdir -p %buildroot%systemd_unitdir
 mkdir -p %buildroot%_sysconfdir/%name
@@ -97,10 +90,6 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_datadir/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
 %_datadir/dbus-1/system-services/fi.w1.wpa_supplicant1.service
 
-%if_enabled privsep
-%_sbindir/wpa_priv
-%endif
-
 %_sbindir/wpa_supplicant
 %_sbindir/wpa_cli
 %_bindir/wpa_passphrase
@@ -112,16 +101,15 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_man8dir/wpa_supplicant.*
 %_man8dir/wpa_passphrase.*
 
-%if_enabled privsep
-%_man8dir/wpa_priv.*
-%endif
-
 %files -n wpa_gui
 %_bindir/wpa_gui
 %_desktopdir/wpa_gui.desktop
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Dec 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7-alt1
+- 2.7 released
+
 * Fri Aug 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt3
 - rebuilt with recent openssl
 
