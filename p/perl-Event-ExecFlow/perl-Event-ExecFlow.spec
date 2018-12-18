@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.64
-Release: alt1
+Release: alt2
 
 Summary: Event::ExecFlow - High level API for event-based execution flow control  
 License: GPL/Artistic
@@ -14,6 +14,7 @@ Source: %module-%version.tar.gz
 BuildRequires: perl-devel perl-libintl perl-AnyEvent
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+BuildArch: noarch
 
 %description
 Event::ExecFlow provides a ligh level API for defining complex flow
@@ -35,6 +36,9 @@ controls with asynchronous execution of external programs.
 %_bindir/*
 
 %changelog
+* Tue Dec 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2
+- set as noarch package
+
 * Sat May 15 2010 Ilya Mashkin <oddity@altlinux.ru> 0.64-alt1
 - 0.64
 
