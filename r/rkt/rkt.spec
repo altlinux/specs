@@ -20,7 +20,7 @@
 
 Name: rkt
 Version: 1.30.0
-Release: alt2%ubt
+Release: alt3
 Summary: A pod-native container engine for Linux
 Group: Development/Other
 License: ASL 2.0
@@ -28,7 +28,7 @@ Url: https://%provider_prefix
 ExclusiveArch: %go_arches aarch64
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: bc
 BuildRequires: glibc-devel-static
 BuildRequires: golang >= 1.6
@@ -172,6 +172,9 @@ touch %buildroot%_sharedstatedir/%name/cas/db/.34a8b4c1ad933745146fdbfef3073706e
 %attr(0660,root,rkt) %_sharedstatedir/%name/cas/db/.34a8b4c1ad933745146fdbfef3073706ee571625
 
 %changelog
+* Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 1.30.0-alt3
+- rebuild without ubt macros
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.30.0-alt2%ubt
 - rebuild with ubt macros
 
