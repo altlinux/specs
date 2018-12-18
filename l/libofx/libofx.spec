@@ -1,6 +1,6 @@
 Name: libofx
-Version: 0.9.10
-Release: alt1.3
+Version: 0.9.13
+Release: alt1
 
 Summary: The OFX parser library
 Group: System/Libraries
@@ -75,6 +75,9 @@ rm -f ofxdump/ofxdump.1
 %_docdir/%name/
 
 %changelog
+* Tue Dec 18 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.13-alt1
+- New version.
+
 * Thu Jun 02 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt1.3
 - support any extension for man pages
 
