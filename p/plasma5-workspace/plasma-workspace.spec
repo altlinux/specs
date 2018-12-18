@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace
 
@@ -57,6 +57,8 @@ Patch117: alt-disable-ctrl-alt-r.patch
 Patch118: alt-session-exclude.patch
 Patch119: alt-freespace-new-thread.patch
 Patch120: alt-krunner-fix-bookmarks.patch
+Patch121: alt-freememorynotifier.patch
+Patch122: alt-systemmonitor-ignoreconfig.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -196,6 +198,8 @@ popd
 %patch118 -p1
 %patch119 -p2
 %patch120 -p1
+%patch121 -p2
+%patch122 -p2
 
 %build
 %K5build \
@@ -351,6 +355,10 @@ done
 
 
 %changelog
+* Wed Nov 28 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt4
+- implement freememorynotifier
+- systemmonitor: add --ignoreconfig option
+
 * Tue Nov 27 2018 Anton Midyukov <antohami@altlinux.org> 1:5.12.7-alt3
 - new subpackage: sddm-theme-breeze, plasma5-workspace-qml
 
