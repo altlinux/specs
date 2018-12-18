@@ -1,10 +1,8 @@
 %global oname pycadf
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 2.5.0
-Release: alt1.1
+Version: 2.8.0
+Release: alt1
 Summary: DMTF Cloud Audit (CADF) data model
 
 Group: Development/Python
@@ -16,28 +14,30 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
-BuildRequires: python-module-sphinx >= 1.1.2
-BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-oslotest
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-pytz
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 
-%if_with python3
+BuildRequires: python-module-sphinx >= 1.1.2
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-pytz
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-%endif
+
+BuildRequires: python3-module-sphinx >= 1.1.2
+BuildRequires: python3-module-reno >= 1.8.0
+BuildRequires: python3-module-openstackdocstheme
 
 %description
 DMTF Cloud Audit (CADF) data model
@@ -77,18 +77,15 @@ Documentation for the DMTF Cloud Audit (CADF) data model.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
+
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -99,11 +96,11 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
+
 mkdir -p %buildroot%_sysconfdir
 mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
 
@@ -117,19 +114,22 @@ mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
+%dir %_sysconfdir/%oname
+%config(noreplace) %_sysconfdir/%oname/*.conf
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
