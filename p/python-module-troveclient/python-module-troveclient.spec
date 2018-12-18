@@ -1,55 +1,60 @@
 %define oname troveclient
-%def_with python3
 
-Name: python-module-%oname
-Version: 2.14.0
+Name:    python-module-%oname
+Version: 2.16.0
 Release: alt1
 Summary: Client library for OpenStack DBaaS API
-Group: Development/Python
+Group:   Development/Python
 License: ASL 2.0
-Url: http://docs.openstack.org/developer/python-%oname
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Url:     http://docs.openstack.org/developer/python-%oname
+Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-prettytable >= 0.7.2
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-simplejson >= 3.5.1
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-keystoneauth1 >= 2.17.0
-BuildRequires: python-module-simplejson >= 2.2.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
 BuildRequires: python-module-swiftclient >= 3.2.0
-BuildRequires: python-module-mistralclient >= 2.0.0
-BuildRequires: python-module-osc-lib >= 1.2.0
-BuildRequires: python-module-openstackdocstheme
+BuildRequires: python-module-mistralclient >= 3.1.0
+BuildRequires: python-module-osc-lib >= 1.8.0
+BuildRequires: python-module-openstackclient >= 3.12.0
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinxcontrib-apidoc
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-httplib2 >= 0.9.1
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-simplejson >= 2.2.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-prettytable >= 0.7.2
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-simplejson >= 3.5.1
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-babel >= 2.3.4
-BuildRequires: python3-module-keystoneauth1 >= 2.17.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-swiftclient >= 3.2.0
-BuildRequires: python3-module-mistralclient >= 2.0.0
-BuildRequires: python3-module-osc-lib >= 1.2.0
-BuildRequires: python3-module-openstackdocstheme
-%endif
+BuildRequires: python3-module-mistralclient >= 3.1.0
+BuildRequires: python3-module-osc-lib >= 1.8.0
+BuildRequires: python3-module-openstackclient >= 3.12.0
 
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-apidoc
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-httplib2 >= 0.9.1
 
 %description
 This is a client for the Trove API. There's a Python API (the
@@ -92,7 +97,6 @@ implements 100 percent (or less ;) ) of the Trove API.
 
 This package contains auto-generated documentation.
 
-
 %prep
 %setup -n python-%oname-%version
 
@@ -102,28 +106,23 @@ rm -rf %name.egg-info
 # Let RPM handle the requirements
 rm -f {test-,}requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/trove %buildroot%_bindir/trove.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/trove %buildroot%_bindir/python3-trove
-%endif
-
-%python_install
 
 sphinx-build -b html doc/source html
 
@@ -133,7 +132,7 @@ rm -rf html/.{doctrees,buildinfo}
 %files
 %doc README.rst LICENSE
 %python_sitelibdir/*
-%_bindir/trove
+%_bindir/trove.py2
 %exclude %python_sitelibdir/%oname/tests
 %exclude %python_sitelibdir/%oname/compat/tests
 
@@ -141,9 +140,8 @@ rm -rf html/.{doctrees,buildinfo}
 %python_sitelibdir/%oname/tests
 %python_sitelibdir/%oname/compat/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%_bindir/python3-trove
+%_bindir/trove
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/compat/tests
@@ -151,12 +149,14 @@ rm -rf html/.{doctrees,buildinfo}
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/compat/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 2.16.0-alt1
+- 2.16.0
+
 * Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 2.14.0-alt1
 - new version 2.14.0
 
