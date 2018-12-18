@@ -1,75 +1,80 @@
 %define oname glance_store
-%def_with python3
 
 Name: python-module-%oname
-Version: 0.20.0
-Release: alt1.1
+Version: 0.26.1
+Release: alt1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-enum34
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-enum34 >= 1.0.4
+BuildRequires: python-module-doc8 >= 0.6.0
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystoneauth1 >= 2.17.0
+BuildRequires: python-module-jsonschema >= 2.6.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
 BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-requests >= 2.14.2
 
-BuildRequires: python-module-boto >= 2.32.1
-BuildRequires: python-module-oslo.vmware >= 2.15.0
-BuildRequires: python-module-httplib2 >= 0.7.5
+BuildRequires: python-module-oslo.vmware >= 2.17.0
+BuildRequires: python-module-httplib2 >= 0.9.1
 BuildRequires: python-module-swiftclient >= 3.2.0
-BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-os-brick >= 1.8.0
-BuildRequires: python-module-oslo.rootwrap >= 5.0.0
+BuildRequires: python-module-cinderclient >= 3.3.0
+BuildRequires: python-module-os-brick >= 2.2.0
+BuildRequires: python-module-oslo.rootwrap >= 5.8.0
+BuildRequires: python-module-oslo.privsep >= 1.23.0
 BuildRequires: python-module-oslotest
 BuildRequires: python-module-requests-mock
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-stevedore >= 1.17.1
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-doc8 >= 0.6.0
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-jsonschema >= 2.0.0
-BuildRequires: python3-module-keystoneauth1 >= 2.17.0
+BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
-BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-requests >= 2.14.2
 
-BuildRequires: python3-module-boto >= 2.32.1
-BuildRequires: python3-module-oslo.vmware >= 2.15.0
-BuildRequires: python3-module-httplib2 >= 0.7.5
+BuildRequires: python3-module-oslo.vmware >= 2.17.0
+BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-swiftclient >= 3.2.0
-BuildRequires: python3-module-cinderclient >= 1.6.0
-BuildRequires: python3-module-os-brick >= 1.8.0
-BuildRequires: python3-module-oslo.rootwrap >= 5.0.0
-%endif
+BuildRequires: python3-module-cinderclient >= 3.3.0
+BuildRequires: python3-module-os-brick >= 2.2.0
+BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
+BuildRequires: python3-module-oslo.privsep >= 1.23.0
+BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-requests-mock
 
-BuildArch: noarch
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 
 %description
 OpenStack Image Service Store Library
@@ -112,37 +117,32 @@ Documentation for OpenStack Image Service Store Library
 #rm -rf %oname.egg-info
 sed 's/requests.packages.urllib3.util/urllib3.util/' -i glance_store/_drivers/vmware_datastore.py
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python setup.py build_sphinx
+python3 setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+rm -fr build/sphinx/html/.buildinfo
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/glance-rootwrap %buildroot%_bindir/glance-rootwrap.py2
+
 pushd ../python3
 %python3_install
 popd
-%endif
-%python_install
 
 %files
 %doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
-%_bindir/glance-rootwrap
+%_bindir/glance-rootwrap.py2
 %python_sitelibdir/*/tests/fakes.py
 %exclude %python_sitelibdir/*/tests
 
@@ -150,8 +150,8 @@ popd
 %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/tests/fakes.py
 
-%if_with python3
 %files -n python3-module-%oname
+%_bindir/glance-rootwrap
 %python3_sitelibdir/*
 %python3_sitelibdir/*/tests/fakes.py
 %exclude %python3_sitelibdir/*/tests
@@ -159,12 +159,14 @@ popd
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/tests/fakes.py
-%endif
 
 %files doc
-%doc doc/build/html
+%doc build/sphinx/html
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 0.26.1-alt1
+- 0.26.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.20.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
