@@ -7,7 +7,7 @@
 %def_enable vulkan
 %def_enable wayland
 %def_enable zbar
-%def_enable rtmp
+%def_disable rtmp
 
 %define _name gst-plugins
 %define api_ver 1.0
@@ -20,7 +20,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -148,6 +148,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Dec 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt3
+- disabled obsolete librtmp support
+
 * Mon Oct 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
 - rebuilt with librtmp-2.4-alt2
 
