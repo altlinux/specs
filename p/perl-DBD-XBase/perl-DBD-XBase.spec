@@ -2,7 +2,7 @@
 %define dist DBD-XBase
 Name: perl-%dist
 Version: 1.08
-Release: alt1
+Release: alt2
 
 Summary: XBase driver for DBI interface in Perl
 License: GPL or Artistic
@@ -17,6 +17,7 @@ BuildRequires: perl-DBI perl-DBM perl-devel
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
+BuildArch: noarch
 
 %description
 Module XBase provides access to XBase (dBase, Fox*) dbf files.
@@ -45,11 +46,14 @@ supported by the DBI interface.
 	%perl_vendor_privlib/XBase.pm
 %dir	%perl_vendor_privlib/XBase
 	%perl_vendor_privlib/XBase/*
-%dir	%perl_vendor_autolib/XBase
+#dir	%perl_vendor_autolib/XBase
 	%_man1dir/*
 	%_bindir/*
 
 %changelog
+* Tue Dec 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt2
+- set as noarch package
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
