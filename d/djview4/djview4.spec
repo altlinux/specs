@@ -1,6 +1,6 @@
 Name: djview4
 Version: 4.10.6
-Release: alt1
+Release: alt2
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -14,6 +14,7 @@ Patch1: djview-4.8-rh-include.patch
 
 %def_disable static
 %define qtdir %_libdir/qt4
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 Provides: djvu-viewer = %EVR
 Obsoletes: djvu-viewer < %EVR
@@ -106,6 +107,9 @@ ln -s %buildroot%_bindir/djview4 djview
 %_mandir/man?/nsdejavu*
 
 %changelog
+* Tue Dec 18 2018 Ivan A. Melnikov <iv@altlinux.org> 4.10.6-alt2
+- Add -D_FILE_OFFSET_BITS=64 to optflags to fix FTBFS.
+
 * Sun Mar 06 2016 Andrey Bergman <vkni@altlinux.org> 4.10.6-alt1
 - Updated to 4.10.6.
 
