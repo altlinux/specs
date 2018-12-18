@@ -1,10 +1,8 @@
 %define oname oslo.cache
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.17.0
-Release: alt1.1
+Version: 1.30.2
+Release: alt1
 Summary: Cache storage for Openstack projects
 
 Group: Development/Python
@@ -19,33 +17,39 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-dogpile.cache >= 0.6.2
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-memcached >= 1.56
 BuildRequires: python-module-pymongo >= 3.0.2
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-etcd3gw >= 0.2.0
 
-%if_with python3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme
+BuildRequires: python-module-sphinxcontrib-apidoc
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-dogpile.cache >= 0.6.2
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-%endif
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-memcached >= 1.56
+BuildRequires: python3-module-pymongo >= 3.0.2
+BuildRequires: python3-module-etcd3gw >= 0.2.0
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 1.8.0
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 Cache storage for Openstack projects.
@@ -89,19 +93,15 @@ Documentation for Cache storage for Openstack projects.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 
 # generate html docs
@@ -110,13 +110,12 @@ sphinx-build doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%if_with python3
+%python_install
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
-%python_install
 
 
 %files
@@ -126,20 +125,21 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 %doc README.rst LICENSE
 
 %changelog
+* Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.30.2-alt1
+- 1.30.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.17.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
