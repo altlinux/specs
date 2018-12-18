@@ -1,6 +1,6 @@
 Name: libmateweather
-Version: 1.20.1
-Release: alt1.qa1
+Version: 1.20.2
+Release: alt1
 Epoch: 1
 Summary: Libraries to allow MATE Desktop to display weather information
 License: GPLv2+ and LGPLv2+
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: %name-data = %EVR
+Requires: %name-data = %epoch:%version-%release
 
 BuildRequires: mate-common gtk-doc intltool libgtk+3-devel libsoup-devel libxml2-devel
 
@@ -67,6 +67,9 @@ Development files for libmateweather
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20.1-alt1.qa1
 - NMU: applied repocop patch
 
