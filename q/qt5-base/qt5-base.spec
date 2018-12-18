@@ -31,8 +31,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.11.2
-Release: alt3
+Version: 5.11.3
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -532,7 +532,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.11.2
+Version: 5.11.3
 __EOF__
 
 # rpm macros
@@ -793,6 +793,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt3
 - rebuild with new icu
 

@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt9
+Release: alt10
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -105,7 +105,7 @@ syncqt.pl-qt5 Source -version %version
 
 %build
 %remove_optflags '-g'
-%add_optflags -g1
+%add_optflags -g1 -fpermissive
 export LDFLAGS="$LDFLAGS -Wl,--no-keep-memory"
 %if_disabled bootstrap
 export QT_HASH_SEED=0
@@ -195,6 +195,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt10
+- rebuild with new Qt
+
 * Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt9
 - rebuild with new icu
 

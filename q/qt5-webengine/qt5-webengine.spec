@@ -28,8 +28,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.11.2
-Release: alt2
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -50,6 +50,8 @@ Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
 Patch10: qtwebengine-everywhere-src-5.10.0-gn-bootstrap-verbose.patch
 Patch11: qtwebengine-everywhere-src-5.10.0-icu59.patch
 Patch12: qtwebengine-everywhere-src-5.10.1-gcc8-alignof.patch
+Patch13: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
+
 # ALT
 Patch100: alt-pepflashplayer.patch
 Patch101: alt-codecs.patch
@@ -162,6 +164,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #%patch11 -p1
 %endif
 %patch12 -p1
+%patch13 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -251,7 +254,7 @@ pushd %_target_platform
 %_qt5_qmake \
     QMAKE_CXXFLAGS="$CXXFLAGS" \
     CONFIG+="release force_debug_info pulseaudio system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
-    WEBENGINE_CONFIG+=" use_proprietary_codecs use_spellchecker" \
+    WEBENGINE_CONFIG+=" use_proprietary_codecs enable_hevc_demuxing use_spellchecker" \
 %if_enabled system_icu
     CONFIG+="system-icu" \
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
@@ -339,6 +342,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt2
 - rebuild with new icu
 

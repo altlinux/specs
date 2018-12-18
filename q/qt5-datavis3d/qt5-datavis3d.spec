@@ -2,8 +2,8 @@
 %global qt_module qtdatavis3d
 
 Name: qt5-datavis3d
-Version: 5.11.2
-Release: alt1%ubt
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Data Visualization component
@@ -96,6 +96,9 @@ syncqt.pl-qt5 -version %version
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 

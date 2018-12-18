@@ -2,8 +2,8 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt5-virtualkeyboard
-Version: 5.11.2
-Release: alt1.qa1%ubt
+Version: 5.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtQuick virtual keyboard component
@@ -96,6 +96,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
+- new version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.11.2-alt1.qa1%ubt
 - NMU: applied repocop patch
 
