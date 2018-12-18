@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.8.2
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -27,7 +27,7 @@ BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
+BuildRequires: libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
@@ -262,7 +262,7 @@ export ASFLAGS='-Ox'
 make
 
 pushd libs/freetdm
-%configure --with-modinstdir=%_libdir/freeswitch --with-libpri --with-libisdn --with-pic
+%configure --with-modinstdir=%_libdir/freeswitch --without-libpri --without-libisdn --with-pic
 make
 popd
 
@@ -341,8 +341,6 @@ fi
 %dir %_libdir/freetdm
 %_libdir/freetdm/ftmod_analog.so
 %_libdir/freetdm/ftmod_analog_em.so
-%_libdir/freetdm/ftmod_isdn.so
-%_libdir/freetdm/ftmod_libpri.so
 %_libdir/freetdm/ftmod_r2.so
 %_libdir/freetdm/ftmod_skel.so
 %_libdir/freetdm/ftmod_zt.so
@@ -603,6 +601,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Dec 18 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt4
+- fixed build with gcc-8
+- disabled build libpri and isdn plugins for freetdm
+
 * Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt3
 - added switch_version.h to devel package (closes: #25924)
 
