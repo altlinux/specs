@@ -1,6 +1,6 @@
 Name: hostapd
-Version: 2.6
-Release: alt3
+Version: 2.7
+Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -10,7 +10,8 @@ Url: http://hostap.epitest.fi/
 Source0: %name-%version-%release.tar
 Source1: src-%version-%release.tar
 Source2: hostapd.sysconfig
-Source3: hostapd.init
+Source3: hostapd.service
+Source4: hostapd.init
 
 BuildRequires: libssl-devel libnl3-devel
 
@@ -31,16 +32,16 @@ make -C %name
 
 %install
 install -pD -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
-install -pD -m0755 %SOURCE3 %buildroot%_initdir/%name
+install -pD -m0644 %SOURCE3 %buildroot%_unitdir/%name.service
+install -pD -m0755 %SOURCE4 %buildroot%_initdir/%name
 
 install -pD -m0755 %name/%name %buildroot%_sbindir/%name
 install -p -m0755 %name/%{name}_cli %buildroot%_sbindir
 
-install -pD -m0400 %name/hostapd.conf %buildroot%_sysconfdir/%name/%name.conf
-install -pm0400 %name/hostapd.accept  %name/hostapd.deny %buildroot%_sysconfdir/%name
+install -pD -m0600 %name/hostapd.conf %buildroot%_sysconfdir/%name/%name.conf
+install -pm0600 %name/hostapd.accept  %name/hostapd.deny %buildroot%_sysconfdir/%name
 install -pm0644 -D %name/%name.8 %buildroot%_man8dir/%name.8
 install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
-mkdir -p %buildroot%_var/run/%name
 
 %post
 %post_service %name
@@ -58,6 +59,7 @@ mkdir -p %buildroot%_var/run/%name
 
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
+%_unitdir/%name.service
 %_initdir/%name
 
 %_sbindir/hostapd
@@ -66,9 +68,10 @@ mkdir -p %buildroot%_var/run/%name
 %_man1dir/*
 %_man8dir/*
 
-%_var/run/%name
-
 %changelog
+* Tue Dec 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7-alt1
+- 2.7 released
+
 * Fri Aug 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt3
 - rebuilt with recent openssl
 
