@@ -4,7 +4,7 @@
 
 Name: gnupg2
 Version: 2.2.10
-Release: alt3
+Release: alt4
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -35,6 +35,7 @@ Requires: bash-builtin-lockf >= 0:0.2
 # due to passing OPTION allow-external-password-cache
 Conflicts: pinentry < 0.9.2
 Conflicts: pinentry-common < 0.9.2
+Conflicts: gnupg-pkcs11-scd <= 0.9.2-alt5
 
 # FC
 Patch11: gnupg-2.1.21-insttools.patch
@@ -62,7 +63,9 @@ Patch19: %name-%version-issuers-%issuersversion.patch
 Provides: %name(issuersconf) = %issuersversion
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: libgcrypt-devel libksba-devel libassuan-devel libksba-devel
+BuildRequires: libgcrypt-devel >= 1.8.3-alt4
+BuildRequires: libksba-devel >= 1.3.6-alt7
+BuildRequires: libassuan-devel
 BuildRequires: libgnutls-devel libnpth-devel
 BuildRequires: bzlib-devel libcurl-devel libldap-devel
 BuildRequires: libreadline-devel zlib-devel libusb-devel pkgconfig(sqlite3)
@@ -157,6 +160,12 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt4
+- Now supports S/MIME encryption/decryption with GOST-2001.
+- Conflicts with gnupg-pkcs11-scd <= 0.9.2-alt5 because that
+  versions of gnupg-pkcs11-scd reverse the UKM.
+- Fixed S-Box debug log (sm).
+
 * Wed Oct 31 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt3
 - Fixed "Unsupported algorithm" with smart-card RSA key pkdecrypt
   operation regression.

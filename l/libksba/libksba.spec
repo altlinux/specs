@@ -2,7 +2,7 @@
 
 Name: libksba
 Version: 1.3.6
-Release: alt6
+Release: alt8
 
 Group: System/Libraries
 Summary: X.509 library
@@ -84,6 +84,30 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Wed Dec 19 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt8
+- Fixed writing the algorithm capabilities.
+- Fixed read_values() for an unspecified (RSA) value.
+
+* Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt7
+- Parse and save the data encryption S-Box OID.
+- Implement AlgorithmIdentifier parameters parser and use it to parse
+  the ContentEncryptionAlgorithmIdentifier properly getting the IV.
+- Flip the ECC key coords prior to write them to the CMS structure.
+- Fixed writing of an uncompressed point to CMS.
+- Fixed public key DER -> SEXP parsing.
+- Specify the Verba-0 digest.
+- Write down the symmetric cipher parameters (CMS).
+- Make _ksba_der_write_algorithm_identifier() more flexible related
+  to paramter types and count.
+- Fixed ephemeral public key encoding + missing UKM.
+- Encode GOST key transport (compiles).
+- Encode GOST key transport (draft).
+- Store curve and digest parameters in the GOST key transfer
+  structure.
+- Added some structures from TK26CMS.1.1.
+- Use "--km-b--p-CD-Qu" parsing formula for GOST CMS encrypted data.
+- Added GOST 2012 to the encryption algos table.
+
 * Wed Nov 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt6
 - Fixed/restored parsing of bit strings.
 

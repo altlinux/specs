@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.8.3
-Release: alt3
+Release: alt4
 
 %define soname %{name}%{soversion}
 
@@ -162,6 +162,12 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt4
+- Flip the UKM buffer relatively to its MPI value.
+- Set "1.2.643.2.2.31.1" S-Box for KEK (CEK wrapping/unwrapping).
+- More debug in ecc_encrypt_raw: Print out the public key.
+- Identify GOST-28147 also by OID 1.2.643.2.2.21.
+
 * Thu Oct 04 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt3
 - Skip check on aarch64.
 
