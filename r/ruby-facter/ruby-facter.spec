@@ -1,8 +1,8 @@
 %define pkgname facter
 
 Name: 	 ruby-%pkgname
-Version: 2.0.1
-Release: alt2.2
+Version: 2.5.1
+Release: alt1
 
 Summary: Ruby library for retrieving facts from operating systems
 Group:   Development/Ruby
@@ -72,6 +72,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Dec 18 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
+- Bump to 2.5.1.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.2
 - Rebuild with new Ruby autorequirements.
 
