@@ -1,37 +1,32 @@
 Name: bash4
-%define bash_version 4.2
-%define bash_patchlevel .50
+%define bash_version 4.4
+%define bash_patchlevel .23
 Version: %bash_version%bash_patchlevel
-Release: alt1.1
+Release: alt1
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
 License: GPLv3+
-Url: http://www.gnu.org/software/%name/
-Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
+Url: https://www.gnu.org/software/bash/
 
-# ftp://ftp.gnu.org/gnu/bash/bash-%bash_version.tar.bz2
-# ftp://ftp.gnu.org/gnu/bash/bash-%bash_version-patches/
+# https://ftp.gnu.org/gnu/bash/bash-%bash_version.tar.gz
+# https://ftp.gnu.org/gnu/bash/bash-%bash_version-patches/
 Source0: bash-%version.tar
-
-Source2: bash_alias
-Source3: bashrc
 
 Patch: bash-%version-%release.patch
 
 # bashbug produces a lot of unneeded dependencies.
 AutoReq: yes, noshell
 
-Requires: sh4 = %version-%release
+Requires: sh4 = %EVR
 
-BuildPreReq: libtinfo-devel, libreadline-devel >= 6.1, mktemp >= 1:1.3.1
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: libreadline-devel >= 7, libtinfo-devel makeinfo texi2dvi
 
 %package -n sh4
 Summary: The GNU Bourne Again SHell (/bin/sh)
 Group: Shells
-Provides: /bin/sh4, /usr/lib/bash4
+Provides: /bin/sh4, %_libexecdir/%name
+Requires: bashrc
 Conflicts: %name < %version-%release
 AutoReq: yes
 
@@ -53,6 +48,7 @@ AutoReq: yes
 Group: Development/Other
 Summary: Bash loadable builtins development files
 Requires: %name = %version-%release
+Requires: libreadline-devel
 
 %description
 Bash is an sh-compatible command language interpreter that executes
@@ -110,28 +106,28 @@ rm configure y.tab.? doc/*.info*
 # Bundled texi2dvi is outdated.
 install -pm755 /usr/bin/texi2dvi support/
 
-# Fix temporary file handling.
-sed -i 's,/tmp/,,g' *.m4
-
-# Would anyone volunteer to fix those? Probably not.
-#find examples -type f -print0 |
-#	xargs -r0 grep -FlZ -- /tmp |
-#	xargs -r0 rm -fv --
-
-sed -n '1,/^\.SH "BASH BUILTIN COMMANDS"/p' doc/builtins.1 >builtins.1
-sed -n '/^\.\\" start of bash_builtins/,/^\.\\" bash_builtins/p' doc/bash.1 >>builtins.1
-sed -n '/^\.SH SEE ALSO/,$p' doc/builtins.1 >>builtins.1
+# Fix builtins.1
+{
+	sed -n '1,/^\.SH BASH BUILTIN COMMANDS/p' doc/builtins.1
+	sed -n '/^\.\\" start of bash_builtins/,/^\.\\" bash_builtins/p' doc/bash.1
+	sed -n '/^\.SH SEE ALSO/,$p' doc/builtins.1
+} > builtins.1
 mv builtins.1 doc/builtins.1
 
-sed -n '1,/^\.SH "RESTRICTED SHELL"/p' doc/rbash.1 >rbash.1
-sed -n '/^\.\\" rbash\.1/,/^\.\\" end of rbash\.1/p' doc/bash.1 >> rbash.1
-sed -n '/^\.SH SEE ALSO/,$p' doc/rbash.1 >>rbash.1
+# Fix rbash.1
+{
+	sed -n '1,/^\.SH RESTRICTED SHELL/p' doc/rbash.1
+	sed -n '/^\.\\" rbash\.1/,/^\.\\" end of rbash\.1/p' doc/bash.1
+	sed -n '/^\.SH SEE ALSO/,$p' doc/rbash.1
+} > rbash.1
 mv rbash.1 doc/rbash.1
 
-mv po/bash.pot po/bash4.pot
+th="$(sed '/^\.TH BASH 1[^"]*/!d;s///;q' doc/bash.1)"
+sed -i "/^\\.TH /s/\".*/$th/" doc/builtins.1 doc/rbash.1
+
+mv po/bash.pot po/%name.pot
 
 %build
-%add_optflags -D_GNU_SOURCE -Werror=parentheses -Werror=maybe-uninitialized
 autoconf
 
 export \
@@ -139,6 +135,7 @@ export \
 	bash_cv_dev_stdin=present \
 	bash_cv_mail_dir=/var/mail \
 	bash_cv_termcap_lib=libc \
+	loadablesdir=%_libexecdir/%name \
 	%{?__buildreqs:bash_cv_must_reinstall_sighandlers=no} \
 	#
 
@@ -148,6 +145,7 @@ export \
 mkdir build-sh
 pushd build-sh
 %configure \
+	--enable-glob-asciiranges-default \
 	--without-bash-malloc \
 	--disable-readline \
 	--disable-command-timing \
@@ -158,51 +156,67 @@ pushd build-sh
 	--disable-progcomp \
 	--disable-restricted \
 	#
-# SMP-incompatible build.
-make "CPPFLAGS=-DRECYCLES_PIDS"
+%make_build
 popd
 
 # Build bash.
 mkdir build-bash
 pushd build-bash
 %configure \
+	--enable-glob-asciiranges-default \
 	--without-bash-malloc \
 	--with-installed-readline \
 	--disable-command-timing \
 	--disable-net-redirections \
 	--enable-separate-helpfiles \
 	#
-# SMP-incompatible build.
-make "CPPFLAGS=-DRECYCLES_PIDS"
-make info
+%make_build
+%make_build info
 ln doc/*.info* ../doc/
 popd
 
 %install
-%makeinstall -C build-bash
+%makeinstall -C build-bash \
+	loadablesdir=%buildroot%_libexecdir/%name
 
 install -pD -m755 build-sh/bash %buildroot/bin/sh4
 mv %buildroot%_bindir/bash %buildroot/bin/%name
 
+# Make manpages for bash builtins as per suggestion in doc/README.
+pushd doc
+	sed -e '
+/^\.SH NAME/, /\\- bash built-in commands$/{
+/^\.SH NAME/d
+s/^bash, //
+s/\\- bash built-in commands$//
+s/,//g
+b
+}
+d
+' builtins.1 > man.pages
+	for f in $(cat man.pages); do
+		ln -s %{name}_builtins.1 %buildroot%_man1dir/%{name}_"$f".1
+	done
+popd
+
 ln -s %name %buildroot/bin/r%name
-mv %buildroot%_bindir/bash{,4}bug
+mv %buildroot%_bindir/{bash,%name}bug
 
-mv %buildroot%_infodir/bash{,4}.info
+mv %buildroot%_infodir/{bash,%name}.info
 
-mv %buildroot%_man1dir/bash{,4}.1
-mv %buildroot%_man1dir/bash{,4}bug.1
-mv %buildroot%_man1dir/bash{,4}_builtins.1
-mv %buildroot%_man1dir/rbash{,4}.1
+mv %buildroot%_man1dir/{bash,%name}.1
+mv %buildroot%_man1dir/{bash,%name}bug.1
+mv %buildroot%_man1dir/{bash,%name}_builtins.1
+mv %buildroot%_man1dir/r{bash,%name}.1
 ln -s %name.1 %buildroot%_man1dir/sh4.1
 
-# Directory for builtins
-mkdir -p %buildroot/usr/lib/%name
+mv %buildroot%_pkgconfigdir/{bash,%name}.pc
 
 # Include files for building custom builtins.
 pushd build-bash
-mkdir -p %buildroot%_includedir/bash
+mkdir -p %buildroot%_includedir/%name
 for f in ../examples/loadables/*.c; do
-	%__cc -MM -DHAVE_CONFIG_H -DSHELL -Iexamples/loadables -I. -I.. -I../lib -I../builtins -I../include "$f"
+	%__cc -MM -DHAVE_CONFIG_H -DSHELL -Iexamples/loadables -I. -I.. -I../lib -I../builtins -Ibuiltins -I../include "$f"
 done |
 	tr -d '\:' |
 	tr -s '[:space:]' '\n' |
@@ -210,9 +224,14 @@ done |
 	fgrep -v examples/loadables/ |
 	sort -u |
 	while read f; do
-		install -pm644 "$f" %buildroot%_includedir/bash/
+		install -pm644 "$f" %buildroot%_includedir/%name/
 	done
 popd
+
+# Install additional headers required by bashdb.
+for f in bashline.h input.h ; do
+	install -pm644 "$f" %buildroot%_includedir/%name/
+done
 
 # Prepare documentation.
 %define docdir %_docdir/%name-%version
@@ -224,7 +243,7 @@ install -p -m644 doc/*.html %buildroot%docdir/html/
 install -p -m644 doc/*.ps %buildroot%docdir/ps/
 install -p -m644 doc/*.txt %buildroot%docdir/txt/
 find %buildroot%docdir/{[A-Z],{ps,txt}/}* -type f -size +8k -print0 |
-	xargs -r0 bzip2 -9 --
+	xargs -r0 xz -9 --
 cp -a examples %buildroot%docdir/
 find %buildroot%docdir/examples/ -type f -name 'Makefile*' -delete -print
 
@@ -238,19 +257,26 @@ LDFLAGS = -shared -Wl,-soname,$@
 	$(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
 EOF
 
+rm %buildroot%_libexecdir/%name/Makefile.inc
+rm -r %buildroot%_defaultdocdir/%name
+
 %find_lang %name
 
 %check
-%make_build -k check -C build-sh
-%make_build -k check -C build-bash
+# These tests are almost useless because they always succeed.
+make -k check -C build-sh
+make -k check -C build-bash
+
+%define _unpackaged_files_terminate_build 1
 
 %files -n sh4
 /bin/sh4
-/usr/lib/bash4
+%dir %_libexecdir/%name
 
 %files -f %name.lang
 /bin/*%{name}*
 %_bindir/*
+%_libexecdir/%name/*
 %_datadir/%name
 %_mandir/man?/*
 %_infodir/*.info*
@@ -269,8 +295,13 @@ EOF
 
 %files devel
 %_includedir/*
+%_pkgconfigdir/*
 
 %changelog
+* Mon Dec 17 2018 Dmitry V. Levin <ldv@altlinux.org> 4.4.23-alt1
+- 4.2.50 -> 4.4.23 (closes: #32607, #32134, #33196).
+- Enabled Rational Range Interpretation (globasciiranges) by default.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.2.50-alt1.1
 - NMU: added BR: texinfo
 
@@ -524,7 +555,7 @@ EOF
   Moreover, a part of its memory is shared with other readline programs (bc, ...)
 - disable built-in time command (incompatible with standard POSIX time command)
 
-* Tue May 25 1999 Bernhard Rosenkr‰nzer <bero@mandrakesoft.com>
+* Tue May 25 1999 Bernhard Rosenkr√§nzer <bero@mandrakesoft.com>
 - handle RPM_OPT_FLAGS
 
 * Sat May 15 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
