@@ -3,7 +3,7 @@
 
 Name: wmbday
 Version: 0.3.1
-Release: alt5.qa1
+Release: alt6
 
 Summary: This dockapp will remind you of birthdays
 Summary(ru_RU.CP1251): Этот апплет будет напоминать вам о днях рождения
@@ -20,6 +20,7 @@ Patch0: %name-0.3.1-alt-warnings-x86_64.patch
 Patch1: %name-0.3.1-alt-autotools-support.patch
 Patch2: %name-0.3.1-alt-man-kill_x11_path.patch
 Patch3: %name-0.3.1-alt-doc-update_my_email.patch
+Patch4: %name-0.3.1-fix-build-with-gcc8.patch
 
 BuildRequires: libXext-devel libXpm-devel
 
@@ -54,6 +55,8 @@ wmbday это апплет для Window Maker под Linux и FreeBSD, который будет
 # update my email in ChangeLog
 %patch3
 
+%patch4 -p2
+
 rm -f BSDmakefile configure Makefile
 chmod -x *.[ch] wmbday.1 wmbday_text.xpm
 
@@ -83,6 +86,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt6
+- Fixed FTBFS.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
