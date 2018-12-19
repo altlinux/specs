@@ -1,19 +1,17 @@
 Name: gcc-common
-Version: 1.4.22
+Version: 1.4.23
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/C
+Url: http://git.altlinux.org/gears/g/gcc-common.git
 
-Source1: gccbug.in
-Source2: gcc_wrapper.c
-
-Patch: gccbug-alt.patch
+Source: gcc_wrapper.c
 
 %define _libexecdir /usr/libexec
 
-%ifarch ppc ppc64
+%ifarch ppc
 # On powerpc, even though target is ppc32, compiler is inherently 64-bit,
 # thus the wrapper should call ppc64-alt-linux-*.
 %define _target_platform ppc64-alt-linux
@@ -21,21 +19,21 @@ Patch: gccbug-alt.patch
 
 %package -n gcc-c++-common
 Summary: Common symlinks for the GNU C++ Compiler
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/C++
 BuildArch: noarch
 PreReq: %name = %version-%release
 
 %package -n gcc-go-common
 Summary: Common symlinks for the Go Compiler
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 BuildArch: noarch
 PreReq: %name = %version-%release
 
 %package -n gcc-fortran-common
 Summary: Common symlinks for the GNU Fortran Compiler
-License: GPL
+License: GPL-2.0-or-later
 BuildArch: noarch
 Group: Development/Other
 PreReq: %name = %version-%release
@@ -48,7 +46,7 @@ Conflicts: gcc3.4-g77 < 0:3.4.5-alt3
 
 %package -n gcc-treelang-common
 Summary: Common symlinks for the GNU Treelang Compiler
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 BuildArch: noarch
 PreReq: %name = %version-%release
@@ -57,7 +55,7 @@ Conflicts: gcc3.4-treelang < 0:3.4.5-alt3
 
 %package -n gcc-gnat-common
 Summary: Common symlinks for the GNU Ada compiler (GNAT)
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 BuildArch: noarch
 PreReq: %name = %version-%release
@@ -84,18 +82,24 @@ This package contains common symlinks for the GNU Ada compiler (GNAT).
 
 %prep
 %setup -cT
-install -p -m755 %SOURCE1 gccbug
-%patch -p1
 
 %build
-gcc %optflags -Werror '-DBINDIR="%_bindir"' \
+build_with()
+{
+"$1" %optflags -Werror '-DBINDIR="%_bindir"' \
 	'-DTARGET="%_target_platform"' %_sourcedir/gcc_wrapper.c -o gcc_wrapper
-sed -i 's|@TARGET@|%_target_platform|g' gccbug
+}
+
+# Directly access the compiler (not via gcc -> gcc_wrapper;
+# in case of errors in the previous build of this package).
+# And fallback to the default command--in case this is a bootstrap build.
+%global __cc_directly %_target_platform-gcc%{?_gcc_version:-%_gcc_version}
+build_with %__cc_directly ||
+build_with %__cc
 
 %install
 mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_bindir,%_includedir/c++}
 install -p -m755 gcc_wrapper %buildroot%_bindir/
-install -p -m755 gccbug %buildroot%_bindir/%_target_platform-gccbug
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
@@ -115,7 +119,31 @@ done
 ln -s ..%_bindir/cpp %buildroot/lib/cpp
 ln -s g++ %buildroot%_bindir/c++
 ln -s gtreelang %buildroot%_bindir/tree1
-ln -s %_target_platform-gccbug %buildroot%_bindir/gccbug
+
+%check
+which %__cc_directly || { echo 'Skipping the test of gcc_wrapper.'; exit 0; }
+%{?_gcc_version:export GCC_VERSION=%_gcc_version}
+%buildroot%_bindir/gcc_wrapper --version
+%buildroot%_bindir/gcc --version
+%buildroot%_bindir/cpp --version
+
+%package checkinstall
+Summary: Installing me immediately runs the test for gcc_wrapper
+Group: Development/C
+PreReq: %name = %EVR
+# An error in gcc_wrapper can already be caught as an UNMET dependency.
+PreReq: %_bindir/%__cc_directly
+
+%description checkinstall
+By installing this package, you immediately run the test for gcc_wrapper.
+
+%files checkinstall
+
+%post checkinstall
+%{?_gcc_version:export GCC_VERSION=%_gcc_version}
+gcc_wrapper --version
+gcc --version
+cpp --version
 
 %files
 /lib/*
@@ -128,13 +156,11 @@ ln -s %_target_platform-gccbug %buildroot%_bindir/gccbug
 %_bindir/gcc-ar
 %_bindir/gcc-nm
 %_bindir/gcc-ranlib
-%_bindir/gccbug
 %_bindir/gcov
 %_bindir/gcov-tool
 %_bindir/gcov-dump
 %_bindir/protoize
 %_bindir/unprotoize
-%_bindir/%_target_platform-gccbug
 
 %files -n gcc-c++-common
 %_bindir/c++
@@ -158,6 +184,15 @@ ln -s %_target_platform-gccbug %buildroot%_bindir/gccbug
 %_bindir/gnat*
 
 %changelog
+* Wed Dec 19 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.23-alt1
+- Updated URL and license information.
+- Removed obsolete gccbug.
+
+* Mon May 21 2018 Ivan Zakharyaschev <imz@altlinux.org> 1.4.22-alt2
+- (.spec) Non user-visible improvements:
+  + Overcome non-working gcc in case of errors in the previous build.
+  + %%check and checkinstall pkg added to test gcc_wrapper.
+
 * Wed Feb 21 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.22-alt1
 - Dropped gcc-java-common and libgcj-common subpackages.
 - gcc-common: dropped alternatives.
