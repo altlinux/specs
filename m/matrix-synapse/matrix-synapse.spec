@@ -1,6 +1,6 @@
 Name: matrix-synapse
 Version: 0.33.9
-Release: alt1
+Release: alt2
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache 2.0
@@ -34,7 +34,6 @@ BuildRequires: python-module-pydenticon
 BuildRequires: python-module-ujson
 BuildRequires: python-module-blist
 BuildRequires: python-module-pysaml2 >= 3.0.0
-BuildRequires: python-module-pysaml2 < 4.0.0
 BuildRequires: python-module-pymacaroons-pynacl
 BuildRequires: python-module-bleach >= 1.4.2
 BuildRequires: python-module-netaddr >= 0.7.18
@@ -55,7 +54,6 @@ Requires: python-module-twisted-names >= 17.5.0
 Requires: python-module-twisted-web >= 17.5.0
 Requires: python-module-service-identity >= 1.0.0
 Requires: python-module-pysaml2 >= 3.0.0
-Requires: python-module-pysaml2 < 4.0.0
 
 # python-modules-sqlite3
 Requires: python-module-matrix-angular-sdk
@@ -116,6 +114,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 0.33.9-alt2
+- no longer require a specific version of saml2 since v0.27.0-rc1
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.33.9-alt1
 - new version 0.33.9 (with rpmrb script)
 
