@@ -6,7 +6,7 @@
 
 Summary: A MySQL database connector for C++
 Name: mysql-connector-c++
-Version: 1.1.9
+Version: 1.1.11
 Release: alt1
 Group: System/Libraries
 License: GPLv2
@@ -15,6 +15,7 @@ Source0: http://cdn.mysql.com/Downloads/Connector-C++/%name-%version.tar.gz
 ## patches from arch-linux
 Patch0: mysql_cxx_linkage.patch
 Patch1: mariadb_api.patch
+Patch10: mysql-alt-cmake-remove-extra-libraries.patch
 Source44: import.info
 
 # Automatically added by buildreq on Sat Feb 03 2018
@@ -90,6 +91,7 @@ offers the following advantages for C++ users:
 %setup
 %patch0 -p1 -b .linkage
 %patch1 -p1 -b .mariadb
+%patch10 -p2
 chmod -x examples/*.cpp examples/*.txt
 
 # Save examples to keep directory clean (for doc)
@@ -110,7 +112,8 @@ cp -pr examples _doc_examples
 cp BUILD/cppconn/config.h  cppconn/config.h
 
 %makeinstall_std -C BUILD
-rm -fr %buildroot%prefix/COPYING
+rm -fr %buildroot%prefix/BUILDINFO
+rm -fr %buildroot%prefix/LICENSE
 rm -fr %buildroot%prefix/INSTALL
 rm -fr %buildroot%prefix/README
 rm -fr %buildroot%prefix/ANNOUNCEMENT
@@ -121,13 +124,16 @@ rm -f %buildroot%_libdir/libmysqlcppconn-static.a
 %_libdir/*.so.*
 
 %files -n %develname
-%doc README COPYING examples
+%doc README LICENSE examples
 %dir %_includedir/cppconn
 %_includedir/*.h
 %_includedir/cppconn/*.h
 %_libdir/*.so
 
 %changelog
+* Wed Dec 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.11-alt1
+- NMU: updated to version 1.1.11.
+
 * Sat Feb 03 2018 Fr. Br. George <george@altlinux.ru> 1.1.9-alt1
 - Autobuild version bump to 1.1.9
 - Fix overloaded buildreq
