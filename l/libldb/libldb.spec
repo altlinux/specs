@@ -2,7 +2,7 @@
 %def_with check
 %def_with python3
 
-%ifarch %ix86 mips mipsel
+%ifarch %arm %ix86 mips mipsel
 %def_without mdb
 %else
 %def_with mdb
@@ -10,7 +10,7 @@
 
 Name: libldb
 Version: 1.4.3
-Release: alt3
+Release: alt4
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -211,6 +211,9 @@ make test
 %endif
 
 %changelog
+* Wed Dec 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.3-alt4
+- Disable lmdb support on armh
+
 * Tue Dec 18 2018 Ivan A. Melnikov <iv@altlinux.org> 1.4.3-alt3
 - Disable lmdb support on mips32
 
