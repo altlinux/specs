@@ -9,9 +9,10 @@
 %def_enable introspection
 %def_enable selinux
 %def_enable docs
+%def_disable check
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -28,15 +29,15 @@ Source: %name-%version.tar
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 
-%define glib_ver 2.49.1
+%define glib_ver 2.55.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.22.6
+%define gtk_ver 3.22.27
 %define libxml2_ver 2.4.7
 %define gexiv2_ver 0.10
 %define gir_ver 0.10.2
-%define tracker_ver 0.18
-%define autoar_ver 0.1
+%define tracker_ver 2.0
+%define autoar_ver 0.2.1
 
 Requires(post): libcap-utils
 Requires: lib%name = %version-%release
@@ -44,9 +45,11 @@ Requires: gnome-icon-theme >= %icon_theme_ver
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.34
+Requires: %_bindir/bwrap
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
+BuildRequires: libappstream-glib-devel
 # for %%check
 BuildRequires: xvfb-run dbus-tools-gui /proc
 
@@ -57,7 +60,6 @@ BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgail3-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
@@ -118,30 +120,28 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the nautilus-extension library
 
-
-%define _bonobo_servers_dir %_libdir/bonobo/servers
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
 %setup
-rm -f data/*.desktop
 
 %build
 %meson \
     %{?_enable_docs:-Ddocs=true} \
-    %{?_enable_tracker:-Dtracker=true} \
     %{?_disable_packagekit:-Dpackagekit=false} \
-    -Dextensions=true
+    -Dextensions=true \
+    %{?_enable_selinux:-Dselinux=true}
 %meson_build
 
 %install
 %meson_install
 bzip2 -9fk NEWS
-
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
-
 %find_lang %name
+
+%check
+%meson_test
 
 %post
 # for mount secure NFS shares
@@ -187,6 +187,12 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.5-alt1
+- 3.30.5
+
+* Wed Nov 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.4-alt1
+- 3.30.4
+
 * Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

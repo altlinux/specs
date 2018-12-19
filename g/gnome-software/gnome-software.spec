@@ -26,7 +26,7 @@
 %def_disable external_appstream
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -159,6 +159,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.6-alt1
+- 3.30.6
+
 * Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.5-alt1
 - 3.30.5
 

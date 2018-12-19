@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.26
+%define ver_major 3.30
 %define xdg_name org.gnome.Totem
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
@@ -37,7 +37,7 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -410,6 +410,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Jul 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 
