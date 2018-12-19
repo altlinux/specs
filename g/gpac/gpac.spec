@@ -1,5 +1,5 @@
 Name: gpac
-Version: 0.6.1
+Version: v0.7.1.0.284.gite64a7d229
 Release: alt1
 
 Summary: GPAC is a multimedia framework covering MPEG-4, VRML/X3D and SVG.
@@ -106,6 +106,9 @@ install -m 644 doc/man/mp42ts* %buildroot%_man1dir/
 
 
 %changelog
+* Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> v0.7.1.0.284.gite64a7d229-alt1
+- Build new version (with openssl1.1).
+
 * Sun Jun 19 2016 Michael A. Kangin <prividen@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
