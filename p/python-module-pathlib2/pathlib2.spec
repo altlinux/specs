@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Object-oriented filesystem paths
@@ -78,6 +78,9 @@ popd
 %python3_sitelibdir/pathlib2-*.egg-info/
 
 %changelog
+* Wed Dec 19 2018 Stanislav Levin <slev@altlinux.org> 2.3.3-alt1
+- 2.3.2 -> 2.3.3.
+
 * Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 2.3.2-alt1
 - 2.1.0 -> 2.3.2.
 
