@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.23.2
+Version: 1.25.0
 Release: alt1
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
@@ -130,6 +130,9 @@ popd
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Wed Dec 19 2018 Stanislav Levin <slev@altlinux.org> 1.25.0-alt1
+- 1.23.2 -> 1.25.0.
+
 * Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 1.23.2-alt1
 - 1.22.5 -> 1.23.2.
 
