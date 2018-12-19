@@ -9,7 +9,7 @@
 %def_disable gevolution
 %def_enable meanwhile
 %def_disable cap
-%def_enable nm
+%def_disable nm
 %def_disable mono
 %def_enable consoleui
 %def_enable dbus
@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.13.0
-Release: alt4
+Release: alt5
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -455,6 +455,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt5
+- Rebuild without NM support.
+
 * Thu Dec 13 2018 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt4
 - Rebuild with libidn support.
 
