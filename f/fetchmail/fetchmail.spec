@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.26
-Release: alt4.qa1
+Release: alt5
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -21,6 +21,7 @@ Source100: fetchmail.watch
 Patch1: %name-5.6.2-contrib.patch
 Patch2: %name-6.3.0-fetchmailconf.patch
 Patch3: %name-6.3.3-nopermcheck.patch
+Patch4: %name-6.3.26-ssl-backport.patch
 
 Requires: %_sbindir/sendmail
 Requires: setup >= 2.1.9-ipl15mdk
@@ -29,7 +30,7 @@ Requires: service >= 0.5.28-alt1
 BuildPreReq: rpm-build-python
 %_python_set_noarch
 
-BuildPreReq: flex libssl-devel python-devel
+BuildPreReq: flex openssl-devel libkrb5-devel python-devel
 
 %define rtdir %_runtimedir/%name
 
@@ -103,6 +104,7 @@ neccessary.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 cp -a %SOURCE3 fetchmailrc.example
 
 %build
@@ -188,6 +190,9 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> 6.3.26-alt5
+- Fixed FTBFS (add patch for openssl1.1).
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 6.3.26-alt4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
