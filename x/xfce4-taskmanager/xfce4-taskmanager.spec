@@ -1,6 +1,6 @@
 Name: xfce4-taskmanager
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
@@ -52,6 +52,9 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Wed Dec 19 2018 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2.
+
 * Wed Dec 12 2018 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt3
 - Fix memory corruption.
 
