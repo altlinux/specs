@@ -6,8 +6,8 @@
 %define _pseudouser_home     %_localstatedir/teeworlds
 
 Name: teeworlds
-Version: 0.6.4
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Cute little buggers with guns
 License: distributable
@@ -17,13 +17,18 @@ Url: http://www.teeworlds.com/
 
 # https://github.com/teeworlds/teeworlds.git
 Source: %name-%version.tar
+Source1: altlinux.tar
+
+Patch:%name-alt-build.patch
 
 Requires: %name-gamedata = %version-%release
 
 Obsoletes: teeworlds-alt < %version-%release
 
-BuildRequires: gcc-c++ libGL-devel libSDL-devel libX11-devel python-modules zlib-devel
-BuildRequires: bam libalsa-devel libfreetype-devel libwavpack-devel libpnglite-devel
+ExclusiveArch: %ix86 x86_64
+
+BuildRequires: gcc-c++ libGL-devel libGLU-devel libSDL2-devel libX11-devel python-modules zlib-devel
+BuildRequires: bam libalsa-devel libfreetype-devel libwavpack-devel libpnglite-devel libpng-devel
 
 %description
 A retro multiplayer shooter.
@@ -67,18 +72,21 @@ Requires: %name-server = %version-%release
 %endif
 
 %prep
-%setup
+%setup -a1
+rm -rf src/engine/external/{wavpack,zlib,pnglite}
+%patch -p1 
 
 %build
-bam release
+bam target=release conf=release builddir=build
 
 %install
 mkdir -p %buildroot%_unitdir/
 install -m 0644 altlinux/teeworlds-server@.service %buildroot%_unitdir/teeworlds-server@.service
 
 install -d %buildroot{%_bindir,%_datadir/teeworlds}
-install -pm755 teeworlds teeworlds_srv altlinux/teeworlds_srv_wrapper %buildroot%_bindir
-cp -a data %buildroot%_datadir/teeworlds/
+
+install -pm755 build//teeworlds_srv build/teeworlds altlinux/teeworlds_srv_wrapper %buildroot%_bindir
+cp -a build/data %buildroot%_datadir/teeworlds/
 
 install -pDm644 altlinux/teeworlds.desktop %buildroot%_desktopdir/teeworlds.desktop
 install -pDm644 altlinux/teeworlds.png %buildroot%_liconsdir/teeworlds.png
@@ -184,6 +192,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_datadir/teeworlds
 
 %changelog
+* Wed Dec 05 2018 Alexey Melyashinsky <bip@altlinux.org> 0.7.0-alt1
+- Updated to upstream version 0.7.0
+
 * Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt2
 - Fixed build with new bam.
 
