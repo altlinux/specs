@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
@@ -7,7 +7,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 
 Summary: Input devices library
@@ -133,6 +133,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Tue Dec 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
+- 1.12.4
+
 * Wed Nov 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - updated to 1.12.3-6-g4e469291
 

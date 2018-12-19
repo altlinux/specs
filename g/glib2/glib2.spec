@@ -18,8 +18,8 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -414,6 +414,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Dec 18 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.2-alt1
+- 2.58.2
+
+* Thu Nov 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt4
+- updated to 2.58.1-81-g2daebb93f
+
 * Wed Oct 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt3
 - back to autotools to avoid problems with static linking
 

@@ -1,9 +1,9 @@
 %def_disable snapshot
-%def_without python3
+%def_with python3
 
 Name: itstool
-Version: 2.0.4
-Release: alt3
+Version: 2.0.5
+Release: alt1
 
 Summary: ITS-based XML translation tool
 Group: Development/GNOME and GTK+
@@ -15,7 +15,6 @@ Source: %name-%version.tar
 %else
 Source: http://files.itstool.org/itstool/%name-%version.tar.bz2
 %endif
-Patch: itstool-2.0.4-2.0.2.diff
 
 BuildArch: noarch
 
@@ -32,11 +31,10 @@ translate and how to separate it into PO file messages.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
-%configure %{?_with_python3:PYTHON=%_bindir/%__python3}
+%configure %{?_with_python3:PYTHON=%__python3}
 %make_build
 
 %install
@@ -52,6 +50,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Wed Dec 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5 with python3
+
 * Sun Nov 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt3
 - temporarily reverted to 2.0.2 with python2
 
