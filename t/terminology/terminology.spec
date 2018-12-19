@@ -2,7 +2,7 @@
 %define ver_major 1.3
 
 Name: terminology
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -11,8 +11,8 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 %if_disabled snapshot
-Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
-#Source: https://fau.re/terminology/%name-%version.tar.xz
+#Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
+Source: https://fau.re/terminology/%name-%version.tar.xz
 %else
 #VCS: https://git.enlightenment.org/apps/terminology.git
 Source: %name-%version.tar
@@ -58,10 +58,13 @@ EOF
 %_datadir/%name/
 %_altdir/%name
 %_iconsdir/hicolor/*/*/%name.png
-%_man1dir/%name.1*
+%_man1dir/*
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
