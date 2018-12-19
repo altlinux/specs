@@ -29,7 +29,7 @@
 
 Name: collectd
 Version: 5.8.1
-Release: alt1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -493,7 +493,7 @@ mkdir libltdl
 # rrdcached.so: underlinked libraries: /lib64/libpthread.so.0
 # rrdtool.so: underlinked libraries: /lib64/libpthread.so.0
 # notify_desktop.so: underlinked libraries: /usr/lib64/libgobject-2.0.so.0
-%add_optflags -lpthread -lgobject-2.0 -std=gnu99
+%add_optflags -lpthread -lgobject-2.0 -Wno-error=format-truncation
 
 # seems like mainstream uses /var for localstatedir, ALT uses /var/lib
 %configure \
@@ -810,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Dec 19 2018 Anton Farygin <rider@altlinux.ru> 5.8.1-alt2
+- temporary disabled format-truncation error to make gcc-8 happy
+
 * Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 5.8.1-alt1
 - New version 5.8.1
 
