@@ -1,29 +1,21 @@
 %define oname defusedxml
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.hg20130328.1.2
+Version: 0.5.0
+Release: alt1
 Summary: XML bomb protection for Python stdlib modules
 License: Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/defusedxml/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://bitbucket.org/tiran/defusedxml
-Source: %name-%version.tar
+Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-module-setuptools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
 defusedxml -- defusing XML bombs and other exploits.
@@ -36,41 +28,36 @@ Group: Development/Python3
 defusedxml -- defusing XML bombs and other exploits.
 
 %prep
-%setup
+%setup -n %oname-%version
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
-%doc *.txt
+%doc README.txt CHANGES.txt LICENSE
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc README.txt CHANGES.txt LICENSE
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt1.hg20130328.1.2
 - (NMU) rebuild with python3.6
 
