@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1
+Release: alt2
 Summary: Discover and load entry points from installed packages
 License: MIT
 Group: Development/Python
@@ -43,18 +43,21 @@ Discover and load entry points from installed packages.
 cp -fR . ../python3
 %endif
 
+
 %build
-
-%install
-install -d %buildroot%python_sitelibdir
-cp -ar entrypoints.py* %buildroot%python_sitelibdir/
-
+%python_build_debug
 %if_with python3
 pushd ../python3
-install -d %buildroot%python3_sitelibdir
-cp -ar entrypoints.py* %buildroot%python3_sitelibdir/
+%python3_build_debug
 popd
 %endif
+
+%install
+pushd ../python3
+%python3_install
+popd
+
+%python_install
 
 %files
 %python_sitelibdir/*
@@ -65,5 +68,8 @@ popd
 %endif
 
 %changelog
+* Wed Dec 19 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2.3-alt2
+- Added egg-info
+
 * Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt1
 - Initial build for ALT.
