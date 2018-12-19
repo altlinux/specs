@@ -1,9 +1,9 @@
 Name: lyx-gost
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: The GOST class files for LyX
-Summary(ru_RU.KOI8-R): Класс документа по ГОСТ для LyX
+Summary(ru_RU.UTF-8): п п╩п╟я│я│ п╢п╬п╨я┐п╪п╣п╫я┌п╟ п©п╬ п⌠п·п║п╒ п╢п╩я▐ LyX
 
 License: GPL
 Group: Office
@@ -15,7 +15,7 @@ Source: %name-%version.tar.bz2
 
 BuildArchitectures: noarch
 BuildPreReq: iconv
-PreReq: lyx >= 1.5.0
+PreReq: lyx >= 2.0.0
 
 Conflicts: lyx-gost-cp1251
 Obsoletes: lyx-gost-cp1251
@@ -27,13 +27,13 @@ Obsoletes: lyx-gost-koi8-r
 The %name package contains the LyX/LaTeX class for preparing documents
 according to Russian GOST's demands.
 
-%description -l ru_RU.KOI8-R
-Пакет %name содержит класс для LyX/LaTeX, предназначенный для
-подготовки технической текстовой документации в соответствии
-с ГОСТ 2.105-95 (с рамками и основными надписями).
+%description -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ п╨п╩п╟я│я│ п╢п╩я▐ LyX/LaTeX, п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╫я▀п╧ п╢п╩я▐
+п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ я┌п╣я┘п╫п╦я┤п╣я│п╨п╬п╧ я┌п╣п╨я│я┌п╬п╡п╬п╧ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦
+я│ п⌠п·п║п╒ 2.105-95 (я│ я─п╟п╪п╨п╟п╪п╦ п╦ п╬я│п╫п╬п╡п╫я▀п╪п╦ п╫п╟п╢п©п╦я│я▐п╪п╦).
 
 %prep
-%setup -q
+%setup
 
 %install
 
@@ -58,6 +58,11 @@ cd %_datadir/lyx
 %_datadir/lyx/templates/*.lyx
 
 %changelog
+* Wed Dec 19 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- use pdf instead of eps
+- latest latex fixes
+- tested with LyX 2.2.3
+
 * Wed Dec 05 2007 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - adopted layouts for new LyX version, recode to UTF-8
 - cleanup spec
