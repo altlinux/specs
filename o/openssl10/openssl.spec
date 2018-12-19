@@ -3,13 +3,13 @@
 %def_disable devel
 
 Name: openssl10
-Version: 1.0.2p
-Release: alt2
+Version: 1.0.2q
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
 Group: System/Base
-Url: http://www.openssl.org
+Url: https://www.openssl.org/source/
 
 # git://git.altlinux.org/gears/o/openssl10.git
 Source: openssl-%version.tar
@@ -39,7 +39,7 @@ Patch21: openssl-rh-algo-doc.patch
 Patch22: openssl-rh-apps-dgst.patch
 Patch23: openssl-rh-xmpp-starttls.patch
 Patch24: openssl-rh-chil-fixes.patch
-Patch25: openssl-rh-alt-secure-getenv.patch
+Patch25: openssl-alt-secure-getenv.patch
 Patch27: openssl-rh-padlock64.patch
 Patch30: openssl-rh-disable-sslv2v3.patch
 Patch84: openssl-rh-trusted-first-doc.patch
@@ -51,7 +51,7 @@ Patch92: openssl-rh-system-cipherlist.patch
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
 %def_disable compat
-%def_with krb
+%def_without krb
 
 BuildRequires: /usr/bin/pod2man bc zlib-devel
 %if_enabled tsget
@@ -263,7 +263,7 @@ sed -i 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
 sed -i 's/\(^#define[[:space:]]\+SHLIB_VERSION_NUMBER[[:space:]]\+\).*/\1"%version"/' crypto/opensslv.h
 
 # Correct compilation options.
-%add_optflags -fno-strict-aliasing -Wa,--noexecstack
+%add_optflags -fno-strict-aliasing -fno-strict-overflow -Wa,--noexecstack -Werror=implicit-function-declaration
 sed -i 's/-O\([0-9s]\>\)\?\( -fomit-frame-pointer\)\?\( -m.86\)\?/\\\$(RPM_OPT_FLAGS)/' \
 	Configure
 
@@ -490,6 +490,10 @@ fi
 %endif
 
 %changelog
+* Wed Dec 19 2018 Dmitry V. Levin <ldv@altlinux.org> 1.0.2q-alt1
+- 1.0.2p -> 1.0.2q.
+- Disabled krb5 support.
+
 * Tue Aug 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2p-alt2
 - Rebuilt as openssl 1.1.0 legacy libraries.
 
