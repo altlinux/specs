@@ -4,7 +4,7 @@
 
 Name: gnupg-pkcs11-scd
 Version: 0.9.2
-Release: alt5
+Release: alt6
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
@@ -59,6 +59,9 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt6
+- Don't reverse the UKM.
+
 * Thu Oct 04 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt5
 - Fixed OpenSSL 1.1 build: Indirect access of EC GOST key using the
   API function.
