@@ -18,7 +18,7 @@
 
 Name: tracker
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -43,7 +43,6 @@ Requires: lib%name = %version-%release
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
 %define upower_ver 0.9.0
-%define nm_ver 0.8
 %define gst_ver 1.0
 %define sqlite_ver 3.20.1-alt2
 %define soup_ver 2.40.0
@@ -63,7 +62,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5}
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
-%{?_enable_network_manager:BuildRequires: NetworkManager-glib-devel >= %nm_ver libnm-devel}
+%{?_enable_network_manager:BuildRequires: libnm-devel}
 BuildRequires: libstemmer-devel
 
 BuildRequires: libuuid-devel
@@ -236,6 +235,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2
+- fixed buildreqs for network-manager support
+
 * Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
 - updated to 2.1.6-5-g92a5a24c4
 
