@@ -9,8 +9,8 @@ BuildRequires: python3-module-keyring python3-module-dbus
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nagstamon
-Version:        3.0.1
-Release:        alt3
+Version:        3.2
+Release:        alt1
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -74,6 +74,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Dec 20 2018 Grigory Ustinov <grenka@altlinux.org> 3.2-alt1
+- new version 3.2
+
 * Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt3
 - Fix default values (Closes: #33585).
 
