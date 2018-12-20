@@ -3,12 +3,13 @@
 %define Distro p8 branch
 
 Name: %base_name-%distro
-Version: 8.2
+Version: 8.3
 Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
+Url: http://git.altlinux.org/gears/a/apt-conf-branch.git
 
 Source: %name-%version.tar
 
@@ -47,6 +48,10 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 8.3-alt1
+- Updated URL and license information.
+- Fixed build with bash4.
+
 * Mon Sep 18 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2-alt1
 - Rebuilt with altlinux-repos 0.8 (for msu mirror).
 
