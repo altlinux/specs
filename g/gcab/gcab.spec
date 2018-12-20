@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.1
+%define ver_major 1.2
 %define api_ver 1.0
 
 %def_enable docs
@@ -117,6 +117,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
 * Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
