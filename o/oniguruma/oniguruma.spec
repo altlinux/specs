@@ -1,18 +1,13 @@
 %define soversion 5
 Name: oniguruma
 Version: 6.9.1
-Release: alt1
+Release: alt2
 Summary: Regular expressions library
 
 Group: System/Libraries
 License: BSD
 Url: https://github.com/kkos/oniguruma/
 Source0: %name-%version.tar
-# FIXME
-# Don't know exactly why, however without Patch0 onig_new returns
-# NULL reg variable
-Patch0: oniguruma-5.9.2-onig_new-returns-NULL-reg.patch
-BuildRequires(pre):rpm-build-ubt
 
 
 %description
@@ -46,9 +41,6 @@ developing applications that use %name.
 
 %prep
 %setup
-( cd src
-%patch0 -p1 -b .nullreg
-)
 %__sed -i.multilib -e 's|-L@libdir@||' onig-config.in
 
 for f in \
@@ -92,30 +84,34 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Dec 20 2018 Anton Farygin <rider@altlinux.ru> 6.9.1-alt2
+- fixed build (thanks bash4 for finding old and unused patch in subshell)
+- ubt cleanup
+
 * Fri Dec 14 2018 Anton Farygin <rider@altlinux.ru> 6.9.1-alt1
 - 6.9.1
 
-* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 6.9.0-alt1%ubt
+* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 6.9.0-alt1
 - 6.9.0 
 
-* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 6.8.2-alt1%ubt
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 6.8.2-alt1
 - new version
 
-* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 6.8.1-alt1%ubt
+* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 6.8.1-alt1
 - new version
 - the library package was renamed for compatability with ALT Linux shared policy
 
-* Mon Jan 29 2018 Anton Farygin <rider@altlinux.ru> 6.7.1-alt1%ubt
+* Mon Jan 29 2018 Anton Farygin <rider@altlinux.ru> 6.7.1-alt1
 - new version
 
-* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 6.6.1-alt1%ubt
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 6.6.1-alt1
 - new version
 
-* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 6.4.0-alt1%ubt
+* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 6.4.0-alt1
 - new version with security fixes (CVE-2017-9224, CVE-2017-9225, CVE-2017-9226, CVE-2017-9227, CVE-2017-9228, CVE-2017-9229)
 
-* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt2%ubt
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt2
 - added obsolete for libOniGuruma-devel to devel package
 
-* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1%ubt
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1
 - first build for ALT, based on RH spec
