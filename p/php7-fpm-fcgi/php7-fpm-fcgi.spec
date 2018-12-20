@@ -2,7 +2,7 @@
 
 Name: php7-fpm-fcgi
 Version: %php7_version
-Release: %php7_release
+Release: %php7_release.1
 Summary: The PHP7 HTML-embedded scripting language as a php-fpm (FastCGI) binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -119,7 +119,7 @@ cat > %buildroot%_rpmlibdir/%name.filetrigger << EOF
 LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
         egrep -qs '^%php7_sysconfdir/%php7_sapi|^%php7_extdir' || exit 0
 %php7_sapi_postin
-/sbin/service condrestart php7-fpm ||:
+/sbin/service php7-fpm condrestart||:
 EOF
 chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 
