@@ -5,7 +5,7 @@
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_without bootstrap
+%def_with bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable network_manager
@@ -18,7 +18,7 @@
 
 Name: tracker
 Version: %ver_major.6
-Release: alt2
+Release: alt2.1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -235,6 +235,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2.1
+- enabled bootstrap to rebuild tracker-miners against libexempi.so.8
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2
 - fixed buildreqs for network-manager support
 

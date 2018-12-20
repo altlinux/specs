@@ -1,10 +1,11 @@
 %def_enable static
+%def_enable check
 
 %define Name Exempi
 %define _name exempi
 
 Name: lib%_name
-Version: 2.4.5
+Version: 2.5.0
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -78,6 +79,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Tue Jan 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
 - 2.4.5 (fixed CVE-2018-7730, CVE-2018-7728, CVE-2018-7729, CVE-2018-7731)
 
