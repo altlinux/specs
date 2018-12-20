@@ -39,7 +39,7 @@
 %def_enable libvpx
 %def_enable libv4l2
 %def_enable libspeex
-%def_enable librtmp
+%def_disable librtmp
 %def_disable frei0r
 
 %if_enabled mmx
@@ -53,7 +53,7 @@
 
 Name: gst-libav
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -146,6 +146,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
+- disabled obsolete librtmp support
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 
