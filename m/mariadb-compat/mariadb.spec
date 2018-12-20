@@ -37,7 +37,7 @@
 
 Name: mariadb-compat
 Version: 10.1.37
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -509,13 +509,6 @@ rm -f %buildroot%_libdir/libmysqlclient_r.a
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
 	     %buildroot%ROOT%_datadir/mysql/charsets
 
-(
-    cd %buildroot%_datadir/mysql
-    for i in */errmsg.sys; do
-	install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
-    done
-)
-
 # Fix perl autodetection.
 grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
          xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
@@ -814,6 +807,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 20 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.37-alt2
+- fixed build with bash4
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.37-alt1
 - 10.1.37
 
