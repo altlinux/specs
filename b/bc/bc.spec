@@ -1,27 +1,28 @@
 Name: bc
-Version: 1.06
-Release: alt4
+Version: 1.07.1
+Release: alt1
 Serial: 1
 
 Summary: GNU's bc (a numeric processing language) and dc (a calculator)
-License: GPL
+License: GPL-3.0-or-later
 Group: Sciences/Mathematics
-Url: http://www.gnu.org/software/bc/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: https://www.gnu.org/software/bc/
 
-# ftp://ftp.gnu.org/gnu/bc/bc-%version.tar.gz
+# https://ftp.gnu.org/gnu/bc/bc-%version.tar.gz
 Source: bc-%version.tar
 
-Patch1: bc-1.06-alt-texinfo.patch
-Patch2: bc-1.06-alt-readline.patch
-Patch3: bc-1.06-alt-warnings.patch
-Patch4: bc-1.06-owl-functions-fix.patch
-Patch5: bc-1.06-deb-17.patch
-Patch6: bc-1.06-alt-makeinfo6.patch
+Patch01: 01_typo_in_bc.diff
+Patch02: 02_hyphens_as_minus_in_man.diff
+Patch05: 05_notice_read_write_errors.diff
+Patch06: 06_read_dcrc.diff
+Patch07: 07_bc_man.diff
+Patch08: 08_no-make-circular-dependencies.diff
 
-# Automatically added by buildreq on Mon Apr 18 2016
-# optimized out: perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base
-BuildRequires: flex libreadline-devel makeinfo
+Patch11: bc-alt-texinfo.patch
+Patch12: bc-owl-functions-fix.patch
+Patch13: bc-rh-dc_ibase.patch
+
+BuildRequires: bison ed flex gcc libreadline-devel makeinfo
 
 %description
 This package includes bc and dc.  bc implements a numeric processing
@@ -29,27 +30,32 @@ language with interactive execution of statements.  dc is a stack-based
 calculator.  Both bc and dc support arbitrary precision arithmetic.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+
+rm doc/*.info
 rm bc/{bc,scan}.c
-sed -i 's/getopt[1]\?\.c //g' lib/Makefile.am
 find -type f -name getopt\* -delete
+sed -i 's/getopt[1]\?\.c //g' lib/Makefile.am
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fno-strict-overflow -DDONTEXIT
 autoreconf -fisv
 export ac_cv_lib_termcap_tgetent=no ac_cv_lib_ncurses_tparm=no
 %configure --with-readline
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -58,6 +64,9 @@ export ac_cv_lib_termcap_tgetent=no ac_cv_lib_ncurses_tparm=no
 %doc Examples AUTHORS FAQ NEWS README
 
 %changelog
+* Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.07.1-alt1
+- 1.06 -> 1.07.1.
+
 * Mon Apr 18 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.06-alt4
 - Added BR: makeinfo.
 - Fixed build with makeinfo 6.
