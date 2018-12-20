@@ -1,9 +1,8 @@
 %define oname keystone
-%def_without python3
 
 Name: openstack-%oname
-Version: 11.0.3
-Release: alt2
+Version: 14.0.1
+Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -21,8 +20,8 @@ Source5: %name.conf
 
 BuildArch: noarch
 
-Requires(pre): python-module-keystone = %EVR
-Requires: python-module-keystoneclient >= 3.8.0
+Requires(pre): python3-module-keystone = %EVR
+Requires: python3-module-keystoneclient >= 3.8.0
 Requires: /usr/bin/uuidgen
 
 Requires(pre): shadow-utils
@@ -32,89 +31,123 @@ BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-webob >= 1.6.0
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-paste
-BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-cryptography >= 1.0
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-webob >= 1.7.1
+BuildRequires: python-module-routes >= 2.3.1
+BuildRequires: python-module-flask >= 1.0.2
+BuildRequires: python-module-flask-restful >= 0.3.5
+BuildRequires: python-module-cryptography >= 2.1
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-migrate >= 0.11.0
+BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-passlib >= 1.7.0
+BuildRequires: python-module-keystoneclient >= 3.8.0
+BuildRequires: python-module-keystonemiddleware >= 4.17.0
+BuildRequires: python-module-bcrypt >= 3.1.3
+BuildRequires: python-module-scrypt >= 0.8.0
 
-BuildRequires: python-module-oslo.cache >= 1.5.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.messaging >= 5.14.0
-BuildRequires: python-module-oslo.db >= 4.15.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 1.17.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-oslo.cache >= 1.26.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.21.0
+BuildRequires: python-module-oslo.messaging >= 5.29.0
+BuildRequires: python-module-oslo.db >= 4.27.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.middleware >= 3.31.0
+BuildRequires: python-module-oslo.policy >= 1.30.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
 
-BuildRequires: python-module-oauthlib >= 0.6
-BuildRequires: python-module-pysaml2 >= 2.4.0
+BuildRequires: python-module-oauthlib >= 0.6.2
+BuildRequires: python-module-pysaml2 >= 4.5.0
 BuildRequires: python-module-dogpile-cache >= 0.6.2
-BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-jsonschema >= 2.6.0
 BuildRequires: python-module-pycadf >= 1.1.0
 BuildRequires: python-module-msgpack >= 0.4.0
 BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-pytz >= 2013.6
 
 BuildRequires: python-module-webtest
-BuildRequires: python-module-sphinx >= 1.0
-BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-oslotest >= 1.5.1
-BuildRequires: python-module-testtools
-BuildRequires: python-module-freezegun
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python-module-os-api-ref >= 1.4.0
+
+BuildRequires: python-module-oslotest >= 3.2.0
+BuildRequires: python-module-stestr >= 1.0.0
+BuildRequires: python-module-testtools >= 2.2.0
+BuildRequires: python-module-tempest >= 17.1.0
+
+BuildRequires: python-module-freezegun >= 0.3.6
 BuildRequires: python-module-oslo.db-tests
 
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-keystonemiddleware >= 4.12.0
-BuildRequires: python-module-pyldap >= 2.4.20 python-module-ldappool >= 2.0.0
-BuildRequires: python-module-memcached
+BuildRequires: python-module-ldap >= 3.0.0 python-module-ldappool >= 2.0.0
+BuildRequires: python-module-memcached >= 1.56
+BuildRequires: python-module-pymongo >= 3.0.2
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-webob >= 1.6.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-pycadf >= 1.1.0
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-webob >= 1.7.1
+BuildRequires: python3-module-routes >= 2.3.1
+BuildRequires: python3-module-flask >= 1.0.2
+BuildRequires: python3-module-flask-restful >= 0.3.5
+BuildRequires: python3-module-cryptography >= 2.1
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-SQLAlchemy >= 1.0.10
+BuildRequires: python3-module-migrate >= 0.11.0
+BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-passlib >= 1.7.0
-BuildRequires: python3-module-SQLAlchemy >= 0.9.9
-BuildRequires: python3-module-migrate >= 0.9.6
-BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-oslo.config >= 2.3.0
-BuildRequires: python3-module-oslo.concurrency >= 2.3.0
-BuildRequires: python3-module-oslo.messaging >= 5.14.0
-BuildRequires: python3-module-oslo.db >= 4.15.1
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.log >= 3.11.0
-BuildRequires: python3-module-oslo.middleware >= 2.8.0
-BuildRequires: python3-module-oslo.policy >= 1.17.0
-BuildRequires: python3-module-oslo.serialization >= 1.4.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslotest >= 1.5.1
-BuildRequires: python3-module-routes >= 1.12.3
-BuildRequires: python3-module-paste
-BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
-BuildRequires: python3-module-keystonemiddleware >= 4.12.0
-BuildRequires: python3-module-dogpile-cache >= 0.5.4
-BuildRequires: python3-module-pyldap >= 2.4.20 python3-module-ldappool >= 2.0.0
-BuildRequires: python3-module-oauthlib >= 0.6
-BuildRequires: python3-module-pysaml2 >= 2.4.0
-BuildRequires: python3-module-jsonschema >= 2.0.0
-BuildRequires: python3-module-cryptography >= 1.0
-BuildRequires: python3-module-msgpack >= 0.4.4
-%endif
+BuildRequires: python3-module-keystonemiddleware >= 4.17.0
+BuildRequires: python3-module-bcrypt >= 3.1.3
+BuildRequires: python3-module-scrypt >= 0.8.0
+
+BuildRequires: python3-module-oslo.cache >= 1.26.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.21.0
+BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-oslo.db >= 4.27.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.middleware >= 3.31.0
+BuildRequires: python3-module-oslo.policy >= 1.30.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+
+BuildRequires: python3-module-oauthlib >= 0.6.2
+BuildRequires: python3-module-pysaml2 >= 4.5.0
+BuildRequires: python3-module-dogpile-cache >= 0.6.2
+BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-pycadf >= 1.1.0
+BuildRequires: python3-module-msgpack >= 0.4.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
+BuildRequires: python3-module-pytz >= 2013.6
+
+BuildRequires: python3-module-webtest
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python3-module-os-api-ref >= 1.4.0
+
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-tempest >= 17.1.0
+
+BuildRequires: python3-module-freezegun >= 0.3.6
+BuildRequires: python3-module-oslo.db-tests
+
+BuildRequires: python3-module-ldap >= 3.0.0 python3-module-ldappool >= 2.0.0
+BuildRequires: python3-module-memcached >= 1.56
+BuildRequires: python3-module-pymongo >= 3.0.2
 
 
 %description
@@ -127,22 +160,21 @@ This package contains the Keystone daemon.
 Summary: Keystone Python libraries
 Group: Development/Python
 Requires: openssl
-Requires: python-module-oslo.cache >= 1.5.0
-Requires: python-module-oslo.concurrency >= 3.8.0
-Requires: python-module-oslo.config >= 3.14.0
-Requires: python-module-oslo.context >= 2.9.0
-Requires: python-module-oslo.messaging >= 5.14.0
-Requires: python-module-oslo.db >= 4.15.0
-Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.log >= 3.11.0
-Requires: python-module-oslo.middleware >= 3.0.0
-Requires: python-module-oslo.policy >= 1.17.0
-Requires: python-module-oslo.serialization >= 1.10.0
-Requires: python-module-oslo.utils >= 3.18.0
+Requires: python-module-oslo.cache >= 1.26.0
+Requires: python-module-oslo.concurrency >= 3.26.0
+Requires: python-module-oslo.config >= 5.2.0
+Requires: python-module-oslo.context >= 2.21.0
+Requires: python-module-oslo.messaging >= 5.29.0
+Requires: python-module-oslo.db >= 4.27.0
+Requires: python-module-oslo.i18n >= 3.15.3
+Requires: python-module-oslo.log >= 3.36.0
+Requires: python-module-oslo.middleware >= 3.31.0
+Requires: python-module-oslo.policy >= 1.30.0
+Requires: python-module-oslo.serialization >= 2.18.0
+Requires: python-module-oslo.utils >= 3.33.0
 # add not finded requires
 Requires: python-module-dogpile-cache >= 0.6.2
-Requires: python-module-PasteDeploy >= 1.5.0
-Requires: python-module-pysaml2 >= 2.4.0
+Requires: python-module-pysaml2 >= 4.5.0
 
 %description -n python-module-%oname
 Keystone is a Python implementation of the OpenStack
@@ -163,16 +195,21 @@ This package contains tests for %oname.
 Summary: Keystone Python libraries
 Group: Development/Python3
 Requires: openssl
-Requires: python3-module-oslo.config >= 2.3.0
-Requires: python3-module-oslo.messaging >= 5.14.0
-Requires: python3-module-oslo.db >= 4.15.0
-Requires: python3-module-oslo.i18n >= 1.5.0
-Requires: python3-module-oslo.utils >= 3.18.0
-
+Requires: python3-module-oslo.cache >= 1.26.0
+Requires: python3-module-oslo.concurrency >= 3.26.0
+Requires: python3-module-oslo.config >= 5.2.0
+Requires: python3-module-oslo.context >= 2.21.0
+Requires: python3-module-oslo.messaging >= 5.29.0
+Requires: python3-module-oslo.db >= 4.27.0
+Requires: python3-module-oslo.i18n >= 3.15.3
+Requires: python3-module-oslo.log >= 3.36.0
+Requires: python3-module-oslo.middleware >= 3.31.0
+Requires: python3-module-oslo.policy >= 1.30.0
+Requires: python3-module-oslo.serialization >= 2.18.0
+Requires: python3-module-oslo.utils >= 3.33.0
 # add not finded requires
-Requires: python3-module-dogpile-cache >= 0.5.4
-Requires: python3-module-PasteDeploy >= 1.5.0
-Requires: python3-module-pysaml2 >= 2.4.0
+Requires: python3-module-dogpile-cache >= 0.6.2
+Requires: python3-module-pysaml2 >= 4.5.0
 
 %description -n python3-module-%oname
 Keystone is a Python implementation of the OpenStack
@@ -209,47 +246,41 @@ find keystone -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 PYTHONPATH=. oslo-config-generator --config-file=config-generator/keystone.conf
+PYTHONPATH=. oslo-config-generator --config-file=config-generator/keystone-policy-generator.conf
 %python_build
 
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python setup.py build_sphinx
-rm -rf doc/build/html/.buildinfo
-sphinx-build -b man doc/source doc/build/man
+python3 setup.py build_sphinx
+rm -rf build/sphinx/html/.buildinfo
+sphinx-build-3 -b man doc/source doc/build/man
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/keystone-manage %buildroot%_bindir/keystone-manage.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/keystone-manage %buildroot%_bindir/python3-keystone-manage
-%endif
 
-%python_install
 
 install -d -m 755 %buildroot%_sysconfdir/keystone
 install -d -m 755 %buildroot%_sysconfdir/keystone/keystone.conf.d/
 install -d -m 750 %buildroot%_sysconfdir/keystone/credential-keys/
 install -p -D -m 640 etc/keystone.conf.sample %buildroot%_sysconfdir/keystone/keystone.conf
+install -p -D -m 640 etc/keystone.policy.yaml.sample %buildroot%_sysconfdir/keystone/keystone.policy.yaml
 install -p -D -m 644 etc/keystone-paste.ini %buildroot%_sysconfdir/keystone/
 
 install -p -D -m 644 etc/policy.v3cloudsample.json %buildroot%_sysconfdir/keystone/policy.v3cloudsample.json
 install -p -D -m 640 etc/logging.conf.sample %buildroot%_sysconfdir/keystone/logging.conf
 install -p -D -m 644 etc/default_catalog.templates %buildroot%_sysconfdir/keystone/default_catalog.templates
-install -p -D -m 644 etc/policy.json %buildroot%_sysconfdir/keystone/policy.json
 install -p -D -m 644 etc/sso_callback_template.html %buildroot%_sysconfdir/keystone/sso_callback_template.html
 install -p -D -m 644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/openstack-keystone
 install -d -m 755 %buildroot%_sysctldir
@@ -277,6 +308,9 @@ touch %buildroot%_sysconfdir/keystone/ssl/certs/signing_cert.pem
 ### set default configuration
 %define keystone_conf %buildroot%_sysconfdir/keystone/keystone.conf.d/010-keystone.conf
 crudini --set %keystone_conf DEFAULT log_dir /var/log/keystone
+
+# cleanup
+rm -rf %buildroot/usr/etc
 
 %pre
 # 163:163 for keystone (openstack-keystone)
@@ -320,7 +354,7 @@ fi
 %config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/logging.conf
 %config %_sysconfdir/keystone/default_catalog.templates
 %config %_sysconfdir/keystone/keystone-paste.ini
-%config %_sysconfdir/keystone/policy.json
+%config %_sysconfdir/keystone/keystone.policy.yaml
 %config %_sysconfdir/keystone/policy.v3cloudsample.json
 %config %_sysconfdir/keystone/sso_callback_template.html
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-keystone
@@ -331,31 +365,30 @@ fi
 
 %files -n python-module-%oname
 %python_sitelibdir/*
-%_bindir/keystone-manage
+%_bindir/keystone-manage.py2
 %_man1dir/keystone*.1.*
 %exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/keystone_tempest_plugin
 
 %files -n python-module-%oname-tests
 %python_sitelibdir/%oname/tests
-%python_sitelibdir/keystone_tempest_plugin
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%_bindir/python3-keystone-manage
+%_bindir/keystone-manage
+%_man1dir/keystone*.1.*
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/keystone_tempest_plugin
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/keystone_tempest_plugin
-%endif
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE build/sphinx/html
 
 %changelog
+* Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1:14.0.1-alt1
+- 14.0.1 Rocky release
+- switch to python3
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:11.0.3-alt2
 - Fixed FTBFS (remove python-module-setuptools-tests from BR).
 
