@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: gobject-introspection
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -137,6 +137,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.58.2-alt1
+- 1.58.2
+
 * Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.58.1-alt1
 - 1.58.1
 
