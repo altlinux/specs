@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.53.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -19,8 +19,7 @@ Patch1: alt-find-docbookxml.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ perl-URI
 BuildRequires: libssl-devel
-BuildRequires: NetworkManager-devel libnm-util-devel libnm-glib-devel
-BuildRequires: qt5-quick1-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+BuildRequires: qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
@@ -125,6 +124,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Thu Dec 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt2
+- fix build requires
+
 * Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt1
 - new version
 
