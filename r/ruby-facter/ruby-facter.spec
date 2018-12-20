@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Ruby library for retrieving facts from operating systems
 Group:   Development/Ruby
@@ -34,15 +34,32 @@ to include additional mechanisms for retrieving facts.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
- 
+
 BuildArch: noarch
- 
+
 %description doc
 Documentation files for %{name}.
+
+%package -n facter
+Summary: Terminal executable called 'facter'
+Group: System/Base
+
+BuildArch: noarch
+
+Requires: ruby-gem(%pkgname) = %version
+
+%description -n facter
+%summary, for retrieving facts from
+operating systems. Supports multiple resolution mechanisms, any
+of which can be restricted to working only on certain operating
+systems or environments. Facter is especially useful for
+retrieving things like operating system names, IP addresses, MAC
+addresses, and SSH keys.
 
 %prep
 %setup -n %pkgname-%version
 %patch1 -p1
+sed "s|read_timeout|timeout|" -i lib/facter/ec2/rest.rb
 %update_setup_rb
 
 %build
@@ -52,7 +69,6 @@ cp .gemspec facter.gemspec
 rm -f Gemfile
 
 %install
-#./install.rb --destdir=%buildroot
 %ruby_install
 %rdoc lib/
 # Remove unnecessary files
@@ -63,7 +79,6 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc *.md
-%_bindir/%pkgname
 %ruby_sitelibdir/*
 %rubygem_specdir/*
 %doc %_man8dir/%{pkgname}.*
@@ -71,7 +86,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files doc
 %ruby_ri_sitedir/*
  
+%files -n facter
+%_bindir/%pkgname
+
 %changelog
+* Thu Dec 20 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt2
+- Fixed ALT Release detection.
+- Decrease timeout when accessing to EC2 from virtual env.
+- Added facter executable rpm.
+- Closes #35801.
+
 * Tue Dec 18 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
 - Bump to 2.5.1.
 
