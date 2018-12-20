@@ -4,7 +4,7 @@
 %def_disable usermode
 
 Name: gparted
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -25,6 +25,7 @@ AutoReq: yes, noshell
 
 %define polkit_ver 0.112
 
+Requires: yelp
 Requires: polkit >= %polkit_ver
 %{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
@@ -37,7 +38,7 @@ Requires: udftools >= 2.0
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
-BuildRequires: libgtkmm2-devel >= 2.22.0
+BuildRequires: libgtkmm2-devel >= 2.24.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel intltool
 BuildRequires: perl-XML-Parser gnome-doc-utils
 BuildRequires: polkit >= %polkit_ver
@@ -116,6 +117,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
+- 0.33.0
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
 - 0.32.0
 
