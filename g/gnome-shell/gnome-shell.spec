@@ -11,7 +11,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -51,7 +51,7 @@ AutoReqProv: nopython
 %define menus_ver 3.5.3
 %define desktop_ver 3.8
 %define json_glib_ver 0.13.2
-%define nm_ver 0.9.8
+%define nm_ver 1.10.4
 %define ibus_ver 1.5.2
 
 Requires: %name-data = %version-%release
@@ -137,7 +137,7 @@ BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
-BuildRequires: libnm-gtk-devel >= %nm_ver libnm-devel libnm-gir-devel
+BuildRequires: libnm-devel >= %nm_ver libnm-gir-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= 3.21.3
 BuildRequires: libsoup-gir-devel ca-certificates
@@ -246,6 +246,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt2
+- fixed buildreqs for network-manager support
+
 * Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
