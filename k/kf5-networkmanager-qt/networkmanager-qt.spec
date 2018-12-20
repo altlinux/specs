@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.53.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ libnm-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: libnm-devel libnm-util-devel NetworkManager-devel
+BuildRequires: libnm-devel
 
 %description
 NetworkManagerQt provides access to all NetworkManager features
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/libKF5NetworkManagerQt.so.*
 
 %changelog
+* Thu Dec 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt2
+- fix build requires
+
 * Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt1
 - new version
 
