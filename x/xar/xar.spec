@@ -1,6 +1,6 @@
 Name: xar
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: The XAR project aims to provide an easily extensible archive format
 License: %bsd
@@ -10,7 +10,6 @@ Source: %name-%version.tar
 #patch: xar-1.5.3-alt-config.patch
 Patch1: xar-1.5.3-ext2.patch
 Patch2: xar-1.6.1-openssl-1.1.patch
-Patch3: xar-1.6.1-test-debug.patch
 Requires: lib%name = %version-%release
 
 ExclusiveArch: i586 x86_64
@@ -60,9 +59,10 @@ build XAR-based software.
 #%patch -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # get rid of RPATH.
 sed -ri 's/(RPATH=)".*/\1/' xar/configure.ac
+sed '/^\. functions/iset -x' -i xar/test/*
+sed 's|^\. functions|. ./functions|' -i xar/test/*
 
 %build
 cd xar
@@ -86,6 +86,7 @@ cd test
 export "PATH=%buildroot%_bindir:$PATH"
 export LD_LIBRARY_PATH="%buildroot%_libdir"
 xar --help
+find .
 ./checksums
 ./compression
 ./data
@@ -105,6 +106,9 @@ xar --help
 %_libdir/*.so
 
 %changelog
+* Thu Dec 20 2018 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt2
+- Fixed build of failure, got from lost part of PATH.
+
 * Thu Dec 13 2018 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt1
 - Updated original source url.
 - Bump to 1.6.1.
