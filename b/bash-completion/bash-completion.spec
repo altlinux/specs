@@ -4,7 +4,7 @@ Name: bash-completion
 Epoch: 1
 
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -68,6 +68,9 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %exclude %_datadir/%name/completions/umount
 
 %changelog
+* Thu Dec 20 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt2
+- update completion for ALT apt-get
+
 * Thu Dec 20 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt1
 - new version 2.8 for bash4
 
