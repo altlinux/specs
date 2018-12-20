@@ -7,10 +7,10 @@
 %set_compress_method %mansuff
 Name: girar-nmu
 Version: 1.997
-Release: alt1
+Release: alt1.1
 
 Summary: git.alt client utilities for NMU automation
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 Packager: Igor Vlasenko <viy@altlinux.org>
 Url: http://www.altlinux.org/Git.alt/girar-nmu
@@ -57,12 +57,10 @@ find . -name '*.1' -size 0 -print -delete
 mkdir -p %buildroot%_man1dir
 install -m 644 *.1 %buildroot%_man1dir/
 
-(while true; do
-read link script
-[ -n "$script" ] || break
+while read link script; do
     ln -s $link %buildroot%_bindir/$script
     ln -s $link.1.%mansuff %buildroot%_man1dir/$script.1.%mansuff
-done) << EOF
+done << 'EOF'
 girar-task-add-git	girar-task-for-each-git
 girar-task-add-git	girar-build-git
 girar-task-add-srpm	girar-task-for-each-srpm
@@ -86,6 +84,11 @@ EOF
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 1.997-alt1.1
+- Updated URL and license information.
+- Fixed build with bash4.
+- NMU.
+
 * Wed Oct 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.997-alt1
 - add girar-get-upload-method --missing mode
 
