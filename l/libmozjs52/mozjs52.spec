@@ -20,7 +20,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.7.3
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -199,6 +199,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 52.7.3-alt2
+- rebuilt against libreadline.so.7
+
 * Mon Apr 16 2018 Yuri N. Sedunov <aris@altlinux.org> 52.7.3-alt1
 - built from firefox sources with debian/fc patchset and bundled icu
 - enabled smp-build (ALT #34772)
