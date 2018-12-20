@@ -2,33 +2,37 @@
 
 Name: bash-completion
 Epoch: 1
-# actualy it is version 1.3-109-g0f39d41
-Version: 1.99
-Release: alt8
+
+Version: 2.8
+Release: alt1
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
 Group: Shells
-Url: http://%name.alioth.debian.org/
+Url: https://github.com/scop/bash-completion
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
 Source: %name-%version.tar
-# git://git.debian.org/git/bash-completion/bash-completion.git
+# https://github.com/scop/bash-completion.git
 Source1: rpm-cache.filetrigger
-Patch1: %name-20060301-alt-iptables.patch
+Patch1: %name-alt-iptables.patch
 Patch9: %name-alt-specific.patch
 
 %if_enabled tests
-BuildRequires: dejagnu tcllib
+BuildRequires: dejagnu tcllib screen
 %endif
 
-Requires: bash >= 2.05
+Requires: bash >= 4.1
 BuildArch: noarch
+
+%add_findreq_skiplist %_datadir/%name/completions/*.py
 
 %description
 bash-completion is a collection of shell functions that take advantage
 of the programmable completion feature of bash 2.04 and later.
+
+
 
 %prep
 %setup
@@ -36,8 +40,9 @@ of the programmable completion feature of bash 2.04 and later.
 %patch9 -p1
 
 %build
-autoreconf -fisv
-%configure && make
+%autoreconf
+%configure
+%make
 
 %check
 #FIXME
@@ -51,19 +56,21 @@ mv %buildroot%_sysconfdir/{profile.d,bashrc.d}
 mkdir -p %buildroot%_sysconfdir/bash_completion.d %buildroot%_rpmlibdir
 install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 
-#%%add_findreq_skiplist %_datadir/%name/completions/btdownloadheadless.py
+
 
 %files
-%doc AUTHORS CHANGES README TODO doc/*.txt
+%doc AUTHORS CHANGES README.md doc/*.txt
 %_sysconfdir/bash_completion.d
 %_sysconfdir/bashrc.d/bash_completion.sh
 %_rpmlibdir/*
 %_datadir/%name
-%exclude %_datadir/%name/completions/rtcwake
 %exclude %_datadir/%name/completions/mount
-%exclude %_datadir/%name//completions/rfkill
+%exclude %_datadir/%name/completions/umount
 
 %changelog
+* Thu Dec 20 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt1
+- new version 2.8 for bash4
+
 * Tue Apr 17 2018 Alexey Gladkov <legion@altlinux.ru> 1:1.99-alt8
 - exclude `rfkill` file conflicting with bash-completion-util-linux.
 
