@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.12.7
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -22,9 +22,12 @@ Obsoletes: kf5-plasma-nm < %EVR
 
 Source: %rname-%version.tar
 Source10: 01-plasma-nm.js
-Patch1: alt-old-openconnectauth.patch
-Patch2: alt-def-allow-all.patch
-Patch3: alt-password-dialog-sizepolicy.patch
+# FC
+Patch1: 0007-Require-NM-1.0.0-and-newer.patch
+# ALT
+Patch11: alt-old-openconnectauth.patch
+Patch12: alt-def-allow-all.patch
+Patch13: alt-password-dialog-sizepolicy.patch
 
 # Automatically added by buildreq on Tue Mar 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -43,7 +46,7 @@ BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-de
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel
 BuildRequires: ModemManager-devel libopenconnect-devel
-BuildRequires: libnm-devel libnm-glib-devel libnm-util-devel libnm-glib-vpn-devel NetworkManager-devel
+BuildRequires: libnm-devel
 BuildRequires: kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
 
 %description
@@ -198,8 +201,10 @@ Obsoletes: kf5-plasma-nm-connect-ssh < %EVR
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p2
+#
+%patch11 -p1
+%patch12 -p1
+%patch13 -p2
 
 %build
 %K5build
@@ -277,6 +282,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Dec 20 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt2
+- fix to build with networkmanager
+
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
 - new version
 
