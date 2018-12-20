@@ -3,7 +3,7 @@
 
 Name: terminator
 Version: %{ver_major}1
-Release: alt1
+Release: alt2
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -17,7 +17,8 @@ Patch: terminator-1.91-fc-fix-desktop-file.patch
 
 BuildArch: noarch
 
-BuildRequires: python-devel intltool rpm-build-gir
+BuildRequires(pre): rpm-build-python rpm-build-gir
+BuildRequires: python-devel intltool
 
 %description
 Multiple GNOME terminals in one window. This is a project to produce an
@@ -56,6 +57,9 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %exclude %python_sitelibdir_noarch/%name-%version-py*.egg-info
 
 %changelog
+* Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.91-alt2
+- fixed buildreqs
+
 * Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.91-alt1
 - 1.91
 
