@@ -1,6 +1,6 @@
 Name: 	  zsh-completions
-Version:  0.26.0
-Release:  alt0.1.f13a8d.1
+Version:  0.30.0
+Release:  alt1
 
 Summary:  Additional completion definitions for Zsh
 License:  BSD
@@ -33,6 +33,9 @@ cp src/_* %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Dec 20 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.30.0-alt1
+- new version 0.30.0
+
 * Mon Oct 09 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.26.0-alt0.1.f13a8d.1
 - Update to f13a8d commit (0.26.0 is last version)
 
