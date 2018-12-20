@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.16
-Release:	alt3
+Version:	0.9.17
+Release:	alt1
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,10 @@ fi
 %files full
 
 %changelog
+* Thu Dec 20 2018 Anton Farygin <rider@altlinux.ru> 0.9.17-alt1
+- return method from source_optfile() changed from "continue" to "return"
+  to avoid errors with bash4
+
 * Mon Nov 26 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt3
 - allow add bridge without parent interfaces and without IFUP_PARENTS=no
 
