@@ -3,12 +3,13 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 7.2
+Version: 7.4
 Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
+Url: http://git.altlinux.org/gears/a/apt-conf-sisyphus.git
 
 Source: %name-%version.tar
 
@@ -46,6 +47,13 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 7.4-alt1
+- Updated URL and license information.
+- Fixed build with bash4.
+
+* Wed May 23 2018 Michael Shigorin <mike@altlinux.org> 7.3-alt1
+- Consider RPM_TARGET_ARCH if RPM_ARCH is empty (closes: #34940).
+
 * Fri Aug 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2-alt1
 - Rebuilt with altlinux-repos 0.8 (for msu mirror).
 
