@@ -1,69 +1,113 @@
+%define _libexecdir /usr/libexec
+%define _scriptdir %_libexecdir/%name
+
 Name: ploop
-Version: 1.15
-Release: alt2
+Version: 7.0.132
+Release: alt1
 Group: System/Base
-License: GNU GPL
+License: GPLv2
 Summary: Ploop tools
 URL: http://wiki.openvz.org/Ploop
 Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
 Source: %name-%version.tar
 
-Patch1: %name-%version-alt-build.patch
+Patch1: %name-%version.patch
 
-Requires: parted
-BuildRequires: libxml2-devel libe2fs-devel
+BuildRequires: libxml2-devel libe2fs-devel libuuid-devel libssl-devel libjson-c-devel
+BuildRequires: python-devel python-module-setuptools
 
 %description
 This package contains tools to work with ploop devices and images.
 
 %package -n lib%name
 Summary: ploop library
-Group: System/Base
+Group: System/Libraries
+License: LGPLv2.1
+Conflicts: vzctl < 4.5
+Requires: parted gdisk e2fsprogs lsof
+
 %description -n lib%name
 Parallels loopback (ploop) block device API library
 
 %package -n lib%name-devel-static
 Summary: Static ploop library
-Group: System/Base
+Group: Development/C
+License: LGPLv2.1
+Requires: lib%name-devel = %version-%release
+
 %description -n lib%name-devel-static
 Static version of ploop library
 
 %package -n lib%name-devel
 Summary: Headers for development with ploop library
-Group: System/Base
+Group: Development/C
+License: GPLv2 or LGPLv2.1
+Requires: lib%name = %version-%release
+
 %description -n lib%name-devel
 Headers of ploop library
+
+%package -n python-module-%name
+Summary: Python bindings for %name
+Group: Development/Python
+Requires: lib%name = %version-%release
+
+%description -n python-module-%name
+python-module-%name contains Python bindings for %name.
 
 %prep
 %setup
 %patch1 -p1
 
 %build
-%make LIBDIR=%_libdir all
+%make_build LIBDIR=%_libdir PLOOP_LOG_FILE=%_logdir/%name.log DEBUG=no all
 
 %install
-mkdir -p %buildroot/%_sbindir
-make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
+mkdir -p %buildroot%_sbindir
+make \
+    DESTDIR=%buildroot \
+    LIBDIR=%_libdir \
+    PLOOP_LOG_FILE=%_logdir/%name.log \
+    TMPFILESDIR=%_tmpfilesdir \
+    MODULESLOADDIR=%_modulesloaddir \
+    install
 
 %files
 /sbin/*
 %_sbindir/*
 %_man8dir/*
+%_logrotatedir/%name
+%_modulesloaddir/%name.conf
 
 %files -n lib%name
-%_libdir/libploop.so.*
+%_libdir/lib%name.so.*
 %_lockdir/%name
 %_tmpfilesdir/*
+%dir %_scriptdir
+%_scriptdir/*
 
 %files -n lib%name-devel-static
 %_libdir/libploop.a
 
 %files -n lib%name-devel
-%_libdir/libploop.so
+%_libdir/lib%name.so
 %_includedir/%name
-%_libdir/pkgconfig/ploop.pc
+%_pkgconfigdir/%name.pc
+
+%files -n python-module-%name
+%python_sitelibdir/*
 
 %changelog
+* Sun Nov 04 2018 Alexey Shabalin <shaba@altlinux.org> 7.0.132-alt1
+- 7.0.132
+
+* Mon Feb 26 2018 Alexey Shabalin <shaba@altlinux.ru> 7.0.126-alt1
+- 7.0.126
+
+* Fri Feb 09 2018 Alexey Shabalin <shaba@altlinux.ru> 7.0.124-alt1
+- Updated to 7.0.124
+- add python package
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15-alt2
 - Fixed build with new toolchain
 
