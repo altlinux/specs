@@ -1,60 +1,69 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-benchmark
 
-%def_with python3
+%def_with docs
+%def_with check
 
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1.1
-Summary: py.test fixture for benchmarking code
+Release: alt2
+Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/pytest-benchmark/
+Url: https://pypi.org/project/pytest-benchmark/
 
 # https://github.com/ionelmc/pytest-benchmark.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-tests.patch
+Patch: %name-%version-alt.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest-cov
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-sphinxcontrib-napoleon
-BuildRequires: python-module-sphinx_py3doc_enhanced_theme
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python2.7(cpuinfo) python2.7(pathlib) python2.7(statistics)
-BuildRequires: python2.7(elasticsearch) python2.7(freezegun) python2.7(pygal) python2.7(aspectlib) python2.7(xdist)
-BuildRequires: git-core
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-mock
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3(cpuinfo)
-BuildRequires: python3(elasticsearch) python3(freezegun) python3(pygal) python3(aspectlib) python3(xdist)
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-sphinx_py3doc_enhanced_theme
 %endif
 
-%py_provides pytest_benchmark
-%py_requires pytest cpuinfo docutils
+%if_with check
+BuildRequires: python-module-aspectlib
+BuildRequires: python-module-cpuinfo
+BuildRequires: python-module-elasticsearch
+BuildRequires: python-module-freezegun
+BuildRequires: python-module-mock
+BuildRequires: python-module-pathlib
+BuildRequires: python-module-pygal
+BuildRequires: python-module-pytest-xdist
+BuildRequires: python-module-statistics
+BuildRequires: git-core
+BuildRequires: python3-module-aspectlib
+BuildRequires: python3-module-cpuinfo
+BuildRequires: python3-module-elasticsearch
+BuildRequires: python3-module-freezegun
+BuildRequires: python3-module-pygal
+BuildRequires: python3-module-pytest-xdist
+%endif
+
+%py_requires cpuinfo
 
 %description
-A py.test fixture for benchmarking code.
+A pytest fixture for benchmarking code.
 
 %package -n python3-module-%oname
-Summary: py.test fixture for benchmarking code
+Summary: pytest fixture for benchmarking code
 Group: Development/Python3
-%py3_provides pytest_benchmark
-%py3_requires pytest cpuinfo docutils
+%py3_requires cpuinfo
 
 %description -n python3-module-%oname
-A py.test fixture for benchmarking code.
+A pytest fixture for benchmarking code.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
 
 %description pickles
-A py.test fixture for benchmarking code.
+A pytest fixture for benchmarking code.
 
 This package contains pickles for %oname.
 
@@ -64,32 +73,31 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-A py.test fixture for benchmarking code.
+A pytest fixture for benchmarking code.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
-
-%build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
 %endif
 
+%build
+%python_build
+
+pushd ../python3
+%python3_build
+popd
+
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -98,56 +106,55 @@ for i in $(ls); do
 	mv $i ${i}.py3
 done
 popd
-%endif
 
 %python_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with docs
+export PYTHONPATH="$(pwd)"/src
 pushd docs
 sphinx-build -b pickle -d _build/doctrees . _build/pickle
 sphinx-build -b html -d _build/doctrees . _build/html
 popd
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -a docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
-python setup.py test
-rm -fR src build
-export PYTHONPATH=%buildroot%python_sitelibdir
-PATH=$PATH:%buildroot%_bindir py.test
-%if_with python3
+export PYTHONPATH="$(pwd)"/src
+PATH=$PATH:%buildroot%_bindir %_bindir/py.test -vv
+
 pushd ../python3
-python3 setup.py test
-rm -fR src build
-export PYTHONPATH=%buildroot%python3_sitelibdir
-PATH=$PATH:%buildroot%_bindir py.test3
+export PYTHONPATH="$(pwd)"/src
+PATH=$PATH:%buildroot%_bindir %_bindir/py.test3 -vv
 popd
-%endif
 
 %files
-%doc *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%doc README.rst CHANGELOG.rst
+%_bindir/py.test-benchmark
+%_bindir/pytest-benchmark
+%python_sitelibdir/pytest_benchmark/
+%python_sitelibdir/pytest_benchmark-*.egg-info/
 
+%files -n python3-module-%oname
+%doc README.rst CHANGELOG.rst
+%_bindir/py.test-benchmark.py3
+%_bindir/pytest-benchmark.py3
+%python3_sitelibdir/pytest_benchmark/
+%python3_sitelibdir/pytest_benchmark-*.egg-info/
+
+%if_with docs
 %files pickles
-%python_sitelibdir/*/pickle
+%python_sitelibdir/pytest-benchmark/pickle
 
 %files docs
 %doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 20 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt2
+- Fixed build.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
