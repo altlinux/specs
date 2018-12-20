@@ -5,7 +5,7 @@
 %endif
 
 Name: rawtherapee
-Version: 5.4%{?_enable_snapshot:.%git_distance}
+Version: 5.5%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -20,16 +20,17 @@ Source: rawtherapee-%version.tar
 Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
 
-%define gtk_ver 3.22.24
-%define tiff_ver 4.0.9
+%define gtk_ver 3.24.2
+%define tiff_ver 4.0.3
 
 Requires: %name-data = %version-%release
 Requires: libgtk+3 >= %gtk_ver
 
+BuildRequires(pre): cmake >= 2.8.8
 %{?_enable_snapshot:BuildRequires: git}
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libtiff-devel
-BuildRequires: bzlib-devel cmake gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
+BuildRequires: libtiff-devel >= %tiff_ver
+BuildRequires: bzlib-devel gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libfftw3-devel
 BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
@@ -51,6 +52,9 @@ This package provides noarch data needed for Raw Therapee to work.
 %setup
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
+
+# downgrade libtiff version (see below)
+subst "s|libtiff-4>=4.0.4|libtiff-4>=4.0.3|" CMakeLists.txt
 
 %build
 %define optflags -O3 -g
@@ -80,6 +84,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 5.5-alt1
+- 5.5
+
 * Wed Mar 21 2018 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
 - 5.4
 
