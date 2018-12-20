@@ -54,7 +54,7 @@
 %endif
 
 Name:    samba-DC
-Version: 4.9.3
+Version: 4.9.4
 Release: alt1
 
 Group:   System/Servers
@@ -1509,6 +1509,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.4-alt1
+- Update to first winter security release
+- Security fixes regressions:
+  + CVE-2018-16853 Do not segfault if client is not set
+  + CVE-2018-14629 Fix CNAME loop prevention using counter regression
+
 * Wed Nov 28 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.3-alt1
 - Update to autumn security release
 - Revert Samba DC to build with internal Heimdal Kerberos implementation
