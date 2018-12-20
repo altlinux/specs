@@ -1,11 +1,11 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Summary: Creates an initramfs image
-License: GPL3
+License: GPL-3.0
 Group: System/Base
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -210,6 +210,13 @@ fi
 %endif
 
 %changelog
+* Thu Dec 20 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.5-alt1
+- Feature changes:
+  + mdadm: Make /etc/mdadm.conf optional
+  + guestfs: Show commmand before output
+- New:
+  + add guestfs feature (thx Alexey Shabalin)
+
 * Mon Oct 08 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.4-alt1
 - Feature changes:
   + plymouth: Add uaccess and seat rules without logind calls
