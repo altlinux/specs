@@ -1,7 +1,7 @@
 %define ver_major 0.8
 
 Name: gupnp-tools
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: A collection of developer tools utilising GUPnP and GTK+3
@@ -15,10 +15,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gssdp_ver 0.13.3
 %define soup_ver 2.42
 
-BuildRequires: intltool desktop-file-utils
+BuildRequires(pre): meson
+BuildRequires: desktop-file-utils
 BuildRequires: libgupnp-devel >= %gupnp_ver libgupnp-av-devel libgssdp-devel >= %gssdp_ver
 BuildRequires: libgtk+3-devel libsoup-devel >= %soup_ver libxml2-devel libuuid-devel
-BuildRequires: libgtksourceview3-devel
+BuildRequires: libgtksourceview4-devel
 
 %description
 GUPnP is an object-oriented open source framework for creating UPnP
@@ -34,16 +35,15 @@ test and debug one's UPnP devices and control points.
 %setup
 
 %build
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %check
-%make check
+%meson_test
 
 %files -f %name.lang
 %_bindir/gssdp-discover
@@ -54,10 +54,14 @@ test and debug one's UPnP devices and control points.
 %_desktopdir/gupnp-av-cp.desktop
 %_desktopdir/gupnp-network-light.desktop
 %_desktopdir/gupnp-universal-cp.desktop
+%_iconsdir/hicolor/*x*/*.png
 %_datadir/%name/
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 %changelog
+* Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.15-alt1
+- 0.8.15
+
 * Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.14-alt1
 - first build for Sisyphus
 
