@@ -4,7 +4,7 @@
 %define major 3.21
 
 Name: wine
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 1
 
@@ -255,13 +255,13 @@ develop programs which make use of Wine.
 %prep
 %setup -a 1 -a 5
 # Apply wine-staging patches
-wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
+wine-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 # Apply local patches
-wine-patches-%version/patchapply.sh
+wine-patches/patchapply.sh
 
 %build
 %ifarch aarch64
@@ -471,6 +471,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri Dec 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.21.2-alt1
+- ntoskrnl.exe: Ignore CProCtrl initialization failure (eterbug #13466)
+- remove "-firstrundlg" parameter from command line for CryptoPro 5.0 installer (eterbug #13466)
+- drop version from internal subdirs
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.21.1-alt1
 - new version 3.21.1 (with rpmrb script)
 
