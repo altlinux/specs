@@ -6,8 +6,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 3.4.1
-Release: alt1.1
+Version: 3.6.0
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -29,6 +29,7 @@ BuildRequires:  python3-module-scipy
 BuildRequires:  python3-module-PyQt5
 BuildRequires:  python3-module-pytest
 BuildRequires:  python3-module-pip
+BuildRequires:  python3-module-shapely
 %endif
 
 BuildArch: noarch
@@ -93,6 +94,9 @@ python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %doc html LICENSE
 
 %changelog
+* Fri Feb 01 2019 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
+- New version 3.6.0
+
 * Wed Jan 30 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1.1
 - Fix BuildRequires
 

@@ -6,7 +6,7 @@
 
 Name: cura
 Epoch: 1
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
@@ -30,6 +30,8 @@ BuildRequires: Uranium >= %version
 %if 0%{?with_check}
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-savitar
+BuildRequires: python3-module-requests
 %endif
 
 %py3_requires serial zeroconf
@@ -40,6 +42,7 @@ Requires: qt5-quickcontrols2
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials = %version
 Requires: 3dprinter-udev-rules
+
 
 %description
 Cura is a project which aims to be an single software solution for 3D printing.
@@ -115,6 +118,12 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 1:3.6.0-alt1
+- New version 3.6.0
+
+* Wed Oct 31 2018 Anton Midyukov <antohami@altlinux.org> 1:3.5.1-alt1
+- New version 3.5.1
+
 * Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 1:3.4.1-alt1
 - New version 3.4.1
 
