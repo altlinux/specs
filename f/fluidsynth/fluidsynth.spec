@@ -10,7 +10,7 @@
 
 Name: fluidsynth
 Version: 1.1.11
-Release: alt1
+Release: alt2
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
@@ -186,6 +186,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.11-alt2
+- rebuilt against libreadline.so.7
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.11-alt1
 - 1.1.11
 
