@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/perl
 
 Name:           libcalendaring
 Version:        4.9.1
-Release:        alt2_1
+Release:        alt3_1
 Summary:        Library for Calendaring
 
 Group:          System/Servers
@@ -84,6 +84,9 @@ These are development headers. Don't bother.
 
 
 %changelog
+* Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 4.9.1-alt3_1
+- rebuild with new libical
+
 * Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 4.9.1-alt2_1
 - rebuild with new ical
 
