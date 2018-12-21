@@ -2,7 +2,7 @@
 
 Name: php7-%php7_extension
 Version: %php7_version
-Release: %php7_release
+Release: %php7_release.1
 
 Summary: xdebug extensions
 Group: System/Servers
@@ -41,7 +41,6 @@ export LDFLAGS=-lphp-%_php7_version
 install -D -m 644 modules/xdebug.so %buildroot%php7_extdir/xdebug.so
 install -D -m 644 %SOURCE1 %buildroot%php7_extconf/%php7_extension/config
 install -D -m 644 %SOURCE2 %buildroot%php7_extconf/%php7_extension/params
-echo "zend_extension=%php7_extdir/xdebug.so" >%buildroot%php7_extconf/%php7_extension/config
 
 %files
 %php7_extconf/%php7_extension
@@ -56,6 +55,10 @@ echo "zend_extension=%php7_extdir/xdebug.so" >%buildroot%php7_extconf/%php7_exte
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%php7_version-%php7_release
+
+* Fri Dec 21 2018 Anton Farygin <rider@altlinux.ru> 7.2.13-alt1.1
+- updated to 2.6.1
+- removed fullpath to module in config
 
 * Tue Jan 30 2018 Vitaly Lipatov <lav@altlinux.ru> 7.1.12-alt0
 - initial build xdebug 2.6.0 for ALT Sisyphus
