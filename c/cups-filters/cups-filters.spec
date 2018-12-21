@@ -4,7 +4,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.21.5
+Version: 1.21.6
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -227,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Dec 21 2018 Anton Farygin <rider@altlinux.ru> 1.21.6-alt1
+- new version 1.21.6
+
 * Fri Dec 07 2018 Anton Farygin <rider@altlinux.ru> 1.21.5-alt1
 - new version 1.21.5
 
