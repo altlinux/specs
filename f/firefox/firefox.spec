@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        63.0.3
+Version:        64.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -52,6 +52,10 @@ BuildRequires: clang6.0
 BuildRequires: clang6.0-devel
 BuildRequires: llvm6.0-devel
 BuildRequires: lld-devel
+%ifarch %{ix86}
+BuildRequires: gcc
+BuildRequires: gcc-c++
+%endif
 BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
@@ -160,11 +164,11 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+%ifnarch %{ix86}
 ac_add_options --enable-linker=lld
-%ifnarch %{ix86} x86_64
+%ifnarch x86_64
 ac_add_options --disable-webrtc
-%else
-ac_add_options --disable-elf-hack
+%endif
 %endif
 EOF
 
@@ -195,13 +199,6 @@ export MOZ_BUILD_APP=browser
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
- -fuse-ld=lld"
-
-#MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
-# -fuse-ld=lld -flto=thin \
-# -Wl,--thinlto-jobs=4 -Wl,--thinlto-cache-dir=thinlto-cache -Wl,--thinlto-cache-policy,cache_size=10%% -Wl,--lto-O0"
-
 # PIE, full relro
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
 
@@ -216,8 +213,13 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
+%ifnarch %{ix86}
 export CC="clang"
 export CXX="clang++"
+%else
+export CC="gcc"
+export CXX="g++"
+%endif
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
@@ -351,6 +353,21 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Dec 20 2018 Alexey Gladkov <legion@altlinux.ru> 64.0-alt1
+- New release (64.0).
+- Fixed:
+  + CVE-2018-12407: Buffer overflow with ANGLE library when using VertexBuffer11 module
+  + CVE-2018-17466: Buffer overflow and out-of-bounds read in ANGLE library with TextureStorage11
+  + CVE-2018-18492: Use-after-free with select element
+  + CVE-2018-18493: Buffer overflow in accelerated 2D canvas with Skia
+  + CVE-2018-18494: Same-origin policy violation using location attribute and performance.getEntries to steal cross-origin URLs
+  + CVE-2018-18495: WebExtension content scripts can be loaded in about: pages
+  + CVE-2018-18496: Embedded feed preview page can be abused for clickjacking
+  + CVE-2018-18497: WebExtensions can load arbitrary URLs through pipe separators
+  + CVE-2018-18498: Integer overflow when calculating buffer sizes for images
+  + CVE-2018-12406: Memory safety bugs fixed in Firefox 64
+  + CVE-2018-12405: Memory safety bugs fixed in Firefox 64 and Firefox ESR 60.4
+
 * Fri Nov 23 2018 Alexey Gladkov <legion@altlinux.ru> 63.0.3-alt1
 - New release (63.0.3).
 
