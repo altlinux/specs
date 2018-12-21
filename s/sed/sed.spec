@@ -1,12 +1,12 @@
 Name: sed
-Version: 4.4.0.10.0580
+Version: 4.7
 Release: alt1
 Epoch: 1
 
 Summary: A GNU stream text editor
 Group: Editors
 License: GPLv3+
-Url: http://www.gnu.org/software/sed/
+Url: https://www.gnu.org/software/sed/
 
 %define srcname %name-%version-%release
 # git://git.altlinux.org/people/ldv/packages/sed refs/heads/sed-current
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.1209.24b32
+BuildRequires: makeinfo, gnulib >= 0.1.2305.95c96
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -64,10 +64,10 @@ xz -k NEWS
 %makeinstall_std
 %makeinstall_std -C subst
 
+%find_lang %name
+
 %check
 %make_build -k check
-
-%find_lang %name
 
 %files -f %name.lang
 /bin/*
@@ -77,6 +77,10 @@ xz -k NEWS
 %doc BUGS NEWS.xz README doc/*.txt.xz
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1:4.7-alt1
+- sed: v4.4-10-g05800ee -> v4.7.
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.4.0.10.0580-alt1
 - sed: v4.2.2-93-g31c84cb -> v4.4-10-g05800ee.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.

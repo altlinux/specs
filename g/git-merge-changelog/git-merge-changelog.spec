@@ -5,7 +5,7 @@ Release: alt1
 Summary: git merge driver for GNU style ChangeLog files
 License: GPLv2+
 Group: Text tools
-Url: http://www.gnu.org/software/gnulib/
+Url: https://www.gnu.org/software/gnulib/
 BuildRequires(pre): gnulib
 
 %description
@@ -51,6 +51,9 @@ gnulib-tool --create-testdir --dir=$PWD %name
 %_bindir/*
 
 %changelog
+* Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 0.1.2305.95c96-alt1
+- Rebuilt with gnulib snapshot v0.1-2305-g95c96b6dd.
+
 * Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1213.683b6-alt1
 - Rebuilt with gnulib snapshot v0.1-1213-g683b607.
 

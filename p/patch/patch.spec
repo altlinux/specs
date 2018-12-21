@@ -1,19 +1,22 @@
 Name: patch
-Version: 2.7.6.0.15.369d
+Version: 2.7.6.0.17.9c98
 Release: alt1
 
 Summary: The GNU patch command, for modifying/upgrading files
 License: GPLv3+
 Group: Text tools
-Url: http://www.gnu.org/software/patch/
+Url: https://www.gnu.org/software/patch/
 
 # git://git.altlinux.org/gears/p/patch.git
 Source: %name-%version-%release.tar
 
-BuildRequires: gnulib >= 0.1.1209.24b32
+BuildRequires: gnulib >= 0.1.2305.95c96
 
 # for extended attribute copying support
 BuildRequires: libattr-devel
+
+# Note that patch --ed required ed(1).
+%{?!_without_check:%{?!_disable_check:BuildRequires: ed}}
 
 %description
 The patch program applies diff files to originals.  The diff command
@@ -35,7 +38,7 @@ echo -n %version > .tarball-version
 %makeinstall_std
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %_bindir/*
@@ -43,6 +46,12 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.17.9c98-alt1
+- patch:
+  + v2.7.6-15-g369dccc -> v2.7.6-17-g9c98635 (fixes: CVE-2018-6952);
+  + Fix error handling with git-style patches (by Lubomir Rintel).
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Mon May 07 2018 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.15.369d-alt1
 - patch: v2.7.5-17-g817d7d1 -> v2.7.6-15-g369dccc (fixes: CVE-2018-1000156).
 

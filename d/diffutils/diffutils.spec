@@ -1,12 +1,12 @@
 Name: diffutils
-Version: 3.5.0.17.198c
+Version: 3.6.0.17.d5ba
 Release: alt1
 %define srcname %name-%version-%release
 
 Summary: A GNU collection of diff utilities
 License: GPLv3+
 Group: File tools
-Url: http://www.gnu.org/software/diffutils/
+Url: https://www.gnu.org/software/diffutils/
 
 # git://git.sv.gnu.org/diffutils refs/heads/master
 # git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/diffutils-current
@@ -17,7 +17,7 @@ Source1: po-%version-%release.tar
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.1.1209.24b32
+BuildRequires: gnulib >= 0.1.2305.95c96
 BuildRequires: gperf help2man makeinfo
 
 %description
@@ -65,6 +65,10 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.6.0.17.d5ba-alt1
+- diffutils: v3.5-17-g198c55a -> v3.6-17-gd5bab3a
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 3.5.0.17.198c-alt1
 - diffutils: v3.3-40-ga3ea9cd -> v3.5-17-g198c55a.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.

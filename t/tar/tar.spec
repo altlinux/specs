@@ -1,11 +1,11 @@
 Name: tar
-Version: 1.29.0.19.d061
+Version: 1.30.0.38.3c2a
 Release: alt1
 
 Summary: A GNU file archiving program
 License: GPLv3+
 Group: Archiving/Backup
-Url: http://www.gnu.org/software/tar/
+Url: https://www.gnu.org/software/tar/
 
 %define srcname %name-%version-%release
 # git://git.altlinux.org/gears/t/tar.git
@@ -14,7 +14,7 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.1.1209.24b32, paxutils >= 0.0.1.121.ec72
+BuildRequires: gnulib >= 0.1.2305.95c96, paxutils >= 0.0.1.124.4ef7
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -64,6 +64,11 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.30.0.38.3c2a-alt1
+- tar: release_1_29-19-gd06126f -> release_1_30-38-g3c2a2cd.
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+- Updated translations from translationproject.org.
+
 * Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.29.0.19.d061-alt1
 - tar: release_1_28-39-gd02c81d -> release_1_29-19-gd06126f
   (fixes: CVE-2016-6321).

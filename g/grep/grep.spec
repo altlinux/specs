@@ -1,11 +1,11 @@
 Name: grep
-Version: 3.0.0.12.e2b7
+Version: 3.3
 Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
 Group: File tools
-Url: http://www.gnu.org/software/grep/
+Url: https://www.gnu.org/software/grep/
 
 %define srcname %name-%version-%release
 # git://git.altlinux.org/people/ldv/packages/grep refs/heads/grep-current
@@ -22,7 +22,7 @@ Requires: libpcre3 >= 0:6.4-alt2
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.1.1213.683b6
+BuildRequires: makeinfo, gnulib >= 0.1.2305.95c96
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
@@ -89,6 +89,10 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sun Dec 23 2018 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt1
+- grep: v3.0-12-ge2b7253 -> v3.3.
+- gnulib: v0.1-1213-g683b60789 -> v0.1-2305-g95c96b6dd.
+
 * Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 3.0.0.12.e2b7-alt1
 - grep: v3.0-11-gdff64f9 -> v3.0-12-ge2b7253.
 - gnulib: v0.1-1209-g24b3216 -> v0.1-1213-g683b607.

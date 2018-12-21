@@ -1,16 +1,16 @@
 Name: m4
 Version: 1.4.18
-Release: alt1
+Release: alt2
 
 Summary: The GNU macro processor
 License: GPLv3+
 Group: Development/Other
-Url: http://www.gnu.org/software/m4/
+Url: https://www.gnu.org/software/m4/
 
 # git://git.altlinux.org/gears/m/m4.git
 Source: %name-%version-%release.tar
 
-BuildRequires: help2man, gnulib >= 0.1.1209.24b32, makeinfo
+BuildRequires: help2man, gnulib >= 0.1.2305.95c96, makeinfo
 
 %description
 A GNU implementation of the traditional UNIX macro processor.  m4 is
@@ -50,6 +50,9 @@ install -pD -m644 m4/m4.m4 %buildroot%_datadir/aclocal/m4.m4
 %doc AUTHORS BACKLOG NEWS README THANKS TODO
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt2
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt1
 - m4: v1.4.17-11-gf258 -> v1.4.18.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
