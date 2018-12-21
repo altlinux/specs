@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		87228
+%define svnrev		87993
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -420,7 +420,8 @@ find conf -type f -print0 | xargs -0 sed -i \
 
 %install
 # Generate *.mo files
-for pofile in `find frontends/php/locale -type f ! -wholename '*/.svn*' -name '*.po'`
+# TODO 'Remove | grep -v "/locale/fr/"' when fix FR locale
+for pofile in `find frontends/php/locale -type f ! -wholename '*/.svn*' -name '*.po' | grep -v "/locale/fr/"`
 do
     msgfmt --use-fuzzy -c -o ${pofile%%po}mo $pofile
 done
@@ -665,6 +666,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Dec 21 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.3-alt1
+- 4.0.3
+
 * Wed Nov 28 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.2-alt1
 - 4.0.2
 
