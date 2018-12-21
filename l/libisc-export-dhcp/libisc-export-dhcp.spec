@@ -1,6 +1,6 @@
 Name: libisc-export-dhcp
-Version: 9.9.11
-Release: alt1.1
+Version: 9.11.5
+Release: alt1
 
 Summary: ISC BIND 9.9.x exportable libraries to build ISC DHCP
 License: BSD-style
@@ -16,8 +16,7 @@ Source0: bind-%version.tar
 Patch0001: 0001-owl-warnings.patch
 Patch0002: 0002-alt-owl-chroot.patch
 Patch0003: 0003-alt-nofile.patch
-Patch0004: 0004-fc-exportlib.patch
-Patch0005: 0005-Fix-failover-initialization-in-dhcpd.patch
+Patch0004: 0004-Link-libirs-with-libdns-libisc-and-libisccfg.patch
 
 Obsoletes: libisc-export <= 9.9.9
 
@@ -29,6 +28,8 @@ Obsoletes: libisc-export <= 9.9.9
 BuildPreReq: gcc-c++
 
 %{?_with_openssl:BuildPreReq: libssl-devel}
+
+%define bind_export_libs isc dns isccfg irs
 
 %package devel
 Summary: ISC 9.9.x BIND development files for exportable libraries
@@ -51,7 +52,6 @@ used to build ISC DHCP.
 %patch0002 -p2
 %patch0003 -p2
 %patch0004 -p2
-%patch0005 -p2
 
 # XXX oldish stuff introduced in 9.9.6
 sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
@@ -80,6 +80,19 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 	--disable-isc-spnego \
 	#
 
+sed -i \
+	-e '/^SUBDIRS =/s/.*/SUBDIRS = make lib/i' \
+	Makefile
+
+sed -i -e \
+	"/^SUBDIRS =/s/.*/SUBDIRS = %bind_export_libs/i" \
+	lib/Makefile
+
+for lib in %bind_export_libs
+do
+	find .  -name Makefile -exec sed  "s/lib${lib}\./lib${lib}-export\./g" -i {} \;
+done;
+
 %make_build
 
 %install
@@ -89,23 +102,18 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 
 %files
 %_libdir/lib*-export.so.*
-%exclude %_sbindir/*
 %exclude %_bindir/*
 %exclude %_mandir/*/*
 %exclude %_sysconfdir/*
-%exclude %_libdir/libbind9.so*
-%exclude %_libdir/libdns.so*
-%exclude %_libdir/libisc.so*
-%exclude %_libdir/libisccc.so*
-%exclude %_libdir/libisccfg.so*
-%exclude %_libdir/liblwres.so*
 
 %files devel
-%exclude %_includedir/bind9
 %_includedir/*
 %_libdir/lib*-export.so
 
 %changelog
+* Wed Dec 05 2018 Mikhail Efremov <sem@altlinux.org> 9.11.5-alt1
+- Updated to 9.11.5.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 9.9.11-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
