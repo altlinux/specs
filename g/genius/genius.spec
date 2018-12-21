@@ -5,7 +5,7 @@
 
 Name: genius
 Version: %ver_major.24
-Release: alt1
+Release: alt2
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -97,6 +97,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.24-alt2
+- rebuilt against libreadline.so.7
+
 * Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.24-alt1
 - 1.0.24
 
