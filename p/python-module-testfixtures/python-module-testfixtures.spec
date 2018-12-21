@@ -3,7 +3,7 @@
 %def_without docs
 
 Name:    python-module-%modulename
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 21 2018 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
+- New version.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 6.3.0-alt1
 - New version.
 
