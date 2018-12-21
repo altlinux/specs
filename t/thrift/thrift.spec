@@ -1,6 +1,10 @@
+# hack kill me
+%filter_from_requires /^.usr.lib.python3.site-packages/d
+%filter_from_requires /^python3.SCons.Builder/d
+%filter_from_requires /^python-base/d
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/bundle /usr/bin/cabal /usr/bin/haxe /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) rpm-build-java
+BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-fedora-compat rpm-macros-java
+BuildRequires: /usr/bin/bundle /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/phpunit /usr/bin/ruby /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) python-devel rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: mono-web javapackages-local
 BuildRequires: chrpath
@@ -9,9 +13,6 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global php_extdir  %(php-config --extension-dir 2>/dev/null || echo "undefined")
-
-
-%global __provides_exclude_from ^(%{python_sitelibdir}/.*\\.so|%{php7_extdir}/.*\\.so)$
 
 %global have_mongrel 0
 
@@ -60,7 +61,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt2_11jpp8
+Release: alt2_15jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -91,6 +92,9 @@ Patch3: fix-ppc64le-builds.patch
 # fix for s390x build; incorporates fix for THRIFT-4177 with some code from THRIFT-4136
 Patch4: THRIFT-4177.patch
 
+# Update fb303 for python3
+Patch5: python3.patch
+
 Group: Development/Other
 
 # BuildRequires for language-specific bindings are listed under these
@@ -101,9 +105,8 @@ BuildRequires: ant >= 1.7
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: bison
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-complete
 BuildRequires: boost-devel-static
-BuildRequires: flex
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: glib2-devel libgio libgio-devel
@@ -133,7 +136,7 @@ Group: Development/C++
 Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
-Requires: boost-devel-headers boost-python-headers
+Requires: boost-complete
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -155,17 +158,17 @@ Requires:       %{name} = %{version}-%{release}
 %description    glib
 The %{name}-qt package contains GLib bindings for %{name}.
 
-%package -n python-module-thrift
-Group: Development/Python
-Summary: Python 2 support for %{name}
-BuildRequires: python-devel
+%package -n python3-module-thrift
+Group: Development/Other
+Summary: Python 3 support for %{name}
+BuildRequires: python3-devel
 Requires: %{name} = %{version}-%{release}
-Requires: python
+Requires: python3
 Obsoletes: python-%{name} < 0.10.0-1%{?dist}
-BuildArch: noarch
+Obsoletes: python2-%{name} < 0.10.0-14%{?dist}
 
-%description -n python-module-thrift
-The python2-%{name} package contains Python bindings for %{name}.
+%description -n python3-module-thrift
+The python3-%{name} package contains Python bindings for %{name}.
 
 %package -n perl-%{name}
 Group: Development/Java
@@ -211,7 +214,7 @@ Requires: %{name} = %{version}-%{release}
 Requires: php(language) >= 5.3.0
 Requires: php7-bz2 php7-calendar php7-curl php7-exif php7-fileinfo php7-sockets
 Requires: php-json
-BuildRequires: php5-devel
+BuildRequires: php-devel
 
 %description -n php-%{name}
 The php-%{name} package contains PHP bindings for %{name}.
@@ -299,15 +302,17 @@ Requires: fb303 = %{version}-%{release}
 %description -n fb303-devel
 The fb303-devel package contains header files for fb303
 
-%package -n python-module-fb303
-Group: Development/Java
-Summary: Python 2 bindings for fb303
+%package -n python3-module-fb303
+Group: Development/Other
+Summary: Python 3 bindings for fb303
 Requires: fb303 = %{version}-%{release}
-BuildRequires: python-devel
+BuildRequires: python3-devel
+Obsoletes: python-fb303 < 0.10.0-1%{?dist}
+Obsoletes: python2-fb303 < 0.10.0-14%{?dist}
 BuildArch: noarch
 
-%description -n python-module-fb303
-The python2-fb303 package contains Python bindings for fb303.
+%description -n python3-module-fb303
+The python3-fb303 package contains Python bindings for fb303.
 
 %package -n fb303-java
 Group: Development/Java
@@ -329,6 +334,7 @@ The fb303-java package contains Java bindings for fb303.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %{?!el5:sed -i -e 's/^AC_PROG_LIBTOOL/LT_INIT/g' configure.ac}
 
@@ -400,9 +406,10 @@ install: build/libfb303.jar
 sh ./bootstrap.sh
 
 # use unversioned doc dirs where appropriate (via _pkgdocdir macro)
-%configure --disable-dependency-tracking --disable-static --with-boost=/usr %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
-	   --without-haskell \
-	   --without-nodejs
+export PYTHON=%{_bindir}/python3
+%configure --disable-dependency-tracking --disable-static --with-boost=/usr %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} --with-py3 --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
+	--without-haskell \
+	--without-nodejs
 
 # eliminate unused direct shlib dependencies
 sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
@@ -414,7 +421,7 @@ sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
   cd contrib/fb303
   sed -i '/^[.][/]configure.*/d' bootstrap.sh
   sh bootstrap.sh
-  %configure --disable-static --with-java --without-php --libdir=%{_libdir}
+  %configure --disable-static --with-java --without-php --with-py3 --libdir=%{_libdir}
 %make_build
   (
       cd java
@@ -532,6 +539,13 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %doc LICENSE NOTICE
 %endif
 
+%if 0
+%files -n python3-module-thrift
+%{python3_sitelibdir}/%{name}
+%{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
+%doc LICENSE NOTICE
+%endif
+
 %files -n lib%{name}-javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE NOTICE
@@ -548,16 +562,21 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %{_includedir}/thrift/fb303
 %doc LICENSE NOTICE
 
-%files -n python-module-fb303
-%{python_sitelibdir_noarch}/fb303
-%{python_sitelibdir_noarch}/fb303_scripts
-%{python_sitelibdir_noarch}/%{name}_fb303-%{version}-py%{__python_version}.egg-info
+%if 0
+%files -n python3-module-fb303
+%{python3_sitelibdir_noarch}/fb303
+%{python3_sitelibdir_noarch}/fb303_scripts
+%{python3_sitelibdir_noarch}/%{name}_fb303-%{version}-py%{__python3_version}.egg-info
 %doc LICENSE NOTICE
+%endif
 
 %files -n fb303-java -f .mfiles-fb303
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_15jpp8
+- build with new ssl
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_11jpp8
 - java fc28+ update
 
