@@ -10,10 +10,10 @@
 
 Name: clip
 Version: 1.2.0cvs
-Release: alt3.qa5
+Release: alt4
 
 Summary: XBASE/Clipper compatible program compiler
-Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ
+Summary(ru_RU.UTF-8): п║п╬п╡п╪п╣я│я┌п╦п╪я▀п╧ я│ XBASE/Clipper п╨п╬п╪п©п╦п╩я▐я┌п╬я─ п©я─п╬пЁя─п╟п╪п╪
 
 License: GPL
 Group: Development/Other
@@ -41,33 +41,33 @@ Requires: lib%name-devel = %version-%release
 %description
 This package includes the clip compiler and supplimentary libraries
 
-%description -l ru_RU.KOI8-R
-Данный пакет содержит компилятор clip и необходимые библиотеки
+%description -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╬п╪п©п╦п╩я▐я┌п╬я─ clip п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦
 
 ###################################################################################
 %package -n lib%name
 Summary: XBASE/Clipper compatible program compiler - runtime library
-Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- библиотеки времени выполнения
+Summary(ru_RU.UTF-8): п║п╬п╡п╪п╣я│я┌п╦п╪я▀п╧ я│ XBASE/Clipper п╨п╬п╪п©п╦п╩я▐я┌п╬я─ п©я─п╬пЁя─п╟п╪п╪ -- п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╡я─п╣п╪п╣п╫п╦ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐
 Group: Development/Other
 
 %description -n lib%name
 This package provides runtime shared libraries for CLIP package
 
-%description -n lib%name -l ru_RU.KOI8-R
-Данный пакет предоставляет разделяемые библиотеки времени выполнения для CLIP
+%description -n lib%name -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐п╣я┌ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╢п╩я▐ CLIP
 
 ###################################################################################
 %package -n lib%name-devel
 Summary: XBASE/Clipper compatible program compiler - headers
-Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- заголовочные файлы
+Summary(ru_RU.UTF-8): п║п╬п╡п╪п╣я│я┌п╦п╪я▀п╧ я│ XBASE/Clipper п╨п╬п╪п©п╦п╩я▐я┌п╬я─ п©я─п╬пЁя─п╟п╪п╪ -- п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀
 Group: Development/Other
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 This package provides headers files for CLIP package
 
-%description -n lib%name -l ru_RU.KOI8-R
-Данный пакет предоставляет заголовочные файлы для CLIP
+%description -n lib%name -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐п╣я┌ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╢п╩я▐ CLIP
 
 %prep
 %setup -q
@@ -84,7 +84,7 @@ export CLIP_LOCALE_ROOT=`pwd`
 
 %install
 %makeinstall_std BINDIR=%_bindir CLIPROOT=%_libdir/clip
-(cd doc ; make install DOCDIR=%buildroot%_docdir/%name-%version)
+#%(cd doc ; make install DOCDIR=%buildroot%_docdir/%name-%version)
 #%__mkdir -p %buildroot%FCLIPDIR
 #%__cp -rf locale.pot %buildroot%FCLIPDIR/
 
@@ -175,6 +175,10 @@ subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 
 %changelog
+* Fri Dec 21 2018 Leontiy Volodin <lvol@altlinux.org> 1.2.0cvs-alt4
+- Fix build with bash4
+- Changed charset for descriptions (KOI8-R -> UTF-8)
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt3.qa5
 - Do not build for aarch64.
 
