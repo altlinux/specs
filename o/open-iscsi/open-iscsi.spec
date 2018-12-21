@@ -2,12 +2,11 @@
 %define bname iscsi
 Name: open-%bname
 %define module_name %name
-Version: 2.0.873
+Version: 2.0.877
 License: %gpl2plus
-Release: alt1.git006270
+Release: alt1.git73652184
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 URL: http://%name.org
 Source: %name-%version.tar
 Source1: iscsi-gen-initiatorname.sh
@@ -15,14 +14,16 @@ Patch: %name-%version-%release.patch
 Conflicts: linux-iscsi
 Provides: iscsi-initiator-utils = 6.%version-%release
 
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: libmount-devel
-BuildRequires: rpm-build-licenses
+BuildRequires: libkmod-devel
+BuildRequires: libssl-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libisns-devel
 
 %description
-%Name is an internet storage protocol, originally developed by CISCO
-systems.
-This is a Linux implementation of user-space utils to access %bname
-storages.
+The Open-iSCSI project is a high-performance, transport independent,
+multi-platform implementation of RFC3720 iSCSI.
 
 %package iscsiuio
 Summary: Userspace configuration daemon required for some iSCSI hardware
@@ -34,12 +35,23 @@ Requires: %name = %version-%release
 The iscsiuio configuration daemon provides network configuration help
 for some iSCSI offload hardware.
 
-%package -n kernel-source-%module_name
-Summary: Linux %module_name modules sources
-Group: Development/Kernel
+%package -n libopeniscsiusr
+Summary: library providing access to Open-iSCSI initiator functionality
+Group: System/Libraries
+License: BSD
 
-%description -n kernel-source-%module_name
-This package contains sources for %module_name kernel modules.
+%description -n libopeniscsiusr
+The libopeniscsiusr library provides a C API for access to the Open-iSCSI
+initiator. It is used by the Open-iSCSI command line tools.
+
+%package -n libopeniscsiusr-devel
+Summary: Development files for libopeniscsiusr
+Group: Development/C
+Requires: libopeniscsiusr = %EVR
+
+%description -n libopeniscsiusr-devel
+The libopeniscsiusr-devel package contains libraries and header files for
+developing applications that use libopeniscsiusr.
 
 %prep
 %setup
@@ -52,26 +64,14 @@ cd iscsiuio
 %autoreconf
 %configure --disable-static
 cd ..
-cd utils/open-isns
-%autoreconf
-%configure --with-security=no --with-slp=no --disable-static
-cd ../..
 
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot initddir=%_initdir \
-    install_programs install_initd_alt install_etc install_doc
+    install_programs install_initd_alt install_etc install_doc install_libopeniscsiusr
 
 install -m 0755 %SOURCE1 %buildroot/sbin/iscsi-gen-initiatorname
-
-install -d -m 0755 kernel-source-%module_name-%version/include
-install -m 0644 include/* kernel-source-%module_name-%version/include/
-install -m 0644 kernel/* kernel-source-%module_name-%version/
-
-install -d -m 0755 %buildroot%_usrsrc/kernel/sources
-tar -c kernel-source-%module_name-%version | bzip2 --best --stdout > \
-    %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
 
 install -d %buildroot%_lockdir/iscsi
 touch %buildroot%_lockdir/iscsi/lock
@@ -128,10 +128,18 @@ fi
 %config(noreplace) %_logrotatedir/iscsiuiolog
 %_man8dir/iscsiuio.8.*
 
-%files -n kernel-source-%module_name
-%_usrsrc/kernel/sources/*.tar.bz2
+%files -n libopeniscsiusr
+%_libdir/libopeniscsiusr.so.*
+
+%files -n libopeniscsiusr-devel
+%_libdir/libopeniscsiusr.so
+%_includedir/*
+%_pkgconfigdir/libopeniscsiusr.pc
 
 %changelog
+* Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.877-alt1.git73652184
+- master snapshot 7365218437ecf8c03860e34c002c76871abf9943
+
 * Mon Mar 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0.873-alt1.git006270
 - master snapshot 006270c0f9a1fa1e78574a7eaa04bb9ae1ef62b6 (ALT#28583)
 - add systemd units
