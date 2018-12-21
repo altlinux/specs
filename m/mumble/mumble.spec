@@ -7,13 +7,14 @@
 
 Name: mumble
 Version: 1.2.19
-Release: alt2
+Release: alt3
 
 Summary: Low latency encrypted VoIP client
 
 Group: Networking/Chat
 License: BSD
 Url: http://mumble.info/
+Packager: Arseny Maslennikov <arseny@altlinux.org>
 
 # VCS0: git://github.com/mumble-voip/mumble.git
 Source0: %name-%version.tar
@@ -30,7 +31,7 @@ Patch: %name-%version-%release.patch
 %define celtopts celt bundled-celt
 %endif
 
-BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libice-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel protobuf-compiler
+BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel protobuf-compiler
 BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
 
@@ -99,7 +100,7 @@ primarily intended for gaming. It provides a KIO protocol description.
 
 %build
 %add_optflags -fpermissive
-qmake-qt4 -recursive "CONFIG+=no-oss speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update" \
+qmake-qt4 -recursive "CONFIG+=no-oss no-ice speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update" \
 QMAKE_CFLAGS+='%optflags' \
 QMAKE_CXXFLAGS+='%optflags' \
 DEFINES+=PLUGIN_PATH=%_libdir/%name \
@@ -216,6 +217,9 @@ mkdir -p %buildroot%_logdir/murmur/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 1.2.19-alt3
+- murmur: blindfoldedly built without Ice RPC support.
+
 * Wed Sep 05 2018 Oleg Solovyov <mcpain@altlinux.org> 1.2.19-alt2
 - fix build
 - build with new openssl 1.1
