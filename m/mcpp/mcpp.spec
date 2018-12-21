@@ -1,13 +1,17 @@
-Summary:    Alternative C/C++ preprocessor
 Name:       mcpp
 Version:    2.7.2
-Release:    alt2.3.qa1
+Release:    alt3
+
+Summary:    Alternative C/C++ preprocessor
+
 License:    BSD
 Group:      Development/C
+URL:        http://mcpp.sourceforge.net/
+
 Packager:   Evgeny Sinelnikov <sin@altlinux.ru>
 Source:     http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-URL:        http://mcpp.sourceforge.net/
 Patch0:     mcpp-manual.html.patch
+Patch1:     mcpp-fix.patch
 
 %description
 C/C++ preprocessor defines and expands macros and processes '#if',
@@ -26,6 +30,7 @@ shared library of mcpp and behaves independent from GCC.
 %prep
 %setup -q
 %patch0 -p0 -b -z.euc-jp
+%patch1 -p1
 
 %build
 %configure --enable-mcpplib --enable-static
@@ -92,6 +97,9 @@ This package provides an html manual for mcpp.
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Mon Dec 17 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt3
+- add fix for Ice build
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt2.3.qa1
 - NMU: applied repocop patch
 
