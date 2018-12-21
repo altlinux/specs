@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt120
+Release: alt121
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -511,6 +511,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt121
+- verify-elf: disabled stack verification and elflint on RISC-V (arei@).
+- platform.in: removed harmless bash4 noise from %%filter_from_* macros
+  (closes: #35803).
+
 * Mon Dec 17 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt120
 - lib.prov, lib.req: enhanced ProvidedSymbols (glebfm@ and me).
 - Added ppc64le support (glebfm@).
