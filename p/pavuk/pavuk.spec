@@ -1,11 +1,11 @@
 Name: pavuk
 Version: 0.9.35
-Release: alt6.2
+Release: alt6.3
 Epoch: 1
 Packager: Igor Vlasenko <viy@altlinux.org>
 Summary: Pavuk WWW Graber
 Summary(ru_RU.KOI8-R): Вор с WWW - паук
-Copyright: GPL
+License: GPL
 Group: Networking/WWW
 URL: https://sourceforge.net/projects/pavuk/
 Source: http://dl.sourceforge.net/%name/%name-%version.tar.bz2
@@ -83,6 +83,9 @@ rm -f %buildroot/usr/share/icons/pavuk_prg_icon.xpm
 #_datadir/pixmaps/*.xpm
 
 %changelog 
+* Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.35-alt6.3
+- rebuild with libssl 1.1
+
 * Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.35-alt6.2
 - fixed unpackaged files
 
