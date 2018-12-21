@@ -1,44 +1,86 @@
+
 Name:           targetcli
 License:        ASL 2.0
 Group:          System/Libraries
 Summary:        An administration shell for storage targets
-Version:        2.1.fb35
-Release:        alt2
-URL:            https://fedorahosted.org/targetcli-fb/
-Source:         %{name}-%{version}.tar
+Version:        2.1.fb49
+Release:        alt1
+URL:             https://github.com/open-iscsi/targetcli-fb
+Source:         %name-%version.tar
 BuildArch:      noarch
-BuildRequires:  python-devel python-module-setuptools
-Requires:       python-module-rtslib >= 2.1.fb41, python-module-configshell, python-module-ethtool
 
+Requires: target-restore
+Requires: python3-module-%name = %EVR
+
+BuildRequires: python-devel python-module-setuptools
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
 An administration shell for configuring iSCSI, FCoE, and other
 SCSI targets, using the TCM/LIO kernel target subsystem. FCoE
 users will also need to install and use fcoe-utils.
 
+%package -n python-module-%name
+Summary:        An administration shell for storage targets
+Group:          Development/Python
+
+%description -n python-module-%name
+An administration shell for storage targets
+
+%package -n python3-module-%name
+Summary:        An administration shell for storage targets
+Group:          Development/Python3
+
+%description -n python3-module-%name
+An administration shell for storage targets
+
 
 %prep
 %setup
+
+sed -i "s/__version__ = .*/__version__ = '%version'/g" \
+	%name/__init__.py
+
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
 bzip2 --stdout targetcli.8 > targetcli.8.bz2
 
+pushd ../python3
+%python3_build
+popd
+
 %install
 %python_install
-mkdir -p %{buildroot}%{_sysconfdir}/target/backup
-mkdir -p %{buildroot}%{_mandir}/man8/
-install -m 644 targetcli.8.bz2 %{buildroot}%{_mandir}/man8/
+
+pushd ../python3
+%python3_install
+popd
+
+mkdir -p %buildroot%_man8dir/
+install -m 644 targetcli.8.bz2 %buildroot%_man8dir/
 
 %files
-%{python_sitelibdir}/*
-%{_bindir}/targetcli
-%dir %{_sysconfdir}/target
-%dir %{_sysconfdir}/target/backup
+%_bindir/targetcli
 %doc COPYING README.md
-%{_mandir}/man8/targetcli.8.*
+%_man8dir/targetcli.8.*
+
+%files -n python-module-%name
+%python_sitelibdir/*
+
+%files -n python3-module-%name
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.1.fb49-alt1
+- 2.1.fb49
+- switch to python3
+
 * Sun Jan 31 2016 Lenar Shakirov <snejok@altlinux.ru> 2.1.fb35-alt2
 - Man pages packaging fixed
 
