@@ -1,4 +1,8 @@
+%ifarch aarch64 %ix86 x86_64
 %def_with libdpdk
+%else
+%def_without libdpdk
+%endif
 %def_with libgps
 %def_enable apache
 %def_enable bind
@@ -29,7 +33,7 @@
 
 Name: collectd
 Version: 5.8.1
-Release: alt2
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -546,6 +550,8 @@ install -d %buildroot%_libdir/%name/ %buildroot%_localstatedir/%name/
 rm %buildroot%_libdir/%name/*.la
 
 # TODO: package collection3 and maybe other frontends as well
+# provide versionless pathname for now
+ln -snr %buildroot%_defaultdocdir/%name-%version/contrib/collection3 %buildroot%_datadir/%name/
 %if_enabled cgi
 %if_enabled apache
 install -pDm644 contrib/altlinux/%name.apache2 %buildroot%apache2_extra_available/%name.conf
@@ -810,6 +816,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Dec 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.1-alt3
+- build with dpdk only on selected arches
+
 * Wed Dec 19 2018 Anton Farygin <rider@altlinux.ru> 5.8.1-alt2
 - temporary disabled format-truncation error to make gcc-8 happy
 
