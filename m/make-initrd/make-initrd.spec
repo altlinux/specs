@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.5
+Version: 2.2.6
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,10 @@ fi
 %endif
 
 %changelog
+* Fri Dec 21 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.6-alt1
+- Feature changes:
+  + guestfs: Do not always turn off other features
+
 * Thu Dec 20 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.5-alt1
 - Feature changes:
   + mdadm: Make /etc/mdadm.conf optional
