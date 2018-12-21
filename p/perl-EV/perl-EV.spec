@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist EV
 Name: perl-%dist
-Version: 4.22
-Release: alt1.1.1
+Version: 4.25
+Release: alt1
 
 Summary: Perl interface to libev, a high performance full-featured event loop
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/EV-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: perl-AnyEvent perl-common-sense perl-devel perl-podlators perl(Canary/Stability.pm)
@@ -25,7 +25,7 @@ with "LIBEV_FLAGS", or just about in any case because it has much more
 detailed information.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %build
 %perl_vendor_build
 
@@ -38,6 +38,9 @@ detailed information.
 %perl_vendor_autolib/EV
 
 %changelog
+* Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 4.25-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.22-alt1.1.1
 - rebuild with new perl 5.26.1
 
