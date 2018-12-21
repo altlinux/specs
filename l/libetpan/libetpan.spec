@@ -1,6 +1,6 @@
 Name: libetpan
-Version: 1.9.1
-Release: alt3
+Version: 1.9.2
+Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: %bsdstyle
@@ -11,8 +11,6 @@ Url: https://www.etpan.org/libetpan.html
 # git://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-# From https://github.com/dinhviethoa/libetpan/pull/310
-Patch1: add-TLS-server-name-indication-support.patch
 
 %def_with gnutls
 %def_without openssl
@@ -26,7 +24,8 @@ BuildRequires: gcc-c++
 
 %{?_with_gnutls:BuildRequires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
 %{?_with_openssl:BuildRequires: libssl-devel}
-BuildRequires: libsasl2-devel libdb4.7-devel
+BuildRequires: libsasl2-devel
+BuildRequires: liblmdb-devel
 BuildRequires: liblockfile-devel libexpat-devel libcurl-devel
 
 %package devel
@@ -35,7 +34,8 @@ Group: Development/C
 Requires: %name = %version-%release
 %{?_with_gnutls:Requires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
 %{?_with_gnutls:Requires: libssl-devel}
-Requires: libsasl2-devel libdb4.7-devel
+Requires: libsasl2-devel
+Requires: liblmdb-devel
 Requires: liblockfile-devel
 
 %description
@@ -51,7 +51,6 @@ program which use lib%name.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 ln -s README.md README
 
 %build
@@ -60,6 +59,7 @@ ln -s README.md README
 	--disable-static \
 	%{subst_with openssl} \
 	%{subst_with gnutls} \
+	--enable-lmdb \
 	--enable-ipv6
 %make_build
 
@@ -78,6 +78,11 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Fri Dec 21 2018 Mikhail Efremov <sem@altlinux.org> 1.9.2-alt1
+- Drop upstreamed patch.
+- Use liblmdb instead of libdb4.7.
+- Updated to 1.9.2.
+
 * Tue Oct 30 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt3
 - Enable TLS-1.3 again.
 - Add TLS server name indication support.
