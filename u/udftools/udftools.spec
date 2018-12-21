@@ -6,7 +6,7 @@
 
 Name: udftools
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Linux tools for UDF filesystems and DVD/CD-R(W) drives
 Group: Archiving/Cd burning
@@ -70,6 +70,9 @@ BuildRequires: rpm-build-licenses
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt2
+- rebuilt against libreadline.so.7
+
 * Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - switched to upstream git
 - updated to 2.0-24-g7e85bc
