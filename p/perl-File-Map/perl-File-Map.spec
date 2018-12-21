@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,13 +7,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-Map
-Version:        0.65
-Release:        alt1.1_4
+Version:        0.66
+Release:        alt1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
 URL:            https://metacpan.org/release/File-Map
-Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel >= 5.008
@@ -77,13 +78,16 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE
 %doc Changes examples README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/File*
 
 
 %changelog
+* Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1.1_4
 - update to new release by fcimport
 
