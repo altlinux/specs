@@ -1,10 +1,10 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.4.1
+%define grass_version 7.4.3
 
 Name:    qgis
 Version: 2.18.16
-Release: alt3
+Release: alt4
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -76,6 +76,7 @@ BuildRequires: gzip
 Requires: libqt4-sql-sqlite
 Requires: gpsbabel
 Requires: qca2-ossl
+Requires: libqwt6
 
 # We don't want to provide private Python extension libs
 %add_findprov_skiplist %%python_sitelibdir/%%name/*.so 
@@ -330,6 +331,10 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Thu Dec 20 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt4
+- Rebuild with grass 7.4.3.
+- Require libqwt6 (ALT #35131).
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt3
 - Rebuild with grass 7.4.1.
 

@@ -1,7 +1,7 @@
 %define shortver 74
 
 Name:    grass
-Version: 7.4.1
+Version: 7.4.3
 Release: alt1
 
 %def_with mysql
@@ -332,6 +332,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Mon Dec 17 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.3-alt1
+- New version.
+
 * Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.1-alt1
 - New version.
 - Use mariadb instead of MySQL.
