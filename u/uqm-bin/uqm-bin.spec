@@ -4,7 +4,7 @@
 %define what bin
 Name: %rname-%what
 Version: 0.7.0
-Release: alt2
+Release: alt3
 
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
@@ -15,7 +15,7 @@ Requires: %rname-content = %version
 Requires: %rname-common = %version
 Obsoletes: %rname-game
 
-Source0: %rname-%version.tar
+Source0: %rname-%version-1-source.tar
 
 Source10: %rname.16.png
 Source11: %rname.32.png
@@ -36,7 +36,7 @@ This package contains binary executable program for this game.
 
 
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version-1
 
 %build
 export CFLAGS="%optflags" LDFLAGS="%optflags -lm"
@@ -103,6 +103,9 @@ install -m 644 %SOURCE12 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_iconsdir/hicolor/*/apps/%rname.png
 
 %changelog
+* Sat Dec 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3
+- fixed build
+
 * Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2
 - added -lm -- fixed linkage
 
