@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.84
+Version: 0.85
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -8,7 +9,7 @@ Group: Development/Perl
 License: mit
 
 Url: %CPAN App-perlbrew
-Source: %oname-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GU/GUGOD/%{oname}-%{version}.tar.gz
 
 Requires: perl-Devel-PatchPerl
 
@@ -19,8 +20,8 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %summary
 
 %prep
-%setup -q -n %oname-%version
-[ %version == 0.84 ] && rm t/http-ua-detect-non-curl.t t/current_shell.t
+%setup -q -n %{oname}-%{version}
+[ %version == 0.85 ] && rm t/http-ua-detect-non-curl.t t/current_shell.t
 
 %build
 %perl_vendor_build
@@ -29,13 +30,17 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %perl_vendor_install
 
 %files
-%doc LICENSE README README.md Changes doc
+%doc LICENSE README README.md Changes doc CONTRIBUTING.md
 %_bindir/perlbrew
 %_man1dir/*
 %perl_vendor_privlib/App/perlbrew*
+%perl_vendor_privlib/App/Perlbrew*
 %doc Changes LICENSE README
 
 %changelog
+* Sat Dec 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.85-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.84-alt1
 - automated CPAN update
 
