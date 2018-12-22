@@ -1,12 +1,12 @@
 %def_enable python
 %def_enable server
-%define samba_version 4.9.3
+%define samba_version 4.9.4
 
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name:    openchange
 Version: 2.4
-Release: alt32.zentyal23
+Release: alt33.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -324,6 +324,9 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt33.zentyal23
+- Rebuild with headers from new release of Samba-4.9.4
+
 * Wed Nov 28 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt32.zentyal23
 - Rebuild with headers from new release of Samba-4.9.3
 

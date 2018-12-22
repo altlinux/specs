@@ -50,7 +50,7 @@
 %endif
 
 Name: samba
-Version: 4.9.3
+Version: 4.9.4
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1524,6 +1524,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.4-alt1
+- Update to first winter security release
+- Security fixes regressions:
+  + CVE-2018-16853 Do not segfault if client is not set
+  + CVE-2018-14629 Fix CNAME loop prevention using counter regression
+
 * Fri Nov 30 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.3-alt1
 - Update to autumn security release
 - Clean test module of third_party/iso8601 and subunit modules
