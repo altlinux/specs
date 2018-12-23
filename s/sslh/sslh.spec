@@ -1,6 +1,6 @@
 Name: sslh
-Version: 1.19c
-Release: alt4
+Version: 1.20
+Release: alt1
 
 Summary: A ssl/ssh multiplexer
 
@@ -60,6 +60,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Sun Dec 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
+- new version 1.20 (with rpmrb script)
+
 * Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt4
 - rebuild without libwrap-devel
 
