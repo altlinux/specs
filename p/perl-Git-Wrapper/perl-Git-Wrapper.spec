@@ -4,7 +4,7 @@
 
 Name: perl-Git-Wrapper
 Version: 0.048
-Release: alt1
+Release: alt2
 
 Summary: Wrap git command-line interface
 
@@ -25,6 +25,9 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 # optimized out: perl perl-Encode perl-Sub-Uplevel perl-devel perl-parent python-base python-modules python3-base
 BuildRequires: git-core perl-Devel-CheckBin perl-File-chdir perl-IPC-Cmd perl-Path-Class perl-Sort-Versions perl-Test-Deep perl-Test-Exception
 
+# modules that use Git::Wrapper expect git to be installed
+Requires: git-core
+
 %description
 Perl module Git::Wrapper provides an API for git(7) that uses
 Perl data structures for argument passing, instead of 
@@ -44,6 +47,9 @@ CLI-style --options as Git does.
 %perl_vendor_privlib/Git/Wrapper*
 
 %changelog
+* Sun Dec 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2
+- NMU: added Req: git-core
+
 * Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.048-alt1
 - New version
 
