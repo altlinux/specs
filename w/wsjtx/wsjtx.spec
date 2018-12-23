@@ -1,6 +1,6 @@
 Name: wsjtx
-Version: 1.9.1
-Release: alt1.S1
+Version: 2.0.0
+Release: alt1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -134,6 +134,9 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/WSJT-X
 %_docdir/WSJT-X
 
 %changelog
+* Sun Dec 23 2018 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- new version (2.0.0) with rpmgs script
+
 * Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1.S1
 - new version 1.9.1
 
