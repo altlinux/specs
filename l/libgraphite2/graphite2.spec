@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.12
-Release: alt2.1
+Version: 1.3.13
+Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -88,6 +88,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Sun Dec 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.13-alt1
+- 1.3.13
+
 * Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.12-alt2.1
 - e2k fixes, see previous release
 
