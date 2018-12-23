@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20181107
+Version: 20181218
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,28 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Dec 23 2018 Cronbuild Service <cronbuild@altlinux.org> 20181218-alt1
+- upstream changes (GIT 0f22c85):
+  + Revert "amdgpu: update vega10 fw for 18.50 release" (thx Alex Deucher)
+  + brcm: Add 4330 NVRAM for the Prowise PT301 tablet (thx Hans de Goede)
+  + brcm: Add 43430 NVRAM for the Chuwi Vi8 Plus tablet (thx Hans de Goede)
+  + brcm: Add 43340 based AP6234 NVRAM for the Meegopad T08 HDMI
+    stick (thx Hans de Goede)
+  + brcm: Add 43430a0 based AP6212 NVRAM for the Jumper EZpad mini
+    3 tablet (thx Hans de Goede)
+  + brcm: Add 43430a0 based AP6212 NVRAM for the Onda V80 Plus tablet (thx Hans de Goede)
+  + brcm: Add 4356 based AP6356 NVRAM for the GPD win handheld (thx Hans de Goede)
+  + brcm: Add brcmfmac43362-sdio.lemaker,bananapro.txt symlink (thx Hans de Goede)
+  + brcm: Add 43362 based AP6210 NVRAM for the Cubietech Cubietruck (thx Hans de Goede)
+  + WHENCE: Put quotes around brcmfmac NVRAM filenames (thx Hans de Goede)
+  + check_whence.py: Add support for filenames with spaces in them (thx Hans de Goede)
+  + rtl_bt: Add firmware and configuration files for the Bluetooth
+    part of RTL8723BS (thx Hans de Goede)
+  + iwlwifi: update firmwares for 8000 series (thx Emmanuel Grumbach)
+  + iwlwifi: add -43.ucode for 9000 series (thx Emmanuel Grumbach)
+  + iwlwifi: update -41.ucode for 9000 series (thx Emmanuel Grumbach)
+  + firmware/huc/bxt: Add huC Update for BXT (thx Anusha Srivatsa)
+
 * Mon Dec 17 2018 Cronbuild Service <cronbuild@altlinux.org> 20181107-alt1
 - upstream changes (GIT 211de16):
   + brcm: provide new firmwares for BCM4366 chipset (thx Arend van Spriel)
