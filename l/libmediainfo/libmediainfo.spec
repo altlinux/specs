@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 18.08.1
+Version: 18.12
 Release: alt1
 
 Group: System/Libraries
@@ -84,6 +84,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Sun Dec 23 2018 Yuri N. Sedunov <aris@altlinux.org> 18.12-alt1
+- 18.12
+
 * Sat Sep 15 2018 Yuri N. Sedunov <aris@altlinux.org> 18.08.1-alt1
 - 18.08.1
 
