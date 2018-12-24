@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.23
-Release: alt2
+Version: 0.0.23b
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -64,7 +64,7 @@ install -Dm 0755 binaries/system/libnvtt.so %buildroot%_libdir/%name/libnvtt.so
 
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 build/resources/0ad.png %buildroot%_pixmapsdir/%name.png
-install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
+ln -s pyrogenesis %buildroot%_bindir/0ad
 mkdir -p %buildroot%_datadir/0ad
 cp -a binaries/data/* %buildroot%_datadir/0ad/
 
@@ -79,6 +79,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Dec 24 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23b-alt1
+- official re-release of Alpha 23
+
 * Tue Jun 26 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23-alt2
 - bundled mozjs won't build on aarch64, trying --with-system-mozjs38
 
