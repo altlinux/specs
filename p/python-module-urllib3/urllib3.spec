@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.24.1
-Release: alt1
+Release: alt2
 
 Epoch: 2
 
@@ -164,6 +164,9 @@ popd
 #python3_sitelibdir/*/test*
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:1.24.1-alt2
+- fixed import system six
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:1.24.1-alt1
 - 1.24.1
 
