@@ -1,6 +1,8 @@
 Name: neko
 Version: 2.2.0
-Release: alt2
+Release: alt3.gitb68336c
+
+# commit: b68336cbc250937fda2741dedc7866b4d5f14d27
 
 Summary: The Neko Programming Language
 
@@ -78,11 +80,16 @@ mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 %files -n lib%name-devel
 %_libdir/*.so
+%dir %_datadir/cmake
 %_datadir/cmake/Modules/
 %_includedir/*.h
 
 
 %changelog
+* Mon Dec 24 2018 Leontiy Volodin <lvol@altlinux.org> 2.2.0-alt3.gitb68336c
+- fix build
+- build from git
+
 * Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt2
 - add libssl-devel buildreq
 - add /proc buildreq (ALT bug 35723)
