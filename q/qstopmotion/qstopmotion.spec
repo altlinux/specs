@@ -1,10 +1,10 @@
 Name: 	  qstopmotion
 Version:  2.3.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A program for stopmotion animation
 License:  GPLv2
-Group:    Other
+Group:    Graphics
 Url: 	  https://sourceforge.net/p/qstopmotion/
 
 Packager: Denis Medvedev <nbr@altlinux.org>
@@ -16,7 +16,9 @@ BuildRequires: libv4l-devel  libexif-devel libavdevice57 v4l-utils qt5-qtbase qt
 
 
 %description
-This program qStopMotion is a program to create stop motion pictures.
+qStopMotion is a program for stop motion pictures creation.
+Stop motion pictures is a kind of animation where multiple images from camera
+are arranged as a movie.
 
 
 %prep
@@ -45,5 +47,8 @@ This program qStopMotion is a program to create stop motion pictures.
 %doc AUTHORS COPYING
 
 %changelog
+* Mon Dec 24 2018 Denis Medvedev <nbr@altlinux.org> 2.3.2-alt2
+- fix compilation and group
+
 * Tue Jun 27 2017 Denis Medvedev <nbr@altlinux.org> 2.3.2-alt1
 - Initial Sisyphus release
