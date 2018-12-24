@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Group: Education
@@ -52,8 +52,12 @@ find %buildroot -name DejaVuSansMono.ttf -delete
 %_datadir/metainfo/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/pixmaps/%name.xpm
+%_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt1
+- Build new version.
+
 * Thu Aug 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.18.2-alt1
 - Build new version.
 
