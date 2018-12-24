@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.4
+Version:  1.3.5
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,13 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Mon Dec 24 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.5-alt1
+- Fix default value for gitignore
+- Use unified doc glob
+- Use right build requires for python templates
+- Add python2 templates (copy from python templates)
+
+
 * Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 1.3.4-alt1
 - Rewritten rule, when creating a new ruby gem, to make it name begining with
   "gem-";
