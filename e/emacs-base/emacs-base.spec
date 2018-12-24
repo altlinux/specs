@@ -2,8 +2,8 @@
 # $Id: emacs-base.spec,v 1.10 2006/05/03 08:50:57 eugene Exp $
 
 Name: emacs-base
-Version: 0.0.8
-Release: alt2
+Version: 0.0.9
+Release: alt1
 
 Group: Editors
 Summary: Common site start scripts for GNU Emacs
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/emacs/etc
 # 1. Добавить check-shadows?
 
 %changelog
+* Mon Dec 24 2018 Terechkov Evgenii <evg@altlinux.org> 0.0.9-alt1
+- Fix to ALT#35809
+
 * Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2
 - Provides: emacs-filesystem = 24
 
