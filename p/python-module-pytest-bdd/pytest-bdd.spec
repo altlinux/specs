@@ -1,39 +1,38 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-bdd
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 2.19.0
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
+
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/pytest-bdd/
 
+Url: https://pypi.org/project/pytest-bdd/
 # https://github.com/pytest-dev/pytest-bdd.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-tests.patch
+Patch: %name-%version-alt.patch
+BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-glob2 python-module-mako
-BuildRequires: python-module-detox python-module-mock
-BuildRequires: python-module-pytest-pep8 python-module-pytest-cov
-BuildRequires: python-module-pytest-cache python-module-pytest-xdist
-BuildRequires: python-module-markupsafe python-module-greenlet
-BuildRequires: python-module-virtualenv python-module-parse_type
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-glob2 python3-module-mako
-BuildRequires: python3-module-detox python3-module-mock
-BuildRequires: python3-module-pytest-pep8 python3-module-pytest-cov
-BuildRequires: python3-module-pytest-cache python3-module-pytest-xdist
-BuildRequires: python3-module-markupsafe python3-module-greenlet
-BuildRequires: python3-module-virtualenv python3-module-parse_type
-%endif
 
-%py_provides pytest_bdd
+%if_with check
+BuildRequires: python-module-execnet
+BuildRequires: python-module-glob2
+BuildRequires: python-module-mako
+BuildRequires: python-module-parse
+BuildRequires: python-module-parse_type
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-execnet
+BuildRequires: python3-module-glob2
+BuildRequires: python3-module-mako
+BuildRequires: python3-module-parse
+BuildRequires: python3-module-parse_type
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 pytest-bdd implements a subset of Gherkin language for the automation of
@@ -54,7 +53,6 @@ the Gherkin imperative declarations.
 %package -n python3-module-%oname
 Summary: BDD library for the py.test runner
 Group: Development/Python3
-%py3_provides pytest_bdd
 
 %description -n python3-module-%oname
 pytest-bdd implements a subset of Gherkin language for the automation of
@@ -74,23 +72,22 @@ the Gherkin imperative declarations.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
+# python mock is actually not used
+grep -qs 'import mock' tests/feature/test_wrong.py || exit 1
+sed -i '/import mock/d' tests/feature/test_wrong.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -99,34 +96,31 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
 %check
 PYTHONPATH=$(pwd) py.test -vv
-%if_with python3
 pushd ../python3
 PYTHONPATH=$(pwd) py.test3 -vv
 popd
-%endif
 
 %files
-%doc *.rst docs/*.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
+%doc CHANGES.rst README.rst
+%_bindir/pytest-bdd
+%python_sitelibdir/pytest_bdd/
+%python_sitelibdir/pytest_bdd-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
+%doc CHANGES.rst README.rst
+%_bindir/pytest-bdd.py3
+%python3_sitelibdir/pytest_bdd/
+%python3_sitelibdir/pytest_bdd-*.egg-info/
 
 %changelog
+* Mon Dec 24 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.19.0 -> 3.0.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
