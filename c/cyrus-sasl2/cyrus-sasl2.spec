@@ -10,7 +10,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.27
-Release: alt0.2
+Release: alt1
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -194,7 +194,7 @@ popd
 %set_verify_elf_method unresolved=relaxed
 
 mkdir -p %buildroot{%_bindir,%_libdir}
-%makeinstall sasldir=%buildroot%_libdir/sasl2-%abiversion libdir=%buildroot/%_lib
+make install DESTDIR=%buildroot
 
 #install -m 755 saslauthd/testsaslauthd %buildroot%_bindir
 
@@ -232,7 +232,8 @@ install -m0755 %SOURCE4 %buildroot%_initdir/saslauthd
 install -m0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/saslauthd
 
 mkdir -p %buildroot%_pkgconfigdir
-mv -f %buildroot/%_lib/pkgconfig/libsasl2.pc %buildroot%_pkgconfigdir/libsasl2.pc
+mv -f  %buildroot/%_lib/pkgconfig/libsasl2.pc %buildroot%_pkgconfigdir/libsasl2.pc
+rm -fr %buildroot/%_lib/pkgconfig
 
 rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 
@@ -299,6 +300,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Mon Dec 24 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt1
+- 2.1.27
+
 * Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt0.2
 - added libsqlite3-devel to BuildRequires
 - rebuilt with openssl 1.1
