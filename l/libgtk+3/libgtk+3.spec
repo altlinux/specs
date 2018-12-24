@@ -23,7 +23,7 @@
 
 Name: libgtk+3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -40,6 +40,9 @@ Source5: gtk-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 # move cloudproviders flags from gdk to gtk
 Patch1: gtk+-3.22.29-alt-build.patch
+
+# from upstream
+Patch10: gtk+-3.24.2-up-issue1280.patch
 
 %define glib_ver 2.50.2
 %define gi_ver 1.41.0
@@ -246,6 +249,8 @@ the functionality of the installed GTK+3 packages.
 %setup -n %_name-%version
 %patch -p1
 %patch1 -b .cloudprov
+%patch10 -p1 -b 1280
+
 # fix typo
 subst 's/dfeault/default/' docs/tools/shooter.c
 
@@ -460,6 +465,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Dec 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
+- applied fixes related to
+  https://gitlab.gnome.org/GNOME/gtk/issues/1280 (ALT #35804)
+
 * Tue Dec 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
