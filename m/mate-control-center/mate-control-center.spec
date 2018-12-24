@@ -1,5 +1,5 @@
 Name: mate-control-center
-Version: 1.20.3
+Version: 1.20.4
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop control-center
@@ -74,6 +74,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.4-alt1
+- 1.20.4
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.3-alt1
 - 1.20.3
 

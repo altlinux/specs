@@ -1,5 +1,5 @@
 Name: mate-media
-Version: 1.20.0
+Version: 1.20.2
 Release: alt1
 Epoch: 1
 Summary: MATE media programs
@@ -45,6 +45,9 @@ including a volume control.
 %_man1dir/*.1*
 
 %changelog
+* Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Tue Mar 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
