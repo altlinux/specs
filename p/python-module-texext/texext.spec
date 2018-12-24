@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5
+Version: 0.6.1
 Release: alt1
 Summary: Sphinx extensions for working with LaTeX math
 License: BSD
@@ -15,11 +15,11 @@ Url: https://github.com/matthew-brett/texext
 # https://github.com/matthew-brett/texext.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools python-module-sphinxtesters
 BuildRequires: python2.7(docutils) python2.7(sphinx.errors) python2.7(sphinxtesters) python2.7(sympy) python2.7(nose.tools) python2.7(matplotlib.sphinxext.plot_directive)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-sphinxtesters
 BuildRequires: python3(docutils) python3(sphinx.errors) python3(sphinxtesters) python3(sympy) python3(nose.tools) python3(matplotlib.sphinxext.plot_directive)
 %endif
 
@@ -83,5 +83,8 @@ popd
 %endif
 
 %changelog
+* Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
+- Build new version.
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt1
 - Initial build for ALT.

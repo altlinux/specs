@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.8
-Release: alt1.git20150730.2
+Version: 0.4.2
+Release: alt1
 Summary: ReadTheDocs.org theme for Sphinx
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sphinx_rtd_theme/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/snide/sphinx_rtd_theme.git
 Source: %name-%version.tar
@@ -73,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.8-alt1.git20150730.2
 - (NMU) rebuild with python3.6
 
