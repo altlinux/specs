@@ -3,8 +3,8 @@
 %define grass_version 7.4.3
 
 Name:    qgis
-Version: 2.18.16
-Release: alt4
+Version: 2.18.27
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -331,6 +331,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Mon Dec 24 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.27-alt1
+- New version.
+
 * Thu Dec 20 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt4
 - Rebuild with grass 7.4.3.
 - Require libqwt6 (ALT #35131).
