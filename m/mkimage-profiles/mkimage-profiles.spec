@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Dec 24 2018 Michael Shigorin <mike@altlinux.org> 1.3.3-alt1
+- aarch64/armh portability fixups (antohami@)
+- grub-based vm images (shaba@)
+- even smaller images (glebfm@)
+- lxc/lxd lists/feature/image (dans@)
+- updated robotics lists/image (dd@)
+- e2k: 801/101/jeos tweaks (me)
+
 * Mon Dec 10 2018 Michael Shigorin <mike@altlinux.org> 1.3.2-alt1
 - sisyphus drops
 
