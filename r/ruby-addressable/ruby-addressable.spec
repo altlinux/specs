@@ -1,6 +1,6 @@
 Name:    ruby-addressable
 Version: 2.5.2
-Release: alt2
+Release: alt3
 
 Summary: Addressable is a replacement for the URI implementation that is part of Ruby's standard library
 Summary(ru_RU.UTF-8): "Адресуемый" есть заменою воплощения URI, который является частью стандартной библиотеки рубина
@@ -41,6 +41,7 @@ Documentation for %{name}.
 %prep
 %setup -n %name-%version
 %update_setup_rb
+sed "s|File.join(File.dirname(__FILE__), '../../..', 'data/unicode.data')|'%_datadir/%name/unicode.data'|" -i lib/addressable/idna/pure.rb
 
 %build
 %ruby_config
@@ -67,6 +68,9 @@ mv %buildroot%_datadir/unicode.data %buildroot%_datadir/%name/unicode.data
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt3
+- Enable replace hardcoded path to "unicode.data" to ALT system's one.
+
 * Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt2
 - Fixed packing procedure of the "unicode.data" file
 - Added russian translations to spec.
