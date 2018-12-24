@@ -4,7 +4,7 @@
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: 0.19.1
+Version: 0.19.2
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -104,6 +104,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Mon Dec 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt1
+- 0.19.2 (fixed CVE-2018-20363, CVE-2018-20364, CVE-2018-20365)
+
 * Fri Nov 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.19.1-alt1
 - 0.19.1
 
