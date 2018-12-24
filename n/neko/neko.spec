@@ -1,6 +1,6 @@
 Name: neko
 Version: 2.2.0
-Release: alt3.gitb68336c
+Release: alt4.gitb68336c
 
 # commit: b68336cbc250937fda2741dedc7866b4d5f14d27
 
@@ -23,6 +23,10 @@ BuildRequires: rpm-macros-cmake cmake git-core
 BuildRequires: apache2-devel libgc-devel libgtk+2-devel libssl-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libmbedtls-devel libaprutil1-devel libapr1-devel
 
 Requires: lib%name = %version-%release
+
+# TODO: move to a separate package
+# Apache modules
+%add_verify_elf_skiplist %_libdir/neko/mod_tora2.ndll %_libdir/neko/mod_neko2.ndll
 
 %description
 Neko is an intermediate programming language. It has been designed to
@@ -86,6 +90,9 @@ mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 
 %changelog
+* Mon Dec 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt4.gitb68336c
+- fix build warning (hide Apache2 symbols)
+
 * Mon Dec 24 2018 Leontiy Volodin <lvol@altlinux.org> 2.2.0-alt3.gitb68336c
 - fix build
 - build from git
