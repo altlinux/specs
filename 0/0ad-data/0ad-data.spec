@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.23
+Version: 0.0.23b
 Release: alt1
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Mon Dec 24 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23b-alt1
+- official re-release of Alpha 23
+
 * Tue Jun 05 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23-alt1
 - 0.0.22 -> 0.0.23
 
