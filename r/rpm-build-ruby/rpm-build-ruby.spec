@@ -2,8 +2,8 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.7
-Release: alt7
+Version: 0.7.1
+Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -18,7 +18,7 @@ Requires: %_bindir/rdoc
 Requires: %_bindir/rake
 Requires: rpm-macros-ruby = %EVR
 Requires: ruby-test-unit = %EVR
-Requires: ruby-bundler
+Requires: ruby-gem(bundler)
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -69,6 +69,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7.1-alt1
+- Added provides for ruby gem as "gem(<gem_name>)".
+
 * Wed Sep 26 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt7
 - Fix absent pry gem require.
 
