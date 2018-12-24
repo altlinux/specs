@@ -1,8 +1,8 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -14,28 +14,27 @@ Url: http://%name.org/
 #Source: %name-%version.tar
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
+%define cmake_ver 3.4
 %define glib_ver 2.40
 %define gtk_ver 3.14
 %define exiv2_ver 0.24
-%define llvm_ver 3.9
 %define iso_codes_ver 3.66
 
 Requires: iso-codes >= %iso_codes_ver
+Requires: icon-theme-adwaita
 
+BuildRequires(pre): cmake >= %cmake_ver
 BuildRequires: gcc-c++ libgomp-devel
-#BuildRequires: llvm-devel >= %llvm_ver
-BuildPreReq:  rpm-build-gnome
 BuildRequires: /proc
+BuildRequires: intltool desktop-file-utils libappstream-glib-devel
+BuildRequires: perl-Pod-Parser xsltproc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libxml2-devel
-BuildRequires: cmake intltool desktop-file-utils libappstream-glib-devel
-BuildRequires: libSDL-devel libXScrnSaver-devel libXcomposite-devel
-BuildRequires: libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
-BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libSDL2-devel libX11-devel libXrandr-devel libcurl-devel
 BuildRequires: libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
 BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
-BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
-BuildRequires: openexr-devel perl-Pod-Parser
-BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
+BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel
+BuildRequires: openexr-devel libxkbcommon-x11-devel lsb-release
+BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
 BuildRequires: libGraphicsMagick-c++-devel libopenjpeg2.0-devel
 BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
@@ -83,6 +82,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Mon Dec 24 2018 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1
 - 2.4.4
 
