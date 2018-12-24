@@ -1,35 +1,63 @@
 %define oname networkx
 
 %def_disable docs
-%def_with python3
 
 Name:           python-module-%oname
-Version:        1.11
-Release:        alt2
+Version:        2.2
+Release:        alt1
 Epoch:          2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
-URL:            https://networkx.lanl.gov/trac
+URL:            http://networkx.github.io
 # https://github.com/networkx/networkx.git
 Source:         %oname-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python-module-pydotplus python-module-pygraphviz python-module-scipy python-module-sphinx-pickles python-module-yaml  time
-
 BuildRequires: python-devel
-#BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
-#BuildPreReq: python-module-pydotplus python-module-matplotlib
-#BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
-#BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: graphviz python-module-setuptools python-module-decorator
-BuildPreReq: python-module-sphinx_rtd_theme
-%if_with python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-decorator >= 4.3.0
+BuildRequires: python-module-numpy >= 1.15.0
+BuildRequires: python-module-scipy >= 1.1.0
+BuildRequires: python-module-pandas >= 0.23.3
+BuildRequires: python-module-matplotlib >= 2.2.2
+BuildRequires: python-module-pygraphviz >= 1.5
+BuildRequires: python-module-pydot >= 1.2.4
+BuildRequires: python-module-yaml >= 3.13
+BuildRequires: python-module-lxml >= 4.2.3
+BuildRequires: python-module-gdal >= 1.10.0
+
+%if_enabled docs
+BuildRequires: python-module-sphinx >= 1.7.6
+BuildRequires: python-module-sphinx_rtd_theme >= 0.4.1
+BuildRequires: python-module-sphinx-gallery >= 0.2.0
+BuildRequires: python-module-Pillow >= 5.2.0
+BuildRequires: python-module-nb2plots >= 0.6
+BuildRequires: python-module-texext >= 0.6
+%endif
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-decorator >= 4.3.0
+BuildRequires: python3-module-numpy >= 1.15.0
+BuildRequires: python3-module-scipy >= 1.1.0
+BuildRequires: python3-module-pandas >= 0.23.3
+BuildRequires: python3-module-matplotlib >= 2.2.2
+BuildRequires: python3-module-pygraphviz >= 1.5
+BuildRequires: python3-module-pydot >= 1.2.4
+BuildRequires: python3-module-yaml >= 3.13
+BuildRequires: python3-module-lxml >= 4.2.3
+BuildRequires: python3-module-gdal >= 1.10.0
+
+%if_enabled docs
+BuildRequires: python3-module-sphinx >= 1.7.6
+BuildRequires: python3-module-sphinx_rtd_theme >= 0.4.1
+BuildRequires: python3-module-sphinx-gallery >= 0.2.0
+BuildRequires: python3-module-Pillow >= 5.2.0
+BuildRequires: python3-module-nb2plots >= 0.6
+BuildRequires: python3-module-texext >= 0.6
 %endif
 
 Requires: %name-drawing = %EVR
@@ -47,6 +75,7 @@ Requires: python-module-numpy
 Requires: python-module-scipy
 %add_python_req_skip tests
 %add_python_req_skip networkx.drawing
+%add_python_req_skip networkx.readwrite.nx_shp
 %add_python_req_skip networkx.tests.test
 
 %description core
@@ -58,7 +87,7 @@ Summary: Creates and Manipulates Graphs and Networks
 Group: Development/Python
 Requires: %name-core = %EVR
 Requires: python-module-pygraphviz
-Requires: python-module-pydotplus
+Requires: python-module-pydot
 Requires: python-module-matplotlib
 
 %description drawing
@@ -67,7 +96,6 @@ study of the structure, dynamics, and functions of complex networks.
 
 This package provides support for graph visualizations.
 
-%if_with python3
 %package -n python3-module-%oname-core
 Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
@@ -76,6 +104,9 @@ Requires: python3-module-yaml
 Requires: python3-module-numpy
 Requires: python3-module-scipy
 %add_python3_req_skip tests
+%add_python3_req_skip networkx.drawing
+%add_python3_req_skip networkx.readwrite.nx_shp
+%add_python3_req_skip networkx.tests.test
 
 %description -n python3-module-%oname-core
 NetworkX is a Python package for the creation, manipulation, and
@@ -86,7 +117,7 @@ Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname-core = %EVR
 Requires: python3-module-pygraphviz
-Requires: python3-module-pydotplus
+Requires: python3-module-pydot
 Requires: python3-module-matplotlib
 
 %description -n python3-module-%oname-drawing
@@ -114,9 +145,6 @@ NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
 This package contains tests for NetworkX.
-%endif
-
-%if_enabled docs
 
 %package docs
 Summary: Documentation for NetworkX
@@ -138,8 +166,6 @@ study of the structure, dynamics, and functions of complex networks.
 
 This package contains pickles for NetworkX.
 
-%endif
-
 %package tests
 Summary: Tests for NetworkX
 Group: Development/Python
@@ -157,10 +183,8 @@ chmod -x examples/*/*.py
 chmod -x examples/*/*.bz2
 sed -i '1,1d' networkx/tests/test.py
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %if_enabled docs
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -168,20 +192,13 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %endif
 
 %build
-#python_build_debug
-#pushd nose_plugin
 %python_build
-#popd
 
-%if_with python3
 pushd ../python3
-#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 find -type f -name '*.py' -exec sed -i \
 	's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-#python3_build_debug
 %python3_build
 popd
-%endif
 
 %install
 %python_install -O1
@@ -189,11 +206,9 @@ popd
 #python_install -O1
 #popd
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %if_enabled docs
 export PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir
@@ -245,7 +260,6 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 
 %files -n python3-module-%oname-core
@@ -267,9 +281,11 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/*/testing
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/*/tests
-%endif
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:2.2-alt1
+- 2.2
+
 * Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 2:1.11-alt2
 - update recuires pydot -> pydotplus
 
