@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:     netlabel_tools
 Version:  0.30.0
-Release:  alt2%ubt
+Release:  alt3
 Summary:  Configuration tools for the Linux NetLabel subsystem
 License:  %gpl2only
 Group:    System/Base
@@ -9,7 +11,7 @@ Url:      https://github.com/netlabel/netlabel_tools
 Source:   %name-%version.tar
 Patch1:   %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-ubt
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: libnl-devel doxygen systemd-devel
 
 %description
@@ -30,22 +32,27 @@ Kernel's NetLabel configuration.
 %install
 %makeinstall_std
 
-%files
+%find_lang --with-man --all-name %name
+
+%files -f %name.lang
 %config(noreplace) %_sysconfdir/netlabel.rules
 %systemd_unitdir/netlabel.service
 %_sbindir/netlabel-config
 %_sbindir/netlabelctl
-%_man8dir/netlabel-config.8.*
-%_man8dir/netlabelctl.8.*
+%_man8dir/netlabel-config.8*
+%_man8dir/netlabelctl.8*
 
 %changelog
-* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.0-alt2%ubt
+* Tue Dec 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.0-alt3
+- Added man pages translation by Olesya Gerasimenko.
+
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.0-alt2
 - Updated to upstream version 0.30.0.
 
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2
 - NMU: added URL
 
-* Wed Jan 18 2017 Anton Farygin <rider@altlinux.ru> 0.21-alt1%ubt
+* Wed Jan 18 2017 Anton Farygin <rider@altlinux.ru> 0.21-alt1
 - added ubt tag
 - netlabel.rules marked as non-replaced config
 

@@ -6,7 +6,7 @@
 Name: libselinux
 Epoch: 1
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -99,6 +99,11 @@ popd
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib LIBSEPOLA=%_libdir/libsepol.a %{?_with_python:install-pywrap}
 install -d -m 0755 %buildroot/var/run/setrans
 
+%find_lang --with-man --all-name %name
+
+egrep -v 'booleans\.8|selinux\.8' %name.lang > %name-utils.lang
+egrep    'booleans\.8|selinux\.8' %name.lang > %name-files.lang
+
 %check
 # Some vital PAM modules are linked with libselinux and therefore
 # we cannot allow libselinux to be linked with libpthread.
@@ -107,7 +112,7 @@ if ldd -r %buildroot%_libdir/libselinux.so 2>&1 |grep -Fq libpthread; then
 	exit 1
 fi
 
-%files
+%files -f %name-files.lang
 /%_lib/*.so.*
 %_man8dir/booleans.*
 %_man8dir/selinux.*
@@ -122,7 +127,7 @@ fi
 %files devel-static
 %_libdir/*.a
 
-%files utils
+%files utils -f %name-utils.lang
 %_sbindir/*
 %_man5dir/*
 %_man8dir/*
@@ -140,6 +145,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
+- Added man pages translation by Olesya Gerasimenko.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
 - Updated to upstream version 2.8.
 

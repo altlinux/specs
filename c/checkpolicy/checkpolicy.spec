@@ -3,12 +3,13 @@
 Name: checkpolicy
 Epoch: 1
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
 License: GPLv2
 Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
+Patch1: %name-%version-checkpolicy-alt.patch
 
 BuildRequires: flex libselinux-devel >= 2.8 libsepol-devel >= 2.8 libsepol-devel-static >= 2.8
 
@@ -27,7 +28,8 @@ This package contains checkpolicy, the SELinux policy compiler.
 Only required for building policies.
 
 %prep
-%setup -q
+%setup
+%patch1 -p1
 
 %build
 %make_build LIBDIR=%_libdir CFLAGS="%optflags"
@@ -38,11 +40,16 @@ for f in dis{mod,pol}; do
 	install test/$f %buildroot%_bindir/se$f
 done
 
-%files
+%find_lang --with-man --all-name %name
+
+%files -f %name.lang
 %_bindir/*
 %_man8dir/*
 
 %changelog
+* Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
+- Added man pages translation by Olesya Gerasimenko.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
 - Updated to upstream version 2.8.
 
