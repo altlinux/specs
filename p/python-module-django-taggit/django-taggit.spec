@@ -4,8 +4,8 @@
 %def_with bootstrap
 
 Name: python-module-%oname
-Version: 0.12.2
-Release: alt2
+Version: 0.23.0
+Release: alt1
 Summary: Simple tagging for django
 License: BSD
 Group: Development/Python
@@ -27,6 +27,8 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-isort
+BuildRequires: python3-module-isort
 
 %description
 django-taggit is a reusable Django application for simple tagging.
@@ -83,6 +85,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.23.0-alt1
+- Build new version.
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt2
 - rebuild with python3.6
 

@@ -2,18 +2,19 @@
 
 %def_with python3
 %def_disable check
+%def_disable tests
 
 Name: python-module-%oname
-Version: 1.2.4
-Release: alt1.git20140714.1.2
+Version: 1.4.9
+Release: alt1
 Summary: Implementation of per object permissions for Django 1.2 or later
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/django-guardian/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/lukaszb/django-guardian.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
+Patch0: %name-%version-%release.patch
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -77,38 +78,13 @@ with older Django releases.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-django-guardian is implementation of per object permissions as
-authorization backend which is supported since Django 1.2. It won't work
-with older Django releases.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-django-guardian is implementation of per object permissions as
-authorization backend which is supported since Django 1.2. It won't work
-with older Django releases.
-
-This package contains documentation for %oname.
-
 %prep
-%setup
+%setup -n django-guardian-%version
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
 
 %build
 %python_build_debug
@@ -128,11 +104,7 @@ pushd ../python3
 popd
 %endif
 
-%make -C docs pickle
-%make -C docs html
-
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -152,14 +124,10 @@ popd
 %dir %python_sitelibdir/%oname
 %exclude %python_sitelibdir/guardian/test*
 
+%if_enabled tests
 %files tests
 %python_sitelibdir/guardian/test*
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -169,12 +137,17 @@ popd
 %exclude %python3_sitelibdir/guardian/test*
 %exclude %python3_sitelibdir/guardian/*/test*
 
+%if_enabled tests
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/guardian/test*
 %python3_sitelibdir/guardian/*/test*
 %endif
+%endif
 
 %changelog
+* Fri Dec 21 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.9-alt1
+- update to 1.4.9
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.4-alt1.git20140714.1.2
 - (NMU) rebuild with python3.6
 

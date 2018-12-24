@@ -1,8 +1,8 @@
 %define oname django-jenkins
 
 Name: python-module-%oname
-Version: 0.16.3
-Release: alt2.1
+Version: 0.19.0
+Release: alt1
 
 Summary: Plug and play continuous integration with django and jenkins
 License: LGPLv3
@@ -59,6 +59,9 @@ popd
 
 
 %changelog
+* Sun Dec 23 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.19.0-alt1
+- update to 0.19.0
+
 * Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.16.3-alt2.1
 - rebuild with all requires
 

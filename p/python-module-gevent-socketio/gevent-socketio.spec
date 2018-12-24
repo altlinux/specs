@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt2.git20140202.1.1.1
+Release: alt3.git20140202
 Summary: SocketIO server based on the Gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/abourget/gevent-socketio.git
 Source: %name-%version.tar
+Patch: fix-django-utils-importlib-since-1.9.patch
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -69,6 +70,8 @@ This package contains pickles for gevent-socketio.
 
 %prep
 %setup
+%patch -p1
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -117,6 +120,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/socketio/
 %endif
 
 %changelog
+* Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.6-alt3.git20140202
+- Adapt module for a new Django.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.6-alt2.git20140202.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
