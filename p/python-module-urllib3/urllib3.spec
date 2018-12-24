@@ -1,10 +1,8 @@
 %define oname urllib3
-%def_without tests
-
-%def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.21.1
+Version: 1.24.1
 Release: alt1
 
 Epoch: 2
@@ -16,7 +14,7 @@ Group: Development/Python
 Url: https://github.com/shazow/urllib3/
 
 # make all imports of things in packages try system copies first
-Patch0: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 # https://github.com/shazow/urllib3.git
 Source: %oname-%version.tar
@@ -31,14 +29,13 @@ BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-mock
 BuildRequires: python-module-nose
 BuildRequires: python-module-socks
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose
-%endif
 
 %setup_python_module %oname
 
@@ -107,30 +104,25 @@ This package contains documentation for urllib3.
 #rm -rf urllib3/packages/
 %patch -p1
 
-%if_with python3
 cp -fR . ../python3
-%endif
+
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
@@ -140,15 +132,13 @@ popd
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
-%if_with tests
 %check
 py.test
-%if_with python3
+
 pushd ../python3
 py.test-3
 popd
-%endif
-%endif
+
 
 %files
 %doc *.txt *.rst
@@ -165,7 +155,6 @@ popd
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -173,9 +162,11 @@ popd
 
 #files -n python3-module-%oname-tests
 #python3_sitelibdir/*/test*
-%endif
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:1.24.1-alt1
+- 1.24.1
+
 * Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2:1.21.1-alt1
 - 1.21.1
 - Add optional test check

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pkgname requests
-%def_with python3
+
 %def_disable check
 
 Name:           python-module-requests
-Version:        2.19.1
+Version:        2.21.0
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
@@ -14,17 +14,23 @@ URL:            https://pypi.io/project/requests
 Source0:        %pkgname-%version.tar
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
-Patch0:         python-requests-system-cert-bundle.patch
-# Remove an unnecessary reference to a bundled compat lib in urllib3
-# Some discussion with upstream:
-# - https://twitter.com/sigmavirus24/status/529816751651819520
-# - https://github.com/kennethreitz/requests/issues/1811
-# - https://github.com/kennethreitz/requests/pull/1812
-Patch1:         dont-import-OrderedDict-from-urllib3.patch
+Patch0:         patch-requests-certs.py-to-use-the-system-CA-bundle.patch
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=1450608
 Patch2:         Remove-tests-that-use-the-tarpit.patch
+
+# Use 127.0.0.1 not localhost for socket.bind() in the Server test
+# class, to fix tests in Koji's no-network environment
+# This probably isn't really upstreamable, because I guess localhost
+# could technically be IPv6 or something, and our no-network env is
+# a pretty odd one so this is a niche requirement.
+Patch3:         requests-2.12.4-tests_nonet.patch
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=1567862
-Patch3:         Don-t-inject-pyopenssl-into-urllib3.patch
+Patch4:         Don-t-inject-pyopenssl-into-urllib3.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1653223
+Patch5:         requests-2.20.0-no-py2-httpbin.patch
 
 BuildArch:      noarch
 
@@ -43,7 +49,6 @@ cumbersome. Python's built-in urllib2 module provides most of the HTTP
 capabilities you should need, but the API is thoroughly broken. This library is
 designed to make HTTP requests easy for developers.
 
-%if_with python3
 %package -n python3-module-%pkgname
 Summary: HTTP library, written in Python, for human beings
 Group:   Development/Python3
@@ -59,52 +64,49 @@ Most existing Python modules for sending HTTP requests are extremely verbose and
 cumbersome. Python's built-in urllib2 module provides most of the HTTP
 capabilities you should need, but the API is thoroughly broken. This library is
 designed to make HTTP requests easy for developers.
-%endif
 
 %prep
 %setup -n requests-%{version}
 
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
+
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
-%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.rst README.rst
+%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.md README.md
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%pkgname
-%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.rst README.rst
+%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.md README.md
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2.21.0-alt1
+- 2.21.0
+
 * Fri Jul 06 2018 Dmitry V. Levin <ldv@altlinux.org> 2.19.1-alt1
 - Emergency NMU: 2.18.4 -> 2.19.1.
 
