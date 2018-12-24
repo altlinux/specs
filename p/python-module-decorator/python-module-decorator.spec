@@ -1,10 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define oname decorator
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 4.0.11
+Version: 4.3.0
 Release: alt1
 Summary: Better living through Python with decorators
 License: BSD
@@ -12,20 +10,16 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/decorator
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/cc/ac/5a16f1fc0506ff72fcc8fd4e858e3a1c231f224ab79bb7c4c9b2094cc570/%{oname}-%{version}.tar.gz
-#Source1: https://raw.githubusercontent.com/micheles/decorator/24d5f1539f0d876e4871ecca4f671d0710ab35bf/docs/README.rst
+Source0: https://files.pythonhosted.org/packages/source/d/%oname/%oname-%version.tar.gz
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
 
-#BuildRequires: python3-devel python3-module-distribute
-%endif
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 Python decorators are an interesting example of why syntactic sugar
@@ -46,7 +40,6 @@ since:
 
                      Michele Simionato <michele simionato at gmail com>
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Better living through Python 3 with decorators
 Group: Development/Python3
@@ -69,45 +62,42 @@ since:
 * decorators are explicit.
 
                      Michele Simionato <michele simionato at gmail com>
-%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
 
 #install -Dm644 %SOURCE1 docs/README.rst
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
+
 
 %files
-%doc *.txt documentation.*
+%doc CHANGES.md LICENSE.txt docs/README.rst
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt documentation.*
+%doc CHANGES.md LICENSE.txt docs/README.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 4.3.0-alt1
+- 4.3.0
+
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1
 - automated PyPI update
 
