@@ -6,12 +6,12 @@
 %define build_parallel_jobs 32
 %endif
 
-%define enigmail_version  2.0.8
+%define enigmail_version  2.0.9
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.3.3
+Version:	60.4.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -466,6 +466,10 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Dec 24 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
+- New version (60.4.0).
+- Enigmail 2.0.9.
+
 * Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.3-alt1
 - New version (60.3.3).
 
