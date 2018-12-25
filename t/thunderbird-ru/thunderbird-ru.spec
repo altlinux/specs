@@ -4,10 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %tbird_noarch_extensionsdir/%cid_dict
 
-%define cid_lightning_dir  %tbird_noarch_extensionsdir/langpack-ru@lightning.mozilla.org
-
 Name:		thunderbird-ru
-Version:	60.3.0
+Version:	60.4.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird (with Lightning support)
 
@@ -18,9 +16,6 @@ Packager:	Andrey Cherepanov <cas@altlinux.org>
 BuildArch:	noarch
 
 Source0:	ru-%version.xpi
-Source1:        lightning-ru-%version.xpi
-Patch0:         fix-metadata-for-languagepack-in-install.rdf.patch
-
 
 Requires:	hunspell-ru
 Provides:	thunderbird-esr-ru = %version-%release
@@ -32,7 +27,7 @@ BuildRequires(pre):	rpm-build-thunderbird
 BuildRequires:		unzip
 
 %description
-The Mozilla Thunderbird in Russian (with Lightning support).
+The Mozilla Thunderbird in Russian.
 
 %prep
 %setup -c -n %name-%version/%cid
@@ -72,20 +67,17 @@ EOF
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%cid_dict_dir/dictionaries/ru.aff
 ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
-# Lightning localization
-mkdir -p %buildroot/%cid_lightning_dir
-unzip -qq -d %buildroot/%cid_lightning_dir %SOURCE1
-cd %buildroot/%cid_lightning_dir
-patch -p2 < %PATCH0
-
 %files
 %cid_dir
 %cid_dict_dir
-%cid_lightning_dir
 
 %changelog
+* Mon Dec 24 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
+- New version.
+
 * Fri Nov 02 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.0-alt1
 - New version.
+- Move Russian localization of Lightning to thunderbird.
 
 * Thu Oct 18 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.1-alt1
 - New version.
