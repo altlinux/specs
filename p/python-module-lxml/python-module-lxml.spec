@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 4.2.1
-Release: alt1.1
+Version: 4.2.5
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -98,7 +98,6 @@ This package contains documentation for lxml.
 %prep
 %setup
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -139,7 +138,7 @@ PYTHONPATH=src python src/lxml/tests/selftest2.py
 %if_with python3
 pushd ../python3
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-#python3 test.py -p -v
+python3 test.py -p -v
 PYTHONPATH=src python3 src/lxml/tests/selftest.py
 PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 popd
@@ -157,6 +156,9 @@ popd
 %doc doc samples
 
 %changelog
+* Tue Dec 25 2018 Grigory Ustinov <grenka@altlinux.org> 4.2.5-alt1
+- Build new version
+
 * Tue Mar 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
