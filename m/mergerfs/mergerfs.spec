@@ -1,5 +1,5 @@
 Name: mergerfs
-Version: 2.23.1
+Version: 2.25.1
 Release: alt1
 
 Summary: A FUSE union filesystem
@@ -13,7 +13,7 @@ Packager: Evgenii Terechkov <evg@altlinux.org>
 # Source-url: https://github.com/trapexit/mergerfs/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libattr-devel libfuse-devel pandoc
+BuildRequires: gcc-c++ libattr-devel libfuse-devel
 
 %description
 mergerfs is similar to mhddfs, unionfs, and aufs. Like mhddfs in that it too
@@ -22,13 +22,16 @@ behavior.
 
 %prep
 %setup
+rm -rf libfuse/
+echo "#pragma once" > src/version.hpp
+echo "static const char MERGERFS_VERSION[] = \"%version\";" >> src/version.hpp
 
 %build
-%make_build
+%make_build INTERNAL_FUSE=0
 make man
 
 %install
-%makeinstall_std PREFIX=%_prefix
+%makeinstall_std INTERNAL_FUSE=0 PREFIX=%_prefix
 mkdir -p %buildroot/sbin/
 ln -s ../usr/bin/mount.mergerfs %buildroot/sbin/
 
@@ -40,6 +43,10 @@ ln -s ../usr/bin/mount.mergerfs %buildroot/sbin/
 %doc README.md
 
 %changelog
+* Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 2.25.1-alt1
+- new version 2.25.1 (with rpmrb script)
+- build with system libfuse
+
 * Fri Feb 02 2018 Vitaly Lipatov <lav@altlinux.ru> 2.23.1-alt1
 - move to classic build from tarball
 - new version (2.23.1) with rpmgs script
