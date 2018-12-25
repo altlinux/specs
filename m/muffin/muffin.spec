@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.0.3
-Release: alt2
+Version: 4.0.5
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -194,6 +194,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.5-alt1
+- 4.0.5
+
 * Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.3-alt2
 - add libGL-devel BR, do not rely on indirect deps
 
