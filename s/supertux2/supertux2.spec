@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.6.0
-Release: alt2
+Release: alt2.1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -15,6 +15,8 @@ Source: SuperTux-v%version-Source.tar.gz
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
+
+Patch: supertux2-alt-fix-translations.patch
 
 Requires: %name-data = %version-%release
 
@@ -50,6 +52,7 @@ This is package contains data files for supertux2.
 
 %prep
 %setup -n SuperTux-v%version-Source
+%patch -p2
 
 %build
 %cmake_insource \
@@ -92,6 +95,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Tue Dec 25 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt2.1
+- Fixed Russian translations in settings
+
 * Mon Dec 24 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt2
 - 0.6.0 final release
 
