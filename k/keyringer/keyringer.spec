@@ -1,5 +1,5 @@
 Name: keyringer
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Encrypted and distributed secret sharing software
@@ -39,6 +39,9 @@ with custom commands to encrypt, decrypt, recrypt, create key pairs, etc.
 %_datadir/zsh/vendor-completions/_keyringer
 
 %changelog
+* Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5.3-alt1
+- new version 0.5.3 (with rpmrb script)
+
 * Thu Mar 01 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - build new version
 
