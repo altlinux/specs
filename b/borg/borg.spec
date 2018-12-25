@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.1.7
-Release: alt1.1
+Version: 1.1.8
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 25 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.8-alt1
+- update version to 1.1.8
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.7-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
