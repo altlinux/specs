@@ -4,7 +4,7 @@
 
 Name: gnutls%libgnutls_soname
 Version: 3.6.5
-Release: alt1
+Release: alt3
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -17,6 +17,7 @@ Source: gnutls-%version.tar
 Patch2: Fix-build-cipher-openssl-compat-test.patch
 Patch3: Fix-privkey-verify-broken-test.patch
 Patch4: tests-Use-IPv4-only-in-s_server.patch
+Patch6: gnulib-E2K-fix-for-lcc-1.23.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_enable guile
@@ -42,7 +43,8 @@ BuildRequires: guile22-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: net-tools}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: datefudge}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: softhsm}}
+# tests/pkcs11/tls-neg-pkcs11-key.c doesn't work with softhsm-2.1.0:
+%{?!_without_check:%{?!_disable_check:BuildRequires: softhsm >= 2.4.0}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: openssl}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: libssl-devel}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: socat}}
@@ -206,7 +208,15 @@ This package contains the GnuTLS API Reference Manual.
 %setup -n gnutls-%version
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
+# Make sure the gnulib files we'd like to patch are identical:
+cmp {src/gl,gl}/intprops.h
+cmp {src/gl,gl/tests}/xalloc-oversized.h
+pushd src/gl
+%patch6 -p4
+popd
+cp -fv {src/gl,gl}/intprops.h
+cp -fv {src/gl,gl/tests}/xalloc-oversized.h
+
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -251,11 +261,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %define _unpackaged_files_terminate_build 1
 
 %check
-%ifarch %e2k
-# This library can't be dlopened for some reason.
-# Just preload it for pksc11 tests.
-export LD_PRELOAD=libcxa.so.2
-%endif
+# The option inserted by the patch is unknown in older openssl:
+if openssl s_server --help 2>&1 | grep -Ewe '^[[:blank:]]*-4'; then
+   patch -p2 < %PATCH4
+fi
 %make_build -k check
 
 %files -n lib%name -f gnutls%libgnutls_soname.lang
@@ -312,6 +321,13 @@ export LD_PRELOAD=libcxa.so.2
 %endif
 
 %changelog
+* Tue Dec 25 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.6.5-alt3
+- Fixed build with lcc-1.23 (on E2K) with a gnulib patch (inspired by MCST).
+
+* Mon Dec 10 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.6.5-alt2
+- (.spec) Adapted %%check to older build environments (useful for E2K)
+  or put the corresponding Buildrequires (on the new version of utils).
+
 * Thu Dec 06 2018 Mikhail Efremov <sem@altlinux.org> 3.6.5-alt1
 - Updated to 3.6.5 (fixes: CVE-2018-16868).
 
