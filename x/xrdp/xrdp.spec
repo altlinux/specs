@@ -1,5 +1,5 @@
 Name: 	 xrdp
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -22,7 +22,6 @@ Source6: xorgxrdp.tar
 # patches from Debian
 Patch2: asm-xorgxrdp.diff
 Patch3: make-fixes.diff
-Patch4: xrdp-alt-fix-config.patch
 Patch5: misc-fixes.diff
 Patch7: shutup-daemon.diff
 Patch10: lfs.diff
@@ -86,7 +85,6 @@ tar xf %SOURCE5
 tar xf %SOURCE6
 #patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch7 -p1
 %patch10 -p1
@@ -230,6 +228,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Tue Dec 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt1
+- New version.
+
 * Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
 - New version.
 
