@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-yaml
-Version: 3.12
-Release: alt1.1
+Version: 3.13
+Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 25 2018 Grigory Ustinov <grenka@altlinux.org> 3.13-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
