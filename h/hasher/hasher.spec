@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.32
+Version: 1.3.33
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -58,6 +58,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Tue Dec 25 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.33-alt1
+- make_srpm_from_pkgtar: use $wlimit_time_long (closes: #35548).
+- mkaptbox: added preferences file/dir support (by Michael Shigorin and me).
+- hsh: remove old chroot before invoking mkaptbox.
+
 * Fri Jul 13 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.32-alt1
 - hsh-rebuild --query-repackage (by Ivan Zakharyaschev):
   + changed to use make_srpm_from_pkgtar(),
