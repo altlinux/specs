@@ -1,5 +1,5 @@
 Name:    magic-wormhole
-Version: 0.10.5
+Version: 0.11.2
 Release: alt1
 
 Summary: get things from one computer to another, safely
@@ -21,13 +21,13 @@ BuildArch: noarch
 # do not provide internal modules
 AutoProv:yes,nopython3
 
-%py3_use txtorcon >= 0.19.3
-%py3_use spake2 >= 0.7
+%py3_use txtorcon >= 18.0.2
+%py3_use spake2 >= 0.8
 %py3_use attrs >= 16.3.0
 %py3_use tqdm >= 4.13.0
 %py3_use click >= 6.7
 %py3_use humanize
-%py3_use ipaddress
+#py3_use ipaddress
 %py3_use automat
 %py3_use hkdf
 
@@ -67,11 +67,15 @@ rm -rf %buildroot%python3_sitelibdir/wormhole/test/
 
 %files
 %_bindir/wormhole
-%_bindir/wormhole-server
+#_bindir/wormhole-server
 %python3_sitelibdir/wormhole/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt1
+- new version 0.11.2 (with rpmrb script)
+- update requirements
+
 * Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.10.5-alt1
 - new version 0.10.5 (with rpmrb script)
 
