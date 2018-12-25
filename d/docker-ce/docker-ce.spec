@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    18.09.0
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -169,6 +169,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 18.09.0-alt2
+- Use overlay2 storage driver by default
+
 * Thu Nov 22 2018 Vladimir Didenko <cow@altlinux.org> 18.09.0-alt1
 - New version
 
