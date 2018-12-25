@@ -1,5 +1,5 @@
 Name: mergerfs-tools
-Version: 0.1
+Version: 0.2git
 Release: alt1
 
 Summary: Optional tools to help manage data in a mergerfs pool
@@ -41,5 +41,8 @@ make install INSTALLBINDIR=%buildroot%_bindir
 %_bindir/mergerfs.mktrash
 
 %changelog
+* Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2git-alt1
+- git 91d8c43fd32690a52b2c660021c48d7dc29b5995
+
 * Fri Feb 02 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus
