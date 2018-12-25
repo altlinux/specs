@@ -2,7 +2,7 @@
 %define  pkgname puppetserver-ca-cli
 
 Name:    ruby-%pkgname
-Version: 1.1.3
+Version: 1.2.1
 Release: alt1
 
 Summary: A simple Ruby CLI tool to interact with the Puppet Server's included CA
@@ -45,5 +45,8 @@ The actual CLI executable lives within the Puppet Server project.
 
 
 %changelog
+* Tue Dec 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt1
+- Version updated to 1.2.1
+
 * Thu Dec 06 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.1.3-alt1
 - Initial build for Sisyphus
