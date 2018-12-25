@@ -13,7 +13,7 @@
 
 Name: dotnet-corefx
 Version: 2.1.6
-Release: alt2
+Release: alt3
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -35,6 +35,7 @@ BuildRequires(pre): rpm-macros-dotnet = %version
 BuildRequires: dotnet-bootstrap-runtime = %version
 %define bootstrapdir %_libdir/dotnet-bootstrap
 # currently binary version supports only OpenSSL-1.0 library
+# System.Security.Cryptography.Native.OpenSsl.so
 Requires: libssl10
 %else
 BuildRequires: dotnet
@@ -44,7 +45,7 @@ BuildRequires: dotnet
 
 Requires: dotnet-common = %version
 
-BuildRequires: libcurl-devel
+BuildRequires: libcurl-devel libssl-devel
 
 %description
 This package contains the the .NET Core foundational libraries, called CoreFX.
@@ -89,18 +90,30 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Sec
 rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %endif
 
+%triggerpostun -- %name <= %version
+# remove obsoleted empty dirs (see discussion at https://github.com/dotnet/sdk/issues/2772)
+rmdir %_dotnetdir/shared/Microsoft.NETCore.App/* 2>/dev/null || :
 
 %files
 %_dotnet_shared/Microsoft.NETCore.App.deps.json
-%_dotnet_shared/System*.so
-%_dotnet_shared/System.Native.a
+%_dotnet_shared/System.IO.Compression.Native.so
+%_dotnet_shared/System.Native.so
+%_dotnet_shared/System.Net.Http.Native.so
+%_dotnet_shared/System.Net.Security.Native.so
+# search for openssl 1.0 dinamically
+%_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.so
+# FIXME
 %_dotnet_shared/System.IO.Compression.Native.a
+%_dotnet_shared/System.Native.a
 %_dotnet_shared/System.Net.Http.Native.a
 %_dotnet_shared/System.Net.Security.Native.a
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 %_dotnet_shared/*.dll
 
 %changelog
+* Mon Dec 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt3
+- drop obsoleted empty dir from shared/Microsoft.NETCore.App/
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
 - move versioned dirs to the appropriate packages
 
