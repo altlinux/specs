@@ -3,13 +3,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
 License: %bsdstyle
 Group: System/Libraries
-URL: http://pwmt.org/projects/girara
+URL: https://pwmt.org/projects/girara
 # https://git.pwmt.org/pwmt/girara.git
 Source: %name-%version.tar
 
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 24 2018 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Fri Sep 21 2018 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 

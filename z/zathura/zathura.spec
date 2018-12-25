@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.1
-Release: alt2
+Version: 0.4.3
+Release: alt1
 
 Summary: A lightweight document viewer
 License: %bsdstyle
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses meson
-BuildRequires: libgirara-devel >= 0.2.0-alt1
+BuildRequires: libgirara-devel >= 0.3.2-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 # For man pages
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
@@ -69,6 +69,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 24 2018 Mikhail Efremov <sem@altlinux.org> 0.4.3-alt1
+- Updated to 0.4.3.
+
 * Tue Sep 25 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt2
 - Install zsh completions to site-functions.
 
