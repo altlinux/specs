@@ -8,7 +8,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 2.8
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -32,8 +32,11 @@ Source19: mcstrans-%version.tar
 
 Patch1: %name-%version-policycoreutils-alt.patch
 Patch2: %name-%version-python-alt.patch
-Patch3: %name-%version-restorecond-alt.patch
-Patch4: %name-%version-mcstrans-alt.patch
+Patch3: %name-%version-gui-alt.patch
+Patch4: selinux-sandbox-%version-alt.patch
+Patch5: semodule-utils-%version-alt.patch
+Patch6: %name-%version-restorecond-alt.patch
+Patch7: %name-%version-mcstrans-alt.patch
 
 %define mcstrans_ver 0.3.3
 Requires: python-module-semanage python-module-audit
@@ -171,12 +174,24 @@ pushd selinux-python-%version
 %patch2 -p1
 popd
 
-pushd restorecond-%version
+pushd selinux-gui-%version
 %patch3 -p1
 popd
 
-pushd mcstrans-%version
+pushd selinux-sandbox-%version
 %patch4 -p1
+popd
+
+pushd semodule-utils-%version
+%patch5 -p1
+popd
+
+pushd restorecond-%version
+%patch6 -p1
+popd
+
+pushd mcstrans-%version
+%patch7 -p1
 popd
 
 %build
@@ -239,7 +254,18 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 # TODO: compatibility for policy packages. remove later
 ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
-%find_lang %name
+%find_lang --with-man --all-name %name
+
+egrep 'newrole\.1' %name.lang > %name-newrole.lang
+egrep 'sandbox\.5|sandbox\.8|seunshare\.8' %name.lang > %name-sandbox.lang
+egrep 'restorecond\.8' %name.lang > %name-restorecond.lang
+egrep 'mcs\.8|mcstransd\.8|setrans\.conf\.8' %name.lang > %name-mcstransd.lang
+egrep 'sepolgen\.8|sepolicy-booleans\.8|sepolicy-generate\.8|sepolicy-interface\.8|sepolicy-network\.8|sepolicy\.8|sepolicy-communicate\.8|sepolicy-manpage\.8|sepolicy-transition\.8|semodule_expand\.8|semodule_link\.8|semodule_unpackage\.8' %name.lang > %name-devel.lang
+egrep 'system-config-selinux\.8|selinux-polgengui\.8|sepolicy-gui\.8' %name.lang > %name-gui.lang
+
+# Now remove all matched lines from original lang file
+grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang -f %name-mcstransd.lang -f %name-devel.lang -f %name-gui.lang %name.lang > %name-common.lang
+
 
 %triggerin -- selinux-policy
 [ -f %_datadir/selinux/devel/include/build.conf ] && sepolgen-ifgen ||:
@@ -264,7 +290,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 # Fedora spec file has additional sub-packages: -python, -python3. 
 # Put it contents here, to main policycoreutils package
 #
-%files -f %name.lang
+%files -f %name-common.lang
 /sbin/restorecon
 /sbin/restorecon_xattr
 /sbin/fixfiles
@@ -327,7 +353,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %_man8dir/run_init.*
 
 
-%files newrole
+%files newrole -f %name-newrole.lang
 %config(noreplace) %_sysconfdir/pam.d/newrole
 %attr(4511,root,root) %_bindir/newrole
 %_man1dir/newrole.*
@@ -337,7 +363,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 # sandbox - useless for selinux-policy-altlinux.
 # Leave it for ref-policy.
 #
-%files sandbox
+%files sandbox -f %name-sandbox.lang
 %_bindir/sandbox
 %_sbindir/seunshare
 %_initddir/sandbox
@@ -351,7 +377,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %_datadir/sandbox
 
 
-%files restorecond
+%files restorecond -f %name-restorecond.lang
 %_unitdir/restorecond.service
 %_datadir/dbus-1/services/org.selinux.Restorecond.service
 %_sbindir/restorecond
@@ -359,7 +385,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %config(noreplace) %_sysconfdir/selinux/restorecond*
 %_man8dir/restorecond.*
 
-%files mcstransd
+%files mcstransd -f %name-mcstransd.lang
 /sbin/mcstransd
 %_initrddir/mcstrans
 %_unitdir/mcstrans.service
@@ -378,7 +404,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 # Easiest way do next and add explicit requires.
 %add_python_req_skip templates
 
-%files devel
+%files devel -f %name-devel.lang
 %_bindir/sepolgen
 %_bindir/sepolgen-ifgen
 %_bindir/sepolgen-ifgen-attr-helper
@@ -405,11 +431,11 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %_man8dir/semodule_unpackage.*
 
 
-%files gui
+%files gui -f %name-gui.lang
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
 
-%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
+%_iconsdir/hicolor/*/apps/system-config-selinux.png
 %_pixmapsdir/system-config-selinux.png
 %_iconsdir/hicolor/*/apps/sepolicy.png
 %_pixmapsdir/sepolicy.png
@@ -436,7 +462,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
 %_man8dir/system-config-selinux.*
 %_man8dir/selinux-polgengui.*
-%_man8dir/sepolicy-gui*
+%_man8dir/sepolicy-gui.*
 
 %files -n python-module-policycoreutils
 %python_sitelibdir/sepolicy
@@ -454,6 +480,9 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %endif
 
 %changelog
+* Tue Dec 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
+- Added man pages translation by Olesya Gerasimenko.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
 - Updated to upstream version 2.8.
 

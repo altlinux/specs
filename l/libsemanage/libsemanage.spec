@@ -9,7 +9,7 @@
 Name: libsemanage
 Epoch: 1
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
@@ -113,10 +113,13 @@ binary policies.
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib %{?_with_python:install-pywrap}
 ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_libdir/libsemanage.so
 
+# TODO: currently only man5dir is translated. If other man pages are translated, %%find_lang use should be improved
+%find_lang --with-man --all-name %name
+
 %check
 %make_build test
 
-%files
+%files -f %name.lang
 %dir %_sysconfdir/selinux
 %config(noreplace) %_sysconfdir/selinux/*
 /%_lib/*.so.*
@@ -145,6 +148,9 @@ ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_
 %endif
 
 %changelog
+* Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
+- Added man pages translation by Olesya Gerasimenko.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
 - Updated to upstream version 2.8.
 

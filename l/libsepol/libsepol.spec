@@ -5,12 +5,15 @@
 Name: libsepol
 Epoch: 1
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/trac/
+
 Source: %name-%version.tar
+Patch1: %name-%version-libsepol-alt.patch
+
 Conflicts: libsetools < 3.3.8-alt6
 
 %{!?_disable_check:BuildRequires: CUnit-devel}
@@ -62,12 +65,16 @@ on binary policies such as customizing policy boolean settings.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=/%_lib all
 
 %install
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib
+
+# TODO: currently only man8dir is translated. If other man pages are translated, %%find_lang use should be improved
+%find_lang --with-man --all-name %name
 
 %check
 %make_build test
@@ -84,12 +91,15 @@ on binary policies such as customizing policy boolean settings.
 %files devel-static
 %_libdir/*.a
 
-%files utils
+%files utils -f %name.lang
 %_bindir/*
 %_man8dir/*
 %exclude %_man8dir/genpol*
 
 %changelog
+* Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
+- Added man pages translation by Olesya Gerasimenko.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
 - Updated to upstream version 2.8.
 

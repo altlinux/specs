@@ -1,21 +1,27 @@
+%define _unpackaged_files_terminate_build 1
+
 %define libsepol_ver 2.7
 
 %def_with python3
 
 Name: setools
 Version: 4.1.1
-Release: alt2
+Release: alt3
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
+Summary: Policy analysis tools for SELinux
+Group: System/Base
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-Summary: Policy analysis tools for SELinux
-Group: System/Base
-Requires: %name-gui = %version-%release %name-console = %version-%release %name-console-analyses = %version-%release
+Requires: %name-gui = %EVR
+Requires: %name-console = %EVR
+Requires: %name-console-analyses = %EVR
 Conflicts: libsepol < %libsepol_ver
-BuildPreReq: rpm-build-licenses
-BuildPreReq: /proc
+
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: /proc
 #libsetools
 BuildRequires: flex bison pkgconfig
 BuildRequires: glibc-devel libstdc++-devel gcc gcc-c++
@@ -95,7 +101,7 @@ SETools is a collection of graphical tools, command-line tools, and
 libraries designed to facilitate SELinux policy analysis.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %if_with python3
@@ -122,6 +128,13 @@ pushd ../python3
 popd
 %endif
 
+%find_lang --with-man --all-name %name
+
+egrep 'sediff\.1|seinfo\.1|sesearch\.1' %name.lang > %name-console.lang
+egrep 'sedta\.1|seinfoflow\.1' %name.lang > %name-console-analyses.lang
+egrep 'apol\.1' %name.lang > %name-gui.lang
+
+
 %files -n python-module-%name
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %python_sitelibdir/setools
@@ -134,32 +147,35 @@ popd
 %python3_sitelibdir/setools-*-py*.egg-info
 %endif
 
-%files console
+%files console -f %name-console.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %_bindir/sediff
 %_bindir/seinfo
 %_bindir/sesearch
-%_mandir/man1/sediff.1*
-%_mandir/man1/seinfo.1*
-%_mandir/man1/sesearch.1*
+%_man1dir/sediff.1*
+%_man1dir/seinfo.1*
+%_man1dir/sesearch.1*
 
-%files console-analyses
+%files console-analyses -f %name-console-analyses.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %_bindir/sedta
 %_bindir/seinfoflow
 %_man1dir/sedta.1*
 %_man1dir/seinfoflow.1*
 
-%files gui
+%files gui -f %name-gui.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %_bindir/apol
-%_mandir/man1/apol.1.*
+%_man1dir/apol.1*
 %python_sitelibdir/setoolsgui
 %if_with python3
 %python3_sitelibdir/setoolsgui
 %endif
 
 %changelog
+* Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt3
+- Added man pages translation by Olesya Gerasimenko.
+
 * Mon Dec 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt2
 - Rebuilt with new swig and gcc (Closes: #35695)
 
