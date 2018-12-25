@@ -1,69 +1,74 @@
-Name: kdiff3
-Version: 0.9.97
-Release: alt1.git
+%define _unpackaged_files_terminate_build 1
 
-Summary: Compares and merges 2 or 3 files or directories
-License: GPL
-Group: Text tools
-Url: http://kdiff3.sourceforge.net
-Packager: Ilya Mashkin <oddity at altlinux dot ru>
+Name:           kdiff3
+Version:        1.7.90
+Release:        alt1.gitd59b742
+Summary:        Compare + merge 2 or 3 files or directories
+ 
+License:        GPLv2
+Group: 		Text tools
+URL:            https://github.com/KDE/kdiff3
+Source0:        %name-%version.tar
 
-Source0: %name-%version.tar.gz
-# Our patches
-Patch0:  kdiff3-post-0.9.97.patch
-Patch1:  kdiff3-%version-%release-alt.patch
-
-
-BuildRequires: gcc-c++ kde4base-workspace-devel kde4base-devel cmake cmake-modules
+BuildRequires(pre): rpm-build-kf5 
+BuildRequires:  cmake
+BuildRequires:  gcc-c++
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  glib-devel
+BuildRequires:  kf5-kio-devel 
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  rpm-macros-cmake 
+BuildRequires:  cmake-modules
+BuildRequires:  extra-cmake-modules
+BuildRequires:  kf5-ktextwidgets-devel
 
 %description
 KDiff3 is a program that
 - compares and merges two or three input files or directories,
 - shows the differences line by line and character by character (!),
 - provides an automatic merge-facility and
-  an integrated editor for comfortable solving of merge-conflicts
-- has support for KDE-KIO (ftp, sftp, http, fish, smb...)
+- an integrated editor for comfortable solving of merge-conflicts
+- has support for KDE-KIO (ftp, sftp, http, fish, smb)
 - and has an intuitive graphical user interface.
 
 %prep
-%setup -q
-
-%patch0 -p1
-%patch1 -p1
+%setup -n %name-%version
 
 %build
-%K4cmake
-%K4make
+%K5build
 
 %install
-%K4install
+%K5install
+%K5install_move data appdata
 
-%K4find_lang --with-kde %name
-%K4find_lang --with-kde --append --output %name.lang %{name}plugin
-%K4find_lang --with-kde --append --output %name.lang %{name}fileitemactionplugin
-
-# Fix absolute links
-pushd %buildroot
-for l in .%_K4doc/*/%name/common; do
-  t=$(readlink $l)
-  # unfortunately ${var:pos} is a bash'ism
-  r=$(relative $t $(echo $l | cut -c 2-))
-  rm -f $l
-  ln -s $r $l
-done
+%find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
-%_bindir/%name
-%_K4apps/%name
-%_K4apps/kdiff3part
-%_K4lib/kdiff3*.so
-%_K4xdg_apps/%name.desktop
-%_K4srv/*.desktop
 
-%_iconsdir/*/*/apps/%name.png
+%doc AUTHORS ChangeLog INSTALL NEWS README
+%_K5bin/%name
+%_K5plug/kf5/kfileitemaction/kdiff3fileitemaction.so
+%_K5plug/kf5/parts/kdiff3part.so
+%_K5data/appdata/org.kde.%name.appdata.xml
+%_K5xdgapp/org.kde.%name.desktop
+%_K5icon/hicolor/*/apps/*.png
+%_K5icon/hicolor/scalable/apps/kdiff3.svgz
+%_K5srv/kdiff3part.desktop
+%_K5xmlgui/%name
+%_K5xmlgui/kdiff3part/kdiff3_part.rc
 
 %changelog
+* Thu Dec 20 2018 Alexey Melyashinsky <bip@altlinux.org> 1.7.90-alt1.gitd59b742
+- Update to upstream snapshot d59b742
+
 * Tue Nov 12 2013 Alexey Morozov <morozov@altlinux.org> 0.9.97-alt1.git
 - built new git snapshot (4d116d1cb7e5ca0ed69a4c8e272253198bfbbb91),
   post-0.9.97.
