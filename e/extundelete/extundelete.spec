@@ -1,12 +1,13 @@
 Name: extundelete
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: An ext3 and ext4 file undeletion utility
 License: GPLv2+
 Group: File tools
 Url: http://extundelete.sourceforge.net/
 Source: %name-%version.tar.bz2
+Patch1: extundelete-0.2.4-fedora-i_size_high.patch
 
 # Automatically added by buildreq on Tue Oct 06 2009
 BuildRequires: gcc-c++ libe2fs-devel
@@ -21,6 +22,7 @@ recovering your files!
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %configure
@@ -34,6 +36,9 @@ recovering your files!
 %_bindir/*
 
 %changelog
+* Wed Dec 26 2018 Ivan A. Melnikov <iv@altlinux.org> 0.2.4-alt2
+- Add patch 1 to build with recent e2fstools
+
 * Sat May 10 2014 Fr. Br. George <george@altlinux.ru> 0.2.4-alt1
 - Autobuild version bump to 0.2.4
 - Drop patches
