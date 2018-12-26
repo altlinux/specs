@@ -1,4 +1,5 @@
 %def_enable snapshot
+%define _libexecdir %_prefix/libexec
 
 %define _name libgda
 %define ver_major 5.2
@@ -7,7 +8,7 @@
 %def_disable default_binary
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 %def_with mysql
 %def_with postgres
@@ -28,13 +29,12 @@
 %def_with ui
 %def_with gtksourceview
 
-%define _libexecdir %_prefix/libexec
 # openerp provides this
 %add_python_req_skip rml2html
 
 Name: %{_name}5
-Version: %ver_major.4
-Release: alt8
+Version: %ver_major.8
+Release: alt1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -47,6 +47,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
+# fix build against libmysqlclient21
+Patch: libgda-5.2.4-mysql8-transition.patch
+
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
 
@@ -56,17 +59,20 @@ Provides: libgda2 = %version-%release
 %define freetds_ver 0.63
 %define vala_ver 0.42
 
+BuildRequires(pre): rpm-build-gir rpm-build-vala
+BuildRequires: gcc-c++
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: perl-XML-Parser
 BuildPreReq: glib2-devel >= 2.12.0
 BuildPreReq: libgio-devel >= 2.12.0
 BuildPreReq: libxslt-devel >= 1.0.9
+BuildRequires: libgee0.8-devel
 BuildPreReq: gtk-doc >= 1.0
 BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
 BuildRequires: libgnome-keyring-devel libsecret-devel iso-codes-devel
-BuildRequires: gcc-c++ libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
+BuildRequires: libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 BuildRequires: yelp-tools
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.6.7}
@@ -405,6 +411,7 @@ databases.
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 touch config.rpath
 
 %if_enabled crypto
@@ -412,7 +419,13 @@ sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
 %define private_sym _gda_server_operation_new_from_string|_split_identifier_string|_gda_vconnection_change_working_obj|_gda_vconnection_set_working_obj
 %endif
 
+# itstool breaks on cs help
+rm -rf tools/browser/help/cs
+sed -i 's/ cs / /' tools/browser/help/Makefile.am
+
 %build
+#NOCONFIGURE=1 ./autogen.sh
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 export ac_cv_path_VAPIGEN=%_bindir/vapigen
 export VALA_API_VERSION=%vala_ver
@@ -445,6 +458,7 @@ export VALA_API_VERSION=%vala_ver
 	%{subst_enable crypto} \
 	%{?_without_java:--with-java=no} \
 	%{subst_enable vala} \
+	%{subst_with ui} \
 %if_enabled introspection
 	--enable-gda-gi \
 	--enable-gdaui-gi
@@ -458,7 +472,8 @@ export VALA_API_VERSION=%vala_ver
 %endif
 
 %install
-%makeinstall_std
+mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
+%makeinstall_std install_sh="/bin/sh $(pwd)/install-sh"
 
 %find_lang --with-gnome %_name-%abi_ver gda-browser
 
@@ -484,6 +499,7 @@ export VALA_API_VERSION=%vala_ver
 %_datadir/%_name-%abi_ver/web/
 %_datadir/%_name-%abi_ver/information_schema.xml
 %_datadir/%_name-%abi_ver/web_specs*.xml
+%{?_enable_crypto:%_datadir/%_name-%abi_ver/sqlcipher_*}
 %_man1dir/gda-sql*
 %dir %_sysconfdir/%_name-%abi_ver
 %config(noreplace) %_sysconfdir/%_name-%abi_ver/config
@@ -601,11 +617,11 @@ export VALA_API_VERSION=%vala_ver
 %files gir-devel
 %_datadir/gir-1.0/Gda-%abi_ver.gir
 
-%files -n libgdaui5-gir
-%_libdir/girepository-1.0/Gdaui-%abi_ver.typelib
+#%files -n libgdaui5-gir
+#%_libdir/girepository-1.0/Gdaui-%abi_ver.typelib
 
-%files -n libgdaui5-gir-devel
-%_datadir/gir-1.0/Gdaui-%abi_ver.gir
+#%files -n libgdaui5-gir-devel
+#%_datadir/gir-1.0/Gdaui-%abi_ver.gir
 %endif
 
 %if_enabled static
@@ -633,6 +649,9 @@ export VALA_API_VERSION=%vala_ver
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Wed Dec 26 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.8-alt1
+- updated to LIBGDA_5_2_8-7-ga5355eb42
+
 * Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt8
 - rebuilt with vala-0.42
 
