@@ -1,19 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: parmetis
 Version: 4.0.3
-Release: alt1
+Release: alt2
 Summary: Parallel Graph Partitioning and Fill-reducing Matrix Ordering
 License: Free for non-commertial
 Group: Sciences/Mathematics
 Url: http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: ParMetis-%version.tar
 Source1: %name.pc
 
-BuildPreReq: %mpiimpl-devel cmake libpcre-devel
+Patch1: ParMetis-%version-alt.patch
+
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: cmake libpcre-devel
 
 %description
 ParMETIS is an MPI-based parallel library that implements a variety of
@@ -44,9 +48,9 @@ This package contains shared libraries of ParMETIS.
 %package -n lib%name-devel
 Summary: Development files of ParMETIS
 Group: Development/C
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel < %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -97,24 +101,17 @@ This package contains example graphs for ParMETIS.
 
 %prep
 %setup
-install -m644 %SOURCE1 .
-
-%ifarch x86_64
-LIB64=64
-%endif
-sed -i "s|@64@|$LIB64|" %name.pc
+%patch1 -p1
+install -m644 %SOURCE1 %name.pc
+sed -i -e "s|@libdir@|%_lib|" -e "s|@VERSION@|%version|" %name.pc
 
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-FLAGS="%optflags %optflags_shared -I%_includedir/pcre"
-cmake \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
-	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
-	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
+%add_optflags -I%_includedir/pcre
+%cmake_insource \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DMPIEXEC_MAX_NUMPROCS:STRING=16 \
 	-DCMAKE_C_COMPILER:FILEPATH=mpicc \
@@ -124,7 +121,7 @@ cmake \
 	-DPCRE:BOOL=ON \
 	-DGDB:BOOL=ON \
 	-DGKRAND:BOOL=ON \
-	.
+	%nil
 
 %make_build VERBOSE=1
 
@@ -134,13 +131,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
-
 install -d %buildroot%mpidir/bin
-#install -d %buildroot%_includedir/%name
 install -d %buildroot%mpidir/include/metis
 install -d %buildroot%_docdir/%name
 install -d %buildroot%_datadir/%name
@@ -151,11 +142,7 @@ install -p -m644 * %buildroot%_datadir/%name
 popd
 
 install -m644 manual/* %buildroot%_docdir/%name
-#install -m644 *.h %buildroot%_includedir
 install -m644 metis/include/*.h %buildroot%mpidir/include/metis
-#install -m644 ParMETISLib/*.h %buildroot%_includedir/%name
-
-sed -i 's|@VERSION@|%version|' %name.pc
 install -m644 %name.pc %buildroot%_pkgconfigdir
 
 # shared libraries
@@ -168,13 +155,10 @@ for i in %name; do
 		-o lib$i.so.0 -Wl,-z,defs -Wl,-R%mpidir/lib
 	ln -s lib$i.so.0 lib$i.so
 	rm -f *.o
-	#chrpath -r %mpidir/lib lib$i.so
 done
 popd
 
-#for i in %buildroot%_bindir/*; do
-#	chrpath -r %mpidir/lib $i ||:
-#done
+rm -rf %buildroot%_libdir/*.a
 
 %files
 %doc Changelog LICENSE.txt
@@ -196,6 +180,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt2
+- Spec cleanup and rebuild with new toolchain.
+
 * Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
 - Version 4.0.3
 
