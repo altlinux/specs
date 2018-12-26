@@ -6,7 +6,7 @@
 
 Name: dotnet-coreclr
 Version: 2.1.6
-Release: alt2
+Release: alt3
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -102,6 +102,10 @@ install -D -m644 .version %buildroot%_dotnet_shared/.version
 # ldd: libmscordaccore.so => /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac/libmscordaccore.so
 #rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%_dotnet_corerelease/createdump
 
+%triggerpostun -- %name <= %version
+# remove obsoleted empty dirs (see discussion at https://github.com/dotnet/sdk/issues/2772)
+rmdir %_dotnetdir/shared/Microsoft.NETCore.App/* 2>/dev/null || :
+
 %files
 %doc CODE_OWNERS.TXT LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
 %dir %_dotnet_shared/
@@ -114,6 +118,9 @@ install -D -m644 .version %buildroot%_dotnet_shared/.version
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Wed Dec 26 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt3
+- drop obsoleted empty dir from shared/Microsoft.NETCore.App/
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
 - move versioned dirs to the appropriate packages
 
