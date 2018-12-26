@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN
 Name: perl-%dist
-Version: 2.16
-Release: alt2
+Version: 2.22
+Release: alt1
 
 Summary: Download and build Perl modules from CPAN sites
 License: GPL or Artistic
@@ -54,6 +54,9 @@ rm t/30shell.t t/31sessions.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
+- automated CPAN update
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt2
 - added requires (closes: #35062)
 
