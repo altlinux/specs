@@ -1,5 +1,5 @@
 Name: mk-configure
-Version: 0.29.1
+Version: 0.30.0
 Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
@@ -7,8 +7,9 @@ License: BSD
 Group: Development/Tools
 
 Url: http://sourceforge.net/projects/mk-configure/
-# Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Source: %name-%version.tar.bz2
+# Source-url: http://prdownloads.sf.net/%name-%version/%name-%version.tar.bz2
+Source: %name-%version.tar
+
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildArch: noarch
@@ -26,6 +27,7 @@ bmake (portable version of NetBSD make), POSIX shell and POSIX utilities.
 
 %prep
 %setup
+sed -i -e "s|-Wabi||" mk/mkc_imp.platform.sys.mk
 
 %define env \
   unset MAKEFLAGS; \
@@ -64,6 +66,9 @@ bmake test
 %_man7dir/*
 
 %changelog
+* Wed Dec 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.30.0-alt1
+- new version 0.30.0 (with rpmrb script)
+
 * Tue Feb 16 2016 Michael Shigorin <mike@altlinux.org> 0.29.1-alt1
 - new version 0.29.1
 
