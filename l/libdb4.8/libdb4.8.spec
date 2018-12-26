@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _sover 4.8
 Name: libdb%_sover
 Version: %_sover.30
-Release: alt3
+Release: alt4
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -10,7 +12,7 @@ Group: System/Libraries
 Url: http://www.oracle.com/technology/products/berkeley-db/db/index.html
 
 # http://download.oracle.com/berkeley-db/db-%srcname.tar.gz
-Source:  %srcname.tar.gz
+Source:  %srcname.tar
 Source1: man.tar
 
 #Provides: libdb4 = %version-%release, db4 = %version-%release
@@ -54,14 +56,14 @@ Conflicts: db3-utils, db4.0-utils, db4.1-utils, db4.2-utils, db4.3-utils, db4.4-
 Summary: Development environment for Berkeley database library
 Group: Development/C
 #Provides: libdb4-devel = %version-%release, db4-devel = %version-%release
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libdb3-devel, libdb4.0-devel, libdb4.1-devel, libdb4.2-devel, libdb4.3-devel, libdb4.4-devel, libdb4.6-devel, libdb4.7-devel, libdb2-devel < 0:2.4.14-alt3
 
 %package devel-static
 Summary: Static version of Berkeley database library
 Group: Development/C
 #Provides: libdb4-devel-static = %version-%release, db4-devel-static = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %package -n %{name}_cxx
 Summary: C++ bindings for Berkeley database library
@@ -72,16 +74,16 @@ Group: System/Libraries
 Summary: C++ development bindings for Berkeley database library
 Group: Development/C++
 #Provides: libdb4_cxx-devel = %version-%release
-Requires: %name-devel = %version-%release
-Requires: %{name}_cxx = %version-%release
+Requires: %name-devel = %EVR
+Requires: %{name}_cxx = %EVR
 Conflicts: libdb4.0_cxx-devel, libdb4.1_cxx-devel, libdb4.2_cxx-devel, libdb4.3_cxx-devel, libdb4.4_cxx-devel, libdb4.6_cxx-devel, libdb4.7_cxx-devel
 
 %package -n %{name}_cxx-devel-static
 Summary: C++ development bindings for Berkeley database library
 Group: Development/C++
 #Provides: libdb4_cxx-devel-static = %version-%release
-Requires: %name-devel-static = %version-%release
-Requires: %{name}_cxx-devel = %version-%release
+Requires: %name-devel-static = %EVR
+Requires: %{name}_cxx-devel = %EVR
 
 %package -n %{name}_tcl
 Summary: Tcl bindings for Berkeley database library
@@ -93,16 +95,16 @@ Conflicts: libdb3_tcl, libdb4.0_tcl, libdb4.1_tcl, libdb4.2_tcl, libdb4.3_tcl, l
 Summary: Tcl development bindings for Berkeley database library
 Group: Development/Tcl
 #Provides: libdb4_tcl-devel = %version-%release
-Requires: %name-devel = %version-%release
-Requires: %{name}_tcl = %version-%release
+Requires: %name-devel = %EVR
+Requires: %{name}_tcl = %EVR
 Conflicts: libdb4.0_tcl-devel, libdb4.1_tcl-devel, libdb4.2_tcl-devel, libdb4.3_tcl-devel, libdb4.4_tcl-devel, libdb4.6_tcl-devel, libdb4.7_tcl-devel
 
 %package -n %{name}_tcl-devel-static
 Summary: Tcl development bindings for Berkeley database library
 Group: Development/Tcl
 #Provides: libdb4_tcl-devel-static = %version-%release
-Requires: %name-devel-static = %version-%release
-Requires: %{name}_tcl-devel = %version-%release
+Requires: %name-devel-static = %EVR
+Requires: %{name}_tcl-devel = %EVR
 
 %package -n %{name}_java
 Summary: Java bindings for Berkeley database library
@@ -114,21 +116,21 @@ Conflicts: libdb4.0_java, libdb4.1_java, libdb4.2_java, libdb4.3_java, libdb4.4_
 Summary: Java development bindings for Berkeley database library
 Group: Development/Java
 #Provides: libdb4_java-devel = %version-%release
-Requires: %name-devel = %version-%release
-Requires: %{name}_java = %version-%release
+Requires: %name-devel = %EVR
+Requires: %{name}_java = %EVR
 
 %package -n %{name}_java-devel-static
 Summary: Java development bindings for Berkeley database library
 Group: Development/Java
 #Provides: libdb4_java-devel-static = %version-%release
-Requires: %name-devel-static = %version-%release
-Requires: %{name}_java-devel = %version-%release
+Requires: %name-devel-static = %EVR
+Requires: %{name}_java-devel = %EVR
 
 %package doc
 Summary: Documentation for Berkeley database library
 Group: Development/Other
 BuildArch: noarch
-Provides: libdb4-doc = %version-%release
+Provides: libdb4-doc = %EVR
 
 %description
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
@@ -432,6 +434,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt4
+- Fixed build with new toolchain.
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt3
 - Updated java build dependencies.
 
