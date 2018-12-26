@@ -14,7 +14,7 @@
 %endif
 %def_enable flatpak
 %def_disable limba
-%def_disable packagekit
+%def_enable packagekit
 %def_enable webapps
 %def_enable odrs
 %def_enable steam
@@ -27,7 +27,7 @@
 
 Name: gnome-software
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -67,7 +67,7 @@ BuildRequires: valgrind-tool-devel
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
 %{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
-%{?_enable_packagekit:BuildRequires: libpackage-glib-devel >= %packagekit_ver}
+%{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel >= %packagekit_ver}
 %{?_enable_valgrind:BuildRequires: valgrind}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
@@ -159,6 +159,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Dec 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.6-alt2
+- enabled PackageKit support (ALT #35817)
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.6-alt1
 - 3.30.6
 
