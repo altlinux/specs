@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-Random
 Name: perl-%dist
-Version: 1.25
-Release: alt3
+Version: 1.52
+Release: alt1
 
 Summary: Cryptographically Secure, True Random Number Generator
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/V/VI/VIPUL/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ Crypt::Random can generate random integers of arbritary size of a given
 bitsize or in a specified interval.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +39,9 @@ bitsize or in a specified interval.
 %perl_vendor_privlib/Crypt
 
 %changelog
+* Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
+- automated CPAN update
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 1.25-alt3
 - rebuilt
 
