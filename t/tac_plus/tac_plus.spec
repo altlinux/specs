@@ -1,9 +1,8 @@
 %set_verify_elf_method relaxed
-%def_disable libwrap
 
 Name: tac_plus
 Version: 4.0.4.28
-Release: alt1
+Release: alt2
 Epoch: 1
 License: BSD
 Group: System/Servers
@@ -19,11 +18,9 @@ Source6: tac_plus.logrotate
 Source7: tac_plus.service
 Patch0: tacacs+-F4.0.4.28-k1.diff
 Patch1: tacacs+-F4.0.4.28.diff
+Patch2: tacacs-nolibnsl.diff
 
-BuildRequires: flex gcc-c++ libpam-devel chrpath
-%if_enabled libwrap
-BuildRequires: libwrap-devel
-%endif
+BuildRequires: flex gcc-c++ libpam-devel chrpath libnsl2-devel
 
 %description
 The base source for this TACACS+ package is Cisco's publicly available TACACS+
@@ -33,12 +30,6 @@ We needed a way to limit certain groups within the company from logging into
 or getting enable access on certain devices. Access lists (ACLs) of a sort have
 been added that match against the address of the device speaking with the
 daemon.
-
-Being paranoid, we also wanted to limit which hosts could connect to the
-daemon. This can be done with tcp_wrappers via inetd, but this does not work if
-the daemon is running standalone. So, calls to libwrap, the tcp_wrappers
-library, have been added. For the source and more information about
-tcp_wrappers, see Wietse Venema's site at http://www.porcupine.org/.
 
 Along the way we have also added autoconf, expanded the manual pages,
 cleaned-up various formatting and STD C nits, added PAM authentication support,
@@ -68,12 +59,19 @@ This package contains TACACS+ library
 %setup -n tacacs-F%version
 %patch0 -p1 -b .k1
 %patch1 -p1
+%patch2 -p2
 
 %build
-%configure --disable-static --enable-acls --enable-uenable --enable-maxsess --enable-debug --enable-mschap --enable-mschapdes \
-%if_disabled libwrap
---without-libwrap
-%endif
+%configure \
+ --disable-static \
+ --enable-acls \
+ --enable-uenable \
+ --enable-maxsess \
+ --enable-finger \
+ --enable-debug \
+ --enable-warn \
+ --enable-mschap \
+ --without-libwrap
 
 %make
 
@@ -127,6 +125,15 @@ done
 %doc users_guide COPYING FAQ INSTALL CHANGES README do_auth.py tac_convert
 
 %changelog
+* Wed Dec 26 2018 Terechkov Evgenii <evg@altlinux.org> 1:4.0.4.28-alt2
+- Disable libwrap unconditionally
+- Spec cleanup
+
+* Thu Jan 22 2015 Terechkov Evgenii <evg@altlinux.org> 1:4.0.4.28-alt2
+- Enable finger NAS service usage
+- Enable gcc warnings
+- Disable mschap-des (it require key obtaining from Microsoft), let NAS do it instead
+
 * Tue Jan 13 2015 Terechkov Evgenii <evg@altlinux.org> 1:4.0.4.28-alt1
 - 4.0.4.28
 
