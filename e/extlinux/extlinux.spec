@@ -1,8 +1,8 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
-Version: 6.03
-Release: alt2
-License: GPL2
+Version: 6.04.pre1
+Release: alt1.5e426532
+License: GPL-2.0-or-later
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -13,6 +13,8 @@ Source2: extlinux.sysconfig
 Source3: extlinux-config
 Source4: extlinux.filetrigger
 
+Patch0: strip-gnu-property.patch
+
 BuildRequires: libe2fs-devel libuuid-devel nasm
 
 Requires: libshell util-linux
@@ -20,6 +22,8 @@ Requires: libshell util-linux
 Conflicts: syslinux-extlinux
 Obsoletes: syslinux4-extlinux
 Provides: syslinux4-extlinux = %version-%release
+
+ExclusiveArch: %{ix86} x86_64
 
 %global _unpackaged_files_terminate_build 1
 %add_verify_elf_skiplist /boot/extlinux/*
@@ -38,6 +42,7 @@ Extlinux documentation.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 rm -rf mk/devel.mk
@@ -100,6 +105,9 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Sat Dec 22 2018 Alexey Gladkov <legion@altlinux.ru> 6.04.pre1-alt1.5e426532
+- New snapshot (syslinux-6.04-pre1-41-g5e426532).
+
 * Mon May 07 2018 Alexey Gladkov <legion@altlinux.ru> 6.03-alt2
 - Remove parted from specfile.
 
