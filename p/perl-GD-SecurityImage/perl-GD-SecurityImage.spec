@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module GD-SecurityImage
 
 Name: perl-%module
-Version: 1.73
+Version: 1.75
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -11,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BU/BURAK/GD-SecurityImage-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BU/BURAK/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +26,7 @@ programs (which may register tons of fake member accounts). This module
 gives you a basic interface to create such an image.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +35,13 @@ gives you a basic interface to create such an image.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE
 %perl_vendor_privlib/GD
 
 %changelog
+* Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.75-alt1
+- automated CPAN update
+
 * Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1
 - automated CPAN update
 
