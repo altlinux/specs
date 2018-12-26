@@ -1,14 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=strict
 
 Name: BlocksRuntime
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: The runtime library for C blocks support
 License: MIT
 Group: Development/Tools
 Url: https://sourceforge.net/projects/blocksruntime/
 
-BuildRequires: ruby-makeconf clang-devel
+BuildRequires: ruby
+BuildRequires: ruby-makeconf
+BuildRequires: clang-devel
 
 Source: %name-%version.tar
 
@@ -40,12 +44,15 @@ This package contains development files of BlocksRuntime.
 
 %prep
 %setup
+# remove bundled ruby gem
+rm -rf makeconf
 
 %build
 export CC=clang
 
 # Clang doesn't support these options
 %remove_optflags -frecord-gcc-switches
+%add_optflags -grecord-gcc-switches
 
 %configure \
 	--disable-option-checking \
@@ -53,7 +60,7 @@ export CC=clang
 	--host=linux
 
 %make
- 
+
 %install
 %makeinstall_std
 
@@ -65,6 +72,9 @@ export CC=clang
 %_libdir/*.so
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt3
+- Updated build dependencies and compiler flags.
+
 * Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt2
 - Removed unsupported compiler flags.
 
