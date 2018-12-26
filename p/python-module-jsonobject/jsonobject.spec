@@ -1,37 +1,36 @@
+%define _unpackaged_files_terminate_build 1
 %define oname jsonobject
 
-%def_without python3
-
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20150130.1
+Version: 0.9.8
+Release: alt1
 Summary: A library for dealing with JSON as python objects
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jsonobject/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/dimagi/jsonobject.git
-Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-couchdbkit python-module-unittest2
-BuildPreReq: python-module-argparse python-module-six
-%if_with python3
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-couchdbkit python-module-unittest2
+BuildRequires: python-module-argparse python-module-six
+BuildRequires: python-module-Cython
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-couchdbkit python3-module-unittest2
 BuildPreReq: python3-module-argparse python3-module-six
-%endif
+BuildPreReq: python3-module-Cython
 
 %py_provides %oname
+
 
 %description
 A python library for handling deeply nested JSON objects as
 well-schema'd python objects.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A library for dealing with JSON as python objects
 Group: Development/Python3
@@ -40,57 +39,51 @@ Group: Development/Python3
 %description -n python3-module-%oname
 A python library for handling deeply nested JSON objects as
 well-schema'd python objects.
-%endif
 
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 export LC_ALL=en_US.UTF-8
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 export LC_ALL=en_US.UTF-8
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 export LC_ALL=en_US.UTF-8
 python setup.py test
 python -m unittest test.test_couchdbkit
-%if_with python3
+
 pushd ../python3
 python3 setup.py test
 python3 -m unittest test.test_couchdbkit
 popd
-%endif
 
 %files
 %doc *.md
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Dec 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.8-alt1
+- Version updated to 0.9.8
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1.git20150130.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
