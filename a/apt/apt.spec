@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt59
+Release: alt60
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -278,6 +278,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Wed Dec 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt60
+- Fixed releasing rpmdb if it was locked read-only.
+- Implemented new interface for querying packages pending to autoremoval.
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt59
 - Fixed crash on fail to read package file.
 - Implemented following actions and commands (closes: #34036):
