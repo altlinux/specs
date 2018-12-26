@@ -2,7 +2,7 @@
 
 Name: extreme-tuxracer
 Version: 0.7.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -42,19 +42,38 @@ This package provides noarch data needed for Extreme Tux Racer to work.
 %install
 %makeinstall_std
 
+rm %buildroot/%_desktopdir/%_name.desktop
+cat > %buildroot/%_desktopdir/%name.desktop <<EOF
+[Desktop Entry]
+Name=Extreme TuxRacer
+Comment=Race a penguin down a mountain
+
+Type=Application
+Categories=Game;
+
+TryExec=etr
+Exec=etr
+
+Icon=etr
+Terminal=false
+EOF
+
 %find_lang %_name
 
 %files -f %_name.lang
 %_bindir/%_name
+%_desktopdir/%name.desktop
 
 %files data
-%_desktopdir/%_name.desktop
 %_pixmapsdir/*
 %_datadir/%_name/
 %_datadir/doc/%_name/
 %_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 1:0.7.5-alt2
+- Add desktop file (Closes: #26342).
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.5-alt1
 - 0.7.5
 
