@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: mate-system-monitor
-Version: 1.20.0
+Version: 1.20.2
 Release: alt1
 Epoch: 1
 Summary: Process and resource monitor
@@ -44,13 +44,16 @@ such as CPU and memory.
 %_bindir/%name
 %_libexecdir/%name
 %_datadir/polkit-1/actions/org.mate.mate-system-monitor.policy
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_desktopdir/%name.desktop
 %_datadir/pixmaps/%name
 %_datadir/glib-2.0/schemas/org.mate.system-monitor.*.xml
 %_man1dir/*.1*
 
 %changelog
+* Wed Dec 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Thu Mar 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
