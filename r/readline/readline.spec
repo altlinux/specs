@@ -5,7 +5,7 @@ Name: readline
 %define rl_patch .3
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt2
+Release: alt3
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -137,6 +137,10 @@ popd
 %_libdir/*.a
 
 %changelog
+* Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 7.0.3-alt3
+- NMU: reintroduced rl_tty_set_echoing (required by perl-Term-ReadLine-Gnu)
+  patch from https://savannah.gnu.org/patch/?9649
+
 * Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 7.0.3-alt2
 - Reintroduced rl_readline_state that was lost in the previous build.
 - Exported 11 more symbols declared in rlprivate.h file.
