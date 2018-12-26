@@ -2,11 +2,13 @@
 
 Name: OpenAD
 Version: 20140315
-Release: alt3.1
+Release: alt4
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.mcs.anl.gov/OpenAD/
+
+ExclusiveArch: %ix86 x86_64
 
 Source: %name-%version.tar
 Source1: setenv2.sh
@@ -16,7 +18,7 @@ BuildRequires: gcc-fortran python-modules gcc-c++ libxerces-c28-devel
 BuildRequires: tcsh libsexpr-devel boost-devel /usr/bin/latex tex(dvips.def)
 BuildRequires: doxygen graphviz
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 OpenAD is a tool for automatic differentiation (AD) of numerical
@@ -64,7 +66,7 @@ This package contains shared libraries of OpenAD.
 %package -n lib%name-devel
 Summary: Development files of OpenAD
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 OpenAD is a tool for automatic differentiation (AD) of numerical
@@ -97,7 +99,7 @@ can be expressed in a language-neutral manner.
 %package -n libxaifBooster-devel
 Summary: Development files of XML Abstract Interface Form (XAIF)
 Group: Development/C++
-Requires: libxaifBooster = %version-%release
+Requires: libxaifBooster = %EVR
 
 %description -n libxaifBooster-devel
 The XML Abstract Interface Form (XAIF) provides a language-independent
@@ -275,6 +277,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20140315-alt4
+- Fixed build with bash-4.
+
 * Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 20140315-alt3.1
 - NMU: updated BR: for new texlive
 
