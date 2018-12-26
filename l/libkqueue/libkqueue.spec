@@ -2,7 +2,7 @@
 
 Name: libkqueue
 Version: 2.0.1
-Release: alt3
+Release: alt4
 Summary: Portable implementation of the kqueue() and kevent() system calls
 License: MIT / BSD
 Group: System/Libraries
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-%version-alt-parallel-build.patch
 Patch3: %name-%version-alt-fix-print.patch
+Patch4: %name-%version-alt-printf-buffer.patch
 
 %description
 A user space implementation of the kqueue(2) kernel event notification
@@ -36,6 +37,7 @@ This package contains development files of libkqueue.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %add_optflags %optflags_shared
@@ -55,6 +57,9 @@ This package contains development files of libkqueue.
 %_man2dir/*
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt4
+- Fixed build with new toolchain.
+
 * Tue Oct 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt3
 - Fixed parallel build.
 
