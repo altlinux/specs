@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.9.3
+Version: 3.10.1
 Release: alt1
 
 Summary: Python test framework
@@ -89,6 +89,8 @@ scales to support complex functional testing for applications and libraries.
 %prep
 %setup
 # adjust timeouts for aarch64 tests
+grep -qs 'child\.expect(.*)' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
+grep -qs 'child\.expect_exact([[:space:]]*$' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
 sed -i '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;
 /child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
 testing/{test_pdb.py,test_terminal.py,test_unittest.py}
@@ -121,23 +123,23 @@ popd
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PYTHONPATH=%buildroot%python_sitelibdir
-# due to
-# https://github.com/pytest-dev/pytest/issues/2673
+%buildroot%_bindir/pytest -v \
+testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
+
 # run pdb/terminal tests separately from other
 %buildroot%_bindir/pytest -v testing \
 --ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
 --ignore=testing/test_unittest.py
 
-%buildroot%_bindir/pytest -v \
-testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
-
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
+%buildroot%_bindir/pytest3 -v \
+testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
+
 %buildroot%_bindir/pytest3 -v testing \
 --ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
 --ignore=testing/test_unittest.py
-%buildroot%_bindir/pytest3 -v \
-testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
+
 popd
 
 %files
@@ -162,6 +164,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Mon Dec 17 2018 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1
+- 3.9.3 -> 3.10.1.
+
 * Sun Oct 28 2018 Stanislav Levin <slev@altlinux.org> 3.9.3-alt1
 - 3.9.1 -> 3.9.3.
 
