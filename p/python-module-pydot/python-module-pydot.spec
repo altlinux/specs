@@ -3,14 +3,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.29
-Release: alt1.git20140730.1.2
+Version: 1.4.1
+Release: alt1
 
 Summary: Python interface to Graphiz's Dot
 
 License: MIT
 Group: Development/Python
-Url: http://pydot.googlecode.com
+Url: https://pypi.org/project/pydot
 
 Source: %oname-%version.tar.bz2
 
@@ -80,16 +80,19 @@ popd
 %endif
 
 %files
-%doc ChangeLog README
+%doc ChangeLog
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc ChangeLog README
+%doc ChangeLog
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.29-alt1.git20140730.1.2
 - (NMU) rebuild with python3.6
 
