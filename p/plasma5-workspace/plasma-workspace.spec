@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt5
+Release: alt6
 Epoch: 1
 %K5init altplace
 
@@ -357,6 +357,9 @@ done
 
 
 %changelog
+* Tue Dec 25 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt6
+- fix warnings
+
 * Tue Dec 25 2018 Pavel Moseev <mars@altlinux.org> 1:5.12.7-alt5
 - fix general configuration widget - correctly set checked/unchecked state on load
 
