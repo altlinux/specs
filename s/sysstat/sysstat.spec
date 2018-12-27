@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: sysstat
-Version: 11.0.0
+Version: 12.0.3
 Release: alt1
 
 Summary: The sar and iostat system monitoring commands
@@ -7,7 +8,7 @@ License: GPLv2+
 Group: System/Base
 
 URL: http://sebastien.godard.pagesperso-orange.fr/
-Source: http://pagesperso-orange.fr/sebastien.godard/sysstat-%version.tar.xz
+Source: %name-%version.tar
 Source1: sysstat.init
 
 # Automatically added by buildreq on Wed Aug 04 2010
@@ -41,9 +42,8 @@ export sa_lib_dir=%_libdir/sa
 %configure \
 	--enable-yesterday \
 	--enable-sensors \
-	--disable-man-group \
-	--disable-compress-manpg \
-	--enable-install-isag
+	--disable-file-attr \
+	--disable-compress-manpg 
 
 sed -i 's/SADC_OPTIONS=""/SADC_OPTIONS="-S DISK"/' sysstat.sysconfig
 
@@ -54,6 +54,8 @@ sed -i 's/SADC_OPTIONS=""/SADC_OPTIONS="-S DISK"/' sysstat.sysconfig
 
 install -p -m644 -D sysstat.ioconf %buildroot%_sysconfdir/sysconfig/
 install -p -m644 -D sysstat.sysconfig %buildroot/etc/sysconfig/sysstat
+install ./contrib/isag/isag %buildroot%_bindir
+install ./contrib/isag/isag.1  %buildroot%_man1dir
 
 install -d %buildroot%_sysconfdir/cron.d/
 # Create cronjob file inline. We can easily use here rpm macros for libdir and
@@ -104,13 +106,16 @@ fi
 %_man5dir/*
 %_man8dir/*
 %attr(750,root,adm) %_logdir/sa
-%doc CHANGES CREDITS FAQ
+%doc CHANGES CREDITS FAQ.md
 
 %files isag
 %_bindir/isag
 %_man1dir/isag.*
 
 %changelog
+* Wed Dec 26 2018 Alexey Melyashinsky <bip@altlinux.org> 12.0.3-alt1
+- Update to upstream version 12.0.3.
+
 * Sat Jun 28 2014 Alexey Shabalin <shaba@altlinux.ru> 11.0.0-alt1
 - 11.0.0
 
