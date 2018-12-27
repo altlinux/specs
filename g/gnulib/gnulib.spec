@@ -1,16 +1,15 @@
 Name: gnulib
-Version: 0.1.1213.683b6
-Release: alt2
+Version: 0.1.2305.95c96
+Release: alt1
 
 Summary: GNU Portability Library
 License: Freely distributable
 Group: Development/C
 BuildArch: noarch
-Url: http://www.gnu.org/software/gnulib/
+Url: https://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
-Patch3: gnulib-upstream-parse-datetime-make-it-standalone-no-changelog.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -27,16 +26,8 @@ source repository.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
-# Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
-# tests with @LIBMULTITHREAD@ in --no-as-needed mode.
-# Starting with commit v0.1-211-gc76f7ed, gnulib sets LIBMULTITHREAD
-# to -pthread instead of -lpthread, and gcc -Wl,--no-as-needed does not apply
-# to gcc -pthread.
-grep -lZ '^test_.*@LIBMULTITHREAD@' modules/*-tests |
-	xargs -r0 sed -i 's/^\(test_[^ +=]\+\)\(_LDADD.*\)@LIBMULTITHREAD@\(.*\)/\1\2-lpthread\3\n\1_LDFLAGS = -Wl,--no-as-needed/' --
 
 %build
 make info
@@ -55,6 +46,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 0.1.2305.95c96-alt1
+- v0.1-1213-g683b60789 -> v0.1-2305-g95c96b6dd.
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1213.683b6-alt2
 - Fixed includes for new toolchain
 

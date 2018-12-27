@@ -1,18 +1,18 @@
 Name: findutils
-Version: 4.6.0.0.99.11a05
+Version: 4.6.0.0.204.b23a2
 Release: alt1
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
 Group: File tools
-Url: http://www.gnu.org/software/findutils/
+Url: https://www.gnu.org/software/findutils/
 
 # git://git.altlinux.org/gears/f/findutils.git
 Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.1.1209.24b32
+BuildRequires: gnulib >= 0.1.2305.95c96
 BuildRequires: glibc-devel-static
 BuildRequires: makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -108,6 +108,10 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 4.6.0.0.204.b23a2-alt1
+- findutils: v4.6.0-99-g11a050c -> v4.6.0-204-gb23a2693
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 4.6.0.0.99.11a05-alt1
 - findutils: v4.6 -> v4.6.0-99-g11a050c.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.

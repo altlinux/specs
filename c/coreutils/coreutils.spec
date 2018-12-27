@@ -1,12 +1,12 @@
 Name: coreutils
-Version: 8.27.0.23.f4570
+Version: 8.30.0.31.69df9
 Release: alt1
 %define srcname %name-%version-%release
 
 Summary: The GNU versions of common management utilities
 License: GPLv3+
 Group: System/Base
-Url: http://www.gnu.org/software/coreutils/
+Url: https://www.gnu.org/software/coreutils/
 
 # git://git.sv.gnu.org/coreutils refs/heads/master
 # git://git.altlinux.org/people/ldv/packages/coreutils refs/heads/coreutils-current
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.1209.24b32
+BuildRequires: gnulib >= 0.1.2305.95c96
 BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
@@ -111,7 +111,6 @@ bzip2 -9k NEWS THANKS
 # workarounds for bootstrap
 ln -s /bin/false build-aux/git-version-gen
 touch m4/cu-progs.m4
-sed -i '/makeinfo/ s/6\.1/6.0/' bootstrap.conf
 
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
@@ -142,11 +141,6 @@ sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
 for n in getuseruid runas runbg usleep; do
 	%__cc %optflags "%_sourcedir/$n.c" -o $n
 done
-
-%check
-: ${SHELL:=/bin/sh} ${VERBOSE:=no}
-export SHELL VERBOSE
-%make_build -k check
 
 %install
 %makeinstall_std
@@ -198,6 +192,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 
 %find_lang %name
 
+%check
+: ${SHELL:=/bin/sh} ${VERBOSE:=no}
+export SHELL VERBOSE
+%make_build -k check
+
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/DIR_COLORS
 %config(noreplace) %_sysconfdir/profile.d/*
@@ -211,6 +210,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 8.30.0.31.69df9-alt1
+- coreutils: v8.27-23-gf4570a9 -> v8.30-31-g69df9e20e.
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+- Updated translations from translationproject.org.
+
 * Sun Apr 23 2017 Dmitry V. Levin <ldv@altlinux.org> 8.27.0.23.f4570-alt1
 - coreutils: v8.27-6-g04148c9 -> v8.27-23-gf4570a9.
 - Changed *domainname aliases to accept hostname(1) options (closes: #33385).

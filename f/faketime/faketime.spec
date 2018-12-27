@@ -1,6 +1,6 @@
 Name: faketime
-Version: 0.2.5
-Release: alt3.1
+Version: 0.2.6
+Release: alt1
 
 Summary: Execute program with changed notion of system time
 License: GPLv3+
@@ -10,7 +10,7 @@ Url: http://git.altlinux.org/people/ldv/packages/faketime.git
 # git://git.altlinux.org/gears/f/faketime.git
 Source: %name-%version.tar
 
-BuildRequires: help2man, gnulib >= 0.1.585.2fda85
+BuildRequires: help2man, gnulib >= 0.1.2305.95c96
 
 %description
 The faketime utility helps to execute programs with changed notion of
@@ -49,6 +49,10 @@ diff exp out
 %_man1dir/*
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 0.2.6-alt1
+- Fixed build with fresh gnulib.
+- Built with gnulib v0.1-2305-g95c96b6dd.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt3.1
 - NMU: added URL git.altlinux.org/people/ldv/packages/faketime.git
   to distinguish from http://www.code-wizards.com/projects/libfaketime

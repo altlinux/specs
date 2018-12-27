@@ -1,12 +1,12 @@
 Name: paxutils
-Version: 0.0.1.121.ec72
+Version: 0.0.1.124.4ef7
 Release: alt1
 
 Summary: GNU pax library
 License: GPLv3+
 Group: Development/C
 BuildArch: noarch
-Url: http://www.gnu.org/software/gnulib/
+Url: https://www.gnu.org/software/gnulib/
 # git://git.altlinux.org/gears/p/paxutils.git
 Source: %name-%version-%release.tar
 AutoReqProv: no
@@ -33,6 +33,9 @@ ln gnulib.modules %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Tue Jul 31 2018 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.124.4ef7-alt1
+- v0.0.1-121-gec72abd -> v0.0.1-124-g4ef7f9a.
+
 * Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.121.ec72-alt1
 - v0.0.1-119-g45af163 -> v0.0.1-121-gec72abd.
 

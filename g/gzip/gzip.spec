@@ -1,16 +1,16 @@
 Name: gzip
-Version: 1.8.0.20.82c6
+Version: 1.9.0.18.9c2a
 Release: alt1
 
 Summary: The GNU data compression program
 License: GPLv3+
 Group: Archiving/Compression
-Url: http://www.gnu.org/software/gzip/
+Url: https://www.gnu.org/software/gzip/
 
 %define srcname %name-%version-%release
 Source0: %srcname.tar
 
-BuildRequires: gnulib >= 0.1.1209.24b32, makeinfo
+BuildRequires: gnulib >= 0.1.2305.95c96, makeinfo
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -128,6 +128,10 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Mon Dec 24 2018 Dmitry V. Levin <ldv@altlinux.org> 1.9.0.18.9c2a-alt1
+- gzip: v1.8-20-g82c62a3 -> v1.9-18-g9c2a2de.
+- gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.20.82c6-alt1
 - gzip: v1.6-33-g6bfbf81 -> v1.8-20-g82c62a3 (closes: #8184).
 - gzip-utils: added support for lz4, lzip, lzop, and zstd.

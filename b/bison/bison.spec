@@ -1,11 +1,11 @@
 Name: bison
-Version: 3.0.4.0.14.8bf2
-Release: alt2
+Version: 3.0.5
+Release: alt1
 
 Summary: A GNU general-purpose parser generator
 License: GPLv3+
 Group: Development/Other
-Url: http://www.gnu.org/software/bison/
+Url: https://www.gnu.org/software/bison/
 
 %define srcname %name-%version-%release
 # git://git.altlinux.org/people/ldv/packages/bison refs/heads/master
@@ -19,7 +19,7 @@ Provides: byacc = %version-%release
 Obsoletes: byacc
 
 BuildRequires: flex, gcc-c++, help2man, makeinfo
-BuildRequires: gnulib >= 0.1.585.2fda85
+BuildRequires: gnulib >= 0.1.2305.95c96
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -56,7 +56,7 @@ ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
 # Install submodule files.
 rm m4/m4.m4 data/m4sugar/{foreach,m4sugar}.m4 build-aux/move-if-change
-ln -s %_aclocaldir/m4.m4 m4/
+ln -s %_aclocaldir/m3.m4 m4/
 ln -s %_datadir/autoconf/m4sugar/{foreach,m4sugar}.m4 data/m4sugar/
 ln -s %_datadir/gnulib/build-aux/move-if-change build-aux/
 
@@ -87,6 +87,11 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.0.5-alt1
+- bison: v3.0.4-14-g8bf276d -> v3.0.5.
+- gnulib: v0.1-585-g2fda85e -> v0.1-2305-g95c96b6dd.
+- Updated translations from translationproject.org.
+
 * Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.14.8bf2-alt2
 - Added makeinfo to BuildRequires.
 
