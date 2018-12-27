@@ -1,5 +1,5 @@
 Name: mintlocale
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Language selection tool for Cinnamon
@@ -54,6 +54,9 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %doc debian/copyright debian/changelog
 
 %changelog
+* Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 1.5.1-alt1
+- new version
+
 * Wed Nov 21 2018 Vladimir Didenko <cow@altlinux.org> 1.5.0-alt1
 - new version
 

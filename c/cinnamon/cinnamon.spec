@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 4.0.3
+Version: 4.0.8
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -55,7 +55,6 @@ Requires: python3-module-pygobject3
 Requires: polkit-gnome
 Requires: typelib(Keybinder) >= 3.0
 Requires: python3-module-PAM
-Requires: xapps-utils
 # required by keyboard applet
 Requires: libxapps-gir
 
@@ -69,7 +68,7 @@ BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menu
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel libnm-gir-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
-BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel NetworkManager-glib-gir-devel
+BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -223,6 +222,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.8-alt1
+- 4.0.8-1-g24637679
+
 * Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
 - 4.0.3-3-gf3786e06
 
