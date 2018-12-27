@@ -1,7 +1,7 @@
 %define oname kiwisolver
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
 Group: Development/Python
@@ -14,6 +14,7 @@ Source: kiwi-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools gcc-c++
+BuildRequires: python3-dev
 
 %description
 Kiwi is an efficient C++ implementation of the Cassowary constraint
@@ -41,6 +42,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Dec 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2
+- Add python3-dev to build requirements.
+
 * Tue Nov 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version.
 - Package as python3 module.
