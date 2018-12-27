@@ -3,16 +3,17 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.3
-Release: alt2.git20140720.1.1
+Version: 1.5
+Release: alt1
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
 License: BSD
 Group: Development/Python
-Url: http://networkx.lanl.gov/pygraphviz
+Url: https://pygraphviz.github.io/
 Packager: Denis Klimov <zver@altlinux.org>
 
+# https://github.com/pygraphviz/pygraphviz.git
 Source: %module_name-%version.tar
 
 BuildRequires: libgraphviz-devel
@@ -102,7 +103,6 @@ popd
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
-%_datadir/doc/%module_name-%version.dev
 
 %files tests
 %python_sitelibdir/*/tests
@@ -110,6 +110,7 @@ popd
 %if_with python3
 %files -n python3-module-%module_name
 %python3_sitelibdir/*
+%doc %_docdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%module_name-tests
@@ -117,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt1
+- update to 1.5
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2.git20140720.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
