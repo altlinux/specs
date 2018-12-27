@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary: pytest plugin which will terminate tests after a certain timeout
 License: MIT
@@ -98,13 +98,19 @@ popd
 
 %files
 %doc README failure_demo.py
-%python_sitelibdir/*
+%python_sitelibdir/pytest_timeout.py*
+%python_sitelibdir/pytest_timeout-*.egg-info/
 
 %files -n python3-module-%oname
 %doc README failure_demo.py
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_timeout.py
+%python3_sitelibdir/__pycache__/pytest_timeout.*.py*
+%python3_sitelibdir/pytest_timeout-*.egg-info/
 
 %changelog
+* Thu Dec 27 2018 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1
+- 1.3.2 -> 1.3.3.
+
 * Fri Nov 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.2.0 -> 1.3.2.
 
