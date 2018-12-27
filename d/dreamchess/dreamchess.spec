@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name:    dreamchess
-Version: 0.2.0
-Release: alt5.1
+Version: 0.3.0
+Release: alt1.git5174b54
 
 Summary: DreamChess is a user interface for playing chess.
 License: GPL
@@ -8,21 +9,13 @@ URL: http://www.dreamchess.org/
 
 Group: Games/Boards
 
-Source: %name-%version.tar.gz
-Source1: %name.desktop
-Source2: %name-16.png
-Source3: %name-32.png
-Source4: %name-48.png
-Patch: dreamchess-0.2.0-alt-DSO.patch
-
-Packager: Evgeny V. Shishkov <shev@altlinux.org>
+Source: %name-%version.tar
 
 Summary(ru_RU.UTF8): DreamChess - пользовательский интерфейс для игры в шахматы.
 
-# Automatically added by buildreq on Wed May 12 2010
-BuildRequires: libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libjpeg-devel libpng-devel libmxml-devel zlib-devel
+BuildRequires: cmake gcc-c++ bison flex libmxml-devel libGLEW-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel 
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 %description
 DreamChess is a user interface for playing chess. It comes with its own
@@ -48,40 +41,35 @@ crafty (ftp://ftp.cis.uab.edu/pub/hyatt/) и GNU Chess (http://www.gnu.org/softw
 Summary: Data files for DreamChess game
 Group: Games/Boards
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description data
 This package contains data files for DreamChess game
 
 %prep
 %setup -q
-%patch -p2
 
 %build
-%configure --datadir=%_gamesdatadir/
-%make_build
+%cmake
+%cmake_build
 
 %install
-%make_install DESTDIR="%buildroot/" install
-%__install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-%__install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
-%__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
-%__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
+%cmakeinstall_std
 
 %files
-%defattr(-, root, root)
 %_bindir/*
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
-%doc README COPYING ChangeLog AUTHORS INSTALL
 %doc %_man6dir/*
+%_datadir/doc/DreamChess
 
 %files data
-%_gamesdatadir/*
+%_datadir/%name
 
 %changelog
+* Thu Dec 27 2018 Alexey Melyashinsky <bip@altlinux.org> 0.3.0-alt1.git5174b54
+- Update to upstream snapshot 5174b54.
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt5.1
 - Fixed build
 
