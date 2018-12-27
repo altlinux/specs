@@ -9,7 +9,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.11.4
-Release:	alt1.1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -97,6 +97,11 @@ Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
+Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
+Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
+Patch7:		%name-3.11.4-alt-mysql8-bool-type-fix.patch
+
+
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -1107,6 +1112,9 @@ terminal applications.
 %patch1 -p1
 %patch2 -p1
 %patch4 -p2
+%patch5 -p0
+%patch6 -p0
+%patch7 -p0
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1118,6 +1126,8 @@ for i in `find . |grep acinclude.m4`; do
 done
 # Need this for gcc44
 sed -i 's|-fno-exceptions||g' gb.db.sqlite3/acinclude.m4
+# fix build against libmysqlclient21
+sed -i 's| my_config\.h||g' gb.db.mysql/configure.ac
 ./reconf-all
 
 # clean up some spurious exec perms
@@ -1652,6 +1662,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.term.*
 
 %changelog
+* Wed Dec 12 2018 Nikolai Kostrigin <nickel@altlinux.org> 3.11.4-alt2
+- Fix FTBFS due to bool types issues
+
 * Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1.1
 - Rebuild with openssl 1.1.
 
