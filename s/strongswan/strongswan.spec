@@ -62,7 +62,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.7.1
+Version: 5.7.2
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -227,6 +227,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Thu Dec 27 2018 Michael Shigorin <mike@altlinux.org> 5.7.2-alt1
+- new version (watch file uupdate)
+
 * Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 5.7.1-alt1
 - new version (watch file uupdate)
 
