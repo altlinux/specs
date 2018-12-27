@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.6.2
-Release: alt1%ubt
+Version: 1.7.5
+Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -26,7 +26,7 @@ Source: lib%{shortname}_%version.tar
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
-BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel
+BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel libtheora-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -76,18 +76,21 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %prep
 %setup -q -n lib%{shortname}_%version
-chmod -x drivers/telescope/lx200fs2.{h,cpp}
 
 %build
+pushd libindi
 %Kbuild \
     -DUDEVRULES_INSTALL_DIR=%_udevrulesdir \
     #
+popd
 
 %install
+pushd libindi
 %Kinstall
+popd
 
 %files common
-%doc ChangeLog README
+%doc libindi/ChangeLog libindi/README
 # an essential part of libindi according to FindINDI.cmake
 %_datadir/%shortname/
 
@@ -109,7 +112,6 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 #%_libdir/libsbigudrv.so.*
 
 %files -n lib%shortname-devel
-%doc TODO
 #%doc src/examples
 %_libdir/*.so
 %_libdir/*.a
@@ -117,6 +119,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt1
+- new version
+
 * Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1%ubt
 - new version
 
