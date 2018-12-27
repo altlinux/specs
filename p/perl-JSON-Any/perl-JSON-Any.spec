@@ -2,7 +2,7 @@
 %define dist JSON-Any
 Name: perl-%dist
 Version: 1.39
-Release: alt1
+Release: alt2
 
 Summary: Wrapper Class for the various JSON classes
 License: GPL or Artistic
@@ -14,7 +14,9 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/JSON-Any-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-JSON perl-JSON-DWIW perl-JSON-PP perl-Pod-Escapes perl-YAML-Syck perl-devel perl(Test/Requires.pm) perl(Test/Without/Module.pm) perl(Test/Fatal.pm) perl(Test/Warnings.pm) perl(namespace/clean.pm)
+BuildRequires: perl-JSON perl-JSON-DWIW perl-JSON-PP perl-Pod-Escapes perl-YAML-Syck perl-devel perl(Test/Requires.pm) perl(Test/Without/Module.pm) perl(Test/Fatal.pm) perl(Test/Warnings.pm) perl(namespace/clean.pm) perl(Cpanel/JSON/XS.pm)
+
+Requires: perl(JSON/XS.pm)
 
 %description
 This module tries to provide a coherent API to bring together the various
@@ -36,6 +38,9 @@ installed.
 %perl_vendor_privlib/JSON
 
 %changelog
+* Thu Dec 27 2018 Igor Vlasenko <viy@altlinux.ru> 1.39-alt2
+- fixed build
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.39-alt1
 - automated CPAN update
 
