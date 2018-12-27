@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 5.3.11
+Version: 8.0.13
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -14,8 +14,6 @@ Group: System/Libraries
 Url: https://github.com/mysql/mysql-connector-odbc
 # https://dev.mysql.com/doc/connector-odbc/en/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.org>
-
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
@@ -23,15 +21,14 @@ Source1: odbc.ini
 Source2: odbcinst.ini
 
 Patch1: %name-5.3.11-alt-rpath.patch
-Patch2: %name-5.3.11-fix_build.patch
-Patch3: %name-5.3.11-alt-aarch64.patch
+Patch2: %name-8.0.13-fedora-myodbc-64bit.patch
 
 
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Wed Aug 08 2018
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libncurses-devel libstdc++-devel libtinfo-devel libunixODBC-devel-compat python-base python-modules python3 python3-base python3-dev ruby
-BuildRequires: cmake gcc-c++ glibc-devel-static libmysqlclient20-devel libsasl2-devel libssl-devel libunixODBC-devel
+BuildRequires: cmake gcc-c++ glibc-devel-static libmysqlclient21-devel libsasl2-devel libssl-devel libunixODBC-devel
 
 %description
 MySQL Connector/ODBC   allows you to connect to MySQL database
@@ -50,21 +47,23 @@ setup instructions can be found at
 
 %patch1
 %patch2 -p1
-%patch3
 
 %build
-cmake -G "Unix Makefiles" \
+%cmake -G "Unix Makefiles" \
+    -DCMAKE_BUILD_TYPE=RelWithDebinfo \
     -DWITH_UNIXODBC=1 \
+    -DMYSQLCLIENT_STATIC_LINKING=false \
     -DBUNDLE_DEPENDENCIES=false \
     -DHAVE_STRUCT_TIMESPEC=1 \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DDISABLE_GUI=1 \
-    -DRPM_BUILD=1
+    -DRPM_BUILD=1 \
+    ..
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 install -m 0644 %SOURCE1 odbc.ini
 install -m 0644 %SOURCE2 odbcinst.ini
@@ -79,6 +78,9 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt}
 %exclude %_prefix/test
 
 %changelog
+* Mon Dec 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt1
+- New version
+
 * Wed Aug 15 2018 Nikolay A. Fetisov <naf@altlinux.org> 5.3.11-alt1
 - New version
 - Restored from orphaned

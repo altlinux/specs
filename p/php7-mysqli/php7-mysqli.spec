@@ -2,7 +2,7 @@
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
-Release:	%php7_release.1
+Release:	%php7_release.2
 
 Summary:	MySQL Improved Extension for PHP
 
@@ -63,6 +63,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Tue Dec 18 2018 Nikolai Kostrigin <nickel@altlinux.org> 7.2.13-alt1.2
+- Modify php7-mysql8-transition.patch: remove excessive definitions
 
 * Fri Dec 07 2018 Nikolai Kostrigin <nickel@altlinux.org> 7.2.12-alt1.1
 - Fix build with MySQL8 client library

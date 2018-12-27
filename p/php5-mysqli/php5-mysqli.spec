@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	MySQL Improved Extension for PHP5
 
@@ -13,6 +13,7 @@ URL:		http://www.php.net/manual/en/ref.mysqli.php
 #Source0:	standart PHP module
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
+Patch0:   	php5-mysql8-transition.patch
 Conflicts: php5-mysqlnd-mysqli
 
 BuildRequires(pre): rpm-build-php5 
@@ -25,6 +26,7 @@ MySQLi (improved) - new MySQL interface for PHP 5 and MySQL 4.1.3+
 %prep
 %setup -T -c
 cp -pr -- %php5_extsrcdir/%php5_extension/* .
+%patch0 -p0
 
 %build
 phpize
@@ -59,6 +61,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Fri Dec 07 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.6.38.20180912-alt1.1
+- Fix build with MySQL8 client library
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
