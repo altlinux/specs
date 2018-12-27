@@ -5,7 +5,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt8.1
+Release: alt9
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -16,6 +16,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
 Patch: 0001_Fix_mono_dir.patch
 Patch1: 0002_libappindicator-no-Werror.patch
+Patch2: libappindicator-12.10.0-alt-application-service-marshal.patch
 BuildRequires(pre): gcc
 BuildRequires: vala-tools gtk-doc
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
@@ -140,6 +141,7 @@ This package contains the development files for the appindicator-sharp library.
 %setup
 %patch0 -p1 -b .monodir
 %patch1 -p2
+%patch2 -p2
 
 sed -i "s#gmcs#mcs#g" configure.ac
 
@@ -220,6 +222,8 @@ find %buildroot -type f -name '*.la' -delete
 %_girdir/AppIndicator3-%api_ver.gir
 
 %files devel-doc
+%dir %_datadir/gtk-doc/
+%dir %_datadir/gtk-doc/html/
 %doc %_datadir/gtk-doc/html/*
 
 %if_with mono
@@ -248,6 +252,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Dec 27 2018 Leontiy Volodin <lvol@altlinux.org> 12.10.0-alt9
+- Fix syntax errors
+
 * Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt8.1
 - Build Compile into one process (Fix FTBFS on a multiprocessor system)
 
