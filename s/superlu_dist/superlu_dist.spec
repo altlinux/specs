@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -6,20 +8,18 @@
 %define sover %somver.5
 Name: superlu_dist
 Version: 3.3
-Release: alt2
+Release: alt3
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://acts.nersc.gov/superlu/
 
-Source: %{name}_%version.tar.gz
+Source: %{name}_%version.tar
 Source1: superlu_sort_perm.c
 
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: liblapack-devel
 BuildRequires: csh libparmetis-devel
-#BuildPreReq: texlive-latex-base texlive-extra-utils
-#BuildPreReq: doxygen graphviz ghostscript-utils
 
 %description
 SuperLU_DIST contains a set of subroutines to solve a sparse linear system 
@@ -64,9 +64,9 @@ This package contains shared library of SuperLU_DIST.
 %package -n lib%name-devel
 Summary: Development files of SuperLU_DIST
 Group: Development/C
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel < %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -149,14 +149,12 @@ export MPIDIR=%mpidir
 export PATH=$PATH:$MPIDIR/bin
 mkdir -p lib
 %make lib
-#make_build install example
 %make_build install
 pushd FORTRAN
 %make
 popd
 %make -C SRC superlu_sort_perm.o
 %make -C EXAMPLE DSuperLUroot=$PWD
-#doxygen
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -166,7 +164,6 @@ install -d %buildroot%_bindir
 install -d %buildroot%_libdir
 install -d %buildroot%_includedir/%name
 install -d %buildroot%_docdir/%name/examples/fortran
-#install -d %buildroot%_docdir/%name/pdf
 
 mv INSTALL/install.csh INSTALL/%name-install.csh
 install -m755 EXAMPLE/p?drive EXAMPLE/p?drive? EXAMPLE/p?drive*_ABglobal \
@@ -177,7 +174,6 @@ install -m644 lib/*.a FORTRAN/*.mod %buildroot%_libdir
 ln -s %_libdir/superlu_mod.mod %buildroot%_includedir/%name/
 ln -s %_libdir/superlupara_mod.mod %buildroot%_includedir/%name/
 cp -fR DOC/*.pdf DOC/html %buildroot%_docdir/%name/
-#install -m644 DOC/latex/*.pdf %buildroot%_docdir/%name/pdf
 install -p -m644 EXAMPLE/*.c EXAMPLE/*.?ua \
 	%buildroot%_docdir/%name/examples
 install -p -m644 FORTRAN/*.c FORTRAN/*.f90 \
@@ -203,13 +199,11 @@ popd
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
 # usually don't belong in releases. 
 # When packaging a CVS/SVN snapshot, export from CVS/SVN rather than use a checkout.
-find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+find %buildroot -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
-#files
-#_bindir/%name-install.csh
-#_bindir/test*
+rm -f %buildroot%_libdir/*.a
 
 %files -n lib%name
 %doc README
@@ -226,10 +220,11 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %files examples
 %doc EXAMPLE/README
 %_bindir/*
-#exclude %_bindir/%name-install.csh
-#exclude %_bindir/test*
 
 %changelog
+* Thu Dec 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt3
+- Rebuild and spec cleanup.
+
 * Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt2
 - Fixed build with gcc-6.
 

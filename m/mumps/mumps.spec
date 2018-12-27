@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,13 +7,15 @@
 %define sover %somver.10.0
 Name: mumps
 Version: 4.10.0
-Release: alt8
+Release: alt9
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: Free
 Group: Sciences/Mathematics
 Url: http://mumps.enseeiht.fr/
 
-Source: MUMPS_%version.tar.gz
+ExclusiveArch: %ix86 x86_64
+
+Source: MUMPS_%version.tar
 Source1: Makefile.inc
 Source2: Makefile.inc.seq
 
@@ -62,10 +66,10 @@ This package contains shared libraries of MUMPS.
 %package -n lib%name-devel
 Summary: Development files of MUMPS
 Group: Development/Other
-Requires: lib%name-headers = %version-%release
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name-headers = %EVR
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel < %EVR
 
 %description -n lib%name-devel
 MUMPS solves a sparse system of linear equations A x = b
@@ -76,9 +80,9 @@ This package contains development files of MUMPS.
 %package -n lib%name-devel-static
 Summary: Static libraries of MUMPS
 Group: Development/Other
-Requires: lib%name-headers = %version-%release
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
+Requires: lib%name-headers = %EVR
+Requires: lib%name-devel = %EVR
+Conflicts: lib%name-devel < %EVR
 
 %description -n lib%name-devel-static
 MUMPS solves a sparse system of linear equations A x = b
@@ -99,10 +103,10 @@ This package contains shared libraries of MUMPS (sequential version).
 %package -n lib%name-seq-devel
 Summary: Development files of MUMPS (sequential version)
 Group: Development/Other
-Requires: lib%name-headers = %version-%release
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name-headers = %EVR
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel < %EVR
 
 %description -n lib%name-seq-devel
 MUMPS solves a sparse system of linear equations A x = b
@@ -113,10 +117,10 @@ This package contains development files of MUMPS (sequential version).
 %package -n lib%name-seq-devel-static
 Summary: Static libraries of MUMPS (sequential version)
 Group: Development/Other
-Requires: libfakempi-devel = %version-%release
-Requires: lib%name-headers = %version-%release
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
+Requires: libfakempi-devel = %EVR
+Requires: lib%name-headers = %EVR
+Requires: lib%name-devel = %EVR
+Conflicts: lib%name-devel < %EVR
 
 %description -n lib%name-seq-devel-static
 MUMPS solves a sparse system of linear equations A x = b
@@ -278,6 +282,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Thu Dec 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10.0-alt9
+- Updated interpackage dependencies and build architectures.
+
 * Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10.0-alt8
 - Fixed build.
 
