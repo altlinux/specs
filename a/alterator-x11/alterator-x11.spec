@@ -1,7 +1,7 @@
 %define guile22 1
 
 Name: alterator-x11
-Version: 1.98.13
+Version: 1.98.14
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -94,6 +94,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout/
 %_bindir/xsetup*
 
 %changelog
+* Thu Dec 27 2018 Mikhail Efremov <sem@altlinux.org> 1.98.14-alt1
+- video_scan: Initialize local variable.
+
 * Thu Jul 27 2017 Oleg Solovyov <mcpain@altlinux.org> 1.98.13-alt1
 - Fallback to /usr/share/alterator-x11/xorg.conf
   if default xorg.conf does not exist (closes: #32510)
