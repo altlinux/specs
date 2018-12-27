@@ -1,5 +1,5 @@
 Name: rescue-launcher
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Optional autorun feature for ALT Rescue
@@ -40,5 +40,8 @@ chmod 644 %buildroot/var/log/%name.log
 %ghost /var/log/%name.log
 
 %changelog
+* Thu Dec 27 2018 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt1
+- vbox method: mounting error fixed.
+
 * Thu Dec 13 2018 Leonid Krivoshein <klark@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus.
