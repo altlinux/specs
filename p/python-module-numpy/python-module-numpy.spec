@@ -1,5 +1,5 @@
 %define oname numpy
-%define majver 1.13
+%define majver 1.15
 %def_without latex
 %def_without doc
 %def_with addons
@@ -12,21 +12,21 @@
 %define py3sover %somver.7
 
 Name: python-module-%oname
-Version: %majver.3
-Release: alt2.2.qa1
+Version: %majver.4
+Release: alt1
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
 Group: Development/Python
-Url: http://numpy.scipy.org/
+Url: https://www.numpy.org/
 
 %setup_python_module %oname
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
 %add_python_req_skip Scons setuptools distutils nose number code_generators
 
-# http://github.com/numpy/numpy
+# https://github.com/numpy/numpy
 Source: %oname-%version.tar
 Source1: %oname.pc
 Source2: site.cfg
@@ -343,9 +343,6 @@ sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
 sed -i 's|^includedir.*|includedir=%_includedir/%oname-py3|' \
 	%oname/core/npymath.ini.in
 
-# delete unnecessary files
-
-rm -f numpy/distutils/mingw32ccompiler.py
 popd
 %endif
 
@@ -367,7 +364,7 @@ INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/numpy-py3"
 INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
-DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86 -DHAVE_LDOUBLE_IEEE_QUAD_BE"
+DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
 DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 %add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
 
@@ -424,7 +421,7 @@ INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/numpy"
 INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
-DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86 -DHAVE_LDOUBLE_IEEE_QUAD_BE"
+DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
 DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 %add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
 
@@ -658,12 +655,6 @@ rm -f \
 	%buildroot%python3_sitelibdir/%oname/f2py/docs/usersguide/setup_example.py
 
 #fixes
-
-#for i in cversions generate_numpy_api
-for i in %buildroot%python3_sitelibdir/code_generators/*.py
-do
-	2to3 -w -n $i
-done
 
 for i in %buildroot%_includedir/%oname-py3/*
 do
@@ -944,6 +935,10 @@ fi
 %endif
 
 %changelog
+* Tue Dec 25 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1:1.15.4-alt1
+- Update to upstream version 1.15.4
+- Remove runnig 2to3 on generators
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2.2.qa1
 - NMU: applied repocop patch
 
