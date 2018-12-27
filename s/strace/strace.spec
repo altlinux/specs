@@ -1,9 +1,10 @@
 Name: strace
-Version: 4.25
+Version: 4.26
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
-License: BSD-style
+# The test suite is GPLv2+, all the rest is LGPLv2.1+.
+License: LGPL-2.1-or-later and GPL-2.0-or-later
 Group: Development/Debuggers
 Url: https://strace.io
 
@@ -95,6 +96,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt1
+- v4.25 -> v4.26.
+
 * Tue Oct 30 2018 Dmitry V. Levin <ldv@altlinux.org> 4.25-alt1
 - v4.24-85-g9eeab9844 -> v4.25.
 
