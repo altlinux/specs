@@ -4,14 +4,14 @@
 BuildRequires(pre): rpm-build-python
 %define python_noarch %python_sitelibdir_noarch
 %define modname scipy
-%define ver_major 1.0
+%define ver_major 1.2
 
-%def_enable docs
+%def_disable docs
 %def_with python3
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt2.1
+Release: alt1
 
 Summary: SciPy is the library of scientific codes
 
@@ -91,6 +91,7 @@ This package contains development files of SciPy.
 Summary: Tests and examples for SciPy (Python 3)
 Group: Development/Python3
 Requires: python3-module-%modname = %version-%release
+Requires: python3-module-numpy-tests
 %add_python3_req_skip ext_tools inline_tools swig2_ext symeig
 %add_python3_req_skip md5 vtk wxPython
 %add_python3_req_skip pylab
@@ -116,6 +117,7 @@ This package contains development files of SciPy.
 Summary: Tests and examples for SciPy
 Group: Development/Python
 Requires: %name = %version-%release
+Requires: python-module-numpy-tests
 %add_python_req_skip ext_tools inline_tools swig2_ext symeig vtk weave
 
 %description tests
@@ -337,6 +339,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed Dec 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt1
+- update to 1.2.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
