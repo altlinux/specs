@@ -1,13 +1,11 @@
 Name:     puppetdb
-Version:  6.0.1
+Version:  6.1.0
 Release:  alt1
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
 Group:    Other
 Url:      https://github.com/puppetlabs/puppetdb
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
@@ -21,6 +19,7 @@ Requires: clojure
 Requires: ruby-msgpack
 
 %def_enable initd
+
 
 %description
 PuppetDB is the fast, scalable, and reliable data warehouse for Puppet. It
@@ -52,6 +51,9 @@ mkdir -p %buildroot%_runtimedir/%name
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/sysconfig/%name
+
+mkdir -p %buildroot%_sysconfdir/logrotate.d
+cat puppetdb.logrotate.conf > %buildroot%_sysconfdir/logrotate.d/puppetdb
 
 install -D default %buildroot%_sysconfdir/default/%name
 
@@ -114,6 +116,7 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %if_enabled initd
 %_initdir/%name
 %_sysconfdir/tmpfiles.d/%name.conf
+%_sysconfdir/logrotate.d/%name
 %_runtimedir/%name
 %doc docs/%name/*
 %endif
@@ -139,6 +142,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %ruby_sitelibdir/*
 
 %changelog
+* Thu Dec 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.1.0-alt1
+- Version updated to 6.1.0
+
 * Fri Nov 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.1-alt1
 - Update version to 6.0.1
 
