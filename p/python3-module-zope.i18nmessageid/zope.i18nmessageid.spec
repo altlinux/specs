@@ -9,8 +9,8 @@ of the 'zope.i18n' package.
 %def_with check
 
 Name: %fname
-Version: 4.1.0
-Release: alt2
+Version: 4.3.1
+Release: alt1
 
 %if ""==""
 Summary: Message Identifiers for internationalization
@@ -114,6 +114,9 @@ python3 setup.py test -v
 %endif
 
 %changelog
+* Fri Dec 28 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt1
+- Build new version.
+
 * Mon May 14 2018 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
 - Tranfer package to subst-packaging system.
 
