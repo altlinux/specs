@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: SciPy is the library of scientific codes
 
@@ -32,6 +32,7 @@ Source: https://github.com/%modname/%modname/releases/download/v%version/%modnam
 Source: %modname-%version.tar
 %endif
 Source1: site.cfg
+Patch1: fix-unicode-use.patch
 
 #BuildPreReq: python-module-sympy python-module-scipy git
 #BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
@@ -157,6 +158,7 @@ This package contains development documentation for SciPy in PDF.
 
 %prep
 %setup -n %modname-%version
+%patch1 -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -339,6 +341,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Fri Dec 28 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt2
+- Fix unicode is docstrings
+
 * Wed Dec 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt1
 - update to 1.2.0
 
