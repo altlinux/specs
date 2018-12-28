@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt1
+Release: alt1.1
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -44,8 +44,10 @@ BuildRequires: perl(Test/Output.pm)
 BuildRequires: perl(Test/Pod.pm)
 BuildRequires: perl(Test/Warnings.pm)
 BuildRequires: perl(Try/Tiny.pm)
-BuildRequires: /usr/bin/qemu-system-i386
-BuildRequires: /usr/bin/qemu-img
+#BuildConflicts: pve-qemu-aux pve-qemu-img
+#BuildRequires: /usr/bin/qemu-system-i386
+#BuildRequires: /usr/bin/qemu-img
+BuildRequires: qemu-img qemu-aux
 BuildRequires: perl(Mojo/File.pm)
 BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm)
 BuildRequires: perl(Mojolicious.pm)
@@ -116,5 +118,8 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Fri Dec 28 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.1527308405.8b586d5-alt1.1
+- NMU: fixed build (Build Conflict with pve-qemu-aux pve-qemu-img)
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt1
 - initial build for ALT
