@@ -2,6 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 %def_with lint
 
+%ifarch %ix86
+%def_with only_client
+%else
+%def_without only_client
+%endif
+
 %if_with lint
     %define linter_options --enable-pylint --with-jslint
 %else
@@ -25,10 +31,11 @@
 %define bind_version 9.11
 %define bind_dyndb_ldap_version 11.0
 %define sssd_version 1.16.3
+%define gssproxy_version 0.8.0-alt2
 
 Name: freeipa
 Version: 4.7.1
-Release: alt4
+Release: alt5
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -39,17 +46,21 @@ Source0: %name-%version.tar
 Source1: freeipa-server.filetrigger
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-python3
-# libs
-BuildRequires: libkrb5-devel >= %krb5_version
-BuildRequires: libsasl2-devel
-BuildRequires: libxmlrpc-devel
-BuildRequires: libpopt-devel
-BuildRequires: libnss-devel
-BuildRequires: libssl-devel
+
+BuildRequires: libcmocka-devel
 BuildRequires: libini_config-devel
+BuildRequires: libkrb5-devel >= %krb5_version
+BuildRequires: libnss-devel
+BuildRequires: libpopt-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libssl-devel
+BuildRequires: libxmlrpc-devel
+BuildRequires: openldap-devel
+
+%if_without only_client
+BuildRequires(pre): rpm-macros-apache2
+
 BuildRequires: libuuid-devel
 BuildRequires: libsss_idmap-devel
 BuildRequires: libsss_certmap-devel
@@ -61,6 +72,7 @@ BuildRequires: apache2-base
 BuildRequires: 389-ds-base-devel >= %ds_version
 BuildRequires: samba-devel >= %samba_version
 BuildRequires: node-uglify-js
+%endif # only_client
 
 # python
 BuildRequires: python3-module-lesscpy
@@ -117,11 +129,6 @@ BuildRequires: python3-module-yubico
 
 %endif
 
-#
-# Build dependencies for unit tests
-#
-BuildRequires: libcmocka-devel
-
 %description
 IPA is an integrated solution to provide centrally managed Identity (users,
 hosts, services), Authentication (SSO, 2FA), and Authorization
@@ -131,12 +138,13 @@ and integration with Active Directory based infrastructures (Trusts).
 
 ###############################################################################
 
+%if_without only_client
 %package server
 Summary: The IPA authentication server
 Group: System/Base
 Requires: %name-client = %EVR
 Requires: acl
-Requires: gssproxy
+Requires: gssproxy >= %gssproxy_version
 Requires: sssd-dbus >= %sssd_version
 Requires: selinux-policy-alt
 Requires: pki-ca >= %pki_version
@@ -184,7 +192,6 @@ If you are installing an IPA server, you need to install this package.
 %package -n python3-module-ipaserver
 Summary: Python libraries used by IPA server
 Group: System/Libraries
-BuildArch: noarch
 Requires: %name-server-common = %EVR
 Requires: python3-module-augeas
 Requires: python3-module-gssapi
@@ -210,7 +217,6 @@ If you are installing an IPA server, you need to install this package.
 %package server-common
 Summary: Common files used by IPA server
 Group: System/Base
-BuildArch: noarch
 Requires: %name-client-common = %EVR
 Requires: apache2-base
 Requires: custodia
@@ -230,7 +236,6 @@ If you are installing an IPA server, you need to install this package.
 %package server-dns
 Summary: IPA integrated DNS server with support for automatic DNSSEC signing
 Group: System/Base
-BuildArch: noarch
 Requires: %name-server = %EVR
 Requires: bind-dyndb-ldap >= %bind_dyndb_ldap_version
 Requires: bind >= %bind_version
@@ -264,6 +269,7 @@ Cross-realm trusts with Active Directory in IPA require working Samba 4
 installation. This package is provided for convenience to install all required
 dependencies at once.
 
+%endif # only_client
 ###############################################################################
 
 %package client
@@ -277,14 +283,10 @@ Requires: sssd-krb5
 Requires: sssd-ipa >= %sssd_version
 Requires: sssd-tools >= %sssd_version
 Requires: libsss_sudo
-Requires: libsss_autofs
 Requires: certmonger
 Requires: nss-utils
 Requires: bind-utils
 Requires: oddjob-mkhomedir
-Requires: autofs
-Requires: libnfsidmap
-Requires: nfs-utils
 Requires: policycoreutils
 Requires: python3-module-gssapi
 Requires: python3-module-ipaclient = %EVR
@@ -306,10 +308,28 @@ This package provides command-line tools for IPA administrators.
 
 ###############################################################################
 
+%package client-automount
+Summary: IPA Automount for use on clients
+Group: System/Base
+Requires: %name-client = %EVR
+Requires: autofs-sss
+Requires: libsss_autofs
+Requires: sssd-nfs-idmap
+
+%description client-automount
+IPA is an integrated solution to provide centrally managed Identity (users,
+hosts, services), Authentication (SSO, 2FA), and Authorization
+(host access control, SELinux user roles, services). The solution provides
+features for further integration with Linux based clients (SUDO, automount)
+and integration with Active Directory based infrastructures (Trusts).
+If your network uses IPA for authentication and you would like to use
+Automount, this package should be installed.
+
+###############################################################################
+
 %package -n python3-module-ipaclient
 Summary: Python libraries used by IPA client
 Group: System/Libraries
-BuildArch: noarch
 Requires: %name-client-common = %EVR
 Requires: python3-module-freeipa = %EVR
 Requires: python3-module-ipaclient-ntp = %EVR
@@ -329,7 +349,6 @@ installed on every client machine.
 %package client-common
 Summary: Common files used by IPA client
 Group: System/Base
-BuildArch: noarch
 Requires: ca-trust
 
 %description client-common
@@ -346,7 +365,6 @@ installed on every client machine.
 %package -n python3-module-freeipa
 Summary: Python3 libraries used by IPA
 Group: System/Libraries
-BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: gnupg2
 Requires: libkeyutils
@@ -379,7 +397,6 @@ If you are using IPA with Python 3, you need to install this package.
 %package -n python3-module-ipaserver-ntp
 Summary: Python3 IPA libraries for ntp services in IPA server
 Group: Development/Python3
-BuildArch: noarch
 
 %description -n python3-module-ipaserver-ntp
 IPA python3 libraries for synchronization IPA server with time&data servers.
@@ -389,7 +406,6 @@ IPA python3 libraries for synchronization IPA server with time&data servers.
 %package -n python3-module-ipaclient-ntp
 Summary: Python3 IPA libraries for ntp services in IPA client
 Group: Development/Python3
-BuildArch: noarch
 
 %description -n python3-module-ipaclient-ntp
 IPA python3 libraries for synchronization IPA client with time&data servers.
@@ -399,7 +415,6 @@ IPA python3 libraries for synchronization IPA client with time&data servers.
 %package common
 Summary: Common files used by IPA
 Group: System/Libraries
-BuildArch: noarch
 
 %description common
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -414,7 +429,6 @@ If you are using IPA, you need to install this package.
 %package -n python3-module-ipatests
 Summary: IPA tests and test tools
 Group: System/Base
-BuildArch: noarch
 Requires: python3-module-ipaclient = %EVR
 Requires: python3-module-ipaserver = %EVR
 Requires: tar
@@ -445,8 +459,13 @@ grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
 export PYTHON=%_bindir/python3
 %autoreconf
 %configure --with-vendor-suffix=-%release \
+%if_without only_client
            --enable-server \
            --with-ipatests \
+%else
+           --disable-server \
+           --without-ipatests \
+%endif
 	   --with-ipaplatform=altlinux \
 	   IPA_VERSION_IS_GIT_SNAPSHOT=no \
            %linter_options
@@ -460,8 +479,15 @@ export PYTHON=%_bindir/python3
 # remove files which are useful only for make uninstall
 find %buildroot -wholename '*/site-packages/*/install_files.txt' -exec rm {} \;
 
+# since we package python modules as arch dependent
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
+
 %find_lang ipa
 
+%if_without only_client
 # Remove .la files from libtool - we don't want to package these files
 rm %buildroot/%plugin_dir/libipa_pwd_extop.la
 rm %buildroot/%plugin_dir/libipa_enrollment_extop.la
@@ -488,14 +514,11 @@ mkdir -p %buildroot%apache2_confdir/{sites-available,extra-available,extra-enabl
 /bin/touch %buildroot%apache2_extra_enabled/{ipa-kdc-proxy.conf,ipa-pki-proxy.conf,ipa-rewrite.conf}
 /bin/touch %buildroot%_datadir/ipa/html/{ca.crt,krb.con,krb5.ini,krbrealm.con}
 
-/bin/touch %buildroot%_sysconfdir/ipa/{default.conf,ca.crt}
-
 mkdir -p %buildroot%etc_systemd_dir/httpd2.service.d
 touch %buildroot%etc_systemd_dir/httpd2.service.d/ipa.conf
 
 mkdir -p %buildroot%_sysconfdir/cron.d
 
-mkdir -p %buildroot%_sharedstatedir/kdcproxy
 mkdir -p %buildroot%_sharedstatedir/ipa/backup
 mkdir -p %buildroot%_sharedstatedir/ipa/gssproxy
 mkdir -p %buildroot%_sharedstatedir/ipa/sysrestore
@@ -511,6 +534,24 @@ touch %buildroot%_sharedstatedir/bind/zone/dyndb-ldap/ipa
 touch %buildroot%_sharedstatedir/ipa/pki-ca/publish
 touch %buildroot%_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 
+mkdir -p %buildroot%_runtimedir
+install -d -m 0700 %buildroot%_runtimedir/ipa
+install -d -m 0700 %buildroot%_runtimedir/ipa/ccaches
+
+# install filetrigger
+mkdir -p %buildroot%_rpmlibdir
+install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/freeipa-server.filetrigger
+
+# We use alternatives to divert winbind_krb5_locator.so plugin to libkrb5
+# on the installes where server-trust-ad subpackage is installed because
+# IPA AD trusts cannot be used at the same time with the locator plugin
+# since Winbindd will be configured in a different mode
+mkdir -p %buildroot%_altdir
+printf '%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so\t/dev/null\t90\n' > %buildroot%_altdir/winbind_krb5_locator.so
+
+%endif # only_client
+
+/bin/touch %buildroot%_sysconfdir/ipa/{default.conf,ca.crt}
 # NSS
 # old dbm format
 touch %buildroot%_sysconfdir/ipa/nssdb/cert8.db
@@ -529,23 +570,10 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client
 mkdir -p %buildroot%_sharedstatedir/ipa-client/pki
 mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 
-mkdir -p %buildroot%_runtimedir
-install -d -m 0700 %buildroot%_runtimedir/ipa
-install -d -m 0700 %buildroot%_runtimedir/ipa/ccaches
-
-# install filetrigger
-mkdir -p %buildroot%_rpmlibdir
-install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/freeipa-server.filetrigger
-
-# We use alternatives to divert winbind_krb5_locator.so plugin to libkrb5
-# on the installes where server-trust-ad subpackage is installed because
-# IPA AD trusts cannot be used at the same time with the locator plugin
-# since Winbindd will be configured in a different mode
-mkdir -p %buildroot%_altdir
-printf '%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so\t/dev/null\t90\n' > %buildroot%_altdir/winbind_krb5_locator.so
-
 %check
 %make check VERBOSE=yes LIBDIR=%_libdir
+
+%if_without only_client
 
 %post server
 %post_service certmonger
@@ -611,6 +639,7 @@ if [ $1 = 0 ]; then
     /bin/systemctl reload-or-try-restart dbus ||:
     /bin/systemctl reload-or-try-restart oddjobd ||:
 fi
+%endif # only_client
 
 %post client
 if [ $1 -gt 1 ] ; then
@@ -675,6 +704,7 @@ if [ -f '/etc/openssh/sshd_config' -a $restore -ge 2 ]; then
     fi
 fi
 
+%if_without only_client
 %files server
 %_sbindir/ipa-backup
 %_sbindir/ipa-restore
@@ -759,20 +789,19 @@ fi
 %_rpmlibdir/freeipa-server.filetrigger
 
 %files -n python3-module-ipaserver
-%python3_sitelibdir_noarch/ipaserver/
-%python3_sitelibdir_noarch/ipaserver-*.egg-info/
+%python3_sitelibdir/ipaserver/
+%python3_sitelibdir/ipaserver-*.egg-info/
 
-%exclude %python3_sitelibdir_noarch/ipaserver/install/servntpconf*
-%exclude %python3_sitelibdir_noarch/ipaserver/install/servntplib*
+%exclude %python3_sitelibdir/ipaserver/install/servntpconf*
+%exclude %python3_sitelibdir/ipaserver/install/servntplib*
 
 %files -n python3-module-ipaserver-ntp
-%python3_sitelibdir_noarch/ipaserver/install/servntpconf*
-%python3_sitelibdir_noarch/ipaserver/install/servntplib*
+%python3_sitelibdir/ipaserver/install/servntpconf*
+%python3_sitelibdir/ipaserver/install/servntplib*
 
 %files server-common
 %dir %attr(0700,root,root) %_runtimedir/ipa
 %dir %attr(0700,root,root) %_runtimedir/ipa/ccaches
-%ghost %verify(not user group) %dir %_sharedstatedir/kdcproxy
 %dir %attr(0755,root,root) %_sysconfdir/ipa/kdcproxy
 %config(noreplace) %_sysconfdir/ipa/kdcproxy/kdcproxy.conf
 /lib/tmpfiles.d/ipa.conf
@@ -807,7 +836,7 @@ fi
 %_datadir/ipa/updates/*
 %dir %_sharedstatedir/ipa
 %attr(700,root,root) %dir %_sharedstatedir/ipa/backup
-%attr(700,root,root) %dir %_sharedstatedir/ipa/gssproxy
+%ghost %dir %_sharedstatedir/ipa/gssproxy
 %attr(711,root,root) %dir %_sharedstatedir/ipa/sysrestore
 %attr(700,root,root) %dir %_sharedstatedir/ipa/sysupgrade
 %attr(755,root,root) %dir %_sharedstatedir/ipa/pki-ca
@@ -848,9 +877,20 @@ fi
 %_libexecdir/ipa/oddjob/com.redhat.idm.trust-fetch-domains
 %_altdir/winbind_krb5_locator.so
 
+%files -n python3-module-ipatests
+%python3_sitelibdir/ipatests/
+%python3_sitelibdir/ipatests-*.egg-info
+%_bindir/ipa-run-tests
+%_bindir/ipa-test-config
+%_bindir/ipa-test-task
+%_man1dir/ipa-run-tests.1*
+%_man1dir/ipa-test-config.1*
+%_man1dir/ipa-test-task.1*
+
+%endif # only_client
+
 %files client
 %_sbindir/ipa-client-install
-%_sbindir/ipa-client-automount
 %_sbindir/ipa-certupdate
 %_sbindir/ipa-getkeytab
 %_sbindir/ipa-rmkeytab
@@ -861,20 +901,23 @@ fi
 %_mandir/man1/ipa-getkeytab.1*
 %_mandir/man1/ipa-rmkeytab.1*
 %_mandir/man1/ipa-client-install.1*
-%_mandir/man1/ipa-client-automount.1*
 %_mandir/man1/ipa-certupdate.1*
 %_mandir/man1/ipa-join.1*
 
-%files -n python3-module-ipaclient
-%python3_sitelibdir_noarch/ipaclient/
-%python3_sitelibdir_noarch/ipaclient-*.egg-info/
+%files client-automount
+%_sbindir/ipa-client-automount
+%_mandir/man1/ipa-client-automount.1*
 
-%exclude %python3_sitelibdir_noarch/ipaclient/install/clientntpconf*
-%exclude %python3_sitelibdir_noarch/ipaclient/install/clintplib*
+%files -n python3-module-ipaclient
+%python3_sitelibdir/ipaclient/
+%python3_sitelibdir/ipaclient-*.egg-info/
+
+%exclude %python3_sitelibdir/ipaclient/install/clientntpconf*
+%exclude %python3_sitelibdir/ipaclient/install/clintplib*
 
 %files -n python3-module-ipaclient-ntp
-%python3_sitelibdir_noarch/ipaclient/install/clientntpconf*
-%python3_sitelibdir_noarch/ipaclient/install/clintplib*
+%python3_sitelibdir/ipaclient/install/clientntpconf*
+%python3_sitelibdir/ipaclient/install/clintplib*
 
 %files client-common
 %dir %attr(0755,root,root) %_sysconfdir/ipa/
@@ -903,25 +946,20 @@ fi
 %dir %_datadir/ipa
 
 %files -n python3-module-freeipa
-%python3_sitelibdir_noarch/ipapython/
-%python3_sitelibdir_noarch/ipalib/
-%python3_sitelibdir_noarch/ipaplatform/
-%python3_sitelibdir_noarch/ipapython-*.egg-info/
-%python3_sitelibdir_noarch/ipalib-*.egg-info/
-%python3_sitelibdir_noarch/ipaplatform-*.egg-info/
-%python3_sitelibdir_noarch/ipaplatform-*-nspkg.pth
-
-%files -n python3-module-ipatests
-%python3_sitelibdir_noarch/ipatests/
-%python3_sitelibdir_noarch/ipatests-*.egg-info
-%_bindir/ipa-run-tests
-%_bindir/ipa-test-config
-%_bindir/ipa-test-task
-%_man1dir/ipa-run-tests.1*
-%_man1dir/ipa-test-config.1*
-%_man1dir/ipa-test-task.1*
+%python3_sitelibdir/ipapython/
+%python3_sitelibdir/ipalib/
+%python3_sitelibdir/ipaplatform/
+%python3_sitelibdir/ipapython-*.egg-info/
+%python3_sitelibdir/ipalib-*.egg-info/
+%python3_sitelibdir/ipaplatform-*.egg-info/
+%python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Fri Dec 28 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt5
+- Fixed support for gssproxy non-privileged user.
+- Fixed support for Automount NFS.
+- Dropped build of freeipa-server for i586.
+
 * Tue Dec 04 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt4
 - Drop Requires on selinux-policy (closes: #35686).
 

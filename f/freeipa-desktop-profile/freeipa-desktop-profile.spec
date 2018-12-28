@@ -4,13 +4,13 @@
 
 Name: freeipa-%plugin_name
 Version: 0.0.8
-Release: alt1
+Release: alt2
 
 Summary: FleetCommander integration with FreeIPA
 License: GPLv3
 Group: System/Base
 
-BuildArch: noarch
+ExcludeArch: %ix86
 Url: https://github.com/abbra/freeipa-desktop-profile
 Source: %name-%version.tar
 
@@ -103,6 +103,9 @@ install -p plugin/updates/75-deskprofile.update \
 %python3_sitelibdir/ipaserver/plugins/__pycache__/deskprofile.*.py*
 
 %changelog
+* Sun Dec 30 2018 Stanislav Levin <slev@altlinux.org> 0.0.8-alt2
+- Dropped build for x86 arch.
+
 * Mon Oct 22 2018 Stanislav Levin <slev@altlinux.org> 0.0.8-alt1
 - Initial build.
 
