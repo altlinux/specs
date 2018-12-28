@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 1.4.0
+Version: 1.6.2
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -61,6 +61,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_man5dir/dune-config.5*
 
 %changelog
+* Fri Dec 28 2018 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Fri Oct 26 2018 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
