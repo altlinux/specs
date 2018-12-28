@@ -3,12 +3,14 @@
 
 Name: springrts
 Version: 104.0
-Release: alt1.1
+Release: alt2
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
 Group: Games/Strategy
 Url: https://springrts.com/
+
+ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
@@ -26,6 +28,8 @@ BuildRequires: libXinerama-devel libxkbfile-devel libXmu-devel libXpm-devel
 BuildRequires: libXrandr-devel libXScrnSaver-devel libXv-devel
 BuildRequires: libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libcurl-devel jsoncpp-devel libunwind-devel
+BuildRequires: /usr/bin/xsltproc
+BuildRequires: asio-devel libassimp-devel
 
 Requires: %name-data = %EVR
 Conflicts: %name-dedicated < %EVR
@@ -34,6 +38,8 @@ Obsoletes: %name-dedicated
 
 Source: %name-%version.tar
 Patch1: %name-alt-linking.patch
+Patch2: %name-alt-gcc8.patch
+Patch3: %name-alt-unbundle-libs.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -55,6 +61,12 @@ data files for Spring RTS engine
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
+
+# TODO: remove remaining bundled libraries. They're either missing or patched.
+rm -rf tools/pr-downloader/src/lib/{jsoncpp,minizip}
+rm -rf rts/lib/{asio,assimp,minizip}
 
 %build
 %add_optflags -fPIC -DPIC -D_FILE_OFFSET_BITS=64
@@ -72,10 +84,10 @@ data files for Spring RTS engine
         -DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl \
         -DAI_TYPES=NATIVE
 
-%make_build -C BUILD VERBOSE=1
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std -C BUILD VERBOSE=1
+%cmakeinstall_std VERBOSE=1
 
 # Move icons into proper Freedesktop hicolor theme
 mkdir -p %buildroot%_liconsdir
@@ -105,9 +117,13 @@ sed -i -e '/NoDisplay=true/d' \
 %_xdgmimedir/packages/*
 %_desktopdir/*
 %_liconsdir/*
-%_iconsdir/hicolor/48x48/mimetypes/*.png
+%_iconsdir/hicolor/*/mimetypes/*.png
+%_man6dir/*
 
 %changelog
+* Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt2
+- Fixed build with new toolchain.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
