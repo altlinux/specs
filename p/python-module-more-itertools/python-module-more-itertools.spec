@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 4.3.0
+Version: 5.0.0
 Release: alt1
 
 Summary: More routines for operating on iterables, beyond itertools
@@ -74,6 +74,12 @@ popd
 %endif
 
 %changelog
+* Fri Dec 28 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
+* Mon Aug 13 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
+- New version.
+
 * Tue Jul 31 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
 - New version.
 
