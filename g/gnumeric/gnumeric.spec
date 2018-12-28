@@ -12,7 +12,7 @@
 
 Name: gnumeric
 Version: %ver_major.44
-Release: alt1
+Release: alt1.1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -120,6 +120,9 @@ GObject introspection devel data for the Gnumeric.
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
+# itstool > 2.0.2 crashes on cs help translations
+rm -rf doc/cs
+sed -i 's/cs / /' doc/Makefile.am
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -181,6 +184,9 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.44-alt1.1
+- disabled "cs" help build as a workaround for (ALT #35824)
+
 * Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.44-alt1
 - 1.12.44
 
