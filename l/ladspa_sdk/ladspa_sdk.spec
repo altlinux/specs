@@ -1,6 +1,6 @@
 Name: ladspa_sdk
 Version: 1.13
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: The Linux Audio Developer's Simple Plugin API (LADSPA)
 License: LGPL
@@ -53,8 +53,10 @@ sed -i 's,mkdirhier,mkdir -p,' src/makefile
 
 %build
 %define _optlevel 3
-%ifarch e2k
-export LIBS=-lcxa
+%ifarch %e2k
+# Some plugins use C++ and need lcxa. It can't be loaded
+# dynamically, so all binaries should be linked with it.
+cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 # lcc: "analyseplugin.c", line 353: error: nonstandard first parameter
 #   "const int" of "main", expected "int" [-Werror=main]
 %else
@@ -123,6 +125,9 @@ install -pDm644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Dec 28 2018 Michael Shigorin <mike@altlinux.org> 1.13-alt1.qa3
+- support e2kv4, lcc-1.23
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.13-alt1.qa2
 - E2K: avoid -Werror with implicit -Wmain
 - minor spec cleanup
