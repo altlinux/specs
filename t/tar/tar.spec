@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.30.0.38.3c2a
+Version: 1.31
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,7 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.1.2305.95c96, paxutils >= 0.0.1.124.4ef7
+BuildRequires: gnulib >= 0.1.2313.4652c, paxutils >= 0.0.1.125.5693
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -64,6 +64,10 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 1.31-alt1
+- tar: release_1_30-38-g3c2a2cd -> release_1_31 (fixes: CVE-2018-20482).
+- gnulib: v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.30.0.38.3c2a-alt1
 - tar: release_1_29-19-gd06126f -> release_1_30-38-g3c2a2cd.
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
