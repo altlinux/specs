@@ -1,6 +1,6 @@
 Name: jhead
-Version: 3.00
-Release: alt2
+Version: 3.02
+Release: alt1
 
 Summary: Tool for handling EXIF data in JPEG image files
 License: Public Domain
@@ -36,6 +36,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Fri Dec 28 2018 Grigory Ustinov <grenka@altlinux.org> 3.02-alt1
+- Build new version.
+
 * Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 3.00-alt2
 - Remove dependency on ImageMagick.
 
