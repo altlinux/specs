@@ -1,8 +1,8 @@
 %def_disable freerdp
 
 Name: vlc
-Version: 3.0.4
-Release: alt2
+Version: 3.0.5.1
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -984,6 +984,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/packetizer/libpacketizer_copy_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_dts_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_hevc_plugin.so
+%vlc_plugindir/packetizer/libpacketizer_av1_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpeg4audio_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpeg4video_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpegaudio_plugin.so
@@ -1377,6 +1378,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sat Dec 29 2018 Anton Farygin <rider@altlinux.ru> 3.0.5.1-alt1
+- 3.0.5-1
+
+* Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 3.0.5-alt0.git.bedc72800
+- up to git bedc72800
+
 * Thu Nov 08 2018 Anton Farygin <rider@altlinux.ru> 3.0.4-alt2
 - built with libaom-devel libsamplerate-devel libsidplay2-devel
 - changed solid actions path to kf5 defaults
