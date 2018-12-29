@@ -1,8 +1,8 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 2.9.7
-Release: alt2%ubt
+Version: 3.0.0
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -52,7 +52,6 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %doc COPYING*
 #%config(noreplace) %_K5xdgconf/kstars.knsrc
 %_K5bin/kstars
-%_K5libexecdir/kauth/kauth_kstars_helper
 %_K5data/kstars/
 %_K5icon/*/*/apps/kstars.*
 #%_K5icon/*/*/actions/kstars_*.*
@@ -60,12 +59,17 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5xdgapp/org.kde.kstars.desktop
 #%_K5xmlgui/kstars/
 %_K5notif/kstars.notifyrc
+# kauth
+#%_K5libexecdir/kauth/kauth_kstars_helper
+#%_K5conf_dbus_sysd/*kstars*.conf
+#%_K5dbus_sys_srv/*kstars*.service
+#%_datadir/polkit-1/actions/*kstars*.policy
 %_K5cfg/kstars.kcfg
-%_datadir/polkit-1/actions/*kstars*.policy
-%_K5conf_dbus_sysd/*kstars*.conf
-%_K5dbus_sys_srv/*kstars*.service
 
 %changelog
+* Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:3.0.0-alt1
+- new version
+
 * Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 1:2.9.7-alt2%ubt
 - fix build requires
 
