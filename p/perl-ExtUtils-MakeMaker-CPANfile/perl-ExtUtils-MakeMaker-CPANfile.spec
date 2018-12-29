@@ -6,7 +6,7 @@ BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: cpanfile support for EUMM
 Group: Development/Perl
@@ -41,6 +41,9 @@ ExtUtils::MakeMaker doesn't know, to avoid warnings.
 %perl_vendor_privlib/E*
 
 %changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
