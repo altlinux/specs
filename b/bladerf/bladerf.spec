@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define bladerf_group bladerf
 %define use_syslog 1
 Name: bladerf
-Version: 1.8.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 Summary: SDR radio receiver
 License: GPL-2.0
 Group: Communications
@@ -11,10 +14,9 @@ Url: http://nuand.com/
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Source1: no-OS.tar
 # PATCH-FIX-OPENSUSE bladeRF-add-cflag-Wno-format-truncation.patch boo#1041192
 Patch: bladeRF-add-cflag-Wno-format-truncation.patch
-# PATCH-FIX-UPSTREAM bladeRF-cmake_syntax.patch upstream commit 037e288
-Patch1: bladeRF-cmake_syntax.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: cmake >= 2.8.4
@@ -44,7 +46,8 @@ use of libbladerf.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
+rm -fr thirdparty/analogdevicesinc/no-OS
+tar -xf %SOURCE1 -C thirdparty/analogdevicesinc/
 
 %build
 pushd host
@@ -70,17 +73,21 @@ getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 
 %files
 %doc README.md COPYING CONTRIBUTORS
+%doc %_docdir/libbladeRF
 %_bindir/*
 %_libdir/libbladeRF.so.*
-%_udevrulesdir/88-nuand.rules
+%_udevrulesdir/*.rules
 %_man1dir/*
 
 %files -n lib%name-devel
 %_libdir/libbladeRF.so
-%_includedir/libbladeRF.h
+%_includedir/*.h
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Mon Feb 04 2019 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Mon Oct 30 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt2
 - Merge packages libbladerf and bladerf-udev with bladerf.
 
