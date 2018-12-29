@@ -1,9 +1,10 @@
+%def_without apache1
 %define installdir %webserver_webappsdir/%name
 
 
 Name: itop
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 
 Summary: IT Operations Portal
@@ -127,18 +128,23 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %doc README.ALT
 
 
-%files apache
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
-
-
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
+%if_with apache1
+%files apache
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
+%else
+%exclude %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
+%endif
 
 %files php5
 
 
 %changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt2
+- NMU: build w/o apache1
+
 * Sat Jan 10 2015 Pavel Zilke <zidex at altlinux dot org> 2.1.0-alt1
 - New version 2.1.0
 
