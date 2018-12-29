@@ -1,6 +1,6 @@
 Name: vpn-ws
 Version: 0.2
-Release: alt2
+Release: alt3
 
 Summary: A VPN system over websockets
 
@@ -26,18 +26,20 @@ protocol and to manage websockets connections.
 %install
 mkdir -p %buildroot/%_sbindir/
 cp vpn-ws* %buildroot/%_sbindir/
-mkdir -p %buildroot/%_sysconfdir
-echo URL= > %buildroot/%_sysconfdir/vpn-ws-client.conf
+mkdir -p %buildroot/%_sysconfdir/vpn-ws-client
 mkdir -p %buildroot/%systemd_unitdir
-cp altlinux/vpn-ws*.service %buildroot/%systemd_unitdir/
+cp altlinux/*.service %buildroot/%systemd_unitdir/
 
 %files
 %doc README.md
 %_sbindir/*
-%_sysconfdir/vpn-ws-client.conf
+%config(noreplace) %_sysconfdir/vpn-ws-client/
 %systemd_unitdir/vpn-ws*.service
 
 %changelog
+* Sat Dec 29 2018 Eugene Prokopiev <enp@altlinux.ru> 0.2-alt3
+- use templates for client unit
+
 * Sun Dec 23 2018 Eugene Prokopiev <enp@altlinux.ru> 0.2-alt2
 - vpn-ws is ready to use
 
