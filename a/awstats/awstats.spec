@@ -1,3 +1,4 @@
+%def_without apache1
 %define _pseudouser_user awstats
 %define _pseudouser_group awstats
 %define _pseudouser_home %_localstatedir/%name
@@ -5,7 +6,7 @@
 
 Name: awstats
 Version: 7.7
-Release: alt0.4.20180105
+Release: alt0.5.20180105
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -164,8 +165,12 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %files docs
 %doc docs examples
 
+%if_with apache1
 %files apache
 %config(noreplace) %apache_modconfdir/%name.conf
+%else
+%exclude %apache_modconfdir/%name.conf
+%endif
 
 %files apache2
 %config(noreplace) %apache2_mods_start/%name.conf
@@ -174,6 +179,9 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 7.7-alt0.5.20180105
+- NMU: build w/o apache1
+
 * Sat Jan 13 2018 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.4.20180105
 - Rediffed browser versions list:
   - replace netscape by yandex browser;
