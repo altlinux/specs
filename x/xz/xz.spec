@@ -1,6 +1,6 @@
 Name: xz
-Version: 5.2.3
-Release: alt2
+Version: 5.2.4
+Release: alt1
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -130,6 +130,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sat Dec 29 2018 Dmitry V. Levin <ldv@altlinux.org> 5.2.4-alt1
+- 5.2.3 -> 5.2.4.
+
 * Sat Jan 27 2018 Alexey Tourbin <at@altlinux.ru> 5.2.3-alt2
 - Fixed liblzma.so non-reproducible build due to -fprofile-* options.
 
