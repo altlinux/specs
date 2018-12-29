@@ -1,6 +1,6 @@
 Name: libclc
 Version: 0.2.0
-Release: alt2
+Release: alt3
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
@@ -57,9 +57,7 @@ export CFLAGS=" -D__extern_always_inline=inline"
 	--libexecdir=%_prefix/libexec/clc \
 	--pkgconfigdir=%_pkgconfigdir
 
-%ifarch aarch64
-sed -i 's|\ -frecord-gcc-switches||' Makefile
-%endif
+sed -i 's|frecord-gcc-switches|grecord-gcc-switches|g' Makefile
 %make_build
 
 %install
@@ -74,6 +72,9 @@ sed -i 's|\ -frecord-gcc-switches||' Makefile
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt3
+- git snapshot master.1ecb16d
+
 * Fri Aug 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt2
 - build for aarch64
 
