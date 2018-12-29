@@ -20,8 +20,8 @@
 %define nv_version 410
 %define nv_release 78
 %define nv_minor %nil
-%define pkg_rel alt208
-%define set_gl_nvidia_ver 1.0.2
+%define pkg_rel alt209
+%define set_gl_nvidia_ver 1.1.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -309,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Sat Dec 29 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt209
+- don't use nvidia-xconfig to prevent creation of /etc/X11/xorg.conf
+
 * Wed Dec 12 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt208
 - new version
 
