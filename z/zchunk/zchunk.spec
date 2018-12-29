@@ -1,0 +1,95 @@
+Group: Other
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           zchunk
+Version:        1.0.0
+Release:        alt1_1
+Summary:        Compressed file format that allows easy deltas
+License:        BSD and MIT
+URL:            https://github.com/zchunk/zchunk
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRequires:  gcc
+BuildRequires:  pkgconfig(libzstd)
+BuildRequires:  pkgconfig(libcurl)
+BuildRequires:  pkgconfig(openssl)
+BuildRequires:  meson
+Requires:       %{name}-libs = %{version}-%{release}
+Provides:       bundled(buzhash-urlblock) = 0.1
+Source44: import.info
+ 
+%description
+zchunk is a compressed file format that splits the file into independent
+chunks.  This allows you to only download the differences when downloading a
+new version of the file, and also makes zchunk files efficient over rsync.
+zchunk files are protected with strong checksums to verify that the file you
+downloaded is in fact the file you wanted.
+
+%package libs
+Group: Other
+Summary: Zchunk library
+
+%description libs
+zchunk is a compressed file format that splits the file into independent
+chunks.  This allows you to only download the differences when downloading a
+new version of the file, and also makes zchunk files efficient over rsync.
+zchunk files are protected with strong checksums to verify that the file you
+downloaded is in fact the file you wanted.
+
+This package contains the zchunk library, libzck.
+
+%package devel
+Group: Other
+Summary: Headers for building against zchunk
+Requires: %{name}-libs = %{version}-%{release}
+
+%description devel
+zchunk is a compressed file format that splits the file into independent
+chunks.  This allows you to only download the differences when downloading a
+new version of the file, and also makes zchunk files efficient over rsync.
+zchunk files are protected with strong checksums to verify that the file you
+downloaded is in fact the file you wanted.
+
+This package contains the headers necessary for building against the zchunk
+library, libzck.
+
+%prep
+%setup -q
+
+# Remove bundled sha libraries
+rm -rf src/lib/hash/sha*
+
+%build
+%meson -Dwith-openssl=enabled -Dwith-zstd=enabled
+%meson_build
+
+%install
+%meson_install
+mkdir -p %{buildroot}%{_libexecdir}
+install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictionary
+
+%check
+%meson_test
+
+
+
+%files
+%doc README.md contrib
+%{_bindir}/zck*
+%{_bindir}/unzck
+%{_libexecdir}/zck_gen_xml_dictionary
+
+%files libs
+%doc --no-dereference LICENSE
+%doc README.md
+%{_libdir}/libzck.so.*
+
+%files devel
+%doc zchunk_format.txt
+%{_libdir}/libzck.so
+%{_libdir}/pkgconfig/zck.pc
+%{_includedir}/zck.h
+
+%changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- new version
+
