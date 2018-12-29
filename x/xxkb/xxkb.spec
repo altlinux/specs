@@ -1,14 +1,14 @@
 Name: xxkb
-Version: 1.11
-Release: alt4
+Version: 1.11.1
+Release: alt1
 
 Summary: Switcher and indicator of current keyboard layout
 Summary(ru_RU.UTF-8): Индикатор и переключатель состояния клавиатуры
-License: Artistic
+License: Artistic-2.0
 Group: System/Internationalization
 Url: http://sourceforge.net/projects/xxkb/
 
-# http://downloads.sourceforge.net/xxkb/xxkb-%version-src.tar.gz
+# httpd://download.sourceforge.net/xxkb/xxkb-%version-src.tar.gz
 Source: %name-%version-%release.tar
 Source1: xxkb-32.png
 Source2: xxkb-48.png
@@ -86,6 +86,9 @@ install -pD -m644 %{SOURCE3} %buildroot%_desktopdir/%name.desktop
 %doc CHANGES.koi8 README.koi8 XXkb.ad
 
 %changelog
+* Sat Dec 29 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.1-alt1
+- 1.11 -> 1.11.1
+
 * Wed Jul 18 2012 Michael Shigorin <mike@altlinux.org> 1.11-alt4
 - Ignore KDE desktop/panel (closes: #610).
 
