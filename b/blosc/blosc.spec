@@ -1,17 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: blosc
-Version: 1.12.1
+Version: 1.15.1
 Release: alt1
 Summary: Blosc: A blocking, shuffling and lossless compression library
 License: MIT
 Group: System/Libraries
 Url: http://www.blosc.org/
 
-# https://github.com/Blosc/c-blosc.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt-pkgconfigdir.patch
 
-BuildPreReq: cmake gcc-c++ libsnappy-devel zlib-devel
-BuildPreReq: liblz4-devel
+BuildPreReq: cmake gcc-c++ libsnappy-devel zlib-devel liblz4-devel
 
 %description
 Blosc is a high performance compressor optimized for binary data. It has
@@ -53,28 +53,13 @@ This package contains development files of Blosc library.
 %patch1 -p1
 
 %build
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DBUILD_BENCHMARKS:BOOL=OFF \
-	-DBUILD_STATIC:BOOL=ON \
-	-DBUILD_TESTS:BOOL=OFF \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	.
-%make_build VERBOSE=1
+%cmake -DBUILD_BENCHMARKS:BOOL=OFF \
+       -DBUILD_TESTS:BOOL=OFF \
+       -DBUILD_STATIC:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std
-
-# remove unpackaged files
-rm %buildroot%_libdir/libblosc.a
+%cmakeinstall_std
 
 %files -n lib%name
 %doc *.rst
@@ -87,6 +72,12 @@ rm %buildroot%_libdir/libblosc.a
 %_pkgconfigdir/blosc.pc
 
 %changelog
+* Sat Dec 29 2018 Alexey Melyashinsky <bip@altlinux.org> 1.15.1-alt1
+- Updated to upstream release version 1.15.1.
+
+* Thu Nov 15 2018 Alexey Melyashinsky <bip@altlinux.org> 1.14.4-alt1
+- Updated to upstream release version 1.14.4.
+
 * Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.1-alt1
 - Updated to upstream release version 1.12.1.
 
@@ -98,4 +89,3 @@ rm %buildroot%_libdir/libblosc.a
 
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20140501
 - Initial build for Sisyphus
-
