@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.240
+Version: 0.241
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -46,6 +46,9 @@ install -m 644 DistroDB/*.pm %buildroot%perl_vendor_privlib/DistroDB/
 %perl_vendor_privlib/DistroDB/*.pm
 
 %changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.241-alt1
+- new version
+
 * Sat Jun 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.240-alt1
 - new version
 
