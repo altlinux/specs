@@ -1,5 +1,5 @@
 Name: xpad
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: A virtual sticky pad system using GTK+3
@@ -44,6 +44,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README NEWS ChangeLog TODO
 
 %changelog
+* Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
+- 5.3.0
+
 * Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
