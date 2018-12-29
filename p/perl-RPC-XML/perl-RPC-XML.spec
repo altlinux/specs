@@ -1,9 +1,10 @@
+%def_without apache1
 ## SPEC file for Perl module RPC::XML
 ## Used in ikiwiki
 
 Name: perl-RPC-XML
 Version: 0.80
-Release: alt1
+Release: alt2
 
 Summary: an implementation of XML-RPC
 
@@ -47,7 +48,7 @@ within Apache with mod_perl.
 %setup  -n %real_name-%version
 
 # Ugly patch to obtain build system dependant server name for tests
-HOST=`awk '/^127.0.0.1/ {print $2;}' /etc/hosts`
+HOST=`awk '/^127.0.0.1/ {print $2;}' /etc/hosts | head -1`
 sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 
 %build
@@ -64,11 +65,17 @@ sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 %_bindir/make_method
 %_man1dir/make_method*
 
+%if_with apache1
 %files -n perl-Apache-RPC-Server
 %perl_vendor_privlib/Apache
-
+%else
+%exclude %perl_vendor_privlib/Apache/*
+%endif
 
 %changelog
+* Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.80-alt2
+- NMU: build w/o apache1 support
+
 * Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.80-alt1
 - New version
 
