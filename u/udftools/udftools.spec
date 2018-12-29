@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 2.0
+%define ver_major 2.1
 # no rules to make shared libudffs now
 %def_disable shared
 
 Name: udftools
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: Linux tools for UDF filesystems and DVD/CD-R(W) drives
 Group: Archiving/Cd burning
@@ -21,8 +21,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 %endif
 
-BuildRequires: libncurses-devel libreadline-devel
-BuildRequires: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: libudev-devel libncurses-devel libreadline-devel
 
 %description
 %name includes:
@@ -70,6 +70,9 @@ BuildRequires: rpm-build-licenses
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+
 * Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt2
 - rebuilt against libreadline.so.7
 
