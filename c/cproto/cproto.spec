@@ -1,44 +1,56 @@
 Name: cproto
-Version: 4.7l
+Version: 4.7o
 Release: alt1
-Summary: Generating prototypes and declarations from C source code
-License: Public
+
+Summary: Generates function prototypes and variable declarations from C code
+License: Public Domain
 Group: Development/Tools
-Url: http://invisible-island.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://invisible-island.net/cproto/cproto.html
 
-# ftp://invisible-island.net/cproto/
-Source: %name-%version.tar.gz
+# ftp://ftp.invisible-island.net/cproto/cproto-%version.tgz
+Source: %name-%version.tar
 
-BuildPreReq: /usr/bin/lex
+BuildRequires: bison flex
 
 %description
 Cproto is a program that generates function prototypes and variable
-declarations from C source code.  It can also convert function definitions
-between the old style and the ANSI C style.  This conversion overwrites the
-original files, so make a backup copy of your files in case something goes
-wrong.
+declarations from C source code.  It can also convert function
+definitions between the old style and the ANSI C style.  This conversion
+overwrites the original files, however, so be sure to make a backup copy
+of your original files in case something goes wrong.
 
-The program isn't confused by complex function definitions as much as other
-prototype generators because it uses a yacc generated parser.  By ignoring all
-the input between braces, I avoided implementing the entire C language grammar.
+The program isn't confused by complex function definitions as much as
+other prototype generators because it uses a yacc generated parser.
+By ignoring all the input between braces, the author has avoided
+implementing the entire C language grammar.
 
 %prep
 %setup
 
 %build
-%add_optflags -DOPT_LINTLIBRARY
-%configure
+%add_optflags %(getconf LFS_CFLAGS)
+%configure --enable-llib
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
+%check
+%make_build -k check
 
 %files
-%_bindir/*
-%_man1dir/*
+%_bindir/cproto
+%_man1dir/cproto.*
+%doc AUTHORS CHANGES README
 
 %changelog
+* Sat Dec 29 2018 Dmitry V. Levin <ldv@altlinux.org> 4.7o-alt1
+- 4.7l -> 4.7o.
+- Rewritten spec file.
+
 * Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7l-alt1
 - Version 4.7l
 
