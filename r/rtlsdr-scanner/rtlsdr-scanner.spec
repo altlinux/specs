@@ -1,5 +1,5 @@
 Name: rtlsdr-scanner
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: A cross platform Python frequency scanning GUI for the OsmoSDR rtl-sdr library
@@ -68,5 +68,8 @@ install -Dpm 0644 %SOURCE4 %buildroot%_iconsdir/hicolor/96x96/apps/%name.png
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Dec 25 2018 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
+- new version 1.3.2
+
 * Sun Mar 18 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus

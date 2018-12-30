@@ -1,7 +1,7 @@
 Name: rtl-sdr
 Url: http://sdr.osmocom.org/trac/wiki/rtl-sdr
-Version: 0.5.3
-Release: alt2.20170920.1
+Version: 0.6.0
+Release: alt1
 License: GPLv2+
 Requires(pre): shadow-utils rpm-macros-cmake
 BuildRequires: cmake libusb-devel
@@ -58,6 +58,9 @@ exit 0
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 25 2018 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
+- New version 0.6.0
+
 * Mon Oct 30 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt2.20170920.1
 - Replace 10-rtl-sdr.rules to _udevrulesdir
 
