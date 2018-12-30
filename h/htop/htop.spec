@@ -4,8 +4,8 @@
 %def_enable oom
 
 Name: htop
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -18,6 +18,10 @@ Source100: %name.watch
 Patch0: htop-0.8.3-alt-desktop.patch
 Patch1: htop-2.1.0-alt-colorscheme.patch
 Packager: Ilya Evseev <evseev@altlinux.ru>
+
+# Automatically added by buildreq on Sun Dec 30 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libncurses-devel libtinfo-devel python-base python-modules sh4
+BuildRequires: libncursesw-devel python-modules-encodings
 
 BuildRequires: /proc
 BuildRequires: libncurses-devel
@@ -86,6 +90,10 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sun Dec 30 2018 Michael Shigorin <mike@altlinux.org> 2.2.0-alt1
+- new version (watch file uupdate)
+- buildreq
+
 * Fri Dec 28 2018 Ivan A. Melnikov <iv@altlinux.org> 2.1.0-alt2
 - set default color scheme to Broken Gray (closes: #35252)
 
