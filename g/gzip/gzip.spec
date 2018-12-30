@@ -1,5 +1,5 @@
 Name: gzip
-Version: 1.9.0.18.9c2a
+Version: 1.10
 Release: alt1
 
 Summary: The GNU data compression program
@@ -128,6 +128,9 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Sun Dec 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1.10-alt1
+- gzip: v1.9-18-g9c2a2de -> v1.10.
+
 * Mon Dec 24 2018 Dmitry V. Levin <ldv@altlinux.org> 1.9.0.18.9c2a-alt1
 - gzip: v1.8-20-g82c62a3 -> v1.9-18-g9c2a2de.
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
