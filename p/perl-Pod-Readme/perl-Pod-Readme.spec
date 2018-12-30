@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(Test/Kit.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl-podlators perl(Data/Perl/Role/String.pm)
 # END SourceDeps(oneline)
 Name:           perl-Pod-Readme
-Version:        1.1.2
-Release:        alt1_1
+Version:        1.2.3
+Release:        alt1
 Summary:        Intelligently generate a README file from POD
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Pod-Readme/
@@ -70,10 +71,6 @@ specify which parts are included or excluded from the README file.
 rm -rf inc/
 perl -ni -e 'print unless /^inc\//;' MANIFEST
 
-# Avoid the need for Module::Install::AuthorRequires and
-# all of upstream's toolchain modules as a result of the unbundling
-%patch0
-
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
@@ -81,7 +78,6 @@ make %{?_smp_mflags}
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
 
 %check
 make test
@@ -93,6 +89,9 @@ make test
 %{_mandir}/man1/pod2readme.1*
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1
+- automated CPAN update
+
 * Sat Dec 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_1
 - new release
 
