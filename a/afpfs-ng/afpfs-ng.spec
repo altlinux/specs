@@ -1,5 +1,6 @@
+BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
-BuildRequires: libncurses-devel
+BuildRequires: gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +11,7 @@ BuildRequires: libncurses-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_23
+Release:        alt3_25
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -23,6 +24,7 @@ Patch1:         afpfs-ng-0.8.1-pointer.patch
 Patch2:         afpfs-ng-0.8.1-formatsec.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
+BuildRequires:  gcc
 BuildRequires: gcrypt-utils libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
 Source44: import.info
 
@@ -75,6 +77,10 @@ touch --reference aclocal.m4 configure.ac Makefile.in
 make install DESTDIR=%{buildroot}
 install -d %{buildroot}%{_includedir}/afpfs-ng
 cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 
 %files
@@ -105,6 +111,9 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_25
+- rebuild with readline7
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_23
 - update to new release by fcimport
 
