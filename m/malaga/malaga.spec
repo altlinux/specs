@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: texinfo
+BuildRequires: gcc-c++ texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           malaga
 Version:        7.12 
-Release:        alt2_23
+Release:        alt2_25
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -22,6 +22,7 @@ Patch0:         malaga-rename-map_file.diff
 Patch1:         malaga-malshow-lm.patch
 Patch2:         malaga-aarch64.patch
 
+BuildRequires:  gcc
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
 Requires: lib%{name} = %{version}-%{release}
 Source44: import.info
@@ -85,6 +86,7 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
+
 %files
 %{_infodir}/%{name}*
 %{_bindir}/mal*
@@ -101,6 +103,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_25
+- rebuild with readline7
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_23
 - update to new release by fcimport
 
