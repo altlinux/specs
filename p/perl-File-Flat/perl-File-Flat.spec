@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module File-Flat
 %define m_distro File-Flat
 %define m_name File::Flat
@@ -5,8 +6,8 @@
 %define _enable_test 1
 
 Name: perl-File-Flat
-Version: 1.04
-Release: alt1.1
+Version: 1.05
+Release: alt1
 
 Summary: File::Flat - Implements a flat filesystem
 
@@ -17,7 +18,7 @@ Url: http://search.cpan.org/~adamk/File-Flat-1.00/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/File-Flat-1.04.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jul 22 2007
 BuildRequires: perl-File-Copy-Recursive perl-File-Remove perl-File-Slurp perl-Module-Install perl-prefork perl-Test-ClassAPI
@@ -32,7 +33,7 @@ never need to worry about the existance of directories, just write to a
 file, no matter where it is.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,10 +42,13 @@ file, no matter where it is.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/File/
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
