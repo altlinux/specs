@@ -2,7 +2,7 @@
 %define module Net-Netmask
 
 Name: perl-%module
-Version: 1.9103
+Version: 1.9104
 Release: alt1
 
 Summary: Perl module for manipulation and lookup of IP network blocks
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/J/JM/JMASLAK/%{module}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Apr 10 2011
-BuildRequires: perl-devel /usr/bin/pod2text perl(Test/UseAllModules.pm) perl(Test2/V0.pm)
+BuildRequires: perl-devel /usr/bin/pod2text perl(Test/UseAllModules.pm) perl(Test2/V0.pm) perl(Math/BigInt.pm)
 
 %description
 Net::Netmask parses and understands IPv4 CIDR blocks. It's built with an
@@ -29,6 +29,9 @@ list of IP addresses. There is a function for sorting by text IP address.
 %prep
 %setup -q -n %{module}-%{version}
 
+#Test2::V0 version 0.000111 required
+[ %version = "1.9104" ] && rm t/ipv6_*
+
 %build
 %perl_vendor_build
 
@@ -36,10 +39,13 @@ list of IP addresses. There is a function for sorting by text IP address.
 %perl_vendor_install
 
 %files
-%doc TODO CONTRIBUTING README Changes LICENSE
+%doc TODO CONTRIBUTING README Changes LICENSE CODE_OF_CONDUCT.md
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.9104-alt1
+- automated CPAN update
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.9103-alt1
 - automated CPAN update
 
