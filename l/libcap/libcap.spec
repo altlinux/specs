@@ -1,10 +1,10 @@
 Name: libcap
-Version: 2.25
+Version: 2.25.0.8.be92
 Release: alt1
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
-License: GPL/BSD-style
+License: GPL-2.0-only or BSD-3-Clause
 Group: System/Libraries
 Url: https://sites.google.com/site/fullycapable/
 # git://git.altlinux.org/gears/l/libcap.git
@@ -94,6 +94,9 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Sun Dec 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.25.0.8.be92-alt1
+- libcap-2.25-1-g1f52c8a -> libcap-korg-2.25-8-gbe92eaa.
+
 * Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1:2.25-alt1
 - Updated to libcap-2.25-1-g1f52c8a.
 
