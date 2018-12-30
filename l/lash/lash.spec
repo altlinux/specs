@@ -4,7 +4,6 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ texinfo
 # END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
@@ -12,7 +11,7 @@ Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_34
+Release:      alt1_35
 License:      GPLv2+
 Group:        System/Libraries
 URL:          http://www.nongnu.org/lash/
@@ -29,6 +28,7 @@ Patch3:       lash-Modernize-texi2html-arguments.patch
 
 BuildRequires: libalsa-devel
 BuildRequires: desktop-file-utils
+BuildRequires: gcc
 BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
 BuildRequires: libjack-devel
 BuildRequires: libxml2-devel
@@ -146,7 +146,8 @@ if [ ! -d docs/lash-manual-html-split/lash-manual/ ]; then
 fi
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README docs/lash-manual-html-split/lash-manual icons/lash.xcf
+%doc AUTHORS ChangeLog NEWS README docs/lash-manual-html-split/lash-manual icons/lash.xcf
+%doc --no-dereference COPYING
 %{_bindir}/lash*
 %{_datadir}/icons/hicolor/16x16/apps/lash.png
 %{_datadir}/icons/hicolor/24x24/apps/lash.png
@@ -170,6 +171,9 @@ fi
 %{python_sitelibdir}/lash.py*
 
 %changelog
+* Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_35
+- rebuild with readline7
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_34
 - update to new release by fcimport
 
