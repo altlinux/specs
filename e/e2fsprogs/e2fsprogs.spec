@@ -1,13 +1,13 @@
 Name: e2fsprogs
-Version: 1.44.3
+Version: 1.44.5
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: http://e2fsprogs.sourceforge.net/
 
-# git://git.altlinux.org/people/ldv/packages/e2fsprogs.git
+# git://git.altlinux.org/gears/e/e2fsprogs.git
 Source: %name-%version-%release.tar
 
 %def_enable static
@@ -32,7 +32,7 @@ modifying and correcting any inconsistencies in EXT2 filesystems.
 # libe2p, libext2fs
 %package -n libe2fs
 Summary: Dynamic ext2/ext3 filesystem libraries
-License: LGPLv2
+License: LGPL-2.0-only and LGPL-2.1-or-later
 Group: System/Libraries
 Conflicts: %name < %version-%release
 Requires: libcom_err = %version-%release
@@ -43,7 +43,7 @@ EXT2/EXT3 filesystem-specific programs.
 
 %package -n libe2fs-devel
 Summary: Development ext2/ext3 filesystem libraries and include files
-License: LGPLv2
+License: LGPL-2.0-only and LGPL-2.1-or-later
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -59,7 +59,7 @@ EXT2/EXT3 filesystem-specific programs.
 
 %package -n libe2fs-devel-static
 Summary: Static ext2/ext3 filesystem libraries
-License: LGPLv2
+License: LGPL-2.0-only and LGPL-2.1-or-later
 Group: Development/C
 Conflicts: %name-devel < %version
 Requires: libe2fs-devel = %version-%release
@@ -75,7 +75,7 @@ linked EXT2/EXT3 filesystem-specific programs.
 # libblkid
 %package -n libblkid
 Summary: Dynamic block device id library
-License: LGPLv2
+License: LGPL-2.1-only
 Group: System/Libraries
 Conflicts: %name < %version-%release, libe2fs < %version-%release
 %{?_enable_libuuid:Requires: libuuid = %version-%release}
@@ -86,7 +86,7 @@ quickly and easily find block devices by filesystem UUID and LABEL.
 
 %package -n libblkid-devel
 Summary: Development block device id library and include files
-License: LGPLv2
+License: LGPL-2.1-only
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -98,7 +98,7 @@ libblkid-based software.
 
 %package -n libblkid-devel-static
 Summary: Static block device id library
-License: LGPLv2
+License: LGPL-2.1-only
 Group: Development/C
 Requires: libblkid-devel = %version-%release
 Conflicts: %name-devel < %version, libe2fs-devel < %version-%release
@@ -111,7 +111,7 @@ statically linked libblkid-based software.
 # libcom_err
 %package -n libcom_err
 Summary: Dynamic common error description library
-License: MIT-style
+License: MIT
 Group: System/Libraries
 Conflicts: %name < %version-%release, libe2fs < %version-%release
 
@@ -123,7 +123,7 @@ in use.
 
 %package -n libcom_err-devel
 Summary: Development common error description library and include files
-License: MIT-style
+License: MIT
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -135,7 +135,7 @@ libcom_err-based software.
 
 %package -n libcom_err-devel-static
 Summary: Static common error description library
-License: MIT-style
+License: MIT
 Group: Development/C
 Requires: libcom_err-devel = %version-%release
 Conflicts: %name-devel < %version, libe2fs-devel < %version-%release
@@ -147,7 +147,7 @@ statically linked libcom_err-based software.
 # libss
 %package -n libss
 Summary: Dynamic command-line interface parsing library
-License: MIT-style
+License: MIT
 Group: System/Libraries
 Conflicts: %name < %version-%release, libe2fs < %version-%release
 Requires: libcom_err = %version-%release
@@ -158,7 +158,7 @@ a simple command-line interface parser.
 
 %package -n libss-devel
 Summary: Development command-line interface parsing library and include files
-License: MIT-style
+License: MIT
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -171,7 +171,7 @@ libss-based software.
 
 %package -n libss-devel-static
 Summary: Static command-line interface parsing library
-License: MIT-style
+License: MIT
 Group: Development/C
 Conflicts: %name-devel < %version, libe2fs-devel < %version-%release
 Requires: libss-devel = %version-%release
@@ -184,7 +184,7 @@ statically linked libss-based software.
 # libuuid
 %package -n libuuid
 Summary: Dynamic universally unique id library
-License: BSD-style
+License: BSD-3-Clause
 Group: System/Libraries
 Conflicts: %name < %version-%release, libe2fs < %version-%release
 
@@ -194,7 +194,7 @@ The uuid library generates and parses 128-bit universally unique id's
 
 %package -n libuuid-devel
 Summary: Development universally unique id library and include files
-License: BSD-style
+License: BSD-3-Clause
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -206,7 +206,7 @@ libuuid-based software.
 
 %package -n libuuid-devel-static
 Summary: Static universally unique id library
-License: BSD-style
+License: BSD-3-Clause
 Group: Development/C
 Requires: libuuid-devel = %version-%release
 Conflicts: %name-devel < %version, libe2fs-devel < %version-%release
@@ -274,7 +274,7 @@ for i in ext2 ext3 ext4 ext4dev; do
 done
 
 # Prepare docs.
-for f in doc/RelNotes/v*.txt; do cat "$f"; echo; done |xz -9 > RELEASE-NOTES.xz
+cat -- $(ls doc/RelNotes/*.txt |tac) |xz -9 > NEWS.xz
 chmod -R a+rX,go-w %buildroot%_mandir
 
 %find_lang %name
@@ -304,7 +304,7 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 %_man5dir/*
 %_man8dir/*
-%doc README RELEASE*
+%doc README NEWS*
 
 # libe2p, libext2fs
 %files -n libe2fs
@@ -388,6 +388,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Sun Dec 16 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44.5-alt1
+- v1.44.3 -> v1.44.5.
+
 * Tue Jul 10 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44.3-alt1
 - v1.44.2 -> v1.44.3.
 
