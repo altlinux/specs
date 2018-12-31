@@ -7,7 +7,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.4
-Release: alt3
+Release: alt3.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -64,11 +64,10 @@ libraries or the X Window System.
 Group: Development/C++
 Summary: Development files for the wxBase3 library
 Requires: libwxBase%wxbranch = %EVR
-Requires(post): %_sbindir/update-alternatives
-Requires(postun): %_sbindir/update-alternatives
 Conflicts: lib%name-devel < %EVR
 Conflicts: libwxGTK2.9-devel
 Conflicts: libwxGTK3.1-devel
+Conflicts: libwxBase%wxbranch-devel < 3.0.4-alt3.1
 Conflicts: wxGTK-devel
 Conflicts: libwxGTK-devel
 
@@ -169,8 +168,6 @@ Requires: compat-lib%name-gtk2-gl = %EVR
 Requires: lib%name-media = %EVR
 Requires: libwxBase%wxbranch-devel = %EVR
 %add_python_req_skip utils
-#Requires: gtk2-devel
-#Requires: libGLU-devel
 
 %description -n compat-lib%name-gtk2-devel
 This package include files needed to link with the %name library.
@@ -295,10 +292,6 @@ popd
 mkdir -p %buildroot%_datadir/wx-%wxbranch/examples/src
 cp -a demos samples %buildroot%_datadir/wx-%wxbranch/examples
 
-#wx_config_filename=$(basename %buildroot%_libdir/wx/config/*-unicode-[0-9]*)
-#ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
-#ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config-%wxbranch
-
 cp -fR include/wx/private %buildroot%_includedir/wx-%wxbranch/wx/
 cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 
@@ -310,27 +303,7 @@ install -p -D -m 755 %SOURCE3 %buildroot%_libexecdir/%name/wx-config
 ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config-3.0
 touch %buildroot%_bindir/wx-config
 
-#Alternatives setup with wxrc
-mv %buildroot%_bindir/wxrc* %buildroot%_libexecdir/%name
-ln -s ../..%_libexecdir/%name/wxrc-3.0 %buildroot%_bindir/wxrc-3.0
-touch %buildroot%_bindir/wxrc
-
 %find_lang wxstd30 wxmsw30 --output=wxstd.lang
-
-%post -n libwxBase%wxbranch-devel
-if [ -f %_bindir/wx-config ] && [ ! -h %_bindir/wx-config ] ; then
-  rm %_bindir/wx-config
-fi
-%_sbindir/update-alternatives --install %_bindir/wx-config \
-  wx-config %_libexecdir/%name/wx-config 3
-%_sbindir/update-alternatives --install %_bindir/wxrc \
-  wxrc %_libexecdir/%name/wxrc 3
-
-%postun -n libwxBase%wxbranch-devel
-if [ $1 -eq 0 ] ; then
-%_sbindir/update-alternatives --remove wx-config %_libexecdir/%name/wx-config
-%_sbindir/update-alternatives --remove wxrc %_libexecdir/%name/wxrc
-fi
 
 %files -n libwxBase%wxbranch
 %_libdir/libwx_baseu*.so.*
@@ -413,6 +386,9 @@ fi
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Dec 31 2018 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt3.1
+- Drop update-alternatives
+
 * Sat Aug 04 2018 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt3
 - New separate packages compatible gtk2 (ALT#35191)
 - Build with SDL2
