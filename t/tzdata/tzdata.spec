@@ -1,6 +1,6 @@
 Name: tzdata
-Version: 2018g
-Release: alt2
+Version: 2018i
+Release: alt1
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -73,6 +73,9 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Mon Dec 31 2018 Dmitry V. Levin <ldv@altlinux.org> 2018i-alt1
+- 2018g -> 2018i.
+
 * Mon Oct 29 2018 Dmitry V. Levin <ldv@altlinux.org> 2018g-alt2
 - tzdata-source: changed format to rearguard.
 
