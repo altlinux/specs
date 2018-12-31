@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt3_7jpp8
+Release:    alt4_7jpp8
 Summary:    Java ATK Wrapper
 
 Group:      Development/Other
@@ -27,7 +27,7 @@ BuildRequires:  java-devel
 
 BuildRequires:	gcc
 BuildRequires:	gcc-c++
-BuildRequires:	clang6.0
+BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
@@ -90,6 +90,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt4_7jpp8
+- fixed build
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt3_7jpp8
 - fc28+ update
 
