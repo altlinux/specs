@@ -1,5 +1,5 @@
 Name: smartmontools
-Version: 6.6
+Version: 7.0
 Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
@@ -23,6 +23,7 @@ Obsoletes: smartsuite
 
 # Automatically added by buildreq on Thu Mar 13 2008
 BuildRequires: gcc-c++
+BuildRequires: libsystemd-devel
 
 %description
 This package contains two utility programs (smartctl and smartd) to
@@ -43,6 +44,7 @@ fgrep -lZ /usr/local/etc/sysconfig *.am *.in |
 %build
 %define docdir %_docdir/%name-%version
 %configure --docdir=%docdir \
+	--with-libsystemd \
 	--with-systemdsystemunitdir=%systemd_unitdir
 %make_build \
 	BUILD_INFO='"(%distribution %version-%release)"'
@@ -81,6 +83,9 @@ rm %buildroot%docdir/{ChangeLog,COPYING,INSTALL}
 %docdir
 
 %changelog
+* Mon Dec 31 2018 Michael Shigorin <mike@altlinux.org> 7.0-alt1
+- Updated to 7.0.
+
 * Mon Nov 06 2017 Michael Shigorin <mike@altlinux.org> 6.6-alt1
 - Updated to 6.6.
 
