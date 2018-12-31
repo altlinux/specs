@@ -2,7 +2,7 @@
 %define dist NetPacket
 
 Name: perl-%dist
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: A cluster of modules related to decoding and encoding of network protocols.
@@ -10,7 +10,7 @@ License: %artistic_license_v2
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/Y/YA/YANICK/NetPacket-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{dist}-%{version}.tar.gz
 
 Patch1: NetPacket-IPv6.diff
 Patch2: NetPacket-1.1.0-LinuxSLL.pm.patch
@@ -42,13 +42,11 @@ included also becouse it is a part of original netpacket.diff.
 Version of modules 0.020
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %patch1 -p1
 %patch2 -p1
 cat >>MANIFEST <<EOF
-lib/NetPacket/IPv6.pm
-lib/NetPacket/ICMPv6.pm
 lib/NetPacket/PFLog.pm
 EOF
 
@@ -59,7 +57,7 @@ EOF
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes CODE_OF_CONDUCT.md CONTRIBUTORS README.mkdn
 
 %exclude %perl_vendor_privlib/NetPacket/ICMPv6.pm
 %exclude %perl_vendor_privlib/NetPacket/IPv6.pm
@@ -72,6 +70,9 @@ EOF
 %perl_vendor_privlib/NetPacket/PFLog.pm
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - automated CPAN update
 
