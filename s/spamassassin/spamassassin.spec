@@ -4,23 +4,25 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.4.1
-Release: alt2
+Version: 3.4.2
+Release: alt1
 
 Summary: Spam filter for email written in perl
 License: Apache License v2.0
 Group: Networking/Mail
 
 URL: http://www.spamassassin.org/
-Source0: http://www.apache.org/dist/spamassassin/source/%pname-%version.tar.bz2
+Source0: http://www.cpan.org/authors/id/K/KM/KMCGRAIL/SpamAssassin/Mail-SpamAssassin-%{version}.tar.gz
 Source1: spamd.init
 Source2: spamassassin_local.cf
 Source3: spamd.sysconfig
 
 # from Debian:
-Patch10: spamassassin-3.4.0-debian-change_config_paths.patch
+Patch10: spamassassin-3.4.2-debian-change_config_paths.patch
 Patch11: spamassassin-3.4.0-sa-check_spamd-man.patch
-Patch12: spamassassin-3.4.1-disable_sslv3.patch
+Patch12: spamassassin-3.4.2-debian-55_disable_nagios_epm.patch
+Patch13: spamassassin-3.4.2-debian-90_pod_cleanup.patch
+Patch14: spamassassin-3.4.2-debian-bug_766718-net-dns-vers.patch
 
 %def_without test
 # normal method nukes on errors :(
@@ -138,10 +140,12 @@ This package contains no files and exist just to synchronize other spamassassin
 subpackages versions with.
 
 %prep
-%setup -n %pname-%version
+%setup -q -n Mail-SpamAssassin-%{version}
 %patch10 -p1
 %patch11 -p0
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 %build
 cp -f spamc/spamc.pod spamc/spamc
@@ -213,7 +217,7 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 /usr/sbin/useradd -r -g spamd -d %_localstatedir/spamd -s /dev/null -n spamd >/dev/null 2>&1 ||:
 
 %files
-%doc CREDITS INSTALL README TRADEMARK USAGE procmailrc.example
+%doc CREDITS INSTALL README TRADEMARK USAGE procmailrc.example Changes sample-nonspam.txt sample-spam.txt
 %doc ldap sql
 %_bindir/spamassassin
 %_bindir/sa-awl
@@ -258,6 +262,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1
+- NMU: 3.4.2
+
 * Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt2
 - rebuilt with LibreSSL-devel
 - disabled SSL v3 (applied Debian's patch)

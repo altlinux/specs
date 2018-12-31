@@ -1,5 +1,5 @@
 Name: spamassassin-rules
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: Rules for SpamAssassin
@@ -7,14 +7,14 @@ License: Apache License v2.0
 Group: Networking/Mail
 
 URL: http://spamassassin.org/
-Source: http://www.apache.org/dist/spamassassin/source/Mail-SpamAssassin-rules-%version.r1675274.tgz
+Source: http://www.apache.org/dist/spamassassin/source/Mail-SpamAssassin-rules-3.4.2.r1840640.tgz
 
 BuildArch: noarch
 
 # We should require package that contains /usr/share/spamassassin (as we put files in this directory)
 # Note this reason here to correctly change requirement in case of package rearrangements.
-Requires: perl-Mail-SpamAssassin >= 3.4.1
-Conflicts: perl-Mail-SpamAssassin < 3.4.1
+Requires: perl-Mail-SpamAssassin >= 3.4.2
+Conflicts: perl-Mail-SpamAssassin < 3.4.2
 
 %description
 This package contains the default packaged rules for SpamAssassin.
@@ -32,6 +32,9 @@ install -pm644 *.cf %buildroot%_datadir/spamassassin
 %_datadir/spamassassin
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1
+- 3.4.2 (r1840640)
+
 * Sun Nov 15 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt1
 - 3.4.1 (r1675274)
 
