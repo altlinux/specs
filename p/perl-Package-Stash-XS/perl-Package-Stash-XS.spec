@@ -1,14 +1,14 @@
 %define dist Package-Stash-XS
 Name: perl-%dist
-Version: 0.28
-Release: alt2.1.1.1.1
+Version: 0.29
+Release: alt1
 
 Summary: Faster and more correct implementation of the Package::Stash API
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DO/DOY/Package-Stash-XS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Test-Fatal perl(Test/Requires.pm)
@@ -19,7 +19,7 @@ a way that's less buggy and much faster.  It will be used by default if it's
 installed, and should be preferred in all environments with a compiler.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -28,11 +28,14 @@ installed, and should be preferred in all environments with a compiler.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_archlib/Package*
 %perl_vendor_autolib/Package*
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2.1.1.1.1
 - rebuild with new perl 5.26.1
 
