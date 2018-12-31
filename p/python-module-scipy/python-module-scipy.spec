@@ -6,12 +6,14 @@ BuildRequires(pre): rpm-build-python
 %define modname scipy
 %define ver_major 1.2
 
+%define numpy_version 1.15.4
+
 %def_disable docs
 %def_with python3
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: SciPy is the library of scientific codes
 
@@ -21,6 +23,7 @@ Url: http://www.scipy.org/
 
 %setup_python_module %modname
 Requires: %python_noarch
+Requires: python-module-numpy >= %numpy_version
 
 #add_python_req_skip swig2_ext symeig vtk
 %add_python_req_skip distutils
@@ -49,7 +52,7 @@ Patch1: fix-unicode-use.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: gcc-c++ gcc-fortran git-core liblapack-devel libnumpy-devel libnumpy-py3-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numdifftools python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests  python3-module-numpy-testing rpm-build-python3 time vixie-cron
+BuildPreReq: gcc-c++ gcc-fortran liblapack-devel libnumpy-devel libnumpy-py3-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numdifftools python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests  python3-module-numpy-testing rpm-build-python3 time vixie-cron
 
 #BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
 #BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
@@ -70,6 +73,7 @@ SciPy is the library of scientific codes built on top of NumPy.
 Summary: SciPy is the library of scientific codes (Python 3)
 Group: Development/Python3
 Requires: %python3_sitelibdir_noarch
+Requires: python3-module-numpy >= %numpy_version
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal sympy
 %add_python3_req_skip distutils
@@ -341,6 +345,10 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Mon Dec 31 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt3
+- Add more unicode fixes
+- Add Requires to numpy with version
+
 * Fri Dec 28 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt2
 - Fix unicode is docstrings
 
