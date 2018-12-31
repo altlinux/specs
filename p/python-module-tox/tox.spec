@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.5.3
+Version: 3.6.1
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -27,6 +27,7 @@ BuildRequires: python-module-pip
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-mock
 BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-pytest-randomly
 BuildRequires: python-module-pytest-timeout
 BuildRequires: python-module-pytest-xdist
 BuildRequires: python-module-virtualenv
@@ -38,6 +39,7 @@ BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-randomly
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-virtualenv
@@ -110,22 +112,23 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_INDEX_URL=http://host.invalid./
 
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch
+export TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR'
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox \
+%buildroot%_bindir/tox \
 --sitepackages -e py%{python_version_nodots python} --notest
 cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
 
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox \
+%buildroot%_bindir/tox \
 --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox.py3 \
+%buildroot%_bindir/tox.py3 \
 --sitepackages -e py%{python_version_nodots python3} --notest
 cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
 
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox.py3 \
+%buildroot%_bindir/tox.py3 \
 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
@@ -142,6 +145,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Mon Dec 31 2018 Stanislav Levin <slev@altlinux.org> 3.6.1-alt1
+- 3.5.3 -> 3.6.1.
+
 * Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 3.5.3-alt1
 - 3.5.2 -> 3.5.3.
 
