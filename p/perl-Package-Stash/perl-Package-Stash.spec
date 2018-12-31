@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Package-Stash
 Name: perl-%dist
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: Routines for manipulating stashes
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DO/DOY/Package-Stash-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ incredibly messy, and easy to get wrong. This module hides all of that behind
 a simple API.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 # avoid built dependencies due to conflicts checking
@@ -39,11 +39,14 @@ sed -i- '/^check_conflicts/s/^/#/' Makefile.PL
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %_bindir/package-stash-conflicts
 %perl_vendor_privlib/Package
 
 %changelog
+* Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
