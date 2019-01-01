@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 2.68
-Release: alt1
+Release: alt2
 
 Summary: Dispatches messages to one or more outputs
 License: Artistic 2.0
@@ -15,7 +15,7 @@ Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 16 2010
-BuildRequires: apache-mod_perl-base perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Devel/GlobalDestruction.pm) perl(Test/Needs.pm) perl(namespace/autoclean.pm) perl(Specio/Exporter.pm) perl(Params/ValidationCompiler.pm)
+BuildRequires: perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Devel/GlobalDestruction.pm) perl(Test/Needs.pm) perl(namespace/autoclean.pm) perl(Specio/Exporter.pm) perl(Params/ValidationCompiler.pm)
 
 %description
 Log::Dispatch is a suite of OO modules for logging messages to multiple
@@ -40,6 +40,9 @@ and particularly for creating new outputs.
 %perl_vendor_privlib/Log/
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.68-alt2
+- build w/o apache1
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 2.68-alt1
 - automated CPAN update
 
