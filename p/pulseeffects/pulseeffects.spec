@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.4.1
+Version: 4.4.4
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -35,6 +35,7 @@ BuildRequires: libbs2b-devel
 BuildRequires: liblilv-devel
 BuildRequires: zita-convolver-devel
 BuildRequires: libebur128-devel
+BuildRequires: libdbus-devel
 
 %description
 PulseEffects is a limiter, compressor, reverberation, stereo equalizer and auto volume
@@ -66,6 +67,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Jan 01 2019 Yuri N. Sedunov <aris@altlinux.org> 4.4.4-alt1
+- 4.4.4
+
 * Tue Dec 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
 - 4.4.1
 
