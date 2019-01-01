@@ -2,7 +2,7 @@
 %define dist SOAP-Lite
 Name: perl-%dist
 Version: 1.27
-Release: alt1
+Release: alt2
 
 Summary: Perl's Web Services Toolkit
 License: GPL or Artistic
@@ -18,7 +18,7 @@ BuildArch: noarch
 Requires: perl-XML-Parser
 
 # Automatically added by buildreq on Tue Oct 25 2011
-BuildRequires: apache-mod_perl-base perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser perl(XMLRPC/Lite.pm) perl(Pod/Man.pm) perl(Test/Warn.pm) perl(XML/Parser/Lite.pm)
+BuildRequires: perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser perl(XMLRPC/Lite.pm) perl(Pod/Man.pm) perl(Test/Warn.pm) perl(XML/Parser/Lite.pm)
 
 %description
 SOAP::Lite is a collection of Perl modules which provides a simple and
@@ -53,6 +53,9 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %exclude %perl_vendor_privlib/IO/SessionSet*
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.27-alt2
+- BuildRequires w/o apache1
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
