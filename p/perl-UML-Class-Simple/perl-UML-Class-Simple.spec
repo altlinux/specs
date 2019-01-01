@@ -16,7 +16,7 @@
 
 Name: perl-UML-Class-Simple
 Version: 0.22
-Release: alt1
+Release: alt2
 
 Summary: Render simple UML class diagrams, by loading the code
 
@@ -24,13 +24,11 @@ License: Artistic and GPL
 Group: Development/Perl
 Url: http://search.cpan.org/dist/UML-Class-Simple/
 
-Packager: Michael Bochkaryov <misha@altlinux.ru>
-
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/A/AG/AGENT/UML-Class-Simple-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Dec 26 2008 (-bi)
-BuildRequires: apache-mod_perl-base fonts-ttf-liberation graphviz perl-Class-Accessor perl-Class-Accessor-Grouped perl-File-Slurp perl-HTML-Parser perl-IPC-Run3 perl-PPI perl-Template perl-Test-Pod perl-Test-Pod-Coverage perl-XML-SAX perl-YAML perl-YAML-Syck perl-threads perl(Class/Inspector.pm)
+BuildRequires: fonts-ttf-liberation graphviz perl-Class-Accessor perl-Class-Accessor-Grouped perl-File-Slurp perl-HTML-Parser perl-IPC-Run3 perl-PPI perl-Template perl-Test-Pod perl-Test-Pod-Coverage perl-XML-SAX perl-YAML perl-YAML-Syck perl-threads perl(Class/Inspector.pm)
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -67,6 +65,9 @@ libraries that they want to depict. This module does all the jobs for them! :)
 %doc Changes README.md samples 
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2
+- build w/o apache1
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
