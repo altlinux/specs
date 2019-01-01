@@ -55,8 +55,8 @@
 
 Name: systemd
 Epoch: 1
-Version: 239
-Release: alt3
+Version: 240
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -93,24 +93,6 @@ Source36: 99-default-disable.preset
 Source37: 85-networkd.preset
 Source38: 85-timesyncd.preset
 
-# bash3 completions
-Source51: hostnamectl-bash3
-Source52: journalctl-bash3
-Source53: localectl-bash3
-Source54: loginctl-bash3
-Source55: systemctl-bash3
-Source56: systemd-analyze-bash3
-Source57: coredumpctl-bash3
-Source58: timedatectl-bash3
-Source59: udevadm-bash3
-Source60: bootctl-bash3
-Source61: busctl-bash3
-Source62: machinectl-bash3
-Source63: systemd-delta-bash3
-Source64: systemd-cat-bash3
-Source65: systemd-cgls-bash3
-Source66: systemd-cgtop-bash3
-Source67: systemd-detect-virt-bash3
 
 # simpleresolv
 Source68: altlinux-simpleresolv.path
@@ -129,7 +111,7 @@ Patch1: %name-%version.patch
 
 %define dbus_ver 1.4.6
 
-BuildPreReq: rpm-build-xdg meson
+BuildPreReq: rpm-build-xdg meson >= 0.46
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
@@ -146,7 +128,7 @@ BuildRequires: libaudit-devel
 %{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
-%{?_enable_lz4:BuildRequires: pkgconfig(liblz4)}
+%{?_enable_lz4:BuildRequires: pkgconfig(liblz4) >= 1.3.0}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 BuildRequires: quota
@@ -615,7 +597,6 @@ Shared library and headers for libudev
 	-Ddebug-shell=/bin/bash \
 	-Dquotaon-path=/sbin/quotaon \
 	-Dquotacheck-path=/sbin/quotacheck \
-	-Dkill-path=/bin/kill \
 	-Dkmod-path=/bin/kmod \
 	-Dkexec-path=/sbin/kexec \
 	-Dsulogin-path=/sbin/sulogin \
@@ -782,33 +763,12 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
 mkdir -p %buildroot%_localstatedir/lib/systemd/journal-upload
+mkdir -p %buildroot%_localstatedir/lib/systemd/timesync
 mkdir -p %buildroot%_logdir/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
 touch %buildroot%_localstatedir/lib/systemd/random-seed
-touch %buildroot%_localstatedir/lib/systemd/clock
-
-# Add completion for bash3
-mkdir -p %buildroot%_sysconfdir/bash_completion.d
-rm -f %buildroot%_sysconfdir/bash_completion.d/*
-rm -f %buildroot%_datadir/bash-completion/completions/*
-install -m644 %SOURCE51 %buildroot%_sysconfdir/bash_completion.d/hostnamectl
-install -m644 %SOURCE52 %buildroot%_sysconfdir/bash_completion.d/journalctl
-install -m644 %SOURCE53 %buildroot%_sysconfdir/bash_completion.d/localectl
-install -m644 %SOURCE54 %buildroot%_sysconfdir/bash_completion.d/loginctl
-install -m644 %SOURCE55 %buildroot%_sysconfdir/bash_completion.d/systemctl
-install -m644 %SOURCE56 %buildroot%_sysconfdir/bash_completion.d/systemd-analyze
-install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/coredumpctl
-install -m644 %SOURCE58 %buildroot%_sysconfdir/bash_completion.d/timedatectl
-install -m644 %SOURCE59 %buildroot%_sysconfdir/bash_completion.d/udevadm
-install -m644 %SOURCE60 %buildroot%_sysconfdir/bash_completion.d/bootctl
-install -m644 %SOURCE61 %buildroot%_sysconfdir/bash_completion.d/busctl
-install -m644 %SOURCE62 %buildroot%_sysconfdir/bash_completion.d/machinectl
-install -m644 %SOURCE63 %buildroot%_sysconfdir/bash_completion.d/systemd-delta
-install -m644 %SOURCE64 %buildroot%_sysconfdir/bash_completion.d/systemd-cat
-install -m644 %SOURCE65 %buildroot%_sysconfdir/bash_completion.d/systemd-cgls
-install -m644 %SOURCE66 %buildroot%_sysconfdir/bash_completion.d/systemd-cgtop
-install -m644 %SOURCE67 %buildroot%_sysconfdir/bash_completion.d/systemd-detect-virt
+touch %buildroot%_localstatedir/lib/systemd/timesync/clock
 
 # Create new-style configuration files so that we can ghost-own them
 touch %buildroot%_sysconfdir/hostname
@@ -1029,6 +989,12 @@ fi
 %endif
 
 %if_enabled timesyncd
+%pre timesyncd
+%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
+    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
+
+
 %post timesyncd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
@@ -1037,18 +1003,22 @@ if [ $1 -eq 1 ] ; then
                  >/dev/null 2>&1 || :
 fi
 
+if [ -L %_localstatedir/lib/systemd/timesync ]; then
+    rm %_localstatedir/lib/systemd/timesync
+    mv %_localstatedir/lib/private/systemd/timesync %_localstatedir/lib/systemd/timesync
+fi
+if [ -f %_localstatedir/lib/systemd/clock ] ; then
+    mkdir -p %_localstatedir/lib/systemd/timesync
+    mv %_localstatedir/lib/systemd/clock %_localstatedir/lib/systemd/timesync/
+fi
+
 %preun timesyncd
 if [ $1 -eq 0 ] ; then
         /bin/systemctl disable \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
 fi
-if [ $1 -eq 1 ] ; then
-    if [ -f %_localstatedir/lib/systemd/clock ] ; then
-        mkdir -p %_localstatedir/lib/private/systemd/timesync
-        mv %_localstatedir/lib/systemd/clock %_localstatedir/lib/private/systemd/timesync/
-     fi
-fi
+
 %endif
 
 %post -n libnss-systemd
@@ -1215,6 +1185,7 @@ fi
 %endif
 %endif
 
+
 %_bindir/busctl
 %_bindir/systemd-socket-activate
 %_bindir/systemd-cat
@@ -1222,10 +1193,11 @@ fi
 %_bindir/systemd-cgtop
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
+%_bindir/systemd-id128
 %_bindir/systemd-mount
 %_bindir/systemd-umount
 %_bindir/systemd-path
-%_bindir/systemd-run
+/bin/systemd-run
 %_bindir/systemd-stdio-bridge
 /lib/systemd/systemd
 /lib/systemd/systemd-ac-power
@@ -1238,6 +1210,8 @@ fi
 %_mandir/*/*cryptsetup*
 %_man8dir/systemd-veritysetup*
 %endif
+/lib/systemd/systemd-bless-boot
+/lib/systemd/systemd-boot-check-no-failures
 /lib/systemd/systemd-fsck
 /lib/systemd/systemd-growfs
 /lib/systemd/systemd-hibernate-resume
@@ -1319,6 +1293,7 @@ fi
 %_man1dir/systemd-delta.*
 %_man1dir/systemd-detect-virt.*
 %_man1dir/systemd-inhibit.*
+%_man1dir/systemd-id128.*
 %_man1dir/systemd-mount.*
 %_man1dir/systemd-umount.*
 %_man1dir/systemd-notify.*
@@ -1333,7 +1308,7 @@ fi
 %_man5dir/os-release*
 %_man5dir/*sleep.conf*
 %_man5dir/*system.conf*
-%_man5dir/*user.conf*
+%_man5dir/*user*
 %_man5dir/systemd.automount*
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
@@ -1351,6 +1326,8 @@ fi
 %_man5dir/systemd.unit*
 %_mandir/*/*vconsole*
 
+%_man8dir/systemd-bless*
+%_man8dir/systemd-boot-check-no-failures*
 %_man8dir/systemd-debug-generator*
 %_man8dir/systemd-fsck*
 %_man8dir/systemd-fstab-generator*
@@ -1369,6 +1346,7 @@ fi
 %_man8dir/systemd-rc-local-generator*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
+%_man8dir/systemd-run-generator*
 %_man8dir/systemd-socket-proxyd*
 %_man8dir/systemd-suspend*
 %_man8dir/systemd-system-update-generator*
@@ -1420,7 +1398,6 @@ fi
 %_rpmlibdir/journal-catalog.filetrigger
 %ghost %_localstatedir/lib/systemd/catalog/database
 %ghost %_localstatedir/lib/systemd/random-seed
-%ghost %_localstatedir/lib/systemd/clock
 
 %_defaultdocdir/%name-%version
 %_logdir/README
@@ -1585,6 +1562,7 @@ fi
 %files networkd
 /bin/networkctl
 %dir %_sysconfdir/systemd/network
+%config(noreplace) %_sysconfdir/systemd/networkd.conf
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
 %config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.network1.service
@@ -1645,6 +1623,7 @@ fi
 /lib/systemd/systemd-machined
 /lib/systemd/systemd-export
 /lib/systemd/systemd-import
+/lib/systemd/systemd-import-fs
 /lib/systemd/systemd-importd
 /lib/systemd/systemd-pull
 /lib/systemd/network/80-container-ve.network
@@ -1669,7 +1648,7 @@ fi
 %dir /lib/systemd/portable
 %dir /lib/systemd/portable/profile
 /lib/systemd/portable/profile/*
-/lib/systemd/portablectl
+/bin/portablectl
 /lib/systemd/systemd-portabled
 %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
 %if_enabled polkit
@@ -1687,6 +1666,8 @@ fi
 %_unitdir/systemd-time-wait-sync.service
 %_mandir/*/*timesyncd*
 %_mandir/*/*time-wait-sync*
+%ghost %dir %_localstatedir/lib/systemd/timesync
+%ghost %_localstatedir/lib/systemd/timesync/clock
 %endif
 
 %files analyze
@@ -1754,16 +1735,15 @@ fi
 %endif #sysuser
 
 %files -n bash-completion-%name
-%_sysconfdir/bash_completion.d/*
-%exclude %_sysconfdir/bash_completion.d/udevadm
+%_datadir/bash-completion/completions/*
+%exclude %_datadir/bash-completion/completions/udevadm
 
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/*
 %exclude %_datadir/zsh/site-functions/_udevadm
 
 %files -n bash-completion-udev
-%_sysconfdir/bash_completion.d/udevadm
-#%_datadir/bash-completion/completions/udevadm
+%_datadir/bash-completion/completions/udevadm
 
 %files -n zsh-completion-udev
 %_datadir/zsh/site-functions/_udevadm
@@ -1809,7 +1789,6 @@ fi
 
 %files -n udev-extras
 /lib/udev/v4l_id
-/lib/udev/collect
 /lib/udev/rules.d/78-sound-card.rules
 
 %files -n udev-rules
@@ -1832,6 +1811,11 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Dec 31 2018 Alexey Shabalin <shaba@altlinux.org> 1:240-alt1
+- 240
+- install systemd-run to /bin (for allow execute from udev rules for lvm2)
+- install upstream completions for bash4
+
 * Mon Oct 29 2018 Alexey Shabalin <shaba@altlinux.org> 1:239-alt3
 - merge with v239-stable
 - Fixes for the following security vulnerabilities:
