@@ -16,7 +16,7 @@
 
 Name: perl-Apache-Test
 Version: 1.40
-Release: alt1
+Release: alt2
 
 Summary: Test.pm wrapper with helpers for testing Apache
 
@@ -33,7 +33,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/S/SH/SHAY/Apache-Test-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Dec 09 2006
-BuildRequires: perl-devel perl-libwww apache-mod_perl
+BuildRequires: perl-devel perl-libwww apache2-mod_perl
 
 %description
 Apache::Test is a wrapper around the standard Test.pm with helpers for
@@ -56,6 +56,9 @@ rm -f %buildroot%perl_vendor_privlib/Apache/TestConfigData.pm
 %perl_vendor_privlib/Apache/
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.40-alt2
+- BuildRequires w/o apache1
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
