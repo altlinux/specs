@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Address
 Name: perl-%dist
-Version: 1.911
+Version: 1.912
 Release: alt1
 
 Summary: RFC 2822 Address Parsing
@@ -36,6 +36,9 @@ of this software is to be correct, and very very fast.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.912-alt1
+- automated CPAN update
+
 * Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.911-alt1
 - automated CPAN update
 
