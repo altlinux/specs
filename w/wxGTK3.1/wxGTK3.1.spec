@@ -7,7 +7,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.1
-Release: alt2
+Release: alt2.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -62,11 +62,10 @@ libraries or the X Window System.
 Group: Development/C++
 Summary: Development files for the wxBase3 library
 Requires: libwxBase%wxbranch = %EVR
-Requires(post): %_sbindir/update-alternatives
-Requires(postun): %_sbindir/update-alternatives
 Conflicts: lib%name-devel < %EVR
 Conflicts: libwxGTK2.9-devel
 Conflicts: libwxGTK3.0-devel
+Conflicts: libwxBase%wxbranch-devel < 3.1.1-alt2.1
 Conflicts: libwxBase3.0-devel
 Conflicts: wxGTK-devel
 Conflicts: libwxGTK-devel
@@ -296,27 +295,7 @@ install -p -D -m 755 %SOURCE3 %buildroot%_libexecdir/%name/wx-config
 ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config-%wxbranch
 touch %buildroot%_bindir/wx-config
 
-#Alternatives setup with wxrc
-mv %buildroot%_bindir/wxrc* %buildroot%_libexecdir/%name
-ln -s ../..%_libexecdir/%name/wxrc-%wxbranch %buildroot%_bindir/wxrc-%wxbranch
-touch %buildroot%_bindir/wxrc
-
 %find_lang wxstd31 wxmsw31 --output=wxstd.lang
-
-%post -n libwxBase%wxbranch-devel
-if [ -f %_bindir/wx-config ] && [ ! -h %_bindir/wx-config ] ; then
-  rm %_bindir/wx-config
-fi
-%_sbindir/update-alternatives --install %_bindir/wx-config \
-  wx-config %_libexecdir/%name/wx-config 3
-%_sbindir/update-alternatives --install %_bindir/wxrc \
-  wxrc %_libexecdir/%name/wxrc 3
-
-%postun -n libwxBase%wxbranch-devel
-if [ $1 -eq 0 ] ; then
-%_sbindir/update-alternatives --remove wx-config %_libexecdir/%name/wx-config
-%_sbindir/update-alternatives --remove wxrc %_libexecdir/%name/wxrc
-fi
 
 %files -n libwxBase%wxbranch
 %_libdir/libwx_baseu*.so.*
@@ -399,6 +378,9 @@ fi
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Dec 31 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2.1
+- Drop update-alternatives
+
 * Wed Oct 24 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2
 - Disabled build options: stl, std_containers, std_string_conv_in_wxstring
 
