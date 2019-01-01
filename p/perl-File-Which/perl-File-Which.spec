@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-File-Which
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: Portable implementation of the `which' utility
@@ -65,6 +65,9 @@ it'll try "perl.exe", "perl.bat", etc.)
 %doc Changes README
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
