@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-UUID
-Version: 0.27
-Release: alt1.1.1
+Version: 0.28
+Release: alt1
 Summary: DCE compatible Universally Unique Identifier library for Perl
 
 Group: Development/Perl
 License: GPL or Artistic
 Url: http://search.cpan.org/~jrm/UUID/UUID.pm
 
-Source: http://www.cpan.org/authors/id/J/JR/JRM/UUID-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JR/JRM/UUID-%{version}.tar.gz
 
 BuildRequires: libuuid-devel perl(Devel/CheckLib.pm) perl(ExtUtils/MakeMaker.pm)
 
@@ -23,7 +23,7 @@ created by the Open Software Foundation (OSF) Distributed Computing
 Environment (DCE) utility uuidgen.
 
 %prep
-%setup -q -n UUID-%version
+%setup -q -n UUID-%{version}
 
 %build
 %perl_vendor_build
@@ -32,11 +32,14 @@ Environment (DCE) utility uuidgen.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README License
 %perl_vendor_archlib/UUID.pm
 %perl_vendor_autolib/UUID
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1.1
 - rebuild with new perl 5.26.1
 
