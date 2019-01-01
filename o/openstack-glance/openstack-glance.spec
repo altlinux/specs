@@ -1,8 +1,8 @@
 %define oname glance
 
 Name: openstack-%oname
-Version: 14.0.0
-Release: alt4
+Version: 17.0.0
+Release: alt1
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -23,69 +23,121 @@ Source43: %name.tmpfiles
 Source46: %name-glare.init
 
 BuildArch: noarch
+
+Requires(pre): shadow-utils
+Requires: python3-module-glance = %EVR
+Requires: python3-module-glanceclient
+Requires: python3-module-PasteDeploy
+Requires: /usr/bin/qemu-img
+
 BuildRequires: python-devel
 BuildRequires: crudini
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-defusedxml >= 0.5.0
+BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-routes >= 2.3.1
+BuildRequires: python-module-migrate >= 0.11.0
 BuildRequires: python-module-sqlparse >= 0.2.2
 BuildRequires: python-module-alembic >= 0.8.10
-BuildRequires: python-module-httplib2 >= 0.7.5
-BuildRequires: python-module-pycrypto >= 2.6
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.context >= 0.2.9
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-stevedore >= 1.17.1
-BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-taskflow >= 2.7.0
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-keystonemiddleware >= 4.12.0
-BuildRequires: python-module-wsme >= 0.8
+BuildRequires: python-module-httplib2 >= 0.9.1
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-futurist >= 1.2.0
+BuildRequires: python-module-taskflow >= 2.16.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-keystonemiddleware >= 4.17.0
+BuildRequires: python-module-wsme >= 0.8.0
 BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-paste
-BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-oslo.db >= 4.15.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.messaging >= 5.14.0
-BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 1.17.0
+BuildRequires: python-module-paste >= 2.0.2
+BuildRequires: python-module-jsonschema >= 2.6.0
+BuildRequires: python-module-OpenSSL >= 17.1.0
+BuildRequires: python-module-oslo.db >= 4.27.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.messaging >= 5.29.0
+BuildRequires: python-module-oslo.middleware >= 3.31.0
+BuildRequires: python-module-oslo.policy >= 1.30.0
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-osprofiler >= 1.4.0
 
-BuildRequires: python-module-glance_store >= 0.18.0
-BuildRequires: python-module-semantic_version >= 2.3.1
-BuildRequires: python-module-cryptography >= 1.0
-BuildRequires: python-module-cursive >= 0.1.1
+BuildRequires: python-module-glance_store >= 0.26.1
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-cryptography >= 2.1
+BuildRequires: python-module-cursive >= 0.2.1
+
 BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-monotonic >= 0.6
 
 # Required to build module documents
-BuildRequires: python-module-boto
-BuildRequires: python-module-webob >= 1.6.0
-BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-elasticsearch
-BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-os-api-ref >= 1.4.0
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
 BuildRequires: python-modules-sqlite3
-BuildRequires: python-module-networkx-drawing
-BuildRequires: python-module-glance_store-tests
-BuildRequires: python-module-dns
+#BuildRequires: python-modules-xattr >= 0.9.2
 
-Requires(pre): shadow-utils
-Requires: python-module-glance = %EVR
-Requires: python-module-glanceclient
-Requires: python-module-PasteDeploy
-Requires: /usr/bin/qemu-img
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-defusedxml >= 0.5.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-SQLAlchemy >= 1.0.10
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-PasteDeploy >= 1.5.0
+BuildRequires: python3-module-routes >= 2.3.1
+BuildRequires: python3-module-migrate >= 0.11.0
+BuildRequires: python3-module-sqlparse >= 0.2.2
+BuildRequires: python3-module-alembic >= 0.8.10
+BuildRequires: python3-module-httplib2 >= 0.9.1
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-taskflow >= 2.16.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-keystonemiddleware >= 4.17.0
+BuildRequires: python3-module-wsme >= 0.8.0
+BuildRequires: python3-module-prettytable >= 0.7.1
+BuildRequires: python3-module-paste >= 2.0.2
+BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-OpenSSL >= 17.1.0
+BuildRequires: python3-module-oslo.db >= 4.27.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-oslo.middleware >= 3.31.0
+BuildRequires: python3-module-oslo.policy >= 1.30.0
+BuildRequires: python3-module-retrying >= 1.2.3
+BuildRequires: python3-module-osprofiler >= 1.4.0
+
+BuildRequires: python3-module-glance_store >= 0.26.1
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-cryptography >= 2.1
+BuildRequires: python3-module-cursive >= 0.2.1
+
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-monotonic >= 0.6
+
+# Required to build module documents
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-os-api-ref >= 1.4.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python3-modules-sqlite3
+#BuildRequires: python3-modules-xattr >= 0.9.2
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -101,18 +153,17 @@ This package contains the API and registry servers.
 %package -n python-module-%oname
 Summary: Glance Python libraries
 Group: Development/Python
-Requires: python-module-keystoneclient >= 3.8.0
-Requires: python-module-keystonemiddleware >= 4.12.0
-Requires: python-module-oslo.config >= 3.14.0
-Requires: python-module-oslo.concurrency >= 3.5.0
-Requires: python-module-oslo.context >= 0.2.0
-Requires: python-module-oslo.utils >= 3.18.0
-Requires: python-module-oslo.log >= 3.11.0
-Requires: python-module-oslo.db >= 4.15.0
-Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.messaging >= 5.14.0
-Requires: python-module-oslo.policy >= 1.17.0
-Requires: python-module-oslo.serialization >= 1.10.0
+Requires: python-module-keystoneauth1 >= 3.4.0
+Requires: python-module-keystonemiddleware >= 4.17.0
+Requires: python-module-oslo.config >= 5.2.0
+Requires: python-module-oslo.concurrency >= 3.26.0
+Requires: python-module-oslo.context >= 2.19.2
+Requires: python-module-oslo.utils >= 3.33.0
+Requires: python-module-oslo.log >= 3.36.0
+Requires: python-module-oslo.db >= 4.27.0
+Requires: python-module-oslo.i18n >= 3.15.3
+Requires: python-module-oslo.messaging >= 5.29.0
+Requires: python-module-oslo.policy >= 1.30.0
 
 %description -n python-module-%oname
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -123,9 +174,36 @@ This package contains the glance Python library.
 %package -n python-module-%oname-tests
 Summary: Tests for %oname
 Group: Development/Python
-Requires: %name = %EVR
 
 %description -n python-module-%oname-tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: Glance Python libraries
+Group: Development/Python3
+Requires: python3-module-keystoneauth1 >= 3.4.0
+Requires: python3-module-keystonemiddleware >= 4.17.0
+Requires: python3-module-oslo.config >= 5.2.0
+Requires: python3-module-oslo.concurrency >= 3.26.0
+Requires: python3-module-oslo.context >= 2.19.2
+Requires: python3-module-oslo.utils >= 3.33.0
+Requires: python3-module-oslo.log >= 3.36.0
+Requires: python3-module-oslo.db >= 4.27.0
+Requires: python3-module-oslo.i18n >= 3.15.3
+Requires: python3-module-oslo.messaging >= 5.29.0
+Requires: python3-module-oslo.policy >= 1.30.0
+
+%description -n python3-module-%oname
+OpenStack Image Service (code-named Glance) provides discovery, registration,
+and delivery services for virtual disk images.
+
+This package contains the glance Python library.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+
+%description -n python3-module-%oname-tests
 This package contains tests for %oname.
 
 %package doc
@@ -149,21 +227,38 @@ This package contains documentation files for glance.
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
+rm -rf ../python3
+cp -a . ../python3
+
 %build
 %python_build
 
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python setup.py build_sphinx
-python setup.py build_sphinx -b man
+pushd ../python3
+%python3_build
+
+#python3 setup.py build_sphinx
+#python3 setup.py build_sphinx -b man
 # Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+#rm -fr build/sphinx/html/.buildinfo
+# regenerate the sample config files
+#for service in api registry scrubber cache manage glare; do
+#    PYTHONPATH=. oslo-config-generator --config-file etc/oslo-config-generator/glance-$service.conf
+#done
+popd
 
 %install
 %python_install
-
-mkdir -p %buildroot%_man1dir
-install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
+mv %buildroot%_bindir/glance-api %buildroot%_bindir/glance-api.py2
+mv %buildroot%_bindir/glance-cache-cleaner %buildroot%_bindir/glance-cache-cleaner.py2
+mv %buildroot%_bindir/glance-cache-manage %buildroot%_bindir/glance-cache-manage.py2
+mv %buildroot%_bindir/glance-cache-prefetcher %buildroot%_bindir/glance-cache-prefetcher.py2
+mv %buildroot%_bindir/glance-cache-pruner %buildroot%_bindir/glance-cache-pruner.py2
+mv %buildroot%_bindir/glance-control %buildroot%_bindir/glance-control.py2
+mv %buildroot%_bindir/glance-manage %buildroot%_bindir/glance-manage.py2
+mv %buildroot%_bindir/glance-registry %buildroot%_bindir/glance-registry.py2
+mv %buildroot%_bindir/glance-replicator %buildroot%_bindir/glance-replicator.py2
+mv %buildroot%_bindir/glance-scrubber %buildroot%_bindir/glance-scrubber.py2
+mv %buildroot%_bindir/glance-wsgi-api %buildroot%_bindir/glance-wsgi-api.py2
 
 install -d -m 0755 %buildroot%_sysconfdir/glance
 install -d -m 0755 %buildroot%_sysconfdir/glance/metadefs
@@ -174,16 +269,20 @@ install -d -m 755 %buildroot%_sysconfdir/glance/glance.conf.d/
 install -d -m 755 %buildroot%_sysconfdir/glance/glance-api.conf.d/
 install -d -m 755 %buildroot%_sysconfdir/glance/glance-registry.conf.d/
 
-# regenerate the sample config files
-for service in api registry scrubber cache manage glare; do
-    PYTHONPATH=. oslo-config-generator --config-file etc/oslo-config-generator/glance-$service.conf
-done
-
+pushd ../python3
+%python3_install
 cp -pr etc/* %buildroot%_sysconfdir/glance
 
-for service in api registry scrubber cache manage glare swift; do
-    mv %buildroot%_sysconfdir/glance/glance-$service.conf{.sample,}
-done
+#for service in api registry scrubber cache manage glare swift; do
+#for service in image-import swift; do
+#    mv %buildroot%_sysconfdir/glance/glance-$service.conf{.sample,}
+#done
+
+# documentation
+#install -d %buildroot%_mandir/man1
+#install -m 644 doc/build/man/*.1 %buildroot%_mandir/man1
+
+popd
 
 rm -rf %buildroot%_sysconfdir/glance/oslo-config-generator
 
@@ -212,12 +311,8 @@ install -d -m 755 %buildroot%_runtimedir/glance
 # Install log directory
 install -d -m 770 %buildroot%_logdir/glance
 
-# documentation
-install -d %buildroot%_mandir/man1
-install -m 644 doc/build/man/*.1 %buildroot%_mandir/man1
-
 # Delete unneeded files
-rm -rf %buildroot/usr/etc/glance
+rm -rf %buildroot/usr/etc
 
 ### set default configuration
 %define glance_conf %buildroot%_sysconfdir/glance/glance.conf.d/010-glance.conf
@@ -245,12 +340,11 @@ crudini --set %glance_conf paste_deploy flavor keystone
 
 %files
 %doc README.rst
-%_bindir/*
 %_unitdir/*
 %_initdir/*
 %_tmpfilesdir/*
 
-%_man1dir/*
+#%_man1dir/*
 %dir %_sysconfdir/glance
 %dir %_sysconfdir/glance/glance.conf.d
 %config(noreplace) %attr(640, root, glance) %_sysconfdir/glance/*.conf
@@ -269,16 +363,33 @@ crudini --set %glance_conf paste_deploy flavor keystone
 
 %files -n python-module-%oname
 %doc README.rst
+%_bindir/*.py2
+%exclude %_bindir/glance-cache-manage.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
 %files -n python-module-%oname-tests
 %python_sitelibdir/%oname/tests
 
-%files doc
-%doc doc/build/html
+%files -n python3-module-%oname
+%doc README.rst
+%_bindir/*
+%exclude %_bindir/glance-cache-manage
+%exclude %_bindir/*.py2
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests
+
+#%files doc
+#%doc doc/build/html
 
 %changelog
+* Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 1:17.0.0-alt1
+- 17.0.0 Rocky release
+- switch to python3
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:14.0.0-alt4
 - Fixed FTBFS (remove python-module-setuptools-tests from BR).
 
