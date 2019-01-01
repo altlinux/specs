@@ -4,7 +4,7 @@
 
 Name: perl-RPC-XML
 Version: 0.80
-Release: alt2
+Release: alt3
 
 Summary: an implementation of XML-RPC
 
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-licenses perl-devel
 
 # Automatically added by buildreq on Sat Jun 06 2015
 # optimized out: perl-Class-Factory-Util perl-Class-Singleton perl-Compress-Raw-Zlib perl-DateTime perl-DateTime-Format-Builder perl-DateTime-Format-Strptime perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Symdump perl-Encode perl-Exporter-Tiny perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-IP perl-LWP-MediaTypes perl-List-MoreUtils perl-Module-Implementation perl-Module-Runtime perl-Net-HTTP perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-Try-Tiny perl-URI perl-XML-Parser perl-devel perl-libwww perl-parent
-BuildRequires: apache-mod_perl-base perl-CGI perl-DateTime-Format-ISO8601 perl-HTTP-Daemon perl-IO-Socket-INET6 perl-Module-Load perl-Net-Server perl-Sub-Name perl-XML-LibXML perl-podlators
+BuildRequires: perl-CGI perl-DateTime-Format-ISO8601 perl-HTTP-Daemon perl-IO-Socket-INET6 perl-Module-Load perl-Net-Server perl-Sub-Name perl-XML-LibXML perl-podlators
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -73,6 +73,9 @@ sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 %endif
 
 %changelog
+* Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.80-alt3
+- BuildRequires w/o apache1
+
 * Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.80-alt2
 - NMU: build w/o apache1 support
 
