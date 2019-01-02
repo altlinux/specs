@@ -55,7 +55,7 @@
 
 Name:    samba-DC
 Version: 4.9.4
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1016,7 +1016,7 @@ TDB_NO_FSYNC=1 %make_build test
 %dir /var/run/samba
 %dir /var/run/winbindd
 %attr(755,root,root) %dir %_localstatedir/cache/samba
-%attr(700,root,root) %dir /var/lib/samba/private
+%attr(710,root,root) %dir /var/lib/samba/private
 %attr(755,root,root) %dir %_sysconfdir/samba
 %config(noreplace) %_sysconfdir/samba/smb.conf
 %config(noreplace) %_sysconfdir/samba/lmhosts
@@ -1509,6 +1509,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Jan 02 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.4-alt2
+- Merge and rebuild for e2k
+- Change group access for private directory due effective mask with acl
+
 * Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.4-alt1
 - Update to first winter security release
 - Security fixes regressions:
