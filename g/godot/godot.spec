@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.0.6
-Release: alt2
+Release: alt3
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -63,6 +63,7 @@ BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel lib
 %{!?_with_builtin_zstd:BuildRequires: libzstd-devel}
 
 Patch1: fix-zstd-linking.patch
+Patch2: fix-zstd-1.3.8.patch
 
 %description
 Godot Engine is a feature-packed, cross-platform game engine to create 2D and 3D
@@ -100,6 +101,7 @@ by pointing to the location of the game's data package.
 %prep
 %setup
 %patch0 -p1
+%{!?_with_builtin_zstd:%patch2 -p2}
 %{!?_with_builtin_zstd:%patch1 -p2}
 cp %SOURCE1 .
 cp %SOURCE2 .
@@ -184,6 +186,9 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Wed Jan 02 2019 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt3
+- fix for zstd-1.3.8
+
 * Sat Oct 06 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt2
 - NMU: merged features from autoimports build:
   * added runner binary and subpackage
