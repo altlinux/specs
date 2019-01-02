@@ -7,7 +7,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -65,7 +65,7 @@ Requires: libwxBase%wxbranch = %EVR
 Conflicts: lib%name-devel < %EVR
 Conflicts: libwxGTK2.9-devel
 Conflicts: libwxGTK3.0-devel
-Conflicts: libwxBase%wxbranch-devel < 3.1.1-alt2.1
+Conflicts: libwxBase%wxbranch-devel < 3.1.1-alt2.2
 Conflicts: libwxBase3.0-devel
 Conflicts: wxGTK-devel
 Conflicts: libwxGTK-devel
@@ -293,7 +293,7 @@ rm %buildroot%_bindir/wx-config
 ##Install new and symlink
 install -p -D -m 755 %SOURCE3 %buildroot%_libexecdir/%name/wx-config
 ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config-%wxbranch
-touch %buildroot%_bindir/wx-config
+ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 
 %find_lang wxstd31 wxmsw31 --output=wxstd.lang
 
@@ -306,8 +306,8 @@ touch %buildroot%_bindir/wx-config
 %_libdir/wx/%version/web-extensions/webkit2_extu-*.so
 
 %files -n libwxBase%wxbranch-devel
-%ghost %_bindir/wx-config
-%ghost %_bindir/wxrc
+%_bindir/wx-config
+%_bindir/wxrc
 %_bindir/wxrc-%wxbranch
 %_bindir/wx-config-%wxbranch
 %_includedir/wx-%wxbranch
@@ -378,6 +378,9 @@ touch %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Jan 02 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2.2
+- Fix /usr/bin/wx-config (create symlink)
+
 * Mon Dec 31 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2.1
 - Drop update-alternatives
 
