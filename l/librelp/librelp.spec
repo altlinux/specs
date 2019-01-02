@@ -2,8 +2,8 @@
 %def_enable tls
 
 Name: librelp
-Version: 1.2.17
-Release: alt1%ubt
+Version: 1.3.0
+Release: alt1
 
 Summary: The RELP (reliable event logging protocol) core protocol library
 License: GPLv3
@@ -12,7 +12,6 @@ Url: http://www.librelp.com/
 # https://github.com/rsyslog/librelp.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 %{?_enable_tls:BuildRequires: pkgconfig(gnutls) >= 2.0.0}
 
 %description
@@ -65,6 +64,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Wed Jan 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.17-alt1%ubt
 - 1.2.17
 
