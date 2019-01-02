@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20181021
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
@@ -33,7 +33,7 @@ BuildRequires:  perl(Test/More.pm)
 # Runtime
 Requires:       perl(autodie.pm) >= 2.220
 Source44: import.info
-Provides: perl(Modern/Perl.pm) = 2012.0
+Provides: perl(Modern/Perl.pm) = 2019.0
 
 %description
 Modern Perl often relies on the presence of several core and CPAN pragmas
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Wed Jan 02 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.20181021-alt2_1
+- updated provides
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20181021-alt1_1
 - update to new release by fcimport
 
