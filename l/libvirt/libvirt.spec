@@ -130,7 +130,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -1310,6 +1310,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jan 02 2019 Alexey Shabalin <shaba@altlinux.org> 4.10.0-alt1
+- 4.10.0
+
 * Thu Nov 29 2018 Alexey Shabalin <shaba@altlinux.org> 4.9.0-alt1
 - 4.9.0
 - add requires qemu-kvm-core to libvirt-daemon-driver-qemu (ALT#33801)
@@ -1815,7 +1818,7 @@ fi
 * Wed Apr 09 2008 Anton Protopopov <aspsk@altlinux.ru> 0.4.2-alt1
 - Release of 0.4.2
 
-* Wed Mar 31 2008 Anton Protopopov <aspsk@altlinux.ru> 0.4.1-alt1
+* Mon Mar 31 2008 Anton Protopopov <aspsk@altlinux.ru> 0.4.1-alt1
 - Release of 0.4.1
 
 * Wed Mar 12 2008 Anton Protopopov <aspsk@altlinux.ru> 0.4.1-alt0.1
