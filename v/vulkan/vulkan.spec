@@ -1,21 +1,29 @@
-%define git 7e48885
-%define spirv_tools_rev 9e19fc0f31ceaf1f6bc907dbf17dcfded85f2ce8
+%define build_type RelWithDebInfo
+%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.1.70
+Version: 1.1.96
 Release: alt1
-Summary: Vulkan loader and validation layers
+Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
 License: ASL 2.0
 Url: http://www.khronos.org/
 
-# https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers
-Source0: vulkan.tar.xz
+# https://github.com/KhronosGroup/Vulkan-Loader
+Source0: vulkan-loader.tar.xz
+# https://github.com/KhronosGroup/Vulkan-Headers
+Source1: vulkan-headers.tar.xz
+# https://github.com/KhronosGroup/SPIRV-Headers
+Source2: SPIRV-Headers.tar.xz
+# https://github.com/KhronosGroup/SPIRV-Tools
+Source3: SPIRV-Tools.tar.xz
 # https://github.com/KhronosGroup/glslang
-Source1: glslang.tar.xz
-# https://github.com/KhronosGroup/SPIRV-Tools.git
-Source2: SPIRV-Tools.tar.xz
+Source4: glslang.tar.xz
+# https://github.com/KhronosGroup/Vulkan-Tools
+Source5: vulkan-tools.tar.xz
+# https://github.com/KhronosGroup/Vulkan-ValidationLayers
+Source6: vulkan-layers.tar.xz
 Patch1: spirv-tools-alt-use-python3.patch
 Patch2: 0003-layers-Don-t-set-an-rpath.patch
 Patch3: vulkan-alt-use-file-rev-spirv-tools.patch
@@ -37,7 +45,8 @@ high-efficiency, cross-platform access to modern GPUs used in a wide
 variety of devices from PCs and consoles to mobile phones and embedded
 platforms.
 
-This package contains the reference ICD loader and validation layers for Vulkan.
+This package contains the reference ICD loader and API validation layer for
+Vulkan.
 
 %package -n lib%{name}1
 Summary: Vulkan loader libraries
@@ -80,36 +89,38 @@ BuildArch: noarch
 %description filesystem
 Filesystem for Vulkan API.
 
-%package demos
-Summary: Vulkan demos
+%package tools
+Summary: Vulkan tools and utilities
 Group: System/X11
 Requires: lib%{name}1 = %version-%release
+Obsoletes: %name-demos
 
-%description demos
-Vulkan API demos.
+%description tools
+Tools and utilities that can assist development by enabling developers to
+verify their applications correct use of the Vulkan API.
 
 %prep
-%setup -n %name -b1 -b2
+%setup -n %name-loader -b0 -b1 -b2 -b3 -b4 -b5 -b6
 pushd ../SPIRV-Tools
 %patch1 -p2
 popd
-%patch2 -p1
-%patch3 -p2
-
+pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
+#%%patch2 -p1
+popd
+#%%patch3 -p2
 
 %build
-# first, glslang and SPIRV-Tools
-for dir in glslang SPIRV-Tools; do
+# first, SPIRV-Tools and glslang
+for dir in SPIRV-Tools glslang; do
 pushd %_builddir/$dir
 if [ "$dir" == "SPIRV-Tools" ]; then
-%cmake \
-       -DSPIRV_BUILD_COMPRESSION:BOOL=ON \
-       -DCMAKE_BUILD_TYPE=Release \
-       -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+ln -s %_builddir/SPIRV-Headers external/SPIRV-Headers
+%_cmake -DSPIRV_BUILD_COMPRESSION:BOOL=ON
 else
-%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+ln -s %_builddir/SPIRV-Tools External/spirv-tools
+%_cmake
 fi
 %cmake_build
 %cmakeinstall_std DESTDIR=$(pwd)/install
@@ -119,38 +130,49 @@ popd
 popd
 done
 
-# create rev file to make vulkan happy
-ln -s %_builddir/SPIRV-Tools %_builddir/glslang/External/spirv-tools
-echo %spriv_tools_rev > %_builddir/SPIRV-Tools/rev_file
-
-# and finally, loader, layers, and demo clients
-%cmake \
- 	   -DCMAKE_BUILD_TYPE=Release \
-           -DEXTERNAL_SOURCE_ROOT=%_builddir \
-	   -DBUILD_TESTS=OFF \
-	   -DBUILD_VKJSON=OFF \
-	   -DCUSTOM_GLSLANG_BIN_ROOT=ON \
-	   -DCUSTOM_SPIRV_TOOLS_BIN_ROOT=ON \
-	   -DGLSLANG_BINARY_ROOT=%_builddir/glslang/BUILD \
-	   -DSPIRV_TOOLS_BINARY_ROOT=%_builddir/SPIRV-Tools/BUILD \
-	   -DSPIRV_TOOLS_OPT_LIB:FILEPATH=%_builddir/SPIRV-Tools/install/%_lib \
-	   -DSPIRV_TOOLS_INCLUDE_DIR:FILEPATH=%_builddir/SPIRV-Tools/include \
-	   -DBUILDTGT_DIR=BUILD \
-	   -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
-	   -DBUILD_WSI_MIR_SUPPORT=OFF
+# second, vulkan-headers
+pushd %_builddir/vulkan-headers
+%_cmake
 %cmake_build
+%cmakeinstall_std
+popd
+
+# then vulkan-loader and layers
+for dir in loader layers; do
+pushd %_builddir/vulkan-"$dir"
+%_cmake \
+	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
+	   -DGLSLANG_INSTALL_DIR=%_builddir/glslang/install \
+	   -DVulkanHeaders_INCLUDE_DIR=%buildroot%_includedir
+%cmake_build
+%cmakeinstall_std
+popd
+done
+
+# end finally -tools
+pushd %_builddir/vulkan-tools
+%_cmake \
+	   -DCMAKE_PREFIX_PATH=%buildroot%prefix \
+	   -DGLSLANG_INSTALL_DIR=%_builddir/glslang/install
+%cmake_build
+%cmakeinstall_std
+popd
 
 %install
+# do it again
+for dir in headers layers loader tools; do
+pushd %_builddir/vulkan-"$dir"
 %cmakeinstall_std
-install -T BUILD/demos/smoketest %buildroot%_bindir/vulkan-smoketest
-mkdir -p %buildroot%_datadir/vulkan/{explicit,implicit}_layer.d/
-mv %buildroot%_sysconfdir/vulkan/explicit_layer.d/*.json %buildroot%_datadir/vulkan/explicit_layer.d/
-mkdir -p %buildroot%_datadir/vulkan/icd.d
+popd
+done
+mkdir -p %buildroot%_sysconfdir/vulkan/explicit_layer.d
+mkdir -p %buildroot%_datadir/vulkan/{explicit,implicit}_layer.d/ ||:
+mkdir -p %buildroot%_datadir/vulkan/icd.d ||:
 
 # remove RPATH
 chrpath -d %buildroot%_bindir/vulkaninfo
 
-%files demos
+%files tools
 %_bindir/*
 
 %files -n lib%{name}1
@@ -162,13 +184,19 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %_includedir/vulkan
 %_libdir/libvulkan.so
 %_pkgconfigdir/vulkan.pc
+%_datadir/vulkan/registry
+# requires vulkan-docs tools
+%exclude %_datadir/vulkan/registry/genvk.py
 
 %files validation-layers
+%_includedir/*
+%exclude %_includedir/vulkan
 %dir %_sysconfdir/vulkan/explicit_layer.d
 %dir %_datadir/vulkan/explicit_layer.d
 %dir %_datadir/vulkan/implicit_layer.d
 %_datadir/vulkan/explicit_layer.d/*.json
 %_libdir/libVkLayer*.so
+%_libdir/libVkLayer*.a
 
 %files filesystem
 %dir %_sysconfdir/vulkan
@@ -176,6 +204,19 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/icd.d
 
 %changelog
+* Wed Jan 02 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.96-alt1
+- Updated to SDK 1.1.96:
+  - headers v1.1.96
+  - loader GIT 15e3d18ce
+  - layers GIT b458d8622
+  - tools GIT 9d4727c6a
+- Rewrote .spec for new code infrastructure:
+  - simplify build flags
+  - demos->tools
+  - added registry to -devel
+  - added extra headers and libs for -layers
+  - enable optimisation for glslang.
+
 * Fri Mar 16 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.70-alt1
 - Updated to vulkan sdk-1.1.70.
 
