@@ -1,5 +1,5 @@
 Name: libcap
-Version: 2.25.0.8.be92
+Version: 2.26
 Release: alt1
 Epoch: 1
 
@@ -94,8 +94,11 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.26-alt1
+- libcap-2.25-8-gbe92eaa -> libcap-2.26.
+
 * Sun Dec 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.25.0.8.be92-alt1
-- libcap-2.25-1-g1f52c8a -> libcap-korg-2.25-8-gbe92eaa.
+- libcap-2.25-1-g1f52c8a -> libcap-2.25-8-gbe92eaa.
 
 * Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1:2.25-alt1
 - Updated to libcap-2.25-1-g1f52c8a.
