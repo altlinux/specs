@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.2305.95c96
+Version: 0.1.2313.4652c
 Release: alt1
 
 Summary: GNU Portability Library
@@ -46,6 +46,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1.2313.4652c-alt1
+- v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
+
 * Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 0.1.2305.95c96-alt1
 - v0.1-1213-g683b60789 -> v0.1-2305-g95c96b6dd.
 
