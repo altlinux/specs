@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: 	 gnucash
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -183,7 +183,7 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %doc %_man1dir/*
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/glib-2.0/schemas/org.%name.*.xml
 
 #hbci отдельно
@@ -192,6 +192,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Thu Jan 03 2019 Andrey Cherepanov <cas@altlinux.org> 3.4-alt1
+- New version.
+
 * Mon Oct 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
 - New version.
 
