@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 0.4
+%define ver_major 5.0
 %define gst_api_ver 1.0
 # [ lastfm', 'audioplayer', 'cdrom', 'ipod' ]
 %define plugins [ 'audioplayer', 'cdrom', 'ipod' ]
@@ -8,7 +8,7 @@ Name: noise
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.music
 Version: %ver_major.2
-Release: alt3
+Release: alt1
 
 Summary: The official elementary music player
 Group: Sound
@@ -35,15 +35,11 @@ Requires: libgda5-sqlite
 
 BuildRequires(pre): meson
 BuildRequires: libappstream-glib-devel
-BuildRequires: cmake gcc-c++ vala-tools libsqlheavy-devel libsqlite3-devel libgee0.8-devel
+BuildRequires: vala-tools libsqlite3-devel libgee0.8-devel
 BuildRequires: libxml2-devel libgtk+3-devel libpeas-devel
 BuildRequires: libgranite-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libsoup-devel libjson-glib-devel libpixman-devel libtag-devel
-BuildRequires: libXdmcp-devel libnotify-devel libpng-devel
-BuildRequires: libXdamage-devel libgranite-vala libXxf86vm-devel
-BuildRequires: libharfbuzz-devel libXinerama-devel libXi-devel libXrandr-devel
-BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel at-spi2-atk-devel
+BuildRequires: libnotify-devel libgranite-vala libharfbuzz-devel
 BuildRequires: libzeitgeist2.0-devel libgpod-devel libusbmuxd-devel
 BuildRequires: gobject-introspection-devel
 # for MPRIS plugin
@@ -125,6 +121,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
+- updated to 5.0.2-5-gc49dd991
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt3
 - updated to 0.4.2-439-g64bccda
 - built against libgranite.so.5
