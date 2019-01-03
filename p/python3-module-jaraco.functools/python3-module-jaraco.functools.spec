@@ -1,7 +1,7 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 1.20
+Version: 2.0
 Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
@@ -38,5 +38,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 03 2019 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
+- New version.
+
 * Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 1.20-alt1
 - Initial build for Sisyphus
