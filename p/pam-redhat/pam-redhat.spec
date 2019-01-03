@@ -1,14 +1,11 @@
 Name: pam-redhat
-Version: 0.99.10.1
-Release: alt2
-
-%define rhver 0.99.10-1
+Version: 1.0.0
+Release: alt1
 
 Summary: Red Hat additional Pluggable Authentication Modules
-# The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
-License: BSD-style or GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
-Url: http://cvs.fedoraproject.org/viewvc/rpms/pam/devel/
+Url: https://releases.pagure.org/pam-redhat/
 
 %define helperdir /sbin
 %define _secdir %_sysconfdir/security
@@ -20,7 +17,7 @@ BuildRequires: flex libpam-devel
 
 %package -n %{make_pam_name console}
 Summary: PAM console session module
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
 Epoch: 1
 Provides: pam_console = %epoch:%version-%release
@@ -29,7 +26,7 @@ Provides: %_secdir/console.apps
 
 %package -n %{make_pam_name chroot}
 Summary: PAM chroot session module
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
 Epoch: 1
 Provides: pam_chroot = %epoch:%version-%release
@@ -54,7 +51,7 @@ opens /etc/security/chroot.conf and attempt to chroot() to appropriate
 directory.
 
 %prep
-%setup -q -n %name-%version-%release
+%setup -n %name-%version-%release
 
 %build
 %autoreconf
@@ -65,6 +62,17 @@ make
 %makeinstall_std
 rm -f %buildroot%_pam_modules_dir/*.la
 mkdir -p %buildroot{%_secdir/console.apps,/var/run/console}
+
+# Documentation
+for f in pam_*/README; do
+	d="${f%%/*}"
+	[ -s "$d/Makefile" ] || continue
+	install -pDm644 "$f" "%buildroot%_docdir/${d##*/}/README"
+done
+
+# ALT#25584
+mkdir -p %buildroot/etc/tmpfiles.d
+echo 'd /var/run/console 0711 root root -' > %buildroot/etc/tmpfiles.d/pamconsole.conf
 
 # Make sure that all modules are built.
 >check.log
@@ -107,17 +115,6 @@ for f in %buildroot%_pam_modules_dir/pam*.so; do
 	echo "${f##*/}" >>check.log
 done
 ! [ -s check.log ] || exit 1
-
-# Documentation
-for f in pam_*/README; do
-	d="${f%%/*}"
-	[ -s "$d/Makefile" ] || continue
-	install -pDm644 "$f" "%buildroot%_docdir/${d##*/}/README"
-done
-
-# ALT#25584
-mkdir -p %buildroot/etc/tmpfiles.d
-echo 'd /var/run/console 0711 root root -' > %buildroot/etc/tmpfiles.d/pamconsole.conf
 
 %post -n %{make_pam_name console}
 /usr/sbin/groupadd -r -f scanner
@@ -170,6 +167,9 @@ fi
 %_docdir/pam_chroot
 
 %changelog
+* Thu Jan 03 2019 Dmitry V. Levin <ldv@altlinux.org> 1.0.0-alt1
+- 0.99.10.1 -> 1.0.0.
+
 * Thu Aug 11 2011 Dmitry V. Levin <ldv@altlinux.org> 0.99.10.1-alt2
 - Synced pam_console with Fedora pam-1.1.4-2.
 - Packaged /etc/tmpfiles.d/pamconsole.conf (closes: #25584).
