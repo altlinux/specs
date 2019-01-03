@@ -1,10 +1,10 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-%define gitrev .git0ac7580
+%define gitrev .git569bbe7
 
 Name: %realname
 Version: 1.4.2
-Release: alt3%gitrev
+Release: alt4%gitrev
 Epoch:3
 
 Summary: X11 Window Manager
@@ -121,6 +121,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Thu Jan 03 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.4.2-alt4.git569bbe7
+- git snapshot 569bbe7
+
 * Tue Oct 02 2018 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.4.2-alt3.git0ac7580
 - git snapshot 0ac7580
 - built with libgdk-pixbuf-xlib and librsvg support
