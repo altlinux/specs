@@ -1,6 +1,6 @@
 Name: camotics
 Version: 1.1.1
-Release: alt1.3
+Release: alt1.4
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -11,8 +11,8 @@ Url: https://github.com/CauldronDevelopmentLLC/CAMotics
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-# libv8-3.15-devel needed build for other arch
-ExclusiveArch: %ix86 x86_64
+# libv8-3.14-devel cannot be compiled for aarch64
+ExcludeArch: aarch64
 
 BuildRequires: gcc-c++
 BuildRequires: scons
@@ -24,7 +24,7 @@ BuildRequires: qt4-devel
 BuildRequires: bzlib-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libexpat-devel
-BuildRequires: libv8-3.15-devel
+BuildRequires: libv8-3.14-devel
 BuildRequires: libevent-devel
 BuildRequires: python-module-simplejson
 BuildRequires: libssl-devel
@@ -108,6 +108,10 @@ done
 %_datadir/%name
 
 %changelog
+* Thu Jan 03 2019 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.4
+- rebuild with libv8-3.14
+- first build for aarch64
+
 * Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.3
 - rebuilt with openssl-1.1
 - exclusive arch %ix86 x86_64
