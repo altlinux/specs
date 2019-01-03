@@ -1,13 +1,12 @@
 %def_enable snapshot
 
-%define _name scratch
-%define xdg_name org.pantheon.%_name
-%define rdn_name io.elementary.code
-%define ver_major 2.4
+%define _name code
+%define rdn_name io.elementary.%_name
+%define ver_major 3.0
 
 Name: scratch-text-editor
-Version: %ver_major.1
-Release: alt6
+Version: %ver_major.2
+Release: alt1
 
 Summary: The text editor that works
 License: GPLv3
@@ -20,25 +19,23 @@ Source: %url/2.x/%version/+download/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-2.4.1-up-vala_0.36.patch
 
 Provides: %rdn_name = %version-%release
 
-Requires: contractor
+Requires: contractor elementary-icon-theme
+Requires: editorconfig
 
-BuildRequires: intltool libappstream-glib-devel
-BuildRequires: libpng-devel cmake gcc-c++ vala libwebkitgtk3-devel
-BuildRequires: libvte3-devel libpixman-devel gobject-introspection-devel
-BuildRequires: libGConf-devel libXdmcp-devel libxml2-devel libXdamage-devel
-BuildRequires: libXxf86vm-devel libharfbuzz-devel libXinerama-devel libXi-devel
-BuildRequires: libXrender-devel libXrandr-devel libXcursor-devel
-BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel libpeas-devel libgtksourceview3-devel
-BuildRequires: libgee0.8-devel libzeitgeist2.0-devel libgranite-devel libgail3-devel
-BuildRequires: libdbus-devel libgranite-vala libvala-devel libexpat-devel
-BuildRequires: libgtkspell3-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ gobject-introspection-devel vala-tools libvala-devel
+BuildRequires: libappstream-glib-devel libgranite-devel
+BuildRequires: libpeas-devel libgtksourceview3-devel libvte3-devel
+BuildRequires: libgee0.8-devel libzeitgeist2.0-devel
+BuildRequires: libdbus-devel libgranite-vala libxml2-devel
+BuildRequires: libgtkspell3-devel libgit2-glib-devel
 # since 2.4
 BuildRequires: libwebkit2gtk-devel
+# since 3.0
+BuildRequires: libeditorconfig-devel
 
 %description
 Scratch is the text editor that works for you. It auto-saves your files,
@@ -90,41 +87,40 @@ This package provides Vala language bindings for the scratch text editor.
 
 %prep
 %setup -n %name-%version
-#%%patch
-# fix libdir
-find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
-%cmake_build VERBOSE=1
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
-
+%meson_install
 %find_lang %rdn_name
 
 %files -f %rdn_name.lang
 %_bindir/%rdn_name
 %_libdir/lib%{_name}core.so.*
 %_libdir/%rdn_name/
-%_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/glib-2.0/schemas/%xdg_name.plugins.folder-manager.gschema.xml
-%_datadir/glib-2.0/schemas/%xdg_name.plugins.spell.gschema.xml
-%_datadir/glib-2.0/schemas/%xdg_name.plugins.terminal.gschema.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/%rdn_name/
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.plugins.spell.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.plugins.terminal.gschema.xml
 %_iconsdir/hicolor/*/*/%rdn_name.*
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %files devel
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_includedir/%_name/
+%_includedir/%{_name}core.h
 
 %files vala
 %_vapidir/%{_name}core.deps
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt6
 - rebuilt with vala-0.42
 
