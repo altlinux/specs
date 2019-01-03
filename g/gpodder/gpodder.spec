@@ -1,7 +1,8 @@
+%def_enable snapshot
 %def_enable check
 
 Name: gpodder
-Version: 3.10.5
+Version: 3.10.6
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -9,8 +10,12 @@ License: GPLv3
 Group: Sound
 Url: http://gpodder.org
 
-# VCS: https://github.com/gpodder/gpodder.git
+%if_disabled snapshot
 Source: %name-%version.tar.gz
+%else
+# VCS: https://github.com/gpodder/gpodder.git
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -75,9 +80,13 @@ PYTHON=python3 %make unittest
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/*/apps/%name.ico
 %_man1dir/*
+%_datadir/metainfo/*.appdata.xml
 
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.10.6-alt1
+- updated to 3.10.6-5-g643b41e2
+
 * Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10.5-alt1
 - 3.10.5 (ported to Python3, GTK+3)
 
