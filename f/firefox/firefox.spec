@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        64.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -48,9 +48,9 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang6.0
-BuildRequires: clang6.0-devel
-BuildRequires: llvm6.0-devel
+BuildRequires: clang7.0
+BuildRequires: clang7.0-devel
+BuildRequires: llvm7.0-devel
 BuildRequires: lld-devel
 %ifarch %{ix86}
 BuildRequires: gcc
@@ -169,6 +169,9 @@ ac_add_options --enable-linker=lld
 %ifnarch x86_64
 ac_add_options --disable-webrtc
 %endif
+%endif
+%ifarch %{ix86} x86_64
+ac_add_options --disable-elf-hack
 %endif
 EOF
 
@@ -353,6 +356,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Dec 31 2018 Alexey Gladkov <legion@altlinux.ru> 64.0-alt2
+- Rebuilt with clang7.0.
+
 * Thu Dec 20 2018 Alexey Gladkov <legion@altlinux.ru> 64.0-alt1
 - New release (64.0).
 - Fixed:
