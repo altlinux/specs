@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libEMF
-Version: 1.0.9
+Version: 1.0.11
 Release: alt1
 
 Summary: A library for generating Enhanced Metafiles
@@ -98,6 +98,9 @@ make check
 %endif
 
 %changelog
+* Thu Jan 03 2019 Michael Shigorin <mike@altlinux.org> 1.0.11-alt1
+- new version (watch file uupdate)
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1
 - 1.0.9
 
