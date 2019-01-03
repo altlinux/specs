@@ -1,6 +1,6 @@
 
 Name: liferea
-Version: 1.12.5
+Version: 1.12.6
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -111,6 +111,9 @@ Play music and videos directly from Liferea
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Thu Jan 03 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.6-alt1
+- 1.12.6
+
 * Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.5-alt1
 - new version 1.12.5
 
