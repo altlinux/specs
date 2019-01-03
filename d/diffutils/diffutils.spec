@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.6.0.17.d5ba
+Version: 3.7
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -65,9 +65,15 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 3.7-alt1
+- diffutils: v3.6-17-gd5bab3a -> v3.7.
+- gnulib: v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
+- Updated translations from translationproject.org.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.6.0.17.d5ba-alt1
 - diffutils: v3.5-17-g198c55a -> v3.6-17-gd5bab3a
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
+- Updated translations from translationproject.org.
 
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 3.5.0.17.198c-alt1
 - diffutils: v3.3-40-ga3ea9cd -> v3.5-17-g198c55a.
