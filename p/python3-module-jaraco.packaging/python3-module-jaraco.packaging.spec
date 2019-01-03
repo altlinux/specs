@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 5.2
+Version: 6.0
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -38,6 +38,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 03 2019 Andrey Cherepanov <cas@altlinux.org> 6.0-alt1
+- New version.
+
 * Mon Dec 10 2018 Andrey Cherepanov <cas@altlinux.org> 5.2-alt1
 - New version.
 
