@@ -56,7 +56,7 @@
 Name: systemd
 Epoch: 1
 Version: 240
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1164,6 +1164,7 @@ fi
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
 
 %config(noreplace) %_sysconfdir/systemd/journald.conf
+%config(noreplace) %_sysconfdir/systemd/sleep.conf
 %config(noreplace) %_sysconfdir/systemd/system.conf
 %config(noreplace) %_sysconfdir/systemd/user.conf
 %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
@@ -1811,6 +1812,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1:240-alt2
+- backport patches from upstream master (fixes ALT#35843, ALT#35840)
+
 * Mon Dec 31 2018 Alexey Shabalin <shaba@altlinux.org> 1:240-alt1
 - 240
 - install systemd-run to /bin (for allow execute from udev rules for lvm2)
