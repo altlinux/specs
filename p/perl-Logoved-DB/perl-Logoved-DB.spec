@@ -2,7 +2,7 @@
 %define module Logoved-DB
 
 Name: perl-%module
-Version: 0.003
+Version: 0.004
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -68,6 +68,11 @@ cp -a db %buildroot%_datadir/logoved/
 %endif
 
 %changelog
+* Thu Jan 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- new version
+- note: DB is constantly updated, it is not packaged yet.
+  use git repo for Logoved DB.
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - bugfix release
 
