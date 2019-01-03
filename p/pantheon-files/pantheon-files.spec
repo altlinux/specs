@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 0.3
+%define ver_major 4.1
 %define xdg_name org.pantheon.files
 %define rdn_name io.elementary.files
 
 Name: pantheon-files
-Version: %ver_major.5
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
@@ -25,9 +25,10 @@ Provides: %rdn_name = %version-%release
 #Depends: tumbler
 #Recommends: contractor
 #Suggests: tumbler-plugins-extra
-Requires: polkit zeitgeist
+Requires: polkit zeitgeist tumbler elementary-icon-theme
 
-BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: intltool libappstream-glib-devel
 BuildRequires: vala-tools libsqlite3-devel libgtk+3-devel
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
@@ -58,17 +59,13 @@ This package provides Vala language bindings for the pantheon-files.
 
 %prep
 %setup
-# fix libdir
-find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-		-DWITH_UNITY:BOOL=OFF
-%cmake_build VERBOSE=1
+%meson -Dwith-unity=false
+%meson_build
 
 %install
-%cmakeinstall_std
-
+%meson_install
 %find_lang %rdn_name
 
 %files -f %rdn_name.lang
@@ -79,7 +76,7 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_libdir/%rdn_name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
-%_datadir/dbus-1/services/%rdn_name.FileManager1.service
+%_datadir/dbus-1/services/%rdn_name.Filemanager1.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/polkit-1/actions/%rdn_name.policy
 %_datadir/%rdn_name/
@@ -88,7 +85,7 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %files devel
-%_includedir/%name-widgets/
+%_includedir/%name-widgets.h
 %_includedir/%name-core/
 %_libdir/*.so
 %_pkgconfigdir/%name-core.pc
@@ -96,14 +93,14 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 
 %if 0
 %files vala
-%_vapidir/%name-core-C.vapi
-%_vapidir/%name-core.deps
 %_vapidir/%name-core.vapi
-%_vapidir/%name-widgets.deps
 %_vapidir/%name-widgets.vapi
 %endif
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.2-alt1
+- updated to 4.1.2-4-g08e2084f
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt3
 - updated to d5c2444 (no tags in git)
 - built against libgranite.so.5
