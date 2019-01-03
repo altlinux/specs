@@ -1,30 +1,21 @@
-#
-# spec file for package spice-up
-#
-# Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
+%def_enable snapshot
 %define _name Spice-up
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.3.2
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Desktop presentation application
 License: GPLv3
 Group: Office
-
 Url: https://github.com/Philip-Scott/%_name
+
+%if_disabled snapshot
 Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
@@ -35,6 +26,7 @@ BuildRequires: pkgconfig(gtk+-3.0) >= 3.18.0
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: vala-tools vapi(granite)
 BuildRequires: libgee0.8-gir libgee0.8-gir-devel
@@ -51,6 +43,7 @@ based upon SpiceOfDesign's presentation concept.
 %setup -n Spice-up-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %cmake_insource -DGSETTINGS_COMPILE=OFF
 %make_build
 
@@ -69,11 +62,14 @@ ln -s %xdg_name %buildroot%_bindir/%name
 %_datadir/icons/hicolor/*/apps/*%name.??g
 %_datadir/icons/hicolor/*/mimetypes/*spiceup.??g
 %_datadir/glib-2.0/schemas/*.%name.gschema.xml
-%_datadir/metainfo/*.%name.appdata.xml
-%_datadir/mime/packages/*%name.mime.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/mime/packages/%xdg_name.mime.xml
 
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- updated to 1.7.0-4-g6c23e27
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt2
 - rebuilt against libgranite.so.5
 
