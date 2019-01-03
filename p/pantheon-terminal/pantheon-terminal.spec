@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.5
+%define ver_major 5.3
 %define xdg_name org.pantheon.terminal
 %define rdn_name io.elementary.terminal
 
 Name: pantheon-terminal
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -20,12 +20,13 @@ Source: %url/archive/%version/terminal-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
+Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ appstream libnotify-devel desktop-file-utils
-BuildRequires: libvte3-devel libgranite-devel libpixman-devel
-BuildRequires: libXdmcp-devel vala libgranite-vala
+BuildRequires: appstream desktop-file-utils
+BuildRequires: libgranite-devel libnotify-devel libvte3-devel libgee0.8-devel
+BuildRequires: vala-tools libgranite-vala
 
 %description
 Pantheon Terminal (referred to simply as "Terminal" when installed) is a super
@@ -52,7 +53,7 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %build
-%meson
+%meson -Dubuntu-bionic-patched-vte=false
 %meson_build
 
 %install
@@ -77,6 +78,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 5.3.3-alt1
+- 5.3.3
+
 * Sat Jul 28 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
