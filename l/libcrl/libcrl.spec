@@ -1,5 +1,5 @@
 Name: libcrl
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 %define soname %version
@@ -37,6 +37,7 @@ developing applications that use %name.
 %prep
 %setup
 cp %SOURCE1 .
+%__subst "s|so\.0\..|so.%version|" crl.gyp
 
 %build
 # --no-parallel due gyp in hasher:
@@ -77,6 +78,9 @@ done
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jan 04 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- merge commit '9b7c6b5d9f1b59d2160bf6e9c4e74510f955efe1'
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - compile missed functions
 
