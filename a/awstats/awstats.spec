@@ -1,4 +1,3 @@
-%def_without apache1
 %define _pseudouser_user awstats
 %define _pseudouser_group awstats
 %define _pseudouser_home %_localstatedir/%name
@@ -6,10 +5,10 @@
 
 Name: awstats
 Version: 7.7
-Release: alt0.5.20180105
+Release: alt0.6.20180105
 
 Summary: Real-time logfile analyzer to get advanced web statistics
-Summary(ru_RU.KOI8-R):	áÎÁÌÉÚÁÔÏÒ ÌÏÇÏ× Web-ÓÅÒ×ÅÒÁ × ÒÅÖÉÍÅ ÒÅÁÌØÎÏÇÏ ×ÒÅÍÅÎÉ
+Summary(ru_RU.UTF8): ÐÐ½Ð°Ð»Ð¸Ð·Ð°Ñ‚Ð¾Ñ€ Ð»Ð¾Ð³Ð¾Ð² Web-ÑÐµÑ€Ð²ÐµÑ€Ð° Ð² Ñ€ÐµÐ¶Ð¸Ð¼Ðµ Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸
 License: GPL3
 Group: Monitoring
 
@@ -19,17 +18,15 @@ BuildArch: noarch
 # https://github.com/eldy/awstats
 Source: %name-%version.tar
 Source1: awstats.cron
-Source2: apache.modconfdir
-Source3: apache2.mods-start
-Source4: apache2.sites-available
-Source5: apache2.sites-start
-Source6: apache2.ports-start
-Source7: README.ALT.ru_RU.UTF8
+Source2: apache2.mods-start
+Source3: apache2.sites-available
+Source4: apache2.sites-start
+Source5: apache2.ports-start
+Source6: README.ALT.ru_RU.UTF8
 
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-apache
 BuildRequires(pre): rpm-build-apache2
 
 # Automatically added by buildreq on Wed Jul 21 2010 (-bi)
@@ -46,11 +43,11 @@ files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and
 most of all web, proxy, wap, streaming servers (and even syslog, ftp servers or
 mail logs).
 
-%description -l ru_RU.KOI8-R
-AWStats ÜÔÏ ÓÏËÒÁÝÅÎÉÅ ÏÔ Advanced Web Statistics (ÒÁÓÛÉÒÅÎÁÑ ÷ÅÂ-ÓÔÁÔÉÓÔÉËÁ).
-üÔÏ ÂÅÓÐÌÁÔÎÙÊ ÉÎÓÔÒÕÍÅÎÔ ÄÌÑ ÇÅÎÅÒÁÃÉÉ ÒÁÓÛÉÒÅÎÏÊ ÓÔÁÔÉÓÔÉËÉ ÇÒÁÆÉËÏ× Ï ÒÁÂÏÔÅ
-http (Á ÔÁË ÖÅ ftp, syslog ÉÌÉ mail) ÓÅÒ×ÉÓÏ×. äÁÎÎÙÊ ÁÎÁÌÉÚÁÔÏÒ ÒÁÂÏÔÁÅÔ ËÁË
-ÉÚ ËÏÍÁÎÄÎÏÊ ÓÔÒÏËÉ ÔÁË É × ×ÉÄÅ CGI-ÓËÒÉÐÔÁ.
+%description -l ru_RU.UTF8
+AWStats ÑÑ‚Ð¾ ÑÐ¾ÐºÑ€Ð°Ñ‰ÐµÐ½Ð¸Ðµ Ð¾Ñ‚ Advanced Web Statistics (Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð°Ñ Ð’ÐµÐ±-ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ°).
+Ð­Ñ‚Ð¾ Ð±ÐµÑÐ¿Ð»Ð°Ñ‚Ð½Ñ‹Ð¹ Ð¸Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚ Ð´Ð»Ñ Ð³ÐµÐ½ÐµÑ€Ð°Ñ†Ð¸Ð¸ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¾Ð¹ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ¸ Ð³Ñ€Ð°Ñ„Ð¸ÐºÐ¾Ð² Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ðµ
+http (Ð° Ñ‚Ð°Ðº Ð¶Ðµ ftp, syslog Ð¸Ð»Ð¸ mail) ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð². Ð”Ð°Ð½Ð½Ñ‹Ð¹ Ð°Ð½Ð°Ð»Ð¸Ð·Ð°Ñ‚Ð¾Ñ€ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ ÐºÐ°Ðº
+Ð¸Ð· ÐºÐ¾Ð¼Ð°Ð½Ð´Ð½Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ñ‚Ð°Ðº Ð¸ Ð² Ð²Ð¸Ð´Ðµ CGI-ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°.
 
 %package docs
 Summary: AWStats documentation set
@@ -67,15 +64,6 @@ files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and
 most of all web, proxy, wap, streaming servers (and even syslog, ftp servers or
 mail logs).
 
-%package apache
-Summary: AWStats apache-related config
-Group: Monitoring
-Requires: %name = %version-%release
-Requires: apache-base
-
-%description apache
-AWStats apache-related config
-
 %package apache2
 Summary: AWStats apache2-related config
 Group: Monitoring 
@@ -88,7 +76,7 @@ AWStats apache2-related config
 %prep
 %setup
 %patch -p1
-cp %SOURCE7 ./
+cp %SOURCE6 ./
 
 %build
 # build awgraphapplet.jar from source, avoiding upstream shipped binary
@@ -99,7 +87,6 @@ perl Makefile.pl
 install -d %buildroot%_datadir/%name
 install -d %buildroot%_sysconfdir/{%name,cron.d}
 install -d %buildroot%_pseudouser_home
-install -d %buildroot%apache_modconfdir
 install -d %buildroot%apache2_mods_start
 install -d %buildroot%apache2_sites_available
 install -d %buildroot%apache2_sites_start
@@ -118,36 +105,18 @@ mv %buildroot%_datadir/%name/plugins/example/example.pm examples/
 find %buildroot%_datadir/%name -name \*.pl -exec chmod 0755 {} \;
 
 install -p -m644 %SOURCE1 %buildroot%_sysconfdir/cron.d/%name
-install -p -m644 %SOURCE2 %buildroot%apache_modconfdir/%name.conf
-install -p -m644 %SOURCE3 %buildroot%apache2_mods_start/%name.conf
-install -p -m644 %SOURCE4 %buildroot%apache2_sites_available/%name.conf
-install -p -m644 %SOURCE5 %buildroot%apache2_sites_start/%name.conf
-install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
+install -p -m644 %SOURCE2 %buildroot%apache2_mods_start/%name.conf
+install -p -m644 %SOURCE3 %buildroot%apache2_sites_available/%name.conf
+install -p -m644 %SOURCE4 %buildroot%apache2_sites_start/%name.conf
+install -p -m644 %SOURCE5 %buildroot%apache2_ports_start/%name.conf
 
 %pre 
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
 /usr/sbin/useradd -g %_pseudouser_group -c 'AWStats log analyzer' \
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
-%pre apache
-/usr/sbin/usermod -g %_pseudouser_group -G %apache_group %_pseudouser_user
-
 %pre apache2
 /usr/sbin/usermod -g %_pseudouser_group -G %apache2_group %_pseudouser_user
-
-%post apache
-%post_apacheconf
-
-%postun apache
-%postun_apacheconf
-
-%post apache2
-%apache2_sbindir/a2chkconfig
-%post_apache2conf
-
-%postun apache2
-%apache2_sbindir/a2chkconfig
-%postun_apache2conf
 
 %files
 %_datadir/%name
@@ -161,16 +130,8 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %_sysconfdir/cron.d/%name
 %doc README.md README.ALT.ru_RU.UTF8 wwwroot/cgi-bin/awstats.model.conf
 
-
 %files docs
 %doc docs examples
-
-%if_with apache1
-%files apache
-%config(noreplace) %apache_modconfdir/%name.conf
-%else
-%exclude %apache_modconfdir/%name.conf
-%endif
 
 %files apache2
 %config(noreplace) %apache2_mods_start/%name.conf
@@ -179,6 +140,10 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Sat Jan 05 2019 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.6.20180105
+- remove apache1 support.
+- .spec cleanup.
+
 * Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 7.7-alt0.5.20180105
 - NMU: build w/o apache1
 
