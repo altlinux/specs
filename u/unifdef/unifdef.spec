@@ -1,10 +1,10 @@
 Name: unifdef
-Version: 2.6
+Version: 2.11.25.65842ab
 Release: alt1
 Summary: A tool for removing ifdef'd lines
-License: BSD
+License: BSD-2-Clause and BSD-3-Clause
 Group: Development/C
-Url: http://dotat.at/prog/unifdef/
+Url: https://dotat.at/prog/unifdef/
 %define srcname %name-%version-%release
 # git://git.altlinux.org/gears/u/unifdef.git
 Source: %srcname.tar
@@ -32,6 +32,9 @@ make test
 %_man1dir/unifdef*
 
 %changelog
+* Fri Jan 04 2019 Dmitry V. Levin <ldv@altlinux.org> 2.11.25.65842ab-alt1
+- Updated to unifdef-2.11-25-g65842ab.
+
 * Fri Jan 20 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6-alt1
 - Updated to unifdef-2.6-5-gac55802.
 
