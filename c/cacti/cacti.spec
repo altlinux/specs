@@ -1,6 +1,6 @@
 
 Name: cacti
-Version: 1.0.3
+Version: 1.2.0
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -81,7 +81,6 @@ Summary: Cacti setup package
 Group: Monitoring
 BuildArch: noarch
 Requires: %name = %version-%release
-Requires: %name-doc = %version-%release
 
 %description setup
 Install this package to configure initial Cacti installation. You
@@ -92,14 +91,6 @@ insecure to keep the setup files in place.
 Установите этот пакет для первоначальной инициализации Cacti.
 После завершения настройки Cacti Вы должны удалить этот пакет, что бы обеспечить
 безопасную работу приложения.
-
-%package doc
-Summary: Documentation for %name
-Group: Documentation
-BuildArch: noarch
-
-%description doc
-Documentation for %name
 
 %prep
 %setup -q
@@ -112,10 +103,6 @@ cp %SOURCE5 sql
 %build
 chmod a+rx scripts/*
 chmod a+rx cli/*
-
-pushd docs
-./build.sh
-popd
 
 %install -n %name-%version
 mkdir -p %buildroot{%_sbindir,%_sysconfdir/cron.d,%cacticonfdir,%cactidir/plugins,%_localstatedir/%name/rra,%_logdir/%name}
@@ -166,7 +153,7 @@ chmod -v 660 %_logdir/%name/* %_localstatedir/%name/*
 fi
 
 %files
-%doc docs/README_ALT.txt docs/CHANGELOG README.md
+%doc docs/README_ALT.txt CHANGELOG LICENSE README.md
 %config(noreplace) %_sysconfdir/cron.d/cacti
 %_sbindir/cacti-poller
 %dir %attr(750,root,%webserver_group) %cacticonfdir
@@ -194,14 +181,13 @@ fi
 %files setup
 %cactidir/install
 
-%files doc
-%doc docs/html docs/txt
-%cactidir/docs
-
 %files config-php5
 %files config-php7
 
 %changelog
+* Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Feb 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 - add php7 subpackage
