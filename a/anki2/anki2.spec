@@ -1,27 +1,21 @@
 Name: anki2
 Version: 2.0.50
-Release: alt3
+Release: alt4
 Summary: Flashcard program for using space repetition learning
 
 Group: Games/Educational
-License: GPLv3+ and MIT
+License: AGPLv3+ and GPLv3+ and MIT and BSD
 Url: https://apps.ankiweb.net/
-Source0: %name-%version.tar
+Source: %name-%version.tar
+BuildArch: noarch
 
 Conflicts: anki < %version-%release
 
-# Automatically added by buildreq on Sat Apr 13 2019 (-bb)
-# optimized out: bash4 bashrc libqt4-core libqt4-xml perl python-base python-modules python-modules-compiler python3 python3-base python3-dev rpm-build-python3 sh4 shared-mime-info xz
-BuildRequires: desktop-file-utils libdb4-devel libicu63 libnss-myhostname python-module-PyQt4 python-module-nose python3-module-mpl_toolkits python3-module-yieldfrom rpm-build-gir selinux-policy xdg-utils
+%py_requires pyaudio
+%py_requires sqlite3
 
-#BuildRequires: python-module-setuptools 
-#BuildRequires: python-modules-sqlite3 python-module-SQLAlchemy
-#BuildRequires: desktop-file-utils python-module-simplejson
-#BuildRequires: python-module-pyaudio
-
-BuildArch: noarch
-
-Requires: python-modules-sqlite3 python-module-matplotlib-qt4
+# Automatically added by buildreq on Sat Apr 13 2019 (-bi)
+BuildRequires: desktop-file-utils python-modules
 
 %description
 Anki is a program designed to help you remember facts (such as words
@@ -30,53 +24,42 @@ as possible. Anki is based on a theory called spaced repetition.
 
 %prep
 %setup
-%build
-#pushd lib%name
-#python setup.py build
-#popd
-tools/build_ui.sh
-#python setup.py build
+rm -r thirdparty
 
 %install
+install -pD -m755 runanki %buildroot%_bindir/anki
 
-mkdir -p %buildroot%_man1dir %buildroot/usr/share/applications
-mkdir -p %buildroot/usr/local/bin %buildroot%_bindir
+mkdir -p %buildroot%_datadir/anki
+cp -a anki aqt designer locale %buildroot%_datadir/anki/
 
-%make_install DESTDIR=%buildroot install
-rm -f %buildroot/usr/share/anki/thirdparty/*/*.so
-mv %buildroot/usr/local/bin/anki %buildroot%_bindir/anki
+mkdir -p %buildroot%_man1dir
+install -pm644 anki.1 %buildroot%_man1dir/
 
-#pushd lib%name
-#python setup.py install -O1 --skip-build --root %buildroot
-#popd
+mkdir -p %buildroot%_datadir/mime/packages
+install -pm644 anki.xml %buildroot%_datadir/mime/packages/
 
-#python setup.py install -O1 --skip-build --root %buildroot
+mkdir -p %buildroot%_datadir/pixmaps
+install -pm644 designer/icons/anki.png %buildroot%_datadir/pixmaps/
 
-install -d %buildroot%_desktopdir
-desktop-file-install --remove-category=KDE --dir %buildroot%_desktopdir anki.desktop
+mkdir -p %buildroot%_desktopdir
+desktop-file-install --remove-category=KDE --dir %buildroot%_desktopdir \
+	anki.desktop
 
-install -d %buildroot%_datadir/pixmaps
-install -m 644 designer/icons/anki.png %buildroot%_datadir/pixmaps/
+%find_lang anki
 
-%find_lang %name
-
-%files -f %name.lang
-# libankiqt
-#%python_sitelibdir/ankiqt
-
-# libanki
-#%python_sitelibdir/anki
-
-#%python_sitelibdir/*egg-info
+%files -f anki.lang
 %_bindir/anki
 %_desktopdir/anki.desktop
 %_datadir/pixmaps/anki.png
+%_datadir/mime/packages/anki.xml
 %_datadir/anki
 %_man1dir/anki.*
-
-%doc README* LICENSE LICENSE.logo
+%doc LICENSE* README*
 
 %changelog
+* Sat Apr 13 2019 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.50-alt4
+- NMU: really fixed build of this miserable package.
+
 * Sat Apr 13 2019 Denis Smirnov <mithraen@altlinux.ru> 2.0.50-alt3
 - fix build
 
