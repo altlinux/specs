@@ -2,8 +2,8 @@
 %define gtkver 2
 
 Name: libfm
-Version: 1.3.0.2
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -113,6 +113,9 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Fri Jan 04 2019 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Tue Jun 12 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0.2-alt2
 - disable gtk-doc (fix FTBFS)
 - fix URL

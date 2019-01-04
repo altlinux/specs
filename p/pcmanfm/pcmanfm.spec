@@ -1,8 +1,8 @@
 %define gtkver 2
 
 Name: pcmanfm
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: PCMan File Manager
 License: GPL
@@ -74,6 +74,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Fri Jan 04 2019 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Sun Apr 29 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
 - Added missing requires: menu-cache, lxde-freedesktop-menu (Closes: 34867)
 
