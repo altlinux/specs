@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libsecret
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -31,10 +31,10 @@ Source: %name-%version.tar
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver
-BuildRequires: gtk-doc intltool xsltproc
+BuildRequires: gtk-doc xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
-%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui python3-module-dbus python3-module-pygobject libgjs}
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui python3-module-dbus python3-module-pygobject libgjs}
 
 %description
 libsecrets is a client for the Secret Service DBus API. The Secret
@@ -100,8 +100,10 @@ GObject introspection devel data for %name.
 %find_lang %name
 
 %check
-# required X11
-xvfb-run %make check
+# no secmem on aarch64?
+%ifnarch aarch64
+dbus-run-session %make check
+%endif
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -132,6 +134,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt1
+- 0.18.7
+
 * Thu Mar 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.6-alt1
 - 0.18.6
 
