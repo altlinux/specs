@@ -1,7 +1,7 @@
 %global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.12
+%global rel alt0.13
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -10,7 +10,7 @@
 %define optflags_debug -g1
 
 %def_disable tests
-%def_with clang
+%def_without clang
 %def_enable compat
 
 Name: %llvm_name
@@ -403,6 +403,9 @@ ninja -C BUILD check-all || :
 %endif
 
 %changelog
+* Fri Jan 04 2019 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.13.rel
+- Rebuild back with gcc (in absence of clang6.0).
+
 * Sat Dec 22 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.12.rel
 - Enable compat build for llvm7 transistion.
 
