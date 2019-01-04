@@ -3,7 +3,7 @@
 
 Name: glade3
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: GTK+2%{?_enable_gnome:/GNOME2} widget builder
 Group: Development/GNOME and GTK+
@@ -63,6 +63,10 @@ This package contains development files for library.
 
 %prep
 %setup
+# itstool > 2.0.2 segfaults on bg and uk helps
+for tr in bg uk; do
+subst "s/$tr //" help/Makefile.am
+done
 
 %build
 %autoreconf
@@ -108,6 +112,9 @@ cat %name.lang glade.lang > lang
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Fri Jan 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt2
+- fixed build (ALT #35864)
+
 * Thu Aug 24 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt1
 - 3.8.6
 
