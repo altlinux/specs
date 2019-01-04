@@ -1,6 +1,6 @@
 
 Name: cacti-spine
-Version: 1.0.3
+Version: 1.2.0
 Release: alt1
 
 License: GPL2
@@ -8,7 +8,6 @@ Group: Monitoring
 
 Summary: Fast c-based poller for package Cacti
 Summary(ru_RU.UTF8): Быстрый сборщик данных для Cacti, написанный на языке C
-Group: System/Servers
 
 URL: http://www.cacti.net
 Source: %name-%version.tar
@@ -38,7 +37,7 @@ pthreads для достижения высокой производительн
 %autoreconf
 %configure
 #--enable-lcap
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -46,11 +45,14 @@ mv %buildroot%_sysconfdir/cacti/{spine.conf.dist,spine.conf}
 
 %files
 %config(noreplace) %attr(0640,root,cacti) %_sysconfdir/cacti/spine.conf
-%doc ChangeLog README.md LICENSE
+%doc CHANGELOG README.md LICENSE
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Feb 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
