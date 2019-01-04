@@ -1,14 +1,57 @@
 Name: expect
-Version: 5.45
-Release: alt4.qa1
+Version: 5.45.4
+Release: alt1
 Serial: 1
 
 Summary: A tcl extension for simplifying program-script interaction
 License: BSD
 Group: Development/Tcl
-Url: http://expect.nist.gov/
+Url: http://core.tcl.tk/expect
 
-Source0: %name-%version-%release.tar
+# fossil export
+Source0: %name-%version.tar
+# ALT patches
+Patch1: expect-5.38-rh-mkpasswd.patch
+Patch2: expect-5.38-rh-rftp.patch
+Patch3: expect-5.39-rh-fixcat.patch
+Patch4: expect-5.43-alt-fixline.patch
+Patch5: expect-5.43-alt-tests.patch
+Patch6: a-bit-better-autopasswd.patch
+Patch7: do-not-fix-script-if-it-ain-t-broken.patch
+Patch8: use-shebang-trick-like-other-examples.patch
+Patch9: avoid-using-fixline1-from-now.patch
+Patch10: made-armh-arch-known.patch
+
+# Debian patches
+Patch100: 01-example-shebang.patch
+Patch101: 06-pkgindex.patch
+Patch102: 09-unsafe-traps.patch
+Patch103: 10-manpage.patch
+Patch104: 11-ttyname.patch
+Patch105: 12-fdout.patch
+Patch106: 13-implicit-defs.patch
+Patch107: 16-logfile.patch
+Patch108: 24-format.patch
+Patch109: 28-cross.patch
+
+# Fedora patches
+Patch200: expect-5.45-mkpasswd-man.patch
+Patch201: expect-5.45-passmass-su-full-path.patch
+Patch202: expect-5.45-check-telnet.patch
+# rediffed to apply with ALT patches
+Patch203: expect-5.45-mkpasswd-dash.patch
+Patch204: expect-5.45.4-covscan-fixes.patch
+Patch205: expect-5.45.4-unification-of-usage-and-man-page.patch
+# applied expect-5.45-fd-leak.patch instead of Debian
+# 07-file-handle.patch
+Patch206: expect-5.45-fd-leak.patch
+# applied expect-5.45-segfault-with-stubs.patch instead of Debian
+# 22-segfault-with-stubs.patch
+Patch207: expect-5.45-segfault-with-stubs.patch
+Patch208: expect-5.45-exp-log-buf-overflow.patch
+Patch209: expect-5.45-re-memleak.patch
+Patch210: expect-5.45-match-gt-numchars-segfault.patch
+Patch211: expect-5.45-man-page.patch
 
 BuildRequires: tcl-devel >= 8.5.0-alt1
 BuildRequires(pre): /dev/pts
@@ -55,6 +98,40 @@ This package provides example programs found in expect bundle.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+
+%patch200 -p1
+%patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
+%patch206 -p1
+%patch207 -p1
+%patch208 -p1
+%patch209 -p1
+%patch210 -p1
+%patch211 -p1
 
 %build
 autoconf
@@ -62,7 +139,7 @@ autoconf
 export ac_cv_c_tclconfig=%_libdir
 export ac_cv_c_tclh=%_includedir/tcl
 %configure --disable-rpath
-%make_build all test
+%make_build all
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -73,6 +150,9 @@ mkdir -p -m0755 %buildroot%_tcldatadir/%name%version
 cat <<EOF > %buildroot%_tcldatadir/%name%version/pkgIndex.tcl
 package ifneeded Expect %version [list load [file join \$dir .. .. .. %_lib lib%name%version.so]]
 EOF
+
+%check
+make test
 
 %files
 %doc FAQ NEWS README
@@ -97,6 +177,13 @@ EOF
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Fri Jan 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt1
+- 5.45.4 released;
+- rediffed ALT patches;
+- applied nice Debian and Fedora patches;
+- moved make test to %%check section;
+- new upstream url.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45-alt4.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
