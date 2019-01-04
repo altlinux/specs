@@ -1,10 +1,10 @@
 %add_findpackage_path %_kde4_bindir
 
-%def_enable qwt
+%def_disable qwt
 
 Name: smokeqt
 Version: 4.14.0
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -374,6 +374,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Fri Jan 04 2019 Vitaly Lipatov <lav@altlinux.ru> 4.14.0-alt6
+- NMU: build without libqwt
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.14.0-alt5%ubt
 - Rebuilt with qscintilla2 2.10.1.
 
