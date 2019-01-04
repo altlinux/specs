@@ -1,7 +1,7 @@
 %global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt1
+%global rel alt2
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -10,11 +10,11 @@
 %define optflags_debug -g1
 
 %def_disable tests
-%def_without clang
+%def_with clang
 
 Name: %llvm_name
 Version: 7.0.1
-Release: %rel.rel.1
+Release: %rel.rel
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -393,6 +393,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Fri Jan 04 2019 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt2.rel
+- Rebuild by clang7.0.
+
 * Fri Dec 21 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt1.rel.1
 - Bootstrap w/ gcc.
 
