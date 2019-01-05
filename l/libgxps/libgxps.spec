@@ -6,8 +6,8 @@
 %def_enable test
 
 Name: libgxps
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
@@ -120,6 +120,9 @@ This package contains development documentation for %name
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt2
 - fixed meson options
 
