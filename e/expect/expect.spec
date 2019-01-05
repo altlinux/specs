@@ -1,6 +1,6 @@
 Name: expect
 Version: 5.45.4
-Release: alt1
+Release: alt2
 Serial: 1
 
 Summary: A tcl extension for simplifying program-script interaction
@@ -67,6 +67,7 @@ Requires: %name = %serial:%version-%release tcl-devel >= 8.5.0-alt0.3
 
 %package examples
 Summary: Example applications using Expect
+BuildArch: noarch
 Group: Development/Tcl
 Requires: %name = %serial:%version-%release tcl(Tk)
 
@@ -177,6 +178,9 @@ make test
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Sat Jan 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt2
+- built examples subpackage noarch.
+
 * Fri Jan 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt1
 - 5.45.4 released;
 - rediffed ALT patches;
