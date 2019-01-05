@@ -1,6 +1,6 @@
 Name: s3cmd
-Version: 1.5.0
-Release: alt1.1
+Version: 2.0.2
+Release: alt1
 License: GPL
 
 Group: Networking/Other
@@ -36,6 +36,9 @@ directory tree synchronization.
 %exclude %_docdir/packages/
 
 %changelog
+* Sat Jan 05 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.0.2-alt1
+- v.2.0.2
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.1
 - NMU: added URL
 
