@@ -1,6 +1,6 @@
 Name: sdcv
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: A console version of StarDict the international dictionary
 
@@ -50,7 +50,7 @@ sed -i 's/;34m/;36m/' src/libwrapper.cpp
 
 %check
 pushd BUILD
-ctest  %_smp_mflags
+ctest
 popd
 
 %files -f %name.lang
@@ -59,6 +59,10 @@ popd
 %_mandir/uk/man1/*
 
 %changelog
+* Sat Jan 5 2019 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt2
+- Run tests sequentially to avoid random failures due to race
+  conditions between tests.
+
 * Fri Aug 31 2018 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt1
 - Version bump, upstream relocated.
 - Enable tests.
