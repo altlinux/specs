@@ -1,6 +1,6 @@
 Name: xournal
-Version: 0.4.8
-Release: alt1
+Version: 0.4.8.2016
+Release: alt2
 
 Summary: Xournal - application for notetaking, sketching, keeping a journal using a stylus
 License: GPL
@@ -15,6 +15,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Mar 08 2009
 BuildRequires: libpoppler-glib-devel libgnomecanvas-devel libgtk+2-devel
+BuildRequires: rpm-build-xdg
 
 Summary(pl.UTF-8): Xournal - aplikacja do tworzenia notatek, szkicowania i prowadzenia dziennika pisakiem
 
@@ -55,6 +56,12 @@ install -pDm644 %SOURCE2 %buildroot%_man1dir/%name.1
 %_datadir/mimelnk/application/x-xoj.desktop
 
 %changelog
+* Sun Jan 06 2019 Michael Shigorin <mike@altlinux.org> 0.4.8.2016-alt2
+- fix BR: (thx bircoph@)
+
+* Tue Jul 25 2017 Michael Shigorin <mike@altlinux.org> 0.4.8.2016-alt1
+- new version (watch file uupdate)
+
 * Sat Aug 02 2014 Michael Shigorin <mike@altlinux.org> 0.4.8-alt1
 - 0.4.8
 
