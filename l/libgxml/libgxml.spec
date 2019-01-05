@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name gxml
 %define ver_major 0.16
 %define api_ver 0.16
@@ -5,15 +7,18 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
 License: LGPLv2.1+
-Url: http://live.gnome.org/XML
+Url: https://wiki.gnome.org/GXml
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+%else
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.32
 %define vala_ver 0.34.6
@@ -112,6 +117,9 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %endif
 
 %changelog
+* Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt2
+- updated to 0.16.3-3-ge51ce7b
+
 * Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt1
 - 0.16.3
 
