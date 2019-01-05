@@ -1,26 +1,31 @@
+%def_enable snapshot
+
 %define ver_major 3.22
 %define _name org.gnome.Vino
 
 Name: vino
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A remote desktop system for GNOME
 License: GPL
 URL: https://wiki.gnome.org/Projects/Vino
 Group: Networking/Remote access
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-
+%if_disabled snapshot
+Source: Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Requires: gnome-settings-daemon
 
-BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
+BuildRequires: intltool gnome-common desktop-file-utils
 BuildRequires: libgio-devel libgtk+3-devel libdbus-devel
 BuildRequires: libXdamage-devel libXtst-devel libSM-devel xorg-cf-files xorg-inputproto-devel
 BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel libsecret-devel
 BuildRequires: libjpeg-devel libnotify-devel >= 0.7 zlib-devel
 BuildRequires: libtelepathy-glib-devel >= 0.11.6
-BuildRequires: systemd-devel
+BuildRequires: libsystemd-devel
 
 %description
 Vino is a VNC server for GNOME. It allows remote users to
@@ -30,6 +35,7 @@ connect to a running GNOME session using VNC.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-schemas-compile
 %make_build
@@ -50,6 +56,9 @@ connect to a running GNOME session using VNC.
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- updated to 3.22.0-49-gd9555bf
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
