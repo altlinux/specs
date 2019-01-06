@@ -1,15 +1,15 @@
 %define appdir  %_datadir/gambas3
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
-%def_without   	jit
+%def_with   	jit
 %define prov3() \
 Provides:  gambas3-%{*} = %EVR \
 Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.11.4
-Release:	alt2
+Version:	3.12.1
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -96,100 +96,17 @@ BuildRequires:  libncurses-devel
 Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
-Patch4:		%name-3.3.4-use-libv4l1.patch
+Patch4:		%name-3.12.0-use-libv4l1.patch
 Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
 Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-3.11.4-alt-mysql8-bool-type-fix.patch
 
-
-
-%description
-Gambas3 is a free development environment based on a Basic interpreter
-with object extensions, like Visual Basic (but it is NOT a clone !).
-With Gambas3, you can quickly design your program GUI, access MySQL or
-PostgreSQL databases, pilot KDE applications with DCOP, translate your
-program into many languages, create network applications easily, and so
-on...
-
-%package runtime
-Summary:	Runtime environment for Gambas3
-Group:		Development/Tools
-%prov3 runtime
-
-%description runtime
-Gambas3 is a free development environment based on a Basic interpreter
-with object extensions, like Visual Basic. This package contains the
-runtime components necessary to run programs designed in Gambas3.
-
-%package devel
-Summary:	Development environment for Gambas3
-Group:		Development/Tools
-Requires:	%name-runtime = %version-%release
-%prov3 devel
-
-%description devel
-The gambas3-devel package contains the tools needed to compile Gambas3
-projects without having to install the complete development environment
-(gambas3-ide).
-
-%package scripter
-Summary:	Scripter program that allows the creation of Gambas3 scripts
-Group:		Development/Tools
-Requires:	%name-runtime = %version-%release
-Requires:	%name-devel = %version-%release
-%prov3 scripter
-
-%description scripter
-This package includes the scripter program that allows the user to
-write script files in Gambas.
-
-%package ide
-Summary:	The complete Gambas3 Development Environment
-Group:		Development/Tools
-License:	GPLv2+
-Provides:	%name = %version-%release
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
-%prov3 ide
-
-Requires:	tar, gzip, rpm-build, gettext
-Requires:	%name-runtime = %version-%release
-Requires:	%name-devel = %version-%release
-Requires:	%name-gb-args = %version-%release
-Requires:	%name-gb-clipper = %version-%release
-Requires:	%name-gb-db = %version-%release
-Requires:	%name-gb-db-form = %version-%release
-Requires:	%name-gb-desktop = %version-%release
-Requires:	%name-gb-eval-highlight = %version-%release
-Requires:	%name-gb-form = %version-%release
-Requires:	%name-gb-form-dialog = %version-%release
-Requires:       %name-gb-form-editor = %version-%release
-Requires:	%name-gb-form-mdi = %version-%release
-Requires:	%name-gb-form-stock = %version-%release
-Requires:	%name-gb-gtk = %version-%release
-Requires:	%name-gb-gui = %version-%release
-Requires:	%name-gb-image = %version-%release
-Requires:	%name-gb-image-effect = %version-%release
-Requires:	%name-gb-markdown = %version-%release
-Requires:	%name-gb-qt4 = %version-%release
-Requires:	%name-gb-qt4-ext = %version-%release
-Requires:	%name-gb-qt4-webkit = %version-%release
-Requires:	%name-gb-settings = %version-%release
-Requires:       %name-gb-util = %version-%release
-Requires:	%name-gb-net = %version-%release
-Requires:	%name-gb-net-curl = %version-%release
-
-%description ide
-This package includes the complete Gambas3 Development Environment
-and the database manager. Installing this package will give you all
-of the Gambas3 components.
-
-%package full
-Summary:       Gambas3 with all components
-Group:         Development/Tools
-BuildArch:     noarch
-Provides:      %name-examples = %version-%release
-Obsoletes:     %name-examples < %version-%release
+Provides:       %name-full = %version-%release
+Obsoletes:      %name-full < %version-%release
+Provides:       %name-examples = %version-%release
+Obsoletes:      %name-examples < %version-%release
 %prov3 examples
 %prov3 full
 
@@ -289,8 +206,87 @@ Requires:      %name-gb-qt5-ext = %version-%release
 Requires:      %name-gb-form-terminal = %version-%release
 Requires:      %name-gb-term = %version-%release
 
-%description full
-Gambas3 with all components.
+%description
+Gambas3 is a free development environment based on a Basic interpreter
+with object extensions, like Visual Basic (but it is NOT a clone !).
+With Gambas3, you can quickly design your program GUI, access MySQL or
+PostgreSQL databases, pilot KDE applications with DCOP, translate your
+program into many languages, create network applications easily, and so
+on...
+
+%package runtime
+Summary:	Runtime environment for Gambas3
+Group:		Development/Tools
+%prov3 runtime
+
+%description runtime
+Gambas3 is a free development environment based on a Basic interpreter
+with object extensions, like Visual Basic. This package contains the
+runtime components necessary to run programs designed in Gambas3.
+
+%package devel
+Summary:	Development environment for Gambas3
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+%prov3 devel
+
+%description devel
+The gambas3-devel package contains the tools needed to compile Gambas3
+projects without having to install the complete development environment
+(gambas3-ide).
+
+%package scripter
+Summary:	Scripter program that allows the creation of Gambas3 scripts
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+Requires:	%name-devel = %version-%release
+%prov3 scripter
+
+%description scripter
+This package includes the scripter program that allows the user to
+write script files in Gambas.
+
+%package ide
+Summary:	The complete Gambas3 Development Environment
+Group:		Development/Tools
+License:	GPLv2+
+Provides:	%name = %version-%release
+%prov3 ide
+
+Requires:	tar, gzip, rpm-build, gettext
+Requires:	%name-runtime = %version-%release
+Requires:	%name-devel = %version-%release
+Requires:	%name-gb-args = %version-%release
+Requires:	%name-gb-clipper = %version-%release
+Requires:	%name-gb-db = %version-%release
+Requires:	%name-gb-db-form = %version-%release
+Requires:	%name-gb-desktop = %version-%release
+Requires:	%name-gb-eval-highlight = %version-%release
+Requires:	%name-gb-form = %version-%release
+Requires:	%name-gb-form-dialog = %version-%release
+Requires:       %name-gb-form-editor = %version-%release
+Requires:	%name-gb-form-mdi = %version-%release
+Requires:	%name-gb-form-stock = %version-%release
+Requires:	%name-gb-gtk = %version-%release
+Requires:	%name-gb-gui = %version-%release
+Requires:	%name-gb-image = %version-%release
+Requires:	%name-gb-image-effect = %version-%release
+Requires:	%name-gb-markdown = %version-%release
+Requires:	%name-gb-qt4 = %version-%release
+Requires:	%name-gb-qt4-ext = %version-%release
+Requires:	%name-gb-qt4-webkit = %version-%release
+Requires:	%name-gb-settings = %version-%release
+Requires:       %name-gb-util = %version-%release
+Requires:	%name-gb-net = %version-%release
+Requires:	%name-gb-net-curl = %version-%release
+%if_with jit
+Requires:	%name-gb-jit = %version-%release
+%endif
+
+%description ide
+This package includes the complete Gambas3 Development Environment
+and the database manager. Installing this package will give you all
+of the Gambas3 components.
 
 %package gb-args
 Summary:	Gambas3 component package for args
@@ -1111,7 +1107,7 @@ terminal applications.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch4 -p2
+%patch4 -p1
 %patch5 -p0
 %patch6 -p0
 %patch7 -p0
@@ -1178,6 +1174,9 @@ make LIBTOOL=%_bindir/libtool DESTDIR=%buildroot INSTALL="install -p" install
 install -m644 -pD ./app/desktop/gambas3.png %buildroot%_pixmapsdir/gambas3.png
 install -m644 -pD %SOURCE1 %buildroot%_desktopdir/gambas3.desktop
 
+# Make symlink /usr/bin/gambas to gambas3
+ln -s gambas3 %buildroot%_bindir/gambas
+
 # Upstream says we don't need those files. Not sure why they install them then. :/
 rm -rf %buildroot%_libdir/gambas3/gb.la %buildroot%_libdir/gambas3/gb.so*
 
@@ -1188,6 +1187,8 @@ rm -rf %buildroot%_libdir/gambas3/*.a
 mkdir -p %buildroot%_datadir/mime/packages/
 install -m 0644 -p app/mime/application-x-gambasscript.xml %buildroot%_xdgmimedir/packages/
 install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/packages/
+
+%files
 
 %files runtime
 %doc COPYING INSTALL README
@@ -1207,6 +1208,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_desktopdir/*.desktop
 %_datadir/gambas3/template/
 %_datadir/appdata/gambas3.appdata.xml
+%_datadir/metainfo/gambas3.appdata.xml
 %dir %appdir/
 %dir %appdir/info/
 %appdir/info/gb.debug.*
@@ -1233,10 +1235,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_xdgmimedir/packages/application-x-gambasscript.xml
 
 %files ide
+%_bindir/gambas
 %_bindir/gambas3
 %_bindir/gambas3.gambas
-
-%files full
 
 %files gb-args
 %_libdir/gambas3/gb.args.*
@@ -1662,6 +1663,15 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.term.*
 
 %changelog
+* Sun Jan 06 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
+- New version.
+
+* Fri Dec 28 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
+- New version.
+- Rename gambas-full to gambas.
+- Make symlink /usr/bin/gambas to gambas3.
+- Use jit.
+
 * Wed Dec 12 2018 Nikolai Kostrigin <nickel@altlinux.org> 3.11.4-alt2
 - Fix FTBFS due to bool types issues
 
