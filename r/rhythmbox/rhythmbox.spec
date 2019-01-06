@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.4
 %define rev %nil
@@ -8,14 +8,14 @@
 %def_with gudev
 %def_enable daap
 %def_enable grilo
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable zeitgeist
 %def_enable soundcloud
 %def_disable magnatune
 
 Name: rhythmbox
-Version: %ver_major.2
-Release: alt2%rev.1
+Version: %ver_major.3
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define dbus_ver 0.35
 %define glib_ver 2.36.0
 %define gst_ver 1.0
-%define gtk_ver 3.6.0
+%define gtk_ver 3.20.0
 %define mtp_ver 0.3
 %define brasero_ver 2.31.5
 %define soup_ver 2.42.0
@@ -62,18 +62,16 @@ Provides: %name-plugins-generic-player
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libexecdir
+%add_python3_path %_libexecdir
 # python bindings are linked into rhythmbox statically
 Provides: python%__python3_version(rb)
 Provides: python%__python3_version(rhythmdb)
 Provides: python3(rb)
 Provides: python3(rhythmdb)
 
+BuildRequires(pre): browser-plugins-npapi-devel rpm-build-python3 rpm-build-gir
+
 BuildRequires: python3-module-pygobject3-devel
-
-BuildRequires(Pre): browser-plugins-npapi-devel
-
-BuildRequires(pre): rpm-build-python3
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: intltool >= 0.40
 BuildRequires: gtk-doc yelp-tools gnome-common desktop-file-utils
@@ -342,6 +340,7 @@ This virtual package installs all Rhythmbox plugins
 %build
 %autoreconf
 export MOZILLA_PLUGINDIR=%browser_plugins_path
+%add_optflags -D_FILE_OFFSET_BITS=64
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
@@ -489,6 +488,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Jan 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
