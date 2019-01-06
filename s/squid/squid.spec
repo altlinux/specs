@@ -8,8 +8,8 @@
 %def_with gnutls
 
 Name: squid
-Version: 4.4
-Release: alt2
+Version: 4.5
+Release: alt1
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -108,7 +108,6 @@ sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 %add_optflags %optflags_shared
 ./bootstrap.sh
 %configure \
-	CPPFLAGS="$(pkg-config --cflags-only-I libxml-2.0)" \
 	--disable-arch-native \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
@@ -290,6 +289,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Sun Jan 06 2019 Alexey Shabalin <shaba@altlinux.org> 4.5-alt1
+- Updated to 4.5
+
 * Fri Nov 30 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4-alt2
 - Cleaned up BuildRequires.
 
