@@ -2,7 +2,7 @@
 
 Name: gnuplot
 Epoch: 1
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
@@ -29,8 +29,8 @@ Patch2: gnuplot-5.0.6-gentoo-no-picins.patch
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
-BuildRequires: emacs-common texinfo latex2html
-BuildRequires: dblatex
+BuildRequires: texinfo latex2html
+BuildRequires: emacs-common dblatex
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
@@ -258,6 +258,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Sat Jan 05 2019 Grigory Ustinov <grenka@altlinux.org> 1:5.2.6-alt1
+- Build new version.
+
 * Mon Oct 08 2018 Grigory Ustinov <grenka@altlinux.org> 1:5.2.5-alt1
 - Build new version.
 
