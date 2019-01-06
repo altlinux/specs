@@ -2,7 +2,7 @@
 
 Name: handbrake
 Version: 1.1.2
-Release: alt3
+Release: alt4
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
@@ -79,12 +79,12 @@ export CXXFLAGS="%optflags"
 		--enable-fdk-aac
 pushd build
 %__make build
-popd build
+popd
 
 %install
 pushd build
 %__make install
-popd #build
+popd
 
 %__ln_s ghb "%buildroot%_bindir/HandBrakeGUI"
 
@@ -104,6 +104,9 @@ popd #build
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Jan 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt4
+- Fixed FTBFS (corrected popd call).
+
 * Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.2-alt3
 - drop exclusivearch, nothing special was about it
 
