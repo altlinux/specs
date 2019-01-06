@@ -1,8 +1,8 @@
 %def_without info
 Version: 2.2
-Release: alt9.1.qa2
+Release: alt9.1.qa3
 Name: emacs-xslt-process
-License: GPL
+License: GPL-2.0-or-later
 Group: Editors
 Url: http://xslt-process.sourceforge.net/
 Summary: Emacs XSLT Process Minor Mode
@@ -14,8 +14,11 @@ Patch: xslt-process.diff
 
 BuildArch: noarch
 
-# Automatically added by buildreq Mon Sep 09 2002
-BuildRequires: emacs-X11 emacs-cedet emacs-elib ImageMagick texinfo texlive-collection-latexrecommended texlive-collection-fontsrecommended texlive-collection-basic texlive-collection-basic java-devel java-common bc update-alternatives texi2html
+# Automatically added by buildreq on Sun Jan 06 2019
+# optimized out: java java-headless javazi python-base python-modules python3 python3-base sh4
+BuildRequires: java-devel
+
+#BuildRequires: emacs-X11 emacs-cedet emacs-elib ImageMagick texinfo texlive-collection-latexrecommended texlive-collection-fontsrecommended texlive-collection-basic texlive-collection-basic java-devel java-common bc update-alternatives texi2html
 Requires: emacs-X11 emacs-cedet emacs-elib java java-common
 
 %description
@@ -61,6 +64,9 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/xslt-process.el
 %endif
 
 %changelog
+* Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt9.1.qa3
+- Automatically updated build dependencies using buildreq.
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt9.1.qa2
 - NMU: rebuild with texlive instead of tetex
 
