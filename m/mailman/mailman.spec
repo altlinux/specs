@@ -2,12 +2,16 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.26
+Version: 2.1.29
 Release: alt1
 Epoch: 5
 
 %define mm_user %name
 %define mm_group %name
+%define mm_lockdir %_lockdir/%name
+%define mm_logdir %_logdir/%name
+%define mm_rundir %_var/run/%name
+%define mm_spooldir %_spooldir/%name
 
 %define crontabdir %_sysconfdir/cron.d
 %define logrotate %_sysconfdir/logrotate.d
@@ -18,7 +22,7 @@ Epoch: 5
 %define _var_prefix %_localstatedir/%name
 
 Summary: Mailing list manager with built in web access
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Servers
 Url: http://www.list.org/
 
@@ -103,7 +107,7 @@ Documentation for mailman
 install -pD -m644 alt-linux/mm_cfg.py Mailman/mm_cfg.py.dist.in
 install -pD -m644 alt-linux/README.ALT README.ALT
 
-sed -i -e 's,@LOCKFILE@,%_lockdir/%name/master-qrunner,g' cron/crontab.in.in
+sed -i -e 's,@LOCKFILE@,%mm_lockdir/master-qrunner,g' cron/crontab.in.in
 
 # Debian patches
 # see http://packages.qa.debian.org/m/mailman.html
@@ -115,7 +119,7 @@ for patch in \
 63_update_default_server_language.patch \
 66_donot_let_cache_html_pages.patch \
 79_archiver_slash.patch \
-90_gettext_errors.patch
+92_reproducible_build.patch
 do
 	echo "Patch ($patch):"
 	patch -s -p1 < debian/patches/$patch
@@ -128,10 +132,10 @@ touch src/*.c
 %configure \
 	--with-var-prefix=%_var_prefix \
 	--with-config-dir=%confdir \
-	--with-lock-dir=%_lockdir/%name \
-	--with-log-dir=%_logdir/%name \
-	--with-pid-dir=%_var/run/%name \
-	--with-queue-dir=%_spooldir/%name \
+	--with-lock-dir=%mm_lockdir \
+	--with-log-dir=%mm_logdir \
+	--with-pid-dir=%mm_rundir \
+	--with-queue-dir=%mm_spooldir \
 	--with-python=%__python \
 	--with-mail-groupfile=%confdir/mail.groups \
 	--with-cgi-groupfile=%confdir/cgi.groups \
@@ -161,16 +165,18 @@ find %buildroot{%prefix,%_exec_prefix} -type d -print0 |
 chmod a-s,go-r %buildroot%_var_prefix
 
 # Create directories we'll use for log and spool files. Create links
-install -d -m3771 %buildroot%_logdir/%name
-install -d -m2770 %buildroot%_spooldir/%name
-install -d -m2771 %buildroot%_spooldir/%name/{archive,bounces,commands,in,news,out,qfiles,retry,shunt,virgin}
+install -d -m3771 %buildroot%mm_logdir
+install -d -m2770 %buildroot%mm_spooldir
+install -d -m2771 %buildroot%mm_spooldir/{archive,bounces,commands,in,news,out,qfiles,retry,shunt,virgin}
 
-ln -s ../../log/%name %buildroot%_var_prefix/logs
-ln -s ../../spool/%name %buildroot%_var_prefix/qfiles
+ln -rs %buildroot%mm_logdir %buildroot%_var_prefix/logs
+ln -rs %buildroot%mm_spooldir %buildroot%_var_prefix/qfiles
 
 # Copy icons to the web server's icons directory.
 mkdir -p %buildroot%webserver_iconsdir
-cp -a %buildroot%prefix/icons/* %buildroot%webserver_iconsdir
+rm -rf %buildroot%webserver_iconsdir
+mv %buildroot%prefix/icons %buildroot%webserver_iconsdir
+ln -rs %buildroot%webserver_iconsdir %buildroot%prefix/icons
 
 # Install the logrotate control file.
 install -pD -m644 alt-linux/%name.logrotate \
@@ -198,6 +204,11 @@ install -pD -m644 cron/crontab.in %buildroot%crontabdir/%name
 # Install init script
 install -pD -m755 misc/mailman %buildroot%_initdir/%name
 
+# Install service file.
+mkdir -p %buildroot%_unitdir
+sed 's|@prefix@|%_prefix|g;s|@PID_DIR@|%mm_rundir|g' \
+	< alt-linux/%name.service.in > %buildroot%_unitdir/%name.service
+
 # Install config files for postfix
 install -pD -m644 alt-linux/mm_config.py %buildroot%confdir/mm_config.py
 touch %buildroot%confdir/mm_config.py{c,o}
@@ -220,12 +231,27 @@ install -m755 -pd %buildroot%_man8dir
 install -m644 debian/manpages/*.8 %buildroot%_man8dir/
 
 # Install lockdir and piddir
-install -m755 -pd %buildroot%_lockdir/%name
-install -m755 -pd %buildroot%_var/run/%name
+install -m755 -pd %buildroot%mm_lockdir
+install -m755 -pd %buildroot%mm_rundir
+
+# Install tmpfiles.d(5) rules.
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/%name.conf <<'EOF'
+d %mm_lockdir 0770 root %mm_group
+d %mm_rundir 0770 root %mm_group
+EOF
+
+%define docdir %_docdir/%name-%version
+mkdir -p %buildroot%docdir
+cp -a ACKNOWLEDGMENTS BUGS FAQ INSTALL NEWS README* STYLEGUIDE.txt TODO UPGRADING \
+	misc/sitelist.cfg tests doc/mailman-{admin,install,member}{,.{pdf,txt}} \
+	%buildroot%docdir/
 
 # Remove unused files
 rm -f %buildroot%confdir/sitelist.cfg
 rm -rf %buildroot%_datadir/%name/tests
+
+%define _unpackaged_files_terminate_build 1
 
 %pre
 /usr/sbin/groupadd -rf %mm_group ||:
@@ -287,32 +313,34 @@ if [ $1 != 0 ]; then
 	fi
 # Move lockfiles and pidfile
 	for file in %_var_prefix/locks/*; do
-		[ -f $file ] && mv $file %_lockdir/%name/ ||:
+		[ -f $file ] && mv $file %mm_lockdir/ ||:
 	done
 	[ -f %_var_prefix/data/master-qrunner.pid ] && \
-		mv -f %_var_prefix/data/master-qrunner.pid %_var/run/%name/ ||:
+		mv -f %_var_prefix/data/master-qrunner.pid %mm_rundir/ ||:
 fi
 # Restart mailman again with configs at the new place
 %post_service mailman
 
 %files
+%docdir/[^m]*
 %config(noreplace) %logrotate/%name
 %config(noreplace) %crontabdir/%name
 %attr(0755,root,root) %_initdir/%name
+%_unitdir/%name.service
 %webserver_iconsdir/*
 %dir %prefix
 %prefix/bin
 %prefix/cron
+%prefix/icons
 %prefix/Mailman
 %prefix/messages
 %prefix/pythonlib
 %prefix/scripts
 %prefix/templates
-%doc ACKNOWLEDGMENTS BUGS FAQ INSTALL NEWS README* STYLEGUIDE.txt TODO UPGRADING
-%doc misc/sitelist.cfg tests
-%doc %_man8dir/*
-%dir %attr(0770,root,%mm_group) %_lockdir/%name
-%dir %attr(0770,root,%mm_group) %_var/run/%name
+%_man8dir/*
+%dir %attr(0770,root,%mm_group) %mm_lockdir
+%dir %attr(0770,root,%mm_group) %mm_rundir
+%_tmpfilesdir/%name.conf
 
 %defattr(-,root,%mm_group,-)
 %_exec_prefix
@@ -332,9 +360,9 @@ fi
 %attr(0644,%mm_user,%mm_group) %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %_var_prefix/data/last_mailman_version
 %_var_prefix/logs
 %_var_prefix/qfiles
-%_logdir/%name
-%dir %_spooldir/%name
-%dir %_spooldir/%name/*
+%mm_logdir
+%dir %mm_spooldir
+%dir %mm_spooldir/*
 
 %files apache2
 %config(noreplace) %apache2_mods_start/%name.conf
@@ -346,9 +374,14 @@ fi
 %config(noreplace) %ngxconfdir/%name.conf
 
 %files docs
-%doc doc
+%docdir/mailman-*
 
 %changelog
+* Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29-alt1
+- 2.1.26 -> 2.1.29 (fixes: CVE-2018-0618, CVE-2018-13796).
+- Enhanced init script.
+- Added tmpfiles.d(5) rules and a systemd unit file for mailman.
+
 * Wed Feb 28 2018 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.26-alt1
 - Updated to 2.1.26.
 - Relocated %%_libdir/mailman to %%_libexecdir/mailman.
