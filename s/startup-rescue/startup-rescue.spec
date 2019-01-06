@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -64,6 +64,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Sun Jan 06 2019 Anton Midyukov <antohami@altlinux.org> 0.32-alt1
+- support tmpfiles.d
+
 * Tue Dec 04 2018 Leonid Krivoshein <klark@altlinux.org> 0.31-alt1
 - optional feature added: autorun on the first terminal
 
