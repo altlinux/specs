@@ -1,11 +1,12 @@
 Name: alternatives
-Version: 0.4.5
-Release: alt1.1
+Version: 0.5.0
+Release: alt1
 
 Summary: alternatives support
 License: GPLv2+
 Group: System/Base
-Url: http://alternatives.sourceforge.net
+# http://alternatives.sourceforge.net
+Url: http://git.altlinux.org/gears/a/alternatives.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -55,35 +56,20 @@ touch %buildroot%_sysconfdir/%name/manual
 mkdir -p %buildroot%_rpmmacrosdir
 cat >%buildroot%_rpmmacrosdir/%name<<EOF
 %%_altdir %%([ ! -f %_datadir/%name/functions ])%_sysconfdir/%name/packages.d
-%%force_update_alternatives [ -x %_sbindir/%name-update ] && %_sbindir/%name-update ||:
-
-%%register_alternatives  %%{warning %%%%register_alternatives is obsolete}%_sbindir/%name-helper --install
-%%reg_alts %%register_alternatives
-%%post_register_alternatives %%register_alternatives
-%%post_reg_alts %%post_register_alternatives
-
-%%unregister_alternatives %%{warning %%%%unregister_alternatives is obsolete}[ "\$1" = 0 ] || exit 0; [ -x %_sbindir/%name-helper ] && %_sbindir/%name-helper --remove
-%%unreg_alts %%unregister_alternatives
-%%preun_unregister_alternatives %%unregister_alternatives
-%%preun_unreg_alts %%preun_unregister_alternatives
-
-%%unregister_alternatives_always %%{warning %%%%register_alternatives_always is obsolete}[ -x %_sbindir/%name-helper ] && %_sbindir/%name-helper --remove
-%%unreg_alts_always %%unregister_alternatives_always
-
-%%update_alternatives() %%{warning %%%%update_alternatives is obsolete}[ -x %_sbindir/%name-update ] && %_sbindir/%name-update %%* ||: %%nil
-%%update_alts %%update_alternatives
-%%post_update_alternatives %%update_alternatives
-%%post_update_alts %%update_alternatives
-
-%%remove_alternatives %%{warning %%%%remove_alternatives is obsolete}[ "\$1" = 0 ] || exit 0; [ -x %_sbindir/%name-update ] && %_sbindir/%name-update --ignore
-%%remove_alts %%remove_alternatives
-%%preun_remove_alternatives %%remove_alternatives
-%%preun_remove_alts %%preun_remove_alternatives
+%%force_update_alternatives [ -x %_bindir/%name-update ] && %_bindir/%name-update ||:
 EOF
 
 install -pD -m755 alternatives.prov %buildroot%_rpmlibdir/alternatives.prov
 install -pD -m755 alternatives.prov.files %buildroot%_rpmlibdir/alternatives.prov.files
 install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.filetrigger
+
+# /usr/sbin/alternatives-update is still used by the following packages:
+# java-1.6.0-openjdk-headless-1.6.0.41-alt6
+# java-1.7.0-openjdk-headless-1.7.0.181-alt1_2.6.14.8jpp8
+# java-1.8.0-openjdk-headless-1.8.0.151-alt1_5.b12jpp8
+# php5-5.6.38-alt1.S1
+mkdir -p %buildroot%_sbindir
+ln -rs %buildroot%_bindir/alternatives-update %buildroot%_sbindir/
 
 %files
 %doc README TODO
@@ -93,7 +79,7 @@ install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.fi
 %dir %_sysconfdir/%name/packages.d
 %ghost %config(noreplace,missingok) %_sysconfdir/%name/manual
 %_bindir/*
-%_sbindir/*
+%_sbindir/alternatives-update
 %_datadir/%name
 %_man1dir/*
 %_rpmlibdir/alternatives.prov
@@ -105,6 +91,15 @@ install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.fi
 %_rpmmacrosdir/*
 
 %changelog
+* Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.0-alt1
+- Removed obsolete stuff: alternatives-upgrade, alternatives-helper,
+  and all references to them.
+- alternatives-auto, alternatives-manual:
+  rewritten using sed -i instead of ed.
+- alternatives-validate:
+  check that slave alternatives reference valid masters.
+- Applied various fixes here and there (closes: #35084).
+
 * Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 0.4.5-alt1.1
 - Fix sorting an joining with non-POSIX locales
 
