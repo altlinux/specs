@@ -1,6 +1,6 @@
 Name: expect
 Version: 5.45.4
-Release: alt2
+Release: alt3
 Serial: 1
 
 Summary: A tcl extension for simplifying program-script interaction
@@ -21,6 +21,8 @@ Patch7: do-not-fix-script-if-it-ain-t-broken.patch
 Patch8: use-shebang-trick-like-other-examples.patch
 Patch9: avoid-using-fixline1-from-now.patch
 Patch10: made-armh-arch-known.patch
+Patch11: expect-5.45.4-alt-remove-ieee-linkage.patch
+Patch12: expect-5.45.4-alt-soname.patch
 
 # Debian patches
 Patch100: 01-example-shebang.patch
@@ -70,6 +72,8 @@ Summary: Example applications using Expect
 BuildArch: noarch
 Group: Development/Tcl
 Requires: %name = %serial:%version-%release tcl(Tk)
+# filename collision
+Conflicts: mkpasswd
 
 %description
 Expect is a tcl extension for automating interactive applications such
@@ -109,6 +113,8 @@ This package provides example programs found in expect bundle.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -178,6 +184,11 @@ make test
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Mon Jan 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt3
+- added conflict to expect-examples subpackage with mkpasswd;
+- removed -lieee again;
+- built library with SONAME.
+
 * Sat Jan 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt2
 - built examples subpackage noarch.
 
