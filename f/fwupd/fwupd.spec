@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -168,10 +168,11 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
-%_sysconfdir/fwupd/remotes.d/fwupd.conf
-%_sysconfdir/fwupd/remotes.d/lvfs.conf
-%_sysconfdir/fwupd/remotes.d/lvfs-testing.conf
-%_sysconfdir/fwupd/remotes.d/vendor.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/lvfs.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/lvfs-testing.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/vendor.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
 %_sysconfdir/dbus-1/system.d/org.freedesktop.fwupd.conf
@@ -209,6 +210,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
 %_libdir/fwupd-plugins-3/libfu_plugin_flashrom.so
+%_libdir/fwupd-plugins-3/libfu_plugin_fastboot.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nitrokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hid.so
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hub.so
@@ -232,7 +234,8 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_unifying.so
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
-%_libdir/fwupd-plugins-3/libfu_plugin_wacomhid.so
+%_libdir/fwupd-plugins-3/libfu_plugin_wacom_usb.so
+
 %ghost %_localstatedir/fwupd/gnupg
 
 %files devel
@@ -250,14 +253,16 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files tests
 %dir %_datadir/installed-tests/fwupd
-%_datadir/installed-tests/fwupd/firmware-example.xml.gz
-%_datadir/installed-tests/fwupd/firmware-example.xml.gz.asc
+%_datadir/installed-tests/fwupd/fwupd-tests.xml
 %_datadir/installed-tests/fwupd/*.test
 %_datadir/installed-tests/fwupd/*.cab
 %_datadir/installed-tests/fwupd/*.sh
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Jan 07 2019 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
