@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.8.2
-Release: alt4
+Version: 1.8.4
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -601,6 +601,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Mon Jan 07 2019 Anton Farygin <rider@altlinux.ru> 1:1.8.4-alt1
+- 1.8.4
+
 * Tue Dec 18 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt4
 - fixed build with gcc-8
 - disabled build libpri and isdn plugins for freetdm
