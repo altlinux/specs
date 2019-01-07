@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 4.18.0
+Version: 4.20.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -16,8 +16,8 @@ Requires: libnetlink = %version-%release
 Provides: iproute = %version-%release
 Obsoletes: iproute < %version
 
-# Automatically added by buildreq on Wed Nov 15 2017
-BuildRequires: flex libdb4-devel libelf-devel libiptables-devel libmnl-devel
+# Automatically added by buildreq on Mon Jan 07 2019
+BuildRequires: flex libcap-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel
 %{?_with_libatm:BuildRequires: libatm-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
 
@@ -61,7 +61,6 @@ This package contains libnetlink dynamic library headers.
 
 %prep
 %setup -n %name-%version-%release
-sed -i 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
 
 %build
 %make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags' V=1
@@ -120,6 +119,10 @@ done
 %_man3dir/*
 
 %changelog
+* Mon Jan 07 2019 Dmitry V. Levin <ldv@altlinux.org> 4.20.0-alt1
+- 4.18.0 -> 4.20.0.
+- ip: enabled capability drop.
+
 * Mon Aug 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.18.0-alt1
 - 4.17.0 -> 4.18.0.
 
