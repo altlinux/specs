@@ -1,7 +1,7 @@
 %define shortver 74
 
 Name:    grass
-Version: 7.4.3
+Version: 7.4.4
 Release: alt1
 
 %def_with mysql
@@ -23,7 +23,6 @@ Source1: %name.watch
 Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
-Patch3: %name-alt-adapt-for-python3.patch
 
 #define grassdir grass%shortver
 %define grassdir grass-%version
@@ -105,7 +104,6 @@ This package contains development headers for GRASS.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
 subst 's/\t/        /g' scripts/v.db.dropcolumn/v.db.dropcolumn.py
 
 %build
@@ -332,6 +330,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Mon Jan 07 2019 Andrey Cherepanov <cas@altlinux.org> 7.4.4-alt1
+- New version.
+
 * Mon Dec 17 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.3-alt1
 - New version.
 
