@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.45
+Version: 0.8.46
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Mon Dec 31 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.46-alt1
+- 090-check-nvr: make version and release check more strict
+
 * Fri May 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.8.45-alt1
 - check-fhs: allow libdirs compatible with the processor arch
   determined by rpm_arch. For e2k*, the peculiar lib32 has been
