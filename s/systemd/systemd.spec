@@ -56,7 +56,7 @@
 Name: systemd
 Epoch: 1
 Version: 240
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1812,6 +1812,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Jan 08 2019 Mikhail Efremov <sem@altlinux.org> 1:240-alt3
+- journald: set a limit on the number of fields once more.
+- Backported patches from upstream (fixes: CVE-2018-16864, CVE-2018-16865).
+
 * Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1:240-alt2
 - backport patches from upstream master (fixes ALT#35843, ALT#35840)
 
