@@ -1,17 +1,24 @@
+%def_enable snapshot
 %def_disable python3
 
 Name: libplist
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
+%if_disabled snapshot
 Source: %url/downloads/%name-%version.tar.bz2
+%else
+# VCS: http://git.sukimashita.com/libplist.git
+Source: %name-%version.tar
+%endif
+Patch: libplist-2.0.0-alt-e2k-lcc123.patch
 
-BuildRequires: gcc-c++ cmake xml-utils
+BuildRequires: gcc-c++ xml-utils
 BuildRequires: python-devel python-module-Cython
 %{?_enable_python3:BuildRequires: python3-devel rpm-build-python3 python3-module-Cython}
 
@@ -65,6 +72,7 @@ Python3 libraries and bindings for %name
 
 %prep
 %setup -a0
+%patch -p1 -b .e2k
 # for python2 only
 subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' m4/ac_python_devel.m4
 mv %name-%version py3build
@@ -122,6 +130,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
+- updated to 2.0.0-27-g3f96731
+- mike@: applied e2k patch to work around lcc-1.23's lack of gcc5 builtins
+
 * Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0 (fixed CVE-2017-6440, CVE-2017-6439, CVE-2017-6438, CVE-2017-6437,
   CVE-2017-6436, CVE-2017-6435, CVE-2017-5836, CVE-2017-5835, CVE-2017-5834,
