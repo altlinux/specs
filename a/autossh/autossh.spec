@@ -1,6 +1,6 @@
 Name: autossh
 Version: 1.4f
-Release: alt1
+Release: alt2
 
 Summary: Automatically restart SSH sessions and tunnels
 License: BSD-style
@@ -9,7 +9,8 @@ Url: http://www.harding.motd.ca/autossh
 
 # %url/autossh-%version.tar.bz2
 Source: autossh-%version.tar
-Patch: autossh-1.4a-alt-setproctitle.patch
+Patch1: autossh-1.4a-alt-setproctitle.patch
+Patch2: autossh-1.4f-alt-monitor-port-checking.patch
 
 Requires: openssh-clients
 BuildRequires: setproctitle-devel
@@ -21,7 +22,8 @@ mechanism are from rstunnel (Reliable SSH Tunnel), but implemented in C.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p2
 chmod -x autossh.host rscreen
 
 %build
@@ -41,6 +43,9 @@ install -pD -m644 autossh.1 %buildroot%_man1dir/autossh.1
 %_man1dir/*
 
 %changelog
+* Tue Jan 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4f-alt2
+- Fixed monitor port checking.
+
 * Thu Apr 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4f-alt1
 - Updated to 1.4f.
 
