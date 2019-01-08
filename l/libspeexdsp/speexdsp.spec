@@ -8,7 +8,7 @@ BuildRequires: pkgconfig(fftw3f)
 Name:           libspeexdsp
 Version:        1.2
 %global rc_ver  rc3
-Release:        alt2_0.12.%{rc_ver}
+Release:        alt3_0.12.%{rc_ver}
 Summary:        A voice compression format (DSP)
 
 Group:          System/Libraries
@@ -61,9 +61,7 @@ This is the DSP package, see the speex package for the codec part.
 %build
 autoreconf -vif
 %configure \
-%ifarch aarch64
 	--disable-neon \
-%endif
 	--disable-static
 
 %make_build V=1
@@ -85,6 +83,10 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Tue Jan 08 2019 Michael Shigorin <mike@altlinux.org> 1.2-alt3_0.12.rc3
+- disable neon unconditionally, we don't do it on armh either
+  (which might be just wrong by now)
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.12.rc3
 - update to new release by fcimport
 
