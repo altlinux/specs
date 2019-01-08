@@ -5,7 +5,7 @@
 %def_with gnutls
 
 Name: openconnect
-Version: 7.08
+Version: 8.01
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -19,7 +19,7 @@ Requires: lib%name = %version-%release
 BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(zlib)
-%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 2.12.16 pkgconfig(p11-kit-1) libtrousers-devel}
+%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 3.2.10 pkgconfig(p11-kit-1) libtrousers-devel pkgconfig(libtasn1)}
 %{?_with_openssl:BuildRequires: pkgconfig(openssl) pkgconfig(p11-kit-1) pkgconfig(libp11)}
 %{?_with_libproxy:BuildRequires: pkgconfig(libproxy-1.0)}
 %{?_with_stoken:BuildRequires: pkgconfig(stoken)}
@@ -83,6 +83,10 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jan 08 2019 Alexey Shabalin <shaba@altlinux.org> 8.01-alt1
+- new version 8.01
+- fixed clear form submissions before freeing (CVE-2018-20319)
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 7.08-alt1
 - 7.08
 
