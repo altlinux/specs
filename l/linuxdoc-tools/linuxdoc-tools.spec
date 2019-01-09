@@ -1,21 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: A text formatting package based on SGML
 Name: linuxdoc-tools
 Version: 0.9.69
-Release: alt3
+Release: alt4
 License: GPL
 Group: Publishing
-Source: http://http.us.debian.org/debian/pool/main/l/linuxdoc-tools/%{name}_%version.tar.gz
+Url: http://packages.qa.debian.org/l/linuxdoc-tools.html
+
+# http://http.us.debian.org/debian/pool/main/l/linuxdoc-tools/%{name}_%version.tar.gz
+Source: %name-%version.tar
 Patch0: linuxdoc-tools-0.9.13-letter.patch
 Patch1: linuxdoc-tools-0.9.20-lib64.patch
 Patch2: linuxdoc-tools-0.9.69-upstream-perl-compat.patch
-Url: http://packages.qa.debian.org/l/linuxdoc-tools.html
+Patch3: linuxdoc-tools-0.9.69-upstream-flex-compat.patch
 
 BuildRequires: flex sgml-common jade groff texinfo OpenSP
 BuildRequires: texlive-latex-recommended texlive-dist
 
 Requires: groff-base sgml-common
 
-Provides: sgml-tools = %version-%release
+Provides: sgml-tools = %EVR
 Obsoletes: sgml-tools
 
 %description
@@ -31,6 +36,7 @@ documentation.
 %patch0 -p1
 %patch1 -p1 -b .lib64
 %patch2 -p2
+%patch3 -p2
 
 %build
 %configure --with-installed-nsgmls --with-installed-iso-entities
@@ -87,6 +93,9 @@ mv %buildroot%_datadir/%name/*.sty \
 %_mandir/*/*
 
 %changelog
+* Wed Jan 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.69-alt4
+- NMU: fixed build with new flex.
+
 * Fri Sep 07 2018 Ivan A. Melnikov <iv@altlinux.org> 0.9.69-alt3
 - (NMU) Add BR: texlive-dist to fix FTBFS
 
