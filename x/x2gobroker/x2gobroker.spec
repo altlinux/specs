@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.3.4
-Release: alt2
+Release: alt3
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -115,6 +115,7 @@ Group: Communications
 BuildArch: noarch
 Requires: x2gobroker = %version-%release
 Requires: x2gobroker-authservice = %version-%release
+Requires: python-module-daemon python-module-setproctitle
 
 %description daemon
 X2Go is a server based computing environment with
@@ -370,6 +371,9 @@ fi
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Wed Jan 09 2019 Oleg Solovyov <mcpain@altlinux.org> 0.0.3.4-alt3
+- fix requires
+
 * Thu Dec 13 2018 Oleg Solovyov <mcpain@altlinux.org> 0.0.3.4-alt2
 - fix files
 
