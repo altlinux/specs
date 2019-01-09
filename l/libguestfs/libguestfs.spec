@@ -4,6 +4,7 @@
 %def_enable ocaml
 %def_enable perl
 %def_enable python
+%def_enable python3
 %def_disable ruby
 %def_disable haskell
 %def_disable php
@@ -11,12 +12,12 @@
 %def_disable lua
 %def_disable golang
 %def_disable static
-%def_disable bash_completion
+%def_enable bash_completion
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.38.6
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -60,7 +61,11 @@ BuildRequires: ocaml-hivex-devel
 #BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-libvirt
+%endif
+%if_enabled python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-libvirt
 %endif
 %if_enabled ruby
 BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems
@@ -217,11 +222,19 @@ perl-Sys-Guestfs contains Perl bindings for %name (Sys::Guestfs).
 
 %package -n python-module-%name
 Summary: Python bindings for %name
-Group: Development/Other
+Group: Development/Python
 Requires: %name = %version-%release
 
 %description -n python-module-%name
 python-module-%name contains Python bindings for %name.
+
+%package -n python3-module-%name
+Summary: Python3 bindings for %name
+Group: Development/Python3
+Requires: %name = %version-%release
+
+%description -n python3-module-%name
+python3-module-%name contains Python3 bindings for %name.
 
 %package -n ruby-%name
 Summary: Ruby bindings for %name
@@ -346,36 +359,60 @@ bash-completion for guestfish tool.
 %setup -a1
 %patch1 -p1
 
-%build
-./bootstrap --gnulib-srcdir=gnulib-%name-%version 
+# For Python 3 we must build libguestfs twice.  This creates:
+#   %name-%version/
+#   %name-%version-python3/
+# with a second copy of the sources in the python3 subdir.
+pushd ..
+cp -a %name-%version %name-%version-python3
+popd
 
-%configure \
-	vmchannel_test=no \
-	%{subst_enable daemon} \
-	--enable-install-daemon \
-	%{subst_enable appliance} \
-	%{subst_enable fuse} \
-	%{subst_enable ocaml} \
-	%{subst_enable perl} \
-	%{subst_enable python} \
-	%{subst_enable ruby} \
-	%{subst_enable haskell} \
-	%{subst_enable php} \
-	%{subst_enable erlang} \
-	%{subst_enable lua} \
-	%{subst_enable goolang} \
-	%{subst_enable static} \
-	--with-default-backend=libvirt \
-	--with-extra="ALTLinux,release=%version-%release,libvirt" \
-	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
-	--disable-silent-rules \
-	--disable-probes \
+%build
+%define localconfigure \
+    %configure \\\
+	vmchannel_test=no \\\
+	%{subst_enable daemon} \\\
+	--enable-install-daemon \\\
+	%{subst_enable appliance} \\\
+	%{subst_enable fuse} \\\
+	%{subst_enable ocaml} \\\
+	%{subst_enable perl} \\\
+	%{subst_enable python} \\\
+	%{subst_enable ruby} \\\
+	%{subst_enable haskell} \\\
+	%{subst_enable php} \\\
+	%{subst_enable erlang} \\\
+	%{subst_enable lua} \\\
+	%{subst_enable goolang} \\\
+	%{subst_enable static} \\\
+	--with-default-backend=libvirt \\\
+	--with-extra="ALTLinux,release=%version-%release,libvirt" \\\
+	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \\\
+	--disable-silent-rules \\\
+	--disable-probes \\\
 	--disable-rpath
 
+./bootstrap --gnulib-srcdir=gnulib-%name-%version
+
+%localconfigure
 %make INSTALLDIRS=vendor
+
+# For Python 3 we must compile libguestfs a second time.
+pushd ../%name-%version-python3
+export PYTHON=%__python3
+# Copy the cache to speed the build:
+cp ../%name-%version/generator/.pod2text* generator/
+./bootstrap --gnulib-srcdir=gnulib-%name-%version
+%localconfigure --enable-python --enable-perl --disable-ruby --disable-haskell --disable-php --disable-erlang --disable-lua --disable-golang --disable-gobject
+%make INSTALLDIRS=vendor
+popd
 
 %install
 %make install INSTALLDIRS=vendor DESTDIR=%buildroot
+# Install Python 3 bindings which were built in a subdirectory.
+pushd ../%name-%version-python3
+%make INSTALLDIRS=vendor DESTDIR=%buildroot -C python install
+popd
 
 # Delete static libraries, libtool files.
 rm -f %buildroot%_libdir/libguestfs.{la,a}
@@ -602,6 +639,13 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_man3dir/guestfs-python.3*
 %endif #python
 
+%if_enabled python3
+%files -n python3-module-%name
+%doc python/examples/*.py
+%python3_sitelibdir/*
+%_man3dir/guestfs-python.3*
+%endif #python3
+
 %if_enabled ruby
 %files -n ruby-%name
 %doc ruby/examples/*.rb
@@ -642,10 +686,14 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 
 %if_enabled bash_completion
 %files -n bash-completion-libguestfs
-%_sysconfdir/bash_completion.d/*
+%_datadir/bash-completion/completions/*
 %endif
 
 %changelog
+* Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1.38.6-alt3
+- build python3 package
+- build bash-completion package
+
 * Sat Oct 20 2018 Anton Farygin <rider@altlinux.ru> 1.38.6-alt2
 - rebuilt with ocaml-4.07.1
 
