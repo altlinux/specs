@@ -4,7 +4,7 @@ Name: bash-completion
 Epoch: 1
 
 Version: 2.8
-Release: alt2
+Release: alt3
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -27,12 +27,11 @@ Requires: bash >= 4.1
 BuildArch: noarch
 
 %add_findreq_skiplist %_datadir/%name/completions/*.py
+%add_findreq_skiplist %_datadir/pkgconfig/bash-completion.pc
 
 %description
 bash-completion is a collection of shell functions that take advantage
 of the programmable completion feature of bash 2.04 and later.
-
-
 
 %prep
 %setup
@@ -56,18 +55,20 @@ mv %buildroot%_sysconfdir/{profile.d,bashrc.d}
 mkdir -p %buildroot%_sysconfdir/bash_completion.d %buildroot%_rpmlibdir
 install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 
-
-
 %files
 %doc AUTHORS CHANGES README.md doc/*.txt
 %_sysconfdir/bash_completion.d
 %_sysconfdir/bashrc.d/bash_completion.sh
 %_rpmlibdir/*
 %_datadir/%name
+%_datadir/pkgconfig/bash-completion.pc
 %exclude %_datadir/%name/completions/mount
 %exclude %_datadir/%name/completions/umount
 
 %changelog
+* Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt3
+- package pkgconfig file
+
 * Thu Dec 20 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt2
 - update completion for ALT apt-get
 
