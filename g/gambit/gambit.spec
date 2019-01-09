@@ -1,6 +1,6 @@
 Name: gambit
 Version: 4.9.1
-Release: alt3
+Release: alt4
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -11,6 +11,7 @@ Conflicts: ghostscript-minimal < 8.64-alt5
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source: %name-%version.tar
+Patch: gambit-4.9.1-alt-e2k-lcc123.patch
 
 %ifarch %e2k
 %def_without emacs
@@ -120,6 +121,7 @@ Development files for Gambit Scheme (Ruby backend)
 
 %prep
 %setup
+%patch -p2
 
 %build
 %ifarch %e2k
@@ -201,6 +203,9 @@ EOF
 %_bindir/gambcomp-ruby
 
 %changelog
+* Wed Jan 09 2019 Michael Shigorin <mike@altlinux.org> 4.9.1-alt4
+- E2K: workaround for lcc-1.23 lacking some gcc5 builtins
+
 * Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 4.9.1-alt3
 - Extract backend sub-packages.
 
