@@ -8,14 +8,14 @@
 %endif
 
 Name:		bcc
-Version:	0.5.0
-Release:	alt1.458
+Version:	0.7.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	ASL 2.0
 URL:		https://github.com/iovisor/bcc
 Source:		%name-%version.tar
-ExclusiveArch:	i586 x86_64
+ExclusiveArch:	x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires:	bison
@@ -79,7 +79,7 @@ subst '/add_subdirectory(examples)/d' CMakeLists.txt
 export CC=clang
 export CXX=clang++
 # ld can not link libLLVM and libclang in ALT
-export LDFLAGS=-fuse-ld=lld
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DREVISION_LAST=%version \
@@ -91,11 +91,9 @@ export LDFLAGS=-fuse-ld=lld
 
 %install
 %cmake_install install/strip DESTDIR=%buildroot
-%ifarch x86_64
 install -d %buildroot/%python_sitelibdir
 rmdir %buildroot/%python_sitelibdir
 mv %buildroot/%python_sitelibdir_noarch %buildroot/%python_sitelibdir
-%endif
 
 %package -n libbcc
 Summary:	Shared Library for BPF Compiler Collection (BCC)
@@ -133,7 +131,7 @@ Requires:	python-module-bcc = %version-%release
 Command line tools for BPF Compiler Collection (BCC)
 
 %files -n libbcc
-%doc LICENSE.txt COPYRIGHT.txt
+%doc LICENSE.txt
 %_libdir/lib*
 
 %files -n libbcc-devel
@@ -155,6 +153,9 @@ Command line tools for BPF Compiler Collection (BCC)
 /usr/share/bcc/man/
 
 %changelog
+* Wed Jan 09 2019 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt1
+- Update to 0.7.0.
+
 * Sun Jun 10 2018 Vitaly Chikunov <vt@altlinux.ru> 0.5.0-alt1.458
 - First build of bcc for ALT.
 
