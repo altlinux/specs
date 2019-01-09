@@ -1,6 +1,6 @@
 %define dist ph
 Name: perl-%dist
-Version: 0.11
+Version: 0.11.1
 Release: alt1
 
 Summary: Perl *.ph files
@@ -37,6 +37,11 @@ This package provides the following Perl header files.
 %perl_vendor_archlib/sys/*.ph
 
 %changelog
+* Wed Dec 26 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.1-alt1
+- Fixed build of ioctl.ph:
+  + on ppc* architectures;
+  + with linux v4.20 headers.
+
 * Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
 - added sys/resource.ph perl header
 
