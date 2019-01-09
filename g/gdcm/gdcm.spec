@@ -1,14 +1,14 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel python-devel rpm-build-java rpm-build-perl rpm-build-python zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gdcm
 Version:	2.8.4
-Release:	alt2_8.1
+Release:	alt2_11
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -20,11 +20,10 @@ Patch2:	gdcm-2.4.0-install2libarch.patch
 Patch3:	gdcm-2.4.0-no-versioned-dir.patch
 # From http://public.kitware.com/pipermail/vtkusers/2013-February/127377.html
 #Patch4: gdcm-0005-support-vtk6.patch
-Patch5: gdcm-2.4.0-find-python27.patch
 Patch6: gdcm-2.6-fix-cmake-config-paths.patch
 Patch7: gdcm-2.8.4-fix-manpage-gen.patch
 Patch8: gdcm-2.8.4-fix-poppler.patch
-Patch9: gdcm-2.8.4-alt-correct-const.patch
+Patch9: gdcm-2.8.4-poppler-0.67.0.patch
 
 BuildRequires:	libCharLS-devel >= 1.0
 BuildRequires:	ctest cmake
@@ -42,7 +41,6 @@ BuildRequires:	libssl-devel
 BuildRequires:  pkgconfig(libopenjp2)
 #BuildRequires:	/usr/bin/pdflatex
 BuildRequires:	libpoppler-devel
-BuildRequires:	python-devel
 BuildRequires:	python3-devel
 BuildRequires:	swig
 BuildRequires:	libjson-c-devel
@@ -96,29 +94,15 @@ compile applications based on gdcm
 Group: Development/Other
 Summary:	CSharp, C++, Java, PHP and Python example programs for GDCM
 Requires:	%{name} = %{version}-%{release}
-BuildArch: noarch
+AutoReqProv: no
 
 %description examples
 GDCM examples
 
-%package	-n python-module-gdcm
-Group: Development/Other
-Summary:	Python binding for GDCM
-%{?python_provide:%python_provide python2-gdcm}
-# Remove before F30
-Provides: %{name}-python = %{version}-%{release}
-Provides: %{name}-python = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-module-gdcm
-You should install the gdcm-python package if you would like to
-used this library with python
-
 %package -n python3-module-gdcm
 Group: Development/Other
 Summary:	Python binding for GDCM
-%{?python_provide:%python_provide python2-gdcm}
+%{?python_provide:%python_provide python3-gdcm}
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python3-module-gdcm
@@ -134,7 +118,7 @@ used this library with python
 %patch6 -p 1
 %patch7 -p 1
 %patch8 -p 1
-%patch9 -p 2
+%patch9 -p 1
 
 # Fix cmake command
 sed -i.backup 's/add_dependency/add_dependencies/' Utilities/doxygen/CMakeLists.txt
@@ -157,56 +141,10 @@ rm -rf Utilities/wxWidgets
 # Needed for testing:
 #rm -rf Utilities/gdcmmd5 
 
-# prepare python3 build
-rm -rf %{_builddir}/python3-%{name}-%{version}-%{release}
-cp -a . %{_builddir}/python3-%{name}-%{version}-%{release}
-
-# apply patch after copying files for python3 build
-%patch5 -p 1
+# see https://gitlab.freedesktop.org/poppler/poppler/merge_requests/83
+sed -i 's,gTrue,true,g;s,gFalse,false,g;s,GBool,bool,g;' Applications/Cxx/gdcmpdf.cxx Applications/Cxx/gdcminfo.cxx
 
 %build
-# build python3 build
-pushd %{_builddir}/python3-%{name}-%{version}-%{release}
-
-mkdir -p %{_target_platform}
-pushd %{_target_platform}
-
-%{fedora_cmake}	.. \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
-	-DGDCM_INSTALL_INCLUDE_DIR=%{_includedir}/%{name} \
-	-DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name} \
-	-DGDCM_INSTALL_MAN_DIR=%{_mandir} \
-	-DGDCM_INSTALL_LIB_DIR=%{_libdir} \
-	-DGDCM_BUILD_TESTING:BOOL=OFF \
-	-DGDCM_DATA_ROOT=../gdcmData/ \
-	-DGDCM_BUILD_EXAMPLES:BOOL=OFF \
-	-DGDCM_DOCUMENTATION:BOOL=OFF \
-	-DGDCM_WRAP_PYTHON:BOOL=ON \
-	-DPYTHON_EXECUTABLE=%{__python3} \
-	-DGDCM_INSTALL_PYTHONMODULE_DIR=%{python3_sitelibdir} \
-	-DGDCM_WRAP_JAVA:BOOL=OFF \
-	-DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
-	-DGDCM_BUILD_APPLICATIONS:BOOL=OFF \
-	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
-	-DGDCM_USE_VTK:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
-	-DGDCM_USE_SYSTEM_EXPAT:BOOL=ON \
-	-DGDCM_USE_SYSTEM_OPENJPEG:BOOL=ON \
-	-DGDCM_USE_SYSTEM_ZLIB:BOOL=ON \
-	-DGDCM_USE_SYSTEM_UUID:BOOL=ON \
-	-DGDCM_USE_SYSTEM_LJPEG:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_OPENSSL:BOOL=ON \
-	-DGDCM_USE_JPEGLS:BOOL=ON \
-	-DGDCM_USE_SYSTEM_LIBXML2:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_JSON:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_POPPLER:BOOL=OFF
-popd
-
-%make_build -C %{_target_platform}
-popd
-# end python3
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 
@@ -223,8 +161,8 @@ pushd %{_target_platform}
 	-DGDCM_DOCUMENTATION:BOOL=ON \
 	-DGDCM_PDF_DOCUMENTATION:BOOL=OFF \
 	-DGDCM_WRAP_PYTHON:BOOL=ON \
-	-DPYTHON_EXECUTABLE=%{__python} \
-	-DGDCM_INSTALL_PYTHONMODULE_DIR=%{python_sitelibdir} \
+	-DPYTHON_EXECUTABLE=%{__python3} \
+	-DGDCM_INSTALL_PYTHONMODULE_DIR=%{python3_sitelibdir} \
 	-DGDCM_WRAP_JAVA:BOOL=OFF \
 	-DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
 	-DGDCM_BUILD_APPLICATIONS:BOOL=ON \
@@ -251,13 +189,8 @@ popd
 %make_build -C %{_target_platform}
 
 %install
-# install python3 build
-pushd %{_builddir}/python3-%{name}-%{version}-%{release}
 make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 install -d $RPM_BUILD_ROOT%{python3_sitelibdir}
-popd
-
-make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 
 ## Cleaning Example dir from cmake cache files + remove 0-length files
 find %{_builddir}/%{?buildsubdir}/Examples -depth -name CMakeFiles | xargs rm -rf
@@ -293,16 +226,15 @@ make test -C %{_target_platform} || exit 0
 %files examples
 %{_datadir}/%{name}/Examples/
 
-%files -n python-module-gdcm
-%{python_sitelibdir}/%{name}*.py*
-%{python_sitelibdir}/_%{name}swig.so
-
 %files -n python3-module-gdcm
 %{python3_sitelibdir}/%{name}*.py
 %{python3_sitelibdir}/_%{name}swig.so
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Wed Jan 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt2_11
+- fixed build
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.8.4-alt2_8.1
 - NMU: Rebuild with new openssl 1.1.0.
 
