@@ -9,7 +9,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -139,6 +139,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
+- rebuild
+
 * Tue Nov 13 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - don't package htmlthumbnail plugin
 - security fixes: CVE-2018-19120
