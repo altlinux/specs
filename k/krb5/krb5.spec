@@ -1,9 +1,21 @@
 
-Name: krb5
-Version: 1.16.2
-Release: alt2
+%def_without bootstrap
+%def_with doc
+%def_with ldap
+%def_with selinux
+%def_with verto
+%def_enable check
 
+Name: krb5
+Version: 1.16.3
+Release: alt1
+
+%if_without bootstrap
+%if_with doc
 %define _unpackaged_files_terminate_build 1
+%endif
+%endif
+
 %define _docdir %_defaultdocdir/%name-%version
 
 Summary: The Kerberos network authentication system
@@ -38,29 +50,33 @@ Patch134: krb5-1.11-fedora-kpasswdtest.patch
 # alt patches:
 Patch200: krb5-1.16-alt-default_keytab_group.patch
 Patch201: alt-Fix-test-with-fallback-realm-ccache-selection.patch
-Patch202: krb5-1.16.2-Don-t-include-all-MEMORY-ccaches-in-collection.patch
 
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
-BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: libncurses-devel libss-devel libssl-devel libtinfo-devel
-BuildRequires: libverto-devel libselinux-devel
 BuildRequires: libpam-devel
 
+%{?_with_ldap:BuildRequires: libldap-devel libsasl2-devel}
+%{?_with_verto:BuildRequires: libverto-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel}
+
+%if_with doc
 BuildRequires: python-module-sphinx
 BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended latexmk
-
-BuildRequires: nss_wrapper socket_wrapper
-
-%ifarch %{ix86} x86_64
-BuildRequires: yasm
 %endif
 
+%ifarch %{ix86} x86_64
+%{?!_with_bootstrap:BuildRequires: yasm}
+%endif
+
+%if_enabled check
 # for tests
 BuildRequires: libverto-libev python-modules gcc-c++
+BuildRequires: nss_wrapper socket_wrapper
 # dejagnu tests disabled
 # BuildRequires: dejagnu tcl-devel
+%endif
 
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
@@ -83,12 +99,23 @@ Requires: lib%name = %version-%release
 Summary: Development files needed to compile Kerberos 5 programs
 Group: System/Libraries
 Requires: lib%name = %version-%release
-Requires: lib%name-ldap = %version-%release
+%{?_with_ldap:Requires: lib%name-ldap = %version-%release}
 Requires: libcom_err-devel
 Provides: %name-services = %version-%release
 Provides: %name-clients = %version-%release
 Obsoletes: %name-services < %version-%release
 Obsoletes: %name-clients < %version-%release
+
+%if_without verto
+%package -n libverto
+Version: 0.0.%version
+Summary: verto shared libraries (bootstrap build)
+Group: System/Legacy libraries
+
+%description -n libverto
+This is a temporary libverto package built within krb5;
+only used for bootstrap.
+%endif
 
 %package kdc
 Group: System/Servers
@@ -191,7 +218,6 @@ MIT Kerberos.
 
 %patch200 -p2 -b .default_keytab_group
 %patch201 -p1
-%patch202 -p1
 
 # Generate an FDS-compatible LDIF file.
 inldif=src/plugins/kdb/ldap/libkdb_ldap/kerberos.ldif
@@ -203,6 +229,11 @@ egrep -iv '(^$|^dn:|^changetype:|^add:)' $inldif | \
 sed -r 's,^		,                ,g' | \
 sed -r 's,^	,        ,g' >> 60kerberos.ldif
 touch -r $inldif 60kerberos.ldif
+
+%ifarch %e2k
+sed -r -i 's, error=(pointer-arith|uninitialized),,g' \
+   src/aclocal.m4 src/configure*
+%endif
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -223,17 +254,19 @@ autoreconf --verbose --force
 	--localstatedir=%_localstatedir/kerberos \
 	--with-system-et \
 	--with-system-ss \
-	--with-system-verto \
-	--with-ldap \
+	%{?_with_verto:--with-system-verto} \
+	%{subst_with ldap} \
+	%{subst_with selinux} \
 	--enable-dns-for-realm \
 	--with-dirsrv-account-locking \
 	--enable-pkinit \
+%if_without bootstrap
 	--with-pkinit-crypto-impl=openssl \
 	--with-tls-impl=openssl \
+%endif
 	--with-pam \
 	--with-netlib=-lresolv \
 	--disable-rpath \
-	--with-selinux
 	#
 
 # dejagnu tests disabled
@@ -248,6 +281,7 @@ if test "$configured_kdcrundir" != %_runtimedir/krb5kdc ; then
     exit 1
 fi
 
+%if_with doc
 # Build the docs.
 make -C src/doc paths.py version.py
 cp src/doc/paths.py doc/
@@ -265,6 +299,7 @@ export TEXMFHOME=texmf/
 for pdf in admin appdev basic build plugindev user ; do
     test -s build-pdf/$pdf.pdf || make -C build-pdf
 done
+%endif
 
 # We need to cut off any access to locally-running nameservers, too.
 %__cc -fPIC -shared -o noport.so -Wall -Wextra %SOURCE100
@@ -326,11 +361,13 @@ mkdir -m 755 -p %buildroot%_sysconfdir/gss
 # hard-coded in g_initialize.c.
 mkdir -m 755 -p %buildroot%_sysconfdir/gss/mech.d
 
+%if_with doc
 # Install docs
 mkdir -p %buildroot%_docdir/pdf
 cp build-pdf/*.pdf %buildroot%_docdir/pdf/
 cp -R build-html/ %buildroot/%_docdir/
 cp -p src/plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} %buildroot%_docdir/
+%endif
 
 # cleanups
 rm -rf %buildroot%_libdir/krb5/plugins/preauth/test.so
@@ -340,6 +377,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 
 %find_lang mit-krb5
 
+%if_without bootstrap
 %post kdc
 %post_service krb5kdc
 %post_service kadmin
@@ -349,6 +387,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %preun_service krb5kdc
 %preun_service kadmin
 %preun_service kprop
+%endif
 
 %pre -n lib%name
 /usr/sbin/groupadd -r -f _keytab
@@ -397,9 +436,11 @@ fi
 %_man5dir/krb5.conf.5*
 %_man7dir/kerberos.7*
 
+%if_with ldap
 %files -n lib%name-ldap
 %_libdir/libkdb_ldap.so.*
 %_libdir/%name/plugins/kdb/kldap.so
+%endif
 
 %files -n lib%name-devel
 %_includedir/*
@@ -419,6 +460,12 @@ fi
 %_man8dir/sserver.8*
 %_pkgconfigdir/*
 
+%if_without verto
+%files -n libverto
+%_prefix/lib*/libverto.so.*
+%endif
+
+%if_without bootstrap
 %files kdc
 %dir %_localstatedir/kerberos/krb5kdc
 %config(noreplace) %_localstatedir/kerberos/krb5kdc/kdc.conf
@@ -438,7 +485,7 @@ fi
 %_sbindir/kadmin.local
 %_sbindir/kadmind
 %_sbindir/kdb5_util
-%_sbindir/kdb5_ldap_util
+%{?_with_ldap:%_sbindir/kdb5_ldap_util}
 %_sbindir/kprop
 %_sbindir/kproplog
 %_sbindir/kpropd
@@ -449,11 +496,12 @@ fi
 %_man8dir/kadmin.local.8*
 %_man8dir/kadmind.8*
 %_man8dir/kdb5_util.8*
-%_man8dir/kdb5_ldap_util.8*
+%{?_with_ldap:%_man8dir/kdb5_ldap_util.8*}
 %_man8dir/kprop.8*
 %_man8dir/kproplog.8*
 %_man8dir/kpropd.8*
 %_man8dir/krb5kdc.8*
+%endif
 
 %files kadmin
 %_bindir/kadmin
@@ -491,12 +539,21 @@ fi
 %_man1dir/ksu.1*
 
 
+%if_with doc
 %files doc
 %doc %_docdir
+%endif
 
 # {{{ changelog
 
 %changelog
+* Tue Jan 08 2019 Ivan A. Melnikov <iv@altlinux.org> 1.16.3-alt1
+- 1.16.3 (CVE-2018-20217)
+- apply bootstrap and e2k tweaks (mike@) (closes: #32982)
+  + introduce doc, ldap, selinux, verto knobs (on by default)
+  + conditionally package bundled libverto
+  + e2k: disable -Werror={pointer-arith,uninitialized} (lcc)
+
 * Thu Nov 29 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2
 - Fixed yield of cache from MEMORY ccache (closes #35597, #35667).
 
