@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.115
-Release: alt4
+Release: alt5
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.115-alt5
+- updated to 0.115-26-gc898fdf (fixed CVE-2018-19788)
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 0.115-alt4
 - updated to 0.115-23fd211e
 - Port the JS authority to mozjs-60
