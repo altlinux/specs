@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4.2
-Release: alt1.1
+Version: 4.0
+Release: alt1
 Summary: Pure-Python RSA implementation
 License: ASLv2
 Group: Development/Python
@@ -15,11 +15,13 @@ BuildArch: noarch
 
 BuildPreReq: python-module-setuptools python-module-pyasn1
 BuildPreReq: python-module-unittest2 python-module-pytest
+BuildPreReq: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-module-pyasn1
 BuildPreReq: python3-module-unittest2 python3-devel
-BuildPreReq: python-tools-2to3 python3-module-pytest
+BuildPreReq: python3-module-pytest
+BuildPreReq: python3-module-mock
 %endif
 
 %py_provides %oname
@@ -48,7 +50,6 @@ Stuvel.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3/rsa -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -100,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 09 2019 Grigory Ustinov <grenka@altlinux.org> 4.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
