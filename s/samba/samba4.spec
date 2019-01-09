@@ -51,7 +51,7 @@
 
 Name: samba
 Version: 4.9.4
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1111,7 +1111,7 @@ TDB_NO_FSYNC=1 %make_build test
 %dir /var/run/winbindd
 %dir /var/lib/samba
 %attr(755,root,root) %dir %_localstatedir/cache/samba
-%attr(700,root,root) %dir /var/lib/samba/private
+%attr(710,root,root) %dir /var/lib/samba/private
 %attr(755,root,root) %dir %_sysconfdir/samba
 %config(noreplace) %_sysconfdir/samba/smb.conf
 %config(noreplace) %_sysconfdir/samba/lmhosts
@@ -1301,7 +1301,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libshares-samba4.so
 %_libdir/samba/libsmbpasswdparser-samba4.so
 %_libdir/samba/libxattr-tdb-samba4.so
+%if_with clustering_support
 %_libdir/samba/libctdb-event-client-samba4.so
+%endif
 
 %if_with dc
 %_libdir/samba/libdb-glue-samba4.so
@@ -1524,6 +1526,11 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Dec 28 2018 Evgeny Sinelikov <sin@altlinux.org> 4.9.4-alt2
+- Merge and rebuild for e2k
+- Change group access for private directory due effective mask with acl
+- Fix build without clustering_support
+
 * Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.4-alt1
 - Update to first winter security release
 - Security fixes regressions:
