@@ -1,6 +1,6 @@
 Name: fish
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -46,6 +46,8 @@ done
 %makeinstall_std
 %find_lang %name
 
+rm -f %buildroot%_datadir/fish/completions/docker.fish
+
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
 	echo %_bindir/fish >>%_sysconfdir/shells
@@ -65,6 +67,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
+- remove completion for docker, fixed file conflict with docker-ce package
+
 * Sun Dec 30 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
