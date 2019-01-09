@@ -1,17 +1,17 @@
 Name: xpad
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: A virtual sticky pad system using GTK+3
 Group: Office
 License: GPLv3+
+Url: https://launchpad.net/xpad
 
-URL: https://launchpad.net/xpad
-Source0: http://launchpad.net/xpad/trunk/%version/+download/xpad-%version.tar.bz2
+Source: http://launchpad.net/xpad/trunk/%version/+download/xpad-%version.tar.bz2
 
-BuildRequires: intltool libgtksourceview3-devel >= 3.10 at-spi2-atk-devel
+BuildRequires: libgtk+3-devel >= 3.22 libgtksourceview3-devel >= 3.10 at-spi2-atk-devel
 BuildRequires: libSM-devel
-BuildRequires: desktop-file-utils
+BuildRequires: intltool desktop-file-utils libappstream-glib-devel
 
 %description
 Xpad is a sticky note application that strives to be simple, fault-tolerant,
@@ -33,7 +33,7 @@ a text box in which notes can be written.
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=TextTools \
-	%buildroot%_desktopdir/xpad.desktop
+	%buildroot%_desktopdir/%name.desktop
 
 %files -f %name.lang
 %_bindir/%name
@@ -41,9 +41,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%doc README NEWS ChangeLog TODO
+%_datadir/metainfo/%name.appdata.xml
+%doc README ChangeLog TODO
 
 %changelog
+* Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
