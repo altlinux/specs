@@ -20,7 +20,7 @@
 %define nv_version 410
 %define nv_release 78
 %define nv_minor %nil
-%define pkg_rel alt209
+%define pkg_rel alt210
 %define set_gl_nvidia_ver 1.1.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -99,6 +99,7 @@ Obsoletes: %virtual_pkg_name < %version-%release
 Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
 PreReq: libGL
 Requires: apt-scripts-nvidia
+Requires: /usr/bin/xsetup-monitor
 Requires(post): x11presetdrv
 # old
 Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
@@ -309,6 +310,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 410.78-alt210
+- require xsetup
+
 * Sat Dec 29 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt209
 - don't use nvidia-xconfig to prevent creation of /etc/X11/xorg.conf
 
