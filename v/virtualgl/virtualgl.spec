@@ -1,6 +1,6 @@
 Name: virtualgl
-Version: 2.5.90
-Release: alt2%ubt
+Version: 2.6.1
+Release: alt1
 
 %define vgl_name vgl
 
@@ -24,7 +24,6 @@ Patch5: %name-2.5.2-alt-libexec-path-fix.patch
 # patch 6: updated Fedora Core system glx patch
 Patch6: %name-2.5.2-alt-system-glx.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: gcc-c++ 
 BuildRequires: libXtst-devel
@@ -147,15 +146,19 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
-* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 2.5.90-alt2%ubt
+* Wed Jan 09 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.1-alt1
+- new version
+- remove ubt
+
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 2.5.90-alt2
 - rebuild with new openssl
 - fix compile on aarch64
 
-* Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.90-alt1%ubt
+* Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.90-alt1
 - new version build
 - restore previous package spec changelog
 
-* Wed Apr 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.2-alt1%ubt
+* Wed Apr 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.2-alt1
 - new version build from Git src tree with updated ALTLinux patches
 
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.1
