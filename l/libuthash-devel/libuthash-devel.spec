@@ -1,5 +1,5 @@
 Name: libuthash-devel
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 Summary: A hash table for C structures
 License: BSD
@@ -28,12 +28,13 @@ make
 
 %files
 %_includedir/ut*.h
-%_includedir/libut.h
-%_includedir/ringbuf.h
 
 %doc LICENSE doc/*.txt
 
 %changelog
+* Wed Jan 09 2019 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Build new version.
+
 * Thu May 24 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
 - Build new version (Closes: #33241).
 
