@@ -5,8 +5,8 @@
 %define soname 4
 
 Name: openmotif
-Version: 2.3.3
-Release: alt4.1
+Version: 2.3.8
+Release: alt1
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -15,42 +15,18 @@ Group: System/Libraries
 Url: http://www.openmotif.org
 Source: ftp://ftp.ics.com/openmotif/2.3/%version/%name-%version.tar.gz
 
-### NB: most 2.2.x patches were either already applied upstream
-### or failed to apply to 2.3.2, see setup section
 # RH
-Patch1: openMotif-2.2.3-rh-acinclude.patch
-Patch2: openMotif-2.2.3-rh-char_not_supported.patch
-Patch3: openMotif-2.2.3-rh-libdir.patch
+Patch58: openmotif-2.3.3-alt-no_underlinked.patch
 Patch4: openMotif-2.2.3-rh-long64.patch
-Patch5: openMotif-2.2.3-rh-multiscreen.patch
-Patch6: openMotif-2.2.3-rh-pixel_length.patch
 Patch7: openMotif-2.2.3-rh-popup_timeout.patch
 Patch8: openMotif-2.2.3-rh-uil_lib.patch
-Patch9: openmotif-2.2.3-rh-utf8.patch
-Patch10: openMotif-2.2.3-rh-vizcount.patch
-# CAN, CVE
-Patch21: openMotif-2.2.3-CAN-2004-0687-0688.patch
-Patch22: openMotif-2.2.3-CAN-2004-0914.patch
-Patch23: openmotif-2.2.3-CAN-2004-0914_sec8.patch
-Patch24: openmotif-CVE-2005-3964.patch
-# misc
-Patch31: openMotif-2.2.3-motifzone_1193.patch
-Patch32: openMotif-2.2.3-motifzone_1202.patch
-Patch33: openMotif-2.2.3-rgbtxt.patch
 # ALT
-Patch41: openmotif-2.2.2-alt-DefaultUserPath.patch
-Patch42: openmotif-2.2.2-alt-VARDIR.patch
-Patch43: openmotif-2.2.2-alt-bison.patch
 Patch44: openmotif-2.2.3-alt-VERSION.patch
 # PLD
-Patch51: openmotif-makedepend.patch
 Patch52: openmotif-mwmrc.patch
 Patch53: openmotif-bison.patch
 Patch54: openmotif-freetype.patch
-Patch55: openmotif-parbuild.patch
-Patch56: openmotif-libtool.patch
 Patch57: openmotif-2.3.3-alt-DSO.patch
-Patch58: openmotif-2.3.3-alt-no_underlinked.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -139,11 +115,8 @@ This package contains the Motif demo applications.
 %patch7 -p1
 %patch8 -p1
 # ALT
-%patch41 -p1
-%patch42 -p1
 %patch44 -p1
 # PLD
-%patch51 -p1
 %patch52 -p1
 %patch53 -p1
 %patch54 -p1
@@ -164,8 +137,7 @@ touch INSTALL NEWS AUTHORS
 %configure --enable-shared %{subst_enable static}
 
 make clean
-# SMP-incompatible build (still true for 2.3.2)
-%make
+%make_build
 
 %install
 mkdir -p %buildroot%_x11sysconfdir/{app-defaults,mwm,xinit.d}
@@ -193,7 +165,7 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 
 %files -n %libnameso
 %_libdir/*.so.*
-%doc BUGREPORT COPYRIGHT.MOTIF RELNOTES TODO
+%doc BUGREPORT COPYING RELNOTES TODO
 
 %files -n %libname-devel
 %_libdir/*.so
@@ -240,6 +212,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Fri Dec 28 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.8-alt1
+- Build new version.
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt4.1
 - Fixed build
 
