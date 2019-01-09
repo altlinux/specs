@@ -28,7 +28,7 @@
 %endif
 
 Name: ceph
-Version: 12.2.9
+Version: 12.2.10
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1278,10 +1278,13 @@ fi
 %endif
 
 %changelog
+* Wed Jan 09 2019 Anton Farygin <rider@altlinux.ru> 12.2.10-alt1
+- 12.2.10 (closes: #35798)
+
 * Fri Oct 26 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.9-alt1
 - 12.2.9
 
-* Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.8-alt1%ubt
+* Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.8-alt1
 - 12.2.8
 - fixed uninstall ceph-common (%%preun_service rbdmap)
 - Fixes for the following security vulnerabilities:
@@ -1289,32 +1292,32 @@ fi
   + CVE-2018-1129 auth: cephx signature check is weak
   + CVE-2018-10861 mon: auth checks not correct for pool ops
 
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.5-alt2%ubt
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.5-alt2
 - NMU: rebuilt with boost-1.67.0
 
-* Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.5-alt1%ubt
+* Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.5-alt1
 - 12.2.5
 - build with rdma support
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.4-alt1%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.4-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.4-alt1%ubt
+* Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.4-alt1
 - 12.2.4
 
-* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.3-alt1%ubt
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.3-alt1
 - 12.2.3
 - backport patches from luminous branch
 
-* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.2-alt1%ubt
+* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.2-alt1
 - 12.2.2
 
-* Tue Oct 03 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt2%ubt
+* Tue Oct 03 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt2
 - backport influx plugin for mgr from upstream master
 - update requires for fix run mgr
 - move mount.ceph to /sbin
 
-* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt1%ubt
+* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt1
 - 12.2.1
 
 * Mon Sep 11 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.0-alt1
