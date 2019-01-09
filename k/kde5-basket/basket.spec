@@ -1,10 +1,11 @@
 %define libbasket_soname 5
 %define libbasketcommon libbasketcommon%libbasket_soname
 %define rname basket
+%define rev   60e38c6
 
 Name: 	 kde5-%rname
 Version: 2.49
-Release: alt1%ubt
+Release: alt2.git%rev
 %K5init no_altplace
 
 Summary: multi-purpose note-taking application
@@ -66,7 +67,7 @@ Library for %name
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc AUTHORS TODO README.md
+%doc AUTHORS README.md
 %_K5bin/*
 %_K5plug/basketthumbcreator.so
 %_K5plug/kcm_basket.so
@@ -87,6 +88,9 @@ Library for %name
 %_K5lib/libbasketcommon.so.%libbasket_soname.*.*
 
 %changelog
+* Wed Jan 09 2019 Andrey Cherepanov <cas@altlinux.org> 2.49-alt2.git60e38c6
+- New version.
+
 * Tue Nov 21 2017 Oleg Solovyov <mcpain@altlinux.org> 2.49-alt1%ubt
 - port from kde4 to kde5
 
