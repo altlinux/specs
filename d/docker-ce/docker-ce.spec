@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    18.09.0
-Release: alt2
+Release: alt3
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -106,8 +106,13 @@ install -d %{buildroot}%{_mandir}/man8
 install -p -m 644 %{build_dir_cli}/man/man8/*.8 %{buildroot}%{_mandir}/man8
 
 # install bash completion
-install -dp %{buildroot}%{_datadir}/bash-completion/completions
-install -p -m 644 %{build_dir_cli}/contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions
+install -Dp -m 644 %{build_dir_cli}/contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions/docker
+
+# install zsh completion
+install -Dp -m 644 %{build_dir_cli}/contrib/completion/zsh/_docker %{buildroot}%{_datadir}/zsh/site-functions/_docker
+
+# install fish completion
+install -Dp -m 644 %{build_dir_cli}/contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/fish/completions/docker.fish
 
 # install vim syntax highlighting
 # (in process of being included in default vim)
@@ -162,6 +167,8 @@ exit 0
 %{_unitdir}/docker.service
 %_initdir/docker
 %{_datadir}/bash-completion/completions/docker
+%{_datadir}/zsh/site-functions/_docker
+%{_datadir}/fish/completions/docker.fish
 %dir %{_sharedstatedir}/docker
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 %{_datadir}/vim/vimfiles/doc/dockerfile.txt
@@ -169,6 +176,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 18.09.0-alt3
+- add completions for zsh and fish
+
 * Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 18.09.0-alt2
 - Use overlay2 storage driver by default
 
