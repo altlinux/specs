@@ -22,8 +22,8 @@ environment.
 
 Name:           python-module-webob
 Summary:        WSGI request and response object
-Version:        1.7.4
-Release:        alt1_3
+Version:        1.8.5
+Release:        alt1
 License:        MIT
 Group:          System/Libraries
 URL:            http://pythonpaste.org/webob/
@@ -45,7 +45,7 @@ BuildRequires:  pytest python-module-pytest
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
-BuildRequires:  python3-module-distribute
+BuildRequires:  python3-module-setuptools
 %if 0%{?with_tests}
 BuildRequires:  python3-module-nose
 BuildRequires:  python3-module-pytest
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1.8.5-alt1
+- new version
+
 * Wed Mar 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1_3
 - new version
 
