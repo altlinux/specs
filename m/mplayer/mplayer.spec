@@ -68,7 +68,7 @@
 %def_disable ass_int
 %def_disable rpath
 %def_enable cddb
-%def_enable librtmp
+%def_disable librtmp
 %def_disable nemesi
 
 # Codecs:
@@ -296,7 +296,7 @@
 
 Name: %lname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1091,6 +1091,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Jan 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.0-alt3
+- rebuilt without librtmp
+
 * Wed Jun 20 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
 - rebuilt with libbluray.so.1
 - disabled crystalhd support
