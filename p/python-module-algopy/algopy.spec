@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1.git20150630.2.1
+Release: alt1.git20150630.3
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
 Group: Development/Python
@@ -12,6 +12,8 @@ Url: https://pypi.python.org/pypi/algopy
 
 # https://github.com/b45ch1/algopy.git
 Source: %name-%version.tar
+Patch1: fix_test_import_of_deprecated_decorators_module.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -117,6 +119,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -193,6 +196,10 @@ popd
 %endif
 
 %changelog
+* Wed Jan 09 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.3-alt1.git20150630.3
+- Fix tests passing. Tests use deprecated module numpy.testing.decorators, very
+  likely tests will not pass with next numpy upgrade and tests must be disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1.git20150630.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
