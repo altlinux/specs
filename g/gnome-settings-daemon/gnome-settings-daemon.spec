@@ -17,7 +17,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1.2
+Version: %ver_major.2
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -81,7 +81,7 @@ BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geoc
 BuildRequires: libnm-devel >= %nm_ver
 
 # for check
-%{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
+%{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
 %description
 GNOME Settings Daemon is a program that organizes access to general GNOME
@@ -188,6 +188,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- 3.30.2
+
 * Thu Oct 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1.2-alt1
 - 3.30.1.2
 
