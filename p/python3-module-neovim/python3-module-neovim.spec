@@ -1,14 +1,15 @@
-%define oname neovim
+%define oldname neovim
+%define oname pynvim
 
-Name: python3-module-%oname
-Version: 0.2.6
+Name: python3-module-%oldname
+Version: 0.3.1
 Release: alt1
 
 Summary: Python 3 client to Neovim
 
 License: %asl
 Group: Development/Python
-Url: https://github.com/neovim/python-client
+Url: https://github.com/neovim/pynvim
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -33,8 +34,12 @@ for connecting to and scripting Nvim processes through its msgpack-rpc API.
 
 %files
 %python3_sitelibdir/%oname/
+%python3_sitelibdir/%oldname/
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Jan 9 2019 Vladimir Didenko <cow@altlinux.org> 0.3.1-alt1
+- new release
+
 * Wed Jul 25 2018 Vladimir Didenko <cow@altlinux.org> 0.2.6-alt1
 - initial build for Sisyphus

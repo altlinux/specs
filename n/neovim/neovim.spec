@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.3.1
+Version: 0.3.3
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -82,6 +82,9 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Wed Jan 9 2019 Vladimir Didenko <cow@altlinux.org> 0.3.3-alt1
+- New version
+
 * Wed Jul 25 2018 Vladimir Didenko <cow@altlinux.org> 0.3.1-alt1
 - New version
 
