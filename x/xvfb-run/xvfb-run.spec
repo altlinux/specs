@@ -1,20 +1,17 @@
 Name: xvfb-run
-Version: 1.4.1
+Version: 1.20.3
 Release: alt1
 
 Summary: xvfb-run - script to run process under Xvfb server
 License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: xvfb-run
 Source1: xvfb-run.1
 
-Requires: fakeroot xorg-xvfb
-
-# Automatically added by buildreq on Tue Sep 09 2008
-BuildRequires: fakeroot xorg-xvfb xset
+Requires: xauth xorg-xvfb
+BuildRequires: xauth xorg-xvfb xset
 
 %description
 xvfb-run - script to run process under Xvfb xserver
@@ -24,7 +21,7 @@ xvfb-run - script to run process under Xvfb xserver
 install -pm755 %_sourcedir/%name .
 
 %build
-./%name -a xset b
+./%name -a xset q
 
 %install
 install -pD -m755 %name %buildroot%_bindir/%name
@@ -35,8 +32,12 @@ install -pD -m644 %_sourcedir/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jan 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.20.3-alt1
+- Changed to use USR1 synchronization mechanism, dropped fakeroot.
+- Updated default resolution and bitdepth to match upstream defaults.
+
 * Sun Apr 04 2010 Dmitry V. Levin <ldv@altlinux.org> 1.4.1-alt1
-- Updated XVFBARGS (Valery V. Inozemtsev).
+- Updated XVFBARGS (by Valery V. Inozemtsev).
 
 * Wed Jun 24 2009 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt1
 - Changed to use "xauth source", to avoid placing magic cookie
