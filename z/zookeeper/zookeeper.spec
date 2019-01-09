@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-java
-BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
+BuildRequires(pre): rpm-build-python3 rpm-macros-java
+BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
 # END SourceDeps(oneline)
 %define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker
 
 Name:          zookeeper
 Version:       3.4.9
-Release:       alt2_7
+Release:       alt2_12
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           https://zookeeper.apache.org/
@@ -35,13 +35,14 @@ BuildRequires: boost-complete
 BuildRequires: pkgconfig(cppunit)
 BuildRequires: dos2unix
 BuildRequires: doxygen
+BuildRequires: gcc-c++
 BuildRequires: graphviz libgraphviz
 BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: jpackage-utils
 BuildRequires: libtool
 BuildRequires: libxml2-devel
-BuildRequires: python-devel
+BuildRequires: python3-devel
 
 BuildRequires: ant
 BuildRequires: ant-junit
@@ -122,16 +123,14 @@ BuildArch:     noarch
 %description javadoc
 This package contains javadoc for %{name}.
 
-%package -n python-module-zookeeper
+%package -n python3-module-zookeeper
 Group: Development/Java
-%{?python_provide:%python_provide python2-%{name}}
+%{?python_provide:%python_provide python3-%{name}}
 Summary:       Python support for %{name}
 Requires:      %{name} = %{version}-%{release}
-Provides:      zkpython = %{version}-%{release}
-Requires:      python
 
-%description -n python-module-zookeeper
-The python-%{name} package contains Python bindings for %{name}.
+%description -n python3-module-zookeeper
+Python bindings for %{name}.
 
 %prep
 %setup -q
@@ -141,6 +140,9 @@ The python-%{name} package contains Python bindings for %{name}.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
+# Do not treat C compile-time warnings as errors
+sed -i -e's/-Werror//' src/c/Makefile.am
 
 iconv -f iso8859-1 -t utf-8 src/c/ChangeLog > src/c/ChangeLog.conv && mv -f src/c/ChangeLog.conv src/c/ChangeLog
 sed -i 's/\r//' src/c/ChangeLog
@@ -232,9 +234,9 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/docs/api/* %{buildroot}%{_javadocdir}/%{name}/
 
 pushd src/contrib/zkpython
-%{__python} src/python/setup.py build --build-base=$PWD/build \
+%{__python3} src/python/setup.py build --build-base=$PWD/build \
 install --root=%{buildroot} ;\
-chmod 0755 %{buildroot}%{python_sitelibdir}/zookeeper.so
+chmod 0755 %{buildroot}%{python3_sitelibdir}/zookeeper.cpython-*.so
 popd
 
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
@@ -319,12 +321,15 @@ getent passwd zookeeper >/dev/null || \
 %{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
-%files -n python-module-zookeeper
-%{python_sitelibdir}/ZooKeeper-?.?-py%{__python_version}.egg-info
-%{python_sitelibdir}/zookeeper.so
+%files -n python3-module-zookeeper
+%{python3_sitelibdir}/ZooKeeper-?.?-py%{__python3_version}.egg-info
+%{python3_sitelibdir}/zookeeper.cpython-*.so
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Wed Jan 09 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt2_12
+- fixed build
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt2_7
 - use boost-complete
 
