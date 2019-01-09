@@ -1,6 +1,6 @@
 Name: maim
 Version:  5.5.2
-Release: alt1
+Release: alt2
 
 Summary:  maim (make image) takes screenshots of your desktop.
 License: GPLv3
@@ -17,7 +17,7 @@ BuildRequires: libslop-devel
 BuildRequires: zlib-devel
 BuildRequires: libpng-devel libjpeg-devel
 BuildRequires: libXrandr-devel libXfixes-devel libXcomposite-devel libglvnd-devel
-BuildRequires: libicu-devel libXext-devel libglm-devel
+BuildRequires: libicu-devel libXext-devel libglm-devel libGL-devel
 
 %description
 maim (make image) takes screenshots of your desktop. It has options to take only
@@ -52,6 +52,9 @@ Features:
 %doc COPYING README.md
 
 %changelog
+* Wed Jan 09 2019 Pavel Skrylev <majioa@altlinux.org> 5.5.2-alt2
+- Fixed lost build dependency to GLX_INCLUDE_DIR.
+
 * Wed Oct 11 2018 Pavel Skrylev <majioa@altlinux.org> 5.5.2-alt1
 - Bump to 5.5.2 with slop support.
 
