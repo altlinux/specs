@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.3.4.9
+Version: 0.3.5.7
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -116,6 +116,7 @@ fi
 %config %_sysconfdir/logrotate.d/%name
 %{_unitdir}/%{name}.service
 %_bindir/tor
+%_bindir/tor-print-ed-signing-cert
 # torify is moved to torsocks package to avoid automatic dependency on it
 %exclude %_bindir/torify
 %_bindir/tor-resolve
@@ -141,6 +142,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Jan 9 2019 Vladimir Didenko <cow@altlinux.ru> 0.3.5.7-alt1
+- new version
+
 * Fri Nov 23 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.4.9-alt1
 - new version
 
