@@ -1,6 +1,6 @@
 Name: sqlite3
 Version: 3.25.2
-Release: alt2
+Release: alt3
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -127,6 +127,10 @@ export CFLAGS="%optflags \
 	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
 	-DSQLITE_SECURE_DELETE=1 \
 	-fno-strict-aliasing "
+%ifarch %e2k
+# FIXME: lcc-1.23 lacks some gcc5 builtins
+cc --version | grep -q '^lcc:1.21' || export CFLAGS+="-D__INTEL_COMPILER=1"
+%endif
 autoreconf -i
 %configure \
 	--enable-threadsafe \
@@ -189,6 +193,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Wed Jan 09 2019 Michael Shigorin <mike@altlinux.org> 3.25.2-alt3
+- E2K: avoid gcc5 builtins not implemented in lcc-1.23
+
 * Tue Oct 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.25.2-alt2
 - Enable DBSTAT_VTAB
 
