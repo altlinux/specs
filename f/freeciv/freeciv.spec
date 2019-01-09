@@ -1,5 +1,5 @@
 Name: freeciv
-Version: 2.5.11
+Version: 2.6.0
 Release: alt1
 
 Summary: Turn-based strategy game inspired by the history of human civilization
@@ -146,7 +146,8 @@ rm *.m4
 	--enable-shared \
 	--disable-static \
 	--enable-server \
-	--enable-client=no%{?_enable_gtk2:,gtk2}%{?_enable_gtk3:,gtk3} \
+	--enable-client=no%{?_enable_gtk2:,gtk2}%{?_enable_gtk3:,gtk3.22} \
+	--enable-fcmp=%{?_enable_gtk2:,gtk2}%{?_enable_gtk3:,gtk3} \
 	--without-freeciv-manual \
 	--disable-silent-rules
 %make_build MSUBDIRS=
@@ -162,19 +163,24 @@ sed -i 's,@LIBEXECDIR@,%_libexecdir,g' \
 mv %buildroot%_bindir/freeciv-server %buildroot%_libexecdir/%name/
 ln -rs %buildroot%_libexecdir/%name/wrapper %buildroot%_bindir/freeciv-server
 
-rm %buildroot%_man6dir/freeciv-{gtk2,gtk3,manual,qt,sdl,xaw}.6
-rm %buildroot%_man6dir/freeciv-mp-{cli,gtk2,gtk3,qt}.6
+rm %buildroot%_bindir/freeciv-manual
+rm %buildroot%_man6dir/freeciv-{gtk,manual,mp-,qt,ruledit,sdl,xaw}*.6
+rm %buildroot%_datadir/locale/*/LC_MESSAGES/freeciv-ruledit.mo
 %if_enabled gtk2
 ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk2.6
 ln -s freeciv-modpack.6 %buildroot%_man6dir/freeciv-mp-gtk2.6
 %endif
 %if_enabled gtk3
+ln -s freeciv-gtk3.22 %buildroot%_bindir/freeciv-gtk3
 ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk3.6
 ln -s freeciv-modpack.6 %buildroot%_man6dir/freeciv-mp-gtk3.6
 %endif
 
 hardlink -cv %buildroot
 %find_lang --output=%name.lang %name %name-nations
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 
@@ -203,9 +209,14 @@ hardlink -cv %buildroot
 %_datadir/%name/classic*
 %_datadir/%name/default*
 %_datadir/%name/experimental*
+%_datadir/%name/hexemplio*
 %_datadir/%name/multiplayer*
 %_datadir/%name/nation
+%_datadir/%name/override
+%_datadir/%name/sandbox*
 %_datadir/%name/scenarios
+%_datadir/%name/stdmusic*
+%_datadir/%name/toonhex*
 
 %files client
 %if_enabled gtk2
@@ -213,6 +224,7 @@ hardlink -cv %buildroot
 %_bindir/freeciv-mp-gtk2
 %endif
 %if_enabled gtk3
+%_bindir/freeciv-gtk3.22
 %_bindir/freeciv-gtk3
 %_bindir/freeciv-mp-gtk3
 %endif
@@ -225,8 +237,8 @@ hardlink -cv %buildroot
 %_datadir/%name/freeciv.rc*
 %endif
 %if_enabled gtk3
-%_datadir/appdata/%name-gtk3.appdata.xml
-%_desktopdir/%name-gtk3.desktop
+%_datadir/appdata/%name-gtk3.22.appdata.xml
+%_desktopdir/%name-gtk3.22.desktop
 %_man6dir/freeciv-gtk3.*
 %endif
 %_iconsdir/hicolor/*/apps/%name-client.png
@@ -251,6 +263,9 @@ hardlink -cv %buildroot
 %_datadir/%name/wonders*
 
 %changelog
+* Tue Jan 08 2019 Dmitry V. Levin <ldv@altlinux.org> 2.6.0-alt1
+- 2.5.11 -> 2.6.0.
+
 * Sat Mar 24 2018 Dmitry V. Levin <ldv@altlinux.org> 2.5.11-alt1
 - 2.5.3 -> 2.5.11 (closes: #33777, #33779).
 
