@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.7.1
-Release:	alt4_6jpp8
+Release:	alt5_6jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 # will become arched again with rust on board
 BuildArch:  noarch
@@ -160,6 +160,7 @@ This package contains ziped sources of the IcedTea-Web project.
 %patch0 -p1
 %patch10 -p2
 cp -f %SOURCE1 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
+sed -i 's/en_US.UTF-8/en_US.UTF-8 ru_RU.UTF-8/' Makefile.am
 
 %build
 autoreconf -vfi
@@ -351,6 +352,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Wed Jan 09 2019 Ivan Razzhivin <underwit@altlinux.org> 1.7.1-alt5_6jpp8
+- fix russian translation
+
 * Fri Dec 07 2018 Ivan Razzhivin <underwit@altlinux.org> 1.7.1-alt4_6jpp8
 - add russian translation to desktop files
 
