@@ -2,8 +2,8 @@
 
 Name: wireguard
 
-Version: 0.0.20180910
-Release: alt1%ubt
+Version: 0.0.20181218
+Release: alt1
 
 Summary: Wireguard is a fast, modern, secure VPN tunnel module for Linux kernel
 License: GPLv2
@@ -14,7 +14,6 @@ Url: https://www.wireguard.com/
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libmnl-devel
 
 %package -n %name-tools 
@@ -111,14 +110,18 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
-* Wed Sep 12 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180910-alt1%ubt
+* Mon Dec 31 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20181218-alt1
+- New version
+  + remove ubt
+
+* Wed Sep 12 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180910-alt1
 - New version
 
-* Tue Jul 03 2018 Alexey Shabalin <shaba@altlinux.ru> 0.0.20180625-alt1%ubt
+* Tue Jul 03 2018 Alexey Shabalin <shaba@altlinux.ru> 0.0.20180625-alt1
 - 0.0.20180625
 
-* Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt2%ubt
+* Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt2
 - Rebuild to provide wg-quick as a separate package
 
-* Tue Apr 17 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt1%ubt
+* Tue Apr 17 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt1
 - Initial build
