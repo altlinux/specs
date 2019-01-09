@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20141014.1.1.1
+Version: 1.1.2
+Release: alt1
 Summary: Easy to use mocking, stubbing and spying framework
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/chai
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/agoragames/chai.git
 Source: %name-%version.tar
@@ -99,8 +98,7 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
-#if_with python3
-%if 0
+%if_with python3
 pushd ../python3
 python3 setup.py test
 popd
@@ -124,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.git20141014.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
