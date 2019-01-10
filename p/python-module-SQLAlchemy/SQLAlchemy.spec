@@ -1,10 +1,8 @@
 %define oname SQLAlchemy
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.0.12
-Release: alt1.1
+Version: 1.2.15
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -20,10 +18,9 @@ Source: SQLAlchemy-%version.tar
 Requires: python-modules-sqlite3
 
 BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-%endif
 
 %description
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -33,7 +30,6 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 SQL toolkit and Object Relational Mapper
 Group: Development/Python3
@@ -66,7 +62,6 @@ designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
 This package contains tests for SQLAlchemy.
-%endif
 
 %package tests
 Summary: Tests for SQLAlchemy
@@ -85,29 +80,25 @@ This package contains tests for SQLAlchemy.
 
 %prep
 %setup -n SQLAlchemy-%version
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
 
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %python_sitelibdir/*
@@ -116,16 +107,17 @@ popd
 %files tests
 %python_sitelibdir/*/testing
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/testing
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/testing
-%endif
 
 %changelog
+* Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.15-alt1
+- 1.2.15
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.12-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
@@ -219,9 +211,6 @@ popd
 
 * Wed Jan 02 2008 Gennady Kovalev <gik@altlinux.ru> 0.4.2-alt1
 - 0.4.2 release
-
-* Sat Jan 2 2008 Gennady Kovalev <gik@altlinux.ru> 0.4.1-alt1
-- 0.4.1 release
 
 * Thu Nov 15 2007 Gennady Kovalev <gik@altlinux.ru> 0.4.0-alt1
 - 0.4 release
