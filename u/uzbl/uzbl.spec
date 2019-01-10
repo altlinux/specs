@@ -1,45 +1,32 @@
 Name: uzbl
-Version: 20111001
-Release: alt1.2
+Version: 20190110
+Release: alt1
 Group: Networking/WWW
 License: GPL
 Summary: The uzbl web interface tools
-
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
-
-
 URL: http://www.uzbl.org
 
 Source0: %name-%version.tar
-Patch:   %name-remove-deprecated.patch
 
-BuildRequires: libwebkitgtk3-devel
+BuildRequires: libwebkit2gtk-devel libgnutls-devel
+BuildRequires: rpm-build-python3 python3-module-wheel python3-module-pip
+BuildRequires: python3-module-mpl_toolkits
+Requires: dmenu
 
 %description
 The uzbl web interface tools
 
 %prep
 %setup
-%patch -p1
 
 %build
 %make PREFIX=/usr DESTDIR=%buildroot
+      DOCDIR=%buildroot/%_docdir/uzbl LIB_SUFFIX="%_libsuff"
 
 %install
-%makeinstall PREFIX=/usr DESTDIR=%buildroot
-
-# Uzbl installs many various files into
-# /usr/share/uzbl. Let's move something to %_docdir:
-
-mkdir -p -- %buildroot/%_docdir
-mv -- %buildroot/%_datadir/uzbl/docs   %buildroot/%_docdir/uzbl
-
-mkdir -p -- %buildroot/%_docdir/uzbl/examples
-mv -- %buildroot/%_datadir/uzbl/examples/data/bookmarks\
-      %buildroot/%_datadir/uzbl/examples/data/dforms\
-      %buildroot/%_datadir/uzbl/examples/data/scripts\
-        %buildroot/%_docdir/uzbl/examples/
-rm -f -- %buildroot/%_datadir/uzbl/examples/uzbl-cookie-manager.c
+%makeinstall PREFIX=/usr DESTDIR=%buildroot\
+      DOCDIR=%buildroot/%_docdir/uzbl LIB_SUFFIX="%_libsuff"
 
 # install vim syntax:
 cp -r -- extras/vim %buildroot/%_datadir/vim
@@ -47,15 +34,39 @@ cp -r -- extras/vim %buildroot/%_datadir/vim
 # make /usr/bin/uzbl symlink
 ln -s -- uzbl-tabbed %buildroot/%_bindir/uzbl
 
+# rm dist-info:
+rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
+
 %files
 %_bindir/*
-%_docdir/uzbl
-%_datadir/uzbl
+%dir %python3_sitelibdir_noarch/uzbl
+%python3_sitelibdir_noarch/uzbl/*
+%dir %_libdir/uzbl
+%_libdir/uzbl/*
+
+%_desktopdir/uzbl*.desktop
+%_iconsdir/hicolor/32x32/apps/uzbl.png
+%_iconsdir/hicolor/48x48/apps/uzbl.png
+%_iconsdir/hicolor/64x64/apps/uzbl.png
+%_iconsdir/hicolor/96x96/apps/uzbl.png
+%_datadir/appdata/uzbl*.xml
+
+%dir %_datadir/uzbl
+%_datadir/uzbl/*
+
+%_man1dir/uzbl*
+%dir %_docdir/uzbl
+%_docdir/uzbl/*
+
 %_datadir/vim/ftplugin/uzbl.vim
 %_datadir/vim/ftdetect/uzbl.vim
 %_datadir/vim/syntax/uzbl.vim
 
 %changelog
+* Thu Jan 10 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt1
+- 2019.01.10 - "next" branch snapshot with webkit2 support
+  (current stable version 0.9.2 does not support it)
+
 * Sun Apr 14 2013 Andrey Cherepanov <cas@altlinux.org> 20111001-alt1.2
 - Fix build with new glib2
 
