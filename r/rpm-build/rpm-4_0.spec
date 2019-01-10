@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt121
+Release: alt122
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -31,7 +31,7 @@ Summary(ru_RU.UTF-8): Файлы, необходимые для установк
 License: GPL
 Group: Development/Other
 Obsoletes: spec-helper
-PreReq: librpmbuild = %version-%release
+Requires: librpmbuild = %version-%release
 PreReq: shadow-utils
 Requires: autoconf autoconf-common automake automake-common bison coreutils cpio
 Requires: gcc gettext-tools glibc-devel gnu-config file kernel-headers libtool m4
@@ -511,6 +511,22 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Thu Jan 10 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt122
+- Dropped $RPM_STRICT_INTERDEPS support
+  (introduced in 4.0.4-alt110).
+- Made name, version, release, and disttag check stricter
+  (by vseleznv@ and me).
+- Changed the generator of package self-provides
+  and the generator of strict intersubpackage dependencies
+  to use [E:]V-R[:D] format instead of [E:]V-R
+  (by vseleznv@ and me).
+- addReqProv: implemented dep flags merge:
+  when a stronger requirement is added while a weaker one already exists
+  with incompatible flags, try to merge these flags to produce a new
+  stronger requirement.  For example,
+  "PreReq: %name = %version" + "Requires: %name = %version-%release"
+  now results to "PreReq: %name = %version-%release".
+
 * Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt121
 - verify-elf: disabled stack verification and elflint on RISC-V (arei@).
 - platform.in: removed harmless bash4 noise from %%filter_from_* macros
