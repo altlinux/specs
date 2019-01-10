@@ -2,7 +2,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.16.2
+Version: 1.18.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -107,6 +107,9 @@ make check
 
 
 %changelog
+* Thu Jan 10 2019 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
+- Updated to 1.18.0.
+
 * Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 1.16.2-alt1
 - Use %%e2k macro.
 - Updated to 1.16.2.

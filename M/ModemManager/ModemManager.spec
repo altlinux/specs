@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.8.2
+Version: 1.9.990
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -25,8 +25,8 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
-%{?_with_qmi:BuildRequires: libqmi-glib-devel}
-%{?_with_mbim:BuildRequires: libmbim-glib-devel}
+%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.22.0}
+%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.18.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: ppp-devel
@@ -144,6 +144,7 @@ Requires: libmm-glib-devel = %version-%release
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 	--enable-gtk-doc \
+	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
 
 %make_build
@@ -231,6 +232,10 @@ fi
 %endif
 
 %changelog
+* Thu Jan 10 2019 Mikhail Efremov <sem@altlinux.org> 1.9.990-alt1
+- Disabled silent rules.
+- Updated to 1.9.990 (1.10-rc1).
+
 * Mon Sep 24 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Fix changelog entry.
 - Updated to 1.8.2.
