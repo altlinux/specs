@@ -7,11 +7,12 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.16
-Release: alt1.1
+Release: alt1.2
 Summary: (alpha) perl interface to C's _Decimal64 operations.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
+ExcludeArch: aarch64 %e2k
 
 Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.tar.gz
 
@@ -66,6 +67,9 @@ Note that this module is alpha software. It seems to work ok
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 10 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.2
+- ExcludeArch: aarch64
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
 - rebuild with new perl 5.26.1
 
