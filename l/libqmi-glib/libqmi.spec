@@ -2,7 +2,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -17,7 +17,7 @@ Patch: %_name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: libmbim-glib-devel
+BuildRequires: libmbim-glib-devel >= 1.18.0
 BuildRequires: libgudev-devel
 BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
@@ -107,6 +107,9 @@ make check
 
 
 %changelog
+* Thu Jan 10 2019 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt1
+- Updated to 1.22.0.
+
 * Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 1.20.2-alt1
 - Use %%e2k macro.
 - Updated to 1.20.0.
