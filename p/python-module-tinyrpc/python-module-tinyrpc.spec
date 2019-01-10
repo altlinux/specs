@@ -1,26 +1,24 @@
-%def_without python3
 
 %define oname tinyrpc
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt2.1
+Version: 0.9.3
+Release: alt1
 Summary: Modular RPC library
 Group: Development/Python
 License: MIT
 Url: http://github.com/mbr/tinyrpc
 Source: %oname-%version.tar.gz
+Patch1: tinyrpc-0.9.3-python3.patch
 BuildArch: noarch
 
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-%endif
 
 %description
 tinyrpc is a library for making and handling RPC calls in python.
@@ -46,42 +44,42 @@ and providing clever syntactic sugar for writing dispatchers.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
+find tinyrpc -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
+
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc README.rst
 %python_sitelibdir/*
 
-
-%if_with python3
 %files -n python3-module-%oname
 %doc README.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt1
+- 0.9.3
+- build python3 package
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
