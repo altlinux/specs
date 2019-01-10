@@ -1,5 +1,5 @@
 Name: rpmrebuild-arepo
-Version: 3.1.7
+Version: 3.1.8
 Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
@@ -44,6 +44,10 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_bindir/arepo_pre.py
 
 %changelog
+* Sat Jan 12 2019 Dmitry V. Levin <ldv@altlinux.org> 3.1.8-alt1
+- arepo.sh: generate strict requirements in [E:]V-R[:D] format,
+  this complements the change made in rpm-build-4.0.4-alt122.
+
 * Fri Oct 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.7-alt1
 - arepo.sh: handle dependencies like ".strictprefix-name-version-release" (ALT#35538).
 
