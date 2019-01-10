@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.7
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Configuration/Packaging
@@ -10,7 +10,7 @@ Summary: KDE Software Center
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: kf5-kirigami
+Requires: kf5-kirigami appstream-data
 
 Source: %rname-%version.tar
 
@@ -34,8 +34,6 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
-Provides: kf5-kinfocenter-common = %EVR
-Obsoletes: kf5-kinfocenter-common < %EVR
 %description common
 %name common package
 
@@ -111,6 +109,9 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 %_K5xdgapp/org.kde.discover-flatpak.desktop
 
 %changelog
+* Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt3
+- require appstream-data
+
 * Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt2
 - rebuild
 
