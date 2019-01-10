@@ -1,7 +1,7 @@
 Name: lz4
 Epoch: 1
 Version: 1.8.3
-Release: alt1
+Release: alt2
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
 Group: Archiving/Compression
@@ -95,7 +95,8 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %check
 export CC=false CXX=false # nothing should be compiled or linked during check
-%make_build -k test -C tests BUILD_STATIC=%BUILD_STATIC
+# Avoid obscure races by disabling parallelized tests.
+make -k test -C tests BUILD_STATIC=%BUILD_STATIC
 
 %files
 %_bindir/*
@@ -117,6 +118,9 @@ export CC=false CXX=false # nothing should be compiled or linked during check
 %endif
 
 %changelog
+* Thu Jan 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.3-alt2
+- %%check: avoid obscure races by disabling parallelized tests.
+
 * Tue Sep 11 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.3-alt1
 - v1.8.2 -> v1.8.3.
 
