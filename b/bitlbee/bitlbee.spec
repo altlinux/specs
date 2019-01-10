@@ -1,12 +1,13 @@
 Name: bitlbee
 Version: 3.5.1
-Release: alt1
+Release: alt2
 Group: Networking/IRC
 License: GPLv2
 Url: http://www.bitlbee.org
 Summary: IRC gateway to IM chat networks
 Source: %name-%version.tar.gz
 Source1: %name.alt.init
+Patch: bitlbee-3.5.1-openssl-1.1.0.patch
 
 # Automatically added by buildreq on Tue Mar 04 2014
 # optimized out: asciidoc docbook-dtds docbook-style-xsl libcom_err-devel libgcrypt-devel libgpg-error libgpg-error-devel libkrb5-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml xml-common xml-utils xsltproc
@@ -46,6 +47,8 @@ Summary: Off-the-record (OTR) plugin for %name
 sed -i 's/\Version: $BITLBEE_VERSION/Version: %version/' configure
 # Hack out root check from systemd files installer
 sed -i 's/\$(shell id -u),0/0,0/' Makefile
+
+%patch -p1
 
 %build
 ./configure \
@@ -112,6 +115,9 @@ install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Jan 10 2019 Fr. Br. George <george@altlinux.ru> 3.5.1-alt2
+- Provide upstream openssl 1.1 support
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 3.5.1-alt1
 - Autobuild version bump to 3.5.1
 
