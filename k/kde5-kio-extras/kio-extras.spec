@@ -9,7 +9,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -139,6 +139,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
+- add fix to avoid crash by not checking free space for smb://
+
 * Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - rebuild
 
