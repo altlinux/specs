@@ -5,14 +5,14 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 40.5.0
+Version: 40.6.3
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python
 # Source-git: https://github.com/pypa/setuptools.git
-Url: http://pypi.python.org/pypi/setuptools
+Url: https://pypi.org/project/setuptools/
 
 Provides: python-module-distribute = %EVR
 Obsoletes: python-module-distribute <= 0.6.35-alt1
@@ -29,7 +29,9 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python %py_dependencies distutils
 
 %if_with check
+BuildRequires: python-module-futures
 BuildRequires: python-module-pytest
+BuildRequires: python-module-pytest-cov
 BuildRequires: python-module-pytest-virtualenv
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-path
@@ -41,6 +43,7 @@ BuildRequires: python-module-pytest-fixture-config
 BuildRequires: python-module-pytest-flake8
 BuildRequires: python3-module-Paver
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytest-virtualenv
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-path
@@ -50,6 +53,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-contextlib2
 BuildRequires: python3-module-pytest-fixture-config
 BuildRequires: python3-module-pytest-flake8
+BuildRequires: python3-module-tox
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python-devel
 BuildPreReq: python3-dev
@@ -159,17 +163,19 @@ ln -s easy_install-%_python_version -T %buildroot%_bindir/easy_install
 ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
 
 %check
+sed -i -e '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest\
+    {envbindir}\/pip install -I --no-build-isolation -e {toxinidir}' \
+-e '/usedevelop=/d' tox.ini
 export LC_ALL=C.UTF-8
-export PYTHONPATH=`pwd`
-export PIP_INDEX_URL=http://host.invalid./
-# unset env var RPM_BUILD_DIR to disable ALT specific behavior during
-# RPM build
-RPM_BUILD_DIR='' py.test -v
-
-pushd ../python3
-export PYTHONPATH=`pwd`
-RPM_BUILD_DIR='' py.test3 -v
-popd
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='LC_ALL'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE *.rst
@@ -208,6 +214,9 @@ popd
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Thu Jan 10 2019 Stanislav Levin <slev@altlinux.org> 1:40.6.3-alt1
+- 40.5.0 -> 40.6.3.
+
 * Thu Nov 01 2018 Stanislav Levin <slev@altlinux.org> 1:40.5.0-alt1
 - 40.4.3 -> 40.5.0.
 
