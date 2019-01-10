@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        60.4.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -50,10 +50,14 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang6.0
-BuildRequires: clang6.0-devel
-BuildRequires: llvm6.0-devel
+BuildRequires: clang7.0
+BuildRequires: clang7.0-devel
+BuildRequires: llvm7.0-devel
 BuildRequires: lld-devel
+%ifarch %{ix86}
+BuildRequires: gcc
+BuildRequires: gcc-c++
+%endif
 BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
@@ -162,8 +166,9 @@ export MOZ_BUILD_APP=browser
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
- -fuse-ld=lld"
+%ifnarch %{ix86}
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fuse-ld=lld"
+%endif
 
 #MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
 # -fuse-ld=lld -flto=thin \
@@ -190,8 +195,13 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 export RPATH="-Wl,-rpath,$rpath"
 %endif
 
+%ifnarch %{ix86}
 export CC="clang"
 export CXX="clang++"
+%else
+export CC="gcc"
+export CXX="g++"
+%endif
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
@@ -202,11 +212,13 @@ export BUILD_VERBOSE_LOG=1
 
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
-ac_add_options --libdir="%_libdir"
+%ifnarch %{ix86}
 ac_add_options --enable-linker=lld
-%ifnarch %{ix86} x86_64
+%ifnarch x86_64
 ac_add_options --disable-webrtc
-%else
+%endif
+%endif
+%ifarch %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
 EOF
@@ -333,6 +345,10 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Thu Jan 10 2019 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt2
+- Rebuild with llvm7.0 (ALT #35858).
+- Build with gcc on %%ix86.
+
 * Tue Dec 11 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
 - New ESR version (60.4.0)
 - Fixed:
