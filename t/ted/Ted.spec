@@ -1,7 +1,7 @@
 Summary:        An easy Rich Text Processor
 Name:           ted
 Version:        2.23
-Release:        alt1
+Release:        alt2
 License:        GPLv2+
 Group:          Office
 Source:         ftp://ftp.nluug.nl/pub/editors/ted/ted-2.23.src.tar.gz
@@ -28,7 +28,7 @@ This package is the general part.
 sed -i '/Icon=/s/.*/Icon=Ted/' tedPackage/Ted.desktop.in
 
 %build
-%make_build CONFIGURE_OPTIONS=--with-GTK
+make CONFIGURE_OPTIONS=--with-GTK
 %make package
 for N in 16 24 32 48 64; do convert Ted/tedmain.xpm $N.png; done
 
@@ -47,6 +47,9 @@ done
 %_man1dir/*
 
 %changelog
+* Thu Jan 10 2019 Fr. Br. George <george@altlinux.ru> 2.23-alt2
+- Avoid parallel build race
+
 * Tue Apr 30 2013 Fr. Br. George <george@altlinux.ru> 2.23-alt1
 - Initial build for ALT from upstream spec
 
@@ -125,7 +128,7 @@ acroread support.
 See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - Solid shading of paragraphs and table cells.
 - Colored table cell borders, Text colors.
-* Sun Mar 01 2002 Mark de Does <mark@mdedoes.com> 2.11-1
+* Fri Mar 01 2002 Mark de Does <mark@mdedoes.com> 2.11-1
 - New upstream release.
 See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - Footnotes and endnotes.
@@ -136,7 +139,7 @@ See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - Widow/Orphan control.
 - Keep paragraph on one page, Keep paragraph on same page as next supported.
 - Better support for sending MIME and HTML mail. Include images in message.
-* Mon Jan 31 2001 Mark de Does <mark@mdedoes.com> 2.9-1
+* Wed Jan 31 2001 Mark de Does <mark@mdedoes.com> 2.9-1
 - New upstream release.
 See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - Full support for page headers and footers including page numbers.
@@ -144,7 +147,7 @@ See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - The improvements in WMF drawing and support for PAGEREF fields make 
 the pdf files from the printed postscript very similar to the RTF 
 original.
-* Tue Apr 15 2000 Mark de Does <mark@mdedoes.com> 2.8-1
+* Sat Apr 15 2000 Mark de Does <mark@mdedoes.com> 2.8-1
 - New upstream release.
 See http://ftp.nluug.nl/pub/editors/ted/announce.html
 - Editing behavior closer to that of Word. E.G. support for Control key 
