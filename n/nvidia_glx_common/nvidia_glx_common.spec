@@ -18,9 +18,9 @@
 # version-release
 
 %define nv_version 410
-%define nv_release 78
+%define nv_release 93
 %define nv_minor %nil
-%define pkg_rel alt210
+%define pkg_rel alt211
 %define set_gl_nvidia_ver 1.1.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -310,6 +310,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt211
+- new version
+
 * Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 410.78-alt210
 - require xsetup
 
