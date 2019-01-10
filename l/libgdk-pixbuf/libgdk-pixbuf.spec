@@ -16,7 +16,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -29,6 +29,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: %_name-2.37.92-alt-compat-version-script.patch
+
+# f6e17d13292ad933327514a2a314a28d402529d2
+Patch10: gdk-pixbuf-2.38.0-up-pixbuf_threads_test.patch
 
 Source1: %_name.map
 Source2: %_name.lds
@@ -134,6 +137,9 @@ the functionality of the installed GdkPixBuf library.
 %prep
 %setup -n %_name-%version
 %patch -p1 -b .alt
+
+%patch10 -p1
+
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
@@ -231,10 +237,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/GdkPixbuf-%api_ver.typelib
+%_typelibdir/GdkPixdata-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/GdkPixbuf-%api_ver.gir
+%_girdir/GdkPixdata-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -245,6 +253,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Jan 10 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt3
+- tests/pixbuf-threads: use g_fopen instead of fopen (fixed by upstream)
+
 * Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt2
 - updated to 2.38.0-26-g9f7d6969
 
