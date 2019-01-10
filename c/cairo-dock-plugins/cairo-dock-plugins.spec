@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt11
+Release: alt12
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -44,7 +44,7 @@ BuildRequires: pkgconfig(libical)
 BuildRequires: pkgconfig(indicator3-0.4)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(upower-glib)
-BuildRequires: pkgconfig(webkitgtk-3.0)
+#BuildRequires: pkgconfig(webkitgtk-3.0)
 BuildRequires: pkgconfig(libxklavier)
 BuildRequires: pkgconfig(zeitgeist-2.0)
 BuildRequires: cairo-dock-devel >= %version
@@ -87,7 +87,7 @@ Requires: %packagename-quick-browser = %EVR
 Requires: %packagename-show_mouse = %EVR
 Requires: %packagename-toons = %EVR
 Requires: %packagename-keyboard-indicator = %EVR
-Requires: %packagename-weblets = %EVR
+#Requires: %packagename-weblets = %EVR
 Requires: %packagename-network-monitor = %EVR
 Requires: %packagename-system-monitor = %EVR
 Requires: %packagename-mail = %EVR
@@ -758,18 +758,18 @@ This applet lets you control the keyboard layout.
 %_libdir/%packagename/libcd-keyboard-indicator.so
 
 #---------------------------------------------------------------------
-%package -n %packagename-weblets
-Summary: That package provides plugin "weblets"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
+#package -n %packagename-weblets
+#Summary: That package provides plugin "weblets"
+#Group: Graphical desktop/Other
+#Requires: %packagename = %version
+#Requires: %packagename-common = %EVR
 
-%description -n %packagename-weblets
-The weblets applet allows you to show an interactive web page on your desktop.
+#description -n %packagename-weblets
+#The weblets applet allows you to show an interactive web page on your desktop.
 
-%files -n %packagename-weblets
-%_datadir/%packagename/plug-ins/weblets
-%_libdir/%packagename/libcd-weblets.so
+#files -n %packagename-weblets
+#_datadir/%packagename/plug-ins/weblets
+#_libdir/%packagename/libcd-weblets.so
 
 #---------------------------------------------------------------------
 
@@ -1135,6 +1135,10 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Wed Jan 09 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt12
+- Rebuild without libwebkitgtk3
+- remove plugin weblets
+
 * Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt11
 - drop ubt
 - disable build python2 bindings
