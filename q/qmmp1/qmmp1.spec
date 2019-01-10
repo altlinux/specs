@@ -5,7 +5,7 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 
 Group: Sound
@@ -273,6 +273,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 1.2.6-alt1
+- new version
+
 * Tue Nov 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt1
 - new version
 
