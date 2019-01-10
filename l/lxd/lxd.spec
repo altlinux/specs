@@ -1,17 +1,16 @@
 %global import_path github.com/lxc/lxd
 
-%global __find_debuginfo_files %nil
+#global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
 %set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/* %go_root/bin/* %go_tooldir/*
+#add_debuginfo_skiplist %go_root %_bindir
 
 %define lxdgroup lxd
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.17
+Version:	3.8
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -42,29 +41,97 @@ Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
 Requires:	squashfs-tools
+Requires:	liblxd_sqlite3
 
+BuildRequires: libcap-devel
+BuildRequires: libuv-devel
+
+BuildRequires: liblxd_sqlite3-devel
+BuildRequires: libdqlite-devel
+
+BuildRequires: help2man
+# Needed for manpages generation. Accessing to '/proc/self/...'
+BuildRequires: /proc
 
 # lxc
-BuildRequires:	golang(gopkg.in/flosch/pongo2.v3)
-BuildRequires:	golang(github.com/gorilla/websocket)
-BuildRequires:	golang(github.com/olekukonko/tablewriter)
-BuildRequires:	golang(github.com/gosexy/gettext)
-BuildRequires:	golang(golang.org/x/crypto/ssh/terminal)
-BuildRequires:	golang(gopkg.in/inconshreveable/log15.v2)
-BuildRequires:	golang(gopkg.in/yaml.v2)
+BuildRequires: golang(gopkg.in/flosch/pongo2.v3)
+BuildRequires: golang(github.com/gorilla/websocket)
+BuildRequires: golang(github.com/olekukonko/tablewriter)
+BuildRequires: golang(github.com/gosexy/gettext)
+BuildRequires: golang(golang.org/x/crypto/ssh/terminal)
+BuildRequires: golang(gopkg.in/inconshreveable/log15.v2)
+BuildRequires: golang(gopkg.in/yaml.v2)
+BuildRequires: golang(github.com/pkg/errors)
+BuildRequires: golang(github.com/spf13/cobra)
+BuildRequires: golang(github.com/spf13/cobra/doc)
+BuildRequires: golang(gopkg.in/juju/environschema.v1/form)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery/form)
+BuildRequires: golang(github.com/juju/persistent-cookiejar)
+BuildRequires: golang(gopkg.in/errgo.v1)
+
+# fuidshift
+BuildRequires:  golang(github.com/spf13/cobra)
 
 # lxd
 BuildRequires:	lxc-devel
 BuildRequires:	libacl-devel
-BuildRequires:	golang(github.com/coreos/go-systemd/activation)
-BuildRequires:	golang(github.com/dustinkirkland/golang-petname)
-BuildRequires:	golang(github.com/golang/protobuf/proto)
-BuildRequires:	golang(github.com/gorilla/mux)
-BuildRequires:	golang(github.com/mattn/go-sqlite3)
-BuildRequires:	golang(github.com/pborman/uuid)
-BuildRequires:	golang(github.com/syndtr/gocapability/capability)
-BuildRequires:	golang(gopkg.in/lxc/go-lxc.v2)
-BuildRequires:	golang(gopkg.in/tomb.v2)
+BuildRequires: golang(github.com/coreos/go-systemd/activation)
+BuildRequires: golang(github.com/dustinkirkland/golang-petname)
+BuildRequires: golang(github.com/golang/protobuf/proto)
+BuildRequires: golang(github.com/gorilla/mux)
+BuildRequires: golang(github.com/mattn/go-sqlite3)
+BuildRequires: golang(github.com/pborman/uuid)
+BuildRequires: golang(github.com/syndtr/gocapability/capability)
+BuildRequires: golang(gopkg.in/lxc/go-lxc.v2)
+BuildRequires: golang(gopkg.in/tomb.v2)
+BuildRequires: golang(github.com/CanonicalLtd/candidclient)
+BuildRequires: golang(github.com/CanonicalLtd/go-dqlite)
+BuildRequires: golang(github.com/boltdb/bolt)
+BuildRequires: golang(github.com/flosch/pongo2)
+BuildRequires: golang(github.com/gorilla/websocket)
+BuildRequires: golang(github.com/hashicorp/raft)
+BuildRequires: golang(github.com/hashicorp/raft-boltdb)
+BuildRequires: golang(github.com/miekg/dns)
+BuildRequires: golang(github.com/olekukonko/tablewriter)
+BuildRequires: golang(github.com/pkg/errors)
+BuildRequires: golang(github.com/spf13/cobra)
+BuildRequires: golang(github.com/spf13/cobra/doc)
+BuildRequires: golang(golang.org/x/net/context)
+BuildRequires: golang(gopkg.in/lxc/go-lxc.v2)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery/checkers)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery/identchecker)
+BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery)
+BuildRequires: golang(gopkg.in/robfig/cron.v2)
+BuildRequires: golang(gopkg.in/yaml.v2)
+BuildRequires: golang(github.com/Rican7/retry)
+BuildRequires: golang(github.com/armon/go-metrics)
+BuildRequires: golang(github.com/gogo/protobuf/proto)
+BuildRequires: golang(gopkg.in/CanonicalLtd/candidclient.v1)
+BuildRequires: golang(github.com/CanonicalLtd/raft-http)
+BuildRequires: golang(github.com/CanonicalLtd/raft-membership)
+BuildRequires: golang(github.com/CanonicalLtd/raft-test)
+BuildRequires: golang(github.com/hashicorp/go-msgpack/codec)
+BuildRequires: golang(github.com/ryanfaerman/fsm)
+BuildRequires: golang(github.com/stretchr/testify)
+BuildRequires: golang(github.com/juju/gomaasapi)
+
+#lxd-p2c
+BuildRequires:  golang(github.com/gorilla/websocket)
+BuildRequires:  golang(github.com/pborman/uuid)
+BuildRequires:  golang(github.com/spf13/cobra)
+BuildRequires:  golang(golang.org/x/crypto/ssh/terminal)
+
+#lxc-to-lxd
+BuildRequires:  golang(github.com/gorilla/websocket)
+BuildRequires:  golang(github.com/pborman/uuid)
+BuildRequires:  golang(github.com/spf13/cobra)
+BuildRequires:  golang(golang.org/x/crypto/ssh/terminal)
+BuildRequires:  golang(gopkg.in/lxc/go-lxc.v2)
+
+#lxd-benchmark
+BuildRequires:  golang(github.com/spf13/cobra)
 
 %description
 REST API, command line tool and OpenStack integration plugin for LXC.
@@ -89,22 +156,23 @@ which use the supplementary Go tools libraries with %import_path imports.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$BUILDDIR"
+export CGO_ENABLED=1
 
 %golang_prepare
 
 cd .build/src/%import_path
 
-for pkg in lxc lxd fuidshift
-do
-    %golang_build $pkg
-done
+# Need to use a patched version of libsqlite
+export TAGS="libsqlite3"
+export CGO_CPPFLAGS="$(pkg-config --cflags lxd_sqlite3)"
+export CGO_LDFLAGS="$(pkg-config --libs lxd_sqlite3)"
+%golang_build lxd lxc fuidshift lxd-benchmark lxd-p2c lxc-to-lxd lxd/db
 
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
 
 %golang_install
-
 
 mkdir -p -- %buildroot/%go_root/bin
 for f in %buildroot/%_bindir/*; do
@@ -134,15 +202,19 @@ cp -av %SOURCE13 %buildroot/%_unitdir/
 
 # install bash completion
 mkdir -p %buildroot/%_datadir/bash-completion/completions/
-cp -av config/bash/lxd-client %buildroot/%_datadir/bash-completion/completions/
+cp -av scripts/bash/lxd-client %buildroot/%_datadir/bash-completion/completions/
 
 # /var/{lib,log}/lxd
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
 
-mkdir -p %buildroot/%_bindir/
-cp -av scripts/lx* %buildroot/%_bindir/
-
+# Install the manpages
+mkdir -p %buildroot/%_man1dir
+help2man %buildroot/%_bindir/fuidshift -n "uid/gid shifter" --no-info > %buildroot/%_man1dir/fuidshift.1
+help2man %buildroot/%_bindir/lxc-to-lxd -n "Convert LXC containers to LXD" --no-info --version-string=%version > %buildroot/%_man1dir/lxc-to-lxd.1
+help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benchmark" --no-info --no-discard-stderr > %buildroot/%_man1dir/lxd-benchmark.1
+%buildroot/%_bindir/lxd manpage %buildroot/%_man1dir/
+%buildroot/%_bindir/lxc manpage %buildroot/%_man1dir/
 
 %pre
 %_sbindir/groupadd -r -f %lxdgroup 2>/dev/null || :
@@ -168,11 +240,22 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %dir %_sysconfdir/lxd
 %config(noreplace) %_sysconfdir/lxd/dnsmasq.conf
 
+%_man1dir/*
 
 %files devel
 %go_path/src/*
 
 %changelog
+* Thu Jan 10 2019 Denis Pynkin <dans@altlinux.org> 3.8-alt1
+- Update
+- Add manpages generation
+
+* Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.2-alt1
+- Update
+
+* Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 3.0.0-alt1
+- new version
+
 * Wed Sep 06 2017 Denis Pynkin <dans@altlinux.org> 2.17-alt1
 - new version 2.17
 
