@@ -1,9 +1,8 @@
 %define oname ncclient
-%def_without python3
 
 Summary: Python library for NETCONF clients
 Name: python-module-%oname
-Version: 0.5.2
+Version: 0.6.3
 Release: alt1
 Url: https://github.com/leopoul/ncclient
 Source: %name-%version.tar
@@ -12,12 +11,17 @@ License: ASL 2.0
 Group: Development/Python
 
 BuildArch: noarch
-BuildRequires: python-devel python-module-setupdocs python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-paramiko >= 1.15.0
+BuildRequires: python-module-lxml >= 3.3.0
+BuildRequires: python-module-six
 
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setupdocs python3-module-setuptools
-%endif
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-paramiko >= 1.15.0
+BuildRequires: python3-module-lxml >= 3.3.0
+BuildRequires: python3-module-six
 
 %description
 ncclient is a Python library that facilitates client-side scripting
@@ -40,43 +44,36 @@ Poulopoulos (@leopoul)
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
-
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_build_install --prefix=/usr
 
-%if_with python3
 pushd ../python3
-%python3_install
+%python3_install --prefix=/usr
 popd
-%endif
-
 
 %files
 %doc Changelog LICENSE README README.md README.rst requirements.txt
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc Changelog LICENSE README README.md README.rst requirements.txt
 %python3_sitelibdir/*
-%endif
-
 
 %changelog
+* Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.6.3-alt1
+- 0.6.3
+- build python3 package
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.2-alt1
 - New version
 
