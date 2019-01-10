@@ -1,7 +1,7 @@
 %define sourcename ta-lib
 Name: libta-lib
 Version: 0.4.0
-Release: alt2
+Release: alt3
 Summary: TA LIB
 
 Group: Development/Other
@@ -32,7 +32,7 @@ Requires: %name
 #./autogen.sh
 #libtoolize -f
 %configure LDFLAGS="-lm"
-%make_build
+%make_build || %make
 
 %install
 %makeinstall_std
@@ -46,6 +46,9 @@ Requires: %name
 %_includedir/ta-lib
 
 %changelog
+* Thu Jan 10 2019 Konstantin Artyushkin <akv@altlinux.org> 0.4.0-alt3
+- make_build || make
+
 * Wed Jun 21 2017 Konstantin Artyushkin <akv@altlinux.org> 0.4.0-alt2
 - split a devel pack
 
