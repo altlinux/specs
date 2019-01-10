@@ -1,5 +1,5 @@
 Name:           libnftnl
-Version:        1.1.1
+Version:        1.1.2
 Release:        alt1
 Summary:        Netfilter nf_tables infrastructure library
 Group:          System/Libraries
@@ -49,9 +49,6 @@ The %name-examples package contains examples files for %name.
 
 %check
 %make check
-pushd tests
-    ./test-script.sh
-popd
 mkdir -p %buildroot%_sbindir
 cp examples/.libs/* %buildroot%_sbindir/
 
@@ -75,6 +72,9 @@ cp examples/.libs/* %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Thu Jan 10 2019 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt1
+- Version 1.1.2
+
 * Sat Jun 09 2018 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 
