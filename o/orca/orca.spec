@@ -2,7 +2,7 @@
 
 Name: orca
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -14,6 +14,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
+Source4: ru.po
 
 #Patch1: orca-3.2.1-alt-voiceman.patch
 Patch2: orca-3.2.1-alt-punc.patch
@@ -59,6 +60,7 @@ Jaws For Windows компании Freedom Scientific.
 %setup
 #%patch1 -p1
 %patch2 -p1
+cp -f %SOURCE4 po/ru.po
 
 %build
 %autoreconf
@@ -90,6 +92,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Thu Jan 10 2019 Ivan Razzhivin <underwit@altlinux.org> 3.30.1-alt3
+- update russian translation
+
 * Wed Nov 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.30.1-alt2
 - requires fixed (closes: #35221)
 
