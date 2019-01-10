@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.6
-Release: alt2%ubt
+Release: alt3
 
 License: AGPLv3
 Summary: Network based backup program
@@ -37,8 +37,7 @@ Source16: baculum-apache2.logrotate
 Patch1: %name-alt.patch
 Patch2: %name-gui-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libssl libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
+BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
 
 %filter_from_requires /libbaccats-%version\.so/d
 
@@ -47,36 +46,36 @@ BuildRequires: libreadline-devel
 %endif
 %if_enabled bat
 # bat buildrequires
-BuildRequires: imake libICE-devel libX11-devel libqwt-devel xorg-cf-files
+BuildRequires: imake libICE-devel libX11-devel xorg-cf-files
 %endif
 
-Requires: %name-common = %version-%release
-Requires: %name-client = %version-%release
-Requires: %name-storage = %version-%release
-Requires: %name-console = %version-%release
-Requires: %name-dir = %version-%release
+Requires: %name-common = %EVR
+Requires: %name-client = %EVR
+Requires: %name-storage = %EVR
+Requires: %name-console = %EVR
+Requires: %name-dir = %EVR
 
 %package client
 Summary: Network based backup program (client only)
 Group: Archiving/Backup
-Provides: %name-fd = %version-%release
+Provides: %name-fd = %EVR
 Conflicts: bacula-client
 Conflicts: bacula7-client
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %package storage
 Summary: Network based backup program (storage only)
 Group: Archiving/Backup
 Conflicts: bacula-storage
 Conflicts: bacula7-storage
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %package console
 Summary: Network based backup program (console only)
 Group: Archiving/Backup
 Conflicts: bacula-console
 Conflicts: bacula7-console
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %if_enabled bat
 %package bat
@@ -91,17 +90,17 @@ Conflicts: bacula7-bat
 %package director-common
 Summary: Network based backup program (director common)
 Group: Archiving/Backup
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Conflicts: bacula-director-common
 Conflicts: bacula7-director-common
 
 %package director-mysql
 Summary: Network based backup program (MySQL director only)
 Group: Archiving/Backup
-Requires(pre): %name-director-common = %version-%release
-Provides: %name-director = %version-%release
-Obsoletes: %name-director < %version-%release
-Provides: %name-dir = %version-%release
+Requires(pre): %name-director-common = %EVR
+Provides: %name-director = %EVR
+Obsoletes: %name-director < %EVR
+Provides: %name-dir = %EVR
 Conflicts: bacula-director-mysql
 Conflicts: bacula7-director-mysql
 
@@ -109,17 +108,17 @@ Conflicts: bacula7-director-mysql
 Summary: Network based backup program (SQLITE3 director only)
 Group: Archiving/Backup
 Requires(pre): sqlite3
-Requires(pre): %name-director-common = %version-%release
-Provides: %name-dir = %version-%release
+Requires(pre): %name-director-common = %EVR
+Provides: %name-dir = %EVR
 Conflicts: bacula-director-sqlite3
 Conflicts: bacula7-director-sqlite3
 
 %package director-postgresql
 Summary: Network based backup program (PostgreSQL director only)
 Group: Archiving/Backup
-Requires(pre): %name-director-common = %version-%release
+Requires(pre): %name-director-common = %EVR
 Requires: postgresql10
-Provides: %name-dir = %version-%release
+Provides: %name-dir = %EVR
 Conflicts: bacula-director-postgresql
 Conflicts: bacula7-director-postgresql
 
@@ -133,7 +132,7 @@ Conflicts: bacula7-common
 %package debug
 Summary: Network based backup program (debug files)
 Group: Archiving/Backup
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 BuildArch: noarch
 Conflicts: bacula-debug
 Conflicts: bacula7-debug
@@ -149,9 +148,9 @@ Conflicts: bacula7-nagios
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
 BuildArch: noarch
-Requires: %name = %version-%release
-Requires: %name-console = %version-%release
-Requires: baculum9-tools = %version-%release
+Requires: %name = %EVR
+Requires: %name-console = %EVR
+Requires: baculum9-tools = %EVR
 Requires: %{php_version}
 Requires: %{php_version}-dom
 Requires: %{php_version}-curl
@@ -160,16 +159,16 @@ Requires: %{php_version}-mbstring
 %package -n baculum9-tools
 Summary: Bacula tools required for baculum web interface.
 Group: Archiving/Backup
-Requires: %name = %version-%release
-Requires: %name-console = %version-%release
+Requires: %name = %EVR
+Requires: %name-console = %EVR
 
 %package -n baculum9-mysql
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
 BuildArch: noarch
-Provides: baculum9 = %version-%release
-Requires: baculum9-common = %version-%release
-Requires: %name-director-mysql = %version-%release
+Provides: baculum9 = %EVR
+Requires: baculum9-common = %EVR
+Requires: %name-director-mysql = %EVR
 Requires: %{php_version}-pdo_mysql
 Requires: %{php_version}-mysqlnd
 
@@ -177,25 +176,25 @@ Requires: %{php_version}-mysqlnd
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
 BuildArch: noarch
-Provides: baculum9 = %version-%release
-Requires: baculum9-common = %version-%release
-Requires: %name-director-sqlite3 = %version-%release
+Provides: baculum9 = %EVR
+Requires: baculum9-common = %EVR
+Requires: %name-director-sqlite3 = %EVR
 Requires: %{php_version}-pdo_sqlite
 
 %package -n baculum9-postgresql
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
 BuildArch: noarch
-Provides: baculum9 = %version-%release
-Requires: baculum9-common = %version-%release
-Requires: %name-director-postgresql = %version-%release
+Provides: baculum9 = %EVR
+Requires: baculum9-common = %EVR
+Requires: %name-director-postgresql = %EVR
 Requires: %{php_version}-pdo_pgsql
 
 %package -n baculum9-apache2
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
 BuildArch: noarch
-Requires: baculum9 = %version-%release
+Requires: baculum9 = %EVR
 Requires: apache2-mod_%{php_version}
 %endif
 
@@ -632,9 +631,9 @@ fi
 %dir %_datadir/bacula/scripts
 %dir %_docdir/bacula
 %_tmpfilesdir/*
-%_man8dir/bacula.8.*
+%_man8dir/bacula.8*
 %_sbindir/bsmtp
-%_man1dir/bsmtp.1.*
+%_man1dir/bsmtp.1*
 %_docdir/bacula/ReleaseNotes
 %_docdir/bacula/LICENSE
 %_libdir/libbac-%version.so
@@ -650,14 +649,14 @@ fi
 %attr (0644,root,root) %_datadir/bacula/sample-configs/bconsole.conf
 %config(noreplace) %attr (0600,root,root) %_sysconfdir/bacula/bconsole.conf
 %_bindir/bconsole
-%_man8dir/bconsole.8.*
+%_man8dir/bconsole.8*
 
 %if_enabled bat
 %files bat
 %attr (0644,root,root) %_datadir/bacula/sample-configs/bat.conf
 %doc %_defaultdocdir/bacula/html
 %attr (0755,root,root) %_bindir/bat
-%_man1dir/bat.1.*
+%_man1dir/bat.1*
 %_miconsdir/bat.png
 %_liconsdir/bat.png
 %_niconsdir/bat.png
@@ -672,7 +671,7 @@ fi
 %config %_initdir/bacula-fd
 %_unitdir/bacula-fd.service
 %_libdir/bpipe-fd.so
-%_man8dir/bacula-fd.8.*
+%_man8dir/bacula-fd.8*
 
 %files storage
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-sd.conf
@@ -687,16 +686,16 @@ fi
 %_sbindir/btape
 %_sbindir/mtx-changer
 %_sbindir/disk-changer
-%_man8dir/bacula-sd.8.*
-%_man8dir/bextract.8.*
-%_man8dir/bls.8.*
-%_man8dir/btape.8.*
+%_man8dir/bacula-sd.8*
+%_man8dir/bextract.8*
+%_man8dir/bls.8*
+%_man8dir/btape.8*
 
 %files debug
 %_sbindir/btraceback
 %_datadir/bacula/scripts/btraceback.dbx
 %_datadir/bacula/scripts/btraceback.gdb
-%_man8dir/btraceback.8.*
+%_man8dir/btraceback.8*
 
 %files director-common
 %doc COPYING ChangeLog ReleaseNotes VERIFYING updatedb
@@ -720,12 +719,12 @@ fi
 %_initdir/bacula-dir
 %_sbindir/bregex
 %_sbindir/bwild
-%_man8dir/bacula-dir.*
-%_man8dir/dbcheck.*
-%_man8dir/bscan.*
-%_man8dir/bcopy.*
-%_man8dir/bregex.*
-%_man8dir/bwild.*
+%_man8dir/bacula-dir.8*
+%_man8dir/dbcheck.8*
+%_man8dir/bscan.8*
+%_man8dir/bcopy.8*
+%_man8dir/bregex.8*
+%_man8dir/bwild.8*
 %_datadir/bacula/scripts/delete_catalog_backup
 %_datadir/bacula/scripts/make_catalog_backup
 %_datadir/bacula/scripts/make_catalog_backup.pl
@@ -777,7 +776,6 @@ fi
 %if_enabled webgui
 %files -n baculum9-common -f baculum.lang
 %dir %_sysconfdir/baculum
-%dir %_datadir/baculum
 %_datadir/baculum
 %exclude %_datadir/baculum/htdocs/assets
 %exclude %_datadir/baculum/htdocs/protected/runtime
@@ -821,35 +819,38 @@ fi
 %endif
 
 %changelog
-* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.0.6-alt2%ubt
+* Thu Jan 10 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt3
+- Updated build dependencies and cleaned up spec.
+
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.0.6-alt2
 - Rebuilt with openssl 1.1.
 - Add requires postgresql10 to bacula9-director-postgresql subpackage
 
-* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt1%ubt
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt1
 - Updated to upstream version 9.0.6.
 - Reverted case change of VersionId for web-interface.
 - Added symlink to default baculum.users configurations.
 
-* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt5%ubt
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt5
 - Added conflicts to bacula7 packages.
 
-* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt4%ubt
+* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt4
 - Updated tmpfiles permissions.
 
-* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt3%ubt
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt3
 - Fixed sql scripts to use VersionId with correct case (closes: #34118).
 
-* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt2%ubt
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt2
 - Fixed cache dir location.
 
-* Mon Sep 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt1%ubt
+* Mon Sep 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt1
 - Updated to upstream version 9.0.3.
 - Packaged web-interface baculum.
 
-* Thu May 18 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt2%ubt
+* Thu May 18 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt2
 - Use readline instead of conio.
 - Update initscripts to use common style and check config before load.
-* Wed Apr 19 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt1%ubt
+* Wed Apr 19 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt1
 - Initial build of branch 7.X (spec based on v5).
 - Change folder names for config files.
 - Change way config files are included.
