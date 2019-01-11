@@ -1,9 +1,9 @@
 #%%define %_libexecdir %_sbindir
-%define snapshot 1
+%define snapshot 0
 
 Name: mailfromd
 
-%define baseversion 8.6.90
+%define baseversion 8.7
 
 %if %snapshot
 %define snapshotdate 20181109
@@ -55,10 +55,7 @@ Source50: mailfromd-clamav_only.mf
 Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 
 #Errata
-Patch10: mailfromd-59f7cf0f14.diff
-Patch11: mailfromd-47011c42b5.diff
-Patch12: mailfromd-b3eb87d520.diff
-Patch13: mailfromd-c659e6efca.diff
+#Patch10:
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -142,9 +139,6 @@ National Language files for mailfromd (Polish and Ukrainian)
 
 #Errata
 #patch10 -p1
-#patch11 -p1
-#patch12 -p1
-#patch13 -p1
 
 gzip ChangeLog
 
@@ -312,6 +306,9 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Fri Jan 11 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.7-alt1
+- new version
+
 * Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.6.90-alt0.20181109.1
 - new version, disabled errata patches
 - packaged report of config.status
