@@ -2,7 +2,7 @@
 
 Name: mate-screensaver
 Version: 1.20.3
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -43,18 +43,17 @@ Development files for mate-screensaver
 	--with-xf86gamma-ext \
 	--with-libgl \
 	--with-shadow \
+	--enable-pam  \
 	--enable-authentication-scheme=helper \
-	--with-passwd-helper=%_libexecdir/%name/%name-chkpwd-helper \
+	--with-passwd-helper=%_libexecdir/%name/%name-pam-helper \
 	--enable-locking \
 	--with-systemd \
 	--without-console-kit
 
 %make_build
-gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS unix2_chkpwd.c -lpam
 
 %install
 %make DESTDIR=%buildroot install
-install -m755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screensaver/mate-screensaver.html
 
 %find_lang %name --with-gnome --all-name
@@ -66,8 +65,11 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_sysconfdir/xdg/menus/mate-screensavers.menu
 %_sysconfdir/xdg/autostart/%name.desktop
 %_bindir/mate-screensaver*
-%_libexecdir/mate-screensaver*
-%attr(2511,root,chkpwd) %_libexecdir/%name/%name-chkpwd-helper
+%_libexecdir/%name-*
+%_libexecdir/%name/floaters
+%_libexecdir/%name/popsquares
+%_libexecdir/%name/slideshow
+%attr(2511,root,chkpwd) %_libexecdir/%name/%name-pam-helper
 %_desktopdir/%name-preferences.desktop
 %_desktopdir/screensavers/*.desktop
 %_datadir/%name
@@ -84,6 +86,10 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Jan 11 2019 Paul Wolneykien <manowar@altlinux.org> 2:1.20.3-alt2
+- Added helper protocol library.
+- Improved PAM helper (supports PAM conversation).
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.3-alt1
 - 1.20.3
 
