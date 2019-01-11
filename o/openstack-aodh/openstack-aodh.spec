@@ -1,8 +1,8 @@
 %global oname aodh
 
 Name: openstack-%oname
-Version: 4.0.1
-Release: alt2
+Version: 7.0.0
+Release: alt1
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
 License: ASL 2.0
@@ -25,28 +25,21 @@ Source112: %name-notifier.init
 Source113: %name-expirer.init
 Source114: %name-listener.init
 
-Requires: python-module-PasteDeploy
+Requires: python3-module-PasteDeploy
 Requires(pre):    shadow-utils
 
 BuildRequires: crudini
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-webob >= 1.2.3
-BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-tenacity >= 3.2.1
 BuildRequires: python-module-croniter >= 0.3.4
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-keystonemiddleware >= 2.2.0
-BuildRequires: python-module-gnocchiclient >= 2.1.0
+BuildRequires: python-module-gnocchiclient >= 3.1.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-oslo.db >= 4.8.0
 BuildRequires: python-module-oslo.config >= 2.6.0
@@ -54,23 +47,70 @@ BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.log >= 1.2.0
 BuildRequires: python-module-oslo.policy >= 0.5.0
 BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-pbr >= 0.11
 BuildRequires: python-module-pecan >= 0.8.0
 BuildRequires: python-module-oslo.messaging >= 5.2.0
 BuildRequires: python-module-oslo.middleware >= 3.22.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
 BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-ceilometerclient >= 1.5.0
 BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-pytz >= 2013.6
 BuildRequires: python-module-requests >= 2.5.2
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-tooz >= 1.28.0
+BuildRequires: python-module-voluptuous >= 0.8.10
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-wsme >= 0.8
 BuildRequires: python-module-cachetools >= 1.1.6
 BuildRequires: python-module-cotyledon
+BuildRequires: python-module-keystoneauth1 >= 2.1
+BuildRequires: python-module-debtcollector >= 1.2.0
+
+BuildRequires: python-module-openstackdocstheme >= 1.11.0
+BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-sphinx >= 1.6.2
+#BuildRequires: python-module-sphinxcontrib-httpdomain
+#BuildRequires: python-module-sphinxcontrib-pecanwsme >= 0.8
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-tenacity >= 3.2.1
+BuildRequires: python3-module-croniter >= 0.3.4
+BuildRequires: python3-module-futurist >= 0.11.0
+BuildRequires: python3-module-jsonschema >= 2.0.0
+BuildRequires: python3-module-keystonemiddleware >= 2.2.0
+BuildRequires: python3-module-gnocchiclient >= 3.1.0
+BuildRequires: python3-module-lxml >= 2.3
+BuildRequires: python3-module-oslo.db >= 4.8.0
+BuildRequires: python3-module-oslo.config >= 2.6.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.log >= 1.2.0
+BuildRequires: python3-module-oslo.policy >= 0.5.0
+BuildRequires: python3-module-PasteDeploy >= 1.5.0
+BuildRequires: python3-module-pecan >= 0.8.0
+BuildRequires: python3-module-oslo.messaging >= 5.2.0
+BuildRequires: python3-module-oslo.middleware >= 3.22.0
+BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-keystoneclient >= 1.6.0
+BuildRequires: python3-module-pytz >= 2013.6
+BuildRequires: python3-module-requests >= 2.5.2
+BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-tooz >= 1.28.0
+BuildRequires: python3-module-voluptuous >= 0.8.10
+BuildRequires: python3-module-webob >= 1.2.3
+BuildRequires: python3-module-wsme >= 0.8
+BuildRequires: python3-module-cachetools >= 1.1.6
+BuildRequires: python3-module-cotyledon
+BuildRequires: python3-module-keystoneauth1 >= 2.1
+BuildRequires: python3-module-debtcollector >= 1.2.0
+
+BuildRequires: python3-module-openstackdocstheme >= 1.11.0
+BuildRequires: python3-module-reno >= 0.1.1
+BuildRequires: python3-module-sphinx >= 1.6.2
+#BuildRequires: python3-module-sphinxcontrib-httpdomain
+#BuildRequires: python3-module-sphinxcontrib-pecanwsme >= 0.8
 
 %description
 Aodh is the alarm engine of the Ceilometer project.
@@ -82,7 +122,7 @@ Group: System/Servers
 Provides: openstack-ceilometer-alarm = %version-%release
 Obsoletes: openstack-ceilometer-alarm < 1:6.0.0
 
-Requires: python-module-aodh  = %version-%release
+Requires: python3-module-aodh  = %version-%release
 Requires: %name-common
 Requires: %name-api
 Requires: %name-evaluator
@@ -105,12 +145,22 @@ OpenStack aodh provides API and services for managing alarms.
 
 This package contains the aodh python library.
 
+%package -n python3-module-%oname
+Summary: OpenStack aodh python libraries
+Group: Development/Python3
+Requires: python3-module-PasteDeploy
+
+%description -n python3-module-%oname
+OpenStack aodh provides API and services for managing alarms.
+
+This package contains the aodh python3 library.
+
 %package common
 Summary: Components common to all OpenStack aodh services
 Group: System/Servers
 
-Requires: python-module-aodh = %version-%release
-Requires: python-module-ceilometerclient
+Requires: python3-module-aodh = %version-%release
+Requires: python3-module-ceilometerclient
 
 %description common
 OpenStack aodh provides API and services for managing alarms.
@@ -120,7 +170,7 @@ Summary: OpenStack aodh api
 Group: System/Servers
 
 Requires: %name-common = %version-%release
-Requires: python-module-ceilometerclient
+Requires: python3-module-ceilometerclient
 
 %description api
 OpenStack aodh provides API and servicesfor managing alarms.
@@ -181,6 +231,17 @@ OpenStack aodh provides API and services for managing alarms.
 
 This package contains the Aodh test files.
 
+%package -n python3-module-%oname-tests
+Summary: Aodh tests
+Group: Development/Python3
+Requires: python3-module-aodh = %version-%release
+
+%description -n python3-module-%oname-tests
+OpenStack aodh provides API and services for managing alarms.
+
+This package contains the Aodh test files.
+
+
 %prep
 %setup -n %oname-%version
 
@@ -192,23 +253,40 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
+
+rm -rf ../python3
+cp -a . ../python3
+
 %build
-# Generate config file
-PYTHONPATH=. oslo-config-generator --config-file=etc/aodh/aodh-config-generator.conf
 
 %python_build
+
+# Generate config file
+PYTHONPATH=. oslo-config-generator --config-file=build/lib/aodh/cmd/aodh-config-generator.conf --output-file aodh.conf.sample
+
 # Generate i18n files
 #python setup.py compile_catalog -d build/lib/%oname/locale
 
+pushd ../python3
+%python3_build
+popd
 
 %install
 %python_install
 
+for f in $(ls -1 %buildroot%_bindir)
+    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
+done
+
+pushd ../python3
+%python3_install
+popd
+
+
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/aodh
 install -d -m 755 %buildroot%_sysconfdir/aodh/aodh.conf.d
-install -p -D -m 640 etc/aodh/aodh.conf %buildroot%_sysconfdir/aodh/aodh.conf
-install -p -D -m 640 aodh/api/policy.json %buildroot%_sysconfdir/aodh/policy.json
+install -p -D -m 640 aodh.conf.sample %buildroot%_sysconfdir/aodh/aodh.conf
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/aodh
@@ -300,11 +378,21 @@ rm -fr %buildroot/usr/etc
 %files compat
 
 %files -n python-module-aodh
+%_bindir/*.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files -n python-module-aodh-tests
 %python_sitelibdir/*/tests
+
+%files -n python3-module-aodh
+%_bindir/*
+%exclude %_bindir/*.py2
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-aodh-tests
+%python3_sitelibdir/*/tests
 
 %files common
 #-f %oname.lang
@@ -313,7 +401,6 @@ rm -fr %buildroot/usr/etc
 %dir %_sysconfdir/aodh/aodh.conf.d
 %config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/aodh.conf
 %config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/aodh.conf.d/010-aodh.conf
-%config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/policy.json
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_tmpfilesdir/%name.conf
 
@@ -323,9 +410,6 @@ rm -fr %buildroot/usr/etc
 #%dir %attr(0755, aodh, aodh) %_cachedir/aodh
 
 %files api
-%_bindir/aodh-dbsync
-%_bindir/aodh-api
-%_bindir/aodh-combination-alarm-conversion
 %_unitdir/%name-api.service
 %_initdir/%name-api
 %dir %_datadir/aodh
@@ -335,26 +419,26 @@ rm -fr %buildroot/usr/etc
 %webserver_cgibindir/*
 
 %files evaluator
-%_bindir/aodh-evaluator
 %_unitdir/%name-evaluator.service
 %_initdir/%name-evaluator
 
 %files notifier
-%_bindir/aodh-notifier
 %_unitdir/%name-notifier.service
 %_initdir/%name-notifier
 
 %files listener
-%_bindir/aodh-listener
 %_unitdir/%name-listener.service
 %_initdir/%name-listener
 
 %files expirer
-%_bindir/aodh-expirer
 %_unitdir/%name-expirer.service
 %_initdir/%name-expirer
 
 %changelog
+* Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
+- 7.0.0 Rocky release
+- switch to python3
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
 - Fixed FTBFS (remove python-module-setuptools-tests from BR).
 
