@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -55,7 +55,6 @@ BuildRequires: libungif-devel xml-utils glib2-devel
 BuildRequires: kde4libs-devel
 BuildRequires: kde4pimlibs-devel
 BuildRequires: kde4-kfilemetadata-devel kde4-baloo-devel kde4-baloo-widgets-devel
-BuildRequires: kde4base-workspace-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -614,6 +613,9 @@ done
 
 
 %changelog
+* Fri Jan 11 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt3
+- fix build requires
+
 * Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2%ubt
 - fix build requires
 
