@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: spice-html5
 Version: 0.1.7
-Release: alt1
+Release: alt2.gitf9f700e
 Summary: Pure Javascript SPICE client
 Group: Networking/Remote access
 
 License: LGPLv3
 Url: http://www.spice-space.org
 Source: %name/%name-%version.tar
+Patch0: %name-gitf9f700e.patch
 Patch1: Spice-devel-Add-Send-Ctrl-Alt-Delete-button-to-spice_auto.html.patch
 
 BuildArch: noarch
@@ -18,6 +21,7 @@ file for Apache, but should work with any web server.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 
 %build
@@ -30,6 +34,9 @@ file for Apache, but should work with any web server.
 %doc COPYING COPYING.LESSER README TODO apache.conf.sample
 
 %changelog
+* Mon Nov 12 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt2.gitf9f700e
+- Updated to a latest git snapshot for the FleetCommander.
+
 * Sun Oct 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.1.7-alt1
 - 0.1.7
 
