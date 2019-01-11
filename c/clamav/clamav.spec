@@ -13,9 +13,9 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.100.2
-Release: alt2
-%define abiversion 7
+Version: 0.101.1
+Release: alt1
+%define abiversion 9
 
 Summary: Clam Antivirus scanner
 License: %gpllgpl2only with exeptions
@@ -67,13 +67,16 @@ Requires(post): sed >= 1:3.02-alt1
 # sed used by configure script
 BuildRequires: sed
 
+# is needed since 0.101 even without llvm
+BuildRequires: gcc-c++
+
 BuildRequires: bzlib-devel libcheck-devel libncurses-devel zlib-devel libssl-devel libxml2-devel libpcre-devel
 BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
 
 # for clamsubmit
 BuildRequires: libcurl-devel libjson-c-devel
 
-%{?_with_llvm:BuildRequires: gcc-c++ llvm-devel }
+%{?_with_llvm:BuildRequires: llvm-devel }
 
 %{?_with_milter:BuildRequires: sendmail-devel}
 
@@ -126,7 +129,7 @@ Group: Books/Howtos
 BuildArch: noarch
 
 %description manual
-This package contains user manual for clamav in HTML format.
+This package contains user manual for ClamAV in Markdown and HTML formats.
 
 %package freshclam
 Summary: Auto-updater for the Clam Antivirus scanner virus signature files
@@ -215,10 +218,10 @@ install -m644 %_sourcedir/clamav.logrotate %buildroot%_sysconfdir/logrotate.d/cl
 # pid file dir
 install -d %buildroot/var/run/clamav
 
-# install html docs
-mkdir -p %buildroot%_defaultdocdir/clamav-manual
-rm -rf docs/html/CVS
-install -m644 docs/html/* %buildroot%_defaultdocdir/clamav-manual
+# install docs (Markdown and HTML)
+mkdir -p %buildroot%_defaultdocdir/clamav-manual/UserManual-{md,html}
+cp -R docs/UserManual/* %buildroot%_defaultdocdir/clamav-manual/UserManual-md
+cp -R docs/html/*       %buildroot%_defaultdocdir/clamav-manual/UserManual-html
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
@@ -232,7 +235,7 @@ fi
 
 
 install -d %buildroot%_sysconfdir/cron.d
-cat <<EOF >%buildroot%_sysconfdir/cron.d/freshclam
+cat <<EOF >%buildroot%_sysconfdir/cron.d/clamav-freshclam
 30 * * * *       root    %_bindir/freshclam --quiet --daemon-notify
 EOF
 
@@ -257,7 +260,7 @@ subst "s/^SubmitDetectionStats/# SubmitDetectionStats/" %_sysconfdir/clamav/fres
 %post freshclam
 # randomize time of database updating (in order to distribute load on servers evenly)
 RNDM=$[$RANDOM/555]
-subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
+subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 
 %preun
 %preun_service clamd
@@ -271,7 +274,6 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %endif
 
 %files
-%doc docs/signatures.*
 %doc virusstat*
 %doc COPYING COPYING.* README.md
 
@@ -317,7 +319,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %_bindir/clamconf
 %_man1dir/clamconf*
 %config(noreplace) %verify(not md5 size mtime) %clamconfdir/freshclam.conf
-%config(noreplace) %_sysconfdir/cron.d/freshclam
+%config(noreplace) %_sysconfdir/cron.d/clamav-freshclam
 %config(noreplace) %_sysconfdir/logrotate.d/freshclam
 %attr(644,mail,mail) %ghost %_logdir/clamav/freshclam.log
 
@@ -346,6 +348,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Fri Jan 11 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.1-alt1
+- 0.101.1
+- renamed cron.d/freshclam to cron.d/clamav-freshclam
+  due to match the name in the clamav-freshclam.service
+
 * Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.2-alt2
 - enabled building clamav-milter subpackage as backup for mailfromd
 - built with libsystemd-devel (packaged unit files)
