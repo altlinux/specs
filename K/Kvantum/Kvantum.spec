@@ -1,6 +1,6 @@
 Name: Kvantum
 Version: 0.10.9
-Release: alt1
+Release: alt2.gitefca972
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
 
 License: GPLv3
@@ -69,9 +69,16 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %files data -f Kvantum/build/%name.lang
 %_datadir/Kvantum
 %_desktopdir/kvantummanager.desktop
+%dir %_datadir/color-schemes
 %_datadir/color-schemes/Kv*
+%dir %_iconsdir/hicolor/scalable
+%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/kvantum.svg
+%dir %_datadir/kde4
+%dir %_datadir/kde4/apps
+%dir %_datadir/kde4/apps/color-schemes
 %_datadir/kde4/apps/color-schemes/Kv*
+%dir %_datadir/themes
 %dir %_datadir/themes/Kv*
 %_datadir/themes/Kv*/*
 %dir %_datadir/kvantumpreview
@@ -80,6 +87,10 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/kvantummanager/translations
 
 %changelog
+* Fri Jan 11 2019 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt2.gitefca972
+- Update from git (commit: efca972)
+- Fixed post-install files
+
 * Thu Nov 08 2018 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt1
 - New release 0.10.9
 - Changed spec for update from git
