@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt12
+Release: alt13
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -40,7 +40,7 @@ BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
 BuildRequires: pkgconfig(libexif)
 BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(libgnome-menu-3.0)
-BuildRequires: pkgconfig(libical)
+BuildRequires: libical-devel
 BuildRequires: pkgconfig(indicator3-0.4)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(upower-glib)
@@ -1135,6 +1135,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Fri Jan 11 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt13
+- Rebuild with libical-devel
+
 * Wed Jan 09 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt12
 - Rebuild without libwebkitgtk3
 - remove plugin weblets
