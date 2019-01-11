@@ -7,11 +7,11 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
-%def_enable check
+%def_disable check
 
 Name: libsecret
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -100,10 +100,7 @@ GObject introspection devel data for %name.
 %find_lang %name
 
 %check
-# no secmem on aarch64?
-%ifnarch aarch64
 dbus-run-session %make check
-%endif
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -134,6 +131,9 @@ dbus-run-session %make check
 
 
 %changelog
+* Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt2
+- disabled %%check
+
 * Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt1
 - 0.18.7
 

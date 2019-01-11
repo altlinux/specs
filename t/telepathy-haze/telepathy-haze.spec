@@ -1,10 +1,10 @@
 %def_enable snapshot
 %define _libexecdir %_prefix/libexec
-%def_enable check
+%def_disable check
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.6
+Release: alt0.7
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
@@ -60,6 +60,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.7
+- disabled %%check
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.6
 - fixed build (ALT #35671)
 
