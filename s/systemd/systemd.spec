@@ -1,6 +1,8 @@
 %define _localstatedir %_var
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 
+%def_enable static_libsystemd
+%def_enable static_libudev
 %def_enable elfutils
 %def_enable libcryptsetup
 %def_enable logind
@@ -56,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 240
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -222,6 +224,14 @@ Obsoletes: systemd-devel < %EVR
 %description -n libsystemd-devel
 The libsystemd library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
+
+%package -n libsystemd-devel-static
+Group: Development/C
+Summary: Development static libraries for systemd
+License: LGPLv2+ and MIT
+
+%description -n libsystemd-devel-static
+Static Library files for doing development with the systemd.
 
 %package -n libnss-systemd
 Group: System/Libraries
@@ -577,6 +587,14 @@ Requires: libudev1 = %EVR
 %description -n libudev-devel
 Shared library and headers for libudev
 
+%package -n libudev-devel-static
+Summary: Static Library for libudev
+Group: Development/C
+License: LGPLv2.1+
+
+%description -n libudev-devel-static
+Static library for libudev.
+
 %prep
 %setup -q
 %patch1 -p1
@@ -586,6 +604,8 @@ Shared library and headers for libudev
 %meson \
 	-Dlink-udev-shared=false \
 	-Dlink-systemctl-shared=false \
+	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
+	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
 	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
@@ -611,6 +631,8 @@ Shared library and headers for libudev
 	-Dusers-gid=100 \
 	-Dnobody-user=nobody \
 	-Dnobody-group=nobody \
+	-Dbump-proc-sys-fs-file-max=false \
+	-Dbump-proc-sys-fs-nr-open=false \
 	%{?_enable_elfutils:-Delfutils=true} \
 	%{?_enable_xz:-Dxz=true} \
 	%{?_enable_zlib:-Dzlib=true} \
@@ -706,7 +728,7 @@ ln -r -s %buildroot%_unitdir/var-run.mount %buildroot%_unitdir/local-fs.target.w
 rm -f %buildroot%_unitdir/tmp.mount
 rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
-find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
+find %buildroot \( -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
 ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/systemd
 
@@ -1421,6 +1443,9 @@ fi
 %exclude %_man3dir/udev*
 %exclude %_man3dir/libudev*
 
+%files -n libsystemd-devel-static
+/%_lib/libsystemd.a
+
 %files -n libnss-systemd
 /%_lib/libnss_systemd.so.*
 %_man8dir/*nss?systemd.*
@@ -1760,6 +1785,9 @@ fi
 %_man3dir/udev*
 %_man3dir/libudev*
 
+%files -n libudev-devel-static
+/%_lib/libudev.a
+
 %files -n udev
 %dir %_sysconfdir/udev
 %config(noreplace) %_sysconfdir/udev/*.conf
@@ -1812,6 +1840,15 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 1:240-alt4
+- merge with v240-stable branch
+- udevadm: refuse to run trigger, control, settle and monitor commands in chroot
+- sd-device: do not try SO_RCVBUF when setting receive buffer size
+- sd-device: enable SO_PASSCRED again after fork()
+- add build options -Dbump-proc-sys-fs-file-max=false and -Dbump-proc-sys-fs-nr-open=false
+- build libsystemd as static and add libsystemd-devel-static package
+- build libudev as static and add libudev-devel-static package
+
 * Tue Jan 08 2019 Mikhail Efremov <sem@altlinux.org> 1:240-alt3
 - journald: set a limit on the number of fields once more.
 - Backported patches from upstream (fixes: CVE-2018-16864, CVE-2018-16865).
