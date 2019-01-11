@@ -6,7 +6,7 @@
 
 Name: setools
 Version: 4.1.1
-Release: alt3
+Release: alt4
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Summary: Policy analysis tools for SELinux
@@ -173,6 +173,9 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %endif
 
 %changelog
+* Fri Jan 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt4
+- Updated email addresses, project name and URLs in translated files.
+
 * Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt3
 - Added man pages translation by Olesya Gerasimenko.
 
