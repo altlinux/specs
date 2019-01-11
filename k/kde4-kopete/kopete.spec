@@ -22,7 +22,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 17.08.3
-Release: alt4
+Release: alt5
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -46,7 +46,8 @@ Patch1: alt-mobile.patch
 #BuildRequires: boost-devel-headers fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif gcc-c++ kde4-nepomuk-core-devel kde4base-runtime-core kde4pimlibs-devel libexpat-devel libgadu-devel libidn-devel libjasper-devel libjpeg-devel libmeanwhile-devel libmediastreamer-devel libmsn-devel libotr-devel libqca2-devel libqimageblitz-devel libsqlite3-devel libsrtp libv4l-devel libxslt-devel python-module-distribute rpm-build-python3 rpm-build-ruby samba-client xorg-xf86miscproto-devel zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel gcc-c++ qjson-devel
-BuildRequires: kde4base-runtime-devel kde4pim-devel
+BuildRequires: kde4base-runtime-devel
+#kde4pim-devel
 BuildRequires: kde4pimlibs-devel libgpgme-devel
 BuildRequires: libexpat-devel libjasper-devel libjpeg-devel
 BuildRequires: libidn-devel
@@ -320,6 +321,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 11 2019 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt5
+- build without kdepim
+
 * Fri Dec 07 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt4
 - return XMPP
 
