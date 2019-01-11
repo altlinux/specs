@@ -11,7 +11,7 @@
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
+Release: alt4
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -36,9 +36,11 @@ Patch1007: kdebase-runtime-4.12.3-alt-use-kwallet.patch
 
 BuildRequires(pre): kde4pimlibs-devel attica-devel rpm-build-ubt
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
-BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel libgcrypt-devel
-BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
+BuildRequires: libalsa-devel libjpeg-devel libpcre-devel libgcrypt-devel
 BuildRequires: libstrigi-devel
+#BuildRequires: libclucene-core-devel
+BuildRequires: libqt4-devel libsmbclient-devel
+#NetworkManager-glib-devel
 BuildRequires: kde4-kactivities-devel
 BuildRequires: libungif-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
@@ -223,6 +225,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt4
+- build without clucene and NetworkManager
+
 * Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt3%ubt
 - rebuild with new libwebp
 
