@@ -1,43 +1,37 @@
 %define pypi_name pecan
-%def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.2.1
+Version: 1.3.2
 Release: alt1
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python
 
 License: BSD
 Url: http://github.com/pecan/pecan
-Source0: %name-%version.tar
+Source0: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-cssselect python-module-ecdsa python-module-ed25519 python-module-genshi python-module-html5lib python-module-jinja2 python-module-lingua python-module-nss python-module-polib python-module-pycrypto python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-waitress python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-Pygments python3-module-babel python3-module-beaker python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-html5lib python3-module-jinja2 python3-module-lingua python3-module-polib python3-module-pycrypto python3-module-pytz python3-module-setuptools python3-module-snowballstemmer python3-module-waitress python3-module-zope python3-module-zope.interface
-BuildRequires: python-module-docutils python-module-logutils python-module-mako python-module-ordereddict python-module-webtest python3-module-logutils python3-module-mako python3-module-sphinx python3-module-webtest rpm-build-python3
 
-#BuildRequires: python-devel
-#BuildRequires: python-module-setuptools
-#BuildRequires: python-module-webob >= 1.2
-#BuildRequires: python-module-simplegeneric >= 0.8
-#BuildRequires: python-module-mako >= 0.4.0
-#BuildRequires: python-module-singledispatch
-#BuildRequires: python-module-webtest >= 1.3.1
-#BuildRequires: python-module-argparse
-#BuildRequires: python-module-logutils
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-webob >= 1.2
+BuildRequires: python-module-simplegeneric >= 0.8
+BuildRequires: python-module-mako >= 0.4.0
+BuildRequires: python-module-singledispatch
+BuildRequires: python-module-webtest >= 1.3.1
+BuildRequires: python-module-argparse
+BuildRequires: python-module-logutils
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel
-#BuildRequires: python3-module-setuptools
-#BuildRequires: python3-module-webob >= 1.2
-#BuildRequires: python3-module-simplegeneric >= 0.8
-#BuildRequires: python3-module-mako >= 0.4.0
-#BuildRequires: python3-module-singledispatch
-#BuildRequires: python3-module-webtest >= 1.3.1
-#BuildRequires: python3-module-argparse
-#BuildRequires: python3-module-logutils
-%endif
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-webob >= 1.2
+BuildRequires: python3-module-simplegeneric >= 0.8
+BuildRequires: python3-module-mako >= 0.4.0
+BuildRequires: python3-module-singledispatch
+BuildRequires: python3-module-webtest >= 1.3.1
+BuildRequires: python3-module-argparse
+BuildRequires: python3-module-logutils
 
 Requires: python-module-singledispatch
 Requires: python-module-argparse
@@ -47,7 +41,6 @@ Requires: python-module-logutils
 A WSGI object-dispatching web framework, designed to be lean and
 fast with few dependencies
 
-%if_with python3
 %package -n python3-module-%pypi_name
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python3
@@ -55,63 +48,84 @@ Group: Development/Python3
 %description -n python3-module-%pypi_name
 A WSGI object-dispatching web framework, designed to be lean and
 fast with few dependencies
-%endif
+
+%package tests
+Summary: Tests for %pypi_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %pypi_name.
+
+%package -n python3-module-%pypi_name-tests
+Summary: Tests for %pypi_name
+Group: Development/Python3
+Requires: python3-module-%pypi_name = %EVR
+
+%description -n python3-module-%pypi_name-tests
+This package contains tests for %pypi_name.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 # Remove bundled egg-info
 rm -rf %pypi_name.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %python_build
 
 %install
-%if_with python3
+%python_install
+for f in $(ls -1 %buildroot%_bindir)
+    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
+done
+
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/pecan \
-   %buildroot%_bindir/pecan3
-mv %buildroot%_bindir/gunicorn_pecan \
-   %buildroot%_bindir/gunicorn_pecan3
 popd
-%endif
 
-%python_install
-
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/*/testing.py
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/*/testing.py
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
+# ?
+rm -rf %buildroot%python_sitelibdir/%pypi_name/tests/config_fixtures/bad
+rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 
 %files
 %doc LICENSE README.rst
-%_bindir/pecan
-%_bindir/gunicorn_pecan
+%_bindir/*.py2
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/testing.py
+%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/*/+package+/tests
 
-%if_with python3
+%files tests
+%python_sitelibdir/*/testing.py
+%python_sitelibdir/*/tests
+%python_sitelibdir/*/*/*/+package+/tests
+
 %files -n python3-module-%pypi_name
-%_bindir/pecan3
-%_bindir/gunicorn_pecan3
+%_bindir/*
+%exclude %_bindir/*.py2
 %python3_sitelibdir/*
-%endif
+%exclude %python3_sitelibdir/*/testing.py
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/*/+package+/tests
 
+%files -n python3-module-%pypi_name-tests
+%python3_sitelibdir/*/testing.py
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
+- 1.3.2
+- add tests packages
+
 * Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
