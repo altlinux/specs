@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.10
-Release: alt4
+Release: alt5
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -162,6 +162,10 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Fri Jan 11 2019 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt5
+- Fix/improve: Write a message when the token authentication is
+  cancelled.
+
 * Wed Nov 28 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt4
 - Fix: Put the examples into the package docdir.
 - Install the default mapping configs.
