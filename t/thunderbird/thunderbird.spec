@@ -12,7 +12,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	60.4.0
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -44,9 +44,9 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang6.0
-BuildRequires: clang6.0-devel
-BuildRequires: llvm6.0-devel
+BuildRequires: clang7.0
+BuildRequires: clang7.0-devel
+BuildRequires: llvm7.0-devel
 BuildRequires: lld-devel
 BuildRequires: libstdc++-devel
 BuildRequires: rust
@@ -466,6 +466,9 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Thu Jan 10 2019 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt2
+- Rebuild with llvm7.0.
+
 * Mon Dec 24 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
 - New version (60.4.0).
 - Enigmail 2.0.9.
