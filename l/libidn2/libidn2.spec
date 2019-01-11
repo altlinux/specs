@@ -1,13 +1,17 @@
+%def_enable doc
+
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          2.0.5
+Version:          2.1.0
 Release:          alt1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
 BuildRequires:    libunistring-devel
-BuildRequires: /usr/bin/gtkdocize texinfo
+# Needed for autoreconf
+BuildRequires: /usr/bin/gtkdocize
+%{?_enable_doc:BuildRequires: texinfo ronn groff-base}
 
 Requires: libunistring2 >= 0.9.8-alt1
 
@@ -38,12 +42,16 @@ Domain Name (IDNA2008/TR46) format.
 
 %prep
 %setup
+# Workaround for generating idn2.1
+rm doc/idn2.1
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
-	--disable-silent-rules
+	--disable-silent-rules \
+	%{subst_enable doc}
+
 %make_build
 
 %install
@@ -61,6 +69,9 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
+ln -s libidn2.so.4 %buildroot/%_lib/libidn2.so.0
+%filter_from_provides s/^\(.*\<libidn2\.so\.\)4\>\(.*\)$/&\n\10\2/
+
 %find_lang %name
 
 %check
@@ -76,15 +87,23 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
 %_includedir/*.h
+%if_enabled doc
 %_man3dir/*
 %_datadir/gtk-doc/
 %_infodir/%name.info*
+%endif
 
 %files -n idn2
 %_bindir/idn2
-%_man1dir/idn2.1*
+%{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Fri Jan 11 2019 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1
+- Add symlink libidn2.so.0 -> libidn2.so.4.
+- Workaround for generating idn2.1 man page.
+- Add enable/disable documentation knob.
+- 2.0.5 -> 2.1.0.
+
 * Mon May 21 2018 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt1
 - Package translations.
 - 2.0.4 -> 2.0.5.
