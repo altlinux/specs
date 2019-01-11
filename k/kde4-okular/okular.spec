@@ -1,6 +1,6 @@
 %def_disable msits
 %def_disable activities
-%def_enable mobile
+%def_disable mobile
 
 %add_findpackage_path %_kde4_bindir
 
@@ -10,7 +10,7 @@ Name: kde4-okular
 %define minor 04
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Office
 Summary: KDE document viewer
@@ -147,6 +147,9 @@ done
 
 
 %changelog
+* Fri Jan 11 2019 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt2
+- don't build mobile version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt1
 - new version
 
