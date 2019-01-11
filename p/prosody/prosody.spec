@@ -1,5 +1,5 @@
 Name: prosody
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 
 Summary: Modern XMPP communication server
@@ -53,6 +53,9 @@ cp %SOURCE2 %buildroot/%systemd_unitdir
 %_man1dir/*
 
 %changelog
+* Fri Jan 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1
+- Build new version.
+
 * Fri Dec 14 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.1-alt1
 - Build new version (Closes: #33835).
 
