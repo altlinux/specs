@@ -12,11 +12,12 @@
 %def_enable x11
 %def_enable libjasper
 %def_enable installed_tests
-%def_enable check
+%def_disable check
+
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -45,13 +46,12 @@ Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: docbook-utils gtk-doc
 %{?_enable_x11:BuildRequires: libX11-devel}
 %{?_enable_libjasper:BuildRequires: libjasper-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_check:BuildRequires: /proc}
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -154,7 +154,7 @@ export LIBS=-lcxa
 	%{?_enable_introspection:-Dgir=true} \
 	%{?_enable_x11:-Dx11=true} \
 	%{?_enable_libjasper:-Djasper=true} \
-	%{?_enable_installed_tests:-Dinstalled_tests=true} \
+	%{?_disable_installed_tests:-Dinstalled_tests=false} \
 	-Dbuiltin_loaders='png'
 
 %meson_build
@@ -253,6 +253,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt4
+- disabled %%check
+
 * Thu Jan 10 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt3
 - tests/pixbuf-threads: use g_fopen instead of fopen (fixed by upstream)
 
