@@ -71,7 +71,7 @@
 
 Name: nfs-ganesha
 Version: 2.7.1
-Release: alt1
+Release: alt2
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -95,7 +95,9 @@ BuildRequires: libdbus-devel
 BuildRequires: libcap-devel
 BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
+%if_with ceph
 BuildRequires: librados2-devel
+%endif
 %if_with system_ntirpc
 BuildRequires: libntirpc-devel >= 1.7.0
 %endif
@@ -548,6 +550,9 @@ rm -f %buildroot%_bindir/ganesha-rados-grace
 %endif
 
 %changelog
+* Fri Jan 11 2019 Michael Shigorin <mike@altlinux.org> 2.7.1-alt2
+- extended ceph knob (BR: librados2-devel might be a problem)
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - new version 2.7.1 (with rpmrb script)
 
