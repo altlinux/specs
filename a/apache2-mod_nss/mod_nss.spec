@@ -7,8 +7,8 @@
 %define modname mod_nss
 
 Name: apache2-%modname
-Version: 1.0.17
-Release: alt4
+Version: 1.0.18
+Release: alt1
 
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
 License: ASL 2.0
@@ -130,6 +130,9 @@ fi
 %ghost %config(noreplace) %apache_nssdb_dir/install.log
 
 %changelog
+* Fri Jan 11 2019 Stanislav Levin <slev@altlinux.org> 1.0.18-alt1
+- 1.0.17 -> 1.0.18.
+
 * Sun Oct 21 2018 Stanislav Levin <slev@altlinux.org> 1.0.17-alt4
 - Fixed tests' timeouts.
 
