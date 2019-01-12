@@ -1,6 +1,6 @@
 Name: bitlbee-facebook
 Version: 1.1.2
-Release: alt1.g553593d
+Release: alt3.7682a35
 Group: Networking/IRC
 License: GPLv2
 Url: https://wiki.bitlbee.org/HowtoFacebookMQTT
@@ -23,9 +23,10 @@ groupchats.
 
 %build
 %autoreconf
-./configure \
+%configure \
     --with-plugindir=%_libdir/bitlbee
-%make_build
+# smp incompatible build
+make
 
 %install
 %makeinstall DESTDIR=%buildroot libdir=%_libdir/bitlbee
@@ -35,6 +36,12 @@ groupchats.
 %_libdir/bitlbee/facebook.so
 
 %changelog
+* Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt3.7682a35
+- Fix smp build.
+
+* Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt2.7682a35
+- Updated to 1.1.2 7682a35 GIT.
+
 * Fri Mar 23 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt1.g553593d
 - Updated to 1.1.2 553593d GIT.
 
