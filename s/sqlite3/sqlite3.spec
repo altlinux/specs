@@ -1,6 +1,6 @@
 Name: sqlite3
-Version: 3.25.2
-Release: alt3
+Version: 3.26.0
+Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -193,6 +193,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sat Jan 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed Jan 09 2019 Michael Shigorin <mike@altlinux.org> 3.25.2-alt3
 - E2K: avoid gcc5 builtins not implemented in lcc-1.23
 
