@@ -1,10 +1,10 @@
 %define _name apsw
 %define rel r1
-%define sqlite_ver 3.25.2
+%define sqlite_ver 3.26.0
 %def_with python3
 
 Name: python-module-%_name
-Version: 3.25.2
+Version: 3.26.0
 Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1.r1
+- 3.26.0
+
 * Mon Nov 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.25.2-alt1.r1
 - 3.25.2
 
