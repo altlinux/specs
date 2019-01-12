@@ -6,8 +6,8 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 1.997
-Release: alt1.1
+Version: 1.998
+Release: alt1
 
 Summary: git.alt client utilities for NMU automation
 License: GPL-2.0-or-later
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 
 #BuildRequires: help2man
 BuildRequires: m4
-BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm)
+BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm) perl(Source/Repository/RPM/ALTLinuxSrcList.pm) perl(Source/Shared/FindMirror/ALTLinux.pm)
 
 Requires: gear
 Requires: perl-RPM-Source-Editor >= 0.9220
@@ -40,8 +40,7 @@ gcc -O2 %optflags -o girar-nmu-helper-pos-sort pos-sort.c
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%perl_vendor_privlib/RPM/Source/Tools
-install -m 644 GirarWriterPrototype.pm %buildroot%perl_vendor_privlib/RPM/Source/Tools/
+install -D -m 644 lib/RPM/Source/Transformation/InputHandler/GirarNMU.pm %buildroot%perl_vendor_privlib/RPM/Source/Transformation/InputHandler/GirarNMU.pm
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 config/* %buildroot%_sysconfdir/%name/
@@ -84,6 +83,9 @@ EOF
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Sat Jan 12 2019 Igor Vlasenko <viy@altlinux.ru> 1.998-alt1
+- 2.0 beta 5
+
 * Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 1.997-alt1.1
 - Updated URL and license information.
 - Fixed build with bash4.
