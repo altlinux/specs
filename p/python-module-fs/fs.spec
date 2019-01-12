@@ -2,14 +2,14 @@
 
 %define oname fs
 
-%def_with python3
-%def_without docs
+%def_with check
+%def_with docs
 
 Name: python-module-%oname
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 Summary: Filesystem abstraction layer
-License: BSD
+License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/fs/
 
@@ -17,23 +17,34 @@ BuildArch: noarch
 
 # https://github.com/PyFilesystem/pyfilesystem2.git
 Source: %name-%version.tar
+Patch: fs-2.2.1-alt-fix-tests-due-to-girar-environment.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: /proc
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-nose python-module-mock
-BuildRequires: python-module-appdirs python-module-pyftpdlib-tests python2.7(pytz)
-BuildRequires: python2.7(backports.os)
-BuildRequires: python-module-sphinxcontrib-spelling
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-mock
-BuildRequires: python3-module-appdirs python3-module-pyftpdlib-tests python3(pytz)
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-sphinx_rtd_theme
+BuildRequires: python-module-objects.inv
+%endif
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: python-module-appdirs
+BuildRequires: python-module-backports.os
+BuildRequires: python-module-coverage
+BuildRequires: python-module-mock
+BuildRequires: python-module-nose
+BuildRequires: python-module-pyftpdlib-tests
+BuildRequires: python-module-tox
+BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-pyftpdlib-tests
+BuildRequires: python3-module-pysendfile
+BuildRequires: python3-module-tox
 %endif
 
 %py_requires backports.os
-%py_provides %oname
 
 %description
 PyFilesystem is an abstraction layer for filesystems. In the same way
@@ -42,12 +53,9 @@ PyFilesystem provides a common way of accessing entire filesystems. You
 can write platform-independent code to work with local files, that also
 works with any of the supported filesystems (zip, ftp, S3 etc.).
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Filesystem abstraction layer
 Group: Development/Python3
-%py3_provides %oname
-%add_python3_req_skip wx libarchive
 
 %description -n python3-module-%oname
 PyFilesystem is an abstraction layer for filesystems. In the same way
@@ -55,7 +63,6 @@ that Python's file-like objects provide a common way of accessing files,
 PyFilesystem provides a common way of accessing entire filesystems. You
 can write platform-independent code to work with local files, that also
 works with any of the supported filesystems (zip, ftp, S3 etc.).
-%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -86,10 +93,16 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
+# no need for python3
+grep -qs '^[[:space:]]*backports\.os[[:space:]]*$' ../python3/tox.ini || exit 1
+sed -i '/backports\.os/d' ../python3/tox.ini
+
+grep -qs '^[[:space:]]*enum34[[:space:]]*$' ../python3/tox.ini || exit 1
+sed -i '/enum34/d' ../python3/tox.ini
 
 %if_with docs
 %prepare_sphinx .
@@ -97,20 +110,16 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %python_install
 
@@ -119,20 +128,36 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-LC_ALL=en_US.UTF-8 python setup.py test
-%if_with python3
+#LC_ALL=en_US.UTF-8 python setup.py test
+export PIP_INDEX_URL=http://host.invalid./
+export LC_ALL=C.UTF-8
+export TOX_TESTENV_PASSENV='LC_ALL'
+# prepare
+%_bindir/tox --sitepackages -e py%{python_version_nodots python} --notest
+cp -f %_bindir/nosetests .tox/py%{python_version_nodots python}/bin/
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python}/bin/python" \
+.tox/py%{python_version_nodots python}/bin/nosetests
+
+%_bindir/tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-LC_ALL=en_US.UTF-8 python3 setup.py test
+# prepare
+%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/nosetests3 .tox/py%{python_version_nodots python3}/bin/nosetests
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python3}/bin/python3" \
+.tox/py%{python_version_nodots python3}/bin/nosetests
+
+%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
 %doc LICENSE *.md
-%python_sitelibdir/*
+%python_sitelibdir/fs/
+%python_sitelibdir/fs-*.egg-info/
 %if_with docs
 %exclude %python_sitelibdir/*/pickle
 %endif
@@ -142,16 +167,19 @@ popd
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc docs/_build/html/*
+%doc docs/build/html/*
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 %doc LICENSE *.md
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/fs/
+%python3_sitelibdir/fs-*.egg-info/
 
 %changelog
+* Sat Jan 12 2019 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.1.0 -> 2.2.1.
+- Fixed build.
+
 * Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated to upstream version 2.1.0.
 
