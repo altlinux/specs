@@ -14,7 +14,7 @@
 
 Name: clamav
 Version: 0.101.1
-Release: alt1
+Release: alt2
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -99,6 +99,9 @@ Some parts of code have separate licenses. See %_defaultdocdir/%name-%version
 Summary: Shared libraries for clamav
 Group: System/Libraries
 Provides: lib%name = %version-%release
+
+# http://lists.clamav.net/pipermail/clamav-devel/2019-January/000437.html
+Conflicts: libclamav7 < 0.100.2-alt3
 
 %description -n lib%{name}%{abiversion}
 Shared libraries for clamav.
@@ -348,6 +351,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Sat Jan 12 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.1-alt2
+- added "Conflicts: libclamav7 < 0.100.2-alt3" to libclamav9 subpackage
+
 * Fri Jan 11 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.1-alt1
 - 0.101.1
 - renamed cron.d/freshclam to cron.d/clamav-freshclam
