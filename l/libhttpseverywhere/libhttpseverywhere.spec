@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name httpseverywhere
 %define ver_major 0.8
@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Library to use HTTPSEverywhere in desktop applications
 Group: System/Libraries
@@ -23,7 +23,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires: meson >= 0.36.0 vala-tools valadoc
+BuildRequires(pre): meson >= 0.39.1 rpm-build-gir rpm-build-vala
+BuildRequires: vala-tools valadoc
 BuildRequires: libgio-devel libsoup-devel libarchive-devel libxml2-devel
 BuildRequires: libjson-glib-devel libgee0.8-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libjson-glib-gir-devel}
@@ -80,9 +81,6 @@ This package contains development documentation for %name
 %install
 %meson_install
 
-#! src/update.vala
-#...
-
 %check
 %meson_test
 
@@ -113,6 +111,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Sat Jan 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt2
+- updated to 0.8.3-4-g6da08ef
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
