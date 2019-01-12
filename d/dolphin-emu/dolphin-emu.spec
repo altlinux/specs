@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt8%ubt
+Release: alt9%ubt
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -14,11 +14,14 @@ ExclusiveArch: x86_64
 Source: https://github.com/%name/dolphin/archive/%version/dolphin-%version.tar.gz
 Patch0: %name-git-alt.patch
 Patch1: %name-gcc-alt.patch
+Patch2: %name-gcc8-alt.patch
+Patch3: %name-soundtouch-alt.patch
 
 BuildPreReq: libswresample-devel
 BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
+BuildRequires: compat-libwxGTK3.1-gtk2-devel
 BuildRequires: gcc-c++
 BuildRequires: libSFML-devel
 BuildRequires: libXcomposite-devel
@@ -50,7 +53,6 @@ BuildRequires: libsoundtouch-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
-BuildRequires: compat-libwxGTK3.0-gtk2-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
@@ -60,6 +62,8 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %setup -n dolphin-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -72,7 +76,8 @@ cmake .. \
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
-	-DUSE_SHARED_GTEST:BOOL=TRUE
+	-DUSE_SHARED_GTEST:BOOL=TRUE \
+	-Wno-dev
 
 popd
 
@@ -91,6 +96,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sat Jan 12 2019 Nazarov Denis <nenderus@altlinux.org> 5.0-alt9%ubt
+- Fix build
+
 * Tue Sep 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0-alt8%ubt
 - Rebuilt with compat-libwxGTK3.0-gtk2-devel
 
