@@ -3,6 +3,8 @@
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
 
+%def_with wayland
+
 %ifarch x86_64
 %define bits 64
 %endif
@@ -12,7 +14,7 @@
 
 Name: vulkan-amdgpu
 Version: 2019.Q1.1
-Release: alt1
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -25,7 +27,9 @@ Requires: vulkan-filesystem
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel
+%if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+%endif
 
 Source0: xgl.tar.xz
 Source1: pal.tar.xz
@@ -55,8 +59,11 @@ export GCC_VERSION=7 \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
 	-DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DBUILD_WAYLAND_SUPPORT=ON
+%if_with wayland
+	-DBUILD_WAYLAND_SUPPORT=ON \
+%endif
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
 %cmake_build
 popd
 
@@ -73,6 +80,10 @@ subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
 %_vkdir/*.json
 
 %changelog
+* Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.1-alt2
+- Added wayland knob.
+- Fix llvm merge.
+
 * Wed Jan 09 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.1-alt1
 - Initial build for ALTLinux:
   + do not build spvgen for now (only tests rely on it);
