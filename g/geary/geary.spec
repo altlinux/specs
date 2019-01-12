@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 # hardcoded lib/geary path
 #%%define _libexecdir %_prefix/libexec
 %define ver_major 0.12
@@ -7,7 +7,7 @@
 
 Name: geary
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Email client
 License: LGPLv2.1+
@@ -20,16 +20,21 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
+Patch: geary-0.12-libdir.patch
+# https://gitlab.gnome.org/GNOME/geary/issues/37
+Patch1: geary-0.12-use-upstream-jsc.patch
+
 %define vala_ver 0.26
 %define gtk_ver 3.14.0
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
 %define webkit_ver 2.10
 
+BuildRequires(pre): cmake
 BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
-BuildRequires: cmake intltool desktop-file-utils gnome-doc-utils
+BuildRequires: intltool desktop-file-utils gnome-doc-utils
 BuildRequires: iso-codes-devel
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
@@ -53,6 +58,8 @@ Geary's development.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 %build
 %cmake -DGSETTINGS_COMPILE:BOOL=OFF \
@@ -67,7 +74,7 @@ Geary's development.
 %files -f %name.lang
 %_bindir/%name
 %{?_enable_contractor:%_bindir/%name-attach}
-%_libexecdir/%name/
+%_libdir/%name/
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-autostart.desktop
@@ -79,6 +86,10 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1.1
+- updated to 0.12.4-12-gefca27c7
+- fixed BR
+
 * Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
 - 0.12.4
 
