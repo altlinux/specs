@@ -14,7 +14,7 @@
 
 Name: vulkan-amdgpu
 Version: 2019.Q1.1
-Release: alt2
+Release: alt3
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -25,7 +25,7 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
+BuildRequires: gcc5-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -53,7 +53,7 @@ AMD developer tools.
 %build
 # build amdvlk.so
 pushd %_builddir/xgl
-export GCC_VERSION=7 \
+export GCC_VERSION=5 \
 %cmake \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
@@ -80,6 +80,9 @@ subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
 %_vkdir/*.json
 
 %changelog
+* Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.1-alt3
+- Rebuild w/ gcc5 (as it does ubuntu).
+
 * Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.1-alt2
 - Added wayland knob.
 - Fix llvm merge.
