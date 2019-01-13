@@ -8,7 +8,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.12.1
+Version:	3.12.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1663,6 +1663,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.term.*
 
 %changelog
+* Sun Jan 13 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.2-alt1
+- New version.
+
 * Sun Jan 06 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
 - New version.
 
