@@ -3,11 +3,11 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.21
-Release: alt4
+Version: 4.8.22
+Release: alt1
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20180819'
+%define ver_date ''
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -30,6 +30,7 @@ Patch0: %name-%version-%release.patch
 Patch1: mc-4.8.16-alt-wrapper.patch
 Patch2: mc-4.7.5.1-alt-defaults.patch
 Patch3: mc-4.8.20-alt-menu.patch
+Patch4: mc-4.8.22-syntax.patch
 
 # Misc
 
@@ -96,6 +97,7 @@ needed for working additional components (some vfs for example).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
+%patch4 -p1
 
 # Misc
 #patch101 -p1
@@ -206,8 +208,12 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Sun Jan 13 2019 Sergey Y. Afonin <asy@altlinux.ru> 4.8.22-alt1
+- 4.8.22
+- added mc-4.8.22-syntax.patch (ALT #35799)
+
 * Tue Nov 13 2018 Ivan Razzhivin <underwit@altlinux.org> 4.8.21-alt4
-- change the name of the icons to avoid conflicts (ALT bug 34346)
+- changed the name of the icons to avoid conflicts (ALT #34346)
 
 * Thu Nov 01 2018 Pavel Moseev <mars@altlinux.org> 4.8.21-alt3
 - Updated hint translation
@@ -227,8 +233,8 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - 4.8.20
 - added mcedit.desktop (ALT #32528)
 - updated patches:
-    alt-menu.patch
-    alt-forceexec.patch
+  + alt-menu.patch
+  + alt-forceexec.patch
 
 * Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.19-alt2
 - added mc-4.8.19-alt-rpm-select.patch,
@@ -249,19 +255,19 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 
 * Fri Mar 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt2
 - merged with git://github.com/MidnightCommander/mc:
-   Ticket #3606 (fix segfault due to incorrect value of SHELL environment variable)
-   Ticket #3618 (update f90 syntax)
-   Ticket #3620 (patchfs: fix syntax error)
-- added mc-4.8.16-3621_cpio_segfault.patch (MC Ticket 3621)
+  + MC Ticket #3606 (fix segfault due to incorrect value of SHELL environment variable)
+  + MC Ticket #3618 (update f90 syntax)
+  + MC Ticket #3620 (patchfs: fix syntax error)
+- added mc-4.8.16-3621_cpio_segfault.patch (MC Ticket #3621)
 
 * Mon Mar 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt1
 - 4.8.16
 - droped fix for MC Ticket #3574 (fixed in upstream)
-- added fix for fish ls helper (MC Ticket 3611)
+- added fix for fish ls helper (MC Ticket #3611)
 - updated patches:
-    alt-wrapper.patch
-    alt-menu.patch
-    alt-forceexec.patch
+  + alt-wrapper.patch
+  + alt-menu.patch
+  + alt-forceexec.patch
 
 * Mon Nov 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.15-alt2
 - Fixed handling of MC_XDG_OPEN in ext.d/*.sh (MC Ticket #3574)
@@ -287,11 +293,11 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - diabled savannah-edit-homekey.patch (many changes in mcedit)
 
 * Tue Apr 09 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt3
-- applied patch for mc ticket #3003 (ALT #28817)
+- applied patch for MC Ticket #3003 (ALT #28817)
 
 * Mon Apr 08 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt2
 - merged with git://github.com/MidnightCommander/mc.git
-  (ticket #2991 closed)
+  (MC Ticket #2991 closed)
 
 * Sun Apr 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt1
 - 4.8.8
@@ -304,8 +310,8 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - merged with git://github.com/MidnightCommander/mc.git
   (CVE-2012-4463)
 - changed the metod of disabling xdg-open
-   you can use MC_XDG_OPEN="/bin/false" for disable xdg-open in
-   scripts in lib/mc/ext.d/*
+  + you can use MC_XDG_OPEN="/bin/false" for disable xdg-open in
+  + scripts in lib/mc/ext.d/*
   removed mc-4.8.6-alt-video.sh.patch
   added mc-4.8.6-alt-xdg-open-quickdisable.patch
 
@@ -326,14 +332,14 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 
 * Sun Oct 14 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt2
 - merged with git://github.com/MidnightCommander/mc.git
-  (ticket 2897 closed)
+  (MC Ticket #2897 closed)
 
 * Sat Sep 22 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt1
 - 4.8.6 (License changed to GPLv3+)
 - removed ALT patches which subject of metaticket
   http://www.midnight-commander.org/ticket/2897 (Milestone: 4.8.7)
-  - mc-4.7.5-alt-filetypes.patch
-  - mc-4.7.0-debian-mc.ext-use-arj.patch
+  + mc-4.7.5-alt-filetypes.patch
+  + mc-4.7.0-debian-mc.ext-use-arj.patch
 - removed mc-4.7.5.3-alt-extf*s-udar.patch
   http://www.midnight-commander.org/ticket/34
 
@@ -341,19 +347,19 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - 4.7.5.6
 
 * Sat Oct 22 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.5-alt3
-- applied fix from #2635
+- applied fix from MC Ticket #2635
 
 * Thu Oct 20 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.5-alt2
 - fixed output of version string (typo in spec of 4.7.5.5-alt1)
 
 * Wed Oct 19 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.5-alt1
 - 4.7.5.5
-- disabled rollback for #81
+- disabled rollback for MC Ticket #81
 
 * Tue Aug 23 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.3-alt3
 - moved mc.sh back to bashrc.d (ALT #25703/c#3)
 - added alias definition for zsh in profile.d (ALT #25703)
-- rollback fix for Ticket #81 (new problem described in Ticket #2594)
+- rollback fix for MC Ticket #81 (new problem described in MC Ticket #2594)
 
 * Tue Aug 09 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.3-alt2
 - moved mc.sh from bashrc.d to profile.d (ALT #25703)
@@ -362,9 +368,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - 4.7.5.3
 
 * Sat Feb 12 2011 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.1-alt2
-- adopted for 4.7.5.1 and reenabled patches:
-    mc-4.7.5.1-alt-forceexec.patch
-    mc-4.7.5.1-alt-defaults.patch
+- adapted for 4.7.5.1 and reenabled patches:
+  + mc-4.7.5.1-alt-forceexec.patch
+  + mc-4.7.5.1-alt-defaults.patch
 - added find_content_enable_by_default.patch from Andrew Borodin
 - added "Obsoletes" for mc-data, mc-locales, mc-doc subpackages
 
@@ -372,25 +378,24 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - 4.7.5.1
 - removed iso9660-semicolon.patch (MC Ticket #2471)
 - disabled patches:
-    mc-4.7.0.2-alt-forceexec.patch
-    mc-4.7.0-alt-po.patch
-    mc-4.7.0-alt-defaults.patch
+  + mc-4.7.0.2-alt-forceexec.patch
+  + mc-4.7.0-alt-po.patch
+  + mc-4.7.0-alt-defaults.patch
 
 * Tue Dec 21 2010 Sergey Y. Afonin <asy@altlinux.ru> 4.7.0.10-alt5
-- fixed processing of ";1" in some ISO images (closes: #12299)
+- fixed processing of ";1" in some ISO images (ALT #12299)
 
 * Mon Dec 13 2010 Sergey Y. Afonin <asy@altlinux.ru> 4.7.0.10-alt4
-- Merge branch '4.7.0-stable' of git://midnight-commander.org/git/mc
-  - Ticket #2437 (mcedit: selection length trouble)
-  - Ticket #1963: use grep instead of awk in iso9660 extfs plugin.
+- Merged branch '4.7.0-stable' of git://midnight-commander.org/git/mc
+  + MC Ticket #2437: mcedit: selection length trouble
+  + MC Ticket #1963: use grep instead of awk in iso9660 extfs plugin.
 - updated mc-4.7.0-alt-filetypes.patch for libreoffice support
 - rollback splitting of package
 - renamed %name-complete to %name-full
 
 * Mon Dec 06 2010 Sergey Y. Afonin <asy@altlinux.ru> 4.7.0.10-alt3
-- Merge branch '4.7.0-stable' of git://midnight-commander.org/git/mc
-  - Ticket #2415: keep active state of editor before final decision
-    about quit.)
+- Merged branch '4.7.0-stable' of git://midnight-commander.org/git/mc
+  + MC Ticket #2415: keep active state of editor before final decision about quit.)
 
 * Thu Dec 02 2010 Sergey Y. Afonin <asy@altlinux.ru> 4.7.0.10-alt2
 - splitted package to %name, %name-data, %name-doc and %name-locales
@@ -402,7 +407,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 - removed mc-4.7.0.2-alt-extfs-urar-fix.patch (in upstream now)
 - adapted mc-4.7.0.2-alt-extfs-udar.patch for 4.7.0.10 (and renamed)
 - disabled mc-4.7.0.2-alt-esc.patch (not needed now)
-- added cdrkit-utils to "Requires" (closes: #24662)
+- added cdrkit-utils to "Requires" (ALT #24662)
 
 * Thu Feb 25 2010 Andrey Rahmatullin <wrar@altlinux.ru> 4.7.0.2-alt2
 - 4.7.0.2-37-ge0030fd (closes: #22979)
