@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.5
+Version: 2.6.6
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -295,6 +295,14 @@ _EOF_
 
 
 %changelog
+* Sun Jan 13 2019 Anton Farygin <rider@altlinux.ru> 2.6.6-alt1
+- 2.6.6
+- fixes:
+     * The 6LoWPAN dissector could crash. CVE-2019-5716
+     * The P_MUL dissector could crash. CVE-2019-5717
+     * The RTSE dissector and other dissectors could crash. CVE-2019-5718
+     * The ISAKMP dissector could crash. CVE-2019-5719
+
 * Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 2.6.5-alt1
 - 2.6.5
 - added devel package (closes: #29869)
