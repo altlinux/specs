@@ -1,7 +1,7 @@
 
 Name: bristol
 Version: 0.60.11
-Release: alt3
+Release: alt4
 Summary: Synthesizer emulator
 Group: Sound
 License: GPLv2+
@@ -10,6 +10,7 @@ Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: %name.desktop
 Patch: bristol-0.60.9-CVE-2010-3351.patch
 Patch1: bristol-0.60.11-alt-build-without-alsa-iatomic.patch
+Patch2: bristol-0.60.11-alt-reduce-script-deps.patch
 
 BuildRequires: libXext-devel libpulseaudio-devel pkgconfig(liblo) xorg-xproto-devel
 BuildRequires: libX11-devel libalsa-devel jackit-devel desktop-file-utils
@@ -34,6 +35,7 @@ This package contains the development libraries for Bristol.
 
 %patch0 -p0 -b .libpath
 %patch1 -p2
+%patch2 -p2
 
 find . -type f | xargs chmod -x
 chmod +x config* *sh depcomp
@@ -77,6 +79,9 @@ desktop-file-install \
 %_libdir/lib*.so
 
 %changelog
+* Sun Jan 13 2019 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt4
+- get rid of valgrind and cpufrequtils dependencies (closes: #30820)
+
 * Sun Jan 13 2019 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt3
 - fix build with recent alsa
 - minor spec cleanup
