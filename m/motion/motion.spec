@@ -1,6 +1,6 @@
 Name: motion
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: %name - Detect motion using a video4linux device
 License: GPL
 Group: Video
@@ -9,6 +9,7 @@ Source0: %name-%version.tar
 Patch0:	motion-4.1.1-docdir.patch
 Patch1: motion-4.1.1-ffmpeg4.patch
 Patch2: motion-4.1.1-configure-binpath.patch
+Patch3: motion-4.1.1-alt-mysql8-transition.patch
 
 BuildPreReq: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
 BuildPreReq: libmjpegtools-devel libsqlite3-devel 
@@ -26,6 +27,7 @@ It will make snapshots if motion is detected.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 
 %__subst 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' %name.h
 %__subst 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' event.c
@@ -64,6 +66,9 @@ install -pDm0644 %name.service %buildroot/%_unitdir/%name.service
 %_man1dir/*
 
 %changelog
+* Sun Jan 13 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.1.1-alt2
+- fix FTBFS due to transition to libmysqlclient21
+
 * Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 4.1.1-alt1
 - 4.1.1
 - cleanup specfile
