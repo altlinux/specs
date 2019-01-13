@@ -1,4 +1,4 @@
-%define ver_major 1.4
+%define ver_major 1.6
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -51,12 +51,15 @@ with the help of a map.
 #%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.enums.xml
 #%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.gschema.xml
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README TODO HACKING
 
 
 %changelog
+* Sun Jan 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat May 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
