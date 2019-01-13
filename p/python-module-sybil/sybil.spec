@@ -6,7 +6,7 @@
 
 Name:    python-module-%oname
 Version: 1.0.9
-Release: alt1.qa1
+Release: alt2
 
 Summary:  Automated testing for the examples in your documentation.
 License: MIT
@@ -29,7 +29,9 @@ BuildRequires: python3(pytest)
 # https://github.com/cjw296/sybil.git
 Source:  %oname-%version.tar
 
+Patch: %oname-%version-%release.patch
 Patch1: %oname-1.0.7-alt-docs.patch
+
 
 %description
 Automated testing for the examples in your documentation.
@@ -45,6 +47,7 @@ Automated testing for the examples in your documentation.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 %patch1 -p1
 
 %if_with python3
@@ -98,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 13 2019 Ivan A. Melnikov <iv@altlinux.org> 1.0.9-alt2
+- Update tests to fix FTBFS.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1.qa1
 - NMU: applied repocop patch
 
