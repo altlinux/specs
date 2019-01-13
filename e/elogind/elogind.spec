@@ -1,6 +1,6 @@
 Name:     elogind
 Version:  239.3
-Release:  alt2
+Release:  alt3
 Summary:  The systemd project's "logind", extracted to a standalone package
 Group:    System/Configuration/Boot and Init
 License:  GPL2, LGPL2.1
@@ -11,6 +11,8 @@ Source0: %name-%version.tar
 Source1: elogind-dbus-helper
 Source2: elogind.init
 Source3: elogind.sysconfig
+Source4: pam_elogind.control
+Source5: libelogind-preload.control
 
 Patch0: elogind-fix-stale-pidfile.patch
 Patch1: elogind-dbus-activation-helper.patch
@@ -38,23 +40,49 @@ BuildRequires: libseccomp-devel
 BuildRequires: libselinux-devel
 BuildRequires: libudev-devel
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 Elogind is the systemd project's "logind", extracted out to be a
 standalone daemon.  It integrates with PAM to know the set of users
 that are logged in to a system and whether they are logged in
 graphically, on the console, or remotely.
 
+%package -n lib%name
+Summary:  The %name library
+Group:    System/Libraries
 
-%package devel
+%description -n lib%name
+This library provides access to %name session management.
+
+%package -n lib%name-devel
 Summary:  Development libraries for elogind
+Group:    Development/C
+
+Obsoletes: elogind-devel
+Provides:  elogind-devel = %version-%release
+
+%description -n lib%name-devel
+Header and Library files for doing development with the elogind.
+
+%package -n lib%name-devel-docs
+Summary:  Development documentation for elogind
 Group:    Development/C
 
 Conflicts: libsystemd-devel
 
+%description -n lib%name-devel-docs
+Development documentation for elogind.
 
-%description devel
-Header and Library files for doing development with the elogind.
+%package -n lib%name-devel-static
+Summary:  Development static libraries for elogind
+Group:    Development/C
 
+Obsoletes: elogind-devel-static
+Provides:  elogind-devel-static = %version-%release
+
+%description -n lib%name-devel-static
+Header and Static Library files for doing development with the elogind.
 
 %package -n bash-completion-%name
 Summary: Bash completion for %name utils
@@ -71,7 +99,7 @@ Bash completion for %name.
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 
 %build
@@ -92,15 +120,17 @@ Bash completion for %name.
 	-Daudit=true \
 	-Dpam=true \
 	-Dselinux=true \
+	-Dsmack=true \
 	-Dhalt-path=/sbin/halt \
 	-Dreboot-path=/sbin/reboot \
+	-Dstatic-libelogind=pic \
 	-Dtests=false \
 #
 %meson_build
 
-
 %install
 %meson_install
+
 %find_lang %name
 
 rm -rf -- \
@@ -114,7 +144,8 @@ rm -f -- %buildroot/lib/udev/rules.d/70-power-switch.rules
 install -m755 -pD %SOURCE1 %buildroot/lib/%name/elogind-dbus-helper
 install -m755 -pD %SOURCE2 %buildroot/%_initdir/elogind
 install -m644 -pD %SOURCE3 %buildroot/%_sysconfdir/sysconfig/elogind
-
+install -m755 -pD %SOURCE4 %buildroot/%_controldir/pam_elogind
+install -m755 -pD %SOURCE5 %buildroot/%_controldir/libelogind-preload
 
 for f in %buildroot/lib/udev/rules.d/*.rules; do
 	n="${f##*/}"
@@ -144,10 +175,22 @@ complete -F _loginctl eloginctl' \
 ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 
 
+%pre
+%pre_control pam_elogind
+%pre_control libelogind-preload
+
+
+%post
+%post_control -s enabled pam_elogind
+%post_control -s enabled libelogind-preload
+
+
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/%name/logind.conf
 %config(noreplace) %_sysconfdir/pam.d/elogind-user
 %config(noreplace) %_sysconfdir/sysconfig/elogind
+%config %_controldir/pam_elogind
+%config %_controldir/libelogind-preload
 %_initdir/elogind
 /bin/elogind-inhibit
 /bin/loginctl
@@ -156,7 +199,6 @@ ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 %_bindir/ebusctl
 /lib/%name
 /lib/udev/rules.d/*.rules
-/%_lib/*.so.*
 /%_lib/security/pam_elogind.so
 %_datadir/dbus-1/system-services/org.freedesktop.login1.service
 %_datadir/dbus-1/system.d/org.freedesktop.login1.conf
@@ -166,19 +208,30 @@ ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 %_man7dir/*
 %_man8dir/*
 
+%files -n lib%name
+/%_lib/*.so.*
 
-%files devel
+%files -n lib%name-devel
 %_includedir/%name
 /%_lib/*.so
 %_pkgconfigdir/libelogind.pc
-%_man3dir/*
 
+%files -n lib%name-devel-static
+/%_lib/*.a
+
+%files -n lib%name-devel-docs
+%_man3dir/*
 
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
-
 %changelog
+* Sun Jan 13 2019 Alexey Gladkov <legion@altlinux.ru> 239.3-alt3
+- Rename packages according policy;
+- Add smack support;
+- Add control for pam_elogind and libelogind preload;
+- Disable /run/systemd/system creation.
+
 * Mon Jan 07 2019 Alexey Gladkov <legion@altlinux.ru> 239.3-alt2
 - Add sysv init-script;
 - Add bash-completion sub-package;
