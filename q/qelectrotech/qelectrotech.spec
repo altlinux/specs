@@ -14,8 +14,8 @@ Summary(pl): Edytor schematów elektrycznych
 Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
-Version:     0.6
-Release:     alt2.qa1
+Version:     0.61
+Release:     alt1
 Epoch:	     1
 
 Group:       Engineering
@@ -184,6 +184,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Sun Jan 13 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.61-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.6-alt2.qa1
 - NMU: applied repocop patch
 
