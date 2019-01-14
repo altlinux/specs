@@ -1,6 +1,6 @@
 Name: netxms
-Version: 2.0.8
-Release: alt3
+Version: 2.2.11
+Release: alt1
 
 Summary: Open source network monitoring system
 License: GPL
@@ -14,7 +14,9 @@ Source2: nxagentd.init
 Source3: netxmsd.service
 Source4: nxagentd.service
 
-BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel libsensors-devel
+BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel libsensors3-devel libldap-devel libcurl-devel libssh-devel
+
+%set_verify_elf_method unresolved=relaxed
 
 %description
 NetXMS is an enterprise grade multi-platform open source network management and monitoring system.
@@ -72,11 +74,13 @@ Group: System/Servers
 %setup
 
 %build
+subst "s/git describe --tags --always/echo 'Release-%version'/g" configure.ac
 ./reconf
 %configure              \
   --localstatedir=/var  \
   --sharedstatedir=/var \
   --enable-unicode      \
+  --disable-mqtt        \
   --with-server \
   --with-snmp   \
   --with-mysql  \
@@ -106,8 +110,8 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %files common
 %_libdir/libnetxms.so*
 %_libdir/libnxdb.so*
+%_libdir/libnxjansson.so*
 %_libdir/libnxlp.so*
-%_libdir/libnxmap.so*
 %_libdir/libnxtre.so*
 %_libdir/libnxsnmp.so*
 %dir %_libdir/%name
@@ -129,19 +133,28 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_bindir/nxdevcfg
 %_bindir/nxgenguid
 %_bindir/nxappget
-%_libdir/libavaya-ers.so
-%_libdir/libcisco.so
+%_libdir/libnxcc.so*
 %_libdir/libnxcore.so*
+%_libdir/libnxdbmgr*.so
 %_libdir/libnxsl.so*
+%_libdir/libnxsms_nxagent.so*
+%_libdir/libnxsms_anysms.so
+%_libdir/libnxsms_dbemu.so
 %_libdir/libnxsms_dummy.so*
 %_libdir/libnxsms_generic.so*
-%_libdir/libnxsms_nxagent.so*
+%_libdir/libnxsms_kannel.so
+%_libdir/libnxsms_mymobile.so
+%_libdir/libnxsms_nexmo.so
+%_libdir/libnxsms_slack.so
+%_libdir/libnxsms_smseagle.so
 %_libdir/libnxsms_portech.so*
+%_libdir/libnxsms_text2reach.so
+%_libdir/libnxsms_websms.so
 %_libdir/libnxsrv.so*
-%_libdir/libnxjansson.so*
-%_libdir/libnxsd.so*
 %_libdir/libstrophe.so*
-%_libdir/libnxcc.so*
+%dir %_libdir/%name
+%_libdir/%name/jira.hdlink
+%_libdir/%name/redmine.hdlink
 %dir %_libdir/%name/dbdrv
 %dir %_libdir/%name/ndd
 %_libdir/%name/ndd/*.ndd
@@ -190,6 +203,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/libnsm_ds18x20.so
 %_libdir/libnsm_filemgr.so
 %_libdir/libnsm_gps.so
+%_libdir/libnsm_mysql.so
+%_libdir/libnsm_netsvc.so
+%_libdir/libnsm_ssh.so
 %_libdir/%name/ecs.nsm
 %_libdir/%name/linux.nsm
 %_libdir/%name/logwatch.nsm
@@ -203,6 +219,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/ds18x20.nsm
 %_libdir/%name/filemgr.nsm
 %_libdir/%name/gps.nsm
+%_libdir/%name/mysql.nsm
+%_libdir/%name/netsvc.nsm
+%_libdir/%name/ssh.nsm
 %config(noreplace) %_sysconfdir/nxagentd.conf
 
 %files mysql
@@ -225,6 +244,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Fri Jan 11 2019 Eugene Prokopiev <enp@altlinux.ru> 2.2.11-alt1
+- new version
+
 * Thu May 18 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt3
 - enable lmsensors
 - fast fix for pgsql metadata (thanks to Vadim Illarionov <gbIMoBou@gmail.com>)
