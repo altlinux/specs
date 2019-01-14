@@ -1,36 +1,29 @@
 %define oname websocket-client
 
-%def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.32.0
-Release: alt1.1.2
+Version: 0.54.0
+Release: alt1
 Summary: WebSocket client for python. hybi13 is supported
-License: LGPLv2.1
+License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/websocket-client/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/liris/websocket-client.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-backports.ssl_match_hostname
-#BuildPreReq: python-module-six
-%if_with python3
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-backports.ssl_match_hostname
+BuildRequires: python-module-six
+
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-six
-%endif
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-six
 
 %py_provides websocket
 %py_requires backports.ssl_match_hostname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 websocket-client module is WebSocket client for python. This provide the
@@ -78,65 +71,57 @@ This package contains tests for %oname.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i ${i}.py2
+done
+popd
+
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i ${i}3
-done
-popd
-%endif
-
-%python_install
 
 %check
 python setup.py test
-%if_with python3
+
 pushd ../python3
 python3 setup.py test
 popd
-%endif
 
 %files
 %doc ChangeLog *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+%_bindir/*.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc ChangeLog *.rst
-%_bindir/*.py3
+%_bindir/*
+%exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Mon Jan 14 2019 Alexey Shabalin <shaba@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.32.0-alt1.1.2
 - (NMU) rebuild with python3.6
 
