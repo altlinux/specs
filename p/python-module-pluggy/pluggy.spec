@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -75,21 +75,22 @@ export PIP_INDEX_URL=http://host.invalid./
 
 # copy nessecary exec deps
 export PYTHONPATH="$(pwd)"
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python} --notest
+export TOX_TESTENV_PASSENV='PYTHONPATH'
+%_bindir/tox --sitepackages -e py%{python_version_nodots python} --notest
 cp -T %_bindir/py.test .tox/py%{python_version_nodots python}/bin/pytest
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python}/bin/python" \
+.tox/py%{python_version_nodots python}/bin/pytest
 
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python} -v -- -v
+%_bindir/tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
 export PYTHONPATH="$(pwd)"
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3} --notest
+%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
 cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/pytest
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python3}/bin/python3" \
+.tox/py%{python_version_nodots python3}/bin/pytest
 
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3} -v -- -v
+%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files
@@ -103,6 +104,9 @@ popd
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1.
+
 * Sat Oct 20 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.1 -> 0.8.0.
 
