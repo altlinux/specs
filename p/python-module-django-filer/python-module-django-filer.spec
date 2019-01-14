@@ -1,8 +1,7 @@
-
 %global pypi_name django-filer
 
 Name: python-module-%pypi_name
-Version: 1.2.7
+Version: 1.4.1
 Release: alt1
 Summary: A file management application for django
 Group: Development/Python
@@ -36,7 +35,8 @@ handling of files and images a breeze.
 %python_sitelibdir/*
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+
 * Wed Mar 15 2017 Lenar Shakirov <snejok@altlinux.ru> 1.2.7-alt1
 - Initial build for ALT
-
-

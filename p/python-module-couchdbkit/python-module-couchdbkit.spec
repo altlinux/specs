@@ -3,7 +3,7 @@
 
 Name: python-module-%modname
 Version: 0.9.15
-Release: alt1
+Release: alt2
 
 Summary: Couchdbkit provides you a full featured and easy client to access and manage CouchDB.
 License: Apache License v. 2.0
@@ -32,6 +32,7 @@ Couchdbkit provides you a full featured and easy client to access and manage Cou
 %package -n python3-module-%modname
 Summary: Couchdbkit provides you a full featured and easy client to access and manage CouchDB.
 Group: Development/Python3
+%add_python3_req_skip django.forms.util
 %add_python3_req_skip django.test.simple
 %add_python3_req_skip jsonobject jsonobject.base
 %add_python3_req_skip jsonobject.exceptions jsonobject.properties
@@ -71,6 +72,9 @@ popd
 
 
 %changelog
+* Mon Jan 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.15-alt2
+- Rebuild with added req skip on django.forms.util.
+
 * Wed Dec 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.15-alt1
 - version updated to 0.9.15
 

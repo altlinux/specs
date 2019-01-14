@@ -1,9 +1,8 @@
-
 %global pypi_name easy-thumbnails
 
 Name: python-module-%pypi_name
-Version: 2.3
-Release: alt1.1
+Version: 2.5
+Release: alt1
 Summary: Easy thumbnails for Django
 Group: Development/Python
 License: BSD
@@ -36,10 +35,11 @@ application for Django 1.4+
 %python_sitelibdir/*
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.5-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
 * Wed Mar 15 2017 Lenar Shakirov <snejok@altlinux.ru> 2.3-alt1
 - Initial build for ALT
-
-

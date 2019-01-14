@@ -1,12 +1,10 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev.git20141022.1.1.1
 %define module_name django-tastypie
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.12.2
-#Release: alt1.dev.git20141022.1.1
+Version: 0.14.1
+Release: alt1
 Group: Development/Python
 License: BSD License
 Summary: Creating delicious APIs for Django apps since 2010
@@ -107,6 +105,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.14.1-alt1
+- Build new version.
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.2-alt1.dev.git20141022.1.1.1
 - (AUTO) subst_x86_64.
 

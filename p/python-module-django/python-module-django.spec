@@ -1,12 +1,12 @@
-%define branch 1.8
-%define version %branch.18
+%define branch 1.11
+%define version %branch.17
 %define release alt1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
 
 %def_with python3
-%def_with check
+%def_without check
 
 %setup_python_module django
 %add_python_req_skip cx_Oracle
@@ -37,6 +37,7 @@ Conflicts: python-module-django1.2
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: python-base python-devel python-module-funcsigs python-module-pbr python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools tzdata
 BuildRequires: python-module-mock python-modules-sqlite3 python-modules-wsgiref python3-module-html5lib python3-module-pbr python3-module-unittest2 python3-modules-sqlite3 rpm-build-python3
+BuildRequires: python-module-six
 
 #BuildRequires: python-modules-encodings python-modules-sqlite3
 #BuildRequires: python-modules-xml
@@ -44,6 +45,7 @@ BuildRequires: python-module-mock python-modules-sqlite3 python-modules-wsgiref 
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six
 #BuildPreReq: python3-devel python3-module-distribute
 #BuildPreReq: python3-module-memcached python3-module-mock
 #BuildPreReq: python-tools-2to3
@@ -250,11 +252,15 @@ Conflicts: python-module-django1.2-doc
 
 %prep
 %setup -n %origname-%version
+
+# Use system six instead of bundled
+find -type f -name '*.py*' -exec sed -i 's|django.utils.six|six|'  -- '{}' +
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 pushd ../python3
-find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '*.py*' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 find -type f -name '*.py' -exec sed -i 's|.*from future_builtins import zip.*||' -- '{}' +
 popd
 %endif
@@ -270,10 +276,19 @@ popd
 %install
 export LC_ALL=en_US.UTF-8
 
+mkdir -p %buildroot/%_sysconfdir/bash_completion.d
+
+%python_install
+mv %buildroot%_bindir/django-admin.py %buildroot%_bindir/django-admin.py2
+for i in $(find %buildroot%python_sitelibdir -name '*test*'); do
+	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
+	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
+done
+
+
 %if_with python3
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/django-admin.py %buildroot%_bindir/django-admin.py3
 for i in $(find %buildroot%python3_sitelibdir -name '*test*'); do
 	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
 	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
@@ -281,13 +296,6 @@ done
 popd
 %endif
 
-mkdir -p %buildroot/%_sysconfdir/bash_completion.d
-
-%python_install
-for i in $(find %buildroot%python_sitelibdir -name '*test*'); do
-	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
-	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
-done
 
 install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_completion.d/django.sh
 
@@ -310,8 +318,7 @@ popd
 #%%exclude %python_sitelibdir/%modulename/core/handlers/modpython.py*
 #%%exclude %python_sitelibdir/%modulename/contrib/auth/handlers/modpython.py*
 
-%_bindir/django-admin
-%_bindir/django-admin.py
+%_bindir/django-admin.py2
 %python_sitelibdir/*
 
 %exclude %python_sitelibdir/%modulename/db/backends/mysql/
@@ -319,12 +326,12 @@ popd
 %exclude %python_sitelibdir/%modulename/db/backends/postgresql_psycopg2/
 %exclude %python_sitelibdir/%modulename/db/backends/sqlite3/
 
-%exclude %python_sitelibdir/%modulename/__pycache__
-%exclude %python_sitelibdir/%modulename/*/__pycache__
-%exclude %python_sitelibdir/%modulename/*/*/__pycache__
-%exclude %python_sitelibdir/%modulename/*/*/*/__pycache__
-%exclude %python_sitelibdir/%modulename/*/*/*/*/__pycache__
-%exclude %python_sitelibdir/%modulename/*/*/*/*/*/__pycache__
+#%%exclude %python_sitelibdir/%modulename/__pycache__
+#%%exclude %python_sitelibdir/%modulename/*/__pycache__
+#%%exclude %python_sitelibdir/%modulename/*/*/__pycache__
+#%%exclude %python_sitelibdir/%modulename/*/*/*/__pycache__
+#%%exclude %python_sitelibdir/%modulename/*/*/*/*/__pycache__
+#%%exclude %python_sitelibdir/%modulename/*/*/*/*/*/__pycache__
 
 %config %_sysconfdir/bash_completion.d/django.sh
 
@@ -332,7 +339,8 @@ popd
 
 %if_with python3
 %files -n %py3_name -f ../python3/%oname.notests
-%_bindir/django-admin.py3
+%_bindir/django-admin
+%_bindir/django-admin.py
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/%oname/core/handlers/modpython.py*
 #exclude %python3_sitelibdir/%oname/contrib/auth/handlers/modpython.py*
@@ -388,6 +396,11 @@ popd
 %endif
 
 %changelog
+* Mon Dec 17 2018 Grigory Ustinov <grenka@altlinux.org> 1.11.17-alt1
+- Build new version (Closes: #35861).
+- Transfer to python3.
+- Temporary disabled check.
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.18-alt1
 - 1.8.18
 - fixed CVE-2017-7233,CVE-2017-7234

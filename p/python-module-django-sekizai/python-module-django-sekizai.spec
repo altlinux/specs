@@ -6,8 +6,8 @@
 %def_with python3
 
 Name: python-module-django-%modulename
-Version: 0.7
-Release: alt4.git20140813.1.2
+Version: 0.10.0
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7-alt4.git20140813.1.2
 - (NMU) rebuild with python3.6
 
