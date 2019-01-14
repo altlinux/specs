@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -26,6 +26,7 @@ BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-typed_ast
 BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-tox
 %endif
 
 BuildArch: noarch
@@ -52,7 +53,18 @@ partial trees by inspecting living objects.
 %python3_install
 
 %check
-py.test3 -vrs
+grep -qs '[[:space:]]*attr[[:space:]]*$' tox.ini || exit 1
+grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
+grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
+
+sed -i '/[[:space:]]*attr[[:space:]]*$/d' tox.ini
+sed -i '/[[:space:]]*coverage[[:space:]]*$/d' tox.ini
+sed -i 's/ {envsitepackagesdir}\/coverage run / /' tox.ini
+
+export PIP_NO_INDEX=YES
+export PIP_NO_DEPS=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc ChangeLog README.rst
@@ -60,6 +72,9 @@ py.test3 -vrs
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.4 -> 2.1.0.
+
 * Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
 - Move Python3 module to a separated src package.
 - 1.6.4 -> 2.0.4.

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Python code static checker
@@ -20,10 +20,12 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-astroid
 BuildRequires: python3-module-mccabe
 BuildRequires: python3-module-isort
 BuildRequires: python3-module-enchant
+BuildRequires: python3-module-tox
 BuildRequires: hunspell-en
 %endif
 
@@ -64,8 +66,20 @@ for i in $(ls); do
 done
 
 %check
-export PYTHONPATH=`pwd`
-py.test3 -vrs
+grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
+grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
+grep -qs 'https:' tox.ini || exit 1
+grep -qsP 'python -c \x22import os' tox.ini || exit 1
+
+sed -i -e '/[[:space:]]*coverage[[:space:]]*$/d' \
+-e 's/ {envsitepackagesdir}\/coverage run / /' \
+-e 's/https:.*/astroid/' \
+-e '/python -c \x22import os/d' tox.ini
+
+export PIP_NO_INDEX=YES
+export PIP_NO_DEPS=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc ChangeLog README.rst doc/
@@ -77,6 +91,9 @@ py.test3 -vrs
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
+- 2.1.1 -> 2.2.2.
+
 * Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - 1.9.1 -> 2.1.1.
 - Move Python3 module to a separated src package.

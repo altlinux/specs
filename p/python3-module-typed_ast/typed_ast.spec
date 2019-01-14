@@ -2,7 +2,7 @@
 %define oname typed_ast
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A fork of the ast module with type annotations
@@ -39,5 +39,8 @@ as supported in Python 3.6.
 %python3_sitelibdir/typed_ast-*.egg-info/
 
 %changelog
+* Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - Initial build.
