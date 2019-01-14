@@ -3,7 +3,7 @@
 
 Name: pdns
 Version: 4.0.3
-Release: alt2.3
+Release: alt3
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -15,6 +15,7 @@ Patch1: fix-unit-tests-32bit.patch
 Patch2: fix-negative-ipv6-32bit.patch
 # Based on https://github.com/PowerDNS/pdns/commit/e6a9dde524b57bb57f1d063ef195bb1e2667c5fc
 Patch3: pdns-alt-global-logger.patch
+Patch4: pdns-4.0.3-alt-mysql8-transition.patch
 
 Requires(pre): shadow-utils
 Requires(post): systemd-units
@@ -157,6 +158,7 @@ This package contains the TinyDNS backend for %{name}
 %patch1 -p1 -b .fix-unit-tests-32bit
 %patch2 -p1 -b .fix-negative-ipv6-32bit
 %patch3 -p2
+%patch4 -p0
 
 %build
 export CPPFLAGS="-DLDAP_DEPRECATED"
@@ -315,6 +317,9 @@ exit 0
 %{_libdir}/%{name}/libtinydnsbackend.so
 
 %changelog
+* Mon Jan 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.0.3-alt3
+- fix FTBFS due to transition to libmysqlclient21
+
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt2.3
 - NMU: rebuilt with new yaml-cpp.
 
