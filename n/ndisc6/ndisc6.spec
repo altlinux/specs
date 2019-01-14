@@ -1,7 +1,6 @@
-
 Name: ndisc6
 Version: 1.0.4
-Release: alt1.git4c794b5512d2.qa1
+Release: alt2
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -89,6 +88,9 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Mon Jan 14 2019 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt2
+- Updated to 1.0.4 release.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.git4c794b5512d2.qa1
 - NMU: applied repocop patch
 
