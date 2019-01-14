@@ -1,6 +1,6 @@
 Name: tvheadend
-Version: 4.2.7
-Release: alt2
+Version: 4.2.8
+Release: alt1
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -71,6 +71,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Mon Jan 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt1
+- 4.2.8 released
+
 * Tue Nov 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.7-alt2
 - fix systemd unit file
 
