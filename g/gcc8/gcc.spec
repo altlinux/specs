@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 8.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20181215
+%define snapshot 20190109
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -46,7 +46,7 @@ Url: http://gcc.gnu.org/
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64
-%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x
+%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x
 %define liblsan_arches		x86_64 aarch64
 %define libmpx_arches		%ix86 x86_64
@@ -98,7 +98,13 @@ Url: http://gcc.gnu.org/
 # BTW, compat and precompat are mutually exclusive.
 %def_disable precompat
 %def_disable compat
+
+# For some architectures we do not want multilib support.
+%ifarch riscv64
+%def_disable multilib
+%else
 %def_enable multilib
+%endif
 %def_with fortran
 %ifnarch ppc ppc64
 %def_with objc
@@ -177,6 +183,7 @@ Patch727: alt-testsuite-Wtrampolines.patch
 Patch728: alt-libstdc++-libvtv-rpath-disable.patch
 Patch729: deb-alt-gcc-as-needed.diff
 Patch730: deb-alt-mips-gcc-multiarch.diff
+Patch731: alt-riscv64-not-use-lp64d.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -1013,6 +1020,7 @@ version %version.
 %patch728 -p1
 %patch729 -p2
 %patch730 -p2
+%patch731 -p1
 
 echo '%distribution %version-%release' > gcc/DEV-PHASE
 
@@ -1029,7 +1037,7 @@ find -type f -name Makefile\* -print0 |
 	xargs -r0 sed -i 's/-I- //g' --
 
 # Disable unwanted multilib builds.
-%ifarch x86_64
+%ifarch x86_64 mips mipsel mips64 mips64el riscv64
 sed -i 's/\$(CC_FOR_TARGET) --print-multi-lib/echo '"'.;'/" Makefile.*
 sed -i 's/\${CC-gcc} --print-multi-lib/echo '"'.;'/" config-ml.in
 sed -i 's/\[ -z "\$(MULTIDIRS)" \]/true/' config-ml.in
@@ -1159,6 +1167,23 @@ CONFIGURE_OPTS="\
 %ifarch arm
 	--with-arch=armv5te --with-float=soft --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
+%endif
+%ifarch mips mipsel mips64 mips64el
+	--enable-targets=all \
+	--with-arch-32=mips32r2 --with-fp-32=xx \
+	--with-arch-64=mips64r2 \
+%endif
+%ifarch mips64 mips64el
+	--with-mips-plt \
+%endif
+%ifarch mips mipsel
+	--with-lxc1-sxc1=no \
+%endif
+%ifarch mipsel mips64el \
+	--with-madd4=no \
+%endif
+%ifarch riscv64
+	--without-multilib-list --with-arch=rv64gc --with-abi=lp64d \
 %endif
 	"
 
@@ -1334,7 +1359,7 @@ pushd %buildroot%_libdir
 	rm libssp*
 	rm libiberty.a ||:
 	mv *.a %buildroot%gcc_target_libdir/
-%ifnarch mips mipsel s390x
+%ifnarch mips mipsel s390x riscv64
 	mv *.o %buildroot%gcc_target_libdir/
 %endif
 	for f in *.so; do
@@ -1509,19 +1534,19 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_man1dir/gcov-dump%psuffix.*
 %dir %gcc_target_libdir/
 %dir %gcc_target_libdir/include/
-%gcc_target_libdir/include/gcov.h
 %gcc_target_libdir/include/float.h
+%gcc_target_libdir/include/gcov.h
 %gcc_target_libdir/include/iso646.h
 %gcc_target_libdir/include/limits.h
 %gcc_target_libdir/include/stdalign.h
 %gcc_target_libdir/include/stdarg.h
-%gcc_target_libdir/include/stdfix.h
+%gcc_target_libdir/include/stdatomic.h
 %gcc_target_libdir/include/stdbool.h
 %gcc_target_libdir/include/stddef.h
-%gcc_target_libdir/include/stdint.h
+%gcc_target_libdir/include/stdfix.h
 %gcc_target_libdir/include/stdint-gcc.h
+%gcc_target_libdir/include/stdint.h
 %gcc_target_libdir/include/stdnoreturn.h
-%gcc_target_libdir/include/stdatomic.h
 %gcc_target_libdir/include/syslimits.h
 %gcc_target_libdir/include/unwind.h
 %gcc_target_libdir/include/varargs.h
@@ -1540,26 +1565,26 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif
 %ifarch mips mipsel
 %gcc_target_libdir/include/loongson.h
+%gcc_target_libdir/include/msa.h
 %endif
 %ifarch s390x
-%gcc_target_libdir/include/htmintrin.h
-%gcc_target_libdir/include/htmxlintrin.h
-%gcc_target_libdir/include/s390intrin.h
-%gcc_target_libdir/include/vecintrin.h
+%gcc_target_libdir/include/*intrin*.h
 %endif
 %ifarch %ix86 x86_64
-%gcc_target_libdir/include/cet.h
 %gcc_target_libdir/include/*intrin*.h
+%gcc_target_libdir/include/cet.h
 %gcc_target_libdir/include/cpuid.h
 %gcc_target_libdir/include/cross-stdarg.h
 %gcc_target_libdir/include/mm3dnow.h
 %gcc_target_libdir/include/mm_malloc.h
 %endif
 %ifarch ppc ppc64
+%gcc_target_libdir/include/*intrin*.h
 %gcc_target_libdir/include/altivec.h
+%gcc_target_libdir/include/amo.h
+%gcc_target_libdir/include/mm_malloc.h
 %gcc_target_libdir/include/paired.h
 %gcc_target_libdir/include/ppc-asm.h
-%gcc_target_libdir/include/ppu_intrinsics.h
 %gcc_target_libdir/include/si2vmx.h
 %gcc_target_libdir/include/spe.h
 %gcc_target_libdir/include/spu2vmx.h
@@ -2014,6 +2039,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jan 14 2019 Dmitry V. Levin <ldv@altlinux.org> 8.2.1-alt3
+- Updated to redhat/gcc-8-branch r267776 (Fedora gcc-8.2.1-7).
+- Merged updates for mips* (by iv@) and riscv (by arei@).
+
 * Thu Dec 27 2018 Dmitry V. Levin <ldv@altlinux.org> 8.2.1-alt2
 - Updated to redhat/gcc-8-branch r267173 (Fedora gcc-8.2.1-6).
 
