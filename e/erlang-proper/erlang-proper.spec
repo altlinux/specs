@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname proper
 
 Name: erlang-%realname
-Version: 1.2
-Release: alt1%ubt
+Version: 1.3
+Release: alt1
 Summary: A QuickCheck-inspired property-based testing tool for Erlang
 Group: Development/Erlang
 License: GPLv3+
@@ -12,10 +14,7 @@ Url: https://github.com/manopapad/proper
 # https://github.com/manopapad/proper.git
 Source: %name-%version.tar
 
-Patch1: erlang-proper-fedora-add-timeout-values-that-work-on-ARM.patch
-
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 
@@ -25,7 +24,6 @@ open-source property-based testing tool for Erlang.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %rebar_compile
@@ -43,5 +41,8 @@ export ERL_LIBS=%buildroot%_erllibdir
 %_erllibdir/%realname-%version
 
 %changelog
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt1
+- Updated to upstream version 1.3.
+
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1
 - Initial build for ALT.

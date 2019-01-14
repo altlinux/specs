@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname meck
 
 Name: erlang-%realname
-Version: 0.8.9
-Release: alt1%ubt
+Version: 0.8.12
+Release: alt1
 Summary: A mocking library for Erlang
 Group: Development/Erlang
 License: ASL 2.0
@@ -15,7 +17,6 @@ Source: %name-%version.tar
 Patch1: erlang-meck-fedora-workaround-for-Rebar-2.x.patch
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-hamcrest
@@ -44,5 +45,8 @@ modules, such as making sure no function is called in a way it should not.
 %_erllibdir/%realname-%version
 
 %changelog
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.9-alt1%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.12-alt1
+- Updated to upstream version 0.8.12.
+
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.9-alt1
 - Initial build for ALT.

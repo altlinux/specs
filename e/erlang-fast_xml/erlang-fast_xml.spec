@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname fast_xml
 
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.29
-Release: alt1%ubt
+Version: 1.1.34
+Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
 License: ASL 2.0
@@ -14,7 +16,6 @@ Url: https://github.com/processone/fast_xml
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-p1_utils
@@ -54,5 +55,8 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.29-alt1%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.34-alt1
+- Updated to upstream version 1.1.34.
+
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.29-alt1
 - Initial build for ALT.

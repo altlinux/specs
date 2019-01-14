@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname fast_tls
 
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.21
-Release: alt2%ubt
+Version: 1.0.26
+Release: alt1
 Summary: TLS / SSL OpenSSL-based native driver for Erlang / Elixir
 Group: Development/Erlang
 License: ASL 2.0
@@ -14,7 +16,6 @@ Url: https://github.com/processone/fast_tls
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-p1_utils
@@ -44,8 +45,11 @@ It is designed for efficiency, speed and compliance.
 %_erllibdir/%realname-%version
 
 %changelog
-* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt2%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.26-alt1
+- Updated to upstream version 1.0.26.
+
+* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt2
 - Rebuilt with openssl 1.1.
 
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1%ubt
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1
 - Initial build for ALT.

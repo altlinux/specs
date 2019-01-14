@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname stun
 
 Name: erlang-%realname
-Version: 1.0.21
-Release: alt1%ubt
+Version: 1.0.26
+Release: alt1
 Summary: STUN and TURN library for Erlang / Elixir
 Group: Development/Erlang
 License: ASL 2.0
@@ -13,7 +15,6 @@ Url: https://github.com/processone/stun
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-p1_utils
@@ -42,5 +43,8 @@ connection between peers for VoIP (for example using SIP or Jingle) and WebRTC.
 %_erllibdir/%realname-%version
 
 %changelog
-* Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.26-alt1
+- Updated to upstream version 1.0.26.
+
+* Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1
 - Initial build for ALT.
