@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.9.0
-Release: alt6%ubt
+Release: alt7
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -12,7 +12,7 @@ Url: http://amarok.kde.org/
 Provides: %rname = %version-%release
 
 Requires: qtscriptbindings libqt4-sql-sqlite
-Requires: kde4multimedia-audiocd
+#Requires: kde4multimedia-audiocd
 Conflicts: amarok <= 1.4.10-alt10
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%rname-%version.tar
@@ -162,6 +162,9 @@ fi
 
 
 %changelog
+* Mon Jan 14 2019 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt7
+- crean requires
+
 * Thu Jul 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.9.0-alt6%ubt
 - rebuild with libmariadbd
 
