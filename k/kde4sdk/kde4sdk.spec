@@ -12,7 +12,7 @@ Name: kde4sdk
 %define minor 12
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -20,22 +20,21 @@ License: GPL
 Url: ftp://ftp.kde.org/pub/kde/stable/%version/src/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
-Requires: %name-core = %version-%release
-Requires: %name-lokalize = %version-%release
-Requires: %name-kapptemplate = %version-%release
-Requires: %name-kuiviewer = %version-%release
+#Requires: %name-core = %version-%release
+#Requires: %name-lokalize = %version-%release
+#Requires: %name-kapptemplate = %version-%release
+#Requires: %name-kuiviewer = %version-%release
 Requires: %name-scripts = %version-%release
-#Requires: %name-kbugbuster = %version-%release
-Requires: %name-strigi-analyzer = %version-%release
+#Requires: %name-strigi-analyzer = %version-%release
 Requires: %name-po2xml = %version-%release
-Requires: %name-umbrello = %version-%release
-Requires: %name-cervisia = %version-%release
-Requires: %name-kompare = %version-%release
-Requires: %name-kmtrace = %version-%release
-Requires: %name-kcachegrind = %version-%release
-Requires: %name-dolphin = %version-%release
-Requires: %name-okteta = %version-%release
-Requires: %name-thumbnailers = %version-%release
+#Requires: %name-umbrello = %version-%release
+#Requires: %name-cervisia = %version-%release
+#Requires: %name-kompare = %version-%release
+#Requires: %name-kmtrace = %version-%release
+#Requires: %name-kcachegrind = %version-%release
+#Requires: %name-dolphin = %version-%release
+#Requires: %name-okteta = %version-%release
+#Requires: %name-thumbnailers = %version-%release
 
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
@@ -56,9 +55,9 @@ BuildRequires: rpm-build-python python-modules-encodings
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
 BuildRequires: gettext-tools
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
-BuildRequires: kde4libs-devel kde4base-devel
-BuildRequires: kde4pimlibs-devel
-BuildRequires: kde4base-workspace-devel libkomparediff2-devel
+BuildRequires: kde4libs-devel
+#BuildRequires: kde4pimlibs-devel libkomparediff2-devel
+#BuildRequires: kde4base-workspace-devel kde4base-devel
 
 %description
 Software Development Kit for the K Desktop Environment.
@@ -156,7 +155,7 @@ Displays Qt Designer UI files
 Summary: Script From kdesdk
 Group: Development/KDE and QT
 BuildArch: noarch
-Requires: %name-core = %version-%release
+#Requires: %name-core = %version-%release
 %description scripts
 This package contains the scripts for KDE development which are
 contained in the %rname module.
@@ -295,6 +294,9 @@ Requires: %name-common = %version-%release
 %patch2 -p1
 %patch3 -p1
 
+# build only scripts and po2xml
+rm -rf cervisia dolphin-plugins kapptemplate kcachegrind kde-dev-utils kdesdk-kioslaves \
+ kdesdk-strigi-analyzers kdesdk-thumbnailers kompare lokalize okteta umbrello
 
 %build
 export PATH=%_kde4_bindir:$PATH
@@ -341,103 +343,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %files
-%files libs
 %files common
-%files core
-%_K4bindir/cvsaskpass
-%_K4bindir/cvsservice
-%_K4bindir/kstartperf
-%_K4bindir/kpartloader
-%_K4libdir/libkdeinit4_cvsaskpass.so
-%_K4libdir/libkdeinit4_cvsservice.so
-%_K4lib/kio_perldoc.so
-%_K4lib/kstartperf.so
-%_K4apps/kio_perldoc/
-%_K4apps/kpartloader/
-%_K4srv/perldoc.protocol
-#%_K4iconsdir/locolor/*/actions/*.*
-%_K4iconsdir/hicolor/*/actions/*.*
-%_K4iconsdir/hicolor/*/mimetypes/application-x-uml.*
-
-%files thumbnailers
-%_K4lib/*thumbnail.so
-%_K4srv/*thumbnail.desktop
-%_K4cfg/pocreatorsettings.kcfg
-
-%files okteta
-%_K4bindir/okteta
-%_K4bindir/struct2osd.sh
-%_K4lib/libkbytearrayedit.so
-%_K4lib/oktetapart.so
-%_K4xdg_apps/okteta.desktop
-%_K4apps/okteta/
-%_K4apps/oktetapart/
-%_K4iconsdir/hicolor/*/apps/okteta.*
-%_K4srv/kbytearrayedit.desktop
-%_K4srv/oktetapart.desktop
-%_K4cfg/structviewpreferences.kcfg
-%_K4conf/okteta-structures.knsrc
-%_K4xdg_mime/okteta.xml
-%_K4doc/*/okteta
-
-%files -n libkasten2okteta1core4
-%_K4libdir/libkasten2okteta1core.so.*
-%files -n libkasten2okteta1gui4
-%_K4libdir/libkasten2okteta1gui.so.*
-%files -n libkasten2okteta1controllers4
-%_K4libdir/libkasten2okteta1controllers.so.*
-%files -n libkasten2controllers4
-%_K4libdir/libkasten2controllers.so.*
-%files -n libokteta1core4
-%_K4libdir/libokteta1core.so.*
-%files -n libokteta1gui4
-%_K4libdir/libokteta1gui.so.*
-%files -n libkasten2core4
-%_K4libdir/libkasten2core.so.*
-%files -n libkasten2gui4
-%_K4libdir/libkasten2gui.so.*
-
-%files dolphin
-%_K4lib/fileviewdropboxplugin.so
-%_K4lib/fileviewgitplugin.so
-%_K4lib/fileviewsvnplugin.so
-%_K4lib/fileviewbazaarplugin.so
-%_K4lib/fileviewhgplugin.so
-%_K4cfg/fileviewsvnpluginsettings.kcfg
-%_K4cfg/fileviewgitpluginsettings.kcfg
-%_K4cfg/fileviewhgpluginsettings.kcfg
-%_K4srv/fileviewdropboxplugin.desktop
-%_K4srv/fileviewgitplugin.desktop
-%_K4srv/fileviewsvnplugin.desktop
-%_K4srv/fileviewbazaarplugin.desktop
-%_K4srv/fileviewhgplugin.desktop
-
-%files lokalize
-%_K4bindir/lokalize
-%_K4xdg_apps/lokalize.desktop
-%_K4apps/lokalize/
-%_K4cfg/lokalize.kcfg
-%_datadir/strigi/fieldproperties/strigi_translation.fieldproperties
-%_K4iconsdir/*/*/apps/lokalize.*
-%_K4doc/*/lokalize
-
-%files kapptemplate
-%_K4bindir/kapptemplate
-%_K4xdg_apps/kapptemplate.desktop
-#%_K4apps/kapptemplate/
-%_K4apps/kdevappwizard/
-%_K4cfg/kapptemplate.kcfg
-%_K4iconsdir/hicolor/*/*/kapptemplate.*
-%_K4doc/*/kapptemplate
-
-%files kuiviewer
-%_K4bindir/kuiviewer
-%_K4libdir/kde4/kuiviewerpart.so
-%_K4xdg_apps/kuiviewer.desktop
-%_K4apps/kuiviewer/
-%_K4iconsdir/hicolor/*/apps/kuiviewer.png
-%_K4apps/kuiviewerpart/
-%_K4srv/kuiviewer_part.desktop
 
 %files scripts
 %_K4bindir/adddebug
@@ -497,99 +403,17 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/wcgrep
 %_K4bindir/zonetab2pot.py
 
-%files strigi-analyzer
-%_K4libdir/strigi/strigi*
-
 %files po2xml
 %_K4bindir/po2xml
 %_K4bindir/swappo
 %_K4bindir/split2po
 %_K4bindir/xml2pot
 
-%files umbrello
-%_K4bindir/umbrello
-%_K4bindir/po2xmi
-%_K4bindir/xmi2pot
-%_K4xdg_apps/umbrello.desktop
-%_K4apps/umbrello/
-%_K4iconsdir/hicolor/*/apps/umbrello*
-%_K4doc/*/umbrello
-
-%files cervisia
-%_K4bindir/cervisia
-%_K4xdg_apps/cervisia.desktop
-%_K4apps/cervisia/
-%_K4apps/cervisiapart/
-%_K4cfg/cervisiapart.kcfg
-%_K4iconsdir/*/*/apps/cervisia.*
-%_K4libdir/libkdeinit4_cervisia.so
-%_K4libdir/kde4/cervisiapart.so
-%_K4srv/cvsservice.desktop
-%_K4srv/cervisiapart.desktop
-%_K4doc/*/cervisia
-%if_enabled kio_svn
-%_K4bindir/kio_svn_helper
-%_K4libdir/kde4/kded_ksvnd.so
-%_K4libdir/kde4/kio_svn.so
-%_K4srv/svn*.protocol
-%_K4srv/ServiceMenus/subversion*.desktop
-%_K4srv/kded/ksvnd.desktop
-%endif
-
-%files kompare
-%_K4bindir/kompare
-%_K4libdir/kde4/komparenavtreepart.so
-%_K4libdir/kde4/komparepart.so
-%_K4libdir/libkomparedialogpages.so.*
-%_K4xdg_apps/kompare.desktop
-%_K4apps/kompare/
-%_K4iconsdir/hicolor/*/apps/kompare.*
-%_K4srv/komparenavtreepart.desktop
-%_K4srv/komparepart.desktop
-%_K4srvtyp/komparenavigationpart.desktop
-%_K4srvtyp/kompareviewpart.desktop
-%_K4doc/*/kompare
-
-%files kmtrace
-%_K4bindir/kmtrace
-%_K4bindir/demangle
-%_K4bindir/kminspector
-%_K4bindir/kmmatch
-%_K4apps/kmtrace/
-
-%files kcachegrind
-%_K4bindir/kcachegrind
-%_K4bindir/dprof2calltree
-%_K4bindir/hotshot2calltree
-%_K4bindir/memprof2calltree
-%_K4bindir/op2calltree
-%_K4bindir/pprof2calltree
-%_K4iconsdir/*/*/*/kcachegrind.*
-%_K4apps/kcachegrind/
-%_K4xdg_apps/kcachegrind.desktop
-%_K4doc/*/kcachegrind
-
-%files -n libkompareinterface4
-%_K4libdir/libkompareinterface.so.*
-%files -n libktrace4
-%_K4libdir/libktrace.so.*
-
-%files devel
-%_K4includedir/kprofilemethod.h
-%_K4includedir/ktrace.h
-%_K4includedir/kompare/
-%_K4includedir/okteta1/
-%_K4includedir/kasten2/
-%_K4includedir/KDE/*
-%_K4link/*.so
-%_K4lib/plugins/designer/*.so
-%if_enabled kio_svn
-%_datadir/dbus-1/interfaces/org.kde.ksvnd.xml
-%endif
-%_datadir/dbus-1/interfaces/org.kde.cervisia.*.xml
-
 
 %changelog
+* Mon Jan 14 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt3
+- build only scripts and po2xml
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.12.2-alt2
 - Patched struct2osd script to work with castxml.
 
