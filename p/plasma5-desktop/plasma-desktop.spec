@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.7
-Release: alt5
+Release: alt6
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -38,9 +38,7 @@ Patch16: alt-locales-preview.patch
 Patch17: alt-fix-moving-icons.patch
 Patch18: alt-fix-create-icon.patch
 Patch19: alt-disable-kwin-runner.patch
-# https://phabricator.kde.org/D17689
-Patch20: alt-fix-phantom-icons.patch
-# https://phabricator.kde.org/D17707
+# https://phabricator.kde.org/D18182
 Patch21: alt-fix-icon-dilation.patch
 # https://phabricator.kde.org/D17809
 Patch22: alt-fix-overlapping-icons.patch
@@ -139,13 +137,13 @@ KF5 library
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p2
-%patch21 -p2
+%patch21 -p1
 %patch22 -p2
 
 %build
 %K5cmake \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    -DCMAKE_BUILD_TYPE=Debug \
     #
 %K5make
 
@@ -229,6 +227,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Mon Jan 14 2019 Oleg Solovyov <mcpain@altlinux.org> 5.12.7-alt6
+- use better patch from upstream
+
 * Thu Dec 27 2018 Oleg Solovyov <mcpain@altlinux.org> 5.12.7-alt5
 - plasmashell: fix moving icons when we're overlapping with existing ones
 
