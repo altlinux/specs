@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt123
+Release: alt124
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -511,6 +511,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Mon Jan 14 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt124
+- addReqProv: fixed too aggressive merge of PreReqs introduced
+  in 4.0.4-alt122.
+- Applied llvm changes (by lakostis@; closes: #34671):
+  + cpp.req: skip cpp checks for llvm;
+  + verify-elf: bypass lint checks by request.
+
 * Thu Jan 10 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt123
 - Dropped %%_allow_deps_with_beginning_dot support
   (introduced in 4.0.4-alt119).
