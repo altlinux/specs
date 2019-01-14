@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.6.1
+Version: 3.7.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -23,6 +23,7 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: pytest
+BuildRequires: python-module-freezegun
 BuildRequires: python-module-pip
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-mock
@@ -35,6 +36,7 @@ BuildRequires: python-module-six
 BuildRequires: python-module-toml
 BuildRequires: python-module-filelock
 BuildRequires: pytest3
+BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
@@ -117,6 +119,8 @@ export TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR'
 %buildroot%_bindir/tox \
 --sitepackages -e py%{python_version_nodots python} --notest
 cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python}/bin/python" \
+.tox/py%{python_version_nodots python}/bin/pytest
 
 %buildroot%_bindir/tox \
 --sitepackages -e py%{python_version_nodots python} -v -- -v
@@ -127,6 +131,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %buildroot%_bindir/tox.py3 \
 --sitepackages -e py%{python_version_nodots python3} --notest
 cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
+sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python3}/bin/python3" \
+.tox/py%{python_version_nodots python3}/bin/pytest
 
 %buildroot%_bindir/tox.py3 \
 --sitepackages -e py%{python_version_nodots python3} -v -- -v
@@ -145,6 +151,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
+- 3.6.1 -> 3.7.0.
+
 * Mon Dec 31 2018 Stanislav Levin <slev@altlinux.org> 3.6.1-alt1
 - 3.5.3 -> 3.6.1.
 
