@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 3.30
@@ -8,7 +8,7 @@
 
 Name: epiphany
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -104,6 +104,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Jan 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt2
+- updated to 3.30.2-8-gd571984e2
+
 * Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
