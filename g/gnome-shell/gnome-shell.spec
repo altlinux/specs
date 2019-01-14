@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -11,7 +11,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -246,6 +246,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Mon Jan 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt3
+- updated to 3.30.2-7-g999cc1214
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt2
 - fixed buildreqs for network-manager support
 
