@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.0.9
+Version: 3.0.10
 Release: alt1
 
 Summary: A platform independent file lock for Python
@@ -80,6 +80,9 @@ popd
 %python3_sitelibdir/filelock-*.egg-info/
 
 %changelog
+* Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 3.0.10-alt1
+- 3.0.9 -> 3.0.10.
+
 * Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 3.0.9-alt1
 - Initial build.
 
