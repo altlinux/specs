@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.6.2
-Release: alt3
+Release: alt4
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -40,7 +40,7 @@ BuildRequires: libssl-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: openssh
-BuildRequires: ruby
+BuildRequires: ruby ruby-nokogiri
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
@@ -574,6 +574,8 @@ fi
 
 %_datadir/one/websockify/*
 
+%_man1dir/econe*
+
 
 %dir %attr(0770, root, oneadmin) %oneadmin_home/sunstone
 %attr(0770, root, oneadmin) %oneadmin_home/sunstone/main.js
@@ -647,7 +649,7 @@ fi
 %_libexecdir/one/ruby/VirtualMachineDriver.rb
 %_libexecdir/one/sh/*
 
-%_man1dir/*
+%_man1dir/onedb.1.*
 %doc LICENSE NOTICE
 
 %dir %attr(0750, oneadmin, oneadmin) %oneadmin_home/datastores
@@ -708,11 +710,18 @@ fi
 
 %_datadir/one/onetoken.sh
 
+%_man1dir/one*
+%exclude %_man1dir/onedb.1.*
+
 ################################################################################
 # Changelog
 ################################################################################
 
 %changelog
+* Mon Jan 14 2019 Mikhail Gordeev <obirvalger@altlinux.org> 5.6.2-alt4
+- Add ruby-nokogiri to BuildRequires for building man pages
+- Move man files to appropriate packages
+
 * Fri Dec 14 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt3
 - move scripts_common.rb to ruby package for allow install sunstone without server package
 - build with system node headers from node-devel package
