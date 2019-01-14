@@ -3,7 +3,7 @@
 
 Name: libarchive
 Version: 3.3.1
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -11,7 +11,7 @@ License: BSD
 Url: http://www.libarchive.org/
 #Url: https://github.com/libarchive/libarchive
 
-Source0: libarchive-%version.tar.gz
+Source0: libarchive-%version.tar
 # SuSE
 # ALT
 Patch100: alt-disable-lzma-mt.patch
@@ -19,7 +19,6 @@ Patch100: alt-disable-lzma-mt.patch
 # Automatically added by buildreq on Mon Mar 11 2013 (-bi)
 # optimized out: elfutils pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: bzlib-devel glibc-devel-static libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel rpm-build-ruby zlib-devel
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
 BuildRequires: libnettle-devel
 
@@ -32,6 +31,7 @@ read ISO9660 CDROM images and ZIP archives.
 %package -n %libarchive
 Summary: Full-featured tar replacement built on libarchive
 Group: System/Libraries
+Provides: %name = %EVR
 %description -n %libarchive
 The bsdtar program is a full-featured tar replacement built on libarchive.
 
@@ -113,6 +113,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.1-alt2
+- NMU: added provide for libarchive.
+
 * Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.1-alt1%ubt
 - new version
 
