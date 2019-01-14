@@ -5,7 +5,7 @@
 
 Name: lightdm-gtk-greeter-pd
 Epoch: 1
-Version: 2.0.1.6
+Version: 2.0.1.7
 Release: alt1
 Summary: LightDM GTK+ Greeter (prompt-driven)
 Group: Graphical desktop/Other
@@ -76,6 +76,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Mon Jan 14 2019 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.7-alt1
+- Fix: Restore last user automatic selection.
+
 * Tue Oct 23 2018 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.6-alt1
 - Workaround: Use the theme's default foreground color for the
   prompt instead of the special question color because the latter is
