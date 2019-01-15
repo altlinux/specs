@@ -3,10 +3,10 @@
 
 Name: GLEW
 Version: 2.1.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
-License: BSD, MIT
+License: BSD and MIT
 Group: System/Libraries
 
 Url: http://glew.sourceforge.net/
@@ -14,9 +14,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://downloads.sourceforge.net/project/glew/glew/%version/glew-%version.tgz
 
-BuildPreReq: rpm-build-ubt
-
-BuildRequires: gcc-c++
+BuildRequires: gcc
 BuildRequires: libGLU-devel
 
 %description
@@ -70,15 +68,28 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 
 %prep
 %setup -n glew-%version
+sed -i s/wglew/eglew/ Makefile
+%if_disabled static
+sed -i '/LIB.STATIC.*DESTDIR/d' Makefile
+%endif
 
 %build
-%make_build
+install -pm755 -- %_datadir/gnu-config/config.guess config/
+%make_build STRIP= CFLAGS.EXTRA='%optflags %optflags_shared' LDFLAGS.EXTRA= \
+	glew.lib.shared \
+%if_enabled static
+	glew.lib.static \
+%endif
+	#
 
 %install
 %makeinstall_std BINDIR=%_bindir LIBDIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
 %files -n lib%name%soversion
-%doc doc/*
+%doc LICENSE.txt doc/*
 %_libdir/lib%name.so.%soversion
 %_libdir/lib%name.so.%soversion.*
 
@@ -93,10 +104,13 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %endif
 
 %changelog
-* Fri Aug 04 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt2%ubt
+* Tue Jan 15 2019 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt3
+- Fixed build.
+
+* Fri Aug 04 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt2
 - Fix libdir param (thanks Sergey Bolshakov)
 
-* Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1%ubt
+* Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
 * Tue Aug 02 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
