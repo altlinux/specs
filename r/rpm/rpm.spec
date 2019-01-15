@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt4
+Release: alt5
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -31,7 +31,7 @@ License: GPLv2+
 
 Requires: coreutils
 Requires: popt >= 1.10.2.1
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 Conflicts: apt < 0.5.15lorg2-alt54
 
 BuildRequires(pre): rpm-build-python3
@@ -93,7 +93,7 @@ the package like its version, a description, etc.
 %package -n rpm2archive
 Summary: Program which converts rpm payload to tar archive
 Group: Archiving/Other
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 
 %description -n rpm2archive
 This package contains rpm2archive utility. It can be used to convert rpm
@@ -103,7 +103,7 @@ package into tarball.
 Summary: Program which allows to query rpm specfile.
 Group: Archiving/Other
 Conflicts: rpm < 4.13.0-alt6
-Requires: librpmbuild%sover = %EVR
+Requires: librpmbuild%sover
 
 %description -n rpmspec
 This package contains rpmspec utility. It can be used to query rpm specfile.
@@ -126,7 +126,7 @@ This package contains the RPM shared libraries.
 Summary: Libraries for building and signing RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 
 %description -n librpmbuild%sover
 This package contains the RPM shared libraries for building and signing
@@ -136,9 +136,9 @@ packages.
 Summary: Development files for manipulating RPM packages
 Group: Development/C
 License: GPLv2+ and LGPLv2+ with exceptions
-Requires: rpm = %EVR
-Requires: librpm%sover = %EVR
-Requires: librpmbuild%sover = %EVR
+Requires: rpm
+Requires: librpm%sover
+Requires: librpmbuild%sover
 Provides: rpm-devel = %EVR
 
 %description -n librpm-devel
@@ -155,7 +155,7 @@ will manipulate RPM packages and databases.
 %package build
 Summary: Scripts and executable programs used to build packages
 Group: Development/Other
-Requires: rpm = %EVR
+Requires: rpm
 Requires: elfutils >= 0.128 binutils
 Requires: findutils sed grep gawk diffutils file patch >= 2.5
 Requires: tar unzip gzip bzip2 cpio xz
@@ -169,7 +169,7 @@ that are used to build packages using the RPM Package Manager.
 %package sign
 Summary: Package signing support
 Group: Development/Other
-Requires: librpmbuild%sover = %EVR
+Requires: librpmbuild%sover
 
 %description sign
 This package contains support for digitally signing RPM packages.
@@ -177,7 +177,7 @@ This package contains support for digitally signing RPM packages.
 %package -n python-module-rpm
 Summary: Python 2 bindings for apps which will manipulate RPM packages
 Group: Development/Python
-Requires: rpm = %EVR
+Requires: rpm
 Provides: rpm-python = %EVR
 
 %description -n python-module-rpm
@@ -191,7 +191,7 @@ programs that will manipulate RPM packages and databases.
 %package -n python3-module-rpm
 Summary: Python 3 bindings for apps which will manipulate RPM packages
 Group: Development/Python3
-Requires: rpm = %EVR
+Requires: rpm
 
 %description -n python3-module-rpm
 The rpm-python3 package contains a module that permits applications
@@ -213,7 +213,7 @@ that will manipulate RPM packages and databases.
 %package plugin-syslog
 Summary: Rpm plugin for syslog functionality
 Group: System/Configuration/Packaging
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 
 %description plugin-syslog
 %summary
@@ -221,7 +221,7 @@ Requires: librpm%sover = %EVR
 %package plugin-systemd-inhibit
 Summary: Rpm plugin for systemd inhibit functionality
 Group: System/Configuration/Packaging
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 
 %description plugin-systemd-inhibit
 This plugin blocks systemd from entering idle, sleep or shutdown while
@@ -230,7 +230,7 @@ an rpm transaction is running using the systemd-inhibit mechanism.
 %package plugin-ima
 Summary: Rpm plugin ima file signatures
 Group: System/Configuration/Packaging
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 
 %description plugin-ima
 %summary
@@ -238,7 +238,7 @@ Requires: librpm%sover = %EVR
 %package plugin-hdrcache
 Summary: Rpm plugin for caching headers in memecached
 Group: System/Configuration/Packaging
-Requires: librpm%sover = %EVR
+Requires: librpm%sover
 Provides: rpmhdrmemcache = 0.1.2-alt4
 Obsoletes: rpmhdrmemcache <= 0.1.2-alt3.1
 
@@ -506,6 +506,15 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue Jan 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.13.0.1-alt5
+- implemented DistTag support when comparing package versions;
+- fixed handling of ancient packages (closes: #33710);
+- rpmquery: disabled glob by default (thx Dmitry V. Levin; closes: #35828);
+- fixed manifest comments handling (thx Dmitry V. Levin; closes: #35125);
+- dirty hacked to make upgrade packages between branches possible;
+- rpmpopt: made query info command display DistTag;
+- spec: removed excess %%EVR in intersubpackages dependencies.
+
 * Fri Oct 05 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt4
 - Add _allow_deps_with_beginning_dot macro to allow dependencies
   beginning with a dot character in spec file (vseleznv@).
