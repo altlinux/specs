@@ -1,7 +1,10 @@
 %define _name qxmpp
 
+# tst_qxmppiceconnection timed out in hasher
+%def_disable check
+
 Name: %_name-qt5
-Version: 0.9.3
+Version: 1.0.0
 Release: alt1
 
 Summary: Qt XMPP library
@@ -14,8 +17,10 @@ Source: %url/archive/%_name-%version.tar.gz
 
 Conflicts: lib%_name
 
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ qt5-base-devel
-BuildRequires: libspeex-devel libtheora-devel libvpx-devel doxygen
+BuildRequires: libspeex-devel libtheora-devel libvpx-devel libopus-devel doxygen
+%{?_enable_check:BuildRequires: /proc ctest}
 
 %description
 Xmpp is a cross-platform C++ XMPP client and server library. It is written
@@ -89,18 +94,23 @@ details.
 %setup -n %_name-%version
 
 %build
-%qmake_qt5 PREFIX=%_prefix LIBDIR=%_lib \
-	QXMPP_USE_SPEEX=1 \
-	QXMPP_USE_THEORA=1 \
-	QXMPP_USE_VPX=1 \
-	QXMPP_USE_DOXYGEN=1
-%make_build
+%cmake \
+	-DCMAKE_BUILD_TYPE="Release" \
+	-DWITH_SPEEX=TRUE \
+	-DWITH_THEORA=TRUE \
+	-DWITH_VPX=TRUE \
+	-DWITH_OPUS=TRUE \
+	-DBUILD_DOCUMENTATION=TRUE
+%cmake_build
 
 %install
-%make INSTALL_ROOT=%buildroot install
-
+%cmakeinstall_std
 mkdir -p %buildroot%_defaultdocdir/%_name
-install -m644 AUTHORS CHANGELOG README.md %buildroot%_defaultdocdir/%_name/
+install -m644 AUTHORS CHANGELOG.md README.md %buildroot%_defaultdocdir/%_name/
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%make -C BUILD test
 
 %files -n lib%name
 %_libdir/lib%_name.so.*
@@ -109,15 +119,19 @@ install -m644 AUTHORS CHANGELOG README.md %buildroot%_defaultdocdir/%_name/
 %_includedir/%_name/
 %_libdir/lib%_name.so
 %_pkgconfigdir/%_name.pc
+%_libdir/cmake/%_name/
 
 %files doc
 %dir %_defaultdocdir/%_name
 %_defaultdocdir/%_name/html/
 %_defaultdocdir/%_name/AUTHORS
-%_defaultdocdir/%_name/CHANGELOG
+%_defaultdocdir/%_name/CHANGELOG.md
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Tue Jan 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
