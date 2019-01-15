@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 2.2
+Version: 2.2.1
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -69,12 +69,13 @@ wxLocale библиотеки wxWindows.
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/net.poedit.PoeditURI.desktop
-%_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/*/*.png
-#%_iconsdir/hicolor/scalable/*/*.svg
 %_datadir/appdata/%rdn_name.appdata.xml
 
 %changelog
+* Tue Jan 15 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
