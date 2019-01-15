@@ -1,6 +1,6 @@
 Name: yandex-browser-preinstall
 Version: 0.4
-Release: alt2%ubt
+Release: alt3
 
 Summary: Set correct environment for Yandex.Browser
 License: GPL
@@ -12,8 +12,6 @@ BuildArch: noarch
 
 Source0: yandex-browser
 Source1: yandex-browser-beta
-
-BuildPreReq: rpm-build-ubt
 
 %description
 Set correct environment for Yandex.Browser
@@ -27,10 +25,13 @@ Set correct environment for Yandex.Browser
 %_sysconfdir/default/yandex-browser-beta
 
 %changelog
-* Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt2%ubt
+* Tue Jan 15 2019 Nazarov Denis <nenderus@altlinux.org> 0.4-alt3
+- Drop macro ubt (ALT #35904)
+
+* Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt2
 - No arch
 
-* Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt1%ubt
+* Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt1
 - Temporary remove fix playable video with H.264 codec
 
 * Sat Oct 28 2017 Nazarov Denis <nenderus@altlinux.org> 0.3-alt2
