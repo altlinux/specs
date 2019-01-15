@@ -5,7 +5,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt6.20180522
+Release: alt7.20180522
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -31,6 +31,8 @@ Buildrequires: pkgconfig(systemd)
 Buildrequires: libConsoleKit2-devel
 Requires: gtk3-theme-clearlooks-phenix
 %add_findreq_skiplist %_sbindir/%upstreamname
+
+Provides: lxdm
 
 %description
 LXDM is the future display manager of LXDE, the Lightweight X11 Desktop
@@ -96,6 +98,9 @@ sed 's/xserverrc vt1/xserverrc vt7/g' -i %buildroot%_sysconfdir/lxdm/lxdm.conf
 %_unitdir/lxdm.service
 
 %changelog
+* Tue Jan 15 2019 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt7.20180522
+- Added provides lxdm
+
 * Tue Oct 09 2018 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt6.20180522
 - new snapshot
 - build with ConsoleKit2
