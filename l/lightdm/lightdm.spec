@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt22
+Release: alt24
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -32,7 +32,8 @@ Patch2: %name-%version-%release-advanced.patch
 # Requires: %name-greeter
 Requires: accountsservice
 Requires: dbus-tools-gui
-Requires: dm-tool = %EVR
+Requires: dm-tool
+Requires: %name-aux
 
 BuildRequires: gcc-c++ intltool
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
@@ -56,12 +57,29 @@ manager use cases, with plugins where appropriate, low code complexity, and
 fast performance. Due to its cross-platform nature greeters can be written in
 several toolkits, including HTML/CSS/Javascript.
 
+%package aux
+Summary: Auxiliary package for Lightweight Display Manager
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+# This package is an implementation of a simple trick:
+# if dm-tool requires lightdm-aux = EVR and lightdm requires
+# lightdm-aux = EVR, you can't install dm-tool and lightdm
+# with different EVRs onto the same system. This trick is
+# required since 'Conflicts: %%name <> %%EVR' doesn't work
+# with disttags, and usual dependency would be too strong for
+# our case. For more information, check out the thread around
+# https://lists.altlinux.org/pipermail/devel/2019-January/206337.html
+# and https://bugzilla.altlinux.org/34339.
+
+%description aux
+Empty auxiliary package for Lightweight Display Manager.
+
 %package -n liblightdm-gobject
 Group: System/Libraries
 Summary: LightDM GObject Greeter Library
 License: LGPLv2+
-Conflicts: %name < %EVR
-Conflicts: %name > %EVR
+Requires: %name-aux
 
 %description -n liblightdm-gobject
 A library for LightDM greeters based on GObject which interfaces with LightDM
@@ -71,8 +89,7 @@ and provides common greeter functionality.
 Group: System/Libraries
 Summary: LightDM Qt Greeter Library
 License: LGPLv2+
-Conflicts: %name < %EVR
-Conflicts: %name > %EVR
+Requires: %name-aux
 
 %description -n liblightdm-qt
 A library for LightDM greeters based on Qt which interfaces with LightDM and
@@ -82,8 +99,7 @@ provides common greeter functionality.
 Group: System/Libraries
 Summary: LightDM Qt5 Greeter Library
 License: LGPLv2+
-Conflicts: %name < %EVR
-Conflicts: %name > %EVR
+Requires: %name-aux
 
 %description -n liblightdm-qt5
 A library for LightDM greeters based on Qt5 which interfaces with LightDM and
@@ -92,7 +108,7 @@ provides common greeter functionality.
 %package devel
 Group: Development/C
 Summary: Development Files for LightDM
-Requires: %name = %EVR
+Requires: %name
 
 %description devel
 This package provides all necessary files for developing plugins, greeters, and
@@ -102,8 +118,7 @@ additional interface libraries for LightDM.
 Summary: Development package for %name
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name < %version
-Conflicts: %name > %version
+Requires: %name-aux
 
 %description devel-doc
 Contains developer documentation for %name.
@@ -111,7 +126,7 @@ Contains developer documentation for %name.
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
-Requires: %name = %EVR
+Requires: %name
 
 %description gir
 GObject introspection data for the %name
@@ -120,7 +135,7 @@ GObject introspection data for the %name
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %EVR
+Requires: %name-gir
 
 %description gir-devel
 GObject introspection devel data for the %name
@@ -129,8 +144,7 @@ GObject introspection devel data for the %name
 Summary: Display Manager control utility
 Group: Graphical desktop/Other
 License: GPLv3+
-Conflicts: %name < %EVR
-Conflicts: %name > %EVR
+Requires: %name-aux
 
 %description -n dm-tool
 dm-tool utility controls a FreeDesktop.org-compatible display
@@ -255,6 +269,9 @@ fi
 %_datadir/bash-completion/completions/*
 %_controldir/*
 
+%files aux
+# intentionally left blank
+
 %files -n liblightdm-gobject
 %_libdir/liblightdm-gobject-?.so.*
 
@@ -291,6 +308,12 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Tue Jan 15 2019 Ivan A. Melnikov <iv@altlinux.org> 1.16.7-alt24
+- Replace 'Conflicts <>' with auxiliary package
+
+* Mon Jan 14 2019 Ivan A. Melnikov <iv@altlinux.org> 1.16.7-alt23
+- Remove MEMLOCK limit in systemd unit file (closes: #35844).
+
 * Sat Aug 04 2018 Fr. Br. George <george@altlinux.ru> 1.16.7-alt22
 - Fix lightdm-greeter-hide-users typo
 
