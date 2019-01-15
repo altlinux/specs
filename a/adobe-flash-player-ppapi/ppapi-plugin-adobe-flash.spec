@@ -7,10 +7,10 @@
 
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
-%define ver_fake   31
-%define ver_ix86   31.0.0.122
-%define ver_x86_64 31.0.0.122
-Release: alt2
+%define ver_fake   32
+%define ver_ix86   32.0.0.114
+%define ver_x86_64 32.0.0.114
+Release: alt1
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -117,6 +117,11 @@ install -m0644 %SOURCE0 %buildroot/%_desktopdir/
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
 
 %changelog
+* Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt1
+- new version (ALT#34555)
+- security fixes:
+  CVE-2018-15978, CVE-2018-15981, CVE-2018-15982, CVE-2018-15983
+
 * Fri Nov 09 2018 Sergey V Turchin <zerg@altlinux.org> 3:31-alt2
 - new version
 

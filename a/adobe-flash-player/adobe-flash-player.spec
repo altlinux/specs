@@ -1,10 +1,10 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   31
-%define ver_ix86   31.0.0.108
-%define ver_x86_64 31.0.0.108
-Release: alt1%ubt
+%define ver_fake 32
+%define ver_ix86 32.0.0.114
+%define ver_x86_64 32.0.0.114
+Release: alt1
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -27,7 +27,7 @@ ExclusiveArch: %ix86 x86_64
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
 
-Source: empty
+Source: versions
 
 %description
 Adobe Flash Player NPAPI compatibility collective package.
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt1
+- bump version
+
 * Tue Oct 02 2018 Sergey V Turchin <zerg@altlinux.org> 3:31-alt1%ubt
 - bump version
 
