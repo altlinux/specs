@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -38,7 +38,7 @@ Patch8: 0008_add_locales.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
 Patch15: 0015-disable-resource-fonts.patch
 Patch16: 0016-fix-lzma.patch
-Patch17: 0017-ligsl-microsoft-fix.patch
+#Patch17: 0017-ligsl-microsoft-fix.patch
 Patch18: 0018-fix-linking.patch
 
 #ExclusiveArch: %ix86 x86_64
@@ -87,8 +87,8 @@ BuildRequires: libopenal-devel >= 1.17.2
 # used by qt imageformats: libwebp-devel
 BuildRequires: libva-devel libdrm-devel
 
-BuildRequires: libtgvoip-devel >= 2.4
-BuildRequires: libcrl-devel >= 0.5
+BuildRequires: libtgvoip-devel >= 2.4.2
+BuildRequires: libcrl-devel >= 0.6
 
 BuildRequires: libxxhash-devel
 
@@ -145,7 +145,7 @@ or business messaging needs.
 #patch9 -p1
 %patch14 -p1
 %patch15 -p1
-%patch17 -p2
+#patch17 -p2
 %patch18 -p2
 
 cp %SOURCE2 Telegram/
@@ -203,6 +203,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Mon Jan 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
+- new version 1.5.7 (with rpmrb script)
+
 * Mon Dec 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
 - new version 1.5.6 (with rpmrb script)
 
