@@ -1,5 +1,5 @@
 Name: fuse3
-Version: 3.1.0
+Version: 3.4.1
 Release: alt1
 
 Summary: a tool for creating virtual filesystems
@@ -11,9 +11,9 @@ Url: https://github.com/libfuse/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
 Requires(pre): fuse-common
+
+BuildRequires: meson ninja-build libudev-devel
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -47,25 +47,17 @@ This package contains development headers.
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--enable-lib \
-	--enable-util \
-        --disable-example \
-        --disable-test \
-	--disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/lib%name.so.* %buildroot/%_lib/
 ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 
 rm -fr %buildroot%_sysconfdir/init.d
-
-mv %buildroot%_man8dir/mount.fuse.8 %buildroot%_man8dir/mount.fuse3.8
 
 %files
 %doc AUTHORS README.md doc/README.NFS doc/kernel.txt doc/html
@@ -83,5 +75,8 @@ mv %buildroot%_man8dir/mount.fuse.8 %buildroot%_man8dir/mount.fuse3.8
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 14 2019 Evgeny Sinelnikov <sin@altlinux.org> 3.4.1-alt1
+- update to latest release
+
 * Tue Jul 25 2017 Denis Smirnov <mithraen@altlinux.ru> 3.1.0-alt1
 - first build for Sisyphus (ALT#33529)
