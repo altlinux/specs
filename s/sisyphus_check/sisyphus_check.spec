@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.46
+Version: 0.8.47
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Jan 15 2019 Dmitry V. Levin <ldv@altlinux.org> 0.8.47-alt1
+- 090-check-nvr: check disttag.
+- 210-check-kernel (check_kmodule): strip disttag from kernel_release.
+
 * Mon Dec 31 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.46-alt1
 - 090-check-nvr: make version and release check more strict
 
