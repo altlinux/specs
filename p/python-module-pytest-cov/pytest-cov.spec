@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
@@ -28,7 +28,7 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-fields
 BuildRequires: python3-module-process-tests
 BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-tox
 %endif
 
 BuildArch: noarch
@@ -78,16 +78,22 @@ popd
 # to read a custom pth-file one should add a such path to site-dir
 # this only needs for tests at RPM build time
 echo "import site;site.addsitedir(\"$(pwd)/src\")" > tests/sitecustomize.py
-export PYTHONPATH="$(pwd)"/tests
-%_bindir/py.test -vv
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
-pushd ../python3
-# to read a custom pth-file one should add a such path to site-dir
-# this only needs for tests at RPM build time
-echo "import site;site.addsitedir(\"$(pwd)/src\")" > tests/sitecustomize.py
-export PYTHONPATH="$(pwd)"/tests
-%_bindir/py.test3 -vv
-popd
+grep -qs '[[:space:]]*hunter[[:space:]]*$' tox.ini || exit 1
+sed -i '/[[:space:]]*hunter[[:space:]]*$/d' tox.ini
+grep -qs '[[:space:]]*process-tests==.*$' tox.ini || exit 1
+sed -i '/[[:space:]]*process-tests==.*$/{s/==.*$//}' tox.ini
+
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='RPM_BUILD_DIR'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -102,6 +108,9 @@ popd
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1
+- 2.6.0 -> 2.6.1.
+
 * Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.4.0 -> 2.6.0.
 
