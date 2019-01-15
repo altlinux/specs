@@ -4,8 +4,8 @@
 
 Name: openstack-%oname
 Summary: OpenStack Orchestration (heat)
-Version: 8.0.3
-Release: alt2
+Version: 11.0.0
+Release: alt1
 Epoch: 1
 License: ASL 2.0
 Group: System/Servers
@@ -28,82 +28,10 @@ Source21: %name.tmpfiles
 Patch0: %name-6.1.0-remove-bash3-header.patch
 
 BuildArch: noarch
-BuildRequires: git
-BuildRequires: crudini
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pycrypto
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-oslo.cache >= 0.4.0
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.middleware >= 2.8.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 1.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.db >= 4.15.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 3.11.0
-BuildRequires: python-module-oslo.messaging >= 5.14.0
-BuildRequires: python-module-oslo.policy >= 1.17.0
-BuildRequires: python-module-oslo.reports >= 0.6.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-osprofiler >= 1.4.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.17.0
-BuildRequires: python-module-argparse
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-keystoneauth1 >= 2.18.0
-BuildRequires: python-module-keystonemiddleware >= 4.12.0
-BuildRequires: python-module-lxml >= 2.3
-BuildRequires: python-module-httplib2
-BuildRequires: python-module-iso8601
-BuildRequires: python-module-kombu >= 3.0.7
-BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-memcached
-BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-osprofiler >= 1.2.0
-BuildRequires: python-module-qpid
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-yaml >= 3.10.0
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-paramiko
-BuildRequires: python-module-dogpile.cache
-BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-stevedore >= 1.17.1
 
-# These are required to build due to the requirements check added
-BuildRequires: python-module-PasteDeploy
-BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-webob
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-cryptography >= 1.0
+Requires: python3-module-heat = %EVR
+Requires(pre): shadow-utils
 
-BuildRequires: python-module-redis-py
-BuildRequires: python-module-zmq
-BuildRequires: python-module-retrying
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-yaql >= 1.1.0
-
-%if_enabled doc
-BuildRequires: python-module-aodhclient >= 0.7.0
-BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-novaclient >= 6.0.0
-BuildRequires: python-module-saharaclient >= 1.1.0
-BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-swiftclient >= 3.2.0
-BuildRequires: python-module-heatclient >= 1.6.1
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-ceilometerclient >= 1.5.0
-BuildRequires: python-module-glanceclient >= 2.5.0
-BuildRequires: python-module-troveclient >= 1.2.0
-%endif
 
 Requires: %name = %EVR
 Requires: %name-engine = %EVR
@@ -111,16 +39,159 @@ Requires: %name-api = %EVR
 Requires: %name-api-cfn = %EVR
 Requires: %name-api-cloudwatch = %EVR
 
-Requires: python-module-heat = %EVR
-Requires(pre): shadow-utils
-
 Provides: %name-common  = %EVR
 Obsoletes: %name-common  < %EVR
+
+BuildRequires: crudini
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-babel >= 2.3.4
+BuildRequires: python-module-croniter >= 0.3.4
+BuildRequires: python-module-cryptography >= 2.1
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-keystonemiddleware >= 4.17.0
+BuildRequires: python-module-lxml >= 3.4.1
+BuildRequires: python-module-netaddr >= 0.7.18
+BuildRequires: python-module-neutron-lib >= 1.14.0
+BuildRequires: python-module-openstacksdk >= 0.11.2
+BuildRequires: python-module-oslo.cache >= 1.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.context >= 2.19.2
+BuildRequires: python-module-oslo.db >= 4.27.0
+BuildRequires: python-module-oslo.i18n >= 3.15.3
+BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.messaging >= 5.29.0
+BuildRequires: python-module-oslo.middleware >= 3.31.0
+BuildRequires: python-module-oslo.policy >= 1.30.0
+BuildRequires: python-module-oslo.reports >= 1.18.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.service >= 1.24.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.31.2
+BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-aodhclient >= 0.9.0
+BuildRequires: python-module-barbicanclient >= 4.5.2
+BuildRequires: python-module-blazarclient >= 1.0.0
+BuildRequires: python-module-cinderclient >= 3.3.0
+BuildRequires: python-module-designateclient >= 2.7.0
+BuildRequires: python-module-glanceclient >= 2.8.0
+BuildRequires: python-module-heatclient >= 1.10.0
+BuildRequires: python-module-keystoneclient >= 3.8.0
+BuildRequires: python-module-magnumclient >= 2.1.0
+BuildRequires: python-module-manilaclient >= 1.16.0
+BuildRequires: python-module-mistralclient >= 3.1.0
+BuildRequires: python-module-monascaclient >= 1.12.0
+BuildRequires: python-module-neutronclient >= 6.7.0
+BuildRequires: python-module-novaclient >= 9.1.0
+BuildRequires: python-module-octaviaclient >= 1.3.0
+BuildRequires: python-module-openstackclient >= 3.12.0
+BuildRequires: python-module-saharaclient >= 1.4.0
+BuildRequires: python-module-swiftclient >= 3.2.0
+BuildRequires: python-module-troveclient >= 2.2.0
+BuildRequires: python-module-zaqarclient >= 1.0.0
+BuildRequires: python-module-zunclient >= 2.0.0
+BuildRequires: python-module-pytz >= 2013.6
+BuildRequires: python-module-yaml >= 3.12
+BuildRequires: python-module-requests >= 2.14.2
+BuildRequires: python-module-tenacity >= 4.4.0
+BuildRequires: python-module-routes >= 2.3.1
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-migrate >= 0.11.0
+BuildRequires: python-module-stevedore >= 1.20.0
+BuildRequires: python-module-webob >= 1.7.1
+BuildRequires: python-module-yaql >= 1.1.3
+
+
+# doc
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-os-api-ref >= 1.4.0
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-reno >= 2.5.0
+BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
+BuildRequires: python-module-sphinxcontrib-httpdomain >= 1.3.0
+
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-croniter >= 0.3.4
+BuildRequires: python3-module-cryptography >= 2.1
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-keystonemiddleware >= 4.17.0
+BuildRequires: python3-module-lxml >= 3.4.1
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-neutron-lib >= 1.14.0
+BuildRequires: python3-module-openstacksdk >= 0.11.2
+BuildRequires: python3-module-oslo.cache >= 1.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-oslo.db >= 4.27.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-oslo.middleware >= 3.31.0
+BuildRequires: python3-module-oslo.policy >= 1.30.0
+BuildRequires: python3-module-oslo.reports >= 1.18.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.service >= 1.24.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
+BuildRequires: python3-module-oslo.versionedobjects >= 1.31.2
+BuildRequires: python3-module-PasteDeploy >= 1.5.0
+BuildRequires: python3-module-aodhclient >= 0.9.0
+BuildRequires: python3-module-barbicanclient >= 4.5.2
+BuildRequires: python3-module-blazarclient >= 1.0.0
+BuildRequires: python3-module-cinderclient >= 3.3.0
+BuildRequires: python3-module-designateclient >= 2.7.0
+BuildRequires: python3-module-glanceclient >= 2.8.0
+BuildRequires: python3-module-heatclient >= 1.10.0
+BuildRequires: python3-module-keystoneclient >= 3.8.0
+BuildRequires: python3-module-magnumclient >= 2.1.0
+BuildRequires: python3-module-manilaclient >= 1.16.0
+BuildRequires: python3-module-mistralclient >= 3.1.0
+BuildRequires: python3-module-monascaclient >= 1.12.0
+BuildRequires: python3-module-neutronclient >= 6.7.0
+BuildRequires: python3-module-novaclient >= 9.1.0
+BuildRequires: python3-module-octaviaclient >= 1.3.0
+BuildRequires: python3-module-openstackclient >= 3.12.0
+BuildRequires: python3-module-saharaclient >= 1.4.0
+BuildRequires: python3-module-swiftclient >= 3.2.0
+BuildRequires: python3-module-troveclient >= 2.2.0
+BuildRequires: python3-module-zaqarclient >= 1.0.0
+BuildRequires: python3-module-zunclient >= 2.0.0
+BuildRequires: python3-module-pytz >= 2013.6
+BuildRequires: python3-module-yaml >= 3.12
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-tenacity >= 4.4.0
+BuildRequires: python3-module-routes >= 2.3.1
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-SQLAlchemy >= 1.0.10
+BuildRequires: python3-module-migrate >= 0.11.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-webob >= 1.7.1
+BuildRequires: python3-module-yaql >= 1.1.3
+
+
+# doc
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-os-api-ref >= 1.4.0
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+#BuildRequires: python3-module-sphinxcontrib-httpdomain >= 1.3.0
 
 %description
 Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
 
-%package -n python-module-heat
+%package -n python-module-%oname
 Summary: Openstack Orchestration (Heat) - Python module
 Group:   Development/Python
 
@@ -149,10 +220,25 @@ Requires: %name = %EVR
 %description -n python-module-%oname-tests
 This package contains tests for %oname.
 
+%package -n python3-module-%oname
+Summary: Openstack Orchestration (Heat) - Python3 module
+Group:   Development/Python3
+
+
+%description -n python3-module-%oname
+This package contains the core Python3 module of OpenStack Heat.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
+
 %package engine
 Summary: The Heat engine
 Group: System/Servers
-
 Requires: %name = %EVR
 
 %description engine
@@ -161,7 +247,6 @@ OpenStack API for starting CloudFormation templates on OpenStack
 %package api
 Summary: The Heat API
 Group: System/Servers
-
 Requires: %name = %EVR
 
 %description api
@@ -170,7 +255,6 @@ OpenStack-native ReST API to the Heat Engine
 %package api-cfn
 Summary: Heat CloudFormation API
 Group: System/Servers
-
 Requires: %name = %EVR
 
 %description api-cfn
@@ -179,7 +263,6 @@ AWS CloudFormation-compatible API to the Heat Engine
 %package api-cloudwatch
 Summary: Heat CloudWatch API
 Group: System/Servers
-
 Requires: %name = %EVR
 
 %description api-cloudwatch
@@ -188,8 +271,8 @@ AWS CloudWatch-compatible API to the Heat Engine
 %package plugin-heat_docker
 Summary: OpenStack Orchestration (Heat) - Support for Docker
 Group: System/Servers
-Requires: %name = %EVR
 Requires: %name-engine = %EVR
+AutoReq: yes, nopython
 
 %description plugin-heat_docker
 This plugin enables using Docker containers as resources in a Heat template.
@@ -205,25 +288,51 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 # Remove tests in contrib
 find contrib -name tests -type d | xargs rm -r
 
+#NOTE: Kill heat Sphinx extension, we're only building manpages:
+sed -i -e "s/'ext.resources',\{0,1\}//" doc/source/conf.py
+
+rm -rf ../python3
+cp -a . ../python3
+
 %build
 %python_build
+
+PBR_VERSION=%version sphinx-build -b man doc/source/ doc/build/man
+
 # Generate sample config
 PYTHONPATH=. oslo-config-generator --config-file=config-generator.conf
+PYTHONPATH=. oslopolicy-sample-generator --config-file=etc/heat/heat-policy-generator.conf --output etc/heat/policy.json
+rm -f etc/heat/heat-policy-generator.conf
 
 #pushd contrib/heat_docker
 #OSLO_PACKAGE_VERSION=%version python setup.py build
 #popd
 
+pushd ../python3
+%python3_build
+popd
+
 %install
 %python_install
+for f in heat-all heat-api-cfn heat-api heat-engine heat-keystone-setup-domain heat-manage heat-wsgi-api-cfn heat-wsgi-api
+    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
+done
+
+pushd ../python3
+%python3_install
+popd
 
 pushd contrib/heat_docker
 OSLO_PACKAGE_VERSION=%version python setup.py install --prefix=%_prefix --root=%buildroot
 # no need for the egg-info file
 rm -r %buildroot%python_sitelibdir/heat_contrib_docker-*.egg-info
+
+OSLO_PACKAGE_VERSION=%version python3 setup.py install --prefix=%_prefix --root=%buildroot
+rm -r %buildroot%python3_sitelibdir/heat_contrib_docker-*.egg-info
 popd
 
 sed -i -e '/^#!/,1 d' %buildroot/%python_sitelibdir/heat/db/sqlalchemy/migrate_repo/manage.py
+sed -i -e '/^#!/,1 d' %buildroot/%python3_sitelibdir/heat/db/sqlalchemy/migrate_repo/manage.py
 mkdir -p %buildroot%_logdir/heat
 mkdir -p %buildroot%_runtimedir/heat
 install -p -D -m 644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/openstack-heat
@@ -248,12 +357,11 @@ install -d -m 755 %buildroot%_sharedstatedir/heat
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
 sphinx-build -b html -d build/doctrees source build/html
-sphinx-build -b man -d build/doctrees source build/man
-
-mkdir -p %buildroot%_man1dir
-install -p -D -m 644 build/man/*.1 %buildroot%_man1dir
 popd
 %endif
+
+mkdir -p %buildroot%_man1dir
+install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir
 
 rm -f %buildroot/%_bindir/heat-db-setup
 rm -f %buildroot/%_mandir/man1/heat-db-setup.*
@@ -273,6 +381,9 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %define heat_conf %buildroot%_sysconfdir/heat/heat.conf.d/010-heat.conf
 crudini --set %heat_conf DEFAULT log_dir /var/log/heat
 crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
+
+# cleanup
+rm -rf %buildroot/usr/etc/
 
 %pre
 # 187:187 for heat (openstack-heat)
@@ -302,10 +413,6 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 
 %files
 %doc LICENSE
-%_bindir/heat-manage
-%_bindir/heat-keystone-setup
-%_bindir/heat-keystone-setup-domain
-%_bindir/heat-all
 %dir %attr(0775,root,heat) %_logdir/heat
 %dir %attr(0775,root,heat) %_runtimedir/heat
 %dir %attr(0775,root,heat) %_sharedstatedir/heat
@@ -319,13 +426,12 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %config(noreplace) %_sysconfdir/heat/policy.json
 %config %_sysconfdir/heat/environment.d
 %config %_sysconfdir/heat/templates
-%if_enabled doc
 %_man1dir/heat-keystone-setup.1*
 %_man1dir/heat-keystone-setup-domain.1*
 %_man1dir/heat-manage.1*
-%endif
 
 %files -n python-module-%oname
+%_bindir/*.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/heat_integrationtests
 %exclude %python_sitelibdir/%oname/tests
@@ -333,14 +439,26 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %files -n python-module-%oname-tests
 %python_sitelibdir/%oname/tests
 %python_sitelibdir/heat_integrationtests
+%exclude %python_sitelibdir/heat_integrationtests/pre_test_hook.sh
+
+%files -n python3-module-%oname
+%_bindir/*
+%exclude %_bindir/*.py2
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/heat_integrationtests
+%exclude %python3_sitelibdir/%oname/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/heat_integrationtests
+%exclude %python3_sitelibdir/heat_integrationtests/pre_test_hook.sh
 
 %files engine
 %doc README.rst LICENSE
 %if_enabled doc
 %doc doc/build/html/man/heat-engine.html
-%_man1dir/heat-engine.1.*
 %endif
-%_bindir/heat-engine
+%_man1dir/heat-engine.1.*
 %_unitdir/%name-engine.service
 %_initdir/%name-engine
 
@@ -348,10 +466,8 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %doc README.rst LICENSE
 %if_enabled doc
 %doc doc/build/html/man/heat-api.html
-%_man1dir/heat-api.1.*
 %endif
-%_bindir/heat-api
-%_bindir/heat-wsgi-api
+%_man1dir/heat-api.1.*
 %_unitdir/%name-api.service
 %_initdir/%name-api
 
@@ -359,10 +475,8 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %doc README.rst LICENSE
 %if_enabled doc
 %doc doc/build/html/man/heat-api-cfn.html
-%_man1dir/heat-api-cfn.1.*
 %endif
-%_bindir/heat-api-cfn
-%_bindir/heat-wsgi-api-cfn
+%_man1dir/heat-api-cfn.1.*
 %_unitdir/%name-api-cfn.service
 %_initdir/%name-api-cfn
 
@@ -372,15 +486,17 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %doc doc/build/html/man/heat-api-cloudwatch.html
 %_man1dir/heat-api-cloudwatch.1.*
 %endif
-%_bindir/heat-api-cloudwatch
-%_bindir/heat-wsgi-api-cloudwatch
 %_unitdir/%name-api-cloudwatch.service
 %_initdir/%name-api-cloudwatch
 
 %files plugin-heat_docker
-%_prefix/lib/heat/docker
+%_prefix/lib/heat/docker/*.py
 
 %changelog
+* Mon Jan 14 2019 Alexey Shabalin <shaba@altlinux.org> 1:11.0.0-alt1
+- 11.0.0 Rocky release
+- switch to python3
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:8.0.3-alt2
 - Fixed FTBFS (remove python-module-setuptools-tests from BR).
 
