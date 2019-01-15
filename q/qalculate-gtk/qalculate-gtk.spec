@@ -3,8 +3,8 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 2.6.1
-Release: alt1%ubt
+Version: 2.8.2
+Release: alt1
 
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
@@ -14,7 +14,6 @@ Url: https://qalculate.github.io/
 # https://github.com/Qalculate/qalculate-gtk.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libcln-devel libdbus-glib libglade-devel libgmp-devel libgnome-devel
 BuildRequires: libqalculate-devel = %version
 BuildRequires: perl-XML-Parser scrollkeeper yelp intltool
@@ -50,10 +49,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/%shortname.png
 
 %changelog
-* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt1%ubt
+* Tue Jan 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.2-alt1
+- Updated to upstream version 2.8.2.
+
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt1
 - Updated to upstream version 2.6.1.
 
-* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt1%ubt
+* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
 * Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1

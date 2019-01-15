@@ -3,8 +3,8 @@
 %def_without static
 
 Name: qalculate
-Version: 2.6.1
-Release: alt1%ubt
+Version: 2.8.2
+Release: alt1
 
 Summary: A very versatile desktop calculator
 Group: Office
@@ -14,7 +14,6 @@ Url: https://qalculate.github.io/
 # https://github.com/Qalculate/libqalculate.git
 Source: lib%name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libcln-devel gcc-c++ glib2-devel libgmp-devel libstdc++-devel perl-XML-Parser pkgconfig zlib-devel intltool libtool libxml2-devel
 BuildRequires: libcurl-devel libicu-devel libmpfr-devel doxygen
 
@@ -27,7 +26,7 @@ precision, plotting.
 %package -n lib%name
 Summary: libqalculate libraries
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: /usr/bin/gnuplot
 
 %description -n lib%name
@@ -36,7 +35,7 @@ Qalculate libraries.
 %package -n lib%name-devel
 Summary: libqalculate development package
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The libqalculate package contains the header files needed for developing
@@ -47,7 +46,7 @@ you want to develop applications using libqalculate.
 %package -n %libname-devel-static
 Summary: libqalculate static library
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 This package contains static version of libqalculate. Install
@@ -109,10 +108,13 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
-* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt1%ubt
+* Tue Jan 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.2-alt1
+- Updated to upstream version 2.8.2.
+
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt1
 - Updated to upstream version 2.6.1.
 
-* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt1%ubt
+* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
 * Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2
