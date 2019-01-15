@@ -1,35 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname sh
-
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
 Version: 1.12.14
-Release: alt2
+Release: alt3
 Summary: Python subprocess interface
 License: MIT
 BuildArch: noarch
 Group: Development/Python
-Url: https://pypi.python.org/pypi/sh/
+Url: https://pypi.org/project/sh/
 
 # https://github.com/amoffat/sh.git
 Source: %name-%version.tar
 Patch1: pep-0538-test-fix.patch
+Patch2: 1.12.14-sh-alt-fix-test_piped_exceptionX.patch
 
-BuildRequires: python-devel python-module-setuptools /dev/pts
-BuildRequires: python-module-coverage python-module-py
-BuildRequires: python-module-tox python-module-virtualenv
-BuildRequires: python-module-nose
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-coverage python3-module-py
-BuildRequires: python3-module-tox python3-module-virtualenv
-BuildRequires: python3-module-nose
-%endif
 
-%py_provides %oname
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python-module-coverage
+BuildRequires: python3-module-coverage
+%endif
 
 %description
 sh (previously pbs) is a full-fledged subprocess replacement for python
@@ -43,7 +37,6 @@ sh is not a collection of system commands implemented in python.
 %package -n python3-module-%oname
 summary: python subprocess interface
 Group: Development/Python3
-%py_provides %oname
 
 %description -n python3-module-%oname
 sh (previously pbs) is a full-fledged subprocess replacement for python
@@ -57,54 +50,49 @@ sh is not a collection of system commands implemented in python.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 sed -i -e 's:==:>=:g' \
 	requirements*.txt
 
-%if_with python3
 cp -fr . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 python sh.py travis
 
-%if_with python3
 pushd ../python3
 python3 sh.py travis
 popd
-%endif
 
 %files
 %doc *.md
-%python_sitelibdir/*
+%python_sitelibdir/sh.py*
+%python_sitelibdir/sh-%version-py*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.md
-%python3_sitelibdir/*.py
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/%oname-%version-py*.egg-info
-%endif
+%python3_sitelibdir/sh.py
+%python3_sitelibdir/__pycache__/sh.cpython-*.py*
+%python3_sitelibdir/sh-%version-py*.egg-info/
 
 %changelog
+* Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 1.12.14-alt3
+- Fixed build.
+
 * Wed Sep 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.14-alt2
 - Fixed build.
 
