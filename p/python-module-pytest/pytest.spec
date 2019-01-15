@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.10.1
-Release: alt1
+Release: alt2
 
 Summary: Python test framework
 License: MIT
@@ -123,20 +123,20 @@ popd
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PYTHONPATH=%buildroot%python_sitelibdir
-%buildroot%_bindir/pytest -v \
+%buildroot%_bindir/pytest -v --cache-clear \
 testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
 
 # run pdb/terminal tests separately from other
-%buildroot%_bindir/pytest -v testing \
+%buildroot%_bindir/pytest -v --cache-clear testing \
 --ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
 --ignore=testing/test_unittest.py
 
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%buildroot%_bindir/pytest3 -v \
+%buildroot%_bindir/pytest3 -v --cache-clear \
 testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
 
-%buildroot%_bindir/pytest3 -v testing \
+%buildroot%_bindir/pytest3 -v --cache-clear testing \
 --ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
 --ignore=testing/test_unittest.py
 
@@ -164,6 +164,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Sun Jan 13 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt2
+- Added workaround for request_garbage test.
+
 * Mon Dec 17 2018 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1
 - 3.9.3 -> 3.10.1.
 
