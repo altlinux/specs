@@ -1,7 +1,7 @@
 Name:           nftables
 Epoch:          1
 Version:        0.9.0
-Release:        alt1
+Release:        alt2
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
 License:        LGPLv2.1+
@@ -33,20 +33,30 @@ make check
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_sysconfdir/nftables
-cp files/examples/* %buildroot%_sysconfdir/nftables/
+#mkdir -p %buildroot%_sysconfdir/nftables
+install -dm0755 %buildroot%_docdir/%name
+rm %buildroot%_sysconfdir/nftables/*.nft
+install -pDm0644 nftables.nft %buildroot%_sysconfdir/nftables/nftables.nft
+install -dm0755 %buildroot%_unitdir
+install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
+
+%post
+%post_service nftables
 
 %files
-%doc COPYING
-#%%doc %_docdir/%name
+%doc COPYING files/examples/*.nft files/nftables/*.nft
 %dir %_sysconfdir/nftables
 %attr(644,root,root) %config %_sysconfdir/nftables/*
 %_libdir/lib%name.so.*
+%_unitdir/*
 %_sbindir/*
 %_man8dir/*
 
 
 %changelog
+* Tue Jan 15 2019 Alexei Takaseev <taf@altlinux.org> 1:0.9.0-alt2
+- Add systemd unit and simple config
+
 * Sat Jun 09 2018 Alexei Takaseev <taf@altlinux.org> 1:0.9.0-alt1
 - Version 0.9.0
 
