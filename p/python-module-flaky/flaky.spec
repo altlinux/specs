@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4.0
-Release: alt1.1
+Version: 3.5.2
+Release: alt1
 Summary: Plugin for nose or py.test that automatically reruns flaky tests
 License: Apache-2.0
 Group: Development/Python
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 15 2019 Grigory Ustinov <grenka@altlinux.org> 3.5.2-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
