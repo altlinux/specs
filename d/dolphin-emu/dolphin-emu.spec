@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt9%ubt
+Release: alt10
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -18,7 +18,6 @@ Patch2: %name-gcc8-alt.patch
 Patch3: %name-soundtouch-alt.patch
 
 BuildPreReq: libswresample-devel
-BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: compat-libwxGTK3.1-gtk2-devel
@@ -96,6 +95,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Tue Jan 15 2019 Nazarov Denis <nenderus@altlinux.org> 5.0-alt10
+- Remove %ubt macro
+
 * Sat Jan 12 2019 Nazarov Denis <nenderus@altlinux.org> 5.0-alt9%ubt
 - Fix build
 
