@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.2
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Jan 15 2019 Elena Mishina <lepata@altlinux.org> 8.2-alt4
+- added kde
+- added boot option
+
 * Wed Oct 17 2018 Elena Mishina <lepata@altlinux.org> 8.2-alt3
 - fix typo
 - update documentation
