@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildPreReq: rpm-build-ubt
+# END SourceDeps(oneline)
 %define sover 0
 
 Name: googletest
 Version: 1.8.0
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: Google's framework for writing C++ tests
 License: BSD
@@ -13,8 +16,6 @@ Url: https://github.com/google/%name
 Source: https://github.com/google/%name/archive/release-%version/%name-release-%version.tar.gz
 Patch0: %name-soname-alt.patch
 Patch1: %name-lib64-alt.patch
-
-BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -125,6 +126,9 @@ popd
 %_includedir/gmock
 
 %changelog
+* Tue Jan 15 2019 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt5%ubt
+- Fixed ubt macros in spec
+
 * Wed May 02 2018 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt4%ubt
 - Change URL (ALT #34874)
 
