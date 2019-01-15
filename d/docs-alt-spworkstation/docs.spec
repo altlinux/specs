@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,11 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Jan 15 2019 Elena Mishina <lepata@altlinux.org> 8.0-alt3
+- fix typo
+- update screenshots
+- added user-selinux, boot option
+
 * Fri Dec 22 2017 Elena Mishina <lepata@altlinux.org> 8.0-alt2
 - del support
 
