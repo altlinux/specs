@@ -1,6 +1,6 @@
 Name: make
 Version: 4.2.1
-Release: alt3
+Release: alt4
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -70,6 +70,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Jan 15 2019 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt4
+- Increase timeout for slow test once more.
+
 * Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt3
 - Increase timeout for slow test.
 
