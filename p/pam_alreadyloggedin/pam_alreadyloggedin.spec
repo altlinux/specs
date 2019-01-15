@@ -1,21 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: pam_alreadyloggedin
 Version: 0.3.2
-Release: alt2
+Release: alt3
 
 %def_without libpam
 %def_with    libpam0
 %def_without libpam2
 
 %define pamconfdir   %_sysconfdir/pam.d
-%define pamlibdir    /lib/security
-%define mydocdir     %_docdir/%name-%version
-%define examples_dir %mydocdir/examples
+%define pamlibdir    /%_lib/security
+
+%ifdef add_findprov_lib_path
+%add_findprov_lib_path %pamlibdir
+%endif
 
 Summary: Skip password authorization if user is already logged in
 License: relaxed BSD and (L)GPL-compatible
 Group: System/Base
 Url: http://ilya-evseev.narod.ru/posix/%name
-Source: %url/%name-%version.tar.gz
+
+Source: %name-%version.tar
 
 %if_with libpam
 BuildPreReq: libpam-devel
@@ -27,50 +32,50 @@ BuildPreReq: libpam0-devel
 BuildPreReq: libpam2-devel
 %endif
 
-Summary(ru_RU.KOI8-R): Вход в систему без пароля, если уже выполнен вход с другой консоли
+Summary(ru_RU.UTF-8): п▓я┘п╬п╢ п╡ я│п╦я│я┌п╣п╪я┐ п╠п╣п╥ п©п╟я─п╬п╩я▐, п╣я│п╩п╦ я┐п╤п╣ п╡я▀п©п╬п╩п╫п╣п╫ п╡я┘п╬п╢ я│ п╢я─я┐пЁп╬п╧ п╨п╬п╫я│п╬п╩п╦
 
 %description
 Based on the appropriate module from FreeBSD project source tree,
 %name is a PAM module which allows you to skip
 authorization stuff (like password entering, etc.),
 if you are already logged in on the another console.
-See using example in %pamconfdir/login.sso file.
+See using example in %_defaultdocdir/%name-%version/examples directory.
 
-%description -l ru_RU.KOI8-R
-%name является модулем PAM, который позволяет пользователю
-пропускать ввод пароля при входе в систему,
-если этот пользователь уже зашёл в систему с другой консоли.
+%description -l ru_RU.UTF-8
+%name я▐п╡п╩я▐п╣я┌я│я▐ п╪п╬п╢я┐п╩п╣п╪ PAM, п╨п╬я┌п╬я─я▀п╧ п©п╬п╥п╡п╬п╩я▐п╣я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▌
+п©я─п╬п©я┐я│п╨п╟я┌я▄ п╡п╡п╬п╢ п©п╟я─п╬п╩я▐ п©я─п╦ п╡я┘п╬п╢п╣ п╡ я│п╦я│я┌п╣п╪я┐,
+п╣я│п╩п╦ я█я┌п╬я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ я┐п╤п╣ п╥п╟я┬я▒п╩ п╡ я│п╦я│я┌п╣п╪я┐ я│ п╢я─я┐пЁп╬п╧ п╨п╬п╫я│п╬п╩п╦.
 
-Данный модуль не начинает использоваться немедленно при инсталляции;
-пример политики PAM для его подключения смотрите в каталоге
-%examples_dir.
+п■п╟п╫п╫я▀п╧ п╪п╬п╢я┐п╩я▄ п╫п╣ п╫п╟я┤п╦п╫п╟п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄я│я▐ п╫п╣п╪п╣п╢п╩п╣п╫п╫п╬ п©я─п╦ п╦п╫я│я┌п╟п╩п╩я▐я├п╦п╦;
+п©я─п╦п╪п╣я─ п©п╬п╩п╦я┌п╦п╨п╦ PAM п╢п╩я▐ п╣пЁп╬ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦я▐ я│п╪п╬я┌я─п╦я┌п╣ п╡ п╨п╟я┌п╟п╩п╬пЁп╣
+%_defaultdocdir/%name-%version/examples.
 
 %prep
-%setup -q -c
+%setup
 
 %build
 %make_build
 
 %install
-%make_install install FAKEROOT=%buildroot MAN8DIR=%_man8dir
-install -pD -m644 login.sso %buildroot%examples_dir/login
+%make_install install FAKEROOT=%buildroot MAN8DIR=%_man8dir SECUREDIR=/%_lib/security
 
-%ifdef add_findprov_lib_path
-%add_findprov_lib_path %pamlibdir
-%endif
+mkdir examples
+install -pD -m644 login.sso examples/login
+sed -i -e 's:/lib/security/::g' examples/login
+
+rm -f %buildroot%pamconfdir/login.sso
 
 %files
+%doc examples
 %pamlibdir/%name.so
-%examples_dir/login
-%exclude %pamconfdir/login.sso
 %_man8dir/%name.8*
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/pam_alreadyloggedin-%version 
-%dir %examples_dir
 
 %changelog
+* Tue Jan 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3
+- Fixed pam module location (Closes: #35894)
+- Changed package summary and description translation to UTF-8
+- Updated description and example config
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt2
 - Fixed spec to allow any man page compression
 
