@@ -3,8 +3,8 @@
 %def_with compression
 
 Name: python-module-django-%oname
-Version: 11.0.3
-Release: alt1.1
+Version: 14.0.2
+Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
 
@@ -29,59 +29,45 @@ Source5:    python-django-horizon-logrotate.conf
 
 BuildArch: noarch
 
-# additional provides to be consistent with other django packages
-Provides: django-horizon = %EVR
-
+%py_provides openstack_dashboard
 Requires: python-module-django
-BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
-BuildRequires: python-module-django >= 1.8
-BuildRequires: python-module-django-tests
-BuildRequires: python-module-greenlet
-BuildRequires: python-module-pint >= 0.5
-BuildRequires: python-module-django-dbbackend-sqlite3
-BuildRequires: python-module-django-openstack-auth >= 3.1.0
-BuildRequires: python-module-django-compressor >= 2.0
-BuildRequires: python-module-django-appconf
-BuildRequires: python-module-django-pyscss >= 2.0.2
-# BuildRequires: python-module-django-babel >= 0.5.1
-BuildRequires: python-module-babel >= 2.3.4
+
+BuildRequires(pre): webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: gettext-tools
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-django-nose
-BuildRequires: python-module-coverage
-BuildRequires: python-module-mox python-module-mox3
-BuildRequires: python-module-nose-exclude
-BuildRequires: python-module-nose
-BuildRequires: python-module-selenium
 
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno
-
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-babel >= 2.3.4
+BuildRequires: python-module-django >= 1.11
+BuildRequires: python-module-django-tests
+# BuildRequires: python-module-django-babel >= 0.5.1
+BuildRequires: python-module-django-compressor >= 2.0
+BuildRequires: python-module-django-pyscss >= 2.0.2
+BuildRequires: python-module-futurist >= 1.2.0
 BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-keystoneauth1 >= 3.4.0
+BuildRequires: python-module-netaddr >= 0.7.18
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.policy >= 1.17.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.18.0
-BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-oslo.policy >= 1.30.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
+BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-osprofiler >= 2.3.0
+BuildRequires: python-module-pint >= 0.5
 BuildRequires: python-module-pymongo >= 3.0.2
 BuildRequires: python-module-pyScss >= 1.3.4
-BuildRequires: python-module-anyjson
-BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-glanceclient >= 2.5.0
-BuildRequires: python-module-heatclient >= 1.6.1
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-neutronclient >= 5.1.0
-BuildRequires: python-module-novaclient >= 6.0.0
+BuildRequires: python-module-cinderclient >= 3.3.0
+BuildRequires: python-module-glanceclient >= 2.8.0
+BuildRequires: python-module-keystoneclient >= 3.15.0
+BuildRequires: python-module-neutronclient >= 6.7.0
+BuildRequires: python-module-novaclient >= 9.1.0
 BuildRequires: python-module-swiftclient >= 3.2.0
 BuildRequires: python-module-pytz
-BuildRequires: python-module-yaml >= 3.10.0
+BuildRequires: python-module-yaml >= 3.12
+BuildRequires: python-module-semantic_version >= 2.3.1
 
 BuildRequires: python-module-xstatic >= 1.0.0
 BuildRequires: python-module-xstatic-angular >= 1.5.8.0
@@ -112,6 +98,103 @@ BuildRequires: python-module-xstatic-spin >= 1.2.5.2
 BuildRequires: python-module-xstatic-term.js >= 0.0.7.0
 BuildRequires: python-module-xstatic-tv4 >= 1.2.7.0
 
+BuildRequires: python-module-rjsmin
+
+BuildRequires: python-module-greenlet
+BuildRequires: python-module-django-dbbackend-sqlite3
+BuildRequires: python-module-django-appconf
+
+BuildRequires: python-module-coverage
+BuildRequires: python-module-mox python-module-mox3
+BuildRequires: python-module-nose-exclude
+BuildRequires: python-module-nose
+BuildRequires: python-module-selenium
+
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 1.6.2
+
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-django >= 1.11
+BuildRequires: python3-module-django-tests
+# BuildRequires: python3-module-django-babel >= 0.5.1
+BuildRequires: python3-module-django-compressor >= 2.0
+BuildRequires: python3-module-django-pyscss >= 2.0.2
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.policy >= 1.30.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-osprofiler >= 2.3.0
+BuildRequires: python3-module-pint >= 0.5
+BuildRequires: python3-module-pymongo >= 3.0.2
+BuildRequires: python3-module-pyScss >= 1.3.4
+BuildRequires: python3-module-cinderclient >= 3.3.0
+BuildRequires: python3-module-glanceclient >= 2.8.0
+BuildRequires: python3-module-keystoneclient >= 3.15.0
+BuildRequires: python3-module-neutronclient >= 6.7.0
+BuildRequires: python3-module-novaclient >= 9.1.0
+BuildRequires: python3-module-swiftclient >= 3.2.0
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-yaml >= 3.12
+BuildRequires: python3-module-semantic_version >= 2.3.1
+
+BuildRequires: python3-module-xstatic >= 1.0.0
+BuildRequires: python3-module-xstatic-angular >= 1.5.8.0
+BuildRequires: python3-module-xstatic-angular-bootstrap >= 2.2.0.0
+BuildRequires: python3-module-xstatic-angular-fileupload >= 12.0.4.0
+BuildRequires: python3-module-xstatic-angular-gettext >= 2.3.8.0
+BuildRequires: python3-module-xstatic-angular-lrdragndrop >= 1.0.2.2
+BuildRequires: python3-module-xstatic-angular-schema-form >= 0.8.13.0
+BuildRequires: python3-module-xstatic-bootstrap-datepicker >= 1.3.1.0
+BuildRequires: python3-module-xstatic-bootstrap-scss >= 3.3.7.1
+BuildRequires: python3-module-xstatic-bootswatch >= 3.3.7.0
+BuildRequires: python3-module-xstatic-d3 >= 3.5.17.0
+BuildRequires: python3-module-xstatic-hogan >= 2.0.0.2
+BuildRequires: python3-module-xstatic-font-awesome >= 4.7.0
+BuildRequires: python3-module-xstatic-jasmine >= 2.4.1.1
+BuildRequires: python3-module-xstatic-jquery >= 1.8.2.1
+BuildRequires: python3-module-xstatic-jquery-migrate >= 1.2.1.1
+BuildRequires: python3-module-xstatic-jquery.quicksearch >= 2.0.3.1
+BuildRequires: python3-module-xstatic-jquery.tablesorter >= 2.14.5.1
+BuildRequires: python3-module-xstatic-jquery-ui >= 1.10.4.1
+BuildRequires: python3-module-xstatic-jsencrypt >= 2.3.1.1
+BuildRequires: python3-module-xstatic-mdi >= 1.4.57.0
+BuildRequires: python3-module-xstatic-objectpath >= 1.2.1.0
+BuildRequires: python3-module-xstatic-rickshaw >= 1.5.0.0
+BuildRequires: python3-module-xstatic-roboto-fontface >= 0.5.0.0
+BuildRequires: python3-module-xstatic-smart-table >= 1.4.13.2
+BuildRequires: python3-module-xstatic-spin >= 1.2.5.2
+BuildRequires: python3-module-xstatic-term.js >= 0.0.7.0
+BuildRequires: python3-module-xstatic-tv4 >= 1.2.7.0
+
+BuildRequires: python3-module-rjsmin
+
+BuildRequires: python3-module-greenlet
+BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-django-appconf
+
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-mox python-module-mox3
+BuildRequires: python3-module-nose-exclude
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-selenium
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 1.6.2
+
 %description
 Horizon is a Django application for providing Openstack UI components.
 It allows performing site administrator (viewing account resource usage,
@@ -130,83 +213,144 @@ This package contains tests for %oname.
 %package -n openstack-dashboard
 Summary: Openstack web user interface reference implementation
 Group: System/Servers
-
-%py_provides openstack_dashboard
+AutoReq: yes, nopython
 
 Provides: openstack-dashboard-branding-upstream = %EVR
 Provides: openstack-dashboard-theme = %EVR
 Obsoletes: openstack-dashboard-theme < %EVR
 
 Requires: apache2-base
-Requires: apache2-mod_wsgi
-Requires: python-module-django-horizon = %EVR
-Requires: python-module-django-openstack-auth >= 3.1.0
-Requires: python-module-django-compressor >= 2.0
-Requires: python-module-django-appconf
-Requires: python-module-django-pyscss >= 2.0.2
+Requires: apache2-mod_wsgi-py3
+Requires: python3-module-django-horizon = %EVR
+Requires: python3-module-django-openstack-auth  = %EVR
+Requires: python3-module-django >= 1.11
+# Requires: python3-module-django-tests
+# Requires: python3-module-django-babel >= 0.5.1
+Requires: python3-module-django-compressor >= 2.0
+Requires: python3-module-django-pyscss >= 2.0.2
+Requires: python3-module-futurist >= 1.2.0
+Requires: python3-module-iso8601 >= 0.1.11
+Requires: python3-module-keystoneauth1 >= 3.4.0
+Requires: python3-module-netaddr >= 0.7.18
+Requires: python3-module-oslo.concurrency >= 3.26.0
+Requires: python3-module-oslo.config >= 5.2.0
+Requires: python3-module-oslo.i18n >= 2.1.0
+Requires: python3-module-oslo.policy >= 1.30.0
+Requires: python3-module-oslo.serialization >= 2.18.0
+Requires: python3-module-oslo.utils >= 3.33.0
+Requires: python3-module-osprofiler >= 2.3.0
+Requires: python3-module-pint >= 0.5
+Requires: python3-module-pymongo >= 3.0.2
+Requires: python3-module-pyScss >= 1.3.4
+Requires: python3-module-cinderclient >= 3.3.0
+Requires: python3-module-glanceclient >= 2.8.0
+Requires: python3-module-keystoneclient >= 3.15.0
+Requires: python3-module-neutronclient >= 6.7.0
+Requires: python3-module-novaclient >= 9.1.0
+Requires: python3-module-swiftclient >= 3.2.0
+Requires: python3-module-pytz
+Requires: python3-module-yaml >= 3.12
+Requires: python3-module-semantic_version >= 2.3.1
 
-Requires: python-module-iso8601 >= 0.1.11
-Requires: python-module-netaddr >= 0.7.13
-Requires: python-module-oslo.concurrency >= 3.8.0
-Requires: python-module-oslo.config >= 3.14.0
-Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.policy >= 1.17.0
-Requires: python-module-oslo.serialization >= 1.10.0
-Requires: python-module-oslo.utils >= 3.18.0
-Requires: python-module-osprofiler >= 1.4.0
-Requires: python-module-pymongo >= 3.0.2
-Requires: python-module-pyScss >= 1.3.4
-Requires: python-module-anyjson
-Requires: python-module-cinderclient >= 1.6.0
-Requires: python-module-glanceclient >= 2.5.0
-Requires: python-module-heatclient >= 1.6.1
-Requires: python-module-keystoneclient >= 3.8.0
-Requires: python-module-neutronclient >= 2.6.0
-Requires: python-module-novaclient >= 6.0.0
-Requires: python-module-swiftclient >= 3.2.0
-Requires: python-module-pytz
-Requires: python-module-yaml >= 3.10.0
+Requires: python3-module-xstatic >= 1.0.0
+Requires: python3-module-xstatic-angular >= 1.5.8.0
+Requires: python3-module-xstatic-angular-bootstrap >= 2.2.0.0
+Requires: python3-module-xstatic-angular-fileupload >= 12.0.4.0
+Requires: python3-module-xstatic-angular-gettext >= 2.3.8.0
+Requires: python3-module-xstatic-angular-lrdragndrop >= 1.0.2.2
+Requires: python3-module-xstatic-angular-schema-form >= 0.8.13.0
+Requires: python3-module-xstatic-bootstrap-datepicker >= 1.3.1.0
+Requires: python3-module-xstatic-bootstrap-scss >= 3.3.7.1
+Requires: python3-module-xstatic-bootswatch >= 3.3.7.0
+Requires: python3-module-xstatic-d3 >= 3.5.17.0
+Requires: python3-module-xstatic-hogan >= 2.0.0.2
+Requires: python3-module-xstatic-font-awesome >= 4.7.0
+Requires: python3-module-xstatic-jasmine >= 2.4.1.1
+Requires: python3-module-xstatic-jquery >= 1.8.2.1
+Requires: python3-module-xstatic-jquery-migrate >= 1.2.1.1
+Requires: python3-module-xstatic-jquery.quicksearch >= 2.0.3.1
+Requires: python3-module-xstatic-jquery.tablesorter >= 2.14.5.1
+Requires: python3-module-xstatic-jquery-ui >= 1.10.4.1
+Requires: python3-module-xstatic-jsencrypt >= 2.3.1.1
+Requires: python3-module-xstatic-mdi >= 1.4.57.0
+Requires: python3-module-xstatic-objectpath >= 1.2.1.0
+Requires: python3-module-xstatic-rickshaw >= 1.5.0.0
+Requires: python3-module-xstatic-roboto-fontface >= 0.5.0.0
+Requires: python3-module-xstatic-smart-table >= 1.4.13.2
+Requires: python3-module-xstatic-spin >= 1.2.5.2
+Requires: python3-module-xstatic-term.js >= 0.0.7.0
+Requires: python3-module-xstatic-tv4 >= 1.2.7.0
 
-Requires: python-module-xstatic >= 1.0.0
-Requires: python-module-xstatic-angular >= 1.5.8.0
-Requires: python-module-xstatic-angular-bootstrap >= 2.2.0.0
-Requires: python-module-xstatic-angular-fileupload >= 12.0.4.0
-Requires: python-module-xstatic-angular-gettext >= 2.3.8.0
-Requires: python-module-xstatic-angular-lrdragndrop >= 1.0.2.2
-Requires: python-module-xstatic-angular-schema-form >= 0.8.13.0
-Requires: python-module-xstatic-bootstrap-datepicker >= 1.3.1.0
-Requires: python-module-xstatic-bootstrap-scss >= 3.3.7.1
-Requires: python-module-xstatic-bootswatch >= 3.3.7.0
-Requires: python-module-xstatic-d3 >= 3.5.17.0
-Requires: python-module-xstatic-hogan >= 2.0.0.2
-Requires: python-module-xstatic-font-awesome >= 4.7.0
-Requires: python-module-xstatic-jasmine >= 2.4.1.1
-Requires: python-module-xstatic-jquery >= 1.8.2.1
-Requires: python-module-xstatic-jquery-migrate >= 1.2.1.1
-Requires: python-module-xstatic-jquery.quicksearch >= 2.0.3.1
-Requires: python-module-xstatic-jquery.tablesorter >= 2.14.5.1
-Requires: python-module-xstatic-jquery-ui >= 1.10.4.1
-Requires: python-module-xstatic-jsencrypt >= 2.3.1.1
-Requires: python-module-xstatic-mdi >= 1.4.57.0
-Requires: python-module-xstatic-objectpath >= 1.2.1.0
-Requires: python-module-xstatic-rickshaw >= 1.5.0.0
-Requires: python-module-xstatic-roboto-fontface >= 0.5.0.0
-Requires: python-module-xstatic-smart-table >= 1.4.13.2
-Requires: python-module-xstatic-spin >= 1.2.5.2
-Requires: python-module-xstatic-term.js >= 0.0.7.0
-Requires: python-module-xstatic-tv4 >= 1.2.7.0
-
-Requires: python-module-django-tests
 
 Requires: openssl
 Requires: logrotate
-
 
 %description -n openstack-dashboard
 Openstack Dashboard is a web user interface for Openstack. The package
 provides a reference implementation using the Django Horizon project,
 mostly consisting of JavaScript and CSS to tie it altogether as a standalone
 site.
+
+%package -n python3-module-django-%oname
+Summary: Django application for talking to Openstack
+Group: Development/Python3
+
+%py3_provides openstack_dashboard
+%py3_provides openstack_dashboard.utils
+
+%description -n python3-module-django-%oname
+Horizon is a Django application for providing Openstack UI components.
+It allows performing site administrator (viewing account resource usage,
+configuring users, accounts, quotas, flavors, etc.) and end user
+operations (start/stop/delete instances, create/restore snapshots, view
+instance VNC console, etc.)
+
+%package -n python3-module-django-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+AutoReq: yes, nopython
+
+%description -n python3-module-django-%oname-tests
+This package contains tests for %oname.
+
+
+%package -n python-module-django-openstack-auth
+Summary: Django authentication backend for OpenStack Keystone
+Group: Development/Python
+
+%description -n python-module-django-openstack-auth
+Django OpenStack Auth is a pluggable Django authentication backend that
+works with Django's contrib.auth framework to authenticate a user against
+OpenStack's Keystone Identity API.
+
+The current version is designed to work with the Keystone v2.0 and v3 API.
+
+%package -n python-module-django-openstack-auth-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: python-module-django-openstack-auth = %EVR
+
+%description -n python-module-django-openstack-auth-tests
+This package contains tests for %oname.
+
+%package -n python3-module-django-openstack-auth
+Summary: Django authentication backend for OpenStack Keystone
+Group: Development/Python3
+
+%description -n python3-module-django-openstack-auth
+Django OpenStack Auth is a pluggable Django authentication backend that
+works with Django's contrib.auth framework to authenticate a user against
+OpenStack's Keystone Identity API.
+
+The current version is designed to work with the Keystone v2.0 and v3 API.
+
+%package -n python3-module-django-openstack-auth-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-django-openstack-auth = %EVR
+
+%description -n python3-module-django-openstack-auth-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for Django Horizon
@@ -250,32 +394,44 @@ sed -i 's:COMPRESS_OFFLINE.=.False:COMPRESS_OFFLINE = True:' openstack_dashboard
 sed -i 's:COMPRESS_OFFLINE = True:COMPRESS_OFFLINE = False:' openstack_dashboard/settings.py
 %endif
 
+rm -rf ../python3
+cp -a . ../python3
+
 %build
 # compile message strings
 cd horizon && django-admin compilemessages && cd ..
 cd openstack_dashboard && django-admin compilemessages && cd ..
 %python_build
 
+pushd ../python3
+%python3_build
+
 # compress css, js etc.
 cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py
 # get it ready for compressing later in puppet-horizon
 %if_with compression
-python manage.py collectstatic --noinput --clear
-python manage.py compress --force
+python3 manage.py collectstatic --noinput --clear
+python3 manage.py compress --force
 %endif
 
 # build docs
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b html doc/source html
+#export PYTHONPATH="$( pwd ):$PYTHONPATH"
+#sphinx-build-3 -b html doc/source html
 
 # undo hack
 cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py
 
 # Fix hidden-file-or-dir warnings
 rm -fr html/.doctrees html/.buildinfo
+popd
 
 %install
 %python_install
+
+pushd ../python3
+%python3_install
+popd
+
 
 # drop httpd-conf snippet
 install -m 0644 -D -p %SOURCE1 %buildroot%apache2_sites_available/openstack-dashboard.conf
@@ -298,12 +454,13 @@ install -d -m 755 %buildroot%_sysconfdir/openstack-dashboard
 mkdir -p %buildroot%_sysconfdir/systemd/system/httpd2.service.d
 cp %SOURCE3 %buildroot%_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
-
 # Copy everything to /usr/share
-mv %buildroot%python_sitelibdir/openstack_dashboard \
+mv %buildroot%python3_sitelibdir/openstack_dashboard \
    %buildroot%_datadir/openstack-dashboard
 cp manage.py %buildroot%_datadir/openstack-dashboard
 rm -rf %buildroot%python_sitelibdir/openstack_dashboard
+rm -rf %buildroot%python3_sitelibdir/openstack_dashboard
+#find %buildroot%_datadir/openstack-dashboard -name *.pyc -exec rm '{}' \;
 
 # remove unnecessary .po files
 find %buildroot -name django.po -exec rm '{}' \;
@@ -319,7 +476,7 @@ cp openstack_dashboard/conf/*.json %buildroot%_sysconfdir/openstack-dashboard/
 mkdir -p %buildroot%_datadir/openstack-dashboard/static
 cp -a openstack_dashboard/static/* %buildroot%_datadir/openstack-dashboard/static
 cp -a horizon/static/* %buildroot%_datadir/openstack-dashboard/static
-cp -a static/* %buildroot%_datadir/openstack-dashboard/static
+#cp -a static/* %buildroot%_datadir/openstack-dashboard/static
 cp -a openstack_dashboard/themes %buildroot%_datadir/openstack-dashboard/openstack_dashboard/
 # ln -r -s %buildroot%_datadir/openstack-dashboard/static/themes %buildroot%_datadir/openstack-dashboard/openstack_dashboard/static/themes
 
@@ -341,19 +498,43 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %python_sitelibdir/horizon-*.egg-info
 #%exclude %python_sitelibdir/horizon/conf/*/static
 #%exclude %python_sitelibdir/horizon/conf/*/templates
-%exclude %python_sitelibdir/horizon/test/tests
-%exclude %python_sitelibdir/horizon/test/test_dashboards
+#%exclude %python_sitelibdir/horizon/test/tests
+%exclude %python_sitelibdir/horizon/test
 
 %files tests
-%python_sitelibdir/horizon/test/tests
-%python_sitelibdir/horizon/test/test_dashboards
+#%python_sitelibdir/horizon/test/tests
+%python_sitelibdir/horizon/test
+#%_datadir/openstack-dashboard/openstack_dashboard/karma.conf.js
+#%_datadir/openstack-dashboard/openstack_dashboard/test
+
+%files -n python-module-django-openstack-auth
+%python_sitelibdir/openstack_auth
+%exclude %python_sitelibdir/openstack_auth/tests
+
+%files -n python-module-django-openstack-auth-tests
+%python_sitelibdir/openstack_auth/tests
+
+%files -n python3-module-django-%oname
+%python3_sitelibdir/horizon
+%python3_sitelibdir/horizon-*.egg-info
+%exclude %python3_sitelibdir/horizon/test
+
+%files -n python3-module-django-%oname-tests
+%python3_sitelibdir/horizon/test
 %_datadir/openstack-dashboard/openstack_dashboard/karma.conf.js
-%_datadir/openstack-dashboard/openstack_dashboard/test/tests
+%_datadir/openstack-dashboard/openstack_dashboard/test
+
+%files -n python3-module-django-openstack-auth
+%python3_sitelibdir/openstack_auth
+%exclude %python3_sitelibdir/openstack_auth/tests
+
+%files -n python3-module-django-openstack-auth-tests
+%python3_sitelibdir/openstack_auth/tests
 
 %files -n openstack-dashboard
 %doc LICENSE README.rst openstack-dashboard-httpd-logging.conf
 %_datadir/openstack-dashboard
-%exclude %_datadir/openstack-dashboard/openstack_dashboard/test/tests
+%exclude %_datadir/openstack-dashboard/openstack_dashboard/test
 %exclude %_datadir/openstack-dashboard/openstack_dashboard/karma.conf.js
 
 %dir %attr(0750, root, _webserver) %_sysconfdir/openstack-dashboard
@@ -364,10 +545,13 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %config(noreplace) %attr(0640, root, _webserver) %_sysconfdir/openstack-dashboard/*.json
 %config(noreplace) %_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
-%files doc
-%doc html
+#%files doc
+#%doc html
 
 %changelog
+* Mon Jan 14 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.0.2-alt1
+- 14.0.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:11.0.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
