@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -14,11 +14,15 @@ Conflicts: rpm-build <= 4.0.4-alt24
 AutoReq: yes,noruby
 Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
-Requires: %_bindir/rdoc
-Requires: %_bindir/rake
+Requires: rdoc
+Requires: rake
+#Requires: %_bindir/rdoc
+#Requires: %_bindir/rake
+#Requires: %_bindir/bundler
 Requires: rpm-macros-ruby = %EVR
-Requires: ruby-test-unit = %EVR
-Requires: ruby-gem(bundler)
+Requires: ruby-bundler
+Requires: ruby-tool-setup
+Requires: libruby-devel
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -30,18 +34,9 @@ package.
 %package -n rpm-macros-ruby
 Summary: rpm macros for Ruby packages
 Group: Development/Ruby
-Requires: ruby-tool-setup
 
 %description -n rpm-macros-ruby
 rpm macros for Ruby packages.
-
-%package -n ruby-test-unit
-Summary: Utility testrb for testing Ruby packages
-Group: Development/Ruby
-Requires: rake
-
-%description -n ruby-test-unit
-Utility testrb for testing Ruby packages.
 
 %prep
 %setup -q
@@ -52,10 +47,6 @@ install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
 install -p -m 0644 rubyreq.rb %buildroot%_rpmlibdir/
 install -p -m 0644 ruby.macros %buildroot%_rpmmacrosdir/ruby
 install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
-install -D -m 0755 testrb %buildroot%_bindir/testrb
-
-%check
-./test.sh
 
 %files
 %lang(ru) %doc README.ru
@@ -65,10 +56,11 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %files -n rpm-macros-ruby
 %_rpmmacrosdir/ruby
 
-%files -n ruby-test-unit
-%_bindir/testrb
-
 %changelog
+* Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt1
+- Added %%rake-dependent macros for test, spec, and rdoc.
+- Find prov is now written in ruby language.
+
 * Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7.1-alt1
 - Added provides for ruby gem as "gem(<gem_name>)".
 

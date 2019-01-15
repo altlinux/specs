@@ -1,29 +1,24 @@
 %def_without bootstrap
 %def_enable shared
-%def_without valgrind
 %def_enable rubygems
 %define ruby_version 2.5.0
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
 %define vendordir %libdir/vendor_%name
+%define lname lib%name
 
 Name: ruby
-%define lname lib%name
-%define branch 2.5
-%define ver_teeny 1
-Version: %branch.%ver_teeny
-Release: alt4
+Version: 2.5.4
+Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
 URL: http://www.%name-lang.org/
 Source0: %name-%version.tar
-Source1: update-ri-cache.rb
-Source2: gems.tar
 Source3: fakeruby.sh
 Source4: miniruby.sh
-Patch: %name-%version-%release.patch
+Provides: %_bindir/%name
 Requires: %lname = %version-%release
 Requires: ruby-stdlibs = %version-%release
 
@@ -39,9 +34,9 @@ done)
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: zlib-devel libyaml-devel gcc-c++
+BuildRequires: valgrind-devel
 %{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:0.1.3}
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %ruby_version}
-%{?_with_valgrind:BuildRequires: valgrind-devel}
 
 %description
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -90,32 +85,27 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
 This package contains static Ruby library needed for embedding Ruby.
 
-
 %package -n %name-stdlibs
 Summary: Standard Ruby libraries
 Group: Development/Ruby
 Requires: %lname = %version-%release
 Provides: %name-libs = %version-%release
-Provides: %name-json = %version
-Obsoletes: %name-json
-Provides: %name-minitest = 5.10.3
-Obsoletes: %name-minitest
 Provides: %name-racc-runtime = %version
-Provides: %{name}gems = 2.7.6
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
 %mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
 Provides: ruby(thread)
-Provides: ruby-gem(did_you_mean) = 1.2.0
-Provides: ruby-gem(minitest) = 5.10.3
-Provides: ruby-gem(net-telnet) = 0.1.1
-Provides: ruby-gem(power_assert) = 1.1.1
-Provides: ruby-gem(rake) = 12.3.0
-Provides: ruby-gem(test-unit) = 3.2.7
-Provides: ruby-gem(xmlrpc) = 0.3.0
-Provides: ruby-gem(json) = %version
-Requires: libyaml2 libgdbm libssl10 libcrypto10
+Requires: libyaml2 libgdbm libssl1.1 libcrypto1.1
+#Requires: gem(update_rubygems) >= 3.0.1
+#Requires: gem(did_you_mean) >= 1.3.0
+Requires: gem(minitest) >= 5.11.3
+Requires: gem(net-telnet) >= 0.2
+#Requires: gem(power_assert) >= 1.1.3
+Requires: gem(rake) >= 12.3.2
+Requires: gem(test-unit) >= 3.2.9
+Requires: gem(xmlrpc) >= 0.3.0
+Requires: gem(rdoc) >= 6.1.1
 
 %description -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -125,55 +115,58 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains standard Ruby runtime libraries.
 
 
-%package -n ri
-Summary: Tool for display descriptions of built-in Ruby methods, classes, and modules
-Group: Development/Ruby
+%package -n gem
+Summary:   Ruby gem executable and framefork
+Group:     Development/Ruby
 BuildArch: noarch
-Requires: %name-stdlibs = %version
-%obsolete %name-tool-ri
-Conflicts: rdoc <= 1.9.3-alt10
+Requires:  %name-stdlibs = %version
+Provides:  %_bindir/gem
+Provides:  %{name}gems = 2.7.6
+Provides:  ruby-tools
+Obsoletes: %name-tools
 
-%description -n ri
-ri is a command line tool that displays descriptions of built-in Ruby methods,
-classes, and modules. For methods, it shows  you  the  calling sequence  and
-a description. For classes and modules, it shows a synopsis along with a list
-of the methods the class or module implements.
+%description -n gem
+Ruby gem executable and framework.
 
-
-%package tools
-Summary: Ruby tools
-Group: Development/Ruby
+%package -n erb
+Summary:   ERB template library
+Group:     Development/Ruby
 BuildArch: noarch
-Requires: %name-stdlibs = %version
-Provides: gem = 2.7.6
-Provides: %name-rake = 12.3.1
-Provides: rake = 12.3.1
-Obsoletes: %name-rake
-Provides: ruby-gem(rdoc) = 6.0.1
-Provides: rdoc = 6.0.1
-Obsoletes: rdoc < 6.0.1
-%obsolete %name-tool-rdoc
+Requires:  %name-stdlibs = %version
+Provides:  %_bindir/erb
+Obsoletes: %name-tools
 
-%description tools
-Ruby tools: rake, rdoc, gem.
+%description -n erb
+ERB template library executable and manual.
 
 %package -n irb
-Summary: Interactive Ruby Shell
-Group: Development/Ruby
+Summary:   Interactive Ruby Shell
+Group:     Development/Ruby
 BuildArch: noarch
-Requires: %name-stdlibs = %version
-%obsolete %name-tool-irb
+Requires:  %name-stdlibs = %version
+Provides:  %_bindir/irb
+Obsoletes: %name-tools
+%obsolete  %name-tool-irb
 
 %description -n irb
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
+%package -n ri-doc
+Summary: Ruby ri executable man page
+Group: Development/Documentation
+BuildArch: noarch
+Requires: %_bindir/ri
+
+%description -n ri-doc
+Ruby ri executable man page
+
 %package doc-ri
-Summary: Ruby ri documentatin
+Summary: Ruby ri documentation
 Group: Development/Documentation
 BuildArch: noarch
 AutoReq: no
 AutoProv: no
-Requires: ri = %version-%release
+Requires: ri
 
 %description doc-ri
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -196,8 +189,6 @@ on different arches.
 
 %prep
 %setup -q
-%patch -p1
-tar xf %SOURCE2
 # More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
@@ -218,7 +209,7 @@ cp -a /usr/share/gnu-config/config.* tool
 my_configure() {
     %configure \
         %{subst_enable shared} \
-        %{subst_with valgrind} \
+        %{subst_enable valgrind} \
         %{subst_enable rubygems} \
         --with-rubylibprefix=%libdir \
         --with-rubyhdrdir=%includedir \
@@ -272,22 +263,11 @@ popd
 %install
 %makeinstall_std
 echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
-install -p -m 0755 %{S:1} %buildroot%_bindir/update-ri-cache
 install -Dm 0755 %lname-static.a %buildroot%_libdir/%lname-static.a
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{*,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
 install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
-
-# RI filetrigger
-install -d -m 0755 %buildroot%_rpmlibdir
-cat > %buildroot%_rpmlibdir/%name-doc-ri.filetrigger <<__EOF__
-#!/bin/sh
-
-LC_ALL=C grep -qs '^%ridir/site/' || exit 0
-exec %_bindir/update-ri-cache %ridir/site
-__EOF__
-chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
 
 %define ruby_libdir %libdir
 %define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch %buildroot%_bindir/%name
@@ -304,6 +284,7 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 
 # Make empty dir for ri documentation
 mkdir -p %buildroot%_datadir/ri/site
+rm -rf %buildroot%_bindir/{ri,rdoc}
 
 %check
 %make_build test
@@ -334,20 +315,12 @@ mkdir -p %buildroot%_datadir/ri/site
 %files stdlibs
 %libdir
 
-%files -n ri
-%_bindir/update-ri-cache
-%_bindir/ri
-%_man1dir/ri.*
-%exclude %_rpmlibdir/%name-doc-ri.filetrigger
-
-%files tools
-%_bindir/erb
+%files -n gem
 %_bindir/gem
-%_bindir/update_rubygems
-%_bindir/rake
-%_bindir/rdoc
+
+%files -n erb
+%_bindir/erb
 %_man1dir/erb.*
-#%_man1dir/rake.*
 
 %files -n irb
 %lang(ja) %doc doc/irb/*.ja
@@ -358,12 +331,35 @@ mkdir -p %buildroot%_datadir/ri/site
 %dir %ridir
 %ridir/*
 
+%files -n ri-doc
+%_man1dir/ri.*
+
 %if_without bootstrap
 %files miniruby-src
 %_datadir/%name-%version-miniruby/miniruby-src.patch
 %endif
 
 %changelog
+* Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt1
+- Bump to 2.5.4;
+- Russian description;
+- Split tools to separate modules;
+- Fixes:
+  + CVE-2018-16396: Tainted flags are not propagated in Array#pack and
+    String#unpack with some directives;
+  + CVE-2018-16395: OpenSSL::X509::Name equality check does not work correctly;
+- Modules pilled-out from the package:
+  + json
+  + minitest
+  + update_rubygems
+  + did_you_mean
+  + net-telnet
+  + power_assert
+  + rake
+  + test-unit
+  + xmlrpc
+  + rdoc
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt4
 - Rebuild with new ruby autoreq.
 - ruby requires ruby-stdlibs.
