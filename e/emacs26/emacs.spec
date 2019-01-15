@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.1.90
+%define emacs_version 26.1.91
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -20,7 +20,7 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.1.90
+Version: 26.1.91
 Release: alt1
 
 Group: Editors
@@ -1516,6 +1516,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 
 
 %changelog
+* Sun Jan 13 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt1
+- 26.1.91
+
 * Thu Nov 22 2018 Terechkov Evgenii <evg@altlinux.org> 26.1.90-alt1
 - Drop Source9 and use native appdata file
 
