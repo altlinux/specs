@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.7.9
-Release: alt1.1
+Version: 1.8.4
+Release: alt1
 Summary: Fiona reads and writes spatial data files
 License: BSD
 Group: Development/Python
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/Fiona/
 
 # https://github.com/Toblerity/Fiona.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libgdal-devel gcc-c++
@@ -95,7 +94,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -167,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 15 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.4-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.9-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
