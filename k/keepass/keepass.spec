@@ -1,5 +1,5 @@
 Name: keepass
-Version: 2.40
+Version: 2.41
 Release: alt1
 
 Summary: Password manager
@@ -121,6 +121,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Tue Jan 15 2019 Oleg Solovyov <mcpain@altlinux.org> 2.41-alt1
+- new version: 2.41
+
 * Thu Sep 13 2018 Oleg Solovyov <mcpain@altlinux.org> 2.40-alt1
 - new version: 2.40
 - do not build for aarch64
