@@ -1,6 +1,6 @@
 Name: rpm-build-erlang
 Version: 0.7.10.1
-Release: alt2%ubt
+Release: alt3
 Summary: RPM helper scripts to calculate Erlang dependencies
 License: %gpl3plus
 Group: Development/Erlang
@@ -41,6 +41,9 @@ install -m 0755 erlang.* %buildroot%_rpmlibdir/
 
 
 %changelog
+* Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.10.1-alt3
+- Removed %%ubt macro.
+
 * Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.10.1-alt2%ubt
 - Rebuilt with %%ubt macro support.
 

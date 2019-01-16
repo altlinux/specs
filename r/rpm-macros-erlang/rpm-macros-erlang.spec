@@ -1,6 +1,6 @@
 Name: rpm-macros-erlang
 Version: 0.8.0
-Release: alt1%ubt
+Release: alt2
 Summary: RPM helper macros to rebuild erlang packages
 License: %gpl3plus
 Group: Development/Erlang
@@ -11,7 +11,6 @@ Source0: erlang.rpm.macros
 Source1: erlang.rpm.env
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
 
 Requires: rpm >= 4.0.4-alt78
 Conflicts: rpm-build-erlang < 0.6.2-alt2
@@ -29,7 +28,10 @@ install -m 0644 %SOURCE1 %buildroot%_rpmmacrosdir/erlang.env
 %_rpmmacrosdir/*
 
 %changelog
-* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1%ubt
+* Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt2
+- Removed %%ubt macro.
+
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1
 - Added macros for rebar.
 
 * Fri Feb 27 2009 Led <led@altlinux.ru> 0.7.0-alt1
