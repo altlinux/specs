@@ -1,5 +1,6 @@
 %define _name totem-pl-parser
 %define ver_major 3.26
+%define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
@@ -8,7 +9,7 @@
 %def_enable quvi
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
@@ -26,11 +27,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 %{?_enable_quvi:Requires: libquvi-scripts0.9 >= %quvi_ver}
 
-BuildPreReq: meson gtk-doc intltool libgio-devel >= %glib_ver
-BuildPreReq: libarchive-devel >= %archive_ver libsoup-gnome-devel >= %soup_ver
-BuildRequires: libgmime3.0-devel libxml2-devel
+BuildRequires(pre): meson
+BuildRequires: gtk-doc libgio-devel >= %glib_ver
+BuildRequires: libarchive-devel >= %archive_ver
+BuildRequires: libgcrypt-devel libxml2-devel
 %{?_enable_libgcrypt:BuildRequires: libgcrypt-devel}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5}
 %{?_enable_quvi:BuildRequires: libquvi0.9-devel >= %quvi_ver}
 
 %description
@@ -108,13 +110,16 @@ GObject introspection devel data for the Totem playlist parser library
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/TotemPlParser-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/TotemPlParser-%api_ver.gir
 %endif
 
 %changelog
+* Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
