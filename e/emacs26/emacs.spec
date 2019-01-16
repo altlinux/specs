@@ -21,7 +21,7 @@
 
 Name: emacs26
 Version: 26.1.91
-Release: alt1
+Release: alt3
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -873,7 +873,7 @@ popd
 %endif
 %if_enabled athena
 pushd build-athena
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
 popd
 %endif
 %if_enabled gtk
@@ -885,7 +885,7 @@ popd
 # export CFLAGS="%optflags -I%_prefix/X11R6/include"
 # export LDFLAGS="-Wl,-L%_prefix/X11R6/%_lib"
 pushd build-motif
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
 popd
 %endif
 %if_enabled gtk3
@@ -1516,6 +1516,12 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 
 
 %changelog
+* Wed Jan 16 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt3
+- Build emacs26-X11-athena and emacs26-X11-motif with librsvg (ALT#35910)
+
+* Mon Jan 14 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt2
+- Bump up alt1->alt2 to bypass installation check (for gnus)
+
 * Sun Jan 13 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt1
 - 26.1.91
 
