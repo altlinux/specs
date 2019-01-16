@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 5.0.31
-Release: alt1
+Version: 5.0.33
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: bridge-utils ntp-server ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
+Requires: bridge-utils chrony ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
 Source0: %name.tar.xz
@@ -148,8 +148,11 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Jan 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt2
+- pve-cluster 5.0-33
+
 * Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.31-alt1
-- pve-cluster 5.0-3
+- pve-cluster 5.0-31
 - pve-access-control 5.1-3
 
 * Mon Nov 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.30-alt1
