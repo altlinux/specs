@@ -2,9 +2,11 @@
 %define _libexecdir /usr/libexec
 %define _localstatedir /var
 
+%def_with check
+
 Name: certmonger
 Version: 0.79.6
-Release: alt2%ubt
+Release: alt3.gitba4c5049
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -13,39 +15,31 @@ Url: https://pagure.io/certmonger
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libldap-devel
+BuildRequires: libcurl-devel
 BuildRequires: libdbus-devel
-BuildRequires: libnspr-devel
-BuildRequires: libnss-devel
-BuildRequires: libssl-devel
 BuildRequires: libidn2-devel
-BuildRequires: libuuid-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libldap-devel
+BuildRequires: libnss-devel
+BuildRequires: libpopt-devel
+BuildRequires: libssl-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
-BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxmlrpc-devel
-BuildRequires: systemd-units
-BuildRequires: diffutils
-BuildRequires: expect
-BuildRequires: mktemp
-BuildRequires: nss-tools
-BuildRequires: openssl
-BuildRequires: /usr/bin/dbus-launch
-BuildRequires: dos2unix
-BuildRequires: which
-BuildRequires: python-module-dbus
-BuildRequires: libpopt-devel
 BuildRequires: libsystemd-devel
-BuildRequires: libkrb5-devel
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: dbus-tools-gui
+BuildRequires: dos2unix
+BuildRequires: nss-utils
+BuildRequires: openssl
+BuildRequires: python-module-dbus
+%endif
 
 Requires: dbus
-Requires(post): /usr/bin/dbus-send
-Requires(post): systemd-units
-Requires(preun): systemd-units, dbus, sed
-Requires(postun): systemd-units
 
 %description
 Certmonger is a service which is primarily concerned with getting your
@@ -54,15 +48,20 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 %prep
 %setup
 %patch -p1
+# writerand option is introduced in openssl 1.1.1
+grep -qs 'openssl rand -writerand $$HOME/\.rnd;' tests/Makefile.am || exit 1
+sed -i 's/openssl rand -writerand $$HOME\/\.rnd;/openssl rand -out $$HOME\/\.rnd 1024;/g' tests/Makefile.am
 
 %build
 %autoreconf
 %configure \
-	--localstatedir=/var \
+        --disable-rpath \
 	--enable-systemd \
 	--enable-tmpfiles \
-	--with-homedir=/var/run/certmonger \
-	--with-tmpdir=/var/run/certmonger --enable-pie --enable-now
+	--with-homedir=/run/certmonger \
+	--with-tmpdir=/run/certmonger \
+        --enable-pie \
+        --enable-now
 
 %make_build
 
@@ -70,7 +69,6 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 %makeinstall_std
 
 mkdir -p %buildroot%_sharedstatedir/%name/{cas,requests}
-install -m755 -d %buildroot%_runtimedir/%name
 mkdir -p %buildroot%_tmpfilesdir
 mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %find_lang %name
@@ -83,34 +81,57 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 
 %preun
 %preun_service %name
-
 %files -f %name.lang
 %doc README.md LICENSE STATUS doc/*.txt
-%config(noreplace) %_sysconfdir/dbus-1/system.d/*
-%_datadir/dbus-1/services/*
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/%name.conf
-%dir %_runtimedir/%name
-%_bindir/*
-%_sbindir/%name
-%_mandir/man*/*
-%_libexecdir/%name
-%_sharedstatedir/%name
+%config(noreplace) %_sysconfdir/dbus-1/system.d/certmonger.conf
+%config(noreplace) %_sysconfdir/certmonger/certmonger.conf
 %attr(0644,root,root) %config(noreplace) %_tmpfilesdir/certmonger.conf
-%_unitdir/*
-%_datadir/dbus-1/system-services/*
+%_datadir/dbus-1/services/certmonger.service
+%_datadir/dbus-1/system-services/org.fedorahosted.certmonger.service
+%_unitdir/certmonger.service
+%dir %_sysconfdir/certmonger
+%_bindir/certmaster-getcert
+%_bindir/getcert
+%_bindir/ipa-getcert
+%_bindir/local-getcert
+%_bindir/selfsign-getcert
+%_sbindir/certmonger
+%dir %_libexecdir/certmonger
+%_libexecdir/certmonger/certmaster-submit
+%_libexecdir/certmonger/certmonger-session
+%_libexecdir/certmonger/dogtag-ipa-renew-agent-submit
+%_libexecdir/certmonger/dogtag-submit
+%_libexecdir/certmonger/ipa-submit
+%_libexecdir/certmonger/local-submit
+%_libexecdir/certmonger/scep-submit
+%dir %_sharedstatedir/certmonger
+%_sharedstatedir/certmonger/cas/
+%_sharedstatedir/certmonger/local/
+%_sharedstatedir/certmonger/requests/
+%_man1dir/certmaster-getcert.1.*
+%_man1dir/getcert-*.1.*
+%_man1dir/getcert.1.*
+%_man1dir/ipa-getcert.1.*
+%_man1dir/local-getcert.1.*
+%_man1dir/selfsign-getcert.1.*
+%_man5dir/certmonger.conf.5.*
+%_man8dir/certmonger-*.8.*
+%_man8dir/certmonger.8.*
 
 %changelog
-* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 0.79.6-alt2%ubt
+* Wed Jan 16 2019 Stanislav Levin <slev@altlinux.org> 0.79.6-alt3.gitba4c5049
+- Applied upstream fixes.
+
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 0.79.6-alt2
 - Fix build with new openssl1.1.
 
-* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.79.6-alt1%ubt
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.79.6-alt1
 - Updated to upstream version 0.79.6.
 
-* Thu Mar 15 2018 Stanislav Levin <slev@altlinux.org> 0.79.5-alt2%ubt
+* Thu Mar 15 2018 Stanislav Levin <slev@altlinux.org> 0.79.5-alt2
 - Keep LC_*, LANG, set default LC_CTYPE
 
-* Wed Dec 20 2017 Stanislav Levin <slev@altlinux.org> 0.79.5-alt1%ubt
+* Wed Dec 20 2017 Stanislav Levin <slev@altlinux.org> 0.79.5-alt1
 - 0.78.6 -> 0.79.5
 
 * Fri Aug 11 2017 Mikhail Efremov <sem@altlinux.org> 0.78.6-alt2
