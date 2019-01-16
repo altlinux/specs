@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: flatpak-builder
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Epoch:1
 
@@ -74,6 +74,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docs:%doc %_docdir/%name}
 
 %changelog
+* Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.2-alt1
+- 1.0.2
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.1-alt1
 - 1.0.1
 
