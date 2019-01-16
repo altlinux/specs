@@ -1,0 +1,127 @@
+%define  pkgname rake
+
+Name:    ruby-%pkgname
+Version: 12.3.2
+Release: alt1
+
+Summary: Ruby based make-like utility
+Summary(ru_RU.UTF-8): Make-подобная утилита для рубина
+License: MIT
+Group:   Development/Ruby
+Url:     https://ruby.github.io/rake/
+# VCS:   https://github.com/ruby/rake.git
+
+Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
+
+Source: %pkgname-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-tool-setup
+#BuildRequires: gem(coveralls)
+
+%description
+Rake is a Make-like program implemented in Ruby. Tasks and dependencies
+are specified in standard Ruby syntax.
+
+%description -l ru_RU.UTF-8
+Rake есть Make-подобная утилита и набор модулей, исполненные на рубине.
+Задачи и зависимости описываются в рядовом правописании рубина.
+
+%package -n %pkgname
+Summary: Executable file for Rake.
+Group: Development/Ruby
+
+BuildArch: noarch
+
+Requires: gem(rake)
+
+%description -n %pkgname
+Executable file for Rake.
+
+%description -n %pkgname -l ru_RU.UTF-8
+Исполяемый файл для утилиты Rake.
+
+%package doc
+Summary: Documentation files for rake
+Group: Documentation
+
+BuildArch: noarch
+
+%description doc
+Documentation files for rake
+
+%description -l ru_RU.UTF-8 doc
+Документация для %{name}.
+
+%prep
+%setup -n %pkgname-%version
+%update_setup_rb
+rm -f bin/{bundle,console,rdoc,rubocop,setup}
+
+%build
+%ruby_config
+%ruby_build
+
+%install
+%ruby_install
+%rdoc lib/
+mkdir -p %buildroot/%_man1dir %buildroot%_docdir/%name
+install -p -m 644 doc/rake.1 %buildroot/%_man1dir
+find -name "*.html"| while read f; do install -p -m 644 "$f" %buildroot%_docdir/%name; done
+
+%check
+#%rake_test
+
+%files
+%ruby_sitelibdir/*
+%rubygem_specdir/*
+
+%files -n %pkgname
+%_bindir/rake
+%_man1dir/*
+
+%files doc
+%doc README.rdoc
+%_docdir/%name
+%ruby_ri_sitedir/*
+
+%changelog
+* Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 12.3.2-alt1
+- Bump to 12.3.2.
+- Russian descriptions.
+
+* Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 0.8.7-alt3
+- Rebuild with new ruby.
+
+* Tue Jan 04 2011 Alexey I. Froloff <raorn@altlinux.org> 0.8.7-alt2
+- Updated to rake-0.8.7-134-g9dad179
+
+* Thu Jul 15 2010 Alexey I. Froloff <raorn@altlinux.org> 0.8.7-alt1
+- [0.8.7]
+
+* Wed May 06 2009 Alexey I. Froloff <raorn@altlinux.org> 0.8.4-alt1
+- [0.8.4]
+
+* Sun Mar 30 2008 Sir Raorn <raorn@altlinux.ru> 0.8.1-alt1
+- [0.8.1]
+
+* Thu Jan 24 2008 Kirill A. Shutemov <kas@altlinux.ru> 0.7.3-alt2
+- Add ruby-module-misc to requires
+
+* Tue May 22 2007 Kirill A. Shutemov <kas@altlinux.ru> 0.7.3-alt1
+- 0.7.3 
+
+* Thu Jul 06 2006 Sir Raorn <raorn@altlinux.ru> 0.7.1-alt1
+- [0.7.1]
+
+* Tue Mar 07 2006 Kirill A. Shutemov <kas@altlinux.ru> 0.7.0-alt2
+- header in /usr/bin/rake fixed [#9195]
+
+* Thu Feb 16 2006 Kirill A. Shutemov <kas@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
+* Wed Aug 31 2005 Mikhail Yakshin <greycat@altlinux.ru> 0.5.4-alt1
+- Initial build for ALT Linux
+
