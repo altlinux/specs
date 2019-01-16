@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-ubt
 
 Name: telegram-desktop
 Version: 1.5.7
-Release: alt1
+Release: alt2
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -26,14 +26,12 @@ Url: https://telegram.org/
 # Source-url: https://github.com/telegramdesktop/tdesktop/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Source1: %name-locales-%version.tar
 Source2: CMakeLists.txt
 
 Patch1: 0001_add-cmake.patch
 Patch3: 0003_qt-plugins.patch
 Patch5: 0005_Downgrade-Qt-version.patch
 Patch6: 0006_fix-static-qt-functions.patch
-Patch8: 0008_add_locales.patch
 #Patch9: 0001-use-correct-executable-path.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
 Patch15: 0015-disable-resource-fonts.patch
@@ -41,8 +39,9 @@ Patch16: 0016-fix-lzma.patch
 #Patch17: 0017-ligsl-microsoft-fix.patch
 Patch18: 0018-fix-linking.patch
 
+# ix86 disabled due to memory limits for linker
 #ExclusiveArch: %ix86 x86_64
-ExclusiveArch: %arm x86_64
+ExclusiveArch: aarch64 x86_64
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
@@ -54,7 +53,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 BuildRequires: gcc-c++ libstdc++-devel gyp
 
-# 3.13 due add_compiler_definitions
+# cmake 3.13 due to add_compiler_definitions
 BuildRequires: cmake >= 3.13
 
 BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
@@ -117,6 +116,9 @@ BuildRequires: clang6.0
 
 Requires: dbus
 
+# instead of internal fonts OpenSans
+Requires: fonts-ttf-open-sans
+
 # some problems with t_assert
 %add_optflags -fpermissive
 
@@ -136,12 +138,11 @@ or business messaging needs.
 
 
 %prep
-%setup -a1
+%setup
 %patch1 -p1
 %patch3 -p1
 %patch5 -p1
 %patch6 -p1
-#patch8 -p1
 #patch9 -p1
 %patch14 -p1
 %patch15 -p1
@@ -151,7 +152,9 @@ or business messaging needs.
 cp %SOURCE2 Telegram/
 # MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
-
+# remove fonts from resources
+rm -rf Telegram/Resources/fonts/
+%__subst "s|.*fonts/OpenSans.*||" Telegram/Resources/qrc/telegram.qrc
 
 %build
 %if_with ffmpeg_static
@@ -203,6 +206,11 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Wed Jan 16 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt2
+- enable build on aarch64
+- add fonts-ttf-open-sans require and drop OpenSans from resources
+- drop external locales patches
+
 * Mon Jan 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
 - new version 1.5.7 (with rpmrb script)
 
