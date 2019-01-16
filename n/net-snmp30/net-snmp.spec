@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt6
+Release: alt6.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -596,6 +596,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Sun Apr 07 2019 L.A. Kostis <lakostis@altlinux.ru> 5.7.3-alt6.1
+- Rebuild w/ new lm_sensors.
+
 * Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.7.3-alt6
 - Fix FTBFS against libmysqlclient21
 

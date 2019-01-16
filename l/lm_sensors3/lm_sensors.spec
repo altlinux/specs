@@ -1,15 +1,16 @@
 %def_disable static
 
 Name: lm_sensors3
-Version: 3.4.0
-Release: alt4
+Version: 3.5.0
+Release: alt1
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
 Group: System/Kernel and hardware
-Url: http://www.lm-sensors.org/
+Url: https://hwmon.wiki.kernel.org/
 Packager: Afanasov Dmitry <ender@altlinux.org> 
 
+# https://github.com/lm-sensors/lm-sensors
 Source: %name-%version.tar
 Source1: lm_sensors.init
 Source2: lm_sensors.service
@@ -229,7 +230,7 @@ fi
 %exclude %_libdir/*.a
 
 %files -n libsensors3-devel
-%doc doc/libsensors-API.txt doc/svn doc/developers
+%doc doc/libsensors-API.txt doc/developers
 %_libdir/*.so
 %_includedir/sensors
 %_man3dir/*
@@ -240,6 +241,10 @@ fi
 %endif #static
 
 %changelog
+* Sat Apr 06 2019 L.A. Kostis <lakostis@altlinux.ru> 3.5.0-alt1
+- new version 3.5.0
+- update URL
+
 * Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.0-alt4
 - lets keep isadump and friends on x86 only
 
