@@ -3,7 +3,7 @@
 Name: rebar
 Epoch:   1
 Version: 2.6.4
-Release: alt1%ubt
+Release: alt2
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: %asl
 Group: Development/Erlang
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Patch1: rebar-fedora-try-shell-variable-VSN-first.patch
 
 BuildRequires(pre): rpm-build-erlang rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-devel erlang-otp-devel erlang-visual-devel erlang-common_test-devel
 
 Requires: erlang-otp erlang-visual erlang-common_test
@@ -47,7 +46,10 @@ install -m755 rebar %buildroot%_bindir
 %_bindir/*
 
 %changelog
-* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.4-alt1%ubt
+* Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.6.4-alt2
+- Removed %%ubt macro.
+
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.4-alt1
 - Updated to upstream version 2.6.4.
 
 * Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 2.git20111225-alt1.1
