@@ -3,7 +3,7 @@
 
 Name: python-module-%mname
 Version: 1.3.0
-Release: alt1%ubt.1
+Release: alt2
 
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 License: ASL 2.0
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/kerberos
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-dev
@@ -73,6 +72,9 @@ popd
 %python3_sitelibdir/kerberos-%version-*.egg-info
 
 %changelog
+* Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt2
+- Disable ubt macros due binary package identity change
+
 * Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
