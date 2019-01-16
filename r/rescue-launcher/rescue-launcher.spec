@@ -1,5 +1,5 @@
 Name: rescue-launcher
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Optional autorun feature for ALT Rescue
@@ -7,7 +7,7 @@ License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 
-Url: http://en.altlinux.org/rescue
+Url: https://www.altlinux.org/Rescue/Launcher
 Source: %name-%version.tar
 Packager: Leonid Krivoshein <klark@altlinux.org>
 
@@ -40,6 +40,11 @@ chmod 644 %buildroot/var/log/%name.log
 %ghost /var/log/%name.log
 
 %changelog
+* Wed Jan 16 2019 Leonid Krivoshein <klark@altlinux.org> 0.1.2-alt1
+- spec file: project documentation URI updated.
+- plan9 method: small bug in condition fixed.
+- vbox method: small code improvement.
+
 * Thu Dec 27 2018 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt1
 - vbox method: mounting error fixed.
 
