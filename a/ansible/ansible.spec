@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.7.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -57,6 +57,9 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Fri Jan 11 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.4-alt2
+- Fix cheksum calculation to work with python3
+
 * Wed Dec 12 2018 Terechkov Evgenii <evg@altlinux.org> 2.7.4-alt1
 - 2.7.4
 
