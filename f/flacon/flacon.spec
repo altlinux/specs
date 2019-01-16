@@ -1,6 +1,6 @@
 Name: flacon
-Version: 4.1.0
-Release: alt1%ubt
+Version: 5.0.0
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -13,7 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ubt
+BuildPreReq: /proc
 
 BuildRequires: cmake
 BuildRequires: libuchardet-devel
@@ -67,6 +67,10 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Jan 16 2019 Nazarov Denis <nenderus@altlinux.org> 5.0.0-alt1
+- Version 5.0.0
+  Remove %ubt macro
+
 * Fri May 04 2018 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1%ubt
 - Version 4.1.0
 
