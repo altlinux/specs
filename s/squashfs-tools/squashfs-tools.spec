@@ -1,6 +1,6 @@
 Name: squashfs-tools
 Version: 4.3
-Release: alt2
+Release: alt3.e38956b
 
 Summary: squashfs support
 License: GPL
@@ -8,7 +8,7 @@ Group: System/Kernel and hardware
 Url: https://git.kernel.org/cgit/fs/squashfs/squashfs-tools.git/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: zlib-devel liblzma-devel liblzo2-devel
+BuildRequires: zlib-devel liblzma-devel liblzo2-devel libzstd-devel
 Provides: squashfsprogs = %version-%release
 Obsoletes: squashfsprogs
 
@@ -26,7 +26,7 @@ This package contains the utilities to (un)compress squashfs images.
 %patch0 -p1
 
 %build
-%make_build XZ_SUPPORT=1 LZO_SUPPORT=1 COMP_DEFAULT=xz
+%make_build XZ_SUPPORT=1 LZO_SUPPORT=1 ZSTD_SUPPORT=1 COMP_DEFAULT=xz
 
 %install
 install -pDm755 mksquashfs %buildroot/sbin/mksquashfs
@@ -39,6 +39,10 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Wed Jan 09 2019 Lenar Shakirov <snejok@altlinux.ru> 4.3-alt3.e38956b
+- Add zstd support (commit e38956b)
+- libzstd-devel added to BuildRequires
+
 * Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 4.3-alt2
 - upstream fix for 32bit memory calculation on 64bit (or pae) kernel (closes: #30103)
 - upstream fix for working without -mem options and/or /proc
