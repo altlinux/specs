@@ -1,9 +1,9 @@
 Name: libpng16
-Version: 1.6.35
+Version: 1.6.36
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
-License: zlib
+License: PNGv2
 Group: System/Libraries
 Url: http://www.libpng.org/pub/png/
 
@@ -40,6 +40,9 @@ programs and packages using libpng.
 %setup
 
 %build
+%ifarch aarch64
+%add_optflags -DPNG_ARM_NEON_OPT=0
+%endif
 %autoreconf
 %configure --disable-static
 %make_build
@@ -56,7 +59,7 @@ install -p -m644 CHANGES LICENSE README TODO example.c libpng*.txt \
 xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %_libdir/*.so.*
@@ -74,6 +77,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Wed Jan 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.36-alt1
+- 1.6.36
+
 * Wed Oct 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.35-alt1
 - 1.6.35 (fixes: CVE-2018-13785, CVE-2018-14048)
 
