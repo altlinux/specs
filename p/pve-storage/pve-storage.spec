@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 5.0.33
+Version: 5.0.36
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -9,7 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 
-Requires: nfs-utils open-iscsi glusterfs3-client smartmontools gdisk parted hdparm
+Requires: open-iscsi smartmontools gdisk parted hdparm
 Requires: multipath-tools ceph >= 12.2.1 zfs-utils
 
 Source: pve-storage.tar.xz
@@ -41,6 +41,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Jan 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.36-alt1
+- 5.0-36
+
 * Thu Dec 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt1
 - 5.0-33
 
