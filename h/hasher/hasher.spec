@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.34
+Version: 1.3.35
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -58,6 +58,10 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Jan 16 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.35-alt1
+- hsh-rebuild --query-repackage:
+  relaxed glob pattern when processing $HOME/in/nosrpm/.
+
 * Tue Dec 25 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.34-alt1
 - mkaptbox: add config entries about preferences unconditionally.
 
