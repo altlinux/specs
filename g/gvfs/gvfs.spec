@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 1.38
 
@@ -27,12 +27,13 @@
 %def_enable google
 %def_enable admin
 %def_enable libusb
+%def_enable dnssd
 %def_enable man
 %def_disable check
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt3
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -56,7 +57,6 @@ Patch1: gvfs-1.19.90-alt-1-logind-state.patch
 Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
-# From configure.ac
 %define glib_ver 2.57.2
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
@@ -73,6 +73,7 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define libusb_ver 1.0.21
 
 Requires: dconf
+%{?_enable_fuse:Requires: fuse-gvfs}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
 
@@ -88,7 +89,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
 %{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
-%{?_enable_avahi:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
+%{?_enable_dnssd:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_bluray:BuildRequires: libbluray-devel}
 %{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
 %{?_enable_fuse:BuildPreReq: libfuse-devel}
@@ -102,7 +103,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
 %{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
 %{?_enable_samba:BuildPreReq: libsmbclient-devel}
-%{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
+%{?_enable_systemd_login:BuildPreReq: libsystemd-devel}
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
@@ -287,12 +288,12 @@ The %name-tests package provides programms for testing GVFS.
 
 %prep
 %setup
-%patch1 -p2 -b .logind-state
+#%%patch1 -p2 -b .logind-state
 
 %build
 %meson \
         %{?_enable_http:-Dhttp=true} \
-        %{?_enable_avahi:-Davahi=true} \
+        %{?_enable_dnssd:-Ddnssd=true} \
         %{?_enable_cdda:-Dcdda=true} \
         %{?_enable_fuse:-Dfuse=true} \
         %{?_enable_gphoto2:-Dgphoto2=true} \
@@ -319,8 +320,8 @@ The %name-tests package provides programms for testing GVFS.
 %find_lang %name
 
 %check
-#export PATH=/usr/sbin:$PATH
-#%%meson_test
+export PATH=/usr/sbin:$PATH
+%meson_test
 
 %post
 killall -USR1 gvfsd >&/dev/null || :
@@ -397,15 +398,14 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %endif
 
 %{?_enable_cdda:%exclude %_datadir/%name/mounts/cdda.mount}
-    %exclude %_libexecdir/gvfsd-dnssd
-    %exclude %_datadir/%name/mounts/dns-sd.mount
+%{?_enable_dnssd:%exclude %_libexecdir/gvfsd-dnssd}
+%{?_enable_dnssd:%exclude %_datadir/%name/mounts/dns-sd.mount}
 
 %if_enabled libmtp
     %exclude %_libexecdir/gvfsd-mtp
     %exclude %_datadir/%name/mounts/mtp.mount
     %exclude %_datadir/dbus-1/services/org.gtk.vfs.MTPVolumeMonitor.service
 %endif
-
 
 %if_enabled nfs
     %exclude %_libexecdir/gvfsd-nfs
@@ -443,11 +443,13 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %_datadir/%name/mounts/obexftp.mount
 %endif
 
+%if_enabled dnssd
 %files backend-dnssd
 %_libexecdir/gvfsd-dnssd
 %_datadir/%name/mounts/dns-sd.mount
 %config %_datadir/glib-2.0/schemas/org.gnome.system.dns_sd.gschema.xml
 %_datadir/GConf/gsettings/gvfs-dns-sd.convert
+%endif
 
 %if_enabled cdda
 %files backend-cdda
@@ -523,6 +525,13 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt3
+- updated to 1.38.1-8-ge4eec2bc (fixed GLI ##348, 355)
+- disabled obsolete logind-state.patch
+
+* Fri Nov 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt2
+- updated to 1.38.1-5-gc5fd1efd
+
 * Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
 - 1.38.1
 
