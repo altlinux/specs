@@ -3,25 +3,21 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: Command line tools for helping with Python development
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pycmd
+Url: https://pypi.org/project/pycmd/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 # pycmd was separated from pylib at that point
 Conflicts: py < 1.4.0
 BuildArch: noarch
+%py_requires py
 
 %description
 Collection of command line tools for dealing with python files
@@ -65,17 +61,31 @@ popd
 
 %files
 %doc CHANGELOG LICENSE *.txt
-%_bindir/*
-%exclude %_bindir/*.py3
-%python_sitelibdir/*
+%_bindir/py.cleanup
+%_bindir/py.convert_unittest
+%_bindir/py.countloc
+%_bindir/py.lookup
+%_bindir/py.svnwcrevert
+%_bindir/py.which
+%python_sitelibdir/pycmd/
+%python_sitelibdir/pycmd-*.egg-info/
 
 %files -n python3-module-%oname
 %doc CHANGELOG LICENSE *.txt
-%_bindir/*.py3
-%python3_sitelibdir/*
+%_bindir/py.cleanup.py3
+%_bindir/py.convert_unittest.py3
+%_bindir/py.countloc.py3
+%_bindir/py.lookup.py3
+%_bindir/py.svnwcrevert.py3
+%_bindir/py.which.py3
+%python3_sitelibdir/pycmd/
+%python3_sitelibdir/pycmd-*.egg-info/
 
 %changelog
-* Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1%ubt
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.2-alt2
+- Add Requires on python py.
+
+* Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1
 - 1.1 -> 1.2
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.hg20140627.1.1
