@@ -1,18 +1,19 @@
 %define pkgname kgio
 
-Name: ruby-%pkgname
-Version: 2.11.2
-Release: alt1.3
+Name:     ruby-%pkgname
+Version:  2.11.2
+Release:  alt3
 
-Summary: kinder, gentler I/O for Ruby
-Group: Development/Ruby
-License: LGPL
-Url: http://bogomips.org/kgio/
+Summary:  kinder, gentler I/O for Ruby
+Group:    Development/Ruby
+License:  LGPLv2
+Url:      https://bogomips.org/kgio
+# VCS:    https://bogomips.org/kgio.git
 
-Source: %pkgname-%version.tar.gz
+Source:  %pkgname-%version.tar
 Source1: %pkgname-%version.gemspec
 
-BuildRequires: libruby-devel ruby-tool-setup strace
+BuildRequires(pre): rpm-build-ruby
 
 %description
 kgio provides non-blocking I/O methods for Ruby without raising
@@ -29,34 +30,44 @@ BuildArch: noarch
 Documentation files for %name.
 
 %prep
-%setup -q -n %pkgname-%version
-rm -rf setup.rb *.gemspec
+%setup -n %pkgname-%version
 cp %SOURCE1 %pkgname-%version.gemspec
 %update_setup_rb
 
 %build 
-%ruby_config 
+%ruby_config
 %ruby_build
 
 %install
 export VERSION=%version
 %ruby_install
 %rdoc lib/
+mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/
+find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/ \;
+touch %buildroot%rubygem_extdir/%pkgname-%version/gem.build_complete
+mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+touch %buildroot.manifest
 
 %check
-#%%ruby_test_unit -Iext/kgio:lib test
+%ruby_test
 
 %files
 %doc README TODO
-%ruby_sitelibdir/*
+%rubygem_gemdir/*
+%rubygem_extdir/*
 %rubygem_specdir/*
-%ruby_sitearchdir/*
 
 %files doc
 %doc COPYING HACKING ISSUES
-%ruby_ri_sitedir/Kgio*
+%ruby_ri_sitedir/
 
 %changelog
+* Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.2-alt3
+- Place library into proper ruby gem folder.
+
+* Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 2.11.2-alt2
+- Fix binding with compiled binary so-libs.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1.3
 - Rebuild with new Ruby autorequirements.
 
