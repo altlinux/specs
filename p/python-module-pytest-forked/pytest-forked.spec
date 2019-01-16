@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt1%ubt
+Version: 1.0.1
+Release: alt1
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
@@ -15,20 +15,15 @@ Url: https://pypi.python.org/pypi/pytest-forked
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
 BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python-module-tox
 BuildRequires: python-module-pycmd
-BuildRequires: python-module-virtualenv
-BuildRequires: python3-module-tox
+BuildRequires: python-module-pytest
 BuildRequires: python3-module-pycmd
-BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-tox
 %endif
 
 BuildArch: noarch
@@ -47,6 +42,7 @@ Group: Development/Python3
 
 %prep
 %setup
+rm -rf ../python3
 cp -fR . ../python3
 
 %build
@@ -71,37 +67,31 @@ pushd ../python3
 popd
 
 %check
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
-
-export PIP_INDEX_URL=http://host.invalid./
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
-export PYTHONPATH=%buildroot%python_sitelibdir_noarch
-
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE CHANGELOG README.rst
-%python_sitelibdir/*
+%python_sitelibdir/pytest_forked/
+%python_sitelibdir/pytest_forked-*.egg-info/
 
 %files -n python3-module-%oname
 %doc LICENSE CHANGELOG README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_forked/
+%python3_sitelibdir/pytest_forked-*.egg-info/
 
 %changelog
-* Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt1%ubt
+* Wed Jan 16 2019 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 0.2 -> 1.0.1.
+
+* Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt1
 - Initial build for ALT.
