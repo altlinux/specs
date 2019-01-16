@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -222,6 +222,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Jan 16 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt1
+- 4.0.9-1-gc42a03a0
+
 * Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.8-alt1
 - 4.0.8-1-g24637679
 
