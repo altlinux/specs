@@ -1,42 +1,40 @@
 %def_without telepathy
 
 Name: remmina
-Version: 1.2.0
-Release: alt5.rc21%ubt
+Version: 1.2.32.1
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
 License: GPLv2+ and MIT
 Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
-Patch0: remmina-1.2.0-rdp-passwordispin_option.patch
-Patch1: fix_plugins_search_v1.2.0-rc21.patch
-Patch2: alt-libssh0.8.patch
+Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext pkgconfig(libpcre)
 BuildRequires: intltool
 BuildRequires: libappstream-glib
-BuildRequires: libgcrypt-devel
+BuildRequires: libgcrypt-devel libssl-devel
 BuildRequires: libjpeg-devel libtasn1-devel libpng-devel libpixman-devel zlib-devel
-BuildRequires: pkgconfig(glib-2.0) >= 2.28 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
-BuildRequires: pkgconfig(avahi-ui) >= 0.6.30
-BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30
+BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30 pkgconfig(avahi-client) >= 0.6.30
 BuildRequires: pkgconfig(freerdp2) >= 2.0.0
 BuildRequires: pkgconfig(winpr2)
-BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango) pkgconfig(cairo) pkgconfig(atk)
+BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango) pkgconfig(cairo) pkgconfig(atk) libwayland-client-devel
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(libssh) >= 0.6
 BuildRequires: pkgconfig(libvncserver)
-%{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib)}
+%{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib) pkgconfig(dbus-glib-1)}
 BuildRequires: pkgconfig(vte-2.91)
 BuildRequires: pkgconfig(xkbfile)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(spice-client-gtk-3.0)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libsoup-2.4)
 
 %add_findreq_skiplist %_datadir/%name/external_tools/*
 
@@ -58,24 +56,146 @@ Files required to build plugins for remmina
 %package plugins
 Summary: A set of plugins for remmina
 Group: Networking/Remote access
-Requires: %name freerdp-plugins-standard
+BuildArch: noarch
+
+Requires: %name
+Requires: %name-plugins-exec
+Requires: %name-plugins-secret
+Requires: %name-plugins-nx
+Requires: %name-plugins-rdp
+Requires: %name-plugins-st
+Requires: %name-plugins-vnc
+Requires: %name-plugins-xdmcp
+Requires: %name-plugins-spice
 
 %description plugins
 A set of plugins for %name remote desktop client
 
-%package plugins-gnome
-Summary: A set of plugins-gnome for remmina
+%package plugins-exec
+Summary: External execution plugin for Remmina Remote Desktop Client
 Group: Networking/Remote access
-Requires: %name-plugins
+Requires: %name = %EVR
 
-%description plugins-gnome
-A set of plugins-gnome for %name remote desktop client
+%description plugins-exec
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the plugin to execute external processes (commands or
+applications) from the Remmina window.
+
+%package plugins-secret
+Summary: Keyring integration for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+Provides: %name-plugins-gnome = %EVR
+Obsoletes: %name-plugins-gnome < %EVR
+
+%description plugins-secret
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the plugin with keyring support for the Remmina remote
+desktop client.
+
+%package plugins-nx
+Summary: NX plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+Requires: nxproxy
+
+%description plugins-nx
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the NX plugin for the Remmina remote desktop client.
+
+%package plugins-rdp
+Summary: RDP plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+Requires: freerdp-plugins-standard
+
+%description plugins-rdp
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the Remote Desktop Protocol (RDP) plugin for the Remmina
+remote desktop client.
+
+%package plugins-st
+Summary: Simple Terminal plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description plugins-st
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the Simple Terminal plugin for the Remmina remote desktop
+client.
+
+%package plugins-vnc
+Summary: VNC plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description plugins-vnc
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the VNC plugin for the Remmina remote desktop
+client.
+
+%package plugins-xdmcp
+Summary: XDMCP plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+Requires: xorg-xephyr
+
+%description plugins-xdmcp
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+ 
+This package contains the XDMCP plugin for the Remmina remote desktop
+client.
+
+%package plugins-spice
+Summary: SPICE plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description plugins-spice
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+ 
+This package contains the SPICE plugin for the Remmina remote desktop
+client.
+
+%package gnome-session
+Summary: Gnome Shell session for Remmina kiosk mode
+Group: Networking/Remote access
+Requires: %name = %EVR
+Requires: gnome-session
+
+%description gnome-session
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains Remmina kiosk mode, including a Gnome Shell session
+that shows up under the display manager session menu.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 #? Hack: https://github.com/FreeRDP/Remmina/issues/292
 sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
@@ -99,9 +219,9 @@ sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install
 %cmakeinstall_std
 
 mkdir -p %buildroot%_pkgconfigdir
-install -p -m 644 remmina/%name.pc.in %buildroot%_pkgconfigdir/%name.pc
+install -p -m 644 data/%name.pc.in %buildroot%_pkgconfigdir/%name.pc
 
-subst "s|@prefix@|%_prefix|g" %buildroot%_pkgconfigdir/%name.pc
+subst "s|@prefix@|%prefix|g" %buildroot%_pkgconfigdir/%name.pc
 subst "s|@exec_prefix@|%_exec_prefix|g" %buildroot%_pkgconfigdir/%name.pc
 subst "s|@libdir@|%_libdir|g" %buildroot%_pkgconfigdir/%name.pc
 subst "s|@includedir@|%_includedir|g" %buildroot%_pkgconfigdir/%name.pc
@@ -115,23 +235,68 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_datadir/metainfo/*.appdata.xml
 %_datadir/mime/*/*.xml
 %_datadir/applications/*.desktop
-%_iconsdir/*/*/*/*
+%_iconsdir/hicolor/*/actions/*.*
+%_iconsdir/hicolor/*/apps/*.*
+%_iconsdir/hicolor/*/emblems/remmina-sftp-symbolic.svg
+%_iconsdir/hicolor/*/emblems/remmina-ssh-symbolic.svg
 %_datadir/%name
+%_man1dir/remmina.1.*
 %dir %_libdir/remmina
 %dir %_libdir/remmina/plugins
 
 %files plugins
-%_libdir/remmina/plugins/*.so
-%exclude %_libdir/remmina/plugins/remmina-plugins-gnome.so
+%files plugins-exec
+%_libdir/remmina/plugins/remmina-plugin-exec.so
 
-%files plugins-gnome
-%_libdir/remmina/plugins/remmina-plugins-gnome.so
+%files plugins-secret
+%_libdir/remmina/plugins/remmina-plugin-secret.so
+
+%files plugins-nx
+%_libdir/remmina/plugins/remmina-plugin-nx.so
+%_iconsdir/hicolor/*/emblems/remmina-nx-symbolic.svg
+
+%files plugins-rdp
+%_libdir/remmina/plugins/remmina-plugin-rdp.so
+%_iconsdir/hicolor/*/emblems/remmina-rdp-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/remmina-rdp-symbolic.svg
+
+%files plugins-st
+%_libdir/remmina/plugins/remmina-plugin-st.so
+%_iconsdir/hicolor/*/emblems/remmina-tool-symbolic.svg
+
+%files plugins-vnc
+%_libdir/remmina/plugins/remmina-plugin-vnc.so
+%_iconsdir/hicolor/*/emblems/remmina-vnc-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/remmina-vnc-symbolic.svg
+
+%files plugins-xdmcp
+%_libdir/remmina/plugins/remmina-plugin-xdmcp.so
+%_iconsdir/hicolor/*/emblems/remmina-xdmcp-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/remmina-xdmcp-symbolic.svg
+
+%files plugins-spice
+%_libdir/remmina/plugins/remmina-plugin-spice.so
+%_iconsdir/hicolor/*/emblems/remmina-spice-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/remmina-spice-symbolic.svg
+
+%files gnome-session
+%_bindir/gnome-session-remmina
+%_bindir/remmina-gnome
+%_datadir/gnome-session/sessions/remmina-gnome.session
+%_datadir/xsessions/remmina-gnome.desktop
+%_man1dir/gnome-session-remmina.1.*
+%_man1dir/remmina-gnome.1.*
 
 %files devel
 %_includedir/%name
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.32.1-alt1
+- 1.2.32.1
+- split plugins package
+- add gnome-session package for kiosk mode
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5.rc21%ubt
 - fix to build with new libssh
 
