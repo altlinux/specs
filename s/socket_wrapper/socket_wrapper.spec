@@ -1,6 +1,6 @@
 Name:           socket_wrapper
-Version:        1.1.9
-Release:        alt2%ubt
+Version:        1.2.1
+Release:        alt1
 Group:          Development/Other
 License:        BSD
 Summary:        A library passing all socket communications through Unix sockets
@@ -9,8 +9,6 @@ Url:            http://cwrap.org/
 # git://git.samba.org/socket_wrapper.git
 Source0:        %name-%version.tar
 Patch0:         %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires:  cmake ctest
 BuildRequires:  libcmocka-devel
@@ -63,7 +61,7 @@ LD_PRELOAD=src/libsocket_wrapper.so bash -c '>/dev/null'
 popd
 
 %files
-%doc AUTHORS README ChangeLog COPYING
+%doc AUTHORS README ChangeLog LICENSE
 %_libdir/lib%name.so*
 %dir %_libdir/cmake/%name
 %_libdir/cmake/%name/*.cmake
@@ -71,16 +69,20 @@ popd
 %_man1dir/socket_wrapper.1*
 
 %changelog
-* Mon Apr 09 2018 Evgeny Sinelikov <sin@altlinux.org> 1.1.9-alt2%ubt
+* Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.2.1-alt1
+- Update to latest release
+- Disable ubt macros due binary package identity change
+
+* Mon Apr 09 2018 Evgeny Sinelikov <sin@altlinux.org> 1.1.9-alt2
 - Add LD_LIBRARY_PATH to libthread_deadlock.so for running tests on e2k
 
-* Mon Jan 29 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.9-alt1%ubt
+* Mon Jan 29 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.9-alt1
 - Update to latest release with fixed thread - signal deadlock issue
 
-* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt2%ubt
+* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt2
 - Disable ipv6 for test_socket_getsockname due girar error with:
   "Address family not supported by protocol"
 
-* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt1%ubt
+* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt1
 - Initial build for ALT Sisyphus
 
