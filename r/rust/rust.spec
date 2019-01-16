@@ -1,10 +1,10 @@
-%define rust_ver 1.30.0
-%define cargo_ver 1.30.0
+%define rust_ver 1.31.1
+%define cargo_ver 1.31.1
 
 Name: rust
 Epoch: 1
 Version: %rust_ver
-Release: alt2
+Release: alt3
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -17,12 +17,12 @@ BuildPreReq: /proc
 BuildRequires: curl gcc-c++ python-devel cmake libffi-devel patchelf
 
 %def_without  bootstrap
-%def_without  bundled_llvm
+%def_with  bundled_llvm
 %define abisuff %nil
 
 %if_without bundled_llvm
 
-BuildRequires: llvm6.0-devel
+BuildRequires: llvm7.0-devel
 
 %endif
 
@@ -270,7 +270,7 @@ export LLVM_LINK_SHARED=1
 DESTDIR=%buildroot ./x.py install
 
 %check
-./x.py test --no-fail-fast || :
+#./x.py test --no-fail-fast || :
 
 %clean
 %if_with bootstrap
@@ -329,7 +329,7 @@ rm -rf %rustdir
 %files -n clippy
 %_bindir/cargo-clippy
 %_bindir/clippy-driver
-%doc src/tools/clippy/{README.md,CHANGELOG.md,LICENSE}
+%doc src/tools/clippy/{README.md,CHANGELOG.md,LICENSE*}
 
 %files src
 %_libdir/rustlib/src
@@ -338,6 +338,11 @@ rm -rf %rustdir
 %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Wed Jan 16 2019 Andrey Cherepanov <cas@altlinux.org> 1:1.31.1-alt3
+- 1.31.1
+- build with llvm7.0 (ALT #35874)
+- disable test check
+
 * Wed Dec 12 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:1.30.0-alt2
 - rust-gdb: fix %%_libdir path (to find the pretty-printers in Python).
 
