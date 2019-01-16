@@ -7,10 +7,10 @@
 
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
-%define ver_fake   32
-%define ver_ix86   32.0.0.114
+%define ver_fake 32
+%define ver_ix86 32.0.0.114
 %define ver_x86_64 32.0.0.114
-Release: alt1
+Release: alt2
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -35,7 +35,7 @@ BuildRequires: libstdc++-devel glibc-devel desktop-file-utils
 Source: ppapi-plugin-adobe-flash.desktop
 #
 Source10: flash_player_ppapi-x86_64-%ver_x86_64.tar
-Source11: flash_player_ppapi-x86-%ver_ix86.tar
+Source11: flash_player_ppapi-i386-%ver_ix86.tar
 
 %description
 Adobe Flash Player %version (Macromedia Flash)
@@ -117,6 +117,9 @@ install -m0644 %SOURCE0 %buildroot/%_desktopdir/
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
 
 %changelog
+* Wed Jan 16 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt2
+- add cronbuild support
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt1
 - new version (ALT#34555)
 - security fixes:
