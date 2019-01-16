@@ -1,6 +1,6 @@
 Name: fotoxx
-Version: 18.07.1
-Release: alt2
+Version: 19.1
+Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 License: GPLv3+
@@ -25,7 +25,7 @@ Requires: brasero
 Provides: fotox
 Obsoletes: fotox
 
-BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
+BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel liblcms2-devel
 BuildRequires: perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
 BuildRequires: libraw-devel
@@ -49,7 +49,7 @@ BuildArch: noarch
 This package provides noarch data needed for Fotox to work.
 
 %prep
-%setup
+%setup -n %name
 chmod -x doc/*
 
 %build
@@ -79,6 +79,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 19.1-alt1
+- 19.1
+
 * Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 18.07.1-alt2
 - rebuilt against libraw.so.19
 
