@@ -1,6 +1,6 @@
 Name: spice-protocol
-Version: 0.12.14
-Release: alt1%ubt
+Version: 0.12.15
+Release: alt1
 Summary: Spice protocol header files
 Group: Development/C
 License: BSD
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: meson
 BuildRequires: python-module-pyparsing python-module-six
 
 %description
@@ -22,12 +22,11 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %patch -p1
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%meson_install
 
 %files
 %doc COPYING NEWS
@@ -35,6 +34,9 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.12.15-alt1
+- 0.12.15
+
 * Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.14-alt1%ubt
 - 0.12.4
 
