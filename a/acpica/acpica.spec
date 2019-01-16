@@ -1,7 +1,7 @@
 
 Name: acpica
-Version: 20180810
-Release: alt1%ubt
+Version: 20181213
+Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
 Group: System/Kernel and hardware
@@ -33,15 +33,15 @@ Patch7: ppc64le.patch
 Patch8: arm7hl.patch
 Patch9: big-endian-v2.patch
 Patch10: simple-64bit.patch
-Patch11: be-tpm2.patch
-Patch12: mips-be-fix.patch
-Patch13: cve-2017-13693.patch
-Patch14: cve-2017-13694.patch
-Patch15: cve-2017-13695.patch
-Patch16: str-trunc-warn.patch
-Patch17: ptr-cast.patch
+Patch11: mips-be-fix.patch
+Patch12: cve-2017-13693.patch
+Patch13: cve-2017-13694.patch
+Patch14: cve-2017-13695.patch
+Patch15: str-trunc-warn.patch
+Patch16: ptr-cast.patch
+Patch17: aslcodegen.patch
+Patch18: facp.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
 
 Provides: %name-tools = %version-%release
@@ -101,13 +101,14 @@ This version of the tools is being released under GPLv2 license.
 %patch8 -p1 -b .arm7hl
 %patch9 -p1 -b .big-endian-v2
 %patch10 -p1 -b .simple-64bit
-%patch11 -p1 -b .be-tpm2
-%patch12 -p1 -b .mips-be-fix
-%patch13 -p1 -b .cve-2017-13693
-%patch14 -p1 -b .cve-2017-13694
-%patch15 -p1 -b .cve-2017-13695
-%patch16 -p1 -b .str-trunc-warn
-%patch17 -p1 -b .ptr-cast
+%patch11 -p1 -b .mips-be-fix
+%patch12 -p1 -b .cve-2017-13693
+%patch13 -p1 -b .cve-2017-13694
+%patch14 -p1 -b .cve-2017-13695
+%patch15 -p1 -b .str-trunc-warn
+%patch16 -p1 -b .ptr-cast
+%patch17 -p1 -b .aslcodegen
+%patch18 -p1 -b .facp
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -197,6 +198,9 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 20181213-alt1
+- 20181213
+
 * Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 20180810-alt1%ubt
 - 20180810
 
