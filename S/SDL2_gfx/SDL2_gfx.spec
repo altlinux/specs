@@ -2,7 +2,7 @@
 
 Name: SDL2_gfx
 Version: 1.0.4
-Release: alt1%ubt
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Graphics primitives and surface functions
 License: zlib
@@ -12,8 +12,6 @@ Url: http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://www.ferzkopp.net/Software/%name/%name-%version.tar.gz
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libSDL2-devel
 
@@ -79,6 +77,9 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %endif
 
 %changelog
+* Wed Jan 16 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.4-alt2
+- Remove %ubt macro
+
 * Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.4-alt1%ubt
 - Version 1.0.4
 
