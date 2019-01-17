@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.12.3
-Release: alt2
+Version: 0.14.0
+Release: alt1
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
@@ -16,19 +16,21 @@ Url: https://pypi.org/project/pytest-pylint/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python-module-pytest-runner
+BuildRequires: python3-module-pytest-runner
+
 %if_with check
 BuildRequires: pylint
+BuildRequires: python-module-coverage
+BuildRequires: python-module-mock
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-pep8
-BuildRequires: python-module-mock
-BuildRequires: python-module-tox
-BuildRequires: python-module-coverage
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-pylint
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-pep8
-BuildRequires: python3-module-mock
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-coverage
 %endif
 
 %description
@@ -48,9 +50,6 @@ pylintrc file.
 %prep
 %setup
 
-# ignore pytest warnings as they are not expected on stdout and mess the results
-sed -i '/^\[pytest\][[:space:]]*/{$!N;/\naddopts[[:space:]]*=/{s/$/ -p no:warnings/}}' \
-tox.ini
 rm -rf ../python3
 cp -fR . ../python3
 
@@ -69,23 +68,15 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-
-# copy necessary exec deps
-export PYTHONPATH=`pwd`
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
--e py%{python_version_nodots python} --notest
-cp -T %_bindir/coverage .tox/py%{python_version_nodots python}/bin/coverage
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
--e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
--e py%{python_version_nodots python3} --notest
-cp -T %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
--e py%{python_version_nodots python3} -v -- -v
-popd
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/coverage \{envbindir\}\/coverage\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.rst pylintrc
@@ -99,6 +90,9 @@ popd
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt1
+- 0.12.3 -> 0.14.0.
+
 * Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 0.12.3-alt2
 - Fixed tests with new pytest-3.8.
 
