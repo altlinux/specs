@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.9.990
+Version: 1.10.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -232,6 +232,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 17 2019 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
 * Thu Jan 10 2019 Mikhail Efremov <sem@altlinux.org> 1.9.990-alt1
 - Disabled silent rules.
 - Updated to 1.9.990 (1.10-rc1).
