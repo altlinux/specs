@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -87,8 +87,8 @@ commands_pre =\
 
 grep -qs '[[:space:]]*hunter[[:space:]]*$' tox.ini || exit 1
 sed -i '/[[:space:]]*hunter[[:space:]]*$/d' tox.ini
-grep -qs '[[:space:]]*process-tests==.*$' tox.ini || exit 1
-sed -i '/[[:space:]]*process-tests==.*$/{s/==.*$//}' tox.ini
+# don't use a specific version
+sed -i 's/==/>=/g' tox.ini
 
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='RPM_BUILD_DIR'
@@ -108,6 +108,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
+- Fixed build.
+
 * Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1
 - 2.6.0 -> 2.6.1.
 

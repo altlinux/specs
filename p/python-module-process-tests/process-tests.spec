@@ -4,16 +4,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.1
-Release: alt1.1
+Version: 2.0.1
+Release: alt1
 Summary: Tools for testing processes
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/process-tests/
+Url: https://pypi.org/project/process-tests/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ionelmc/python-process-tests.git
-Source0: https://pypi.python.org/packages/fc/02/f74f38b10331e90ec7fd022f899c53d08e9802a35b97a57acd890bac5cce/%{oname}-%{version}.tar.gz
+Source: https://files.pythonhosted.org/packages/43/6e/c4bd9605036e3c883c42e4f9ce79aede9101bd95f09055ae946a60b63b9e/%name-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -22,21 +22,18 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
-%py_provides process_tests
-
 %description
 Testcase classes and assertions for testing processes.
 
 %package -n python3-module-%oname
 Summary: Tools for testing processes
 Group: Development/Python3
-%py3_provides process_tests
 
 %description -n python3-module-%oname
 Testcase classes and assertions for testing processes.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -60,14 +57,6 @@ pushd ../python3
 popd
 %endif
 
-%check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
-
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -79,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 1.2.1 -> 2.0.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
