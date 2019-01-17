@@ -1,25 +1,25 @@
 
 Summary: Cloud image management utilities
 Name: cloud-utils
-Version: 0.30
-Release: alt1%ubt
+Version: 0.31
+Release: alt1
 License: GPLv3
 Group: System/Configuration/Boot and Init
 Url: https://launchpad.net/cloud-utils
 
+# vcs git: https://git.launchpad.net/cloud-utils
 Source: %name-%version.tar
-Patch: %name-%version.patch
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-ubt
 
 Requires: cloud-utils-growpart
 Requires: gawk
 Requires: e2fsprogs
 Requires: euca2ools
 Requires: file
-Requires: qemu-img
 Requires: util-linux
+Requires: qemu-img
+Requires: /usr/bin/qemu-img
 
 %description
 This package provides a useful set of utilities for managing cloud images.
@@ -48,7 +48,6 @@ package to grow the root partition on first boot.
 
 %prep
 %setup
-%patch -p1
 
 %build
 
@@ -71,6 +70,9 @@ rm -f %buildroot%_bindir/*ubuntu*
 %_man1dir/growpart.*
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 0.31-alt1
+- 0.31
+
 * Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1%ubt
 - 0.30
 
