@@ -1,6 +1,6 @@
 Name: uzbl
 Version: 20190110
-Release: alt1
+Release: alt2
 Group: Networking/WWW
 License: GPL
 Summary: The uzbl web interface tools
@@ -51,9 +51,6 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
 %_iconsdir/hicolor/96x96/apps/uzbl.png
 %_datadir/appdata/uzbl*.xml
 
-%dir %_datadir/uzbl
-%_datadir/uzbl/*
-
 %_man1dir/uzbl*
 %dir %_docdir/uzbl
 %_docdir/uzbl/*
@@ -63,6 +60,10 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
 %_datadir/vim/syntax/uzbl.vim
 
 %changelog
+* Thu Jan 17 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt2
+- use /usr/share/doc/uzbl instead of /usr/share/uzbl to avoid
+  extra dependencies (closes #22613)
+
 * Thu Jan 10 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt1
 - 2019.01.10 - "next" branch snapshot with webkit2 support
   (current stable version 0.9.2 does not support it)
