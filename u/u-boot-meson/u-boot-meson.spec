@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2018.11
+Version: 2019.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -16,23 +16,36 @@ BuildRequires: bc dtc >= 1.4 flex
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
-This package supports Odroid C2 board.
+This package supports various AMLogic Meson family boards.
 
 %prep
 %setup
 
 %build
-%make_build odroid-c2_defconfig all
+boards=$(grep -lr ARCH_MESON configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
+for board in $boards; do
+	mkdir build
+	%make_build O=build ${board}_defconfig all
+	install -pm0644 -D build/u-boot.bin out/${board}/u-boot.bin
+	rm -rf build
+done
 
 %install
-install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/odroid-c2/u-boot.bin
-cp -p board/amlogic/odroid-c2/README README.odroid-c2
+mkdir -p %buildroot%_datadir/u-boot
+cd out
+find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 
 %files
-%doc README README.odroid-c2 
+%doc README
+%doc board/amlogic/odroid-c2/README.*
+%doc board/amlogic/p212/README.*
+%doc board/amlogic/q200/README.*
 %_datadir/u-boot/*
 
 %changelog
+* Thu Jan 17 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
+- 2019.01 released
+
 * Wed Dec 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.11-alt1
 - 2018.11 released
 
@@ -47,4 +60,3 @@ cp -p board/amlogic/odroid-c2/README README.odroid-c2
 
 * Tue Feb 07 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2017.01-alt1
 - initial
-
