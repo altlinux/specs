@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: pytest plugin for efficiently checking PEP8 compliance
 License: BSD
@@ -17,10 +17,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: pytest
-BuildRequires: python-module-tox
 BuildRequires: python-module-flake8
-BuildRequires: pytest3
+BuildRequires: python-module-pytest
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-tox
 %endif
@@ -38,8 +36,6 @@ pytest plugin for efficiently checking PEP8 compliance
 %prep
 %setup
 
-# due to tox issue https://github.com/tox-dev/tox/issues/1020
-sed -i '/basepython=python/d' tox.ini
 rm -rf ../python3
 cp -fR . ../python3
 
@@ -58,33 +54,20 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%buildroot%python_sitelibdir
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
---sitepackages -e py%{python_version_nodots python} --notest
-
-cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
-
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
---sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
-
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE CHANGELOG README.rst
 %python_sitelibdir/pytest_flake8-*.egg-info/
 %python_sitelibdir/pytest_flake8.py*
-%python_sitelibdir/__pycache__/
 
 %files -n python3-module-%oname
 %doc LICENSE CHANGELOG README.rst
@@ -93,6 +76,9 @@ popd
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3.
+
 * Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - 0.9.1 -> 1.0.2.
 
