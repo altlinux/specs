@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: mongo client shell and tools
@@ -32,6 +32,7 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3
 BuildRequires: golang-tools-devel
 BuildRequires: libssl-devel libpcap-devel
@@ -41,55 +42,21 @@ Conflicts:      mongo < 3.0.0
 %description
 The MongoDB tools provides import, export, and diagnostic capabilities.
 
-%package devel
-Group: Development/Other
-Requires: golang
-Summary: %{summary}
-Provides:      golang(%{import_path}/bsondump) = %{version}-%{release}
-Provides:      golang(%{import_path}/common) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/archive) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/auth) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/bsonutil) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/db) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/db/kerberos) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/db/openssl) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/intents) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/json) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/log) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/options) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/password) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/progress) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/signals) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/testutil) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/text) = %{version}-%{release}
-Provides:      golang(%{import_path}/common/util) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongodump) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongoexport) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongofiles) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongoimport) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongoimport/csv) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongooplog) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongorestore) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongostat) = %{version}-%{release}
-Provides:      golang(%{import_path}/mongotop) = %{version}-%{release}
-
-
-%description devel
-This is the source libraries for mongo-tools.
-
 %prep
 %setup
 
 %build
-mkdir -p src/github.com/mongodb
-
-ln -s ../../../  src/github.com/mongodb/mongo-tools
-export GOPATH=$(pwd):$(pwd)/vendor:%{gopath}
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="%go_path:$BUILDDIR"
+%golang_prepare
+rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
+cp -alv -- vendor/* "$BUILDDIR/src"
 
 mkdir bin
 binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongoreplay)
 for bin in "${binaries[@]}"; do
-    go build -o bin/${bin} \-tags ssl ${bin}/main/${bin}.go
+    go build -o bin/${bin} \-tags ssl $BUILDDIR/src/%{import_path}/${bin}/main/${bin}.go
 done
 
 %install
@@ -101,26 +68,15 @@ install -p -m 0755 bin/* %{buildroot}%{_bindir}
 install -d %{buildroot}%{_mandir}/man1
 install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 
-install -d -p %{buildroot}/%{gopath}/src/%{import_path}/
-echo "%%dir %%{gopath}/src/%%{import_path}/." >> devel.file-list
-# find all *.go but no *_test.go files
-for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    echo "%%dir %%{gopath}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
-    install -d -p %{buildroot}/%{gopath}/src/%{import_path}/$(dirname $file)
-    cp -pav $file %{buildroot}/%{gopath}/src/%{import_path}/$file
-    echo "%%{gopath}/src/%%{import_path}/$file" >> devel.file-list
-done
-sort -u -o devel.file-list devel.file-list
-
 %files
 %doc Godeps README.md CONTRIBUTING.md THIRD-PARTY-NOTICES LICENSE.md
 %_bindir/*
 %{_mandir}/man1/*
 
-%files devel
-%{gopath}/src/%{import_path}
-
 %changelog
+* Thu Jan 17 2019 Vladimir Didenko <cow@altlinux.org> 4.0.5-alt1
+- 4.0.5
+
 * Thu Nov 22 2018 Vladimir Didenko <cow@altlinux.org> 4.0.4-alt1
 - 4.0.4
 
