@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 20.1
+Version: 22
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -416,6 +416,9 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 %docdir/ibsrpdm.md
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 22-alt1
+- 22
+
 * Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 20.1-alt1
 - 20.1
 
