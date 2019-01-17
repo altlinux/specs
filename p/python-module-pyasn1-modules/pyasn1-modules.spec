@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: ASN.1 modules for Python
@@ -84,6 +84,9 @@ popd
 %python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 0.2.3-alt1
+- 0.2.2 -> 0.2.3.
+
 * Tue Jul 24 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1
 - 0.2.1 -> 0.2.2
 
