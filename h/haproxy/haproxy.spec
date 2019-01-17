@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 1.9.0
+Version: 1.9.2
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -20,7 +20,7 @@ Source1: %name.cfg
 Source2: %name.init
 Source3: %name.logrotate
 
-BuildRequires: libpcre2-devel zlib-devel libssl-devel
+BuildRequires: libpcre2-devel zlib-devel libssl-devel libsystemd-devel
 %{?_enable_lua:BuildRequires: liblua5-devel >= 5.3}
 
 %description
@@ -49,7 +49,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_NS=1 %{?_enable_lua:USE_LUA=1} \
+%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_NS=1 USE_SYSTEMD=1 %{?_enable_lua:USE_LUA=1} \
 	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
@@ -106,6 +106,10 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
+- 1.9.2
+- fixed start systemd unit
+
 * Thu Jan 03 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
