@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.25.0
+Version: 1.26.0
 Release: alt1
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
@@ -21,18 +21,15 @@ BuildRequires: python-module-setuptools_scm
 BuildRequires: python3-module-setuptools_scm
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: pytest
-BuildRequires: python-module-tox
-BuildRequires: python-module-pycmd
+BuildRequires: python-module-execnet
+BuildRequires: python-module-filelock
 BuildRequires: python-module-pytest-forked
 BuildRequires: python-module-pexpect
-BuildRequires: python-module-execnet
-BuildRequires: pytest3
-BuildRequires: python3-module-tox
+BuildRequires: python3-module-execnet
+BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-pycmd
 BuildRequires: python3-module-pytest-forked
-BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-execnet
+BuildRequires: python3-module-tox
 %endif
 
 %add_python3_req_skip execnet
@@ -72,6 +69,7 @@ Group: Development/Python3
 %prep
 %setup
 
+rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -94,30 +92,17 @@ pushd ../python3
 popd
 
 %check
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_INDEX_URL=http://host.invalid./
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
-# copy nessecary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/py.cleanup .tox/py%{python_version_nodots python}/bin/
-cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
-
-export PYTHONPATH=`pwd`
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-
-# copy nessecary exec deps
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/py.cleanup.py3 \
-.tox/py%{python_version_nodots python3}/bin/py.cleanup
-cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
-
-export PYTHONPATH=`pwd`
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3} -v -- -v
-popd
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc CHANGELOG.rst LICENSE README.rst example
@@ -130,6 +115,9 @@ popd
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.26.0-alt1
+- 1.25.0 -> 1.26.0.
+
 * Wed Dec 19 2018 Stanislav Levin <slev@altlinux.org> 1.25.0-alt1
 - 1.23.2 -> 1.25.0.
 
