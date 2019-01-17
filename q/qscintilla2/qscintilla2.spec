@@ -11,7 +11,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.8
-Release: alt1
+Release: alt3
 License: GPL
 Group: Development/KDE and QT
 
@@ -401,7 +401,9 @@ pushd Python-qt3
 python configure.py -p 3 -n ../Qt3 -o ../Qt3
 STR=`cat Makefile | grep "LFLAGS ="`
 # add rpath for use qt3 %oname lib
+%if_with qt3
 sed -i "s:$STR:$STR,-rpath,%_qt3dir/lib:g" Makefile
+%endif
 %make
 popd
 %endif
@@ -712,6 +714,14 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Thu Jan 17 2019 Michael Shigorin <mike@altlinux.org> 2.10.8-alt3
+- Re-enabled qt4 knob by default: at least qgis version update results in FTBFS
+  (full list: hgview juffed openscad qgis smokeqt sqliteman universalindentgui)
+
+* Mon Jan 14 2019 Michael Shigorin <mike@altlinux.org> 2.10.8-alt2
+- Disabled qt4 knob by default
+- Fixed qt3 knob (and unescaped macro use in %%changelog)
+
 * Sat Dec 01 2018 Alexander Makeenkov <amakeenk@altlinux.org> 2.10.8-alt1
 - Updated to upstream version 2.10.8.
 
@@ -868,7 +878,7 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 - build python packages
 
 * Tue Dec 16 2008 Boris Savelev <boris@altlinux.org> 2.3-alt5
-- move %libname-qt3-devel headers to %_qt3dir/include
+- move %libname-qt3-devel headers to %%_qt3dir/include
 - add requires libqt3-devel for lib%name-qt3-devel and libqt4-devel for lib%name-qt4-devel
 
 * Fri Dec 12 2008 Boris Savelev <boris@altlinux.org> 2.3-alt4
