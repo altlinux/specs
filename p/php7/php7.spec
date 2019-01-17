@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.13
+Version: 7.2.14
 Release: alt1
 
 %define php7_name      %name
@@ -39,9 +39,10 @@ Patch38: php-no-static-program.patch
 Patch39: php-set-session-save-path.patch
 Patch40: php7-7.1.10-alt-lsattr.patch
 Patch41: php-7.2.12-acinclude.patch
+Patch50: php7-7.2.13-alt-e2k-lcc123.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
-Patch63: php-7.1-alt-zend-signal-visibility.patch
+Patch63: php-7.2.14-alt-zend-signal-visibility.patch
 Patch64: php-7.2-alt-phar-manfile-suffix.patch
 Patch65: php7-7.1.0-phpize.patch
 
@@ -165,6 +166,7 @@ in use by other PHP7-related packages.
 %patch39 -p2
 %patch40 -p1
 %patch41 -p1
+%patch50 -p1
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
@@ -412,7 +414,7 @@ chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
 %exclude %php7_servicedir/cli
 
 %files mysqlnd
-%php7_extdir/mysqlnd*
+%php7_extdir/mysqlnd*.so
 %php7_extconf/mysqlnd/*
 
 %files devel
@@ -430,6 +432,11 @@ chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
 %doc tests run-tests.php 
 
 %changelog
+* Tue Jan 15 2019 Anton Farygin <rider@altlinux.ru> 7.2.14-alt1
+- 7.2.14 (fixes: CVE-2018-19935)
+- removed the .a archive from php7-mysqlnd package (closes: #34521)
+- E2K: worked around the lack of gcc5's builtins in lcc-1.23 (closes: #35856)
+
 * Fri Dec 14 2018 Anton Farygin <rider@altlinux.ru> 7.2.13-alt1
 - 7.2.13
 - added filetrigger for cli sapi and it's modules
