@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    18.09.0
-Release: alt3
+Release: alt4
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -48,6 +48,7 @@ Requires: /usr/bin/docker-proxy
 Requires: docker-containerd >= 1.0.2-alt1
 Requires: docker-runc >= 1.0.0-alt4.rc5
 Requires: docker-init >= 0.17.0-alt1
+Requires: iptables
 
 # do not extract debuginfo
 %define __find_debuginfo_files %nil
@@ -176,6 +177,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Jan 17 2019 Mikhail Gordeev <obirvalger@altlinux.org> 18.09.0-alt4
+- add iptables to requires
+
 * Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 18.09.0-alt3
 - add completions for zsh and fish
 
