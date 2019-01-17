@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.14
-%define kernel_sublevel .89
+%define kernel_sublevel .94
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -134,8 +134,7 @@ Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-drm-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -153,8 +152,7 @@ Provides:  kernel-modules-drm-ancient-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-drm-ancient-%flavour
 The Direct Rendering Modules for ancient cards: mgag200.ko,
@@ -171,8 +169,7 @@ Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease > %version-%r
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-drm-nouveau-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -192,8 +189,7 @@ Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease > %version-%re
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-drm-radeon-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -212,8 +208,7 @@ Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-ide-%flavour
 This package contains  IDE driver modules for the Linux kernel
@@ -234,8 +229,7 @@ Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-kvm-%flavour
 Linux kernel module for Kernel Virtual Machine virtualization
@@ -254,8 +248,7 @@ Provides:  kernel-modules-lirc-%kversion-%flavour-%krelease = %version-%release
 Provides:  kernel-modules-lirc-%flavour = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-v4l-%flavour
 Video for linux drivers
@@ -270,8 +263,7 @@ Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Requires: kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires: %name
 
 %description -n kernel-modules-staging-%flavour
 Drivers and filesystems that are not ready to be merged into the main
@@ -619,6 +611,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Jan 17 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.94-alt1
+- v4.14.94
+
+* Sun Jan 13 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.93-alt1
+- v4.14.93
+
+* Thu Jan 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.92-alt1
+- v4.14.92  (Fixes: CVE-2018-19985)
+
+* Sat Dec 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.90-alt1
+- v4.14.90
+
 * Mon Dec 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.89-alt1
 - v4.14.89
 
