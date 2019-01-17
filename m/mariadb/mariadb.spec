@@ -44,7 +44,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.3.11
+Version: 10.3.12
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -524,8 +524,11 @@ ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 mkdir -p %buildroot%_pkgconfigdir
 mv %buildroot%_datadir/pkgconfig/mariadb.pc %buildroot%_pkgconfigdir/
 
+
 %if "%_lib" == "lib64"
-mv %buildroot%_prefix/lib/pkgconfig/libmariadb.pc %buildroot%_pkgconfigdir/
+    if [ -f %buildroot%_prefix/lib/pkgconfig/libmariadb.pc ]; then
+        mv %buildroot%_prefix/lib/pkgconfig/libmariadb.pc %buildroot%_pkgconfigdir/
+    fi
 %endif
 
 # Fix libmysqlclient_r symlinks
@@ -861,6 +864,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.12-alt1
+- 10.3.12
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.11-alt1
 - 10.3.11
 - Fixes for the following security vulnerabilities:
