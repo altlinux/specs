@@ -6,14 +6,15 @@
 
 Name: ispell-ru-lebedev
 Version: 0.99g5
-Release: alt12.1
+Release: alt13
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
 Summary: Russian ispell dictionary, KOI8-R, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, разрешена замена "ё" на "е"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, дазволена зьмена "ё" на "е"
-License: distributable
+# aspell is also GPL-2.0-only, see LICENSE.phonet
+License: BSD-3-Clause
 Group: Text tools
 URL: http://scon155.phys.msu.su/~swan/orthography.html
 
@@ -22,13 +23,14 @@ URL: http://scon155.phys.msu.su/~swan/orthography.html
 
 # ftp://scon155.phys.msu.su/pub/russian/ispell/rus-ispell-%version.tar.gz
 Source: rus-ispell-%version.tar
+# http://www.inp.nsk.su/~grozin/aspell/
 Source2: rus-ispell-aspellfiles-0.3.tar
 Source10: addition.words
 
 Patch1:	rus-ispell-0.99g1-alt-no-substandard-language.patch
 Patch3:	ispell-ru-lebedev-affix_flags.patch
 
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
@@ -43,13 +45,30 @@ BuildPreReq: vim-devel >= 4:7.0
 # The real ispell is required - not the aspell-provided emulation.
 BuildConflicts:	aspell-ispell
 
+%package common
+Summary: Russian ispell/aspell/hunspell/vim dictionaries common files
+Group: Text tools
+BuildArch: noarch
+Conflicts: %name < %EVR
+Conflicts: %name-cp1251 < %EVR
+Conflicts: %name-ie < %EVR
+Conflicts: %name-ie-cp1251 < %EVR
+Conflicts: %name-io < %EVR
+Conflicts: %name-io-cp1251 < %EVR
+Conflicts: aspell-ru-lebedev < %EVR
+Conflicts: hunspell-ru-lebedev < %EVR
+Conflicts: hunspell-ru-lebedev-ie < %EVR
+Conflicts: hunspell-ru-lebedev-io < %EVR
+Conflicts: vim-spell-ru-lebedev < %EVR
+Conflicts: vim-spell-ru-lebedev-ie < %EVR
+Conflicts: vim-spell-ru-lebedev-io < %EVR
 
 %package cp1251
 Summary: Russian ispell dictionary, CP1251, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, разрешена замена "ё" на "е"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, дазволена зьмена "ё" на "е"
 Group: Text tools
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru-cp1251 = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
@@ -58,8 +77,9 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
 Summary: Russian dictionary for GNU Aspell
 Summary(ru_RU.UTF-8): Словарь русского языка для GNU Aspell
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для GNU Aspell
+License: BSD-3-Clause and GPL-2.0-only
 Group: Text tools
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: aspell >= %aspell_version
 Provides: aspell-dictionary, aspell-ru = %version
 Provides: aspell-ru-lebedev-common = %version-%release
@@ -72,8 +92,7 @@ Summary: Russian dictionary for myspell/hunspell, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell, разрешена замена "ё" на "е"
 Group: Text tools
 BuildArch: noarch
-PreReq: alternatives >= 0.4
-Requires: libhunspell
+Requires: %name-common
 Provides: hunspell-ru
 Obsoletes: hunspell-ru
 
@@ -82,8 +101,7 @@ Summary: Russian dictionary for myspell/hunspell, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell без поддержки буквы "ё"
 Group: Text tools
 BuildArch: noarch
-PreReq: alternatives >= 0.4
-Requires: libhunspell
+Requires: %name-common
 Provides: hunspell-ru
 
 %package -n hunspell-ru-lebedev-io
@@ -91,8 +109,7 @@ Summary: Russian dictionary for myspell/hunspell, "io" required
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell с обязательным употреблением буквы "ё"
 Group: Text tools
 BuildArch: noarch
-PreReq: alternatives >= 0.4
-Requires: libhunspell
+Requires: %name-common
 Provides: hunspell-ru
 
 %package -n vim-spell-ru-lebedev
@@ -100,24 +117,30 @@ Summary: Russian dictionary for vim, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для vim, разрешена замена "ё" на "е"
 Group: Text tools
 BuildArch: noarch
+Requires: %name-common
+Provides: vim-spell-ru
+Obsoletes: vim-spell-ru
 
 %package -n vim-spell-ru-lebedev-ie
 Summary: Russian dictionary for vim, only 'ie' spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для vim без поддержки буквы "ё"
 Group: Text tools
 BuildArch: noarch
+Requires: %name-common
 
 %package -n vim-spell-ru-lebedev-io
 Summary: Russian dictionary for vim, "io" required
 Summary(ru_RU.UTF-8): Словарь русского языка для vim с обязательным употреблением буквы "ё"
 Group: Text tools
 BuildArch: noarch
+Requires: %name-common
 
 %package ie
 Summary: Russian ispell dictionary, KOI8-R, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, без поддержки буквы "ё"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, бяз літары "ё"
 Group: Text tools
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
@@ -127,7 +150,7 @@ Summary: Russian ispell dictionary, CP1251, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, без поддержки буквы "ё"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, бяз літары "ё"
 Group: Text tools
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru-cp1251 = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
@@ -137,7 +160,7 @@ Summary: Russian ispell dictionary, KOI8-R, "io" required
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, обязательное употребление буквы 'ё'
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, абавязковае выкарыстаньне літары 'ё'
 Group: Text tools
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
@@ -147,7 +170,7 @@ Summary: Russian ispell dictionary, CP1251, 'io' required
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, обязательное употребление 'ё'
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, абавязковае выкарыстаньне літары 'ё'
 Group: Text tools
-PreReq: alternatives >= 0.4
+Requires: %name-common
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary
 Provides: ispell-ru-cp1251 = %version
@@ -175,6 +198,9 @@ using alternatives subsystem.
 Устанавливается под именем "russian-lebedev". Словарь по умолчанию
 с именем "russian" выбирается при помощи подсистемы альтернатив.
 
+%description common
+This package contains files common among all Russian
+ispell/aspell/hunspell/vim dictionaries.
 
 %description cp1251
 Russian dictionary for ispell in CP1251 encoding, based on original
@@ -432,10 +458,9 @@ cat %SOURCE10 | iconv -f=utf-8 -t=koi8-r > addition.koi
 %patch1 -p1
 %patch3 -p1
 
+iconv -fkoi8r -tutf8 <README.koi >README.ru
 
 %build
-
-./trans koi win < README.koi > README.cp1251
 
 # BuildIspellEncoding <spelling> <encoding> <encoding-suffix>
 BuildIspellEncoding()
@@ -598,6 +623,9 @@ for spelling in "" "-ie" "-io" ; do
 	install -p -m 644 ru-lebedev$spelling.utf-8.{spl,sug} \
 		%buildroot%vim_spell_dir
 done
+for s in spl sug; do
+	ln -s ru-lebedev.utf-8.$s %buildroot%vim_spell_dir/ru.utf-8.$s
+done
 
 # Install myspell/hunspell dictionary and affix files
 for spelling in "" "-ie" "-io" ; do
@@ -673,72 +701,89 @@ cat > %buildroot%_altdir/aspell-ru-lebedev << EOF
 %aspelldir/russian.alias	%aspelldir/russian-lebedev-ie.alias	%aspelldir/ru-lebedev-ie.multi
 EOF
 
+mkdir -p %buildroot%_docdir/%name
+install -pm644 LICENSE LICENSE.phonet README README.ru \
+	%buildroot%_docdir/%name/
+for d in aspell-ru-lebedev hunspell-ru-lebedev{,-i{e,o}} \
+	vim-spell-ru-lebedev{,-i{e,o}}; do
+	ln -s %name %buildroot%_docdir/$d
+done
+
+
+%files common
+%dir %_docdir/%name
+%_docdir/%name/LICENSE
+%_docdir/%name/README
+%_docdir/%name/README.ru
 
 %files
-%doc LICENSE README README.koi
 %_altdir/%name
 %ispelldir/russian-lebedev.*
 
 %files cp1251
-%doc LICENSE README README.cp1251
 %_altdir/%name-cp1251
 %ispelldir/russianw-lebedev.*
 
 %files -n aspell-ru-lebedev
-%doc LICENSE LICENSE.phonet README README.koi
+%dir %_docdir/%name
+%_docdir/%name/LICENSE.phonet
+%_docdir/aspell-ru-lebedev
 %_altdir/aspell-ru-lebedev
 %aspelldir/*
 %_datadir/aspell/*
 
 %files -n hunspell-ru-lebedev
-%doc LICENSE README
+%_docdir/hunspell-ru-lebedev
 %_altdir/hunspell-ru-lebedev
 %myspelldir/ru_RU-lebedev.*
 
 %files -n hunspell-ru-lebedev-ie
-%doc LICENSE README
+%_docdir/hunspell-ru-lebedev-ie
 %_altdir/hunspell-ru-lebedev-ie
 %myspelldir/ru_RU-lebedev-ie.*
 
 %files -n hunspell-ru-lebedev-io
-%doc LICENSE README
+%_docdir/hunspell-ru-lebedev-io
 %_altdir/hunspell-ru-lebedev-io
 %myspelldir/ru_RU-lebedev-io.*
 
 %files -n vim-spell-ru-lebedev
-%doc LICENSE README
+%_docdir/vim-spell-ru-lebedev
 %vim_spell_dir/ru-lebedev.*
+%vim_spell_dir/ru.*
 
 %files -n vim-spell-ru-lebedev-ie
-%doc LICENSE README
+%_docdir/vim-spell-ru-lebedev-ie
 %vim_spell_dir/ru-lebedev-ie.*
 
 %files -n vim-spell-ru-lebedev-io
-%doc LICENSE README
+%_docdir/vim-spell-ru-lebedev-io
 %vim_spell_dir/ru-lebedev-io.*
 
 %files ie
-%doc LICENSE README README.koi
 %_altdir/%name-ie
 %ispelldir/russian-lebedev-ie.*
 
 %files ie-cp1251
-%doc LICENSE README README.cp1251
 %_altdir/%name-ie-cp1251
 %ispelldir/russianw-lebedev-ie.*
 
 %files io
-%doc LICENSE README README.koi
 %_altdir/%name-io
 %ispelldir/russian-lebedev-io.*
 
 %files io-cp1251
-%doc LICENSE README README.cp1251
 %_altdir/%name-io-cp1251
 %ispelldir/russianw-lebedev-io.*
 
 
 %changelog
+* Wed Jan 16 2019 Dmitry V. Levin <ldv@altlinux.org> 0.99g5-alt13
+- Added an auxiliary subpackage for better intersubpackage dependencies.
+- vim-spell-ru-lebedev: turned into a full replacement of vim-spell-ru.
+- Removed redundant PreReqs on alternatives.
+- Fixed license tags.
+
 * Sat Jul 20 2013 Sergey Kurakin <kurakin@altlinux.org> 0.99g5-alt12.1
 - fix alternatives issue (ALT #28364)
 
