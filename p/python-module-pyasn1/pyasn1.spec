@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
@@ -44,7 +44,7 @@ based on ASN.1 specification.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 rm -rf ../python3
 cp -a . ../python3
@@ -81,6 +81,9 @@ popd
 %python3_sitelibdir/pyasn1-%version-*.egg-info/
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 0.4.5-alt1
+- 0.4.4 -> 0.4.5.
+
 * Sun Oct 07 2018 Stanislav Levin <slev@altlinux.org> 0.4.4-alt1
 - 0.4.3 -> 0.4.4.
 
