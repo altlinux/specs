@@ -1,7 +1,7 @@
 
 Name: libgadu
-Version: 1.12.1
-Release: alt2
+Version: 1.12.2
+Release: alt1
 
 Summary: Library for Handling of Gadu-Gadu Instant Messaging
 License: LGPLv2.1
@@ -12,7 +12,8 @@ Source: %name-%version.tar
 
 BuildRequires: doxygen
 BuildRequires: libgnutls-devel >= 2.10.0
-BuildRequires: libxml2-devel zlib-devel
+BuildRequires: libxml2-devel  >= 2.2.3
+BuildRequires: zlib-devel
 BuildRequires: libprotobuf-c-devel >= 1.0.0 protobuf-c-compiler
 
 %description
@@ -57,6 +58,9 @@ instant messenger Gadu-Gadu.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.2-alt1
+- 1.12.2
+
 * Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt2
 - rebuild with new gnutls
 
