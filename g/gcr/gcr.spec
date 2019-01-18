@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: gcr
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -177,6 +177,9 @@ xvfb-run %make check
 
 
 %changelog
+* Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
