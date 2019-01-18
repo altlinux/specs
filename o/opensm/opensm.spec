@@ -5,12 +5,12 @@
 Name: opensm
 %define lname lib%name
 Summary: InfiniBand subnet manager and administration
-Version: 3.3.20
+Version: 3.3.21
 Release: alt1
 License: %gpl2only
 Group: Networking/Other
 URL: http://openib.org
-# git://git.openfabrics.org/~halr/opensm.git
+# https://github.com/linux-rdma/opensm.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.service
@@ -130,6 +130,9 @@ __CONF__
 %endif
 
 %changelog
+* Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 3.3.21-alt1
+- 3.3.21
+
 * Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 3.3.20-alt1
 - 3.3.20
 - disable static build
