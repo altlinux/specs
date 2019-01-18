@@ -1,19 +1,20 @@
 %define   pkgname nokogiri
 Name:     ruby-%pkgname
 Version:  1.10.1
-Release:  alt1
+Release:  alt2
 Summary:  Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:    Development/Ruby
 License:  MIT
-URL:      http://%pkgname.org
+URL:      https://nokogiri.org/
+# VCS:    https://github.com/sparklemotion/nokogiri.git
 Source:   %pkgname-%version.tar
 Patch:    shutdown-libxml2-warning.patch
 
-BuildRequires(pre): rpm-build-ruby vim
-BuildRequires: ruby-racc ruby-rexical
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
-BuildRequires: ruby-hoe rake-compiler ruby-concourse
 #BuildRequires: db2latex-xsl xhtml1-dtds
+BuildRequires: ruby-hoe rake-compiler ruby-concourse
+BuildRequires: ruby-racc ruby-rexical
 BuildRequires: gem(mini_portile2)
 
 %description
@@ -55,20 +56,19 @@ echo "gemspec" >> Gemfile
 %install
 %ruby_install
 %rdoc lib/
-ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/Nokogiri$' | xargs rm -rf
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-mv %buildroot%ruby_sitelibdir/%pkgname/* %buildroot%ruby_sitelibdir/%pkgname.rb %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-find  %buildroot%ruby_sitearchdir/
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/
+find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/ \;
+touch %buildroot%rubygem_extdir/%pkgname-%version/gem.build_complete
+mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
 
 %check
-%rake_test
+%ruby_test
 
 %files
 %rubygem_gemdir/*
+%rubygem_extdir/*
 %rubygem_specdir/*
-%ruby_sitelibdir/xsd
-%ruby_sitelibdir/*.jar
-%ruby_sitearchdir/*
 
 %files -n %pkgname
 %_bindir/*
@@ -77,6 +77,9 @@ find  %buildroot%ruby_sitearchdir/
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jan 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt2
+- Fixed spec.
+
 * Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt1
 - Bump to 1.10.1;
 - Place library files into gem folder.
