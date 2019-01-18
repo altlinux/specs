@@ -9,7 +9,7 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
-%global go_arches %ix86 x86_64 aarch64 %arm
+%global go_arches %ix86 x86_64 aarch64 %arm mipsel
 %global go_root %_libdir/golang
 
 %ifarch x86_64
@@ -24,11 +24,14 @@
 %ifarch aarch64
 %global go_hostarch  arm64
 %endif
+%ifarch mipsel
+%global go_hostarch  mipsle
+%endif
 
 %def_disable check
 
 Name:    golang
-Version: 1.11.2
+Version: 1.11.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -279,6 +282,12 @@ mkdir -p -- \
 
 
 %changelog
+* Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt1
+- New version (1.11.4).
+
+* Thu Jan 17 2019 Ivan A. Melnikov <iv@altlinux.org> 1.11.2-alt1.0.mips1
+- Build on mipsel.
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1
 - New version (1.11.2).
 
