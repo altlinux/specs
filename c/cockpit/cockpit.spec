@@ -28,10 +28,10 @@
 ###############################################################################
 
 Name: cockpit
-Version: 180
+Version: 185
 Release: alt1
 
-Summary: A user interface for Linux servers
+Summary: Web Console for Linux servers
 License: LGPLv2+
 Group: System/Base
 # Source-git: https://github.com/cockpit-project/cockpit.git
@@ -99,8 +99,11 @@ Requires: cockpit-kubernetes
 Requires: cockpit-selinux
 
 %description
-Cockpit runs in a browser and can manage your network of GNU/Linux
-machines.
+The Cockpit Web Console enables users to administer GNU/Linux servers using a
+web browser.
+
+It offers network configuration, log inspection, diagnostic reports, SELinux
+troubleshooting, interactive command-line sessions, and more.
 
 ###############################################################################
 %if_with basic
@@ -521,13 +524,13 @@ for pkg in base1 branding motd kdump networkmanager realmd selinux shell sosrepo
     rm -r %buildroot/%_datadir/cockpit/$pkg
     rm -f %buildroot/%_datadir/metainfo/org.cockpit-project.cockpit-${pkg}.metainfo.xml
 done
-for data in applications doc locale man pixmaps; do
+for data in doc locale man pixmaps polkit-1; do
     rm -r %buildroot/%_datadir/$data
 done
 for lib in systemd tmpfiles.d; do
     rm -r %buildroot/lib/$lib
 done
-for libexec in cockpit-askpass cockpit-session cockpit-ws; do
+for libexec in cockpit-askpass cockpit-session cockpit-ws cockpit-desktop; do
     rm %buildroot/%_libexecdir/$libexec
 done
 rm -r %buildroot/%_lib/security
@@ -566,7 +569,6 @@ done
 %doc AUTHORS COPYING README.md
 %dir %_datadir/cockpit
 %_datadir/metainfo/cockpit.appdata.xml
-%_datadir/applications/cockpit.desktop
 %_datadir/pixmaps/cockpit.png
 %doc %_man1dir/cockpit.1.*
 
@@ -574,6 +576,7 @@ done
 %doc %_man1dir/cockpit-bridge.1.*
 %_sysconfdir/cockpit/machines.d/
 %_datadir/cockpit/base1/
+%_datadir/polkit-1/actions/org.cockpit-project.cockpit-bridge.policy
 %_bindir/cockpit-bridge
 %_libexecdir/cockpit-askpass
 
@@ -607,6 +610,7 @@ done
 %endif
 
 %files ws -f cockpit.lang
+%doc %_man1dir/cockpit-desktop.1.*
 %doc %_man5dir/cockpit.conf.5.*
 %doc %_man8dir/cockpit-ws.8.*
 %doc %_man8dir/remotectl.8.*
@@ -624,6 +628,7 @@ done
 %_sbindir/remotectl
 /%_lib/security/pam_ssh_add.so
 %_libexecdir/cockpit-ws
+%_libexecdir/cockpit-desktop
 %attr(4710, root, %cockpit_user) %_libexecdir/cockpit-session
 %attr(775, root, wheel) %_sharedstatedir/cockpit
 %_datadir/cockpit/static/
@@ -729,6 +734,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 185-alt1
+- 180 -> 185.
+
 * Wed Oct 17 2018 Stanislav Levin <slev@altlinux.org> 180-alt1
 - Initial build.
 
