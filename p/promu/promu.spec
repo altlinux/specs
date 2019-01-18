@@ -1,5 +1,5 @@
 %global import_path github.com/prometheus/promu
-%global commit 74e548a5d08d8b4adfc37c7cf1ef7275a69a979b
+%global commit 264dc36af9ea3103255063497636bd5713e3e9c1
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,8 +9,8 @@
 %brp_strip_none %_bindir/*
 
 Name: promu
-Version: 0.1.0
-Release: alt1%ubt
+Version: 0.2.0
+Release: alt1
 Summary: Prometheus Utility Tool
 
 Group: Development/Other
@@ -19,7 +19,7 @@ Url: https://%import_path
 Source: %name-%version.tar
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 
 %description
 promu is the utility tool for Prometheus projects.
@@ -54,5 +54,8 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Sat Jan 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Fri Apr 20 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1%ubt
 - Initial build for ALT.

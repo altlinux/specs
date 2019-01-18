@@ -9,8 +9,8 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus
-Version: 2.2.1
-Release: alt2%ubt
+Version: 2.6.1
+Release: alt1
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
@@ -24,7 +24,7 @@ Source4: %name.service
 Source5: %name.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: promu
 BuildRequires: /proc
 
@@ -106,6 +106,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt2%ubt
 - move adduser, tmpfiles and /etc/prometheus to prometheus-common package
 - update systemd unit

@@ -1,7 +1,7 @@
 
 %define oname blackbox_exporter
 %global import_path github.com/prometheus/blackbox_exporter
-%global commit 4a22506cf0cf139d9b2f9cde099f0012d9fcabde
+%global commit 1cfb7512daa7e100abb32037996c8f805990d813
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus-%oname
-Version: 0.12.0
-Release: alt2%ubt
+Version: 0.13.0
+Release: alt1
 Summary: Prometheus blackbox prober exporter
 
 Group: Development/Other
@@ -72,6 +72,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt2%ubt
 - fix typo in option
 
