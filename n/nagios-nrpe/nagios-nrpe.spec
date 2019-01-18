@@ -1,7 +1,4 @@
-#TODO:
-# -
 %define realname nrpe
-%define rev %nil
 %define nagios_confdir   %_sysconfdir/nagios
 %define contacts_cfgdir  %_sysconfdir/nagios/contacts
 %define plugins_cmddir   %_sysconfdir/nagios/commands
@@ -14,11 +11,11 @@
 
 Name: nagios-%realname
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
-License: GPL
+License: GPLv2
 Group: Monitoring
 URL: http://www.nagios.org
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
@@ -28,28 +25,27 @@ Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
 # Provide the abstract service names (which are virtual pkg names),
 # specify their origin (our pkg name as the epoch + version-release):
-Provides: nagios-daemon = %name:%version-%release
+Provides: nagios-daemon = %EVR
 
 # Conflict with all other real pkgs which provide the same services
 # (they should specify the origin the same way, so the epoch-version-release
 # of the virtual pkgs will always differ from that of ours if they are provided
 # by a different real pkg):
-Conflicts: nagios-daemon < %name:%version-%release
-Conflicts: nagios-daemon > %name:%version-%release
-
+Conflicts: nagios-daemon < %EVR
+Conflicts: nagios-daemon > %EVR
 # End of the statements to describe relations with Nagios daemon or NRPE pkgs
 ########################################
+
 Requires: nagios-plugins
 Requires(pre): nagios-common
 
-Source0: %realname-%version%rev.tar.gz
+Source0: %name-%version.tar
 Source1: %realname-init
 Source2: nagios-addons-nrpe.cfg
 
 # fix default NRPE configuration
-Patch0: %realname-2.12-alt-config.patch
-Patch1: %realname-2.12-alt-warnings.patch
-Patch2: %realname-2.12-alt-defpath.patch
+Patch0: %realname-3.2.1-alt-config.patch
+Patch1: %realname-2.12-alt-defpath.patch
 
 Prefix: %prefix
 
@@ -59,7 +55,7 @@ BuildRequires: libssl-devel openssl
 %package -n nagios-addons-%realname
 Summary: Nagios(R) plug-in for NRPE.
 Summary(ru_RU.UTF-8): Модуль для Nagios(R), взаимодействующий с сервером NRPE.
-License: GPL
+License: GPLv2
 Group: Monitoring
 PreReq: nagios-plugins
 Provides: nagios-plugins-nrpe = %version
@@ -94,22 +90,22 @@ as host or service state.
 демоном NRPE.
 
 %prep
-%setup -n %realname-%version%rev
+%setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %configure \
-	--with-nrpe-user=%nagios_usr \
-	--with-nrpe-group=%nagios_grp \
-	--with-nrpe-port=65534 \
-	--enable-ssl \
-	--enable-command-args
+    --with-nrpe-user=%nagios_usr \
+    --with-nrpe-group=%nagios_grp \
+    --with-nrpe-port=65534 \
+    --enable-ssl \
+    --enable-command-args \
+    --with-pluginsdir="%_libexecdir/nagios/plugins"
 
 %make_build all
 pushd contrib
-	gcc -o nrpe_check_control nrpe_check_control.c
+    gcc -o nrpe_check_control nrpe_check_control.c
 popd
 
 %install
@@ -127,12 +123,9 @@ install -pDm0644 %SOURCE2 %buildroot/%plugins_cmddir/nagios-addons-nrpe.cfg
 #install init-script
 install -pDm0755 %SOURCE1 %buildroot/%_initdir/nrpe
 
-# install sample xinetd config file
-install -m 0644 sample-config/nrpe.xinetd %buildroot/%plugin_docdir/nrpe.xinetd
-
 # install docs
-for d in Changelog LEGAL README README.SSL SECURITY; do
-	install -m 0644 $d %buildroot/%plugin_docdir/
+for d in CHANGELOG.md LEGAL README* SECURITY.md; do
+    install -m 0644 $d %buildroot/%plugin_docdir/
 done
 install -m 0644 contrib/README.nrpe_check_control %buildroot/%plugin_docdir/
 
@@ -149,18 +142,23 @@ install -m 0644 contrib/README.nrpe_check_control %buildroot/%plugin_docdir/
 %_sbindir/nrpe
 %doc %plugin_docdir/*
 # The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
+# The line below is added by repocop to fix this bug in a straightforward way.
 # Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/nagios-nrpe-%version 
+%dir %_docdir/nagios-nrpe-%version
 
 %files -n nagios-addons-%realname
 %config(noreplace) %plugins_cmddir/nagios-addons-nrpe.cfg
 %nagios_plugdir/check_nrpe
 %nagios_evhdir/nrpe_check_control
 %doc %plugin_docdir/*
-%exclude %plugin_docdir/nrpe.xinetd
 
 %changelog
+* Fri Jan 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt2
+- Real build of new version since 2.12.
+- Update patches.
+- Massive cleanup spec.
+- Change build scheme.
+
 * Tue Nov 06 2018 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt1
 - Build new version (Closes: #35576).
 
