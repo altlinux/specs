@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.7.2
-Release: alt1
+Release: alt2
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -14,13 +14,8 @@ Conflicts: rpm-build <= 4.0.4-alt24
 AutoReq: yes,noruby
 Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
-Requires: rdoc
-Requires: rake
-#Requires: %_bindir/rdoc
-#Requires: %_bindir/rake
-#Requires: %_bindir/bundler
+Requires: rdoc rake ruby-bundler
 Requires: rpm-macros-ruby = %EVR
-Requires: ruby-bundler
 Requires: ruby-tool-setup
 Requires: libruby-devel
 
@@ -57,6 +52,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Thu Jan 17 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt2
+- Fix to all ruby packages that use %%ruby_test_unit macro.
+
 * Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt1
 - Added %%rake-dependent macros for test, spec, and rdoc.
 - Find prov is now written in ruby language.
