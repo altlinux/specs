@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildPreReq: rpm-build-ubt
-# END SourceDeps(oneline)
 %define sover 0
 
 Name: googletest
 Version: 1.8.0
-Release: alt5%ubt
+Release: alt6
 
 Summary: Google's framework for writing C++ tests
 License: BSD
@@ -126,6 +123,9 @@ popd
 %_includedir/gmock
 
 %changelog
+* Fri Jan 18 2019 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt6
+- Removed ubt macros
+
 * Tue Jan 15 2019 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt5%ubt
 - Fixed ubt macros in spec
 
