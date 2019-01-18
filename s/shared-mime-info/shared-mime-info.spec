@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.10
-Release: alt1.1
+Version: 1.12
+Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -14,6 +14,7 @@ Url: http://www.freedesktop.org/wiki/Software/%name
 %if_disabled snapshot
 Source: http://www.freedesktop.org/~hadess/%name-%version.tar.xz
 %else
+#VCS: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
 Source: %name-%version.tar
 %endif
 
@@ -108,6 +109,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
+- 1.12
+
 * Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1.1
 - removed rpm-build-xdg dependency (ALT #32548)
 
