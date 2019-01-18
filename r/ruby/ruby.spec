@@ -8,19 +8,19 @@
 %define vendordir %libdir/vendor_%name
 %define lname lib%name
 
-Name: ruby
-Version: 2.5.4
-Release: alt1
-Summary: An Interpreted Object-Oriented Scripting Language
-License: BSD (revised) or Ruby
-Group: Development/Ruby
-URL: http://www.%name-lang.org/
-Source0: %name-%version.tar
-Source3: fakeruby.sh
-Source4: miniruby.sh
-Provides: %_bindir/%name
+Name:     ruby
+Version:  2.5.4
+Release:  alt2
+Summary:  An Interpreted Object-Oriented Scripting Language
+License:  BSD (revised) or Ruby
+Group:    Development/Ruby
+URL:      http://www.%name-lang.org/
+Source0:  %name-%version.tar
+Source3:  fakeruby.sh
+Source4:  miniruby.sh
 Requires: %lname = %version-%release
 Requires: ruby-stdlibs = %version-%release
+Requires: gem irb erb ri rdoc rake bundle
 
 %define obsolete() \
 Provides: %1 = %version-%release \
@@ -89,23 +89,23 @@ This package contains static Ruby library needed for embedding Ruby.
 Summary: Standard Ruby libraries
 Group: Development/Ruby
 Requires: %lname = %version-%release
-Provides: %name-libs = %version-%release
-Provides: %name-racc-runtime = %version
-%mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
-%mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
-%mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
-%mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
-Provides: ruby(thread)
 Requires: libyaml2 libgdbm libssl1.1 libcrypto1.1
-#Requires: gem(update_rubygems) >= 3.0.1
-#Requires: gem(did_you_mean) >= 1.3.0
+Requires: gem(rubygems-update) >= 3.0.1
+Requires: gem(did_you_mean) >= 1.3.0
 Requires: gem(minitest) >= 5.11.3
 Requires: gem(net-telnet) >= 0.2
-#Requires: gem(power_assert) >= 1.1.3
+Requires: gem(power_assert) >= 1.1.3
 Requires: gem(rake) >= 12.3.2
 Requires: gem(test-unit) >= 3.2.9
 Requires: gem(xmlrpc) >= 0.3.0
 Requires: gem(rdoc) >= 6.1.1
+Provides: %name-libs = %version-%release
+Provides: %name-racc-runtime = %version
+Provides: ruby(thread)
+%mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
+%mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
+%mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
+%mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
 
 %description -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -122,7 +122,7 @@ BuildArch: noarch
 Requires:  %name-stdlibs = %version
 Provides:  %_bindir/gem
 Provides:  %{name}gems = 2.7.6
-Provides:  ruby-tools
+Provides:  %name-tools
 Obsoletes: %name-tools
 
 %description -n gem
@@ -340,6 +340,9 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Thu Jan 17 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt2
+- Added some gem dependencies to spec.
+
 * Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt1
 - Bump to 2.5.4;
 - Russian description;

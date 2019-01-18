@@ -1,18 +1,19 @@
-%define  pkgname rdoc
+%define    pkgname rdoc
 
-Name:    ruby-%pkgname
-Version: 6.1.1
-Release: alt1
+Name:      ruby-%pkgname
+Version:   6.1.1
+Release:   alt2
 
-Summary: RDoc produces HTML and online documentation for Ruby projects.
-License: GPLv2
-Group:   Development/Ruby
-Url:     https://github.com/ruby/rdoc.git
+Summary:   RDoc produces HTML and online documentation for Ruby projects.
+License:   GPLv2
+Group:     Development/Ruby
+Url:       https://ruby.github.io/rdoc/
+# VCS:     https://github.com/ruby/rdoc.git
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
-Source:  %pkgname-%version.tar
+Source:    %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 
@@ -37,6 +38,7 @@ Group:     Development/Ruby
 BuildArch: noarch
 Requires:  %name = %version
 Obsoletes: ruby-tool-rdoc ruby-tools
+Provides:  ruby-tool-rdoc
 
 %description -n rdoc
 Tool for generation ruby documentation.
@@ -77,7 +79,7 @@ find exe/ -type f -name "*" | while read f; do install -p -m 755 "$f" %buildroot
 
 
 %check
-#%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc *.md
@@ -96,5 +98,9 @@ find exe/ -type f -name "*" | while read f; do install -p -m 755 "$f" %buildroot
 #%exclude %_rpmlibdir/%name-doc-ri.filetrigger
 
 %changelog
+* Fri Jan 18 2019 Pavel Skrylev <majioa@altlinux.org> 6.1.1-alt2
+- Added lost provides ruby-tool-rdoc;
+- Minor change in rspec.
+
 * Tue Jan 15 2019 Pavel Skrylev <majioa@altlinux.org> 6.1.1-alt1
 - Initial build for Sisyphus, packaged as a gem

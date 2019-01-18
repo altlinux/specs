@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.7.2
-Release: alt2
+Release: alt3
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -52,6 +52,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Fri Jan 18 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt3
+- Added template %%ruby_test.
+
 * Thu Jan 17 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt2
 - Fix to all ruby packages that use %%ruby_test_unit macro.
 
