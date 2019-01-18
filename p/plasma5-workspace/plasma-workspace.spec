@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt7
+Release: alt8
 Epoch: 1
 %K5init altplace
 
@@ -357,6 +357,13 @@ done
 
 
 %changelog
+* Fri Jan 18 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt8
+- memory notifier fixes:
+  + warn every time when the most-greedy process changes
+  + build notification only once (would require less memory)
+  + make notification persistent
+  + hide notification when free memory is above threshold
+
 * Thu Dec 27 2018 Pavel Moseev <mars@altlinux.org> 1:5.12.7-alt7
 - fix general configuration widget - add function to check settings
 
