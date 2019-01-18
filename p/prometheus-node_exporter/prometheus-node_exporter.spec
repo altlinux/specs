@@ -1,7 +1,7 @@
 
 %define oname node_exporter
 %global import_path github.com/prometheus/node_exporter
-%global commit 575d8950d367987ab8792e90fb2cf00c3fee1c10
+%global commit f6f6194a436b9a63d0439abc585c76b19a206b21
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus-%oname
-Version: 0.16.0
-Release: alt0.rc3%ubt
+Version: 0.17.0
+Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
 Group: Development/Other
@@ -25,7 +25,7 @@ Source3: %name.init
 Source4: %name.service
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: glibc-devel-static
 BuildRequires: promu
 BuildRequires: /proc
@@ -64,12 +64,15 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %preun_service %name
 
 %files
-%doc LICENSE README.md docs/* example.rules example-rules.yml text_collector_examples
+%doc LICENSE README.md docs/* example-rules.yml text_collector_examples
 %_bindir/*
 %_unitdir/%name.service
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.17.0-alt1
+- 0.17.0
+
 * Tue May 08 2018 Alexey Shabalin <shaba@altlinux.ru> 0.16.0-alt0.rc3%ubt
 - Initial build for ALT.

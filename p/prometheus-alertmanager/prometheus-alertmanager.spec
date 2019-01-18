@@ -1,7 +1,7 @@
 
 %define oname alertmanager
 %global import_path github.com/prometheus/alertmanager
-%global commit 30af4d051b37ce817ea7e35b56c57a0e2ec9dbb0
+%global commit d4a7697cc90f8bce62efe7c44b63b542578ec0a1
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus-%oname
-Version: 0.14.0
-Release: alt1%ubt
+Version: 0.15.3
+Release: alt1
 Summary: Prometheus Alertmanager
 
 Group: Development/Other
@@ -26,7 +26,7 @@ Source4: %name.service
 Source5: %name.yml
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: promu
 BuildRequires: /proc
 
@@ -83,5 +83,8 @@ install -m0644 template/default.tmpl %buildroot%_sysconfdir/prometheus/alertmana
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.15.3-alt1
+- 0.15.3
+
 * Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1%ubt
 - Initial build for ALT.
