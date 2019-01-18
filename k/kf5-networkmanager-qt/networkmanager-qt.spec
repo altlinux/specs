@@ -1,8 +1,8 @@
 %define rname networkmanager-qt
 
 Name: kf5-%rname
-Version: 5.53.0
-Release: alt2
+Version: 5.54.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/libKF5NetworkManagerQt.so.*
 
 %changelog
+* Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
+- new version
+
 * Thu Dec 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.0-alt2
 - fix build requires
 

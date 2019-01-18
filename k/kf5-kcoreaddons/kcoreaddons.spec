@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.53.1
+Version: 5.54.0
 Release: alt1
 %K5init altplace
 
@@ -163,6 +163,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
+- new version
+
 * Mon Dec 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.53.1-alt1
 - new version
 
