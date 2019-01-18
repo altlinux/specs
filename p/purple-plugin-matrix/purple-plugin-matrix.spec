@@ -1,6 +1,6 @@
 Name: purple-plugin-matrix
 Version: 0.0.0
-Release: alt1.git.79.g49ea988
+Release: alt1.git.122.gf26edd5
 Summary: Matrix Plugin for Pidgin
 License: GPL2
 Group: Networking/Instant messaging
@@ -40,5 +40,8 @@ joining rooms you are invited to by other users.
 %_pixmapsdir/pidgin/protocols/*/matrix.png
 
 %changelog
+* Thu Jan 17 2019 Ildar Mulyukov <ildar@altlinux.ru> 0.0.0-alt1.git.122.gf26edd5
+- new snapshot
+
 * Fri Mar 30 2018 Ildar Mulyukov <ildar@altlinux.ru> 0.0.0-alt1.git.79.g49ea988
 - initial build for ALT Linux Sisyphus

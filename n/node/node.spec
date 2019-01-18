@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 10.14
+%define major 10.15
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -36,7 +36,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -300,6 +300,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Jan 17 2019 Vitaly Lipatov <lav@altlinux.ru> 10.15.0-alt1
+- new version 10.15.0 (with rpmrb script)
+- 2018-12-26, Version 10.15.0 'Dubnium' (LTS), @MylesBorins
+- rebuild with http-parser 2.9.0
+
 * Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 10.14.2-alt1
 - new version 10.14.2 (with rpmrb script)
 - 2018-12-11, Version 10.14.2 'Dubnium' (LTS), @MylesBorins prepared by @codebytere

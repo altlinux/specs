@@ -1,15 +1,13 @@
 
 Name: http-parser
-Version: 2.8.1
-Release: alt1%ubt
+Version: 2.9.0
+Release: alt1
 Summary: HTTP request/response parser for C
 
 Group: System/Libraries
 License: MIT
 Url: http://github.com/joyent/http-parser
 Source: %name-%version.tar
-
-BuildRequires(pre):rpm-build-ubt
 
 %description
 This is a parser for HTTP messages written in C. It parses both requests and
@@ -57,6 +55,9 @@ Development headers and libraries for http-parser.
 %_libdir/*.so
 
 %changelog
+* Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.1-alt1%ubt
 - 2.8.1
 
