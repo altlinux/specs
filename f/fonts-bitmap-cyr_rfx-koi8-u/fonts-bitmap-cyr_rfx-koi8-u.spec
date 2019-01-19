@@ -6,7 +6,7 @@
 
 Name: fonts-bitmap-%fname-%cname
 Version: 1.1
-Release: alt15
+Release: alt16
 License: distributable
 Group: System/Fonts/X11 bitmap
 URL: http://www.inp.nsk.su/~bolkhov/files/fonts/cyr-rfx/00index.ru.html
@@ -25,7 +25,7 @@ Requires: fonts-bitmap-%fname-%cname-misc = %EVR
 Requires: fonts-bitmap-%fname-%cname-75dpi = %EVR
 
 # Automatically added by buildreq on Wed Oct 01 2003
-BuildRequires: xorg-x11-font-utils
+BuildRequires: xorg-x11-font-utils xorg-font-encodings
 
 %description
 Collection of cyrillic raster fonts for X Window System by D. Bolkhovityanov.
@@ -73,7 +73,7 @@ make
 %install
 mkdir -p %buildroot%_fontsdir/%fname-%cname
 make FONTDIR=%buildroot%_fontsdir/%fname-%cname install
-for n in 75dpi misc; do mkfontdir %buildroot%_fontsdir/%fname-%cname/$n; done
+for n in 75dpi misc; do mkfontdir -e /usr/share/X11/fonts/encodings %buildroot%_fontsdir/%fname-%cname/$n; done
 
 %if_with xfs
 mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
@@ -101,6 +101,9 @@ ln -s ../../..%_fontsdir/%fname-%cname/75dpi \
 %_fontsdir/%fname-%cname/75dpi
 
 %changelog
+* Sat Jan 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt16
+- added encodings.dir
+
 * Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt15
 - restored X fontpath.d support
 
