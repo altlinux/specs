@@ -11,7 +11,7 @@
 
 Name: rdma-core
 Version: 22
-Release: alt1
+Release: alt2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -239,6 +239,11 @@ ln -r -s %buildroot%_unitdir/srp_daemon.service %buildroot%_unitdir/srpd.service
 LD_LIBRARY_PATH="lib" bin/ib_acme -D . -O
 install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 
+# add symlinks to linux kernel headers
+for h_file in ib_user_sa ib_user_verbs ; do
+  ln -sr %buildroot%_includedir/linux-default/include/rdma/${h_file}.h %buildroot%_includedir/rdma/${h_file}.h
+done
+
 %post -n ibacm
 %post_service ibacm
 %preun -n ibacm
@@ -416,6 +421,10 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 %docdir/ibsrpdm.md
 
 %changelog
+* Sat Jan 19 2019 Alexey Shabalin <shaba@altlinux.org> 22-alt2
+- add symlinks to linux kernel headers
+- fixed path in pkconfig files
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 22-alt1
 - 22
 
