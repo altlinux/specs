@@ -1,6 +1,6 @@
 Name: picolisp
-Version: 17.12
-Release: alt1
+Version: 18.12
+Release: alt2
 
 Summary: Interpreted Lisp
 License: MIT
@@ -28,11 +28,11 @@ PicoLisp can be viewed from two different aspects:
 %setup -n picoLisp
 
 %build
-%ifarch x86_64 ia64 ppc64 sparc64 s390x
-cd src64
-%else
-cd src
-%endif
+if [ %_lib = lib64 ]; then
+	cd src64
+else
+	cd src
+fi
 make
 cd ..
 
@@ -53,6 +53,15 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Sat Jan 19 2019 Michael Shigorin <mike@altlinux.org> 18.12-alt2
+- fix 64-bitness test
+
+* Sun Dec 30 2018 Michael Shigorin <mike@altlinux.org> 18.12-alt1
+- new version (watch file uupdate)
+
+* Thu Jun 28 2018 Michael Shigorin <mike@altlinux.org> 18.6-alt1
+- new version (watch file uupdate)
+
 * Tue Dec 26 2017 Michael Shigorin <mike@altlinux.org> 17.12-alt1
 - new version (watch file uupdate)
 
