@@ -1,6 +1,6 @@
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
-Version: 205
+Version: 219
 Release: alt1
 BuildArch: noarch
 URL: https://www.xs3.uni-freiburg.de/research/dsr
@@ -43,12 +43,18 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/manuals
 mkdir -p %buildroot%_datadir/%name/example
+mkdir -p %buildroot%_datadir/%name/mpmath
+mkdir -p %buildroot%_datadir/%name/networkx
+mkdir -p %buildroot%_datadir/%name/rmsd
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
 install -m 644 *.py %buildroot%_datadir/%name
 install -m 644 dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
+cp -R mpmath %buildroot%_datadir/%name
+cp -R networkx %buildroot%_datadir/%name
+cp -R rmsd %buildroot%_datadir/%name
 
 %files
 %doc README changelog.txt
@@ -56,5 +62,8 @@ install -m 644 example/* %buildroot%_datadir/%name/example
 %_datadir/%name
 
 %changelog
+* Sun Jan 20 2019 Denis G. Samsonenko <ogion@altlinux.org> 219-alt1
+- new version
+
 * Thu Jan 04 2018 Denis G. Samsonenko <ogion@altlinux.org> 205-alt1
 - initial build for ALT
