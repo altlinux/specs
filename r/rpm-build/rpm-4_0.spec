@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt126
+Release: alt127
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -202,6 +202,18 @@ This package contains a module which permits applications written in
 the Python programming language to use the interface supplied by RPM
 (RPM Package Manager) libraries.
 %endif #with python
+
+%package checkinstall
+Summary: Run tests for %name immediately when this package is installed
+Group: Other
+BuildArch: noarch
+Requires: %name
+# rpminstall-tests-checkinstall first uses rpm-build to build packages,
+# then tests how rpm installs them. Useful for testing rpm-build, too.
+Requires: rpminstall-tests-checkinstall
+
+%description checkinstall
+%summary
 
 %prep
 %setup -n rpm-%rpm_version-%release
@@ -527,7 +539,25 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %_libdir/python*/site-packages/*module.so
 %endif #with python
 
+%files checkinstall
+
 %changelog
+* Tue Feb 19 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt127
+- Make "new" packages (with disttags) be treated better
+  by the "old" disttag-unaware rpm in some cases; primarily those with
+  < and/or > Conflicts on another subpackage. This form of Conflicts
+  is used to ensure that no subpackages from different releases/builds
+  get installed together. (A better way to express this is to add a
+  common subpackage that all other subpackages depend on.) This change
+  doesn't affect the way the "new" rpm would treat packages with such
+  deps (ALT#35930):
+  + rewrite < and > dependencies so that they have almost the same meaning when
+    treated by old disttag-unaware tools;
+  + %%EVR macro (for intersubpackage deps) upgraded to include %%disttag
+    (given the other change, this is only useful for making the rare
+    Conflicts: subpkg = %%EVR more compatible with disttag-unaware tools).
+- checkinstall subpackage added.
+
 * Thu Jan 31 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt126
 - imz@:
   + shell.req: correctly detect #!/bin/env bash (ALT#35376).
