@@ -9,7 +9,7 @@
 
 Name: fonts-bitmap-cyr_rfx-cp1251
 Version: 1.1a
-Release: alt8
+Release: alt9
 
 Summary: Cyrillic bitmap fonts for the X Window System in microsoft-cp1251 encoding
 
@@ -28,7 +28,7 @@ Source5: fonts.alias.75dpi
 
 BuildArch: noarch
 
-BuildRequires: unzip mkfontdir bdftopcf xorg-font-utils rpm-build-fonts >= 0.3
+BuildRequires: unzip mkfontdir bdftopcf xorg-font-utils xorg-font-encodings rpm-build-fonts
 PreReq: fontconfig >= 2.4.2
 
 Obsoletes: XFree86-%fname-fonts-%cname
@@ -79,7 +79,7 @@ mkdir -p %buildroot%__bitmapdir
 make FONTDIR=%buildroot%__bitmapdir install
 # due bdf in orig dir, make only pcf here
 for n in 75dpi misc; do
-	mkfontdir %buildroot%__bitmapdir/$n
+  mkfontdir -e /usr/share/X11/fonts/encodings %buildroot%__bitmapdir/$n
 done
 
 %if_with xfs
@@ -108,6 +108,9 @@ ln -s ../../..%__bitmapdir/75dpi \
 %__bitmapdir/75dpi/
 
 %changelog
+* Sat Jan 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt9
+- added encodings.dir
+
 * Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt8
 - restored X fontpath.d support
 
