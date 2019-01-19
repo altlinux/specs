@@ -1,7 +1,7 @@
 %define soname 21
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 8.2.1
+Version: 8.3.0
 Release: alt1
 License: Apache 2.0
 Group: System/Base
@@ -66,6 +66,7 @@ QPDF Manual
 
 %configure --disable-static \
 	   --enable-html-doc \
+	   --disable-check-autofiles \
 	   --with-docbook-xsl=%_datadir/xml/docbook/xsl-stylesheets \
            --enable-show-failed-test-output
 
@@ -95,6 +96,9 @@ QPDF Manual
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 8.3.0-alt1
+- 8.3.0
+
 * Sun Sep 02 2018 Anton Farygin <rider@altlinux.ru> 8.2.1-alt1
 - 8.2.1
 
