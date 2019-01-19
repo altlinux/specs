@@ -1,6 +1,6 @@
 Name: uzbl
 Version: 20190110
-Release: alt2
+Release: alt3
 Group: Networking/WWW
 License: GPL
 Summary: The uzbl web interface tools
@@ -21,8 +21,7 @@ The uzbl web interface tools
 %setup
 
 %build
-%make PREFIX=/usr DESTDIR=%buildroot
-      DOCDIR=%buildroot/%_docdir/uzbl LIB_SUFFIX="%_libsuff"
+%make PREFIX=/usr DOCDIR=%_docdir/uzbl LIB_SUFFIX="%_libsuff"
 
 %install
 %makeinstall PREFIX=/usr DESTDIR=%buildroot\
@@ -60,6 +59,9 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
 %_datadir/vim/syntax/uzbl.vim
 
 %changelog
+* Sat Jan 19 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt3
+- Remove buildroot path from uzbl-core
+
 * Thu Jan 17 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt2
 - use /usr/share/doc/uzbl instead of /usr/share/uzbl to avoid
   extra dependencies (closes #22613)
