@@ -2,7 +2,7 @@
 
 Name: alterator-net-wifi
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -44,10 +44,13 @@ alterator module for wi-fi connections administration
 %_alterator_backend3dir/*
 
 %changelog
+* Sat Jan 19 2019 Fr. Br. George <george@altlinux.ru> 0.14-alt2
+- Fix incorrect interface naming
+
 * Mon May 07 2012 Andriy Stepanov <stanv@altlinux.ru> 0.14-alt1
 - Fix crash ahttpd part for uninitialized WiFi adapters.
 
-* Thu Mar 08 2011 Vladislav Zavjalov <slazav@altlinux.org> 0.13-alt1
+* Tue Mar 08 2011 Vladislav Zavjalov <slazav@altlinux.org> 0.13-alt1
 - show signal level, sort networks by level (patches by vx8400, ALT bug #26992)
 
 * Sun Jan 16 2011 Vladislav Zavjalov <slazav@altlinux.org> 0.12-alt2
