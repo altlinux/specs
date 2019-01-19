@@ -8,7 +8,7 @@
 
 Name: wireshark
 Version: 2.6.6
-Release: alt1
+Release: alt2
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -45,9 +45,8 @@ BuildRequires(pre):rpm-build-xdg
 Summary: Wireshark base package
 Group: Monitoring
 Obsoletes: ethereal-libs < 0.10.10
+Obsoletes: libwiretap
 Obsoletes: ethereal-base
-Conflicts: libwiretap < %EVR
-Conflicts: libwiretap > %EVR
 
 %package qt5
 Summary: QT5 GUI for Wireshark package
@@ -68,24 +67,15 @@ Summary: Wireshark User's Guide
 Group: Documentation
 License: FDL
 BuildArch: noarch
-Conflicts: %name-base < %version-%release
-Conflicts: %name-base > %version-%release
+Conflicts: %name-base < %EVR
+Conflicts: %name-base > %EVR
 Obsoletes: ethereal-doc
-
-%package -n libwiretap
-Summary: A future replacement for libpcap
-Group: System/Libraries
-
-%package -n libwiretap-devel
-Summary: Development environment for Wiretap library
-Group: Development/C
-Requires: libwiretap = %EVR
-Obsoletes: %name-devel
 
 %package devel
 Summary: Development environment for wireshark extensions 
 Group: Development/C
 Requires: wireshark-base = %EVR
+Obsoletes: libwiretap-devel < %EVR
 
 %description
 Wireshark (formerly Ethereal) is a network protocol analyzer, or
@@ -120,17 +110,6 @@ of documentation.
 
 This document is part of an effort by the Wireshark team to
 improve the usability of Wireshark. 
-
-%description -n libwiretap
-Wiretap is a library that is being developed as a future replacement for
-libpcap, the current standard Unix library for packet capturing.
-
-%description -n libwiretap-devel
-Wiretap is a library that is being developed as a future replacement for
-libpcap, the current standard Unix library for packet capturing.
-
-This package contains development files needed to develop wiretap-based
-applications.
 
 %description devel
 This package contains development files needed to develop wireshark
@@ -260,6 +239,7 @@ _EOF_
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
 %_libdir/libwscodecs.so.*
+%_libdir/libwiretap.so.*
 %_man1dir/wireshark.*
 %_miconsdir/wireshark.png
 %_niconsdir/wireshark.png
@@ -279,14 +259,9 @@ _EOF_
 %files doc
 %doc wsug_html_chunked/*
 
-%files -n libwiretap
-%_libdir/libwiretap.so.*
-
-%files -n libwiretap-devel
+%files devel
 %_includedir/wiretap
 %_libdir/libwiretap.so
-
-%files devel
 %_includedir/wireshark
 %_libdir/libwireshark.so
 %_libdir/libwscodecs.so
@@ -295,6 +270,10 @@ _EOF_
 
 
 %changelog
+* Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 2.6.6-alt2
+- libwiretap included to wireshark-base package
+- libwiretap-devel included to wireshark-devel package
+
 * Sun Jan 13 2019 Anton Farygin <rider@altlinux.ru> 2.6.6-alt1
 - 2.6.6
 - fixes:
