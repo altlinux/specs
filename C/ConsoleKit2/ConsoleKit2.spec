@@ -6,17 +6,16 @@
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.2.1
-Release: alt3
+Release: alt4
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
 URL: https://github.com/ConsoleKit2/ConsoleKit2
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Requires: lib%name = %version-%release
-Requires: pam-ck-connector2 = %version-%release
-Provides: ConsoleKit = %version-%release
-Obsoletes: ConsoleKit < %version-%release
+Requires: lib%name = %EVR
+Requires: pam-ck-connector2 = %EVR
+Provides: ConsoleKit = %EVR
 PreReq: dbus polkit >= 0.93
 
 Source: %name-%version.tar
@@ -28,7 +27,7 @@ BuildRequires: libdbus-glib-devel
 BuildRequires: libpolkit1-devel
 BuildRequires: libudev-devel
 BuildRequires: libacl-devel
-BuildRequires: xmlto 
+BuildRequires: xmlto
 BuildRequires: zlib-devel
 BuildRequires: libX11-devel
 BuildRequires: libselinux-devel
@@ -43,12 +42,20 @@ keyboard and mouse they use).
 
 It provides asynchronous notification via the system message bus.
 
+%package service
+Summary: Dbus service ConsoleKit
+Group: System/X11
+Requires: %name-x11 = %EVR
+Conflicts: systemd-services
+
+%description service
+Dbus service ConsoleKit.
+
 %package x11
 Summary: X11-requiring add-ons for ConsoleKit
 Group: System/X11
-Requires: %name = %version-%release
-Provides: ConsoleKit-x11 = %version-%release
-Obsoletes: ConsoleKit-x11 < %version-%release
+Requires: %name = %EVR
+Provides: ConsoleKit-x11 = %EVR
 
 %description x11
 ConsoleKit contains some tools that require Xlib to be installed,
@@ -60,8 +67,7 @@ have a requires for this package.
 %package -n lib%name
 Summary: ConsoleKit libraries
 Group: System/Libraries
-Provides: libConsoleKit = %version-%release
-Obsoletes: libConsoleKit < %version-%release
+Provides: libConsoleKit = %EVR
 
 %description -n lib%name
 Libraries and a PAM module for interacting with ConsoleKit
@@ -69,9 +75,8 @@ Libraries and a PAM module for interacting with ConsoleKit
 %package -n lib%name-devel
 Summary: Development libraries and headers for ConsoleKit
 Group: Development/C++
-Requires: lib%name = %version-%release
-Provides: libConsoleKit-devel = %version-%release
-Obsoletes: libConsoleKit-devel < %version-%release
+Requires: lib%name = %EVR
+Provides: libConsoleKit-devel = %EVR
 
 %description -n lib%name-devel
 Headers, libraries and API docs for ConsoleKit
@@ -79,8 +84,7 @@ Headers, libraries and API docs for ConsoleKit
 %package -n pam-ck-connector2
 Summary: Register session with ConsoleKit
 Group: System/Base
-Provides: pam-ck-connector = %version-%release
-Obsoletes: pam-ck-connector < %version-%release
+Provides: pam-ck-connector = %EVR
 
 %description -n pam-ck-connector2
 The pam_ck_connector PAM module registers a login session with the system-wide ConsoleKit daemon. This
@@ -138,13 +142,15 @@ mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
 %_sbindir/*
 %_bindir/*
 %_libdir/%oname
-%_datadir/dbus-1/system-services/*.service
 %_datadir/polkit-1/actions/*.policy
 %dir %_logdir/%oname
 %ghost %_logdir/%oname/history*
 %_udevrulesdir/*.rules
 /lib/udev/udev-acl
 %_libexecdir/udev-acl
+
+%files service
+%_datadir/dbus-1/system-services/org.freedesktop.ConsoleKit.service
 
 %files x11
 %_libexecdir/ck-get-*
@@ -167,6 +173,11 @@ mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
 %_man1dir/*.1*
 
 %changelog
+* Sat Jan 19 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt4
+- Fix conflict with systemd-services
+- New subpackage ConsoleKit2-service
+- Drop obsoletes ConsoleKit2
+
 * Sun Oct 21 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt3
 - disable systemd support
 - enable udev support
