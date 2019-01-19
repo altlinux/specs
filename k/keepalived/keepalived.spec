@@ -11,7 +11,7 @@
 %def_enable regex
 
 Name: keepalived
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -31,6 +31,7 @@ BuildRequires: libpopt-devel libssl-devel
 BuildRequires: libnfnetlink-devel
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
+BuildRequires: systemd-devel
 
 %description
 The main goal of the keepalived project is to add a strong & robust keepalive
@@ -50,7 +51,8 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 %build
 %autoreconf
 %configure \
-        --with-kernel-dir=/usr/include \
+	--with-kernel-dir=/usr/include/linux-default \
+	--enable-strict-config-checks \
         %{subst_enable lvs} \
         %{subst_enable vrrp} \
         %{subst_enable sha1} \
@@ -105,6 +107,10 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 2.0.11-alt1
+- 2.0.11
+- enabled strict config check (closes: #33349)
+
 * Thu Nov 15 2018 Anton Farygin <rider@altlinux.ru> 2.0.10-alt1
 - 2.0.10
 
