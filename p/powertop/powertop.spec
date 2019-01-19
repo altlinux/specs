@@ -1,6 +1,6 @@
 Name: powertop
-Version: 2.9
-Release: alt1%ubt
+Version: 2.10
+Release: alt1
 Serial: 1
 
 Summary: Tool that helps you find what software is using the most power
@@ -17,7 +17,6 @@ Source100: %name.watch
 # optimized out: libncurses-devel libstdc++-devel libtinfo-devel pkg-config xz
 BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
 
-BuildRequires(pre):rpm-build-ubt
 %define cachedir %_cachedir/%name
 
 %description
@@ -66,7 +65,10 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
-* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1:2.9-alt1%ubt
+* Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 1:2.10-alt1
+- 2.10
+
+* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1:2.9-alt1
 - new version (closes: #32459)
 
 * Tue Nov 10 2015 Michael Shigorin <mike@altlinux.org> 1:2.8-alt1
