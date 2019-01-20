@@ -1,6 +1,6 @@
 Name: lxde
 Version: 1.0
-Release: alt16
+Release: alt17
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
@@ -36,7 +36,8 @@ BuildArch: noarch
 Requires: lxde-lite = %EVR
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-lxhotkey lxde-lxterminal
 Requires: gpicview leafpad
-Requires: ConsoleKit2 polkit-sysvinit nm-sysvinit
+Requires: ConsoleKit2-service ConsoleKit2-x11
+Requires: polkit-sysvinit nm-sysvinit
 Conflicts: lxde lxde-lxpolkit
 
 %description sysvinit
@@ -47,6 +48,9 @@ Conflicts: lxde lxde-lxpolkit
 %files sysvinit
 
 %changelog
+* Sat Jan 19 2019 Anton Midyukov <antohami@altlinux.org> 1.0-alt17
+- lxde-sysv requires ConsoleKit2-service, ConsoleKit2-x11
+
 * Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 1.0-alt16
 - Added Url
 
