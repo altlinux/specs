@@ -17,7 +17,7 @@
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
 Version: 3.13.0.2
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -34,7 +34,7 @@ BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
 BuildRequires: rpm-build-python
 BuildRequires: python-module-Cheetah
-BuildRequires: python-module-docutils doxygen libpcap-devel libwiretap-devel
+BuildRequires: python-module-docutils doxygen libpcap-devel wireshark-devel
 BuildRequires: python-module-mako
 BuildRequires: libnumpy-devel
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
@@ -180,6 +180,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python_sitelibdir/%name/
 
 %changelog
+* Sun Jan 20 2019 Anton Midyukov <antohami@altlinux.org> 3.13.0.2-alt3
+- rebuild with new wireshark-devel (fix FTBFS)
+
 * Tue Jan 01 2019 Anton Midyukov <antohami@altlinux.org> 3.13.0.2-alt2
 - Update firmaware (Closes: 35831)
 - Enable Python API
