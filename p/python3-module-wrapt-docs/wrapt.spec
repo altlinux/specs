@@ -6,7 +6,7 @@ Python, which can be used as the basis for the construction of function \
 wrappers and decorator functions.
 
 Name: %fname-docs
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 %if "-docs"==""
@@ -98,6 +98,9 @@ py.test3
 %endif
 
 %changelog
+* Sun Jan 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.11.1-alt1
+- Build new version.
+
 * Fri Jan 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.11.0-alt1
 - Build new version.
 
