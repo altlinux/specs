@@ -1,6 +1,6 @@
 Name:    ruby-gettext
 Version: 3.2.9
-Release: alt1.5
+Release: alt1.6
 
 Summary: Native Language Support Library for Ruby
 Group:   Development/Ruby
@@ -21,8 +21,6 @@ BuildRequires: ruby-test-unit
 Requires: ruby-text
 
 Source: gettext-%version.tar
-
-%add_ruby_req_skip mathn
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools
@@ -99,6 +97,9 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Sun Jan 20 2019 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.6
+- Drop deprecated macro (ALT #35937).
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.5
 - Rebuild with new Ruby autorequirements.
 
