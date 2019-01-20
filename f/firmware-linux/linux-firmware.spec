@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20181218
+Version: 20190118
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,24 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Jan 20 2019 Cronbuild Service <cronbuild@altlinux.org> 20190118-alt1
+- upstream changes (GIT a8b75ca):
+  + brcm: Add BCM43455 NVRAM for Raspberry Pi 3 B+ (thx Matthias Brugger)
+  + brcm: Fix filename for BCM43430 NVRAM for the Raspberry Pi 3
+    Model B (thx Matthias Brugger)
+  + amdgpu: add raven2 fw for 18.50 release (thx Alex Deucher)
+  + amdgpu: add picasso fw for 18.50 release (thx Alex Deucher)
+  + Revert "brcm: Add BCM43455 NVRAM for Raspberry Pi 3 B+" (thx Josh Boyer)
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + brcm: Add BCM43430 NVRAM for the Raspberry Pi 3 Model B (thx Matthias Brugger)
+  + brcm: Add BCM43455 NVRAM for Raspberry Pi 3 B+ (thx Matthias Brugger)
+  + update Marvell USB8801 B0 firmware image (thx Ganapathi Bhat)
+  + iwlwifi: update firmwares for 9000 series (thx Emmanuel Grumbach)
+  + cxgb4: update firmware to revision 1.22.9.0 (thx Arjun Vynipadath)
+
 * Sun Dec 23 2018 Cronbuild Service <cronbuild@altlinux.org> 20181218-alt1
 - upstream changes (GIT 0f22c85):
   + Revert "amdgpu: update vega10 fw for 18.50 release" (thx Alex Deucher)
