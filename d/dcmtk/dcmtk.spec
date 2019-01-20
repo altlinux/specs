@@ -1,7 +1,8 @@
 %add_optflags %optflags_shared
+%define soname 14
 
 Name: dcmtk
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
@@ -12,9 +13,9 @@ Url: http://dcmtk.org/dcmtk.php.en
 # ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk354/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
-BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
-BuildPreReq: libxml2-devel, libssl-devel, cmake
+Requires: lib%name%soname = %EVR
+BuildRequires: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
+BuildRequires: libxml2-devel, libssl-devel, cmake
 BuildRequires: libjpeg-devel
 
 %description
@@ -26,17 +27,17 @@ worklist servers.
 
 Contains patches against latest stable version from http://gna.org/projects/pdcmtk
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: %name shared libraries
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soname
 %name shared libraries
 
 %package -n lib%name-devel
 Summary: Headers for building software that uses %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 Headers for building software that uses %name.
@@ -73,8 +74,9 @@ Headers for building software that uses %name.
 %_man1dir/*
 %config(noreplace) %_sysconfdir/*
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%soname
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n lib%name-devel
 %_includedir/dcmtk/
@@ -82,6 +84,10 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 3.6.4-alt1
+- 3.6.4
+- added soname version to libdcmtk package name
+
 * Tue Sep 18 2018 Anton Farygin <rider@altlinux.ru> 3.6.3-alt1
 - 3.6.3
 - disabled libwrap support
