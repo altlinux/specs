@@ -4,10 +4,10 @@
 mysqlclient is a fork of MySQL-python. It add Python 3.3 support and \
 merges some pull requests.
 
-%def_disable check
+%def_enable check
 
 Name: %fname-docs
-Version: 1.3.14
+Version: 1.4.1
 Release: alt1
 
 %if "-docs"==""
@@ -98,6 +98,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Jan 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+
 * Fri Dec 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.14-alt1
 - Build new version.
 
