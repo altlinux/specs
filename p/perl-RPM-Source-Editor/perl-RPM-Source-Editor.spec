@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.9225
+Version: 0.9226
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Sun Jan 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.9226-alt1
+- new version
+
 * Mon Jan 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.9225-alt1
 - support for logoved loghooks
 
