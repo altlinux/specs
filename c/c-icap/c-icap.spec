@@ -1,6 +1,6 @@
 Name: 	 c-icap
-Version: 0.5.2
-Release: alt3.qa1
+Version: 0.5.5
+Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -113,6 +113,9 @@ install -Dm 0644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 %_libdir/libicapapi.so
 
 %changelog
+* Fri Jan 18 2019 Sergey Y. Afonin <asy@altlinux.ru> 1:0.5.5-alt1
+- New version (ALT #33480)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt3.qa1
 - NMU: applied repocop patch
 

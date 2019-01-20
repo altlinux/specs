@@ -1,5 +1,5 @@
 Name: 	 c-icap-modules
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -47,8 +47,11 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_bindir/c-icap-mods-sguardDB
 
 %changelog
+* Fri Jan 18 2019 Sergey Y. Afonin <asy@altlinux.ru> 1:0.5.3-alt1
+- New version (with ClamAV 0.101 support)
+
 * Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.5.2-alt1
-- New version.
+- New version
 
 * Sun Oct 08 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.4.5-alt1
 - New version
