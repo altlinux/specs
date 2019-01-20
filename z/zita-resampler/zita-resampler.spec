@@ -6,7 +6,7 @@
 Summary: Fast, high-quality sample rate conversion library
 Name: zita-resampler
 Version: 1.6.2
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Sound
 Url: http://kokkinizita.linuxaudio.org/linuxaudio/zita-resampler/resampler.html
@@ -54,7 +54,11 @@ This package contains the headers and development libraries for %name.
 sed 's|ldconfig||' -i source/Makefile
 
 %build
+%ifarch %ix86 x86_64
+export CXXFLAGS+='%optflags -mno-avx -fpic'
+%endif
 %make_build -C source
+
 ln -sf libzita-resampler.so.%version source/libzita-resampler.so
 export LDFLAGS="-L../source"
 %make_build -C apps CXXFLAGS+=-I../source
@@ -80,6 +84,11 @@ export LDFLAGS="-L../source"
 %_libdir/lib%name.so
 
 %changelog
+* Sun Jan 20 2019 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt2
+- compilation with avx breaks work of package with older or lower
+Intel CPUs such as Atom. Recompilation with avx disabled
+(Thanks Denis Medvedev <nbr@altlinux.org>)
+
 * Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
 - new version 1.6.2
 
