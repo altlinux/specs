@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt124
+Release: alt125
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -32,30 +32,48 @@ License: GPL
 Group: Development/Other
 Obsoletes: spec-helper
 Requires: librpmbuild = %version-%release
-PreReq: shadow-utils
-Requires: autoconf autoconf-common automake automake-common bison coreutils cpio
-Requires: gcc gettext-tools glibc-devel gnu-config file kernel-headers libtool m4
-Requires: procps psmisc sed service which
+Requires: %_bindir/subst
+Requires: autoconf
+Requires: autoconf-common
+Requires: automake
+Requires: automake-common
 Requires: bash >= 0:3.1.17-alt4
+# Due to 'readelf --dyn-syms':
+Requires: binutils >= 1:2.20.51.0.7
+Requires: bison
 Requires: bzip2 >= 1:1.0.2-alt4
-Requires: xz
+Requires: coreutils
+Requires: cpio
+Requires: elfutils >= 0.143-alt1
+Requires: file
+Requires: gcc
+Requires: gettext-tools
+Requires: glibc-devel
+Requires: gnu-config
 Requires: gzip >= 0:1.3.3-alt2
+Requires: info-install >= 4.11
+Requires: kernel-headers
+Requires: libtool
+Requires: m4
 # due to -O option in $MAKEFLAGS
 Requires: make >= 4.0
 Requires: mktemp >= 1:1.3.1
 Requires: patch >= 2.5
-Requires: tar >= 0:1.13.22-alt1
-Requires: %_bindir/subst
-Requires: elfutils >= 0.143-alt1
-Requires: info-install >= 4.11
-Requires: pkgconfig-reqprov pkgconfig-recursion
+Requires: pkgconfig-recursion
+Requires: pkgconfig-reqprov
+Requires: procps
+Requires: psmisc
 Requires: rpm-build-perl >= 0.76
 Requires: rpm-build-python >= 0.31
+Requires: rpmspec
+Requires: sed
+Requires: service
+Requires: shadow-utils
+Requires: tar >= 0:1.13.22-alt1
+Requires: which
+Requires: xz
 Conflicts: rpm-build-tcl <= 0.2
 Conflicts: rpm-build-mono <= 1.0
-# Due to 'readelf --dyn-syms':
-Requires: binutils >= 1:2.20.51.0.7
-Requires: rpmspec
 
 Url: http://www.rpm.org/
 
@@ -82,9 +100,6 @@ Summary: Shared libraries required for applications which will manipulate RPM pa
 Summary(ru_RU.UTF-8): Файлы, необходимые для разработки приложений, взаимодействующих с RPM-пакетами
 License: GPL/LGPL
 Group: System/Libraries
-PreReq: zlib >= 1.1.4
-PreReq: libpopt >= 1:1.7-alt3
-PreReq: libdb4.7
 
 %package -n librpmbuild
 Summary: Shared library required for applications which will build RPM packages
@@ -117,14 +132,14 @@ Summary: RPM package installation and build directory tree
 Summary(ru_RU.UTF-8): Сборочное дерево, используемое для установки SRPM-пакетов и сборки RPM-пакетов
 License: GPL
 Group: Development/Other
-PreReq: %oname-build = %version-%release
+Requires: %oname-build = %version-%release
 
 %package static
 Summary: Static version of the RPM package management system
 Summary(ru_RU.UTF-8): Статическая версия менеджера пакетов RPM
 License: GPL
 Group: System/Configuration/Packaging
-PreReq: %oname = %version-%release
+Requires: %oname = %version-%release
 
 %description -l ru_RU.UTF-8
 RPM - это мощный неинтерактивный менеджер пакетов, используемый для сборки,
@@ -177,7 +192,7 @@ Summary: Python bindings for apps which will manipulate RPM packages
 Summary(ru_RU.UTF-8): Интерфейс для разработки Python-приложений, взаимодействующих с RPM-пакетами
 License: GPL/LGPL
 Group: Development/Python
-PreReq: lib%oname = %rpm_version-%release
+Requires: lib%oname = %rpm_version-%release
 Requires: python = %__python_version
 Provides: rpm-python = %{rpm_version}_%__python_version-%release
 Obsoletes: rpm-python
@@ -475,10 +490,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %rpmattr %_rpmlibdir/percolate
 %rpmattr %_rpmlibdir/pkgconfig.*
 %rpmattr %_rpmlibdir/pkgconfiglib.*
+%rpmattr %_rpmlibdir/provided_symbols
 %rpmattr %_rpmlibdir/rpmlib.*
 %rpmattr %_rpmlibdir/shell.*
 %rpmattr %_rpmlibdir/shebang.*
 %rpmattr %_rpmlibdir/static.*
+%rpmattr %_rpmlibdir/suggest_bpp
 %rpmattr %_rpmlibdir/symlinks.*
 %rpmattr %_rpmlibdir/tmpdir.sh
 %rpmattr %_rpmlibdir/verify-elf
@@ -511,6 +528,18 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Sun Jan 20 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt125
+- spec: replaced deprecated PreReq tags with Requires tags.
+- Added automatic conversion of deprecated PreReq tags to Requires tags.
+- Disallowed extra qualifiers with BuildPreReq tag.
+- Disallowed unknown qualifiers with Requires and BuildRequires tags.
+- Allowed abbreviated qualifiers with Requires and BuildRequires tags.
+- Moved ProvidedSymbols() and SuggestBPP() to separate files.
+- lib.prov: Added printing of the number of provided symbols
+  and the bpp value for each library.
+- lib.req: Updated the list of standard libraries with guaranteed versioning.
+- suggest_bpp: Fixed harmless off-by-one error in bpp estimation.
+
 * Mon Jan 14 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt124
 - addReqProv: fixed too aggressive merge of PreReqs introduced
   in 4.0.4-alt122.
