@@ -7,7 +7,7 @@
 
 Name: mumble
 Version: 1.2.19
-Release: alt3
+Release: alt4
 
 Summary: Low latency encrypted VoIP client
 
@@ -39,6 +39,8 @@ BuildRequires: libopus-devel
 BuildRequires: libcelt-devel
 Requires: libcelt >= 0:0.7.0-alt1
 %endif
+
+Requires: libqt4-sql-sqlite
 
 %description
 Mumble is a low-latency, high quality voice chat program primarily intended
@@ -217,6 +219,11 @@ mkdir -p %buildroot%_logdir/murmur/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Sun Jan 20 2019 Arseny Maslennikov <arseny@altlinux.org> 1.2.19-alt4
+- murmur.service: Fixed wrong path to executable in ExecStart=.
+- mumble: Added a dependency on libqt4-sql-sqlite since the client
+  needs a database driver as well as the server.
+
 * Fri Dec 21 2018 Dmitry V. Levin <ldv@altlinux.org> 1.2.19-alt3
 - murmur: blindfoldedly built without Ice RPC support.
 
