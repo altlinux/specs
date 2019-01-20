@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-mccs
 Version: 1.1.9
-Release: alt1
+Release: alt2
 Summary: Multi Criteria CUDF Solver with OCaml bindings
 # Original C/C++ code is BSD, OCaml bindings are LGPL.
 # Linking exception, see included COPYING file.
@@ -44,7 +44,7 @@ developing applications that use %name.
 dune build -p mccs
 
 %install
-dune install --destdir=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 
 %files
 %doc README.md LICENCE
@@ -78,6 +78,9 @@ dune install --destdir=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/mccs/glpk/internal/*.ml
 
 %changelog
+* Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.1.9-alt2
+- fixed built with dune-1.6.4
+
 * Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 1.1.9-alt1
 - first build for ALT
 
