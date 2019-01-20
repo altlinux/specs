@@ -8,7 +8,7 @@
 
 Name:           lib%oname
 Version:        1.8.15
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -175,6 +175,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_includedir/*
 
 %changelog
+* Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.8.15-alt2
+- rebuilt for libdcmtk14
+
 * Tue Oct 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.15-alt1
 - Initial build for ALT.
 
