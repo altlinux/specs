@@ -1,6 +1,6 @@
 Name: flacon
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -12,8 +12,6 @@ Url: http://%name.github.io/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
-
-BuildPreReq: /proc
 
 BuildRequires: cmake
 BuildRequires: libuchardet-devel
@@ -58,15 +56,28 @@ popd
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_niconsdir/%name.png
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
 %_iconsdir/hicolor/128x128/apps/%name.png
+%dir %_iconsdir/hicolor/256x256
+%dir %_iconsdir/hicolor/256x256/apps
 %_iconsdir/hicolor/256x256/apps/%name.png
+%dir %_iconsdir/hicolor/512x512
+%dir %_iconsdir/hicolor/512x512/apps
 %_iconsdir/hicolor/512x512/apps/%name.png
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
 %_iconsdir/hicolor/64x64/apps/%name.png
+%dir %_iconsdir/hicolor/scalable
+%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Jan 21 2019 Nazarov Denis <nenderus@altlinux.org> 5.0.0-alt2
+- Add files in project
+
 * Wed Jan 16 2019 Nazarov Denis <nenderus@altlinux.org> 5.0.0-alt1
 - Version 5.0.0
   Remove %ubt macro
