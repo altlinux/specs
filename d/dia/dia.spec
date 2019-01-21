@@ -6,7 +6,7 @@
 %define major 0.97
 Name: dia
 Version: %major.4
-Release: alt0.6
+Release: alt0.7
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -107,6 +107,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Mon Jan 21 2019 Ivan Razzhivin <underwit@altlinux.org> 0.97.4-alt0.7
+- improve translation
+
 * Tue Jan 15 2019 Ivan Razzhivin <underwit@altlinux.org> 0.97.4-alt0.6
 - improve translation
 
