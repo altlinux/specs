@@ -1,22 +1,21 @@
-%def_disable docs
+%define     pkgname glib2
 
-Name: 	 ruby-gnome2
-Version: 3.2.9
-Release: alt2
+Name: 	    ruby-gnome2
+Version:    3.3.1
+Release:    alt1
  
-Summary: Ruby bindings for GNOME
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/ruby-gnome2/ruby-gnome2
+Summary:    Ruby bindings for GNOME
+License:    MIT
+Group:      Development/Ruby
+Url:        https://ruby-gnome2.osdn.jp/
+# VCS:      https://github.com/ruby-gnome2/ruby-gnome2.git
+Packager:   Ruby Maintainers Team <ruby@packages.altlinux.org>
  
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:  %name-%version.tar
-Patch1:  glib2-disable-rake_extensiontask.patch
+Source:     %pkgname-%version.tar
+Source1:    %pkgname-%version.gemspec
+#Patch1:  glib2-disable-rake_extensiontask.patch
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libpixman-devel
@@ -29,22 +28,20 @@ BuildRequires: libXdmcp-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libvte3-devel
-BuildRequires: ruby-pkg-config
 BuildRequires: gobject-introspection-devel
-BuildRequires: ruby-native-package-installer
-# TODO BuildRequires: ruby-cairo for GTK+ support
+BuildRequires: ruby-pkg-config gem(native-package-installer) gem(cairo) gem(rake) gem(rake-compiler)
+BuildRequires: ruby-mechanize
 
-%filter_from_requires \,^ruby(\(cairo\|rake/extensiontask\|ruby_installer/runtime\))$,d
 
 %description
 This is a set of bindings for the GNOME 2.x and 3.x libraries to use
 from Ruby 2.1, 2.2, 2.3 and 2.4.
 
-%package -n ruby-glib2
+%package -n ruby-%pkgname
 Summary: GLib 2 bindings for the Ruby language
 Group: Development/Ruby
 
-%description -n ruby-glib2
+%description -n ruby-%pkgname
 GLib is a useful general-purpose C library, notably used by GTK+ and
 GNOME. This package contains libraries for using GLib 2 with the Ruby
 programming language. It is most likely useful in conjunction with Ruby
@@ -60,62 +57,61 @@ GNOME. This package contains libraries for using GLib 2 with the Ruby
 programming language. It is most likely useful in conjunction with Ruby
 bindings for other libraries such as GTK+.
 
-This packages contains header files for ruby-glib2
+This packages contains header files for ruby-%pkgname
 
-%if_enabled docs
-%package doc
+%package -n ruby-%pkgname-doc
 Summary: Documentation files for %name
 Group: Documentation
  
 BuildArch: noarch
  
-%description doc
+%description -n ruby-%pkgname-doc
 Documentation files for %{name}.
-%endif
 
 %prep
-%setup
-%patch1 -p1
+%setup -n %pkgname-%version
+#%patch1 -p1
 %update_setup_rb
+cp %SOURCE1 ./
  
 %build
-%ruby_config
-#ruby_build
+%ruby_config -- --use-system-libraries
+%ruby_build
 %rake build
  
 %install
-#ruby_install
 %makeinstall_std -C glib2
-#makeinstall_std -C atk
+%ruby_install
 
-%if_enabled docs
-rdoc lib/
+%rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-%endif
 
 %check
-#ruby_test_unit -Ilib:test test
+%ruby_test
  
-%files -n ruby-glib2
+%files -n ruby-%pkgname
 %doc README*
-%ruby_sitelibdir/glib2
-%ruby_sitelibdir/glib2.rb
-%ruby_sitearchdir/glib2.so
+%ruby_sitelibdir/%pkgname
+%ruby_sitelibdir/%pkgname.rb
+%ruby_sitearchdir/%pkgname.so
+%rubygem_specdir/*
 
 %files devel
+#%ruby_sitelibdir/*.h
 %ruby_sitelibdir/gnome2
 %ruby_sitelibdir/glib-mkenums.rb
 %ruby_sitelibdir/gnome2-raketask.rb
 %ruby_sitelibdir/mkmf-gnome2.rb
 %ruby_sitearchdir/*.h
 
-%if_enabled docs
-%files doc
+%files -n ruby-%pkgname-doc
 %ruby_ri_sitedir/*
-%endif
 
 %changelog
+* Sun Jan 20 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.1-alt1
+- Bump to 3.3.1 gem.
+
 * Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt2
 - Fix build (add libpcre-devel).
 

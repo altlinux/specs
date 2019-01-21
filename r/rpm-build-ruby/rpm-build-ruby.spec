@@ -1,23 +1,24 @@
 %def_disable check
 
-Name: rpm-build-ruby
-Epoch: 1
-Version: 0.7.2
-Release: alt3
-Summary: RPM helper scripts to calculate Ruby dependencies
-License: GPLv2
-Group: Development/Ruby
-Source: %name-%version.tar
-BuildArch: noarch
-Requires: ruby >= 1.9
-Conflicts: rpm-build <= 4.0.4-alt24
-AutoReq: yes,noruby
-Requires: ruby >= 1.9
-Requires: ruby-stdlibs >= 1.9
-Requires: rdoc rake ruby-bundler
-Requires: rpm-macros-ruby = %EVR
-Requires: ruby-tool-setup
-Requires: libruby-devel
+Name:       rpm-build-ruby
+Epoch:      1
+Version:    0.7.3
+Release:    alt1
+Summary:    RPM helper scripts to calculate Ruby dependencies
+License:    GPLv2
+Group:      Development/Ruby
+Source:     %name-%version.tar
+BuildArch:  noarch
+
+Requires:   ruby >= 1.9
+Conflicts:  rpm-build <= 4.0.4-alt24
+AutoReq:    yes,noruby
+Requires:   ruby >= 1.9
+Requires:   ruby-stdlibs >= 1.9
+Requires:   rdoc rake ruby-bundler
+Requires:   rpm-macros-ruby = %EVR
+Requires:   ruby-tool-setup
+Requires:   libruby-devel
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -52,6 +53,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.3-alt1
+- Added a filter pilling out the non-ASCII chars in input to ruby.prov.
+
 * Fri Jan 18 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.2-alt3
 - Added template %%ruby_test.
 
