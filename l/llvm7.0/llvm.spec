@@ -1,7 +1,7 @@
 %global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt2
+%global rel alt3
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -35,6 +35,9 @@ Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: 0001-unittests-Don-t-install-TestPlugin.so.patch
 Patch9: 0001-Don-t-set-rpath-when-installing.patch
 Patch10: 0001-Filter-out-cxxflags-not-supported-by-clang.patch
+Patch11: 0001-AMDGPU-test-for-uniformity-of-branch-instruction-not.patch
+Patch12: 0001-llvm-objdump-Implement-z-disassemble-zeroes.patch
+Patch13: 0001-llvm-nm-Add-portability-as-alias-for-format-posix.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -221,6 +224,9 @@ mv compiler-rt-%version projects/compiler-rt
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %cmake -G Ninja \
@@ -393,6 +399,13 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Mon Jan 21 2019 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt3.rel
+- Added patches from stable:
+  + llvm-nm: Add --portability as alias for --format=posix.
+  + llvm-objdump: Implement -z/--disassemble-zeroes.
+  + AMDGPU: test for uniformity of branch instruction, not its
+            condition.
+
 * Fri Jan 04 2019 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt2.rel
 - Rebuild by clang7.0.
 
