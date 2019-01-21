@@ -4,7 +4,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.21.6
+Version: 1.22.0
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -26,6 +26,7 @@ Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
 Patch3: %name-pjl-as-ps.patch
+Patch4: %name-1.22.0-pftoopvp-gcc8.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -53,7 +54,6 @@ BuildRequires: libijs-devel
 BuildRequires: glib2-devel
 BuildRequires: libgs-devel
 BuildRequires: libfreetype-devel
-BuildRequires: mupdf
 BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
 %{?_with_php:BuildRequires: php5-devel}
@@ -121,6 +121,7 @@ serial backend for cups
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 # work-around Rpath
@@ -129,11 +130,15 @@ serial backend for cups
 # --with-pdftops=pdftops - use Poppler instead of Ghostscript (see README)
 %configure --disable-static \
            --disable-silent-rules \
+	   --disable-mutool \
 	   --without-php \
+	   --with-rcdir=no \
 	   --enable-driverless \
 	   --enable-auto-setup-driverless \
 	   --with-gs-path=/usr/bin/gs \
-           --with-pdftops=pdftops
+	   --enable-opvp \
+	   --enable-dbus \
+	   --with-pdftops=hybrid
 
 %make
 
@@ -161,6 +166,7 @@ install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
+rm -rf %buildroot%_docdir/%name
 
 %if_with php
 %post -n php5-cups
@@ -174,12 +180,14 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %doc README AUTHORS NEWS
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %config(noreplace) %_initdir/cups-browsed
+%_sysconfdir/fonts/conf.d/*.conf
 %attr(0755,root,root) %_cups_serverbin/filter/*
 %attr(0755,root,root) %_cups_serverbin/driver/*
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %attr(0755,root,root) %_cups_serverbin/backend/beh
 %attr(0755,root,root) %_cups_serverbin/backend/implicitclass
 %attr(0755,root,root) %_cups_serverbin/backend/driverless
+%attr(0755,root,root) %_cups_serverbin/backend/cups-brf
 %_datadir/cups/banners
 %_datadir/cups/charsets
 %_datadir/cups/braille
@@ -187,13 +195,13 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_datadir/cups/ppdc/*
 %_datadir/cups/drv/cupsfilters.drv
 %_datadir/cups/drv/generic-brf.drv
+%_datadir/cups/drv/generic-ubrl.drv
 %_datadir/cups/drv/indexv3.drv
 %_datadir/cups/drv/indexv4.drv
 %_datadir/cups/mime/braille.types
 %_datadir/cups/mime/braille.convs
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
-%_datadir/cups/mime/cupsfilters-mupdf.convs
 %_datadir/cups/mime/cupsfilters-poppler.convs
 %_datadir/cups/mime/cupsfilters-ghostscript.convs
 %_datadir/ppd/cupsfilters
@@ -227,6 +235,15 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.22.0-alt1
+- 1.22.0
+- enabled opvp filter
+- disabled mutool (changed to qpdf)
+- pdftops renderer changed to hybrid (for better support printers from Brother,
+  Minolta, and Konica Minolta)
+- added generic UBRL braille ppd
+- added backend for Virtual Braille BRF Printer
+
 * Fri Dec 21 2018 Anton Farygin <rider@altlinux.ru> 1.21.6-alt1
 - new version 1.21.6
 
