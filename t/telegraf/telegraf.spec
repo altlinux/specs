@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit ae9efb2f696f4dd9e83db4b0431cf9aabf7af97c
+%global commit dda8079947be70b9cde4625ea2fcca7f5148a604
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.8.1
+Version:	1.9.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -47,11 +47,15 @@ or Google Analytics).
 # This is necessary because the gdm cannot work with the vendor directory and always tries to update
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
-# $ export GOPATH="$PWD/.gopath"
-# $ git rm -rf -- "$GOPATH"
-# $ make
-# $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add "$GOPATH"
+# $ go get github.com/influxdata/telegraf
+# $ cd $HOME/go/src/github.com/influxdata/telegraf
+# $ git checkout %version
+# $ dep ensure -vendor-only
+# $ cd to_this_git_dir
+# $ git rm -rf vendor
+# $ cp -r $HOME/go/src/github.com/influxdata/telegraf/vendor ./
+# $ git add -f vendor
+# $ git commit -m "update go pkgs by dep ensure -vendor-only"
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -118,6 +122,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Jan 21 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
+- 1.9.2
+
 * Thu Oct 11 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
