@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.083
+Version: 2.084
 Release: alt1
 
 Summary: Read and write compressed data
@@ -44,6 +44,9 @@ export TEST_SKIP_VERSION_CHECK=1
 %perl_vendor_privlib/IO
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.084-alt1
+- automated CPAN update
+
 * Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.083-alt1
 - automated CPAN update
 
