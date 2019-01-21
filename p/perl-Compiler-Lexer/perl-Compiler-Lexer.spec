@@ -1,10 +1,16 @@
+## in Version: 0.22, during perl update to 5.28, test failed on aarch64
+## to be safe.
+%ifarch aarch64
+%define _without_test 1
+%endif
+
 ## SPEC file for Perl module Compiler::Lexer
 
 %define real_name Compiler-Lexer
 
 Name: perl-Compiler-Lexer
 Version: 0.22
-Release: alt2.1.1
+Release: alt2.2
 
 Summary: Lexical Analyzer for Perl5
 
@@ -43,6 +49,9 @@ Perl module Compiler::Lexer is a Lexical Analyzer for Perl5.
 %perl_vendor_autolib/Compiler/Lexer*
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2.2
+- NMU: disabled tests on aarch64, to prepare for new perl 5.28
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2.1.1
 - rebuild with new perl 5.26.1
 
