@@ -3,16 +3,17 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt10
+Release: alt11
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/lightdm-gtk-greeter
 #To get source code use the command "bzr branch lp:lightdm-gtk-greeter"
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
+Patch1: %name-2.0.1-alt-fixes.patch
+Patch2: %name-%version-advanced.patch
 
-Requires: lightdm
+Requires: lightdm >= 1.16.7-alt11
 Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
 Requires: /usr/share/design/current
 
@@ -25,15 +26,18 @@ BuildRequires: pkgconfig(gmodule-export-2.0)
 BuildRequires: pkgconfig(liblightdm-gobject-1) >= 1.3.5
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(libxklavier)
-BuildRequires: lightdm-devel lightdm-gir-devel
+BuildRequires: lightdm-devel >= 1.16.7-alt11 lightdm-gir-devel >= 1.16.7-alt11
 BuildRequires: /usr/bin/exo-csource
 
 %description
-This package provides a GTK+-based LightDM greeter engine.
+This package provides a GTK+-based LightDM greeter engine. In contrast
+to the conventional "lightdm-gtk-greeter" package this version is
+directly controlled by PAM prompts and messages.
 
 %prep
-%setup
+%setup -n %name-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -68,6 +72,24 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Mon Jan 21 2019 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt11
+- A prompt-driven greeter.
+- Workaround: Use the theme\'s default foreground color for the
+  prompt instead of the special question color because the latter is
+  defined in only a few themes.
+- A better layout for error messages.
+- Load CSS from file ("css-path" config. option).
+- Support Pnago markup for error messages.
+- Automatically start new authentication session when the password
+  is successfully changed.
+- Make the login and cancel button labels configurable.
+- Use CSS to style the prompt and error messages.
+- Conditional change pass (PIN) button.
+- Use configurable default info text.
+- Clear error when the auth. session is started by the button.
+- Append the error messages until user responds.
+- Hide cancel button when authentication completes.
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt10
 - Fixed rebuilding: Ignore the "format-nonliteral" warning/error.
 
