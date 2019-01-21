@@ -1,21 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %def_without test
-%define module_version 2.37
 %define module_name TermReadKey
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(AutoLoader.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.37
-Release: alt2.1
+Version: 2.38
+Release: alt1
 Summary: simple control over terminal driver modes
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/J/JS/JSTOWE/TermReadKey-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JS/JSTOWE/%{module_name}-%{version}.tar.gz
 Provides: perl-Term-ReadKey = %version
 Obsoletes: perl-Term-ReadKey < 2.31
 
@@ -28,7 +27,7 @@ functions as portable as possible, so you can just plug in "use
 Term::ReadKey" on any architecture and have a good likelihood of it working.
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,6 +41,9 @@ Term::ReadKey" on any architecture and have a good likelihood of it working.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.38-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.37-alt2.1
 - rebuild with new perl 5.26.1
 
