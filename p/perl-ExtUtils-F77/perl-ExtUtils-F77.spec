@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-F77
 Name: perl-%dist
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: Simple interface to F77 libs
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/K/KG/KGB/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: gcc-fortran perl-devel
+BuildRequires: gcc-fortran perl-devel perl(File/Which.pm)
 
 %description
 Simple interface to F77 libs.  Used to be in perl-PDL, but isn't anymore.
@@ -55,6 +55,9 @@ __EOF__
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
