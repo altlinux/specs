@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 389de31c961831de0a9f4172173337d4a6193909
+%global commit 85b24361752aaa26f3e8cfe0efa23a51d67eb855
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.6.3
+Version:	1.6.5
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -42,20 +42,17 @@ events, and performing analytics.
 # This is necessary because the gdm cannot work with the vendor directory and always tries to update
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
-# $ export GOPATH="$PWD/.gopath"
-# $ git rm -rf -- "$GOPATH"
-# $ mkdir -p "$GOPATH"
-# $ cd $GOPATH
-# $ go get github.com/sparrc/gdm
-# $ ./bin/gdm restore -f ../Godeps
 # $ go get -d github.com/influxdata/influxdb
 # pushd src/github.com/influxdata/influxdb
-# and git checkout to %version
+# $ git checkout to %version
+# $ dep ensure -vendor-only
 # popd
-# $ go build github.com/influxdata/influxdb
+# $ git rm -rf vendor
+# $ cp -r src/github.com/influxdata/telegraf/vendor ./
+# $ git add --force vendor
+# $ git commit -m "update go pkgs by dep ensure -vendor-only"
 # $ rm -rf $GOPATH/src/github.com/influxdata/influxdb
-# $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add --force "$GOPATH"
+
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -122,6 +119,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Jan 21 2019 Alexey Shabalin <shaba@altlinux.org> 1.6.5-alt1
+- 1.6.5
+
 * Thu Oct 11 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
