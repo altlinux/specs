@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-Portability-Files
-Version:        0.09
-Release:        alt1_3
+Version:        0.10
+Release:        alt1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-Portability-Files
-Source0:        https://cpan.metacpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -59,11 +60,14 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_3
 - update to new release by fcimport
 
