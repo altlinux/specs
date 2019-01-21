@@ -1,8 +1,9 @@
+%python_req_hier
 %define  modulename treq
 
 Name:    python-module-%modulename
 Version: 18.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python requests like API built on top of Twisted's HTTP client.
 License: MIT
@@ -13,6 +14,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools python-module-incremental
+
+%add_python_req_skip twisted.test twisted.test.proto_helpers twisted.trial twisted.trial.unittest
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-incremental
@@ -59,5 +62,8 @@ Twisted.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jan 21 2019 Anton Midyukov <antohami@altlinux.org> 18.6.0-alt2
+- Added python_req_hier (Closes: 35940)
+
 * Wed Aug 22 2018 Anton Midyukov <antohami@altlinux.org> 18.6.0-alt1
 - Initial build for Sisyphus
