@@ -1,6 +1,6 @@
 Name: apt-indicator
-Version: 0.3.11
-Release: alt1%ubt
+Version: 0.3.12
+Release: alt1
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -39,6 +39,10 @@ help2man --output=apt-indicator.1 --no-info apt-indicator ||:
 %install
 %make INSTALL_ROOT=%buildroot install
 
+# icons
+install -Dm 0644 pixmaps/package-available.png %buildroot/%_iconsdir/hicolor/22x22/apps/apt-indicator.png
+install -Dm 0644 pixmaps/light/package-available.svg %buildroot/%_iconsdir/hicolor/scalable/apps/apt-indicator.svg
+
 mkdir -p %buildroot/%_datadir/%name/translations/
 install -m644 translations/apt_indicator_*.qm %buildroot/%_datadir/%name/translations/
 mkdir -p %buildroot/%_man1dir/
@@ -66,9 +70,13 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_sysconfdir/xdg/autostart/apt-indicator.desktop
-
+%_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Mon Jan 21 2019 Sergey V Turchin <zerg at altlinux dot org> 0.3.12-alt1
+- use only internal icons
+- don't show dialog at exit
+
 * Wed Jun 27 2018 Sergey V Turchin <zerg at altlinux dot org> 0.3.11-alt1%ubt
 - wait after startup only if autostarted
 
