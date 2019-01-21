@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 4.1.0
-Release: alt2
+Release: alt3
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -13,8 +13,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4-devel ocaml-react glib2-devel libev-devel chrpath
-BuildRequires: jbuilder opam ocaml-cppo
-BuildRequires: ocaml-migrate-parsetree ocaml-ppx_tools_versioned-devel ocaml-result-devel
+BuildRequires: dune opam ocaml-cppo
+BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
@@ -41,7 +41,7 @@ make
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/
-jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc CHANGES README.md
@@ -59,11 +59,14 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/stublibs/*.so*
 
 %files devel
+%_libdir/ocaml/lwt*/*.dune
+%_libdir/ocaml/lwt*/opam
 %_libdir/ocaml/lwt*/*.a
 %_libdir/ocaml/lwt*/*.cmt*
 %_libdir/ocaml/lwt*/*.cmxa
 %_libdir/ocaml/lwt*/*.cmx
 %_libdir/ocaml/lwt*/*.mli
+%_libdir/ocaml/lwt/unix/*.dune
 %_libdir/ocaml/lwt/unix/*.a
 %_libdir/ocaml/lwt/unix/*.cmt*
 %_libdir/ocaml/lwt/unix/*.cmxa
@@ -71,25 +74,28 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.mli
 
 %changelog
+* Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 4.1.0-alt3
+- rebuilt with ocaml-migrate-parsetree 1.2.0-alt1
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.1.0-alt2
 - rebuilt with ocaml-4.07.1
 
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.1.0-alt1
 - 4.1.0
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1
 - 4.0.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt3
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt2%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt2
 - rebuild in new environment
 
-* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt1%ubt
+* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt1
 - new version from upstream git
 
 * Wed Dec 28 2011 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt3

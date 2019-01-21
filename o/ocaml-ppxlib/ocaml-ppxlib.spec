@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppxlib
 Name: ocaml-%libname
-Version: 0.3.1
+Version: 0.5.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
@@ -71,6 +71,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 0.5.0-alt1
+- 0.5.0
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 0.3.1-alt1
 - first build for ALT
 
