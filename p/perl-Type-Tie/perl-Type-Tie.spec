@@ -7,7 +7,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMak
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.012
+Version: 0.013
 Release: alt1
 Summary: tie a variable to a type constraint
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Thu Jan 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
 - automated CPAN update
 
