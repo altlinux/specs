@@ -1,5 +1,5 @@
 Name: apt-repo-tools
-Version: 0.6.0.20
+Version: 0.6.0.22
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -40,13 +40,27 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Mon Jan 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0.22-alt1
+- genpkglist: added DistTag.
+- genbasedir (by glebfm@):
+  + added --compressedonly alias for --bz2only option;
+  + added --{,no-}bz2 and --{,no-}xz to usage.
+- Dropped Vendor tag from {pkg,src}list (by glebfm@).
+
+* Fri Jul 21 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0.21-alt1
+- Changes for gen{pkglist,basedir} (from Alexey Tourbin):
+  + introduced startswith function;
+  + removed support for oldhashfile;
+  + fixed partial changelog copying.
+- Rebuilt with libapt-pkg-libc6.9-6.so.7.
+
 * Tue Aug 30 2016 Alexey Gladkov <legion@altlinux.ru> 0.6.0.20-alt1
 - Port to rpm-4.13.
 
 * Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0.19-alt1.1.1
 - Rebuilt for:
- + libapt-pkg-libc6.9-6.so.5.
- + gcc5 C++11 ABI.
+  + libapt-pkg-libc6.9-6.so.5.
+  + gcc5 C++11 ABI.
 
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0.19-alt1.1
 - Rebuilt with libapt-pkg-libc6.9-6.so.4.
