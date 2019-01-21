@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
@@ -19,6 +19,8 @@ BuildRequires: ocaml-tyxml-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-reactiveData-devel
+BuildRequires: ocaml-migrate-parsetree-devel
+BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-ppx_tools-devel
 BuildRequires: ocaml-ppx_deriving-devel
 BuildRequires: dune opam
@@ -113,6 +115,9 @@ done
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 3.3.0-alt1
+- 3.3.0
+
 * Fri Oct 26 2018 Anton Farygin <rider@altlinux.ru> 3.2.1-alt1
 - first build for ALT
 

@@ -2,7 +2,7 @@
 %define libname ppx_deriving
 Name: ocaml-%libname
 Version: 4.2.1
-Release: alt1
+Release: alt2
 Summary: Type-driven code generation for OCaml >=4.02
 License: MIT
 Group: Development/ML
@@ -54,6 +54,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 4.2.1-alt2
+- rebuilt with ocaml-migrate-parsetree 1.2.0
+
 * Tue Oct 30 2018 Anton Farygin <rider@altlinux.ru> 4.2.1-alt1
 - first build for ALT
 
