@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Encode
 Name: perl-%dist
-Version: 2.98
+Version: 2.99
 Release: alt1
 
 Summary: Character encodings
@@ -133,6 +134,9 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.99-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.98-alt1
 - automated CPAN update
 
