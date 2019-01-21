@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,13 +7,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Summary: 	Calculate business hours in a time period
 Name: 		perl-Business-Hours
-Version: 	0.12
-Release: 	alt2_14
+Version: 	0.13
+Release: 	alt1
 License: 	GPL+ or Artistic
 Group: 		Development/Other
 URL: 		https://metacpan.org/release/Business-Hours
 
-Source0: https://cpan.metacpan.org/authors/id/R/RU/RUZ/Business-Hours-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/Business-Hours-%{version}.tar.gz
 BuildArch: 	noarch
 
 Requires:  perl(Set/IntSpan.pm) >= 1.120
@@ -59,11 +60,14 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE README
 %doc Changes
 %{perl_vendor_privlib}/Business
 
 %changelog
+* Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_14
 - update to new release by fcimport
 
