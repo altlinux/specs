@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with check
-%def_with python3_default
 %define nss_default_db_type sql
 
 %define java_home           %_jvmdir/jre
@@ -9,10 +8,10 @@
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
 %define tomcatjss_version   7.3.6
-%define jss_version         4.5.0
+%define jss_version         4.5.2
 
 Name: pki-core
-Version: 10.6.7
+Version: 10.6.9
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -45,38 +44,29 @@ BuildRequires: velocity
 BuildRequires: ldapjdk
 BuildRequires: resteasy-atom-provider
 BuildRequires: resteasy-client
-BuildRequires: libnuxwdog-java
+BuildRequires: resteasy-jackson2-provider
 BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
 BuildRequires: idm-console-framework
 BuildRequires: junit
 
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-nss
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-nss
 
 %if_with check
-
-BuildRequires: python-module-selinux
-BuildRequires: python-module-ldap
-BuildRequires: pylint
-BuildRequires: pyflakes
-BuildRequires: python-module-flake8
-
-BuildRequires: python3-module-selinux
-BuildRequires: python3-module-ldap
-BuildRequires: pylint-py3
-BuildRequires: python3-pyflakes
 BuildRequires: python3-module-flake8
-
+BuildRequires: python3-module-ldap
+BuildRequires: python3-module-pyflakes
+BuildRequires: python3-module-pylint
+BuildRequires: python3-module-selinux
+BuildRequires: python3-module-tox
 %endif
 
 #### Meta package ####
 Requires: dogtag-pki-server-theme >= %EVR
 Requires: dogtag-pki-console-theme >= %EVR
-Requires: python-module-pki-base >= %EVR
+Requires: python3-module-pki-base >= %EVR
 Requires: pki-base-java >= %EVR
 Requires: pki-tools >= %EVR
 Requires: pki-server >= %EVR
@@ -116,11 +106,7 @@ symmetric key operations to Java programs.
 Summary: Dogtag PKI Base Package
 Group: System/Base
 BuildArch: noarch
-%if_with python3_default
 Requires: python3-module-pki-base >= %EVR
-%else
-Requires: python-module-pki-base >= %EVR
-%endif
 Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
@@ -144,15 +130,6 @@ Requires: xml-commons-resolver
 %description -n pki-base-java
 The Dogtag PKI Base Java Package contains the common and client
 libraries and utilities written in Java.
-
-%package -n python-module-pki-base
-Summary: Dogtag PKI Python2 Package
-Group: Development/Python
-BuildArch: noarch
-Requires: pki-base = %EVR
-
-%description -n python-module-pki-base
-This package contains Dogtag PKI client library for Python2.
 
 %package -n python3-module-pki-base
 Summary: Dogtag PKI Python3 Package
@@ -372,7 +349,7 @@ interface for PKI Console.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 # change port from 8080 to 8090
 # Port 8080 is used by alterator-ahttpd-server
 grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
@@ -408,12 +385,13 @@ fi
     -DNSS_DEFAULT_DB_TYPE=%nss_default_db_type \
     -DBUILD_PKI_CORE:BOOL=ON \
     -DWITH_PYTHON3_DEFAULT:BOOL=ON \
+    -DPYTHON_EXECUTABLE=%_bindir/python3 \
 %if_with check
     -DWITH_TEST:BOOL=ON \
 %else
     -DWITH_TEST:BOOL=OFF \
 %endif
-    -DWITH_PYTHON2:BOOL=ON \
+    -DWITH_PYTHON2:BOOL=OFF \
     -DWITH_PYTHON3:BOOL=ON \
     -DWITH_JAVADOC:BOOL=ON \
     -DBUILD_PKI_CONSOLE:BOOL=ON \
@@ -461,44 +439,9 @@ ln -sf tps/libtps.so %buildroot%_libdir/libtps.so
 ln -sf tps/libtokendb.so %buildroot%_libdir/libtokendb.so
 
 %check
-
-echo "Scanning Python code with pylint"
-%if_with python3_default
-python3 tools/pylint-build-scan.py rpm --prefix %buildroot
-if [ $? -ne 0 ]; then
-    echo "pylint for Python 3 failed. RC: $?"
-    exit 1
-fi
-%else
-python tools/pylint-build-scan.py rpm --prefix %buildroot
-if [ $? -ne 0 ]; then
-    echo "pylint for Python 2 failed. RC: $?"
-    exit 1
-fi
-
-python tools/pylint-build-scan.py rpm --prefix %buildroot -- --py3k
-if [ $? -ne 0 ]; then
-    echo "pylint for Python 2 with --py3k failed. RC: $?"
-    exit 1
-fi
-%endif
-
-echo "Scanning Python code with flake8"
-%if_with python2
-flake8 --config tox.ini %buildroot
-if [ $? -ne 0 ]; then
-    echo "flake8 for Python 2 failed. RC: $?"
-    exit 1
-fi
-%endif
-
-%if_with python3
-python3-flake8 --config tox.ini %buildroot
-if [ $? -ne 0 ]; then
-    echo "flake8 for Python 3 failed. RC: $?"
-    exit 1
-fi
-%endif
+export PIP_NO_INDEX=YES
+export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %pre -n pki-server
 %define pki_username pkiuser
@@ -575,16 +518,8 @@ fi
 %_javadir/pki/pki-nsutil.jar
 %_javadir/pki/pki-certsrv.jar
 
-%files -n python-module-pki-base
-%if_without python3_default
-%exclude %python_sitelibdir_noarch/pki/server
-%endif
-%python_sitelibdir_noarch/pki
-
 %files -n python3-module-pki-base
-%if_with python3_default
 %exclude %python3_sitelibdir_noarch/pki/server
-%endif
 %python3_sitelibdir_noarch/pki
 
 %files -n pki-tools
@@ -659,18 +594,14 @@ fi
 %_sbindir/pkispawn
 %_sbindir/pkidestroy
 %_sbindir/pki-server
-%_sbindir/pki-server-nuxwdog
 %_sbindir/pki-server-upgrade
-%if_with python3_default
 %python3_sitelibdir_noarch/pki/server/
-%else
-%python_sitelibdir_noarch/pki/server/
-%endif
 %_datadir/pki/etc/tomcat.conf
 %dir %_datadir/pki/deployment
 %_datadir/pki/deployment/config/
 %_datadir/pki/scripts/operations
 %_bindir/pkidaemon
+%_bindir/pki-server-nuxwdog
 %dir %_sysconfdir/systemd/system/pki-tomcatd.target.wants
 %_unitdir/pki-tomcatd@.service
 %_unitdir/pki-tomcatd.target
@@ -746,6 +677,7 @@ fi
 
 %files -n dogtag-pki-server-theme
 %_datadir/pki/common-ui/
+%_datadir/pki/CS_SERVER_VERSION
 %dir %_datadir/pki/server
 %dir %_datadir/pki/server/webapps
 %dir %_datadir/pki/server/webapps/pki
@@ -769,6 +701,10 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Mon Jan 21 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt1
+- 10.6.7 -> 10.6.9.
+- Fixed pylint, flake8 errors (closes: #35938).
+
 * Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 10.6.7-alt1
 - 10.6.6 -> 10.6.7.
 

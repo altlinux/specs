@@ -1,7 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define java_home %_jvmdir/jre
+
+%def_with check
 
 Name: jss
-Version: 4.5.0
+Version: 4.5.2
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -15,7 +18,11 @@ Source1: jss.watch
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: glassfish-jaxb-api
 BuildRequires: /proc
+BuildRequires: cmake
 BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
@@ -24,10 +31,16 @@ BuildRequires: apache-commons-codec
 BuildRequires: slf4j
 BuildRequires: slf4j-jdk14
 
+%if_with check
+BuildRequires: ctest
+BuildRequires: nss-utils
+%endif
+
 Requires: apache-commons-lang
 Requires: apache-commons-codec
-Requires: slf4j
+Requires: glassfish-jaxb-api
 Requires: java-headless
+Requires: slf4j
 
 %description
 Network Security Services for Java (JSS) is a Java interface to NSS. JSS
@@ -56,70 +69,47 @@ This package contains the API documentation for JSS.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 %build
-export JAVA_HOME=%_jvmdir/java
-export USE_INSTALLED_NSPR=1
-export USE_INSTALLED_NSS=1
-
 # Enable compiler optimizations and disable debugging code
 # NOTE: If you ever need to create a debug build with optimizations disabled
 # just comment out this line and change in the %%install section below the
 # line that copies jars xpclass.jar to be xpclass_dbg.jar
 export BUILD_OPT=1
 
-# Generate symbolic info for debuggers
-export XCFLAGS="-g $RPM_OPT_FLAGS"
+%cmake \
+    -DJAVA_HOME=%java_home \
+    ..
 
-export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+%cmake_build all javadoc
 
-NSPR_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nspr | sed 's/-I//'`
-NSPR_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nspr | sed 's/-L//'`
-[ -z $NSPR_LIB_DIR ] && NSPR_LIB_DIR="%_libdir"
-
-NSS_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nss | sed 's/-I//'`
-NSS_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nss | sed 's/-L//'`
-[ -z $NSS_LIB_DIR ] && NSS_LIB_DIR="%_libdir"
-
-export NSPR_INCLUDE_DIR
-export NSPR_LIB_DIR
-export NSS_INCLUDE_DIR
-export NSS_LIB_DIR
-
-%ifarch aarch64 x86_64 ppc64 ia64 s390x sparc64
-export USE_64=1
-%endif
-
-# The Makefile is not thread-safe
-rm -rf ../dist
-mkdir ../dist
-%make -C coreconf
-%make
-%make javadoc
-# actually must be at 'check' section, but requires all exports as 'build'
-%make test_jss
+%check
+# FIPS is not enabled in kernel
+cat > BUILD/CTestCustom.cmake <<EOF
+set(CTEST_CUSTOM_TESTS_IGNORE
+   Enable_FipsMODE
+)
+EOF
+%cmake_build test
 
 %install
 install -d -m 0755 %buildroot%_jnidir
-install -m 644 ../dist/xpclass.jar %buildroot%_jnidir/jss4.jar
+install -m 644 BUILD/jss4.jar %buildroot%_jnidir/jss4.jar
 
 # We have to use the name libjss4.so because this is dynamically
 # loaded by the jar file.
 install -d -m 0755 %buildroot%_libdir/jss
-install -m 0755 ../dist/Linux*.OBJ/lib/libjss4.so %buildroot%_libdir/jss/
+install -m 0755 BUILD/libjss4.so %buildroot%_libdir/jss/
 pushd  %buildroot%_libdir/jss
     ln -fs %_jnidir/jss4.jar jss4.jar
 popd
 
 # javadoc
 install -d -m 0755 %buildroot%_javadocdir/%name-%version
-cp -rp ../dist/jssdoc/* %buildroot%_javadocdir/%name-%version
+cp -rp BUILD/docs/* %buildroot%_javadocdir/%name-%version
 cp -p jss.html %buildroot%_javadocdir/%name-%version
 cp -p *.txt %buildroot%_javadocdir/%name-%version
-
-%check
 
 %files
 %dir %_libdir/jss
@@ -131,6 +121,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Fri Jan 18 2019 Stanislav Levin <slev@altlinux.org> 4.5.2-alt1
+- 4.5.0 -> 4.5.2.
+
 * Mon Aug 13 2018 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
 - 4.4.5 -> 4.5.0.
 
