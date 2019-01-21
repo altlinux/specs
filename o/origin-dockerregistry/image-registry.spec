@@ -11,18 +11,18 @@
 
 %global gopath      %_datadir/gocode
 %global import_path github.com/openshift/image-registry
-%global commit fef8b8b5ff6c348ff3efdd518398314234587d8e
+%global commit 0d49798e519cb36d27c97392e92a9bf41ef90b66
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-%global os_git_vars OS_GIT_VERSION=v3.9.0 OS_GIT_MINOR=9+ OS_GIT_COMMIT=%{shortcommit} OS_GIT_MAJOR=3 OS_GIT_TREE_STATE=clean
+%global os_git_vars OS_GIT_VERSION=v3.11.0 OS_GIT_MINOR=9+ OS_GIT_COMMIT=%{shortcommit} OS_GIT_MAJOR=3 OS_GIT_TREE_STATE=clean
 
 %global golang_version 1.8.1
 %global product_name OpenShift Docker Registry
 %global import_path github.com/openshift/image-registry
 
-Name: origin-dockerregistry 
-Version: 3.9.0
-Release: alt1%ubt
+Name: origin-dockerregistry
+Version: 3.11.0
+Release: alt1
 Summary: Docker Registry v2 for OpenShift Origin
 License: ASL 2.0
 Group: Networking/Other
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= %golang_version
 BuildRequires: /proc
 
@@ -88,6 +88,9 @@ done
 %_bindir/dockerregistry
 
 %changelog
+* Mon Jan 21 2019 Alexey Shabalin <shaba@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Fri Apr 20 2018 Alexey Shabalin <shaba@altlinux.ru> 3.9.0-alt1%ubt
 - Initial build for ALT
 
