@@ -1,16 +1,21 @@
 %def_disable snapshot
 
+%define api_ver 2
+%define sover %api_ver
+
 %def_disable static
 %def_disable ladcca
 %def_enable lash
 %def_enable ladspa
 %def_enable jack
 %def_enable pulseaudio
+%def_disable portaudio
 %def_enable dbus
+%def_enable check
 
 Name: fluidsynth
-Version: 1.1.11
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
@@ -42,6 +47,8 @@ BuildRequires: libncurses-devel libreadline-devel
 %{?_enable_jack:BuildRequires: libjack-devel >= %jack_ver}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
+%{?_enable_portaudio:BuildRequires: libportaudio-devel}
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 FluidSynth is a software real-time synthesizer based on the
@@ -156,7 +163,8 @@ MIDI-синтезатора. FluidSynth также может воспроизв
     %{?_enable_ladspa:-Denable-ladspa:bool=true} \
     %{?_enable_jack:-Denable-jack:bool=true} \
     %{?_enable_pulseaudio:-Denable-pulseaudio:bool=true} \
-    %{?_enable_dbus:-Denable-dbus:bool=true}
+    %{?_enable_dbus:-Denable-dbus:bool=true} \
+    %{?_enable_portaudio:-Denable-portaudio:bool=true} \
 
 %cmake_build
 %cmake_build doxygen
@@ -164,6 +172,9 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %install
 %cmakeinstall_std
 cp -r BUILD/doc/api/html ./
+
+%check
+%make -C BUILD check
 
 %files
 %_bindir/%name
@@ -186,6 +197,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.11-alt2
 - rebuilt against libreadline.so.7
 

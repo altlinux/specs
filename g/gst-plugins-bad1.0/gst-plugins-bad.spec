@@ -20,7 +20,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt3
+Release: alt4
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -148,6 +148,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt4
+- rebuilt against libfluidsynth.so.2
+
 * Tue Dec 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt3
 - disabled obsolete librtmp support
 

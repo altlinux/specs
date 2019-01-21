@@ -3,7 +3,7 @@
 
 Name: calf
 Version: 0.90.1
-Release: alt1
+Release: alt2
 
 Summary: Audio plugins pack
 Group: Sound
@@ -16,6 +16,8 @@ Source: http://calf-studio-gear.org/files/%name-%version.tar.gz
 # VCS: https://github.com/calf-studio-gear/calf.git
 Source: %name-%version.tar
 %endif
+
+Patch: calf-0.90.1-up-fluidsynth_2.0.patch
 
 BuildRequires: gcc-c++ desktop-file-utils
 BuildRequires: glib2-devel libexpat-devel libfftw3-devel libfluidsynth-devel
@@ -65,6 +67,7 @@ extensions.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -106,6 +109,9 @@ extensions.
 
 
 %changelog
+* Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.90.1-alt2
+- rebuilt against libfluidsynth.so.2
+
 * Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.90.1-alt1
 - 0.90.1
 

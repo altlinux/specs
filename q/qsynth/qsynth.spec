@@ -2,7 +2,7 @@
 
 Name: qsynth
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: QSynth is a GUI front-end for FluidSynth
 Summary(ru_RU.UTF-8): QSynth - это графическая надстройка над FluidSynth
@@ -68,6 +68,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt2
+- rebuilt against libfluidsynth.so.2
+
 * Fri Dec 28 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
