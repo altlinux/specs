@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.40
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 Patch: alterator-fbi-5.39-call-cc-via-reset.patch
@@ -29,7 +29,7 @@ Requires(pre): shadow-utils
 
 BuildPreReq: alterator >= 5.0-alt1, libguile-vhttpd, libexpat-devel
 
-%ifarch e2k
+%ifarch %e2k
 BuildRequires: guile20-devel libguile20-devel
 BuildRequires: alterator >= 5.1-alt7
 %else
@@ -47,7 +47,7 @@ this is an alterator based engine (form based interface) to create a simple form
 
 %prep
 %setup
-%ifarch e2k
+%ifarch %e2k
 %patch -p2
 %endif
 
@@ -152,6 +152,9 @@ fi ||:
 
 
 %changelog
+* Mon Jan 21 2019 Michael Shigorin <mike@altlinux.org> 5.40-alt2
+- Replace e2k arch name with %%e2k macro (grenka@).
+
 * Mon Dec 10 2018 Paul Wolneykien <manowar@altlinux.org> 5.40-alt1
 - Use platform-based procedure to initialize the pseudo-random
   generator.
