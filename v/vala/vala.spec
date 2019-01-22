@@ -8,7 +8,7 @@
 %define api_ver 0.42
 
 Name: vala
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -26,10 +26,10 @@ Patch: %name-%version-%release-pregenerated.patch
 %endif
 Patch1: %name-0.39.7-alt-fixes.patch
 
-PreReq: rpm-build-vala
-PreReq: vapi-common = %version-%release
+Requires(pre): rpm-build-vala vapi-common = %version-%release
+
 BuildRequires: flex libgio-devel >= 2.40.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
-BuildPreReq: /proc rpm-build-vala
+BuildRequires: /proc rpm-build-vala
 # since 0.37
 BuildRequires: libgraphviz-devel
 %if_without bootstrap
@@ -263,6 +263,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Tue Jan 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.42.5-alt1
+- 0.42.5
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.42.4-alt1
 - 0.42.4
 
