@@ -1,9 +1,9 @@
 %define module_name	ipset
-%define module_version	7.0
-%define module_release	alt2
+%define module_version	7.1
+%define module_release	alt1
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -60,6 +60,9 @@ install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 7.1-alt1
+- 7.0 -> 7.1
 
 * Wed Nov 14 2018 Anton Farygin <rider@altlinux.ru> 7.0-alt1
 - 6.29 -> 7.0
