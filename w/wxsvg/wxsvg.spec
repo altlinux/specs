@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wxsvg
-Version: 1.5.14
-Release: alt4%ubt
+Version: 1.5.15
+Release: alt1
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -11,12 +11,11 @@ Group: Graphics
 Url: http://wxsvg.sourceforge.net
 Source: %name-%version.tar
 
-Patch1: %name-%version-alt.patch
+Patch1: %name-1.5.14-alt.patch
 
 BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
 BuildRequires: compat-libwxGTK3.0-gtk2-devel libavformat-devel libswscale-devel
 BuildRequires: libexpat-devel libexif-devel
-BuildRequires(pre): rpm-build-ubt
 
 # for older branches support
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
@@ -55,7 +54,7 @@ Development shared library for wxSVG
 %patch1 -p2
 
 %build
-%qIF_ver_lt %ubt_id S1
+%qIF_ver_lt _id S1
 %add_optflags -std=c++11
 %endif
 
@@ -83,20 +82,23 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
-* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt4%ubt
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.15-alt1
+- 1.5.15
+
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt4
 - svgview: fixed error messages on start without existing svg file specified as argument.
 
-* Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt3%ubt
+* Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt3
 - Rebuilt with support for older branches.
 
-* Thu Aug 16 2018 Anton Midyukov <antohami@altlinux.org> 1:1.5.14-alt2%ubt
+* Thu Aug 16 2018 Anton Midyukov <antohami@altlinux.org> 1:1.5.14-alt2
 - Rebuilt with compat-libwxGTK3.0-gtk2
 
-* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.14-alt1%ubt
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.14-alt1
 - 1.5.14
 
-* Tue Jun 26 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.13-alt2%ubt
-- add %%ubt
+* Tue Jun 26 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.13-alt2
+- add %
 
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.13-alt2
 - rebuilt for ffmpeg-4
