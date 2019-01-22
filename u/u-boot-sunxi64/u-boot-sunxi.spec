@@ -1,5 +1,5 @@
 Name: u-boot-sunxi64
-Version: 2018.11
+Version: 2019.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -20,7 +20,7 @@ BuildRequires: atf-sunxi
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
-This package supports various Allwinner H5 based boards.
+This package supports various Allwinner A64/H5 based boards.
 
 %prep
 %setup
@@ -46,6 +46,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 22 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
+- 2019.01 released
+
 * Mon Dec 03 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.11-alt1
 - 2018.11 released
 
