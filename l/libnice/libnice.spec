@@ -2,15 +2,13 @@
 %define ver_major 0.1
 %define api_ver %ver_major
 %define gst_api_ver 1.0
-%define old_gst_api_ver 0.10
 
 %def_disable static
 %def_disable gtk_doc
-%def_without old_gstreamer
 
 Name: libnice
-Version: %ver_major.14
-Release: alt1.1
+Version: %ver_major.15
+Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
@@ -19,11 +17,10 @@ URL: http://nice.freedesktop.org
 
 Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
-%define glib_ver 2.44
-%define tls_ver 2.12
+%define glib_ver 2.48
+%define tls_ver 2.12.0
 
 BuildRequires: glib2-devel >= %glib_ver gtk-doc libgupnp-igd-devel
-%{?_with_old_gstreamer:BuildRequires: gst-plugins-devel}
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgnutls-devel
@@ -114,9 +111,7 @@ for Gstreamer (1.0 API version)
 %build
 %configure \
 	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_without_old_gstreamer:--without-gstreamer-0.10}
-
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
@@ -145,11 +140,6 @@ for Gstreamer (1.0 API version)
 %files gir-devel
 %_girdir/Nice-%api_ver.gir
 
-%if_with old_gstreamer
-%files -n gst-plugins-nice
-%_libdir/gstreamer-%old_gst_api_ver/libgstnice010.so
-%endif
-
 %files -n gst-plugins-nice%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstnice.so
 
@@ -157,11 +147,12 @@ for Gstreamer (1.0 API version)
 
 # don't package tools
 %exclude %_bindir/stun*
-# and example progs
-%exclude %_bindir/*example
 
 
 %changelog
+* Tue Jan 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.15-alt1
+- 0.1.15
+
 * Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 0.1.14-alt1.1
 - NMU: Rebuilt for e2k.
 
