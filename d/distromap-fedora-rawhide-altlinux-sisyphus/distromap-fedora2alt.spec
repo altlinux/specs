@@ -1,7 +1,7 @@
 %define module fedora-rawhide-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.433
+Version: 0.434
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -45,6 +45,9 @@ done
 /usr/share/distromap/*
 
 %changelog
+* Tue Jan 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.434-alt1
+- db updates
+
 * Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.433-alt1
 - db updates
 
