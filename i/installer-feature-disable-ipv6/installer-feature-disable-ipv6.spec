@@ -1,5 +1,5 @@
 Name: installer-feature-disable-ipv6
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: ipv6.disable=1
@@ -31,6 +31,9 @@ Setup "%summary" when IPv6 is prohibited.
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Jan 22 2019 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
+- E2K: fix whitespace
+
 * Mon Jan 21 2019 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release
 
