@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pg_rman
-Version: 1.3.6
-Release: alt2
+Version: 1.3.8
+Release: alt1
 Summary: pg_rman is an online backup and restore tool for PostgreSQL
 License: New BSD
 Group: Databases
 Url: https://github.com/ossc-db/pg_rman
 
+# https://github.com/ossc-db/pg_rman.git
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Apr 19 2014 (-bi)
@@ -22,22 +23,29 @@ catalog per database cluster. Users can maintain old backups
 including archive logs with one command.
 
 %prep
-%setup -n %name
+%setup
 
 %build
-%make_build USE_PGXS=1
+%make_build
 
 %install
-install -pD -m 755 %_builddir/%name/%name %buildroot%_bindir/%name
-mkdir -p %buildroot%_docdir/%name/examples
-mv %_builddir/%name/sql/ %buildroot%_docdir/%name/examples/
-install -pD -m 644 %_builddir/%name/COPYRIGHT %buildroot%_docdir/%name/
+install -pD -m 755 %name %buildroot%_bindir/%name
+
+mkdir examples
+cp -r sql examples/
 
 %files
+%doc COPYRIGHT README.md
+%doc docs
+%doc examples
 %_bindir/*
-%_docdir/%name
 
 %changelog
+* Tue Jan 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.8-alt1
+- Updated to upstream version 1.3.8.
+- Rebuilt with PostgreSQL 11.
+- This version may be incompatible with backups from older versions.
+
 * Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt2
 - Updated build dependencies.
 
