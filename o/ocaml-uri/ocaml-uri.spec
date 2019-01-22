@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname uri
 Name: ocaml-%libname
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
@@ -19,6 +19,7 @@ BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-stringext-devel
+BuildRequires: ocaml-migrate-parsetree-devel
 
 %description
 his is an OCaml implementation of the RFC3986 specification for parsing URI
@@ -86,6 +87,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - first build for ALT
 
