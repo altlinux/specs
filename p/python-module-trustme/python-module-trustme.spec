@@ -1,7 +1,7 @@
 %define  modulename trustme
 
 Name:    python-module-%modulename
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
@@ -64,5 +64,8 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Tue Jan 22 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
+- New version.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
