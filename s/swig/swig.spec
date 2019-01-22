@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt5
+Release: alt6
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -21,6 +21,8 @@ Patch5: fix-chicken-tests.patch
 Patch6: upstream-issue-1259-preparation.patch
 # Based on https://github.com/swig/swig/commit/7f9883011029674553a2a4b623d459f02b512458
 Patch7: upstream-issue-1259.patch
+# Based on https://github.com/swig/swig/commit/9825fcbab5c4ddd867432f9922bebfbec7b78af0
+Patch8: upstream-issue-898.patch
 
 %def_disable testsuite
 
@@ -156,6 +158,7 @@ This package contains SWIG runtime tcl library.
 %endif
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
 
 %build
 ./autogen.sh
@@ -248,6 +251,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Jan 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt6
+- NMU: additional fixes for code generated for python and gcc-8.
+
 * Mon Dec 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt5
 - NMU: fixed code generated for python >= 2.3 and gcc-8.
 
