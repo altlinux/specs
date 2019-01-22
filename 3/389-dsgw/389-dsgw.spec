@@ -4,7 +4,7 @@ Summary:  389 Directory Server Gateway (dsgw)
 
 Name:     389-dsgw
 Version:  1.1.11
-Release:  alt3
+Release:  alt4
 License:  GPLv2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Url:      http://port389.org
@@ -18,6 +18,7 @@ Provides: fedora-ds-dsgw = %version-%release
 Obsoletes: fedora-ds-dsgw < %version-%release
 
 Source0: %name-%version-%release.tar
+ExcludeArch: %ix86
 
 %description
 389 Directory Server Gateway is a collection of 3 web applications
@@ -64,6 +65,9 @@ export adminutil_lib=-L%_libdir/
 %_sbindir/setup-ds-dsgw
 
 %changelog
+* Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 1.1.11-alt4
+- Stopped build for 32bit systems.
+
 * Thu Nov 01 2018 Ivan A. Melnikov <iv@altlinux.org> 1.1.11-alt3
 - Fix build with recent mozldap
 

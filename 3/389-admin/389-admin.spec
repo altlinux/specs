@@ -5,19 +5,20 @@
 Summary: 389 Administration Server
 Name:    389-admin
 Version: 1.1.46
-Release: alt2
+Release: alt3
 License: GPLv2
 Url:     http://port389.org/
 # VCS:   https://git.fedorahosted.org/git/389/admin.git
 Group:   System/Servers
 
+ExcludeArch: %ix86
+
 BuildRequires: 389-adminutil-devel apache2-devel apache2-mod_nss gcc-c++
 BuildRequires: libicu-devel libsasl2-devel perl-Mozilla-LDAP perl-CGI
-BuildRequires: 389-ds-base mozldap-devel libaprutil1-devel
+BuildRequires: 389-ds-base-legacy-tools mozldap-devel libaprutil1-devel
 
 Requires: apache2-httpd-worker
 Requires: apache2-mod_nss
-Requires: 389-ds-base
 
 Provides: fedora-ds-adminserver = %version-%release
 Obsoletes: fedora-ds-adminserver < %version-%release
@@ -93,6 +94,9 @@ rm -f %buildroot%_libdir/*.so
 %_man8dir/*
 
 %changelog
+* Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 1.1.46-alt3
+- Stopped build for 32bit systems.
+
 * Tue Oct 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.46-alt2
 - Fixed dirsrv-admin.service.
 
