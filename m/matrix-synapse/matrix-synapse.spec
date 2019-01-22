@@ -1,6 +1,6 @@
 Name: matrix-synapse
-Version: 0.33.9
-Release: alt2
+Version: 0.34.1.1
+Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache 2.0
@@ -11,39 +11,60 @@ Url: http://matrix.org
 # Source-url: https://github.com/matrix-org/synapse/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+Source1: %name.service
+
 # python-pip python-setuptools sqlite3 python-virtualenv
 # python-devel libffi-devel libopenssl-devel libjpeg-devel
 
-BuildRequires: python-module-twisted-core >= 16.0.0
-BuildRequires: python-module-mock
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-unpaddedbase64 >= 1.1.0
-BuildRequires: python-module-canonicaljson >= 1.0.0
-BuildRequires: python-module-signedjson >= 1.0.0
-BuildRequires: python-module-matrix-angular-sdk >= 0.6.8
-BuildRequires: python-module-service-identity >= 1.0.0
-BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-yaml
-BuildRequires: python-module-pyasn1
-BuildRequires: python-module-pynacl >= 0.3.0
-BuildRequires: python-module-daemonize
-BuildRequires: python-module-bcrypt
-BuildRequires: python-module-frozendict >= 0.4
-BuildRequires: python-module-Pillow
-BuildRequires: python-module-pydenticon
-BuildRequires: python-module-ujson
-BuildRequires: python-module-blist
-BuildRequires: python-module-pysaml2 >= 3.0.0
-BuildRequires: python-module-pymacaroons-pynacl
-BuildRequires: python-module-bleach >= 1.4.2
-BuildRequires: python-module-netaddr >= 0.7.18
-BuildRequires: python-module-jinja2 >= 2.8
-#BuildRequires: python-module-matrix-synapse-ldap3 >= 0.1
-BuildRequires: python-module-psutil >= 2.0.0
-BuildRequires: python-module-lxml
-BuildRequires: python-module-msgpack
-BuildRequires: python-module-jsonschema >= 2.5.1
-BuildRequires: python-module-phonenumbers >= 8.2.0
+BuildRequires(pre): rpm-build-intro >= 2.1.9
+
+# Note: update from synapse/python_dependencies.py
+%py_use twisted-core >= 17.1.0
+%py_use mock
+%py_use setuptools
+%py_use unpaddedbase64 >= 1.1.0
+%py_use treq >= 15.1
+%py_use canonicaljson >= 1.1.3
+%py_use signedjson >= 1.0.0
+%py_use matrix-angular-sdk >= 0.6.8
+%py_use service_identity >= 16.0.0
+# Twisted has required pyopenssl 16.0 since about Twisted 16.6.
+%py_use OpenSSL >= 16.0.0
+%py_use yaml >= 3.11
+%py_use pyasn1 >= 0.1.9
+%py_use pyasn1-modules >= 0.0.7
+%py_use pynacl >= 1.2.1
+%py_use daemonize >= 2.3.1
+%py_use bcrypt >= 3.1.0
+%py_use frozendict >= 1
+%py_use Pillow >= 3.1.2
+%py_use sortedcontainers >= 1.4.4
+#py_use pydenticon
+#py_use ujson
+#py_use blist
+%py_use pysaml2 >= 4.5.0
+%py_use bleach >= 1.4.2
+%py_use netaddr >= 0.7.18
+%py_use jinja2 >= 2.8
+#py_use matrix-synapse-ldap3 >= 0.1
+%py_use psutil >= 2.0.0
+%py_use pymacaroons-pynacl >= 0.9.3
+%py_use lxml >= 3.5.0
+%py_use msgpack >= 0.4.2
+%py_use jsonschema >= 2.5.1
+%py_use phonenumbers >= 8.2.0
+%py_use six >= 1.10
+# prometheus_client 0.4.0 changed the format of counter metrics
+# (cf https://github.com/matrix-org/synapse/issues/4001)
+%py_use prometheus_client >= 0.0.18
+%py_use prometheus_client < 0.4.0
+# we use attr.s(slots), which arrived in 16.0.0
+%py_use attrs >= 16.0.0
+%py_use netaddr >= 0.7.18
+
+# Conditional
+%py_use jinja2 >= 2.9
+%py_use bleach >= 1.4.2
 
 # for /usr/lib/matrix-synapse/sync_room_to_group.pl
 BuildRequires: perl-CPAN
@@ -52,11 +73,13 @@ BuildRequires: perl-JSON-XS
 Requires: python-module-twisted-conch >= 17.5.0
 Requires: python-module-twisted-names >= 17.5.0
 Requires: python-module-twisted-web >= 17.5.0
-Requires: python-module-service-identity >= 1.0.0
-Requires: python-module-pysaml2 >= 3.0.0
+#Requires: python-module-service-identity >= 1.0.0
+Requires: python-module-twisted-mail >= 17.5.0
+#Requires: python-module-pysaml2 >= 3.0.0
+#Requires: python-module-pysaml2 < 4.0.0
 
 # python-modules-sqlite3
-Requires: python-module-matrix-angular-sdk
+#Requires: python-module-matrix-angular-sdk
 
 BuildArch: noarch
 
@@ -67,7 +90,7 @@ Synapse is the reference python/twisted Matrix homeserver implementation.
 
 %prep
 %setup
-%__subst "s|nacl==0.3.0|nacl>=0.3.0|g" synapse/python_dependencies.py
+#__subst "s|nacl==0.3.0|nacl>=0.3.0|g" synapse/python_dependencies.py
 
 %build
 %python_build
@@ -78,8 +101,7 @@ mkdir -p %buildroot/etc/synapse
 cp contrib/systemd/log_config.yaml %buildroot/etc/synapse/
 # TODO
 echo >%buildroot/etc/synapse/homeserver.yaml
-install -m644 -D contrib/systemd/synapse.service %buildroot%_unitdir/synapse.service
-subst "s|=synapse|=_synapse|g" %buildroot%_unitdir/synapse.service
+install -m644 -D %SOURCE1 %buildroot%_unitdir/matrix-synapse.service
 mkdir -p %buildroot/var/{run,lib,log}/synapse
 mkdir -p %buildroot%_sbindir/
 ln -sr %buildroot%_libexecdir/%name/synctl %buildroot%_sbindir/synctl
@@ -103,8 +125,9 @@ fi
 %_libexecdir/%name/synctl
 %_libexecdir/%name/move_remote_media_to_new_store.py
 %_libexecdir/%name/sync_room_to_group.pl
+%_libexecdir/%name/generate_config
 %_sbindir/synctl
-%_unitdir/synapse.service
+%_unitdir/matrix-synapse.service
 %_tmpfilesdir/%name.conf
 %python_sitelibdir_noarch/*
 %dir /etc/synapse/
@@ -114,6 +137,11 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Jan 22 2019 Vitaly Lipatov <lav@altlinux.ru> 0.34.1.1-alt1
+- new version 0.34.1.1 (with rpmrb script)
+- update build and install python module requires
+- rename service to matrix-synapse
+
 * Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 0.33.9-alt2
 - no longer require a specific version of saml2 since v0.27.0-rc1
 
