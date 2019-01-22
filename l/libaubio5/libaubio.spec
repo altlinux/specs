@@ -3,7 +3,7 @@
 %def_enable python
 
 Name: libaubio%sover
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
@@ -141,6 +141,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 0.4.8-alt1
+- 0.4.8
+
 * Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 0.4.7-alt1
 - 0.4.7
 
