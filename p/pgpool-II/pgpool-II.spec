@@ -1,4 +1,4 @@
-%define pg_ver 10
+%define pg_ver 11
 %def_with devel
 %def_with lib
 %define pgpool_configdir %_sysconfdir/pgpool.d
@@ -7,8 +7,8 @@
 %define PGSQL pgsql
 
 Name: pgpool-II
-Version: 3.7.4
-Release: alt1.1
+Version: 4.0.2
+Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -146,6 +146,10 @@ __EOF__
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 4.0.2-alt1
+- 4.0.2
+- build for postgresql11
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.4-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
