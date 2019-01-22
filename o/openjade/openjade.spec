@@ -1,6 +1,6 @@
 Name: openjade
 Version: 1.3.2
-Release: alt14
+Release: alt15
 
 %def_disable static
 %def_enable http
@@ -15,9 +15,8 @@ URL: http://openjade.sourceforge.net/
 
 %define sp_ver 1.5.2
 
-PreReq: docbook-dtds
-Requires: sgml-common >= 0.2
-Requires(post,postun,triggerun): sgml-common >= 0.2
+Requires(pre): docbook-dtds
+Requires(post,postun): sgml-common >= 0.2
 Requires: libOpenSP >= %sp_ver
 
 Provides: jade = %version
@@ -117,19 +116,6 @@ if [ "$1" != 0 -a ! -f %sgmlbase/%name-%version/catalog ]; then
         %sgmlbase/%name-%version/catalog >/dev/null 2>&1
 fi
 
-%triggerun -- openjade < 1.3.2-alt2
-OJCATALOGS=$(echo %sgmlbase/%name-*/catalog)
-[ "$OJCATALOGS" = '%sgmlbase/%name-*/catalog' ] ||
-/bin/find %sgmlconfdir -type f \
-	\( -name 'sgml-docbook-*.cat' -o -name 'xml-docbook-*.cat' \) -print |
-    while read -r catalog; do
-	for ojcatalog in $OJCATALOGS; do
-	    [ "$ojcatalog" = %sgmlbase/%name-%version/catalog ] ||
-	    %_bindir/install-catalog --remove "$catalog" \
-		$ojcatalog >/dev/null 2>&1
-	done
-    done
-
 %files
 %doc README COPYING NEWS releasenotes.html ChangeLog
 %doc dsssl/demo.*
@@ -146,6 +132,9 @@ OJCATALOGS=$(echo %sgmlbase/%name-*/catalog)
 %exclude %_libdir/libostyle.so
 
 %changelog
+* Tue Jan 22 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt15
+- removed obsolete %%triggerun script for 15 y.o openjade (ALT #35945)
+
 * Tue Oct 03 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.2-alt14
 - Fixed miscompilation with gcc6.
 
