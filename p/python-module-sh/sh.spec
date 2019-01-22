@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.12.14
-Release: alt3
+Release: alt4
 Summary: Python subprocess interface
 License: MIT
 BuildArch: noarch
@@ -16,6 +16,7 @@ Url: https://pypi.org/project/sh/
 Source: %name-%version.tar
 Patch1: pep-0538-test-fix.patch
 Patch2: 1.12.14-sh-alt-fix-test_piped_exceptionX.patch
+Patch3: 1.12.14-sh-alt-fix-test_general_signal.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -51,6 +52,7 @@ sh is not a collection of system commands implemented in python.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 sed -i -e 's:==:>=:g' \
 	requirements*.txt
@@ -90,6 +92,9 @@ popd
 %python3_sitelibdir/sh-%version-py*.egg-info/
 
 %changelog
+* Tue Jan 22 2019 Stanislav Levin <slev@altlinux.org> 1.12.14-alt4
+- Fixed build.
+
 * Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 1.12.14-alt3
 - Fixed build.
 
