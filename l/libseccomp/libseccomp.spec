@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: 2.3.3
-Release: alt1%ubt.1
+Release: alt2
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -14,7 +14,6 @@ Url: https://github.com/seccomp/libseccomp
 Source: %name-%version.tar
 Patch100: 0001-Tune-config.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -141,6 +140,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 2.3.3-alt2
+- Removed ubt macros.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
