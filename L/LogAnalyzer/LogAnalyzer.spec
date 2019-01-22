@@ -2,7 +2,7 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 4.1.6
+Version: 4.1.7
 Release: alt1
 License: GPLv3+
 Group: Monitoring
@@ -99,6 +99,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files php7
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 4.1.7-alt1
+- 4.1.7
+
 * Wed Apr 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.1.6-alt1
 - 4.1.6
 - add php5, php7, apache2 packages
