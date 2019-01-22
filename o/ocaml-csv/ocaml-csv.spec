@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-csv
-Version: 2.1
-Release: alt2
+Version: 2.2
+Release: alt1
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
 Group: Development/ML
@@ -45,7 +45,7 @@ make
 %install
 
 mkdir -p %buildroot%prefix %buildroot%_libdir/ocaml
-jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 
 %files
@@ -74,6 +74,9 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/csv-lwt/*.mli
 
 %changelog
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 2.2-alt1
+- 2.2
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.1-alt2
 - rebuilt with ocaml-4.07.1
 
