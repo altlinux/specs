@@ -3,11 +3,12 @@
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          2.1.0
-Release:          alt1
+Release:          alt2
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
+Patch1:           Change-soname-back-to-0.patch
 BuildRequires:    libunistring-devel
 # Needed for autoreconf
 BuildRequires: /usr/bin/gtkdocize
@@ -42,6 +43,7 @@ Domain Name (IDNA2008/TR46) format.
 
 %prep
 %setup
+%patch1 -p1
 # Workaround for generating idn2.1
 rm doc/idn2.1
 
@@ -69,8 +71,9 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-ln -s libidn2.so.4 %buildroot/%_lib/libidn2.so.0
-%filter_from_provides s/^\(.*\<libidn2\.so\.\)4\>\(.*\)$/&\n\10\2/
+#FIXME: Drop it when there is no clients for libidn2.so.4
+ln -s libidn2.so.0 %buildroot/%_lib/libidn2.so.4
+%filter_from_provides s/^\(.*\<libidn2\.so\.\)0\>\(.*\)$/&\n\14\2/
 
 %find_lang %name
 
@@ -98,6 +101,10 @@ ln -s libidn2.so.4 %buildroot/%_lib/libidn2.so.0
 %{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Tue Jan 22 2019 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt2
+- Add symlink libidn2.so.4 -> libidn2.so.0.
+- Change soname back to 0.
+
 * Fri Jan 11 2019 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1
 - Add symlink libidn2.so.0 -> libidn2.so.4.
 - Workaround for generating idn2.1 man page.
