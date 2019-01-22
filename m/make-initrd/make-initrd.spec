@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,14 @@ fi
 %endif
 
 %changelog
+* Tue Jan 22 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.7-alt1
+- Runtime changes:
+  + Exclude some shell variables from the original environment
+  + Allow mount anything as root from cmdline
+  + Log network events
+- Utilities:
+  + depinfo: Add support for kernel builtins
+
 * Fri Dec 21 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.6-alt1
 - Feature changes:
   + guestfs: Do not always turn off other features
