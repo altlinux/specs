@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.11.0
-Release: alt2
+Version: 1.12.0
+Release: alt1
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -26,10 +26,10 @@ BuildRequires(pre): rpm-build-python3
 
 # for test suite
 %if_with check
-BuildRequires: python-module-tox
+BuildRequires: python-module-pytest
 BuildRequires: python-modules-tkinter
-BuildRequires: python3-module-tox
 BuildRequires: python3-modules-tkinter
+BuildRequires: python3-module-tox
 %endif
 
 %description
@@ -70,20 +70,17 @@ popd
 pushd ../python3
 %python3_install
 popd
+# check actual state of things regarding to provides
+set -o pipefail
+PYTHONPATH="$(pwd)" python3 -c "import six;assert six.__version__==\"%version\";modules=six._importer.known_modules.keys();print(*modules, sep='\n')" | sort > move.actual.list
+set +o pipefail
+cat %SOURCE2 | sort > move.expected.list
+diff -yq move.expected.list move.actual.list
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-
-# copy necessary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst documentation/index.rst
@@ -97,6 +94,9 @@ popd
 %python3_sitelibdir/six-*.egg-info/
 
 %changelog
+* Sat Jan 20 2019 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
+- 1.11.0 -> 1.12.0.
+
 * Wed Aug 29 2018 Stanislav Levin <slev@altlinux.org> 1.11.0-alt2
 - Fix build with new pytest-3.7.
 
