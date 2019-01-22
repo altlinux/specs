@@ -1,7 +1,7 @@
 Summary: A tool to replay captured network traffic
 Name: tcpreplay
-Version: 4.2.6
-Release: alt1%ubt
+Version: 4.3.1
+Release: alt1
 License: GPLv3
 Group: Networking/Other
 Url: https://github.com/appneta/tcpreplay
@@ -44,6 +44,9 @@ files.
 %_man1dir/*
 
 %changelog
+* Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 4.3.1-alt1
+- 4.2.6 -> 4.3.1
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 4.2.6-alt1%ubt
 - new version
 
