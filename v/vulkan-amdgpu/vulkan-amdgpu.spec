@@ -13,8 +13,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q1.1
-Release: alt3
+Version: 2019.Q1.2
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -68,7 +68,8 @@ export GCC_VERSION=5 \
 popd
 
 %install
-mkdir -p %buildroot{%_vkdir,%_libdir}
+mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
+touch %buildroot%_sysconfdir/amd/amdPalSettings.cfg
 
 install -p -m644 %_builddir/xgl/BUILD/icd/%_vklib%bits.so %buildroot%_libdir/
 install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd%{bits}.json
@@ -78,8 +79,19 @@ subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
 %files
 %_libdir/*.so
 %_vkdir/*.json
+%dir %_sysconfdir/amd
+%ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Tue Jan 22 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.2-alt1
+- 2019-1-15 update:
+  + llvm: 3c7dbb214c3680803f7d3e3c3aed02fddb2f7dbb
+  + spvgen: d26082d54930ad2ea97da94a2443137e7325b64c
+  + llpc: 797be964eb8d65f2ec162a783708b36834a62000
+  + pal: 2e94fa1533a606d076061db8d5be514bb69adfc3
+  + xgl: 0d7c5a69ba314bfabe2d5dbe3e5e4d1ea3228845
+- .spec: added missing conf dir.
+
 * Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.1-alt3
 - Rebuild w/ gcc5 (as it does ubuntu).
 
