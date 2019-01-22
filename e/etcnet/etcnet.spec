@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.17
-Release:	alt1
+Release:	alt2
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Mon Jan 21 2019 Fr. Br. George <george@altlinux.ru> 0.9.17-alt2
+- remove incorrect quotation when doing restart (Closes: #35943)
+
 * Thu Dec 20 2018 Anton Farygin <rider@altlinux.ru> 0.9.17-alt1
 - return method from source_optfile() changed from "continue" to "return"
   to avoid errors with bash4
@@ -305,7 +308,7 @@ fi
 * Wed Dec 12 2007 Denis Ovsienko <pilot@altlinux.ru> 0.9.5-alt1
 - new version fixes two issues with iwpriv and ifrename
 
-* Thu Oct 19 2007 Denis Ovsienko <pilot@altlinux.ru> 0.9.4-alt1
+* Fri Oct 19 2007 Denis Ovsienko <pilot@altlinux.ru> 0.9.4-alt1
 - avoid ghost Ruby dependency
 - update vlan-utils dependency
 - introduce LINKDELAY feature and enable it by default
