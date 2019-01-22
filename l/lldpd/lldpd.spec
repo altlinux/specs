@@ -1,6 +1,6 @@
 Name: lldpd
-Version: 1.0.1
-Release: alt1%ubt
+Version: 1.0.3
+Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -27,10 +27,10 @@ Source6: lldpd.tmpfiles
 %def_with readline
 %def_without seccomp
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libssl-devel
 BuildRequires: doxygen
 BuildRequires: libevent-devel
+BuildRequires: libcap-devel
 
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_snmp:BuildRequires: libnet-snmp-devel}
@@ -95,6 +95,7 @@ mkdir libevent
 
 %autoreconf
 %configure \
+    --enable-pie \
     %{subst_enable cdp} \
     %{subst_enable fdp} \
     %{subst_enable edp} \
@@ -164,6 +165,9 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1%ubt
 - 1.0.1
 
