@@ -13,9 +13,10 @@
 %def_enable libgcrypt
 %def_enable libsystemd
 %def_enable mmkubernetes
+%def_enable clickhouse
 
 Name: rsyslog
-Version: 8.40.0
+Version: 8.1901.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -52,6 +53,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
 %{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
+%{?_enable_clickhouse:BuildRequires: libcurl-devel}
 
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
@@ -87,7 +89,7 @@ BuildArch: noarch
 Requires: %name = %version-%release
 Provides: syslogd-daemon
 Provides: /etc/rsyslog.d
-PreReq: syslog-common
+Requires: syslog-common
 Conflicts: syslogd klogd
 Conflicts: syslog-ng
 
@@ -302,6 +304,17 @@ feed logs directly into Elasticsearch.
  o omelasticsearch.so - This module provides the capability for rsyslog to feed logs directly into
 Elasticsearch.
 
+%package clickhouse 
+Summary: clickhouse output module for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description clickhouse
+The rsyslog-clickhouse package contains a dynamic shared object that will add
+feed logs directly into clickhouse.
+
+ o clickhouse.so - This is the https://clickhouse.yandex/ output module.
+
 %package hiredis
 Summary: Redis support for rsyslog
 Group: System/Kernel and hardware
@@ -419,6 +432,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-usertools \
 	--enable-generate-man-pages \
 	%{subst_enable mmkubernetes} \
+    %{subst_enable clickhouse} \
 	%{subst_enable libsystemd} \
 	--with-systemdsystemunitdir=%_unitdir
 
@@ -574,6 +588,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %files elasticsearch
 %mod_dir/omelasticsearch.so
 
+%files clickhouse 
+%mod_dir/omclickhouse.so
+
 %files hiredis
 %mod_dir/omhiredis.so
 
@@ -599,6 +616,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 8.1901.0-alt1
+- 2019.01 Release
+- add clickhouse package
+
 * Wed Jan 02 2019 Alexey Shabalin <shaba@altlinux.org> 8.40.0-alt1
 - 8.40.0
 
