@@ -1,6 +1,6 @@
 Name: gambit
 Version: 4.9.1
-Release: alt4
+Release: alt5
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -203,6 +203,9 @@ EOF
 %_bindir/gambcomp-ruby
 
 %changelog
+* Tue Jan 22 2019 Paul Wolneykien <manowar@altlinux.org> 4.9.1-alt5
+- Setup for "cronbuild" automatic building of new versions.
+
 * Wed Jan 09 2019 Michael Shigorin <mike@altlinux.org> 4.9.1-alt4
 - E2K: workaround for lcc-1.23 lacking some gcc5 builtins
 
