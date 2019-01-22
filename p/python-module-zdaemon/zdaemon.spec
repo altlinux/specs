@@ -4,9 +4,12 @@
 
 %def_with python3
 
+# Because there is race in tests. TODO: try to disable it in next release
+%def_without check
+
 Name: python-module-%oname
 Version: 4.3
-Release: alt1
+Release: alt2
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -139,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 22 2019 Grigory Ustinov <grenka@altlinux.org> 4.3-alt2
+- Disable check, until next release, because of race in tests (Closes: #35947).
+
 * Thu Jan 10 2019 Grigory Ustinov <grenka@altlinux.org> 4.3-alt1
 - new version 4.3
 
