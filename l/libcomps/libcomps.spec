@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-mageia-compat
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,8 +10,8 @@ BuildRequires: gcc-c++
 %define libname_devel lib%{shortname}-devel
 
 Name:           libcomps
-Version:        0.1.8
-Release:        alt1_3.1
+Version:        0.1.9
+Release:        alt1_1
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
@@ -20,15 +20,15 @@ URL:            https://github.com/rpm-software-management/libcomps
 Source0:        https://github.com/rpm-software-management/libcomps/archive/%{name}-%{version}.tar.gz
 
 # Patches from upstream
-Patch1:         0001-libcomps-0.1.8-1.patch
+Patch1:         0001-Fix-Missing-braces.patch
 
 # Fixes zlib linking, from:
 # https://github.com/rpm-software-management/libcomps/pull/28
 Patch0:         libcomps-0001-Add-zlib-as-an-explicit-dependency.patch
-BuildRequires:  zlib-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  check libcheck-devel libcheck-devel-static
-BuildRequires:  libexpat-devel
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(check)
+BuildRequires:  pkgconfig(expat)
 BuildRequires:  ccmake cmake ctest
 
 
@@ -68,7 +68,7 @@ Documentation files for libcomps library
 %package -n python-module-libcomps-doc
 Summary:        Documentation files for python bindings libcomps library
 Group:          Development/Python
-Requires:       python-%{name} = %{version}-%{release}
+Requires:       python-module-libcomps = %{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  python-module-sphinx
 BuildRequires:  python-module-sphinx_rtd_theme
@@ -79,7 +79,7 @@ Documentation files for python bindings libcomps library
 %package -n python-module-libcomps
 Summary:        Python 2 bindings for libcomps library
 Group:          Development/Python
-BuildRequires:  python-devel
+BuildRequires:  pkgconfig(python)
 Provides:       python-%{name} = %{version}-%{release}
 Requires:       %{libname}%{?_isa} = %{version}-%{release}
 
@@ -103,6 +103,9 @@ Python3 bindings for libcomps library
 
 rm -rf py3
 mkdir py3
+
+# Fix build with sphinx 1.8.3
+sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/doc-sources/conf.py.in
 
 %build
 %{mageia_cmake} -DPYTHON_DESIRED:STRING=2 ../libcomps/
@@ -161,6 +164,9 @@ popd
 
 
 %changelog
+* Tue Jan 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.9-alt1_1
+- update by mgaimport
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.8-alt1_3.1
 - (NMU) Rebuilt with python-3.6.4.
 
