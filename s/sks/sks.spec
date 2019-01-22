@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: Synchronizing Key Server
 Name: sks
 Epoch: 1
 Version: 1.1.6
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 Url: https://bitbucket.org/skskeyserver/sks-keyserver/wiki/Home
@@ -14,15 +16,26 @@ Source3: %{name}-recon.init
 Source4: %name.log
 Source5: sks-db.service
 Source6: sks-recon.service
-Source7: cryptokit-1.7-sks-uint32.patch
 
-Patch1: %name-%version-fedora-makefile.patch
-Patch2: %name-%version-alt-libdb.patch
-Patch3: %name-%version-alt-build.patch
+Patch1: %name-%version-upstream-unbundle-cryptokit.patch
+Patch2: %name-%version-upstream-cryptokit-compat-1.patch
+Patch3: %name-%version-upstream-cryptokit-compat-2.patch
+Patch4: %name-%version-upstream-cryptokit-compat-3.patch
+Patch5: %name-%version-upstream-compiler-name.patch
+Patch6: %name-%version-upstream-ocaml-compat.patch
+
+Patch10: %name-%version-debian-use-fhs.patch
+Patch11: %name-%version-debian-fix-misspellings.patch
+Patch12: %name-%version-debian-fix-ftbfs.patch
+
+Patch20: %name-%version-alt-libdb.patch
+Patch21: %name-%version-alt-build.patch
 
 BuildRequires: ocaml-camlp4-devel ocaml-cryptokit-devel libdb6-devel zlib-devel
 BuildRequires: perl-podlators
-BuildRequires: chrpath
+BuildRequires: ocaml-num-devel
+BuildRequires: ocaml-findlib
+BuildRequires: libgmp-devel
 
 %description
 SKS (Synchronizing Key Server) is a full-featured replacement
@@ -34,11 +47,19 @@ the replication is complete.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
-%patch3 -p2
-cp %SOURCE7 .
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch20 -p2
+%patch21 -p2
 
 %build
+export OCAMLPARAM="safe-string=0,_"
 mv Makefile.local.unused Makefile.local
 %make dep
 %make all
@@ -47,8 +68,6 @@ mv Makefile.local.unused Makefile.local
 %makeinstall_std \
 PREFIX="%{buildroot}%{_prefix}" \
 MANDIR="%{buildroot}%{_mandir}"
-
-chrpath -d %buildroot%_bindir/sks
 
 mkdir -p %buildroot%_sysconfdir/%name
 install %SOURCE1 %buildroot%_sysconfdir/%name
@@ -101,6 +120,9 @@ install -m 0644 %SOURCE6 %buildroot%_unitdir/%{name}-recon.service
 %_man8dir/*
 
 %changelog
+* Tue Jan 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.6-alt2
+- Unbundled cryptokit library and updated build dependencies.
+
 * Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.6-alt1
 - Updated to upstream release version 1.1.6.
 
