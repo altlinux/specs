@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.54.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: alt-catch-sigterm.patch
 
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -51,6 +52,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 
 %build
 %K5build
@@ -75,6 +77,9 @@ KF5 library
 %_K5lib/libKF5Crash.so.*
 
 %changelog
+* Fri Jan 18 2019 Oleg Solovyov <mcpain@altlinux.org> 5.54.0-alt2
+- kcrash: handle SIGTERM
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
 - new version
 
