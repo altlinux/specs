@@ -2,7 +2,7 @@
 %define origname krusader
 
 Name: kde5-%origname
-Version: 2.7.0
+Version: 2.7.1
 Release: alt2
 
 Source: %origname.tar.gz
@@ -79,6 +79,9 @@ published under the GNU General Public Licence
 %_K5doc/*/%origname
 
 %changelog
+* Wed Jan 23 2019 Konstantin Artyushkin <akv@altlinux.org> 2.7.1-alt2
+- new 2.7.1 version
+
 * Tue Jun 19 2018 Konstantin Artyushkin <akv@altlinux.org> 2.7.0-alt2
 - add some requires for non-kde5 environtments
 
