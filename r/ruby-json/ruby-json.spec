@@ -2,7 +2,7 @@
 
 Name:     ruby-%pkgname
 Version:  2.1.0
-Release:  alt1
+Release:  alt2
 
 Summary:  JSON parser and generator
 License:  MIT
@@ -15,7 +15,8 @@ Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source: %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-Obsoletes: ruby-json-utils
+Obsoletes: ruby-json-utils ruby-json-pure
+Provides: ruby-json-utils ruby-json-pure
 
 %description
 This library can parse JSON texts and generate them from ruby data
@@ -57,6 +58,9 @@ find %buildroot
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jan 23 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
+- Fixed provides and obsoletes.
+
 * Mon Jan 14 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - Bump to 2.1.0
 
