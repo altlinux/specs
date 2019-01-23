@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.0.20180710
-Release: alt3
+Release: alt4
 
 Summary: mediawiki bot library
 License: MIT
@@ -30,12 +30,12 @@ wikis.
 %setup -n %modulename-%version
 
 %build
-pushd *
+pushd core
 %python3_build
 popd
 
 %install
-pushd *
+pushd core
 %python3_install
 mkdir -p %buildroot/%_docdir/
 cp *.rst generate_*.py pwb.py *.sample  *.txt %buildroot/%_docdir/
@@ -48,6 +48,9 @@ popd
 %_docdir/*
 
 %changelog
+* Wed Jan 23 2019 Denis Medvedev <nbr@altlinux.org> 3.0.20180710-alt4
+- Fixed build with corrected build instruction.
+
 * Sun Oct 07 2018 Denis Medvedev <nbr@altlinux.org> 3.0.20180710-alt3
 - Added forgotten main script pwv.py
 
