@@ -3,8 +3,8 @@
 %def_disable libxml2
 
 Name: xmlrpc-c
-Version: 1.43.06
-Release: alt1.svn2912
+Version: 1.51.03
+Release: alt1.svn3018
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
@@ -22,6 +22,11 @@ Patch2: 0001-cleanup-and-fix-libxml2-backend.patch
 Patch101: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
 Patch102: 0002-Use-proper-datatypes-for-long-long.patch
 Patch103: 0003-allow-30x-redirections.patch
+
+# Backported patches
+# https://sourceforge.net/p/xmlrpc-c/code/2981/
+# Fixes RHBZ #1541868
+Patch201:       0001-Remove-trace-statements-accidentally-committed-with-.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
@@ -111,6 +116,7 @@ The header file for developing applications that use
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch201 -p1
 
 %build
 autoconf
@@ -118,15 +124,13 @@ autoconf
 	--disable-wininet-client \
 	%{?_enable_libxml2:--enable-libxml2-backend}
 
-%make AR="ar" RANLIB="ranlib"
-%make -C tools AR="ar" RANLIB="ranlib"
+%make
+%make -C tools
 
 %install
-%makeinstall_std AR="ar" RANLIB="ranlib"
-%makeinstall_std -C tools AR="ar" RANLIB="ranlib"
+%makeinstall_std
+%makeinstall_std -C tools
 rm -f %buildroot%_libdir/*.a
-#mkdir -p %buildroot%_pkgconfigdir
-#mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 
 %files
 %doc README doc/*
@@ -136,14 +140,19 @@ rm -f %buildroot%_libdir/*.a
 %exclude %_bindir/xmlrpc-c-config
 
 %files -n %libname
-%_libdir/*.so.3*
+%_libdir/libxmlrpc.so.*
+%_libdir/libxmlrpc_*.so.*
+%exclude %_libdir/libxmlrpc_cpp.so.*
+%exclude %_libdir/libxmlrpc_*++.so.*
 %exclude %_libdir/libxmlrpc_client.so.*
 
 %files -n %libname-client
 %_libdir/libxmlrpc_client.so.*
 
 %files -n %libname++
-%_libdir/*.so.8*
+%_libdir/libxmlrpc_cpp.so.*
+%_libdir/libxmlrpc++.so.*
+%_libdir/libxmlrpc_*++.so.*
 %exclude %_libdir/libxmlrpc_client++.so.*
 
 %files -n %libname-client++
@@ -157,6 +166,12 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.51.03-alt1.svn3018
+- 1.51.03
+
+* Wed Sep 26 2018 Alexey Shabalin <shaba@altlinux.org> 1.51.02-alt1.svn3011
+- 1.51.02
+
 * Thu Mar 01 2018 Alexey Shabalin <shaba@altlinux.ru> 1.43.06-alt1.svn2912
 - 1.43.06
 
