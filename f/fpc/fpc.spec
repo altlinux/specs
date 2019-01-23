@@ -1,6 +1,6 @@
 %def_disable boostrap
 %def_with    sources
-%def_with    doc
+%def_without doc
 %def_without win32
 %def_with    tests
 # Help index is generated too long, package ready index
@@ -8,13 +8,15 @@
 
 Name: 	  fpc
 Epoch:    2
-Version:  3.0.4
-Release:  alt1
+Version:  3.3.1
+Release:  alt0.1
 
 Summary:  Free Pascal Compiler -- Meta Package
 License:  GPL
 Group:    Development/Other
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
 
 Url: 	 http://www.freepascal.org
 Source:  fpcbuild-%version.tar
@@ -34,8 +36,6 @@ Patch0:  fpc-gdb.patch
 # Patches from Mageia
 # Fix http://bugs.freepascal.org/view.php?id=23682
 Patch1: fpc-fpkeys.patch
-# Fix http://bugs.freepascal.org/view.php?id=23683
-Patch2: fpc-process-window-info.patch
 # Don't show message on mouse click
 Patch3: fpc-mouse-click.patch
 # Fix http://bugs.freepascal.org/view.php?id=25280
@@ -69,8 +69,8 @@ Patch32: fpc-auto-add-help-index.patch
 Patch33: fpc-writeidx-show-progress.patch
 # Fix missing examples in documentation
 Patch34: fpc-alt-fix-missing-examples-in-docs.patch
-
-ExclusiveArch: %ix86 amd64 x86_64
+# Link with gdb libraries (fix build with GBD 8)
+Patch35: fpc-alt-link-wih-gdb-libs.patch
 
 Requires: fpc-units-rtl
 Requires: fpc-compiler
@@ -88,11 +88,18 @@ Requires: fpc-units-multimedia
 
 Requires: rpm-build-fpc
 
-BuildRequires(pre): rpm-build-fpc fpc-compiler
+Provides:  freepascal = %EVR
+Obsoletes: freepascal < %EVR
+
+BuildRequires(pre): rpm-build-fpc
+BuildRequires: fpc-compiler
 BuildRequires: fpc-utils
 BuildRequires: libexpat-devel libgdb-devel libncurses-devel libreadline-devel-static python-devel zlib-devel liblzma-devel
 BuildRequires: mysql-devel postgresql-devel libunixODBC-devel libsqlite3-devel
 BuildRequires: libGL-devel libgtk+2-devel libjpeg-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libunwind-devel
+BuildRequires: python3-dev
 BuildRequires: unzip
 %if_with doc
 BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-units-fcl
@@ -132,7 +139,6 @@ need, and can skip installing this metapackage.
 %patch -p1
 pushd fpcsrc
 %patch1 -p0
-%patch2 -p0
 %patch3 -p0
 %patch6 -p0
 popd
@@ -143,19 +149,20 @@ popd
 %patch17 -p2
 %patch18 -p1
 #patch19 -p1 TODO need adapt
-%patch20 -p1
+%patch20 -p2
 #patch21 -p1
-%patch23 -p1
+#patch23 -p1
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-%patch27 -p2
-%patch28 -p1
+#patch27 -p2
+%patch28 -p2
 %patch30 -p2
 %patch31 -p0
 %patch32 -p2
 %patch33 -p2
 %patch34 -p2
+#%%patch35 -p2
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -163,7 +170,7 @@ cp -a fpcsrc{,.orig}
 
 pushd fpcsrc
 sed -i "s|/usr/local/lib|%_libdir|g"      packages/gdbint/src/gdbint.pp
-sed -i "/LINKLIB/s/python/python2.7/"     packages/gdbint/src/gdbint.pp
+#sed -i "/LINKLIB/s/python/python2.7/"     packages/gdbint/src/gdbint.pp
 sed -i "/LINKLIB ncurses/a {\$LINKLIB z}" packages/gdbint/src/gdbint.pp
 sed -i "/LINKLIB ncurses/a {\$LINKLIB lzma}" packages/gdbint/src/gdbint.pp
 sed -i '/fp/s/\/bin/\/usr\/bin/g'         compiler/utils/samplecfg
@@ -194,7 +201,14 @@ export PATH=$PWD/compiler:$PATH
 sed -i "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" utils/tply/Makefile.fpc
 %endif
 
-make build VERBOSE=1 FPC=%ppcname
+# First build gnulib modules glob fcntl for link with libgdb.a
+#gnulib-tool --create-testdir --dir=gnulib-stub --without-tests glob fcntl
+#pushd gnulib-stub
+#./configure
+#make
+#popd
+
+make build VERBOSE=1 FPC=%ppcname LDCONFIG="$(dirname `gcc -print-file-name=libgcc.a`)"
 
 popd
 
@@ -217,7 +231,7 @@ popd
 %install
 pushd fpcsrc
 %makeinstall_std INSTALL_PREFIX=%buildroot%_usr
-%makeinstall_std INSTALL_PREFIX=%buildroot%_usr -C installer
+#%%makeinstall_std INSTALL_PREFIX=%buildroot%_usr -C installer
 
 # this symbolic link must be absolute (so that fpcmake can detect FPCDIR)
 ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
@@ -234,6 +248,14 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 mv %buildroot%fpc_dir/%version/* %buildroot%fpc_dir
 rmdir %buildroot%fpc_dir/%version
 mv %buildroot%fpc_docdir-%version %buildroot%fpc_docdir
+
+# Do not package library and install dirwatch* directly
+rm -f %buildroot%_libdir/libpas2jslib.so
+%ifarch x86_64
+cp -av utils/pas2js/units/x86_64-linux/dirwatch.* %buildroot%fpc_dir/units/x86_64-linux/pastojs/
+%else
+cp -av utils/pas2js/units/i386-linux/dirwatch.* %buildroot%fpc_dir/units/i386-linux/pastojs/
+%endif
 
 # Install fp.cfg and create fpc.cfg
 install -Dpm 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
@@ -401,7 +423,7 @@ Compiler:
 %_bindir/fprcp
 %_bindir/h2pas
 %_bindir/h2paspp
-%_bindir/ifpc
+%_bindir/instantfpc
 %_bindir/makeskel
 %_bindir/makeskel.rsj
 %_bindir/mkarmins
@@ -422,11 +444,18 @@ Compiler:
 %_bindir/rmcvsdir
 %_bindir/rstconv
 %_bindir/unitdiff
+%if_with doc
 %_bindir/writeidx
+%endif
 # Other utilities
 %_bindir/cldrparser
 %_bindir/mkinsadd
 %_bindir/unihelper
+%_bindir/compileserver
+%_bindir/json2pas
+%_bindir/mka64ins
+%_bindir/pas2js
+%_bindir/webidl2pas
 #
 %fpc_dir/lexyacc
 %fpc_unitdir/utils-lexyacc
@@ -442,7 +471,7 @@ Compiler:
 %_man1dir/fpcres.1*
 %_man1dir/fpdoc.1*
 %_man1dir/fprcp.1*
-%_man1dir/ifpc.1*
+#_man1dir/instantfpc.1*
 %_man1dir/h2pas.1*
 %_man1dir/h2paspp.1*
 %_man1dir/makeskel.1*
@@ -477,8 +506,10 @@ Compiler.
 %files units-rtl
 %dir %fpc_dir/units
 %dir %fpc_unitdir
+%doc %fpc_docdir/rtl-generics
 %fpc_unitdir/rtl
 %fpc_unitdir/rtl-console
+%fpc_unitdir/rtl-generics
 %fpc_unitdir/rtl-extra
 %fpc_unitdir/rtl-objpas
 %fpc_unitdir/rtl-unicode
@@ -781,9 +812,18 @@ This package contains Free Pascal miscellaneous units for:
 %doc %fpc_docdir/tcl
 %doc %fpc_docdir/users
 %doc %fpc_docdir/utmp
+%doc %fpc_docdir/libenet
+%ifnarch %ix86
+%doc %fpc_docdir/libffi
+%endif
+%doc %fpc_docdir/libfontconfig
+%doc %fpc_docdir/libgc
 %ifarch %ix86
+%doc %fpc_docdir/libc
 %fpc_unitdir/libc
 %fpc_unitdir/unixutil
+%fpc_fpmdir/libc.fpm
+%fpc_fpmdir/unixutil.fpm
 %endif
 %fpc_unitdir/aspell
 %fpc_unitdir/bfd
@@ -807,6 +847,19 @@ This package contains Free Pascal miscellaneous units for:
 %fpc_unitdir/users
 %fpc_unitdir/utmp
 %fpc_unitdir/zlib
+%fpc_unitdir/fcl-report
+%fpc_unitdir/libcups
+%fpc_unitdir/libenet
+%ifnarch %ix86
+%fpc_unitdir/libffi
+%endif
+%fpc_unitdir/libfontconfig
+%fpc_unitdir/libgc
+%fpc_unitdir/libusb
+%fpc_unitdir/odata
+%fpc_unitdir/pastojs
+%fpc_unitdir/utils-pas2js
+%fpc_unitdir/webidl
 %fpc_fpmdir/aspell.fpm
 %fpc_fpmdir/bfd.fpm
 %fpc_fpmdir/bzip2.fpm
@@ -829,6 +882,18 @@ This package contains Free Pascal miscellaneous units for:
 %fpc_fpmdir/users.fpm
 %fpc_fpmdir/utmp.fpm
 %fpc_fpmdir/zlib.fpm
+%fpc_fpmdir/libcups.fpm
+%fpc_fpmdir/libenet.fpm
+%ifnarch %ix86
+%fpc_fpmdir/libffi.fpm
+%endif
+%fpc_fpmdir/libfontconfig.fpm
+%fpc_fpmdir/libgc.fpm
+%fpc_fpmdir/libusb.fpm
+%fpc_fpmdir/odata.fpm
+%fpc_fpmdir/pastojs.fpm
+%fpc_fpmdir/utils-pas2js.fpm
+%fpc_fpmdir/webidl.fpm
 
 # packages/media
 %package units-multimedia
@@ -869,7 +934,8 @@ This package contains Free Pascal multimedia interfacing units for:
 %package ide
 Summary: Free Pascal -- IDE
 Group: Development/Other
-Requires: %name-common = %{?epoch:%epoch:}%version-%release
+Requires: %name-common = %EVR
+Requires: fpc-units-base = %EVR
 
 %description ide
 This package contains the Integrated Development Environment (IDE) for
@@ -948,6 +1014,9 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Wed Jan 23 2019 Andrey Cherepanov <cas@altlinux.org> 2:3.3.1-alt0.1
+- New version from trunk because it supports gdb 8.x (ALT #35832).
+
 * Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 2:3.0.4-alt1
 - New version.
 - Package new units libmicrohttpd, googleapi and fcl-pdf.

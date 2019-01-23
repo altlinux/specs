@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.8.4
-Release:    alt1
+Release:    alt2
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -36,7 +36,7 @@ Patch13: lazarus-customform-sigsegv-fix.patch
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 
-Requires:   fpc >= 2.6.4 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
+Requires:   fpc >= 2.6.4 fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
 Requires:   glibc-devel glib-devel libGLU-devel libode-devel
 Requires:   fonts-bitmap-terminus
 Requires:   libdbus-devel
@@ -194,6 +194,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Wed Jan 23 2019 Andrey Cherepanov <cas@altlinux.org> 1:1.8.4-alt2
+- Remove requirement of fpc-src.
+
 * Fri Jun 29 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.8.4-alt1
 - New version.
 - Build only for i586 and x86_64.
