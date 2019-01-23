@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit d812109ebf3b904c9fcd8bc17f6d9b246232743b
+%global commit 653918056c594d7f56a65771b2c9681bdf8a3b9a 
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	5.4.2
+Version:	5.4.3
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -30,7 +30,7 @@ Source104: %name.tmpfiles
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: npm yarn
 BuildRequires: node node-devel
 BuildRequires: fontconfig libfreetype
@@ -152,6 +152,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Wed Jan 23 2019 Alexey Shabalin <shaba@altlinux.org> 5.4.3-alt1
+- 5.4.3
+
 * Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 5.4.2-alt1
 - 5.4.2
 
