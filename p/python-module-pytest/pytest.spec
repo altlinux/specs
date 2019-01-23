@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.10.1
-Release: alt2
+Release: alt3
 
 Summary: Python test framework
 License: MIT
@@ -14,6 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools_scm
@@ -21,6 +22,7 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: /dev/pts
+BuildRequires: python-module-argcomplete
 BuildRequires: python-module-pathlib2
 BuildRequires: python-module-funcsigs
 BuildRequires: python-module-pluggy
@@ -44,6 +46,7 @@ BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-tox
 %endif
 
 %py_requires py
@@ -88,6 +91,7 @@ scales to support complex functional testing for applications and libraries.
 
 %prep
 %setup
+%patch -p1
 # adjust timeouts for aarch64 tests
 grep -qs 'child\.expect(.*)' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
 grep -qs 'child\.expect_exact([[:space:]]*$' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
@@ -121,26 +125,13 @@ popd
 %python_install
 
 %check
+sed -i '/pytest --lsof {posargs}$/{s/{posargs}$/--ignore testing\/test_pdb.py --ignore testing\/test_terminal.py --ignore testing\/test_unittest.py &/g}' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PYTHONPATH=%buildroot%python_sitelibdir
-%buildroot%_bindir/pytest -v --cache-clear \
-testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
-
-# run pdb/terminal tests separately from other
-%buildroot%_bindir/pytest -v --cache-clear testing \
---ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
---ignore=testing/test_unittest.py
-
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%buildroot%_bindir/pytest3 -v --cache-clear \
-testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
-
-%buildroot%_bindir/pytest3 -v --cache-clear testing \
---ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
---ignore=testing/test_unittest.py
-
-popd
+export PIP_NO_INDEX=YES
+%define python2_nodots py%{python_version_nodots python}
+%define python3_nodots py%{python_version_nodots python3}
+export TOXENV=%python2_nodots,%python2_nodots-pexpect,%python3_nodots,%python3_nodots-pexpect
+tox.py3 --sitepackages -p auto -o -v -- --cache-clear
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -164,6 +155,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Wed Jan 23 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt3
+- Fixed "test_raises_exception_looks_iterable" test.
+
 * Sun Jan 13 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt2
 - Added workaround for request_garbage test.
 
