@@ -1,6 +1,6 @@
 Name:		netinst-overlays
-Version:	0.02
-Release:	alt3
+Version:	0.03
+Release:	alt1
 License:	BSD
 Summary:	Managing ALT Linux netinst-style filesystem patches
 Group:		System/Configuration/Networking
@@ -22,6 +22,9 @@ install overlays-* %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Jan 23 2019 Fr. Br. George <george@altlinux.ru> 0.03-alt1
+- Switch to overlayfs mount scheme gith squashfs overlays
+
 * Thu Jul 05 2018 Arseny Maslennikov <arseny@altlinux.org> 0.02-alt3
 - overlays-create: Defined more non-persistent locations.
 - overlays-init: Fixed a trailing slash.
