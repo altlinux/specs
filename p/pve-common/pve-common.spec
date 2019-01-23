@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 5.0.43
+Version: 5.0.44
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -64,6 +64,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Jan 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.44-alt1
+- 5.0-44
+
 * Mon Nov 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.43-alt1
 - 5.0-43
 
