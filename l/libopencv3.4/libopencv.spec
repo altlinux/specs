@@ -6,6 +6,7 @@
 %def_without unicap
 %def_with swig
 %def_with python
+%def_with python3
 %def_without xine
 %def_without octave
 %def_without gstreamer
@@ -39,8 +40,8 @@
 %define sover 3.4
 Name: lib%bname%sover
 Epoch: 1
-Version: 3.4.3
-Release: alt1.qa1
+Version: 3.4.5
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -51,6 +52,9 @@ Source: %bname-%version.tar
 # https://github.com/opencv/opencv_contrib.git
 Source1: %bname-contrib-%version.tar
 # https://github.com/opencv/opencv_3rdparty.git
+# Exact commits are mentioned in following files from contrib repo:
+# modules/xfeatures2d/cmake/download_vgg.cmake
+# modules/xfeatures2d/cmake/download_boostdesc.cmake
 Source2: %bname-xfeatures2d-boostdesc-%version.tar
 Source3: %bname-xfeatures2d-vgg-%version.tar
 
@@ -59,7 +63,7 @@ Patch2: %bname-alt-unimplemented-functions.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
-BuildRequires: cmake libnumpy-devel eigen3 doxygen python2.7(bs4) zlib-devel
+BuildRequires: cmake eigen3 doxygen python2.7(bs4) zlib-devel
 BuildRequires: libucil-devel libv4l-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
@@ -77,7 +81,15 @@ BuildRequires: ceres-solver-devel libglog-devel
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+3-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
-%{?_with_python:BuildRequires: python-devel}
+%{?_with_python:
+BuildRequires: python-devel
+BuildRequires: libnumpy-devel
+}
+%{?_with_python3:
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: libnumpy-py3-devel
+}
 %{?_with_octave:BuildRequires: octave-devel}
 %{?_with_swig:BuildRequires: swig}
 %{?_with_1394libs:BuildRequires: libdc1394-devel}
@@ -102,14 +114,14 @@ Summary: Development files for %name
 Requires: %name = %EVR
 # generated cmake targets mention tbb, require it here explicitly
 Requires: tbb-devel
-Provides: lib%{bname}2.2-devel = %version-%release
-Provides: lib%{bname}2-devel = %version-%release
-Conflicts: lib%{bname}2.2-devel < %version-%release
-Obsoletes: lib%{bname}2.2-devel < %version-%release
-Conflicts: lib%bname-devel < %version-%release
-Obsoletes: lib%bname-devel < %version-%release
-Conflicts: lib%{bname}2-devel < %version-%release
-Obsoletes: lib%{bname}2-devel < %version-%release
+Provides: lib%{bname}2.2-devel = %EVR
+Provides: lib%{bname}2-devel = %EVR
+Conflicts: lib%{bname}2.2-devel < %EVR
+Obsoletes: lib%{bname}2.2-devel < %EVR
+Conflicts: lib%bname-devel < %EVR
+Obsoletes: lib%bname-devel < %EVR
+Conflicts: lib%{bname}2-devel < %EVR
+Obsoletes: lib%{bname}2-devel < %EVR
 Provides: lib%bname-devel-static = %EVR
 
 %description -n lib%bname-devel
@@ -157,12 +169,12 @@ This package contains %Name tests applications.
 %package utils
 Group: Video
 Summary: %Name utils
-Provides: lib%bname-utils = %version-%release
-Conflicts: lib%bname-utils < %version-%release
-Obsoletes: lib%bname-utils < %version-%release
-Provides: lib%{bname}2-utils = %version-%release
-Conflicts: lib%{bname}2-utils < %version-%release
-Obsoletes: lib%{bname}2-utils < %version-%release
+Provides: lib%bname-utils = %EVR
+Conflicts: lib%bname-utils < %EVR
+Obsoletes: lib%bname-utils < %EVR
+Provides: lib%{bname}2-utils = %EVR
+Conflicts: lib%{bname}2-utils < %EVR
+Obsoletes: lib%{bname}2-utils < %EVR
 
 %description utils
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -174,16 +186,16 @@ improving Python bindings to %Name.
 
 This package contains %Name demo applications.
 
-
+%if_with python
 %package -n python-module-%bname%sover
 Group: Development/Python
 Summary: Python modules for %Name
-Provides: python-module-%bname = %version-%release
-Conflicts: python-module-%bname < %version-%release
-Obsoletes: python-module-%bname < %version-%release
-Provides: python-module-%{bname}2 = %version-%release
-Conflicts: python-module-%{bname}2 < %version-%release
-Obsoletes: python-module-%{bname}2 < %version-%release
+Provides: python-module-%bname = %EVR
+Conflicts: python-module-%bname < %EVR
+Obsoletes: python-module-%bname < %EVR
+Provides: python-module-%{bname}2 = %EVR
+Conflicts: python-module-%{bname}2 < %EVR
+Obsoletes: python-module-%{bname}2 < %EVR
 Conflicts: python-module-%{bname}2.3
 Obsoletes: python-module-%{bname}2.3
 Provides: python%{__python_version}(%bname)
@@ -198,13 +210,30 @@ improving Python bindings to %Name.
 
 This package contains an extension module for python that provides a
 Python language mapping for the %Name.
+%endif
+
+%if_with python3
+%package -n python3-module-%bname%sover
+Group: Development/Python3
+Summary: Python3 modules for %Name
+
+%description -n python3-module-%bname%sover
+%Name means Intel(R) Open Source Computer Vision Library. It is a
+collection of C functions and a few C++ classes that implement many
+popular Image Processing and Computer Vision algorithms.
+%Name provides cross-platform middle-to-high level API that includes
+about 300 C functions and a few C++ classes. Also there are constantly
+improving Python bindings to %Name.
+
+This package contains an extension module for python that provides a
+Python3 language mapping for the %Name.
+%endif
 
 %package examples
 Group: Video
 Summary: %Name samples
 Conflicts: lib%bname-examples
 Conflicts: lib%{bname}2-examples
-BuildArch: noarch
 
 %description examples
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -221,7 +250,7 @@ This package contains %Name examples.
 %patch1 -p1
 %patch2 -p1
 
-rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
+rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
 mkdir -pv BUILD/downloads/xfeatures2d
 cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* BUILD/downloads/xfeatures2d/
@@ -287,8 +316,15 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %files utils
 %_bindir/*
 
+%if_with python
 %files -n python-module-%bname%sover
 %python_sitelibdir/*
+%endif
+
+%if_with python3
+%files -n python3-module-%bname%sover
+%python3_sitelibdir/*
+%endif
 
 %files examples
 %_datadir/%Name/samples
@@ -296,6 +332,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Wed Jan 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.5-alt1
+- Updated to upstream version 3.4.5.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.4.3-alt1.qa1
 - NMU: applied repocop patch
 
