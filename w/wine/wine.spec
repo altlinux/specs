@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.3
-%define major 3.21
+%define major 4.0
 
 Name: wine
-Version: %major.2
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/3.x/wine-%major.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/4.0/wine-%major.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major.tar.gz
 Source1: %name-staging-%version.tar
@@ -471,6 +471,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Jan 23 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
+
 * Fri Dec 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.21.2-alt1
 - ntoskrnl.exe: Ignore CProCtrl initialization failure (eterbug #13466)
 - remove "-firstrundlg" parameter from command line for CryptoPro 5.0 installer (eterbug #13466)
