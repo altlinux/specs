@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 5.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby on Rails
 License: MIT
@@ -18,12 +18,6 @@ Patch1:  %pkgname-alt-fix-path-to-bundle.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-
-%add_ruby_req_skip jruby resque_scheduler backburner delayed_job qu que
-%add_ruby_req_skip queue_classic resque resque-scheduler sidekiq sucker_punch
-%add_ruby_req_skip sneakers active_storage/filename aws-sdk-s3
-%add_ruby_req_skip google/cloud/storage
-%add_ruby_req_skip .*\.rake
 
 Requires: ruby-actioncable
 Requires: ruby-actionmailer
@@ -239,6 +233,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 #%ruby_ri_sitedir/*
 
 %changelog
+* Wed Jan 23 2019 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1.2
+- Remove deprecated macros.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
