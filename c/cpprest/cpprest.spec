@@ -1,11 +1,14 @@
-%def_disable snapshot
-%def_disable check
+%def_enable snapshot
 
 %define _name cpprestsdk
 %define ver_major 2.10
 
+#can't build on %ix86, see bottom of /usr/share/cmake/websocketpp-configVersion.cmake
+%def_without system_websocketpp
+%def_disable check
+
 Name: cpprest
-Version: %ver_major.6
+Version: %ver_major.9
 Release: alt1
 
 Summary: C++ REST library
@@ -13,14 +16,18 @@ Group: System/Libraries
 License: MIT
 Url: https://github.com/Microsoft/%_name
 
+%if_disabled snapshot
 Source: https://github.com/Microsoft/%_name/archive/v%version.tar.gz#/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-devel >= 1.55 boost-interprocess-devel boost-filesystem-devel
 BuildRequires: boost-asio-devel boost-locale-devel
 BuildRequires: pkgconfig(openssl) >= 1.0
-BuildRequires: websocketpp-devel >= 0.4
-BuildRequires: zlib-devel
+%{?_with_system_websocketpp:BuildRequires: websocketpp-devel >= 0.4}
+BuildRequires: zlib-devel libbrotli-devel
 
 %description
 The C++ REST SDK is a Microsoft project for cloud-based client-server
@@ -57,7 +64,7 @@ This package provides development files for %name library.
 %prep
 %setup -n %_name-%version
 # Remove bundled sources of websocketpp
-rm -r Release/libs
+%{?_with_system_websocketpp:rm -r Release/libs}
 # Remove file ThirdPartyNotices.txt, which is associated to websocketpp
 rm -f ThirdPartyNotices.txt
 # fix libdir
@@ -67,10 +74,9 @@ subst 's|\(DESTINATION \)lib|\1%_lib|' Release/src/CMakeLists.txt
 cd Release
 %add_optflags %optflags -D_FILE_OFFSET_BITS=64 -Wl,--as-needed
 %cmake .. -DCMAKE_BUILD_TYPE=Release \
-	  -DCPPREST_EXPORT_DIR=%_lib/%_name \
-	  -DCMAKE_INSTALL_DO_STRIP=false \
-	  -DCMAKE_INCLUDE_PATH=%_datadir/cmake/websocketpp/ \
-	  -DWEBSOCKETPP_INCLUDE_DIR=%_includedir
+	  -DCMAKE_INSTALL_DO_STRIP=OFF \
+	  -DCPPREST_EXCLUDE_BROTLI=OFF \
+	  -DCPPREST_EXPORT_DIR=cmake/%_name
 %cmake_build
 
 %install
@@ -89,10 +95,13 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %_includedir/%name
 %_includedir/pplx
 %_libdir/libcpprest.so
-%_libdir/%_name/
+%_libdir/cmake/%_name/
 %doc README.md
 
 %changelog
+* Wed Jan 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.10.9-alt1
+- 2.10.9 with bundled websocketpp
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.6-alt1
 - 2.10.6
 
