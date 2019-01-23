@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -39,6 +39,12 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Wed Jan 23 2019 Arseny Maslennikov <arseny@altlinux.org> 0.41-alt1
+- Network overlays:
+  + Overlays with a name of *.squashfs are now also taken into consideration.
+  + Support for overlay sets of an unspecified profile is restored; see
+    commit message for elaborate reasoning.
+
 * Tue Aug 28 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.40-alt1
 - switch from aufs to overlayfs
 
