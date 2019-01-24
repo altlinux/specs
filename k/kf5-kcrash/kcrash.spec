@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.54.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ KF5 library
 %_K5lib/libKF5Crash.so.*
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt3
+- update sources
+
 * Fri Jan 18 2019 Oleg Solovyov <mcpain@altlinux.org> 5.54.0-alt2
 - kcrash: handle SIGTERM
 

@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.54.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -56,7 +56,7 @@ KF5 library
 %build
 %K5build ||:
 # hack against ALTBUG#32378
-sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexer.c
+sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexer.c ||:
 %K5make
 
 %install
@@ -85,6 +85,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 %_K5qml/org/kde/solid/
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt2
+- new version
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
 - new version
 

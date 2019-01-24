@@ -2,7 +2,7 @@
 
 Name: kf5-oxygen-icons
 Version: 5.54.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ fi
 %_iconsdir/oxygen*/
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt2
+- new version
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
 - new version
 
