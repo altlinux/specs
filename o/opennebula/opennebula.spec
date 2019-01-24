@@ -3,54 +3,32 @@
 
 %add_findreq_skiplist /var/lib/one/*
 
-%add_ruby_lib_path /usr/lib/one/ruby/cli
-%add_ruby_lib_path /usr/lib/one/ruby/vendors/rbvmomi/lib
-%add_ruby_lib_path /usr/lib/one/ruby/vcenter_driver
-%add_ruby_lib_path /usr/lib/one/ruby/cloud/econe
-%add_ruby_lib_path /usr/lib/one/ruby/cloud
-%add_ruby_lib_path /usr/lib/one/ruby/onedb
-%add_ruby_lib_path /usr/lib/one/ruby
-%add_ruby_lib_path /usr/lib/one/mads
-%add_ruby_lib_path /usr/lib/one/oneflow/lib
-%add_ruby_lib_path /usr/lib/one/sunstone/models
-
-%filter_from_requires /^ruby(win32\/sspi)/d
-%filter_from_requires /^ruby(zurb-foundation)/d
-%filter_from_requires /^ruby(xmlparser)/d
-
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.6.2
-Release: alt4
+Release: alt5
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
 
 Source0: %name-%version.tar
 
-################################################################################
-# Build Requires
-################################################################################
-
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-build-ruby rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel libxmlrpc-devel liblzma-devel
 BuildRequires: libssl-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: libsystemd-devel
 BuildRequires: openssh
-BuildRequires: ruby ruby-nokogiri
+BuildRequires: ruby ruby-nokogiri ruby-aws-sdk ruby-builder
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: node node-gyp npm node-devel
 BuildRequires: ronn
 BuildRequires: groff-base
-
-################################################################################
-# Main Package
-################################################################################
 
 %description
 OpenNebula.org is an open-source project aimed at building the industry
@@ -65,18 +43,11 @@ to support each other.
 OpenNebula is free software released under the Apache License.
 
 
-################################################################################
-# Package opennebula-tools
-################################################################################
-
 %package tools
 Summary: Cloud computing solution for Data Center Virtualization
 Group: Emulators
 BuildArch: noarch
 Provides: ruby-%name-cli = %EVR
-#fix provides
-Provides: ruby(cli/cli_helper)
-Provides: ruby(cli/command_parser)
 
 Requires: openssl
 Requires: openssh
@@ -84,7 +55,8 @@ Requires: sqlite3
 Requires: openssh-clients
 
 Requires: %name-common = %EVR
-Requires: %name-ruby = %EVR
+Requires: ruby-%name = %EVR
+Requires: ruby-stdlibs
 
 %description tools
 OpenNebula.org is an open-source project aimed at building the industry
@@ -100,10 +72,6 @@ OpenNebula is free software released under the Apache License.
 
 This package provides the CLI interface.
 
-################################################################################
-# Package opennebula-server
-################################################################################
-
 %package server
 Summary: Provides the OpenNebula servers
 Group: System/Servers
@@ -117,16 +85,19 @@ Requires: wget
 Requires: curl
 Requires: rsync
 Requires: iputils
+Requires: ruby-aws-sdk
+Requires: ruby-amazon-ec2
+Requires: ruby-azure
+Requires: ruby-nokogiri
+Requires: ruby-mysql2
+Requires: sqlite3-ruby
+Requires: ruby-sequel
 Obsoletes: %name-ozones
 #TODO: Requires http://rubygems.org/gems/net-ldap
 
 %description server
 This package provides the OpenNebula servers: oned (main daemon) and mm_sched
 (scheduler).
-
-################################################################################
-# Package common
-################################################################################
 
 %package common
 Summary: Provides the OpenNebula user
@@ -136,17 +107,20 @@ BuildArch: noarch
 %description common
 This package creates the oneadmin user and group.
 
-################################################################################
-# Package ruby
-################################################################################
-
-%package ruby
+%package -n ruby-%name
 Summary: Provides the OpenNebula Ruby libraries
 Group: Development/Ruby
 BuildArch: noarch
-Provides: ruby-%name = %EVR
-#fix provides
-Provides: ruby(cloud/CloudClient)
+Provides: %name-ruby = %EVR
+Obsoletes: %name-ruby < %EVR
+
+Requires: ruby-stdlibs
+Requires: ruby-rbvmomi
+Requires: ruby-xmlrpc
+Requires: ruby-nokogiri
+Requires: ruby-ox
+Requires: ruby-curb
+Requires: ruby-net-ldap
 
 #Requires: ruby
 #Requires: rubygems
@@ -171,32 +145,24 @@ Provides: ruby(cloud/CloudClient)
 # net-ldap   => Ldap authentication
 # parse-cron => OneFlow
 
-%description ruby
+%description -n ruby-%name
 Ruby interface for OpenNebula.
-
-################################################################################
-# Package sunstone
-################################################################################
 
 %package sunstone
 Summary: Browser based UI and public cloud interfaces
 Group: System/Servers
 BuildArch: noarch
-#fix provides
-Provides: ruby(econe/EC2QueryClient)
 
 Requires: %name-common = %EVR
-Requires: %name-ruby = %EVR
-Requires: ruby-rack-handler-webrick ruby-sinatra ruby-tilt ruby-rack-protection ruby-nokogiri
+Requires: ruby-%name = %EVR
+Requires: ruby-stdlibs
+Requires: ruby-rack-handler-webrick ruby-sinatra ruby-tilt
+Requires: ruby-rack-protection ruby-nokogiri ruby-dalli ruby-zendesk_api
+Requires: ruby-uuidtools
 
 %description sunstone
 Browser based UI for administrating a OpenNebula cloud. Also includes
-the public cloud interface econe-server (AWS cloud
-API).
-
-################################################################################
-# Package gate
-################################################################################
+the public cloud interface econe-server (AWS cloud API).
 
 %package gate
 Summary: Transfer information from Virtual Machines to OpenNebula
@@ -204,14 +170,12 @@ Group: System/Servers
 BuildArch: noarch
 
 Requires: %name-common = %EVR
-Requires: %name-ruby = %EVR
+Requires: ruby-%name = %EVR
+Requires: ruby-stdlibs
+Requires: ruby-sinatra
 
 %description gate
 Transfer information from Virtual Machines to OpenNebula
-
-################################################################################
-# Package flow
-################################################################################
 
 %package flow
 Summary: Manage OpenNebula Services
@@ -219,15 +183,12 @@ Group: System/Servers
 BuildArch: noarch
 
 Requires: %name-common = %EVR
-Requires: %name-ruby = %EVR
-Requires: ruby-treetop ruby-parse-cron
+Requires: ruby-%name = %EVR
+Requires: ruby-stdlibs
+Requires: ruby-treetop ruby-parse-cron ruby-sinatra
 
 %description flow
 Manage OpenNebula Services
-
-################################################################################
-# Package java
-################################################################################
 
 %package java
 Summary: Java interface to OpenNebula Cloud API
@@ -239,10 +200,6 @@ Requires: xmlrpc-client
 
 %description java
 Java interface to OpenNebula Cloud API.
-
-################################################################################
-# Package node-kvm
-################################################################################
 
 %package node-kvm
 Summary: Configures an OpenNebula node providing kvm
@@ -266,10 +223,6 @@ Requires: %name-common = %EVR
 %description node-kvm
 Configures an OpenNebula node providing kvm.
 
-################################################################################
-# Package node-xen
-################################################################################
-
 # %package node-xen
 # Summary: Configures an OpenNebula node providing xen
 # Group: System/Servers
@@ -287,13 +240,9 @@ Configures an OpenNebula node providing kvm.
 # %description node-xen
 # Configures an OpenNebula node providing xen.
 
-################################################################################
-# Build and install
-################################################################################
 
 %prep
 %setup
-
 
 # add symlink to node headers
 node_ver=$(node -v | sed -e "s/v//")
@@ -316,7 +265,16 @@ mv -f dist/main.js dist/main-dist.js
 popd
 
 # Compile OpenNebula
-scons -j2 mysql=yes new_xmlrpc=yes sunstone=no
+scons -j2 mysql=yes new_xmlrpc=yes sunstone=no systemd=yes rubygems=yes
+
+# build gems
+for dir in tmp/opennebula{,-cli} ;do
+    pushd $dir
+        %update_setup_rb
+        %ruby_config
+        %ruby_build
+    popd
+done
 
 # build man pages
 pushd share/man
@@ -328,12 +286,38 @@ pushd src/oca/java
 ./build.sh -d
 popd
 
+
 %install
 export DESTDIR=%buildroot
 ./install.sh -p
 touch %buildroot%oneadmin_home/sunstone/main.js
 rm -f %buildroot%_libexecdir/one/sunstone/public/dist/main.js
 ln -r -s %buildroot%oneadmin_home/sunstone/main.js %buildroot%_libexecdir/one/sunstone/public/dist/main.js
+
+# install gems
+for dir in tmp/opennebula{,-cli} ;do
+    pushd $dir
+        %ruby_install
+    popd
+done
+
+# delete duplicated with gems files
+## opennebula
+rm -f  %buildroot%_libexecdir/one/ruby/opennebula.rb
+rm -rf %buildroot%_libexecdir/one/ruby/opennebula
+rm -f  %buildroot%_libexecdir/one/ruby/vcenter_driver.rb
+rm -f  %buildroot%_libexecdir/one/ruby/VirtualMachineDriver.rb
+rm -f  %buildroot%_libexecdir/one/ruby/OpenNebulaDriver.rb
+rm -f  %buildroot%_libexecdir/one/ruby/CommandManager.rb
+rm -f  %buildroot%_libexecdir/one/ruby/ActionManager.rb
+rm -f  %buildroot%_libexecdir/one/ruby/DriverExecHelper.rb
+rm -f  %buildroot%_libexecdir/one/ruby/cloud/CloudClient.rb
+
+## oennebula-cli
+rm -f  %buildroot%_libexecdir/one/ruby/cli_helper.rb
+rm -f  %buildroot%_libexecdir/one/ruby/one_helper.rb
+rm -f  %buildroot%_libexecdir/one/ruby/command_parser.rb
+rm -rf %buildroot%_libexecdir/one/ruby/one_helper
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
@@ -371,23 +355,15 @@ install -p -D -m 644 src/oca/java/jar/org.opennebula.client.jar %buildroot%_java
 # sysctl
 install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfdir/sysctl.d/bridge-nf-call.conf
 
-# Gemfile
-#install -p -D -m 644 share/install_gems/CentOS7/Gemfile.lock %buildroot%_datadir/one/Gemfile.lock
-
-
-################################################################################
-# common - scripts
-################################################################################
+# cleanup
+rm -f %buildroot%_datadir/one/Gemfile
+rm -f %buildroot%_datadir/one/install_gems
+rm -rf %buildroot%_libexecdir/one/ruby/vendors
 
 %pre common
 %_sbindir/groupadd -r -f oneadmin 2>/dev/null ||:
 %_sbindir/useradd -r -m -g oneadmin -G disk,wheel -c 'Opennebula Daemon User' \
         -s /bin/bash -d %oneadmin_home oneadmin 2>/dev/null ||:
-
-
-################################################################################
-# server - scripts
-################################################################################
 
 %post server
 %post_service %name
@@ -411,18 +387,10 @@ fi
 %preun_service %name
 
 
-################################################################################
-# node-xen - scripts
-################################################################################
-
 # %post node-xen
 # if [ $1 = 1 ]; then
 #     /usr/bin/grub-bootxen.sh
 # fi
-
-################################################################################
-# sunstone - scripts
-################################################################################
 
 %post sunstone
 %post_service %name-sunstone
@@ -432,9 +400,6 @@ fi
 %preun_service %name-sunstone
 %preun_service %name-novnc
 
-################################################################################
-# node-kvm - scripts
-################################################################################
 %pre node-kvm
 %_sbindir/usermod -a -G vmusers oneadmin  2>/dev/null ||:
 
@@ -457,19 +422,11 @@ elif [ $1 = 2 ]; then
     [ -n "$PID" ] && kill $PID 2> /dev/null || :
 fi
 
-################################################################################
-# ruby - scripts
-################################################################################
-
 #%post ruby
 #cat <<EOF
 #Please remember to execute %_datadir/one/install_gems to install all the
 #required gems.
 #EOF
-
-################################################################################
-# common - files
-################################################################################
 
 %files common
 %config %_sysconfdir/sudoers.d/opennebula
@@ -484,60 +441,42 @@ fi
 %dir %attr(0775, root, oneadmin) %_lockdir/one
 %dir %attr(0750, oneadmin, oneadmin) %oneadmin_home
 
-################################################################################
-# node-kvm - files
-################################################################################
-
 %files node-kvm
 %config %_sysconfdir/polkit-1/rules.d/50-opennebula.rules
 %config %_sysconfdir/sysctl.d/bridge-nf-call.conf
 %_tmpfilesdir/opennebula-node.conf
 
-################################################################################
-# node-xen - files
-################################################################################
-
 # %files node-xen
-
-################################################################################
-# java - files
-################################################################################
 
 %files java
 %_javadir/org.opennebula.client.jar
 
-################################################################################
-# ruby - files
-################################################################################
-
-%files ruby
-%_libexecdir/one/ruby/opennebula.rb
-%_libexecdir/one/ruby/opennebula/*
-%_libexecdir/one/ruby/vendors/rbvmomi/*
-%_libexecdir/one/ruby/vcenter_driver.rb
-%_libexecdir/one/ruby/vcenter_driver/*
+%files -n ruby-%name
+%ruby_sitelibdir/opennebula.rb
+%ruby_sitelibdir/opennebula
+%ruby_sitelibdir/vcenter_driver.rb
+%ruby_sitelibdir/VirtualMachineDriver.rb
+%ruby_sitelibdir/OpenNebulaDriver.rb
+%ruby_sitelibdir/CommandManager.rb
+%ruby_sitelibdir/ActionManager.rb
+%ruby_sitelibdir/DriverExecHelper.rb
+%ruby_sitelibdir/cloud/CloudClient.rb
 
 %_libexecdir/one/ruby/OpenNebula.rb
 %_libexecdir/one/ruby/scripts_common.rb
+%_libexecdir/one/ruby/vcenter_driver
 
-%_libexecdir/one/ruby/cloud/CloudClient.rb
-%_libexecdir/one/ruby/cloud/CloudAuth.rb
-%_libexecdir/one/ruby/cloud/CloudServer.rb
-%_libexecdir/one/ruby/cloud/CloudAuth/*
-
-#%_datadir/one/install_gems
-#%_datadir/one/Gemfile
-#%_datadir/one/Gemfile.lock
-
-################################################################################
-# sunstone - files
-################################################################################
+%rubygem_specdir/opennebula*
+%exclude %rubygem_specdir/opennebula-cli*
 
 %files sunstone
-%_libexecdir/one/sunstone/*
+%_libexecdir/one/sunstone
 %_libexecdir/one/ruby/OpenNebulaVNC.rb
 %_libexecdir/one/ruby/OpenNebulaAddons.rb
-%_libexecdir/one/ruby/cloud/econe/*
+%_libexecdir/one/ruby/cloud/econe
+%_libexecdir/one/ruby/cloud/CloudAuth.rb
+%_libexecdir/one/ruby/cloud/CloudServer.rb
+%_libexecdir/one/ruby/cloud/CloudAuth
 
 %_bindir/sunstone-server
 %_bindir/novnc-server
@@ -572,7 +511,7 @@ fi
 %_initdir/opennebula-econe
 %_initdir/opennebula-novnc
 
-%_datadir/one/websockify/*
+%_datadir/one/websockify
 
 %_man1dir/econe*
 
@@ -590,10 +529,6 @@ fi
 %config(noreplace) %_sysconfdir/one/ec2_driver.conf
 %config %_sysconfdir/one/ec2_driver.default
 
-################################################################################
-# gate - files
-################################################################################
-
 %files gate
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/onegate-server.conf
 %_libexecdir/one/onegate
@@ -601,10 +536,6 @@ fi
 %_unitdir/opennebula-gate.service
 %_initdir/opennebula-gate
 
-
-################################################################################
-# flow - files
-################################################################################
 
 %files flow
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/oneflow-server.conf
@@ -614,12 +545,7 @@ fi
 %_initdir/opennebula-flow
 
 
-################################################################################
-# server - files
-################################################################################
-
 %files server
-
 %_unitdir/opennebula.service
 %_unitdir/opennebula-scheduler.service
 %_initdir/opennebula
@@ -631,23 +557,19 @@ fi
 %_bindir/onedb
 %_bindir/tty_expect
 
-%_datadir/one/examples/*
-%_datadir/one/esx-fw-vnc/*
+%_datadir/one/examples
+%_datadir/one/esx-fw-vnc
 %_datadir/one/follower_cleanup
 
-%_libexecdir/one/mads/*
-%_libexecdir/one/ruby/ActionManager.rb
+%_libexecdir/one/mads
 %_libexecdir/one/ruby/az_driver.rb
-%_libexecdir/one/ruby/CommandManager.rb
-%_libexecdir/one/ruby/DriverExecHelper.rb
 %_libexecdir/one/ruby/ec2_driver.rb
-%_libexecdir/one/ruby/onedb/*
+%_libexecdir/one/ruby/onedb
 %_libexecdir/one/ruby/one_vnm.rb
 %_libexecdir/one/ruby/opennebula_driver.rb
-%_libexecdir/one/ruby/OpenNebulaDriver.rb
 %_libexecdir/one/ruby/ssh_stream.rb
-%_libexecdir/one/ruby/VirtualMachineDriver.rb
-%_libexecdir/one/sh/*
+%_libexecdir/one/sh
+#%rubygem_specdir/opennebula-server/Gemfile
 
 %_man1dir/onedb.1.*
 %doc LICENSE NOTICE
@@ -673,10 +595,6 @@ fi
 %config(noreplace) %_sysconfdir/one/auth/server_x509_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/ldap_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
-
-################################################################################
-# tools package - files
-################################################################################
 
 %files tools
 %dir %_sysconfdir/one/cli
@@ -706,18 +624,22 @@ fi
 %_bindir/oneflow
 %_bindir/oneflow-template
 
-%_libexecdir/one/ruby/cli/*
+%_libexecdir/one/ruby/cli
+%rubygem_specdir/opennebula-cli*
+%ruby_sitelibdir/cli_helper.rb
+%ruby_sitelibdir/one_helper.rb
+%ruby_sitelibdir/command_parser.rb
+%ruby_sitelibdir/one_helper
 
 %_datadir/one/onetoken.sh
 
 %_man1dir/one*
 %exclude %_man1dir/onedb.1.*
 
-################################################################################
-# Changelog
-################################################################################
-
 %changelog
+* Thu Jan 24 2019 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt5
+- use new ruby rpm macros for build
+
 * Mon Jan 14 2019 Mikhail Gordeev <obirvalger@altlinux.org> 5.6.2-alt4
 - Add ruby-nokogiri to BuildRequires for building man pages
 - Move man files to appropriate packages
