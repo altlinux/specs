@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.1
+Version: 2.0
+Release: alt1
 Summary: Freetype python bindings
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/freetype-py/
 
 # https://github.com/rougier/freetype-py.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Patch1: %oname-1.1-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel python-module-setuptools
@@ -79,7 +79,7 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3/examples -type f -name '*.py' -exec 2to3 -w -n '{}' +
+# find ../python3/examples -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 2.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
