@@ -1,6 +1,6 @@
 Name: apt-indicator
 Version: 0.3.12
-Release: alt1
+Release: alt2
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 Provides: egg = %version-%release, alt-update = %version-%release
 Obsoletes: egg < %version-%release, alt-update < %version-%release
+Requires: qt5-svg
 Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
 BuildRequires(pre): rpm-build-ubt
@@ -73,6 +74,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg at altlinux dot org> 0.3.12-alt2
+- fix requires
+
 * Mon Jan 21 2019 Sergey V Turchin <zerg at altlinux dot org> 0.3.12-alt1
 - use only internal icons
 - don't show dialog at exit
