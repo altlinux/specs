@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 4.4.2
-Release: alt2.1
+Version: 5.1.1
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.2-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
