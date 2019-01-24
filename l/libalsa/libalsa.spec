@@ -2,7 +2,7 @@
 %def_without python
 
 Name: libalsa
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Epoch: 1
 
@@ -178,6 +178,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Thu Jan 24 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.8-alt1
+- 1.1.8
+
 * Wed Oct 17 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.7-alt1
 - 1.1.7
 

@@ -1,5 +1,5 @@
 Name: alsa-utils
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Serial: 1
 
@@ -68,7 +68,7 @@ touch config.rpath
 %find_lang --with-man --output=%name.lang %name
 
 %files -f %name.lang
-%doc ChangeLog README
+%doc ChangeLog README*
 /lib/udev/rules.d/90-alsa-restore.rules
 %_bindir/*
 %exclude %_bindir/aplay
@@ -95,6 +95,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Thu Jan 24 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.8-alt1
+- 1.1.8
+
 * Wed Oct 17 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.7-alt1
 - 1.1.7
 
