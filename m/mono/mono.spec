@@ -8,7 +8,7 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 5.14.0.177
+Version: 5.18.0.240
 Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
@@ -588,39 +588,36 @@ install -p -m0644 %SOURCE2 %buildroot%_sysconfdir/pki/mono/
 # C5 is not installed, see commit 0af35dd5
 
 # remove Windows-only stuff
-rm -rf %buildroot%_monodir/*/Mono.Security.Win32*
-rm -f %buildroot%_libdir/libMonoSupportW.*
+rm -rfv %buildroot%_monodir/*/Mono.Security.Win32*
+rm -fv %buildroot%_libdir/libMonoSupportW.*
 # remove libgc cruft
-rm -rf %buildroot%_datadir/libgc-mono
+rm -rfv %buildroot%_datadir/libgc-mono
 # remove stuff that we don't package*
-rm -f %buildroot%_bindir/cilc
-rm -f %buildroot%_man1dir/cilc.1*
-rm -f %buildroot%_man1dir/mdb2ppdb.1*
-rm -f %buildroot%_monodir/*/browsercaps-updater.*
-rm -f %buildroot%_monodir/*/culevel.*
+rm -fv %buildroot%_man1dir/cilc.1*
+rm -fv %buildroot%_man1dir/mdb2ppdb.1*
+rm -fv %buildroot%_monodir/*/browsercaps-updater.*
+rm -fv %buildroot%_monodir/*/culevel.*
 
-rm -f %buildroot%_monodir/*/mscorlib.dll.so
-rm -f %buildroot%_monodir/*/mcs.exe.so
-rm -f %buildroot%_monodir/*/gmcs.exe.so
-rm -f %buildroot%_monodir/4.0/dmcs.exe.so
-rm -rf %buildroot%_bindir/mono-configuration-crypto
-rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
+rm -fv %buildroot%_monodir/*/mscorlib.dll.so
+rm -fv %buildroot%_monodir/*/mcs.exe.so
+rm -rfv %buildroot%_bindir/mono-configuration-crypto
+rm -rfv %buildroot%_mandir/man?/mono-configuration-crypto*
 
 %if_disabled ibmlibs
-rm -rf %buildroot%_monogacdir/IBM.Data.DB2
-rm -f %buildroot%_monodir/4.5/IBM.Data.DB2.dll
+rm -rfv %buildroot%_monogacdir/IBM.Data.DB2
+rm -fv %buildroot%_monodir/4.5/IBM.Data.DB2.dll
 %endif
 
-rm -f %buildroot%_monodir/4.5/mono-shlib-cop.exe.config
-rm -f %buildroot%_monodir/4.5/sqlmetal.exe.config
-rm -f %buildroot%_monodir/4.5/xbuild.exe.config
+rm -fv %buildroot%_monodir/4.5/mono-shlib-cop.exe.config
+rm -fv %buildroot%_monodir/4.5/sqlmetal.exe.config
+rm -fv %buildroot%_monodir/4.5/xbuild.exe.config
 
-rm -f %buildroot%_libdir/libmono-2.0.a
-rm -f %buildroot%_libdir/libmono-2.0.la
-rm -f %buildroot%_libdir/libmonoboehm-2.0.a
-rm -f %buildroot%_libdir/libmonosgen-2.0.a
-rm -rf %buildroot%_libdir/mono/lldb
-rm -rf %buildroot%_datadir/mono-2.0/mono/profiler
+rm -fv %buildroot%_libdir/libmono-2.0.a
+rm -fv %buildroot%_libdir/libmono-2.0.la
+rm -fv %buildroot%_libdir/libmonoboehm-2.0.a
+rm -fv %buildroot%_libdir/libmonosgen-2.0.a
+rm -rfv %buildroot%_libdir/mono/lldb
+rm -rfv %buildroot%_datadir/mono-2.0/mono/profiler
 
 mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
@@ -695,11 +692,9 @@ ln -s mcs %buildroot%_bindir/gmcs
 %_man1dir/mprof-report.1*
 %_man1dir/cert-sync.1*
 %_libdir/libMonoPosixHelper.so*
-%_libdir/libMonoPosixHelper.a
-%_libdir/*profiler*.so*
-%_libdir/*profiler*.a
-%_libdir/libikvm-native.a
+%_libdir/*profiler*.so.*
 %_libdir/libmono-btls-shared.so*
+%_libdir/libmono-system-native.so.*
 %_monodir/4.0/Mono.Posix.dll
 %_monodir/4.0/mscorlib.dll
 
@@ -814,6 +809,8 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/monograph
 %_bindir/sgen-grep-binprot
 %_bindir/csi
+%_monodir/4.5/mono-api-diff.exe
+%_monodir/4.5/mono-api-diff.pdb
 %_monodir/4.5/csi.*
 %_bindir/vbc
 %_monodir/4.5/vbc.*
@@ -830,6 +827,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monodir/4.6.1-api/*
 %_monodir/4.6.2-api/*
 %_monodir/4.7.1-api/*
+%_monodir/4.7.2-api/*
 %_monodir/msbuild/15.0/bin/Roslyn
 %_bindir/mono-symbolicate
 %mono_bin xbuild
@@ -881,7 +879,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/mkbundle.1*
 %_man1dir/mono-cil-strip.1*
 %_man1dir/monodis.1*
-%_datadir/mono-2.0/mono/cil/cil-opcodes.xml
 %_man1dir/monolinker.1*
 %_man1dir/mono-profilers.1*
 %_man1dir/mono-shlib-cop.1*
@@ -923,6 +920,12 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %ifarch %ix86 x86_64 armh
 %_libdir/libmonoboehm-2.0.so
 %endif
+%_libdir/libMonoPosixHelper.a
+%_libdir/*profiler*.so
+%_libdir/*profiler*.a
+%_libdir/libikvm-native.a
+%_libdir/libmono-system-native.so
+%_libdir/libmono-system-native.a
 %_pkgconfigdir/dotnet.pc
 %_pkgconfigdir/mono-cairo.pc
 %_pkgconfigdir/mono.pc
@@ -1136,10 +1139,14 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 
 %files mono2-compat-devel
 %_includedir/mono-2.0
+%_datadir/mono-2.0
 %_libdir/libmono-2.0.so
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Thu Jan 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.18.0.240-alt1
+- Updated to upstream version 5.18.0.240.
+
 * Mon Oct 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.14.0.177-alt1
 - Updated to upstream version 5.14.0.177.
 
