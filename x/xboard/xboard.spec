@@ -1,6 +1,6 @@
 Name: xboard
-Version: 4.8.0
-Release: alt2
+Version: 4.9.1
+Release: alt1
 
 Summary: An X Window System graphical chessboard
 License: GPL
@@ -93,6 +93,9 @@ install -d %buildroot%_datadir/%name/theme
 %_gamesdatadir/%name/themes/
 
 %changelog
+* Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
+- Build new version.
+
 * Sun Apr 10 2016 Michael Shigorin <mike@altlinux.org> 4.8.0-alt2
 - switched to GTK+ UI
 
