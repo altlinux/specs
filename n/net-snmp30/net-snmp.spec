@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt4.1
+Release: alt5
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -28,8 +28,6 @@ Source11: snmptrapd.service
 Patch: %name-%version-%release.patch
 Patch6: net-snmp-5.7.3-systemd.patch
 Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
-Patch8: net-snmp-5.7.3-systemd-fix.patch
-Patch9: net-snmp-5.7.3-openssl.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -305,8 +303,6 @@ for run-time access to parsed MIB data.
 %patch -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
 
 sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -598,6 +594,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Thu Jan 24 2019 Stanislav Levin <slev@altlinux.org> 5.7.3-alt5
+- Applied patches from upstream (closes: #35969).
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt4.1
 - rebuild with new perl 5.28.1
 
