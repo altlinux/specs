@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.0.1.4
+Version: 4.1.1.0
 Release: alt1
 
 Summary: A boulderdash like game
@@ -81,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 4.1.1.0-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 4.0.1.4-alt1
 - Autobuild version bump to 4.0.1.4
 
