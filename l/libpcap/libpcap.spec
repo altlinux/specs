@@ -1,6 +1,6 @@
 Name: libpcap
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Epoch: 2
 
 # Default optional switches
@@ -121,6 +121,9 @@ autoconf -f -v
 %endif
 
 %changelog
+* Thu Jan 24 2019 Nikita Ermakov <arei@altlinux.org> 2:1.9.0-alt2
+- Fix VERSION.
+
 * Thu Jan 24 2019 Nikita Ermakov <arei@altlinux.org> 2:1.9.0-alt1
 - Updated to 1.9.0.
 
