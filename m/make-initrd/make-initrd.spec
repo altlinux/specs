@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,13 @@ fi
 %endif
 
 %changelog
+* Thu Jan 24 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.8-alt1
+- Runtime changes:
+  + Add service to handle x-mount-source mountpoints
+- Utilities:
+  + Builtin module may differ by name from the string being
+    searched for.
+
 * Tue Jan 22 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.7-alt1
 - Runtime changes:
   + Exclude some shell variables from the original environment
