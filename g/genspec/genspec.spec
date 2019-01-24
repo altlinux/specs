@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.5
+Version:  1.3.6
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Thu Jan 24 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.6-alt1
+- Ruby packages start with ruby, againg
+
 * Mon Dec 24 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.5-alt1
 - Fix default value for gitignore
 - Use unified doc glob
