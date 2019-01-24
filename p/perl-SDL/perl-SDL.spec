@@ -2,7 +2,7 @@
 %define dist SDL
 Name: perl-%dist
 Version: 2.548
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -73,6 +73,9 @@ application/game into PAR archive.
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.548-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 2.548-alt1
 - automated CPAN update
 

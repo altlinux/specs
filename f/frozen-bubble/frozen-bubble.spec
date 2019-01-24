@@ -1,6 +1,6 @@
 Name: frozen-bubble
 Version: 2.2.0
-Release: alt4
+Release: alt4.1
 
 Summary: Frozen Bubble arcade game
 License: GPL
@@ -102,6 +102,9 @@ transition effects, 8 unique logo eye-candies.
 # - package locales
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt4.1
+- rebuild with new perl 5.28.1
+
 * Mon Jan 08 2018 Michael Shigorin <mike@altlinux.org> 2.2.0-alt4
 - E2K: added openbsd clang patch
 - added Russian descriptions (closes: #33776)

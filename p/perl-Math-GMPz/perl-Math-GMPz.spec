@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.48
-Release: alt1
+Release: alt1.1
 Summary: perl interface to the GMP library's integer (mpz) functions..
 Group: Development/Perl
 License: perl
@@ -42,6 +42,9 @@ A bignum module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 

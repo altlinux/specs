@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.31
-Release: alt1
+Release: alt1.1
 
 Summary: RSA encoding and decoding, using the openSSL libraries
 License: Perl
@@ -38,6 +38,9 @@ decryption, signatures and signature verification.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 

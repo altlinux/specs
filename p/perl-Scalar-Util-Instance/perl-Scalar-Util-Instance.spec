@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.001
-Release: alt2.1.1.1.1
+Release: alt2.2
 Summary: Generates and installs is-a predicates
 Group: Development/Perl
 License: perl
@@ -36,6 +36,9 @@ Scalar::Util::Instance provides is-a predicates to look up.an is-a hierarchy for
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.001-alt2.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.001-alt2.1.1.1.1
 - rebuild with new perl 5.26.1
 

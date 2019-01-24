@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        alt3_21
+Release:        alt4_21
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -59,6 +59,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.40-alt4_21
+- rebuild with new perl 5.28.1
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt3_21
 - update to new release by fcimport
 

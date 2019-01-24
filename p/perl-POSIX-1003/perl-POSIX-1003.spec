@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(
 
 Name: perl-POSIX-1003
 Version: 0.99_07
-Release: alt1
+Release: alt1.1
 
 Summary: POSIX::1003, alternative for POSIX in core
 
@@ -40,6 +40,9 @@ BuildRequires: alternatives atop
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.99_07-alt1.1
+- rebuild with new perl 5.28.1
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.99_07-alt1
 - new version 0.99_07 (with rpmrb script)
 

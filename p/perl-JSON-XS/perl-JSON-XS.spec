@@ -2,7 +2,7 @@
 %define dist JSON-XS
 Name: perl-%dist
 Version: 3.04
-Release: alt1
+Release: alt1.1
 Epoch: 3
 
 Summary: JSON serialising/deserialising, done correctly and fast
@@ -40,6 +40,9 @@ fi
 %perl_vendor_autolib/JSON
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3:3.04-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Jan 16 2019 Igor Vlasenko <viy@altlinux.ru> 3:3.04-alt1
 - reverted to 3.04
 

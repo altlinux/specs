@@ -4,7 +4,7 @@
 %define dist Devel-Cover
 Name: perl-%dist
 Version: 1.31
-Release: alt1
+Release: alt1.1
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -50,6 +50,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 

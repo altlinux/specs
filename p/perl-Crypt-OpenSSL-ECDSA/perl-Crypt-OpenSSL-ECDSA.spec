@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.08
-Release: alt2
+Release: alt2.1
 Summary: Perl extension for OpenSSL ECDSA (Elliptic Curve Digital Signature Algorithm)
 Group: Development/Perl
 License: perl
@@ -36,6 +36,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2.1
+- rebuild with new perl 5.28.1
+
 * Thu Sep 13 2018 Anton Farygin <rider@altlinux.ru> 0.08-alt2
 - rebuilt with openssl 1.1
 

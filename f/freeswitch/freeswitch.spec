@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.8.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -601,6 +601,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.4-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Jan 07 2019 Anton Farygin <rider@altlinux.ru> 1:1.8.4-alt1
 - 1.8.4
 

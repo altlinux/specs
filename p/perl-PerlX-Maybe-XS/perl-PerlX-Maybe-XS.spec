@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.001
-Release: alt5
+Release: alt5.1
 Summary: XS backend for PerlX::Maybe
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/T/TO/TOBYINK/%module_name-%module_version
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.001-alt5.1
+- rebuild with new perl 5.28.1
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 1.001-alt5
 - to Sisyphus as perl-Dancer-Session-Cookie dep
 

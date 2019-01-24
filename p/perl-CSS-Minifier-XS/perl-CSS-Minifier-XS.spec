@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt4_15
+Release:    alt5_15
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Other
@@ -60,6 +60,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.09-alt5_15
+- rebuild with new perl 5.28.1
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_15
 - update to new release by fcimport
 

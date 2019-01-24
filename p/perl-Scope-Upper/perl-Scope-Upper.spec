@@ -8,7 +8,7 @@ BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
 Version:        0.31
-Release:        alt1_1
+Release:        alt2_1
 License:        GPL+ or Artistic
 Source0:        https://cpan.metacpan.org/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
 URL:            https://metacpan.org/release/Scope-Upper
@@ -75,6 +75,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2_1
+- rebuild with new perl 5.28.1
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_1
 - update to new release by fcimport
 

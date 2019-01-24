@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_without bootstrap
+%def_with bootstrap
 %define dist DateTime
 Name: perl-%dist
 Version: 1.50
-Release: alt1
+Release: alt1.1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -50,6 +50,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
 - automated CPAN update
 

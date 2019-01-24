@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.7.0
-Release: alt1.1
+Release: alt1.2
 
 
 %define native rrdtool
@@ -359,6 +359,9 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1.1
 - rebuild with new perl 5.26.1
 

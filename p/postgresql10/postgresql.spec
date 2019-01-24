@@ -19,7 +19,7 @@
 
 Name: %prog_name%postgresql_major
 Version: %postgresql_major.%postgresql_minor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.1
 
 Summary: PostgreSQL client programs and libraries
 License: PostgreSQL
@@ -742,6 +742,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 10.6-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 10.6-alt1
 - 10.6
 - Fix CVE-2018-16850

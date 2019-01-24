@@ -1,7 +1,7 @@
 %define dist Digest-SHA1
 Name: perl-%dist
 Version: 2.13
-Release: alt5.1.1.1.1
+Release: alt5.2
 
 Summary: Perl interface to the SHA1 algorithm
 License: GPL or Artistic
@@ -34,6 +34,9 @@ a 160-bit "fingerprint" or "message digest" of the input.
 %perl_vendor_archlib/Digest
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.13-alt5.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt5.1.1.1.1
 - rebuild with new perl 5.26.1
 

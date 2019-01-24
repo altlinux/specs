@@ -1,7 +1,7 @@
 %define dist Event-Lib
 Name: perl-%dist
 Version: 1.03
-Release: alt6
+Release: alt6.1
 
 Summary: Perl extentions for event-based programming
 License: GPL or Artistic
@@ -52,6 +52,9 @@ fi
 %perl_vendor_autolib/Event
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt6.1
+- rebuild with new perl 5.28.1
+
 * Sat Oct 27 2018 Igor Vlasenko <viy@altlinux.ru> 1.03-alt6
 - fixed build
 

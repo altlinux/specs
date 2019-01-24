@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.063
-Release: alt1
+Release: alt1.1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -98,6 +98,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.063-alt1.1
+- rebuild with new perl 5.28.1
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.063-alt1
 - automated CPAN update
 

@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(overload.pm) perl-devel perl-podlators
 %define fedora 20
 Name:           perl-Unicode-LineBreak
 Version:        2019.001
-Release:        alt1
+Release:        alt1.1
 Summary:        UAX #14 Unicode Line Breaking Algorithm
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -89,6 +89,9 @@ make test
 %{perl_vendor_archlib}/POD2
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2019.001-alt1.1
+- rebuild with new perl 5.28.1
+
 * Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 2019.001-alt1
 - automated CPAN update
 

@@ -4,7 +4,7 @@
 
 Name: perl-%dist
 Version: 0.02_reupload1
-Release: alt1.1.1
+Release: alt1.2
 
 Summary: This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
 License: %perl_license
@@ -36,6 +36,9 @@ This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.02_reupload1-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.02_reupload1-alt1.1.1
 - rebuild with new perl 5.26.1
 

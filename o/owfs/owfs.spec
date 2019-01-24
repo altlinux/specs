@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 3.2p1
-Release: alt1.2
+Release: alt1.3
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -338,6 +338,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.2p1-alt1.3
+- rebuild with new perl 5.28.1
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 3.2p1-alt1.2
 - NMU: built for aarch64
 

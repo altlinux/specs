@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.12
-Release: alt1.1.1.1.1
+Release: alt1.2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -35,6 +35,9 @@ host name, then uses (perl) gethostbyname to extract the real hostname.
 %perl_vendor_autolib/Sys
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.1.1.1.1
 - rebuild with new perl 5.26.1
 

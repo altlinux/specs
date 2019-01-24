@@ -2,7 +2,7 @@
 
 Name: inn
 Version: 2.6.2
-Release: alt2
+Release: alt2.1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -460,6 +460,9 @@ fi
 %_bindir/inews
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt2.1
+- rebuild with new perl 5.28.1
+
 * Sun Nov 25 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.6.2-alt2
 - moved innreport_inn.pm to %%perl_vendor_privlib
 - added innwatch init script

@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt1.1
+Release: alt1.2
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -118,6 +118,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1527308405.8b586d5-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 28 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.1527308405.8b586d5-alt1.1
 - NMU: fixed build (Build Conflict with pve-qemu-aux pve-qemu-img)
 

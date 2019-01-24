@@ -2,7 +2,7 @@
 %def_without test
 Name: perl-B-C
 Version: 1.55_04
-Release: alt1.1
+Release: alt1.2
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -41,6 +41,9 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-deve
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.55_04-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.55_04-alt1.1
 - rebuild with new perl 5.26.1
 

@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt5.1
+Release: alt5.2
 
 %define oname stfl
 
@@ -101,6 +101,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt5.2
+- rebuild with new perl 5.28.1
+
 * Thu Jul 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt5.1
 - Rebuilt for new Ruby autoreq.
 

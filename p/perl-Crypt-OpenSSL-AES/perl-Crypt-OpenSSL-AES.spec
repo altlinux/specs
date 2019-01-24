@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 0.02
-Release: alt1.1.2
+Release: alt1.2
 
 Summary: XS-wrapper around OpenSSL's AES library
 License: Perl
@@ -39,6 +39,9 @@ module is simply a wrapper around the OpenSSL library.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.2
+- rebuild with new perl 5.28.1
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.02-alt1.1.2
 - NMU: Rebuild with new openssl 1.1.0.
 

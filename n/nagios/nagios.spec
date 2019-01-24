@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt6
+Release: alt6.1
 
 Summary: Services and network monitoring system
 License: GPL
@@ -375,6 +375,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt6.1
+- rebuild with new perl 5.28.1
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.6-alt6
 - Fixed localstatedir location.
 

@@ -12,7 +12,7 @@
 
 Name: gnumeric
 Version: %ver_major.44
-Release: alt1.1
+Release: alt1.2
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -184,6 +184,9 @@ sed -i 's/cs / /' doc/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.12.44-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.44-alt1.1
 - disabled "cs" help build as a workaround for (ALT #35824)
 

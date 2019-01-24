@@ -2,7 +2,7 @@
 
 Name: nuxwdog
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
@@ -141,6 +141,9 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.1
+- rebuild with new perl 5.28.1
+
 * Tue Dec 04 2018 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
 - 1.0.3 -> 1.0.5.
 

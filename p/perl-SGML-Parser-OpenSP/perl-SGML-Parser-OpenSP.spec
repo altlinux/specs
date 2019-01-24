@@ -1,7 +1,7 @@
 %define dist SGML-Parser-OpenSP
 Name: perl-%dist
 Version: 0.994
-Release: alt4
+Release: alt4.1
 
 Summary: Parse SGML documents using OpenSP
 License: Perl
@@ -40,6 +40,9 @@ are called with suitable parameters.
 %perl_vendor_autolib/SGML
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.994-alt4.1
+- rebuild with new perl 5.28.1
+
 * Sat Oct 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.994-alt4
 - fixed build
 

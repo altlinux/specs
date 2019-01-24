@@ -2,7 +2,7 @@
 %define dist BDB
 Name: perl-%dist
 Version: 1.92
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
@@ -36,6 +36,9 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt1
 - automated CPAN update
 

@@ -12,7 +12,7 @@ BuildRequires: rpm-build-licenses
 
 Name: perl-%module_name
 Version: %module_version
-Release: alt3.1.1
+Release: alt3.2
 Summary: This module provides a Perl API for the BSDs' arc4random(3) suite of functions
 Group: Development/Perl
 License: %perl_license
@@ -47,6 +47,9 @@ from the arc4random generator once on module load time.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt3.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.50-alt3.1.1
 - rebuild with new perl 5.26.1
 
