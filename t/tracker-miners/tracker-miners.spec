@@ -6,7 +6,7 @@
 
 Name: tracker-miners
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -166,6 +166,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt2
+- rebuilt against libexempi.so.8
+
 * Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
 - 2.1.5
 

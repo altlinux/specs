@@ -8,7 +8,7 @@
 
 Name: nemo
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -27,30 +27,29 @@ Requires: %name-translations
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 
-# From configure.in
 %define glib_ver 2.31.9
-%define desktop_ver 1.9.0
+%define desktop_ver 2.6.1
 %define pango_ver 1.28.3
-%define gtk_ver 3.3.18
-%define libxml2_ver 2.4.7
-%define exif_ver 0.5.12
-%define exempi_ver 2.1.0
+%define gtk_ver 3.9.10
+%define libxml2_ver 2.7.8
+%define exif_ver 0.6.20
+%define exempi_ver 2.2.0
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
-%define tracker_ver 0.12
+%define tracker_ver 0.16
 
-PreReq: lib%name = %version-%release
-PreReq: gnome-icon-theme >= %icon_theme_ver
+Requires(pre): lib%name = %version-%release
+Requires: gnome-icon-theme >= %icon_theme_ver
 
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.9.1
 
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
-BuildPreReq: rpm-build-gnome rpm-build-licenses
 # for %%check
-BuildPreReq: xvfb-run dbus-tools-gui /proc
+BuildRequires: xvfb-run dbus-tools-gui /proc
 
 # From configure.in
 BuildPreReq: glib2-devel >= %glib_ver
@@ -186,6 +185,10 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 4.0.6-alt2
+- rebuilt against libexempi.so.8
+- updated build dependencies
+
 * Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.6-alt1
 - 4.0.6-1-g33ab105
 
