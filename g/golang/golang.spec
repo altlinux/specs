@@ -9,7 +9,7 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
-%global go_arches %ix86 x86_64 aarch64 %arm mipsel
+%global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le
 %global go_root %_libdir/golang
 
 %ifarch x86_64
@@ -27,11 +27,14 @@
 %ifarch mipsel
 %global go_hostarch  mipsle
 %endif
+%ifarch ppc64le
+%global go_hostarch  ppc64le
+%endif
 
 %def_disable check
 
 Name:    golang
-Version: 1.11.4
+Version: 1.11.5
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -282,6 +285,11 @@ mkdir -p -- \
 
 
 %changelog
+* Thu Jan 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.5-alt1
+- 1.11.5
+- fixed CPU DoS vulnerability affecting P-521 and P-384 (Fixes: CVE-2019-6486)
+- add ppc64le to go_arches
+
 * Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt1
 - New version (1.11.4).
 
