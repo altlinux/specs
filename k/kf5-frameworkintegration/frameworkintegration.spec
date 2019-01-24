@@ -1,8 +1,18 @@
 %define rname frameworkintegration
 
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%_K5if_ver_gteq %ubt_id M90
+%def_enable packagekit
+%else
+%def_disable packagekit
+%endif
+
+
 Name: kf5-%rname
 Version: 5.54.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -18,7 +28,9 @@ Patch1: alt-def-font.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
-#BuildRequires: appstream-qt-devel packagekit-qt5-devel
+%if_enabled packagekit
+BuildRequires: appstream-qt-devel packagekit-qt-devel
+%endif
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
@@ -65,10 +77,11 @@ KF5 library
 %K5install_move data kconf_update
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+mkdir -p %buildroot/%_K5exec/kpackagehandlers/
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
-#%dir %_K5exec/kpackagehandlers/
+%dir %_K5exec/kpackagehandlers/
 #%_K5data/kconf_update/frameworksintegration*
 
 %files devel
@@ -80,6 +93,9 @@ KF5 library
 
 %files -n libkf5style
 %_K5exec/kpackagehandlers/knshandler
+%if_enabled packagekit
+%_K5exec/kpackagehandlers/appstreamhandler
+%endif
 %_K5lib/libKF5Style.so.*
 %_K5data/infopage/
 %_K5plug/kf5/*.so
@@ -87,6 +103,9 @@ KF5 library
 %_K5notif/*.notifyrc
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt2
+- new version
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt1
 - new version
 
