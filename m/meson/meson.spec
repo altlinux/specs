@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define libname mesonbuild
 # pkexec may be used to "gain elevated privileges" during install
@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: meson
-Version: 0.49.0
+Version: 0.49.1
 Release: alt1
 
 Summary: High productivity build system
@@ -88,6 +88,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.1-alt1
+- 0.49.1
+
 * Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - updated to 0.49.0-10-g88e08969
 
