@@ -3,7 +3,7 @@
 
 Name: qt5-script
 Version: 5.11.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtScript component
@@ -61,6 +61,11 @@ Requires: %name-common = %EVR
 %setup -qn %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version 
 
+# workaround against gcc8
+%if "%__gcc_version_major" == "8"
+sed -i 's|^asm volatile ($|asm (|' src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.cpp
+%endif
+
 %build
 %qmake_qt5
 %make_build
@@ -90,6 +95,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2
+- add workaround against rejecting 'asm volatile' statements by gcc-8 (ALT#35928)
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
