@@ -3,8 +3,8 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.6.5
-Release: alt3
+Version: 3.6.6
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -321,6 +321,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 25 2019 Mikhail Efremov <sem@altlinux.org> 3.6.6-alt1
+- Updated to 3.6.6.
+
 * Tue Dec 25 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.6.5-alt3
 - Fixed build with lcc-1.23 (on E2K) with a gnulib patch (inspired by MCST).
 
