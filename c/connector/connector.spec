@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -53,6 +53,10 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Jan 25 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.4-alt1
+- Added buttons 'Communication with developer' and 'Report a bug' into menu Help.
+- FreeRDP: added checkbox for glyph-cache (ALT #35796)
+
 * Fri Dec 07 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.3-alt1
 - keyring: some fixes
 
