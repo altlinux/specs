@@ -21,7 +21,7 @@
 
 Name: mongo-tools
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 Summary: mongo client shell and tools
 License: ASL 2.0
@@ -34,7 +34,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3
-BuildRequires: golang-tools-devel
 BuildRequires: libssl-devel libpcap-devel
 
 Conflicts:      mongo < 3.0.0
@@ -74,6 +73,9 @@ install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/*
 
 %changelog
+* Fri Jan 25 2019 Vladimir Didenko <cow@altlinux.org> 4.0.5-alt2
+- Remove golang-tools-devel from build reqs
+
 * Thu Jan 17 2019 Vladimir Didenko <cow@altlinux.org> 4.0.5-alt1
 - 4.0.5
 
