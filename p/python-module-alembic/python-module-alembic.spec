@@ -5,7 +5,7 @@
 
 Name: python-module-alembic
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: Database migration tool for SQLAlchemy
 
@@ -27,7 +27,6 @@ BuildRequires: help2man
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-mako
-BuildRequires: python-module-argparse
 BuildRequires: python-module-SQLAlchemy >= 0.9.0
 BuildRequires: python-module-editor >= 0.3
 BuildRequires: python-module-dateutil
@@ -41,7 +40,6 @@ BuildRequires: python-module-pytest
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-mako python3-module-nose
 BuildRequires: python3-module-SQLAlchemy python3-module-setuptools
-BuildRequires: python3-module-argparse
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-pytest
 %endif
@@ -162,6 +160,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 1.0.5-alt2
+- Dropped BR on python argparse.
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
