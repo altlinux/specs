@@ -1,7 +1,7 @@
 %def_without telepathy
 
 Name: remmina
-Version: 1.2.32.1
+Version: 1.3.0
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -292,6 +292,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jan 25 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.32.1-alt1
 - 1.2.32.1
 - split plugins package
