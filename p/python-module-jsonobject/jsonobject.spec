@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.9.8
-Release: alt1
+Release: alt2
 Summary: A library for dealing with JSON as python objects
 
 License: BSD
@@ -15,13 +15,13 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-couchdbkit python-module-unittest2
-BuildRequires: python-module-argparse python-module-six
+BuildRequires: python-module-six
 BuildRequires: python-module-Cython
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-couchdbkit python3-module-unittest2
-BuildPreReq: python3-module-argparse python3-module-six
+BuildPreReq: python3-module-six
 BuildPreReq: python3-module-Cython
 
 %py_provides %oname
@@ -81,6 +81,9 @@ popd
 
 
 %changelog
+* Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 0.9.8-alt2
+- Dropped BR on argparse.
+
 * Wed Dec 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.8-alt1
 - Version updated to 0.9.8
 

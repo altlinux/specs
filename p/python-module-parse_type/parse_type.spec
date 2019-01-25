@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname parse_type
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
@@ -14,23 +15,17 @@ Url: https://pypi.python.org/pypi/parse_type/
 # https://github.com/jenisys/parse_type.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-parse python-module-six
-BuildRequires: python2.7(enum34) python-module-coverage
-BuildRequires: python-module-pytest-cov python-module-pytest-runner
-BuildRequires: python-module-tox python-module-argparse
-BuildRequires: python-module-ordereddict
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-parse python3-module-six
-BuildRequires: python3(enum) python3-module-coverage
-BuildRequires: python3-module-pytest-cov python3-module-pytest-runner
-BuildRequires: python3-module-tox python3-module-argparse
+
+%if_with check
+BuildRequires: python2.7(enum34)
+BuildRequires: python2.7(parse)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(parse)
+BuildRequires: python3(tox)
 %endif
 
-%py_provides %oname
-%py_requires parse six enum34
+%py_requires parse enum34
 
 %description
 Simplifies to build parse types based on the parse module.
@@ -38,8 +33,7 @@ Simplifies to build parse types based on the parse module.
 %package -n python3-module-%oname
 Summary: parse_type extends the parse module (opposite of string.format())
 Group: Development/Python3
-%py3_provides %oname
-%py3_requires parse six enum
+%py3_requires parse
 
 %description -n python3-module-%oname
 Simplifies to build parse types based on the parse module.
@@ -47,48 +41,48 @@ Simplifies to build parse types based on the parse module.
 %prep
 %setup
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test
-
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+sed -i -e '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+%_bindir/tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python_sitelibdir/parse_type/
+%python_sitelibdir/parse_type-%version-py%_python_version.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/parse_type/
+%python3_sitelibdir/parse_type-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 0.4.2-alt2
+- Dropped BR on argparse.
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt1
 - Updated to upstream version 0.4.2.
 

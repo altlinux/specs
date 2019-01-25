@@ -1,11 +1,10 @@
 %define oname argparse
 
-%def_with python3
 %def_disable check
 
 Name:           python-module-%oname
 Version:        1.3.0
-Release:        alt2.hg20141215.2
+Release:        alt3.hg20141215
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -18,32 +17,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildArch:      noarch
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python3-base
-BuildRequires: python3
+# optimized out: python-base python-modules
 
 #BuildRequires: python-module-setuptools-tests python-devel
 #BuildPreReq: python-module-setupdocs python-module-sphinx-devel
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools-tests
-%endif
 
 %py_requires %oname
 
 %description
 The argparse module provides an easy, declarative interface for
 creating command line tools.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python 3 command line parser
-Group: Development/Python3
-%py3_requires %oname
-
-%description -n python3-module-%oname
-The argparse module provides an easy, declarative interface for
-creating command line tools.
-%endif
 
 %package docs
 Summary: Documentation for argparse
@@ -71,28 +54,13 @@ This package contains pickles for argparse.
 
 #touch test/__init__.py
 
-#if_with python3
-#rm -rf ../python3
-#cp -a . ../python3
-#endif
-
 #prepare_sphinx .
 
 #build
 #python_build
-#if_with python3
-#pushd ../python3
-#python3_build
-#popd
-#endif
 
 #install
 #python_install -O1
-#if_with python3
-#pushd ../python3
-#python3_install
-#popd
-#endif
 
 #generate_pickles doc/source doc/source %oname
 #cp -fR pickle %buildroot%python_sitelibdir/%oname
@@ -100,13 +68,6 @@ This package contains pickles for argparse.
 #check
 #python setup.py test
 #py.test
-#if_with python3
-#if 0
-#pushd ../python3
-#python3 setup.py test
-#py.test-%_python3_version
-#popd
-#endif
 
 %files
 #doc NEWS.txt README.txt
@@ -120,13 +81,10 @@ This package contains pickles for argparse.
 #dir %python_sitelibdir/%oname
 #python_sitelibdir/%oname/pickle
 
-%if_with python3
-%files -n python3-module-%oname
-#doc NEWS.txt README.txt
-#python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt3.hg20141215
+- Removed Python3 module (closes: #35994).
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2.hg20141215.2
 - (NMU) rebuild with python3.6
 
