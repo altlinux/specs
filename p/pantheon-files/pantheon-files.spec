@@ -5,7 +5,7 @@
 %define rdn_name io.elementary.files
 
 Name: pantheon-files
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -98,6 +98,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Fri Jan 25 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
+- updated to 4.1.3-30-gedee9887
+
 * Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.2-alt1
 - updated to 4.1.2-4-g08e2084f
 
