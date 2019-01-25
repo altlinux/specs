@@ -1,6 +1,6 @@
 Name: thunar
-Version: 1.8.2
-Release: alt2
+Version: 1.8.3
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -29,6 +29,9 @@ Requires: exo-utils
 
 Obsoletes: Thunar < 1.3.1
 Provides: Thunar = %version-%release
+
+# Due to org.freedesktop.FileManager1.service
+Conflicts: nautilus
 
 %description
 Thunar File Manager for the Xfce desktop environment.
@@ -122,6 +125,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Jan 25 2019 Mikhail Efremov <sem@altlinux.org> 1.8.3-alt1
+- Add conflict with nautilus.
+- Updated to 1.8.3.
+
 * Thu Oct 25 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt2
 - Fix systemd userdir location.
 
