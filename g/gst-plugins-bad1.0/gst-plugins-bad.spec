@@ -20,7 +20,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt4
+Release: alt5
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -28,6 +28,8 @@ License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
+
+Patch1: %name-alt-libopencv-compat.patch
 
 Provides: %_name-bad = %version-%release
 
@@ -98,6 +100,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %prep
 %setup -n %_name-bad-%version
+%patch1 -p2
 
 %build
 %autoreconf
@@ -148,6 +151,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Jan 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.4-alt5
+- Fixed build with libopencv-3.4.5 (Closes: #35971)
+
 * Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt4
 - rebuilt against libfluidsynth.so.2
 
