@@ -8,8 +8,8 @@
 %add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
 
 Name: rabbitmq-server
-Version: 3.6.16
-Release: alt1%ubt
+Version: 3.7.10
+Release: alt1
 Summary: The RabbitMQ server
 License: MPLv1.1
 BuildArch: noarch
@@ -28,16 +28,14 @@ Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
 Patch3: rabbitmq-server-0003-Allow-guest-login-from-non-loopback-connections.patch
 Patch4: rabbitmq-server-0004-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
-Patch201: rabbitmq-server-release-0001-Don-t-use-templates.patch
 
 URL: http://www.rabbitmq.com/
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-erlang
-BuildRequires: erlang-devel erlang-otp-devel
+BuildRequires: erlang-devel erlang-otp-devel elixir
 BuildRequires: python-module-simplejson python-modules-xml
 BuildRequires: xmlto zip unzip netcat rsync
-Requires: erlang  >= 1:20.1.3
+Requires: erlang  >= 1:20.3.0
 Requires: tsung   >= 1.7.0
 
 
@@ -68,8 +66,6 @@ pushd deps/rabbit_common
 %patch101 -p1
 popd
 
-%patch201 -p1
-
 # We have to remove it until common_test subpackage lands RHOS
 rm -f \
     deps/amqp_client/src/rabbit_ct_client_helpers.erl \
@@ -81,10 +77,12 @@ sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
 sed -i 's|@localstatedir@|%_localstatedir|g' %SOURCE2
 #sed -i 's|@RABBITMQ_DIR@|%_erlanglibdir/rabbitmq_server-%version|g' %SOURCE5
 
+export LANG=en_US.UTF-8
 export VERSION=%version
 %make_build
 
 %install
+export LANG=en_US.UTF-8
 %makeinstall_std \
         VERSION="%version" \
         PREFIX=%_prefix \
@@ -122,6 +120,14 @@ install -p -D -m 0755 scripts/rabbitmq-server-ha.ocf %buildroot%_libexecdir/ocf/
 mkdir -p %buildroot%_sysconfdir/%oname/conf.d
 rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTALL}
 
+# Install completions
+mkdir -p %buildroot%_datadir/bash-completion/completions
+mv %buildroot/usr/lib/erlang/autocomplete/bash_autocomplete.sh %buildroot%_datadir/bash-completion/completions/%name
+
+mkdir -p %buildroot%_datadir/zsh/site-functions
+mv %buildroot/usr/lib/erlang/autocomplete/zsh_autocomplete.sh %buildroot%_datadir/zsh/site-functions/_%name
+rm -rf %buildroot/usr/lib/erlang/autocomplete
+
 %pre
 %_sbindir/groupadd -r -f rabbitmq &>/dev/null
 %_sbindir/useradd -r -g rabbitmq  -d %_localstatedir/rabbitmq -s /dev/null \
@@ -147,18 +153,23 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 %attr(0750, rabbitmq, rabbitmq) %dir %_runtimedir/%oname
 %config(noreplace) %_logrotatedir/*
 %config(noreplace) %_sysconfdir/%oname
-%_man1dir/*
 %_man5dir/*
+%_man8dir/*
 %_unitdir/%oname.service
 %_tmpfilesdir/%oname.conf
 %_initrddir/%oname
 %_libexecdir/ocf/resource.d/rabbitmq
+%_datadir/bash-completion/completions/%name
+%_datadir/zsh/site-functions/_%name
 
 %files -n %name-devel
 %_erlanglibdir/rabbitmq_server-%version/include
 #%_datadir/%name
 
 %changelog
+* Fri Jan 25 2019 Alexey Shabalin <shaba@altlinux.org> 3.7.10-alt1
+- 3.7.10
+
 * Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.16-alt1%ubt
 - Updated to upstream version 3.6.16.
 

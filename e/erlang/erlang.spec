@@ -52,9 +52,8 @@
 %define ver 21
 Name: erlang
 Epoch: 1
-%define subver 0.9
+%define subver 2.4
 Version: %ver.%subver
-%define plevel b
 Release: alt1
 Summary: A programming language developed by Ericsson
 License: %asl
@@ -925,6 +924,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/stdlib-*
 %dir %_otplibdir/syntax_tools-*
 %dir %_otplibdir/tools-*
+%_otplibdir/tools-*/priv
 %dir %_otplibdir/xmerl-*
 
 
@@ -1249,6 +1249,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Fri Jan 25 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.2.4-alt1
+- new version
+
 * Thu Oct 11 2018 Denis Medvedev <nbr@altlinux.org> 1:21.0.9-alt1
 - new version
 
