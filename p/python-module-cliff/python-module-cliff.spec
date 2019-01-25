@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.13.0
-Release: alt1
+Release: alt2
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python
@@ -15,7 +15,6 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 Requires: python-module-unicodecsv >= 0.8.0
-Requires: python-module-argparse
 Requires: python-module-prettytable >= 0.7.1
 Requires: python-module-yaml >= 3.10.0
 
@@ -24,7 +23,6 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-prettytable >= 0.7.2
 BuildRequires: python-module-pyparsing >= 2.1.0
-BuildRequires: python-module-argparse
 BuildRequires: python-module-cmd2 >= 0.6.7
 BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-unicodecsv >= 0.8.0
@@ -45,7 +43,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-pyparsing >= 2.1.0
-BuildRequires: python3-module-argparse
 BuildRequires: python3-module-cmd2 >= 0.6.7
 BuildRequires: python3-module-stevedore  >= 1.20.0
 BuildRequires: python3-module-six >= 1.10.0
@@ -99,7 +96,6 @@ Documentation for the Command Line Interface Formulation Framework.
 rm -f test-requirements.txt requirements.txt
 
 #sed -i 's|^pbr.*||' requirements.txt
-#sed -i 's|^argparse.*||' requirements.txt
 
 # Remove bundled egg info
 rm -rf *.egg-info
@@ -155,6 +151,9 @@ popd
 #%doc html
 
 %changelog
+* Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 2.13.0-alt2
+- Dropped BR and RR on python argparse.
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt1
 - 2.13.0
 
