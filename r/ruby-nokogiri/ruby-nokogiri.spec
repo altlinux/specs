@@ -1,7 +1,7 @@
 %define   pkgname nokogiri
 Name:     ruby-%pkgname
 Version:  1.10.1
-Release:  alt2
+Release:  alt3
 Summary:  Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:    Development/Ruby
 License:  MIT
@@ -11,7 +11,8 @@ Source:   %pkgname-%version.tar
 Patch:    shutdown-libxml2-warning.patch
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
+BuildRequires(pre): ruby-tool-setup
+BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config zlib-devel
 #BuildRequires: db2latex-xsl xhtml1-dtds
 BuildRequires: ruby-hoe rake-compiler ruby-concourse
 BuildRequires: ruby-racc ruby-rexical
@@ -48,7 +49,7 @@ Documentation for Nokogiri.
 
 %build
 export CFLAGS="$CFLAGS -Wno-unused-parameter"
-%ruby_config -- --use-system-libraries
+%ruby_config --  --use-system-libraries --sodir=%rubygem_extdir/  --rbdir=%rubygem_gemdir/
 %ruby_build
 rake debug_gem > %pkgname-%version.gemspec
 echo "gemspec" >> Gemfile
@@ -57,9 +58,9 @@ echo "gemspec" >> Gemfile
 %ruby_install
 %rdoc lib/
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/
-find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/ \;
-touch %buildroot%rubygem_extdir/%pkgname-%version/gem.build_complete
+mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/
+find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/ \;
+touch %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/gem.build_complete
 mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
 
 %check
@@ -77,6 +78,9 @@ mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jan 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt3
+- Fixed extension installation folder.
+
 * Fri Jan 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt2
 - Fixed spec.
 
