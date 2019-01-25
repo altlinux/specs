@@ -1,4 +1,4 @@
-%define git_hash .git1445b5b2966d
+%define git_hash .git542e340f01b2
 #define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
@@ -47,7 +47,7 @@
 %ifarch %e2k
 %define more_warnings no
 %else
-%define more_warnings error
+%define more_warnings yes
 %endif
 
 %define _name %name-daemon
@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.14.5
-Release: alt2%git_hash
+Release: alt3%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -770,6 +770,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Jan 25 2019 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt3.git542e340f01b2
+- Fix build: don't treat warnings as errors.
+- Upstream git snapshot (nm-1-14 branch).
+
 * Fri Dec 14 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt2.git1445b5b2966d
 - Disable libnm-glib build.
 - Start NM _after_ network.service.
