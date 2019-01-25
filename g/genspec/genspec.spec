@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.7
+Version:  1.3.8
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Fri Jan 25 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.8-alt1
+- Fix name translation
+
 * Fri Jan 25 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.7-alt1
 - Add disable-name-translation option
 
