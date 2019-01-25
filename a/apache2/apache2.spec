@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.37
+Version: 2.4.38
 Release: alt1
 Epoch: 1
 
@@ -1514,6 +1514,13 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Jan 25 2019 Anton Farygin <rider@altlinux.ru> 1:2.4.38-alt1
+- 2.4.38
+- fixes:
+   * important: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1. CVE-2019-0190
+   * low: mod_session_cookie does not respect expiry time. CVE-2018-17199
+   * low: DoS for HTTP/2 connections via slow request bodies. CVE-2018-17189 
+
 * Wed Oct 24 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.37-alt1
 - 2.4.37
 - removed TimeoutStartSec in httpd.service (closes: #27925)
