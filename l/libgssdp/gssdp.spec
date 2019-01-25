@@ -1,13 +1,16 @@
 %define _name gssdp
 %define ver_major 1.0
+%define api_ver 1.0
 
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable sniffer
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
@@ -16,9 +19,11 @@ Url: http://www.gupnp.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: gnome-common gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.32
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.32
 BuildRequires: vala-tools rpm-build-vala libvala-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel}
+%{?_enable_sniffer:BuildRequires: libgtk+3-devel >= 3.12}
 
 %description
 GSSDP implements resource discovery and announcement over SSDP and is part
@@ -61,22 +66,30 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the GSSDP library
 
+%package -n %_name-tools
+Summary: Graphical SSDP sniffer
+Group: Networking/Other
+Requires: %name = %version-%release
+
+%description -n %_name-tools
+A Device Sniffer tool based on GSSDP framework.
+
 %prep
 %setup -n %_name-%version
 
-[ ! -d m4 ] && mkdir m4
-
 %build
-%autoreconf
-%configure  --disable-static \
-	    --without-gtk \
-	    %{?_enable_gtk_doc:--enable-gtk-doc} \
-	    %{subst_enable introspection}
-
-%make_build
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_disable_sniffer:-Dsniffer=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -90,18 +103,30 @@ GObject introspection devel data for the GSSDP library
 %_vapidir/*.vapi
 
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%_name
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/GSSDP-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/GSSDP-%api_ver.gir
+%endif
+
+%if_enabled sniffer
+%files -n %_name-tools
+%_bindir/%_name-device-sniffer
+%dir %_datadir/%_name
+%_datadir/%_name/%_name-device-sniffer.ui
 %endif
 
 
 %changelog
+* Fri Jan 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3 (ported to Meson build system)
+- new gssdp-tools subpackage
+- %%check section
+
 * Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1.1
 - NMU: Rebuilt for e2k.
 
