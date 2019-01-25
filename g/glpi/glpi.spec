@@ -1,15 +1,12 @@
 %define installdir %webserver_webappsdir/%name
 
-
 Name: glpi
-Version: 9.1.6
-Release: alt2
-
+Version: 9.3.3
+Release: alt1
 
 Summary: IT and asset management software
 License: GPLv2
 Group: Networking/Other
-
 
 URL: http://www.glpi-project.org
 Packager: Pavel Zilke <zidex at altlinux dot org>
@@ -20,7 +17,7 @@ Source1: apache2.conf
 Source2: README.ALT
 Patch: patch0.patch
 
-Requires: webserver-common php-engine composer curl lynx
+Requires: webserver-common php-engine curl lynx
 BuildRequires(pre): rpm-macros-webserver-common
 
 %description
@@ -32,15 +29,12 @@ It has enhanced functions to make the daily life for the administrators easier,
 like a job-tracking-system with mail-notification and methods to build a
 database with basic information about your network-topology.
 
-
-
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
 Group: Networking/Other
 Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
-
 
 %package php5
 Summary: PHP5 dependencies for %name
@@ -49,11 +43,16 @@ Requires: %name = %version-%release, php5-mysqli, php5-ldap, php5-imap, php5-cur
 %description php5
 PHP5 dependencies for %name
 
+%package php7
+Summary: PHP7 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release, php7-mysqli, php7-ldap, php7-imap, php7-curl, php7-gd2, php7-fileinfo, php7-mbstring, php7-apcu, php7-opcache, php7-xmlrpc
+%description php7
+PHP7 dependencies for %name
 
 %prep
 %setup
 %patch -p0
-
 
 %build
 
@@ -75,10 +74,7 @@ find %buildroot%installdir -name .htaccess -delete
 find %buildroot%installdir -name remove.txt -delete
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
-
 %post
-cd %installdir
-composer install --no-dev
 
 %post apache2
 if [ "$1" = "1" ]; then
@@ -92,13 +88,12 @@ if [ "$1" = "1" ]; then
   %_initdir/httpd2 condreload
 fi
 
-
 %files
 %dir %installdir
 %dir %attr(2770,root,%webserver_group) %installdir/config
-%config %attr(0664,root,%webserver_group) %installdir/config/based_config.php
-%config %attr(0664,root,%webserver_group) %installdir/config/config.php
-%config %attr(0664,root,%webserver_group) %installdir/config/define.php
+#%config %attr(0664,root,%webserver_group) %installdir/config/based_config.php
+#%config %attr(0664,root,%webserver_group) %installdir/config/config.php
+#%config %attr(0664,root,%webserver_group) %installdir/config/define.php
 %dir %attr(2770,root,%webserver_group) %installdir/files
 %attr(2770,root,%webserver_group) %installdir/files/*
 %installdir/ajax
@@ -108,28 +103,37 @@ fi
 %installdir/front
 %installdir/inc
 %installdir/install
+%installdir/js
 %installdir/lib
 %installdir/locales
 %installdir/pics
 %installdir/plugins
 %installdir/scripts
+%installdir/sound
+%installdir/vendor
 %installdir/*.php
-%installdir/*.js
-%installdir/*.json
+#%installdir/*.js
+#%installdir/*.json
 %installdir/COPYING.txt
-%doc AUTHORS.txt
-%doc CHANGELOG.txt
+%doc CHANGELOG.md
+%doc CONTRIBUTING.md
+%doc README.md
+%doc SUPPORT.md
+%doc apirest.md
 %doc README.ALT
-
 
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-
 %files php5
 
+%files php7
 
 %changelog
+* Sun Dec 30 2018 Pavel Zilke <zidex at altlinux dot org> 9.3.3-alt1
+- New verion 9.3.3
+- PHP7 support
+
 * Thu Sep 21 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.6-alt2
 - Delete glpi-apache
 
