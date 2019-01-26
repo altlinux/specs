@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.71
-Release: alt1
+Release: alt1.1
 Summary: Concise Binary Object Representation (CBOR, RFC7049)
 Group: Development/Perl
 License: GPL-3
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.71-alt1.1
+- rebuild with new perl 5.28.1
+
 * Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.71-alt1
 - automated CPAN update
 

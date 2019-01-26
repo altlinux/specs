@@ -2,7 +2,7 @@
 %define dist Sys-Virt
 Name: perl-%dist
 Version: 4.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Represent and manage a libvirt hypervisor connection
 License: GPL or Artistic
@@ -36,6 +36,9 @@ export NPROCS=1
 %perl_vendor_autolib/Sys
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.10.0-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 4.10.0-alt1
 - automated CPAN update
 

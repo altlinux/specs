@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.0003
-Release: alt1
+Release: alt1.1
 Summary: Perl pragma to declare lexical compile-time constants
 Group: Development/Perl
 License: perl
@@ -40,6 +40,9 @@ fi
 %perl_vendor_autolib/c*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.0003-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.0003-alt1
 - automated CPAN update
 

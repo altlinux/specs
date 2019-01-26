@@ -7,7 +7,7 @@ BuildRequires: perl(Fatal.pm) perl(Text/Balanced.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-autovivification
 Version:        0.18
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Lexically disable autovivification
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/autovivification
@@ -78,6 +78,9 @@ make test
 %{perl_vendor_archlib}/auto/autovivification/
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_3
+- rebuild with new perl 5.28.1
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3
 - update to new release by fcimport
 

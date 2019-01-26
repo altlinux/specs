@@ -1,7 +1,7 @@
 %define module RPM2
 Name:           perl-%module
 Version:        1.4
-Release:        alt1
+Release:        alt1.1
 Summary:        Perl bindings for the RPM Package Manager API
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -33,6 +33,9 @@ bindings for the RPM Package Manager API.
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
 - new version
 

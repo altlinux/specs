@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.66
-Release: alt3
+Release: alt3.1
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
@@ -45,6 +45,9 @@ export CFLAGS="-std=c99 $CFLAGS"
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.66-alt3.1
+- rebuild with new perl 5.28.1
+
 * Thu Jan 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.66-alt3
 - e2k support to Sisyphus
 

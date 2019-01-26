@@ -20,7 +20,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.1
 
 Summary: PostgreSQL client programs and libraries
 License: PostgreSQL
@@ -782,6 +782,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 9.6.11-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 9.6.11-alt1
 - 9.6.11
 

@@ -2,7 +2,7 @@
 %define dist Template-Toolkit
 Name: perl-Template
 Version: 2.28
-Release: alt1
+Release: alt1.1
 
 Summary: Perl Template Toolkit
 License: GPL or Artistic
@@ -63,6 +63,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
 - automated CPAN update
 

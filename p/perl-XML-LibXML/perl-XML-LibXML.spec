@@ -1,8 +1,8 @@
 %define dist XML-LibXML
-%def_without bootstrap
+%def_with bootstrap
 Name: perl-%dist
 Version: 2.0132
-Release: alt1
+Release: alt1.1
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -61,6 +61,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.0132-alt1.1
+- rebuild with new perl 5.28.1
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 2.0132-alt1
 - automated CPAN update
 

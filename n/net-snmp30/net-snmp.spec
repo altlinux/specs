@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt4
+Release: alt4.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -598,6 +598,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt4.1
+- rebuild with new perl 5.28.1
+
 * Thu Aug 30 2018 Terechkov Evgenii <evg@altlinux.org> 5.7.3-alt4
 - Build without libwrap (tcp_wrappers)
 - Fix build with openssl1.1 (patch9)

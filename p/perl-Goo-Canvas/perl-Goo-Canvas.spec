@@ -4,7 +4,7 @@ BuildRequires: perl-podlators
 
 Name: perl-%module
 Version: 0.06
-Release: alt4
+Release: alt4.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -57,6 +57,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4.1
+- rebuild with new perl 5.28.1
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4
 - fixed unpackaged files
 

@@ -4,7 +4,7 @@
 
 Name: perl-Ref-Util-XS
 Version: 0.117
-Release: alt1
+Release: alt1.1
 
 Summary: XS implementation for Ref::Util Perl module
 
@@ -48,6 +48,9 @@ that uses Ref::Util.
 %perl_vendor_autolib/Ref/Util/XS*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.117-alt1.1
+- rebuild with new perl 5.28.1
+
 * Fri Mar 02 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.117-alt1
 - New version
 

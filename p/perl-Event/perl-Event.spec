@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 1.27
-Release: alt1
+Release: alt1.1
 
 Summary: Event loop processing
 License: Perl
@@ -36,6 +36,9 @@ order when it is safe for callbacks to execute.
 %perl_vendor_autolib/Event
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1
+- rebuild with new perl 5.28.1
+
 * Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 

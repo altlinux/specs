@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt1.1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -252,6 +252,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 6.9.10.24-alt1.1
+- rebuild with new perl 5.28.1
+
 * Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.24-alt1
 - new version 6.9.10.24
 

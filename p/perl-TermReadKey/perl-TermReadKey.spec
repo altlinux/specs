@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.38
-Release: alt1
+Release: alt1.1
 Summary: simple control over terminal driver modes
 Group: Development/Perl
 License: perl
@@ -41,6 +41,9 @@ Term::ReadKey" on any architecture and have a good likelihood of it working.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.38-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.38-alt1
 - automated CPAN update
 

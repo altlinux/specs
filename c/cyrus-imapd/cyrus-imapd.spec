@@ -18,7 +18,7 @@
 
 Name: cyrus-imapd
 Version: 3.0.8
-Release: alt3
+Release: alt3.1
 
 Summary: A high-performance email, contacts and calendar server
 License: CMU License
@@ -482,6 +482,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.8-alt3.1
+- rebuild with new perl 5.28.1
+
 * Thu Sep 13 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt3
 - updated README.ALT.rus
 - do not installed build scripts from "tools" directory (dropped

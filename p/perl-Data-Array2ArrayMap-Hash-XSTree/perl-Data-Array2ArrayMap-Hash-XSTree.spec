@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.13
-Release: alt4.1.1.1.1
+Release: alt4.2
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -38,6 +38,9 @@ mv t/test_Hash.t t/test_Hash.t.failed
 %perl_vendor_autolib/Data
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1.1.1.1
 - rebuild with new perl 5.26.1
 

@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.1
 Version: %branch.26
-Release: alt1
+Release: alt1.1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1065,6 +1065,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4:8.1.26-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon May 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.26-alt1
 - Updated to 8.1.0026.
 - %name-minimal: enabled support of multibyte encodings (ALT#33359).

@@ -9,7 +9,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:           perl-Coro
 Version:        6.54
-Release:        alt1.1
+Release:        alt1.2
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -156,6 +156,9 @@ make test
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.54-alt1.2
+- rebuild with new perl 5.28.1
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.54-alt1.1
 - disabled tests for 6.54 + perl 5.28
 

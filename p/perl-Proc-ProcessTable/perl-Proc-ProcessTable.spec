@@ -2,7 +2,7 @@
 %define dist Proc-ProcessTable
 Name: perl-%dist
 Version: 0.55
-Release: alt1
+Release: alt1.1
 
 Summary: Perl extension to access the unix process table
 License: GPL or Artistic
@@ -35,6 +35,9 @@ Perl interface to the unix process table.
 %perl_vendor_autolib/Proc
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
 - automated CPAN update
 

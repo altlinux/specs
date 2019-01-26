@@ -2,7 +2,7 @@
 %define dist Gtk2-ImageView
 Name: perl-%dist
 Version: 0.05
-Release: alt4
+Release: alt4.1
 
 Summary: Perl bindings for the GtkImageView widget
 License: LPGL
@@ -52,6 +52,9 @@ should be considered the canonical documentation.
 %doc	%perl_vendor_archlib/Gtk2/Gdk/Pixbuf/Draw/Cache.pod
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4.1
+- rebuild with new perl 5.28.1
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4
 - fixed unpackaged files
 

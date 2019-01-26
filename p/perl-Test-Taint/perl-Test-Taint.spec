@@ -2,7 +2,7 @@
 %define dist Test-Taint
 Name: perl-%dist
 Version: 1.06
-Release: alt4
+Release: alt4.1
 
 Summary: Checks for taintedness of variables
 License: GPL or Artistic
@@ -40,6 +40,9 @@ in standard the Test::More manpage style.
 %perl_vendor_autolib/Test
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.06-alt4.1
+- rebuild with new perl 5.28.1
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt4
 - enabled tests again
 

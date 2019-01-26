@@ -8,7 +8,7 @@
 
 Name: exim
 Version: 4.90.1
-Release: alt2
+Release: alt2.1
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
@@ -451,6 +451,9 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.90.1-alt2.1
+- rebuild with new perl 5.28.1
+
 * Tue Oct 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.90.1-alt2
 - NMU: Rebuilt without tcp_wrappers support.
 

@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: 4.13.6
-Release: alt1
+Release: alt1.1
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
@@ -118,6 +118,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.13.6-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Oct 22 2018 Mikhail Efremov <sem@altlinux.org> 4.13.6-alt1
 - Updated to 4.13.6.
 

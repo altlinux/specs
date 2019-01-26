@@ -33,7 +33,7 @@
 
 Name: collectd
 Version: 5.8.1
-Release: alt3
+Release: alt3.1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -816,6 +816,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 5.8.1-alt3.1
+- rebuild with new perl 5.28.1
+
 * Fri Dec 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.1-alt3
 - build with dpdk only on selected arches
 

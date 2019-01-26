@@ -1,7 +1,7 @@
 %def_with perl
 Name: libossp-uuid
 Version: 1.5.1
-Release: alt2
+Release: alt2.1
 Summary: Universally Unique Identifier library
 License: MIT
 Group: System/Libraries
@@ -129,6 +129,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OSSP/uuid/uuid.so ||:
 %endif
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2.1
+- rebuild with new perl 5.28.1
+
 * Tue Oct 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
 - NMU: built with perl
 

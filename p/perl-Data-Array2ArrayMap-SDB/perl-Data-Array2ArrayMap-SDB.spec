@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.15
-Release: alt1.1.1
+Release: alt1.2
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -50,6 +50,9 @@ cp -a sdblib %buildroot%_includedir/mapsdb
 %_includedir/mapsdb
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1.1
 - rebuild with new perl 5.26.1
 

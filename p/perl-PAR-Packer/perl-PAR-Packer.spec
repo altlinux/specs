@@ -4,7 +4,7 @@
 
 Name: perl-PAR-Packer
 Version: 1.047
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module to generate stand-alone executables and ".par" archives
 
@@ -72,6 +72,9 @@ mv -- %buildroot%_bindir/pp %buildroot%_bindir/par-pp
 
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.047-alt1.1
+- rebuild with new perl 5.28.1
+
 * Sat Aug 25 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.047-alt1
 - New version
 

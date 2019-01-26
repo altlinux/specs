@@ -2,7 +2,7 @@
 %define dist File-LibMagic
 Name: perl-File-LibMagic
 Version: 1.16
-Release: alt1
+Release: alt1.1
 
 Summary: Perl wrapper for libmagic
 License: GPL or Artistic
@@ -37,6 +37,9 @@ sed -i -e s,us-ascii,7bit, t/oo-api.t
 %perl_vendor_autolib/File
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 

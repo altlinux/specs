@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.16
-Release: alt3.1.1.1.1
+Release: alt3.2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,6 +40,9 @@ library (libwnck for short) to write tasklists and pagers.
 	%perl_vendor_archlib/Gnome2/Wnck/Install
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 

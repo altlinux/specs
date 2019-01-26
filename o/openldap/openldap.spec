@@ -17,7 +17,7 @@
 
 Name: openldap
 Version: %_sover.46
-Release: alt1
+Release: alt1.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -690,6 +690,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.46-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.46-alt1
 - 2.4.46
 - build with openssl-1.1

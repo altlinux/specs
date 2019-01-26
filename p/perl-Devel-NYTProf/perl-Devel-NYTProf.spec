@@ -2,7 +2,7 @@
 %define dist Devel-NYTProf
 Name: perl-%dist
 Version: 6.06
-Release: alt1
+Release: alt1.1
 
 Summary: Powerful fast feature-rich perl source code profiler
 License: Perl
@@ -40,6 +40,9 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1.1
+- rebuild with new perl 5.28.1
+
 * Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1
 - automated CPAN update
 

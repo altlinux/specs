@@ -4,7 +4,7 @@
 
 Name: perl-%dist
 Version: 1.04
-Release: alt1.1
+Release: alt1.2
 
 Summary: bare-bones Ed25519 public key signing/verification system
 License: %perl_license
@@ -50,6 +50,9 @@ http://ed25519.cr.yp.to/index.html.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1.1
 - rebuild with new perl 5.26.1
 

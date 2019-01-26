@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 4.005
-Release: alt1
+Release: alt1.1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
@@ -52,6 +52,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.005-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.005-alt1
 - automated CPAN update
 

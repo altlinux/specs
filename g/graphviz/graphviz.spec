@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt4
+Release: alt4.1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -339,6 +339,9 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 # - enable/fix/test language bindings
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.40.1-alt4.1
+- rebuild with new perl 5.28.1
+
 * Mon Aug 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.40.1-alt4
 - rebuilt with recent guile
 

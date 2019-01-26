@@ -6,7 +6,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.p
 %define _localstatedir %{_var}
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt4_23
+Release:        alt5_23
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
 Group:          Development/Other
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_archlib}/String*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt5_23
+- rebuild with new perl 5.28.1
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_23
 - update to new release by fcimport
 

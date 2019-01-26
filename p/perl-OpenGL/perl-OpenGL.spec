@@ -1,7 +1,7 @@
 Name: perl-OpenGL
 Epoch: 1
 Version: 0.70
-Release: alt2
+Release: alt2.1
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -34,6 +34,9 @@ rm test.pl
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.70-alt2.1
+- rebuild with new perl 5.28.1
+
 * Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.70-alt2
 - NMU: rebuilt with libGLUT.
 

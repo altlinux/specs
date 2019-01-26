@@ -5,7 +5,7 @@
 
 Name: qpid-proton
 Version: 0.18.1
-Release: alt1.2
+Release: alt1.3
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -150,6 +150,9 @@ mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 %perl_vendor_archlib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.18.1-alt1.3
+- rebuild with new perl 5.28.1
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.18.1-alt1.2
 - NMU: Rebuild with new openssl 1.1.0.
 

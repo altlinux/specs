@@ -1,7 +1,7 @@
 %define dist Tk
 Name: perl-%dist
 Version: 804.034
-Release: alt1.1
+Release: alt1.2
 
 Summary: Perl modules providing the Tk graphics library
 License: GPL/Artistic/Tk/Tix
@@ -118,6 +118,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Tk/demos/widtrib/
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 804.034-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 804.034-alt1.1
 - rebuild with new perl 5.26.1
 

@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define dist Net-Libdnet
 Name: perl-%dist
 Version: 0.99
-Release: alt1
+Release: alt1.1
 
 Summary: Binding for Dug Song's libdnet
 License: BSD
@@ -52,6 +52,9 @@ scripts for %name
 
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1.1
+- rebuild with new perl 5.28.1
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 

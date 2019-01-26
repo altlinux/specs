@@ -2,7 +2,7 @@
 %define dist DBD-ODBC
 Name: perl-%dist
 Version: 1.60
-Release: alt1
+Release: alt1.1
 
 Summary: Perl DBD module for interfacing with ODBC databases
 License: GPL or Artistic
@@ -38,6 +38,9 @@ The module uses the unixODBC manager to connect to the database.
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1.1
+- rebuild with new perl 5.28.1
+
 * Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
 - automated CPAN update
 

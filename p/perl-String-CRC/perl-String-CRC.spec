@@ -1,7 +1,7 @@
 %define dist String-CRC
 Name: perl-%dist
 Version: 1.0
-Release: alt3.1.1.1.1
+Release: alt3.2
 
 Summary: Cyclic redundency check generation
 License: Public Domain
@@ -34,6 +34,9 @@ and from files.
 	%perl_vendor_autolib/String
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 

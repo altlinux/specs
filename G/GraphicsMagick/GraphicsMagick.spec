@@ -51,7 +51,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.30
-Release: alt2
+Release: alt2.1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.30-alt2.1
+- rebuild with new perl 5.28.1
+
 * Mon Nov 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.30-alt2
 - built with freetype library (closes: 22348)
 

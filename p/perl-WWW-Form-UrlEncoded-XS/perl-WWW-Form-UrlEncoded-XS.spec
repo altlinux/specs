@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.25
-Release: alt1
+Release: alt1.1
 Summary: XS implementation of parser and builder for application/x-www-form-urlencoded
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 

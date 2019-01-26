@@ -4,7 +4,7 @@
 
 Name: qpid
 Version: 1.36.0
-Release: alt1.2
+Release: alt1.3
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -363,6 +363,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %doc %_pkgdocdir
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.36.0-alt1.3
+- rebuild with new perl 5.28.1
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.36.0-alt1.2
 - NMU: rebuilt with boost-1.67.0.
 

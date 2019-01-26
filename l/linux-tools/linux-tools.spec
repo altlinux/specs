@@ -9,7 +9,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt1.1
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -408,6 +408,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.19-alt1.1
+- rebuild with new perl 5.28.1
+
 * Wed Nov 21 2018 Alexey Shabalin <shaba@altlinux.org> 4.19-alt1
 - Update for kernel-4.19
 

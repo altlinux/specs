@@ -2,7 +2,7 @@
 %define dist Compress-LZF
 Name: perl-%dist
 Version: 3.8
-Release: alt1.1.1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: Extremely light-weight Lempel-Ziv-Free compression
@@ -42,6 +42,9 @@ patents.
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.8-alt1.2
+- rebuild with new perl 5.28.1
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.8-alt1.1.1.1
 - rebuild with new perl 5.26.1
 

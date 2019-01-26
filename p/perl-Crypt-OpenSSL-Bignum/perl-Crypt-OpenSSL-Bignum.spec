@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.09
-Release: alt1.1
+Release: alt1.2
 
 Summary: Perl module for OpenSSL's multiprecision integer arithmetic
 License: Perl
@@ -34,6 +34,9 @@ arithmetic libraries.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1.2
+- rebuild with new perl 5.28.1
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.09-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
 Version: 2.70
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -54,6 +54,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.70-alt1.1
+- rebuild with new perl 5.28.1
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.70-alt1
 - automated CPAN update
 
