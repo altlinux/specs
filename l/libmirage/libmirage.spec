@@ -2,7 +2,7 @@
 
 Name: libmirage
 Version: 3.2.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -12,8 +12,6 @@ URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
-
-BuildPreReq: rpm-build-ubt
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -106,6 +104,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt2
+- Remove %ubt macro
+
 * Fri Jul 27 2018 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1%ubt
 - Version 3.2.0
 

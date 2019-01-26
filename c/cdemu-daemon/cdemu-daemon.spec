@@ -1,6 +1,6 @@
 Name: cdemu-daemon
 Version: 3.2.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -12,8 +12,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2 
 Source1: vhba.init
 Source2: vhba.service
-
-BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: glibc-kernheaders-generic
@@ -81,6 +79,9 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt2
+- Remove %ubt macro
+
 * Fri Jul 27 2018 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1%ubt
 - Version 3.2.1
 
