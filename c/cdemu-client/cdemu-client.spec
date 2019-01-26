@@ -1,6 +1,6 @@
 Name: cdemu-client
 Version: 3.2.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -11,8 +11,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
 
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
-
-BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: intltool
@@ -58,6 +56,9 @@ popd
 %_sysconfdir/bash_completion.d/cdemu
 
 %changelog
+* Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt2
+- Remove %ubt macro
+
 * Fri Jul 27 2018 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1%ubt
 - Version 3.2.0
 

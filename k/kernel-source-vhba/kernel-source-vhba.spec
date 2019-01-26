@@ -1,6 +1,6 @@
 Name: kernel-source-vhba
 Version: 20170610
-Release: alt1%ubt
+Release: alt2
 
 Summary: Source for VHBA module
 License: GPLv2
@@ -15,7 +15,6 @@ Source1: 60-vhba.rules
 BuildArch: noarch
 
 BuildPreReq: kernel-build-tools
-BuildPreReq: rpm-build-ubt
 BuildRequires(pre): rpm-build-kernel
 
 %package -n vhba-udev-rules
@@ -47,6 +46,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 20170610-alt2
+- Remove %ubt macro
+
 * Mon Jul 31 2017 Nazarov Denis <nenderus@altlinux.org> 20170610-alt1%ubt
 - Version 20170610
 
