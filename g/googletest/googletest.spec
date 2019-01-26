@@ -1,8 +1,8 @@
 %define sover 0
 
 Name: googletest
-Version: 1.8.0
-Release: alt6
+Version: 1.8.1
+Release: alt1
 
 Summary: Google's framework for writing C++ tests
 License: BSD
@@ -12,7 +12,6 @@ Url: https://github.com/google/%name
 
 Source: https://github.com/google/%name/archive/release-%version/%name-release-%version.tar.gz
 Patch0: %name-soname-alt.patch
-Patch1: %name-lib64-alt.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -69,9 +68,6 @@ Development environment for gmock
 %prep
 %setup -n %name-release-%version
 %patch0 -p1
-%if "%_lib" == "lib64"
-%patch1 -p1
-%endif
 
 %build
 
@@ -109,6 +105,9 @@ popd
 %_bindir/gtest-config
 %_libdir/libgtest.so
 %_libdir/libgtest_main.so
+%_libdir/cmake/GTest
+%_pkgconfigdir/gtest.pc
+%_pkgconfigdir/gtest_main.pc
 %_includedir/gtest
 %_aclocaldir/gtest.m4
 
@@ -120,9 +119,14 @@ popd
 %files -n libgmock-devel
 %_libdir/libgmock.so
 %_libdir/libgmock_main.so
+%_pkgconfigdir/gmock.pc
+%_pkgconfigdir/gmock_main.pc
 %_includedir/gmock
 
 %changelog
+* Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 1.8.1-alt1
+- Version 1.8.1 (ALT #35575)
+
 * Fri Jan 18 2019 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt6
 - Removed ubt macros
 
