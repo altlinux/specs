@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %def_enable ladspa
 %def_enable libdc1394
 %def_enable libkate
@@ -20,14 +22,18 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt5
+Release: alt6
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
 License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
+%if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
+%else
+Source: %_name-bad-%version.tar
+%endif
 
 Patch1: %name-alt-libopencv-compat.patch
 
@@ -151,6 +157,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sun Jan 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt6
+- updated to 1.14.4-22-ge87fb02c1
+
 * Fri Jan 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.4-alt5
 - Fixed build with libopencv-3.4.5 (Closes: #35971)
 
