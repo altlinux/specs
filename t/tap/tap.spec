@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Test/More.pm)
 # END SourceDeps(oneline)
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tap
-%define version 1.03
 %define	major	0
 %define	libname	    lib%{name}%{major}
 %define develname   lib%{name}-devel
 
 Name:		tap
 Version:	1.03
-Release:	alt1_7
+Release:	alt1_9
 Summary:	Write tests that implement the Test Anything Protocol
 License:	GPL
 Group:		System/Libraries
@@ -48,9 +49,12 @@ This package contains development files for %{name}.
 %setup -q
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure \
 	--disable-static
-%make CFLAGS+=-UHAVE_LIBPTHREAD
+%make_build CFLAGS+=-UHAVE_LIBPTHREAD
 
 %install
 %makeinstall_std
@@ -70,6 +74,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_9
+- new version
+
 * Sat Jun 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_7
 - converted for ALT Linux by srpmconvert tools
 
