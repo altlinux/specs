@@ -12,7 +12,7 @@
 
 Name: mailutils
 
-%define baseversion 3.5
+%define baseversion 3.5.90
 
 %if %snapshot
 %define snapshotdate 20170306
@@ -21,7 +21,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt1
 %define srcdir %name-%version
 %endif
 
@@ -458,6 +458,9 @@ done
 %endif
 
 %changelog
+* Sun Jan 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.5.90-alt1
+- New version
+
 * Tue Dec 11 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.5-alt2
 - Removed emacs-git from BuildRequires (fixed FTBFS)
 
