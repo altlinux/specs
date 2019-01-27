@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.12
-%define		svn svn8283
+%define		svn svn8656
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -26,7 +26,6 @@ Plugins List
  - XMP - support for MOD, S3M, IT and others tracker formats
  - SRC - Qmmp Sample Rate Converter Plugin
  - Goom - Qmmp Goom Visual Plugin
- - History - Qmmp Listening History Plugin
 
 %description -l ru_RU.UTF8
 Набор дополнительных модулей для Qmmp.
@@ -37,7 +36,6 @@ Plugins List
  - XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
  - SRC - модуль конвертера Sample Rate для Qmmp
  - Goom - Модуль визуализации Goom для Qmmp
- - History - Модуль журнала прослушиваний для Qmmp
 
 %description -l uk_UA.UTF8
 Набір додаткових модулів для Qmmp.
@@ -48,7 +46,6 @@ Plugins List
  - XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
  - SRC - модуль конвертера Sample Rate для Qmmp
  - Goom - Модуль візуалізації Goom для Qmmp
- - History - Модуль  журнала прослуховування для Qmmp
 
 %package -n %name-in-ffvideo
 Summary: FFVideo - FFmpeg-based video plugin
@@ -130,22 +127,6 @@ Qmmp Goom Visual Plugin
 %description -l uk_UA.UTF8 -n %name-vis-goom
 Модуль візуалізації Goom для Qmmp
 
-%package -n %name-history
-Summary: Qmmp Listening History Plugin
-Summary(ru_RU.UTF8): Модуль журнала прослушиваний для Qmmp
-Summary(uk_UA.UTF8): Модуль  журнала прослуховування для Qmmp
-Group: Sound
-Requires: qmmp >= %version-%release
-
-%description -n %name-history
-Qmmp Listening History Plugin
-
-%description -l ru_RU.UTF8 -n %name-history
-Модуль журнала прослушиваний для Qmmp
-
-%description -l uk_UA.UTF8 -n %name-history
-Модуль  журнала прослуховування для Qmmp
-
 %prep
 %setup -q -n %name-svn
 
@@ -173,10 +154,10 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib D
 %files -n %name-vis-goom
 %_libdir/qmmp-%branch/Visual/libgoom.so
 
-%files -n %name-history
-%_libdir/qmmp-%branch/General/libhistory.so
-
 %changelog
+* Sat Jan 26 2019 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn8656
+- build svn8656
+
 * Tue Sep 11 2018 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn8283
 - build svn8283
 

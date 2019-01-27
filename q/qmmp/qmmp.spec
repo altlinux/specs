@@ -1,5 +1,5 @@
 %define branch 0.12
-%define svn svn8288
+%define svn svn8656
 
 %define rel alt1
 
@@ -31,7 +31,7 @@
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: %rel.%svn.1
+Release: %rel.%svn
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -41,7 +41,7 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://qmmp.ylsoftware.com/
 Source0: %name-%branch.tar.bz2
 
-Requires: unzip winamplike-skins lib%name = %version-%release
+Requires: unzip winamplike-skins lib%name = %version-%release %name-out-pulseaudio = %version-%release
 
 BuildPreReq: rpm-build-wlskins doxygen
 
@@ -483,6 +483,14 @@ Requires: qmmp = %version-%release
 %description -n %name-eff-extrastereo
 Qmmp Extra Stereo Plugin
 
+%package -n %name-eff-monotostereo
+Summary: Qmmp Mono to Stereo Converter Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-eff-monotostereo
+Qmmp Mono to Stereo Converter Plugin
+
 %package -n %name-eff-filewriter
 Summary: File Writer Plugin for Qmmp
 Group: Sound
@@ -669,6 +677,14 @@ Requires: qmmp = %version-%release
 %description -n %name-rgscan
 This plugin scans audio files and gives information for volume normalization
 
+%package -n %name-history
+Summary: Qmmp Listening History Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-history
+This plugin collects information about listened tracks
+
 %package -n lib%name-devel
 Summary: Qmmp header files
 Group: Development/C++
@@ -692,9 +708,9 @@ Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey qmmp-gnomehotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
-Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
+Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid qmmp-history
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
-Requires: qmmp-out-qtmultimedia qmmp-out-icecast qmmp-eff-filewriter
+Requires: qmmp-out-qtmultimedia qmmp-out-icecast qmmp-eff-filewriter qmmp-eff-monotostereo
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -870,6 +886,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-eff-extrastereo
 %_libdir/%name-%branch/Effect/libstereo*
 
+%files -n %name-eff-monotostereo
+%_libdir/%name-%branch/Effect/libmonotostereo*
+
 %files -n %name-eff-filewriter
 %_libdir/%name-%branch/Effect/libfilewriter*
 
@@ -935,6 +954,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-copypaste
 %_libdir/%name-%branch/General/libcopypaste*
 
+%files -n %name-history
+%_libdir/%name-%branch/General/libhistory*
+
 %files -n %name-rgscan
 %_libdir/%name-%branch/General/librgscan*
 
@@ -953,6 +975,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sat Jan 26 2019 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn8656
+- 0.12.0 svn8656 version
+
 * Fri Sep 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn8288.1
 - fix subdirectories packaging violation
 
