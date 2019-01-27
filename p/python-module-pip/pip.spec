@@ -1,9 +1,12 @@
-Summary: pip installs packages.  Python packages.  An easy_install replacement
+%define _unpackaged_files_terminate_build 1
+
+%def_with docs
+
+Summary: The PyPA recommended tool for installing Python packages
 Name: python-module-pip
-Version: 18.1
+Version: 19.0.1
 Release: alt1
 Source0: pip-%version.tar.gz
-Patch: pip-1.5.6-alt-python3.patch
 License: MIT
 Group: Development/Python
 BuildArch: noarch
@@ -11,16 +14,19 @@ Url: http://www.pip-installer.org
 Obsoletes: python-module-pip-pickles
 %setup_python_module pip
 
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jun 13 2018 (-bi)
-# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-asn1crypto python-module-attrs python-module-babel python-module-backports python-module-backports.ssl_match_hostname python-module-cffi python-module-chardet python-module-cryptography python-module-docutils python-module-enum34 python-module-funcsigs python-module-idna python-module-imagesize python-module-ipaddress python-module-jinja2 python-module-lxml python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pluggy python-module-py python-module-pycparser python-module-pytest python-module-pytz python-module-requests python-module-setuptools python-module-simplejson python-module-six python-module-sphinx python-module-sphinxcontrib python-module-typing python-module-urllib3 python-module-webencodings python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-sphinx-objects.inv python3 python3-base python3-module-OpenSSL python3-module-Pygments python3-module-asn1crypto python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-requests python3-module-setuptools python3-module-six python3-module-sphinx python3-module-urllib3 rpm-build-python3 xz
-BuildRequires: ctags python-module-alabaster python-module-html5lib python-module-sphinxcontrib-websupport python3-module-alabaster python3-module-sphinxcontrib-websupport time
+BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
+%endif
 
 BuildRequires(pre): rpm-build-python3
 
 %description
 %summary
+%add_findprov_skiplist %python_sitelibdir/pip/_vendor/*
 
+%if_with docs
 %package docs
 Summary: Documentation for pip
 Group: Development/Documentation
@@ -29,16 +35,19 @@ Group: Development/Documentation
 %summary
 
 This package contains documentation for pip.
+%endif
 
 %package -n python3-module-%modulename
-Summary: pip installs packages.  Python packages.  An easy_install replacement
+Summary: The PyPA recommended tool for installing Python packages
 Group: Development/Python3
-%py3_provides %modulename pip._vendor.six.moves pip._vendor.six.moves.urllib pip._vendor.six.moves.urllib.parse
 Obsoletes: python3-module-pip-pickles
 
 %description -n python3-module-%modulename
 %summary
+%add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pip\._vendor\..*)/d
 
+%if_with docs
 %package -n python3-module-%modulename-docs
 Summary: Documentation for pip3
 Group: Development/Documentation
@@ -47,10 +56,12 @@ Group: Development/Documentation
 %summary
 
 This package contains documentation for pip.
+%endif
 
 %prep
 %setup -n %modulename-%version
 
+%if_with docs
 # XXX wait for packaging pypa_theme
 sed -i '
 s/pypa_theme/default/
@@ -60,14 +71,17 @@ s/pypa_theme/default/
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 # py2 and py3 builds are identical
 %python_build
 
+%if_with docs
 PYTHONPATH=`pwd`/build/lib sphinx-build-3 -c docs/html docs/html html3
 
 PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
+%endif
 
 %install
 %python3_install
@@ -75,22 +89,31 @@ PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
 
 %files
 %doc *.txt *.rst
-%_bindir/*
-%exclude %_bindir/pip3*
-%python_sitelibdir/*
+%_bindir/pip
+%_bindir/pip2
+%_bindir/pip2.7
+%python_sitelibdir/pip/
+%python_sitelibdir/pip-*.egg-info/
 
+%if_with docs
 %files docs
 %doc html2
 
-%files -n python3-module-%modulename
-%doc *.txt *.rst
-%_bindir/pip3*
-%python3_sitelibdir/*
-
 %files -n python3-module-%modulename-docs
 %doc html3
+%endif
+
+%files -n python3-module-%modulename
+%doc *.txt *.rst
+%_bindir/pip3
+%_bindir/pip3.6
+%python3_sitelibdir/pip/
+%python3_sitelibdir/pip-*.egg-info/
 
 %changelog
+* Sun Jan 27 2019 Stanislav Levin <slev@altlinux.org> 19.0.1-alt1
+- 18.1 -> 19.0.1.
+
 * Thu Oct 18 2018 Fr. Br. George <george@altlinux.ru> 18.1-alt1
 - Autobuild version bump to 18.1
 - Pickle modules removed
