@@ -1,28 +1,35 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/R gcc-c++
+BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_options-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname ompl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# This package depends on automagic byte compilation
+# https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
+%global _python_bytecompile_extra 1
+
 Name:           libompl
 Version:        1.3.2
-Release:        alt1_2.1
+Release:        alt1_5
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
 License:        BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  gcc-c++
+BuildRequires:  boost-complete >= 1.42.0
 BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  libflann-devel
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libode-devel
 BuildRequires:  python
-BuildRequires:  ruby-tools
+BuildRequires:  erb
+
+Patch0: ompl-1.3.2-pybindings.patch
 Source44: import.info
 Provides: ompl = %{version}-%{release}
 
@@ -37,7 +44,7 @@ collision checker or visualization front end.
 Summary:        Development files for %{oldname}
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       boost-devel-headers boost-python-headers
+Requires:       boost-complete
 Provides: ompl-devel = %{version}-%{release}
 
 %description    devel
@@ -49,6 +56,7 @@ developing applications that use %{oldname}.
 %setup -q -n %{oldname}-%{version}-Source
 # Get rid of bundled odeint
 rm -rf src/external/omplext_odeint/
+%patch0 -p0 -b .pybindings
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
@@ -81,7 +89,7 @@ make -C build test || exit 0
 %files
 %doc LICENSE README.md
 %{_libdir}/libompl.so.*
-%{_mandir}/man1/*.1.*
+%{_mandir}/man1/*.1*
 
 %files devel
 %doc doc/html
@@ -92,6 +100,9 @@ make -C build test || exit 0
 %{_libdir}/cmake/%{oldname}
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_5
+- update to new release by fcimport
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt1_2.1
 - NMU: rebuilt with boost-1.67.0
 
