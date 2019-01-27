@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libGL-devel libGLU-devel libSDL-devel libXext-devel libXt-devel libogg-devel perl(Cwd.pm) perl(Digest/MD5.pm) perl(DirHandle.pm) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libGL-devel libGLU-devel libSDL-devel libXext-devel libXt-devel libcrypt-devel libglvnd-devel libogg-devel perl(Cwd.pm) perl(Digest/MD5.pm) perl(DirHandle.pm) xorg-cf-files
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_28
+Release:        alt4_31
 License:        GPLv2
 Group:          Games/Other
 URL:            http://www.mushware.com/
@@ -15,6 +15,8 @@ Source0:        http://www.mushware.com/files/%{name}-1.2.5.tar.gz
 Patch0:         adanaxisgpl-1.2.5-const.patch
 Patch1:         adanaxisgpl-1.2.5-gcc47.patch
 Patch2:         adanaxisgpl-1.2.5-xdg-open.patch
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  libfreeglut-devel
 BuildRequires:  libexpat-devel
@@ -100,6 +102,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_31
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_28
 - update to new release by fcimport
 
