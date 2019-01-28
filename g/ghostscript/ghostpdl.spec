@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.26
-Release: alt1
+Release: alt2
 
 %define ijsver	0.35
 %global origver %version
@@ -34,6 +34,9 @@ Patch106: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
 Patch107: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
 Patch108: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
 Patch109: Ubuntu-2010_add_build_timestamp_setting.patch
+Patch110: Ubuntu-020181126-96c381c-ps2write-move-the-page-level-save-restore-wrapper.patch
+Patch111: Ubuntu-020181205-fae21f16-subclassing-devices-fix-put-image-method.patch
+Patch112: Ubuntu-CVE-2019-6116.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
@@ -54,14 +57,14 @@ BuildRequires: libpng-devel
 %package module-X
 Summary: PostScript interpreter and renderer (additional support for X)
 Group: Publishing
-PreReq: %name-classic = %version-%release
+Requires: %name-classic = %version-%release
 Provides: %esp_name-module-X = %version, %gnu_name-module-X = %version
 Obsoletes: %gnu_name-module-X, %esp_name-module-X
 
 %package utils
 Summary: Additional tools for configuring printers
 Group: Publishing
-PreReq: %name-classic = %version-%release
+Requires: %name-classic = %version-%release
 Provides: %esp_name-utils = %version, %gnu_name-utils = %version
 Obsoletes: %gnu_name-utils, %esp_name-utils
 BuildArch: noarch
@@ -79,14 +82,14 @@ Group: Development/C
 %package classic
 Summary: classic edition of %name
 Group: Publishing
-PreReq: %name-common = %version-%release libgs = %version-%release
+Requires: %name-common = %version-%release libgs = %version-%release
 Provides: %esp_name-classic = %version, %gnu_name-classic = %version, %name-minimal = %version
 Obsoletes: %gnu_name-classic, %esp_name-classic, %name-minimal
 
 %package gtk
 Summary: %name with gtk
 Group: Publishing
-PreReq: %name-lib = %version-%release, %name-common = %version-%release
+Requires: %name-lib = %version-%release, %name-common = %version-%release
 Provides: %esp_name-gtk = %version, %gnu_name-gtk = %version
 Obsoletes: %gnu_name-gtk, %esp_name-gtk
 
@@ -171,7 +174,7 @@ Common files for the %name
 
 %prep
 %setup -n ghostpdl-%version
-mkdir jpegxr && unzip %SOURCE4 -d jpegxr
+##mkdir jpegxr && unzip %SOURCE4 -d jpegxr
 
 # force system library usage
 ##rm -rf -- libpng zlib jpeg jasper freetype
@@ -190,6 +193,9 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 #patch107 -p1
 #patch108 -p1
 %patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
 
 ## ALT apply patches
 %patch500 -p1
@@ -305,6 +311,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Mon Jan 28 2019 Fr. Br. George <george@altlinux.ru> 9.26-alt2
+- Update patchset (CVE-2019-6116)
+
 * Wed Dec 05 2018 Fr. Br. George <george@altlinux.ru> 9.26-alt1
 - Autobuild version bump to 9.26
 
