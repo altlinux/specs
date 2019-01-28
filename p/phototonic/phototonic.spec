@@ -1,5 +1,5 @@
 Name: phototonic
-Version: 2.1
+Version: 2.1.10
 Release: alt1
 
 Summary: An image viewer and organizer
@@ -59,6 +59,9 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %doc README.md
 
 %changelog
+* Mon Jan 28 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.10-alt1
+- 2.1.10
+
 * Mon Oct 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1 (new url)
 
