@@ -7,10 +7,11 @@
 %add_optflags -O3
 %endif
 %define upname libtorrent-rasterbar
+%define soname 9
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.1.9
+Version: 1.1.12
 Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
@@ -28,10 +29,36 @@ BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
 BuildRequires: python-devel boost-python-devel
 BuildRequires: libGeoIP-devel
-Obsoletes: libtorrent <= 0.13-alt3.svn.r2433
-Obsoletes: libtorrent-rasterbar0.15
 
 %description
+libTorrent is designed to avoid redundant copying and storing of data
+that other clients and libraries suffer from. libTorrent features:
+
+* The client has full control over the polling of sockets.
+* Sigc++ signals makes it easy for the client to react to events.
+* Fast resume which checks the file modification time.
+* Direct reading and writing from network to mmap'ed files.
+* File hash check uses the same thread; client can control the rate;
+  non-blocking and preload to memory with the mincore and madvise.
+* File handler: fine-grained use of file read/write permissions, allows
+  seeding of read-only files; allows torrents with unlimited number of
+  files; opens closed files when mapping chunks to memory, with graceful
+  error handling; support for files larger than 2 GB; different download
+  priorities for files in the torrent.
+* Multi-tracker support.
+* No dependency on any specific HTTP library, the client implements a
+  wrapper class.
+* Dynamic request pipe size.
+* Upload and download throttle.
+* And much more...
+
+%package -n %name%soname
+Summary: libTorrent is a BitTorrent library written in C++ for *nix
+Group: System/Libraries
+# TODO: remove this obsolete on next soname change
+Obsoletes: %name <= 3:1.1.9-alt1
+
+%description -n %name%soname
 libTorrent is designed to avoid redundant copying and storing of data
 that other clients and libraries suffer from. libTorrent features:
 
@@ -56,7 +83,7 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n %upname-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 Provides: libtorrent-rasterbar8-devel = %EVR
 Conflicts: libtorrent-rasterbar8-devel < %EVR
 Obsoletes: libtorrent-rasterbar8-devel < %EVR
@@ -74,10 +101,9 @@ to develop applications using libTorrent.
 %package -n %upname-devel-static
 Summary: Development static libraries for libTorrent
 Group: Development/C++
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 Provides: libtorrent-rasterbar7-devel-static = %EVR
 Conflicts: libtorrent-rasterbar7-devel-static < %EVR
-#Conflicts: libtorrent-devel
 
 %description -n %upname-devel-static
 The libtorrent-devel package contains static libraries needed
@@ -87,7 +113,7 @@ to develop applications using libTorrent.
 %package -n python-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 Provides: python-module-libtorrent-rasterbar7 = %EVR
 Conflicts: python-module-libtorrent-rasterbar7 < %EVR
 
@@ -120,7 +146,7 @@ rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%_libdir/*.a
 %endif
 
-%files
+%files -n %name%soname
 %doc AUTHORS ChangeLog NEWS README.rst
 %doc --no-dereference COPYING
 %_libdir/*.so.*
@@ -140,6 +166,10 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jan 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.12-alt1
+- Updated to upstream version 1.1.12.
+- Updated package names to support shared libs policy.
+
 * Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.9-alt1
 - Updated to upstream version 1.1.9.
 
