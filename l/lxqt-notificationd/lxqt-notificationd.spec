@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-notificationd
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Notification service
@@ -26,8 +29,7 @@ Conflicts: lxqt-common <= 0.11.0
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -38,8 +40,12 @@ Conflicts: lxqt-common <= 0.11.0
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
+%_datadir/lxqt/translations/*
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

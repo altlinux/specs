@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: qtermwidget
-Version: 0.9.0
-Release: alt1.1
+Version: 0.14.0
+Release: alt1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
 License: GPL
@@ -62,7 +65,7 @@ This package contains the development headers for %name library.
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -83,11 +86,10 @@ This package contains the development headers for %name library.
 %_pkgconfigdir/*.pc
 %_libdir/cmake/*/
 
-# TODO:
-# - P:/O: qtermwidget-qt5 after check
-# - build with libutf8proc (pkgconfig problem in 0.8.0 though)
-
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1.1
 - Rebuilt with qt 5.11s
 

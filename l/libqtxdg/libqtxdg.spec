@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libqtxdg
-Version: 3.2.0
-Release: alt1.1
+Version: 3.3.0
+Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL
@@ -45,6 +48,9 @@ which implements functions of the XDG Specifications in Qt.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
+- new version 3.3.0
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1.1
 - Rebuilt with qt 5.11
 

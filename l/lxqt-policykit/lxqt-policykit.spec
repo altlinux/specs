@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-policykit
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Policykit authentication agent
@@ -27,8 +30,7 @@ Conflicts: lxqt-common <= 0.11.0
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -36,10 +38,15 @@ Conflicts: lxqt-common <= 0.11.0
 
 %files
 %_bindir/*
+%_datadir/lxqt/translations/*
+%_man1dir/*
 %_xdgconfigdir/*/*
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

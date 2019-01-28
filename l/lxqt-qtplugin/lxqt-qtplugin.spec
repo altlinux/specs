@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-qtplugin
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL
@@ -32,6 +35,9 @@ BuildRequires: libfm-qt-devel
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt2
 - rebuild with new Qt
 

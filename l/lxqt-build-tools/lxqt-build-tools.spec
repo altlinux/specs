@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-build-tools
-Version: 0.5.0
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -35,8 +38,12 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %files
 %doc BSD-3-Clause
 %_datadir/cmake/%name
+%_bindir/*
 
 %changelog
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1.1
 - Rebuilt with qt 5.11
 

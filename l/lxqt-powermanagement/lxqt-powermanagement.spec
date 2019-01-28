@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-powermanagement
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
@@ -29,8 +32,7 @@ Obsoletes: razorqt-power < 0.7.0
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -38,12 +40,16 @@ Obsoletes: razorqt-power < 0.7.0
 
 %files
 %_bindir/*
-%_xdgconfigdir/*/*
+%_datadir/lxqt/translations/*
 %_desktopdir/*.desktop
-%_iconsdir/*/*/*/*.svg
 %doc AUTHORS CHANGELOG LICENSE README.md
+%_iconsdir/*/*/*/*.svg
+%_xdgconfigdir/*/*
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

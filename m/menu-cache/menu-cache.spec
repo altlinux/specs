@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: menu-cache
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
@@ -77,6 +80,9 @@ This package contains development headers for libmenu-cache.
 %exclude %_libdir/*.a
 
 %changelog
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

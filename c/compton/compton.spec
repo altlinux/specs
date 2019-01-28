@@ -1,22 +1,28 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: compton
-Version: 0.1_beta2_1
-Release: alt3
+Version: 5
+Release: alt1
 Summary: fork of xcompmgr
 Summary(ru_RU.UTF-8): Форк xcompmgr
-License: GPL
+License: MPL-2.0 or MIT
 Group: System/X11
-Url: https://github.com/chjj/compton.git
-Source: %name-%version.tar.gz
-#Patch: 
-BuildRequires: rpm-utils libX11-devel libXcomposite-devel libXdamage-devel
-BuildRequires: libXfixes-devel libXrender-devel pkg-config xorg-xproto-devel
-BuildRequires: libXext-devel libXrandr-devel libXinerama-devel libpcre-devel
-BuildRequires: libconfig-devel libdrm-devel libGL-devel libdbus-devel asciidoc
-BuildRequires: asciidoc-a2x
-#Requires
-#Conflicts:
-#Obsoletes:
-#Provides:
+Url: https://github.com/yshui/compton
+Source: %name-%version.tar
+
+BuildRequires: meson
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: libconfig-devel
+BuildRequires: libpcre-devel
+BuildRequires: libGL-devel
+BuildRequires: libdbus-devel
+BuildRequires: libev-devel
+BuildRequires: pkgconfig(xcb-renderutil)
+BuildRequires: pkgconfig(xcb-image)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(libxdg-basedir)
 
 %description
 Compton is a compositor for X, and a fork of xcompmgr-dana.
@@ -30,7 +36,6 @@ This is also a learning experience for me.
 That is, I'm partially doing this out of a desire to learn Xlib. 
 
 %description -l ru_RU.UTF-8
-
 Лёгкий композитный менеджер окон. Является форком xcompmgr-dana, который в свою очередь
 тоже является форком xcompmgr. В общем - исправленное и дополненое.
 
@@ -38,20 +43,25 @@ That is, I'm partially doing this out of a desire to learn Xlib.
 %setup
 
 %build
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/compton*
-%_mandir/man1/compton*
 %_datadir/applications/%name.desktop
+%_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 5-alt1
+- new version 5
+- fix license
+- fix URL
+
 * Fri Aug 01 2014 Konstantin Artyushkin <akv@altlinux.org> 0.1_beta2_1-alt3
 - change Group
 

@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-session
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Session manager
@@ -49,11 +52,14 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %_desktopdir/*.desktop
 %_datadir/xsessions/*.desktop
 %_datadir/kdm/sessions/*.desktop
-%_datadir/lxqt
+%_datadir/lxqt/*
 %_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
