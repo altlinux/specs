@@ -3,7 +3,7 @@
 %define modname typing
 
 Name: python-module-%modname
-Version: 3.6.4
+Version: 3.6.6
 Release: alt1
 
 Summary: This is a backport of the standard library typing module to Python versions older than 3.6
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.6-alt1
+- 3.6.6
+
 * Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 
