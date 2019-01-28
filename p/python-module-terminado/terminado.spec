@@ -1,10 +1,11 @@
 %define oname terminado
 
 %def_with python3
+%def_with check
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.git20150717.2.1
+Release: alt2.git20150717
 Summary: Terminals served by tornado websockets
 License: BSD
 Group: Development/Python
@@ -15,17 +16,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools /dev/pts
-BuildPreReq: python-module-tornado_xstatic python-module-ptyprocess
-BuildPreReq: python-module-xstatic-term.js
-BuildPreReq: python-module-sphinx-devel
-BuildRequires: python-module-nose
+BuildRequires(pre): rpm-macros-sphinx
+BuildPreReq: python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-tornado_xstatic python3-module-ptyprocess
-BuildPreReq: python3-module-xstatic-term.js
+%endif
+
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python-module-futures
+BuildRequires: python-module-nose
+BuildRequires: python-module-tornado_xstatic
+BuildRequires: python-module-ptyprocess
+
+%if_with python3
 BuildRequires: python3-module-nose
+BuildRequires: python3-module-ptyprocess
+BuildRequires: python3-module-tornado_xstatic
+%endif
+
 %endif
 
 %py_provides %oname
@@ -184,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 28 2019 Stanislav Levin <slev@altlinux.org> 0.5-alt2.git20150717
+- Fixed build (closes: #35984).
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt1.git20150717.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 - Fix tests
