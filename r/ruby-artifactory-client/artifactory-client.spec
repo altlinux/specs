@@ -2,7 +2,7 @@
 %define  pkgname artifactory-client
 
 Name:    ruby-%pkgname
-Version: 2.8.6
+Version: 3.0.0
 Release: alt1
 
 Summary:  A simple, lightweight Ruby client for interacting with the Artifactory API.
@@ -45,5 +45,8 @@ Artifactory API.
 
 
 %changelog
+* Mon Jan 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
+- version fixed 3.0.0
+
 * Tue Dec 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.8.6-alt1
 - Initial build for Sisyphus
