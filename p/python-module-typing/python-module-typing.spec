@@ -1,10 +1,10 @@
-%def_with python3
+%def_without python3
 
 %define modname typing
 
 Name: python-module-%modname
 Version: 3.6.6
-Release: alt1
+Release: alt2
 
 Summary: This is a backport of the standard library typing module to Python versions older than 3.6
 License: PSF
@@ -22,8 +22,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 #-tests python3-module-setuptools_scm
 %endif
+BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-setuptools
-#python-devel python-module-setuptools-tests python-module-setuptools_scm
 
 %description
 Typing defines a standard notation for Python function and variable type
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.6-alt2
+- disabled python3 module (ALT #35980)
+
 * Mon Jan 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.6-alt1
 - 3.6.6
 
