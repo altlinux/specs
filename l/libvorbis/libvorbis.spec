@@ -1,17 +1,22 @@
 Name: libvorbis
 Version: 1.3.6
-Release: alt1
+Release: alt2
 
 Summary: The Vorbis General Audio Compression Codec
 Summary(ru_RU.UTF-8): Аудиокодек Vorbis
-License: BSD-style
+License: BSD-3-Clause
 Group: System/Libraries
 Url: http://www.xiph.org/vorbis/
 # http://downloads.xiph.org/releases/vorbis/%name-%version.tar.bz2
 Source: %name-%version.tar
-Patch1: libvorbis-1.3.2-alt-export-symbols.patch
-Patch2: libvorbis-1.3.6-alt-add-needed.patch
-Patch3: libvorbis-1.3.5-alt-configure.patch
+Patch1: 0001-vorbisenc-detect-if-new_template-is-NULL.patch
+Patch2: 0002-CVE-2017-14160-fix-bounds-check-on-very-low-sample-r.patch
+Patch3: 0003-Clamp-large-exponents-in-float32_unpack.patch
+Patch4: 0004-Sanity-check-number-of-channels-in-setup.patch
+Patch5: 0005-Fix-shift-by-negative-value-when-reading-blocksize.patch
+Patch11: libvorbis-1.3.2-alt-export-symbols.patch
+Patch12: libvorbis-1.3.6-alt-add-needed.patch
+Patch13: libvorbis-1.3.5-alt-configure.patch
 
 BuildRequires: libogg-devel
 
@@ -28,7 +33,7 @@ Ogg Vorbis - это полностью открытый и свободный ф
 %package devel
 Summary: Development files for libvorbis
 Group: Development/C
-PreReq: %name = %version-%release
+Requires: %name = %version-%release
 Requires: libogg-devel
 
 %description devel
@@ -42,7 +47,7 @@ needed to develop applications with libvorbis.
 %package devel-static
 Summary: Static libraries for libvorbis
 Group: Development/C
-PreReq: %name-devel = %version-%release
+Requires: %name-devel = %version-%release
 Requires: libogg-devel-static
 
 %description devel-static
@@ -56,8 +61,13 @@ statically linked libvorbis-based software.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch11 -p1
+%patch12 -p2
+%patch13 -p1
 for f in m4/*.m4; do
 	[ ! -f "%_datadir/aclocal/${f##*/}" ] ||
 		rm -fv "$f"
@@ -77,7 +87,7 @@ sort -u -o lib/libvorbis.sym{,}
 
 %build
 %autoreconf
-%configure %{subst_enable static}
+%configure %{subst_enable static} --disable-silent-rules
 %make_build
 
 %install
@@ -87,7 +97,8 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %set_verify_elf_method strict
 
 %check
-%make_build -k check
+# SMP-incompatible check
+make -k check
 
 %files
 %_libdir/*.so.*
@@ -108,6 +119,10 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Mon Jan 28 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.6-alt2
+- Backported upstream fixes (fixes: CVE-2017-14160, CVE-2018-10392, CVE-2018-10393).
+- Fixed probabilistic behaviour of %%check.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1
 - Updated to upstream version 1.3.6.
 
