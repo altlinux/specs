@@ -20,7 +20,7 @@
 
 Name: xplayer
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Xplayer is a generic media player.
 Group: Video
@@ -221,6 +221,8 @@ export ac_cv_path_PYLINT=%_bindir/pylint.py3
    --enable-introspection		\
 	%{?_enable_snapshot:--enable-gtk-doc}
 
+# Fix build on beekeeper machines
+export NPROCS=1
 %make_build
 
 %install
@@ -315,6 +317,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1.1
+- fix build on beekeeper machines
+
 * Wed Dec 26 2018 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
 - 2.0.2
 

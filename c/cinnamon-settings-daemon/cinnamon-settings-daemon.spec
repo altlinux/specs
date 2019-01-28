@@ -8,7 +8,7 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -91,7 +91,8 @@ developing applications that use %name.
 	%{subst_enable systemd} \
 	--disable-schemas-compile \
         --enable-polkit
-
+# Fix build on beekeeper machines
+export NPROCS=1
 %make_build
 
 %install
@@ -121,6 +122,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1.1
+- fix build on beekeeper machines
+
 * Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
 - 4.0.3
 
