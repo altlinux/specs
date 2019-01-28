@@ -1,9 +1,9 @@
 Name:		refal-plus
 # `svnversion`
 Version:	4137
-Release:	alt2
+Release:	alt3
 Summary:	A modern dialect of Refal programming language
-Summary(ru_RU.KOI8-R): Современный диалект языка программирования Рефал
+Summary(ru_RU.UTF-8): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
 # svn checkout --config-option servers:global:http-chunked-requests=no http://svn.botik.ru/refal/to-imperative/trunk
 Source1:	http://rfp.botik.ru/rfp/RefalPlusReferenceManual.pdf
@@ -14,7 +14,8 @@ URL:		http://rfp.botik.ru/
 Patch1:     %name-%version-alt-build.patch
 
 # Automatically added by buildreq on Tue Sep 28 2010
-BuildRequires: gcc-c++ libgmp-devel unzip
+BuildRequires: gcc7-c++ libgmp-devel unzip
+%set_gcc_version 7
 
 %description
 Refal Plus is a modern dialect of Refal programming language.
@@ -54,7 +55,7 @@ following features:
     * Operations on boxes, vectors, and tables
     * "Vector" representation of ground expressions
 
-%description -l ru_RU.KOI8-R
+%description -l ru_RU.UTF-8
 Рефал Плюс представляет собой один из диалектов языка программирования
 Рефал.
 
@@ -143,6 +144,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Mon Jan 28 2019 Fr. Br. George <george@altlinux.ru> 4137-alt3
+- Explicitly require gcc7 for build
+
 * Thu Feb 22 2018 Fr. Br. George <george@altlinux.ru> 4137-alt2
 - Fixed build with new toolchain
 
