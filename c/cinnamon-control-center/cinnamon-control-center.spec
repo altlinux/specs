@@ -9,7 +9,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -122,6 +122,8 @@ you'll want to install this package.
 	%{subst_enable ibus} \
 	%{subst_enable onlineaccounts}
 
+# Fix build on beekeeper machines
+export NPROCS=1
 %make_build
 
 %install
@@ -166,6 +168,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1.1
+- fix build on beekeeper machines
+
 * Tue Dec 25 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
