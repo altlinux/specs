@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python
@@ -90,26 +90,20 @@ This is version of the package running with Python 3.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-find ../python3 -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
 
 %build
-%python_build
-
-pushd ../python3
-%python3_build
-popd
+%python_build_debug -b build2
+%python3_build_debug -b build3
 
 %install
-pushd ../python3
-%python3_install
-mv %buildroot%_bindir/{flake8,python3-flake8}
-popd
-
+ln -sf build2 build
 %python_install
+mv %buildroot%_bindir/{flake8,python2-flake8}
+ln -sf build3 build
+%python3_install
 
 %check
+ln -sf build2 build
 export PIP_INDEX_URL=http://host.invalid./
 
 export PYTHONPATH="$(pwd)"/src
@@ -121,7 +115,7 @@ cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
 TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
 --sitepackages -e py%{python_version_nodots python} -v -- -v
 
-pushd ../python3
+ln -sf build3 build
 export PYTHONPATH="$(pwd)"/src
 # copy nessecary exec deps
 TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
@@ -130,21 +124,23 @@ cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
 
 TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
 
 %files
 %doc README.rst LICENSE
-%_bindir/flake8
+%_bindir/python2-flake8
 %python_sitelibdir/flake8/
 %python_sitelibdir/flake8-*.egg-info/
 
 %files -n python3-module-%oname
 %doc README.rst LICENSE
-%_bindir/python3-flake8
+%_bindir/flake8
 %python3_sitelibdir/flake8/
 %python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Mon Jan 28 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.6.0-alt2
+- Use executable on python3
+
 * Sat Oct 27 2018 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
 - 3.5.0 -> 3.6.0.
 
