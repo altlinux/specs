@@ -2,7 +2,7 @@
 %define  pkgname packaging
 
 Name:    ruby-%pkgname
-Version: 0.99.20
+Version: 0.99.22
 Release: alt1
 
 Summary: Packaging automation for Puppet software
@@ -44,6 +44,9 @@ projects to a level where this repo can be cloned inside any project.
 
 
 %changelog
+* Mon Jan 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.99.22-alt1
+- Version updated to 0.99.22
+
 * Tue Dec 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.99.20-alt1
 - Initial build for Sisyphus
 
