@@ -1,5 +1,5 @@
-%define kernel_base_version	4.19
-%define kernel_sublevel        .12
+%define kernel_base_version	4.20
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -36,7 +36,7 @@ Url: http://www.kernel.org/
 
 Patch0: %name-%version-%release.patch
 
-ExclusiveArch: arm armh aarch64
+ExclusiveArch: armh aarch64
 
 ExclusiveOS: Linux
 
@@ -45,7 +45,6 @@ BuildRequires: bc flex lzma-utils
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
-BuildRequires: module-init-tools >= 3.16
 BuildRequires: libssl-devel
 
 %if_enabled ccache
@@ -56,10 +55,7 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.24-alt1
-Requires: module-init-tools >= 3.16-alt2
-Requires: startup >= 0.9.8.30-alt1
-
+Requires: bootloader-utils >= 0.5.2-alt3
 Provides: kernel = %kversion
 
 %ifarch %arm
@@ -260,6 +256,15 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Jan 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.20.4-alt1
+- 4.20.4
+
+* Wed Jan 23 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.20.0-alt1
+- 4.20
+
+* Wed Jan 23 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.16-alt1
+- 4.19.16
+
 * Mon Dec 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.12-alt1
 - 4.19.12
 
