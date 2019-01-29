@@ -1,44 +1,49 @@
+%define _unpackaged_files_terminate_build 1
 %define oname behave
 
-%def_with python3
+%def_with check
+%def_with docs
 
 Name: python-module-%oname
-Version: 1.2.5
-Release: alt1.a1.git20141018.1.1.1
+Version: 1.2.6
+Release: alt1
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/behave/
+Url: https://pypi.org/project/behave/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/behave/behave.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-parse python-module-parse_type
-BuildPreReq: python-module-six python-module-nose
-BuildPreReq: python-module-mock python-module-hamcrest
-BuildPreReq: python-module-argparse python-module-tox
-BuildPreReq: python-module-coverage python-module-jsonschema
-BuildPreReq: python-module-simplejson python-module-ordereddict
-BuildPreReq: python-module-sphinx-devel python-module-Pygments-tests
-BuildPreReq: python-module-sphinxcontrib-cheeseshop
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-parse python3-module-parse_type
-BuildPreReq: python3-module-six python3-module-nose
-BuildPreReq: python3-module-mock python3-module-hamcrest
-BuildPreReq: python3-module-argparse python3-module-tox
-BuildPreReq: python3-module-coverage python3-module-jsonschema
-BuildPreReq: python3-module-simplejson
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python2.7(parse)
+BuildRequires: python2.7(parse_type)
+BuildRequires: python2.7(sphinx_bootstrap_theme)
+BuildRequires: python2.7(traceback2)
 %endif
 
-%py_provides %oname
+%if_with check
+BuildRequires: python2.7(hamcrest)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(nose)
+BuildRequires: python2.7(path.py)
+BuildRequires: python3(hamcrest)
+BuildRequires: python3(mock)
+BuildRequires: python3(nose)
+BuildRequires: python3(parse)
+BuildRequires: python3(parse_type)
+BuildRequires: python3(path.py)
+BuildRequires: python3(tox)
+%endif
+
 Requires: %oname-common = %EVR
-%py_requires json parse parse_type simplejson ordereddict
+%py_requires traceback2
 %add_python_req_skip gherkin
 
 %description
@@ -66,9 +71,7 @@ This package contains common files for Python 2 & 3 modules.
 %package -n python3-module-%oname
 Summary: behave is behaviour-driven development, Python style
 Group: Development/Python3
-%py3_provides %oname
 Requires: %oname-common = %EVR
-%py3_requires json parse parse_type simplejson
 %add_python3_req_skip gherkin
 %add_python3_req_skip gherkin.formatter
 %add_python3_req_skip gherkin.tag_expression
@@ -81,6 +84,7 @@ non-technical or business participants in a software project.
 behave uses tests written in a natural language style, backed up by
 Python code.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
@@ -109,28 +113,34 @@ behave uses tests written in a natural language style, backed up by
 Python code.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
-
-%build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
 %endif
 
+%build
+
+%if_with docs
+%make -C docs pickle
+%make -C docs html
+%endif
+
+%python_build
+
+pushd ../python3
+%python3_build
+popd
+
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -139,33 +149,36 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
 install -d %buildroot%_sysconfdir
 cp -fR etc/* %buildroot%_sysconfdir/
 
-%make -C docs pickle
-%make -C docs html
-
+%if_with docs
 cp -fR build/docs/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+sed -i -e '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
+-e '/behave --format=/d' \
+tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+%_bindir/tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.rst *features
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
+%_bindir/behave
+%python_sitelibdir/behave/
+%python_sitelibdir/setuptools_behave.py*
+%python_sitelibdir/behave-%version-py%_python_version.egg-info/
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -173,18 +186,28 @@ popd
 
 %files docs
 %doc build/docs/html/*
-
-%files -n %oname-common
-%_sysconfdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst *features
-%_bindir/*.py3
-%python3_sitelibdir/*
 %endif
 
+%files -n %oname-common
+%dir %_sysconfdir/json
+%_sysconfdir/json/behave.json-schema
+%dir %_sysconfdir/junit.xml
+%_sysconfdir/junit.xml/behave_junit.xsd
+%_sysconfdir/junit.xml/junit-4.xsd
+
+%files -n python3-module-%oname
+%doc *.rst *features
+%_bindir/behave.py3
+%python3_sitelibdir/behave/
+%python3_sitelibdir/setuptools_behave.py
+%python3_sitelibdir/__pycache__/setuptools_behave.cpython-*.py*
+%python3_sitelibdir/behave-%version-py%_python3_version.egg-info/
+
 %changelog
+* Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 1.2.6-alt1
+- 1.2.5 -> 1.2.6.
+- Dropped BR on python argparse.
+
 * Sat Feb 03 2018 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1.a1.git20141018.1.1.1
 - (NMU) Fix Requires to gherkin
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.29.0
-Release: alt1
+Release: alt2
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
 License: ASL 2.0
@@ -14,10 +14,9 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 
-BuildRequires: python-devel python-module-argparse
+BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0 python-module-six >= 1.10
-BuildRequires: python-module-argparse
 BuildRequires: python-module-Pillow python-module-oslotest
 BuildRequires: python-module-discover python-module-testrepository
 BuildRequires: python-module-coverage python-module-mock
@@ -27,10 +26,9 @@ BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-reno >= 2.5.0
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-argparse
+BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0 python3-module-six >= 1.10
-BuildRequires: python3-module-argparse
 BuildRequires: python3-module-Pillow python3-module-oslotest
 BuildRequires: python3-module-discover python3-module-testrepository
 BuildRequires: python3-module-coverage python3-module-mock
@@ -165,6 +163,9 @@ popd
 
 
 %changelog
+* Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 1.29.0-alt2
+- Dropped dependency on python argparse (use stdlib's one).
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.29.0-alt1
 - 1.29.0
 

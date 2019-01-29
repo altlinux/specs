@@ -2,7 +2,7 @@
 
 Name: python-module-%pypi_name
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python
 
@@ -19,7 +19,6 @@ BuildRequires: python-module-simplegeneric >= 0.8
 BuildRequires: python-module-mako >= 0.4.0
 BuildRequires: python-module-singledispatch
 BuildRequires: python-module-webtest >= 1.3.1
-BuildRequires: python-module-argparse
 BuildRequires: python-module-logutils
 
 BuildRequires(pre): rpm-build-python3
@@ -30,11 +29,9 @@ BuildRequires: python3-module-simplegeneric >= 0.8
 BuildRequires: python3-module-mako >= 0.4.0
 BuildRequires: python3-module-singledispatch
 BuildRequires: python3-module-webtest >= 1.3.1
-BuildRequires: python3-module-argparse
 BuildRequires: python3-module-logutils
 
 Requires: python-module-singledispatch
-Requires: python-module-argparse
 Requires: python-module-logutils
 
 %description
@@ -122,6 +119,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 1.3.2-alt2
+- Dropped dependency on python argparse (use stdlib's one).
+
 * Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
 - 1.3.2
 - add tests packages
