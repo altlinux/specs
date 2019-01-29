@@ -1,20 +1,61 @@
-%add_findreq_skiplist %_datadir/%name/*
-%add_python_req_skip cvstoys
+%def_disable check
 
 Name: buildbot
-Version: 0.7.12
-Release: alt2.1
-Summary: Build/test automation system
+Version: 1.8.0
+Release: alt1
+Summary: Python-based continuous integration testing framework
 
 Group: Development/Python
 License: GPLv2+
-Url: http://buildbot.net
-Packager: Boris Savelev <boris@altlinux.org>
+Url: https://buildbot.net
 
+# https://github.com/buildbot/buildbot
 Source: %name-%version.tar
 
+Source1: buildbot_www-%version-py2.py3-none-any.whl
+Source2: buildbot_console_view-%version-py2.py3-none-any.whl
+Source3: buildbot_grid_view-%version-py2.py3-none-any.whl
+Source4: buildbot_waterfall_view-%version-py2.py3-none-any.whl
+
+Patch0: %name-%version-%release.patch
+
 BuildArch: noarch
-BuildRequires: python-devel
+
+BuildRequires(pre): rpm-build-python3
+
+%if_enabled check
+BuildRequires: python3-module-twisted-core-test
+BuildRequires: python3-module-service-identity
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-autobahn
+BuildRequires: python3-module-jwt
+BuildRequires: python3-module-migrate
+BuildRequires: python3(future) python3(dateutil) python3(yaml) python3(treq)
+BuildRequires: /dev/pts openssh-clients
+%endif
+
+Requires: python3-module-service-identity
+
+###############################################################################
+# Skip win requires
+###############################################################################
+
+%filter_from_requires /python3(pywintypes)/d
+%filter_from_requires /python3(win32api)/d
+%filter_from_requires /python3(win32con)/d
+%filter_from_requires /python3(win32event)/d
+%filter_from_requires /python3(win32file)/d
+%filter_from_requires /python3(win32pipe)/d
+%filter_from_requires /python3(win32process)/d
+%filter_from_requires /python3(win32security)/d
+%filter_from_requires /python3(win32service)/d
+%filter_from_requires /python3(win32serviceutil)/d
+%filter_from_requires /python3(winerror)/d
+
+
+###############################################################################
+# Main Package
+###############################################################################
 
 %description
 The BuildBot is a system to automate the compile/test cycle required by
@@ -23,40 +64,124 @@ rebuilding and testing the tree each time something has changed, build
 problems are pinpointed quickly, before other developers are
 inconvenienced by the failure.
 
-%package contrib
-Summary: Contribs for %name
-Group: Development/Python
 
-%description contrib
-Additional scripts for %name
+###############################################################################
+# Package buildbot-worker
+###############################################################################
+
+%package worker
+Group: Development/Python
+Summary: Buildbot worker implementation
+Requires: git-core
+
+%description worker
+%summary.
+
+
+###############################################################################
+# Package python3-module-buildbot-www
+###############################################################################
+
+%package -n python3-module-buildbot-www
+Group: Development/Python
+Summary: Buildboot web UI as python3 module
+
+%description -n python3-module-buildbot-www
+%summary.
+
+
+###############################################################################
+# Package buildbot-www
+###############################################################################
+
+# Need to create dummy package due to sisyphus_check limitations
+%package www
+Group: Development/Python
+Summary: Buildbot web UI
+Requires: python3-module-buildbot-www = %EVR
+
+%description www
+%summary.
+
+
+###############################################################################
+# Build and Install
+###############################################################################
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%python_build
+for name in master worker; do
+    pushd "$name"
+    %python3_build_debug
+    popd
+done
 
 %install
+pushd master
+%python3_install
+install -Dm 0644 docs/buildbot.1 %buildroot/%_man1dir/buildbot.1
+popd
 
-%python_install --install-purelib=%python_sitelibdir
+pushd worker
+%python3_install
+install -Dm 0644 docs/buildbot-worker.1 %buildroot/%_man1dir/buildbot-worker.1
+popd
 
-mkdir -p %buildroot/%_datadir/%name/
-cp -R contrib %buildroot/%_datadir/%name/
+python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
+python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
+python3 -mzipfile -e %SOURCE3 %buildroot/%python3_sitelibdir
+python3 -mzipfile -e %SOURCE4 %buildroot/%python3_sitelibdir
 
-# clean up Windows contribs.
-sed -i 's/\r//' %buildroot/%_datadir/%name/contrib/windows/*
-chmod -x %buildroot/%_datadir/%name/contrib/windows/*
+rm %buildroot%_bindir/buildbot_windows_service
+rm %buildroot%_bindir/buildbot_worker_windows_service
+
+
+###############################################################################
+# Check
+###############################################################################
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+trial.py3 -e buildbot.test
+trial.py3 -e buildbot_worker.test
+
+
+###############################################################################
+# Files
+###############################################################################
+
+%files -n python3-module-buildbot-www
+%python3_sitelibdir/buildbot_www
+%python3_sitelibdir/buildbot_www-*.dist-info
+%python3_sitelibdir/buildbot_console_view
+%python3_sitelibdir/buildbot_console_view-*.dist-info
+%python3_sitelibdir/buildbot_grid_view
+%python3_sitelibdir/buildbot_grid_view-*.dist-info
+%python3_sitelibdir/buildbot_waterfall_view
+%python3_sitelibdir/buildbot_waterfall_view-*.dist-info
+
+%files www
+
+%files worker
+%doc worker/docs
+%_man1dir/buildbot-worker.1.*
+%_bindir/buildbot-worker
+%python3_sitelibdir/buildbot_worker
+%python3_sitelibdir/buildbot_worker-*.egg-info
 
 %files
-%doc NEWS README docs
+%doc README.rst master/docs
+%_man1dir/buildbot.1.*
 %_bindir/buildbot
-%python_sitelibdir/buildbot
-%python_sitelibdir/*.egg-info
-
-%files contrib
-%_datadir/%name
+%python3_sitelibdir/buildbot
+%python3_sitelibdir/buildbot-*.egg-info
 
 %changelog
+* Tue Jan 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.0-alt1
+- update to 1.8.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.12-alt2.1
 - Rebuild with Python-2.7
 
@@ -75,7 +200,7 @@ chmod -x %buildroot/%_datadir/%name/contrib/windows/*
 * Mon Oct 12 2009 Boris Savelev <boris@altlinux.org> 0.7.11p3-alt1
 - new version
 
-* Mon Oct 01 2009 Boris Savelev <boris@altlinux.org> 0.7.10p1-alt1
+* Thu Oct 01 2009 Boris Savelev <boris@altlinux.org> 0.7.10p1-alt1
 - initial build for Sisyphus
 
 * Thu Sep 10 2009 Thierry Vignaud <tvignaud@mandriva.com> 0.7.10p1-2mdv2010.0
