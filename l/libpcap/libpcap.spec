@@ -1,7 +1,15 @@
 Name: libpcap
-Version: 1.1.1
-Release: alt3
+Version: 1.9.0
+Release: alt1
 Epoch: 2
+
+# Default optional switches
+%def_enable dbus
+%def_enable bluetooth
+%def_enable usb
+%def_enable yydebug
+%def_enable packetring
+%def_disable static
 
 Summary: A system-independent interface for user-level packet capture
 License: BSD
@@ -12,11 +20,12 @@ Url: http://www.tcpdump.org
 Source: %name-%version-%release.tar
 
 %define libname libpcap0.8
-%def_disable static
 
 BuildRequires: flex
 # bluetooth sniffing support
-BuildRequires: libbluez-devel
+%{?_enable_bluetooth:BuildRequires: libbluez-devel}
+# D-Bus support
+%{?_enable_dbus:BuildRequires: libdbus-devel}
 
 %package -n %libname
 Summary: A system-independent interface for user-level packet capture
@@ -74,37 +83,47 @@ statically linked libpcap-based applications.
 
 %prep
 %setup -n %name-%version-%release
-echo %version > VERSION
 bzip2 -9k CHANGES
 
 %build
-%configure
-%make_build shared pcap-config
+export V_RPATH_OPT=
+autoconf -f -v
+%configure \
+	%{subst_enable dbus} \
+	%{subst_enable bluetooth} \
+	%{subst_enable usb} \
+	%{subst_enable yydebug} \
+	%{subst_enable packetring} \
+
+%make_build shared pcap-config libpcap.pc %{?_enable_shared:libpcap.a}
 
 %install
 %make_install DESTDIR=%buildroot \
-	install-shared %{?_enable_shared:install-archive} \
-	install-include install-bin install-man
+	install-bin install-include install-shared %{?_enable_shared:install-archive}
 
 %define _customdocdir %_docdir/libpcap-%version
 
 %files -n %libname
 %_libdir/*.so.*
 %_man7dir/*
-%doc CHANGES.bz2 CREDITS LICENSE README README.linux TODO
+%doc CHANGES.bz2 CREDITS LICENSE README.md TODO
 
 %files devel
 %_bindir/*
 %_libdir/*.so
 %_includedir/*
 %_mandir/man[135]/*
+%_libdir/pkgconfig/libpcap.pc
 
-%if_enabled static
+%if_with static
 %files devel-static
 %_libdir/*.a
-%endif #static
+%endif
 
 %changelog
+* Thu Jan 24 2019 Nikita Ermakov <arei@altlinux.org> 2:1.9.0-alt1
+- Updated to 1.9.0.
+
 * Fri Feb 25 2011 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt3
 - Rebuilt for debuginfo.
 

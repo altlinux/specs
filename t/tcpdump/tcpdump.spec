@@ -1,6 +1,6 @@
 Name: tcpdump
-Version: 4.1.1
-Release: alt3
+Version: 4.9.2
+Release: alt1
 Epoch: 1
 
 Summary: A network traffic monitoring tool
@@ -11,12 +11,12 @@ Url: http://www.tcpdump.org
 # git://git.altlinux.org/gears/t/tcpdump
 Source: %name-%version-%release.tar
 
-Requires: /var/resolv, libpcap0.8 >= 2:1.1.1
+Requires: /var/resolv, libpcap0.8 >= 2:1.9.0
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: sharutils}}
 
-BuildRequires: libpcap-devel >= 2:1.1.1, libssl-devel
+BuildRequires: libpcap-devel >= 2:1.9.0, libssl-devel
 
 %description
 Tcpdump is a command-line tool for monitoring network traffic.  Tcpdump
@@ -31,7 +31,7 @@ bzip2 -9k CHANGES
 %build
 %add_optflags -fno-strict-aliasing
 %autoreconf
-%configure --without-smi --with-crypto --enable-ipv6 \
+%configure --without-smi --with-crypto \
 	--with-user=tcpdump --with-chroot=/var/resolv
 %make_build
 
@@ -51,9 +51,12 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 %_sbindir/*
 %_datadir/%name
 %_mandir/man?/*
-%doc CHANGES.bz2 CREDITS LICENSE README TODO
+%doc CHANGES.bz2 CREDITS LICENSE README
 
 %changelog
+* Tue Jan 29 2019 Nikita Ermakov <arei@altlinux.org> 1:4.9.2-alt1
+- Updated to 4.9.2.
+
 * Fri Feb 25 2011 Dmitry V. Levin <ldv@altlinux.org> 1:4.1.1-alt3
 - Rebuilt for debuginfo.
 
