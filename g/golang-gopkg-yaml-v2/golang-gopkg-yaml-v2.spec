@@ -1,12 +1,12 @@
 %global import_path gopkg.in/yaml.v2
 
-%global commit 25c4ec802a7d637f88d584ab26798e94ad14c13b
+%global commit 51d6538a90f86fe93ac480b35f37b2be17fef232
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-gopkg-yaml-v2
-Version: 2.0
-Release: alt5.git%abbrev
+Version: 2.2.2
+Release: alt1.git%abbrev
 Summary: YAML support for the Go language
 License: Apache v.2
 Group: Development/Other
@@ -19,7 +19,6 @@ ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 
 BuildArch: noarch
-BuildRequires: golang-tools
 
 %description
 The yaml package enables Go programs to comfortably encode and decode YAML
@@ -61,6 +60,12 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Fri Jan 11 2019 Denis Pynkin <dans@altlinux.org> 2.2.2-alt1.git51d6538a
+- Update
+
+* Fri Feb 02 2018 Denis Pynkin <dans@altlinux.org> 2.0-alt6.gitd670f940
+- Update
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 2.0-alt5.git25c4ec80
 - Update
 
