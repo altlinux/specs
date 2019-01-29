@@ -7,7 +7,7 @@
 
 Name: gns3-server
 Version: 2.1.11
-Release: alt1
+Release: alt2
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -35,7 +35,6 @@ Requires: python3-module-jsonschema >= 2.4.0
 Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 3.0.0
 Requires: python3-module-zipstream >= 1.1.4
-Requires: python3-module-typing >= 3.5.3
 #endif
 #Requires: qemu
 #Requires: wireshark
@@ -68,6 +67,9 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Tue Jan 29 2019 Anton Midyukov <antohami@altlinux.org> 2.1.11-alt2
+- drop requires python3(typing), not needed for python3 >= 3.5
+
 * Wed Oct 17 2018 Anton Midyukov <antohami@altlinux.org> 2.1.11-alt1
 - new version 2.1.11
 
