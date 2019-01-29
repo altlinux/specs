@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install libSDL-devel perl(FileHandle.pm) pe
 %define _localstatedir %{_var}
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_21.20120228gitb0a402a
+Release:        alt2_23.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -15,12 +15,14 @@ Group:          Games/Other
 # Occasionally upstream names things with an underscore.
 %global         version_us %(echo %{version} | sed -e 's/\\./_/g')
 
-#Source0:        nazghul-20120228gitb0a402a.txz
-
 # Construct cvs checkout tarball with:
 #  ./nazghul-make-snapshot %%{cvsdate}
 Source0:        nazghul-20120228gitb0a402a.txz
 Source1:        haxima-music-license
+# Since xcftools is orphaned, this was converted manually from haxima.xcf.  If
+# there is ever an update, upstream will hopefully include this icon in the
+# tarball.
+Source2:        haxima.png
 Patch0:         nazghul-desktop.patch
 Patch1:         nazghul-format-security.patch
 Patch2:         nazghul-armbuild.patch
@@ -28,7 +30,7 @@ Patch2:         nazghul-armbuild.patch
 # For building from a CVS snapshot
 BuildRequires:  automake, autoconf, gcc-c++
 BuildRequires:  libSDL_image-devel, libSDL_mixer-devel, desktop-file-utils
-BuildRequires:  libpng-devel, xcftools
+BuildRequires:  libpng-devel
 Source44: import.info
 
 %description
@@ -77,10 +79,6 @@ cp %SOURCE1 .
 %configure
 %make_build
 
-# Want a 256x256 icon, so generate one from the existing .xcf file
-pushd icons
-xcf2png haxima.xcf > haxima.png
-
 
 %install
 make install DESTDIR=%{buildroot}
@@ -91,7 +89,7 @@ desktop-file-install \
     --dir %{buildroot}/%{_datadir}/applications \
     haxima.desktop
 
-install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
+install -D -m 644 %SOURCE2 %{buildroot}/%{_datadir}/pixmaps/haxima.png
 
 # Register as an application to be visible in the software center
 #
@@ -144,6 +142,9 @@ EOF
 
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_23.20120228gitb0a402a
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_21.20120228gitb0a402a
 - update to new release by fcimport
 
