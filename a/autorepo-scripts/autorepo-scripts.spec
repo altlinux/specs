@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.608
+Version: 0.609
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.609-alt1
+- new version
+
 * Fri Jan 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.608-alt1
 - new version
 
