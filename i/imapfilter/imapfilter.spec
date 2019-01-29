@@ -1,6 +1,6 @@
 Name: imapfilter
-Version: 2.5.5
-Release: alt1.1
+Version: 2.6.12
+Release: alt1
 
 Summary: mail filtering utility
 License: BSD
@@ -38,6 +38,9 @@ make BINDIR=%buildroot%_bindir SHAREDIR=%buildroot%_datadir/%name MANDIR=%buildr
 %_mandir/*/*
 
 %changelog
+* Tue Jan 29 2019 Vladimir Lettiev <crux@altlinux.org> 2.6.12-alt1
+- 2.6.12
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1.1
 - rebuild with new lua 5.3
 
