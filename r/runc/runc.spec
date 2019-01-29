@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt5.git%shortcommit
+Release:        alt6.rc6
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Tue Jan 29 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt6.rc6
+- New version (for docker 18.09.1-ce).
+
 * Fri Jul 20 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt5.git69663f0
 - New version (for docker 18.06.0-ce).
 
