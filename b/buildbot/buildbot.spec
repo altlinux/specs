@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: buildbot
-Version: 1.8.0
+Version: 2.1.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -12,10 +12,10 @@ Url: https://buildbot.net
 # https://github.com/buildbot/buildbot
 Source: %name-%version.tar
 
-Source1: buildbot_www-%version-py2.py3-none-any.whl
-Source2: buildbot_console_view-%version-py2.py3-none-any.whl
-Source3: buildbot_grid_view-%version-py2.py3-none-any.whl
-Source4: buildbot_waterfall_view-%version-py2.py3-none-any.whl
+Source1: buildbot_www-%version-py3-none-any.whl
+Source2: buildbot_console_view-%version-py3-none-any.whl
+Source3: buildbot_grid_view-%version-py3-none-any.whl
+Source4: buildbot_waterfall_view-%version-py3-none-any.whl
 
 Patch0: %name-%version-%release.patch
 
@@ -179,6 +179,9 @@ trial.py3 -e buildbot_worker.test
 %python3_sitelibdir/buildbot-*.egg-info
 
 %changelog
+* Tue Jan 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt1
+- update to 2.1.0
+
 * Tue Jan 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.0-alt1
 - update to 1.8.0
 
