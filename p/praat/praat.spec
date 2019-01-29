@@ -1,5 +1,5 @@
 Name: praat
-Version: 6.0.36
+Version: 6.0.46
 Release: alt1
 
 Summary: A program for speech analysis and synthesis
@@ -9,11 +9,11 @@ Group: Sound
 Url: http://www.praat.org
 
 # https://github.com/praat/praat.git
-Source: %name-%version.tar
+Source: v%version.tar.gz
 
 # Automatically added by buildreq on Sun Sep 25 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel
+BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libjack-devel
 
 Requires: fonts-bitmap-75dpi
 
@@ -56,6 +56,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 6.0.46-alt1
+- Autobuild version bump to 6.0.46
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.36-alt1
 - Updated to upstream version 6.0.36.
 
