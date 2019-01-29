@@ -1,8 +1,8 @@
 %define xdg_name io.github.GnomeMpv
 
 Name: gnome-mpv
-Version: 0.15
-Release: alt1.qa1
+Version: 0.16
+Release: alt1
 
 Summary: GNOME MPV is a simple GTK+ frontend for mpv
 License: GPLv3
@@ -47,6 +47,9 @@ allowing access to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 0.16-alt1
+- new version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.qa1
 - NMU: applied repocop patch
 
