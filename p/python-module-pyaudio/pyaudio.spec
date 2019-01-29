@@ -1,26 +1,22 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
 BuildRequires: python-module-setuptools python3-module-setuptools
 # END SourceDeps(oneline)
 %define oldname pyaudio
-%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%endif
-
 %global srcname pyaudio
 %global sum Python bindings for PortAudio
 
 Name:		python-module-pyaudio
-Version:	0.2.9
-Release:	alt3_10
+Version:	0.2.11
+Release:	alt1_1
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
-Source0:	https://pypi.python.org/packages/d0/dc/ffb9ce5e3f19bd289902915a9f68b7d199216065f8ea17d5b5e8e4ad86ee/PyAudio-0.2.9.tar.gz#/%{oldname}-%{version}.tar.gz
-Group:		System/Libraries
+Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
 Summary:	%{sum}
+
 BuildRequires:  gcc
 BuildRequires:	libportaudio2-devel
 BuildRequires:	python-devel
@@ -58,19 +54,22 @@ rm -rf packaging
 %python3_install
 
 %files -n python-module-pyaudio
-%doc README CHANGELOG docs
+%doc README CHANGELOG
 %{python_sitelibdir}/*.py*
 %{python_sitelibdir}/*.so
 %{python_sitelibdir}/*egg-info
 
 %files -n python3-module-pyaudio
-%doc README CHANGELOG docs
+%doc README CHANGELOG
 %{python3_sitelibdir}/*.py*
 %{python3_sitelibdir}/__pycache__/*.py*
 %{python3_sitelibdir}/*.so
 %{python3_sitelibdir}/*egg-info
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.9-alt3_10
 - update to new release by fcimport
 
