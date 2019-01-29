@@ -1,23 +1,30 @@
+Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl(URI.pm) perl(URI/QueryParam.pm) perl-podlators
+BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl(URI.pm) perl(URI/QueryParam.pm) perl-podlators
 # END SourceDeps(oneline)
 # hacks around findreq ==============
+# GraphViz is optional dependency, not a requirement
+%filter_from_requires /^perl(GraphViz.pm)/d
+# Self-dep 
+%filter_from_requires /^perl(RT.pm)/d
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRT::Base'
-%add_findreq_skiplist %_sbindir/rt-externalize-attachments
-%add_findreq_skiplist %_sbindir/rt-*
-%add_findreq_skiplist */RT/ACL.pm
-%add_findreq_skiplist */RT/Article.pm
-%add_findreq_skiplist */RT/Authen/ExternalAuth.pm
-%add_findreq_skiplist */RT/CustomField.pm
-%add_findreq_skiplist */RT/Group.pm
-%add_findreq_skiplist */RT/I18N*
-%add_findreq_skiplist */RT/Queue.pm
-%add_findreq_skiplist */RT/System.pm
-%add_findreq_skiplist */RT/Ticket.pm
-%add_findreq_skiplist */RT/Tickets.pm
-%add_findreq_skiplist /usr/share/rt/upgrade/*
-%add_findreq_skiplist /usr/libexec/perl5-tests/*
+# instead of findreqs below
+%set_perl_req_method relaxed
+#add_findreq_skiplist %_sbindir/rt-externalize-attachments
+#add_findreq_skiplist %_sbindir/rt-*
+#add_findreq_skiplist */RT/ACL.pm
+#add_findreq_skiplist */RT/Article.pm
+#add_findreq_skiplist */RT/Authen/ExternalAuth.pm
+#add_findreq_skiplist */RT/CustomField.pm
+#add_findreq_skiplist */RT/Group.pm
+#add_findreq_skiplist */RT/I18N*
+#add_findreq_skiplist */RT/Queue.pm
+#add_findreq_skiplist */RT/System.pm
+#add_findreq_skiplist */RT/Ticket.pm
+#add_findreq_skiplist */RT/Tickets.pm
+#add_findreq_skiplist /usr/share/rt/upgrade/*
+#add_findreq_skiplist /usr/libexec/perl5-tests/*
 # end hacks =======================
 BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 # fedora bcond_with macro
@@ -31,7 +38,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rt
 #
-# Copyright (c) 2005-2017, Ralf Corsepius, Ulm, Germany.
+# Copyright (c) 2005-2018, Ralf Corsepius, Ulm, Germany.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -70,11 +77,10 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.2
-Release:	alt1_3
+Version:	4.4.3
+Release:	alt1_2
 Summary:	Request tracker
 
-Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://bestpractical.com/request-tracker
 Source0:	http://download.bestpractical.com/pub/rt/release/rt-%{version}.tar.gz
@@ -136,7 +142,7 @@ BuildRequires: perl(Email/Address.pm)
 BuildRequires: perl(Email/Address/List.pm)
 BuildRequires: perl(Encode.pm)
 BuildRequires: perl(Errno.pm)
-%{?with_devel_mode:BuildRequires: perl(File/Find.pm)}
+BuildRequires: perl(File/Find.pm)
 BuildRequires: perl(File/Glob.pm)
 BuildRequires: perl(File/ShareDir.pm)
 BuildRequires: perl(File/Spec.pm)
@@ -162,6 +168,7 @@ BuildRequires: perl(HTML/TreeBuilder.pm)
 BuildRequires: perl(HTTP/Request/Common.pm)
 BuildRequires: perl(HTTP/Server/Simple.pm)
 BuildRequires: perl(HTTP/Server/Simple/Mason.pm)
+BuildRequires: perl(HTTP/Status.pm)
 BuildRequires: perl(IPC/Run.pm)
 BuildRequires: perl(IPC/Run3.pm)
 BuildRequires: perl(IPC/Run/SafeHandles.pm)
@@ -251,7 +258,6 @@ Requires:  /usr/share/fonts/ttf/google-droid/DroidSans.ttf
 BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
 BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSans.ttf
 
-Requires:	%{_sysconfdir}/httpd2/conf
 
 
 # rpm doesn't catch these:
@@ -312,9 +318,9 @@ Requires: rt-mailgate
 Source44: import.info
 %filter_from_requires /^perl(FCGI.ProcManager.pm)/d
 %filter_from_requires /^perl(DBIx.SearchBuilder.Handle..pm)/d
-%filter_from_provides /^perl(RT\\)$/d
+%filter_from_provides /^perl(RT.pm)/d
 %filter_from_provides /^perl(HTML.Mason/d
-%filter_from_provides /^perl(IO.Handle.CRLF\\)$/d
+%filter_from_provides /^perl(IO.Handle.CRLF.pm)/d
 Patch33: rt-4.4.1-alt-buildroot.patch
 Conflicts: request-tracker < 4
 #Obsoletes: request-tracker < 4
@@ -328,8 +334,8 @@ by a community of users.
 
 
 %package mailgate
+Group: Networking/WWW
 Summary: rt's mailgate utility
-Group:	Networking/WWW
 # rpm doesn't catch these:
 Requires:	perl(Pod/Usage.pm)
 Requires:	perl(HTML/TreeBuilder.pm)
@@ -343,8 +349,8 @@ Provides:	rt3-mailgate = %{version}-%{release}
 
 %if %{with devel_mode}
 %package tests
+Group: Development/Debug
 Summary:	Test suite for package rt
-Group:		Development/Debug
 Requires:	%{name} = %{version}-%{release}
 Requires:	/usr/bin/prove
 Requires:	perl(RT/Test.pm)
@@ -378,8 +384,8 @@ fi
 
 
 %package -n perl-RT-Test
+Group: Networking/WWW
 Summary: rt's test utility module
-Group:	Networking/WWW
 Requires:	rt = %{version}-%{release}
 
 # rpm doesn't catch these:
@@ -612,8 +618,8 @@ fi
 %exclude %{_datadir}/%{name}/upgrade/*/*.SQLite
 %{?!with_mysql:%exclude %{_sysconfdir}/%{name}/*.mysql}
 %{?!with_mysql:%exclude %{_datadir}/%{name}/upgrade/*/*.mysql}
+%attr(0750,apache,apache) %{_sysconfdir}/%{name}/RT_SiteConfig.d
 %config(noreplace) %attr(0640,apache,apache) %{_sysconfdir}/%{name}/RT_*.pm
-%dir %attr(770,apache,apache) %{_sysconfdir}/%{name}/RT_SiteConfig.d
 
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
@@ -650,6 +656,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.3-alt1_2
+- new version (closes: #35997)
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt1_3
 - update to new release by fcimport
 
