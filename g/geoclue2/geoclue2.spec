@@ -2,15 +2,17 @@
 
 %define _name geoclue
 %define __name org.freedesktop.GeoClue2
-%define ver_major 2.4
+%define ver_major 2.5
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable 3g
-%def_disable gtk_doc
+%def_enable nmea
+%def_enable gtk_doc
+%def_enable introspection
 
 Name: %{_name}2
-Version: %ver_major.13
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -25,15 +27,17 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.34
+%define glib_ver 2.44
 %define mm_ver 1.6
 %define soup_ver 2.42
 
-BuildRequires(pre): rpm-build-xdg
-BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
+BuildRequires(pre): meson rpm-build-xdg
+BuildRequires: yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
-BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
-BuildRequires: gobject-introspection-devel vala-tools
+BuildRequires: libdbus-devel libnotify-devel systemd-devel
+BuildRequires: vala-tools
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_nmea:BuildRequires: libavahi-glib-devel}
 %{?_enable_3g:BuildRequires: libmm-glib-devel >= %mm_ver}
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -117,21 +121,22 @@ This package contains demo programs for GeoClue.
 rm -f demo/*.desktop.in
 
 %build
-%autoreconf
-%configure --disable-static \
-	--with-dbus-service-user=%_name \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_enable_network_manager:--enable-network-manager} \
-	--enable-demo-agent \
-	%{?_disable_3g:--disable-3g-source}
-%make_build
+%meson \
+	-Ddbus-srv-user=%_name \
+	%{?_disable_nmea:-Dnmea-source=false} \
+	%{?_disable_3g:-D3g-source=false} \
+	%{?_disable_gtk_doc:-Dgtk-doc=false} \
+	%{?_disable_introspection:-Dintrospection=false} \
+	-Ddemo-agent=true
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 mkdir -p %buildroot%_localstatedir/%_name
 
 %check
-%make check
+%meson_test
 
 %pre
 %_sbindir/groupadd -r -f %_name
@@ -166,11 +171,13 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_vapidir/lib%_name-%api_ver.deps
 %_vapidir/lib%_name-%api_ver.vapi
 
+%if_enabled introspection
 %files -n lib%name-gir
 %_typelibdir/Geoclue-%api_ver.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/Geoclue-%api_ver.gir
+%endif
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -186,6 +193,12 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Tue Jan 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
+- 2.5.2
+
+* Tue Nov 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- updated to 2.5.1-13-g225d5f9
+
 * Mon Oct 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.13-alt1
 - 2.4.13
 
