@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  5.2.22
+%define module_version  5.2.24
 %define module_release	alt1
 
 %define flavour		un-def
@@ -102,6 +102,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt1
+- Updated template for virtualbox 5.2.24
 
 * Fri Nov 30 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt1
 - Updated template for virtualbox 5.2.22

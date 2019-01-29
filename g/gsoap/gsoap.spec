@@ -1,15 +1,13 @@
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
-Version: 2.8.42
-Release: alt2%ubt.1
+Version: 2.8.75
+Release: alt1
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 Source0: http://downloads.sourceforge.net/gsoap2/gsoap_%version.tar.gz
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre):rpm-build-ubt
 
 #packagereq: optimized out: glibc-devel-static glibc-pthread libcom_err-devel libkrb5-devel libstdc++-devel perl-threads
 BuildRequires: dos2unix flex gcc-c++ libssl-devel libstdc++-devel-static tzdata zlib-devel
@@ -357,15 +355,25 @@ make check
 %_datadir/gsoap/import/wsp_appliesto.h
 %_datadir/gsoap/plugin/wstapi.c
 %_datadir/gsoap/plugin/wstapi.h
+# Additions in 2.8.67
+%_datadir/gsoap/import/wst2.h
+%_datadir/gsoap/import/wstx2.h
+# Additions in 2.8.75
+%_datadir/gsoap/plugin/httppipe.c
+%_datadir/gsoap/plugin/httppipe.h
 
 %changelog
+* Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.8.75-alt1
+- Update to latest winter release
+- Disable ubt macros due binary package identity change
+
 * Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 2.8.42-alt2.S1.1
 - NMU: rebuild with new openssl.
 
-* Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 2.8.42-alt2%ubt
+* Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 2.8.42-alt2
 - NMU: rebuild for new glibc: fixes bug with xlocale.h
 
-* Wed Feb 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.42-alt1%ubt
+* Wed Feb 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.42-alt1
 - Update to new release
 - Increment soversion for gsoap libraries
 

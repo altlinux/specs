@@ -59,8 +59,8 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 5.2.22
-Release: alt4
+Version: 5.2.24
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -805,6 +805,15 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Jan 25 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt3
+- Fix rEFInd 0.11.4 icons missing due to inaccessible files on ISO9660 partition (Closes: 34435)
+
+* Thu Jan 24 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt2
+- Avoid volatile in asm inline within function context due new gcc8 release (Closes: 35929)
+
+* Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt1
+- Build first winter security release (Fixes: CVE-2019-2500, CVE-2019-2524, CVE-2019-2552)
+
 * Wed Dec 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt4
 - Add lost VMMRC.rc due manual install on ix86
 
