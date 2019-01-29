@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt8
+Release: alt9
 Epoch: 1
 %K5init altplace
 
@@ -357,6 +357,9 @@ done
 
 
 %changelog
+* Mon Jan 28 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt9
+- disable freememorynotifier autoload
+
 * Fri Jan 18 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt8
 - memory notifier fixes:
   + warn every time when the most-greedy process changes
