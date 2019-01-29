@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.14.2
+Version: 1.16.2
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -8,8 +8,8 @@ Group: Video
 Url: http://linuxtv.org
 
 Source: %name-%version-%release.tar
-BuildRequires: gcc-c++ libalsa-devel libjpeg-devel libudev-devel
-BuildRequires: libqt4-devel
+BuildRequires: gcc-c++ libalsa-devel libelf-devel libGLU-devel libjpeg-devel
+BuildRequires: libudev-devel qt5-base-devel
 
 %package -n ir-keytable
 Summary: IR keytable management tool
@@ -29,6 +29,10 @@ License: LGPLv2+
 
 %package -n qv4l2
 Summary: A test bench application for video4linux devices
+Group: Video
+
+%package -n qvidcap
+Summary: A video capture viewer
 Group: Video
 
 %description
@@ -61,9 +65,14 @@ The libv4l-devel package contains libraries and header files for
 developing applications that use libv4l.
 
 %description -n qv4l2
-The  qv4l2  tool  is  used  to test video4linux capture devices, either
-video, vbi or radio.  This application can  also  serve  as  a  generic
+The qv4l2 tool is used to test video4linux capture devices, either
+video, vbi or radio. This application can also serve as a generic
 video/TV viewer application.
+
+%description -n qvidcap
+The qvidcap tool is used to test video4linux capture devices, either
+using a video device, a file, or over network. This application can
+also serve as a generic video/TV viewer application.
 
 %prep
 %setup
@@ -83,6 +92,7 @@ video/TV viewer application.
 %_bindir/*
 %exclude %_bindir/ir-keytable
 %exclude %_bindir/qv4l2
+%exclude %_bindir/qvidcap
 %_man1dir/cec-compliance.1*
 %_man1dir/cec-ctl.1.*
 %_man1dir/cec-follower.1*
@@ -118,10 +128,19 @@ video/TV viewer application.
 %files -n qv4l2
 %_bindir/qv4l2
 %_desktopdir/qv4l2.desktop
-%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/qv4l2.*
 %_man1dir/qv4l2.1*
 
+%files -n qvidcap
+%_bindir/qvidcap
+%_desktopdir/qvidcap.desktop
+%_iconsdir/hicolor/*/*/qvidcap.*
+%_man1dir/qvidcap.1*
+
 %changelog
+* Tue Jan 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.2-alt1
+- 1.16.2 released
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.14.2-alt1
 - 1.14.2
 
