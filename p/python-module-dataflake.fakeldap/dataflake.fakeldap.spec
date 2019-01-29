@@ -1,10 +1,10 @@
 %define oname dataflake.fakeldap
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 2.1
-Release: alt1
+Release: alt2
 Summary: LDAP connection library
 License: ZPLv2.1
 Group: Development/Python
@@ -173,6 +173,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 29 2019 Ivan A. Melnikov <iv@altlinux.org> 2.1-alt2
+- Enable python3.
+
 * Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
 - Updated to upstream version 2.1.
 
