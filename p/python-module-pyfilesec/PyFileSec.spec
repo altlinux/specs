@@ -1,12 +1,12 @@
-Name:		python-module-pyfilesec
-Version:	0.2.13
-Release:	alt1
-Summary:	Working with files that may contain sensitive information
-License:	GPLv3
-Group:		Development/Python
-URL:		https://github.com/jeremygray/pyfilesec
-Source:		PyFileSec-%version.tar.gz
-BuildArch:	noarch
+Name: python-module-pyfilesec
+Version: 0.2.14
+Release: alt1
+Summary: Working with files that may contain sensitive information
+License: GPLv3
+Group: Development/Python
+Url: https://github.com/jeremygray/pyfilesec
+Source: PyFileSec-%version.tar.gz
+BuildArch: noarch
 %setup_python_module pyfilesec
 
 # Automatically added by buildreq on Thu Jan 16 2014
@@ -35,6 +35,9 @@ applications.
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 0.2.14-alt1
+- Autobuild version bump to 0.2.14
+
 * Thu Jan 16 2014 Fr. Br. George <george@altlinux.ru> 0.2.13-alt1
 - Initial build for ALT
 
