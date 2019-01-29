@@ -1,6 +1,6 @@
 Name: v4l-utils
 Version: 1.16.2
-Release: alt1
+Release: alt2
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -92,7 +92,9 @@ also serve as a generic video/TV viewer application.
 %_bindir/*
 %exclude %_bindir/ir-keytable
 %exclude %_bindir/qv4l2
+%ifnarch armh
 %exclude %_bindir/qvidcap
+%endif
 %_man1dir/cec-compliance.1*
 %_man1dir/cec-ctl.1.*
 %_man1dir/cec-follower.1*
@@ -131,13 +133,18 @@ also serve as a generic video/TV viewer application.
 %_iconsdir/hicolor/*/*/qv4l2.*
 %_man1dir/qv4l2.1*
 
+%ifnarch armh
 %files -n qvidcap
 %_bindir/qvidcap
 %_desktopdir/qvidcap.desktop
 %_iconsdir/hicolor/*/*/qvidcap.*
 %_man1dir/qvidcap.1*
+%endif
 
 %changelog
+* Tue Jan 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.2-alt2
+- fixed build on arm
+
 * Tue Jan 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.2-alt1
 - 1.16.2 released
 
