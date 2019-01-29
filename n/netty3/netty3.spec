@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty3
 Version:        3.10.6
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 # CC0: src/main/java/org/jboss/netty/handler/codec/base64/Base64.java
 License:        ASL 2.0 and BSD and CC0
@@ -30,7 +30,7 @@ BuildRequires:  mvn(ant-contrib:ant-contrib)
 BuildRequires:  mvn(com.google.protobuf:protobuf-java)
 BuildRequires:  mvn(com.jcraft:jzlib)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(io.netty:netty-tcnative)
+#BuildRequires:  mvn(io.netty:netty-tcnative)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(log4j:log4j:12)
 BuildRequires:  mvn(org.apache.ant:ant)
@@ -47,7 +47,7 @@ BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
-Requires:       netty-tcnative
+#Requires:       netty-tcnative
 # src/main/java/org/jboss/netty/handler/codec/base64/Base64.java (unkown version)
 Provides:       bundled(java-base64)
 Source44: import.info
@@ -140,6 +140,9 @@ rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
  
 %changelog
+* Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_5jpp8
+- built w/o netty-tcnative
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_4jpp8
 - java update
 
