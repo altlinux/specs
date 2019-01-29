@@ -8,9 +8,11 @@
 # peer to peer support requires ostree >= 2018.2 with experimental/P2P API
 %def_disable p2p
 %def_enable docs
+# cannot run bwrap in hasher
+%def_disable check
 
 Name: flatpak
-Version: 1.0.6
+Version: 1.2.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -32,6 +34,8 @@ Requires: lib%name = %version-%release
 Requires: %_bindir/fusermount
 Requires: %_bindir/bwrap
 Requires: bubblewrap >= %bwrap_ver
+Requires: ostree
+Requires: dconf
 
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -44,6 +48,9 @@ BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(appstream-glib)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(xau)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(dconf)
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
 BuildRequires: libgpgme-devel
@@ -53,6 +60,7 @@ BuildRequires: bubblewrap >= %bwrap_ver
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
+%{?_enable_check:BuildRequires: dbus %_bindir/fusermount %_bindir/ostree}
 
 %description
 Flatpak is a system for building, distributing and running sandboxed desktop
@@ -103,6 +111,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 # Create an (empty) system-wide repo.
 %_bindir/flatpak remote-list --system
 
+%check
+%make check
+
 %files -f %name.lang
 %_bindir/%name
 %_bindir/%name-bisect
@@ -119,6 +130,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_libexecdir/%name-dbus-proxy
 %_libexecdir/%name-session-helper
 %_libexecdir/%name-system-helper
+%_libexecdir/%name-validate-icon
 %dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
 %_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
@@ -128,7 +140,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_unitdir/%name-system-helper.service
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
-%_userunitdir/dbus.service.d
+%_prefix/lib/systemd/user-environment-generators/60-%name
 %_man5dir/*
 %doc NEWS README.md
 %{?_enable_docs:%doc %_docdir/%name/}
@@ -147,6 +159,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Tue Jan 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
