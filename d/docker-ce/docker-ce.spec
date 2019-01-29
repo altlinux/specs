@@ -15,8 +15,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.09.0
-Release: alt4
+Version:    18.09.1
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -35,7 +35,7 @@ Source3: %repo_engine.sysconf
 Source4: %repo_engine-storage.sysconf
 Source5: daemon.json
 
-Patch1: %name-17.12.0-bash-completion.patch
+Patch1: %name-18.09.1-bash-completion.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
@@ -177,6 +177,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Tue Jan 29 2019 Vladimir Didenko <cow@altlinux.org> 18.09.1-alt1
+- New version
+
 * Thu Jan 17 2019 Mikhail Gordeev <obirvalger@altlinux.org> 18.09.0-alt4
 - add iptables to requires
 
