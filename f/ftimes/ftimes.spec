@@ -1,6 +1,6 @@
 Name: ftimes
-Version: 3.10.0
-Release: alt2
+Version: 3.11.0
+Release: alt1
 
 Summary: a system baselining and evidence collection tool
 License: BSD (3-clause), Apache, MIT
@@ -10,9 +10,11 @@ Url: http://ftimes.sourceforge.net/FTimes/
 Source: %name-%version.tgz
 Packager: Michael Shigorin <mike@altlinux.org>
 
+ExclusiveArch: %ix86 x86_64
+
 # Automatically added by buildreq on Mon May 12 2014
 # optimized out: gnu-config libcloog-isl4 libcom_err-devel libkrb5-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
-BuildRequires: libpcre-devel libssl-devel perl-podlators
+BuildRequires: libpcre-devel libssl-devel perl-podlators perl-devel
 
 %description
 FTimes is a system baselining and evidence collection tool.
@@ -26,7 +28,7 @@ sed -i 's,pcre.h,pcre/pcre.h,' configure* src/app-includes.h
 sed -i 's,XMAGIC_PREFIX"/etc/xmagic","/etc/xmagic",' src/xmagic.h
 
 %build
-%configure
+%configure --bindir=%_bindir --without-ssl
 %make_build
 
 %check
@@ -42,6 +44,7 @@ mv %buildroot/usr/etc/xmagic %buildroot%_sysconfdir/
 %_bindir/*
 %_man1dir/*
 %_sysconfdir/*
+%_prefix/etc/*
 %doc README*
 %doc etc/*.cfg/*.cfg.*
 #doc doc/*/
@@ -50,6 +53,11 @@ mv %buildroot/usr/etc/xmagic %buildroot%_sysconfdir/
 # - server-side?
 
 %changelog
+* Tue Jan 29 2019 Leontiy Volodin <lvol@altlinux.org> 3.11.0-alt1
+- 3.11.0
+- disabled openssl support
+- added ExclusiveArch (don't support aarch64)
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 3.10.0-alt2
 - added sample configuration files
 
