@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_21jpp8
+Release:       alt1_23jpp8
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -197,6 +197,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_23jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_21jpp8
 - java update
 
