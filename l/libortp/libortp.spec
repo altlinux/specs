@@ -1,6 +1,6 @@
 Name: libortp
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Real-time Transport Protocol Stack
@@ -38,7 +38,11 @@ develop programs using the oRTP library.
 
 %build
 %define _optlevel 3
-%add_optflags %optflags_shared %optflags_strict %optflags_notraceback -fno-schedule-insns -fschedule-insns2
+%add_optflags %optflags_shared %optflags_strict %optflags_notraceback
+%ifnarch %e2k
+# as of lcc-1.23.12
+%add_optflags -fno-schedule-insns -fschedule-insns2
+%endif
 %ifarch %ix86
 %add_optflags -malign-double
 %endif
@@ -63,6 +67,9 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Tue Jan 29 2019 Michael Shigorin <mike@altlinux.org> 1.0.2-alt2
+- E2K: avoid lcc-unsupported options
+
 * Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
