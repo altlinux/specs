@@ -1,11 +1,11 @@
-Name:		vtable-dumper
-Version:	1.0
-Release:	alt1
-Group:		Development/Other
-License:	GPLv2+
-Source:		%version.tar.gz
-Summary:	List content of virtual tables in a C++ shared library
-URL:		https://github.com/lvc/vtable-dumper
+Name: vtable-dumper
+Version: 1.2
+Release: alt1
+Group: Development/Other
+License: GPLv2+
+Source: %version.tar.gz
+Summary: List content of virtual tables in a C++ shared library
+Url: https://github.com/lvc/vtable-dumper
 
 # Automatically added by buildreq on Mon Sep 16 2013
 BuildRequires: libelf-devel libstdc++-devel
@@ -32,6 +32,9 @@ compatibility.
 %_bindir/*
 
 %changelog
+* Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 1.2-alt1
+- Autobuild version bump to 1.2
+
 * Mon Sep 16 2013 Fr. Br. George <george@altlinux.ru> 1.0-alt1
 - Initial build from upstream
 
