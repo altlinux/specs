@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global		upstream_version 1.0.0-beta.2
 
 Name:		ongres-%upstream_name
-Version:	%(echo %upstream_version | sed 's/-/~/g')
-Release:	alt1_5jpp8
+Version:	%(echo %upstream_version | sed 's/-/_/g')
+Release:	alt1_6jpp8
 Summary:	Salted Challenge Response Authentication Mechanism (SCRAM) - Java Implementation
 License:	BSD
 URL:		https://github.com/ongres/%upstream_name
@@ -76,6 +76,9 @@ find \( -name '*.jar' -o -name '*.class' \) -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0_beta.2-alt1_6jpp8
+- java update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0~beta.2-alt1_5jpp8
 - java fc28+ update
 
