@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install boost-devel gcc-c++ libGLU-devel unzip
+BuildRequires: /usr/bin/desktop-file-install boost-devel libGLU-devel libglvnd-devel unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global svn_rev 1681
 Name:           blobby
 Version:        1.0
-Release:        alt3_17.svn%{svn_rev}
+Release:        alt3_19.svn%{svn_rev}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -24,7 +24,9 @@ Patch1:         blobby-vector2.patch
 Patch2:         blobby-vector3.patch
 Patch3:         blobby-compile-flags.patch
 Patch4:         blobby-vector4.patch
+Patch5:         blobby-install-api-lua-files.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake, boost-complete, zip
 BuildRequires:  ImageMagick-tools, desktop-file-utils, icon-theme-hicolor
 BuildRequires:  tinyxml-devel lua-devel
@@ -42,6 +44,7 @@ Blobby Volley 2 is the continuation of this lovely game.
 %patch2 -p0 -b .orig3
 %patch3 -p0 -b .orig4
 %patch4 -p0 -b .orig5
+%patch5 -p1 -b .orig6
 
 # Remove lua and tinyxml
 rm -rvf src/lua
@@ -89,6 +92,9 @@ install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdat
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_19.svn1681
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17.svn1681
 - use boost-complete
 
