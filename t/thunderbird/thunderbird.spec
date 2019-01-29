@@ -12,7 +12,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	60.4.0
-Release:	alt2
+Release:	alt3
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -39,6 +39,8 @@ Patch23:        build-aarch64-skia.patch
 Patch24:        rhbz-1354671.patch
 Patch25:        Bug-1238661---fix-mozillaSignalTrampoline-to-work-.patch
 Patch26:        bug1375074-save-restore-x28.patch
+
+Patch27:	enigmail-gost.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -197,6 +199,7 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 
 %if_with enigmail
 tar -xf %SOURCE1
+%patch27 -p1
 %endif
 
 tar -xf %SOURCE2
@@ -466,6 +469,9 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Tue Jan 29 2019 Paul Wolneykien <manowar@altlinux.org> 60.4.0-alt3
+- Added Enigmail GOST patch.
+
 * Thu Jan 10 2019 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt2
 - Rebuild with llvm7.0.
 
