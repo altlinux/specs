@@ -1,20 +1,19 @@
-%define module_version 0.05
+%define _unpackaged_files_terminate_build 1
 %define module_name Email-Address-List
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Email/Address.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Html.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Test/More.pm) perl(Time/HiRes.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: RFC close address list parsing
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/A/AL/ALEXMV/%module_name-%module_version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -23,7 +22,7 @@ previous prefixed with Resent- (eg Resent-From) headers.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +35,9 @@ previous prefixed with Resent- (eg Resent-From) headers.
 %perl_vendor_privlib/E*
 
 %changelog
+* Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - moved to Sisyphus by lav@ request
 
