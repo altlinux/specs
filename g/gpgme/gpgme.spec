@@ -15,7 +15,7 @@
 
 Name: gpgme
 Version: 1.11.1
-Release: alt1%ubt.1
+Release: alt2
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -221,25 +221,29 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
-* Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.1-alt1%ubt.1
+* Wed Jan 30 2019 Paul Wolneykien <manowar@altlinux.org> 1.11.1-alt2
+- Remove the redundant %%ubt macro.
+- Added GOST hash constants from libgcrypt (308--311).
+
+* Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1%ubt
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1
 - new version
 
-* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt2%ubt
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt2
 - fix requires
 
 * Sat Oct 21 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt0.M80P.1
 - Backport new version to p8 branch
 
-* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1%ubt
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1
 - new version
 
-* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt2%ubt
+* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt2
 - clean requires
 
-* Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1%ubt
+* Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
 - new version
 
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.5.5-alt2
