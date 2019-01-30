@@ -1,6 +1,6 @@
 Name: flacon
-Version: 5.0.0
-Release: alt2
+Version: 5.1.0
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -75,6 +75,9 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Jan 30 2019 Nazarov Denis <nenderus@altlinux.org> 5.1.0-alt1
+- Version 5.1.0
+
 * Mon Jan 21 2019 Nazarov Denis <nenderus@altlinux.org> 5.0.0-alt2
 - Add files in project
 
