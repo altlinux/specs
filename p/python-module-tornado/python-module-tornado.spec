@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 5.1.1
-Release: alt1
+Release: alt2
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -31,6 +31,7 @@ Requires: python-module-backports.ssl_match_hostname python-module-certifi
 Requires: python-module-singledispatch
 # required by tornado/gen.py
 Requires: python-module-backports_abc
+%py_requires concurrent.futures
 
 %description
 Tornado is an open source version of the scalable, non-blocking web
@@ -105,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
+- Added dependency on python futures.
+
 * Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Build new version.
 
