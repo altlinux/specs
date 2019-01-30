@@ -5,8 +5,8 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: Networking/News
@@ -26,10 +26,10 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-webengine-devel
 BuildRequires: boost-devel libassuan-devel libsasl2-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-grantleetheme-devel kde5-kcontacts-devel kde5-kimap-devel
 BuildRequires: kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-messagelib-devel kde5-pimcommon-devel
-BuildRequires: kde5-syndication-devel
 BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-syndication-devel
 
 %description
 RSS/Atom feed reader for KDE.
@@ -115,6 +115,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

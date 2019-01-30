@@ -1,8 +1,8 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libsasl2-devel
 BuildRequires: kde5-akonadi-devel kde5-kmime-devel
 BuildRequires: kde5-akonadi-mime-devel kde5-ksmtp-devel
+BuildRequires: kde5-libkgapi-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -97,6 +98,9 @@ KF5 library
 %_K5lib/libKF5MailTransportAkonadi.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

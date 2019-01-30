@@ -4,8 +4,8 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -97,6 +97,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkontactprivate.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

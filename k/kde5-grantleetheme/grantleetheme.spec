@@ -4,8 +4,8 @@
 %define libkf5grantleetheme libkf5grantleetheme%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -81,6 +81,9 @@ KF5 library
 %_libdir/grantlee/5.?/*grantlee_*.so
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

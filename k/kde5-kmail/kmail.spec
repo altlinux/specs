@@ -4,8 +4,8 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: Networking/Mail
@@ -91,7 +91,7 @@ Requires: %name-common = %version-%release
 #%_K5xmlgui/kmail2/
 %_K5xmlgui/kontactsummary/*
 %_K5srv/kontact/*.desktop
-%_K5srv/ServiceMenus/*.desktop
+#%_K5srv/ServiceMenus/*.desktop
 %_K5srv/*.desktop
 %_K5icon/*/*/apps/kmail.*
 %_K5notif/kmail2.notifyrc
@@ -126,6 +126,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
 - update russian translation
 
