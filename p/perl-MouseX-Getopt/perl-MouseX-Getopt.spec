@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,12 +8,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
-Version:	0.37
-Release:	alt1_10
+Version:	0.38
+Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/MouseX-Getopt
-Source0:	https://cpan.metacpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
-Patch0:		MouseX-Getopt-0.37-gld103.patch
+Source0:	http://www.cpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	rpm-build-perl
@@ -57,9 +57,6 @@ objects using parameters passed in from the command line.
 %prep
 %setup -q -n MouseX-Getopt-%{version}
 
-# Fix compatibility with GLD 0.103 (GH#12, GH#13)
-%patch0 -p1
-
 %build
 perl Build.PL --installdirs=vendor
 ./Build
@@ -77,6 +74,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_10
 - update to new release by fcimport
 
