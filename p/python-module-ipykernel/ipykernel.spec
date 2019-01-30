@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.6.1
-Release: alt3.1
+Release: alt4
 Summary: IPython Kernel for Jupyter
 License: BSD
 Group: Development/Python
@@ -14,6 +14,9 @@ BuildArch: noarch
 Url: https://pypi.python.org/pypi/ipykernel
 
 Source: %name-%version.tar
+Patch1: ipykernel-4.6.1-update-use-of-tornado-current.patch
+Patch2: ipykernel-4.6.1-only-enter-eventloop-when-there-is-one.patch
+Patch3: ipykernel-4.6.1-run-pre-post-handler-hooks-around-eventloop-dispatch.patch
 
 BuildRequires: python-module-html5lib python-module-ipyparallel python-module-mock python-module-nose python-module-numpy-testing
 BuildRequires: python-module-pytest
@@ -76,6 +79,9 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -133,6 +139,10 @@ popd
 %endif
 
 %changelog
+* Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 4.6.1-alt4
+- Fixed testing (applied upstream patches for support for tornado5,
+  closes: #35981).
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.6.1-alt3.1
 - rebuild with all requires
 
