@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.17.2
-Release: alt1
+Release: alt2
 Summary: An SDK for building applications to work with OpenStack
 
 Group: Development/Python
@@ -95,7 +95,7 @@ This package contains tests for %oname.
 rm -rf requirements.txt test-requirements.txt
 
 # Remove bundled egg-info
-rm -rf *.egg-info
+#rm -rf *.egg-info
 
 rm -rf ../python3
 cp -a . ../python3
@@ -149,6 +149,9 @@ popd
 %exclude %python3_sitelibdir/*/tests/functional/examples
 
 %changelog
+* Wed Jan 30 2019 Alexey Shabalin <shaba@altlinux.org> 0.17.2-alt2
+- package configs: defaults.json, schema.json, vendor-schema.json
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 0.17.2-alt1
 - 0.17.2
 
