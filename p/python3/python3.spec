@@ -76,8 +76,8 @@
 
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
-Version: %{pybasever}.5
-Release: alt1.1
+Version: %{pybasever}.8
+Release: alt1
 License: Python
 Group: Development/Python3
 
@@ -238,17 +238,10 @@ Patch292: 00292-restore-PyExc_RecursionErrorInst-symbol.patch
 # See also: https://bugzilla.redhat.com/show_bug.cgi?id=1489816
 Patch294: 00294-define-TLS-cipher-suite-on-build-time.patch
 
-# 00301 #
-# Tools/scripts/pathfix.py: Add -n option for no backup~
-# See: https://bugzilla.redhat.com/show_bug.cgi?id=1546990
-# Fixed upstream: https://bugs.python.org/issue32885
-Patch301: 00301-pathfix-add-n-option-for-no-backup.patch
-
-# 00302 #
-# Fix multiprocessing regression on newer glibcs
-# See: https://bugzilla.redhat.com/show_bug.cgi?id=1569933
-# and: https://bugs.python.org/issue33329
-Patch302: 00302-fix-multiprocessing-regression-on-newer-glibcs.patch
+# 00317 #
+# Security fix for CVE-2019-5010: Fix segfault in ssl's cert parser
+# Fixed upstream https://bugs.python.org/issue35746
+Patch317: 00317-CVE-2019-5010.patch
 
 # (New patches go here ^^^)
 #
@@ -304,6 +297,9 @@ Patch1007: python3-sslv2-compat.patch
 # the information from it.
 Patch1008: python3-platform-osrelease.patch
 
+# skip some new tests requiring network
+Patch1009: python-3.6.8-alt-skip-test-network.patch
+
 # ======================================================
 # Additional metadata, and subpackages
 # ======================================================
@@ -326,12 +322,6 @@ Requires: %name-base = %EVR
 Requires: python3-setuptools
 Requires: python3-pip
 %endif
-
-# ALT Sisyphus RPM Macros Packaging Policy
-# makes sure that the RPM support for building
-# the language-specific modules comes together with
-# the compiler/-devel pkgs:
-Requires: rpm-build-python3 >= 0.1.9
 
 %description
 Python 3 is a new version of the language that is incompatible with the 2.x
@@ -519,8 +509,7 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch274 -p1
 %patch292 -p1
 %patch294 -p1
-%patch301 -p1
-%patch302 -p1
+%patch317 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -533,6 +522,7 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1007 -p2
 
 %patch1008 -p1
+%patch1009 -p2
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -1099,6 +1089,11 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Tue Jan 29 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.8-alt1
+- Updated to upstream version 3.6.8
+- Removed dependency on rpm-build-python3 from python3 package (Closes: #35992)
+- Applied security fix (Fixes: CVE-2019-5010)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.6.5-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
