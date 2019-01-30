@@ -6,7 +6,7 @@
 %define cfontsdir /lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: 4.46
+Version: 4.47
 Release: alt1
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
@@ -23,7 +23,7 @@ Source2: ibm-866.uni
 
 Patch0: %cname-4.40-alt-12pt_ve_fix.patch
 Patch1: %cname-4.40-alt-be2.patch
-Patch2: %cname-4.46-alt-cp866.patch
+Patch2: %cname-4.47-alt-cp866.patch
 
 Provides: terminus-font = %version-%release
 
@@ -130,6 +130,9 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Wed Jan 30 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.47-alt1
+- 4.47
+
 * Wed Nov 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.46-alt1
 - 4.46
 - rediffed cp866 patch
