@@ -1,6 +1,6 @@
 Name:		rosa-media-player
 Version:	1.6.11
-Release:	alt1
+Release:	alt2
 Summary:	Multimedia player based on mplayer technology
 
 License:	GPLv2+
@@ -14,7 +14,7 @@ Packager:	Andrey Cherepanov <cas@altlinux.org>
 BuildRequires(pre):	qt4-devel >= 4.2.0
 BuildRequires:  libwildmidi-devel
 BuildRequires:	libalsa-devel
-BuildRequires:  gcc-c++ kdelibs zlib-devel
+BuildRequires:  gcc-c++ zlib-devel
 BuildRequires:  qjson-devel
 
 Requires:	mplayer >= 1.0
@@ -59,6 +59,9 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Wed Jan 30 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.11-alt2
+- Build without kdelibs support.
+
 * Sat Apr 04 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.11-alt1
 - New version (ALT #30908)
 
