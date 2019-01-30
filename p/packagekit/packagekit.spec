@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.1.12
-Release:   alt1
+Release:   alt2
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -136,6 +136,8 @@ rm -rf %buildroot%_datadir/PackageKit/helpers/test_spawn
 # Following scripts seems unused, and it needs to be patched for ALT should it be used
 rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
 
+touch %buildroot%_localstatedir/PackageKit/upgrade_lock
+
 %find_lang PackageKit
 
 %post
@@ -143,6 +145,22 @@ rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
 
 %preun
 %preun_service %name
+
+%triggerin -- librpm7
+# only on update of librpm7
+if [ $2 -eq 2 ] ; then
+	# if librpm7 is updated, prohibit packagekit to start and ask it to quit
+	touch %_localstatedir/PackageKit/upgrade_lock
+	SYSTEMCTL=systemctl
+	sd_booted && $SYSTEMCTL is-active --quiet %name && %_bindir/pkcon quit ||:
+fi
+:
+
+%triggerpostun -- librpm7
+# after librpm7 is updated, allow packagekit to restart on request
+# it may be a good idea to move this to librpm7 package's delayed actions
+rm -f %_localstatedir/PackageKit/upgrade_lock ||:
+:
 
 %files -f PackageKit.lang
 %doc COPYING
@@ -170,6 +188,7 @@ rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
 %_bindir/pkcon
 %exclude %_libdir/libpackagekit*.so.*
 %ghost %verify(not md5 size mtime) %_localstatedir/PackageKit/transactions.db
+%ghost %_localstatedir/PackageKit/upgrade_lock
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/interfaces/*.xml
 %_unitdir/packagekit-offline-update.service
@@ -216,5 +235,9 @@ rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Jan 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt2
+- Forced stopping and blocked restarting of packagekit service during
+  upgrade of librpm7, improved locking (Closes: #35987).
+
 * Tue Dec 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt1
 - Initial build for ALT.
