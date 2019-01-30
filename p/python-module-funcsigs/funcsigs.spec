@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.1
+Release: alt2
 Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
 License: ASLv2.0
 Group: Development/Python
@@ -70,11 +70,11 @@ popd
 
 %check
 python setup.py test
-flake8 --exit-zero funcsigs tests
+python2-flake8 --exit-zero funcsigs tests
 %if_with python3
 pushd ../python3
 python3 setup.py test
-python3-flake8 --exit-zero funcsigs tests
+flake8 --exit-zero funcsigs tests
 popd
 %endif
 
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 30 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt2
+- Fix build with flake8
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
