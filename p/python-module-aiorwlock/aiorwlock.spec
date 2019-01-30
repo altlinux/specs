@@ -5,8 +5,8 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.1
-Summary: Synchronization primitive RWLock for asyncio (PEP 3156) 
+Release: alt2
+Summary: Synchronization primitive RWLock for asyncio (PEP 3156)
 License: ASLv2.0
 Group: Development/Python
 BuildArch: noarch
@@ -74,10 +74,11 @@ any increase in concurrency.
 
 %if_with python3
 cp -fR . ../python3
-sed -i 's|flake8|python3-flake8|' ../python3/Makefile
 sed -i 's|nosetests|nosetests3|' ../python3/Makefile
 sed -i 's|py.test|py.test3|' ../python3/Makefile
 %endif
+
+sed -i 's|flake8|python2-flake8|' Makefile
 
 %build
 %if_with python2
@@ -128,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 30 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.4.0-alt2
+- Fix build with flake8
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
