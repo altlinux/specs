@@ -12,7 +12,7 @@
 
 Name: pki-core
 Version: 10.6.9
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -701,6 +701,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Thu Jan 31 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt2
+- Fixed name of flake8 executable.
+
 * Mon Jan 21 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt1
 - 10.6.7 -> 10.6.9.
 - Fixed pylint, flake8 errors (closes: #35938).
