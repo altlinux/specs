@@ -17,7 +17,7 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 410.78
+Version: 410.93
 Release: alt1
 
 Source0: null
@@ -151,6 +151,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 410.78-alt1
 - new version
 
