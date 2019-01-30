@@ -3,7 +3,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.8.6
-Release: alt1
+Release: alt2
 
 Summary: A simple, lightweight Ruby client for interacting with the Artifactory API.
 License: Apache-2.0
@@ -17,6 +17,9 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
+
+Provides: ruby-artifactory-client = %EVR
+Conflicts: ruby-artifactory-client
 
 
 %description
@@ -45,5 +48,8 @@ Artifactory API.
 
 
 %changelog
+* Wed Jan 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.8.6-alt2
+- Conflict on artifactory-client added
+
 * Mon Jan 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.8.6-alt1
 - Initial build for Sisyphus
