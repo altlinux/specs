@@ -5,10 +5,13 @@
 # "with" 1c <8.3.3
 %def_without ver_old
 
+# Use ICU
+%def_with icu
+
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     6
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -23,7 +26,7 @@
 
 Name: %prog_name%postgresql_major-1C
 Version: %postgresql_major.%postgresql_minor
-Release: alt%postgresql_altrel.1
+Release: alt%postgresql_altrel
 
 Summary: PostgreSQL client programs and libraries (edition for 1C 8.3.3 and later)
 License: PostgreSQL
@@ -49,6 +52,7 @@ Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
+Patch10: 0009-postgresql-10-logging.patch
 
 # 1C
 Patch100: 00001-1c_FULL_100_EXT.patch
@@ -57,6 +61,11 @@ Patch103: 00003-plantuner.patch
 Patch104: 00004-postgresql-1c-10.patch
 Patch105: 00005-coalesce_cost.patch
 Patch106: 00006-pg_receivewal.patch
+Patch107: 00007-remove_selfjoin.patch
+Patch108: 00008-planner_timing.patch
+Patch109: 00009-opt_group_by_and_cost_sort.patch
+Patch110: 00010-joinsel.patch
+Patch111: 00011-max_files_per_process.patch
 
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
@@ -74,6 +83,9 @@ BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-styl
 BuildRequires: libkrb5-devel
 %if_without devel
 BuildRequires: postgresql-devel
+%endif
+%if_with icu
+BuildRequires: libicu-devel
 %endif
 
 %description
@@ -202,9 +214,9 @@ the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 %package server
 Summary: The programs needed to create and run a PostgreSQL server (edition for 1C 8.3.3 and later)
 Group: Databases
-PreReq: shadow-utils, syslogd-daemon, grep, sed, chrooted
-PreReq: postgresql-common > 1.0-alt3
-Requires: %name = %version-%release
+Requires(pre): shadow-utils, syslogd-daemon, grep, sed, chrooted
+Requires(pre): postgresql-common > 1.0-alt3
+Requires: %name = %version-%release %name-contrib = %version-%release
 Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
 Conflicts: %prog_name-server < %version-%release
@@ -284,6 +296,7 @@ database.
 %patch4 -p2
 %patch6 -p2
 %patch8 -p1
+#%%patch10 -p0
 
 # 1C
 %patch100 -p1
@@ -292,7 +305,11 @@ database.
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
 
 %build
 %autoreconf
@@ -305,6 +322,9 @@ database.
     --enable-thread-safety \
 %if_with ver_old
     --disable-integer-datetimes \
+%endif
+%if_with icu
+    --with-icu \
 %endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
@@ -763,6 +783,19 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Wed Jan 30 2019 Alexei Takaseev <taf@altlinux.org> 10.6-alt2
+- Build with ICU
+- Re-applay patches from 1C:
+    * 00002-online_analyze.patch
+    * 00004-postgresql-1c-10.patch
+- Add patches from 1C:
+    * 0009-postgresql-10-logging.patch
+    * 00007-remove_selfjoin.patch
+    * 00008-planner_timing.patch
+    * 00009-opt_group_by~nd_cost_sort.patch
+    * 00010-joinsel.patch
+    * 00011-max_files_per_process.patch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 10.6-alt1.1
 - rebuild with new perl 5.28.1
 
