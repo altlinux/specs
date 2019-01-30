@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.85
+Version: 0.86
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -21,7 +21,7 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 
 %prep
 %setup -q -n %{oname}-%{version}
-[ %version == 0.85 ] && rm t/http-ua-detect-non-curl.t t/current_shell.t
+[ %version == 0.86 ] && rm t/current_shell.t
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %doc Changes LICENSE README
 
 %changelog
+* Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
+- automated CPAN update
+
 * Sat Dec 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.85-alt1
 - automated CPAN update
 
