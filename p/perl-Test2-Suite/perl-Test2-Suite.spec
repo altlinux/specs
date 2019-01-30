@@ -7,7 +7,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Importe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.000111
+Version: 0.000117
 Release: alt1
 Summary: Distribution with a rich set of tools built upon the Test2 framework.
 Group: Development/Perl
@@ -35,6 +35,9 @@ you.
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.000117-alt1
+- new version
+
 * Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.000111-alt1
 - new version - intermediate update for perl 5.28 migration
 
