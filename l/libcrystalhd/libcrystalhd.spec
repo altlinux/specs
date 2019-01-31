@@ -1,8 +1,7 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libcrystalhd-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 BuildRequires(pre): kernel-build-tools
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorminor 1.0
@@ -13,7 +12,7 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_17
+Release:       alt3_20
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal-hd/
@@ -34,7 +33,8 @@ Patch0:        libcrystalhd-nosse2.patch
 # https://patchwork2.kernel.org/patch/2247431/
 Patch1:        crystalhd-gst-Port-to-GStreamer-1.0-API.patch
 
-BuildRequires: autoconf-common automake-common libtool-common
+BuildRequires: gcc-c++
+BuildRequires: autoconf automake libtool
 BuildRequires: gstreamer1.0-devel libgstreamer1.0-gir-devel
 BuildRequires: gst-plugins1.0-devel gst-plugins1.0-gir-devel
 Requires:      firmware-crystalhd
@@ -131,8 +131,8 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
   $RPM_BUILD_ROOT%{_udevrulesdir}
 
 mv driver kernel-source-crystalhd-%version
-%__mkdir_p %kernel_srcdir/
-%__tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-crystalhd-%version/
+mkdir -p %kernel_srcdir/
+tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-crystalhd-%version/
 
 
 
@@ -160,6 +160,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_20
+- aarch64 build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_17
 - update to new release by fcimport
 
