@@ -1,13 +1,14 @@
 Summary: A disassembly framework
 Name: capstone
 Version: 3.0.5
-Release: alt1
+Release: alt2
 License: BSD
 Group: Development/Tools
 Url: http://capstone-engine.org/
 Source: %name-%version-%release.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc java-devel-default jna python-devel python3-module-yieldfrom
 
 %description
@@ -105,6 +106,9 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_javadir/
 
 %changelog
+* Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt2
+- NMU: Updated build dependencies.
+
 * Mon Nov 12 2018 Nikita Ermakov <arei@altlinux.org> 3.0.5-alt1
 - Updated to 3.0.5.
 - Python bindings are architecture dependent now.
