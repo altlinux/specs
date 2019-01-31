@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname eimp
 
 %set_verify_elf_method relaxed
@@ -6,8 +8,8 @@
 %def_disable check
 
 Name: erlang-%realname
-Version: 1.0.4
-Release: alt1%ubt
+Version: 1.0.9
+Release: alt1
 Summary: Erlang Image Manipulation Process
 Group: Development/Erlang
 License: ASL 2.0
@@ -17,7 +19,6 @@ Url: https://github.com/processone/eimp
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-p1_utils
@@ -50,5 +51,8 @@ using external C libraries. It supports WebP, JPEG, PNG and GIF.
 %_erllibdir/%realname-%version
 
 %changelog
-* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.4-alt1%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.9-alt1
+- Updated to upstream version 1.0.9.
+
+* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.4-alt1
 - Initial build for ALT.

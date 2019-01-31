@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %global realname p1_oauth2
 
 Name: erlang-%realname
-Version: 0.6.2
-Release: alt1.git5806c87%ubt
+Version: 0.6.3
+Release: alt1
 
 Summary: An Oauth2 implementation for Erlang
 Group: Development/Erlang
@@ -14,7 +16,6 @@ Url: https://github.com/processone/p1_oauth2
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-proper
@@ -42,5 +43,8 @@ OAuth2. It is a fork of erlang-oauth2 by processone, and is needed by ejabberd.
 %_erllibdir/%realname-%version
 
 %changelog
-* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.2-alt1.git5806c87%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
+- Updated to upstream version 0.6.3.
+
+* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.2-alt1.git5806c87
 - Initial build for ALT.

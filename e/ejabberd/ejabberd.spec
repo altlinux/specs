@@ -13,8 +13,8 @@
 %def_enable tools
 
 Name: ejabberd
-Version: 18.03
-Release: alt3%ubt
+Version: 18.12.1
+Release: alt1
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
@@ -27,17 +27,14 @@ Source: %name-%version.tar
 Source1: %name-%version-alt.tar
 
 # Use ejabberd as an example for PAM service name
-Patch1: ejabberd-fedora-fix-PAM-service-example-name-to-match-actual-one.patch
 Patch4: ejabberd-fedora-enable-systemd-notification-if-available.patch
 
-Patch10: ejabberd-alt-deps.patch
 Patch11: ejabberd-alt-version.patch
 # https://github.com/processone/ejabberd/issues/1037
 Patch12: ejabberd-alt-erllibs-path.patch
 
 BuildRequires(pre): jabber-common >= 0.2
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-devel erlang-otp-devel libcom_err-devel libexpat-devel libssl-devel zlib-devel
 BuildRequires: rebar
 BuildRequires: erlang-lager
@@ -53,6 +50,7 @@ BuildRequires: erlang-p1_oauth2
 BuildRequires: erlang-jose
 BuildRequires: erlang-eimp
 BuildRequires: erlang-sd_notify
+BuildRequires: erlang-pkix
 %{?_enable_stun:BuildRequires: erlang-stun}
 %{?_enable_sip:BuildRequires: erlang-esip}
 %{?_enable_mysql:BuildRequires: erlang-p1_mysql}
@@ -108,9 +106,7 @@ The main features of ejabberd is:
 
 %prep
 %setup -a 1
-%patch1 -p1
 %patch4 -p1
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 
@@ -187,7 +183,7 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %preun_service %name
 
 %files
-%doc COPYING README examples
+%doc COPYING README.md examples
 
 %dir %_sysconfdir/ejabberd
 %config(noreplace) %_sysconfdir/ejabberd/inetrc
@@ -215,13 +211,16 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
-* Mon Jul 02 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 18.03-alt3%ubt
+* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 18.12.1-alt1
+- Updated to upstream version 18.12.1.
+
+* Mon Jul 02 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 18.03-alt3
 - Fixed SysVInit script.
 
-* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt2%ubt
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt2
 - Fixed LDAP module (upstream issue #1037).
 
-* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt1%ubt
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt1
 - Updated to upstream version 18.03.
 
 * Wed Apr 06 2016 Denis Medvedev <nbr@altlinux.org> 2.1.13-alt1
