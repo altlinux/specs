@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libfm-qt
-Version: 0.13.1
-Release: alt1.1
+Version: 0.14.0
+Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -17,10 +20,9 @@ BuildRequires: libexif-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5X11Extras)
-BuildRequires: pkgconfig(libfm) >= 1.2.0
-BuildRequires: pkgconfig(libmenu-cache) >= 0.4.0
+BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(libmenu-cache) >= 1.1.0
 
-Conflicts: libfm-qt3
 Obsoletes: libfm-qt3
 
 %description
@@ -39,8 +41,7 @@ This package contains files needed to build applications using LibFM-Qt.
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake -DREQUIRED_QT_VERSION=5.9
 %cmake_build
 
 %install
@@ -62,6 +63,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.1-alt1.1
 - Rebuilt with qt 5.11
 

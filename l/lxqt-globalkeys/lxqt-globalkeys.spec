@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-globalkeys
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -35,8 +38,7 @@ This package provides the development files for %name.
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -46,6 +48,7 @@ This package provides the development files for %name.
 %_bindir/*
 %_libdir/*.so.*
 %_xdgconfigdir/*/*
+%_datadir/lxqt/translations/lxqt-config-globalkeyshortcuts/
 %_desktopdir/*.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
@@ -56,6 +59,9 @@ This package provides the development files for %name.
 %_datadir/cmake/*/
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

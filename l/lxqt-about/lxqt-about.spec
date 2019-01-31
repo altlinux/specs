@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-about
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
@@ -20,8 +23,7 @@ BuildRequires: kf5-kwindowsystem-devel
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -30,9 +32,13 @@ BuildRequires: kf5-kwindowsystem-devel
 %files
 %_bindir/*
 %_desktopdir/*.desktop
+%_datadir/lxqt/translations/*
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

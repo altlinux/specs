@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: qterminal
-Version: 0.9.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -37,7 +40,7 @@ at http://qterminal.sourceforge.net/
 %add_optflags -std=c++11
 %endif
 %cmake \
-    -DUSE_QT5=true -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
+    -DUSE_QT5=true \
     -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
 %cmake_build
 
@@ -50,8 +53,12 @@ at http://qterminal.sourceforge.net/
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %_datadir/appdata/*
+%_datadir/%name
 
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

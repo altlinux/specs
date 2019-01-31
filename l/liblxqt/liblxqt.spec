@@ -1,8 +1,11 @@
-Name: liblxqt
-Version: 0.13.0
-Release: alt1.1
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
 
-Summary: Core utility library for LXDE-Qt components
+Name: liblxqt
+Version: 0.14.0
+Release: alt1
+
+Summary: Core utility library for LxQt components
 License: LGPL
 Group: Graphical desktop/Other
 
@@ -21,17 +24,11 @@ Obsoletes: librazorqt < 0.7.0
 
 Provides: %name-data = %version
 Obsoletes: %name-data < 0.11.0
+Obsoletes: lxqt-backlight_backend
+Obsoletes: lxqt-l10n
 
 %description
 %summary
-
-%package -n lxqt-backlight_backend
-Summary: backlight backend for LXQt
-Group: Graphical desktop/Other
-Requires: %name = %version
-
-%description -n lxqt-backlight_backend
-This package provides backlight backend for LXQt library.
 
 %package devel
 Summary: Development headers for LXQt library
@@ -55,8 +52,6 @@ This package provides the development files for LXQt library.
 %files
 %_libdir/*.so.*
 %doc AUTHORS CHANGELOG COPYING README.md
-
-%files -n lxqt-backlight_backend
 %_bindir/lxqt-backlight_backend
 %dir %_datadir/lxqt
 %_datadir/lxqt/*
@@ -69,6 +64,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1.1
 - Rebuilt with qt 5.11
 

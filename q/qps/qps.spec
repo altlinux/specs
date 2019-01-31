@@ -1,15 +1,20 @@
 Name:		qps
-Version:	1.10.18
+Version:	1.10.19
 Release:	alt1
 Summary:	Visual process status monitor
 License:	GPLv2+
 Group:		Monitoring
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-URL:		https://github.com/lxqt/qps/releases
+URL:		https://github.com/lxqt/qps
 Source0:	%name-%version.tar.xz
 Source1:	%name.desktop
 
-BuildRequires:	/usr/bin/convert cmake qt5-tools-devel qt5-x11extras-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: lxqt-build-tools >= 0.6.0
+BuildRequires: /usr/bin/convert
 
 %description
 Qps is a perfect visual process manager, an X11 version of "top" or "ps" that displays processes in a window and lets you sort and manipulate them easily
@@ -29,25 +34,20 @@ Qps can
     * execute user-defined commands on selected processes
     * display MOSIX-specific fields and migrate processes to other nodes in a cluster
 %prep
-%setup -q
+%setup
 
 %build
-mkdir build && cd build
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags"
-%make_build
+%cmake
+%cmake_build
 
 %install
-cd build
-%make_install DESTDIR=%buildroot install
+%cmakeinstall_std
 install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
-convert -resize 32x32 ../icon/%name.png %buildroot%_niconsdir/%name.png
-convert -resize 16x16 ../icon/%name.png %buildroot%_miconsdir/%name.png
+convert -resize 32x32 icon/%name.png %buildroot%_niconsdir/%name.png
+convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 
 %files
 %dir %_datadir/%name
@@ -61,6 +61,9 @@ convert -resize 16x16 ../icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 1.10.19-alt1
+- 1.10.19
+
 * Mon Oct 08 2018 Motsyo Gennadi <drool@altlinux.ru> 1.10.18-alt1
 - 1.10.18
 

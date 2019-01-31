@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-panel
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 
 Summary: Desktop panel
 License: LGPL
@@ -55,9 +58,7 @@ This package provides the development files for %name.
 %patch -p1
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF \
-       -DVOLUME_USE_PULSEAUDIO=ON
+%cmake -DVOLUME_USE_PULSEAUDIO=ON
 %cmake_build
 
 %install
@@ -76,6 +77,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat Sep 08 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt2
 - full date worldclock applet
 - expanded panel for worldclock applet

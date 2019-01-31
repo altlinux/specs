@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lximage-qt
-Version: 0.7.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
@@ -24,8 +27,7 @@ BuildRequires: glib2-devel libpcre-devel
 %setup
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -35,9 +37,13 @@ BuildRequires: glib2-devel libpcre-devel
 %_bindir/*
 %_iconsdir/*/*/*/*
 %_desktopdir/*.desktop
+%_datadir/%name
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
 - new version 0.7.0
 

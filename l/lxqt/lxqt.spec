@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 0.13
+Version: 0.14
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -7,27 +7,89 @@ License: GPL
 Url: https://lxqt.org
 BuildArch: noarch
 
-# core componenets
-Requires: liblxqt-data lxmenu-data lxqt-about lxqt-common lxqt-globalkeys lxqt-notificationd lxqt-panel lxqt-powermanagement lxqt-qtplugin lxqt-runner lxqt-session pcmanfm-qt lxqt-l10n qterminal
-Requires: lxqt-backlight_backend
-# system configuration tools
-Requires: lxqt-config obconf-qt
-# themes
-Requires: icon-theme-oxygen
-
-Requires: openbox eject
-
-# sound mixer
-Requires: qasmixer
-
-# optional components
-Requires: lxqt-openssh-askpass lxqt-policykit
-
 %description
 %summary
 
-%files
+%package mini
+Summary: Meta package for install LxQt
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+# core componenets
+Requires: lxmenu-data
+Requires: lxqt-about >= %version
+Requires: lxqt-themes >= %version
+Requires: lxqt-globalkeys >= %version
+Requires: lxqt-notificationd >= %version
+Requires: lxqt-panel >= %version
+Requires: lxqt-powermanagement >= %version
+Requires: lxqt-qtplugin >= %version
+Requires: lxqt-runner >= %version
+Requires: lxqt-session >= %version
+Requires: pcmanfm-qt >= %version
+Requires: lxqt-config >= %version
+Requires: qterminal >= %version
+Requires: lxqt-policykit >= %version
+# system configuration tools
+Requires: lxqt-config >= %version
+Requires: obconf-qt >= %version
+# themes
+Requires: icon-theme-oxygen
+# system components
+Requires: openbox
+
+Obsoletes: lxqt < 0.14
+Obsoletes: lxqt-l10n < 0.14
+Obsoletes: compton-conf-l10n < 0.14
+Obsoletes: libfm-qt-l10n < 0.14
+Obsoletes: lximage-qt-l10n < 0.14
+Obsoletes: obconf-qt-l10n < 0.14
+Obsoletes: pavucontrol-qt-l10n < 0.14
+Obsoletes: pcmanfm-qt-l10n < 0.14
+Obsoletes: qterminal-l10n < 0.14
+Obsoletes: qtermwidget-l10n < 0.14
+
+%description mini
+%summary
+
+%package regular
+Summary: Meta package for install regular-lxqt
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+Requires: lxqt-mini
+# sound mixer
+Requires: pavucontrol-qt >= %version
+# for pavucontrol-qt
+Requires: pulseaudio-daemon pulseaudio-utils alsa-plugins-pulse
+# optional components
+Requires: lxqt-openssh-askpass >= %version
+Requires: lxqt-admin >= %version
+# archiver
+Requires: file-roller
+# task-manager
+Requires: qps
+# clipboard history applet
+Requires: qlipper
+# fonts
+Requires: fonts-ttf-liberation
+# pdf-viewer
+Requires: qpdfview
+# image-viewer
+Requires: lximage-qt
+
+%description regular
+%summary
+
+%files mini
+%files regular
+
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14-alt1
+- new version 0.14
+- new package lxqt-regular
+- replaced lxqt to lxqt-mini
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13-alt1
 - new version 0.13
 

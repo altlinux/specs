@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:    pcmanfm-qt
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -15,8 +18,8 @@ Patch: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: libfm-devel >= 1.2.0
-BuildRequires: libfm-qt-devel >= 0.13.0
+BuildRequires: libfm-qt-devel >= 0.14.0
+BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: liblxqt-devel
 BuildRequires: libmenu-cache-devel
 BuildRequires: rpm-build-xdg
@@ -31,8 +34,7 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 %patch -p1
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
+%cmake
 %cmake_build
 
 %install
@@ -48,6 +50,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat May 26 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

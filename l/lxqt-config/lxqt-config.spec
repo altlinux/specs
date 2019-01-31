@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: lxqt-config
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -15,6 +18,8 @@ BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-libkscreen-devel qt5-svg-devel
 BuildRequires: rpm-build-xdg
 BuildRequires: zlib-devel
+BuildRequires: pkgconfig(xorg-libinput)
+BuildRequires: libudev-devel
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
@@ -30,9 +35,7 @@ Obsoletes: lxqt-config-randr < 0.8.0
 
 %build
 # FIXME: 0.10.0 fiddling with liblxqt-config-cursor.so (thx palinek)
-%cmake -DPULL_TRANSLATIONS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF \
-       -DCMAKE_SKIP_RPATH:BOOL=OFF \
+%cmake -DCMAKE_SKIP_RPATH:BOOL=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 %cmake_build
 
@@ -43,12 +46,16 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %_bindir/*
 %_libdir/%name/*.so
 %_datadir/lxqt/*
+%_man1dir/*
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 

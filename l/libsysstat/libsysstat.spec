@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libsysstat
-Version: 0.4.1
-Release: alt1.1
+Version: 0.4.2
+Release: alt1
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -48,6 +51,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
+- new version 0.4.2
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1.1
 - Rebuilt with qt 5.11
 
