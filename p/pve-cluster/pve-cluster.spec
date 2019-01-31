@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 5.0.33
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -148,6 +148,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Jan 31 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt3
+- rebuild with perl 5.28.1
+
 * Wed Jan 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt2
 - pve-cluster 5.0-33
 
