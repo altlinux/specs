@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt9
+Release: alt10
 Epoch: 1
 %K5init altplace
 
@@ -357,6 +357,11 @@ done
 
 
 %changelog
+* Wed Jan 30 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt10
+- memory notifier fixes:
+  + disable notifications by default
+  + re-create notification ASAP after closing the old one
+
 * Mon Jan 28 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt9
 - disable freememorynotifier autoload
 
