@@ -2,7 +2,7 @@
 %define dist AnyEvent
 Name: perl-%dist
 Version: 7.14
-Release: alt1
+Release: alt2
 
 Summary: Framework for multiple event loops
 License: GPL or Artistic
@@ -10,6 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
+Patch: AnyEvent-7.14-syntax-fix.patch
 
 BuildArch: noarch
 
@@ -30,6 +31,7 @@ time).
 
 %prep
 %setup -q -n %{dist}-%{version}
+%patch -p1
 sed -i 's@require "lib/AnyEvent@require "AnyEvent@' lib/AnyEvent/Util.pm
 
 # disable archlib hack
@@ -47,6 +49,9 @@ sed -i- '/ PM /,/}/d' Makefile.PL
 %perl_vendor_privlib/AnyEvent*
 
 %changelog
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 7.14-alt2
+- added AnyEvent-7.14-syntax-fix.patch for perl 5.28
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 7.14-alt1
 - automated CPAN update
 
