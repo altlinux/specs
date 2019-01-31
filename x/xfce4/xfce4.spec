@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.12
-Release: alt6
+Version: 4.14
+Release: alt2
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -60,8 +60,12 @@ Requires: thunar-volman-plugin
 Requires: thunar-media-tags-plugin
 Requires: thunar-archive-plugin
 # Icon themes
-Requires: rodent-icon-theme
-Requires: gnome-icon-theme
+Requires: icon-theme-adwaita
+# It was proposed as default GTK theme for Xfce-4.14.
+Requires: gtk2-theme-greybird
+Requires: gtk3-theme-greybird
+Requires: xfwm4-theme-greybird
+Requires: xfce4-notifyd-theme-greybird
 # for trash and network in Thunar
 Requires: gvfs gvfs-backends
 
@@ -79,35 +83,36 @@ Requires: xarchiver \
 Requires: ristretto \
 Requires: mousepad \
 Requires: parole \
+Requires: xfce4-panel-profiles \
 # Panel plugins \
+Requires: xfce4-battery-plugin \
+Requires: xfce4-calculator-plugin \
 Requires: xfce4-clipman-plugin \
 Requires: xfce4-cpufreq-plugin \
-Requires: xfce4-xkb-plugin \
-Requires: xfce4-timer-plugin \
+Requires: xfce4-cpugraph-plugin \
 Requires: xfce4-datetime-plugin \
-Requires: xfce4-places-plugin \
-Requires: xfce4-quicklauncher-plugin \
-Requires: xfce4-time-out-plugin \
-Requires: xfce4-fsguard-plugin \
-Requires: xfce4-mailwatch-plugin \
-Requires: xfce4-battery-plugin \
-Requires: xfce4-verve-plugin \
 Requires: xfce4-diskperf-plugin \
 Requires: xfce4-eyes-plugin \
-Requires: xfce4-notes-plugin \
-Requires: xfce4-netload-plugin \
-Requires: xfce4-mount-plugin \
-Requires: xfce4-weather-plugin \
+Requires: xfce4-fsguard-plugin \
 Requires: xfce4-genmon-plugin \
-Requires: xfce4-wmdock-plugin \
-Requires: xfce4-systemload-plugin \
-Requires: xfce4-cpugraph-plugin \
+Requires: xfce4-hardware-monitor-plugin \
 Requires: xfce4-kbdleds-plugin \
+Requires: xfce4-mailwatch-plugin \
+Requires: xfce4-mount-plugin \
+Requires: xfce4-netload-plugin \
+Requires: xfce4-notes-plugin \
+Requires: xfce4-places-plugin \
+Requires: xfce4-quicklauncher-plugin \
 Requires: xfce4-sensors-plugin \
-Requires: xfce4-whiskermenu-plugin \
 Requires: xfce4-smartbookmark-plugin \
-Requires: xfce4-calculator-plugin \
-Requires: xfce4-hardware-monitor-plugin
+Requires: xfce4-systemload-plugin \
+Requires: xfce4-time-out-plugin \
+Requires: xfce4-timer-plugin \
+Requires: xfce4-verve-plugin \
+Requires: xfce4-weather-plugin \
+Requires: xfce4-whiskermenu-plugin \
+Requires: xfce4-wmdock-plugin \
+Requires: xfce4-xkb-plugin
 
 %package full
 Summary: Full installation of Xfce4 Desktop
@@ -115,15 +120,17 @@ Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-default = %version-%release
 Requires: xfce-polkit
+Requires: xfce4-screensaver
 %commonreqs
 Requires: xfce4-pulseaudio-plugin
 # For xfce4-pulseaudio-plugin
 Requires: pavucontrol
-# xfce4-volumed-pulse is alternative for xfce4-volumed.
-#Requires: xfce4-volumed
 
 # Not needed for most users.
 #Requires: xfce4-radio-plugin
+
+# No xfce4-mpc-plugin on aarch64
+#Requires: xfce4-mpc-plugin
 
 # Thunar plugins
 # It requires additional configuration in /etc/samba/smb.conf.
@@ -146,15 +153,11 @@ Requires: gnome-icon-theme
 
 %install
 mkdir -p %buildroot/%_datadir/xfce4
-# Can be dropped later
-# (seems like upstream wants get rid of all offline documentation).
-mkdir -p %buildroot/%_datadir/xfce4/doc
 mkdir -p %buildroot/%_libdir/xfce4
 mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 
 %files common
 %dir %_datadir/xfce4
-%dir %_datadir/xfce4/doc
 %dir %_libdir/xfce4
 %dir %_sysconfdir/xdg/xfce4
 
@@ -166,6 +169,20 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Thu Jan 31 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt2
+- full,regular: Drop xfce4-mpc-plugin again.
+
+* Thu Jan 31 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt1
+- common: Drop %%_datadir/xfce4/doc/.
+- full,regular: Add xfce4-mpc-plugin.
+- Move xfce4-screensaver default -> full.
+- full,regular: Add xfce4-panel-profiles.
+- cosmetic: List plugins in alphabetical order.
+- default: Add xfce4-screensaver.
+- default: Add Greybird GTK+ theme.
+- default: Replace icon themes with icon-theme-adwaita.
+- cleanup: Remove xfce4-volumed from comments.
+
 * Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 4.12-alt6
 - Add bootstrap switch.
 - default: Drop screen-saver-engine.
