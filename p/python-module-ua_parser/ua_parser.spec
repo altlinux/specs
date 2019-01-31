@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: Python port of Browserscope's user agent parser
 License: ASLv2.0
 Group: Development/Python
@@ -15,6 +15,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/tobie/ua-parser.git
 Source: %name-%version.tar
 BuildArch: noarch
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+%endif
 BuildRequires: python-module-pytest python-module-yaml python-modules-json
 
 #BuildPreReq: python-module-setuptools-tests python-module-yaml
@@ -102,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt2
+- NMU: Updated build dependencies.
+
 * Tue May 30 2017 Lenar Shakirov <snejok@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 
