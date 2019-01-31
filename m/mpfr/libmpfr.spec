@@ -1,11 +1,11 @@
 Name: mpfr
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: Multiple Precision Floating-Point library
-License: LGPLv2.1+
+License: LGPL-3.0-or-later
 Group: System/Libraries
-Url: http://www.mpfr.org/
+Url: https://www.mpfr.org/
 
 # Don't build static library by default
 %def_disable static
@@ -24,12 +24,12 @@ Patch: mpfr-%version-%release.patch
 
 %package -n %libmpfr
 Summary: Multiple Precision Floating-Point library
-License: LGPLv2.1+
+License: LGPL-3.0-or-later
 Group: System/Libraries
 
 %package -n libmpfr-devel
 Summary: Development MPFR library, header files and documentation
-License: LGPLv2.1+, FDLv1.1+
+License: LGPL-3.0-or-later and GFDL-1.2-or-later
 Group: Development/C
 Requires: %libmpfr = %version-%release
 Requires: libgmp-devel
@@ -37,7 +37,7 @@ Conflicts: libgmp-devel = 0:4.1.4-alt3
 
 %package -n libmpfr-devel-static
 Summary: Static MPFR library
-License: LGPLv2.1+
+License: LGPL-3.0-or-later
 Group: Development/C
 Requires: libmpfr-devel = %version-%release
 
@@ -108,6 +108,9 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Thu Jan 31 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt1
+- v4.0.1 -> v4.0.2.
+
 * Fri Feb 16 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
 - v4.0.0 -> v4.0.1.
 
