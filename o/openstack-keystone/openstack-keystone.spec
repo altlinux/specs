@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 14.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -17,11 +17,14 @@ Source1: %name.logrotate
 Source3: %name.sysctl
 Source4: %name.tmpfiles
 Source5: %name.conf
+Source6: %name.start
 
 BuildArch: noarch
 
 Requires(pre): python3-module-keystone = %EVR
 Requires: python3-module-keystoneclient >= 3.8.0
+Requires: python3-module-pymysql
+Requires: apache2-mod_wsgi-py3
 Requires: /usr/bin/uuidgen
 
 Requires(pre): shadow-utils
@@ -210,6 +213,8 @@ Requires: python3-module-oslo.utils >= 3.33.0
 # add not finded requires
 Requires: python3-module-dogpile-cache >= 0.6.2
 Requires: python3-module-pysaml2 >= 4.5.0
+Requires: python3-module-bcrypt >= 3.1.3
+Requires: python3-module-scrypt >= 0.8.0
 
 %description -n python3-module-%oname
 Keystone is a Python implementation of the OpenStack
@@ -273,7 +278,7 @@ popd
 
 install -d -m 755 %buildroot%_sysconfdir/keystone
 install -d -m 755 %buildroot%_sysconfdir/keystone/keystone.conf.d/
-install -d -m 750 %buildroot%_sysconfdir/keystone/credential-keys/
+install -d -m 770 %buildroot%_sysconfdir/keystone/credential-keys/
 install -p -D -m 640 etc/keystone.conf.sample %buildroot%_sysconfdir/keystone/keystone.conf
 install -p -D -m 640 etc/keystone.policy.yaml.sample %buildroot%_sysconfdir/keystone/keystone.policy.yaml
 install -p -D -m 644 etc/keystone-paste.ini %buildroot%_sysconfdir/keystone/
@@ -289,6 +294,8 @@ install -d -m 755 %buildroot%_tmpfilesdir
 install -p -D -m 644 %SOURCE4 %buildroot%_tmpfilesdir/openstack-keystone.conf
 
 install -m 0644 -D -p %SOURCE5 %buildroot%apache2_sites_available/openstack-keystone.conf
+install -m 0644 -D -p %SOURCE6 %buildroot%apache2_sites_start/100-openstack-keystone.conf
+
 mkdir -p %buildroot%apache2_sites_enabled
 touch %buildroot%apache2_sites_enabled/openstack-keystone.conf
 
@@ -318,11 +325,11 @@ rm -rf %buildroot/usr/etc
 %_sbindir/useradd -r -u 163 -g keystone -c 'OpenStack Keystone Daemons' \
         -s /sbin/nologin  -d %_sharedstatedir/keystone keystone 2>/dev/null ||:
 
-%post
+%_sbindir/a2enmod wsgi-py3
 
-#Generate ssl certs for pki token support
-# su -l -s /bin/sh -c 'exec keystone-manage pki_setup' keystone
-/usr/bin/keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
+%post
+keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 # keystone-manage will create a keystone.log file owned by root; fix that
 if [ -f %_logdir/keystone/keystone-manage.log ]; then
     chown keystone:keystone %_logdir/keystone/keystone-manage.log
@@ -337,13 +344,14 @@ fi
 %doc tools/sample_data.sh
 %doc httpd/*
 %config(noreplace) %apache2_sites_available/*.conf
+%apache2_sites_start/*.conf
 %ghost %apache2_sites_enabled/*.conf
 %_tmpfilesdir/openstack-keystone.conf
 %_bindir/keystone-wsgi-admin
 %_bindir/keystone-wsgi-public
 %dir %attr(0750, root, keystone) %_sysconfdir/keystone
 %dir %attr(0750, root, keystone) %_sysconfdir/keystone/keystone.conf.d
-%dir %attr(0750, root, keystone) %_sysconfdir/keystone/credential-keys
+%dir %attr(0770, root, keystone) %_sysconfdir/keystone/credential-keys
 %dir %attr(0755, root, keystone) %_sysconfdir/keystone/ssl
 %dir %attr(0755, root, keystone) %_sysconfdir/keystone/ssl/certs
 %ghost %attr(0644, root, keystone) %_sysconfdir/keystone/ssl/certs/signing_cert.pem
@@ -385,6 +393,11 @@ fi
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.0.1-alt2
+- update Requires
+- update apache config
+- execute a2enmod wsgi-py3 in %%pre
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1:14.0.1-alt1
 - 14.0.1 Rocky release
 - switch to python3
