@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt16
+Release: alt17
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Jan 31 2019 Pavel Vainerman <pv@altlinux.ru> 2.7-alt17
+- new release
+
 * Thu Oct 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt16
 - (codegen): reformat
 - (Modbus): modify genRegID(), update test, used 'using' instead 'typedef'
