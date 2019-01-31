@@ -5,13 +5,15 @@
 
 Name: python-module-%oname
 Version: 5.1.0
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jupyter_client
 
 Source: %name-%version.tar
+Patch1: jupyter_client-5.1.0-tornado-5-support.patch
+Patch2: jupyter_client-5.1.0-disable-pyzmq-zero-copy-optimizations-during-session.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -114,6 +116,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -185,6 +189,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 5.1.0-alt2
+- Applied upstream patches for Tornado5 support.
+
 * Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.0-alt1
 - Updated to upstream release 5.1.0.
 
