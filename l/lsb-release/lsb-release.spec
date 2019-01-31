@@ -1,7 +1,7 @@
 Summary: Linux Standard Base Release Tools
 Name: lsb-release
 Version: 2.0
-Release: alt3
+Release: alt4
 License: %gpl2plus
 Source: %name-%version.tar
 Group: System/Base
@@ -33,7 +33,7 @@ useful for programmatically distinguishing between a original one and
 derived distributions.
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %build
 make
@@ -48,6 +48,9 @@ make prefix=%buildroot%_prefix mandir=%buildroot%_mandir install
 %{_man1dir}/lsb_release.1*
 
 %changelog
+* Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 2.0-alt4
+- Do not check 'ALT Linux' prefix and 'release' delimiter in description.
+
 * Tue Apr 13 2010 Andriy Stepanov <stanv@altlinux.ru> 2.0-alt3
 - Enhance lsb_release utilility.
 
