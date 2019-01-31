@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.7
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: System/Configuration/Packaging
@@ -10,7 +10,8 @@ Summary: KDE Software Center
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: kf5-kirigami appstream-data
+Requires: packagekit appstream-data
+Requires: kf5-kirigami
 
 Source: %rname-%version.tar
 
@@ -48,6 +49,7 @@ developing applications that use %name.
 Summary: Plasma Discover flatpak support
 Group: System/Configuration/Packaging
 Requires: %name
+Requires: flatpak
 %description flatpak
 Plasma Discover flatpak support.
 
@@ -109,6 +111,10 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 %_K5xdgapp/org.kde.discover-flatpak.desktop
 
 %changelog
+* Thu Jan 31 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt4
+- require packagekit
+- require flatpak for flatpak-backend
+
 * Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt3
 - require appstream-data
 
