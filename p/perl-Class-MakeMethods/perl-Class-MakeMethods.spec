@@ -1,7 +1,7 @@
 %define dist Class-MakeMethods
 Name: perl-%dist
 Version: 1.01
-Release: alt3
+Release: alt4
 
 Summary: Generate common types of methods
 License: GPL or Artistic
@@ -9,7 +9,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch0:         Class-MakeMethods-1.009-Fix-building-on-Perl-without-dot-in-INC.patch
+Patch0: Class-MakeMethods-1.009-Fix-building-on-Perl-without-dot-in-INC.patch
+Patch2: Class-MakeMethods-1.01-alt-perl.req.patch
 
 BuildArch: noarch
 
@@ -30,6 +31,7 @@ dynamically generated and installed in the calling package.
 %prep
 %setup -q -n %dist-%version
 %patch0 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -45,6 +47,9 @@ rm %buildroot%perl_vendor_privlib/Class/benchmark.pl
 %perl_vendor_privlib/Class
 
 %changelog
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 1.01-alt4
+- fixed build with new perl 5.28
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3
 - fixed build with new perl 5.26
 
