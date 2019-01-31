@@ -2,8 +2,8 @@
 %define sover 1.0.1
 
 Name: vmware-view-preinstall
-Version: 3.4.0
-Release: alt4
+Version: 4.10.0
+Release: alt1
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -14,8 +14,6 @@ ExclusiveArch: %ix86
 
 BuildRequires: libXScrnSaver
 Requires: libudev0
-Requires: libcrypto%soname >= %sover
-Requires: libssl%soname >= %sover
 
 %description
 Install this package if you plan to deploy
@@ -28,17 +26,10 @@ ln -s /usr/lib/libXss.so.1 %buildroot%_libdir/%name/
 %files
 %_libdir/%name
 
-%post
-for i in libssl libcrypto; do
-	ln -s $i.so.%soname /`getconf SLIB`/$i.so.%sover
-done
-
-%preun
-for i in libssl libcrypto; do
-	rm /`getconf SLIB`/$i.so.%sover
-done
-
 %changelog
+* Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
+- New version of VMware-Horizon-Client uses bundled libssl and libcrypto.
+
 * Tue Apr 04 2017 Michael Shigorin <mike@altlinux.org> 3.4.0-alt4
 - made "64-bit" package "require" i586-libXScrnSaver
   like skype-preinstall (closes: #33325);

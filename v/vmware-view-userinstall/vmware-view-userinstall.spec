@@ -2,8 +2,8 @@
 %define sover 1.0.1
 
 Name: vmware-view-userinstall
-Version: 3.4.0
-Release: alt4
+Version: 4.10.0
+Release: alt1
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -44,6 +44,9 @@ cp -a checksums %buildroot%uinstdir/goodsums
 %uinstdir/goodsums/*
 
 %changelog
+* Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
+- support for VMware-Horizon-Client-4.10.0-11053294.x86.bundle
+
 * Tue Apr 04 2017 Michael Shigorin <mike@altlinux.org> 3.4.0-alt4
 - sync ExclusiveArch: to vmware-view-preinstall 3.4.0-alt4
   to avoid an unmet dependency
