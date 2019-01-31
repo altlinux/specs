@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-vdr-vnsi
-Version: 17.0
-Release: alt1.1
+Version: 18.0
+Release: alt1
 
 Summary: PVR VDR addon for Kodi
 License: GPL
@@ -9,11 +9,11 @@ Url: https://github.com/FernetMenta/pvr.vdr.vnsi/
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel >= 17.0
+BuildRequires: cmake gcc-c++ kodi-devel libcec-platform-devel libkodiplatform-devel >= 18.0
 %ifarch %ix86 x86_64
 BuildRequires:libGL-devel
 %endif
-%ifarch armh
+%ifarch armh aarch64
 BuildRequires: libGLES-devel
 %endif
 
@@ -35,6 +35,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Thu Jan 31 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
+- updated for Leia
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.0-alt1.1
 - NMU: added URL
 

@@ -1,6 +1,6 @@
 Name: libcec-platform
 Version: 2.1.0.1
-Release: alt1.1
+Release: alt2
 
 Summary: Platform support library used by libCEC and binary add-ons for Kodi
 License: GPL
@@ -9,7 +9,6 @@ Url: https://github.com/Pulse-Eight/platform
 
 Source: %name-%version.tar
 BuildRequires: cmake gcc-c++
-
 %description
 %summary
 
@@ -37,6 +36,9 @@ make
 %_pkgconfigdir/p8-platform.pc
 
 %changelog
+* Thu Jan 31 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0.1-alt2
+- rebuilt for Leia
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0.1-alt1.1
 - NMU: added URL
 

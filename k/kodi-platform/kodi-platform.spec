@@ -1,6 +1,6 @@
 Name: kodi-platform
-Version: 17.0
-Release: alt1.1
+Version: 18.0
+Release: alt1
 
 Summary: Kodi plugin development support
 License: GPL
@@ -48,6 +48,9 @@ make
 %_includedir//kodi/util
 
 %changelog
+* Thu Jan 31 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
+- updated for Leia
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.0-alt1.1
 - NMU: added URL
 
