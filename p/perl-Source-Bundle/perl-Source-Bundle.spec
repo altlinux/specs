@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-devel
 %define module Source-Bundle
 
 Name: perl-%module
-Version: 0.01
+Version: 0.010
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,5 +32,8 @@ Url: http://search.cpan.org/dist/%module
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- added gem support
+
 * Sun Jan 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - first build for Sisyphus
