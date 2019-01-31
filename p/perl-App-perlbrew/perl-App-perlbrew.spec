@@ -2,7 +2,7 @@
 %define oname App-perlbrew
 Name: perl-App-perlbrew
 Version: 0.86
-Release: alt1
+Release: alt2
 
 Summary: Manage perl installations in your $HOME
 Group: Development/Perl
@@ -21,9 +21,9 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 
 %prep
 %setup -q -n %{oname}-%{version}
-[ %version == 0.86 ] && rm t/current_shell.t
 
 %build
+export SHELL
 %perl_vendor_build
 
 %install
@@ -38,6 +38,9 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %doc Changes LICENSE README
 
 %changelog
+* Thu Jan 31 2019 Ivan A. Melnikov <iv@altlinux.org> 0.86-alt2
+- fix rebuild on Sisyphus
+
 * Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
 - automated CPAN update
 
