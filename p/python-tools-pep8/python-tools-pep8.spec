@@ -4,7 +4,7 @@
 
 Name:           python-tools-%{module_name}
 Version:        1.6.2
-Release:        alt1.1.1
+Release:        alt2
 Summary:        Python style guide checker
 
 Group:          Development/Python
@@ -13,6 +13,7 @@ Group:          Development/Python
 License:        MIT
 URL:            http://pypi.python.org/pypi/%{module_name}
 Source0:        %{name}-%{version}.tar
+Patch1:         pep8-1.6.2-Keep-compability-with-stdlib-tokenize.py-changes.patch
 
 BuildArch:      noarch
 BuildRequires:  python-devel
@@ -49,6 +50,7 @@ This is a version for Python 3.
 
 %prep
 %setup
+%patch1 -p1
 # Remove #! from pep8.py
 sed --in-place "s:#!\s*/usr.*::" pep8.py
 
@@ -103,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 31 2019 Stanislav Levin <slev@altlinux.org> 1.6.2-alt2
+- Applied patch from upstream for Python 3.6.7+ support.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.2-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
