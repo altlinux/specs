@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 
 %define _localstatedir /var
 %define _libexecdir %_prefix/libexec
@@ -36,7 +37,6 @@
 %else
 %def_without vbox
 %endif
-%def_without uml
 %def_without libxl
 %ifarch %ix86 x86_64
 %def_with vmware
@@ -109,7 +109,7 @@
 %def_with capng
 %def_with firewalld
 
-%if_with qemu || lxc || uml
+%if_with qemu || lxc
 %def_with nwfilter
 %def_with libpcap
 %endif
@@ -130,7 +130,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.10.0
+Version: 5.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -150,7 +150,6 @@ Patch1: %name-%version.patch
 Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
 
-BuildRequires(pre): rpm-build-ubt
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
@@ -512,17 +511,6 @@ an implementation of the hypervisor driver APIs using
 the Linux kernel
 %endif
 
-%if_with uml
-%package daemon-driver-uml
-Summary: Uml driver plugin for the libvirtd daemon
-Group: System/Libraries
-
-%description daemon-driver-uml
-The UML driver plugin for the libvirtd daemon, providing
-an implementation of the hypervisor driver APIs using
-User Mode Linux
-%endif
-
 %if_with libxl
 %package daemon-driver-libxl
 Summary: Libxl driver plugin for the libvirtd daemon
@@ -604,22 +592,6 @@ Requires: %name-daemon-driver-storage = %EVR
 %description lxc
 Server side daemon, driver and default network & firewall configs
 required to manage the virtualization capabilities of LXC.
-
-%package uml
-Summary: Server side daemon, driver & default configs required to run UML guests
-Group: System/Servers
-Requires: %name-daemon-config-network = %EVR
-Requires: %name-daemon-config-nwfilter = %EVR
-%if_with driver_modules
-Requires: %name-daemon-driver-uml = %EVR
-Requires: %name-daemon-driver-nodedev = %EVR
-Requires: %name-daemon-driver-secret = %EVR
-Requires: %name-daemon-driver-storage = %EVR
-%endif
-
-%description uml
-Server side daemon, driver and default network & firewall configs
-required to manage the virtualization capabilities of UML.
 
 %package xen
 Summary: Server side daemon, driver & default configs required to run XEN guests
@@ -784,7 +756,6 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with lxc} \
 		%{?_with_login_shell:--with-login-shell} \
 		%{subst_with vbox} \
-		%{subst_with uml} \
 		%{subst_with libxl} \
 		%{subst_with vmware} \
 		%{subst_with phyp} \
@@ -870,9 +841,6 @@ rm -f %buildroot%_datadir/augeas/lenses/tests/test_libvirtd_lxc.aug
 rm -f %buildroot%_sysconfdir/libvirt/lxc.conf
 rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.lxc
 %endif
-%if_without uml
-rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.uml
-%endif
 %if_without nwfilter
 rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 %endif
@@ -899,6 +867,9 @@ EOF
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 %find_lang %name
+
+# cleanup
+rm -f %buildroot/usr/share/libvirt/test-screenshot.png
 
 %check
 cd tests
@@ -1183,11 +1154,6 @@ fi
 %_libdir/%name/connection-driver/libvirt_driver_lxc.so
 %endif
 
-%if_with uml
-%files daemon-driver-uml
-%_libdir/%name/connection-driver/libvirt_driver_uml.so
-%endif
-
 %if_with libxl
 %files daemon-driver-libxl
 %_libdir/%name/connection-driver/libvirt_driver_libxl.so
@@ -1231,14 +1197,6 @@ fi
 %_datadir/augeas/lenses/libvirtd_lxc.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_lxc.aug
 %_libexecdir/libvirt_lxc
-%endif
-
-%if_with uml
-%files uml
-%config(noreplace) %_sysconfdir/logrotate.d/libvirtd.uml
-%dir %_runtimedir/%name/uml
-%dir %attr(0700, root, root) %_localstatedir/lib/libvirt/uml
-%dir %attr(0700, root, root) %_localstatedir/log/libvirt/uml
 %endif
 
 %if_with libxl
@@ -1310,6 +1268,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Wed Jan 02 2019 Alexey Shabalin <shaba@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
