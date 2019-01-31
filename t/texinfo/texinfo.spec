@@ -1,9 +1,9 @@
 Name: texinfo
 Version: 6.5
-Release: alt1.1
+Release: alt2
 
 Summary: Tools needed to create Texinfo format documentation files
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Publishing
 Url: http://www.gnu.org/software/texinfo/
 
@@ -26,6 +26,9 @@ Patch5: texinfo-alt-texi2any-version.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
 Patch7: texinfo-alt-perl_vendor_libdir.patch
 Patch8: texinfo-alt-tests.patch
+
+Patch11: texinfo-deb-perl-fixes.patch
+Patch12: texinfo-deb-Update-locale-handling-for-Perl-5.28.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -108,6 +111,9 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+
+%patch11 -p1
+%patch12 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
 
@@ -221,8 +227,12 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Jan 31 2019 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt2
+- Applied Debian fixes for Perl 5.28.
+- Updated texinfo.tex.
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 6.5-alt1.1
-- NMU: build with rpm-build-tex
+- NMU: build with rpm-build-tex instead of rpm-build-texmf.
 
 * Sat Dec 09 2017 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt1
 - 6.0 -> 6.5 (closes: #34299).
