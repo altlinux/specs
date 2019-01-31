@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.1.12
-Release:   alt2
+Release:   alt3
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -12,6 +12,7 @@ URL:       http://www.freedesktop.org/software/PackageKit/
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: gobject-introspection-devel
 BuildRequires: gtk-doc
@@ -235,6 +236,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt3
+- Updated build dependencies.
+
 * Mon Jan 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt2
 - Forced stopping and blocked restarting of packagekit service during
   upgrade of librpm7, improved locking (Closes: #35987).
