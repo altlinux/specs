@@ -1,6 +1,6 @@
 Name: icestorm
 Version: 0.0.0.618.gf029975
-Release: alt1
+Release: alt2
 
 Summary: Tools for working with Lattice iCE40 bitstream files
 License: ISC
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Tue Jun 19 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel libusb-devel pkg-config python-base python3-base
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libftdi1-devel python3
 Requires: %name = %version-%release
 
@@ -57,6 +58,9 @@ chmod a+x %buildroot%_bindir/icebox.py
 %_datadir/icebox
 
 %changelog
+* Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.0.618.gf029975-alt2
+- NMU: Updated build dependencies.
+
 * Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 0.0.0.618.gf029975-alt1
 - New version
 - Move noarch chipdb files to a separate package
