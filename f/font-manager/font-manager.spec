@@ -6,11 +6,10 @@
 %define xdg_name org.gnome.FontManager
 %define xdg_name1 org.gnome.FontViewer
 
-%def_with file_roller
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.3.1
+Version: 0.7.4.2
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -25,15 +24,15 @@ Source: https://github.com/FontManager/master/releases/download/%version/%name-%
 Source: %name-%version.tar
 %endif
 
-%{?_with_file_roller:Requires: file-roller}
+Requires: file-roller
 
 BuildRequires(pre): rpm-build-gir
-BuildRequires: libgtk+3-devel libjson-glib-devel libgee0.8-devel
-BuildRequires: libgucharmap-devel libsqlite3-devel libxml2-devel
-BuildRequires: intltool yelp-tools libappstream-glib-devel
+BuildRequires: libgtk+3-devel libjson-glib-devel
+BuildRequires: libsqlite3-devel libxml2-devel
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: vala-tools
-BuildRequires: gobject-introspection-devel libgucharmap-gir-devel
-%{?_with_nautilus:BuildRequires: nautilus-python}
+BuildRequires: gobject-introspection-devel
+%{?_with_nautilus:BuildRequires: nautilus-python python-modules-distutils}
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -53,8 +52,7 @@ Enlightenment, and even KDE.
 
 %build
 %autoreconf
-%{?_with_file_roller:export ac_cv_prog_HAVE_FILE_ROLLER="yes"}
-%configure %{?_with_file_roller:--with-file-roller} \
+%configure \
 	%{subst_with nautilus}
 %make_build
 
@@ -70,19 +68,23 @@ Enlightenment, and even KDE.
 %_libdir/%name/
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name1.desktop
-%_datadir/%name/
+#%_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/%xdg_name1.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name1.gschema.xml
 %_man1dir/%name.1.*
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name1.appdata.xml
 %{?_with_nautilus:%_datadir/nautilus-python/extensions/font-manager.py*}
-%doc README
+%doc README CHANGELOG
 
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Thu Jan 31 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.2-alt1
+- 0.7.4.2
+
 * Sat Sep 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.3.1-alt1
 - 0.7.3.1
 
