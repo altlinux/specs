@@ -1,18 +1,20 @@
-%define         pgb_runtimedir   /var/run/pgbouncer
-Name:		pgbouncer
-Version:	1.7.2
-Release:        alt8
-Summary:	Lightweight connection pooler for PostgreSQL
-License: 	BSD
-Group: 		Databases
-Url:		https://github.com/pgbouncer/pgbouncer
-Source:		%name-%version.tar
-Source1:        pgbouncer.init
-Source2:        pgbouncer.ini
-Source3:	users.txt
-Source4:	pgbouncer.conf
+%define     pgb_runtimedir   /var/run/pgbouncer
+Name:       pgbouncer
+Version:    1.9.0
+Release:    alt1
+Summary:    Lightweight connection pooler for PostgreSQL
+License:    BSD
+Group:      Databases
+Url:        https://github.com/pgbouncer/pgbouncer
+Source:     %name-%version.tar
+Source1:    pgbouncer.init
+Source2:    pgbouncer.ini
+Source3:    users.txt
+Source4:    pgbouncer.conf
 
-BuildRequires:	libevent-devel libssl-devel
+BuildRequires: libevent-devel libssl-devel
+# Need /usr/bin/rst2man for building
+BuildRequires: python-module-docutils
 # That was a pkg with an ugly temporary name:
 Obsoletes: pgbouncer17
 
@@ -39,6 +41,8 @@ touch lib/mk/install-sh
 
 %files
 %_bindir/pgbouncer
+%_man1dir/*
+%_man5dir/*
 %config(noreplace) %_sysconfdir/pgbouncer.ini
 %attr(750,root,postgres) %dir %_sysconfdir/pgbouncer
 %attr(750,root,postgres) %config(noreplace) %_sysconfdir/pgbouncer/users.txt
@@ -73,6 +77,9 @@ This is meant to enforce "autocommit" mode on client, mostly targeted
 for PL/Proxy.
 
 %changelog
+* Thu Jan 31 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- Build new version.
+
 * Wed May 10 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.7.2-alt8
 - %%config(noreplace) modifiers used where needed
 
