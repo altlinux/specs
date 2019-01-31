@@ -2,7 +2,7 @@
 
 Name:		python-module-migrate
 Version:	0.11.0
-Release:	alt1.1
+Release:	alt2
 Summary:	Schema migration tools for SQLAlchemy
 
 Group:		Development/Python
@@ -18,6 +18,8 @@ Patch0: no-db2-tests.patch
 Patch1:		python-module-migrate-py27.patch
 # Local patch to rename /usr/bin/migrate to sqlalchemy-migrate
 Patch100: python-migrate-sqlalchemy-migrate.patch
+
+Patch2: fix-regex.patch
 
 BuildArch:	noarch
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
@@ -111,6 +113,7 @@ Tests for Schema migration tools for SQLAlchemy.
 #echo '' > migrate/tests/changeset/databases/test_ibmdb2.py
 #%patch1 -p1 -b .py27
 %patch100 -p1 -b .rename
+%patch2 -p1
 
 # use real unittest in python 2.7 and up
 #sed -i "s/import unittest2/import unittest as unittest2/g" \
@@ -182,6 +185,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %endif
 
 %changelog
+* Thu Jan 31 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.11.0-alt2
+- Fix bad regular expression in migrate/versioning/script/sql.py
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
