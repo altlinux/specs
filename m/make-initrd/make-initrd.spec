@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.8
+Version: 2.2.9
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,12 @@ fi
 %endif
 
 %changelog
+* Thu Jan 31 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.9-alt1
+- Utilities:
+  + Replace /sys by SYSFS_PATH
+  + Allow to specify the modules or patterns in /lib/modules/KVER
+    directory
+
 * Thu Jan 24 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.8-alt1
 - Runtime changes:
   + Add service to handle x-mount-source mountpoints
