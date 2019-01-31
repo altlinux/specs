@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt125
+Release: alt126
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -528,6 +528,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Thu Jan 31 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt126
+- imz@:
+  + shell.req: correctly detect #!/bin/env bash (ALT#35376).
+  + platform.in: completely expand %%_libsuff (/usr/lib%%nil was ugly).
+- Fixed getopt(3) use in parameterized macros parser.
+
 * Sun Jan 20 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt125
 - spec: replaced deprecated PreReq tags with Requires tags.
 - Added automatic conversion of deprecated PreReq tags to Requires tags.
