@@ -1,7 +1,7 @@
 Summary: Linux Standard Base Release Tools
 Name: lsb-release
 Version: 2.0
-Release: alt4
+Release: alt5
 License: %gpl2plus
 Source: %name-%version.tar
 Group: System/Base
@@ -48,6 +48,9 @@ make prefix=%buildroot%_prefix mandir=%buildroot%_mandir install
 %{_man1dir}/lsb_release.1*
 
 %changelog
+* Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 2.0-alt5
+- Fix extract text in brackets.
+
 * Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 2.0-alt4
 - Do not check 'ALT Linux' prefix and 'release' delimiter in description.
 
