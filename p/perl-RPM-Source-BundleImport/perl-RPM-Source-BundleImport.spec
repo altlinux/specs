@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.065
+Version: 0.067
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,7 +15,7 @@ Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Bundle perl-Source-Package perl-RPM-Source-Dependency-Analyzer perl(Pod/PlainText.pm)
 Requires: perl-Source-Package > 0.174
-Requires: perl-RPM-Source-Editor > 0.9225
+Requires: perl-RPM-Source-Editor > 0.9226
 
 %description
 %summary
@@ -55,6 +55,12 @@ RPM-Source-BundleImport plugin for Perl source code
 %perl_vendor_privlib/RPM/Source/BundleImport/Perl
 
 %changelog
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.067-alt1
+- lazy distromap matcher (API change)
+
+* Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.066-alt1
+- new version
+
 * Sun Jan 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.065-alt1
 - new version
 
