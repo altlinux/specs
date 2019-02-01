@@ -1,30 +1,35 @@
 # a hack: should be fixed
 %def_without doc
-
-%define proton_datadir %_datadir/proton-%version
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 
 Name: qpid-proton
-Version: 0.18.1
-Release: alt1.3
+Version: 0.26.0
+Release: alt1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
 License: ASL 2.0
 Url: http://qpid.apache.org/proton/
 
+%define proton_datadir %_datadir/proton-%version
+
 Source: %name-%version.tar
 
-BuildRequires: cmake >= 2.6
-
+BuildRequires: cmake >= 2.8.12
+BuildRequires: gcc-c++
 BuildRequires: swig
 BuildRequires: doxygen
 BuildRequires: libuuid-devel
+BuildRequires: libuv-devel
+BuildRequires: jsoncpp-devel
 BuildRequires: libssl-devel
 BuildRequires: libsasl2-devel
 BuildRequires: python-devel
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-epydoc
-BuildRequires: perl-devel
-BuildRequires: perl-Test-Exception perl-Switch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 
 %description
 Proton is a high performance, lightweight messaging library. It can be used in
@@ -38,7 +43,6 @@ Summary: C libraries for Qpid Proton
 Group: System/Libraries
 
 %description -n lib%name
-C libraries for Qpid Proton
 Proton is a high performance, lightweight messaging library. It can be used in
 the widest range of messaging applications including brokers, client libraries,
 routers, bridges, proxies, and more. Proton is based on the AMQP 1.0 messaging
@@ -55,6 +59,28 @@ Group: Development/C
 %description -n lib%name-devel
 Development libraries for writing messaging apps with Qpid Proton
 
+%package -n lib%name-cpp
+Summary: C++ libraries for Qpid Proton
+Group: Development/C++
+
+%description -n lib%name-cpp
+Proton is a high performance, lightweight messaging library. It can be used in
+the widest range of messaging applications including brokers, client libraries,
+routers, bridges, proxies, and more. Proton is based on the AMQP 1.0 messaging
+standard. Using Proton it is trivial to integrate with the AMQP 1.0 ecosystem
+from any platform, environment, or language.
+
+C++ libraries for Qpid Proton
+
+%package -n lib%name-cpp-devel
+Summary: Development libraries for writing messaging apps with Qpid Proton
+Group: Development/C++
+Requires: lib%name-cpp = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-cpp-devel
+Development libraries for writing messaging apps with Qpid Proton
+
 %package -n python-module-qpid-proton
 Summary: Python language bindings for the Qpid Proton messaging framework
 Group: Development/Python
@@ -62,6 +88,14 @@ Requires: lib%name = %version-%release
 
 %description -n python-module-qpid-proton
 Python language bindings for the Qpid Proton messaging framework
+
+%package -n python3-module-qpid-proton
+Summary: Python3 language bindings for the Qpid Proton messaging framework
+Group: Development/Python3
+Requires: lib%name = %version-%release
+
+%description -n python3-module-qpid-proton
+Python3 language bindings for the Qpid Proton messaging framework
 
 %package  -n lib%name-devel-doc
 Summary: Documentation for the C development libraries for Qpid Proton
@@ -79,41 +113,69 @@ BuildArch: noarch
 %description -n python-module-qpid-proton-doc
 Documentation for the Python language bindings for Qpid Proton
 
-%package -n perl-qpid_proton
-Summary: Perl language bindings for Qpid Proton
-Group: Development/Perl
-Requires: lib%name = %version-%release
-
-%description -n perl-qpid_proton
-Perl language bindings for Qpid Proton
-
-
-#%%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -Mqpid::proton -Mqpid::proton::Mapping' PERL5LIB='%buildroot%_libdir'
-%define _perl_req_method relaxed
-
 %prep
 %setup
 
+rm -rf ../python3
+cp -a . ../python3
+
 %build
+#%%add_optflags -Wno-error=return-type -Wno-error=format-security
+
 %cmake \
     -DPYTHON_SITEARCH_PACKAGES=%python_sitelibdir \
-    -DNOBUILD_RUBY=1 \
-    -DNOBUILD_PHP=1 \
-    -DSYSINSTALL_PYTHON=1 \
-    -DSYSINSTALL_PERL=1 \
-    -DCHECK_SYSINSTALL_PYTHON=0 \
-    -DCMAKE_BUILD_TYPE=Release
+    -DSYSINSTALL_BINDINGS=ON \
+    -DENABLE_FUZZ_TESTING=NO \
+    -DPYTHON_EXECUTABLE=%__python \
+    -DPYTHON_INCLUDE_DIR=%python_includedir \
+    -DPYTHON_LIBRARY=%__libpython
 
+%cmake_build generated_c_files
 %cmake_build VERBOSE=1
+
+(cd BUILD/python/dist; %python_build)
+
+pushd ../python3
+%cmake \
+    -DPYTHON_SITEARCH_PACKAGES=%python3_sitelibdir \
+    -DSYSINSTALL_BINDINGS=ON \
+    -DENABLE_FUZZ_TESTING=NO \
+    -DPYTHON_EXECUTABLE=%__python3 \
+    -DPYTHON_INCLUDE_DIR=%__python3_includedir \
+    -DPYTHON_LIBRARY=%__libpython3
+
+%cmake_build generated_c_files
+%cmake_build VERBOSE=1
+
+(cd BUILD/python/dist; %python3_build)
+popd
 
 %install
 %cmakeinstall_std
+(cd BUILD/python/dist; %python_install)
+
+pushd ../python3
+%cmakeinstall_std
+(cd BUILD/python/dist; %python3_install)
+popd
+
+find %buildroot%proton_datadir/examples/python -name "*.py" -exec sed -i 's/!\/usr\/bin\/env python/!\/usr\/bin\/python3/' {} \;
+sed -i 's/!\/usr\/bin\/python/!\/usr\/bin\/python3/' %buildroot%proton_datadir/examples/c/testme
+#sed -i 's/!\/usr\/bin\/python/!\/usr\/bin\/python3/' %buildroot%proton_datadir/examples/cpp/testme
+echo '#!/usr/bin/python3' > %buildroot%proton_datadir/examples/python/proton_server.py.original
+cat %buildroot%proton_datadir/examples/python/proton_server.py >> %buildroot%proton_datadir/examples/python/proton_server.py.original
+mv %buildroot%proton_datadir/examples/python/proton_server.py.original %buildroot%proton_datadir/examples/python/proton_server.py
+
 mkdir -p %buildroot%_defaultdocdir/%name-%version
 mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 
+# cleanup
+rm -rf %buildroot%proton_datadir/tests
+rm -rf %buildroot%proton_datadir/CMakeLists.txt
+
 %files -n lib%name
 %dir %proton_datadir
-%doc %proton_datadir/LICENSE
+%doc %proton_datadir/LICENSE.txt
 %doc %proton_datadir/README*
 %_libdir/libqpid-proton.so.*
 %_libdir/libqpid-proton-core.so.*
@@ -124,11 +186,19 @@ mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 %_libdir/libqpid-proton.so
 %_libdir/libqpid-proton-core.so
 %_libdir/libqpid-proton-proactor.so
-%_libdir/pkgconfig/libqpid-proton.pc
-%_libdir/pkgconfig/libqpid-proton-core.pc
-%_libdir/pkgconfig/libqpid-proton-proactor.pc
+%_pkgconfigdir/libqpid-proton.pc
+%_pkgconfigdir/libqpid-proton-core.pc
+%_pkgconfigdir/libqpid-proton-proactor.pc
 %_libdir/cmake/Proton
 %doc %_defaultdocdir/%name-%version/
+
+%files -n lib%name-cpp
+%_libdir/libqpid-proton-cpp.so.*
+
+%files -n lib%name-cpp-devel
+%_libdir/libqpid-proton-cpp.so
+%_pkgconfigdir/libqpid-proton-cpp.pc
+%_libdir/cmake/ProtonCpp
 
 %if_with doc
 %files -n lib%name-devel-doc
@@ -136,20 +206,23 @@ mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 %endif
 
 %files -n python-module-qpid-proton
-%python_sitelibdir/_cproton.so
-%python_sitelibdir/cproton.*
-%python_sitelibdir/proton
+%python_sitelibdir/*
 
+%files -n python3-module-qpid-proton
+%python3_sitelibdir/*
 
 %if_with doc
 %files -n python-module-qpid-proton-doc
 %doc %proton_datadir/docs/api-py
 %endif
 
-%files -n perl-qpid_proton
-%perl_vendor_archlib/*
-
 %changelog
+* Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 0.26.0-alt1
+- new version 0.26.0
+- drop perl binding package
+- add python3 package
+- add cpp library package
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.18.1-alt1.3
 - rebuild with new perl 5.28.1
 

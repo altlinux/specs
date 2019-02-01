@@ -2,9 +2,15 @@
 %define perftests "qpid-perftest qpid-topic-listener qpid-topic-publisher qpid-latency-test qpid-client-test qpid-txtest"
 %define _libexecdir %_prefix/libexec
 
+# disable build bindings
+%def_disable perl
+%def_enable python
+%def_disable ruby
+%def_enable rdma
+
 Name: qpid
-Version: 1.36.0
-Release: alt1.3
+Version: 1.39.0
+Release: alt1
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -24,10 +30,10 @@ BuildRequires: gcc-c++
 BuildRequires: cmake rpm-macros-cmake
 BuildRequires: boost-devel
 BuildRequires: doxygen
-BuildRequires: swig
-BuildRequires: ruby ruby-stdlibs
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+%{?_enable_perl:BuildRequires: swig perl-devel}
+%{?_enable_python:BuildRequires: swig python-devel python-module-setuptools}
+%{?_enable_ruby:BuildRequires: swig ruby ruby-stdlibs}
+BuildRequires: ruby
 BuildRequires: libsasl2-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
@@ -37,12 +43,10 @@ BuildRequires: libnspr-devel
 #BuildRequires: libxqilla-devel
 #BuildRequires: libxerces-c-devel
 BuildRequires: libaio-devel
-BuildRequires: libqpid-proton-devel >= 0.7
-BuildRequires: libdb4.7-devel
-BuildRequires: libdb4.7_cxx-devel
-
-BuildRequires: libibverbs-devel
-BuildRequires: librdmacm-devel
+BuildRequires: libqpid-proton-devel >= 0.26.0
+BuildRequires: libdb4-devel
+BuildRequires: libdb4_cxx-devel
+%{?_enable_rdma:BuildRequires: rdma-core-devel}
 
 %description
 Run-time libraries for AMQP client applications developed using Qpid
@@ -214,6 +218,10 @@ Python bindings for qmfgen.
 %cmake_insource \
 	-DENABLE_WARNINGS:BOOL=OFF \
 	-DDOC_INSTALL_DIR:PATH=%_pkgdocdir \
+	%{?_disable_python:-DBUILD_BINDING_PYTHON:BOOL=OFF} \
+	%{?_disable_ruby:-DBUILD_BINDING_RUBY:BOOL=OFF} \
+	%{?_disable_perl:-DBUILD_BINDING_PERL:BOOL=OFF} \
+	-DBUILD_LEGACYSTORE=false \
 	-DBUILD_LINEARSTORE=true
 
 %make_build
@@ -221,6 +229,12 @@ Python bindings for qmfgen.
 
 %install
 mkdir -p -m0755 %buildroot{%_bindir,%_unitdir,%_initdir,%_tmpfilesdir}
+
+pushd management/python
+python setup.py install \
+    --install-purelib %python_sitelibdir \
+    --root %buildroot
+popd
 
 %makeinstall_std
 
@@ -242,6 +256,9 @@ popd
 
 mkdir -p %buildroot/%_runtimedir/qpidd
 mkdir -p %buildroot/%_localstatedir/qpidd
+
+#cleanup
+rm -f %buildroot%_bindir/*.bat
 
 %pre server
 %_sbindir/groupadd -r -f qpidd 2>/dev/null ||:
@@ -284,17 +301,20 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %exclude %python_sitelibdir_noarch/qmfgen/templates/CMakeLists.cmake
 
 %files -n python-module-qmf
-%python_sitelibdir/*qmf2*
+%python_sitelibdir/qmf
 
 %files -n libqmf2-devel
 %_libdir/libqmf2.so
 %_includedir/qmf
 %_pkgconfigdir/qmf2.pc
 %_bindir/qmf-gen
+%_man1dir/qmf-gen*
 
 %files client
 %_bindir/qpid-receive
 %_bindir/qpid-send
+%_man1dir/qpid-receive*
+%_man1dir/qpid-send*
 %doc LICENSE.txt
 %doc NOTICE.txt
 %doc README.md
@@ -335,12 +355,14 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %_libdir/qpid/daemon/ha.so
 %doc docs/ha.txt
 
+%if_enabled rdma
 %files client-rdma
 %_libdir/librdmawrap.so.*
 %_libdir/qpid/client/rdmaconnector.so
 
 %files server-rdma
 %_libdir/qpid/daemon/rdma.so
+%endif
 
 #%files server-xml
 #%_libdir/qpid/daemon/xml.so
@@ -352,17 +374,46 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %_libdir/qpid/daemon/linearstore.so
 %_libdir/liblinearstoreutils.so
 
+%if_enabled perl
 %files -n perl-qpid_messaging
-%_libdir/perl5/*.pm
-%_libdir/perl5/*.so
+%_libdir/perl5/*
+%endif
 
+%if_enabled python
 %files -n python-module-qpid_messaging
 %python_sitelibdir/*qpid_messaging*
+%endif
+
+%files -n qpid-tools
+%_bindir/qpid-config
+%_bindir/qpid-ha
+%_bindir/qpid-printevents
+%_bindir/qpid-queue-stats
+%_bindir/qpid-route
+%_bindir/qpid-stat
+%_bindir/qpid-tool
+%_man1dir/qpid-config*
+%_man1dir/qpid-ha*
+%_man1dir/qpid-printevents*
+%_man1dir/qpid-queue-stats*
+%_man1dir/qpid-route*
+%_man1dir/qpid-stat*
+%_man1dir/qpid-tool*
+%python_sitelibdir/qpidtoollibs
+%_libexecdir/qpid-qls-analyze
+%dir %_datadir/qpid-tools
+%dir %_datadir/qpid-tools/python
+%_datadir/qpid-tools/python/qlslibs
+%python_sitelibdir/qpid_tools-*.egg-info
 
 %files client-devel-docs
 %doc %_pkgdocdir
 
 %changelog
+* Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 1.39.0-alt1
+- new version 1.39.0
+- disable build bindings
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.36.0-alt1.3
 - rebuild with new perl 5.28.1
 
