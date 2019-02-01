@@ -1,7 +1,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.0
+Version:       5.999.1
 Release:       alt1
 
 Summary:       Ruby's Classic Site Installer
@@ -67,5 +67,8 @@ mv .gemspec %pkgname.gemspec
 %ruby_ri_sitedir/
 
 %changelog
+* Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.1-alt1
+- Bump to 5.999.1
+
 * Fri Jan 25 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.0-alt1
 - Initial gemified build for Sisyphus with usage Ruby Policy 2.0.
