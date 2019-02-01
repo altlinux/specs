@@ -2,8 +2,8 @@
 %def_without tests
 
 Name:           ninja-build
-Version:        1.8.2
-Release:        alt2
+Version:        1.9.0
+Release:        alt1
 
 Summary:        A small build system with a focus on speed
 
@@ -87,6 +87,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
+- New version.
+
 * Wed Nov 15 2017 Arseny Maslennikov <arseny@altlinux.org> 1.8.2-alt2
 - Add RPM macros for ninja-build.
 - Add a manual page from Debian.
