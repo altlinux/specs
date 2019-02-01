@@ -4,12 +4,12 @@
 %set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 1.99
-Release: alt2
+Version: 1.100
+Release: alt1
 Summary: ScreenGrab is a tool for geting screenshots
 License: GPLv2
-Source0: %name-%version.tar.xz
-Url: https://github.com/lxqt/screengrab/releases
+Source0: %name-%version.tar
+Url: https://github.com/lxqt/screengrab
 Group: Graphics
 
 BuildRequires(pre): rpm-macros-cmake
@@ -52,7 +52,8 @@ find . -type f | xargs chmod 644
 sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' CMakeLists.txt
 
 %build
-%cmake
+%cmake -DSG_GLOBALSHORTCUTS=OFF \
+       -DUPDATE_TRANSLATIONS=ON
 
 %cmake_build
 
@@ -78,6 +79,9 @@ convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 1.100-alt1
+- new version 1.100
+
 * Thu Jul 26 2018 Anton Midyukov <antohami@altlinux.org> 1.99-alt2
 - Fix update conflict
 - Update buildrequires
