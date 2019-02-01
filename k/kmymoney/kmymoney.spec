@@ -1,5 +1,5 @@
 Name:    kmymoney
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
@@ -64,7 +64,7 @@ BuildRequires: glib2-devel
 BuildRequires: libassuan-devel
 BuildRequires: ktoblzcheck-devel
 BuildRequires: libOpenSP-devel
-BuildRequires: libalkimia-devel >= 4.3.1
+BuildRequires: libalkimia-devel >= 7.0.0
 BuildRequires: libaqbanking-devel >= 5.0.0
 BuildRequires: libaqbanking-ofx-devel 
 BuildRequires: libgamin-devel
@@ -367,6 +367,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 5.0.3-alt1
+- New version.
+
 * Tue Nov 06 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
 - New version.
 
