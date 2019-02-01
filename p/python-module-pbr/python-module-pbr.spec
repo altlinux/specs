@@ -3,18 +3,26 @@
 %def_with doc
 %def_with python3
 
-Name:		python-module-%pypi_name
-Version:	5.1.1
-Release:	alt1
-Summary:	Python Build Reasonableness
-Group:		Development/Python
-BuildArch:	noarch
+%define descr \
+PBR is a library that injects some useful and sensible default behaviors \
+into your setuptools run. It started off life as the chunks of code that \
+were copied between all of the OpenStack projects. Around the time that \
+OpenStack hit 18 different projects each with at least 3 active \
+branches, it seems like a good time to make that code into a proper \
+re-usable library.
 
-License:	ASL 2.0
-URL:		http://pypi.python.org/pypi/pbr
+Name:       python-module-%pypi_name
+Version:    5.1.2
+Release:    alt1
+
+Summary:    Python Build Reasonableness
+
+Group:      Development/Python
+License:    ASL 2.0
+URL:        http://pypi.python.org/pypi/pbr
 
 # git://git.openstack.org/openstack-dev/pbr
-Source:	%name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
 BuildRequires: python-module-pbr
@@ -27,26 +35,18 @@ BuildRequires: python3-module-pbr
 BuildRequires: python3-module-html5lib python3-module-mimeparse
 %endif
 
+BuildArch:  noarch
+
 %description
-PBR is a library that injects some useful and sensible default behaviors
-into your setuptools run. It started off life as the chunks of code that
-were copied between all of the OpenStack projects. Around the time that
-OpenStack hit 18 different projects each with at least 3 active
-branches, it seems like a good time to make that code into a proper
-re-usable library.
+%descr
 
 %package -n python3-module-%pypi_name
-Summary:	Python Build Reasonableness
-Group:		Development/Python3
-Requires:	python3-module-pip
+Summary:    Python Build Reasonableness
+Group:      Development/Python3
+Requires:   python3-module-pip
 
 %description -n python3-module-%pypi_name
-PBR is a library that injects some useful and sensible default behaviors
-into your setuptools run. It started off life as the chunks of code that
-were copied between all of the OpenStack projects. Around the time that
-OpenStack hit 18 different projects each with at least 3 active
-branches, it seems like a good time to make that code into a proper
-re-usable library.
+%descr
 
 %package -n python3-module-%pypi_name-tests
 Summary: Tests for PBR library (Python 3)
@@ -105,7 +105,7 @@ pushd ../python3
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i $i.py3
+    mv $i $i.py3
 done
 popd
 %endif
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 01 2019 Grigory Ustinov <grenka@altlinux.org> 5.1.2-alt1
+- Build new version.
+
 * Thu Nov 08 2018 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Build new version.
 
