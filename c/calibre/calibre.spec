@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.36.0
+Version: 3.39.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -67,7 +67,7 @@ BuildRequires: libmtp-devel >= 1.1.11
 # >= 0.3.5
 %py_use lxml >= 3.8.0
 %py_use dateutil >= 2.5.3
-%py_use cssutils >= 1.0.1
+%py_use css-parser >= 1.0.4
 %py_use dns >= 1.14.0
 
 %py_use netifaces >= 0.10.5
@@ -167,6 +167,12 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Fri Feb 01 2019 Vitaly Lipatov <lav@altlinux.ru> 3.39.0-alt1
+- new version 3.39.0 (with rpmrb script)
+
+* Thu Jan 31 2019 Vitaly Lipatov <lav@altlinux.ru> 3.38.1-alt1
+- new version 3.38.1 (with rpmrb script)
+
 * Sun Dec 23 2018 Vitaly Lipatov <lav@altlinux.ru> 3.36.0-alt1
 - new version 3.36.0 (with rpmrb script)
 
