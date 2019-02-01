@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.7
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel
+
+Requires: xorg-xwayland wayland-protocols qt5-wayland
 
 Provides: kf5-kwayland-integration = %EVR
 Obsoletes: kf5-kwayland-integration < %EVR
@@ -41,6 +43,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 %_K5plug/kf5/*/*Wayland*.so
 
 %changelog
+* Tue Jan 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.12.7-alt2
+- requires for wayland session fixed
+
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
 - new version
 

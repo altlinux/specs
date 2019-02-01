@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt10
+Release: alt11
 Epoch: 1
 %K5init altplace
 
@@ -60,6 +60,7 @@ Patch120: alt-krunner-fix-bookmarks.patch
 Patch121: alt-freememorynotifier.patch
 Patch122: alt-systemmonitor-ignoreconfig.patch
 Patch123: alt-fix-general-configuration-widget-correctly-set-check.patch
+Patch124: alt-startplasma.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -202,6 +203,7 @@ popd
 %patch121 -p2
 %patch122 -p2
 %patch123 -p2
+%patch124 -p2
 
 %build
 %K5build \
@@ -313,7 +315,7 @@ done
 %_K5conf_up/*.upd
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
-#%_datadir/wayland-sessions/plasmawayland.desktop
+%_datadir/wayland-sessions/plasmawayland.desktop
 
 %files -n %name-qml
 %dir %_K5qml/org/kde/plasma/workspace/
@@ -357,6 +359,9 @@ done
 
 
 %changelog
+* Thu Jan 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:5.12.7-alt11
+- startplasma and plasmacompositor fixed for wayland session
+
 * Wed Jan 30 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt10
 - memory notifier fixes:
   + disable notifications by default
