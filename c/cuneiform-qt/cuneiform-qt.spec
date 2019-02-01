@@ -1,57 +1,65 @@
-Name:		cuneiform-qt
-Version:	0.1.2
-Release:	alt1.qa1
-Summary:	GUI frontend for Cuneiform OCR
+Name:    cuneiform-qt
+Version: 0.1.3
+Release: alt1
+Summary: GUI frontend for Cuneiform OCR
 
-License:	GPLv3+
-Group:		Graphics
-URL:		http://www.altlinux.org/Cuneiform-Qt
+License: GPLv3+
+Group:   Graphics
+URL:     http://www.altlinux.org/Cuneiform-Qt
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0:	%name-%version.tar.bz2
+Source: %name-%version.tar
 
-BuildRequires: ImageMagick gcc-c++ libqt4-devel >= 4.3.0
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: qt5-base-devel
+BuildRequires: ImageMagick
 
 Requires: cuneiform
+Requires: qt5-translations
 
 %description
-This application is GUI frontend for Cuneiform (OCR system originally 
+This application is GUI frontend for Cuneiform (OCR system originally
 developed and open sourced by Cognitive technologies). It allow
 to open scanned image, view this one in preview pane, recornize text via
 Cuneiform and save result in HTML file.
 
 %prep
 %setup -q
-PREFIX=%prefix qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
 
 %build
+%qmake_qt5
 %make_build
 
 %install
-make install INSTALL_ROOT=%buildroot
+%makeinstall INSTALL_ROOT=%buildroot
 
 # Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
+mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 convert -resize 48x48 icons/%name.png %buildroot%_liconsdir/%name.png
 convert -resize 32x32 icons/%name.png %buildroot%_niconsdir/%name.png
 convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 
 %files
-%doc AUTHORS README TODO
+%doc AUTHORS README.md TODO.md
 %_bindir/%name
 %_datadir/apps/%name/*.qm
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+%_pixmapsdir/%name.png
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt1
+- New version based on patches from Magea.
+- Build with Qt5.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
 * Fri Apr 10 2009 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
-- Fix build with Qt 4.3 
+- Fix build with Qt 4.3
 
 * Fri Apr 10 2009 Motsyo Gennadi <drool@altlinux.ru> 0.1.1-alt1.2
 - created Ukrainian translation
