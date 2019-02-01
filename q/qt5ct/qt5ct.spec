@@ -1,6 +1,6 @@
 Name: qt5ct
-Version: 0.30
-Release: alt1.1
+Version: 0.37
+Release: alt1
 Summary: Qt5 Configuration Tool
 License: BSD
 
@@ -33,8 +33,8 @@ echo "setenv QT_QPA_PLATFORMTHEME '%name'" > %name.csh
 %install
 INSTALL_ROOT=%buildroot %makeinstall_std
 
-install -Dm 0644 %name.sh %buildroot%_sysconfdir/profile.d/%name.sh
-install -Dm 0644 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
+install -Dm 0755 %name.sh %buildroot%_sysconfdir/profile.d/%name.sh
+install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 
 %files
 %doc AUTHORS ChangeLog COPYING README
@@ -46,6 +46,10 @@ install -Dm 0644 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Feb 01 2019 Ivan A. Melnikov <iv@altlinux.org> 0.37-alt1
+- New version
+- Make /etc/profile.d/qt5ct* executable (closes: #35769)
+
 * Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.30-alt1.1
 - NMU: build with Qt 5.9
 
