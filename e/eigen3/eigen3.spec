@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.7
-Release: alt1
+Release: alt2
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -18,15 +18,17 @@ Patch1:         eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
 Patch2:         eigen3-3.3.1-fixcmake.patch
 
-BuildPreReq: gcc-c++ cmake doxygen libqt4-devel libsuitesparse-devel
-BuildPreReq: libsuperlu-devel libmpfr-devel libgmp-devel
-BuildPreReq: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
-BuildPreReq: liblapack-devel libglew-devel libGLUT-devel libXi-devel
-BuildPreReq: libXmu-devel libmetis-devel phonon-devel libXres-devel
-BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
-BuildPreReq: libXft-devel libxkbfile-devel libXpm-devel
-BuildPreReq: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
-BuildPreReq: libscotch-devel libgoogle-sparsehash
+%ifnarch %e2k
+BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
+%endif
+BuildRequires: gcc-c++ cmake doxygen libqt4-devel
+BuildRequires: libsuperlu-devel libmpfr-devel libgmp-devel
+BuildRequires: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
+BuildRequires: liblapack-devel libglew-devel libGLUT-devel libXi-devel
+BuildRequires: libXmu-devel libmetis-devel phonon-devel libXres-devel
+BuildRequires: libXcomposite-devel libXdamage-devel libXdmcp-devel
+BuildRequires: libXft-devel libxkbfile-devel libXpm-devel
+BuildRequires: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
 
 # TODO: add devel subpackage and move stuff
 Provides: %{name}-devel = %EVR
@@ -76,8 +78,14 @@ cmake \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
 	-DCMAKE_Fortran_FLAGS="%optflags" \
+%ifarch %e2k
+	-DEIGEN_TEST_AVX512:BOOL=OFF \
+	-DEIGEN_TEST_AVX:BOOL=OFF \
+	-DEIGEN_TEST_SSE4_2:BOOL=OFF \
+%else
 	-DCHOLMOD_INCLUDES:PATH=%_includedir/suitesparse \
 	-DUMFPACK_INCLUDES:PATH=%_includedir/suitesparse \
+%endif
 	-DSUPERLU_LIBRARIES:STRING=-lsuperlu_4.0 \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
@@ -89,15 +97,19 @@ cmake \
 popd
 
 %make_build -C BUILD
+%ifnarch %e2k
 %make_build -C BUILD doc
+%endif
 
 %install
 %makeinstall_std -C BUILD
 
 install -d %buildroot%_bindir
+%ifnarch %e2k
 rm -fR BUILD/doc/examples/CMakeFiles BUILD/doc/examples/*.out \
 	BUILD/doc/examples/*.cmake
 install -m755 BUILD/doc/examples/* %buildroot%_bindir
+%endif
 
 %files
 %_includedir/*
@@ -105,14 +117,19 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %_datadir/cmake/Modules/FindEigen3.cmake
 %_datadir/%name/cmake/*.cmake
 
+%ifnarch %e2k
 %files examples
 %_bindir/*
 %doc doc/examples/*
 
 %files docs
 %doc BUILD/doc/html/*
+%endif
 
 %changelog
+* Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 3.3.7-alt2
+- E2K: avoid building too much for now.
+
 * Fri Dec 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.7-alt1
 - New version.
 
