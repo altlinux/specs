@@ -1,22 +1,24 @@
-%define _optlevel s
-
 Name: stellarium
 Version: 0.18.3
-Release: alt1
+Release: alt2
 
-Group: Education
 Summary: Astronomical Sky Simulator
-Url: http://www.stellarium.org/
 License: GPLv2
+Group: Education
 
-Source0: %name-%version.tar
+Url: http://www.stellarium.org/
+Source: %name-%version.tar
 
-BuildPreReq: cmake rpm-macros-cmake
+BuildRequires: rpm-macros-cmake
 
 # Automatically added by buildreq on Sun Feb 07 2016
 # optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-serialport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators qt5-base-devel qt5-tools qt5-script-devel
 BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel qt5-multimedia-devel qt5-location-devel
 BuildRequires: fonts-ttf-dejavu
+
+%ifnarch %e2k
+%define _optlevel s
+%endif
 
 %description
 Stellarium is a free software available for Windows, Linux/Unix and MacOSX.
@@ -25,7 +27,11 @@ really see what you can see with your eyes, binoculars or a small
 telescope.
 
 %prep
-%setup -q
+%setup
+%ifarch %e2k
+# lcc doesn't ignore unicode bom
+find -type f -print0 | xargs -r0 -- sed -i '1s/^\xEF\xBB\xBF//'
+%endif
 
 %build
 %cmake -DQT5_LIBS=%_libdir/qt5 -DCMAKE_INSTALL_PREFIX=/usr
@@ -37,8 +43,7 @@ pushd BUILD
 popd
 
 # See ALT 25353
-find %buildroot -name DejaVuSans.ttf -delete
-find %buildroot -name DejaVuSansMono.ttf -delete
+find %buildroot -name 'DejaVuSans*.ttf' -delete
 
 %find_lang %name
 %find_lang %name-skycultures
@@ -55,6 +60,10 @@ find %buildroot -name DejaVuSansMono.ttf -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 0.18.3-alt2
+- E2K: drop Unicode BoM symbols from source files
+- Minor spec cleanup
+
 * Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt1
 - Build new version.
 
