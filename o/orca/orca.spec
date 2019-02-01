@@ -1,8 +1,8 @@
 %define ver_major 3.30
 
 Name: orca
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -68,7 +68,7 @@ cp -f %SOURCE4 po/ru.po
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot pyexecdir=%python3_sitelibdir install
+%makeinstall_std pyexecdir=%python3_sitelibdir
 
 #%__install -d -m755 %buildroot%_datadir/%name/emacspeak-servers/
 #echo voiceman > %buildroot%_datadir/%name/emacspeak-servers/.servers
@@ -82,7 +82,6 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %doc AUTHORS ChangeLog NEWS README TODO
 %_bindir/%name
 %python3_sitelibdir/%name/
-#%_datadir/applications/*
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
@@ -92,6 +91,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Fri Feb 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- 3.30.2
+
 * Thu Jan 10 2019 Ivan Razzhivin <underwit@altlinux.org> 3.30.1-alt3
 - update russian translation
 
