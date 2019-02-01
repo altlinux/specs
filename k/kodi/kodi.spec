@@ -1,49 +1,96 @@
 Name: kodi
-Version: 17.6
-Release: alt5
+Version: 18.0
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL
 Group: Video
 Url: http://kodi.tv
 
-ExclusiveArch: %ix86 x86_64
-
-Provides: xbmc = %version-%release
-Obsoletes: xbmc
-
 Requires: kodi-data = %version-%release
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: cmake gcc-c++ doxygen swig gperf nasm unzip zip
-BuildRequires: boost-devel bzlib-devel libmysqlclient-devel libSDL_image-devel libSDL_mixer-devel
-BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel
-BuildRequires: libXdmcp-devel libXext-devel libXft-devel libXmu-devel
-BuildRequires: libXpm-devel libXrandr-devel libXt-devel libXtst-devel libSM-devel libxkbfile-devel
-BuildRequires: libX11-devel libXfixes-devel libXrender-devel xorg-xproto-devel
-BuildRequires: libalsa-devel libass-devel libavahi-devel libbluray-devel libcap-devel
-BuildRequires: libcec-devel >= 4.0.0 libcdio-devel libcurl-devel libdbus-devel libenca-devel
-BuildRequires: libexpat-devel libfaad-devel libflac-devel libfreetype-devel libfribidi-devel
-BuildRequires: libgnutls-devel libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel
-BuildRequires: liblcms2-devel libmicrohttpd-devel libmms-devel libnfs-devel
-BuildRequires: libpcrecpp-devel libgif-devel libpng-devel libsmbclient-devel libdcadec-devel
-BuildRequires: libsqlite3-devel libtiff-devel libwavpack-devel
-BuildRequires: libplist-devel libpulseaudio-devel libssh-devel python-devel
-BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel libuuid-devel
-BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
-BuildRequires: libcrossguid-devel libdrm-devel libssl-devel zlib-devel
-BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel libEGL-devel
-BuildRequires: java-1.8.0-openjdk-devel /proc
+BuildRequires: cmake gcc-c++
+BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
+BuildRequires: libunistring-devel libidn2-devel
+BuildRequires: java-1.8.0-openjdk-devel /proc swig
+BuildRequires: pkgconfig(RapidJSON)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(avahi-client)
+BuildRequires: pkgconfig(bluez)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(dvdnav)
+BuildRequires: pkgconfig(dvdread)
+BuildRequires: pkgconfig(enca)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(fmt)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(fribidi)
+BuildRequires: pkgconfig(fstrcmp)
+BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(libass)
+BuildRequires: pkgconfig(libavcodec)
+BuildRequires: pkgconfig(libavfilter)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavresample)
+BuildRequires: pkgconfig(libavutil)
+BuildRequires: pkgconfig(libbluray)
+BuildRequires: pkgconfig(libcap)
+BuildRequires: pkgconfig(libcdio)
+BuildRequires: pkgconfig(libcec)
+BuildRequires: pkgconfig(libcrypto)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libdvdcss)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libiso9660)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(liblircclient0)
+BuildRequires: pkgconfig(libmicrohttpd)
+BuildRequires: pkgconfig(libnfs)
+BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(libpcrecpp)
+BuildRequires: pkgconfig(libplist)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libpostproc)
+BuildRequires: pkgconfig(libpulse-simple)
+BuildRequires: pkgconfig(libswresample)
+BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libtasn1)
+BuildRequires: pkgconfig(libva)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libxslt)
+BuildRequires: pkgconfig(nettle)
+BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: pkgconfig(python2)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(taglib)
+BuildRequires: pkgconfig(tinyxml)
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(udfread)
+BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(vdpau)
+BuildRequires: pkgconfig(xau)
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(zlib)
 
 %package data
 Summary: Kodi architecture-independent data
 Group: Video
 BuildArch: noarch
-Provides: xbmc-data = %version-%release
-Obsoletes: xbmc-data
-# commonly used by external plugins
-%py_requires json logging sqlite3 xml
 
 %package devel
 Summary: Kodi development part
@@ -61,50 +108,31 @@ This package contains all architecture-independent data requried for Kodi.
 Kodi is an media-player and entertainment hub for all your digital media.
 This package contains development part of Kodi.
 
-%define docdir %_defaultdocdir/%name-%version
+%define __nprocs 8
+%define docdir %_defaultdocdir/%name
+%ifarch armh aarch64
+%define platdefs -DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles
+%else
+%define platdefs %nil
+%endif
 
 %prep
 %setup
 
 %build
-export ac_cv_type__Bool=yes
-[ ! -x bootstrap ] || sh bootstrap
-%configure --disable-non-free \
-	--enable-pulse \
-	--with-ffmpeg=force \
-	--with-lirc-device=/var/run/lirc/lircd \
-	#
-
-%make_build
+%cmake %platdefs
+%cmake_build
 
 %install
-%makeinstall_std
-
-rm -rf %buildroot%_datadir/kodi/system/players/VideoPlayer/etc
-
-mv %buildroot%_datadir/doc/kodi %buildroot%docdir
-
-mkdir -p \
-    %buildroot%_sysconfdir/sysconfig \
-    %buildroot%_sysconfdir/X11/wmsession.d \
-    %buildroot%_datadir/kodi/language \
-    %buildroot%_datadir/kodi/sounds
-
-cat >%buildroot%_sysconfdir/X11/wmsession.d/20KODI << 'E_O_F'
-NAME=Kodi
-ICON=/usr/share/kodi/media/icon32x32.png
-DESC=Kodi Media Center
-EXEC=/usr/bin/kodi-standalone
-SCRIPT:
-exec /usr/bin/kodi-standalone
-E_O_F
+%cmakeinstall_std
+sed -i -e '/Exec=kodi/ s,=,=%_bindir/,' %buildroot%_datadir/xsessions/kodi.desktop
+install -pm0644 -D kodi.wmsession %buildroot%_sysconfdir/X11/wmsession.d/20KODI
+mkdir %buildroot%_libdir/kodi/addons
 
 %add_python_req_skip xbmc
 %add_python_req_skip xbmcgui
 %add_python_req_skip xbmcaddon
 %add_python_req_skip xbmcvfs
-
-%set_verify_elf_method textrel=relaxed
 
 %files
 %docdir
@@ -119,26 +147,26 @@ E_O_F
 %_iconsdir/hicolor/*/apps/kodi.png
 
 %dir %_libdir/kodi
-%_libdir/kodi/system
 %_libdir/kodi/addons
-%_libdir/kodi/kodi.bin
-%_libdir/kodi/kodi-xrandr
+%_libdir/kodi/system
+%_libdir/kodi/kodi-*
 
 %files data
 %dir %_datadir/kodi
 %_datadir/kodi/addons
-%_datadir/kodi/language
 %_datadir/kodi/media
-%_datadir/kodi/sounds
 %_datadir/kodi/system
 %_datadir/kodi/userdata
 %_datadir/kodi/privacy-policy.txt
 
 %files devel
 %_includedir/kodi
-%_libdir/kodi/*.cmake
+%_datadir/kodi/cmake
 
 %changelog
+* Wed Jan 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
+- 18.0 Leia released
+
 * Tue Sep 18 2018 Alexey Shabalin <shaba@altlinux.org> 17.6-alt5
 - rebuilt with recent libmicrohttpd
 
