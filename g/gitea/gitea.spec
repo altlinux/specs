@@ -1,17 +1,17 @@
 %global import_path code.gitea.io/gitea
 
-Name:     gitea
-Version:  1.7.0
-Release:  alt1
+Name:    gitea
+Version: 1.7.1
+Release: alt1
 
-Summary:  Git with a cup of tea, painless self-hosted git service
+Summary: Git with a cup of tea, painless self-hosted git service
 
-License:  MIT
-Group:    Development/Other
-Url:      https://gitea.io
+License: MIT
+Group:   Development/Other
+Url:     https://gitea.io
 
 # https://github.com/go-gitea/gitea
-Source:   %name-%version.tar
+Source:  %name-%version.tar
 
 Source1: gitea.service
 Source2: app-%version.ini
@@ -49,7 +49,8 @@ install -Dm 0660 %SOURCE2 %buildroot%_sysconfdir/%name/app.ini
 
 # install docs
 mkdir -p %buildroot%_docdir/%name
-install -Dm 0644 ".gopath/src/%import_path/custom/conf/app.ini.sample" %buildroot%_docdir/%name/default-app.ini
+install -Dm 0644 ".gopath/src/%import_path/custom/conf/app.ini.sample" \
+%buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE3 %buildroot%_docdir/%name/
 
 %pre
@@ -69,6 +70,9 @@ useradd -r -g _%name -d %_localstatedir/%name _%name -s /bin/sh ||:
 %doc *.md
 
 %changelog
+* Fri Feb 01 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
+- Build new version.
+
 * Wed Jan 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Build new version.
 
