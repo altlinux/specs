@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.1.12
-Release:   alt3
+Release:   alt4
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -142,10 +142,19 @@ touch %buildroot%_localstatedir/PackageKit/upgrade_lock
 %find_lang PackageKit
 
 %post
-%post_service %name
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+	"$SYSTEMCTL" daemon-reload
+	if [ "$RPM_INSTALL_ARG1" -eq 1 ]; then
+		"$SYSTEMCTL" -q preset %name
+	else
+		# only request stop of service, don't restart it
+		"$SYSTEMCTL" is-active --quiet %name && %_bindir/pkcon quit ||:
+	fi
+fi
 
 %preun
-%preun_service %name
+%preun_service %name ||:
 
 %triggerin -- librpm7
 # only on update of librpm7
@@ -236,6 +245,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Feb 01 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt4
+- Fixed stopping service without finishing current request.
+
 * Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt3
 - Updated build dependencies.
 
