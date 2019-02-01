@@ -1,5 +1,5 @@
 Name: rpmhdrcache
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Cached reading of rpm package headers
@@ -28,7 +28,7 @@ caches the result using libqacache library.
 gcc -shared -fPIC -D_GNU_SOURCE %optflags -o libqacache.so.0 -Wl,-soname,libqacache.so.0 cache.c \
 	-ldb -lcrypto -lsnappy -Wl,-z,defs
 gcc -shared -fPIC -D_GNU_SOURCE %optflags -o rpmhdrcache.so preload.c hdrcache.c \
-	-Wl,--no-as-needed -lrpmio -lrpm -Wl,--as-needed -lrpmdb -ldl libqacache.so.0 -Wl,-z,defs
+	-Wl,--no-as-needed -lrpmio -lrpm -Wl,--as-needed -ldl libqacache.so.0 -Wl,-z,defs
 gcc -D_GNU_SOURCE %optflags -o qacache-clean clean.c libqacache.so.0
 
 %install
@@ -72,6 +72,10 @@ are stored in a Berkeley DB, larger entries are backed by filesystem.
 %_libdir/libqacache.so
 
 %changelog
+* Fri Feb 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.1-alt1
+- Switched to librpm7 API (patch by Alexey Tourbin).
+- Rebuilt with openssl 1.1.
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.3-alt1
 - cache.c: implemented db and fs atime cleanup
 - clean.c: implemented /usr/bin/qacache-clean helper program
