@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 18.12.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Development/Tools
@@ -13,6 +13,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: Add-language-team-settings-to-Lokalize.patch
 
 # Automatically added by buildreq on Thu Oct 01 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel rpm-build-gir xml-common xml-utils
@@ -34,6 +35,7 @@ Lokalize is the localization tool for KDE and other open source software.
 %prep
 %setup -n %rname-%version
 sed -i 's|\(.*FIND_LIBRARY.*HUNSPELL_LIBRARIES.*NAMES\)|\1 hunspell|' cmake/FindHUNSPELL.cmake
+%patch1 -p2
 
 %build
 %K5build
@@ -59,6 +61,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5notif/lokalize*
 
 %changelog
+* Fri Feb 01 2019 Pavel Moseev <mars@altlinux.org> 18.12.1-alt2
+- add language-team settings to Lokalize
+
 * Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - new version
 
