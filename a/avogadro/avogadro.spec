@@ -8,7 +8,7 @@
 
 Name: avogadro
 Version: 1.2.0
-Release: alt4%ubt
+Release: alt5
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -145,6 +145,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt5
+- rebuild with python-module-sip-4.9.13
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt4%ubt
 - NMU: rebuilt with boost-1.67.0
 

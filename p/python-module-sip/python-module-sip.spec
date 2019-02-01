@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.19.7
-Release: alt1.3
+Version: 4.19.13
+Release: alt1
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -23,23 +23,36 @@ Source: %name-%version.tar
 Provides: %modulename = %version-%release
 Obsoletes: %modulename <= 4.1-alt2.1
 
-#BuildPreReq: gcc-c++
-#BuildPreReq: flex
 # for docs build
 #BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libstdc++-devel python-base python-modules python-modules-compiler python3 python3-base
-BuildRequires: flex gcc-c++ python-devel python3-devel rpm-build-python3
-
-#BuildRequires: python3-devel
+BuildRequires: python3-devel
 %endif
+BuildRequires(pre): rpm-build-python
+BuildRequires: flex gcc-c++ python-devel 
+
 
 %description
 Generates Python bindings for C++ class libraries from a set of class
 specification files.  Also includes a Python extension module needed by all
 generated bindings.
+
+%package -n python-module-PyQt4-%oname
+Summary: Python bindings generator for C++ class libraries for PyQt4
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-PyQt4-%oname
+Python bindings generator for C++ class libraries for PyQt4
+
+%package -n python-module-PyQt5-%oname
+Summary: Python bindings generator for C++ class libraries for PyQt5
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-PyQt5-%oname
+Python bindings generator for C++ class libraries for PyQt5
 
 %if_with python3
 %package -n python3-module-%oname
@@ -51,6 +64,22 @@ Group: Development/Python3
 Generates Python bindings for C++ class libraries from a set of class
 specification files.  Also includes a Python extension module needed by all
 generated bindings.
+
+%package -n python3-module-PyQt4-%oname
+Summary: Python 3 bindings generator for C++ class libraries for PyQt4
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-PyQt4-%oname
+Python 3 bindings generator for C++ class libraries for PyQt4
+
+%package -n python3-module-PyQt5-%oname
+Summary: Python 3 bindings generator for C++ class libraries for PyQt5
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-PyQt5-%oname
+Python 3 bindings generator for C++ class libraries for PyQt5
 
 %package -n python3-module-%oname-devel
 Requires: python3-module-%oname = %version-%release
@@ -83,44 +112,74 @@ Header files for sip
 #subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
 #python build.py prepare
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-python configure.py --debug -d %python_sitelibdir
+mkdir python
+pushd python
+python ../configure.py --debug -d %python_sitelibdir
+
 sed -i 's|^\(CPPFLAGS.*\)|\1 -g -I%python_includedir|' */Makefile
-%make
+%make_build
+popd
+
+mkdir python-PyQt4
+pushd python-PyQt4
+python ../configure.py --debug -d %python_sitelibdir \
+	--sip-module=PyQt4.sip
+%make_build
+popd
+
+mkdir python-PyQt5
+pushd python-PyQt5
+python ../configure.py --debug -d %python_sitelibdir \
+	--sip-module=PyQt5.sip
+%make_build
+popd
 
 # docs build
 #python build.py doc
 
 %if_with python3
-pushd ../python3
-python3 configure.py --debug -d %python3_sitelibdir
+mkdir python3
+pushd python3
+python3 ../configure.py --debug -d %python3_sitelibdir
 sed -i \
 	's|^\(CPPFLAGS.*\)|\1 -g -I%__python3_includedir|' \
 	*/Makefile
 sed -i \
 	's|lpython%__python3_version|l:%(basename %__libpython3)|' \
 	siplib/Makefile
-%make
+%make_build
+popd
+
+mkdir python3-PyQt4
+pushd python3-PyQt4
+python3 ../configure.py --debug -d %python3_sitelibdir \
+	--sip-module=PyQt4.sip
+%make_build
+popd
+
+mkdir python3-PyQt5
+pushd python3-PyQt5
+python3 ../configure.py --debug -d %python3_sitelibdir \
+	--sip-module=PyQt5.sip
+%make_build
 popd
 %endif
 
 %install
 %if_with python3
-pushd ../python3
-%makeinstall_std
-popd
+%makeinstall_std -C python3
 mv %buildroot%_bindir/sip %buildroot%_bindir/sip3
 sed -i 's|%_datadir/sip|%_datadir/sip3|' \
 	%buildroot%python3_sitelibdir/sipconfig.py
 sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 	%buildroot%python3_sitelibdir/sipconfig.py
+%makeinstall_std -C python3-PyQt4
+%makeinstall_std -C python3-PyQt5
 %endif
-%makeinstall_std
+%makeinstall_std -C python
+%makeinstall_std -C python-PyQt4
+%makeinstall_std -C python-PyQt5
 
 %files
 %_bindir/sip
@@ -128,7 +187,15 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %exclude %python_sitelibdir/*.pyi
 %exclude %python_sitelibdir/sipconfig.*
 %exclude %python_sitelibdir/sipdistutils.*
+%exclude %python_sitelibdir/PyQt4*
+%exclude %python_sitelibdir/PyQt5*
 %doc README NEWS LICENSE*
+
+%files -n python-module-PyQt4-%oname
+%python_sitelibdir/PyQt4*
+
+%files -n python-module-PyQt5-%oname
+%python_sitelibdir/PyQt5*
 
 %files devel
 %python_includedir/*
@@ -145,6 +212,14 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %exclude %python3_sitelibdir/*.pyi
 %exclude %python3_sitelibdir/sipconfig.*
 %exclude %python3_sitelibdir/sipdistutils.*
+%exclude %python3_sitelibdir/PyQt4*
+%exclude %python3_sitelibdir/PyQt5*
+
+%files -n python3-module-PyQt4-%oname
+%python3_sitelibdir/PyQt4*
+
+%files -n python3-module-PyQt5-%oname
+%python3_sitelibdir/PyQt5*
 
 %files -n python3-module-%oname-devel
 # Here, we just use the same path as in the build system:
@@ -156,6 +231,10 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 4.19.13-alt1
+- new version (4.19.13) with rpmgs script
+- build PyQt4 and PyQt5-sip modules
+
 * Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.19.7-alt1.3
 - move sipconfig and sipdistutils to devel subpackage
 

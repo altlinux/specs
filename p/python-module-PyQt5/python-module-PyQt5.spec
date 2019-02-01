@@ -7,8 +7,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 5.10.1
-Release: alt2%ubt
+Version: 5.11.3
+Release: alt1
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -25,7 +25,8 @@ Url: http://www.riverbankcomputing.co.uk/software/pyqt
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
 %py_provides dbus.mainloop.pyqt5
-Requires: python-module-sip = %sipver2
+Requires: python-module-PyQt5-sip = %sipver2
+Requires: python-module-enum34
 
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
 #BuildPreReq: %py_package_dependencies dbus-devel
@@ -84,7 +85,7 @@ code generator for Qt Designer.
 %package -n python3-module-%oname
 Summary: Python bindings for Qt
 Group: Development/Python3
-Requires: python3-module-sip = %sipver3
+Requires: python3-module-PyQt5-sip = %sipver3
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
 %py3_provides dbus.mainloop.pyqt5
 
@@ -135,8 +136,8 @@ This package contains PyQt5 docs
 %prep
 %setup -n PyQt-gpl-%version
 #patch0 -p1
-#%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst "s|/lib'$|/%_lib'|g" configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -263,6 +264,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 5.11.3-alt1
+- new version
+
 * Tue Aug 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt2%ubt
 - build with QtWebKit
 
