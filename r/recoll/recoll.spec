@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.24.3
+Version: 1.24.5
 Release: alt1
 
 Summary: A personal full text search package
@@ -150,6 +150,9 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 1.24.5-alt1
+- new version (watch file uupdate)
+
 * Fri Nov 16 2018 Michael Shigorin <mike@altlinux.org> 1.24.3-alt1
 - new version (watch file uupdate)
 - dropped upstream patch
