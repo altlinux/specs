@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.22
-Release: alt4
+Release: alt5
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -16,11 +16,15 @@ Patch2: ufraw-0.22-multipliers.patch
 Patch3: ufraw-0.22-find_green.patch
 Patch4: ufraw-0.22-lf-destroy.patch
 
-PreReq: GConf
+Requires(pre): GConf
 
-BuildRequires: gcc-c++ libgomp-devel
-BuildPreReq: liblensfun-devel >= 0.2.5
-BuildPreReq: libexiv2-devel >= 0.20
+%ifnarch %e2k
+# lcc-1.23.12: ftbfs on ufraw_developer.c:862
+BuildRequires: libgomp-devel
+%endif
+BuildRequires: gcc-c++
+BuildRequires: liblensfun-devel >= 0.2.5
+BuildRequires: libexiv2-devel >= 0.20
 BuildRequires: liblcms2-devel libgimp-devel libgtkimageview-devel
 BuildRequires: libjpeg-devel liblensfun-devel libpng-devel libtiff-devel
 BuildRequires: libcfitsio-devel zlib-devel bzlib-devel perl-podlators
@@ -51,8 +55,11 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 
 %build
 %autoreconf
-%configure --enable-contrast \
+%configure \
+	--enable-contrast \
+%ifnarch %e2k
 	--enable-openmp \
+%endif
 	--enable-mime \
 	--enable-extras
 %make_build schemasdir=%_sysconfdir/gconf/schemas
@@ -88,6 +95,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri Feb 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt5
+- mike@: E2K: avoid openmp for now (ftbfs)
+
 * Wed Jun 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt4
 - rebuilt against libjasper.so.4
 
