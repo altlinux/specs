@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.3.5
-Release: alt10
+Version: 5.3.8
+Release: alt11
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -46,7 +46,7 @@ Patch11: pve-manager-install_vzdump_cron_config.patch
 Patch12: qemu-server-lsi.patch
 Patch13: pve-manager-lsi.patch
 Patch14: pve-container-lxc.patch
-Patch15: pve-manager-ceph.patch
+Patch15: pve-manager-sgdisk.patch
 Patch16: pve-manager-logrotate.patch
 Patch18: pve-container-lxcnetdelbr.patch
 Patch19: pve-manager-snapshot-resize.patch
@@ -68,7 +68,7 @@ Patch34: qemu-server-alt-bootsplash.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
-BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc
+BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc libnetfilter_conntrack-devel
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
 BuildRequires: perl(Template.pm) perl(IPC/Run.pm) perl(Term/ReadLine.pm) libjson-c-devel
 
@@ -77,7 +77,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.31
+Version: 2.0.33
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc >= 2.1.0 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
@@ -87,7 +87,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.16
+Version: 3.0.17
 Group: System/Servers
 Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -96,7 +96,7 @@ This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 2.0.5
+Version: 2.0.6
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -104,9 +104,9 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.43
+Version: 5.0.45
 Group: System/Servers
-Requires: socat genisoimage cloud-init pve-qemu-system >= 2.6.1-alt4
+Requires: socat genisoimage pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -115,7 +115,7 @@ This package contains the Qemu Server tools used by PVE
 
 %package -n pve-guest-common
 Summary: PVE common guest-related modules
-Version: 2.0.18
+Version: 2.0.19
 Group: System/Servers
 
 %description -n pve-guest-common
@@ -149,7 +149,7 @@ This is used to implement the PVE REST API
 %patch12 -p0 -b .megasas-gen2-1
 %patch13 -p0 -b .megasas-gen2-2
 %patch14 -p0 -b .lxc
-%patch15 -p0 -b .ceph
+%patch15 -p0 -b .sgdisk
 %patch16 -p0 -b .logrotate
 %patch18 -p0 -b .lxcnetdelbr
 %patch19 -p0 -b .resize
@@ -297,11 +297,11 @@ __EOF__
 %dir %perl_vendor_privlib/PVE/Service
 %dir %perl_vendor_privlib/PVE/Status
 %dir %perl_vendor_privlib/PVE/VZDump
+%dir %perl_vendor_privlib/PVE/Ceph
 %perl_vendor_privlib/PVE/API2.pm
 %perl_vendor_privlib/PVE/API2Tools.pm
 %perl_vendor_privlib/PVE/APLInfo.pm
 %perl_vendor_privlib/PVE/AutoBalloon.pm
-%perl_vendor_privlib/PVE/CephTools.pm
 %perl_vendor_privlib/PVE/CertHelpers.pm
 %perl_vendor_privlib/PVE/HTTPServer.pm
 %perl_vendor_privlib/PVE/NodeConfig.pm
@@ -333,12 +333,17 @@ __EOF__
 %perl_vendor_privlib/PVE/API2/Hardware/PCI.pm
 %perl_vendor_privlib/PVE/API2/Ceph/FS.pm
 %perl_vendor_privlib/PVE/API2/Ceph/MDS.pm
+%perl_vendor_privlib/PVE/API2/Ceph/MGR.pm
+%perl_vendor_privlib/PVE/API2/Ceph/MON.pm
+%perl_vendor_privlib/PVE/API2/Ceph/OSD.pm
 %perl_vendor_privlib/PVE/CLI/pveceph.pm
 %perl_vendor_privlib/PVE/CLI/pvenode.pm
 %perl_vendor_privlib/PVE/CLI/pvesr.pm
 %perl_vendor_privlib/PVE/CLI/pvesubscription.pm
 %perl_vendor_privlib/PVE/CLI/vzdump.pm
 %perl_vendor_privlib/PVE/CLI/pvesh.pm
+%perl_vendor_privlib/PVE/Ceph/Services.pm
+%perl_vendor_privlib/PVE/Ceph/Tools.pm
 %perl_vendor_privlib/PVE/Service/pvedaemon.pm
 %perl_vendor_privlib/PVE/Service/pveproxy.pm
 %perl_vendor_privlib/PVE/Service/pvestatd.pm
@@ -502,13 +507,21 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Fri Feb 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.3.8-alt11
+- pve-manager 5.3-8
+- pve-container 2.0-33
+- pve-firewall 3.0-17
+- qemu-server 5.0-45
+- pve-ha-manager 2.0-6
+- pve-guest-common 2.0-19
+
 * Wed Dec 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.3.5-alt10
 - pve-manager 5.3-5
 - pve-container 2.0-31
 - pve-firewall 3.0-16
 - qemu-server 5.0-43
 - pve-widget-toolkit 1.0-22
-- extjs 6.0-1-2
+- extjs 6.0.1-2
 - pve-i18n 1.0-9
 
 * Mon Nov 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.3.3-alt9
