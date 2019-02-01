@@ -5,8 +5,8 @@
 
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
-Version: 2.3
-Release: alt1%ubt.1
+Version: 2.5.2
+Release: alt1
 License: LGPLv3
 Group: Development/Python
 BuildArch: noarch
@@ -15,7 +15,6 @@ Url: https://pypi.python.org/pypi/ldap3/
 # https://github.com/cannatag/ldap3.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pyasn1
@@ -121,10 +120,14 @@ popd
 %endif
 
 %changelog
-* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3-alt1%ubt.1
+* Fri Feb 01 2019 Ivan A. Melnikov <iv@altlinux.org> 2.5.2-alt1
+- Version 2.5.2.
+- Get rid of ubt.
+
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3-alt1.S1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
-* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3-alt1%ubt
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3-alt1.S1
 - Updated to upstream version 2.3.
 - Disabled tests since it requires running ldap server.
 
