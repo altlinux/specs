@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 
 Name:           squeak-vm
 Version:        %{vmver}
-Release:        alt3_8
+Release:        alt3_9
 Summary:        The Squeak virtual machine
 
 Group:          Development/Other
@@ -61,6 +61,8 @@ sed -i 's|libdir="${prefix}/lib/squeak"|libdir="%{_libdir}/squeak"|' unix/cmake/
 %build
 mkdir -p bld
 cd bld
+
+export CFLAGS="-std=gnu89"
 
 %{fedora_cmake} ../unix -DCMAKE_VERBOSE_MAKEFILE=ON -DVM_HOST="%{_host}" -DVM_VERSION="%{vmver2}" -DPLATFORM_SOURCE_VERSION="%{rev}"
 
@@ -165,6 +167,9 @@ chmod 755 %buildroot/usr/lib/rpm/squeak-vm.req*
 /usr/lib/rpm/squeak-vm.req*
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 4.10.2.2614-alt3_9
+- force -std=c89 (see also debian#778129)
+
 * Wed Sep 04 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt3_8
 - build with mp3 support; dropped symlink _libdir/squeak/current
 
