@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 17.5
-Release: alt1.1
+Version: 18.0
+Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPL
@@ -30,6 +30,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/*
 
 %changelog
+* Fri Feb 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
+- updated for Leia
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.5-alt1.1
 - NMU: added URL
 

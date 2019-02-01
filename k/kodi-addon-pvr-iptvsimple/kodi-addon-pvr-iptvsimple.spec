@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-iptvsimple
-Version: 17.0
-Release: alt2
+Version: 18.0
+Release: alt1
 
 Summary: IPTVSimple addon for Kodi
 License: GPL
@@ -9,14 +9,14 @@ Url: https://github.com/kodi-pvr/pvr.iptvsimple/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel zlib-devel
-%ifarch %ix86 x86_64
-BuildRequires:libGL-devel
+%ifarch armh aarch64
+%define glflavour libGLES-devel
+%else
+%define glflavour libGL-devel
 %endif
-%ifarch armh
-BuildRequires: libGLES-devel
-%endif
+
+BuildRequires: cmake gcc-c++ kodi-devel libcec-platform-devel
+BuildRequires: libkodiplatform-devel %glflavour rapidxml zlib-devel
 
 %description
 %summary
@@ -36,6 +36,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Fri Feb 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
+- updated for Leia
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.0-alt2
 - NMU: added URL
 
