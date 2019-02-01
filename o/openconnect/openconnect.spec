@@ -5,7 +5,7 @@
 %def_with gnutls
 
 Name: openconnect
-Version: 8.01
+Version: 8.02
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -83,6 +83,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 8.02-alt1
+- new version 8.02
+
 * Tue Jan 08 2019 Alexey Shabalin <shaba@altlinux.org> 8.01-alt1
 - new version 8.01
 - fixed clear form submissions before freeing (CVE-2018-20319)
