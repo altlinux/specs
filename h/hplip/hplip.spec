@@ -29,7 +29,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.18.12
+Version: 3.19.1
 Release: alt1
 %if_without ernie
 License: GPLv2+ and MIT and BSD
@@ -516,7 +516,7 @@ find . -name *.ppd.gz -exec gunzip '{}' ';'
 # Corrected several IEEE 1284 Device IDs using foomatic data.
 # Color LaserJet 2500 series (bug #659040)
 # LaserJet 4100 Series/2100 Series (bug #659039)
-%patch105 -p1 -b .deviceIDs-drv
+%patch105 -p2 -b .deviceIDs-drv
 chmod +x %{SOURCE102} %{SOURCE103}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 %if_with python3
@@ -1179,6 +1179,13 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.1-alt1
+- New version.
+- Added support for new printers:
+  + HP LaserJet Managed MFP E82540du, E82550du, E82560du;
+  + HP Color LaserJet Managed MFP E87640du, E87650du, E87660du.
+- Added support for the HP Scanjet Pro 2500 f1.
+
 * Wed Dec 05 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.18.12-alt1
 - New version.
 
