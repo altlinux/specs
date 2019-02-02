@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.7
-Release: alt2
+Release: alt3
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -17,6 +17,8 @@ Patch0:         01_install_FindEigen3.patch
 Patch1:         eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
 Patch2:         eigen3-3.3.1-fixcmake.patch
+# Avoid SSE4.2/AVX on e2k
+Patch3:		eigen3-3.3.7-alt-e2k.patch
 
 %ifnarch %e2k
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
@@ -65,6 +67,9 @@ This package contains examples for Eigen.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0 -b .fixcmake
+%ifarch %e2k
+%patch3 -p2 -b .e2k
+%endif
 
 %build
 mkdir -p BUILD
@@ -127,6 +132,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %endif
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 3.3.7-alt3
+- E2K: avoid SSE4.2/AVX in installed headers too.
+
 * Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 3.3.7-alt2
 - E2K: avoid building too much for now.
 
