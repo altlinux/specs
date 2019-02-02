@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty3
 Version:        3.10.6
-Release:        alt1_5jpp8
+Release:        alt2_5jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 # CC0: src/main/java/org/jboss/netty/handler/codec/base64/Base64.java
 License:        ASL 2.0 and BSD and CC0
@@ -51,6 +51,9 @@ BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 # src/main/java/org/jboss/netty/handler/codec/base64/Base64.java (unkown version)
 Provides:       bundled(java-base64)
 Source44: import.info
+
+# mvn install:install-file -Dfile=../SOURCES/netty-tcnative.jar  -DgroupId=io.netty -DartifactId=netty-tcnative -Dversion=1.1.30.Fork2 -Dpackaging=jar
+Source21: m2-build-repo-add-netty-tcnative.tar
 
 %description
 Netty is a NIO client server framework which enables quick and easy
@@ -124,6 +127,8 @@ rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
 %mvn_alias : org.jboss.netty:
 %mvn_file  : %{name}
 
+tar -x -C ~ -f %SOURCE21
+
 %build
 
 # skipping tests because we don't have easymockclassextension
@@ -140,6 +145,9 @@ rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
  
 %changelog
+* Sat Feb 02 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt2_5jpp8
+- fixed build
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_5jpp8
 - built w/o netty-tcnative
 
