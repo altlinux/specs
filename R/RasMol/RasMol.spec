@@ -4,7 +4,7 @@
 
 Name: RasMol
 Version: %series.%patchlevel
-Release: alt3
+Release: alt4
 
 Summary: Molecular Graphics Visualisation Tool
 License: GPL-like
@@ -107,6 +107,9 @@ install -pDm644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 # - consider adding rasmol-gtk
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt4
+- rebuilt with current NearTree
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt3
 - rebuilt with current NearTree
 

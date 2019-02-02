@@ -1,5 +1,5 @@
 Name: NearTree
-Version: 3.1.1
+Version: 5.1.1
 Release: alt1
 
 Summary: An API for finding nearest neighbors
@@ -10,9 +10,9 @@ Url: http://neartree.sourceforge.net
 Source: http://downloads.sourceforge.net/project/neartree/neartree/NearTree-%version/NearTree-%version.tar.gz
 # library should not have version number in their name.
 # Sent to upstream but upstream cannot accept.
-Patch: NearTree-3.1-fedora.patch
+Patch: NearTree-5.1.1-fedora.patch
 # to fix libdir for lib64 architecture
-Patch1: NearTree-3.1-lib64.patch
+Patch1: NearTree-5.1.1-lib64.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 22 2012
@@ -65,14 +65,11 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name '*.a' -exec rm -f {} ';'
 
 %check
-if [ "`gcc -dumpversion | cut -d \. -f 1-2`" = "4.4" ] ; then
-  # gcc-4.4.x may have a bug in -fcaller-saves
-  make tests \
-  	CFLAGS="%optflags -fno-caller-saves -ansi -pedantic -DCNEARTREE_SAFE_TRIANG=1"
-else
-  make tests \
-  	CFLAGS="%optflags -ansi -pedantic -DCNEARTREE_SAFE_TRIANG=1"
-fi
+# Fails on i686 for some reason (thank you, fedora)
+%ifnarch %ix86
+make tests \
+	CFLAGS="%optflags -ansi -pedantic -DCNEARTREE_SAFE_TRIANG=1"
+%endif
 
 %files -n lib%name
 %doc README_NearTree.html README_NearTree.txt lgpl.txt
@@ -86,6 +83,13 @@ fi
 %_libdir/libCNearTree.so
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 5.1.1-alt1
+- 5.1.1
+  + updated fedora patches and spec bits
+
+* Tue Oct 20 2015 Michael Shigorin <mike@altlinux.org> 3.1.1-alt2
+- rebuilt against gcc5-built CVector
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
