@@ -1,37 +1,61 @@
 %define oname z3c.pt
 
 %def_with python3
+%def_with check
+%def_with docs
 
 Name: python-module-%oname
-Version: 3.0.0
-Release: alt2.a2.dev0.git20130313.1.1.1
+Version: 3.2.0
+Release: alt1
 Summary: Python template compiler which supports ZPT
 License: ZPLv2.1
 Group: Development/Python
-Url: http://chameleon.repoze.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/zopefoundation/z3c.pt
 
 # git://github.com/zopefoundation/z3c.pt.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-zope.interface
-#BuildPreReq: python-module-zope.i18n python-module-zope.component
-#BuildPreReq: python-module-zope.event python-module-zope.i18nmessageid
-#BuildPreReq: python-module-texttemplate python-module-zope.schema
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python-module-setuptools
+%if_with check
+BuildRequires: python-module-six
+BuildRequires: python-module-zope.interface
+BuildRequires: python-module-zope.component
+BuildRequires: python-module-zope.component-tests
+BuildRequires: python-module-zope.i18n >= 3.5
+BuildRequires: python-module-zope.traversing
+BuildRequires: python-module-zope.contentprovider
+BuildRequires: python-module-chameleon.core >= 2.4
+BuildRequires: python-module-zope.pagetemplate
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
 %endif
 
-%py_requires z3c zope.interface zope.component zope.i18n zope.traversing
-%py_requires zope.contentprovider chameleon
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-six
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.i18n >= 3.5
+BuildRequires: python3-module-zope.traversing
+BuildRequires: python3-module-zope.contentprovider
+BuildRequires: python3-module-chameleon.core >= 2.4
+BuildRequires: python3-module-zope.pagetemplate
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+%endif
+%endif
 
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-persistent python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-z3c python-module-zope.component python-module-zope.event python-module-zope.hookable python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.schema python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-texttemplate python-module-zope.i18n python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-docutils python-module-objects.inv
+%endif
+
+%py_requires z3c zope.interface zope.component
+%py_requires zope.i18n zope.traversing zope.contentprovider
 
 %description
 This is a fast implementation of the ZPT template engine for Zope 3
@@ -40,11 +64,11 @@ which uses Chameleon to compile templates to byte-code.
 The package provides application support equivalent to
 ``zope.app.pagetemplate``.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python template compiler which supports ZPT
 Group: Development/Python3
-%py3_requires z3c zope.interface zope.component zope.i18n zope.traversing
-%py3_requires zope.contentprovider chameleon
+%py3_requires z3c
 
 %description -n python3-module-%oname
 This is a fast implementation of the ZPT template engine for Zope 3
@@ -66,22 +90,7 @@ The package provides application support equivalent to
 ``zope.app.pagetemplate``.
 
 This package contains tests for z3c.pt
-
-%package -n python-module-z3c
-Summary: z3c core package
-Group: Development/Python
-%py_provides z3c
-
-%description -n python-module-z3c
-z3c core package.
-
-%package -n python3-module-z3c
-Summary: z3c core package (Python 3)
-Group: Development/Python3
-%py3_provides z3c
-
-%description -n python3-module-z3c
-z3c core package.
+%endif
 
 %package tests
 Summary: Tests for z3c.pt
@@ -97,6 +106,7 @@ The package provides application support equivalent to
 
 This package contains tests for z3c.pt
 
+%if_with docs
 %package pickles
 Summary: Pickles for z3c.pt
 Group: Development/Python
@@ -123,16 +133,19 @@ The package provides application support equivalent to
 ``zope.app.pagetemplate``.
 
 This package contains documentation for z3c.pt
+%endif
 
 %prep
 %setup
 
 %if_with python3
-cp -fR . ../python3
+cp -a . ../python3
 %endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build
@@ -145,35 +158,44 @@ popd
 
 %install
 %python_install
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
+install -d %buildroot%python_sitelibdir
+mv %buildroot%python_sitelibdir_noarch/* \
+	%buildroot%python_sitelibdir/
+%endif
 
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+        %buildroot%python3_sitelibdir/
+%endif
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with docs
+export PYTHONPATH="$(pwd)/src"
 pushd docs
 %make pickle
 %make html
+install -d %buildroot%python_sitelibdir/%oname/
+cp -va .build/pickle %buildroot%python_sitelibdir/%oname/
 popd
+%endif
 
-install -d %buildroot%python_sitelibdir/z3c
-install -d %buildroot%python_sitelibdir/%oname
-install -p -m644 src/z3c/__init__.py %buildroot%python_sitelibdir/z3c/
 
-install -d %buildroot%python3_sitelibdir/z3c
-install -p -m644 src/z3c/__init__.py %buildroot%python3_sitelibdir/z3c/
+%if_with check
+%check
+PYTHONPATH="$(pwd)/src" zope-testrunner --test-path=./src/
 
-%ifarch x86_64
-mv %buildroot%python_sitelibdir_noarch/z3c/* \
-	%buildroot%python_sitelibdir/z3c/
 %if_with python3
-mv %buildroot%python3_sitelibdir_noarch/z3c/* \
-	%buildroot%python3_sitelibdir/z3c/
+pushd ../python3
+PYTHONPATH="$(pwd)/src" zope-testrunner3 --test-path=./src/
+popd
 %endif
 %endif
-cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc *.txt
@@ -181,27 +203,21 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %ifnarch x86_64
 %exclude %python_sitelibdir/*.pth
 %endif
-%exclude %python_sitelibdir/z3c/__init__.py*
+%if_with docs
 %exclude %python_sitelibdir/%oname/pickle
+%endif
 %exclude %python_sitelibdir/*/*/tests
-
-%files -n python-module-z3c
-%dir %python_sitelibdir/z3c
-%python_sitelibdir/z3c/__init__.py*
-
-%files -n python3-module-z3c
-%dir %python3_sitelibdir/z3c
-%python3_sitelibdir/z3c/__init__.py*
-%python3_sitelibdir/z3c/__pycache__
 
 %files tests
 %python_sitelibdir/*/*/tests
 
+%if_with docs
 %files pickles
 %python_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/.build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -210,8 +226,6 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %ifnarch x86_64
 %exclude %python3_sitelibdir/*.pth
 %endif
-%exclude %python3_sitelibdir/z3c/__init__.py*
-%exclude %python3_sitelibdir/z3c/__pycache__/__init__.*
 %exclude %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-%oname-tests
@@ -219,6 +233,13 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Feb 02 2019 Ivan A. Melnikov <iv@altlinux.org> 3.2.0-alt1
+- 3.2.0
+- add %%check
+- add toggles for %%check and building docs, on by default
+- build 'z3c' namespace module separately, remove it from here
+- minor spec cleanups
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.a2.dev0.git20130313.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
