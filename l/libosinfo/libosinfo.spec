@@ -1,8 +1,8 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.2.0
-Release: alt1%ubt
+Version: 1.3.0
+Release: alt1
 
 License: LGPLv2+
 Group: System/Libraries
@@ -11,19 +11,16 @@ Source: %name-%version.tar
 #Patch2: %name-%version-altlinux.patch
 
 Url: https://libosinfo.org
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gnome-common gtk-doc
-BuildRequires: glib2-devel >= 2.36 libgio-devel
-BuildRequires: libcurl-devel
-BuildRequires: libxml2-devel >= 2.6.0
-BuildRequires: libxslt-devel >= 1.0.0
-BuildRequires: gobject-introspection-devel >= 0.9.0
-BuildRequires: osinfo-db
+BuildRequires: pkgconfig(glib-2.0) >= 2.38 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
+BuildRequires: pkgconfig(libxslt) >= 1.0.0
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: gobject-introspection-devel >= 0.9.7
 BuildRequires: perl-podlators
 BuildRequires: vala
 BuildRequires: vala-tools
-BuildRequires: gobject-introspection-devel
 BuildRequires: pciids usbids
 BuildRequires: osinfo-db
 
@@ -127,6 +124,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1%ubt
 - 1.2.0
 
