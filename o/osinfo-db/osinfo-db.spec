@@ -1,12 +1,12 @@
 
 Summary: osinfo database files
 Name: osinfo-db
-Version: 20181116
+Version: 20190120
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: https://libosinfo.org
-Source: https://releases.pagure.io/libosinfo/%{name}-%{version}.tar.xz
+Source: https://releases.pagure.org/libosinfo/%{name}-%{version}.tar.xz
 BuildArch: noarch
 
 BuildRequires: intltool >= 0.40.0
@@ -26,6 +26,9 @@ osinfo-db-import --root %buildroot --system %SOURCE0
 %_datadir/osinfo/*
 
 %changelog
+* Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 20190120-alt1
+- 20190120
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 20181116-alt1
 - 20181116
 
