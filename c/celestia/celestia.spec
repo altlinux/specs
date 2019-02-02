@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.9.git
-Release: alt1
+Release: alt2
 
 Summary: A real-time visual space simulation
 
@@ -29,6 +29,7 @@ BuildRequires: eigen3
 
 BuildRequires: libjpeg-devel libpng-devel libtheora-devel
 BuildRequires: zlib-devel liblua5-devel libssl-devel
+BuildRequires: libfmt-devel
 
 BuildRequires: libgtk+2-devel libgtkglext-devel
 
@@ -176,6 +177,9 @@ rm -fv %buildroot%_libdir/libcelmodel.a
 /etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 1.6.9.git-alt2
+- build with system libfmt
+
 * Sat Dec 08 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.9.git-alt1
 - new version (1.6.9.git) with rpmgs script
 - cleanup spec, build gtk, glut, qt builds
