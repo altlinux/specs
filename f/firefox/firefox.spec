@@ -7,15 +7,15 @@
 %define gst_version 1.0
 %define nspr_version 4.20
 %define nss_version 3.40.0
-%define rust_version 1.24.1
-%define cargo_version 0.25.0
+%define rust_version  1.31.1
+%define cargo_version 1.31.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        64.0
-Release:        alt2
+Version:        65.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -154,10 +154,10 @@ tar -xf %SOURCE2
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
-%patch19 -p1 -b .aarch64-skia
+#patch19 -p1 -b .aarch64-skia
 
 %patch200 -p1
-%patch201 -p1
+#patch201 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -356,6 +356,17 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Jan 31 2019 Alexey Gladkov <legion@altlinux.ru> 65.0-alt1
+- New release (65.0).
+- Fixed:
+  + CVE-2018-18500: Use-after-free parsing HTML5 stream
+  + CVE-2018-18503: Memory corruption with Audio Buffer
+  + CVE-2018-18504: Memory corruption and out-of-bounds read of texture client buffer
+  + CVE-2018-18505: Privilege escalation through IPC channel messages
+  + CVE-2018-18506: Proxy Auto-Configuration file can define localhost access to be proxied
+  + CVE-2018-18502: Memory safety bugs fixed in Firefox 65
+  + CVE-2018-18501: Memory safety bugs fixed in Firefox 65 and Firefox ESR 60.5
+
 * Mon Dec 31 2018 Alexey Gladkov <legion@altlinux.ru> 64.0-alt2
 - Rebuilt with clang7.0.
 
