@@ -15,8 +15,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.4.0
-Release:        alt2
+Version:        60.5.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -148,10 +148,10 @@ tar -xf %SOURCE2
 %patch17 -p2
 %patch18 -p2
 %patch19 -p2 -b .aarch64-skia
-%patch20 -p1 -b .bug1375074-save-restore-x28
+#patch20 -p1 -b .bug1375074-save-restore-x28
 
 %patch200 -p1
-%patch201 -p1
+#patch201 -p1
 #patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
@@ -345,6 +345,13 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.0-alt1
+- New ESR version (60.5.0).
+- Fixed:
+  + CVE-2018-18500 Use-after-free parsing HTML5 stream
+  + CVE-2018-18505 Privilege escalation through IPC channel messages
+  + CVE-2018-18501 Memory safety bugs fixed in Firefox 65 and Firefox ESR 60.5
+
 * Thu Jan 10 2019 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt2
 - Rebuild with llvm7.0 (ALT #35858).
 - Build with gcc on %%ix86.
