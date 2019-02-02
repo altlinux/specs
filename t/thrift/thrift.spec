@@ -4,7 +4,7 @@
 %filter_from_requires /^python-base/d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/bundle /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/phpunit /usr/bin/ruby /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) python-devel rpm-build-java
+BuildRequires: /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/phpunit /usr/bin/ruby /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) python-devel rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: mono-web javapackages-local
 BuildRequires: chrpath
@@ -61,7 +61,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt2_15jpp8
+Release: alt3_15jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -574,6 +574,9 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 02 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt3_15jpp8
+- fixed build
+
 * Fri Dec 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_15jpp8
 - build with new ssl
 
