@@ -4,7 +4,7 @@
 
 Name: mgetty
 Version: 1.1.37
-Release: alt1.1.1
+Release: alt2
 
 %define verdate Jun05
 
@@ -51,9 +51,15 @@ Patch40: mgetty-1.1.31-callback.patch
 Patch41: mgetty-1.1.35-faxrunq.patch
 Patch42: mgetty-1.1.35-strerror.patch
 
+# from fedora
+Patch50: mgetty-1.1.36-fedora-gcc7.patch
+
+# debian-based
+Patch60: mgetty-1.1.37-alt-texi2roff.patch
+
 Packager: Fr. Br. George <george@altlinux.ru>
 
-PreReq: /var/lock/serial
+Requires(pre): /var/lock/serial
 
 # Automatically added by buildreq on Tue Oct 06 2009
 BuildRequires: gccmakedep groff-base imake libX11-devel libXext-devel xorg-cf-files
@@ -157,6 +163,10 @@ Documentation, samples and contributed stuff that comes with %name.
 %patch40 -p1
 #patch41 -p1
 %patch42 -p1
+
+%patch50 -p1
+
+%patch60 -p2
 
 cp policy.h-dist policy.h
 
@@ -333,7 +343,8 @@ find samples -type f |xargs chmod a-x
 
 %files doc
 %doc BUGS ChangeLog FTP THANKS TODO Recommend README.CID
-%doc doc/{modems.db,*.ps,*.txt,fhng-codes}
+%doc doc/{modems.db,*.txt,fhng-codes}
+#doc doc/*.ps
 %doc samples contrib
 
 #
@@ -344,6 +355,12 @@ find samples -type f |xargs chmod a-x
 # - Consider Gentoo patches
 
 %changelog
+* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 1.1.37-alt2
+- fix build without texi2roff
+
+* Thu Dec 13 2018 Michael Shigorin <mike@altlinux.org> 1.1.37-alt1.1.1.1
+- fix build with gcc7/lcc-1.23 with fedora patch
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.37-alt1.1.1
 - NMU: added BR: texinfo
 
