@@ -11,8 +11,8 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.4.0
-Release:	alt3
+Version:	60.5.0
+Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -218,7 +218,7 @@ tar -xf %SOURCE2
 %ifarch %arm
 %patch25 -p1
 %endif
-%patch26 -p1
+#patch26 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -469,6 +469,14 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.0-alt1
+- New version (60.5.0).
+- Fixes:
+  + CVE-2018-18500 Use-after-free parsing HTML5 stream
+  + CVE-2018-18505 Privilege escalation through IPC channel messages
+  + CVE-2016-5824 DoS (use-after-free) via a crafted ics file
+  + CVE-2018-18501 Memory safety bugs fixed in Firefox 65, Firefox ESR 60.5, and Thunderbird 60.5
+
 * Tue Jan 29 2019 Paul Wolneykien <manowar@altlinux.org> 60.4.0-alt3
 - Added Enigmail GOST patch.
 
@@ -478,6 +486,13 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 * Mon Dec 24 2018 Andrey Cherepanov <cas@altlinux.org> 60.4.0-alt1
 - New version (60.4.0).
 - Enigmail 2.0.9.
+- Fixes:
+  + CVE-2018-17466 Buffer overflow and out-of-bounds read in ANGLE library with TextureStorage11
+  + CVE-2018-18492 Use-after-free with select element
+  + CVE-2018-18493 Buffer overflow in accelerated 2D canvas with Skia
+  + CVE-2018-18494 Same-origin policy violation using location attribute and performance.getEntries to steal cross-origin URLs
+  + CVE-2018-18498 Integer overflow when calculating buffer sizes for images
+  + CVE-2018-12405 Memory safety bugs fixed in Firefox 64, Firefox ESR 60.4, and Thunderbird 60.4
 
 * Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.3-alt1
 - New version (60.3.3).
