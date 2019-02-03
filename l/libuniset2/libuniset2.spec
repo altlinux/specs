@@ -23,8 +23,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.7
-Release: alt17
+Version: 2.8
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sun Feb 03 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt1
+- added new public function 'pushMessage(string)'
+
 * Thu Jan 31 2019 Pavel Vainerman <pv@altlinux.ru> 2.7-alt17
 - new release
 
