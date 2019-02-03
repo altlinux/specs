@@ -6,8 +6,6 @@ BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl 
 # hacks around findreq ==============
 # GraphViz is optional dependency, not a requirement
 %filter_from_requires /^perl(GraphViz.pm)/d
-# Self-dep 
-%filter_from_requires /^perl(RT.pm)/d
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRT::Base'
 # instead of findreqs below
 %set_perl_req_method relaxed
@@ -78,7 +76,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 
 Name:		rt
 Version:	4.4.3
-Release:	alt1_2
+Release:	alt2_2
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -325,6 +323,8 @@ Patch33: rt-4.4.1-alt-buildroot.patch
 Conflicts: request-tracker < 4
 #Obsoletes: request-tracker < 4
 Provides: request-tracker = %version
+# perl.prov failed to recognize
+Provides: perl(RT.pm) = %version
 
 
 %description
@@ -656,6 +656,9 @@ fi
 %endif
 
 %changelog
+* Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.3-alt2_2
+- restored RT.pm provides
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.3-alt1_2
 - new version (closes: #35997)
 
