@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-Kwalitee
-Version:	1.27
-Release:	alt1.1_3
+Version:	1.28
+Release:	alt1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -61,13 +61,16 @@ make install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE
 %doc Changes CONTRIBUTING README
 %{_bindir}/kwalitee-metrics
 %{perl_vendor_privlib}/Test/
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1_3
 - update to new release by fcimport
 
