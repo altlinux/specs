@@ -7,13 +7,14 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 Epoch:          2
 
 Name:		jeuclid
-Version:	3.1.3
-Release:	alt1_22
+Version:	3.1.9
+Release:	alt1_0
 Summary:	MathML rendering solution
 Group:		Development/Java
 License:	ASL 2.0 and SPL
 URL:		http://jeuclid.sourceforge.net/index.html
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-parent-%{version}-src.zip
+#Source0:	http://downloads.sourceforge.net/%{name}/%{name}-parent-%{version}-src.zip
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-parent-%{version}-src.tar.gz
 #fedora specific build script based on debian
 Source1:	build.xml
 Source2:	jeuclid-mathviewer.desktop
@@ -21,11 +22,14 @@ Source3:	jeuclid-mathviewer.sh
 Source4:	jeuclid-cli.sh
 
 #removes FreeHep support as per the build README, optional feature (not upstream)
-Patch0:		jeuclid-core-FreeHep.patch
+#Patch0:		jeuclid-core-FreeHep.patch
 #Allows for compiling code that uses Apple EAWT without the lib
 Patch1:		AppleJavaExtensions.patch
 #removes OSX dep for the viewer
 Patch2:		MacOSX.patch
+Patch3:		jeuclid-cli-name.diff
+Patch4:		cast-issue.diff
+Patch5:		batik-compatibility.patch
 
 BuildArch:	noarch
 
@@ -90,11 +94,14 @@ touch -r NOTICE NOTICE.unix;
 mv NOTICE.unix NOTICE
 
 mkdir lib
-build-jar-repository -s -p lib jcip-annotations commons-logging xmlgraphics-commons batik-all fop commons-cli commons-lang
+build-jar-repository -s -p lib jcip-annotations commons-logging xmlgraphics-commons batik-all fop commons-cli commons-lang xml-commons-apis xalan-j2
 
-%patch0 -p1
+#patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
@@ -147,6 +154,11 @@ desktop-file-install --dir=$RPM_BUILD_ROOT/%{_datadir}/applications \
 
 
 %changelog
+* Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 2:3.1.9-alt1_0
+- new version 3.1.9
+- fixed build (closes: #35932)
+- merged debian patches
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2:3.1.3-alt1_22
 - NMU: fixed build, downgraded version to 3.1.3
 
