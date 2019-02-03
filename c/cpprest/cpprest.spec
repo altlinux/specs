@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: cpprest
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: C++ REST library
@@ -99,6 +99,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Sun Feb 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.10.10-alt1
+- 2.10.10
+
 * Wed Jan 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.10.9-alt1
 - 2.10.9 with bundled websocketpp
 
