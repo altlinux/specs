@@ -1,40 +1,29 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
 
-%define modulename waitress
-%define oldname python-%modulename
+%define oname waitress
+%def_with check
 
-%def_with python3
-%def_disable check
-
-%if_with python3
-%define py3name python3-module-%modulename
-%define py3dir %py3name-%version
-%endif
-
-Name: python-module-waitress
-Version: 0.8.10
-Release: alt2.dev0.2
-
-%setup_python_module %modulename
+Name: python-module-%oname
+Version: 1.2.1
+Release: alt1
 
 Summary: Waitress WSGI server
 License: ZPLv2.1
 Group: Development/Python
 
-Url: https://github.com/Pylons/%modulename
-Packager: Aleksey Avdeev <solo@altlinux.ru>
+Url: https://pypi.org/project/waitress/
 BuildArch: noarch
 
-# http://pypi.python.org/packages/source/w/%modulename/%modulename-%version.tar.gz
-# git://github.com/Pylons/%modulename.git
 Source: %name-%version.tar
-Source44: import.info
-BuildRequires: python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-pytest
+Patch: %name-%version-alt.patch
+BuildRequires(pre): rpm-build-python3
 
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-coverage
-#BuildPreReq: python-module-sphinx
-#BuildPreReq: python-module-setuptools-tests
+%if_with check
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(nose)
+BuildRequires: python3(nose)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -43,80 +32,40 @@ in the Python standard library. It runs on CPython on Unix and Windows under
 Python 2.6+ and Python 3.2. It is also known to run on PyPy 1.6.0 on UNIX.
 It supports HTTP/1.0 and HTTP/1.1.
 
-For more information, see %_docdir/%oldname-%version/docs or
-http://docs.pylonsproject.org/projects/%modulename/en/latest/ .
+For more information, see the "docs" directory of the Waitress package or
+visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 
-%package tests
-Summary: Tests for Waitress WSGI server
-Group: Development/Python
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description tests
-%summary
-
-This package contains tests for Waitress.
-
-%if_with python3
-%package -n %py3name
+%package -n python3-module-%oname
 Summary: Waitress WSGI server
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-BuildRequires: python3-module-coverage python3-module-html5lib python3-module-nose python3-module-pytest python3-module-sphinx
-BuildPreReq: rpm-build-python3
-#BuildPreReq: python3-module-distribute
-#BuildPreReq: python3-module-nose
-#BuildPreReq: python3-module-coverage
-#BuildPreReq: python3-module-sphinx
-#BuildPreReq: python3-module-setuptools-tests
 
-%description -n %py3name
+%description -n python3-module-%oname
 Waitress is meant to be a production-quality pure-Python WSGI server with
 very acceptable performance. It has no dependencies except ones which live
 in the Python standard library. It runs on CPython on Unix and Windows under
 Python 2.6+ and Python 3.2. It is also known to run on PyPy 1.6.0 on UNIX.
 It supports HTTP/1.0 and HTTP/1.1.
 
-For more information, see %_docdir/%oldname-%version/docs or
-http://docs.pylonsproject.org/projects/%modulename/en/latest/ .
-
-%package -n %py3name-tests
-Summary: Tests for Waitress WSGI server
-Group: Development/Python
-BuildArch: noarch
-Requires: %py3name = %EVR
-
-%description -n %py3name-tests
-%summary
-
-This package contains tests for Waitress.
-
-%endif
+For more information, see the "docs" directory of the Waitress package or
+visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 
 %prep
 %setup
-rm -rf %modulename.egg-info
-rm -f .gitignore docs/.gitignore
-# this script has devel paths, not useful in a user system
-rm -f docs/rebuild
+%patch -p1
 
-%if_with python3
-rm -rf ../%py3dir
-cp -a . ../%py3dir
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
 
-%if_with python3
-pushd ../%py3dir
+pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
-pushd ../%py3dir
+pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
@@ -124,48 +73,42 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
-%check
-# by setting the PYTHONPATH to the current dir
-# we make the package %modulename importable
-# Usually the testsuite is run after installing
-# the package in develop mode but we can't install
-# in develop mode here.
-PYTHONPATH=. %__python setup.py test -q
+# don't package tests
+rm -r %buildroot{%python_sitelibdir,%python3_sitelibdir}/%oname/tests
 
-%if_with python3
-pushd ../%py3dir
-PYTHONPATH=. %__python3 setup.py test -q
-popd
-%endif
+%check
+# we won't use coverage in tox
+sed -i '/\x27coverage\x27,/d' setup.py
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/nosetests3 \{envbindir\}\/nosetests\
+    sed -i \x27s/\\x27nosetests-.*\\x27/\\x27nosetests\\x27/g;1c #!{envpython}\x27 {envbindir}/nosetests' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
-%doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt docs
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir_noarch/*
-%exclude %python_sitelibdir_noarch/%modulename/test*
+%doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
+%_bindir/waitress-serve
+%python_sitelibdir/waitress/
+%python_sitelibdir/waitress-%version-py%_python_version.egg-info/
 
-%files tests
-%python_sitelibdir_noarch/%modulename/test*
-
-%if_with python3
-%files -n %py3name
-%doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt docs
-%_bindir/*.py3
-%python3_sitelibdir_noarch/*
-%exclude %python3_sitelibdir_noarch/%modulename/test*
-
-%files -n %py3name-tests
-%python3_sitelibdir_noarch/%modulename/test*
-%endif
+%files -n python3-module-%oname
+%doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
+%_bindir/waitress-serve.py3
+%python3_sitelibdir/waitress/
+%python3_sitelibdir/waitress-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Feb 03 2019 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 0.8.10 -> 1.2.1.
+- Enabled testing.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.10-alt2.dev0.2
 - (NMU) rebuild with python3.6
 
