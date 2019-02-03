@@ -1,6 +1,6 @@
 Name: fuse
-Version: 2.9.7
-Release: alt3
+Version: 2.9.9
+Release: alt1
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -9,6 +9,7 @@ Group: System/Kernel and hardware
 Url: https://github.com/libfuse/
 
 Source: %name-%version.tar
+Source1: fuserumount
 
 Patch0: %name.Makefile.patch
 Patch1: 914871b.patch
@@ -19,7 +20,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires: mount >= 2.11
 Provides: avfs-fuse = %version
 Obsoletes: avfs-fuse < %version
-Requires(pre): fuse-common
+Requires(pre): fuse-common >= 1.1.0
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -75,17 +76,26 @@ ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
 
+install -pD %SOURCE1 %buildroot%_bindir/fuserumount
+
 %pre
-%pre_control fusermount
+if [ $1 -ge 2 -o -e %_bindir/fusermount3 ]; then
+    %_sbindir/control-dump fusermount
+fi
 
 %post
-%post_control -s fuseonly fusermount
+if [ $1 -ge 2 -o -e %_bindir/fusermount3 ]; then
+    %_sbindir/control-restore fusermount
+else
+    %_sbindir/control fusermount fuseonly
+fi
 
 %files
 %doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt doc/html
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
+%attr(0755,root,root) %_bindir/fuserumount
 %_man1dir/*
 %_man8dir/*
 
@@ -99,6 +109,11 @@ rm -f %buildroot%_sysconfdir/udev/rules.d/*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 04 2019 Rustem Bapin <rbapin@altlinux.org> 2.9.9-alt1
+- 2.9.9
+- fuserumount move back from fuse-common
+- pre- and postinstall scriptlets are modified to take account mode of already installed fuse3 package
+
 * Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9.7-alt3
 - pick mainline 914871b, fixes build on aarch64
 
