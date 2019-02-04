@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           SimplyHTML
 Version:        0.16.18
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Application and a java component for rich text processing
 License:        GPLv2 and BSD
 URL:            http://simplyhtml.sourceforge.net/
@@ -60,6 +60,9 @@ echo 'rootProject.name="%{name}"' >settings.gradle
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.18-alt1_5jpp8
+- java update
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.18-alt1_4jpp8
 - java update
 
