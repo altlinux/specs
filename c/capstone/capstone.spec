@@ -1,7 +1,7 @@
 Summary: A disassembly framework
 Name: capstone
-Version: 3.0.5
-Release: alt2
+Version: 4.0.1
+Release: alt1
 License: BSD
 Group: Development/Tools
 Url: http://capstone-engine.org/
@@ -57,6 +57,8 @@ DESTDIR=%buildroot CFLAGS="%optflags" LIBDIRARCH=%_lib INCDIR="%_includedir" %ma
 sed -i 's;%buildroot;;' capstone.pc
 # remove static libs entry from the pkgconfig file
 sed -i 's;archive.*;;' capstone.pc
+# remove temporary fuzzallcorp test from 'check:' in Makefile
+sed -E -i 's;^(check:.*)fuzzallcorp;\1;g' Makefile
 
 # python bindings
 pushd bindings/python
@@ -106,6 +108,9 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_javadir/
 
 %changelog
+* Fri Feb 1 2019 Nikita Ermakov <arei@altlinux.org> 4.0.1-alt1
+- Updated to 4.0.1.
+
 * Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt2
 - NMU: Updated build dependencies.
 
