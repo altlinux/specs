@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: bash4
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -24,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -198,7 +197,6 @@ sed -i 's|taskdef|taskdef classpathref="maven.plugin.classpath"|' all/pom.xml
 %mvn_package ":::linux*:"
 
 %mvn_package ':*-tests' __noinstall
-sed -i -e s,/bin/bash,/bin/bash4, common/codegen.bash
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
@@ -214,6 +212,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_6jpp8
+- java update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_5jpp8
 - java fc28+ update
 
