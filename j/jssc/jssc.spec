@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_10jpp8
+Release:	alt1_11jpp8
 License:	GPLv3+
 Group:		System/Libraries
 URL:		http://jssc.scream3r.org
@@ -103,6 +103,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_11jpp8
+- java update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_10jpp8
 - java fc28+ update
 
