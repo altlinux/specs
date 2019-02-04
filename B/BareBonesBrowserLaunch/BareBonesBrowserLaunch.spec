@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          BareBonesBrowserLaunch
 Version:       3.1
-Release:       alt1_15jpp8
+Release:       alt1_16jpp8
 Summary:       Simple library to launch a browser window from Java
 License:       Public Domain
 URL:           http://www.centerkey.com/java/browser/
@@ -54,6 +54,9 @@ rm -rf doc/*
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_16jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_15jpp8
 - java update
 
