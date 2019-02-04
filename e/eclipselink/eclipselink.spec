@@ -24,7 +24,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:          eclipselink
 Version:       2.6.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Eclipse Persistence Services Project
 License:       EPL and BSD
 Url:           http://www.eclipse.org/eclipselink/
@@ -181,6 +181,9 @@ ant
 %doc --no-dereference license.html
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_5jpp8
+- java update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_4jpp8
 - java update
 
