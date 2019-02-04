@@ -1,6 +1,6 @@
 Name: libqtkeychain
 Version: 0.9.1
-Release: alt1%ubt
+Release: alt2
 
 %define sover 1
 %define libqtkeychain libqtkeychain%sover
@@ -13,7 +13,6 @@ Url: https://github.com/frankosterfeld/qtkeychain
 
 Source0: %name-%version.tar
 Patch1: alt-build-qt4.patch
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ libqt4-devel qt5-tools-devel pkgconfig(QtDBus) pkgconfig(Qt5DBus) libsecret-devel
 
 %description
@@ -67,6 +66,7 @@ QtKeychain devel files.
 Group: Development/KDE and QT
 Summary: Development files for %name-qt5
 Provides: qtkeychain-qt5-devel = %version
+Requires: libsecret-devel
 %description qt5-devel
 This package contains development files for qt5keychain.
 
@@ -135,16 +135,19 @@ grep %_qt5_translationdir qtkeychain.lang > %name-qt5.lang
 %_qt5_archdatadir/mkspecs/qt_Qt5Keychain.pri
 
 %changelog
-* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1%ubt
+* Mon Feb 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.1-alt2
+- NMU: fix requires
+
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
 - new version
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
 - fix requires
 
-* Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1%ubt
+* Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
-* Mon May 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1%ubt
+* Mon May 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - new version
 
 * Mon Nov 07 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1.M80P.1
