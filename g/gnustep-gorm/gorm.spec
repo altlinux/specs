@@ -2,12 +2,13 @@
 
 Name: gnustep-gorm
 Version: 1.2.20
-Release: alt3.svn20140119
+Release: alt4.svn20140119
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+ExcludeArch: aarch64
 
 # http://svn.gna.org/svn/gnustep/apps/gorm/trunk/
 Source: %name-%version.tar
@@ -63,6 +64,7 @@ This package contains documentation for Gorm.
 
 %prep
 %setup
+sed -i 's/@subsection/@section/g' Documentation/*.texi
 
 %build
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
@@ -131,6 +133,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 1.2.20-alt4.svn20140119
+- Fix build with recent texinfo
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt3.svn20140119
 - Built with clang
 
