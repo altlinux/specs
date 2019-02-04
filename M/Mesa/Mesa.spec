@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.3.2
+Version: 18.3.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -374,6 +374,9 @@ d=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Feb 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:18.3.3-alt1
+- 18.3.3
+
 * Fri Jan 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:18.3.2-alt1
 - 18.3.2
 
