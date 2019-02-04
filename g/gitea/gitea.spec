@@ -2,7 +2,7 @@
 
 Name:    gitea
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -54,22 +54,25 @@ install -Dm 0644 ".gopath/src/%import_path/custom/conf/app.ini.sample" \
 install -Dm 0644 %SOURCE3 %buildroot%_docdir/%name/
 
 %pre
-groupadd -rf _%name
-useradd -r -g _%name -d %_localstatedir/%name _%name -s /bin/sh ||:
+groupadd -rf %name
+useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 
 %files
 %_bindir/%name
-%dir %attr(0770,root,_%name) %_localstatedir/%name
-%dir %attr(0770,root,_%name) %_logdir/%name
+%dir %attr(0770,root,%name) %_localstatedir/%name
+%dir %attr(0770,root,%name) %_logdir/%name
 %dir %_docdir/%name
 %dir %_sysconfdir/%name
-%config(noreplace) %attr(0660,root,_%name) %_sysconfdir/%name/app.ini
+%config(noreplace) %attr(0660,root,%name) %_sysconfdir/%name/app.ini
 %systemd_unitdir/%name.service
 %_docdir/%name/default-app.ini
 %_docdir/%name/README.ALT
 %doc *.md
 
 %changelog
+* Mon Feb 04 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
+- Change user _gitea to gitea.
+
 * Fri Feb 01 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
 - Build new version.
 
