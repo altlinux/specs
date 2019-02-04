@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: jack_capture
-Version: 0.9.69
+Version: 0.9.73
 Release: alt1
 Summary: Record sound files with JACK
 Group: Sound
@@ -60,5 +63,8 @@ install -pm 644 %SOURCE2 %buildroot/%_iconsdir/hicolor/48x48/apps/
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Feb 04 2019 Anton Midyukov <antohami@altlinux.org> 0.9.73-alt1
+- new version 0.9.73
+
 * Mon May 29 2017 Anton Midyukov <antohami@altlinux.org> 0.9.69-alt1
 - Initial build for ALT Linux Sisyphus.
