@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_38jpp8
+Release:        alt1_39jpp8
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -45,6 +45,7 @@ Patch9:         %{name}-1.0.3-libpng15.patch
 Patch10:        %{name}-class-version15.patch
 Patch11:        %{name}-use-system-extgl.patch
 Patch12:        %{name}-gcc6.patch
+BuildRequires:  gcc-c++
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
 BuildRequires:  libpng-devel libXext-devel libXrandr-devel libXcursor-devel
@@ -244,6 +245,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_39jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_38jpp8
 - java update
 
