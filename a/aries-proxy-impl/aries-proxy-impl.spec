@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle org.apache.aries.proxy.impl
 Name:          aries-proxy-impl
 Version:       1.0.5
-Release:       alt2_5jpp8
+Release:       alt2_6jpp8
 Summary:       Apache Aries Proxy Service
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -102,6 +102,9 @@ sed -i '/delete dir/d' pom.xml
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_6jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_5jpp8
 - java update
 
