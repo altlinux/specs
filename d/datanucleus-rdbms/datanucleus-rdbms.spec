@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          datanucleus-rdbms
 Version:       3.2.13
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       DataNucleus RDBMS
 License:       ASL 2.0
 URL:           http://www.datanucleus.org/%{name}
@@ -106,6 +106,9 @@ cp -p META-INF/README.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.13-alt1_8jpp8
+- java update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.13-alt1_7jpp8
 - new version
 
