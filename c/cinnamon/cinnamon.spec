@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 4.0.9
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -57,6 +57,8 @@ Requires: typelib(Keybinder) >= 3.0
 Requires: python3-module-PAM
 # required by keyboard applet
 Requires: libxapps-gir
+# needed to install applets
+Requires: gettext-tools
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -222,6 +224,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Feb 4 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt2
+- add gettext-tools to requires
+
 * Wed Jan 16 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt1
 - 4.0.9-1-gc42a03a0
 
