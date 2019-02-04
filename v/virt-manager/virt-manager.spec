@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name: virt-manager
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -43,10 +43,11 @@ Requires: typelib(Vte) = 2.91
 Requires: typelib(Libosinfo) = 1.0
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-argcomplete
 BuildRequires: libgio
 BuildRequires: intltool
 BuildRequires: /usr/bin/pod2man
+BuildRequires: bash-completion
 
 %add_python3_lib_path %_datadir/%name
 %allow_python3_import_path %_datadir/%name
@@ -89,7 +90,7 @@ machine).
 #%%patch -p1
 
 %build
-python3 setup.py configure 
+python3 setup.py configure
 
 #%%python_build
 
@@ -137,12 +138,20 @@ done
 %_datadir/%name/virt-clone
 %_datadir/%name/virt-convert
 %_datadir/%name/virt-xml
+%_datadir/bash-completion/completions/virt-install
+%_datadir/bash-completion/completions/virt-clone
+%_datadir/bash-completion/completions/virt-convert
+%_datadir/bash-completion/completions/virt-xml
 %_man1dir/virt-install.1*
 %_man1dir/virt-clone.1*
 %_man1dir/virt-convert.1*
 %_man1dir/virt-xml.1*
 
 %changelog
+* Mon Feb 04 2019 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+- add bash completions
+
 * Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt2
 - allow python3 provides non-standart path
 
