@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle org.apache.aries.quiesce.api
 Name:          aries-quiesce-api
 Version:       1.0.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Apache Aries Quiesce API
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -77,6 +77,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - java update
 
