@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          artemis
 Version:       1.4.0
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java high performance, clustered, asynchronous messaging system
 License:       ASL 2.0
 URL:           https://activemq.apache.org/artemis/
@@ -474,6 +474,9 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_9jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_8jpp8
 - regenerated to fix __isa_bits definition
 
