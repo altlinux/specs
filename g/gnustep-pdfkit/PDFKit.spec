@@ -1,11 +1,12 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt5
+Release: alt5.1
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
 Url: http://wiki.gnustep.org/index.php/PDFKit
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+ExcludeArch: aarch64
 
 BuildPreReq: gcc-c++ libfreetype-devel clang-devel gnustep-make-devel
 BuildPreReq: gnustep-base-devel libgnustep-objc2-devel gnustep-gui-devel
@@ -47,6 +48,7 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %add_optflags %optflags_shared
+%remove_optflags -frecord-gcc-switches
 export CC=clang
 export CXX=clang++
 %autoreconf
@@ -118,6 +120,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.3-alt5.1
+- Fix FTBFS.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt5
 - Built with clang
 
