@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt2_19jpp8
+Release:        alt2_20jpp8
 Summary:        A few useful Java libraries
 License:        MIT
 
@@ -25,6 +25,7 @@ Patch1:         native-library-paths.patch
 Patch2:         classpath_fix.patch
 
 BuildRequires:  javapackages-local
+BuildRequires:  gcc
 
 Requires:       javapackages-tools
 Source44: import.info
@@ -104,6 +105,9 @@ make install \
 
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_20jpp8
+- java update
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_19jpp8
 - java update
 
