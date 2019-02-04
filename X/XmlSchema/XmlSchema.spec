@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           XmlSchema
 Version:        2.2.3
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Lightweight schema object model
 License:        ASL 2.0
 URL:            http://ws.apache.org/xmlschema/
@@ -26,11 +26,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xmlunit:xmlunit)
 Source44: import.info
-
-Provides: ws-commons-%name = 0:%version-%release
-Conflicts:  ws-commons-%name <= 0:1.4.7-alt3_7jpp7
-Obsoletes:  ws-commons-%name <= 0:1.4.7-alt3_7jpp7
-
 
 %description
 Commons XMLSchema is a lightweight schema object model that can be 
@@ -73,6 +68,9 @@ sed -i -e 's/\r//g' RELEASE-NOTE.txt
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt1_2jpp8
+- java update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt1_1jpp8
 - new version
 
