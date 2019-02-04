@@ -1,17 +1,13 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %def_without devel
 
-# "without" for 1c >=8.3.3
-# "with" 1c <8.3.3
-%def_without ver_old
-
 # Use ICU
 %def_with icu
 
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     6
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -28,7 +24,7 @@ Name: %prog_name%postgresql_major-1C
 Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
 
-Summary: PostgreSQL client programs and libraries (edition for 1C 8.3.3 and later)
+Summary: PostgreSQL client programs and libraries (edition for 1C 8.3.13 and later)
 License: PostgreSQL
 Group: Databases
 URL: http://www.postgresql.org/
@@ -320,9 +316,6 @@ database.
     --disable-rpath \
     --enable-nls \
     --enable-thread-safety \
-%if_with ver_old
-    --disable-integer-datetimes \
-%endif
 %if_with icu
     --with-icu \
 %endif
@@ -783,6 +776,12 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Mon Feb 04 2019 Alexei Takaseev <taf@altlinux.org> 10.6-alt3
+- Re-applay patches from 1C:
+    * 00007-remove_selfjoin.patch
+    * 00010-joinsel.patch
+- Cleanup spec: remove "%%def_without ver_old"
+
 * Wed Jan 30 2019 Alexei Takaseev <taf@altlinux.org> 10.6-alt2
 - Build with ICU
 - Re-applay patches from 1C:
@@ -801,7 +800,7 @@ fi
 
 * Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 10.6-alt1
 - 10.6
-- Fix CVE-2018-16850
+- (Fix CVE-2018-16850)
 
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Disable package libs for --without devel. This will provide
@@ -813,7 +812,7 @@ fi
 
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
 - 10.5
-- Fix CVE-2018-10915, CVE-2018-10925
+- (Fix CVE-2018-10915, CVE-2018-10925)
 
 * Mon Jul 16 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
 - 10.4
@@ -831,7 +830,7 @@ fi
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.6.9-alt1
 - 9.6.9
-- Fix CVE-2018-1115
+- (Fix CVE-2018-1115)
 
 * Wed Feb 28 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
 - 9.6.8
@@ -840,7 +839,7 @@ fi
     * 00004-postgresql-1c-9.6.patch
     * 00005-exists_opt-2.patch
 - Remove path 00001-1c_create_append_path.patch (fixed in 00001-1c_FULL_96.patch)
-- Fix CVE-2018-1058
+- (Fix CVE-2018-1058)
 
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
 - 9.6.7
@@ -871,7 +870,7 @@ fi
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
 - 9.6.4
-- fix CVE-2017-7547
+- (Fix CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt1
 - Initial build for ALT Linux Sisyphus
