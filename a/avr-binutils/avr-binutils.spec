@@ -7,7 +7,7 @@
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
 Version: 2.26
-Release: alt1
+Release: alt2
 Epoch: 2
 License: GPL
 Group: Development/Other
@@ -128,6 +128,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.26-alt2
+- NMU: rebuild on aarch64
+
 * Fri Feb 03 2017 Grigory Milev <week@altlinux.ru> 2:2.26-alt1
 - New version released
 
