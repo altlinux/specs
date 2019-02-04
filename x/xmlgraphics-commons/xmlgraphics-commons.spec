@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
 Version:        2.2
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -78,6 +78,9 @@ find -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_2jpp8
+- java update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1jpp8
 - java update
 
