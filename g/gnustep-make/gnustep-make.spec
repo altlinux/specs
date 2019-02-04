@@ -1,12 +1,13 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt18.svn20140202
+Release: alt19.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Objective-C
 Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
+ExcludeArch: aarch64
 
 BuildRequires: clang-devel libgnustep-objc2-devel star
 BuildPreReq: texlive-latex-base texi2html
@@ -22,7 +23,6 @@ GNUstep filesystem layout.
 %package devel
 Summary: Files needed to develop applications with gnustep-make
 Group: Development/Objective-C
-BuildArch: noarch
 Requires: %name = %version-%release
 Requires: gcc-objc
 
@@ -51,9 +51,14 @@ LIB_SUFF=64
 sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
+# many of gnustep packages are build with clang
+%remove_optflags -frecord-gcc-switches
+
 export CC=gcc CXX=gcc-c++ CPP='gcc -E'
 OBJCFLAGS="%optflags"
 export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -136,6 +141,10 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 2.6.6-alt19.svn20140202
+- Avoid using rpm --eval in build scripts (fixes FTBFS
+  for gnustep-base and gnustep-corebase on i586).
+
 * Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt18.svn20140202
 - Add gcc-objc requirement for gnustep-make-devel
 
