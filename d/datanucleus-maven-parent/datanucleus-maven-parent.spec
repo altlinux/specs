@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           datanucleus-maven-parent
 Version:        3.3
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        DataNucleus Maven parent project 
 
 License:        ASL 2.0
@@ -51,6 +51,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_8jpp8
+- java update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_7jpp8
 - new version
 
