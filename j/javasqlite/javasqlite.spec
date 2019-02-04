@@ -4,7 +4,7 @@ BuildRequires: libsqlite-devel
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -36,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javasqlite
 Version:        20150419
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -46,6 +46,7 @@ Source0:        http://www.ch-werner.de/javasqlite/%{name}-%{version}.tar.gz
 Patch0:         %{name}-20090430-jnipath.patch
 
 # >= 3.4 for zeroblob stuff in %%check's test3
+BuildRequires:  gcc
 BuildRequires:  libsqlite3-devel >= 3.4
 %if 0%{?javaver:1}
 BuildRequires:  java-%{javaver}-devel
@@ -157,6 +158,9 @@ done
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_8jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_7jpp8
 - java update
 
