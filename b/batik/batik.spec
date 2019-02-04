@@ -3,8 +3,6 @@ Group: Graphics
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -13,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           batik
 Version:        1.10
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -39,14 +37,6 @@ BuildRequires:  mvn(xml-apis:xml-apis-ext)
 # full support for tiff
 Requires:     jai-imageio-core
 Source44: import.info
-#19119
-Provides: xmlgraphics-batik = 0:%version-%release
-Obsoletes: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description
 Batik is a Java(tm) technology based toolkit for applications that want
@@ -57,8 +47,6 @@ purposes, such as viewing, generation or manipulation.
 Group: Graphics
 Summary:        Batik CSS engine
 Obsoletes:      %{name} < 1.8-0.17.svn1230816
-#32067
-Conflicts: batik < 0:1.8-alt1_1
 
 %description css
 CSS component of the Apache Batik SVG manipulation and rendering library.
@@ -66,14 +54,6 @@ CSS component of the Apache Batik SVG manipulation and rendering library.
 %package        squiggle
 Group: Graphics
 Summary:        Batik SVG browser
-#19119
-Provides: xmlgraphics-batik-squiggle = 0:%version-%release
-Obsoletes: xmlgraphics-batik-squiggle < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description    squiggle
 The Squiggle SVG Browser lets you view SVG file, zoom, pan and rotate
@@ -82,14 +62,6 @@ in the content and select text items in the image and much more.
 %package        svgpp
 Group: Graphics
 Summary:        Batik SVG pretty printer
-#19119
-Provides: xmlgraphics-batik-svgpp = 0:%version-%release
-Obsoletes: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description    svgpp
 The SVG Pretty Printer lets developers "pretty-up" their SVG files and
@@ -99,14 +71,6 @@ also be used to modify the DOCTYPE declaration on SVG files.
 %package        ttf2svg
 Group: Graphics
 Summary:        Batik SVG font converter
-#19119
-Provides: xmlgraphics-batik-ttf2svg = 0:%version-%release
-Obsoletes: xmlgraphics-batik-ttf2svg < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description    ttf2svg
 The SVG Font Converter lets developers convert character ranges from
@@ -117,14 +81,6 @@ rendered exactly the same on all systems.
 %package        rasterizer
 Group: Graphics
 Summary:        Batik SVG rasterizer
-#19119
-Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
-Obsoletes: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description    rasterizer
 The SVG Rasterizer is a utility that can convert SVG files to a raster
@@ -136,14 +92,6 @@ to be added easily.
 %package        slideshow
 Group: Graphics
 Summary:        Batik SVG slideshow
-#19119
-Provides: xmlgraphics-batik-slideshow = 0:%version-%release
-Obsoletes: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik < 0:%version
-Conflicts: xmlgraphics-batik-rasterizer < 0:%version
-Conflicts: xmlgraphics-batik-slideshow < 0:%version
-Conflicts: xmlgraphics-batik-svgpp < 0:%version
-Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 
 %description    slideshow
 Batik SVG slideshow.
@@ -216,10 +164,6 @@ done
 %mvn_file :batik-all batik-all
 
 %build
-
-export ANT_OPTS="-Xmx512m"
-# due to javadoc x86_64 out of memory
-subst 's,maxmemory="128m",maxmemory="512m",' build.xml
 %mvn_build
 
 %install
@@ -235,21 +179,6 @@ subst 's,maxmemory="128m",maxmemory="512m",' build.xml
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/
 cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/rasterizer.conf`
-touch $RPM_BUILD_ROOT/etc/rasterizer.conf
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/slideshow.conf`
-touch $RPM_BUILD_ROOT/etc/slideshow.conf
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/squiggle.conf`
-touch $RPM_BUILD_ROOT/etc/squiggle.conf
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/svgpp.conf`
-touch $RPM_BUILD_ROOT/etc/svgpp.conf
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/ttf2svg.conf`
-touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -259,23 +188,18 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 %files squiggle -f .mfiles-squiggle
 %{_bindir}/squiggle
-%config(noreplace,missingok) /etc/squiggle.conf
 
 %files svgpp -f .mfiles-svgpp
 %{_bindir}/svgpp
-%config(noreplace,missingok) /etc/svgpp.conf
 
 %files ttf2svg -f .mfiles-ttf2svg
 %{_bindir}/ttf2svg
-%config(noreplace,missingok) /etc/ttf2svg.conf
 
 %files rasterizer -f .mfiles-rasterizer
 %{_bindir}/rasterizer
-%config(noreplace,missingok) /etc/rasterizer.conf
 
 %files slideshow -f .mfiles-slideshow
 %{_bindir}/slideshow
-%config(noreplace,missingok) /etc/slideshow.conf
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
@@ -285,6 +209,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_2jpp8
+- java update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_1jpp8
 - java update
 
