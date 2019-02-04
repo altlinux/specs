@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle org.apache.aries.blueprint.cm
 Name:          aries-blueprint-cm
 Version:       1.0.8
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Apache Aries Blueprint CM
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -92,6 +92,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_5jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_4jpp8
 - java update
 
