@@ -1,6 +1,6 @@
 Name: sqlite
 Version: 2.8.17
-Release: alt2.3
+Release: alt2.4
 
 Summary: An Embeddable SQL Database Engine, version 2
 License: Public Domain
@@ -13,6 +13,7 @@ Patch1: sqlite-2.8.17-CVE-2007-1888.patch
 Patch2: sqlite-2.8.17-alt-libdir.patch
 Patch3: sqlite-2.8.17-alt-tcl.patch
 Patch4: sqlite-2.8.17-alt-sort+4.patch
+Patch5: sqlite-2.8.17-deb-unsigned-char.patch
 
 Requires: lib%name = %version-%release
 
@@ -86,6 +87,7 @@ access without running a separate RDBMS process.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # lemon is now in sqlite3
 rm doc/lemon.html
@@ -139,6 +141,9 @@ install -p -m644 doc/*.* %buildroot%pkgdocdir/
 %pkgdocdir/*.*
 
 %changelog
+* Mon Feb 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.8.17-alt2.4
+- Fixed build on architectures with unsigned char.
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.17-alt2.3
 - rebuilt against Tcl/Tk 8.6
 
