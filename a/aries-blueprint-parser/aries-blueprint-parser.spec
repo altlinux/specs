@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle blueprint-parser
 Name:          aries-blueprint-parser
 Version:       1.4.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Apache Aries Blueprint Parser
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -84,6 +84,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_6jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_5jpp8
 - java update
 
