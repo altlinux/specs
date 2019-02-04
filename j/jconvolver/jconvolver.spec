@@ -4,14 +4,14 @@
 %define _localstatedir %_var
 Summary: Real-time Convolution Engine
 Name: jconvolver
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 License: GPLv2+
 Group: Sound
-Url: http://www.kokkinizita.net/linuxaudio/
+Url: https://kokkinizita.linuxaudio.org
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: http://www.kokkinizita.net/linuxaudio/downloads/%name-%version.tar.bz2
+Source: https://kokkinizita.linuxaudio.org/downloads/%name-%version.tar.bz2
 
 Obsoletes: jace <= 0.2.0
 Provides: jace = %EVR
@@ -54,6 +54,9 @@ cp -a config-files/* %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Mon Feb 04 2019 Anton Midyukov <antohami@altlinux.org> 1.0.3-alt1
+- new version 1.0.3
+
 * Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 
