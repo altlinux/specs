@@ -12,7 +12,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt2
+Release: alt3
 
 Summary: Matlab(TM) style python plotting package
 
@@ -73,7 +73,6 @@ charts, or embedded in GTK or WX applications; see backends.
 %package -n python3-module-%oname
 Summary: Matlab(TM) style python 3 plotting package
 Group: Development/Python3
-Requires: dvipng
 Requires: python3-module-%oname-gtk3
 Requires: python3-module-mpl_toolkits = %EVR
 %add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
@@ -778,6 +777,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Feb 04 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt3
+- Drop requirement on dvipng for python3-module-matplotlib.
+
 * Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.3-alt2
 - Package testing module in main package (ALT #35714).
 - Drop tests subpackages.
