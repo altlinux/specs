@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -20,7 +20,6 @@ BuildRequires: libgraphviz-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3 swig
 %endif
 
 %setup_python_module %module_name
@@ -65,39 +64,21 @@ This package contains tests for %module_name.
 
 %prep
 %setup -n %module_name-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
 %add_optflags -I%_includedir/graphviz
 
-sed -i 's|@PY2@||' pygraphviz/graphviz.i
-sed -i 's|@PY3@.*||' pygraphviz/graphviz.i
-%python_build_debug
-
+%python_build_debug -b build2
 %if_with python3
-pushd ../python3
-rm -f %module_name/graphviz_wrap.c %module_name/graphviz.py
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-sed -i 's|UserDict\.DictMixin|collections.MutableMapping|' \
-	%module_name/agraph.py
-sed -i 's|import UserDict|import collections|' \
-	%module_name/agraph.py
-sed -i 's|@PY2@.*||' pygraphviz/graphviz.i
-sed -i 's|@PY3@||' pygraphviz/graphviz.i
-swig -python -py3 %module_name/graphviz.i
-%python3_build_debug
-popd
+%python3_build_debug -b build3
 %endif
 
 %install
-%python_build_install
+ln -sf build2 build
+%python_install
 %if_with python3
-pushd ../python3
+ln -sf build3 build
 %python3_build_install
-popd
 %endif
 
 %files
@@ -118,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 04 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt2
+- Cleanup spec
+
 * Wed Dec 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt1
 - update to 1.5
 
@@ -128,7 +112,7 @@ popd
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
 
-* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.3-alt2.git20140720
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.3-alt2.git20140720
 - Fix graphviz.i
 
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140720
