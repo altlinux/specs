@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Inline
 Name: perl-%dist
-Version: 0.80
-Release: alt2
+Version: 0.81
+Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IN/INGY/Inline-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 Requires: gcc >= 4.1
 Requires: perl(Parse/RecDescent.pm)
 
 # Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-Inline-Files perl-Parse-RecDescent perl-Test-Warn
+BuildRequires: perl-Inline-Files perl-Parse-RecDescent perl-Test-Warn perl(Encode.pm)
 
 %description
 Inline lets you write Perl subroutines in other programming languages
@@ -25,7 +25,7 @@ compile anything. All the details are handled transparently so you
 can just run your Perl script like normal.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,7 +36,7 @@ can just run your Perl script like normal.
 rm -f %buildroot%perl_vendor_privlib/Inline/MakeMaker/Changes
 
 %files
-%doc	Changes README
+%doc	Changes README CONTRIBUTING example
 	%perl_vendor_privlib/Inline.pm
 %doc	%perl_vendor_privlib/Inline*.pod
 
@@ -45,6 +45,9 @@ rm -f %buildroot%perl_vendor_privlib/Inline/MakeMaker/Changes
 %doc	%perl_vendor_privlib/Inline/*.pod
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.81-alt1
+- automated CPAN update
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.80-alt2
 - fixed unpackaged files
 
