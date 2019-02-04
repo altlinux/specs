@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jsch-agent-proxy
 Version:        0.0.8
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Proxy to ssh-agent and Pageant in Java
 License:        BSD
 URL:            http://www.jcraft.com/jsch-agent-proxy/
@@ -157,6 +157,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1_9jpp8
+- java update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1_8jpp8
 - java fc28+ update
 
