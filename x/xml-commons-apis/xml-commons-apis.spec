@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_25jpp8
+Release:       alt3_26jpp8
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -33,18 +33,6 @@ Provides:      xml-commons = %{version}-%{release}
 # TODO: Ugh, this next line should be dropped since it actually provides JAXP 1.4 now...
 Provides:      xml-commons-jaxp-1.3-apis = %{version}-%{release}
 Source44: import.info
-# jpackage deprecations
-Conflicts: xml-commons-apis12 < 0:1.2.05
-Obsoletes: xml-commons-apis12 < 0:1.2.05
-Conflicts: xml-commons-jaxp-1.1-apis < 0:1.3.05
-Obsoletes: xml-commons-jaxp-1.1-apis < 0:1.3.05
-Conflicts: xml-commons-jaxp-1.2-apis < 0:1.3.05
-Obsoletes: xml-commons-jaxp-1.2-apis < 0:1.3.05
-Conflicts: xml-commons-jaxp-1.3-apis < 0:1.3.05
-Obsoletes: xml-commons-jaxp-1.3-apis < 0:1.3.05
-Conflicts: xml-commons-jaxp-1.4-apis < %version-%release
-Obsoletes: xml-commons-jaxp-1.4-apis < %version-%release
-
 
 %description
 xml-commons-apis is designed to organize and have common packaging for
@@ -117,6 +105,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_26jpp8
+- java update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_25jpp8
 - java update
 
