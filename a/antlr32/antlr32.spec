@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_19jpp8
+Release:        alt1_20jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -167,6 +167,9 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %doc tool/LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_20jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_19jpp8
 - java update
 
