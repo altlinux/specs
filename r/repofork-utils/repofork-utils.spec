@@ -3,7 +3,7 @@ BuildRequires: perl(Pod/Usage.pm) perl(RPM/Header.pm) perl(Parallel/ForkManager.
 # END SourceDeps(oneline)
 URL: https://www.altlinux.org/Repofork-utils
 Name: repofork-utils
-Version: 0.09
+Version: 0.10
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -30,7 +30,7 @@ existing repository with given packages added/removed/replaced.
 #perl_vendor_install
 
 mkdir -p $RPM_BUILD_ROOT%_bindir
-cp mkrepofork repofork-* $RPM_BUILD_ROOT%_bindir/
+install -m 755 mkrepofork repofork-* $RPM_BUILD_ROOT%_bindir/
 rm $RPM_BUILD_ROOT%_bindir/*.spec
 
 %files
@@ -38,6 +38,9 @@ rm $RPM_BUILD_ROOT%_bindir/*.spec
 %_bindir/repofork*
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- new version
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - new version
 
