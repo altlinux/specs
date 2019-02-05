@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             castor-maven-plugin
 Version:          2.5
-Release:          alt3_7jpp8
+Release:          alt3_8jpp8
 Summary:          Maven plugin for Castor XML's code generator
 License:          ASL 2.0
 URL:              http://www.mojohaus.org/castor-maven-plugin/
@@ -80,6 +80,9 @@ sed -i 's/\r/\n/g' src/main/java/org/codehaus/mojo/castor/ConvertDTD2XSDMojo.jav
 %doc --no-dereference LICENSE.TXT
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5-alt3_8jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt3_7jpp8
 - java update
 
