@@ -11,7 +11,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.13
+Version: 8.0.15
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -125,8 +125,8 @@ Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
 License: GPL
 Group: Databases
-PreReq: MySQL-client = %version-%release
-PreReq: shadow-utils, coreutils, glibc-locales
+Requires(pre): MySQL-client = %version-%release
+Requires(pre): shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
 Provides: mysql-server = %version MySQL = %version mysql = %version community-mysql = %version
 Obsoletes: mysql-server < %version MySQL < %version mysql < %version
@@ -324,7 +324,7 @@ recommend upgrading your installation to MySQL Router 8.
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_67_0
+pushd boost/boost_1_68_0
 %patch115 -p0
 %patch125 -p1
 popd
@@ -384,7 +384,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_67_0 \
+	-DWITH_BOOST=../boost/boost_1_68_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -681,7 +681,6 @@ fi
 %_bindir/mysql_config_editor
 %_bindir/ibd2sdi
 %_bindir/perror
-%_bindir/resolve*
 %_bindir/zlib_decompress
 %_mandir/man?/*
 
@@ -759,6 +758,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Feb 05 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.15-alt1
+- new version
+- replace PreReq with Requires(pre)
+
 * Thu Nov 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt1
 - new version
 - update patches: chroot, client, load_defaults, mysql_config-libs
