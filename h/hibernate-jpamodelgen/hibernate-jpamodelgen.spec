@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate-jpamodelgen
 Version:       1.3.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Hibernate JPA 2 Metamodel Generator
 License:       ASL 2.0
 Url:           http://www.hibernate.org/subprojects/jpamodelgen.html
@@ -97,6 +97,9 @@ opts="-f"
 %doc --no-dereference license.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5jpp8
 - java update
 
