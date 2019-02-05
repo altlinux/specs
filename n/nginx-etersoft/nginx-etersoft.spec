@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.22
+Version: 0.2.23
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,10 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.23-alt1
+- stat.conf: add stub_status location for netdata (eterbug #13591)
+- add initial fastcgi config
+
 * Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2.22-alt1
 - add skip apple-touch requests
 - proxy: improve set X-Forwarded-Proto
