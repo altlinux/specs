@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ehcache-core
 Version:       2.6.11
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Easy Hibernate Cache
 License:       ASL 2.0
 URL:           http://ehcache.org/
@@ -122,6 +122,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6.11-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6.11-alt1_5jpp8
 - java update
 
