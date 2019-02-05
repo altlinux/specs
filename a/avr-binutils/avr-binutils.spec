@@ -1,133 +1,92 @@
-# -*- rpm-spec -*-
-# $Id: avr-binutils,v 1.11 2003/09/05 11:18:56 grigory Exp $
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo zlib-devel
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define target avr
 
-#define snapshot_version 030512
-%define cross_arch avr
+Name:           %{target}-binutils
+Version:        2.30
+Release:        alt1_3
+Epoch:          2
+Summary:        Cross Compiling GNU binutils targeted at %{target}
+Group:          Development/Tools
+License:        GPLv2+
+URL:            http://www.gnu.org/software/binutils/
+Source0:        ftp://ftp.gnu.org/pub/gnu/binutils/binutils-%{version}.tar.xz
+Source1:        README.fedora
+#add widespread options to avr-size: --format=avr -mcu=XX
+Patch1: http://distribute.atmel.no/tools/opensource/avr-gcc/binutils-2.20.1/30-binutils-2.20.1-avr-size.patch
 
-Summary: A GNU collection of binary utilities.
-Name: %cross_arch-binutils
-Version: 2.26
-Release: alt2
-Epoch: 2
-License: GPL
-Group: Development/Other
-URL: http://ftp.gnu.org/gnu/binutils/
-Source: avr-binutils-%version.tar.gz
-Patch0: patch-coff-avr-2.20.51.0.9.patch
-Patch1: 30-binutils-2.20.1-avr-size.patch
-#Patch0: binutils-%version-info_fix.diff
-
-%define libavrdir %_libdir/%cross_arch
-%define includeavrdir %_includedir/%cross_arch
-
-BuildRequires: makeinfo
-
-BuildRequires: expect flex gcc-c++ imake libelf-devel libexpat-devel zlib-devel-static
-BuildRequires: libncurses-devel
-
-Provides: avr-binutils = 2:2.23.1-alt1
+BuildRequires:  gawk makeinfo gcc
+#for autoreconf:
+BuildRequires:  gettext-tools libasprintf-devel autoconf automake
+Provides: bundled(libiberty)
+Source44: import.info
 
 %description
-Avr-Binutils is a collection of binary utilities, including avr-ar (for
-creating, modifying and extracting from archives), avr-as (a family of GNU
-assemblers), avr-ld (the GNU linker), avr-nm (for listing symbols from object
-files), avr-objcopy (for copying and translating object files), avr-objdump
-(for displaying information from object files), avr-ranlib (for generating an
-index for the contents of an archive), avr-size (for listing the section sizes
-of an object or archive file), avr-strings (for listing printable strings from
-files), avr-strip (for discarding symbols), and avr-addr2line (for converting
-addresses to file and line).
+This is a Cross Compiling version of GNU binutils, which can be used to
+assemble and link binaries for the %{target} platform, instead of for the
+native %{_arch} platform.
 
-This package is for cross-development of AVR programs.
 
 %prep
-%setup -n binutils -q
-#%patch1
-#%patch0 -p1
-#%patch0 -p1 -b .avrinfo
+%setup -q -c
+pushd binutils-%{version}
+%patch1 -p0 -b .avr-size
+
+# known to fail on avr
+rm ld/testsuite/ld-elf/pr22450.*
+
+popd 
+cp %{SOURCE1} .
+
 
 %build
-%__subst 's/AC_PREREQ(2.64)/AC_PREREQ(2.68)/g' ./configure.ac
-%__subst 's/AC_PREREQ(2.64)/AC_PREREQ(2.68)/g' ./libiberty/configure.ac
-%__subst 's/  \[m4_fatal(\[Please use exactly Autoconf \]/  \[m4_errprintn(\[Please use exactly Autoconf \]/g' ./config/override.m4
-%__autoconf
-pushd ld
-autoreconf
+mkdir -p build
+pushd build
+CFLAGS="$RPM_OPT_FLAGS" ../binutils-%{version}/configure --prefix=%{_prefix} \
+  --libdir=%{_libdir} --mandir=%{_mandir} --infodir=%{_infodir} \
+  --target=%{target} --disable-werror --disable-nls
+%make_build
 popd
 
-# Binutils come with its own custom libtool
-%define __libtoolize echo
-./configure \
-	--prefix=%_prefix \
-	--mandir=%_mandir \
-	--infodir=%_infodir \
-	--includedir=%includeavrdir \
-	--libdir=%libavrdir \
-	--exec-prefix=%libavrdir \
-	--disable-nls \
-	--target=avr \
-	--program-prefix="avr-" \
-	--enable-languages="c,c++" \
-	--disable-werror \
-	--enable-install-libiberty \
-	--enable-install-libbfd
-
-%make_build all-bfd TARGET-bfd=headers
-%__rm bfd/Makefile
-
-%make_build configure-host
-%make_build
-
+%check
+cd build
+%ifnarch %ix86
+# on x86 can't find proper config, export does not ot help for gas
+# export DEJAGNU=`pwd`/binutils/site.exp
+make check
+%endif
 
 %install
-%__mkdir_p %buildroot{%libavrdir/bin,%includeavrdir,%_bindir}
+pushd build
+make install DESTDIR=$RPM_BUILD_ROOT
+popd
+# these are for win targets only
+rm $RPM_BUILD_ROOT%{_mandir}/man1/%{target}-{dlltool,nlmconv,windres}.1
+# we don't want these as we are a cross version
+rm -r $RPM_BUILD_ROOT%{_infodir}
+rm    $RPM_BUILD_ROOT%{_libdir}/libiberty.a ||:
 
-%makeinstall \
-	prefix=%buildroot%_prefix \
-	exec_prefix=%buildroot%libavrdir \
-	libdir=%buildroot%libavrdir \
-	includedir=%buildroot%includeavrdir \
-	mandir=%buildroot%_mandir
-
-%__make install-info \
-	prefix=%buildroot%_prefix \
-	infodir=%buildroot%_infodir
-
-%__mv %buildroot%_bindir/* %buildroot%libavrdir/bin/
-for i in `ls -1 %buildroot%libavrdir/bin/`; do
-	%__ln_s ../..%libavrdir/bin/$i %buildroot%_bindir/$i
-done
-for i in `ls -1 %buildroot%libavrdir/%cross_arch/bin/`; do
-	%__ln_s %cross_arch-$i %buildroot%libavrdir/bin/$i
-done
-%__rm -rf %buildroot%libavrdir/%cross_arch/bin
-
-%__ln_s ../bin %buildroot%libavrdir/avr/bin
-%__ln_s ./ %buildroot%libavrdir/lib
-%__ln_s ../../..%includeavrdir %buildroot%libavrdir/include
-
-%__rm -f %buildroot%_bindir/*c++filt*
-%__rm -fr %buildroot%_infodir
-
-%__ln_s %_libdir/%cross_arch %buildroot%_prefix/%cross_arch
-
-%__rm -f %buildroot/usr/lib64/lib64/libiberty.a
-%__rm -rf %buildroot/%_datadir/gdb
+%pre
+if [ -L /usr/avr ]; then
+  echo link /usr/avr detected. removing...
+  rm /usr/avr
+fi
 
 %files
-%doc README
-%dir %libavrdir
-%dir %includeavrdir
-%dir %includeavrdir/libiberty
-%dir %includeavrdir/gdb
-%_bindir/*
-%_prefix/%cross_arch
-%includeavrdir/libiberty/*
-%includeavrdir/gdb/*
-%libavrdir/*
-%_man1dir/*
+%doc binutils-%{version}/COPYING binutils-%{version}/COPYING.LIB
+%doc binutils-%{version}/README README.fedora
+%{_prefix}/%{target}
+%{_bindir}/%{target}-*
+%{_mandir}/man1/%{target}-*.1*
+
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.30-alt1_3
+- new version (closes: #36040)
+
 * Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.26-alt2
 - NMU: rebuild on aarch64
 
