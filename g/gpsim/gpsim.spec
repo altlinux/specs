@@ -2,7 +2,7 @@
 
 Name: gpsim
 Version: 0.30.0
-Release: alt1
+Release: alt2
 
 Summary: Software simulator for Microchip PIC microcontrollers
 Summary(ru_RU.UTF-8): Программный эмулятор микроконтроллеров PIC фирмы Microchip
@@ -127,6 +127,9 @@ install -Dm 644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 %_libdir/*.so
 
 %changelog
+* Tue Feb 05 2019 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt2
+- Rebuild with libreadline7.
+
 * Thu Jul 20 2017 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
 - New version
 - Adapt and use upstream appdata, desktop file and icon
