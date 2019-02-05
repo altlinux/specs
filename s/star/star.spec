@@ -1,6 +1,6 @@
 Name: star
 Version: 1.5.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: A very fast, POSIX compliant tape archiver
 License: CDDL
@@ -50,6 +50,9 @@ connection.
 
 # kill annoying beep'n'sleep
 subst 's/^__gmake_warn.*//' RULES/mk-gmake.id
+
+[ -f RULES/%_arch-linux-cc.rul ] ||
+	ln -s i586-linux-cc.rul RULES/%_arch-linux-cc.rul
 
 %build
 subst 's/\/etc\/default/\/etc\/rmt/' rmt/rmt.c rmt/rmt.dfl
@@ -101,6 +104,9 @@ chrpath -d %buildroot%_bindir/* %buildroot%_sbindir/*
 %_man1dir/rmt.1.*
 
 %changelog
+* Tue Feb 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.1-alt2.qa1
+- Fixed build on architectures without predefined config (e.g. aarch64).
+
 * Wed Feb 09 2011 Victor Forsiuk <force@altlinux.org> 1.5.1-alt2
 - Apply patches from Fedora (including fix for crashing buffer overflow).
   Thnx ender@ for suggestion!
