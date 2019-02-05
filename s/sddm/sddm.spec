@@ -7,8 +7,8 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.17.0
-Release: alt9
+Version: 0.18.0
+Release: alt1
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -31,7 +31,6 @@ Source21: Xstop
 # SuSE
 Patch10: create_pid_file.patch
 # github issues
-Patch81: 735.patch
 # ALT
 Patch100: alt-defaults.patch
 Patch101: alt-branding-faces.patch
@@ -74,8 +73,6 @@ ability to create smooth, animated user interfaces.
 %prep
 %setup -n %name-%version
 %patch10 -p1
-#
-%patch81 -p1
 #
 %patch100 -p1 -b .defaults
 #%patch101 -p1
@@ -164,6 +161,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Tue Feb 05 2019 Sergey V Turchin <zerg@altlinux.org> 0.18.0-alt1
+- new version
+
 * Fri Nov 30 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt9
 - fix hardware keyboard detection
 
