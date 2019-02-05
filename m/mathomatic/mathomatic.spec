@@ -1,6 +1,6 @@
 Name: mathomatic
 Version: 16.0.5
-Release: alt1
+Release: alt2
 Summary: Small, portable symbolic math program
 License: LGPL
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ make test
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 16.0.5-alt2
+- Rebuild with libreadline.so.7
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 16.0.5-alt1
 - Autobuild version bump to 16.0.5
 
@@ -351,13 +354,13 @@ make test
 * Sat Jan 29 2005 Dries Verachtert <dries@ulyssis.org> 11.7-1
 - Update to version 11.7.
 
-* Fri Jan 23 2005 Dries Verachtert <dries@ulyssis.org> 11.6e-1
+* Sun Jan 23 2005 Dries Verachtert <dries@ulyssis.org> 11.6e-1
 - Update to version 11.6e.
 
 * Fri Jan 14 2005 Dries Verachtert <dries@ulyssis.org> 11.6d-1
 - Update to version 11.6d.
 
-* Sat Jan 06 2005 Dries Verachtert <dries@ulyssis.org> 11.6c-1
+* Thu Jan 06 2005 Dries Verachtert <dries@ulyssis.org> 11.6c-1
 - Update to version 11.6c.
 
 * Sat Jan 01 2005 Dries Verachtert <dries@ulyssis.org> 11.6b-1
