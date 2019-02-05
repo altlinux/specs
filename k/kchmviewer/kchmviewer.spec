@@ -1,99 +1,60 @@
-Name: kchmviewer
-Version: 7.0
-Release: alt1.beta1.svn20140803
+%define _unpackaged_files_terminate_build 1
 
-Summary: A chm (MS HTML help file format) viewer (with KDE4 support)
+Name: kchmviewer
+Version: 7.7
+Release: alt1
+
+Summary: A CHM (Winhelp) and EPUB viewer
 License: %gpl3plus
 Group: Office
 Url: http://kchmviewer.net
 
 Source: %name-%version.tar
+Patch1: %name-%version-alt-force-qt5-webkit.patch
+Patch2: %name-%version-alt-underlinking.patch
 
-BuildRequires(pre): rpm-build-licenses kde-common-devel rpm-macros-make
-BuildPreReq: gcc-c++ kde4libs-devel libchm-devel libzip-devel
-BuildPreReq: libXxf86misc-devel
+BuildRequires(pre): rpm-build-licenses rpm-macros-make
+BuildRequires: gcc-c++ libchm-devel libzip-devel qt5-base-devel qt5-webkit-devel
+BuildRequires: libXxf86misc-devel
 
-Conflicts: kde4graphics-okular < 4.2.3-alt1
 Obsoletes: kchmviewer4 <= 4.0-alt3
-Provides: kchmviewer4 = %version-%release
-
-%define _unpackaged_files_terminate_build 1
-%define __kde4_alternate_placement 1
-
-%package nokde
-Summary: A chm (MS HTML help file format) viewer
-Group: Office
-Conflicts: kchmviewer
-
+Obsoletes: kchmviewer-nokde
+Provides: kchmviewer4 = %EVR
 
 %description
-KchmViewer is a chm (MS HTML help file format) viewer, written in C++.
+Kchmviewer is a CHM (aka MS HTML help) and EPUB viewer written in C++.
 The main advantage of KchmViewer is extended support for non-English
 languages. Unlike others, KchmViewer in most cases correctly detects chm
 file encoding, correctly shows tables of context of Russian, Korean,
 Chinese and Japanese help files. It also correctly searches text in
 non-English help files, including Korean, Chinese and Japanese.
-
-This version is built with KDE4 support and uses KHTML engine.
-
-
-%description nokde
-KchmViewer is a chm (MS HTML help file format) viewer, written in C++.
-The main advantage of KchmViewer is extended support for non-English
-languages. Unlike others, KchmViewer in most cases correctly detects chm
-file encoding, correctly shows tables of context of Russian, Korean,
-Chinese and Japanese help files. It also correctly searches text in
-non-English help files, including Korean, Chinese and Japanese.
-
-This version is built without KDE4 support and uses Qt Webkit engine.
-
 
 %prep
 %setup
+%patch1 -p2
+%patch2 -p2
 
 %build
 %add_optflags -I%_includedir/libzip -I%_libdir/libzip/include
-%K4cmake -DKDE4_ENABLE_FINAL:BOOL=1 \
-	-DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
-	-DKDE4_ENABLE_HTMLHANDBOOK:BOOL=ON
-%K4make VERBOSE=1
-%K4make
-
-mkdir build-nokde
-pushd build-nokde
-ln -s $(find ~ -name libebook.a) ../lib/libebook/
-qmake-qt4 \
-	QMAKE_CXX_FLAGS="%optflags" \
-	../kchmviewer.pro %{!?_enable_debug:-after "CONFIG -= debug"}
-%make lib/Makefile src/Makefile
-%make -C lib libebook/Makefile
-sed -i 's|-pipe |%optflags |g' src/Makefile lib/libebook/Makefile
-%make_build -C lib/libebook
+%qmake_qt5 QMAKE_CXX_FLAGS="%optflags"
 %make_build_ext
 
 %install
-%K4install VERBOSE=1
-install -pD -m755 build-nokde/bin/kchmviewer %buildroot%_bindir/%name
-install -pD -m644 packages/kchmviewer.png %buildroot%_K4datadir/icons/hicolor/128x128/apps/%name.png
+%installqt5
+install -pD -m755 bin/kchmviewer %buildroot%_bindir/%name
+install -pD -m644 packages/kchmviewer.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
+install -pD -m644 packages/kchmviewer.desktop %buildroot%_desktopdir/%name.desktop
 
-%K4find_lang --with-kde %name
-
-
-%files -f %name.lang
-%doc ChangeLog DBUS-bindings FAQ README
-%_kde4_bindir/*
-#_K4lib/*.so
-%_K4datadir/icons/hicolor/*/apps/*.png
-%_K4datadir/applications/kde4/*.desktop
-#_K4srv/*.protocol
-
-
-%files nokde
+%files
 %_bindir/%name
+%_iconsdir/hicolor/*/apps/%name.png
+%_desktopdir/%name.desktop
 %doc ChangeLog DBUS-bindings FAQ README
-
 
 %changelog
+* Tue Feb 05 2019 Slava Aseev <ptrnine@altlinux.org> 7.7-alt1
+- Version 7.7
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt1.beta1.svn20140803
 - Version 7.0beta1
 
