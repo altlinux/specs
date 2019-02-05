@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -253,6 +253,9 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %doc --no-dereference NOTICE.txt LICENSE*
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_10jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_9jpp8
 - java update
 
