@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          disruptor
 Version:       3.3.6
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           http://lmax-exchange.github.io/disruptor/
@@ -99,6 +99,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_4jpp8
 - java update
 
