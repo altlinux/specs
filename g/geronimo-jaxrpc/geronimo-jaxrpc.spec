@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-jaxrpc
 Version:          2.1
-Release:          alt2_21jpp8
+Release:          alt2_22jpp8
 Summary:          Java EE: Java API for XML Remote Procedure Call v1.1
 License:          ASL 2.0 and W3C
 
@@ -67,6 +67,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_22jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_21jpp8
 - java update
 
