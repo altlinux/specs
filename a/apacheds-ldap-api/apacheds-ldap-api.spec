@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apacheds-ldap-api
 Version:       1.0.0
-Release:       alt1_0.5.M33jpp8
+Release:       alt1_0.6.M33jpp8
 Summary:       Apache Directory LDAP API
 License:       ASL 2.0
 Url:           http://directory.apache.org/api/
@@ -116,6 +116,9 @@ chmod 644 README.txt
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.M33jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.5.M33jpp8
 - java update
 
