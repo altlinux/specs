@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jaxrs-1.1-api
 Version:       1.0.1
-Release:       alt2_15jpp8
+Release:       alt2_16jpp8
 Summary:       Java API for RESTful Web Services (JAX-RS) 1.1
 License:       CDDL
 URL:           http://www.jboss.org
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_16jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_15jpp8
 - java update
 
