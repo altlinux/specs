@@ -2,7 +2,7 @@
 
 Name: apachetop
 Version: 0.12.6
-Release: alt1.qa1
+Release: alt2
 
 Epoch: 20060605
 
@@ -59,6 +59,9 @@ subst 's,pcre.h,pcre/pcre.h,g' src/apachetop.h configure
 #   (until proper multi-host infrastructure is in place)
 
 %changelog
+* Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 20060605:0.12.6-alt2
+- rebuilt against readline7
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060605:0.12.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
