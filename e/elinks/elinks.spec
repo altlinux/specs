@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.1
+Release: alt0.12.2
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -82,6 +82,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.2
+- rebuild with OpenSSL 1.1
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt0.12.1
 - rebuild with new lua 5.3
 
@@ -248,7 +251,7 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 * Tue Jun 10 2003 Alexey Tourbin <at@altlinux.ru> 0.4.3-alt1rc1
 - 0.4.3rc1
 
-* Wed May 27 2003 Alexey Tourbin <at@altlinux.ru> 0.4.2-alt8
+* Tue May 27 2003 Alexey Tourbin <at@altlinux.ru> 0.4.2-alt8
 - cvs fixes (20030526); patches reordered
 - increase height for big dialogs (alt-dialog-height.patch)
 - use colors and frames for all terminals by default
