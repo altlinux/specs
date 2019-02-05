@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-codec
 Version:        1.11
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Implementations of common encoders and decoders
 License:        ASL 2.0
 URL:            http://commons.apache.org/codec/
@@ -54,6 +54,9 @@ sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES*
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_4jpp8
+- fc29 update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_3jpp8
 - java update
 
