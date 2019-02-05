@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt2_15jpp8
+Release:        alt2_16jpp8
 Summary:        A java library for lists of bytes
 
 Group:          Development/Other
@@ -76,6 +76,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_16jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_15jpp8
 - java update
 
