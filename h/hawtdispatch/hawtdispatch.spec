@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          hawtdispatch
 Version:       1.22
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       The libdispatch style API for Java
 License:       ASL 2.0
 URL:           http://hawtdispatch.fusesource.org/
@@ -158,6 +158,9 @@ rm -r hawtdispatch/src/test/java/org/fusesource/hawtdispatch/DispatchSourceTest.
 %doc --no-dereference license.txt notice.md
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_6jpp8
+- fc29 update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_5jpp8
 - java update
 
