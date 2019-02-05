@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		canl-java
 Version:	2.5.0
-Release:	alt1_2jpp8
+Release:	alt1_3jpp8
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -78,6 +78,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_3jpp8
+- fc29 update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
 - java update
 
