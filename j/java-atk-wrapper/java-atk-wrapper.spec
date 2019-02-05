@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt4_8jpp8
+Release:    alt5_8jpp8
 Summary:    Java ATK Wrapper
 
 Group:      Development/Other
@@ -89,6 +89,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt5_8jpp8
+- fc29 update
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt4_8jpp8
 - java update
 
