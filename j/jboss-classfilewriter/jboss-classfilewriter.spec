@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-classfilewriter
 Version:          1.1.2
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBoss Class File Writer
 License:          ASL 2.0
 URL:              https://github.com/jbossas/jboss-classfilewriter
@@ -59,6 +59,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_4jpp8
 - java update
 
