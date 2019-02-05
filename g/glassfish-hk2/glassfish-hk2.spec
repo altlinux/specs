@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-hk2
 Version:       2.4.0
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Hundred Kilobytes Kernel
 License:       CDDL or GPLv2 with exceptions
 URL:           http://hk2.java.net/
@@ -617,6 +617,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_10jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_9jpp8
 - java update
 
