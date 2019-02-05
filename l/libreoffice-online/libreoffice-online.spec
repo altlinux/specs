@@ -5,7 +5,7 @@
 
 Name: libreoffice-online
 Version: 6.0.2.3
-Release: alt2%ubt
+Release: alt3
 
 Summary: LibreOffice Online WebSocket Daemon
 
@@ -31,10 +31,11 @@ Patch8: npm-shrinkwrap.patch
 Patch9: package.patch
 Patch10: loleaflet-makefile.patch
 Patch11: fix-printing-size-type.patch
+Patch12: libreoffice-online-upstream-gcc8.patch
 
 Requires: LibreOffice python3 fonts-ttf-core
 
-BuildRequires(pre): rpm-build-ubt rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libtool automake npm libcap-utils fontconfig
 BuildRequires: libpoco-devel libpng-devel libcap-devel cppunit-devel
 BuildRequires: pam-devel libpcre-devel
@@ -86,6 +87,7 @@ tar -xf %SOURCE4 -C loleaflet/
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 sh autogen.sh
@@ -211,9 +213,12 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
-* Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2.3-alt2%ubt
+* Tue Feb 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2.3-alt3
+- NMU: fixed build.
+
+* Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2.3-alt2
 - NMU: rebuilt with openssl 1.1.
 
-* Wed Apr 18 2018 Maxim Voronov <mvoronov@altlinux.org> 6.0.2.3-alt1%ubt
+* Wed Apr 18 2018 Maxim Voronov <mvoronov@altlinux.org> 6.0.2.3-alt1
 - initial build for ALT
 
