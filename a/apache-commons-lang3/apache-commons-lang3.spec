@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-lang3
 Version:        3.7
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            http://commons.apache.org/lang
@@ -65,6 +65,9 @@ rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_4jpp8
+- fc29 update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_3jpp8
 - java update
 
