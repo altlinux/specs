@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          http-builder
 Version:       0.7.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       HTTP client framework for Groovy
 License:       ASL 2.0
 URL:           https://github.com/jgritman/httpbuilder
@@ -115,6 +115,9 @@ rm src/test/groovy/groovyx/net/http/HttpURLClientTest.groovy
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_5jpp8
+- fc29 update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_4jpp8
 - java update
 
