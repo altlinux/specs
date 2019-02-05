@@ -1,12 +1,12 @@
 Name: rlwrap
 Version: 0.43
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Line editor - readline wrapper
 License: GCL
 Group: Editors
-Url: http://utopia.knoware.nl/~hlub/uck/rlwrap
+Url: https://github.com/hanslub42/rlwrap
 
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
@@ -42,6 +42,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 1:0.43-alt2
+- Rebuild with libreadline.so.7
+
 * Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1:0.43-alt1
 - Autobuild version bump to 0.43
 
