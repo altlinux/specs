@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt2_17jpp8
+Release:          alt2_18jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Other
 License:          LGPLv2+
@@ -83,6 +83,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_18jpp8
+- fc29 update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_17jpp8
 - java fc28+ update
 
