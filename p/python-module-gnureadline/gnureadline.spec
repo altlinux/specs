@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 6.3.3
-Release: alt1.git20140408.1.1
+Version: 6.3.8
+Release: alt1
 Summary: Stand-alone GNU readline module
 License: GPL
 Group: Development/Python
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 6.3.8-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.3-alt1.git20140408.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
