@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jboss-metadata
 Version:        10.0.0
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        JBoss Metadata
 License:        LGPLv2+
 URL:            https://github.com/jboss/metadata
@@ -78,6 +78,9 @@ dos2unix common/LICENSE.txt
 %doc --no-dereference common/LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:10.0.0-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:10.0.0-alt1_4jpp8
 - java update
 
