@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        An open source data binding framework for Java
 Name:           castor
 Version:        1.3.3
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 # Older source files are BSD licensed and newer ones are ASL licensed
 License:        BSD and ASL 2.0
 URL:            http://castor-data-binding.github.io/castor/
@@ -109,6 +109,9 @@ sed -i 's@edu.umd.cs.mtc@edu.umd.cs@g' pom.xml xml/pom.xml
 %doc src/doc/license.txt src/doc/new-license.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_9jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_8jpp8
 - java update
 
