@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-osgi-foundation
 Version: 1.2.0
-Release: alt5_23jpp8
+Release: alt5_24jpp8
 Summary: Felix OSGi Foundation EE Bundle
 Group:   Development/Other
 License: ASL 2.0
@@ -56,6 +56,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_24jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_23jpp8
 - java update
 
