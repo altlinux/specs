@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          arquillian-core
 Version:       1.1.11
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java Testing Platform for the JVM Member
 # No license header report @ https://github.com/arquillian/arquillian-core/issues/101
 License:       ASL 2.0
@@ -439,6 +439,9 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_9jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_8jpp8
 - java update
 
