@@ -6,7 +6,7 @@ BuildRequires: perl(IO/Socket.pm) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          grizzly
 Version:       2.3.24
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java NIO Server Framework
 # see Grizzly_THIRDPARTYLICENSEREADME.txt
 License:       (CDDL or GPLv2 with exceptions) and BSD and ASL 2.0 and Public Domain
@@ -211,6 +211,9 @@ done
 %doc --no-dereference LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_5jpp8
 - java update
 
