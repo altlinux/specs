@@ -11,7 +11,7 @@
 %def_enable docs
 
 Name: zeitgeist
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Framework providing Desktop activity awareness
@@ -36,17 +36,15 @@ Requires: lib%name%api_ver = %version-%release
 
 # can't do buildreq correctly
 BuildRequires: python-devel python-module-rdflib
-BuildRequires: raptor
-BuildRequires: gettext perl-XML-Parser intltool
-BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libgio-devel libdbus-devel
-BuildRequires: libxapian-devel
+BuildRequires: gcc-c++ libsqlite3-devel libdbus-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libjson-glib-devel
+BuildRequires: libxapian-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-rdflib
-BuildRequires: systemd-devel
+BuildRequires: pkgconfig(systemd)
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
@@ -228,6 +226,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - updated to v1.0.1-3-g2b337c8
 - used gtk-doc & valadoc to build documentation
