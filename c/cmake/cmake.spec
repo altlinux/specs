@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.13.1
+Version: 3.13.3
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -262,6 +262,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 3.13.3-alt1
+- new version 3.13.3 (with rpmrb script) (ALT bug 36041)
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 3.13.1-alt1
 - Updated to upstream version 3.13.1 (ALT bug 35702)
 
