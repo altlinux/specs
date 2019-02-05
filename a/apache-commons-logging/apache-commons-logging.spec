@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
@@ -106,6 +106,9 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_14jpp8
+- fc29 update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_13jpp8
 - java update
 
