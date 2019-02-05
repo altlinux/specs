@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-cxf
 Version:          5.1.5
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBoss Web Services CXF stack
 License:          LGPLv2+
 URL:              http://jbossws.jboss.org/
@@ -137,6 +137,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt1_4jpp8
 - java update
 
