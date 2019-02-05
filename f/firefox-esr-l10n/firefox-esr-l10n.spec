@@ -6,7 +6,7 @@
 
 Name:		firefox-esr-l10n
 Version:	60.5.0
-Release:	alt1
+Release:	alt2
 Summary:	Language Pack for Firefox ESR
 
 License:	MPL/GPL/LGPL
@@ -19,8 +19,6 @@ Source0:	%name-%version.tar
 Source1:	firefox-l10n-template.in
 
 BuildRequires(pre): rpm-build-firefox
-
-ExclusiveArch: %ix86 x86_64
 
 # Spell dictionaries
 BuildRequires: hunspell-af
@@ -418,6 +416,9 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Tue Feb 05 2019 Anton Midyukov <antohami@altlinux.org> 60.5.0-alt2
+- Not exslusive arch
+
 * Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.0-alt1
 - New version.
 
