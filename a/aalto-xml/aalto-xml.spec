@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          aalto-xml
 Version:       1.0.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Ultra-high performance non-blocking XML processor (Stax/Stax2, SAX/SAX2)
 # Source files without license headers https://github.com/FasterXML/aalto-xml/issues/38
 # See https://github.com/FasterXML/jackson-modules-base/issues/18, from main developer:
@@ -82,6 +82,9 @@ mv release-notes/asl/LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
 - java update
 
