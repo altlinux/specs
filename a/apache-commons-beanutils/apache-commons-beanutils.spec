@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.9.3
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}
@@ -67,6 +67,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.9.3-alt1_5jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.3-alt1_4jpp8
 - java update
 
