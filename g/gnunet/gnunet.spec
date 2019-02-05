@@ -1,6 +1,6 @@
 Name: gnunet
 Version: 0.11.0pre666
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer framework
 
@@ -15,8 +15,9 @@ Source1: gnunetd.init.altlinux
 Source2: gnunetd.service
 
 Patch1: gnunet-libidn2.patch
+Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
-BuildRequires: gcc-c++ libmysqlclient-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires: gcc-c++ libmysqlclient21-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 #BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel 
 BuildRequires: glib2-devel libglpk36-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
@@ -56,11 +57,15 @@ applications which will use %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p0
 
 # broken --disable-testing
 %__subst "s|ats-tests||" src/Makefile.*
 
 %build
+CFLAGS="%optflags -I%_includedir/mysql"
+CXXFLAGS="%optflags -I%_includedir/mysql"
+export CFLAGS CXXFLAGS
 %autoreconf
 # disable testing due recursive linking bug
 %configure --disable-rpath --disable-testing --disable-documentation
@@ -251,6 +256,10 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.11.0pre666-alt2
+- fix FTBFS against libmysqlclient21
+  + spec: add missing include subdir for configure to autodetect libmysqlclient
+
 * Mon Nov 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.0pre666-alt1
 - new version 0.11.0pre666 (with rpmrb script)
 - build with libidn2
