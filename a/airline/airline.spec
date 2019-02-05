@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          airline
 Version:       0.7
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java annotation-based framework
 License:       ASL 2.0
 URL:           https://github.com/airlift/airline
@@ -67,6 +67,9 @@ find -name '*.jar' -delete
 %doc --no-dereference license.txt notice.md
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_8jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_7jpp8
 - java update
 
