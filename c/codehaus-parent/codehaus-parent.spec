@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           codehaus-parent
 Version:        4
-Release:        alt4_13jpp8
+Release:        alt4_14jpp8
 Summary:        Parent pom file for codehaus projects
 License:        ASL 2.0
 URL:            http://codehaus.org/
@@ -43,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:4-alt4_14jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:4-alt4_13jpp8
 - java update
 
