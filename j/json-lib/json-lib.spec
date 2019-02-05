@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           json-lib
 Version:        2.4
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        JSON library for Java
 License:        ASL 2.0
 URL:            http://json-lib.sourceforge.net/
@@ -152,6 +152,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_15jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_14jpp8
 - java update
 
