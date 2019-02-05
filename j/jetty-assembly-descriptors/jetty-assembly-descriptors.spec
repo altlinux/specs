@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Other
@@ -41,6 +41,9 @@ cp -p %{SOURCE1} %{SOURCE2} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16jpp8
 - java update
 
