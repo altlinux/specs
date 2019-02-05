@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-sasl
 Version:          1.0.5
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          SASL Provider for J2SE
 License:          LGPLv2+
 URL:              https://github.com/wildfly-security/jboss-sasl
@@ -55,6 +55,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_4jpp8
 - java update
 
