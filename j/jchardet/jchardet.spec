@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jchardet
 Version:        1.1
-Release:        alt2_17jpp8
+Release:        alt2_18jpp8
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
@@ -69,6 +69,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_18jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_17jpp8
 - java update
 
