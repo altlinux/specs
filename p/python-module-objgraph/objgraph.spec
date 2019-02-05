@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.0
+Version: 3.4.0
 Release: alt1
 Summary: Draws Python object reference graphs with graphviz
 License: MIT
@@ -12,7 +12,8 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/objgraph/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/f4/b3/082e54e62094cb2ec84f8d5a49e0142cef99016491cecba83309cff920ae/%{oname}-%{version}.tar.gz
+# https://github.com/mgedmin/objgraph
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -44,7 +45,7 @@ I recommend xdot for interactive use. pip install xdot should suffice;
 objgraph will automatically look for it in your PATH.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -79,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Build new version.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1
 - automated PyPI update
 
