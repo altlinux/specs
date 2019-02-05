@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          grizzly-npn
 Version:       1.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Grizzly Next Protocol Negotiation API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://grizzly.java.net/spdy.html
@@ -125,6 +125,9 @@ rm -r bootstrap/src/main/java/sun/security/ssl/Alerts.java \
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_7jpp8
 - java update
 
