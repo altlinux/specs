@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.5.5
-Release:           alt1_4jpp8
+Release:           alt1_5jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
@@ -207,6 +207,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.5-alt1_5jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.5-alt1_4jpp8
 - java update
 
