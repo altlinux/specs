@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api
 Version:          1.2
-Release:          alt1_8jpp8
+Release:          alt1_9jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -99,6 +99,9 @@ cd api
 %doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_9jpp8
+- fc29 update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_8jpp8
 - java fc28+ update
 
