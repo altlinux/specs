@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_17jpp8
+Release:       alt1_18jpp8
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -98,6 +98,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_18jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_17jpp8
 - java update
 
