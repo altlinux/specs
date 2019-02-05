@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-osgi-core
 Version:        1.4.0
-Release:        alt5_23jpp8
+Release:        alt5_24jpp8
 Summary:        Felix OSGi R4 Core Bundle
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-osgi-core.html
@@ -55,6 +55,9 @@ export LC_ALL=en_US.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_24jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_23jpp8
 - java update
 
