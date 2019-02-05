@@ -1,6 +1,6 @@
 Name: abook
 Version: 0.5.6
-Release: alt3.qa1
+Release: alt4
 
 Summary: Text-based addressbook program for mutt
 License: GPL
@@ -45,6 +45,9 @@ Abook это небольшая и полнофункциональная тек
 # - 0.6.0pre2? (2006-09-07)
 
 %changelog
+* Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 0.5.6-alt4
+- rebuilt with readline7
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.6-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
