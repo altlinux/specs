@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jpathwatch
 Version:          0.95
-Release:          alt1_16jpp8
+Release:          alt2_16jpp8
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
 # http://jpathwatch.wordpress.com/
@@ -87,6 +87,9 @@ find %{name}-java/src -name '*.java' | xargs javadoc -Xdoclint:none -classpath d
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.95-alt2_16jpp8
+- fc29 update
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_16jpp8
 - java update
 
