@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-sshd
 Version:        0.14.0
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Apache SSHD
 License:        ASL 2.0
 URL:            http://mina.apache.org/sshd-project
@@ -73,6 +73,9 @@ This package provides %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_8jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_7jpp8
 - java update
 
