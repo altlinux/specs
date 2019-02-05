@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jackson-bom
 Version:       2.9.4
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Bill of materials POM for Jackson projects
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-bom
@@ -46,6 +46,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_3jpp8
+- fc29 update
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
 - java update
 
