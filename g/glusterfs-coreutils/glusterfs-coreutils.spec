@@ -1,6 +1,6 @@
 Name: glusterfs-coreutils
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Core Utilities for the Gluster Distributed File System
 
@@ -67,6 +67,9 @@ gnulib-tool --import human
 %_man1dir/gftruncate.1.*
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1.1
+- autorebuild with libreadline7
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 

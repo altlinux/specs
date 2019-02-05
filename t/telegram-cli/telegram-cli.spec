@@ -1,6 +1,6 @@
 Name: telegram-cli
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Private fast and open platform for instant messaging
 
@@ -46,6 +46,9 @@ install -D -m0644 tg-server.pub %buildroot/%_sysconfdir/%name/server.pub
 %_sysconfdir/%name/server.pub
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1.1
+- autorebuild with libreadline7
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1
 - enw release 1.3.3, build with libtgl
 
