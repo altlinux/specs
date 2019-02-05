@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           Mars
 Version:        4.5
-Release:        alt2_7jpp8
+Release:        alt3_7jpp8
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
@@ -50,7 +50,7 @@ ant
 install -Dpm 644 %{name}.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
 install -Dpm 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{_bindir}/%{name}
 desktop-file-install                                \
-    --add-category="Development"                    \
+    --add-category="Development" --add-category="IDE"                    \
     --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
     %{SOURCE2}
 
@@ -61,6 +61,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5-alt3_7jpp8
+- restored jpp patches
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 4.5-alt2_7jpp8
 - java update
 
