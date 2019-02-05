@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          evo-inflector
 Version:       1.2.1
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Implements English pluralization algorithm
 License:       ASL 2.0
 URL:           https://github.com/atteo/evo-inflector
@@ -59,6 +59,9 @@ find . -name "*.class" -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_7jpp8
 - java update
 
