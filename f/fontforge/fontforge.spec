@@ -1,10 +1,10 @@
 %def_enable docs
 %def_enable python
 
-
 Name: fontforge
 Version: 20170731
-Release: alt1.1
+Release: alt2
+
 Summary: FontForge -- font editor
 
 License: BSD
@@ -14,19 +14,22 @@ Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
 
+# Thanks, Fedora
+Patch1: Add-python3-support.patch
+
 # manually removed: glibc-devel-static packages-info-i18n-common
 # Automatically added by buildreq on Wed Nov 30 2016
 # optimized out: ca-certificates fontconfig fontconfig-devel glib2-devel gnu-config ipython libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libfreetype-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-module-decorator python-module-future python-module-google python-module-ipython_genutils python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-simplegeneric python-module-traitlets python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-json python-modules-logging python-modules-sqlite3 python3 python3-base shared-mime-info tzdata xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: desktop-file-utils git-core imake indent libSM-devel libXi-devel libgif-devel libgio-devel libjpeg-devel libltdl7-devel libpango-devel libreadline-devel libspiro-devel libtiff-devel libuninameslist-devel libxml2-devel python-module-mwlib python3-dev unzip wget xorg-cf-files
+BuildRequires: desktop-file-utils git-core imake indent libSM-devel libXi-devel libgif-devel libgio-devel libjpeg-devel libltdl7-devel libpango-devel libreadline-devel libspiro-devel libtiff-devel libuninameslist-devel libxml2-devel unzip wget xorg-cf-files
 
 BuildRequires: libuthash-devel gnulib
 
 %if_enabled python
 # BuildRequires: python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
-BuildRequires: python3-dev
+BuildRequires: python-dev
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 FontForge allows the user to create and modify 
@@ -48,14 +51,14 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: FontForge development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %if_enabled python
 %package -n python-module-%name
 Summary: FontForge python module
 Group: Development/Python
 Requires: python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n python-module-%name
 FontForge python module
@@ -77,7 +80,8 @@ FontForge shared library
 FontForge development files
 
 %prep
-%setup -q -n %{name}-%version
+%setup
+
 # hack to make an illision about local uthash and prevent download it
 mkdir -p uthash/src
 
@@ -87,9 +91,14 @@ mkdir -p uthash/src
 %configure --disable-rpath --disable-static
 #sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
+
 # disable rpath
 sed -ri 's/^(hardcode_libdir_flag_spec).*$/\1=/' libtool
 sed -ri 's/^(runpath_var).*$/\1=/' libtool
+%make_build || :
+# try again
+# looks like gnulib bug? (see https://bugzilla.altlinux.org/show_bug.cgi?id=36059)
+%__subst '24i#include "config.h"' lib/math.h
 %make_build
 
 %install
@@ -135,6 +144,10 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 20170731-alt2
+- fix build (ALT bug 36059), thanks pv@
+- rebuild with libreadline7
+
 * Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 20170731-alt1.1
 - NMU: Rebuilt for e2k.
 
