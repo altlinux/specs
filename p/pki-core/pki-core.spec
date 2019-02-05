@@ -12,7 +12,7 @@
 
 Name: pki-core
 Version: 10.6.9
-Release: alt2
+Release: alt3
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -55,6 +55,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-nss
 
 %if_with check
+BuildRequires: nss-utils
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-ldap
 BuildRequires: python3-module-pyflakes
@@ -701,6 +702,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Tue Feb 05 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt3
+- Added BR on "certutil" (needed for testing).
+
 * Thu Jan 31 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt2
 - Fixed name of flake8 executable.
 
