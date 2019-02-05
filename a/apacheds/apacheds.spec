@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apacheds
 Version:       2.0.0
-Release:       alt1_0.6.M21jpp8
+Release:       alt1_0.7.M21jpp8
 Summary:       Apache Directory Server
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -298,6 +298,9 @@ sed -i '/ConcurrentJunitRunner/d' $(find */src/test/java -name "*.java")
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.7.M21jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.6.M21jpp8
 - java update
 
