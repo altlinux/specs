@@ -1,6 +1,6 @@
 Name:		dmsdos
 Version:	0.9.2.3
-Release:	alt2
+Release:	alt3
 Summary:	Reads compressed dos filesystems (CVF-FAT)
 Group:		File tools
 Source:		%name-%version-pre2.tgz
@@ -64,6 +64,9 @@ install cvflist.1  cvftest.1  dmsdosfsck.8  mcdmsdos.1 %buildroot%_man1dir
 %_includedir/%name
 
 %changelog
+* Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 0.9.2.3-alt3
+- Build with libreadline.so.7
+
 * Thu Jun 07 2012 Fr. Br. George <george@altlinux.ru> 0.9.2.3-alt2
 - Fix gcc4.6 build
 
