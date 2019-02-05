@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-common
 Version:          3.1.3
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBossWS Common
 License:          LGPLv2+
 URL:              http://jbossws.jboss.org
@@ -71,6 +71,9 @@ rm src/test/java/org/jboss/test/ws/common/management/AbstractServerConfigTestCas
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.3-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.3-alt1_4jpp8
 - java update
 
