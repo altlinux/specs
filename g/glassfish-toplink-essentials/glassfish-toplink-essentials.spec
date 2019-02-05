@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt3_14jpp8
+Release:       alt3_15jpp8
 Summary:       Glassfish JPA Toplink Essentials
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
@@ -112,6 +112,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc --no-dereference glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_15jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_14jpp8
 - java update
 
