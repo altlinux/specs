@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-parent
 Version:        43
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Apache Commons Parent Pom
 License:        ASL 2.0
 URL:            http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-%{version}/
@@ -61,6 +61,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:43-alt1_3jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:43-alt1_2jpp8
 - java update
 
