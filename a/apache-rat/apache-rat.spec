@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-rat
 Version:        0.12
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Apache Release Audit Tool (RAT)
 
 License:        ASL 2.0
@@ -171,6 +171,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_5jpp8
 - java update
 
