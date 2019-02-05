@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-shell
 Version:        1.4.3
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Apache Felix Shell Service
 Group:          Development/Other
 License:        ASL 2.0
@@ -59,6 +59,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_12jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_11jpp8
 - java update
 
