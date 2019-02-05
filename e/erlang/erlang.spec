@@ -54,7 +54,7 @@ Name: erlang
 Epoch: 1
 %define subver 2.4
 Version: %ver.%subver
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -100,8 +100,8 @@ Provides: erlang_mod(hipe_x86_main)
 %set_autoconf_version 2.5
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-macros-%name
-BuildRequires: rpm-build-%name
+BuildRequires(pre): rpm-macros-erlang
+BuildRequires(pre): rpm-build-erlang
 BuildRequires: gcc-c++ flex libunixODBC-devel zlib-devel /proc symlinks
 #BuildRequires: wxGTK-contrib-stc-devel >= 2.8.4, wxGTK-devel >= 2.8.4
 #BuildRequires: wxGTK-contrib-stc >= 2.8.4, wxGTK >= 2.8.4
@@ -109,7 +109,7 @@ BuildRequires: libwxGTK3.0-devel
 BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
-%{?_enable_docs:BuildRequires: xsltproc xmlgraphics-batik xmlgraphics-commons %_bindir/fop %{?_enable_pdf_opt:%_bindir/pdfopt}}
+%{?_enable_docs:BuildRequires: xsltproc %_bindir/fop %{?_enable_pdf_opt:%_bindir/pdfopt}}
 %if_with java
 %if_enabled gcj
 BuildRequires: jdkgcj
@@ -1249,6 +1249,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Tue Feb 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1:21.2.4-alt2
+- Use pre BuildRequires for macros
+- Remove unnecessary BuildRequires
+
 * Fri Jan 25 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.2.4-alt1
 - new version
 
