@@ -11,7 +11,7 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -183,6 +183,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_10jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_9jpp8
 - java update
 
