@@ -1,6 +1,6 @@
 Name: apmd
 Version: 3.2.2
-Release: alt6.qa1
+Release: alt7
 Epoch: 1
 %define subver 3
 
@@ -36,7 +36,7 @@ PreReq: powermgmt-base
 Requires(post): %post_service
 Requires(preun): %preun_service
 
-ExclusiveArch: %{ix86} x86_64 ppc %arm
+ExclusiveArch: %{ix86} x86_64 ppc %arm aarch64
 
 Summary(ru_RU.UTF-8): Утилиты управления системой питания (APM BIOS)
 
@@ -227,6 +227,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %endif
 
 %changelog
+* Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 1:3.2.2-alt7
+- rebuilt for aarch64
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1:3.2.2-alt6.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

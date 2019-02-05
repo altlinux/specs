@@ -13,7 +13,7 @@
 
 Name: gnome-applets
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -66,20 +66,20 @@ Requires: %name-window-title = %version-%release
 
 # From configure.ac
 BuildRequires: autoconf-archive
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgnome-panel-devel >= %gnome_panel_ver
-BuildPreReq: libgtop-devel >= %libgtop_ver
-BuildPreReq: libgail3-devel >= %libgail_ver
-BuildPreReq: libxklavier-devel >= %libxklavier_ver
-BuildPreReq: libwnck3-devel >= %libwnck_ver
-BuildPreReq: libnotify-devel >= %libnotify_ver
-BuildPreReq: icon-theme-adwaita >= %icon_theme_ver
-BuildPreReq: intltool >= 0.35
-BuildPreReq: libX11-devel libXt-devel
-BuildPreReq: libgucharmap-devel >= 2.33.2
-BuildPreReq: libgweather-devel >= %libgweather_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgnome-panel-devel >= %gnome_panel_ver
+BuildRequires: libgtop-devel >= %libgtop_ver
+BuildRequires: libgail3-devel >= %libgail_ver
+BuildRequires: libxklavier-devel >= %libxklavier_ver
+BuildRequires: libwnck3-devel >= %libwnck_ver
+BuildRequires: libnotify-devel >= %libnotify_ver
+BuildRequires: icon-theme-adwaita >= %icon_theme_ver
+BuildRequires: intltool >= 0.35
+BuildRequires: libX11-devel libXt-devel
+BuildRequires: libgucharmap-devel >= 2.33.2
+BuildRequires: libgweather-devel >= %libgweather_ver
 BuildRequires: rpm-build-gnome icon-theme-adwaita
 BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel libxml2-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
@@ -88,7 +88,7 @@ BuildRequires: tracker-devel libupower-devel
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
 
 %if_enabled battstat
-BuildPreReq: libapm-devel
+BuildRequires: libapm-devel
 %endif
 
 %description
@@ -142,7 +142,7 @@ This package contains common files needed to run GNOME panel applets.
 %package accessx-status
 Summary: Accessibility Keyboard Status Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description accessx-status
 This applet shows the status of the keyboard accessibility features,
@@ -153,7 +153,7 @@ use.
 %package battstat
 Summary: Laptop Power Subsystem Applet for the GNOME panel
 Group: Monitoring
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description battstat
 battstat-applet is a utility that displays the status of the power
@@ -164,7 +164,7 @@ remaining battery charge percentage in a graphical window.
 %package cpufreq
 Summary: GNOME CPUFreq Applet
 Group: Monitoring
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 Requires: polkit-gnome
 
 %description cpufreq
@@ -186,7 +186,7 @@ frequency via applet.
 %package charpick
 Summary: Character Picker Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description charpick
 charpick_applet allows you to easily write many characters which are not
@@ -196,7 +196,7 @@ mathematical  symbols and punctuation, and some other special symbols.
 %package drivemount
 Summary: Drive Mount Applet for the GNOME panel.
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description drivemount
 drivemount_applet allows to quickly and easily mount and unmount various
@@ -205,7 +205,7 @@ types of drives and file systems on computer.
 %package geyes
 Summary: gEyes Applet for the GNOME panel
 Group: Toys
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description geyes
 geyes_applet is a pair of eyes which follow mouse pointer around the screen.
@@ -213,7 +213,7 @@ geyes_applet is a pair of eyes which follow mouse pointer around the screen.
 %package gweather
 Summary: Weather Applet for the GNOME panel
 Group: Toys
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description gweather
 gweather displays the current temperature and weather conditions in
@@ -222,7 +222,7 @@ numeric and iconified form inside the applet.
 %package mini-commander
 Summary: Mini-Commander Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description mini-commander
 mini_commander_applet adds a command line to your Panel. It features
@@ -235,7 +235,7 @@ view a web page or search for a man/info page etc.
 %package modemlights
 Summary: Modem Lights applet for the GNOME panel
 Group: Monitoring
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description modemlights
 modemlights_applet can be used to tell if your modem is working, and to
@@ -247,7 +247,7 @@ when you click on the button with the single green light.
 %package multiload
 Summary: Multiload (cpu, load average, memory, net, swap) applet for the GNOME panel
 Group: Monitoring
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 Requires: gnome-system-monitor
 
 %description multiload
@@ -257,7 +257,7 @@ Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
 %package stickynotes
 Summary: Stickynotes applet for the GNOME panel
 Group: Office
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 Requires: libwnck >= %libwnck_ver
 
 %description stickynotes
@@ -267,7 +267,7 @@ Gnome Desktop.
 %package trash
 Summary: GNOME Trash Applet
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 Requires: gvfs
 
 %description trash
@@ -277,7 +277,7 @@ Nautilus onto this applet to move them to your trash folder.
 %package windowpicker
 Summary: Window Picker for the GNOME panel
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description windowpicker
 This package provides a GNOME Window Picker Applet to switch between open
@@ -286,7 +286,7 @@ windows.
 %package netspeed
 Summary: Applet that shows traffic on a network device
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description netspeed
 netspeed_applet is a little GNOME applet that shows the traffic on a
@@ -295,7 +295,7 @@ specified network device.
 %package brightness
 Summary: Applet that allows to adjust laptop panel brightness
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description brightness
 This package provides brightness_applet for gnome-panel that allows user
@@ -304,7 +304,7 @@ to adjust laptop panel brightness.
 %package inhibit
 Summary: Applet that allows to inhibit automatic power saving
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description inhibit
 This package provides inhibit_applet for gnome-panel that allows user
@@ -313,7 +313,7 @@ to inhibit automatic power saving.
 %package tracker-search-bar
 Summary: Applet that allows to search with tracker
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 Requires: tracker
 
 %description tracker-search-bar
@@ -323,7 +323,7 @@ to search data quickly using Tracker.
 %package command
 Summary: Applet that shows the output of a command
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description command
 This package provides command-applet for gnome-panel that allows user
@@ -332,7 +332,7 @@ to show the output of a command.
 %package timer
 Summary: Applet that starts a timer
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description timer
 This package provides timer-applet for gnome-panel that allows user
@@ -341,7 +341,7 @@ to start a timer and receive a notification when it is finished.
 %package window-buttons
 Summary: Window Buttons applet
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description window-buttons
 This package provides window-buttons-applet for gnome-panel.
@@ -349,7 +349,7 @@ This package provides window-buttons-applet for gnome-panel.
 %package window-title
 Summary: Window Title applet
 Group: Graphical desktop/GNOME
-PreReq: %name-common = %version-%release
+Requires(pre): %name-common = %version-%release
 
 %description window-title
 This package provides window-title-applet for gnome-panel that display
@@ -555,6 +555,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
+- rebuilt battstat against current libapm
+
 * Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
