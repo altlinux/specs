@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        A Java finite state automata/regular expression library
 
 License:        BSD
@@ -72,6 +72,9 @@ cp -p %{SOURCE1} .
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.12r1-alt1_3jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.12r1-alt1_2jpp8
 - java update
 
