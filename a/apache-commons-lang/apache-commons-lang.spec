@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_21jpp8
+Release:        alt5_22jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Other
@@ -78,6 +78,9 @@ sed -i 's/\r//' *.txt *.html
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_22jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_21jpp8
 - java update
 
