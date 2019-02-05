@@ -48,7 +48,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-%{version}.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-%{apiver}.pom
 Name:           bea-stax
 Version:        1.2.0
-Release:        alt4_16jpp8
+Release:        alt4_17jpp8
 License:        ASL 1.1 and ASL 2.0
 BuildArch:      noarch
 
@@ -112,6 +112,9 @@ ant all javadoc
 %doc --no-dereference ASF2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_17jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_16jpp8
 - java update
 
