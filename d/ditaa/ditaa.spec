@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
 Version:        0.10
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Group:          System/Base
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
@@ -57,6 +57,9 @@ install -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_javadir}/%{name}.jar
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_5jpp8
 - java update
 
