@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-commons-jci
 Version:       1.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Commons Java Compiler Interface
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
@@ -171,6 +171,9 @@ find . -name "*.jar" -delete
 %files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_7jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_6jpp8
 - java update
 
