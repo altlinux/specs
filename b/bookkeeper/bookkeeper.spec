@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -84,7 +84,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
 # hedwig-client cpp
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-complete
 BuildRequires: libtool
 BuildRequires: log4cxx-devel
 BuildRequires: libssl-devel
@@ -366,6 +366,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_5jpp8
 - java update
 
