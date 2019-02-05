@@ -3,7 +3,7 @@
 
 Name: oddjob
 Version: 0.34.4
-Release: alt2
+Release: alt3
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 
 Group: System/Servers
@@ -137,6 +137,9 @@ rm %buildroot%_libdir/security/pam_oddjob_mkhomedir.la
 %preun_service oddjobd
 
 %changelog
+* Tue Feb 05 2019 Stanislav Levin <slev@altlinux.org> 0.34.4-alt3
+- Enable debug logging for testing.
+
 * Mon Oct 22 2018 Stanislav Levin <slev@altlinux.org> 0.34.4-alt2
 - Fixed the location of PAM module.
 
