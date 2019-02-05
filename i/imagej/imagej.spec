@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           imagej
 Version:        1.50
-Release:        alt1_5.hjpp8
+Release:        alt1_6.hjpp8
 Summary:        Image Processing and Analysis in Java
 
 Group:          Engineering
@@ -131,6 +131,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_6.hjpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_5.hjpp8
 - java update
 
