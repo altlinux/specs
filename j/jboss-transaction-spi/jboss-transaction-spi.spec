@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-transaction-spi
 Version:       7.3.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JBoss Transaction SPI
 License:       LGPLv2+
 URL:           https://github.com/jbosstm/jboss-transaction-spi
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 7.3.0-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 7.3.0-alt1_4jpp8
 - java update
 
