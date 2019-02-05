@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           htmlunit
 Version:        2.23
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        A headless web browser for automated testing
 License:        ASL 2.0 
 URL:            http://htmlunit.sourceforge.net/
@@ -111,6 +111,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_5jpp8
 - java update
 
