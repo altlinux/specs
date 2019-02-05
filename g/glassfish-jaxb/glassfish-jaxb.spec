@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt2_9jpp8
+Release:        alt2_10jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -283,6 +283,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_10jpp8
+- fc29 update
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_9jpp8
 - fc28+ update
 
