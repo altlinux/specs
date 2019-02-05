@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_9jpp8
+Release:	alt1_10jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -243,6 +243,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_10jpp8
+- fc29 update
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_9jpp8
 - fixed build with new tomcat
 
