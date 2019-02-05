@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_29jpp8
+Release:        alt3_30jpp8
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -68,6 +68,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_30jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_29jpp8
 - java update
 
