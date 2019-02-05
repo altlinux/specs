@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-configadmin
 Version:        1.8.14
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Apache Felix Configuration Admin Service
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-config-admin.html
@@ -65,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.14-alt1_4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.14-alt1_3jpp8
 - java update
 
