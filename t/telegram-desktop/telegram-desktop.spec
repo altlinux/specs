@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.5.10
+Version: 1.5.11
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -206,6 +206,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.11-alt1
+- new version 1.5.11 (with rpmrb script)
+
 * Fri Feb 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.10-alt1
 - new version 1.5.10 (with rpmrb script)
 
