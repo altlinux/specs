@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate4
 Version:       4.3.11
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Relational persistence and query service
 # Incorrect Free Software Foundation address https://hibernate.atlassian.net/browse/HHH-10961
 License:       LGPLv2+ and ASL 2.0
@@ -459,6 +459,9 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt1_7jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt1_6jpp8
 - java update
 
