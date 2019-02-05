@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-fileupload
 Version:        1.3.3
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
@@ -34,9 +34,6 @@ BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(javax.portlet:portlet-api)
 %endif
 Source44: import.info
-%define short_name commons-fileupload
-Provides: %{short_name} = %{version}
-Conflicts:	jakarta-%{short_name} < 1:%version
 
 %description
 The javax.servlet package lacks support for RFC-1867, HTML file
@@ -92,6 +89,9 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_4jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_3jpp8
 - java update
 
