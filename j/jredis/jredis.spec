@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Name:          jredis
 # This release is compatible with newer Redis release
 Version:       2.0.0
-Release:       alt1_0.5.a.0jpp8
+Release:       alt1_0.6.a.0jpp8
 Summary:       Java Client and Connectors for Redis
 License:       ASL 2.0
 # https://code.google.com/p/jredis/
@@ -124,6 +124,9 @@ find . -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.6.a.0jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.5.a.0jpp8
 - java update
 
