@@ -11,7 +11,7 @@ BuildRequires: desktop-file-utils
 Summary: 	Panel for the Matchbox Desktop
 Name: 		matchbox-panel
 Version: 	0.9.3
-Release: 	alt1_12
+Release: 	alt1_12.qa1
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -71,6 +71,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1_12.qa1
+- rebuilt against current libapm
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_12
 - update by mgaimport
 
