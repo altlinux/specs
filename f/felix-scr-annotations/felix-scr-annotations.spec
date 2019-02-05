@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          felix-scr-annotations
 Version:       1.12.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Annotations for SCR
 License:       ASL 2.0
 URL:           http://felix.apache.org/
@@ -54,6 +54,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_3jpp8
 - java update
 
