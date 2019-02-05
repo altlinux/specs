@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          gmetric4j
 Version:       1.0.10
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       JVM instrumentation to Ganglia
 License:       BSD
 URL:           https://github.com/ganglia/gmetric4j
@@ -81,6 +81,9 @@ rm -r src/test/java/info/ganglia/gmetric4j/gmetric/GMetricIT.java
 %doc --no-dereference COPYING
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_9jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_8jpp8
 - java update
 
