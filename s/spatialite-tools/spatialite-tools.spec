@@ -1,6 +1,6 @@
 Name: spatialite-tools
 Version: 4.3.0
-Release: alt1
+Release: alt2
 Summary: A set of useful CLI tools for SpatiaLite
 
 Group: Development/Other
@@ -41,6 +41,9 @@ rm -f Makefile-static*
 %_bindir/*
 
 %changelog
+* Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt2
+- Rebuild with libreadline7.
+
 * Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
 - New version
 - Package all executables
