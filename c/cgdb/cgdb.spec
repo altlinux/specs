@@ -1,6 +1,6 @@
 Name: cgdb
 Summary: Frontend for GDB
-Version: 0.6.8
+Version: 0.7.0
 Release: alt1
 Url: http://cgdb.github.io/
 License: GPL2
@@ -12,9 +12,12 @@ Source: %name-%version.tar.bz2
 
 Requires: gdb
 
-# Automatically added by buildreq on Fri Sep 26 2008
-BuildRequires: flex libncurses-devel libreadline-devel
-BuildRequires: texinfo help2man
+BuildRequires: gcc-c++
+BuildRequires: flex
+BuildRequires: libncurses-devel
+BuildRequires: libreadline-devel
+BuildRequires: texinfo
+BuildRequires: help2man
 
 %description
 CGDB is a curses (terminal-based) interface to the GNU Debugger (GDB).
@@ -38,9 +41,11 @@ printf '#define HAVE_DEV_PTMX 1\n' >> config.h
 %_bindir/*
 %_datadir/%name
 %_infodir/*
-%_man1dir/*
 
 %changelog
+* Tue Feb 05 2019 Alexey Gladkov <legion@altlinux.ru> 0.7.0-alt1
+- New version (0.7.0).
+
 * Thu Dec 10 2015 Alexey Gladkov <legion@altlinux.ru> 0.6.8-alt1
 - New version (0.6.8).
 
