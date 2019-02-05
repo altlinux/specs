@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             bean-validation-api
 Version:          1.1.0
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          Bean Validation API (JSR 349)
 License:          ASL 2.0
 URL:              http://beanvalidation.org/
@@ -66,6 +66,9 @@ find src/test/java -name "ValidationTest.java" -print -delete
 %doc license.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_10jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_9jpp8
 - java update
 
