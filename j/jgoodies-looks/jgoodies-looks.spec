@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jgoodies-looks
 Version:        2.6.0
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
 Group:          Development/Other
@@ -92,6 +92,9 @@ done
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_7jpp8
 - java update
 
