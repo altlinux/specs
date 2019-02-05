@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-mina
 Version:        2.0.9
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Apache MINA
 License:        ASL 2.0
 URL:            http://mina.apache.org
@@ -124,6 +124,9 @@ sed -i \
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_9jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_8jpp8
 - java update
 
