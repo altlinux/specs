@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -27,7 +27,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bval
 Version:       1.1.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -210,6 +210,9 @@ sed -i '/Privileged/d' \
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_5jpp8
 - java update
 
