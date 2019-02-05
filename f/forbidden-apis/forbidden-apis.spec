@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          forbidden-apis
 Version:       2.5
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Policeman's Forbidden API Checker
 License:       ASL 2.0
 URL:           https://github.com/policeman-tools/forbidden-apis
@@ -111,6 +111,9 @@ install -pm 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2jpp8
+- fc29 update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1jpp8
 - java update
 
