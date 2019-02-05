@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          gsbase
 Version:       2.0.1
-Release:       alt9_11jpp8
+Release:       alt9_12jpp8
 Summary:       A collection of java utility classes
 # http://gsbase.sourceforge.net/license.html Apache style license
 License:       ASL 2.0
@@ -76,6 +76,9 @@ rm -r src/test/com/gargoylesoftware/base/gui/TableLayoutTest.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt9_12jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt9_11jpp8
 - java update
 
