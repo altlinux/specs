@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/dvipdfm /usr/bin/gnucap-modelgen /usr/bin/hacha /usr/bin
 %define _localstatedir %{_var}
 Name:           gnucap
 Version:        0.35
-Release:        alt1_23
+Release:        alt123.1
 Summary:        The Gnu Circuit Analysis Package
 Group:          Engineering
 License:        GPLv2+
@@ -61,6 +61,9 @@ rm examples/Makefile*
 
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1:0.35-alt123.1
+- autorebuild with libreadline7
+
 * Mon Dec 04 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.35-alt1_23
 - new version (closes: #34274)
 
