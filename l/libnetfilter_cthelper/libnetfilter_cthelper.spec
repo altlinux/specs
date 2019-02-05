@@ -1,6 +1,6 @@
 Name: libnetfilter_cthelper
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: userspace library for helper infrastructure in kernel-space.
 License: %gpl2plus
@@ -50,5 +50,8 @@ rm -f %buildroot%_libdir/%name/*.la
 
 
 %changelog
+* Tue Feb 05 2019 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
+- rebuilt in new environment
+
 * Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
 - first build for Sisyphus
