@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-stdio
 Version:          1.0.2
-Release:          alt1_7jpp8
+Release:          alt1_8jpp8
 Summary:          JBoss STDIO 
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-stdio/
@@ -52,6 +52,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_7jpp8
 - java update
 
