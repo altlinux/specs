@@ -51,6 +51,9 @@ gnulib-tool --create-testdir --dir=$PWD %name
 %_bindir/*
 
 %changelog
+* Sat Feb 02 2019 Dmitry V. Levin <ldv@altlinux.org> %version-%release
+- Rebuilt with the latest gnulib snapshot.
+
 * Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1.2313.4652c-alt1
 - Rebuilt with gnulib snapshot v0.1-2313-g4652c7baf.
 

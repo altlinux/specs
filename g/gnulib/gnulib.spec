@@ -1,8 +1,9 @@
 Name: gnulib
-Version: 0.1.2313.4652c
+Version: 0.1.2433.3043e
 Release: alt1
 
 Summary: GNU Portability Library
+# assorted licenses, see the source
 License: Freely distributable
 Group: Development/C
 BuildArch: noarch
@@ -46,6 +47,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Sat Feb 02 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1.2433.3043e-alt1
+- v0.1-2313-g4652c7baf -> v0.1-2433-g3043e43a7 (closes: ##35859).
+
 * Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1.2313.4652c-alt1
 - v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
 
