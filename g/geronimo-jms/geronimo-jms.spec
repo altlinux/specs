@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           geronimo-jms
 Version:        1.1.1
-Release:        alt3_25jpp8
+Release:        alt3_26jpp8
 Summary:        J2EE JMS v1.1 API
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -60,6 +60,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_26jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_25jpp8
 - java update
 
