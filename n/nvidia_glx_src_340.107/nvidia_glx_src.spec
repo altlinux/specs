@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 107
 %define nv_minor %nil
-%define pkg_rel alt158
+%define pkg_rel alt159
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -83,6 +83,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_4.11.patch
+Patch2: buildfix_kernel_4.4.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -160,6 +161,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -306,6 +308,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 05 2019 Sergey V Turchin <zerg@altlinux.org> 340.107-alt159
+- add fix against kernel 4.4 get_user_pages
+
 * Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 340.107-alt158
 - rebuild
 
