@@ -7,7 +7,7 @@
 
 Name: plasma5-%rname
 Version: 5.14.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 Source10: pam-kf5-screenlocker
 Patch1: alt-def-screenlocker.patch
 Patch2: alt-greeter-path.patch
+Patch3: fix-screenlock-focus-on-x11.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-x11extras-devel
@@ -74,6 +75,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %K5build \
@@ -121,6 +123,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Tue Feb 05 2019 Andrey Bychkov <mrdrew@altlinux.ru> 1:5.14.4-alt2
+- lock screen focus on x11 platform fixed
+
 * Fri Dec 07 2018 Andrey Bychkov <mrdrew@altlinux.ru> 1:5.14.4-alt1
 - Version updated to 5.14.4
 
