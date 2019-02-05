@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global spec_name geronimo-jcdi_%{spec_ver}_spec
 Name:          geronimo-jcdi-1.0-api
 Version:       1.0
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Apache Geronimo Java Contexts and Dependency Injection (JSR-299) Spec API
 License:       ASL 2.0
 URL:           http://geronimo.apache.org/
@@ -82,6 +82,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_10jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9jpp8
 - java update
 
