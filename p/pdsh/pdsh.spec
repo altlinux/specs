@@ -14,7 +14,7 @@
 
 Name: pdsh
 Version: 2.29
-Release: alt1
+Release: alt2
 
 Summary: Parallel remote shell program
 License: GPL
@@ -401,6 +401,9 @@ fi
 ##############################################################################
 
 %changelog
+* Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 2.29-alt2
+- rebuilt against readline7
+
 * Thu Jun 19 2014 Michael Shigorin <mike@altlinux.org> 2.29-alt1
 - new version (watch file uupdate)
 
