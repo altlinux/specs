@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jcifs
 Version:       1.3.18
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Common Internet File System Client in 100% Java
 # Licenses:
 #   src/jcifs/util/DES.java: BSD and MIT
@@ -104,6 +104,9 @@ cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_7jpp8
 - java update
 
