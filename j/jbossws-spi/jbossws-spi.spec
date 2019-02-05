@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-spi
 Version:          3.1.2
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBossWS SPI
 # https://issues.jboss.org/browse/JBWS-4002
 License:          LGPLv2+
@@ -76,6 +76,9 @@ rm src/test/java/org/jboss/test/wsf/spi/metadata/config/ConfigMDParserTestCase.j
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt1_4jpp8
 - java update
 
