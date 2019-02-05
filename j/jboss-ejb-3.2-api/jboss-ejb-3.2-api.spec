@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %global pname jboss-ejb-api_spec
 Name:          jboss-ejb-3.2-api
 Version:       1.0.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Enterprise JavaBeans 3.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-ejb-api_spec
@@ -69,6 +69,9 @@ cp -p %{SOURCE1} .
 %doc --no-dereference cddl.txt LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - java update
 
