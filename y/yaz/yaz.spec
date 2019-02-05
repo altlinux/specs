@@ -8,7 +8,7 @@
 
 Name: yaz
 Version: 5.25.0
-Release: alt2
+Release: alt3
 
 Summary: Z39.50/SRW/SRU toolkit
 
@@ -142,6 +142,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt3
+- rebuild with libicu 6.3.1
+
 * Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt2
 - build without libwrap-devel
 
