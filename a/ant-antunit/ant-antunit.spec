@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             ant-%{base_name}
 Version:          1.3
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          Provide antunit ant task
 License:          ASL 2.0
 URL:              http://ant.apache.org/antlibs/%{base_name}/
@@ -77,6 +77,9 @@ echo "ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_10jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_9jpp8
 - java update
 
