@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           checkstyle
 Version:        8.0
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -171,6 +171,9 @@ fi
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_3jpp8
 - java update
 
