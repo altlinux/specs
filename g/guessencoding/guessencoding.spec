@@ -4,12 +4,12 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             guessencoding
 Version:          1.4
-Release:          alt2_15jpp8
+Release:          alt2_16jpp8
 Summary:          Guess encoding of files and return configured reader
 Group:            Development/Other
 License:          ASL 2.0
@@ -78,6 +78,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_16jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_15jpp8
 - java update
 
