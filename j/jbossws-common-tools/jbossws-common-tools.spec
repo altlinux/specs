@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-common-tools
 Version:          1.2.2
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBossWS Common Tools
 License:          LGPLv2+ and ASL 2.0
 URL:              http://jbossws.jboss.org
@@ -65,6 +65,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4jpp8
 - java update
 
