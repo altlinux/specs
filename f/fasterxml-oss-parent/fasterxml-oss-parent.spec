@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname oss-parent
 Name:          fasterxml-oss-parent
 Version:       26
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       FasterXML parent pom
 License:       ASL 2.0
 URL:           http://fasterxml.com/
@@ -64,6 +64,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 26-alt1_7jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 26-alt1_6jpp8
 - java update
 
