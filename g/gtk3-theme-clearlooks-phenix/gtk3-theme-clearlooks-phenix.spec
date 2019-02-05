@@ -2,7 +2,7 @@
 
 Name:    gtk3-theme-clearlooks-phenix
 Version: 7.0.1
-Release: alt2.gite1bb5fe
+Release: alt3.gite1bb5fe
 Epoch:   1
 
 Summary: GTK3 port of the Clearlooks theme
@@ -17,6 +17,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 
 Patch10:  alt-fix-gtk3-small-bugs.patch
+Patch11:  alt-fix-menubar-view-for-Libreoffice.patch
 
 BuildArch: noarch
 
@@ -33,6 +34,7 @@ window managers.
 %prep
 %setup -c %themename
 %patch10 -d %themename -p1
+%patch11 -d %themename -p1
 
 %install
 mkdir -p %buildroot%_datadir/themes/
@@ -43,6 +45,9 @@ cp -r %themename %buildroot%_datadir/themes/
 %_datadir/themes/%themename
 
 %changelog
+* Tue Feb 05 2019 Ivan Razzhivin <underwit@altlinux.org> 1:7.0.1-alt3.gite1bb5fe
+- fix menubar view for LibreOffice
+
 * Tue Sep 11 2018 Ivan Razzhivin <underwit@altlinux.org> 1:7.0.1-alt2.gite1bb5fe
 - Fix rubberband selection
 - Fix treeviews jumping
