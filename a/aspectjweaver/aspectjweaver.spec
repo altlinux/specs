@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          aspectjweaver 
 Version:       1.8.9
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java byte-code weaving library
 License:       EPL
 URL:           http://eclipse.org/aspectj/
@@ -79,6 +79,9 @@ LANG=en_US.ISO8859-1 CLASSPATH=$( build-classpath objectweb-asm/asm commons-logg
 %doc --no-dereference epl-v10.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_6jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_5jpp8
 - java update
 
