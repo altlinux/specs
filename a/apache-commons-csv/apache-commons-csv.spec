@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-csv
 Version:        1.5
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-csv/
@@ -67,6 +67,9 @@ rm src/test/java/org/apache/commons/csv/CSVPrinterTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_2jpp8
 - java update
 
