@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: htrace
 Version: 3.1.0
-Release: alt1_7jpp8
+Release: alt1_8jpp8
 Summary: Tracing framework for java based distributed systems
 License: ASL 2.0
 URL:     https://%{name}.incubator.apache.org
@@ -93,6 +93,9 @@ This package contains javadoc for %{name}.
 %doc DISCLAIMER.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_7jpp8
 - java update
 
