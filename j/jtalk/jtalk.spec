@@ -1,7 +1,6 @@
 Name: jtalk
 Version: 20060521
-Release: alt1.qa2
-
+Release: alt2
 Summary: Jtalk is a simple Jabber client
 Group: Networking/Instant messaging
 License: GPL
@@ -15,7 +14,7 @@ Patch0: %name-%version-alt-ass-needed.patch
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Sat Jan 13 2007
-BuildRequires: libloudmouth-devel libpcre-devel libreadline-devel linux-libc-headers 
+BuildRequires: libloudmouth-devel libpcre-devel libreadline-devel linux-libc-headers
 
 %description
 Jtalk is a Jabber client that provides an interface somewhat similar to the
@@ -44,6 +43,9 @@ create accounts and so on, you need another, more complete, Jabber client.
 
 
 %changelog
+* Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 20060521-alt2
+- Rebuild with libreadline7.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060521-alt1.qa2
 - NMU: rebuilt for updated dependencies.
 
