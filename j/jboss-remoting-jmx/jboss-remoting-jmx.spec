@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-remoting-jmx
 Version:       2.0.1
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JMX via JBoss Remoting
 License:       LGPLv2+
 URL:           http://www.jboss.org/
@@ -65,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference COPYING.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
 - java update
 
