@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-osgi-compendium
 Version:        1.4.0
-Release:        alt5_26jpp8
+Release:        alt5_27jpp8
 Summary:        Felix OSGi R4 Compendium Bundle
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -77,6 +77,9 @@ This package contains API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_27jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_26jpp8
 - java update
 
