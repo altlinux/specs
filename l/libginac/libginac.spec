@@ -3,7 +3,7 @@
 Name: libginac
 Version: 1.6.2
 Epoch: 1
-Release: alt1.git20140518.1.1
+Release: alt1.git20140518.2
 
 Summary: C++ class library for symbolic calculations
 
@@ -92,6 +92,9 @@ for developing GiNaC applications.
 %_infodir/*.info*
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.6.2-alt1.git20140518.2
+- Rebuild with libreadline7.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.6.2-alt1.git20140518.1.1
 - NMU: added BR: texinfo
 
