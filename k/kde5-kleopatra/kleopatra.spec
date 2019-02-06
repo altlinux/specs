@@ -6,8 +6,8 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -32,6 +32,7 @@ BuildRequires: kde5-kmime-devel kde5-libkleo-devel kf5-kauth-devel kf5-kcmutils-
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel kf5-kitemmodels-devel
+BuildRequires: kf5-kcrash-devel
 
 %description
 %summary
@@ -102,6 +103,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

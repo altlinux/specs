@@ -11,8 +11,8 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -30,8 +30,9 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kde5-kcalcore-devel kde5-kcontacts-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel python-module-google python3-dev qt5-webkit-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-webengine-devel qt5-tools-devel
+BuildRequires: libsasl2-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kwallet-devel
 
 %description
 LibKGAPI is a C++ library that implements APIs for various Google services.
@@ -123,6 +124,16 @@ KF5 library
 
 %install
 %K5install
+
+# workaround against sasl plugins dir
+for sffx in 3 4 5 6 ; do
+    mkdir -p  %buildroot/%_libdir/sasl2-$sffx
+    for f in %buildroot/%_libdir/sasl2/*.so* ; do
+	fname=`basename "$f"`
+	ln -s ../sasl2/"$fname" %buildroot/%_libdir/sasl2-$sffx/"$fname"
+    done
+done
+
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
@@ -140,6 +151,7 @@ KF5 library
 
 %files -n %libkpimgapidrive
 %_K5lib/libKPimGAPIDrive.so.*
+%_libdir/sasl2*/*.so*
 %files -n %libkpimgapilatitude
 %_K5lib/libKPimGAPILatitude.so.*
 %files -n %libkpimgapicore
@@ -156,6 +168,9 @@ KF5 library
 %_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

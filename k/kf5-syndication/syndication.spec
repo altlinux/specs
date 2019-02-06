@@ -1,8 +1,9 @@
 %define rname syndication
 
-Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Name: kf5-%rname
+Version: 5.54.0
+Release: alt1
+Epoch: 1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -29,12 +30,16 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Provides: kde5-syndication-common = 19
+Obsoletes: kde5-syndication-common < 19
 %description common
 %name common package
 
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Provides: kde5-syndication-devel = 19
+Obsoletes: kde5-syndication-devel < 19
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -59,6 +64,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING*
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files devel
 %_K5inc/syndication_version.h
@@ -71,6 +77,10 @@ KF5 library
 %_K5lib/libKF5Syndication.so.*
 
 %changelog
+* Mon Feb 04 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.54.0-alt1
+- new version
+- moved from apps
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

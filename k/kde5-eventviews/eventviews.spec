@@ -4,8 +4,8 @@
 %define libkf5eventviews libkf5eventviews%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -23,7 +23,7 @@ BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
-BuildRequires: kf5-kdiagram-devel
+BuildRequires: kf5-kdiagram-devel kf5-kholidays-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -84,6 +84,9 @@ KF5 library
 %_K5lib/libKF5EventViews.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

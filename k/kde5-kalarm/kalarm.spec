@@ -1,8 +1,8 @@
 %define rname kalarm
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -27,6 +27,7 @@ BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-
 BuildRequires: kde5-kcontacts-devel kf5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel
 BuildRequires: kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kwallet-devel
+BuildRequires: kf5-kglobalaccel-devel
 
 %description
 Personal Alarm Scheduler.
@@ -57,7 +58,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch -p3
+#%patch -p3
 
 %build
 %K5build
@@ -87,6 +88,9 @@ KF5 library
 
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

@@ -10,8 +10,8 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2%ubt
+Version: 18.12.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -171,6 +171,9 @@ KF5 library
 %_K5lib/libKF5WebEngineViewer.so.*
 
 %changelog
+* Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
+- new version
+
 * Mon Aug 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
 - update Russian translation
 
