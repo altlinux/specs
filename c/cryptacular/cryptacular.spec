@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cryptacular
 Version:       1.1.0
-Release:       alt2_5jpp8
+Release:       alt2_6jpp8
 Summary:       Java Library that complement to the Bouncy Castle crypto API
 # See https://github.com/vt-middleware/cryptacular/issues/25
 License:       ASL 2.0 or LGPLv3
@@ -66,6 +66,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_6jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_5jpp8
 - java update
 
