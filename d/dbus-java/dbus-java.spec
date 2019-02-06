@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_27jpp8
+Release:    alt2_28jpp8
 Summary:    Java implementation of the DBus protocol
 License:    AFL or LGPLv2
 URL:        http://freedesktop.org/wiki/Software/DBusBindings
@@ -156,6 +156,9 @@ make install \
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_28jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_27jpp8
 - java update
 
