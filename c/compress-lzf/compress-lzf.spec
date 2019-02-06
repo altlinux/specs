@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          compress-lzf
 Version:       1.0.3
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Basic LZF codec, compatible with standard C LZF package
 License:       ASL 2.0
 URL:           https://github.com/ning/compress
@@ -68,6 +68,9 @@ find . -name "*.jar" -type f -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_9jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_8jpp8
 - java update
 
