@@ -1,9 +1,9 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.6.2
+Version: 1.7.4
 Epoch: 1
-Release: alt1.git20140518.2
+Release: alt1
 
 Summary: C++ class library for symbolic calculations
 
@@ -11,16 +11,15 @@ License: GPLv2+
 Group: Sciences/Mathematics
 Url: http://www.ginac.de/
 
-# git://www.ginac.de/ginac.git
-Source: ginac-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: https://ginac.de/ginac-%version.tar
 
 # manually removed: xorg-sdk  rpm-build-java rpm-build-mono rpm-build-seamonkey
 # Automatically added by buildreq on Wed Dec 03 2008
-BuildRequires: doxygen flex gcc-c++ libcln-devel libncurses-devel
-BuildRequires: libreadline-devel texlive-latex-base transfig
-BuildPreReq: autogen python-modules
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: flex gcc-c++ libcln-devel libncurses-devel libreadline-devel python-modules
+BuildRequires: makeinfo
+#BuildRequires: doxygen tetex-dvips tetex-latex transfig
 
 %description
 GiNaC is Not a Cocktail.
@@ -46,7 +45,7 @@ C++ programming language.
 %package devel
 Summary: Libraries, includes and more for developing GiNaC applications
 Group: Development/C++
-Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
 
 %description devel
 GiNaC is Not a Cocktail.
@@ -59,18 +58,19 @@ This is the libraries, include files and other resources you can use
 for developing GiNaC applications.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
 	--disable-rpath
-%make -C ginac function.h function.cpp
 %make_build
 
 %install
 %makeinstall_std
+#mv %buildroot/usr/lib/ginac-excompiler %buildroot%_bindir/
+rm -fv %buildroot/usr/lib/ginac-excompiler
 
 %files -n %oname
 %doc AUTHORS NEWS README
@@ -84,7 +84,7 @@ for developing GiNaC applications.
 
 %files devel
 %doc ChangeLog
-%_bindir/ginac-excompiler
+#_bindir/ginac-excompiler
 %_includedir/ginac/
 #%_libdir/*.la
 %_libdir/*.so
@@ -92,6 +92,10 @@ for developing GiNaC applications.
 %_infodir/*.info*
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt1
+- new version 1.7.4 (with rpmrb script)
+- disable doc build
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.6.2-alt1.git20140518.2
 - Rebuild with libreadline7.
 
