@@ -5,7 +5,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt9
+Release: alt10
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -141,7 +141,7 @@ This package contains the development files for the appindicator-sharp library.
 %setup
 %patch0 -p1 -b .monodir
 %patch1 -p2
-%patch2 -p2
+#patch2 -p2
 
 sed -i "s#gmcs#mcs#g" configure.ac
 
@@ -155,13 +155,13 @@ pushd build-gtk2
 export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
 %configure %opts --with-gtk=2
 #make_build
-%make
+%make -j1
 popd
 
 pushd build-gtk3
 export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
 %configure %opts --with-gtk=3
-%make_build
+%make -j1
 popd
 
 %install
@@ -252,6 +252,10 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Feb 06 2019 Leontiy Volodin <lvol@altlinux.org> 12.10.0-alt10
+- Disabled patch for application-service-marshal.
+- Build Compile into one process for gtk3.
+
 * Thu Dec 27 2018 Leontiy Volodin <lvol@altlinux.org> 12.10.0-alt9
 - Fix syntax errors
 
