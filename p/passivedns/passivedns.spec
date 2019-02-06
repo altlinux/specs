@@ -1,19 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libjansson-devel libnuma-devel libpfring-devel perl(DBI.pm) perl(Date/Simple.pm) perl(DateTime.pm) perl(Time/Local.pm)
-# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
+
 Name: passivedns
-Version: 1.2.0
-Release: alt2%ubt
+Version: 1.2.1
+Release: alt1
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
 Group: Monitoring
 URL: https://github.com/gamelinux/passivedns
+
 Source: %name-%version.tar
 Source2: %name.init
 Source3: %{name}@.service
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: libpcap-devel libldns-devel perl-DateTime perl-DBI perl-Date-Simple
+Patch1: %name-%version-alt.patch
+
+BuildRequires: libpcap-devel libldns-devel
+BuildRequires: libjansson-devel
+BuildRequires: perl(DBI.pm) perl(Date/Simple.pm) perl(DateTime.pm) perl(Time/Local.pm)
 
 %description
 A tool to collect DNS records passively to aid Incident handling, Network
@@ -27,7 +30,7 @@ loosing the essens in the DNS answer.
 %package daemon
 Summary: Daemon for passive DNS 
 Group: Monitoring
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description daemon
 Daemon for %name
@@ -41,16 +44,22 @@ A tools for work with %name data
 
 %prep
 %setup
+%patch1 -p1
 
-subst 's|/var/log/passivedns.log|/var/log/passivedns/passivedns.log|g' src/passivedns.c
-subst 's|/var/run/passivedns.pid|/var/run/passivedns/passivedns.pid|g' src/passivedns.c
+find . -type f | xargs sed -i \
+	-e "s|%_logdir/passivedns.log|%_logdir/%name/passivedns.log|g" \
+	-e "s|%_logdir/passivedns.stats|%_logdir/%name/passivedns.stats|g" \
+	-e "s|%_logdir/passivedns-run.log|%_logdir/%name/passivedns-run.log|g" \
+	-e "s|%_logdir/passivedns-alert.log|%_logdir/%name/passivedns-alert.log|g" \
+	%nil
 
 %build
 %autoreconf
-#export CC="gcc %optflags"
-%configure
+%configure \
+	--enable-json \
+	%nil
+
 %make_build
-#-C src
 
 %install
 install -pD -m755 src/%name %buildroot%_sbindir/%name
@@ -64,13 +73,12 @@ install -pD -m755 %SOURCE3 %buildroot%_unitdir/%{name}@.service
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_sharedstatedir/%name
 mkdir -p %buildroot%_sysconfdir/sysconfig
-mkdir -p %buildroot%_runtimedir/%name
 mkdir -p %buildroot%_logrotatedir
 
 cat > %buildroot%_sysconfdir/sysconfig/%name  <<EOF
 #OPTIONS:
 # -i <iface>      Network device <iface> (default: eth0).
-# -l <file>       Name of the logfile (default: /var/log/passivedns/passivedns.log).
+# -l <file>       Name of the logfile (default: %_logdir/%name/passivedns.log).
 # -b 'BPF'        Berkley Packet Filter (default: 'port 53').
 # -S <mem>        Soft memory limit in MB (default: 256).
 # -C <sec>        Seconds to cache DNS objects in memory (default 43200).
@@ -82,7 +90,7 @@ OPTIONS='-i lo'
 EOF
 
 cat << EOF > %buildroot%_logrotatedir/%name
-/var/log/%name/%name.log {
+%_logdir/%name/%name.log {
     create 644 root _%name
     weekly
     rotate 5
@@ -113,7 +121,6 @@ EOF
 
 %files daemon
 %dir %_sharedstatedir/%name
-%dir %attr(775,root,_%name) %_runtimedir/%name
 %_sysconfdir/sysconfig/%name
 %_initdir/*
 %_unitdir/%{name}@.service
@@ -122,7 +129,11 @@ EOF
 %_bindir/*.pl
 
 %changelog
-* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt2%ubt
+* Wed Feb 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
+- Updated to upstream version 1.2.1.
+- Removed %%ubt macro from release.
+
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt2
 - Rebuilt with ldns-1.7.0.
 - Added %%ubt macro to release.
 - Added systemd service.
