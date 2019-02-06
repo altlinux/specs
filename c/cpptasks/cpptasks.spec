@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_20jpp8
+Release:	alt2_21jpp8
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -85,6 +85,9 @@ echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_21jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_20jpp8
 - java update
 
