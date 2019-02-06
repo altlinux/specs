@@ -28,7 +28,7 @@
 %define init_script systemd,sysvinit
 
 Name: lxc
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -44,7 +44,7 @@ Requires: libcap gzip-utils
 %ifarch x86_64 %arm
 Requires: criu
 %endif
-Requires: iproute2 bridge-utils dnsmasq
+Requires: iproute2 bridge-utils dnsmasq wget
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
 BuildRequires: rpm-macros-alternatives
@@ -202,6 +202,10 @@ fi
 %_pam_modules_dir/*
 
 %changelog
+* Wed Feb 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt1
+- 3.0.3
+- lxc: added wget to runtime dependencies.
+
 * Sun Sep 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt1
 - 3.0.2
 - rebuilt with seccomp and SELinux support
