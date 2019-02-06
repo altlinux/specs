@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt11
+Release: alt13
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -68,6 +68,12 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Tue Jan 22 2019 Pavel Vainerman <pv@altlinux.ru> 2.6-alt13
+- up build
+
+* Wed Nov 14 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt12
+- fix check_tag again
+
 * Fri Nov 09 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt11
 - fix error in check_tag function
 
