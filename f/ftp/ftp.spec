@@ -5,7 +5,7 @@
 
 Name: ftp
 Version: 0.18
-Release: alt0.pre1.2
+Release: alt0.pre1.3
 
 Summary: The standard UNIX FTP (file transfer protocol) client
 
@@ -115,6 +115,9 @@ mkdir -p $RPM_BUILD_ROOT{%_bindir,%_mandir/man{1,5}}
 %doc README BUGS
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.18-alt0.pre1.3
+- Rebuild with libreadline7.
+
 * Sun Sep 09 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.18-alt0.pre1.2
 - Fix build: removing nested include
 
