@@ -1,6 +1,6 @@
 Name: lnav
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: The log file navigator
 License: BSD
@@ -11,6 +11,7 @@ Source0: %name-%version.tar.gz
 Source1: %name.watch
 Patch0: lnav-0.4.0-alt-fixes.patch
 Patch1: lnav-fix_32bit_use_size_t.patch
+Patch2: lnav-0.8.1-remove-legacy.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Jun 23 2014
@@ -29,6 +30,7 @@ the user to quickly and efficiently zero in on problems.
 
 %prep
 %setup
+%patch2 -p2
 sed -i 's,var/log/syslog,&/messages,g' src/lnav.cc
 touch AUTHORS ChangeLog COPYING
 
@@ -51,6 +53,9 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt2
+- fix build
+
 * Thu Aug 11 2016 Michael Shigorin <mike@altlinux.org> 0.8.1-alt1
 - new version (watch file uupdate)
 
