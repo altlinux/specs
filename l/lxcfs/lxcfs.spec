@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	3.0.2
+Version:	3.0.3
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -62,6 +62,9 @@ install -Dm0755 %SOURCE1 %buildroot%_initdir/lxcfs
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Wed Feb 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Sun Sep  9 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
