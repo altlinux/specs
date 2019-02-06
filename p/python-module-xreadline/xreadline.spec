@@ -1,6 +1,6 @@
 Name: python-module-xreadline
 Version: 0.4.6
-Release: alt2.2.1.1
+Release: alt2.3
 Summary: eXtended readline library
 Group: Development/Python
 License: GPL
@@ -27,6 +27,9 @@ eXtended readline library
 %python_sitelibdir/xreadline*
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.6-alt2.3
+- Rebuild with libreadline7.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.6-alt2.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
