@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             cookxml
 Version:          3.0.2
-Release:          alt3_15jpp8
+Release:          alt3_16jpp8
 Summary:          Dynamic XML data binding tool
 Group:            Development/Other
 License:          BSD
@@ -76,6 +76,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_16jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_15jpp8
 - java update
 
