@@ -1,7 +1,7 @@
 Summary:	JavaScript interpreter and libraries
 Name:		libmozjs38
 Version:	38.2.1
-Release:	alt3
+Release:	alt3.1
 Group:		System/Libraries
 License:	MPL/GPL/LGPL
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -119,6 +119,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-38
 %_libdir/*.a
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 38.2.1-alt3.1
+- Rebuild with libreadline7.
+
 * Wed Jul 5 2017 Vladimir Didenko <cow@altlinux.org> 38.2.1-alt3
 - Disable two optimizations which cause regressions with new gcc
 - Use -O2 instead of mozjs -O3
