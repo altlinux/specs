@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt7
+Release: alt8
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -15,7 +15,7 @@ Url: http://www.gnu.org/software/libtool/libtool.html
 %add_findreq_skiplist %_datadir/%libtool/config.guess
 %set_compress_method xz
 
-PreReq: libtool-common >= 0.2
+Requires(pre): libtool-common >= 0.2
 Requires: autoconf
 Requires: automake
 
@@ -101,9 +101,8 @@ sed -i -e 's/^\(predep_objects\|postdep_objects\|compiler_lib_search_path\)=.*/\
        -e 's/^\(archive\(_expsym\)\?_cmds=\".*\) -nostdlib /\1 /' libtool
 
 %check
-# Testsuite is SMP-compatible but the output is hard to read.
 # Remove -frecord-gcc-switches because it confuses demo-hardcode.test.
-make -k check CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
+%make_build -k check CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
 find tests -maxdepth 1 -type d -name '*demo*' |
 	xargs -rn1 make distclean -C
 
@@ -176,6 +175,9 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Wed Feb 06 2019 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt8
+- libtool.m4: fixed -export-symbols option for C++ code (closes: #36054).
+
 * Tue Nov 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.2-alt7
 - Changed libtool.m4 to use:
   + lib64 suffix for 64-bit RISC-V architecture;
