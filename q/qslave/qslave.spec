@@ -1,6 +1,6 @@
 Name:     qslave
 Version:  1.0.2
-Release:  alt3%ubt
+Release:  alt4
 
 Summary:  Modbus network emulator
 License:  GPL-2.0
@@ -12,7 +12,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source:   %name-%version.tar
 Patch:    fix-registers-functions.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel pkgconfig(Qt5SerialPort)
 BuildRequires: libmodbus-devel
 
@@ -25,7 +24,8 @@ BuildRequires: libmodbus-devel
 
 %build
 %qmake_qt5
-%make_build
+#make_build
+make -j1
 
 %install
 cat >%name.desktop<<END
@@ -54,11 +54,14 @@ install -Dm755 %name-gui %buildroot%_bindir/%name
 %_pixmapsdir/%name.png
 
 %changelog
-* Fri Jul 27 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt3%ubt
+* Wed Feb 06 2019 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt4
+- single-threaded build
+
+* Fri Jul 27 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt3.S1
 - Fix FTBFS
 
-* Tue Jul 24 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt2%ubt
+* Tue Jul 24 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt2.S1
 - Added missing buildrequires (libmodbus-devel)
 
-* Fri Dec 29 2017 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1%ubt
+* Fri Dec 29 2017 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1.S1
 - Initial build for Sisyphus
