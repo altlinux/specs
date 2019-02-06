@@ -1,7 +1,7 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.63.0
+Version: 7.64.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -149,6 +149,13 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Feb 06 2019 Anton Farygin <rider@altlinux.ru> 7.64.0-alt1
+- 7.64.0
+- fixes:
+  * CVE-2018-16890: NTLM type-2 out-of-bounds buffer read
+  * CVE-2019-3822: NTLMv2 type-3 header stack buffer overflow
+  * CVE-2019-3823: SMTP end-of-response out-of-bounds read
+
 * Wed Dec 12 2018 Anton Farygin <rider@altlinux.ru> 7.63.0-alt1
 - 7.63.0
 
