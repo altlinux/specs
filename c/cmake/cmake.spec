@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.13.3
+Version: 3.13.4
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -262,6 +262,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 3.13.4-alt1
+- new version 3.13.4 (with rpmrb script)
+- treat "No source or binary directory provided" as warning (ALT bug 36051)
+
 * Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 3.13.3-alt1
 - new version 3.13.3 (with rpmrb script) (ALT bug 36041)
 
