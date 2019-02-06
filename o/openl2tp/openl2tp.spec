@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt6
+Release: alt6.1
 
 Summary: L2TP (RFC2661) server/client
 License: GPL
@@ -80,6 +80,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.8-alt6.1
+- Rebuild with libreadline7.
+
 * Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt6
 - fixed packaging on 64bit arches other than x86_64
 
