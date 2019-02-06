@@ -9,7 +9,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -249,6 +249,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Wed Feb 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.3-alt1
+- 2.8.3
+
 * Sat Oct 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
