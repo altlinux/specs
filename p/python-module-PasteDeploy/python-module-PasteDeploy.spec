@@ -1,11 +1,9 @@
-%define version 1.5.2
-%define release alt2.1
 %define oname PasteDeploy
 %def_without bootstrap
 
 Name: python-module-%oname
-Version:%version
-Release: alt2.2
+Version: 2.0.1
+Release: alt1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -13,8 +11,7 @@ Summary: Load, configure, and compose WSGI applications and servers
 License: MIT/X11
 Group: Development/Python
 BuildArch: noarch
-Url: http://pythonpaste.org
-# hg clone http://bitbucket.org/ianb/pastedeploy
+Url: https://github.com/Pylons/pastedeploy
 
 Source: %oname-%version.tar
 
@@ -22,10 +19,15 @@ Conflicts: python-module.paste.deploy
 Obsoletes: python-module.paste.deploy
 %py_provides %oname
 
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pytest-runner
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-html5lib python3-module-sphinx time
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest-runner
+
 %py_requires Paste
 
 
@@ -63,8 +65,6 @@ pushd ../python3
 %python3_build
 popd
 
-./regen-docs
-
 %install
 %python_install
 
@@ -73,7 +73,6 @@ pushd ../python3
 popd
 
 %files
-%doc docs/_build/*
 %python_sitelibdir/paste/deploy
 %python_sitelibdir/%oname-*
 
@@ -81,8 +80,10 @@ popd
 %python3_sitelibdir/paste/deploy
 %python3_sitelibdir/%oname-*
 
-
 %changelog
+* Wed Feb 06 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.0.1-alt1
+- 2.0.1
+
 * Tue May 29 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt2.2
 - fix requires(2)
 
