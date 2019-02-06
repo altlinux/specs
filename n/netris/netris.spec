@@ -3,17 +3,17 @@
 
 Name: netris
 Version: 0.52
-Release: alt5.2.qa1
+Release: alt6
 
 Summary: A free network version of Tetris
-Summary(ru_RU.CP1251): Свободная версия сетевого тетриса
+Summary(ru_RU.UTF-8): РЎРІРѕР±РѕРґРЅР°СЏ РІРµСЂСЃРёСЏ СЃРµС‚РµРІРѕРіРѕ С‚РµС‚СЂРёСЃР°
 
 License: GPLv2
 Group: Games/Other
 Url: ftp://ftp.netris.org/pub/netris/
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source0: ftp://ftp.netris.org/pub/netris/%name-%version.tar.gz
+# ftp://ftp.netris.org/pub/netris/%name-%version.tar.gz
+Source0: %name-%version.tar
 
 # http://www.openbsd.org/cgi-bin/cvsweb/~checkout~/ports/games/netris/files/netris.1
 # http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/ports/games/netris/files/netris.1
@@ -32,10 +32,10 @@ A free version of Tetris. This game uses ncurses library and can work
 in console or pseudo-terminal. You can play against computer or on the
 network against your friends.
 
-%description -l ru_RU.CP1251
-Свободная версия тетриса. Игра использует библиотеку ncurses и может
-работать как в консоли так и в псевдотерминале. Играть можно против
-компьютера или по сети, против друг друга.
+%description -l ru_RU.UTF-8
+РЎРІРѕР±РѕРґРЅР°СЏ РІРµСЂСЃРёСЏ С‚РµС‚СЂРёСЃР°. РРіСЂР° РёСЃРїРѕР»СЊР·СѓРµС‚ Р±РёР±Р»РёРѕС‚РµРєСѓ ncurses Рё РјРѕР¶РµС‚
+СЂР°Р±РѕС‚Р°С‚СЊ РєР°Рє РІ РєРѕРЅСЃРѕР»Рё С‚Р°Рє Рё РІ РїСЃРµРІРґРѕС‚РµСЂРјРёРЅР°Р»Рµ. РРіСЂР°С‚СЊ РјРѕР¶РЅРѕ РїСЂРѕС‚РёРІ
+РєРѕРјРїСЊСЋС‚РµСЂР° РёР»Рё РїРѕ СЃРµС‚Рё, РїСЂРѕС‚РёРІ РґСЂСѓРі РґСЂСѓРіР°.
 
 %prep
 %setup
@@ -75,6 +75,9 @@ EOF
 %_man6dir/%name.6.*
 
 %changelog
+* Tue Feb 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.52-alt6
+- NMU: fixed build, converted summary and description to UTF-8.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.52-alt5.2.qa1
 - NMU: rebuilt for updated dependencies.
 
