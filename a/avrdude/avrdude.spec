@@ -8,7 +8,7 @@
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
 Version: 6.3
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Development/Other
 URL: http://www.nongnu.org/avrdude/
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/*.so*
 %_libdir/*.a
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 6.3-alt3.1
+- Rebuild with libreadline7.
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 6.3-alt3
 - NMU: fixed BR: for texlive 2017
 
