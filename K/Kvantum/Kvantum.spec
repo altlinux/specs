@@ -1,6 +1,6 @@
 Name: Kvantum
 Version: 0.10.9
-Release: alt2.gitefca972
+Release: alt3
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
 
 License: GPLv3
@@ -8,8 +8,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/tsujan/Kvantum
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-# Source-git: https://github.com/tsujan/Kvantum.git
-Source: %name-%version.tar
+# Source-url: https://github.com/tsujan/Kvantum/archive/V%version.tar.gz
+Source: %name-%version.tar.gz
 
 BuildRequires: gcc-c++ cmake libX11-devel libXext-devel libqt4-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel desktop-file-utils icon-theme-hicolor
 Requires: %name-data
@@ -41,16 +41,15 @@ on elegance, usability and practicality.
 This package contains the data needed Kvantum.
 
 %prep
-%setup -n Kvantum-%version
+%setup
 
 %build
-cd Kvantum
 mkdir build && cd build
 cmake ..
-%make_build
+%make -j1
 
 %install
-cd Kvantum/build
+cd build
 %makeinstall_std
 
 # desktop-file-validate doesn't recognize LXQt
@@ -60,13 +59,13 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %find_lang %name --all-name --with-qt
 
 %files
-%doc Kvantum/COPYING
-%doc Kvantum/ChangeLog Kvantum/NEWS Kvantum/README.md
+%doc COPYING
+%doc ChangeLog NEWS README.md
 %_bindir/kvantummanager
 %_bindir/kvantumpreview
 %_qt5_plugindir/styles/libkvantum.so
 
-%files data -f Kvantum/build/%name.lang
+%files data -f build/%name.lang
 %_datadir/Kvantum
 %_desktopdir/kvantummanager.desktop
 %dir %_datadir/color-schemes
@@ -87,6 +86,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/kvantummanager/translations
 
 %changelog
+* Wed Feb 06 2019 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt3
+- 0.10.9 (final release)
+
 * Fri Jan 11 2019 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt2.gitefca972
 - Update from git (commit: efca972)
 - Fixed post-install files
