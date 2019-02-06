@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          dnssec4j
 Version:       0.1.6
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java Wrapper around DNSSEC primitives in dnsjava
 License:       ASL 2.0 and GPLv3+
 URL:           https://github.com/adamfisk/DNSSEC4J
@@ -65,6 +65,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference COPYRIGHT.txt LICENSE_APACHE_2.txt LICENSE_GPL.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1_5jpp8
 - java update
 
