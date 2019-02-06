@@ -2,7 +2,7 @@
 
 Name: glpi
 Version: 9.3.3
-Release: alt1
+Release: alt2
 
 Summary: IT and asset management software
 License: GPLv2
@@ -82,9 +82,13 @@ if [ "$1" = "1" ]; then
   %_initdir/httpd2 condreload
 fi
 
-%postun apache2
-if [ "$1" = "1" ]; then
+%preun apache2
+if [ "$1" = "0" ]; then
   a2dissite %name
+fi
+
+%postun apache2
+if [ "$1" = "0" ]; then
   %_initdir/httpd2 condreload
 fi
 
@@ -130,6 +134,9 @@ fi
 %files php7
 
 %changelog
+* Wed Feb 06 2019 Pavel Zilke <zidex at altlinux dot org> 9.3.3-alt2
+- Fixed glpi-apache2 postun
+
 * Sun Dec 30 2018 Pavel Zilke <zidex at altlinux dot org> 9.3.3-alt1
 - New verion 9.3.3
 - PHP7 support
