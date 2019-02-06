@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt3.a1.git20140620.1.1.1
+Release: alt3.a1.git20140620.1.1.1.1
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -102,6 +102,8 @@ This package contains tests for %oname.
 
 ./bootstrap.sh
 
+# update gnu-config scripts
+cp /usr/share/gnu-config/config.* build-aux/
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -158,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7-alt3.a1.git20140620.1.1.1.1
+- Update gnu-config scripts before build.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt3.a1.git20140620.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
