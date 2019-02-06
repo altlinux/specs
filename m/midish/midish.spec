@@ -1,6 +1,6 @@
 Name: midish
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 Summary: MIDI sequencer/filter
 Group: Sound
 Url: http://www.midish.org/
@@ -49,5 +49,8 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1
+- Rebuild with libreadline7.
+
 * Wed Aug 02 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Linux Sisyphus
