@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cxf-build-utils
 Version:       3.2.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Apache CXF Build Utils
 License:       ASL 2.0
 URL:           http://cxf.apache.org/build-utils.html
@@ -61,6 +61,9 @@ rm -r buildtools/src/main/java/org/apache/cxf/pmd
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_5jpp8
 - java update
 
