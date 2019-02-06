@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.1.12
-Release:   alt4
+Release:   alt5
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -245,6 +245,10 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Feb 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt5
+- Fixed crash during showing errors.
+- Enabled verbose logging for packagekit service.
+
 * Fri Feb 01 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt4
 - Fixed stopping service without finishing current request.
 
