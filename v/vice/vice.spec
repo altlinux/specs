@@ -1,6 +1,6 @@
 Name: vice
 Version: 2.1
-Release: alt8
+Release: alt9
 
 Summary: Versatile Commodore Emulator
 License: GPL v2+
@@ -121,6 +121,9 @@ popd
 # TODO: build with ffmpeg support
 
 %changelog
+* Wed Feb 06 2019 Michael Shigorin <mike@altlinux.org> 2.1-alt9
+- rebuilt against libreadline7
+
 * Sat Feb 03 2018 Michael Shigorin <mike@altlinux.org> 2.1-alt8
 - fixed build with current perl
 
