@@ -1,13 +1,17 @@
 Name:		uchardet
-Summary:	Universal charset detection
 Version:	0.0.1
-Release:	alt2
+Release:	alt3
+
+Summary:	Universal charset detection
+
 Group:		Development/Tools
 License:	MPLv1.1
-Url:		http://code.google.com/p/uchardet/
-Source0:	http://uchardet.googlecode.com/files/%name-%version.tar.gz
+Url:		https://github.com/BYVoid/uchardet
 
-Requires:	lib%name = %version-%release
+# Source-url: https://github.com/BYVoid/uchardet/archive/v%version.tar.gz
+Source:	%name-%version.tar
+
+Requires:	lib%name = %EVR
 
 # Automatically added by buildreq on Tue Oct 15 2013 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config
@@ -47,15 +51,12 @@ Static library to build statically linked applications that lib%name
 %setup
 
 %build
-cmake 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_INSTALL_LIBDIR=%_libdir \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags"
+%cmake_insource -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_LIBDIR=%_libdir
 %make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc COPYING AUTHORS
@@ -74,6 +75,9 @@ make install DESTDIR=%buildroot
 %_libdir/lib%name.a
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt3
+- cleanup spec, fix cmake build
+
 * Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1-alt2
 - fixed packaging on 64bit arches other than x86_64
 
