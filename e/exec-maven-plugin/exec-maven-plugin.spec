@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
 Version:        1.6.0
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Exec Maven Plugin
 
 License:        ASL 2.0
@@ -71,6 +71,9 @@ find . -name *.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3jpp8
 - java update
 
