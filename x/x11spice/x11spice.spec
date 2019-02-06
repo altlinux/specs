@@ -1,6 +1,6 @@
 Name: x11spice
 Version: 1.1.0
-Release: alt3
+Release: alt4
 Summary: x11spice connects a running X server as a Spice server
 Group: Networking/Remote access
 License: GPLv3
@@ -12,6 +12,8 @@ Patch2: %name-allow-access-in-config.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: libxcb-devel libxcbutil-devel libgtk+3-devel libspice-server-devel libpixman-devel libaudit-devel
+
+ExcludeArch: %ix86
 
 %description
 It owes a debt to the excellent x11vnc project,
@@ -44,6 +46,9 @@ export CFLAGS="-Wno-error=address -Wno-pointer-to-int-cast -Wno-int-to-pointer-c
 %_man1dir/*
 
 %changelog
+* Wed Feb 06 2019 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt4
+- Do not build on i586.
+
 * Thu Dec 20 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3
 - Run with password spicey and allow control by default.
 
