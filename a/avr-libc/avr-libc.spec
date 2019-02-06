@@ -14,7 +14,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           avr-libc
 Version:        2.0.0
-Release:        alt5_6
+Release:        alt6_6
 Summary:        C library for use with GCC on Atmel AVR microcontrollers
 Group:          Development/Tools
 License:        BSD
@@ -32,6 +32,7 @@ Source5:        http://distribute.atmel.no/tools/opensource/Atmel-AVR-GNU-Toolch
 BuildRequires:  avr-gcc, autoconf, automake, libtool
 #BuildArch:      noarch
 Source44: import.info
+Conflicts: avr-binutils < 2:2.30
 
 %description
 AVR Libc is a Free Software project whose goal is to provide a high quality C
@@ -140,6 +141,9 @@ chmod -R u=rwX,g=rX,o=rX $RPM_BUILD_ROOT%{_docdir}/%{name}/html
 %doc %{_docdir}/%{name}/%{name}*.pdf
 
 %changelog
+* Wed Feb 06 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt6_6
+- added conflict for altbug#36040
+
 * Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt5_6
 - fixed build
 
