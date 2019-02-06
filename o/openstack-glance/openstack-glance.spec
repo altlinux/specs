@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 17.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -21,6 +21,8 @@ Source41: %name-registry.init
 Source42: %name-scrubber.init
 Source43: %name.tmpfiles
 Source46: %name-glare.init
+
+Patch1: glance-fix-recursion.patch
 
 BuildArch: noarch
 
@@ -165,6 +167,8 @@ Requires: python-module-oslo.i18n >= 3.15.3
 Requires: python-module-oslo.messaging >= 5.29.0
 Requires: python-module-oslo.policy >= 1.30.0
 
+%add_python_req_skip glance.cmd.cache_manage
+
 %description -n python-module-%oname
 OpenStack Image Service (code-named Glance) provides discovery, registration,
 and delivery services for virtual disk images.
@@ -193,6 +197,8 @@ Requires: python3-module-oslo.i18n >= 3.15.3
 Requires: python3-module-oslo.messaging >= 5.29.0
 Requires: python3-module-oslo.policy >= 1.30.0
 
+%add_python3_req_skip glance.cmd.cache_manage
+
 %description -n python3-module-%oname
 OpenStack Image Service (code-named Glance) provides discovery, registration,
 and delivery services for virtual disk images.
@@ -219,6 +225,7 @@ This package contains documentation files for glance.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
 
 # Remove bundled egg-info
 #rm -rf glance.egg-info
@@ -364,7 +371,6 @@ crudini --set %glance_conf paste_deploy flavor keystone
 %files -n python-module-%oname
 %doc README.rst
 %_bindir/*.py2
-%exclude %_bindir/glance-cache-manage.py2
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
@@ -374,7 +380,6 @@ crudini --set %glance_conf paste_deploy flavor keystone
 %files -n python3-module-%oname
 %doc README.rst
 %_bindir/*
-%exclude %_bindir/glance-cache-manage
 %exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
@@ -386,6 +391,9 @@ crudini --set %glance_conf paste_deploy flavor keystone
 #%doc doc/build/html
 
 %changelog
+* Wed Feb 06 2019 Alexey Shabalin <shaba@altlinux.org> 1:17.0.0-alt2
+- py3: fix recursion issue
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 1:17.0.0-alt1
 - 17.0.0 Rocky release
 - switch to python3
