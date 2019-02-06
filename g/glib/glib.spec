@@ -1,6 +1,6 @@
 Name: glib
 Version: 1.2.10
-Release: alt20
+Release: alt21
 
 Summary: A library of handy utility functions
 License: LGPLv2.1+
@@ -70,6 +70,7 @@ autoheader
 automake
 autoconf
 sed -i 's,/lib/,/%_lib/,g; s,/lib ,/%_lib ,g' ltconfig
+sed 's/\(powerpc.*dynamic_linker=\)no/\1yes/' -i ltconfig
 
 %configure %{subst_enable static}
 %make_build
@@ -112,6 +113,9 @@ bzip2 -9 %buildroot%docdir/NEWS
 %endif
 
 %changelog
+* Thu Feb 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt21
+- Fixed build on ppc* architectures.
+
 * Mon Apr 18 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt20
 - Added BR: makeinfo.
 - Fixed build with makeinfo 6.
