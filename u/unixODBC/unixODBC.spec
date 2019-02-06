@@ -3,7 +3,7 @@
 
 Name:    unixODBC
 Version: 2.3.4
-Release: alt2
+Release: alt2.1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -187,6 +187,9 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt2.1
+- Rebuild with libreadline7.
+
 * Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 2.3.4-alt2
 - BOOTSTRAP: introduce qt knob (on by default)
 
