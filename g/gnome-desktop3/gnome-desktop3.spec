@@ -13,7 +13,7 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -30,15 +30,15 @@ Source: %_name-%version.tar
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
 
 # From configure.ac
-BuildPreReq: gnome-common >= 2.8.0
-BuildPreReq: yelp-tools gtk-doc
-BuildPreReq: libgdk-pixbuf-devel >= 2.36.5
-BuildPreReq: libgtk+3-devel >= 3.3.6
-BuildPreReq: libgio-devel >= 2.53.0
-BuildPreReq: gsettings-desktop-schemas-devel >= 3.27.90
+BuildRequires: gnome-common >= 2.8.0
+BuildRequires: yelp-tools gtk-doc
+BuildRequires: libgdk-pixbuf-devel >= 2.36.5
+BuildRequires: libgtk+3-devel >= 3.3.6
+BuildRequires: libgio-devel >= 2.53.0
+BuildRequires: gsettings-desktop-schemas-devel >= 3.27.90
 BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: libudev-devel
@@ -61,6 +61,7 @@ License: %lgpl2plus
 Requires: icon-theme-hicolor
 Requires: udev-hwdb
 Requires: bubblewrap
+Requires: pciids usbids
 
 %description -n lib%name
 Gnome 3 desktop libraries.
@@ -179,6 +180,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Wed Feb 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2.1-alt1
+- 3.30.2.1
+
 * Sat Oct 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
