@@ -2,7 +2,7 @@
 
 Name:    nx-libs
 Version: 3.5.2.31
-Release: alt7
+Release: alt8
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
@@ -41,7 +41,7 @@ BuildRequires: libxml2-devel
 BuildRequires: xorg-proto-devel
 BuildRequires: zlib-devel
 
-Conflicts: nx
+Obsoletes: nx < %EVR
 Provides:  nx = %EVR
 %if_with system_locale
 Requires: libX11-locales
@@ -350,6 +350,9 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 3.5.2.31-alt8
+- use Obsoletes: nx instead Conflicts
+
 * Fri Jun 08 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt7
 - fix window title encoding (eterbug #12919)
 - fix font path for ALTLinux (eterbug #12807)
