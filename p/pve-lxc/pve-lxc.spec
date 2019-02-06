@@ -1,8 +1,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 3.0.2
-Release: alt3
+Version: 3.1.0
+Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -13,7 +13,7 @@ ExclusiveArch: x86_64
 Requires: lxcfs
 Conflicts: %rname %rname-libs
 
-Source: %rname-%version.tar.gz
+Source: %rname-%version.tar.xz
 Source1: %rname-config.tar
 
 Patch1: 0001-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
@@ -23,16 +23,13 @@ Patch4: 0004-PVE-Up-separate-the-limiting-from-the-namespaced-cgr.patch
 Patch5: 0005-PVE-Up-start-initutils-make-cgroupns-separation-leve.patch
 Patch6: 0006-PVE-Config-namespace-separation.patch
 Patch7: 0007-PVE-Up-possibility-to-run-lxc-monitord-as-a-regular-.patch
-Patch8: 0008-PVE-Deprecated-Make-lxc-.service-forking.patch
-Patch9: 0001-confile-add-lxc.monitor.signal.pdeath.patch
-Patch10: 0002-tests-add-lxc.monitor.signal.pdeath.patch
-Patch11: 0003-doc-Translate-lxc.monitor.signal.pdeath-into-Japanes.patch
-Patch12: 0004-apparmor-profile-generation.patch
-Patch13: 0005-tests-add-test-for-generated-apparmor-profiles.patch
-Patch14: 0006-conf-fix-path-lxcpath-mixups-in-tty-setup.patch
+Patch8: 0008-PVE-Config-Disable-lxc.monitor-cgroup.patch
+Patch9: 0001-conf-use-SYSERROR-on-lxc_write_to_file-errors.patch
+Patch10: 0002-Revert-conf-remove-extra-MS_BIND-with-sysfs-mixed.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
+Patch22: lxc-unused-but-set-variable.patch
 
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
@@ -58,17 +55,15 @@ an applications or a system.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
 
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %build
 %autoreconf
 %configure \
+    --disable-static \
     --disable-rpath \
     --with-distro=altlinux \
     --with-init-script=systemd \
@@ -77,6 +72,7 @@ an applications or a system.
     --enable-bash \
     --disable-examples \
     --enable-seccomp \
+    --with-cgroup-pattern='lxc/%n' \
     --localstatedir=%_var
 
 %make_build
@@ -108,6 +104,10 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Wed Feb 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt1
+- 3.1.0-2
+- not provide liblxc.so.1 (closes: #36009)
+
 * Thu Oct 11 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt3
 - 3.0.2+pve1-3
 
