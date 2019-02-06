@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cssparser
 Version:       0.9.20
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       CSS Parser
 License:       ASL 2.0
 URL:           http://cssparser.sourceforge.net/
@@ -65,6 +65,9 @@ rm src/test/java/com/steadystate/css/parser/SACParserCSS3Test.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.9.20-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.9.20-alt1_4jpp8
 - java update
 
