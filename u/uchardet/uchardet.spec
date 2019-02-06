@@ -1,6 +1,6 @@
 Name:		uchardet
-Version:	0.0.1
-Release:	alt3
+Version:	0.0.5
+Release:	alt1
 
 Summary:	Universal charset detection
 
@@ -75,6 +75,9 @@ Static library to build statically linked applications that lib%name
 %_libdir/lib%name.a
 
 %changelog
+* Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.0.5-alt1
+- new version 0.0.5 (with rpmrb script)
+
 * Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt3
 - cleanup spec, fix cmake build
 
