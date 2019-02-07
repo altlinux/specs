@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.10.1
-Release: alt3
+Release: alt4
 
 Summary: Python test framework
 License: MIT
@@ -92,11 +92,20 @@ scales to support complex functional testing for applications and libraries.
 %prep
 %setup
 %patch -p1
-# adjust timeouts for aarch64 tests
-grep -qs 'child\.expect(.*)' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
-grep -qs 'child\.expect_exact([[:space:]]*$' testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
-sed -i '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;
-/child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
+
+# adjust timeouts for testing on aarch64/beehive
+grep -qs 'child\.expect(.*)' \
+testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
+grep -qs 'child\.expect_exact([[:space:]]*$' \
+testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
+grep -qs 'testdir\.spawn_pytest([[:space:]]*$' \
+testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
+
+sed -i -e '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;' \
+-e '/child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
+-e '/testdir\.spawn_pytest(.*)/s/)[[:space:]]*$/, expect_timeout=30)/g;' \
+-e '/testdir\.spawn_pytest([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1expect_timeout=30,/g}' \
+-e 's/\([[:space:]]*\)child\.sendline(\x22p .*)$/&\n\1import time; time.sleep(child.delaybeforesend)/g' \
 testing/{test_pdb.py,test_terminal.py,test_unittest.py}
 
 rm -rf ../python3
@@ -155,6 +164,9 @@ tox.py3 --sitepackages -p auto -o -v -- --cache-clear
 %_bindir/pytest3
 
 %changelog
+* Thu Feb 07 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt4
+- Fixed "test_pdb_unittest_postmortem" test.
+
 * Wed Jan 23 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt3
 - Fixed "test_raises_exception_looks_iterable" test.
 
