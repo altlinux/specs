@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-framework
 Version:        5.6.0
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Apache Felix Framework
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -67,6 +67,9 @@ sed -i "/testgetOsNameWithAliases/s//ignore_&/" $(find -name NativeLibraryClause
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_4jpp8
 - java update
 
