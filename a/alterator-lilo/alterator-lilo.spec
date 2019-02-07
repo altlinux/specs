@@ -1,10 +1,11 @@
 Name: alterator-lilo
 Version: 1.9
-Release: alt1
+Release: alt2
 
 Summary: alterator module for lilo setup
 License: GPL
 Group: System/Configuration/Other
+ExclusiveArch: %ix86 x86_64
 
 Source:%name-%version.tar
 
@@ -38,6 +39,9 @@ alterator module for lilo setup
 %_datadir/%name
 
 %changelog
+* Thu Feb 07 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.9-alt2
+- fix build (add missing header sys/sysmacros.h, add ExclusiveArch), closes #36021
+
 * Thu Sep 19 2013 Michael Shigorin <mike@altlinux.org> 1.9-alt1
 - dropped evms kludges for good, these aren't needed anymore
   with installer-scripts-remount-stage2 (and spoiled UEFI case
