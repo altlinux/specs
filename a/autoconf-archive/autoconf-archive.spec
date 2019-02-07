@@ -1,5 +1,5 @@
 Name: autoconf-archive
-Version: 2018.03.13
+Version: 2019.01.06
 Release: alt1
 Summary: The Autoconf Macro Archive
 
@@ -55,6 +55,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Thu Feb 07 2019 Alexey Shabalin <shaba@altlinux.org> 2019.01.06-alt1
+- 2019.01.06
+
 * Tue Apr 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2018.03.13-alt1
 - 2018.03.13
 
