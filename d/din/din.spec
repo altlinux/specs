@@ -1,16 +1,19 @@
+%def_without jack
 Name: din
-Version: 5.2.1
-Release: alt2
+Version: 39.0.1
+Release: alt1
 License: GPLv2
 Summary: Edit waveforms in a GUI, and watch the sound change before your ears
 Group: Sound
 Source: %name-%version.tar.gz
-Patch1: din-5.2.1-alt-ftbfs.patch
 Url: http://dinisnoise.org/
 
-# Automatically added by buildreq on Sun Sep 09 2012
-# optimized out: fontconfig libX11-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: ImageMagick-tools gcc-c++ libGL-devel libfftw3-devel libircclient-devel libjack-devel liblo-devel tcl-devel
+# Automatically added by buildreq on Wed May 23 2018
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libgpg-error libstdc++-devel perl python-base python-modules
+BuildRequires: ImageMagick-tools boost-devel-headers gcc-c++ libSDL-devel libalsa-devel tcl-devel
+%if_with jack
+BuildRequires: libjack-devel
+%endif
 
 %description
 If Puredata and Supercollider are two synths, din is a synth of a 3rd kind.
@@ -33,21 +36,24 @@ Collaboration? MIDI. OSC. IRC.
 
 %prep
 %setup
-%patch1 -p2
-sed -i 's@\[tcl8\.5/tcl\.h\]@@' configure.ac
-sed -i 's@tcl8\.5@tcl8.6@g' src/Makefile.in
-sed -i 's@tcl8\.5@tcl8.6@g' src/Makefile.am
-sed -i 's@/usr/local@/usr@g' data/checkdotdin
 
+%define bmsizes 128 96 64 48 32 24 16
 %build
+%if_with jack
 %autoreconf
-%configure
+%configure --prefix=%prefix CXXFLAGS="-D__UNIX_JACK__"
 %make_build
-for N in 96 64 48 32 24 16; do convert data/din.png $N.png; done
+%else
+sed -i 's/-ljack//g' src/Makefile.am
+%autoreconf
+%configure --prefix=%prefix CXXFLAGS="-D__LINUX_ALSA__"
+%make_build
+%endif
+for N in %bmsizes; do convert pixmaps/din.png $N.png; done
 
 %install
 %makeinstall
-for N in 96 64 48 32 24 16; do
+for N in %bmsizes; do
 	install -D $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
@@ -61,6 +67,16 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 39.0.1-alt1
+- Autobuild version bump to 39.0.1
+
+* Wed May 23 2018 Fr. Br. George <george@altlinux.ru> 34-alt1
+- Autobuild version bump to 34
+- Provide ALSA build option
+
+* Fri Apr 21 2017 Fr. Br. George <george@altlinux.ru> 10.0.0-alt1
+- Autobuild version bump to 10.0.0
+
 * Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.2.1-alt2
 - Rebuilt against Tcl/Tk 8.6
 - Fixed FTBFS
