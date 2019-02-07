@@ -5,25 +5,33 @@ BuildRequires: /usr/bin/perl gcc-c++ imake libX11-devel libXt-devel libalsa-deve
 %define _localstatedir %{_var}
 %define api 2.3
 %define major 1
-%define libname libclanlib%{api}%{major}
+%define libname libclanlib%{api}_%{major}
 %define develname libclanlib%{api}-devel
 
 Name:		clanlib
 Summary:	The ClanLib Game SDK series 2.3
 Version:	2.3.7
-Release:	alt1_6
+Release:	alt1_7
 License:	BSD-like
 Group:		System/Libraries
 Source0:	http://www.clanlib.org/download/releases-2.0/ClanLib-%version.tgz
 Patch0:		ClanLib-2.3.6-link.patch
 Patch1:		ClanLib-2.3.4-gcc47.patch
 # from fedora
-Patch3:		ClanLib-2.3.4-non-x86.patch
+Patch2:		ClanLib-2.3.4-non-x86.patch
+Patch3:         ClanLib-2.3.7-no-wm_type-in-fs.patch
+Patch4:         ClanLib-2.3.7-no-ldflags-for-conftest.patch
+Patch5:         ClanLib-2.3.7-gcc7.patch
+
+Patch8:		ClanLib-2.3.7-alt-i586.patch
+# suse
+Patch9:         ClanLib-2.3.6-fix-opengl.patch
+
 URL:		http://www.clanlib.org/
 BuildRequires:	pkgconfig(libmikmod)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	libfreeglut-devel libGL-devel libGLU-devel libGLES-devel
-BuildRequires:	autoconf-common autoconf_2.60
+BuildRequires:	autoconf_2.60
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	bzip2-devel
 BuildRequires:	libvorbis-devel
@@ -79,12 +87,32 @@ work for game developers. This package contains the documentation.
 %setup -q -n ClanLib-%{version}
 %patch0 -p0 -b .link
 %patch1 -p1 -b .gcc
-%patch3 -p1 -b .non-x86
+%patch2 -p1 -b .non-x86
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%ifarch %ix86
+%patch8 -p0
+%endif
+%patch9 -p1
 
 %build
 export CXXFLAGS="%{optflags} -fno-stack-protector"
 autoreconf -fi
 %configure \
+  --enable-clanDisplay   \
+  --enable-clanGL        \
+  --enable-clanGL1       \
+  --enable-clanSound     \
+  --enable-clanDatabase  \
+  --enable-clanSqlite    \
+  --enable-clanRegExp    \
+  --enable-clanNetwork   \
+  --enable-clanGUI       \
+  --enable-clanCSSLayout \
+  --enable-clanSWRender  \
+  --enable-clanMikMod    \
+  --enable-clanVorbis    \
 	--disable-static \
 	--enable-docs
 %make
@@ -108,6 +136,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_7
+- fixed build
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_6
 - new version
 
