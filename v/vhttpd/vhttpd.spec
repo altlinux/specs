@@ -1,6 +1,6 @@
 Name: vhttpd
 Version: 0.7.8
-Release: alt2.1
+Release: alt2.2
 
 Summary: simple embedded web server
 License: LGPL
@@ -11,7 +11,7 @@ Source:%name-%version.tar
 %ifarch %e2k
 Buildrequires: guile20-devel libguile20-devel /proc
 %else
-BuildRequires: guile22-devel >= 2.2.0-alt2
+BuildRequires: guile22-devel >= 2.2.0-alt2 /proc
 %endif
 BuildPreReq: glib2-devel libssl-devel libgnutls-devel cgreen
 
@@ -93,6 +93,9 @@ sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Thu Feb 07 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.7.8-alt2.2
+- add BuildRequires: /proc
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.8-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
