@@ -1,6 +1,6 @@
 Name: ddd
 Version: 3.3.12
-Release: alt1.qa2
+Release: alt2
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
 License: GPL
@@ -20,7 +20,7 @@ Requires: gdb
 Obsoletes: ddd-static, ddd-semistatic, ddd-dynamic
 
 # Added by buildreq2 on Чтв Окт 05 2006
-BuildRequires: flex gcc4.3-c++ libX11-devel libXext-devel libXi-devel libXaw-devel libXp-devel libreadline-devel libtinfo-devel openmotif-devel
+BuildRequires: flex gcc-c++ libX11-devel libXext-devel libXi-devel libXaw-devel libXp-devel libreadline-devel libtinfo-devel openmotif-devel
 
 BuildRequires: makeinfo
 
@@ -74,7 +74,6 @@ find -type f -name \*.orig -print -delete
 %build
 %set_automake_version 1.10
 #set_autoconf_version 2.5
-export CC=gcc-4.3 CXX=g++-4.3
 
 # Fix build via precaching configure variables.
 export \
@@ -138,6 +137,7 @@ sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 %_datadir/%name-%version
 %_mandir/man?/*
 %_infodir/*.info*
+%_desktopdir/%name.desktop
 %dir %docdir
 %docdir/[A-Z]*
 
@@ -150,6 +150,10 @@ sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 %docdir/html
 
 %changelog
+* Thu Feb 07 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.12-alt2
+- Rebuild with libreadline7 and new gcc-c++.
+- Package desktop file.
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 3.3.12-alt1.qa2
 - NMU:
   + fixed FTBFS (BR: makeinfo and opensuse texinfo-5.0 patch)
