@@ -1,9 +1,10 @@
 %def_without bash
+%def_with keyutils
 # too old kernel in hasher
 %def_disable check
 
 Name: ndctl
-Version: 63
+Version: 64.1
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -21,7 +22,8 @@ BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(json-c)
-BuildRequires: libsystemd-devel
+BuildRequires: pkgconfig(systemd)
+%{?_with_keyutils:BuildRequires: pkgconfig(libkeyutils)}
 %{?_with_bash:BuildRequires: bash-completion >= 2.0}
 BuildRequires: asciidoctor asciidoc xmlto
 
@@ -91,7 +93,8 @@ mappings of performance / feature-differentiated memory.
 echo %version > version
 ./autogen.sh
 %configure --disable-static \
-	%{subst_with bash}
+	%{subst_with bash} \
+	%{subst_with keyutils}
 %make_build
 
 %install
@@ -103,9 +106,14 @@ echo %version > version
 %files
 %_bindir/%name
 %_man1dir/%{name}*
+%dir %_sysconfdir/%name
 %_sysconfdir/%name/monitor.conf
+%dir %_sysconfdir/%name/keys
+%_sysconfdir/%name/keys/keys.readme
 %_unitdir/%name-monitor.service
 %{?_with_bash:%_datadir/bash-completion/completions/%name}
+%_sysconfdir/modprobe.d/nvdimm-security.conf
+
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -119,6 +127,8 @@ echo %version > version
 %files -n daxctl
 %_bindir/daxctl
 %_man1dir/daxctl*
+%dir %_datadir/daxctl
+%_datadir/daxctl/daxctl.conf
 
 %files -n libdaxctl
 %_libdir/libdaxctl.so.*
@@ -130,6 +140,9 @@ echo %version > version
 %_pkgconfigdir/libdaxctl.pc
 
 %changelog
+* Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 64.1-alt1
+- 64.1
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 63-alt1
 - 63
 
