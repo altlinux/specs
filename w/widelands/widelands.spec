@@ -2,7 +2,7 @@ Epoch: 1
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen boost-devel libGL-devel libGLU-devel libX11-devel libicu-devel python-devel rpm-build-python zlib-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen boost-devel libGLU-devel libX11-devel libglvnd-devel libicu-devel python-devel rpm-build-python zlib-devel
 # END SourceDeps(oneline)
 
 %filter_from_requires /^.usr.share.fonts.ttf./d
@@ -16,7 +16,7 @@ Requires: fonts-ttf-wqy-microhei
 
 Name:           widelands
 Version:        0
-Release:        alt7_0.67.%{buildid}
+Release:        alt7_0.69.%{buildid}
 Summary:        Open source realtime-strategy game
 
 License:        GPLv2+
@@ -130,6 +130,9 @@ popd
 
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.69.build19
+- update to new release by fcimport
+
 * Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.67.build19
 - rebuild with new libicu/ical
 
