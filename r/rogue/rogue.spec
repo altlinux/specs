@@ -1,6 +1,6 @@
 Name: rogue
 Version: 5.4.4
-Release: alt2
+Release: alt3
 Packager: Fr. Br. George <george@altlinux.ru>
 Group: Games/Adventure
 License: BSD
@@ -8,6 +8,7 @@ Url: http://rogue.rogueforge.net
 Source0: http://rogue.rogueforge.net/files/rogue5.4/%name%version-src.tar.gz
 Source1: %name.desktop
 Source2: %name.png
+Patch: rogue5.4.4-gcc8.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: ncurses-devel
@@ -15,19 +16,26 @@ BuildRequires: ncurses-devel
 Summary: The original graphical adventure game
 
 %description
-The one, the only, the original graphical adventure game that spawned an entire genre.
+The one, the only, the original graphical adventure game that spawned an
+entire genre.
 
-Rogue 5.4 was developed between 1983 and 1984. The most common release of 5.4 is found on the BSD 4.3 Unix distribution tape (June 1986) as archived on the CSRG Archives CD Set and only as a binary executable.
+Rogue 5.4 was developed between 1983 and 1984. The most common release
+of 5.4 is found on the BSD 4.3 Unix distribution tape (June 1986) as
+archived on the CSRG Archives CD Set and only as a binary executable.
 
-This is the final version of the original (Toy, Arnold, Wichman) rogue developed for the UNIX operating system. The source code was recovered by Ken Arnold and posted on Sourceforge which I then copied and restored here. 
+This is the final version of the original (Toy, Arnold, Wichman) rogue
+developed for the UNIX operating system. The source code was recovered
+by Ken Arnold and posted on Sourceforge which I then copied and restored
+here.
 
 %prep
-%define _gamesvar %_var/games
+%define _gamesvar /var/lib/games
 %setup -q -c -n %name-%version
+%patch -p1
 
 %build
-%configure --enable-setgid=games --enable-scorefile=%_gamesvar/roguelike/rogue54.scr --enable-lockfile=%_gamesvar/roguelike/rogue54.lck --bindir=%_gamesbindir
-make %_smp_mflags
+CFLAGS="-DNCURSES_OPAQUE=0" %configure --enable-setgid=games --enable-scorefile=%_gamesvar/roguelike/rogue54.scr --enable-lockfile=%_gamesvar/roguelike/rogue54.lck --bindir=%_gamesbindir
+%make_build
 
 %install
 make install DESTDIR=%buildroot
@@ -46,6 +54,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 %doc LICENSE.TXT %name.doc %name.html %name.me
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 5.4.4-alt3
+- Fix build
+
 * Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 5.4.4-alt2
 - Fix build
 
