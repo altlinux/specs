@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt24
+Release: alt25
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -162,6 +162,7 @@ subst -p 's/az /az be /g' configure*
 %patch128 -p1 -b .argb
 %patch129 -p1 -b .ahiguchi
 %patch130 -p1 -b .ppc64
+sed 's/\(powerpc.*dynamic_linker=\)no/\1yes/' -i ltconfig
 
 %build
 %def_disable static
@@ -224,6 +225,9 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Thu Feb 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt25
+- Fixed build on ppc* architectures.
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 1.2.10-alt24
 - E2K: link against -lXi -lXext -lX11 explicitly
 
