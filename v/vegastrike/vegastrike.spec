@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(English.pm) zlib-devel
+BuildRequires: /usr/bin/desktop-file-install perl(English.pm) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: boost-python-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt7_31.r1.1
+Release:        alt7_35.r1
 Summary:        3D OpenGL spaceflight simulator
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://vegastrike.sourceforge.net/
 #Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.bz2
@@ -35,10 +35,12 @@ Patch18:        vegastrike-aarch64.patch
 Patch19:        vegastrike-0.5.1-gcc6.patch
 # https://sourceforge.net/p/vegastrike/patches/70/
 Patch20:        vegastrike-0.5.1-gcc7.patch
+BuildRequires:  gcc-c++
 BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires:  libjpeg-devel libpng-devel boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libexpat-devel python-devel
-BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libalut-devel
-BuildRequires:  libvorbis-devel libogre-devel cegui cegui-devel desktop-file-utils
+BuildRequires:  libjpeg-devel libpng-devel boost-complete libexpat-devel python-devel
+BuildRequires:  boost-python-devel
+BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
+BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       %{name}-data = %{version}, xdg-utils, opengl-games-utils
 Source44: import.info
@@ -74,7 +76,7 @@ Yet danger lurks in the space beyond.
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
-sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
+sed -i 's/-lboost_python/-lboost_python27/g' Makefile.in
 # we want to use the system version of expat.h
 rm objconv/mesher/expat.h
 %patch33 -p2
@@ -120,7 +122,7 @@ appstream-util validate-relax --nonet \
 
 %files
 %doc AUTHORS DOCUMENTATION README ToDo.txt
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/vega*
 %{_bindir}/vs*
 %{_libexecdir}/%{name}
@@ -130,6 +132,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt7_35.r1
+- aarch64 build
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt7_31.r1.1
 - NMU: rebuilt with boost-1.67.0
 
