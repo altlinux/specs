@@ -2,7 +2,7 @@
 %define dist Test-Easy
 Name: perl-%dist
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: Testing made absolute easy.
 License: GPL or Artistic
@@ -21,18 +21,13 @@ Easy testing suite.
 
 %prep
 %setup -q -n %dist-%version
-if [ %version = 1.07 ]; then
-# Range iterator outside integer range at lib/Test/Easy/Time.pm line 38.
-# incorrect test at 1.07
-rm t/nearly.t
-fi
 
 %build
 %perl_vendor_build
 
 %install
 %perl_vendor_install
-rm %buildroot%perl_vendor_privlib/Test/README.pod
+#rm -f %buildroot%perl_vendor_privlib/Test/README.pod
 
 %files
 %doc README.pod
@@ -40,6 +35,9 @@ rm %buildroot%perl_vendor_privlib/Test/README.pod
 %perl_vendor_privlib/Test/Easy/*pm
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2
+- fixed build
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
