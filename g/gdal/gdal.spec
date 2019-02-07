@@ -10,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.2.3
-Release: alt2.1
+Release: alt3
 Group: Sciences/Geosciences
 
 License: MIT
@@ -24,6 +24,7 @@ Patch2: %name-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
 Patch5: %name-alt-libproj.so_name.patch
 Patch6: %name-alt-python3.patch
+Patch7: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
 
@@ -119,6 +120,7 @@ Perl modules for GDAL/OGR.
 %patch3 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p0
 
 %if_with python3
 cp -fR swig/python swig/python3
@@ -257,6 +259,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt3
+- fix FTBFS against libmysqlclient21
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt2.1
 - rebuild with new perl 5.28.1
 
