@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt20
+Release: alt21
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -140,6 +140,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Thu Feb 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt21
+- NMU: fixed -Wreturn-type warnings.
+
 * Mon Dec 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt20
 - NMU: implemented marking explicitely installed packages as manually installed.
 
