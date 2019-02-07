@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.12.1
-Release: alt3%ubt
+Release: alt4
 Summary: Python bindings for Qt4
 License: GPL
 Group: Development/Python
@@ -30,7 +30,7 @@ BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel
 #BuildPreReq: python-module-dbus-devel phonon-devel
 
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-Requires: python-module-sip = %sipver2
+Requires: python-module-PyQt4-sip = %sipver2
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
@@ -50,7 +50,7 @@ code generator for Qt4 Designer.
 Summary: Python 3 bindings for Qt4
 Group: Development/Python3
 %add_python3_req_skip Compiler
-Requires: python3-module-sip = %sipver3
+Requires: python3-module-PyQt4-sip = %sipver3
 
 %description -n python3-module-%oname
 Python bindings for the Qt4 C++ class library.  Also includes a PyQt4 backend
@@ -233,6 +233,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 4.12.1-alt4
+- rebuild with python-module-sip-4.9.13
+
 * Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.12.1-alt3%ubt
 - move pyqtconfig to devel subpackage
 

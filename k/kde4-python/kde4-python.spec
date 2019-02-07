@@ -10,7 +10,7 @@
 %define rname pykde4
 Name: kde4-python
 Version: 4.14.3
-Release: alt6%ubt
+Release: alt7
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -104,6 +104,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 4.14.3-alt7
+- rebuild with python-module-sip-4.9.13
+
 * Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt6%ubt
 - move pykdeconfig to devel subpackage
 
