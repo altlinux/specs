@@ -1,16 +1,17 @@
 %define WIP WIP4
 Name: e-uae
 Version: 0.8.29
-Release: alt1
+Release: alt2
 Group: Emulators
 Summary: Experimental UAE Amiga Emulator
+Url: http://www.rcdrummond.net/uae/
 License: GPLv2
 Source: %name-%version-%WIP.tar.bz2
-Url: http://www.rcdrummond.net/uae/
+Patch: e-uae-ucontext_t.patch
 
-# Automatically added by buildreq on Sun Apr 03 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libGLU-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel pkg-config xorg-xproto-devel
-BuildRequires: libSDL-devel libalsa-devel libgtk+2-devel zlib-devel
+# Automatically added by buildreq on Thu Feb 07 2019
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libEGL-devel libGL-devel libGLU-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libpango-devel pkg-config python-base python-modules sh4 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ libSDL-devel libalsa-devel libgtk+2-devel
 
 %description
 This is a version of UAE, the Ubiquitous Amiga Emulator, with an
@@ -44,10 +45,12 @@ online from Cloanto - publishers of the Amiga Forever distribution.1
 
 %prep
 %setup -n %name-%version-%WIP
+%patch -p2
 
 %build
 %configure --with-alsa --with-sdl-gl --with-sdl-gfx --enable-ui --enable-audio --disable-sdltest --disable-gtktest --enable-bsdsock
 
+%make_build -C src/tools
 %make_build
 
 %install
@@ -59,6 +62,9 @@ mv %buildroot/%_bindir/uae %buildroot/%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 0.8.29-alt2
+- Fix build
+
 * Sun Apr 03 2011 Fr. Br. George <george@altlinux.ru> 0.8.29-alt1
 - Initial build from scratch
 
