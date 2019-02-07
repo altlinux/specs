@@ -1,6 +1,6 @@
 Name:    xqf
 Version: 1.0.6.2
-Release: alt1
+Release: alt2
 Summary: X11 QStat Frontend
 Packager: Andrey Cherepanov <cas@altlinux.org>
 License: GPL
@@ -8,7 +8,7 @@ Group:   Networking/Other
 URL:     https://xqf.github.io/en/
 # VCS:   https://github.com/XQF/xqf
 
-Requires: qstat = 2.11
+Requires: qstat >= 2.11
 Requires: gzip
 Requires: wget
 
@@ -56,6 +56,9 @@ sh autogen.sh
 %_man6dir/%name.6*
 
 %changelog
+* Thu Feb 07 2019 Konstantin Rybakov <kastet@altlinux.org> 1.0.6.2-alt2
+- NMU: update runtime dependencies
+
 * Wed Oct 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.6.2-alt1
 - New version from upstream Git repository
 - Spec cleanup
