@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 
 Name:           cdogs-sdl
 Version:        0.6.6
-Release:        alt1
+Release:        alt2
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 # The game-engine is GPLv2+
@@ -57,7 +57,7 @@ chmod -x src/tinydir/tinydir.h
 
 
 %build
-%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1
+%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1 .
 %make_build
 icns2png -x build/macosx/cdogs-icon.icns
 
@@ -79,6 +79,9 @@ appstream-util validate-relax --nonet \
 %_iconsdir/hicolor/*/apps/%{name}-icon.png
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt2
+- fixed build
+
 * Thu Dec 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.6-alt1
 - Updated to upstream version 0.6.6.
 - Removed dependencies on blender.
