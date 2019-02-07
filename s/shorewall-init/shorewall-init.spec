@@ -2,7 +2,7 @@
 %filter_from_requires /^\/etc\/default\/shorewall-init/d
 
 Name: shorewall-init
-Version: 5.2.1.4
+Version: 5.2.2
 Release: alt1
 Summary: Shorewall-init adds functionality to Shoreline Firewall (Shorewall).
 License: GPLv2
@@ -56,6 +56,9 @@ DESTDIR=%buildroot ./install.sh
 %_libexecdir/%name/*
 
 %changelog
+* Thu Feb 07 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
+- 5.2.2
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.1.4-alt1
 - 5.2.1.4
 
