@@ -4,7 +4,7 @@
 
 Name: librep
 Version: 0.92.3
-Release: alt2.git20120908.1
+Release: alt4
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -106,6 +106,13 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Thu Feb 07 2019 Paul Wolneykien <manowar@altlinux.org> 0.92.3-alt4
+- Add "aarch64" to the set of known arches (in order to make the
+  stack direction autodetection work).
+
+* Thu Feb 07 2019 Paul Wolneykien <manowar@altlinux.org> 0.92.3-alt3
+- Rebuild with the new version of libreadline.
+
 * Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 0.92.3-alt2.git20120908.1
 - NMU: added BR: texinfo
 - add_optflags -fgnu89-inline to fix build
