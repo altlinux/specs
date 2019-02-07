@@ -25,11 +25,11 @@
   --enable-toolbar
 
 Name: xterm
-Version: 337
+Version: 343
 Release: alt1
 
-Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
+Summary: A standard terminal emulator for the X Window System
 Url: http://invisible-island.net/xterm/
 License: MIT
 Group: Terminals
@@ -53,8 +53,8 @@ Patch0013: 0013-xterm-alt-man_suffix.patch
 Patch0014: 0014-xterm-alt-translate-update-desktop.patch
 
 Provides: xvt, %_bindir/xvt
-PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
-BuildPreReq: alternatives groff-base imake libXaw-devel libXft-devel libncurses-devel libutempter-devel libxkbfile-devel xorg-cf-files
+Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
+BuildRequires(pre): alternatives groff-base imake libXaw-devel libXft-devel libncurses-devel libutempter-devel libxkbfile-devel xorg-cf-files
 # Automatically added by buildreq on Wed Nov 14 2012
 # optimized out: alternatives fontconfig fontconfig-devel gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel libtinfo-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: ctags groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
@@ -157,6 +157,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 343-alt1
+- Autobuild version bump to 343
+
 * Thu Nov 15 2018 Fr. Br. George <george@altlinux.ru> 337-alt1
 - Autobuild version bump to 337
 
