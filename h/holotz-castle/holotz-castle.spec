@@ -1,6 +1,6 @@
 Name: holotz-castle
 Version: 1.3.14
-Release: alt2.qa1
+Release: alt3
 
 %define Sum Holotz's Castle - A puzzle/arcade platform scroller
 Summary: %Sum
@@ -76,6 +76,7 @@ sed -i s"|\r\n|\n|g" res/playlist.txt
 rm -f res/savedata/empty.txt
 
 %build
+%make_build -C JLib
 %make_build
 
 %install
@@ -158,6 +159,9 @@ EOF
 %_includedir/JLib/*
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 1.3.14-alt3
+- Fix parallel build
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.14-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
