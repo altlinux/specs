@@ -1,5 +1,5 @@
 Name: pspp
-Version: 1.0.1
+Version: 1.2.0
 Release: alt1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
@@ -9,7 +9,7 @@ Source0: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 
 # Automatically added by buildreq on Mon Sep 18 2017
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-x86 libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-podlators pkg-config python-base python-modules python-modules-compiler tzdata xml-utils zlib-devel
-BuildRequires: glibc-kernheaders-generic libgsl-devel libgtksourceview3-devel libreadline-devel libxml2-devel makeinfo perl-devel
+BuildRequires: glibc-kernheaders-generic libgsl-devel libgtksourceview3-devel libreadline-devel libxml2-devel makeinfo perl-devel libspread-sheet-widget-devel
 
 BuildRequires: fonts-ttf-liberation
 
@@ -68,6 +68,9 @@ make check
 %doc %_datadir/doc/pspp
 
 %changelog
+* Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
 - Autobuild version bump to 1.0.1
 
