@@ -30,7 +30,7 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 Name: hplip
 Epoch: 1
 Version: 3.19.1
-Release: alt1
+Release: alt2
 %if_without ernie
 License: GPLv2+ and MIT and BSD
 %else
@@ -1179,6 +1179,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Feb 07 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.1-alt2
+- Autodetect auth type for modern ALT distro (ALT #36053).
+
 * Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.1-alt1
 - New version.
 - Added support for new printers:
