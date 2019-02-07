@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: shorewall-lite
-Version: 5.2.1.4
+Version: 5.2.2
 Release: alt1
 Summary: Shoreline Firewall Lite is an iptables-based firewall for Linux systems.
 License: GPLv2
@@ -65,6 +65,9 @@ install -D -m 0755 %SOURCE3 %buildroot%_controldir/%name
 %_man8dir/*
 
 %changelog
+* Thu Feb 07 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
+- 5.2.2
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.1.4-alt1
 - 5.2.1.4
 
