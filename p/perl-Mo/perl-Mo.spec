@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.40
-Release: alt1
+Release: alt2
 Summary: Micro Objects. Mo is less.
 Group: Development/Perl
 License: perl
@@ -40,12 +40,15 @@ scripts for %module_name
 %files
 %doc README ReadMe.pod Changes LICENSE
 %perl_vendor_privlib/M*
-%perl_vendor_privlib/R*
+#perl_vendor_privlib/R*
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.40-alt2
+- fixed build
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
