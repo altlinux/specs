@@ -11,7 +11,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.26
+Version: %ver_major.27
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -32,7 +32,9 @@ Source: %_name-%version.tar
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 %{?_enable_hw:Requires: gst-plugins-bad%gst_api_ver}
 
-BuildRequires: libgio-devel >= %glib_ver gst-plugins%gst_api_ver-devel >= %gst_ver gtk-doc
+BuildRequires: gtk-doc
+BuildRequires: libgio-devel >= %glib_ver libgdk-pixbuf-devel
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libcogl-devel >= %cogl_ver libclutter-devel >= %clutter_ver
 BuildRequires: libgudev-devel
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins%gst_api_ver-gir-devel}
@@ -108,11 +110,11 @@ that use Clutter-Gst libraries.
 %makeinstall_std
 
 %files -n lib%name
-%_libdir/libclutter-gst-*.so.*
+%_libdir/lib%_name-*.so.*
 
 %files -n lib%name-devel
 %_includedir/clutter-*
-%_libdir/libclutter-gst-*.so
+%_libdir/lib%_name-*.so
 %_pkgconfigdir/*.pc
 
 %if_enabled introspection
@@ -133,6 +135,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.27-alt1
+- 3.0.27
+
 * Sun Mar 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.26-alt1
 - 3.0.26
 
