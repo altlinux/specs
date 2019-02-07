@@ -1,6 +1,6 @@
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt6.1
+Release: alt7
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -112,7 +112,6 @@ Install this package if you want to create RPM packages that use %name.
 %package doc
 Summary: Documentation for GHC
 Group: Development/Haskell
-BuildArch: noarch
 
 %description doc
 Preformatted documentation for the Glasgow Haskell Compiler
@@ -219,6 +218,11 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Fri Feb 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.6.1-alt7
+- Applied patches to add support of aarch64 and ppc64le architectures.
+- Removed BuilArch: noarch from doc subpackage (ghc generates different
+  list of documents for different archirectures).
+
 * Wed Oct 21 2015 Ivan Zakharyaschev <imz@altlinux.org> 7.6.1-alt6.1
 - "ghc-pkg recache" went crazy without glibc-gconv-modules (ALT#31576);
   we workaround it for now without an investigation whether it's a Haskell
