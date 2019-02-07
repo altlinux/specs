@@ -1,6 +1,6 @@
 Name: doxygen
-Version: 1.8.13
-Release: alt2.1
+Version: 1.8.15
+Release: alt1
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -9,9 +9,25 @@ Group: Development/Other
 Url: http://www.doxygen.org/
 
 # ftp://ftp.stack.nl/pub/users/dimitri/doxygen-%version.src.tar.gz
-Source: %name-%{version}.src.tar.gz
-Patch: doxygen-1.7.5-rh-timestamp.patch
-Patch1: %name-%version-upstream-crash.patch
+Source: %name-%version.src.tar.gz
+Source500: %name.unused
+Source501: repatch_spec.sh
+
+## FC patches
+Patch1: FC-1.8.15-handle_empty_TOC_in_XML_output.patch
+Patch2: FC-1.8.15-test_for_XML_output_with_an_empty_TOC.patch
+
+## Ubuntu patches
+Patch101: Ubuntu-fix-issue-776791.patch
+Patch102: Ubuntu-manpages.patch
+Patch103: Ubuntu-dot-config.patch
+Patch104: Ubuntu-jquery.patch
+Patch105: Ubuntu-no-timestamps.patch
+Patch106: Ubuntu-no-rpath.patch
+Patch107: Ubuntu-avoid-compass.patch
+
+## ALT patches
+
 
 # Automatically added by buildreq on Wed May 10 2017
 # optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
@@ -50,23 +66,21 @@ pdf formats.
 
 %prep
 %setup
+
+## FC apply patches
 %patch1 -p1
+%patch2 -p1
 
-# XXX Waiting for newer TeXlive
-sed -i 's/subinputfrom/subimport/g' doc/doxygen_manual.tex
+## Ubuntu apply patches
+#patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+#patch106 -p1
+%patch107 -p1
 
-##patch -p1
-
-##find -name unistd.h -delete -print
-##perl -pi -e '
-##	s|^(TMAKE_CFLAGS\s*=\s*).*|$1\$(RPM_OPT_FLAGS)|;
-##	s|^(TMAKE_CFLAGS_WARN_ON\s*=).*|$1|;
-##	s|^(TMAKE_CFLAGS_WARN_OFF\s*=).*|$1|;
-##	s|^(TMAKE_CFLAGS_RELEASE\s*=).*|$1|;
-##	s|^(TMAKE_CFLAGS_DEBUG\s*=).*|$1|;
-##	s|^(TMAKE_CFLAGS_SHLIB\s*=\s*).*|$1%optflags_shared|;
-##	s|/usr/X11R6/lib|/usr/X11R6/%_lib|;
-##	' tmake/lib/linux-g++/tmake.conf
+## ALT apply patches
 
 %build
 export QTDIR=%_libdir/qt4
@@ -77,9 +91,9 @@ export PATH="$QTDIR/bin:$PATH"
 %cmake -G "Unix Makefiles" \
 	-Dbuild_doc=ON -Dbuild_wizard=ON -Dbuild_xmlparser=ON \
 	-Dbuild_search=OFF \
-	-DMAN_INSTALL_DIR=%{_mandir}/man1 \
+	-DMAN_INSTALL_DIR=%_mandir/man1 \
 	-DDOC_INSTALL_DIR=share/doc/%name-%version \
-	-DCMAKE_INSTALL_PREFIX:PATH=%{_prefix}
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix
 #cmake_build docs
 %cmake_build VERBOSE=1
 %cmake_build docs VERBOSE=1
@@ -124,6 +138,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 1:1.8.15-alt1
+- Autobuild version bump to 1.8.15
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.13-alt2.1
 - NMU: fixed build with texlive 2017
 
