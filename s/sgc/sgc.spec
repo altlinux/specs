@@ -1,6 +1,6 @@
 Name: sgc
 Version: 0.2.1
-Release: alt1
+Release: alt2
 Summary: A GUI toolkit for Pygame
 Group: Development/Python
 License: BSD
@@ -37,10 +37,14 @@ Summary: %summary documentation
 
 %prep
 %setup
+cat > makedocs <<@@@
+sleep 5
+make -C docs html
+@@@
 
 %build
 %python_build
-PYTHONPATH="$(realpath `pwd`)" xvfb-run make -C docs html
+PYTHONPATH="$(realpath `pwd`)" xvfb-run sh makedocs
 
 %install
 %python_install
@@ -52,6 +56,9 @@ PYTHONPATH="$(realpath `pwd`)" xvfb-run make -C docs html
 %doc docs/_build/html/* example
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 0.2.1-alt2
+- Insert 5 sec delay for start xvfb-run
+
 * Thu Mar 06 2014 Fr. Br. George <george@altlinux.ru> 0.2.1-alt1
 - Autobuild version bump to 0.2.1
 - Rename documentation package
