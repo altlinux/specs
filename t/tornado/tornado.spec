@@ -1,5 +1,5 @@
 Name: tornado
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Curses-based game of destroing enemy's house by controlling the weather
@@ -7,35 +7,43 @@ License: GPL
 Url: http://kiza.kcore.de/software/tornado/
 Group: Games/Arcade
 
-Source: http://kiza.kcore.de/software/tornado/download/%name-%version.tar.gz
-Patch: %name-%version.patch
+Source: v%version.tar.gz
+Patch: %name-1.4.patch
 
-# Automatically added by buildreq on Thu Jun 01 2006
-BuildRequires: libncurses-devel coreutils
+# Automatically added by buildreq on Tue Jan 29 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libtinfo-devel python-base sh4
+BuildRequires: libncursesw-devel
 
 %description
-The object of the game is to destroy your opponents house with the powers of rain, snow, hail, lightning and the tornado. It resembles the original C64 game.
+The object of the game is to destroy your opponents house with the
+powers of rain, snow, hail, lightning and the tornado. It resembles the
+original C64 game.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 %make
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_datadir/locale,%_localstatedir/games}
-#%__install  %buildroot%_bindir
+mkdir -p %buildroot{%_bindir,%_datadir/locale,%_localstatedir/games}
 %makeinstall ROOT=%buildroot
+%find_lang --with-man %name
 
-%files
-%attr(2711,root,games) %{_bindir}/*
+%files -f %name.lang
+%attr(2711,root,games) %_bindir/*
 %attr(664,root,games) %_localstatedir/games/%{name}*
-%_datadir/locale/*/*
-%_mandir/*/*
+#_datadir/locale/*/*
+%_man6dir/*
 %doc [A-LN-Z]*
 
 %changelog
+* Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 1.4-alt1
+- Autobuild version bump to 1.4
+- Separate locales
+- Convert russian lcale to UTF-8
+
 * Thu Mar 16 2006 Fr. Br. George <george@altlinux.ru> 1.3-alt1
 - Initial build for ALT
 
