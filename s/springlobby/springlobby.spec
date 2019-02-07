@@ -1,7 +1,7 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/xsltproc gcc-c++ libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
+BuildRequires: /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/xsltproc libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
 # END SourceDeps(oneline)
 # undefined symbol: L_*, LOG_*, parse32 in libFileSystem
 # those are from static libUtil, in main binary
@@ -11,7 +11,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define _localstatedir %{_var}
 Name:			springlobby
 Version:		0.195
-Release:		alt2_15
+Release:		alt2_17
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -19,11 +19,12 @@ License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
 
+BuildRequires:  gcc-c++
 BuildRequires:	ctest cmake
-BuildRequires:	libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel, libtorrent-rasterbar-devel
+BuildRequires:	libwxGTK3.0-devel, libtorrent-rasterbar-devel
 BuildRequires:	libSDL-devel, libSDL_sound-devel, libSDL_mixer-devel
 BuildRequires:	desktop-file-utils gettext gettext-tools
-BuildRequires:	libopenal-devel libopenal1, libcurl-devel
+BuildRequires:	libopenal-devel, libcurl-devel
 BuildRequires:	libalure-devel
 BuildRequires:	dumb-devel
 BuildRequires:  boost-complete
@@ -45,7 +46,7 @@ SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 %patch33 -p1
 
 %build
-%{fedora_cmake}
+%{fedora_cmake} .
 %make_build
 
 %install
@@ -107,6 +108,9 @@ EOF
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.195-alt2_17
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.195-alt2_15
 - use boost-complete
 
