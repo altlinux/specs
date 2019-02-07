@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           felix-bundlerepository
 Version:        2.0.10
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
@@ -83,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_3jpp8
 - java update
 
