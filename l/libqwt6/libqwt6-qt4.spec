@@ -1,7 +1,7 @@
 %define oname libqwt
 %define ver_major 6.1
 Name: %{oname}6
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: 2D plotting widget extension to the Qt GUI
@@ -16,8 +16,9 @@ Source: http://sourceforge.net/projects/qwt/files/qwt/%version/qwt-%version.tar.
 Patch: qwt-6.1.2-qwtconfig.pri.patch
 
 #Provides: %oname = %version-%release
-
-BuildRequires: gcc-c++ libqt4-devel libXext-devel doxygen graphviz
+BuildRequires(pre): rpm-macros-qt4
+BuildRequires: gcc-c++ libqt4-devel >= 4.4 qt4-designer
+BuildRequires: libXext-devel doxygen graphviz
 BuildRequires: chrpath
 
 %description
@@ -77,9 +78,9 @@ echo 'QMAKE_CXXFLAGS += %optflags' >> $f
 done
 
 %build
+export QTDIR=%_qt4dir
 %qmake_qt4 QWT_CONFIG+=QwtMathML
-# incompatible with SMP build
-%make
+%make_build
 
 pushd doc
 doxygen
@@ -119,6 +120,9 @@ chrpath -d %buildroot%_libdir/qt4/plugins/designer/libqwt_designer_plugin.so
 %_man3dir/*
 
 %changelog
+* Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 6.1.4-alt1
+- 6.1.4 (ALT #36057)
+
 * Fri Jun 24 2016 Yuri N. Sedunov <aris@altlinux.org> 6.1.3-alt1
 - 6.1.3
 
