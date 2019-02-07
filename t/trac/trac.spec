@@ -1,49 +1,38 @@
-Summary: Integrated scm, wiki, issue tracker and project environment
-Name: trac
-Version: 1.0
-Release: alt4
-Source: http://ftp.edgewall.com/pub/trac/%name-%version.tar
-Source1: trac-0.9-alt-apache2.conf
-Source3: trac-0.9.4-alt-nginx.cgi.conf
-Source4: trac-0.9.4-alt-nginx.fcgi.conf
-Source5: trac-0.9.4-alt-cherokee.cgi.conf
-Source6: trac-0.9.4-alt-cherokee.fcgi.conf
-Source7: trac-passwd
-Source8: trac.init
-Source9: trac.sysconfig
-Source10: trac-restrict-env
-Source11: Alt-linux-team-bar-small.png
-Source12: trac.service
+%define _unpackaged_files_terminate_build 1
 
-#Patch: trac-0.11.6-tracd-drop-privileges.patch
-Patch1: trac-0.11.7-trac-admin-initenv-fixp-group-privileges.patch
+Name:      trac
+Version:   1.3.3
+Release:   alt1
 
-#Patches from Debian
-Patch2: 30_default_charset_utf8.dpatch.patch
-##Patch3: 40_timeline_author_filter.dpatch.patch
-
-License: BSD
-Group: Development/Other
-Packager: Python Development Team <python@packages.altlinux.org>
-Url: http://trac.edgewall.org/
+Group:     Development/Other
+Summary:   Integrated scm, wiki, issue tracker and project environment
+Url:       http://trac.edgewall.org/
+License:   BSD
 BuildArch: noarch
 
-PreReq: python = %__python_version
-BuildPreReq: python-devel = %__python_version
-BuildRequires(pre): python
+Source:    %name-%version.tar
 
-# Provided by clearsilver-python
-# Required by trac.cgi, etc.
-%py_requires neo_cgi
-# Provided by python-module-pysqlite2
-# Required by sqlite db engine
-%py_requires pysqlite2
+Source1:   trac-0.9-alt-apache2.conf
+Source2:   trac-0.9.4-alt-nginx.cgi.conf
+Source3:   trac-0.9.4-alt-nginx.fcgi.conf
+Source4:   trac-0.9.4-alt-cherokee.cgi.conf
+Source5:   trac-0.9.4-alt-cherokee.fcgi.conf
+Source6:   trac-passwd
+Source7:   trac.init
+Source8:   trac.sysconfig
+Source9:   trac-restrict-env
+Source10:  Alt-linux-team-bar-small.png
+Source11:  trac.service
 
-BuildPreReq: rpm-build-python >= 0.28
-BuildPreReq: %py_dependencies setuptools
-BuildPreReq: rpm-macros-apache2 python-module-babel python-module-genshi
+BuildRequires(pre): rpm-macros-apache2
+BuildRequires:      python-devel
+BuildRequires:      python-module-setuptools
+BuildRequires:      python-module-jinja2
 
 Requires: python-module-genshi >= 0.6
+Requires: python-modules-sqlite3
+Requires: python-module-clearsilver
+
 
 %description
 Trac is a minimalistic web-based software project management and bug/issue
@@ -72,56 +61,46 @@ This package contains trac mod_python web frontend
 Summary: Trac FastCGI web frontend
 Group: Development/Other
 Requires: %name = %version
-# FastCGI server spawner, should be restarted on upgrade
 Requires: trac-spawn-fcgi
 
 %description -n python-module-trac-fcgi
 This package contains trac FastCGI web frontend
 
 %prep
-%setup -q
-###patch -p1
-%patch1 -p1
-###patch2 -p1
-##patch3 -p1
+%setup
 
-cp %SOURCE3 nginx-A.trac.cgi.conf
-cp %SOURCE4 nginx-A.trac.fcgi.conf
-cp %SOURCE5 cherokee-A.trac.cgi.conf
-cp %SOURCE6 cherokee-A.trac.fcgi.conf
+cp %SOURCE2 nginx-A.trac.cgi.conf
+cp %SOURCE3 nginx-A.trac.fcgi.conf
+cp %SOURCE4 cherokee-A.trac.cgi.conf
+cp %SOURCE5 cherokee-A.trac.fcgi.conf
 
-#Use ALT logo :)
 %__subst "s|site/your_project_logo.png|common/Alt-linux-team-bar-small.png|g" trac/web/chrome.py
 
 %build
-#__python setup.py build
 %python_build
-%__python setup.py compile_catalog -f
 
 %install
-#__python setup.py install --root=%buildroot --single-version-externally-managed --optimize=2
-%python_build_install --single-version-externally-managed --optimize=2
+%python_install
 
 mkdir -p %buildroot%apache2_addonconfdir
-sed  -e 's,@DATADIR@,%_datadir,g' \
-	-e 's,@AHTDOCSDIR@,%apache2_htdocsdir,g' \
-	-e 's,@ACONFDIR@,%apache2_confdir,g' \
-	-e 's,@LOCALSTATEDIR@,%_localstatedir,g' \
-	%SOURCE1 > %buildroot%apache2_addonconfdir/A.%name.conf
+sed -e 's,@DATADIR@,%_datadir,g' \
+    -e 's,@AHTDOCSDIR@,%apache2_htdocsdir,g' \
+    -e 's,@ACONFDIR@,%apache2_confdir,g' \
+    -e 's,@LOCALSTATEDIR@,%_localstatedir,g' \
+    %SOURCE1 > %buildroot%apache2_addonconfdir/A.%name.conf
 install -d %buildroot%_localstatedir/%name %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/passwd
 mkdir -p %buildroot/%_bindir
-install -m 755 %SOURCE7 %buildroot/%_bindir
-install -m 755 %SOURCE10 %buildroot/%_bindir
+install -m 755 %SOURCE6 %buildroot/%_bindir
+install -m 755 %SOURCE9 %buildroot/%_bindir
 
-#mkdir -p %buildroot/%_initdir
-install -pD -m 755 %SOURCE8 %buildroot/%_initdir/%name
-install -pD -m 644 %SOURCE12 %buildroot%_unitdir/%name.service
+install -pD -m 755 %SOURCE7 %buildroot/%_initdir/%name
+install -pD -m 644 %SOURCE11 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot/%_sysconfdir/sysconfig
-install -m 644 %SOURCE9 %buildroot/%_sysconfdir/sysconfig/%name
+install -m 644 %SOURCE8 %buildroot/%_sysconfdir/sysconfig/%name
 
-install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-team-bar-small.png
+install -m 644 %SOURCE10 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-team-bar-small.png
 
 rm -rf %buildroot%python_sitelibdir/{admin,db,mimeview,prefs,search,tests,ticket,timeline,util,web,wiki}
 
@@ -142,29 +121,23 @@ rm -rf %buildroot%python_sitelibdir/{admin,db,mimeview,prefs,search,tests,ticket
 %preun -n python-module-trac-fcgi
 %preun_service trac-spawn-fcgi
 
-#post mod_python
-#/sbin/service httpd2 condreload ||:
-
-#postun mod_python
-#/sbin/service httpd2 condreload ||:
-
 %files
-%doc ChangeLog README RELEASE
-%doc AUTHORS INSTALL THANKS UPGRADE
-# put htpasswd here
+%doc README.* COPYING AUTHORS THANKS
+%_bindir/trac-admin
+%_bindir/tracd
+%_bindir/trac-passwd
+%_bindir/trac-restrict-env
 %attr(0750,root,tracadmin) %dir %_sysconfdir/%name
 %attr(0660,root,tracadmin) %config(noreplace) %_sysconfdir/%name/passwd
-# empty dir for environments creation
 %attr(2770,root,tracadmin) %dir %_localstatedir/%name
 %python_sitelibdir/*
-%_bindir/*
 %_initdir/%name
 %_unitdir/%name.service
 %_sysconfdir/sysconfig/%name
 
 %exclude %python_sitelibdir/%name/web/modpython_frontend.*
-%exclude %python_sitelibdir/%name/web/_fcgi.*
 %exclude %python_sitelibdir/%name/web/fcgi_frontend.*
+%exclude %python_sitelibdir/%name/web/_fcgi.*
 
 %files contrib
 %doc contrib
@@ -176,11 +149,14 @@ rm -rf %buildroot%python_sitelibdir/{admin,db,mimeview,prefs,search,tests,ticket
 %files -n python-module-trac-fcgi
 %python_sitelibdir/%name/web/fcgi_frontend.*
 %python_sitelibdir/%name/web/_fcgi.*
-#doc cgi-bin
 %doc nginx-A.trac.cgi.conf nginx-A.trac.fcgi.conf
 %doc cherokee-A.trac.cgi.conf cherokee-A.trac.fcgi.conf
 
+
 %changelog
+* Thu Feb 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.3-alt1
+- version updated to 1.3.3
+
 * Wed Sep 03 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0-alt4
 - #30277
 - Fixed rpm-filesystem-conflict-file-file
