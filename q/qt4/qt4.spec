@@ -3,6 +3,9 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define my_gcc_ver 5
 %qIF_ver_gteq %ubt_id M90
 %define my_gcc_ver 6
@@ -39,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt13%ubt
+%define rlz alt14
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -123,6 +126,7 @@ Patch513: qt-4.8.6-alt-fix-ssl-loading.patch
 Patch514: qt-4.8.5-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
+Patch517: alt-sql-mysql.patch
 # SuSE
 Patch701: handle-tga-files-properly.diff
 Patch702: build-qvfb-tool.diff
@@ -737,6 +741,7 @@ Install this package if you want to create RPM packages that use %name
 %patch514 -p1
 %patch515 -p1
 %patch516 -p1
+%patch517 -p1
 
 %patch701 -p0
 %patch702 -p0
@@ -1465,6 +1470,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Feb 07 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt14
+- fix to build with new libmysqlclient
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt13%ubt
 - link with openssl
 
