@@ -28,7 +28,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 185
+Version: 187
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -38,6 +38,7 @@ Group: System/Base
 Url: https://cockpit-project.org/
 Source0: %name-%version.tar
 Source1: cockpit.alt.pam
+Source2: node_modules.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires: node
@@ -436,7 +437,9 @@ via PackageKit.
 
 %prep
 %setup
-%patch -s -p1
+%patch -p1
+
+tar -xzf %SOURCE2
 
 echo '%version' > .tarball
 # newusers executable is not on the user PATH
@@ -459,6 +462,10 @@ grep -rl '/usr/bin/true' | xargs sed -i 's/\/usr\/bin\/true/\/bin\/true/g'
 
 grep -qr '/usr/bin/false' || exit 1
 grep -rl '/usr/bin/false' | xargs sed -i 's/\/usr\/bin\/false/\/bin\/false/g'
+
+# 5min is not enough on beehive
+grep -qs 'timeout 5m' Makefile.am || exit 1
+sed -i 's/timeout 5m/timeout 15m/' Makefile.am
 
 %build
 %autoreconf
@@ -734,6 +741,10 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Thu Feb 07 2019 Stanislav Levin <slev@altlinux.org> 187-alt1
+- 185 -> 187.
+- Increased build timeout.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 185-alt1
 - 180 -> 185.
 
