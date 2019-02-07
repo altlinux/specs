@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt1.1.1.3
+Release: alt1.2
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -8,12 +8,16 @@ Group: System/Libraries
 Url: http://www.ogre3d.org/
 Source: %name-%version.tar
 Patch: %name-%version-alt-changes.patch
+Patch10: ogre-aarch64.patch
 
-BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel libcg-devel
+BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel
 BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
 #BuildRequires:  glew-devel 
-BuildPreReq: libharfbuzz-devel libGLES-devel libpoco-devel
-BuildPreReq: libglsl-optimizer-devel libGLEW-devel hlsl2glsl
+BuildRequires: libharfbuzz-devel libGLES-devel libpoco-devel
+BuildRequires: libglsl-optimizer-devel libGLEW-devel hlsl2glsl
+%ifarch %ix86 x86_64
+BuildRequires: libcg-devel
+%endif
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -69,6 +73,7 @@ samples.
 %prep
 %setup -n ogre
 %patch -p1
+%patch10 -p1
 
 %build
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
@@ -139,6 +144,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1.2
+- NMU: aarch64 build
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1.1.1.3
 - NMU: rebuilt with boost-1.67.0
 
