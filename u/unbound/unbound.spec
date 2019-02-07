@@ -1,12 +1,11 @@
 Name: unbound
-Version: 1.8.3
+Version: 1.9.0
 Release: alt1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
 Summary: Validating, recursive, and caching DNS resolver
 Group: System/Servers
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 %define _chrootdir %_localstatedir/%name
 %define with_python 1
@@ -195,6 +194,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Thu Feb 07 2019 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Wed Dec 12 2018 Alexei Takaseev <taf@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
