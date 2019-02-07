@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-main
 Version: 5.4.0
-Release: alt1_5jpp8
+Release: alt1_6jpp8
 Summary: Apache Felix Main
 Group:   Development/Other
 License: ASL 2.0
@@ -75,6 +75,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_5jpp8
 - java update
 
