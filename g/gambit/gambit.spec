@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.9.2
+Version: 4.9.3
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -203,6 +203,9 @@ EOF
 %_bindir/gambcomp-ruby
 
 %changelog
+* Thu Feb 07 2019 Cronbuild Service <cronbuild@altlinux.org> 4.9.3-alt1
+- new version 4.9.3
+
 * Tue Jan 22 2019 Cronbuild Service <cronbuild@altlinux.org> 4.9.2-alt1
 - new version 4.9.2
 
