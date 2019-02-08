@@ -2,7 +2,7 @@
 
 Name:    gitea
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -17,6 +17,8 @@ Source1: gitea.service
 Source2: app-%version.ini
 Source3: README.ALT
 
+Patch1: make-version.patch
+
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-bindata
 BuildRequires: libpam0-devel
@@ -30,6 +32,7 @@ and Gitlab. Gitea is a fork of Gogs.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -38,7 +41,7 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 cd "$BUILDDIR"/src/%import_path
-TAGS="bindata sqlite pam" make generate all
+TAGS="bindata sqlite pam" make VERSION=%version generate all
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
@@ -59,8 +62,8 @@ useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 
 %files
 %_bindir/%name
-%dir %attr(0770,root,%name) %_localstatedir/%name
-%dir %attr(0770,root,%name) %_logdir/%name
+%dir %attr(0700,%name,%name) %_localstatedir/%name
+%dir %attr(0700,%name,%name) %_logdir/%name
 %dir %_docdir/%name
 %dir %_sysconfdir/%name
 %config(noreplace) %attr(0660,root,%name) %_sysconfdir/%name/app.ini
@@ -70,6 +73,10 @@ useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 %doc *.md
 
 %changelog
+* Fri Feb 08 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.1-alt3
+- Fix ownership of catalogs
+- Fix showing version
+
 * Mon Feb 04 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
 - Change user _gitea to gitea.
 
