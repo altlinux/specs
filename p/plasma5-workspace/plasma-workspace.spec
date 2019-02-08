@@ -1,3 +1,6 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname plasma-workspace
 
 %define x11confdir %_sysconfdir/X11
@@ -17,7 +20,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt11
+Release: alt12
 Epoch: 1
 %K5init altplace
 
@@ -315,7 +318,9 @@ done
 %_K5conf_up/*.upd
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
+%_K5if_ver_gteq %ubt_id M90
 %_datadir/wayland-sessions/plasmawayland.desktop
+%endif
 
 %files -n %name-qml
 %dir %_K5qml/org/kde/plasma/workspace/
@@ -359,6 +364,9 @@ done
 
 
 %changelog
+* Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:5.12.7-alt12
+- wayland session for p8 branch excluded
+
 * Thu Jan 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:5.12.7-alt11
 - startplasma and plasmacompositor fixed for wayland session
 
