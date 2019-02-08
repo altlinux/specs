@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-osgi-obr
 Version:        1.0.2
-Release:        alt2_20jpp8
+Release:        alt2_21jpp8
 Summary:        Felix OSGi OBR Service API
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
@@ -55,6 +55,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_21jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_20jpp8
 - java update
 
