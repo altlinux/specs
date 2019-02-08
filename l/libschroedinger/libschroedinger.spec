@@ -1,6 +1,6 @@
 Name: libschroedinger
 Version: 1.0.11
-Release: alt1
+Release: alt2
 
 Summary: Library for decoding and encoding video in the Dirac format
 Group: System/Libraries
@@ -8,8 +8,7 @@ License: LGPL/MIT/MPL
 URL: http://www.diracvideo.org/
 
 Source0: schroedinger-%version.tar
-
-#Patch0: ldadd.patch
+Patch0: libschroedinger-1.0.11-export-symbols.patch
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -43,7 +42,7 @@ Development documantation for libschroedinger.
 
 %prep
 %setup -q -n schroedinger-%version
-#%patch0 -p1
+%patch0 -p2
 
 %build
 
@@ -74,6 +73,10 @@ Development documantation for libschroedinger.
 %_datadir/gtk-doc/html/schroedinger
 
 %changelog
+* Fri Feb 08 2019 Paul Wolneykien <manowar@altlinux.org> 1.0.11-alt2
+- Added patch to export _orc_code_orc_* symbols along with schro_*
+  (closes #36058).
+
 * Tue Dec 24 2013 Paul Wolneykien <manowar@altlinux.org> 1.0.11-alt1
 - Freshed up to v1.0.11 with the help of cronbuild and update-source-functions.
 
