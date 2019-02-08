@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          felix-scr-generator
 Version:       1.18.0
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Descriptor Generator Implementation
 License:       ASL 2.0
 URL:           http://felix.apache.org/documentation/subprojects/apache-felix-service-component-runtime.html
@@ -83,6 +83,9 @@ This package contains API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_2jpp8
+- fc29 update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_1jpp8
 - java update
 
