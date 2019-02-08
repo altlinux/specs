@@ -1,6 +1,6 @@
 Name: ulogd
-Version: 2.0.5
-Release: alt4
+Version: 2.0.7
+Release: alt1
 
 %def_disable nfacct
 
@@ -160,6 +160,11 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Wed Feb 06 2019 Mikhail Efremov <sem@altlinux.org> 2.0.7-alt1
+- ulogd.logrotate: Replace *.pktlog with *.json.
+- Fix log path for json1.
+- Updated to 2.0.7.
+
 * Fri Oct 27 2017 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt4
 - Use _unpackaged_files_terminate_build.
 - ulogd: restructures signal handling by self-pipe trick.
