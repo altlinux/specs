@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 82
+%define somajor 85
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 71
+%define minor 74
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -290,6 +290,7 @@ export QT4DIR=%_qt4dir
     -DENABLE_DCTDECODER=libjpeg \
     -DENABLE_LIBOPENJPEG=openjpeg2 \
     -DENABLE_XPDF_HEADERS=%{?_enable_xpdfheaders:ON}%{!?_enable_xpdfheaders:OFF} \
+    -DENABLE_UNSTABLE_API_ABI_HEADERS=%{?_enable_xpdfheaders:ON}%{!?_enable_xpdfheaders:OFF} \
     -DENABLE_UTILS=%{?_enable_utils:ON}%{!?_enable_utils:OFF} \
     -DENABLE_CPP=%{?_enable_cpp:ON}%{!?_enable_cpp:OFF} \
     -DENABLE_GLIB=%{?_enable_glib:ON}%{!?_enable_glib:OFF} \
@@ -397,8 +398,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org>  0.71.0-alt3
-- build only compat library
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.74.0-alt1
+- new version
 
 * Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org>  0.71.0-alt2
 - new version
