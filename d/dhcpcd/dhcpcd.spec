@@ -5,7 +5,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 7.1.0
+Version: 7.1.1
 Release: alt1
 
 Summary: DHCP Client
@@ -91,6 +91,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Fri Feb 08 2019 Mikhail Efremov <sem@altlinux.org> 1:7.1.1-alt1
+- Updated to 7.1.1.
+
 * Tue Jan 22 2019 Mikhail Efremov <sem@altlinux.org> 1:7.1.0-alt1
 - resolv.conf hook: Initialize more local variables.
 - Updated to 7.1.0.
