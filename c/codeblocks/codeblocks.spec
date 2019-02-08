@@ -1,6 +1,9 @@
 Name: codeblocks
+# Don't forget to make a new parallel branch with upstream sources, when you
+# will update codeblocks for a new version. In sisyphus branch windows blobs
+# should be cleared.
 Version: 17.12
-Release: alt5
+Release: alt6
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -8,26 +11,26 @@ Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная 
 License: GPLv3
 Group: Development/C++
 Url: http://www.codeblocks.org
+
 Packager: Grigory Ustinov <grenka@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: %name-8.02-alt-icons.tar
 Source3: %name.desktop
 Source4: %name.po
-#Source5: %%name-default.conf
 
+Patch0: codeblocks-language-detection-from-locale.patch
 Patch1: codeblocks-ebuild.conf.patch
 
 # should be checked in next release
 Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-FortranProject_fix_build_gcc7_failed.patch
 
-BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
 Requires: automake >= 1.7 wxGTK gcc gcc-c++ gdb xterm gamin mythes-en
 
-# Automatically added by buildreq on Mon Jan 22 2018
-# optimized out: boost-devel-headers fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+2-devel libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK-devel python3-base zip
+BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+2-devel
+BuildRequires: libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK-devel
+BuildRequires: tinyxml-devel zip
 
 %description
 Code::Blocks is a free C++ IDE built specifically to meet the most
@@ -47,7 +50,7 @@ Code::Blocks может быть расширена с помощью подкл
 Summary: Code::Blocks contrib plugins
 Summary(ru_RU.UTF-8): Дополнительные плагины для Code::Blocks
 Group: Development/C++
-Requires: codeblocks = %version-%release
+Requires: codeblocks = %EVR
 
 %description contrib
 Additional Code::Blocks plugins.
@@ -58,7 +61,7 @@ Additional Code::Blocks plugins.
 %package devel
 Summary: Code::Blocks SDK
 Group: Development/C++
-Requires: codeblocks = %version-%release
+Requires: codeblocks = %EVR
 
 %description devel
 Code::Blocks SDK to develop your own plugins.
@@ -71,17 +74,10 @@ SDK для создания собственных плагинов к сред�
 cp %SOURCE3 src/mime/
 cp %SOURCE4 .
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
-# Script update_revision.sh generates file revision.m4 that contains info about svn revision.
-# It takes data from .svn directory. Since we haven't this directory in %%SOURCE0, we should remove
-# this script and create correct file revision.m4 instead.
-# rm update_revision.sh
-# echo "m4_define([SVN_REV], %%revision)" > revision.m4
-# echo "m4_define([SVN_REVISION], %%version)" >> revision.m4
-# echo "m4_define([SVN_DATE], `date +'%%F %%T'`)" >> revision.m4
 
 %build
 msgfmt %name.po -o %name.mo
@@ -101,7 +97,6 @@ install -m 644 -D alt-icons/32x32/%name.png %buildroot%_niconsdir/%name.png
 install -m 644 -D alt-icons/48x48/%name.png %buildroot%_liconsdir/%name.png
 install -m 644 -D alt-icons/64x64/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
-#install -m 644 -D %%SOURCE5 %%buildroot%%_sysconfdir/skel/.config/codeblocks/default.conf
 
 %files
 %doc README COPYING AUTHORS BUGS COMPILERS TODO NEWS ChangeLog
@@ -281,6 +276,10 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Fri Feb 08 2019 Grigory Ustinov <grenka@altlinux.org> 17.12-alt6
+- Turned on automatical detection of language from user locale.
+- Built with tinyxml.
+
 * Thu Dec 13 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt5
 - Add dependency on gamin (Closes: #35764).
 - Add dependency on mythes-en (Closes: #35765).
