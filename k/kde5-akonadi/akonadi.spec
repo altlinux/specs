@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 18.12.1
+Version: 18.12.2
 Release: alt1
 %K5init altplace
 
@@ -269,6 +269,9 @@ done
 %endif
 
 %changelog
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkf5ksieve libkf5ksieve%sover
 
 Name: kde5-%rname
-Version: 18.12.1
+Version: 18.12.2
 Release: alt1
 %K5init
 
@@ -109,6 +109,9 @@ KF5 library
 
 
 %changelog
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - new version
 

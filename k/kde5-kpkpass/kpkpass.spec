@@ -1,7 +1,10 @@
 %define rname kpkpass
 
+%define sover 5
+%define libkpimpkpass libkpimpkpass%sover
+
 Name: kde5-%rname
-Version: 18.12.1
+Version: 18.12.2
 Release: alt1
 %K5init altplace
 
@@ -35,11 +38,13 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkpimpkpass
+%package -n %libkpimpkpass
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %version-%release
-%description -n libkpimpkpass
+Provides: libkpimpkpass = %EVR
+Obsoletes: libkpimpkpass < %EVR
+%description -n %libkpimpkpass
 %name library
 
 
@@ -69,9 +74,16 @@ mv %buildroot/%_K5xdgmime/application-vnd-apple-pkpass.xml \
 %_K5lib/cmake/KPimPkPass/
 #%_K5archdata/mkspecs/modules/qt_kpkpass.pri
 
-%files -n libkpimpkpass
-%_K5lib/libKPimPkPass.*
+%files -n %libkpimpkpass
+%_K5lib/libKPimPkPass.so.%sover
+%_K5lib/libKPimPkPass.so.*
 
 %changelog
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
+* Wed Feb 06 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt2
+- track so version
+
 * Mon Feb 04 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - initial build
