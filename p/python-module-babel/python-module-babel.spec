@@ -1,12 +1,11 @@
 %define oname babel
 
-%def_with python3
 %def_with doc
 #def_disable check
 
 Name:    python-module-%oname
-Version: 2.4.0
-Release: alt1.1
+Version: 2.6.0
+Release: alt1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -20,21 +19,17 @@ Source: %name-%version.tar
 Source1: CLDR.tar
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools python-module-sphinx-devel
-BuildPreReq: python-module-pytest-cov
+BuildRequires: python-module-setuptools python-module-sphinx-devel
+BuildRequires: python-module-pytest-cov python-module-freezegun
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-pytz
-%if_with bootstrap
-%else
+BuildRequires: python3-module-pytz
 BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: python3-module-pytest-cov
-%endif
-%endif
+BuildRequires: python3-module-pytest-cov python3-module-freezegun
 %py_requires pytz
 
 %description
@@ -48,7 +43,6 @@ localization (L10N) can be separated into two different aspects:
     providing access to various locale display names, localized number
     and date formatting, etc.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: a collection of tools for internationalizing Python 3 applications
 Group: Development/Python3
@@ -64,14 +58,11 @@ localization (L10N) can be separated into two different aspects:
   * a Python interface to the CLDR (Common Locale Data Repository),
     providing access to various locale display names, localized number
     and date formatting, etc.
-%endif
 
 %prep
 %setup -a1
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %if_with doc
 %prepare_sphinx .
@@ -81,22 +72,18 @@ ln -s ../objects.inv docs/
 %build
 python scripts/import_cldr.py CLDR/common
 %python_build
-%if_with python3
 pushd ../python3
 python scripts/import_cldr.py CLDR/common
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+%python_install
+mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel.py2
+
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
-%endif
-
-%python_install
 
 %if_with doc
 %make -C docs html
@@ -104,31 +91,30 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 
 %check
 python setup.py test
-%if_with python3
 pushd ../python3
 python3 setup.py test
 popd
-%endif
 
 %files
-%_bindir/pybabel
+%_bindir/pybabel.py2
 %python_sitelibdir/*
 %doc AUTHORS CHANGES README.rst
 %if_with doc
 %doc docs/_build/html
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS CHANGES README.rst
 %if_with doc
 %doc docs/_build/html
 %endif
-%_bindir/pybabel3
+%_bindir/pybabel
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Feb 08 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.6.0-alt1
+- 2.6.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
