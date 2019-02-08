@@ -1,5 +1,16 @@
+%define native_code_gen %nil
+%define dyn_libs %nil
+%define interpreter %nil
+
+%ifarch %ix86 x86_64
+%define native_code_gen --enable-split-objs
+%define dyn_libs --enable-shared
+%else
+%define interpreter --flags=-templateHaskell
+%endif
+
 Name: rpm-build-haskell
-Version: 1.2
+Version: 1.3
 Release: alt1
 BuildArch: noarch
 
@@ -25,7 +36,12 @@ There is currently no support for compilers other than GHC.
 %install
 mkdir -p %buildroot%_rpmlibdir
 cp haskell.* -t %buildroot%_rpmlibdir/
-install -D %SOURCE1 %buildroot%_rpmmacrosdir/haskell
+mkdir -p %buildroot%_rpmmacrosdir
+sed \
+	-e 's/@ENABLE_SPLIT_OBJS@/%{native_code_gen}/' \
+	-e 's/@ENABLE_SHARED@/%{dyn_libs}/' \
+	-e 's/@DISABLE_TEMPLATEHASKELL@/%{interpreter}/' \
+	%SOURCE1 > %buildroot%_rpmmacrosdir/haskell
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
@@ -37,6 +53,11 @@ install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Fri Feb 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt1
+- Fixed build of ghc modules on non-x86 architectures.
+- Added mipsel, aarch64, and ppc64le architectures
+  to %%ghc_arches macro.
+
 * Wed Nov 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.2-alt1
 - add %%ghc_arches macro.
 
