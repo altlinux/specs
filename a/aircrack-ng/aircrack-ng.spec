@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: aircrack-ng
-Version: 1.3
+Version: 1.5.2
 Release: alt1
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
@@ -12,6 +12,7 @@ Url: http://aircrack-ng.org
 
 # https://github.com/aircrack-ng/aircrack-ng.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel libsqlite3-devel
@@ -34,6 +35,7 @@ auditing wireless networks.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -58,6 +60,10 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_defaultdocdir/%name
 
 %changelog
+* Tue Jan 22 2019 Egor Zotov <egorz@altlinux.org> 1.5.2-alt1
+- Update to upstream version 1.5.2
+- Don't install airgraph-ng
+
 * Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt1
 - Updated to upstream version 1.3.
 
