@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gnome-quod
 Version: 0.2.3
-Release: alt2
+Release: alt3
 Summary: Place pieces on a grid so that they make a square
 Group: Games/Puzzles
 License: GPL3
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc-6.patch
+Patch2: %name-%version-alt-gcc-8.patch
 
 # Automatically added by buildreq on Sun Sep 26 2010
 BuildRequires: ImageMagick-tools gcc-c++ intltool libgtkmm2-devel librsvg-devel libxml++2-devel
@@ -21,6 +24,7 @@ blocking pieces, which adds to the complexity and interest.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 sed -i 's/^LF_/# LF_/' configure.ac
 for s in 16 32 48 64 128; do convert pixmaps/quod.png -resize ${s}x${s} $s.png; done
 
@@ -49,6 +53,9 @@ done
 %_man6dir/*
 
 %changelog
+* Fri Feb 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt3
+- Fixed build with gcc-8.
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt2
 - Fixed build with gcc-6.
 
