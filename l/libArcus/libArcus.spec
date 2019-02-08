@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
@@ -13,6 +13,7 @@ Url: https://github.com/Ultimaker/libArcus
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix_find_sip.patch
 
 Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
@@ -24,7 +25,7 @@ BuildRequires: python3-dev cmake gcc-c++ pkgconfig(protobuf) python3-module-sip-
 %package devel
 Summary: Development files for %name
 Group:   Development/Other
-Requires: %name = %version-%release
+Requires: %name
 
 %description devel
 Development files for %name.
@@ -33,13 +34,14 @@ Development files for %name.
 Summary: Communication library between internal components for Ultimaker software
 Group:   Development/Python3
 %py3_provides Arcus
-Requires: %name = %version-%release
+Requires: %name
 
 %description -n python3-module-Arcus
 Communication library between internal components for Ultimaker software
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DBUILD_EXAMPLES:BOOL=OFF \
@@ -62,6 +64,12 @@ Communication library between internal components for Ultimaker software
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
+- New version 3.6.0
+
+* Tue Oct 30 2018 Anton Midyukov <antohami@altlinux.org> 3.5.1-alt1
+- New version 3.5.1
+
 * Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
 - New version 3.4.1
 

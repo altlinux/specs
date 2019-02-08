@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -25,7 +25,7 @@ Patch1: %name-rpath.patch
 Patch2: %name-static-libstdcpp.patch
 
 # A weird part of cmake stuff that does not work at all, not present in upstream master
-Patch3: %name-3.4.1-no-resource-dir.patch
+Patch3: fix-stb-PATH.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -57,9 +57,6 @@ tar -xf %SOURCE1
 # bundled libraries
 rm -rf libs
 
-# The -DCURA_ENGINE_VERSION does not work, so we sed-change the default value
-sed -i 's/"DEV"/"%version"/' src/settings/settings.h
-
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=OFF \
        -DCURA_ENGINE_VERSION:STRING=%version \
@@ -81,6 +78,12 @@ sed -i 's/"DEV"/"%version"/' src/settings/settings.h
 %doc LICENSE README.md
 
 %changelog
+* Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 1:3.6.0-alt1
+- New version 3.6.0
+
+* Tue Oct 30 2018 Anton Midyukov <antohami@altlinux.org> 1:3.5.1-alt1
+- New version 3.5.1
+
 * Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 1:3.4.1-alt1
 - New version 3.4.1
 
