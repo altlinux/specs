@@ -9,7 +9,7 @@
 %define rname kipi-plugins
 Name: kde5-%rname
 Version: 5.9.0
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphics
@@ -35,7 +35,7 @@ Requires: %name-panorama
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-svg-devel qt5-xmlpatterns-devel
-BuildRequires: libkqoauth-devel
+BuildRequires: libkqoauth-qt5-devel
 BuildRequires: kde5-libkipi-devel
 BuildRequires: kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kwindowsystem-devel
@@ -192,6 +192,9 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt3
+- fix build requires
+
 * Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
 - remove jalbum plugin
 
