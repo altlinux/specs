@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		    flexdock
 Version:        1.2.4
-Release:	    alt1_7jpp8
+Release:	    alt1_8jpp8
 Summary:	    Docking framework for Java Swing GUI apps
 
 Group:		    Development/Other
@@ -79,6 +79,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_7jpp8
 - java update
 
