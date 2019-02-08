@@ -1,7 +1,7 @@
 Name: dsniff
 Version: 2.4
 %define beta_ver b1
-Release: alt0.12.b1
+Release: alt0.13.b1
 
 Summary: Network audit tools
 License: BSD-like
@@ -27,9 +27,17 @@ Patch10: dsniff-2.4b1-deb-checksum.patch
 Patch11: dsniff-2.4b1-deb-urlsnarf-escape.patch
 Patch12: dsniff-2.4b1-deb-pop-version.patch
 Patch13: dsniff-2.4b1-deb-checksum-libnids.patch
+Patch14: dsniff-2.4b1-deb-fix-openssl1.1.0-build.patch
+Patch15: dsniff-2.4b1-deb-tds_decoder.patch
+Patch16: dsniff-2.4b1-deb-msgsnarf_segfault.patch
+Patch17: dsniff-2.4b1-deb-handlepp.patch
+Patch18: dsniff-2.4b1-fc-pntohl_shift.patch
+Patch19: dsniff-2.4b1-fc-sysconf_clocks.patch
+Patch20: dsniff-2.4b1-deb-fix-parallel-FTBFS.patch
 
-# Automatically added by buildreq on Mon Mar 22 2010
-BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libssl-devel xorg-cf-files
+# Automatically added by buildreq on Wed Feb 06 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXt-devel libnet2-devel libpcap-devel python-base sh4 xorg-proto-devel
+BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libnsl2-devel libssl-devel xorg-cf-files
 
 %package X11
 Summary: Network audit tools for X11
@@ -77,6 +85,13 @@ install -pm644 %_sourcedir/dsniff-faq.html faq.html
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
 grep -FZl /usr/local/lib/ *.* |
 	xargs -r0 sed -i 's,/usr/local/lib/,%_datadir/dsniff/,' --
 sed -i 's/dn_expand/__&/g' configure.in
@@ -84,6 +99,7 @@ sed -i 's/dn_expand/__&/g' configure.in
 %build
 %set_autoconf_version 2.13
 autoconf
+%add_optflags -I%_includedir/nsl
 %configure --libdir=%_datadir/dsniff
 sed -i 's,[[:space:]]\+-\(I/usr/include\|L/usr/lib\)\([[:space:]]\|$\),\2,g' Makefile
 %make_build
@@ -104,6 +120,12 @@ sed -i 's,[[:space:]]\+-\(I/usr/include\|L/usr/lib\)\([[:space:]]\|$\),\2,g' Mak
 %_mandir/man?/webspy.*
 
 %changelog
+* Fri Feb 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4-alt0.13.b1
+- Rebuilt against libssl.so.1.1.
+- Rebuilt against libnsl2.
+- Applied some patches from Debian dsniff-2.4b1-29 and Fedora
+  dsniff-2.4-0.29.b1.
+
 * Sun Nov 07 2010 Dmitry V. Levin <ldv@altlinux.org> 2.4-alt0.12.b1
 - Rebuilt for soname set-versions.
 
