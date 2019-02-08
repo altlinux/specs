@@ -1,11 +1,15 @@
 %define ver_major 12.10
 %define api_ver 0.1
 
+%ifarch %ix86 x86_64 aarch64
 %def_with mono
+%else
+%def_without mono
+%endif
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt10
+Release: alt11
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -252,6 +256,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Fri Feb 08 2019 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt11
+- enable build mono for ix86 x86_64 aarch64 only
+
 * Wed Feb 06 2019 Leontiy Volodin <lvol@altlinux.org> 12.10.0-alt10
 - Disabled patch for application-service-marshal.
 - Build Compile into one process for gtk3.
