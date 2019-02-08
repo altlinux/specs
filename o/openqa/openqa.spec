@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt1
+Release: alt2
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -39,6 +39,7 @@ BuildArch: noarch
 BuildRequires: %t_requires
 BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl-Package-Generator
+BuildRequires: perl(Mojo/SQLite.pm)
 BuildRequires: spectool
 BuildRequires: postgresql-server
 BuildRequires: systemd
@@ -49,6 +50,7 @@ BuildRequires: perl(Mojolicious.pm)
 BuildRequires: perl(Mojolicious/Plugin/AssetPack.pm)
 BuildRequires: perl(Mojo/IOLoop/ReadWriteProcess.pm)
 BuildRequires: perl(Minion.pm)
+BuildRequires: perl(Minion/Backend/SQLite.pm)
 BuildRequires: git-core
 BuildRequires: os-autoinst
 BuildRequires: osc
@@ -98,7 +100,7 @@ operating system.
 Summary: Common components for openQA server and workers
 Group: Development/Tools
 
-Requires: perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(SQL/Translator.pm) perl(File/Copy/Recursive.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Cpanel/JSON/XS.pm)
+Requires: perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(SQL/Translator.pm) perl(File/Copy/Recursive.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Cpanel/JSON/XS.pm) perl(Mojo/SQLite.pm)
 Requires: perl(Mojolicious/Plugin/AssetPack.pm) >= 2.01
 
 %description common
@@ -114,6 +116,7 @@ Requires: os-autoinst-openvswitch
 Requires: openqa-client = %EVR
 Requires: perl(DBD/SQLite.pm)
 Requires: perl(SQL/SplitStatement.pm)
+Requires: perl(Mojo/SQLite.pm)
 Requires(post): coreutils
 Requires(post): os-autoinst >= 4.4
 PreReq: qemu-common
@@ -181,6 +184,8 @@ sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhos
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
 rm -f lib/OpenQA/WebAPI/Plugin/AMQP.pm
 rm -f t/23-amqp.t
+rm -f t/34-developer_mode-unit.t
+rm -f t/deploy.t
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
 
 %build
@@ -198,6 +203,10 @@ ln -s %_datadir/openqa/script/clone_job.pl %buildroot%_bindir/openqa-clone-job
 ln -s %_datadir/openqa/script/dump_templates %buildroot%_bindir/openqa-dump-templates
 ln -s %_datadir/openqa/script/load_templates %buildroot%_bindir/openqa-load-templates
 
+#These files are not needed
+rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
+rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap-container
+
 cd %buildroot
 grep -rl %_bindir/env . | while read file; do
   sed -e 's,%_bindir/env perl,%_bindir/perl,' -i $file
@@ -206,6 +215,7 @@ done
 mkdir -p %buildroot%_datadir/openqa/packed
 mkdir -p %buildroot%_localstatedir/openqa/cache
 mkdir -p %buildroot%_localstatedir/openqa/pool
+mkdir -p %buildroot%_localstatedir/openqa/webui/cache
 
 # We don't do AppArmor
 rm -rf %buildroot%_sysconfdir/apparmor.d
@@ -267,6 +277,9 @@ fi
 %_unitdir/openqa-scheduler.service
 %_unitdir/openqa-resource-allocator.service
 %_unitdir/openqa-websockets.service
+%_unitdir/openqa-livehandler.service
+%_unitdir/openqa-worker-cacheservice-minion.service
+%_unitdir/openqa-worker-cacheservice.service
 # web libs
 %_datadir/openqa/templates
 %_datadir/openqa/public
@@ -284,6 +297,9 @@ fi
 %_datadir/openqa/script/openqa-websockets
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
+%_datadir/openqa/script/openqa-livehandler
+%_datadir/openqa/script/openqa-workercache
+%_datadir/openqa/script/openqa-clone-custom-git-refspec
 %dir %_localstatedir/openqa/share
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/db
@@ -320,6 +336,7 @@ fi
 %dir %_localstatedir/openqa/pool
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/cache
+%dir %_localstatedir/openqa/webui/cache
 
 %files httpd
 %doc COPYING
@@ -346,5 +363,8 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Tue Feb 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt2
+- update to current version
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt1
 - initial build for ALT

@@ -2,12 +2,15 @@
 
 Name: perl-Mojolicious-Plugin-AssetPack
 Version: 2.06
-Release: alt1
+Release: alt2
 Summary: Compress and convert CSS, Less, Sass, JavaScript and CoffeeScript files
 License: Artistic 2.0
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Mojolicious-Plugin-AssetPack/
 Source0: http://www.cpan.org/authors/id/J/JH/JHTHORSEN/Mojolicious-Plugin-AssetPack-%{version}.tar.gz
+
+Patch0: alt-corrected-ruby-sass-name.patch
+
 BuildArch: noarch
 
 BuildRequires: python-module-dukpy
@@ -61,6 +64,7 @@ meaning you can save bandwidth and browser parsing time.
 
 %prep
 %setup -q -n Mojolicious-Plugin-AssetPack-%{version}
+%patch0 -p1
 for PL in sprites.pl rollup.pl; do
     sed -i -e '1s,#!.*perl,#!perl,' examples/"$PL"
 done
@@ -78,6 +82,9 @@ rm -f %buildroot%perl_vendorlib/Mojolicious/Plugin/README.pod
 %perl_vendorlib/Mojolicious/Plugin/AssetPack*
 
 %changelog
+* Mon Nov 19 2018 Alexandr Antonov <aas@altlinux.org> 2.06-alt2
+- Corrected the name of the called application
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
