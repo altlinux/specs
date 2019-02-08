@@ -10,7 +10,7 @@
 
 Name: LibreOffice-still
 %define hversion 6.0
-%define urelease 7.2
+%define urelease 7.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -72,7 +72,7 @@ Patch404: fix-unexpected-abort.patch
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 %if_with kde
 BuildRequires: kde4libs-devel
 %endif
@@ -303,6 +303,7 @@ test -r %conffile && . %conffile ||:
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 ./autogen.sh \
+	--without-system-poppler \
 	--without-system-mdds \
 	--without-system-orcus \
 	--prefix=%_prefix \
@@ -530,6 +531,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 08 2019 Andrey Cherepanov <cas@altlinux.org> 6.0.7.3-alt1
+- New version 6.0.7.3 (Still).
+- Link with bundled poppler-0.66.
+
 * Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.7.2-alt1
 - New version 6.0.7.2 (Still).
 - Unexpected abort fixed (bug #35444) by mrdrew@.
