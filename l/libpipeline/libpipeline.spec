@@ -1,3 +1,4 @@
+Group: Development/Other
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -5,10 +6,9 @@
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.5.0
-Release: alt1_5
+Version: 1.5.1
+Release: alt1_1
 License: GPLv3+
-Group: Development/Other
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
 
@@ -27,8 +27,8 @@ laboriously construct pipelines using lower-level primitives such as fork(2)
 and execve(2).
 
 %package devel
-Summary: Header files and libraries for pipeline manipulation library
 Group: Development/Other
+Summary: Header files and libraries for pipeline manipulation library
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
@@ -63,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_5
 - update to new release by fcimport
 
