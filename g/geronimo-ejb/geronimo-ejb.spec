@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           geronimo-ejb
 Version:        1.0
-Release:        alt4_20jpp8
+Release:        alt4_21jpp8
 Summary:        Java EE: EJB API v3.1
 License:        ASL 2.0
 URL:            http://geronimo.apache.org
@@ -67,6 +67,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_21jpp8
+- fc29 update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_20jpp8
 - java fc28+ update
 
