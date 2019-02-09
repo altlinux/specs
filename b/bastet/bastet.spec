@@ -1,15 +1,15 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: boost-program_options-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		bastet
 Version:	0.43.1
-Release:	alt1_23
+Release:	alt1_25
 Summary:	An evil falling bricks game
 
-Group:		Games/Other
 License:	GPLv3+
 URL:		http://fph.altervista.org/prog/bastet.html
 Source0:	https://github.com/fph/bastet/archive/%{version}.zip
@@ -19,6 +19,7 @@ Source2:	%{name}.png
 Patch0:		bastet-tr1.patch
 Patch1:		bastet-fix-appdata.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:	boost-complete libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
 Source44: import.info
 
@@ -88,6 +89,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_25
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_23
 - use boost-complete
 
