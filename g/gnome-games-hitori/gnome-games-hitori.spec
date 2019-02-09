@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name hitori
@@ -7,14 +8,20 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: GTK+ application to generate and let you play games of Hitori
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Hitori
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
+# serial 25
+Source1: ax_code_coverage.m4
 
 Provides:  %_name = %version-%release
 
@@ -45,6 +52,11 @@ multiple solutions to a Hitori puzzle board.
 
 %prep
 %setup -n %_name-%version
+[ ! -d m4 ] && mkdir m4
+# save last (good) version of AX_CODE_COVERAGE
+rm -f m4/ax_code_coverage.m4
+cp %SOURCE1 m4/code_coverage.m4
+subst 's/AX_\(CODE_COVERAGE\)/HITORI_\1/' m4/code_coverage.m4 configure.ac
 
 %build
 %autoreconf
@@ -62,9 +74,13 @@ multiple solutions to a Hitori puzzle board.
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Feb 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt2
+- updated to 3.22.4-37-g7d90827
+- fixed build with new autoconf-archive-2019.01.06
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
 - 3.22.4
 
