@@ -7,19 +7,22 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-BOM
 Version:        0.15
-Release:        alt2_8
+Release:        alt2_10
 Summary:        Utilities for handling Byte Order Marks
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-BOM
 Source0:        https://cpan.metacpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
+# Adapt tests to stricter Encode-2.99, bug #1668818, CPAN RT#128334
+Patch0:         File-BOM-0.15-Adapt-to-stricter-Encode-2.99.patch
 BuildArch:      noarch
 # Build
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
+BuildRequires:  sed
 # Runtime
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(bytes.pm)
@@ -43,8 +46,8 @@ Requires:       perl(Readonly.pm) >= 0.060
 
 
 Source44: import.info
-%filter_from_requires /^perl(Encode\\)$/d
-%filter_from_requires /^perl(Readonly\\)$/d
+%filter_from_requires /^perl(Encode.pm)/d
+%filter_from_requires /^perl(Readonly.pm)/d
 
 %description
 This module provides functions for handling Unicode byte order marks, which
@@ -52,6 +55,9 @@ are to be found at the beginning of some files and streams.
 
 %prep
 %setup -q -n File-BOM-%{version}
+%patch0 -p1
+# Normalize EOLs
+sed -i -e 's/\r//' README
 
 %build
 perl Build.PL installdirs=vendor
@@ -69,6 +75,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_8
 - update to new release by fcimport
 
