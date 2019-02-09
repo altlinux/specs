@@ -1,6 +1,7 @@
+Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel perl(Class/Accessor.pm) perl(Encode.pm) perl(IO/All.pm) perl(IO/Uncompress/Unzip.pm) perl(LWP/UserAgent.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl-podlators
+BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel perl(Class/Accessor.pm) perl(Encode.pm) perl(IO/All.pm) perl(LWP/UserAgent.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl-podlators
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
@@ -14,11 +15,10 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt2_3
+Release:        alt2_6
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
-Group:          Engineering
 URL:            http://slic3r.org/
 Source0:        https://github.com/alexrj/Slic3r/archive/%{version}.tar.gz
 
@@ -31,6 +31,8 @@ Patch2:         %{name}-english-locale.patch
 Patch3:         %{name}-linker.patch
 Patch4:         %{name}-clipper.patch
 Patch5:         %{name}-1.3.0-fixtest.patch
+Patch6:         %{name}-wayland.patch
+Patch7:         %{name}-boost169.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -45,35 +47,29 @@ BuildRequires:  perl(Encode/Locale.pm)
 BuildRequires:  perl(ExtUtils/CppGuess.pm)
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(ExtUtils/ParseXS.pm)
 BuildRequires:  perl(ExtUtils/Typemaps/Default.pm)
 BuildRequires:  perl(ExtUtils/Typemaps.pm)
 BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Getopt/Long.pm)
-BuildRequires:  perl(Growl/GNTP.pm)
 BuildRequires:  perl(IO/Scalar.pm)
+BuildRequires:  perl(IO/Uncompress/Unzip.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(local/lib.pm)
-BuildRequires:  perl(Math/PlanePath.pm)
 BuildRequires:  perl(Module/Build/WithXSpp.pm)
 BuildRequires:  perl(Moo.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
-BuildRequires:  perl(Storable.pm)
 BuildRequires:  perl(SVG.pm)
 BuildRequires:  perl(Test/Harness.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Thread/Queue.pm)
-BuildRequires:  perl(Thread/Semaphore.pm)
 BuildRequires:  perl(threads.pm)
 BuildRequires:  perl(threads/shared.pm)
 BuildRequires:  perl(Time/HiRes.pm)
 BuildRequires:  perl(Unicode/Normalize.pm)
 BuildRequires:  perl(Wx.pm)
-BuildRequires:  perl(XML/SAX.pm)
-BuildRequires:  perl(XML/SAX/ExpatXS.pm)
 
 %if %{use_system_admesh}
 BuildRequires:  libadmesh-devel >= 0.98.1
@@ -104,21 +100,21 @@ Provides:       bundled(poly2tri) = 0.0
 %endif
 
 BuildRequires:  boost-complete
-#BuildRequires:  boost-nowide-devel
 BuildRequires:  libleatherman-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  ImageMagick-tools
 Requires:       perl(Growl/GNTP.pm) >= 0.150
 Requires:       perl(XML/SAX.pm)
+
+# Optional dependency. Not packaged in Fedora yet.
+# It's only used for magically finding octoprint servers.
+# Requires:     perl(Net/Bonjour.pm)
+Source44: import.info
+# alt bug #34434
 Requires:       perl(OpenGL.pm)
 Requires:       perl(Class/Accessor.pm)
 Requires:       perl(Math/Trig.pm)
 Requires:       perl-Wx-GLCanvas
-
-# Optional dependency. Not packaged in Fedora yet.
-# It's only used for magically finding octoprint servers.
-#Requires:     perl(Net/Bonjour.pm)
-Source44: import.info
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -137,6 +133,8 @@ for more information.
 %patch4 -p1
 %endif
 %patch5 -p1 -b .fixtest
+%patch6 -p1
+%patch7 -p1
 
 # Optional removals
 %if %{use_system_admesh}
@@ -165,7 +163,6 @@ sed -i '/src\/poly2tri/d' xs/MANIFEST
 # We always do boost.
 rm -rf xs/src/boost
 sed -i '/src\/boost\/nowide/d' xs/MANIFEST
-
 sed -i 's|\(ExtUtils::ParseXS\s\+\)3.35|\13.34|' Build.PL xs/Build.PL
 
 %build
@@ -253,6 +250,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_6
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_3
 - rebuild with new perl 5.28.1
 
