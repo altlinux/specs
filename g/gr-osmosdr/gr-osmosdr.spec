@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.1.4
-Release: alt3.20170612.S1.1
+Release: alt4.20180627
 License: GPLv3+
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -72,6 +72,9 @@ Documentation files for gr-osmosdr.
 %doc %_docdir/%name/xml
 
 %changelog
+* Thu Feb 07 2019 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt4.20180627
+- New snapshot
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt3.20170612.S1.1
 - NMU: rebuilt with boost-1.67.0
 
