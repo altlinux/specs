@@ -22,11 +22,11 @@ BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Epoch:          1
 Version:        0.76
-Release:        alt1.1
+Release:        alt1.1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/YAML/YAML-LibYAML-%{version}.tar.gz
 
 # Build
 BuildRequires:  coreutils
@@ -107,12 +107,15 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.76-alt1.1_1
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.76-alt1.1
 - rebuild with new perl 5.28.1
 
