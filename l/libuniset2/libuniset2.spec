@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.8
-Release: alt4
+Release: alt5
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Feb 09 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt5
+- (uniset-codegen): setup logrotate command
+
 * Tue Feb 05 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt4
 - (PGSQL): fix SIGSEGV in flushInsertBuffer()
 
