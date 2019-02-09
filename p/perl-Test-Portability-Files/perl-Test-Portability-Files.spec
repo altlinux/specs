@@ -1,22 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/CPAN/Meta.pm) perl(Test/CPAN/Meta/JSON.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/CPAN/Meta.pm) perl(Test/CPAN/Meta/JSON.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/MinimumVersion.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-Portability-Files
 Version:        0.10
-Release:        alt1
+Release:        alt1_1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-Portability-Files
-Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  coreutils
-BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -48,23 +45,25 @@ a distribution can select which tests to execute.
 %setup -q -n Test-Portability-Files-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
