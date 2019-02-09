@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -7,15 +6,16 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global cpan_version 6.54
 Name:           perl-Coro
-Version:        6.54
-Release:        alt1.2
+Version:        6.540
+Release:        alt1_1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
 License:        (GPL+ or Artistic) and (GPLv2 or BSD)
 URL:            https://metacpan.org/release/Coro
-Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Coro-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/Coro-%{cpan_version}.tar.gz
 Patch0:         %{name}-5.25-ucontext-default.patch
 # Do not disable hardening
 Patch1:         Coro-6.512-Disable-disabling-FORTIFY_SOURCE.patch
@@ -84,15 +84,16 @@ Requires:       perl(warnings.pm)
 
 
 Source44: import.info
-%filter_from_requires /:__requires_exclude\|}^perl(AnyEvent\\)$/d
+%filter_from_requires /:__requires_exclude\|}^perl(AnyEvent.pm)/d
 %filter_from_requires /^perl(AnyEvent\\) >= 4.800001$/d
-%filter_from_requires /^perl(AnyEvent.AIO\\)$/d
-%filter_from_requires /^perl(AnyEvent.BDB\\)$/d
-%filter_from_requires /^perl(EV\\)$/d
-%filter_from_requires /^perl(Event\\)$/d
-%filter_from_requires /^perl(Guard\\)$/d
-%filter_from_requires /^perl(Storable\\)$/d
-%filter_from_provides /:__provides_exclude\|}^perl(Coro\\)$/d
+%filter_from_requires /^perl(AnyEvent.AIO.pm)/d
+%filter_from_requires /^perl(AnyEvent.BDB.pm)/d
+%filter_from_requires /^perl(EV.pm)/d
+%filter_from_requires /^perl(Event.pm)/d
+%filter_from_requires /^perl(Guard.pm)/d
+%filter_from_requires /^perl(Storable.pm)/d
+%filter_from_provides /:__provides_exclude\|}^perl(Coro.pm)/d
+
 
 %description
 This module collection manages continuations in general, most often in the
@@ -106,7 +107,7 @@ programming much safer and easier than using other thread models.
 
 
 %prep
-%setup -q -n Coro-%{version}
+%setup -q -n Coro-%{cpan_version}
 
 %ifnarch %{ix86} x86_64 %{arm}
 # use ucontext backend on non-x86 (setjmp didn't work on s390(x))
@@ -133,22 +134,20 @@ done
 RPM_OPT_FLAGS="${RPM_OPT_FLAGS} -Wp,-U_FORTIFY_SOURCE -Wp,-D_FORTIFY_SOURCE=0"
 %endif
 
-# Interractive configuration. Use default values.
-perl Makefile.PL INSTALLDIRS=perl OPTIMIZE="$RPM_OPT_FLAGS" </dev/null
-%make_build
+# Interactive configuration. Use default values.
+perl Makefile.PL INSTALLDIRS=perl NO_PACKLIST=1 OPTIMIZE="$RPM_OPT_FLAGS" </dev/null
+%{make_build}
 
 %install
-make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -delete
+%{make_build} pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
-[ %version == 6.54 ] || \
-make test
+%{make_build} test
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc Changes README README.linux-glibc
 %doc doc/* eg
 %{perl_vendor_archlib}/auto/Coro
@@ -156,6 +155,9 @@ make test
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.540-alt1_1
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.54-alt1.2
 - rebuild with new perl 5.28.1
 
