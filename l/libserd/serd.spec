@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python
 BuildRequires: waf
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -10,8 +10,8 @@ Group: System/Libraries
 %global maj 0
 
 Name:           libserd
-Version:        0.28.0
-Release:        alt1_2
+Version:        0.30.0
+Release:        alt1_1
 Summary:        A lightweight C library for RDF syntax
 
 License:        ISC
@@ -22,20 +22,18 @@ BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  python
-BuildRequires:  gcc-common
+BuildRequires:  python-devel
+BuildRequires:  gcc
 Source44: import.info
 Provides: serd = %{version}-%{release}
 
 %description
 %{oldname} is a lightweight C library for RDF syntax which supports reading and 
-writing Turtle and NTriples.
+writing Turtle, TRiG, NTriples, and NQuads.
 
-Serd is not intended to be a swiss-army knife of RDF syntax, but rather is 
-suited to resource limited or performance critical applications (e.g. 
-converting many gigabytes of NTriples to Turtle), or situations where a 
-simple reader/writer with minimal dependencies is ideal (e.g. in LV2 
-implementations or embedded applications).is a library to make the use of 
-LV2 plugins as simple as possible for applications. 
+Serd is suitable for performance-critical or resource-limited applications,
+such as serialising very large data sets, network protocols, or embedded
+systems that require minimal dependencies and lightweight deployment.
 
 %package devel
 Group: Development/Other
@@ -45,19 +43,19 @@ Provides: serd-devel = %{version}-%{release}
 
 %description devel
 %{oldname} is a lightweight C library for RDF syntax which supports reading and 
-writing Turtle and NTriples.
+writing Turtle, TRiG, NTriples, and NQuads.
 
 This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-# we'll run ldconfig
+# we'll run ldconfig, well not any more, see
+# https://fedoraproject.org/wiki/Changes/Removing_ldconfig_scriptlets
 sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 
 %build
-export CFLAGS="%{optflags}"
-export LDFLAGS="%{__global_ldflags}"
-./waf configure \
+
+%{__python} waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -65,17 +63,17 @@ export LDFLAGS="%{__global_ldflags}"
     --docdir=%{_docdir} \
     --test \
     --docs 
-./waf build -v %{?_smp_mflags}
+%{__python} waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} ./waf install
+DESTDIR=%{buildroot} %{__python} waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 # Move devel docs to the right directory
 install -d %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}
 mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}/html
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS NEWS README.md
 %doc %{_mandir}/man1/serdi.1*
 %{_libdir}/lib%{oldname}-%{maj}.so.*
@@ -89,6 +87,9 @@ mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldnam
 %{_includedir}/%{oldname}-%{maj}/
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.30.0-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.28.0-alt1_2
 - rebuild with libaltascpp
 
