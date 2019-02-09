@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libhugetlbfs
 Version: 2.20
-Release: alt1_5
+Release: alt1_8
 Summary: A library which provides easy access to huge pages of memory
-
-Group: System/Libraries
 License: LGPLv2+
 URL: https://github.com/libhugetlbfs/libhugetlbfs
 Source0: https://www.mgebm.net/~emunson/%{name}-%{version}.tar.gz
+Patch0: build_flags.patch
 
+BuildRequires: gcc
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
 
@@ -28,15 +29,15 @@ Alternatively, applications can be linked against libhugetlbfs without source
 modifications to load BSS or BSS, data, and text segments into large pages.
 
 %package devel
+Group: Development/Other
 Summary:	Header files for libhugetlbfs
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 %description devel
 Contains header files for building with libhugetlbfs.
 
 %package utils
+Group: System/Base
 Summary:	Userspace utilities for configuring the hugepage environment
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 %description utils
 This packages contains a number of utilities that will help administrate the
@@ -46,11 +47,13 @@ pages and then execs the target program. hugeadm gives easy access to huge page
 pool size control. pagesize lists page sizes available on the machine.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
+%patch0 -p1
 
 %build
+
 # Parallel builds are not reliable
-CFLAGS="%{optflags}" make BUILDTYPE=NATIVEONLY
+make BUILDTYPE=NATIVEONLY
 
 %install
 make install PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LDSCRIPTDIR=%{ldscriptdir} BUILDTYPE=NATIVEONLY
@@ -64,20 +67,21 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_sysconfdir}/security/limits.d/hugepages.conf
+for rpm404_ghost in %{_sysconfdir}/security/limits.d/hugepages.conf
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 
 %files
+%doc --no-dereference LGPL-2.1
+%doc README HOWTO NEWS
 %{_libdir}/libhugetlbfs.so*
 %{_datadir}/%{name}/
 %{_mandir}/man7/libhugetlbfs.7*
 %ghost %config(noreplace) %{_sysconfdir}/security/limits.d/hugepages.conf
 %exclude %{_libdir}/libhugetlbfs_privutils.so
-%doc README HOWTO LGPL-2.1 NEWS
 
 %files devel
 %{_includedir}/hugetlbfs.h
@@ -112,6 +116,9 @@ done
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_5
 - update to new release by fcimport
 
