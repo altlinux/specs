@@ -7,7 +7,7 @@ merges some pull requests.
 %def_enable check
 
 Name: %fname-docs
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 %if "-docs"==""
@@ -98,6 +98,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sat Feb 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Build new version.
+
 * Sun Jan 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Build new version.
 
