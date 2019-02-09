@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_optio
 
 Name:           libompl
 Version:        1.3.2
-Release:        alt1_5
+Release:        alt1_6
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -86,6 +86,9 @@ rm -rf %{buildroot}%{_bindir}
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 make -C build test || exit 0
 
+
+
+
 %files
 %doc LICENSE README.md
 %{_libdir}/libompl.so.*
@@ -100,6 +103,9 @@ make -C build test || exit 0
 %{_libdir}/cmake/%{oldname}
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_6
+- update to new release by fcimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_5
 - update to new release by fcimport
 
