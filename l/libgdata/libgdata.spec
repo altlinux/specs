@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: %ver_major.9
-Release: alt1
+Release: alt2
 
 Summary: Library for the GData protocol
 Group: System/Libraries
@@ -22,6 +22,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+# serial 25
+Source1: ax_code_coverage.m4
 
 %define glib_ver 2.44
 %define soup_ver 2.42
@@ -83,6 +85,10 @@ GObject introspection devel data for the GData library.
 %prep
 %setup
 [ ! -d m4 ] && mkdir m4
+# save last (good) version of AX_CODE_COVERAGE
+rm -f m4/ax_code_coverage.m4
+cp %SOURCE1 m4/code_coverage.m4
+subst 's/AX_\(CODE_COVERAGE\)/LIBGDATA_\1/' m4/code_coverage.m4 configure.ac
 
 %build
 %autoreconf
@@ -96,7 +102,6 @@ GObject introspection devel data for the GData library.
 
 %install
 %makeinstall_std
-
 %find_lang %_name
 
 %check
@@ -124,6 +129,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Sat Feb 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.17.9-alt2
+- fixed build with new autoconf-archive-2019.01.06
+
 * Wed Aug 23 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17.9-alt1
 - 0.17.9
 
