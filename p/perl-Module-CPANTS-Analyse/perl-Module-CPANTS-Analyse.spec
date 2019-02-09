@@ -1,9 +1,7 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-#BuildRequires: perl(Module/CPANTS.pm)
-BuildRequires: perl-podlators perl(Module/Find.pm) perl(Data/Binary.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -11,29 +9,36 @@ BuildRequires: perl-podlators perl(Module/Find.pm) perl(Data/Binary.pm)
 
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.99
-Release:        alt1
+Release:        alt1_1
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Module-CPANTS-Analyse
-Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/Module/Module-CPANTS-Analyse-%{version}.tar.gz
+Source1:        https://raw.githubusercontent.com/cpants/Module-CPANTS-Analyse/master/xt/kwalitee/has_meta_json.t
 BuildArch:      noarch
 # Module Build
-BuildRequires:  perl-devel
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker/CPANfile.pm)
 # Module Runtime
 BuildRequires:  perl(Archive/Any/Lite.pm)
+BuildRequires:  perl(Archive/Tar.pm)
 BuildRequires:  perl(Array/Diff.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Class/Accessor.pm)
+BuildRequires:  perl(Class/Accessor/Fast.pm)
 BuildRequires:  perl(CPAN/DistnameInfo.pm)
 BuildRequires:  perl(CPAN/Meta/Converter.pm)
 BuildRequires:  perl(CPAN/Meta/Validator.pm)
 BuildRequires:  perl(CPAN/Meta/YAML.pm)
+BuildRequires:  perl(Data/Binary.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(ExtUtils/Manifest.pm)
 BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Copy.pm)
 BuildRequires:  perl(File/Find.pm)
@@ -41,36 +46,27 @@ BuildRequires:  perl(File/Find/Object.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(File/stat.pm)
 BuildRequires:  perl(File/Temp.pm)
-BuildRequires:  perl(IO/Capture.pm)
-BuildRequires:  perl(IO/Capture/Stderr.pm)
-BuildRequires:  perl(IO/Capture/Stdout.pm)
-BuildRequires:  perl(JSON/MaybeXS.pm)
+BuildRequires:  perl(JSON/PP.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(Module/CPANfile.pm)
 BuildRequires:  perl(Module/ExtractUse.pm)
-BuildRequires:  perl(Module/Pluggable.pm)
-BuildRequires:  perl(Set/Scalar.pm)
+BuildRequires:  perl(Module/Find.pm)
 BuildRequires:  perl(Software/License.pm)
-BuildRequires:  perl(Software/License/CC_BY_SA_3_0.pm)
 BuildRequires:  perl(Software/LicenseUtils.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Text/Balanced.pm)
 BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
-BuildRequires:  perl(Archive/Tar.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(File/Path.pm)
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/FailWarnings.pm)
 BuildRequires:  perl(Test/More.pm)
-# Release Tests (author tests not run as they are prone to failing)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
 # Runtime
 Requires:       perl(Archive/Any/Lite.pm) >= 0.060
-Requires:       perl(Archive/Tar.pm) >= 1.480
+Requires:       perl(Archive/Tar.pm) >= 1.760
 Requires:       perl(Array/Diff.pm) >= 0.040
 Requires:       perl(Class/Accessor.pm) >= 0.190
 Requires:       perl(CPAN/DistnameInfo.pm) >= 0.060
@@ -78,11 +74,9 @@ Requires:       perl(CPAN/Meta/Validator.pm) >= 2.133.380
 Requires:       perl(CPAN/Meta/YAML.pm) >= 0.008
 Requires:       perl(Exporter.pm)
 Requires:       perl(File/Find/Object.pm) >= 0.2.1
-Requires:       perl(IO/Capture.pm) >= 0.050
+Requires:       perl(JSON/PP.pm)
 Requires:       perl(Module/CPANfile.pm)
-Requires:       perl(Module/Pluggable.pm) >= 2.960
-Requires:       perl(Software/License.pm) >= 0.103.008
-Requires:       perl(Software/License/CC_BY_SA_3_0.pm)
+Requires:       perl(Software/License.pm) >= 0.103.012
 Requires:       perl(version.pm) >= 0.730
 
 # Filter underspecified dependencies
@@ -94,17 +88,15 @@ Requires:       perl(version.pm) >= 0.730
 
 
 
-
 Source44: import.info
-%filter_from_requires /:__requires_exclude\|}^perl(Archive.Any.Lite\\)$/d
-%filter_from_requires /^perl(Array.Diff\\)$/d
-%filter_from_requires /^perl(Class.Accessor\\)$/d
-%filter_from_requires /^perl(CPAN.DistnameInfo\\)$/d
-%filter_from_requires /^perl(CPAN.Meta.Validator\\)$/d
-%filter_from_requires /^perl(CPAN.Meta.YAML\\)$/d
-%filter_from_requires /^perl(File.Find.Object\\)$/d
-%filter_from_requires /^perl(Module.Pluggable\\)$/d
-%filter_from_requires /^perl(version\\)$/d
+%filter_from_requires /:__requires_exclude\|}^perl(Archive.Any.Lite.pm)/d
+%filter_from_requires /^perl(Array.Diff.pm)/d
+%filter_from_requires /^perl(Class.Accessor.pm)/d
+%filter_from_requires /^perl(CPAN.DistnameInfo.pm)/d
+%filter_from_requires /^perl(CPAN.Meta.Validator.pm)/d
+%filter_from_requires /^perl(CPAN.Meta.YAML.pm)/d
+%filter_from_requires /^perl(File.Find.Object.pm)/d
+%filter_from_requires /^perl(version.pm)/d
 
 %description
 CPANTS is an acronym for CPAN Testing Service. The goals of the CPANTS project
@@ -114,17 +106,21 @@ metadata for all distributions on CPAN.
 %prep
 %setup -q -n Module-CPANTS-Analyse-%{version}
 
+# File missing from dist, needed for xt/kwalitee.t
+# https://github.com/cpants/Module-CPANTS-Analyse/issues/38
+cp -p %{SOURCE1} xt/kwalitee/
+
 %build
 perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %files
-%doc AUTHORS Changes TODO README.md
+%doc AUTHORS Changes README.md TODO
 %dir %{perl_vendor_privlib}/Module/
 %dir %{perl_vendor_privlib}/Module/CPANTS/
 %{perl_vendor_privlib}/Module/CPANTS/Analyse.pm
@@ -133,6 +129,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 
