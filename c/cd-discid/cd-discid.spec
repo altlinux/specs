@@ -3,13 +3,14 @@ Group: Sound
 %define _localstatedir %{_var}
 Name:           cd-discid
 Version:        1.4
-Release:        alt1_10
+Release:        alt1_13
 Summary:        Utility to get CDDB discid information
 
 # Also "Larry Wall's Artistic" upstream, but that's not accepted in Fedora
 License:        GPLv2+
 URL:            http://linukz.org/cd-discid.shtml
 Source0:        http://linukz.org/download/%{name}-%{version}.tar.gz
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -23,7 +24,8 @@ can be used for any purpose requiring CDDB data.
 
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" make %{?_smp_mflags}
+
+%make_build
 
 
 %install
@@ -31,14 +33,16 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" make %{?_smp_mflags}
 
 
 %files
-%{!?_licensedir:%global license %%doc}
-%doc COPYING
+%doc --no-dereference COPYING
 %doc changelog README
 %{_bindir}/cd-discid
 %{_mandir}/man1/cd-discid.1*
 
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_10
 - update to new release by fcimport
 
