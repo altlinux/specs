@@ -11,13 +11,13 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.24.2
+%define version 0.24.4
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.24.2
-Release:    alt2_7
+Version:    0.24.4
+Release:    alt1_3
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
@@ -25,13 +25,15 @@ URL:        http://drobilla.net/software/lilv/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
-BuildRequires:  libsord-devel >= 0.13.0
+BuildRequires:  libsord-devel >= 0.14.0
 BuildRequires:  libsratom-devel >= 0.4.4
 BuildRequires:  lv2-devel >= 1.14.0
 BuildRequires:  python-devel
 BuildRequires:  swig
 BuildRequires:  python-module-numpy
-BuildRequires:  libserd-devel >= 0.14.0
+BuildRequires:  libserd-devel >= 0.18.0
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 Source44: import.info
 Provides: lilv = %{version}-%{release}
 
@@ -52,18 +54,6 @@ supports reading and writing Turtle and NTriples.
 
 This package contains the headers and development libraries for %{oldname}.
 
-%package -n python-module-lilv
-Group: Development/Other
-%{?python_provide:%python_provide python2-%{oldname}}
-Summary:    Python bindings for %{oldname}
-Requires:   %{name} = %{version}-%{release}
-
-%description -n python-module-lilv
-%{oldname} is a lightweight C library for Resource Description Syntax which 
-supports reading and writing Turtle and NTriples.
-
-This package contains the python libraries for %{oldname}.
-
 %prep
 %setup -n %{oldname}-%{version} -q 
 # we'll run ld config
@@ -73,16 +63,16 @@ sed -i -e "s|'-ftest-coverage'\]|\
  '-ftest-coverage' \] + '%{optflags}'.split(' ')|" wscript
 
 %build
-export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+
 export LINKFLAGS="%{__global_ldflags}"
-./waf configure -v --prefix=%{_prefix}\
+%{__python} waf configure -v --prefix=%{_prefix}\
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
  --docdir=%{_docdir}/%{oldname}\
- --docs --test --dyn-manifest --bindings 
-./waf -v build %{?_smp_mflags}
+ --docs --test --dyn-manifest
+%{__python} waf -v build %{?_smp_mflags}
 
 %install
-./waf -v install --destdir=%{buildroot} 
+%{__python} waf -v install --destdir=%{buildroot}
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %check
@@ -107,10 +97,10 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_mandir}/man3/*
 
-%files -n python-module-lilv
-%{python_sitelibdir_noarch}/%{oldname}.*
-
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.24.4-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.24.2-alt2_7
 - update to new release by fcimport
 
