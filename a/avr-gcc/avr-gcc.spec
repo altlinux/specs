@@ -1,17 +1,17 @@
-%define _libexecdir %_prefix/libexec
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest gcc-c++ perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
+BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
 # END SourceDeps(oneline)
+%define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define target avr
 
 Name:           %{target}-gcc
-Version:        7.2.0
-Release:        alt1_1
+Version:        7.4.0
+Release:        alt1_5
 Epoch:          1
 Summary:        Cross Compiling GNU GCC targeted at %{target}
-Group:          Development/Other
 License:        GPLv2+
 URL:            http://gcc.gnu.org/
 Source0:        ftp://ftp.gnu.org/gnu/gcc/gcc-%{version}/gcc-%{version}.tar.xz
@@ -19,6 +19,7 @@ Source2:        README.fedora
 
 Patch0:         avr-gcc-4.5.3-mint8.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  %{target}-binutils >= 1:2.23, zlib-devel gawk libgmp-devel libgmpxx-devel libmpfr-devel libmpc-devel, flex
 #for autoreconf:
 BuildRequires:  gettext-tools libasprintf-devel autoconf automake
@@ -33,8 +34,8 @@ native %{_arch} platform.
 
 
 %package c++
+Group: Development/Other
 Summary:        Cross Compiling GNU GCC targeted at %{target}
-Group:          Development/Other
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description c++
@@ -111,8 +112,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 %define __os_install_post . ./os_install_post
 
 
+
 %files
-%doc gcc-%{version}/COPYING gcc-%{version}/COPYING.LIB
+%doc --no-dereference gcc-%{version}/COPYING gcc-%{version}/COPYING.LIB
 %doc gcc-%{version}/README README.fedora
 %{_bindir}/%{target}-*
 %dir /usr/lib/gcc
@@ -133,6 +135,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1:7.4.0-alt1_5
+- update to new release by fcimport
+
 * Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 1:7.2.0-alt1_1
 - fixed build
 
