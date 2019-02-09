@@ -1,10 +1,10 @@
 Name:		gamine
-Version:	1.5
+Version:	1.6
 Release:	alt1
 Summary:	An interactive game for young children
 Source:		%name-%version.tar.gz
 Source1:	%name.desktop.in
-URL:		http://gamine-game.sourceforge.net/:q
+URL:		http://gamine-game.sourceforge.net/
 Group:		Games/Educational
 License:	GPLv3+
 
@@ -42,6 +42,9 @@ cp %SOURCE1 .
 %_man6dir/%name.6*
 
 %changelog
+* Sat Feb 09 2019 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version.
+
 * Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
 - New version
 
