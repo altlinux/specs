@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           geronimo-annotation
 Version:        1.0
-Release:        alt4_23jpp8
+Release:        alt4_24jpp8
 Summary:        Java EE: Annotation API v1.3
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -60,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_24jpp8
+- fc29 update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_23jpp8
 - java fc28+ update
 
