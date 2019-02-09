@@ -1,6 +1,6 @@
 Name: openntpd
 Version: 3.9p1
-Release: alt13
+Release: alt14
 
 %define privuser  ntpd
 %define privgroup ntpd
@@ -98,6 +98,9 @@ install -pD -m644 %_sourcedir/ntpd.service %buildroot%systemd_unitdir/ntpd.servi
 %doc CREDITS ChangeLog.bz2 LICENCE README
 
 %changelog
+* Sat Feb 09 2019 Anton Midyukov <antohami@altlinux.org> 3.9p1-alt14
+- Fix ntpd.service (Closes: 35979)
+
 * Sat Sep 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.9p1-alt13
 - Fixed build and rebuilt with openssl 1.1.
 - Disabled ELF strip(1)ping to enable debuginfo subpackage.
