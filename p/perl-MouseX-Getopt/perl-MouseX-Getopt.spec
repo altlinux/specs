@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,10 +8,10 @@ BuildRequires: perl-podlators
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.38
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/MouseX-Getopt
-Source0:	http://www.cpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/MouseX/MouseX-Getopt-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	rpm-build-perl
@@ -68,12 +67,15 @@ perl Build.PL --installdirs=vendor
 ./Build test
 
 %files
-# Note: malformed LICENSE file in 0.35 .. 0.37 not shipped
+# Note: malformed LICENSE file in 0.35 .. 0.38 not shipped
 # https://github.com/gfx/mousex-getopt/issues/2
 %doc Changes README.md
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1_1
+- update to new release by fcimport
+
 * Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated CPAN update
 
