@@ -1,3 +1,6 @@
+# for tests
+BuildRequires: /proc /dev/pts
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo zlib-devel
 # END SourceDeps(oneline)
@@ -6,11 +9,10 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin
 %define target avr
 
 Name:           %{target}-binutils
-Version:        2.30
-Release:        alt1_3
+Version:        2.32
+Release:        alt1_1
 Epoch:          2
 Summary:        Cross Compiling GNU binutils targeted at %{target}
-Group:          Development/Tools
 License:        GPLv2+
 URL:            http://www.gnu.org/software/binutils/
 Source0:        ftp://ftp.gnu.org/pub/gnu/binutils/binutils-%{version}.tar.xz
@@ -33,10 +35,12 @@ native %{_arch} platform.
 %prep
 %setup -q -c
 pushd binutils-%{version}
-%patch1 -p0 -b .avr-size
+%patch1 -p2 -b .avr-size
 
 # known to fail on avr
 rm ld/testsuite/ld-elf/pr22450.*
+
+rm ld/testsuite/ld-elf/notes.*
 
 popd 
 cp %{SOURCE1} .
@@ -54,8 +58,8 @@ popd
 %check
 cd build
 %ifnarch %ix86
-# on x86 can't find proper config, export does not ot help for gas
-# export DEJAGNU=`pwd`/binutils/site.exp
+# on x86 can't find proper config, export does not help for gas
+export DEJAGNU=site.exp
 make check
 %endif
 
@@ -64,16 +68,20 @@ pushd build
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 # these are for win targets only
-rm $RPM_BUILD_ROOT%{_mandir}/man1/%{target}-{dlltool,nlmconv,windres}.1
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/%{target}-{dlltool,nlmconv,windres}.1 ||:
 # we don't want these as we are a cross version
 rm -r $RPM_BUILD_ROOT%{_infodir}
 rm    $RPM_BUILD_ROOT%{_libdir}/libiberty.a ||:
 
 %pre
+# upgrade from binutils 2.26
 if [ -L /usr/avr ]; then
   echo link /usr/avr detected. removing...
   rm /usr/avr
 fi
+
+
+
 
 %files
 %doc binutils-%{version}/COPYING binutils-%{version}/COPYING.LIB
@@ -84,6 +92,9 @@ fi
 
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.32-alt1_1
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.30-alt1_3
 - new version (closes: #36040)
 
