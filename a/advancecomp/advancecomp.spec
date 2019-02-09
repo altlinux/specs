@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel
 %define _localstatedir %{_var}
 Name:           advancecomp
 Version:        2.1
-Release:        alt1_6
-Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
+Release:        alt1_7
+Summary:        Recompression utilities for png, mng, zip and gz files
 License:        GPLv3
 URL:            http://www.advancemame.it/
 Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
@@ -15,6 +15,7 @@ Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{ve
 BuildRequires:  gcc gcc-c++
 BuildRequires:  tofrodos
 BuildRequires:  zlib-devel
+BuildRequires:  dos2unix
 Source44: import.info
 
 %description
@@ -27,11 +28,11 @@ This package contains:
 * advzip - Recompression and test utility for zip files
 * advpng - Recompression utility for png files
 * advmng - Recompression utility for mng files
-* advdef - Recompression utility for deflate streams in .png, .mng and .gz 
-files
+* advdef - Recompression utility for deflate streams in png, mng and gz files
 
 %prep
 %setup -q
+dos2unix -k doc/*.txt
 
 %build
 %configure
@@ -51,6 +52,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_7
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_6
 - update to new release by fcimport
 
