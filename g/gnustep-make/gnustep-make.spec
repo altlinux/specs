@@ -1,13 +1,12 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt19.svn20140202
+Release: alt20.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Objective-C
 Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
-ExcludeArch: aarch64
 
 BuildRequires: clang-devel libgnustep-objc2-devel star
 BuildPreReq: texlive-latex-base texi2html
@@ -23,6 +22,7 @@ GNUstep filesystem layout.
 %package devel
 Summary: Files needed to develop applications with gnustep-make
 Group: Development/Objective-C
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: gcc-objc
 
@@ -45,10 +45,7 @@ This package contains development documentation for %name.
 %prep
 %setup -n %name-%version-%release
 
-%ifarch x86_64
-LIB_SUFF=64
-%endif
-sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
+sed -i "s|@64@|%_libsuff|g" FilesystemLayouts/fhs-system-alt
 
 %build
 # many of gnustep packages are build with clang
@@ -78,10 +75,8 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 %makeinstall_std -C Documentation \
 	GNUSTEP_MAKEFILES=$PWD
 
-%ifarch x86_64
 sed -i 's|-march=i586||g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
 sed -i 's|-mtune=i586||g' $(find %buildroot -type f)
-%endif
 sed -i 's|-mtune=generic||g' \
 	%buildroot%_datadir/GNUstep/Makefiles/config.make
 
@@ -141,6 +136,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.6-alt20.svn20140202
+- Built for aarch64 architecture.
+
 * Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 2.6.6-alt19.svn20140202
 - Avoid using rpm --eval in build scripts (fixes FTBFS
   for gnustep-base and gnustep-corebase on i586).

@@ -6,14 +6,12 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt13.svn20140704
+Release: alt14.svn20140704
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-ExclusiveArch: %ix86 x86_64
 
 # http://svn.gna.org/svn/gnustep/libs/libobjc2/trunk/
 Source: %name-%version.tar
@@ -22,8 +20,8 @@ Patch:  gnustep-objc2-1.6.1-alt-i586.patch
 Patch1: gnustep-objc2-fix-build-gcc7.patch
 
 BuildRequires(pre): rpm-macros-make
-BuildPreReq: gnustep-make-devel gcc-c++ libstdc++-devel
-BuildPreReq: cmake
+BuildRequires(pre): cmake
+BuildRequires: gcc-objc gcc-c++ libstdc++-devel
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
@@ -100,9 +98,7 @@ cp -fR objc objc2
 %add_optflags -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
 export CPPFLAGS="%optflags"
 cmake \
-%ifarch x86_64
-	-DLIB_SUFFIX:STRING=64 \
-%endif
+	-DLIB_SUFFIX:STRING=%_libsuff \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
@@ -112,10 +108,11 @@ cmake \
 	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/cc' \
 	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
 	-DLLVM_DIR:PATH='%_datadir/cmake/Modules' \
-	-DCMAKE_STRIP:FILEPATH='/bin/echo' \
+	-DCMAKE_STRIP:FILEPATH='/bin/true' \
 	-DCPACK_STRIP_FILES:BOOL=OFF \
 	-DCXX_RUNTIME:FILEPATH='-lpthread -lstdc++' \
-	-DGNUSTEP_INSTALL_TYPE:STRING='SYSTEM' \
+	-DGNUSTEP_INSTALL_TYPE:STRING='NONE' \
+	-DCMAKE_INSTALL_LIBDIR:STRING='%_lib' \
 	-DINCLUDE_DIRECTORY:STRING=objc2 \
 	-DLEGACY_COMPAT:BOOL=ON \
 	-DLIBOBJC_NAME:STRING=objc2 \
@@ -180,6 +177,9 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt14.svn20140704
+- Avoid build cycle with gnustep-make package.
+
 * Tue Oct 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt13.svn20140704
 - Fix build with gcc 7.0.
 - Exclude aarch64 from supported platform.

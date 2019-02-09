@@ -3,7 +3,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt7.svn20140226
+Release: alt8.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -97,6 +97,8 @@ export LD_LIBRARY_PATH=$PWD/Source/obj
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
+# gnustep install most of it stuff
+# into $(gnustep-config --variable=GNUSTEP_SYSTEM_LIBRARY)
 %make install \
 	INSTALL_ROOT_DIR=%buildroot \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -127,18 +129,12 @@ rm -rf ca-certificates.crt
 ln -s /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 
 %post
-grep -q '^gdomap' /etc/services \
-|| (echo "gdomap 538/tcp # GNUstep distributed objects" >> /etc/services \
-&& echo "gdomap 538/udp # GNUstep distributed objects" >> /etc/services)
 t="%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/NSTimeZones/zones"
 if [ ! -d "$t" ];then
     ln -s /usr/share/zoneinfo "$t"
 fi
 
 %postun
-mv -f /etc/services /etc/services.orig
-grep -v "^gdomap 538" /etc/services.orig > /etc/services
-rm -f /etc/services.orig
 t="%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/NSTimeZones/zones"
 if [ -L "$t" ];then
     rm -f "$t"
@@ -169,6 +165,10 @@ fi
 %_infodir/*
  
 %changelog
+* Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.24.6-alt8.svn20140226
+- Built for aarch64 architecture.
+- Removed useless services(5) hacking from %%post and %%postun scripts.
+
 * Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt7.svn20140226
 - Set symlinks to system timezones and ca-certificates
 
