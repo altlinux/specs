@@ -4,8 +4,8 @@
 %define oldname liberation-fonts
 
 Name: fonts-ttf-%fontname
-Version: 2.00.3
-Release: alt2
+Version: 2.00.4
+Release: alt1
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -77,6 +77,9 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Sat Feb 09 2019 Vitaly Lipatov <lav@altlinux.ru> 2.00.4-alt1
+- new version 2.00.4 (with rpmrb script)
+
 * Thu Oct 18 2018 Vladimir Didenko <cow@altlinux.ru> 2.00.3-alt2
 - add provides to satisfy requirements of official Google Chrome RPM
 
