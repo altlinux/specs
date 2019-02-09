@@ -1,4 +1,4 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -8,18 +8,17 @@ BuildRequires: perl-podlators
 Summary: 	Calculate business hours in a time period
 Name: 		perl-Business-Hours
 Version: 	0.13
-Release: 	alt1
+Release: 	alt1_1
 License: 	GPL+ or Artistic
-Group: 		Development/Other
 URL: 		https://metacpan.org/release/Business-Hours
 
-Source0: http://www.cpan.org/authors/id/B/BP/BPS/Business-Hours-%{version}.tar.gz
+Source0: https://cpan.metacpan.org/authors/id/B/BP/BPS/Business-Hours-%{version}.tar.gz
 BuildArch: 	noarch
 
 Requires:  perl(Set/IntSpan.pm) >= 1.120
 
-BuildRequires:	coreutils
-BuildRequires:	findutils
+BuildRequires:	%{__perl}
+
 BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -37,7 +36,7 @@ BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Filter under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(Set.IntSpan\\)$/d
+%filter_from_requires /^perl(Set.IntSpan.pm)/d
 
 %description
 A simple tool for calculating business hours in a time period. Over time, 
@@ -49,22 +48,25 @@ number of business hours between arbitrary dates.
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+make %{?_smp_mflags}
 
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-chmod -R u+w $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=$RPM_BUILD_ROOT
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+%{__make} test
 
 %files
-%doc LICENSE README
+%doc --no-dereference LICENSE
 %doc Changes
 %{perl_vendor_privlib}/Business
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
