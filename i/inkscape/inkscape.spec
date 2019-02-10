@@ -4,8 +4,8 @@
 
 %define pre %nil
 Name: inkscape
-Version: %major.3
-Release: alt4
+Version: %major.4
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -73,7 +73,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 %prep
 %setup -n %name-%version%pre
 %patch
-%patch1 -p1
+#patch1 -p1
 %patch2 -p1
 
 %build
@@ -119,6 +119,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Sun Feb 10 2019 Vitaly Lipatov <lav@altlinux.ru> 0.92.4-alt1
+- new version 0.92.4 (with rpmrb script)
+
 * Wed Nov 21 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.92.3-alt4
 - Fixed build with poppler >= 0.71.
 
