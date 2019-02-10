@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname policy
 Name:          glassfish-policy
 Version:       2.5
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       GlassFish WS-Policy implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://policy.java.net/
@@ -79,6 +79,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt Licenses/license-policy.html
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_9jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_8jpp8
 - java update
 
