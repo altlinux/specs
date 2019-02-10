@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname javax.ws.rs-api
 Name:          glassfish-jax-rs-api
 Version:       2.0.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://jax-rs-spec.java.net/
@@ -142,6 +142,9 @@ cd src/jax-rs-api
 %endif
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_7jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_6jpp8
 - java update
 
