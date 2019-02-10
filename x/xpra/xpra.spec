@@ -3,7 +3,7 @@
 # typelib(GtkGLExt)
 
 Name: xpra
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -128,6 +128,9 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Sun Feb 10 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- new version 2.4.3 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - new version 2.4.2 (with rpmrb script)
 
