@@ -10,14 +10,14 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Fil
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    3.6
+Version:    3.7
 Release:    alt1
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/H/HI/HISSO/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/H/HI/HISSO/Alien-SeleniumRC-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Test/More.pm)
@@ -36,7 +36,7 @@ start/stop/control any supported browser. It works by using Selenium Core,
 a pure-HTML+JS library that performs automated tasks in JavaScript.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n Alien-SeleniumRC-%{version}
 
 %build
 %__perl -I. Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -55,6 +55,9 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 
 
 %changelog
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1
 - automated CPAN update
 
