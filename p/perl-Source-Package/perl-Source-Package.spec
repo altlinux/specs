@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.176
+Version: 0.177
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,7 +15,7 @@ Source: %module-%version.tar
 Url: https://git.altlinux.org/people/viy/%module
 
 
-BuildRequires: perl-devel perl(RPM/Vercmp.pm) perl(RPM/Header.pm)
+BuildRequires: perl-devel perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Source/Shared/Utils/Downloader.pm)
 Conflicts: perl-Source-Repository < 0.388
 
 %description
@@ -36,6 +36,9 @@ Conflicts: perl-Source-Repository < 0.388
 %perl_vendor_privlib/Source*
 
 %changelog
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 0.177-alt1
+- new version
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.176-alt1
 - new version
 

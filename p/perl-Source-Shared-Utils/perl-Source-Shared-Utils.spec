@@ -1,7 +1,7 @@
 %define module Source-Shared-Utils
 
 Name: perl-%module
-Version: 0.003
+Version: 0.004
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(Module/Build/Tiny.pm)
 %perl_vendor_privlib/S*
 
 %changelog
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- added Downloader
+
 * Sat Sep 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - removed Source/Shared/Utils.pm
 

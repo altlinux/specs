@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.405
+Version: 0.406
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(Source/Shared/Resource/Verbose.pm) perl(Source/Shared/Utils/GlobList.pm) perl(JSON/XS.pm)
+BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(Source/Shared/Resource/Verbose.pm) perl(Source/Shared/Utils/GlobList.pm) perl(JSON/XS.pm)  perl(Source/Shared/Utils/Downloader.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 0.406-alt1
+- use Source::Shared::Utils::Downloader
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.405-alt1
 - new version
 
