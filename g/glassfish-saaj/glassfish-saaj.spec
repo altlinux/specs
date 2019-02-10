@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_13jpp8
+Release:          alt2_14jpp8
 Summary:          JSR-67 implementation
 License:          CDDL and GPLv2 with exceptions
 URL:              http://java.net/projects/saaj
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.html
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_14jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_13jpp8
 - java update
 
