@@ -3,7 +3,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/MongoDB/Collection.pm
 %define dist MongoDB
 Name: perl-%dist
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -11,7 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.cpan.org
-Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/%{dist}-v%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/MongoDB-v%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-D
 This is the Perl driver for MongoDB, a document-oriented database.
 
 %prep
-%setup -q -n %{dist}-v%{version}
+%setup -q -n MongoDB-v%{version}
 
 # need database connection
 %def_without test
@@ -39,6 +39,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 #perl_vendor_autolib/MongoDB
 
 %changelog
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1
+- automated CPAN update
+
 * Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1
 - automated CPAN update
 
