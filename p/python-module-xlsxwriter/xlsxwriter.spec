@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:    python-module-%oname
-Version: 1.1.2
+Version: 1.1.4
 Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 10 2019 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Mon Oct 22 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - New version.
 
