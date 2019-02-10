@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 3.0.0
-Release: alt3.20180902
+Version: 3.0.1
+Release: alt1.20190207
 
 Summary: A simple sound converter application for GNOME
 License: GPLv3
@@ -65,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sun Feb 10 2019 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1.20190207
+- 3.0.1
+
 * Fri Sep 14 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt3.20180902
 - new snapshot
 
