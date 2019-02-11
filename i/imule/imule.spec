@@ -1,15 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: imule
 Version: 1.4.6
-Release: alt5
+Release: alt6
 
 Summary: P2P file sharing software which connects through the anonymous I2P network
 License: GPL
 Group: Networking/File transfer
 
 Url: http://echelon.i2p/imule/
+
 Source: %name-%version.tar
 Patch: imule-1.4.6-alt-glibc-2.16.patch
 Patch2: %name-%version-alt-gcc6.patch
+Patch3: %name-%version-alt-gcc8.patch
 
 Conflicts: aMule
 BuildRequires: gcc-c++ zlib-devel libgd2-devel libpng-devel wxGTK-devel flex
@@ -23,9 +27,10 @@ BuildRequires: /usr/bin/makeinfo
 %setup
 %patch -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-%add_optflags -fpermissive
+%add_optflags -Wno-error=narrowing
 %configure \
         --enable-optimize \
         --disable-debug \
@@ -44,6 +49,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=P2P \
 	%buildroot%_desktopdir/imule.desktop
 
+rm -rf %buildroot%_libdir/xchat
+
 %files -f imule.lang
 %_bindir/imule
 %_bindir/ed2k
@@ -54,6 +61,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Fri Feb 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.6-alt6
+- Fixed build with gcc-8.
+
 * Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.6-alt5
 - Fixed build with gcc 6 and updated build dependencies.
 
