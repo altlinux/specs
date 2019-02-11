@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -70,6 +70,12 @@ cd  "$tmpdir"; \
 '
 
 %changelog
+* Mon Feb 11 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt3
+- Unmarked XFAIL: cases with underspecified Provides
+  (the error should be gone with rpm-4,13-alt6).
+- Marked XFAIL: non-critical unrealistic cases when obsoleting an exact disttag.
+ (Of course, this requires a fix, but this is not critical.)
+
 * Sun Feb 10 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt2
 - Additionally test the same things, but provided as virtual Provides
   (dummy = ...).
