@@ -3,7 +3,7 @@
 %define rname OpenEXR
 Name: openexr
 Version: 2.2.0
-Release: alt1.1
+Release: alt3
 
 %define common %name%libsover-common
 %define libilmimf libilmimf%libsover
@@ -27,6 +27,7 @@ Patch1: openexr-2.1.0-bigendian.patch
 Patch10: openexr-2.2.0-alt-build.patch
 Patch11: openexr-2.1.0-alt-libdir.patch
 Patch12: openexr-2.1.0-alt-pkgconfig.patch
+Patch13: alt-gcc8.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libstdc++-devel pkg-config
@@ -79,6 +80,7 @@ developing applications with %rname
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %Kcmake
@@ -123,6 +125,13 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 
 %changelog
+* Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt3
+- fix to build with gcc8
+
+* Thu Sep 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.2.0-alt2
+- Security (Fixes: CVE-2017-9110, CVE-2017-9111, CVE-2017-9112,
+  CVE-2017-9113, CVE-2017-9114, CVE-2017-9115, CVE-2017-9116)
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.2.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
