@@ -1,6 +1,34 @@
+%define descr \
+ANN is a library written in C++, which supports data structures and \
+algorithms for both exact and approximate nearest neighbor searching in \
+arbitrarily high dimensions. \
+\
+In the nearest neighbor problem a set of data points in d-dimensional \
+space is given. These points are preprocessed into a data structure, so \
+that given any query point q, the nearest or generally k nearest points \
+of P to q can be reported efficiently. The distance between two points \
+can be defined in many ways. ANN assumes that distances are measured \
+using any class of distance functions called Minkowski metrics. These \
+include the well known Euclidean distance, Manhattan distance, and max \
+distance. \
+\
+Based on our own experience, ANN performs quite efficiently for point \
+sets ranging in size from thousands to hundreds of thousands, and in \
+dimensions as high as 20. (For applications in significantly higher \
+dimensions, the results are rather spotty, but you might try it anyway.) \
+\
+The library implements a number of different data structures, based on \
+kd-trees and box-decomposition trees, and employs a couple of different \
+search strategies. \
+\
+The library also comes with test programs for measuring the quality of \
+performance of ANN on any particular data sets, as well as programs for \
+visualizing the structure of the geometric data structures.
+
+
 Name: ann
 Version: 1.1.2
-Release: alt4
+Release: alt5
 Summary: A Library for Approximate Nearest Neighbor Searching
 License: LGPL v2.1 or later
 Group: Sciences/Mathematics
@@ -14,31 +42,7 @@ Requires: lib%name = %version-%release
 BuildPreReq: gcc-c++
 
 %description
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 %package test
 Summary: Test for ANN
@@ -46,31 +50,7 @@ Group: Sciences/Mathematics
 Requires: lib%name = %version-%release
 
 %description test
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains test for ANN.
 
@@ -80,31 +60,7 @@ Group: Development/Documentation
 Requires: lib%name = %version-%release
 
 %description example
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains example for ANN.
 
@@ -114,31 +70,7 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains documentation for ANN.
 
@@ -147,31 +79,7 @@ Summary: Shared library of ANN
 Group: System/Libraries
 
 %description -n lib%name
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains shared library of ANN.
 
@@ -181,31 +89,7 @@ Group: Development/C++
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains development files of ANN.
 
@@ -215,31 +99,7 @@ Group: Development/C++
 Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
-ANN is a library written in C++, which supports data structures and
-algorithms for both exact and approximate nearest neighbor searching in
-arbitrarily high dimensions.
-
-In the nearest neighbor problem a set of data points in d-dimensional
-space is given. These points are preprocessed into a data structure, so
-that given any query point q, the nearest or generally k nearest points
-of P to q can be reported efficiently. The distance between two points
-can be defined in many ways. ANN assumes that distances are measured
-using any class of distance functions called Minkowski metrics. These
-include the well known Euclidean distance, Manhattan distance, and max
-distance.
-
-Based on our own experience, ANN performs quite efficiently for point
-sets ranging in size from thousands to hundreds of thousands, and in
-dimensions as high as 20. (For applications in significantly higher
-dimensions, the results are rather spotty, but you might try it anyway.)
-
-The library implements a number of different data structures, based on
-kd-trees and box-decomposition trees, and employs a couple of different
-search strategies.
-
-The library also comes with test programs for measuring the quality of
-performance of ANN on any particular data sets, as well as programs for
-visualizing the structure of the geometric data structures.
+%descr
 
 This package contains static library of ANN.
 
@@ -296,6 +156,9 @@ install -p -m644 doc/* %buildroot%_docdir/%name
 %_libdir/*.a
 
 %changelog
+* Mon Feb 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt5
+- Fixed FTBFS.
+
 * Fri Mar 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt4
 - Added -g into compiler flags
 
