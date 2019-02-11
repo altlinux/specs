@@ -1,12 +1,15 @@
 Name:		bloboats
 Version:	1.0.2
-Release:	alt2
+Release:	alt3
 License:	GPLv2
 Summary:	Arcade-like boat racing game
 Group:		Games/Arcade
 Source:		http://bloboats.dy.fi/mirror/bloboats-%version.tar.gz
 URL:		http://bloboats.dy.fi/about.php
 Requires:	%name-data
+
+# GCC8 fix
+Patch1: alt-bloboats-1.0.2-gcc8-fix.patch
 
 # Automatically added by buildreq on Sun Mar 13 2011
 BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libmpc
@@ -47,6 +50,8 @@ Terminal=false
 Categories=Game;ArcadeGame;
 @@@
 
+%patch1 -p2
+
 %build
 %make_build PREFIX="" DATADIR="%_datadir/%name"
 
@@ -66,6 +71,9 @@ install -D data/images/icon.png %buildroot%_niconsdir/%name.png
 %_datadir/%name/*
 
 %changelog
+* Mon Feb 11 2019 Ivan Razzhivin <underwit@altlinux.org> 1.0.2-alt3
+- GCC8 fix
+
 * Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 1.0.2-alt2
 - GCC6 fix
 
