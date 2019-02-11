@@ -6,10 +6,10 @@
 %def_enable xml2
 %def_enable cs
 %def_enable inband
-%def_disable openssl
+%def_enable openssl
 
 Name: mstflint
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -50,7 +50,7 @@ echo "#define TOOLS_GIT_SHA \"%shortcommit\"" > common/gitversion.h
     %{subst_enable inband} \
     %{subst_enable cs} \
     %{subst_enable openssl} \
-    MFT_VERSION_STR=="%name %version-%release"
+    MSTFLINT_VERSION_STR="%name %version-%release"
 
 %make_build
 
@@ -66,6 +66,9 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Mon Feb 11 2019 Alexey Shabalin <shaba@altlinux.org> 4.11.0-alt1
+- 4.11.0-2
+
 * Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 4.10.0-alt1
 - v4.10.0-3
 
