@@ -12,15 +12,15 @@
 %def_enable web_audio
 %def_disable media_stream
 %def_enable spellcheck
-#%%ifarch %ix86
-#%%def_disable jit
-#%%endif
+%ifarch ppc64le
+%def_disable jit
+%endif
 
 %define smp %__nprocs
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt6
+Release: alt7
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -203,6 +203,9 @@ GObject introspection devel data for the JavaScriptCore library
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
 
 %build
+%ifarch ppc64le
+%add_optflags -DENABLE_YARR_JIT=0
+%endif
 %add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough
 # Use linker flags to reduce memory consumption
 %add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
@@ -291,6 +294,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Mon Feb 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.11-alt7
+- Fixed build on ppc64le architecture.
+
 * Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt6
 - rebuilt against libicu*.so.63
 
