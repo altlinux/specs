@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt4%ubt
+Release: alt5
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -38,6 +38,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt5
+- update from 4.15-up branch
+
 * Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt4%ubt
 - update from 4.15-up branch
 
