@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -17,6 +17,7 @@ Url: https://github.com/linuxmint/cjs
 
 Source: %_name-%version.tar
 Source1: pkg.m4
+Patch: %_name-%version-%release.patch
 
 %define glib_ver 2.33.14
 %define gi_ver 1.33.14
@@ -50,6 +51,7 @@ Files for development with %name.
 %setup -q -n %_name-%version
 [ ! -d m4 ] && mkdir m4
 cp %SOURCE1 m4/
+%patch0 -p1
 
 %build
 %autoreconf
@@ -81,6 +83,9 @@ cp %SOURCE1 m4/
 %doc examples/*
 
 %changelog
+* Mon Feb 11 2019 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt2
+- fix build with new autoconf-archive
+
 * Wed Oct 31 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
