@@ -1,6 +1,6 @@
 Name: novnc
 Version: 0.6.2
-Release: alt1
+Release: alt2
 Summary: VNC client using HTML5 (Web Sockets, Canvas) with encryption support
 Requires: python-module-websockify
 
@@ -10,6 +10,7 @@ Url: https://github.com/kanaka/noVNC
 Source: %name-%version.tar
 
 Patch2: novnc-0.4-manpage.patch
+Patch3: novnc-0.6.2-hide-git-require.patch
 BuildArch: noarch
 BuildRequires: python-devel
 
@@ -19,6 +20,7 @@ Websocket implementation of VNC client
 %prep
 %setup
 %patch2 -p1
+%patch3 -p2
 
 %build
 %install
@@ -46,6 +48,9 @@ install -m 644 docs/novnc_server.1 %buildroot%_man1dir/
 %_man1dir/novnc_server.1*
 
 %changelog
+* Mon Feb 11 2019 Lenar Shakirov <snejok@altlinux.ru> 0.6.2-alt2
+- novnc-0.6.2-hide-git-require.patch added
+
 * Wed Nov 01 2017 Lenar Shakirov <snejok@altlinux.ru> 0.6.2-alt1
 - 0.6.2
 
