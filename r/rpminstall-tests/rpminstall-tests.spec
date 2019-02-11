@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -25,6 +25,16 @@ various forms of matching Provides.
 
 More tests can appear.
 
+%package checkinstall
+Summary: Immediately run %name when installing this package
+Group: Other
+Requires(pre): %name
+
+%description checkinstall
+Immediately run %name when installing this package.
+
+They test rpm (applied to the results of rpm-build).
+
 %prep
 %setup
 
@@ -44,7 +54,28 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 %files
 %_datadir/%name
 
+%files checkinstall
+
+%pre checkinstall
+# --pidfile doesn't exist and makes it always start.
+/sbin/start-stop-daemon --start --pidfile /var/empty/no.pid \
+--chuid nobody:nobody \
+--startas /bin/sh -- -ec \
+'export TMPDIR=/tmp; \
+. /usr/lib/rpm/tmpdir.sh; \
+cd  "$tmpdir"; \
+%_datadir/%name/makeme.sh; \
+%_datadir/%name/makeme.sh clean; \
+%_datadir/%name/makeme.sh minimal_epoch=0; \
+'
+
 %changelog
+* Sun Feb 10 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt2
+- Additionally test the same things, but provided as virtual Provides
+  (dummy = ...).
+- Implemented a checkinstall subpackage that runs these tests immediately.
+- Fixed running the tests from another working dir.
+
 * Tue Feb  5 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1
 - initial build for ALT Linux Sisyphus.
 
