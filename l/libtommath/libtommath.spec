@@ -1,6 +1,6 @@
 Name: libtommath
-Version: 1.0.1.0.97.gitg0bc7551
-Release: alt2.qa1
+Version: 1.1.0
+Release: alt1
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -8,7 +8,7 @@ Group: System/Libraries
 
 Url: http://www.libtom.net/
 # https://github.com/libtom/libtommath.git
-Source: ltm-%version.tar
+Source: ltm-%version.tar.xz
 
 BuildRequires: dblatex ghostscript-utils libtiff-utils
 
@@ -51,13 +51,13 @@ using %name.
 
 # Fix pkgconfig path
 sed -i \
-    -e 's|^prefix=.*|prefix=%{_prefix}|g' \
-    -e 's|^libdir=.*|libdir=%{_libdir}|g' \
-    -e 's|^includedir=.*|includedir=%{_includedir}|g' \
-    %{name}.pc.in
+    -e 's|^prefix=.*|prefix=%prefix|g' \
+    -e 's|^libdir=.*|libdir=%_libdir|g' \
+    -e 's|^includedir=.*|includedir=%_includedir|g' \
+    %name.pc.in
 
 %build
-%make_build V=1 LIBPATH=%_libdir CFLAGS="%{optflags} -I./" -f makefile.shared
+%make_build V=1 LIBPATH=%_libdir CFLAGS="%optflags -I./" -f makefile.shared
 %make_build V=1 -f makefile poster manual docs
 
 %install
@@ -88,6 +88,10 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Mon Feb 11 2019 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
+- Autobuild version bump to 1.1.0
+- Change packaging scheme
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1.0.97.gitg0bc7551-alt2.qa1
 - NMU: applied repocop patch
 
