@@ -1,7 +1,10 @@
 %define rname kitinerary
 
+%define sover 5
+%define libkpimitinerary libkpimitinerary%sover
+
 Name: kde5-%rname
-Version: 18.12.1
+Version: 18.12.2
 Release: alt1
 %K5init altplace
 
@@ -38,11 +41,13 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkpimitinerary
+%package -n %libkpimitinerary
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %version-%release
-%description -n libkpimitinerary
+Provides: libkpimitinerary = %EVR
+Obsoletes: libkpimitinerary < %EVR
+%description -n %libkpimitinerary
 %name library
 
 
@@ -69,9 +74,16 @@ Requires: %name-common = %version-%release
 %_K5lib/cmake/KPimItinerary/
 #%_K5archdata/mkspecs/modules/qt_kitinerary.pri
 
-%files -n libkpimitinerary
-%_K5lib/libKPimItinerary.*
+%files -n %libkpimitinerary
+%_K5lib/libKPimItinerary.so.%sover
+%_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
+* Wed Feb 06 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt2
+- track so version
+
 * Mon Feb 04 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - initial build
