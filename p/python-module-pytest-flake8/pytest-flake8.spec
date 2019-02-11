@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: pytest plugin for efficiently checking PEP8 compliance
 License: BSD
@@ -76,6 +76,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
+- 1.0.3 -> 1.0.4.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1
 - 1.0.2 -> 1.0.3.
 
