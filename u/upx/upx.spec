@@ -1,5 +1,5 @@
 Name: upx
-Version: 3.94
+Version: 3.95
 Release: alt1
 
 Summary: The Ultimate Packer for eXecutables
@@ -9,9 +9,9 @@ Group: Archiving/Compression
 Url: http://upx.sourceforge.net
 Source: v%version.tar.gz
 
-# Automatically added by buildreq on Tue Dec 23 2008
-BuildRequires: gcc-c++ libucl-devel zlib-devel
-BuildRequires: perl-podlators
+# Automatically added by buildreq on Mon Feb 11 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-base sh4
+BuildRequires: gcc-c++ libucl-devel perl-Pod-Usage perl-devel zlib-devel
 
 %description
 UPX is an advanced executable packer for several different executable formats.
@@ -38,6 +38,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 3.95-alt1
+- Autobuild version bump to 3.95
+
 * Mon Sep 25 2017 Fr. Br. George <george@altlinux.ru> 3.94-alt1
 - Autobuild version bump to 3.94
 
