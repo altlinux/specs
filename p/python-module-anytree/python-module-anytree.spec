@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Python Tree Data Structure Library
@@ -67,6 +67,9 @@ popd
 %doc README.rst
 
 %changelog
+* Mon Feb 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Sat Feb 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
