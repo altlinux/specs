@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
@@ -69,6 +69,12 @@ Group: Development/Python3
 %prep
 %setup
 
+# adjust timeouts for aarch64/beehive
+# the default one is 10sec
+grep -qrs 'child\.expect(.*)' testing/ || exit 1
+grep -lrs 'child\.expect(.*)' testing/ | xargs \
+sed -i '/[^#][[:space:]]\+child\.expect(.*)/{s/)[[:space:]]*$/, timeout=30)/g}'
+
 rm -rf ../python3
 cp -a . ../python3
 
@@ -115,6 +121,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.26.1-alt1
+- 1.26.0 -> 1.26.1.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.26.0-alt1
 - 1.25.0 -> 1.26.0.
 
