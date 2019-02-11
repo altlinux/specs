@@ -1,6 +1,6 @@
 Name: kumir
 Version: 1.9.1.2810
-Release: alt2
+Release: alt3
 
 Summary: Kumir is a simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Кумир это простой язык программирования и среда разработки, применяемый при обучении
@@ -20,6 +20,7 @@ Patch0: %name-1.7.1-desktop.patch
 Patch1: %name-1.7.90-x-kumir-program.desktop.patch
 Patch2: %name-1.7.1-x-kumir-program.xml.patch
 Patch3: %name-1.9.0-build.patch
+Patch4: %name-1.9.1.2810-gcc8-fix.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -40,6 +41,7 @@ language". Includes compiler, runtime, IDE and  modules "Robot", "Draw",
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 cp %SOURCE2 .
 find . -type f -name \*.pro |xargs sed -i 's,QMAKE_CXXFLAGS_RELEASE += -O2,QMAKE_CXXFLAGS_RELEASE += %optflags,'
 
@@ -124,6 +126,9 @@ ln -s ../..%_libdir/kumir/pluginstarter kumpluginstarter
 %_datadir/mimelnk/application/x-kumir-program.desktop
 
 %changelog
+* Mon Feb 11 2019 Pavel Moseev <mars@altlinux.org> 1.9.1.2810-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 1.9.1.2810-alt2
 - Fixed BR: (needs libqt4-webkit which will pull in the main one)
 
