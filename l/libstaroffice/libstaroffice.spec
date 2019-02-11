@@ -1,7 +1,7 @@
 %global apiversion 0.0
 
 Name: libstaroffice
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 Summary: A library for import of binary StarOffice documents
 
@@ -105,6 +105,9 @@ cp -p sd2*.1 sd?2*.1 %buildroot/%_mandir/man1
 %_mandir/man1/sdc2csv.1*
 
 %changelog
+* Mon Feb 11 2019 Fr. Br. George <george@altlinux.ru> 0.0.6-alt1
+- Autobuild version bump to 0.0.6
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.0.5-alt1
 - Autobuild version bump to 0.0.5
 
