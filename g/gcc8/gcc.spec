@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 8.2.1
-Release: alt4
+Release: alt5
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20190109
+%define snapshot 20190209
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -2055,6 +2055,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Feb 11 2019 Dmitry V. Levin <ldv@altlinux.org> 8.2.1-alt5
+- Updated to redhat/gcc-8-branch r268720 (Fedora gcc-8.2.1-8).
+
 * Thu Feb 07 2019 Dmitry V. Levin <ldv@altlinux.org> 8.2.1-alt4
 - Added ppc64le support (by glebfm@).
 - Fixed profiledbootstrap build (by glebfm@).
