@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: marsyas
 Version: 0.6.0
-Release: alt1.alpha.git20150301.3
+Release: alt2.alpha.git20150301
 Summary: Music Analysis, Retrieval and Synthesis for Audio Signals
 License: GPLv2
 Group: Sound
@@ -8,6 +10,7 @@ Url: http://marsyas.info/
 
 # https://github.com/marsyas/marsyas.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -109,6 +112,7 @@ This package contains documentation for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 for i in ANN liblinear libsvm RtMidi zlib* libpng*
 do
@@ -116,14 +120,11 @@ do
 done
 
 %build
-%add_optflags -fpermissive -I%_includedir/ANN -I$PWD/src/marsyas
+%add_optflags -I%_includedir/ANN -I$PWD/src/marsyas
 %add_optflags -I$PWD/src/marsyas/marsystems %optflags_shared
 %add_optflags $(rtmidi-config --cppflags)
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+
+%cmake_insource \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
@@ -132,8 +133,8 @@ cmake \
 	-DFREETYPE_INCLUDE_DIRS:PATH=%_includedir/freetype2 \
 	-DFREETYPE_INCLUDE_DIR_ft2build:PATH=%_includedir/freetype2 \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	.
+	%nil
+
 %make_build VERBOSE=1
 
 pushd doc
@@ -169,6 +170,9 @@ rm -f doc/CMakeLists.txt
 %doc MIREX doc/*.txt doc/examples doc/out-www
 
 %changelog
+* Mon Feb 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt2.alpha.git20150301
+- Fixed build with gcc-8.
+
 * Fri Jun 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.3
 - Rebuilt with new librtmidi 3.0.0.
 
