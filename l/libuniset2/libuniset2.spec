@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.8
-Release: alt5
+Release: alt6
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Feb 11 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt6
+- (TSDB): reopen connection for error "broken pipe"
+
 * Sat Feb 09 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt5
 - (uniset-codegen): setup logrotate command
 
