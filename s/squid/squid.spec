@@ -9,7 +9,7 @@
 
 Name: squid
 Version: 4.5
-Release: alt1
+Release: alt2
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -289,6 +289,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Mon Feb 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.5-alt2
+- Fixed build with default -Werror=return-type flag.
+
 * Sun Jan 06 2019 Alexey Shabalin <shaba@altlinux.org> 4.5-alt1
 - Updated to 4.5
 
