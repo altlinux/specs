@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: yaafe
 Version: 0.64
-Release: alt2.git20130420
+Release: alt3.git20130420
 Summary: Yaafe - Yet Another Audio Feature Extractor
 License: LGPLv3
 Group: Sound
@@ -8,11 +10,12 @@ Url: http://yaafe.sourceforge.net/
 
 # git://git.code.sf.net/p/yaafe/code
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
-BuildPreReq: cmake gcc-c++ libargtable2-devel libsndfile-devel
-BuildPreReq: libmpg123-devel libhdf5-devel liblapack-devel
-BuildPreReq: libfftw3-devel dvipng
-BuildPreReq: python-module-sphinx-devel texlive-latex-recommended
+BuildRequires: cmake gcc-c++ libargtable2-devel libsndfile-devel
+BuildRequires: libmpg123-devel libhdf5-devel liblapack-devel
+BuildRequires: libfftw3-devel dvipng
+BuildRequires: python-module-sphinx-devel texlive-latex-recommended
 
 Requires: lib%name = %EVR
 
@@ -77,6 +80,7 @@ This package contains documentation for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
@@ -107,6 +111,9 @@ EOF
 
 chmod +x %buildroot%_sysconfdir/profile.d/%name.sh
 
+# don't put CMakeLists.txt into documentation
+rm -f matlab/CMakeLists.txt
+
 %files
 %doc DISCLAIMER README
 %_bindir/*
@@ -125,9 +132,13 @@ chmod +x %buildroot%_sysconfdir/profile.d/%name.sh
 %python_sitelibdir_noarch/*
 
 %files docs
-%doc doc/build/html/*
+%doc doc/build/html
+%doc matlab
 
 %changelog
+* Mon Feb 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.64-alt3.git20130420
+- Fixed build with gcc-8.
+
 * Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.64-alt2.git20130420
 - Fixed build with new toolchain.
 
