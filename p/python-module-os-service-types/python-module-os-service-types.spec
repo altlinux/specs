@@ -1,7 +1,7 @@
 %define oname os-service-types
 
 Name: python-module-%oname
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 Summary: Python library for consuming OpenStack sevice-types-authority data
 Group: Development/Python
@@ -134,5 +134,8 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Feb 11 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - Initial packaging
