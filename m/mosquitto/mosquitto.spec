@@ -3,7 +3,7 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.5.4
+Version: 1.5.6
 Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
@@ -108,6 +108,10 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Feb 11 2019 Pavel Vainerman <pv@altlinux.ru> 1.5.6-alt1
+- new version (1.5.6) with rpmgs script
+- fix CVE-2018-12551, CVE-2018-12550, CVE-2018-12546
+
 * Sun Nov 25 2018 Pavel Vainerman <pv@altlinux.ru> 1.5.4-alt1
 - new version (1.5.4) with rpmgs script
 
