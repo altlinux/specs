@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: ipsumdump
 Version: 1.86
-Release: alt1
+Release: alt2
 Group: Networking/Other
 Summary: Summarizes TCP/IP dump files into a self-describing ASCII format easily readable by humans and programs
 License: %bsd
@@ -8,6 +10,7 @@ Url: http://www.read.seas.harvard.edu/~kohler/ipsumdump/
 
 # https://github.com/kohler/ipsumdump.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt-gcc8.patch
 
 BuildRequires: rpm-build-licenses
 BuildRequires: perl-podlators
@@ -21,6 +24,7 @@ from existing ipsumdump files.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %configure
@@ -39,6 +43,9 @@ from existing ipsumdump files.
 %_man1dir/ipaggmanip.1*
 
 %changelog
+* Mon Feb 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.86-alt2
+- Fixed build with gcc-8.
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.86-alt1
 - Updated to upstream version 1.86.
 
