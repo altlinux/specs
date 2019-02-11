@@ -1,31 +1,40 @@
 %define oname islpy
 
 %def_with python3
+%def_without docs
 
 Name: python-module-%oname
-Version: 2014.2
-Release: alt2.1.1.1
+Version: 2018.2.1
+Release: alt1
 Summary: Wrapper around isl, an integer set library
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/islpy
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel libisl-devel boost-python-devel libgmp-devel
-#BuildPreReq: gcc-c++ python-module-sphinx-bootstrap-theme
-#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel boost-python3-devel
-#BuildPreReq: python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pybind11
 %endif
 
+BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pybind11
+
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libstdc++-devel python-base python-devel python-module-Fabric python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-ecdsa python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: gcc-c++ python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-sphinx-bootstrap-theme python3-devel python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-sphinx-bootstrap-theme
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-objects.inv
+%endif
+
 
 %description
 islpy is a Python wrapper around Sven Verdoolaege's isl, a library for
@@ -103,21 +112,21 @@ This package contains documentation for islpy.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
+%if_with docs
+prepare_sphinx .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 export LC_ALL=en_US.UTF-8
 
 ./configure.py \
-	--boost-python-libname=boost_python \
 	--cxxflags="-g"
 %python_build_debug
 
 %if_with python3
 pushd ../python3
 ./configure.py \
-	--boost-python-libname=boost_python3 \
 	--cxxflags="-g"
 %python3_build_debug
 popd
@@ -134,15 +143,18 @@ pushd ../python3
 popd
 %endif
 
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
-%make -C doc html
+make -C doc pickle
+make -C doc html
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %files
 %doc README.rst
 %python_sitelibdir/*
+%if_with docs
 %exclude %python_sitelibdir/%oname/pickle
 
 %files pickles
@@ -150,6 +162,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files doc
 %doc doc/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -158,6 +171,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Feb 11 2019 Anton Midyukov <antohami@altlinux.org> 2018.2.1-alt1
+- New version 2018.2.1
+- without docs
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.2-alt2.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

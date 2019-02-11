@@ -1,10 +1,11 @@
 %define oname meshpy
 
 %def_with python3
+%def_with docs
 
 Name: python-module-%oname
-Version: 2014.1
-Release: alt3.git20140706.1.1
+Version: 2018.2.1
+Release: alt1
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -16,18 +17,25 @@ Source: %oname-%version.tar
 # git://github.com/inducer/bpl-subset
 Source1: bpl-subset.tar
 
-#BuildPreReq: boost-python-devel gcc-c++ python-module-setuptools
-#BuildPreReq: libnumpy-devel python-module-epydoc
-#BuildPreReq: doxygen graphviz
+
+BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-matplotlib
+BuildRequires: python-module-numpy-testing
+BuildRequires: boost-python-devel
+BuildRequires: python-module-pybind11
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: boost-python3-devel python3-module-setuptools
-#BuildPreReq: libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: boost-python3-devel
+BuildRequires: python3-module-pybind11
 %endif
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-dev python3-module-numpy
-BuildRequires: boost-python-devel boost-python3-devel gcc-c++ python-module-epydoc python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-setuptools python3-module-setuptools rpm-build-python3 time
+%if_with docs
+BuildRequires: python-module-epydoc python-module-html5lib
+%endif
 
 %description
 MeshPy offers quality triangular and tetrahedral mesh generation for
@@ -93,7 +101,7 @@ tar -xf %SOURCE1
 %if_with python3
 rm -rf ../python3
 cp -fR . ../python3
-sed -i 's|boost_python|boost_python3|' ../python3/setup.py
+#sed -i 's|boost_python|boost_python3|' ../python3/setup.py
 %endif
 
 %build
@@ -107,8 +115,10 @@ pushd ../python3
 popd
 %endif
 
+%if_without docs
 export PYTHONPATH=$PWD
 %make doc
+%endif
 
 %install
 %python_install
@@ -127,19 +137,21 @@ popd
 %endif
 
 %files
-%doc LICENSE README
+%doc LICENSE README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test
 
 %files tests
 %python_sitelibdir/%oname/test
 
+%if_with docs
 %files docs
-%doc doc/html/*
+%doc doc/*.rst
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README
+%doc LICENSE README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test
 
@@ -148,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 11 2019 Anton Midyukov <antohami@altlinux.org> 2018.2.1-alt1
+- Version 2018.2.1
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.1-alt3.git20140706.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
