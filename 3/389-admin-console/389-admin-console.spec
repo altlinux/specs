@@ -6,7 +6,7 @@
 
 Name: 389-admin-console
 Version: 1.1.12
-Release: alt1
+Release: alt2
 Group:   Networking/Other
 Url:     http://port389.org
 # VCS:	 https://git.fedorahosted.org/git/389/admin-console.git
@@ -23,9 +23,8 @@ BuildRequires: ldapsdk
 BuildRequires: idm-console-framework
 BuildRequires: jss
 
+ExcludeArch: %ix86
 Requires: 389-admin
-
-BuildArch: noarch
 
 %description
 A Java based remote management console used for Managing 389
@@ -83,6 +82,9 @@ popd
 %doc %_datadir/%pkgname/manual/en/admin/help/*.html
 
 %changelog
+* Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 1.1.12-alt2
+- Stopped build for 32bit systems.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.12-alt1
 - new version 1.1.12
 

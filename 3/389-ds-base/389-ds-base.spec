@@ -1,61 +1,103 @@
 %define _unpackaged_files_terminate_build 1
 
-%global pkgname	dirsrv
-%global groupname %pkgname.target
+%define pkgname	dirsrv
+%define groupname %pkgname.target
+%define _libexecdir %_usr/libexec
 
 %def_without selinux
+%def_with check
+%def_with perl
+%def_without debug
+%def_with cockpit
 
 Name: 389-ds-base
-Version: 1.3.9.0
-Release: alt3
+Version: 1.4.1.1
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
 Group: System/Servers
-# Source-git:   https://pagure.io/389-ds-base.git
+# Source-git: https://pagure.io/389-ds-base.git
 Url: http://port389.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
-Patch: %name-alt.patch
+Source0: %name-%version.tar
+%if_with cockpit
+Source1: node_modules.tar.gz
+%endif
+Patch: %name-%version-alt.patch
 
-BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel
-BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel
-BuildRequires: libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel >= 4.1.2
-BuildRequires: libkrb5-devel
-BuildRequires: perl-devel
-BuildRequires: perl-Mozilla-LDAP perl-libnet perl-bignum
-BuildRequires: perl-DBM
-BuildRequires: perl-NetAddr-IP
-BuildRequires: perl-Archive-Tar
-BuildRequires: perl-Socket6
-BuildRequires: libsystemd-devel
-BuildRequires: libevent-devel
-BuildRequires: doxygen
-BuildRequires: libgperftools-devel
-
-BuildRequires: python3-module-setuptools
+ExcludeArch: %ix86
 BuildRequires(pre): rpm-build-python3
 
-Provides: fedora-ds = %version-%release
-Obsoletes: fedora-ds < %version-%release
-Provides: ldif2ldbm
-Conflicts: lprng
+BuildRequires: cracklib-devel
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+%if_with debug
+BuildRequires: libasan5
+%endif
+BuildRequires: libdb4-devel
+BuildRequires: libevent-devel
+BuildRequires: libicu-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libldap-devel
+BuildRequires: libnet-snmp-devel
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
+BuildRequires: libpam0-devel
+BuildRequires: libpcre-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libsystemd-devel
 
+BuildRequires: python3(build_manpages)
+BuildRequires: python3(argcomplete)
+BuildRequires: python3(ldap)
+BuildRequires: python3(six)
+
+%if_with cockpit
+BuildRequires: rsync
+BuildRequires: npm
+%endif
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: libcmocka-devel
+%endif
+
+%if_with perl
+BuildRequires: perl-bignum
+BuildRequires: perl-devel
+BuildRequires: perl-Archive-Tar
+BuildRequires: perl-DBM
+BuildRequires: perl-Mozilla-LDAP
+BuildRequires: perl-NetAddr-IP
+%endif
 # AutoReq: yes, noperl
 %add_perl_lib_path %_libdir/%pkgname/perl
 %add_findprov_skiplist %_datadir/%pkgname/script-templates/*
 %add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
-%add_python_req_skip gdb
+
+# use Python3 everywhere
+%add_python3_path %_datadir/gdb/auto-load/
+%add_python3_compile_exclude %_datadir/gdb/auto-load/
+
+%add_python3_path %_libdir/%pkgname/python/
+%add_python3_compile_exclude %_libdir/%pkgname/python/
+
+# we don't want python gdb
+%filter_from_requires /python3(gdb\(\..*\)\?)/d
+# requires self
+%add_python3_req_skip __main__
+
+Requires: libjemalloc2
 
 %description
-389 Directory Server is an LDAPv3 compliant server. Use setup-ds.pl to
-setup instances.
+389 Directory Server is an LDAPv3 compliant server. The base package includes
+the LDAP server and command line utilities for server administration.
 
 %package -n 389-ds
 Summary: 389 Directory, Administration, and Console Suite
 Group: System/Servers
-BuildArch: noarch
 Requires: 389-ds-base
 Requires: 389-admin
 Requires: idm-console-framework
@@ -72,127 +114,164 @@ provide the LDAPv3 server, the httpd daemon used to administer the
 server, and the console GUI application used for server and user/group
 administration.
 
+%package libs
+Summary: Core libraries for 389 Directory Server
+Group: System/Libraries
+# svrcore has been merged into 389-ds
+# https://pagure.io/389-ds-base/issue/49369
+Provides: libsvrcore = 4.1.4
+Obsoletes: libsvrcore <= 4.1.3
+Conflicts: libsvrcore
+
+%description libs
+Core libraries for the 389 Directory Server base package. These libraries are
+used by the main package and the -devel package. This allows the -devel package
+to be installed with just the -libs package and without the main package.
+
 %package devel
 Summary: Development libraries for 389 Directory Server
 Group: Development/C
 Requires: %name = %EVR
-Provides: 389-ds-devel = %EVR
-Obsoletes: 389-ds-devel < %EVR
+# svrcore has been merged into 389-ds
+# https://pagure.io/389-ds-base/issue/49369
+Provides: libsvrcore-devel = 4.1.4
+Obsoletes: libsvrcore-devel <= 4.1.3
+Conflicts: libsvrcore-devel
 
 %description devel
-Development Libraries and heades for 389 Directory Server.
+Development Libraries and headers for 389 Directory Server.
 
-%package libs
-Summary: Core libraries for 389 Directory Server
-Group: System/Libraries
-Provides: 389-ds-libs = %EVR
-Obsoletes: 389-ds-libs < %EVR
+%package legacy-tools
+Summary: Legacy utilities for 389 Directory Server
+Group: System/Base
+Obsoletes: %name <= 1.4.0.9
+Requires: %name = %EVR
 
-%description libs
-Core libraries for the 389 Directory Server base package.  These
-libraries are used by the main package and the -devel package.  This
-allows the -devel package to be installed with just the -libs package
-and without the main package.
+%description legacy-tools
+Legacy (and deprecated) utilities for 389 Directory Server. This includes
+the old account management and task scripts. These are deprecated in favour of
+the dscreate, dsctl, dsconf and dsidm tools.
 
 %package -n python3-module-lib389
 Summary: A library for accessing, testing, and configuring the 389 Directory Server
 BuildArch: noarch
 Group: Development/Python3
-Requires: krb5-server
-Requires: openssl
-Requires: iproute
+Requires: nss-utils
 
 %description -n python3-module-lib389
 This module contains tools and libraries for accessing, testing, and
 configuring the 389 Directory Server.
 
-%package -n python3-module-389-ds-tests
-Summary: The lib389 Continuous Integration Tests
-Group: Development/Python3
+%if_with cockpit
+%package -n cockpit-389-ds
+Summary: Cockpit UI Plugin for configuring and administering the 389 Directory Server
 BuildArch: noarch
-# Tests have a huge amount useless Provides
-%set_findprov_skiplist %python3_sitelibdir_noarch/dirsrvtests/*
+Group: System/Base
+Requires: cockpit
+%py3_requires lib389
 
-%description -n  python3-module-389-ds-tests
-The python3-module-389-ds CI tests that can be run against the Directory Server.
+%description -n cockpit-389-ds
+A cockpit UI Plugin for configuring and administering the 389 Directory Server
+%endif
 
 %prep
 %setup
 %patch -p1
-# ALTLinux has bash3 only, thus operation '|&' is not supported
-find -name db2index.in -exec sed -i 's/|\&/2>\&1 |/g' {} \;
 
-# Link libsds.so with pthread
-sed -i '/SDS_LDFLAGS[[:space:]]*=/s/$/ -lpthread/g' Makefile.am
+# node modules are intended for building Cockpit plugin
+# and are not utilized in runtime
+tar -xzf %SOURCE1 -C "./src/cockpit/389-console"
 
-# Fix linking of libldaputil
-sed -i '/libldaputil_la_CPPFLAGS[[:space:]]*=/a\
-libldaputil_la_LIBADD = libslapd.la -L.libs' Makefile.am
+# ALT specific paths
+grep -qrs '\(<\| \)nss3\/' || exit 1
+grep -rl '\(<\| \)nss3\/' | xargs sed -i 's/\(<\| \)nss3\//\1nss\//g'
 
-# Fix sasl path
-sed -i 's|saslpath = "/usr/lib/aarch64-linux-gnu"|saslpath = "/usr/lib64/aarch64-linux-gnu"|g; s|saslpath = "/usr/lib64/sasl2"|saslpath = "/usr/lib64/sasl2-3"|g; s|saslpath = "/usr/lib/sasl2"|saslpath = "/usr/lib/sasl2-3"|g' ldap/servers/slapd/ldaputil.c
+grep -qsF 'sysctldir = @prefixdir@/lib/sysctl.d' Makefile.am || exit 1
+sed -i 's|sysctldir = .*|sysctldir = %_sysctldir|' Makefile.am
 
-sed -i 's|"$libdir/sasl2"|"$libdir/sasl2-3"|g' configure.ac
+grep -qsr 'LD_PRELOAD=.*/libjemalloc.so.2' || exit 1
+grep -rl 'LD_PRELOAD=.*/libjemalloc.so.2' | \
+xargs sed -i 's|LD_PRELOAD=.*/libjemalloc.so.2|LD_PRELOAD=libjemalloc.so.2|g'
 
-# tests
-find -name "*.py" -exec sed -i 's@/usr/bin/systemctl@/sbin/systemctl@g' {} \;
+grep -qsr '/sasl2\( \|"\)' || exit 1
+grep -rl '/sasl2\( \|"\)' | xargs sed -i 's/\/sasl2\( \|"\)/\/sasl2-3\1/g'
 
-sed -r -i '1s|#!/usr/bin/python[[:space:]]+|#!/usr/bin/python3|' ldap/admin/src/scripts/{*.py,ds-replcheck}
+grep -qsr '/usr/bin/\(ls\|echo\)' || exit 1
+grep -rl '/usr/bin/\(ls\|echo\)' | \
+xargs sed -i 's/\/usr\(\/bin\/\(ls\|echo\)\)/\1/g'
+
+grep -qs 'saslpath = "/usr/lib/aarch64-linux-gnu"' \
+ldap/servers/slapd/ldaputil.c || exit 1
+sed -i 's|\(saslpath = "/usr/\)lib\(/aarch64-linux-gnu"\)|\1lib64\2|g' \
+ldap/servers/slapd/ldaputil.c
 
 %build
 %autoreconf
-# Install SysVInit scripts anyway
-subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
 
-# For strange cleanup before documentation build
-mkdir -p man/man3
-touch man/man3/_file
 %configure  \
 	--with-openldap \
         %{subst_with selinux} \
-        --enable-tcmalloc \
 	--localstatedir=/var \
+        --libexecdir=%_libexecdir/%pkgname \
  	--enable-autobind \
 	--with-systemd \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-systemdsystemconfdir=%_sysconfdir/systemd/system \
 	--with-systemdgroupname=%groupname \
-	--with-perldir=%_bindir \
-	--with-svrcore-inc=%_includedir \
-	--with-svrcore-lib=%_libdir \
+        --with-tmpfiles-d=%_sysconfdir/tmpfiles.d \
+%if_with debug
+        --enable-asan \
+        --enable-debug \
+%endif
+        %{subst_enable perl} \
 	--with-nss-lib=%_libdir \
-	--with-nss-inc=%_includedir/nss
+	--with-nss-inc=%_includedir/nss \
+        %{?_with_check:--enable-cmocka } \
 
 %make
-%make setup.py
+
+%if_with cockpit
+# cockpit plugin
+%make 389-console
+%endif
+
+# Python3 bindings
 pushd ./src/lib389
 %python3_build
 popd
 
-%python3_build
+# argparse-manpage dynamic man pages have hardcoded man v1 in header,
+# need to change it to v8
+sed -i  "1s/\"1\"/\"8\"/" ./src/lib389/man/ds{conf,ctl,idm,create}.8
+
+%check
+%make check || { cat test-suite.log; exit 1; }
 
 %install
 %makeinstall_std
-pushd ./src/lib389
+
+# python stuff
+pushd src/lib389
 %python3_install
 popd
 
-%python3_install
-
 # do not package lib389's tests
-rm -rf %buildroot%python3_sitelibdir_noarch/lib389/tests
+rm -r %buildroot%python3_sitelibdir_noarch/lib389/tests
+rm %buildroot%python3_sitelibdir_noarch/lib389/topologies.py
 
-mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir,%_var/tmp}/%pkgname
+mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir}/%pkgname
 
 # for systemd
 mkdir -p %buildroot%_sysconfdir/systemd/system/%groupname.wants
 
 # remove libtool and static libs
-rm -f %buildroot%_libdir/%pkgname/{,plugins/}*.{a,la}
+find %buildroot -type f \( -name "*.la" -o -name "*.a" \) -delete
 
+%if_with perl
 # make sure perl scripts have a proper shebang
-subst 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/%pkgname/script-templates/template-*.pl
-subst 's|File::Spec->tmpdir|"/tmp"|' %buildroot%_libdir/%pkgname/perl/DSCreate.pm
+sed -i 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/%pkgname/script-templates/template-*.pl
+sed -i 's|File::Spec->tmpdir|"/tmp"|g' %buildroot%_libdir/%pkgname/perl/DSCreate.pm
+%endif
 
 # move main libraries to common directory
 mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
@@ -202,71 +281,7 @@ mkdir -p %buildroot%_man3dir
 cp man/man3/* %buildroot%_man3dir
 
 # Fix path to systemctl in scripts
-subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
-
-%files
-%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README
-%dir %_sysconfdir/%pkgname
-%dir %_sysconfdir/%pkgname/schema
-%config(noreplace)%_sysconfdir/%pkgname/schema/*.ldif
-%dir %_sysconfdir/%pkgname/config
-%dir %_sysconfdir/systemd/system/%groupname.wants
-%config(noreplace)%_sysconfdir/%pkgname/config/slapd-collations.conf
-%config(noreplace)%_sysconfdir/%pkgname/config/certmap.conf
-%config(noreplace)%_sysconfdir/%pkgname/config/ldap-agent.conf
-%config(noreplace)%_sysconfdir/%pkgname/config/template-initconfig
-%config(noreplace)%_sysconfdir/sysconfig/%pkgname
-%config(noreplace)%_sysconfdir/sysconfig/%pkgname.systemd
-%_datadir/%pkgname
-%_unitdir/dirsrv-snmp.service
-%_unitdir/dirsrv.target
-%_unitdir/dirsrv@.service
-%_bindir/*
-%_sbindir/*
-%exclude %_sbindir/dsconf
-%exclude %_sbindir/dscreate
-%exclude %_sbindir/dsctl
-%exclude %_sbindir/dsidm
-%_libdir/%pkgname/perl
-%_libdir/%pkgname/python
-%_libdir/%pkgname/plugins/*.so
-%_datadir/gdb/auto-load/*
-%_libexecdir/sysctl.d/*
-%dir %_libdir/%pkgname/plugins
-%dir %_localstatedir/%pkgname
-%dir %_logdir/%pkgname
-%ghost %dir %_lockdir/%pkgname
-%_initdir/*
-%_man1dir/*
-%_man8dir/*
-
-%files -n 389-ds
-%files devel
-%_includedir/%pkgname
-%_libdir/*.so
-%exclude %_libdir/libns-dshttpd-*.so
-%_pkgconfigdir/*.pc
-%_man3dir/*
-
-%files libs
-%dir %_libdir/%pkgname
-%_libdir/libns-dshttpd-*.so
-%_libdir/libnunc-stans.so.*
-%_libdir/libsds.so.*
-%_libdir/libslapd.so.*
-%_libdir/libldaputil.so.*
-
-%files -n python3-module-lib389
-%_sbindir/dsconf
-%_sbindir/dscreate
-%_sbindir/dsctl
-%_sbindir/dsidm
-%python3_sitelibdir_noarch/lib389/
-%python3_sitelibdir_noarch/lib389-*.egg-info
-
-%files -n python3-module-389-ds-tests
-%python3_sitelibdir_noarch/dirsrvtests/
-%python3_sitelibdir_noarch/dirsrvtests-*.egg-info
+sed -i 's|%_bindir/systemctl|/bin/systemctl|' %buildroot%_sbindir/*-dirsrv
 
 %pre
 %define _dirsrv_user dirsrv
@@ -278,6 +293,10 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 		  > /dev/null 2>&1 ||:
 
 %post
+sysctl --system &> /dev/null ||:
+
+%post legacy-tools
+%if_with perl
 # Upgrade
 if [ $1 -gt 1 ]; then
     echo "Checking for upgrade"
@@ -326,6 +345,7 @@ if [ $1 -gt 1 ]; then
 
     echo "Upgrade has been completed successfully"
 fi
+%endif
 %post_service %pkgname-snmp
 
 %preun
@@ -339,8 +359,241 @@ if [ $1 -eq 0 ]; then
     /bin/systemctl stop %pkgname@*.service
 fi
 %preun_service %pkgname-snmp
+%files -n 389-ds
+%files
+%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README.md
+%dir %_sysconfdir/%pkgname
+%dir %_sysconfdir/%pkgname/schema
+%config(noreplace)%_sysconfdir/%pkgname/schema/*.ldif
+%dir %_sysconfdir/%pkgname/config
+%dir %_sysconfdir/systemd/system/%groupname.wants
+%config(noreplace)%_sysconfdir/%pkgname/config/slapd-collations.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/certmap.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/ldap-agent.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/template-initconfig
+%config(noreplace)%_sysconfdir/sysconfig/%pkgname
+%config(noreplace)%_sysconfdir/sysconfig/%pkgname.systemd
+%dir %_datadir/%pkgname
+%_datadir/%pkgname/data/
+%_datadir/%pkgname/inf/
+%_datadir/%pkgname/mibs/
+%_datadir/%pkgname/schema/
+%_unitdir/dirsrv-snmp.service
+%_unitdir/dirsrv.target
+%_unitdir/dirsrv@.service
+
+%_bindir/dbscan
+%_bindir/ds-replcheck
+%_bindir/ds-logpipe.py
+%_bindir/ldclt
+%_bindir/logconv.pl
+%_bindir/pwdhash
+%_bindir/readnsstate
+
+%_sbindir/bak2db
+%_sbindir/db2bak
+%_sbindir/db2index
+%_sbindir/db2ldif
+%_sbindir/dbverify
+%_sbindir/ldap-agent
+%_sbindir/ldif2db
+%_sbindir/ldif2ldap
+%_sbindir/ns-slapd
+%_sbindir/restart-dirsrv
+%_sbindir/start-dirsrv
+%_sbindir/status-dirsrv
+%_sbindir/stop-dirsrv
+%_sbindir/upgradedb
+%_sbindir/vlvindex
+
+%dir %_libexecdir/%pkgname
+%_libexecdir/%pkgname/ds_systemd_ask_password_acl
+%dir %_libdir/%pkgname/python
+%_libdir/%pkgname/python/*.py*
+%dir %_libdir/%pkgname/plugins
+%_libdir/%pkgname/plugins/*.so
+%_datadir/gdb/auto-load/*
+%_sysctldir/70-dirsrv.conf
+%dir %_localstatedir/%pkgname
+%dir %_logdir/%pkgname
+%ghost %dir %_lockdir/%pkgname
+%_man1dir/dbscan.1.*
+%_man1dir/ds-replcheck.1.*
+%_man1dir/ds-logpipe.py.1.*
+%_man1dir/ldclt.1.*
+%_man1dir/logconv.pl.1.*
+%_man1dir/pwdhash.1.*
+%_man1dir/readnsstate.1.*
+%_man1dir/ldap-agent.1.*
+%_man8dir/ldif2ldap.8.*
+%_man8dir/ns-slapd.8.*
+%_man8dir/bak2db.8.*
+%_man8dir/db2bak.8.*
+%_man8dir/db2index.8.*
+%_man8dir/db2ldif.8.*
+%_man8dir/dbverify.8.*
+%_man8dir/ldif2db.8.*
+%_man8dir/restart-dirsrv.8.*
+%_man8dir/start-dirsrv.8.*
+%_man8dir/status-dirsrv.8.*
+%_man8dir/stop-dirsrv.8.*
+%_man8dir/upgradedb.8.*
+%_man8dir/vlvindex.8.*
+%_man5dir/99user.ldif.5.*
+%_man5dir/certmap.conf.5.*
+%_man5dir/template-initconfig.5.*
+%_man5dir/slapd-collations.conf.5.*
+%_man5dir/dirsrv.5.*
+%_man5dir/dirsrv.systemd.5.*
+
+%files devel
+%_includedir/%pkgname/
+%_includedir/svrcore.h
+%_libdir/libsvrcore.so
+%_libdir/libslapd.so
+%_libdir/libns-dshttpd.so
+%_libdir/libnunc-stans.so
+%_libdir/libsds.so
+%_libdir/libldaputil.so
+%_pkgconfigdir/dirsrv.pc
+%_pkgconfigdir/libsds.pc
+%_pkgconfigdir/svrcore.pc
+%_pkgconfigdir/nunc-stans.pc
+%_man3dir/*.3.*
+
+%files libs
+%dir %_libdir/%pkgname
+%_libdir/libsvrcore.so.*
+%_libdir/libns-dshttpd-*.so
+%_libdir/libnunc-stans.so.*
+%_libdir/libsds.so.*
+%_libdir/libslapd.so.*
+%_libdir/libldaputil.so.*
+
+%files legacy-tools
+%_bindir/infadd
+%_bindir/ldif
+%_bindir/migratecred
+%_bindir/mmldif
+%_bindir/rsearch
+
+%_sbindir/dbmon.sh
+%_sbindir/dn2rdn
+%_sbindir/monitor
+%_sbindir/restoreconfig
+%_sbindir/saveconfig
+%_sbindir/suffix2instance
+%_sbindir/upgradednformat
+
+%_libexecdir/%pkgname/ds_selinux_enabled
+%_libexecdir/%pkgname/ds_selinux_port_query
+
+%_man1dir/infadd.1.*
+%_man1dir/ldif.1.*
+%_man1dir/migratecred.1.*
+%_man1dir/mmldif.1.*
+%_man1dir/rsearch.1.*
+%_man8dir/dbmon.sh.8.*
+%_man8dir/dn2rdn.8.*
+%_man8dir/monitor.8.*
+%_man8dir/restoreconfig.8.*
+%_man8dir/saveconfig.8.*
+%_man8dir/suffix2instance.8.*
+%_man8dir/upgradednformat.8.*
+
+%if_with perl
+%dir %_datadir/%pkgname/properties
+%_datadir/%pkgname/properties/ns-slapd.properties
+%_datadir/%pkgname/properties/*.res
+%_datadir/%pkgname/script-templates
+%_datadir/%pkgname/updates
+
+%_bindir/cl-dump
+%_bindir/cl-dump.pl
+%_bindir/dbgen.pl
+%_bindir/repl-monitor
+%_bindir/repl-monitor.pl
+
+%_sbindir/bak2db.pl
+%_sbindir/cleanallruv.pl
+%_sbindir/db2bak.pl
+%_sbindir/db2index.pl
+%_sbindir/db2ldif.pl
+%_sbindir/fixup-linkedattrs.pl
+%_sbindir/fixup-memberof.pl
+%_sbindir/ldif2db.pl
+%_sbindir/migrate-ds.pl
+%_sbindir/ns-accountstatus.pl
+%_sbindir/ns-activate.pl
+%_sbindir/ns-inactivate.pl
+%_sbindir/ns-newpwpolicy.pl
+%_sbindir/remove-ds.pl
+%_sbindir/schema-reload.pl
+%_sbindir/setup-ds.pl
+%_sbindir/syntax-validate.pl
+%_sbindir/usn-tombstone-cleanup.pl
+%_sbindir/verify-db.pl
+
+%_man1dir/dbgen.pl.1.*
+%_man1dir/repl-monitor.1.*
+%_man1dir/repl-monitor.pl.1.*
+%_man1dir/cl-dump.1.*
+%_man1dir/cl-dump.pl.1.*
+%_man8dir/bak2db.pl.8.*
+%_man8dir/cleanallruv.pl.8.*
+%_man8dir/db2bak.pl.8.*
+%_man8dir/db2index.pl.8.*
+%_man8dir/db2ldif.pl.8.*
+%_man8dir/fixup-linkedattrs.pl.8.*
+%_man8dir/fixup-memberof.pl.8.*
+%_man8dir/ldif2db.pl.8.*
+%_man8dir/migrate-ds.pl.8.*
+%_man8dir/ns-accountstatus.pl.8.*
+%_man8dir/ns-activate.pl.8.*
+%_man8dir/ns-inactivate.pl.8.*
+%_man8dir/ns-newpwpolicy.pl.8.*
+%_man8dir/remove-ds.pl.8.*
+%_man8dir/schema-reload.pl.8.*
+%_man8dir/setup-ds.pl.8.*
+%_man8dir/syntax-validate.pl.8.*
+%_man8dir/usn-tombstone-cleanup.pl.8.*
+%_man8dir/verify-db.pl.8.*
+
+%_libdir/%pkgname/perl/
+%endif
+
+%files -n python3-module-lib389
+%_sbindir/dsconf
+%_sbindir/dscreate
+%_sbindir/dsctl
+%_sbindir/dsidm
+%_man8dir/dsconf.8.*
+%_man8dir/dscreate.8.*
+%_man8dir/dsctl.8.*
+%_man8dir/dsidm.8.*
+%python3_sitelibdir_noarch/lib389/
+%python3_sitelibdir_noarch/lib389-*-py%_python3_version.egg-info/
+
+%if_with cockpit
+%files -n cockpit-389-ds
+%dir %_datadir/metainfo/389-console
+%_datadir/metainfo/389-console/org.cockpit-project.389-console.metainfo.xml
+%dir %_datadir/cockpit/389-console
+%_datadir/cockpit/389-console/manifest.json
+%_datadir/cockpit/389-console/*.html
+%_datadir/cockpit/389-console/*.js
+%_datadir/cockpit/389-console/*.js.map
+%_datadir/cockpit/389-console/css/
+%_datadir/cockpit/389-console/fonts/
+%_datadir/cockpit/389-console/images/
+%_datadir/cockpit/389-console/static/
+%endif
 
 %changelog
+* Tue Jan 22 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.1-alt1
+- 1.3.9.0 -> 1.4.1.1.
+- Stopped build for i586 arch.
+
 * Wed Nov 28 2018 Stanislav Levin <slev@altlinux.org> 1.3.9.0-alt3
 - Fixed initialization of plugin's hashtable.
 - Dropped useless Provides of python 389-ds-tests.

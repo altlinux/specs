@@ -2,10 +2,17 @@
 %define minor  0
 %define submin 7
 
+# svrcore is no longer built for x86 arch
+%ifarch %ix86
+%def_without svrcore
+%else
+%def_with svrcore
+%endif
+
 Summary:	Mozilla LDAP C SDK
 Name:		mozldap
 Version:	6.0.7
-Release:	alt3.1
+Release:	alt4
 License:	MPL/GPL/LGPL
 URL:		https://wiki.mozilla.org/LDAP_C_SDK
 Group:		System/Libraries
@@ -22,7 +29,12 @@ Patch6:		mozldap-fix-pthread-link.patch
 Patch7:		mozldap-alt-fix-ldap_str2charray.patch
 
 # Automatically added by buildreq on Mon Feb 26 2007 (-bi)
-BuildRequires: chrpath gcc-c++ libsasl2-devel libsvrcore-devel nss-utils python-base
+BuildRequires: chrpath gcc-c++ libsasl2-devel nss-utils python-base
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
+%if_with svrcore
+BuildRequires: libsvrcore-devel
+%endif
 
 Conflicts: mozilla < 1.8
 
@@ -90,7 +102,9 @@ export USE_64=1
     --enable-clu \
     --with-system-nss \
     --with-system-nspr \
+%if_with svrcore
     --with-system-svrcore \
+%endif
     --with-pthreads \
     \
     --enable-strip \
@@ -181,6 +195,9 @@ done
 %_datadir/%name
 
 %changelog
+* Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 6.0.7-alt4
+- Made conditional usage of svrcore.
+
 * Wed Apr 11 2018 Grigory Ustinov <grenka@altlinux.org> 6.0.7-alt3.1
 - NMU: Add patch for building with perl 5.26.
 

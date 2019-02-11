@@ -1,6 +1,6 @@
 Name:    389-adminutil
 Version: 1.1.23
-Release: alt1
+Release: alt2
 License: LGPLv2
 Url:     http://port389.org
 # VCS: 	 https://pagure.io/389-adminutil.git
@@ -15,6 +15,7 @@ Provides: fedora-ds-adminutil = %version-%release
 Obsoletes: fedora-ds-adminutil < %version-%release
 
 Source: %name-%version.tar
+ExcludeArch: %ix86
 
 %description
 %name is libraries of functions used to administer directory
@@ -64,6 +65,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 1.1.23-alt2
+- Stopped build for 32bit systems.
+
 * Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.23-alt1
 - New version
 
