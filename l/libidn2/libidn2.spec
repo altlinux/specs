@@ -2,13 +2,12 @@
 
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          2.1.0
-Release:          alt2
+Version:          2.1.1
+Release:          alt1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
-Patch1:           Change-soname-back-to-0.patch
 BuildRequires:    libunistring-devel
 # Needed for autoreconf
 BuildRequires: /usr/bin/gtkdocize
@@ -43,7 +42,6 @@ Domain Name (IDNA2008/TR46) format.
 
 %prep
 %setup
-%patch1 -p1
 # Workaround for generating idn2.1
 rm doc/idn2.1
 
@@ -101,6 +99,10 @@ ln -s libidn2.so.0 %buildroot/%_lib/libidn2.so.4
 %{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Mon Feb 11 2019 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1
+- Drop obsoleted patch.
+- 2.1.0 -> 2.1.1.
+
 * Tue Jan 22 2019 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt2
 - Add symlink libidn2.so.4 -> libidn2.so.0.
 - Change soname back to 0.
