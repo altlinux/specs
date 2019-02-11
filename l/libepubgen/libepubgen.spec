@@ -1,12 +1,12 @@
 Name: libepubgen
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 Summary: An EPUB generator library
 Group: Development/C++
 
 License: MPLv2.0
 Url: https://sourceforge.net/projects/libepubgen/
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.xz
+Source: %name-%version.tar.gz
 
 BuildRequires: cppunit-devel libxml2-devel
 # Automatically added by buildreq on Mon Feb 19 2018
@@ -62,5 +62,8 @@ LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} make c
 %doc docs/doxygen/html
 
 %changelog
+* Mon Feb 11 2019 Fr. Br. George <george@altlinux.ru> 0.1.1-alt1
+- Autobuild version bump to 0.1.1
+
 * Mon Feb 19 2018 Fr. Br. George <george@altlinux.ru> 0.1.0-alt1
 - Initial build from FC
