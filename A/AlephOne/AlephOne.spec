@@ -1,6 +1,6 @@
 Name: AlephOne
 Version: 1.0.1
-Release: alt1.2
+Release: alt1.3
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -14,6 +14,8 @@ Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name-48x48.png
 Source3: alephone-wrapper.sh
+
+Patch0: %name-1.0.1-gcc8-fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Tue Jan 26 2010
@@ -36,6 +38,7 @@ alephone "~/Marathon Infinity"
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %add_optflags -fpermissive
@@ -62,6 +65,9 @@ install -pD -m755 %SOURCE3 %buildroot%_gamesbindir/
 %_man6dir/*
 
 %changelog
+* Mon Feb 11 2019 Pavel Moseev <mars@altlinux.org> 1.0.1-alt1.3
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.2
 - fixed build - added BR libspeexdsp-devel
 
