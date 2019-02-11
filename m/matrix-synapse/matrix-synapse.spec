@@ -1,6 +1,6 @@
 Name: matrix-synapse
 Version: 0.99.0
-Release: alt1
+Release: alt2
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache 2.0
@@ -13,61 +13,58 @@ Source: %name-%version.tar
 
 Source1: %name.service
 
-# python-pip python-setuptools sqlite3 python-virtualenv
-# python-devel libffi-devel libopenssl-devel libjpeg-devel
-
 BuildRequires(pre): rpm-build-intro >= 2.1.9
 
-%py_use setuptools
-%py_use matrix-angular-sdk >= 0.6.8
+%py3_use setuptools
+%py3_use matrix-angular-sdk >= 0.6.8
 
 
 # Note: update from synapse/python_dependencies.py
-%py_use jsonschema >= 2.5.1
-%py_use frozendict >= 1
-%py_use unpaddedbase64 >= 1.1.0
-%py_use canonicaljson >= 1.1.3
-%py_use signedjson >= 1.0.0
-%py_use pynacl >= 1.2.1
-%py_use service_identity >= 16.0.0
+%py3_use jsonschema >= 2.5.1
+%py3_use frozendict >= 1
+%py3_use unpaddedbase64 >= 1.1.0
+%py3_use canonicaljson >= 1.1.3
+%py3_use signedjson >= 1.0.0
+%py3_use pynacl >= 1.2.1
+%py3_use service-identity >= 16.0.0
 # logcontext handling relies on the ability to cancel inlineCallbacks
 # (https://twistedmatrix.com/trac/ticket/4632) which landed in Twisted 18.7.
-%py_use twisted-core >= 18.7.0
-%py_use treq >= 15.1
+%py3_use twisted-core >= 18.7.0
+%py3_use treq >= 15.1
 # Twisted has required pyopenssl 16.0 since about Twisted 16.6.
-%py_use OpenSSL >= 16.0.0
-%py_use yaml >= 3.11
-%py_use pyasn1 >= 0.1.9
-%py_use pyasn1-modules >= 0.0.7
-%py_use daemonize >= 2.3.1
-%py_use bcrypt >= 3.1.0
-%py_use Pillow >= 3.1.2
-%py_use sortedcontainers >= 1.4.4
-%py_use psutil >= 2.0.0
-%py_use pymacaroons-pynacl >= 0.13.0
-%py_use msgpack >= 0.5.0
-%py_use phonenumbers >= 8.2.0
-%py_use six >= 1.10
+%py3_use OpenSSL >= 16.0.0
+%py3_use yaml >= 3.11
+%py3_use pyasn1 >= 0.1.9
+%py3_use pyasn1-modules >= 0.0.7
+%py3_use daemonize >= 2.3.1
+%py3_use bcrypt >= 3.1.0
+%py3_use Pillow >= 3.1.2
+%py3_use sortedcontainers >= 1.4.4
+%py3_use psutil >= 2.0.0
+%py3_use pymacaroons-pynacl >= 0.13.0
+%py3_use msgpack >= 0.5.0
+%py3_use phonenumbers >= 8.2.0
+%py3_use six >= 1.10
 # prometheus_client 0.4.0 changed the format of counter metrics
 # (cf https://github.com/matrix-org/synapse/issues/4001)
-%py_use prometheus_client >= 0.0.18
-%py_use prometheus_client < 0.4.0
+%py3_use prometheus_client >= 0.0.18
+%py3_use prometheus_client < 0.4.0
 # we use attr.s(slots), which arrived in 16.0.0
-%py_use attrs >= 17.4.0
-%py_use netaddr >= 0.7.18
+%py3_use attrs >= 17.4.0
+%py3_use netaddr >= 0.7.18
 
 # Conditional
-#py_use matrix-synapse-ldap3 >= 0.1
+#py3_use matrix-synapse-ldap3 >= 0.1
 # "email.enable_notifs"
-%py_use jinja2 >= 2.9
-%py_use bleach >= 1.4.2
+%py3_use jinja2 >= 2.9
+%py3_use bleach >= 1.4.2
 # "acme": ["txacme>=0.9.2"],
 
-%py_use pysaml2 >= 4.5.0
+%py3_use pysaml2 >= 4.5.0
 # "url_preview"
-%py_use lxml >= 3.5.0
+%py3_use lxml >= 3.5.0
 # "test"
-%py_use mock >= 2.0
+%py3_use mock >= 2.0
 
 
 
@@ -75,11 +72,11 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 BuildRequires: perl-CPAN
 BuildRequires: perl-JSON-XS
 
-Requires: python-module-twisted-conch >= 17.5.0
-Requires: python-module-twisted-names >= 17.5.0
-Requires: python-module-twisted-web >= 17.5.0
+Requires: python3-module-twisted-conch >= 17.5.0
+Requires: python3-module-twisted-names >= 17.5.0
+Requires: python3-module-twisted-web >= 17.5.0
 #Requires: python-module-service-identity >= 1.0.0
-Requires: python-module-twisted-mail >= 17.5.0
+Requires: python3-module-twisted-mail >= 17.5.0
 #Requires: python-module-pysaml2 >= 3.0.0
 #Requires: python-module-pysaml2 < 4.0.0
 
@@ -98,10 +95,10 @@ Synapse is the reference python/twisted Matrix homeserver implementation.
 #__subst "s|nacl==0.3.0|nacl>=0.3.0|g" synapse/python_dependencies.py
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install --install-scripts=%_libexecdir/%name/
+%python3_install --install-scripts=%_libexecdir/%name/
 mkdir -p %buildroot/etc/synapse
 cp contrib/systemd/log_config.yaml %buildroot/etc/synapse/
 # TODO
@@ -134,7 +131,7 @@ fi
 %_sbindir/synctl
 %_unitdir/matrix-synapse.service
 %_tmpfilesdir/%name.conf
-%python_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/*
 %dir /etc/synapse/
 %attr(0640,root,_synapse) %config(noreplace) /etc/synapse/*
 %attr(0710,_synapse,_synapse) /var/run/synapse/
@@ -142,6 +139,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Mon Feb 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.99.0-alt2
+- switch to python3
+
 * Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.99.0-alt1
 - new version 0.99.0 (with rpmrb script)
 - update requires
