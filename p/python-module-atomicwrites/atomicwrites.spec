@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Python Atomic file writes on POSIX
@@ -59,23 +59,15 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-
-# copy nessecary exec deps
-tox --sitepackages -e py%{python_version_nodots python}-test --notest
-cp -T %_bindir/py.test .tox/py%{python_version_nodots python}-test/bin/py.test
-
-export PYTHONPATH=build/lib
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python}-test -v -- -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3}-test --notest
-cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}-test/bin/py.test
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3}-test -v -- -v
-popd
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python}-test,py%{python_version_nodots python3}-test
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE README.rst
@@ -88,6 +80,9 @@ popd
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.1 -> 1.3.0.
+
 * Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.2.0 -> 1.2.1.
 
