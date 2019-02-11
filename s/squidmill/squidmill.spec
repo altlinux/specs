@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.6
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Mon Feb 11 2019 Paul Wolneykien <manowar@altlinux.org> 2.6-alt3
+- Rebuild with a new version of Gambit
+
 * Wed Jan 23 2019 Paul Wolneykien <manowar@altlinux.org> 2.6-alt2
 - Rebuild with a new version of Gambit (closes: 35955).
 
