@@ -1,6 +1,6 @@
 Name: vhttpd
-Version: 0.7.8
-Release: alt2.2
+Version: 0.7.9
+Release: alt1
 
 Summary: simple embedded web server
 License: LGPL
@@ -11,12 +11,15 @@ Source:%name-%version.tar
 %ifarch %e2k
 Buildrequires: guile20-devel libguile20-devel /proc
 %else
-BuildRequires: guile22-devel >= 2.2.0-alt2 /proc
+BuildRequires: guile-devel >= 2.0
+BuildRequires: /proc
 %endif
 BuildPreReq: glib2-devel libssl-devel libgnutls-devel cgreen
 
 Conflicts: alterator < 4.17-alt1
 Conflicts: alterator-fbi < 5.26-alt1
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 voins httpd - port of the first alterators web server.
@@ -61,9 +64,6 @@ guile bindings for %name
 
 %prep
 %setup
-%ifarch %e2k
-sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
-%endif
 
 %build
 %make_build
@@ -93,6 +93,17 @@ sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Mon Feb 11 2019 Mikhail Efremov <sem@altlinux.org> 0.7.9-alt1
+- Use _unpackaged_files_terminate_build.
+- Set connection socket non-block immediately if needed.
+- Don't modify Makefile for e2k.
+- Don't hardcode guile version in the Makefile.
+- Get rid of close_on_exec().
+- Set CLOEXEC flag for accepted connection socket.
+- Drop unused variable.
+- Fix BR for non-e2k architectures.
+- Add OpenSSL 1.1 support.
+
 * Thu Feb 07 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.7.8-alt2.2
 - add BuildRequires: /proc
 
