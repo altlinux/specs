@@ -1,6 +1,6 @@
 Name: libetonyek
-Version: 0.1.6
-Release: alt4
+Version: 0.1.9
+Release: alt1
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
@@ -8,8 +8,6 @@ License: MPLv2.0
 # https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
-Patch1: %name-%version-fedora-test.patch
-Patch2: %name-%version-fedora-test-i686.patch
 
 BuildRequires: cppunit-devel
 
@@ -49,10 +47,8 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-# XXX hack out mdds=1.0 (too low)
-sed -i 's/mdds-1.0/mdds/' configure.ac
+## XXX hack out mdds=1.0 (too low)
+#sed -i 's/mdds-1.0/mdds/' configure.ac
 %ifarch e2k
 # FTBFS against boost 1.65 with lcc 1.21.20
 %add_optflags -fno-error-always-inline
@@ -60,7 +56,7 @@ sed -i 's/mdds-1.0/mdds/' configure.ac
 
 %build
 %autoreconf
-%configure --disable-silent-rules --disable-static --disable-werror
+%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=1.4
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -95,6 +91,12 @@ make check
 %_bindir/*
 
 %changelog
+* Mon Feb 11 2019 Fr. Br. George <george@altlinux.ru> 0.1.9-alt1
+- Autobuild version bump to 0.1.9
+
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.1.7-alt1
+- Autobuild version bump to 0.1.7
+
 * Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 0.1.6-alt4
 - E2K: work around FTBFS against boost 1.65 with lcc 1.21.20
 
