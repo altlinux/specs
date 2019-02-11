@@ -1,7 +1,7 @@
 %define major 2018.2
 Name: SimGear
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Simulator Construction Tools
 
@@ -15,6 +15,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
+Patch2: %name-g++8.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -50,6 +51,7 @@ This package contains header files for SimGear.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 %__subst "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
 
 %build
@@ -66,6 +68,9 @@ This package contains header files for SimGear.
 %_libdir/cmake/SimGear/
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2018.2.2-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.2.2-alt1
 - new version (2018.2.2) with rpmgs script
 
