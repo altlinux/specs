@@ -15,7 +15,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.8.8
+Version: 1.8.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -105,6 +105,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Feb 11 2019 Mikhail Efremov <sem@altlinux.org> 1.8.10-alt1
+- Updated to 1.8.10.
+
 * Fri Oct 26 2018 Mikhail Efremov <sem@altlinux.org> 1.8.8-alt1
 - Updated to 1.8.8.
 
