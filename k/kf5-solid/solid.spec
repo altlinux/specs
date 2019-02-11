@@ -1,8 +1,8 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.54.0
-Release: alt2
+Version: 5.55.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -13,7 +13,6 @@ License: GPLv2+ / LGPLv2+
 Requires: upower udisks2 media-player-info
 
 Source: %rname-%version.tar
-Patch1: alt-no-hal.patch
 
 # Automatically added by buildreq on Mon Jan 19 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
@@ -51,7 +50,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build ||:
@@ -85,6 +83,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
+- new version
+
 * Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt2
 - new version
 

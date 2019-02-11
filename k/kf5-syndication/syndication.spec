@@ -1,7 +1,7 @@
 %define rname syndication
 
 Name: kf5-%rname
-Version: 5.54.0
+Version: 5.55.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -77,6 +77,9 @@ KF5 library
 %_K5lib/libKF5Syndication.so.*
 
 %changelog
+* Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.55.0-alt1
+- new version
+
 * Mon Feb 04 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.54.0-alt1
 - new version
 - moved from apps
