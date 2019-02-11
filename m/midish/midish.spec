@@ -1,6 +1,6 @@
 Name: midish
-Version: 1.2.1
-Release: alt1.1
+Version: 1.2.2
+Release: alt1
 Summary: MIDI sequencer/filter
 Group: Sound
 Url: http://www.midish.org/
@@ -17,23 +17,23 @@ systems. Implemented as a simple command-line interpreter, it's intended to
 be lightweight, fast and reliable for real-time performance.
 
 Important features:
-	- multiple MIDI devices handling
-	- synchronization to external audio/MIDI hardware/software
-	- real-time MIDI filtering/routing (controller 
-	  mapping, keyboard splitting, ...)
-	- track recording, metronome
-	- basic track editing (insert, copy, delete, ...)
-	- progressive track quantisation
-	- import and export of standard MIDI files
-	- tempo and time-signature changes
-	- system exclusive messages handling
+    - multiple MIDI devices handling
+    - synchronization to external audio/MIDI hardware/software
+    - real-time MIDI filtering/routing (controller 
+      mapping, keyboard splitting, ...)
+    - track recording, metronome
+    - basic track editing (insert, copy, delete, ...)
+    - progressive track quantisation
+    - import and export of standard MIDI files
+    - tempo and time-signature changes
+    - system exclusive messages handling
 
 %prep
 %setup -n %name
 
 %build
 ./configure --prefix=/usr \
-	--enable-rmidish \
+    --enable-rmidish \
 
 make
 
@@ -49,6 +49,9 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Mon Feb 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Build new version.
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1
 - Rebuild with libreadline7.
 
