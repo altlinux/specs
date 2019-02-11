@@ -1,15 +1,14 @@
 Name: gambit-signal
 Version: 1.2
-Release: alt3
+Release: alt4
+
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
 
-Packager: Paul Wolneykien <manowar@altlinux.ru>
-
-BuildRequires: gambit-devel glibc-devel
-
 Source: %name-%version.tar
+Packager: Paul Wolneykien <manowar@altlinux.ru>
+BuildRequires: gambit-devel glibc-devel
 
 %description
 UNIX signal handling library for Gambit-C Scheme programming system
@@ -26,10 +25,17 @@ UNIX signal handling library for Gambit-C Scheme programming system
 This package contains the library link file
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
+
+# workaround non-blocking i/o: https://unix.stackexchange.com/questions/437409
+cat >> nonblock.c << EOF
+#include <fcntl.h>
+main() { fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~(O_NONBLOCK)); }
+EOF
+make nonblock && ./nonblock
 
 %install
 %makeinstall
@@ -44,6 +50,10 @@ This package contains the library link file
 %{_includedir}/gambit/*.c
 
 %changelog
+* Mon Feb 11 2019 Michael Shigorin <mike@altlinux.org> 1.2-alt4
+- Ensure sane stdin state (even --without check)
+- Minor spec cleanup
+
 * Mon Feb 11 2019 Paul Wolneykien <manowar@altlinux.org> 1.2-alt3
 - Rebuild with a new version of Gambit
 
