@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt3.svn20150317
+Release: alt4.svn20150317
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -145,9 +145,6 @@ FLAGS="-I%seqdir/include"
 
 FLAGS="%optflags %optflags_shared $FLAGS"
 cmake \
-%ifarch x86_64
-	-DENABLE_64BIT:BOOL=ON \
-%endif
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
@@ -162,9 +159,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
-%ifarch x86_64 or aarch64
+%if "lib" != "%_lib"
 install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
+mv %buildroot/usr/lib/* %buildroot%_libdir/
 %endif
 
 %if "%seqmpi" == "mpi"
@@ -212,6 +209,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Mon Feb 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2-alt4.svn20150317
+- Fixed build on other architectures with %%_lib != lib.
+
 * Sat Jun 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2-alt3.svn20150317
 - Rebuilt for aarch64
 
