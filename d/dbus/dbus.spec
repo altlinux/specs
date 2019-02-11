@@ -9,7 +9,7 @@
 
 Name: dbus
 Version: 1.12.12
-Release: alt1
+Release: alt2
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -86,6 +86,7 @@ This package contains D-BUS development files (headers and libraries links)
 %patch -p1
 
 mkdir -p m4
+sed -i 's|@CODE_COVERAGE_RULES@|#CODE_COVERAGE_RULES#|' $(find -name Makefile.am)
 
 %build
 %autoreconf
@@ -228,6 +229,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Mon Feb 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.12.12-alt2
+- fixed build with new autoconf-archive-2019.01.06
+
 * Wed Dec 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.12.12-alt1
 - 1.12.12
 - syslog is not required in initscript (closes: #35689)
