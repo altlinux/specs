@@ -1,7 +1,7 @@
 %define dnh dnh
 Name: ctorrent
 Version: 3.3.2
-Release: alt1.1.qa1.1
+Release: alt2
 Summary: BitTorrent Client written in C
 Group: Networking/File transfer
 License: GPL
@@ -10,6 +10,7 @@ Url: http://www.rahul.net/dholmes/ctorrent/
 Source0: http://www.rahul.net/dholmes/ctorrent/%name-%dnh%version.tar.gz
 
 Patch0: %name-%dnh%version-security-fix.patch
+Patch1: ctorrent-return-type-fix.patch
 
 # Automatically added by buildreq on Sat Jan 31 2009 (-bi)
 BuildRequires: gcc-c++ libssl-devel
@@ -21,6 +22,7 @@ doesn't require any graphical component, such as an X server.
 %prep
 %setup -q -n %name-%dnh%version
 %patch0 -p0
+%patch1 -p2
 
 %build
 %configure
@@ -35,6 +37,9 @@ doesn't require any graphical component, such as an X server.
 %_bindir/ctorrent
 
 %changelog
+* Tue Feb 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt2
+- Fixed FTBFS.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1.1.qa1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
