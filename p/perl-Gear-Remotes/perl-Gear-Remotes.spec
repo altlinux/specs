@@ -2,7 +2,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.020
+Version: 0.021
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -68,6 +68,9 @@ gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 %_man1dir/*
 
 %changelog
+* Tue Feb 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
+- new version
+
 * Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1
 - checks for transform-tag
 
