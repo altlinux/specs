@@ -9,6 +9,9 @@
 %define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
@@ -26,7 +29,7 @@
 
 Name: ring-project
 Version: 20180826
-Release: alt3
+Release: alt4
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -144,7 +147,8 @@ developing applications that use %name.
 %patch3 -p1
 
 %build
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -Wno-error=return-type
+export CXXFLAGS="%optflags"
 mkdir -p daemon/contrib/native
 pushd daemon/contrib/native
 ../bootstrap \
@@ -279,6 +283,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Tue Feb 12 2019 Sergey V Turchin <zerg@altlinux.org> 20180826-alt4
+- disable return-type error
+
 * Mon Nov 26 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt3
 - fix to build on armh (thanks sbolshakov@alt)
 
