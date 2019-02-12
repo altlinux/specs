@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 6.2.9
+Version: 6.2.11
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -12,6 +12,8 @@ Packager: Denis Baranov <baraka@altlinux.ru>
 
 # Source-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: seafile-client-no-return-error.patch
 
 Requires: seafile >= %version
 
@@ -36,6 +38,7 @@ Seafile is a full-fledged document collaboration platform.
 
 %prep
 %setup
+%patch -p2
 
 %build
 PATH=%_qt5_bindir:$PATH %cmake_insource
@@ -55,6 +58,9 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2.11-alt1
+- new version 6.2.11 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.9-alt1
 - new version 6.2.9 (with rpmrb script)
 
