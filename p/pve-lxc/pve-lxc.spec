@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -26,6 +26,7 @@ Patch7: 0007-PVE-Up-possibility-to-run-lxc-monitord-as-a-regular-.patch
 Patch8: 0008-PVE-Config-Disable-lxc.monitor-cgroup.patch
 Patch9: 0001-conf-use-SYSERROR-on-lxc_write_to_file-errors.patch
 Patch10: 0002-Revert-conf-remove-extra-MS_BIND-with-sysfs-mixed.patch
+Patch11: 0003-CVE-2019-5736-runC-rexec-callers-as-memfd.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
@@ -55,6 +56,7 @@ an applications or a system.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %patch20 -p1
 %patch21 -p1
@@ -104,6 +106,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt2
+- merge fix for CVE-2019-5736
+
 * Wed Feb 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt1
 - 3.1.0-2
 - not provide liblxc.so.1 (closes: #36009)
