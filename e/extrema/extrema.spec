@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Summary: Extrema is a powerful visualization and data analysis tool
 Name: extrema
 Version: 4.4.5
-Release: alt2
+Release: alt3
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Engineering
@@ -12,6 +12,7 @@ Url: http://exsitewebware.com/extrema/
 Source0: http://downloads.sourceforge.net/extrema/extrema-%version.tar.gz
 Patch0: extrema-4.2.10.desktop.patch
 Patch1: extrema-4.4.5-gcc46.patch
+Patch2: extrema-4.4.5-alt-gcc8.patch
 BuildRequires: wxGTK-devel >= 2.6.3
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick
@@ -48,6 +49,7 @@ documentation in PDF format for Extrema.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure --disable-static
@@ -76,6 +78,9 @@ desktop-file-install \
 %doc doc/*.pdf
 
 %changelog
+* Tue Feb 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.5-alt3
+- NMU: fixed build with gcc-8.
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 4.4.5-alt2
 - build for Sisyphus
 
