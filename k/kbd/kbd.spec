@@ -3,7 +3,7 @@
 Name: kbd
 Epoch: 0
 Version: 2.0.4
-Release: alt2
+Release: alt3
 
 Group: Terminals
 Summary: Tools for managing the Linux console
@@ -425,6 +425,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Tue Feb 12 2019 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt3
+- Rebuilt to remove automatic dependency on i586-glibc-kernheaders.
+
 * Mon Jan 09 2017 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt2
 - Add flag to switch off the docs (thx Michael Shigorin).
 
