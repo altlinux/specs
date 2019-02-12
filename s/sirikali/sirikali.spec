@@ -1,6 +1,6 @@
 # TODO: build with external lxqt_wallet, with kwallet support
 Name: sirikali
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: A Qt/C++ GUI front end to ecryptfs-simple,cryfs,gocryptfs,securefs and encfs
@@ -57,7 +57,7 @@ by zuluCrypt,TrueCrypt,VeraCrypt among other projects that use file based encryp
 %_bindir/%name
 %_bindir/%{name}.pkexec
 %_datadir/%name/
-%_desktopdir/%name.desktop
+%_desktopdir/io.github.mhogomchungu.sirikali.desktop
 %_iconsdir/hicolor/48x48/apps/%name.png
 %_iconsdir/hicolor/256x256/apps/%name.png
 %_iconsdir/%name.png
@@ -67,6 +67,9 @@ by zuluCrypt,TrueCrypt,VeraCrypt among other projects that use file based encryp
 %_datadir/metainfo/sirikali.appdata.xml
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
+- new version 1.3.7 (with rpmrb script)
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.6-alt1
 - new version 1.3.6 (with rpmrb script)
 
