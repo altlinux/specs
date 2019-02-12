@@ -36,8 +36,8 @@ BuildRequires: libvorbis-devel
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.14.3
-Release: alt1.1
+Version: 1.14.5
+Release: alt2
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -46,6 +46,7 @@ Url: http://www.%name.org
 Source0: wesnoth-%version.tar
 Patch0: wesnoth-1.13.8-sdl2.02.patch
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
+Patch2:	wesnoth-1.15.5-alt-gcc8.patch
 
 Requires: %name-data = %version-%release
 
@@ -220,8 +221,8 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup -n wesnoth-%version
-#patch -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %define _optlevel 3
@@ -710,8 +711,17 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Tue Feb 12 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.5-alt2
+- added gcc8 patch
+
+* Mon Feb 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.5-alt1
+- 1.14.5
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.14.3-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
+
+* Wed Jun 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.3-alt0.M80P.1
+- backport
 
 * Wed Jun 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.3-alt1
 - 1.14.3
