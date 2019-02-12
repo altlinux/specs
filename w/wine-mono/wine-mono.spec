@@ -1,7 +1,7 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 4.7.3
+Version: 4.7.5
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
@@ -33,6 +33,9 @@ install -m 644 %SOURCE0 %buildroot%winemonodir
 %winemonodir/%name-%version.msi
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 4.7.5-alt1
+- new version 4.7.5 (with rpmrb script)
+
 * Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 4.7.3-alt1
 - new version (4.7.3) with rpmgs script
 
