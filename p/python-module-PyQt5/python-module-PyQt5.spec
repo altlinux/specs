@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: 5.11.3
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -34,6 +34,7 @@ Requires: python-module-enum34
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils gcc-c++ libGL-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt5-bluetooth libqt5-clucene libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-help libqt5-location libqt5-multimedia libqt5-network libqt5-nfc libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sensors libqt5-serialport libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-websockets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip qt5-base-devel qt5-declarative-devel rpm-build-gir
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre):python-module-sip-devel
 %if_with python3
 # %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
@@ -68,7 +69,9 @@ BuildRequires: pkgconfig(Qt5Sql)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5WebChannel)
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: pkgconfig(Qt5WebEngineWidgets)
+%endif
 BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5WebKitWidgets)
 BuildRequires: pkgconfig(Qt5WebSockets)
@@ -264,6 +267,10 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Tue Feb 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.11.3-alt2
+- spec: use rpm-macros-qt5-webengine to build without qt5-webengine
+  on architectures not supported by webengine.
+
 * Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 5.11.3-alt1
 - new version
 
