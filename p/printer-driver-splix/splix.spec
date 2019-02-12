@@ -3,7 +3,7 @@ Summary: CUPS printer drivers for SPL (Samsung Printer Language) printers
 %define real_name splix
 Name: printer-driver-%real_name
 Version: 2.0.1
-Release: alt1.svn315
+Release: alt1.svn315.1
 
 Provides: %real_name = %version
 Obsoletes: %real_name
@@ -20,6 +20,7 @@ Patch: splix-2.0.0-mdv-gcc44.patch
 Patch1: splix-2.0.0-mdv-tools-nojbig.patch
 Patch2: splix-2.0.0-debian-arm-alighnment.patch
 Patch3: splix-deviceID.patch
+Patch4: splix-2.0.1-gcc8-fix.patch
 
 Requires: cups
 
@@ -47,6 +48,7 @@ An additional tools for splix
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 %make V=1 OPTIM_CXXFLAGS="%optflags" DISABLE_JBIG=1 THREADS=1
@@ -69,6 +71,9 @@ install -Dpm755 tools/decompress %buildroot%_bindir/%name-decompress
 %_bindir/*
 
 %changelog
+* Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 2.0.1-alt1.svn315.1
+- GCC8 fix
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 2.0.1-alt1.svn315
 - Update to current svn
 - Move Samsung drivers back to /pps dir
