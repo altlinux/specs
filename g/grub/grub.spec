@@ -1,6 +1,8 @@
+%def_with sb_kern_signature_check_relaxed
+
 Name: grub
 Version: 2.02
-Release: alt14
+Release: alt15
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -24,6 +26,9 @@ Source9: update-grub.8
 Source10: grub-efi-autoupdate
 Source11: embedded_grub.cfg
 
+Source12: grub-entries
+Source13: grub-entries.8
+
 Patch0: grub-2.02-os-alt.patch
 Patch1: grub-2.00-sysconfig-path-alt.patch
 Patch2: grub-2.02-altlinux-theme.patch
@@ -43,6 +48,28 @@ Patch15: grub-2.02-alt-fedora-linuxefi.patch
 Patch16: grub-2.02-suse-fix-build-with-gcc8.patch
 Patch17: grub-2.02-fix-binutils-break-grub-efi-build.patch
 Patch18: grub-2.02-upstream-default-ptimer.patch
+
+# add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
+# refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
+Patch101: grub-2.02-sb-0001-Use-linuxefi-and-initrdefi-where-appropriate.patch
+Patch102: grub-2.02-sb-0002-Don-t-allow-insmod-when-secure-boot-is-enabled.patch
+Patch103: grub-2.02-sb-0003-Load-arm-with-SB-enabled.patch
+Patch104: grub-2.02-sb-0004-Use-linux16-when-appropriate-880840.patch
+Patch105: grub-2.02-sb-0005-Make-10_linux-work-with-our-changes-for-linux16-and-.patch
+Patch106: grub-2.02-sb-0006-Fix-race-in-EFI-validation.patch
+Patch107: grub-2.02-sb-0007-Use-device-part-of-chainloader-target-if-present.patch
+Patch108: grub-2.02-sb-0008-Add-secureboot-support-on-efi-chainloader.patch
+Patch109: grub-2.02-sb-0009-Make-any-of-the-loaders-that-link-in-efi-mode-honor-.patch
+Patch110: grub-2.02-sb-0010-Rework-linux-command.patch
+Patch111: grub-2.02-sb-0011-Rework-linux16-command.patch
+Patch112: grub-2.02-sb-0012-Re-work-some-intricacies-of-PE-loading.patch
+Patch113: grub-2.02-sb-0013-Rework-even-more-of-efi-chainload-so-non-sb-cases-wo.patch
+Patch114: grub-2.02-sb-0014-Add-some-grub_dprintf-in-the-linuxefi-path.patch
+Patch115: grub-2.02-sb-0015-linuxefi-minor-cleanups.patch
+Patch116: grub-2.02-sb-0016-Handle-multi-arch-64-on-32-boot-in-linuxefi-loader.patch
+Patch117: grub-2.02-sb-0017-Clean-up-some-errors-in-the-linuxefi-loader.patch
+
+Patch201: grub-2.02-alt-relaxed-kernel-sign-check.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -167,6 +194,25 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch17 -p1
 %patch18 -p1
 
+#SB patches
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
 %ifarch %ix86 x86_64
@@ -216,7 +262,14 @@ popd
 
 %make_build
 
-./grub-mkimage -O %grubefiarch -o grubx64.efi -d grub-core -p "" \
+%if_with sb_kern_signature_check_relaxed
+# grubx64sb.efi brings strict checking for kernel sign
+%define EFI_X64_BINARY_NAME grubx64sb.efi
+%else
+%define EFI_X64_BINARY_NAME grubx64.efi
+%endif
+
+./grub-mkimage -O %grubefiarch -o %EFI_X64_BINARY_NAME -d grub-core -p "" \
 	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile diskfilter \
 %ifarch x86_64
 linuxefi \
@@ -227,14 +280,52 @@ linux \
 	font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
 	png jpeg
 
+%if_with sb_kern_signature_check_relaxed
+make clean
+patch -p0 < %PATCH201
+%make_build
+
+./grub-mkimage -O %grubefiarch -o grubx64.efi -d grub-core -p "" \
+        part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile diskfilter \
+%ifarch x86_64
+linuxefi \
+%else
+linux \
+%endif
+	minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
+	font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
+	png jpeg
+%endif
+
 %ifarch x86_64
 pushd ../%name-ia32-%version
+
+%if_with sb_kern_signature_check_relaxed
+# grubia32sb.efi brings strict checking for kernel sign
+%define EFI_IA32_BINARY_NAME grubia32sb.efi
+%else
+%define EFI_IA32_BINARY_NAME grubia32.efi
+%endif
+
+../%name-%version/grub-mkimage -O i386-efi -o %EFI_IA32_BINARY_NAME -d ./grub-core -p "" \
+        -c embedded_grub.cfg \
+        part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linuxefi diskfilter \
+        minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
+        font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
+        png jpeg
+
+%if_with sb_kern_signature_check_relaxed
+make clean
+patch -p0 < %PATCH201
+%make_build
+
 ../%name-%version/grub-mkimage -O i386-efi -o ./grubia32.efi -d ./grub-core -p "" \
         -c embedded_grub.cfg \
         part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linuxefi diskfilter \
         minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
         font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
         png jpeg
+%endif
 popd
 %endif
 
@@ -245,6 +336,9 @@ popd
 pushd ../%name-ia32-%version
 #"cherry pick" only i386 executable
 install -pDm644 grubia32.efi %buildroot%_efi_bindir/grubia32.efi
+%if_with sb_kern_signature_check_relaxed
+install -pDm644 grubia32sb.efi %buildroot%_efi_bindir/grubia32sb.efi
+%endif
 
 #install ia32 version in parallel with x64 for x86_64 platforms with ia32 EFI
 %makeinstall_std -C ../%name-ia32-%version
@@ -261,6 +355,7 @@ mkdir -p %buildroot/boot/grub/fonts
 
 install -pD -m755 %SOURCE8 %buildroot%_sbindir/
 install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
+install -pD -m644 %SOURCE13 %buildroot%_man8dir/grub-entries.8
 
 # TODO: drop the obsolete one (unifont.pf2)
 %buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
@@ -275,6 +370,7 @@ sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
 install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub.filetrigger
 install -pDm755 %SOURCE6  %buildroot%_sbindir/grub-autoupdate
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
+install -pDm755 %SOURCE12 %buildroot%_sbindir/grub-entries
 
 # Ghost config file
 install -d %buildroot/boot/grub
@@ -286,11 +382,18 @@ mkdir -p %buildroot%_sysconfdir/default
 ln -s ../sysconfig/grub2 %buildroot%_sysconfdir/default/grub
 
 install -pDm644 grubx64.efi %buildroot%_efi_bindir/grubx64.efi
+%if_with sb_kern_signature_check_relaxed
+install -pDm644 grubx64sb.efi %buildroot%_efi_bindir/grubx64sb.efi
+%endif
 
 # NB: UEFI GRUB2 image gets signed when build environment is set up that way
 %ifarch x86_64
 %pesign -s -i %buildroot%_efi_bindir/grubx64.efi
 %pesign -s -i %buildroot%_efi_bindir/grubia32.efi
+%if_with sb_kern_signature_check_relaxed
+%pesign -s -i %buildroot%_efi_bindir/grubx64sb.efi
+%pesign -s -i %buildroot%_efi_bindir/grubia32sb.efi
+%endif
 %endif
 
 # Remove headers
@@ -330,6 +433,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-reboot
 %_sbindir/grub-set-default
 %_sbindir/grub-sparc64-setup
+%_sbindir/grub-entries
 %_sbindir/update-grub
 %_bindir/grub-editenv
 %_bindir/grub-file
@@ -366,8 +470,14 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %files efi
 %_efi_bindir/grubx64.efi
+%if_with sb_kern_signature_check_relaxed
+%_efi_bindir/grubx64sb.efi
+%endif
 %ifarch x86_64
 %_efi_bindir/grubia32.efi
+%if_with sb_kern_signature_check_relaxed
+%_efi_bindir/grubia32sb.efi
+%endif
 %_libdir/grub/i386-efi
 %endif
 %_sbindir/grub-efi-autoupdate
@@ -398,6 +508,12 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Feb 12 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt15
+- add rhboot/grub2 SB patch set to prevent unauthorized code execution at boot time when SB is enabled
+- add grub-entries script by klark@ for list grub menu (closes: #36048)
+- add patch preventing boot failure for unsigned kernel in SB environment
+  + add an optional patch application flag for convenience
+
 * Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt14
 - added patch from upstream with changes for default pit time source to ptimer
 
