@@ -4,8 +4,8 @@
 %define libringqt libringqt%ringqt_sover
 
 Name: ring-client-kde5
-Version: 3.0.0
-Release: alt4%ubt
+Version: 3.1.0
+Release: alt1
 %K5init no_altplace
 
 Group: Communications
@@ -58,7 +58,7 @@ Client library for GNU Ring.
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 
 # add translations
@@ -66,7 +66,9 @@ mv .gear/po ./
 #cat %SOURCE1 >> CMakeLists.txt
 
 mkdir BUILD
-mv .gear/libringqt BUILD/
+mv .gear/kquickitemviews  libkquickitemviews
+ln -s ../libkquickitemviews/src src/KQuickItemViews
+mv .gear/libringqt libringqt
 ln -s %_datadir/dbus-1/interfaces BUILD/xml
 
 # fake git binary presence
@@ -116,6 +118,9 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Tue Feb 12 2019 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
+- new version
+
 * Thu Aug 02 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt4%ubt
 - update russian translation
 
