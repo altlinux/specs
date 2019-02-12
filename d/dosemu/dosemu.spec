@@ -1,6 +1,6 @@
 Name: dosemu
 Version: 1.4.1
-Release: alt0.2
+Release: alt0.4
 Epoch: 1
 
 Summary: The Linux DOS emulator
@@ -9,6 +9,7 @@ License: GPLv2
 Group: Emulators
 Url: http://dosemu.sourceforge.net/
 Packager: Grigory Batalov <bga@altlinux.ru>
+ExclusiveArch: %ix86 x86_64
 
 # https://dosemu.svn.sourceforge.net/svnroot/dosemu/trunk
 Source: %name-svn.tar
@@ -32,6 +33,7 @@ Conflicts: dosemu-bin-x
 
 %define docdir %_docdir/%name-%version
 
+BuildRequires(pre): rpm-macros-alternatives
 # Automatically added by buildreq on Tue Sep 25 2012
 # optimized out: alternatives libX11-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 BuildRequires: flex imake libICE-devel libSDL-devel libXext-devel libXxf86vm-devel libalsa-devel libgpm-devel libslang2-devel libsndfile-devel
@@ -180,6 +182,12 @@ fi
 %_libdir/%name/libplugin_sndfile.so
 
 %changelog
+* Tue Feb 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1:1.4.1-alt0.4
+- build on %%ix86 and x86_64 only
+
+* Fri Feb 08 2019 Ivan A. Melnikov <iv@altlinux.org> 1:1.4.1-alt0.3
+- add BR(pre) on rpm-macros-alternatives to fix rebuild in beehive
+
 * Mon Oct 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:1.4.1-alt0.2
 - build with gcc5 fixed
 
