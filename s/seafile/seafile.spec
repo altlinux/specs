@@ -1,5 +1,5 @@
 Name: seafile
-Version: 6.2.9
+Version: 6.2.11
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -111,6 +111,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2.11-alt1
+- new version 6.2.11 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.9-alt1
 - new version 6.2.9 (with rpmrb script)
 
