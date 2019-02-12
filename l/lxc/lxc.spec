@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 3.0.3
-Release: alt1
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -202,6 +202,11 @@ fi
 %_pam_modules_dir/*
 
 %changelog
+* Tue Feb 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt2
+- built lxc-3.0.3-15-g94bb05e0 snapshot.
+- fixes:
+  + CVE-2019-5736: (runC) rexec callers as memfd.
+
 * Wed Feb 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt1
 - 3.0.3
 - lxc: added wget to runtime dependencies.
