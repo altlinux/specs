@@ -1,38 +1,35 @@
-# 6.1.3.1
+# 6.2.0.3
 %def_without forky
 %def_without python
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
-# enable gtk3/kde5 UI
+# enable kde5 UI
 %def_enable kde5
 
 %ifarch mipsel
 %def_without java
-%def_disable kde4
 %def_disable qt5
 %else
 %def_with java
 %if_enabled kde5
-%def_disable kde4
-%def_disable qt5
+%def_enable qt5
 %else
-%def_enable kde4
 %def_disable qt5
 %endif
 %endif
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 6.1
-%define urelease 3.1
+%define hversion 6.2
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -67,10 +64,8 @@ Source300:	libreoffice.unused
 ## FC patches
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch3: FC-0001-gtk3-only-for-3.20.patch
-Patch4: FC-0001-Update-mdds-to-1.4.1.patch
-Patch5: FC-0001-Update-orcus-to-0.14.0.patch
-Patch6: FC-0001-disable-libe-book-support.patch
+Patch3: FC-0001-Upgrade-external-boost-to-Boost-1.69.0.patch
+Patch4: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -84,55 +79,20 @@ Patch404: alt-003-poppler-compat.patch
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
-# Automatically added by buildreq on Mon Nov 10 2014
-# optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel unzip xorg-cf-files zip rpm-build-gir
-
-# Requirements that were previously brought in by kde4libs-devel
-BuildRequires: libunixODBC-devel
-BuildRequires: libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
-BuildRequires: libssl-devel
-
-%if_enabled kde4
-BuildRequires: kde4libs-devel
-%endif
-
-# 4.4
-BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
-BuildRequires: libe-book-devel
-# 5.1
-BuildRequires: xsltproc
+# Automatically added by buildreq on Wed Feb 13 2019
+# optimized out: ant-lib apache-commons-logging at-spi2-atk bash4 boost-devel boost-devel-headers cppunit dconf fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gobject-introspection gobject-introspection-devel gstreamer1.0-devel hamcrest-core icu-utils java java-headless javapackages-tools javazi kf5-kconfig-devel kf5-kcoreaddons-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libat-spi2-core libatk-devel libatk-gir-devel libboost_numpy3-1.67.0 libboost_python3-1.67.0 libcairo-devel libcairo-gobject libcairo-gobject-devel libclucene-contribs-lib libclucene-core libclucene-shared libcrypt-devel libcurl-devel libe-book libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir-devel libgio-devel libglvnd-devel libgpg-error libgpg-error-devel libgraphite2-devel libgst-plugins1.0 libgtk+3-devel libharfbuzz-devel libharfbuzz-icu libicu-devel libltdl7-devel libnspr-devel libnss-devel libpango-devel libpango-gir-devel libpng-devel libpoppler-devel libpq-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-x11extras librasqal-devel librevenge-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libxcb-devel libxml2-devel libxmlsec1-devel libxmlsec1-nss libxslt-devel pentaho-libxml perl pkg-config python-base python-modules python-modules-compiler python-modules-distutils python3 python3-base python3-module-lxml qt5-base-devel raptor2-devel sac sh4 termutils wayland-devel xml-common xml-utils xorg-proto-devel xz zlib-devel
+BuildRequires: boost-filesystem-devel boost-locale-devel boost-signals-devel bsh cppunit-devel doxygen flex fontforge fonts-ttf-liberation git-core gperf graphviz gst-plugins1.0-devel imake libGConf libabw-devel libavahi-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libe-book-devel libepoxy-devel libepubgen-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgpgme-devel libgtk+2-devel libgtk+3-gir-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmysqlclient20-devel libmythes-devel libneon-devel libnumbertext-devel libodfgen-devel liborcus-devel libpagemaker-devel libpoppler-cpp-devel libqxp-devel libredland-devel libsane-devel libssl-devel libstaroffice-devel libunixODBC-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxmlsec1-nss-devel libzmf-devel mdds-devel pentaho-reporting-flow-engine postgresql-devel unzip xorg-cf-files xsltproc zip
 %if_with java
-BuildRequires: junit java-1.8.0-openjdk-devel
+BuildRequires: java-devel junit ant
 %endif
-# 5.1.2
-BuildRequires: libgtk+3-gir-devel
-# 5.2.0
-# 5.3.0
-BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
-# 5.3.3
-BuildRequires: doxygen e2fsprogs
-# 5.4.0
-BuildRequires: libxmlsec1-nss-devel libgpgme-devel
-# 6.0.1
-BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
-# 6.0.5
+
 %if_enabled qt5
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel qt5-x11extras-devel 
 %endif
 
-# 6.1.0
-BuildRequires: libnumbertext-devel
-
-# 6.1.1
-BuildRequires: python3-module-setuptools
-
-# 6.1.3.1 gtk3/kde5 UI
 %if_enabled kde5
-BuildRequires: qt5-base-devel qt5-x11extras-devel
-BuildRequires: kde4libs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
 %endif
-
 
 %if_without python
 BuildRequires: python3-dev
@@ -187,17 +147,6 @@ Requires: %uname = %EVR
 Requires: %name-common = %EVR
 %description qt5
 qt5 extensions for %name
-%endif
-
-%if_enabled kde4
-%package kde4
-Summary: KDE4 Extensions for %name
-Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-kde4
-%description kde4
-KDE4 extensions for %name
 %endif
 
 %if_enabled kde5
@@ -301,9 +250,7 @@ echo Direct build
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-#patch6 -p1
+#patch4 -p1
 
 ## Long-term FC patches applying
 
@@ -311,7 +258,7 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p1
-%patch404 -p1
+#patch404 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -372,8 +319,9 @@ export CXXFLAGS="$CFLAGS"
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
+	--enable-build-opensymbol \
+  	--enable-avahi \
         %{subst_with java} \
-        --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
 	\
@@ -388,22 +336,20 @@ export CXXFLAGS="$CFLAGS"
 	--enable-ext-wiki-publisher \
 	--enable-ext-ct2n \
 	--enable-ext-languagetool \
-	--enable-ext-mariadb-connector \
   \
 	--enable-release-build \
 	--with-help \
   \
-	%{subst_enable kde4} \
+	%{subst_enable kde5} \
 	%{subst_enable qt5} \
 	--enable-gtk \
 	--enable-gtk3 \
+  	--enable-cipher-openssl-backend \
 %if_enabled kde5
-	--enable-gtk3-kde5 \
-	--disable-kde5 \
+	--enable-kde5 \
 %endif
 	--disable-gstreamer-0-10 \
   \
-  	--enable-avahi \
 %if_with lto
   	--enable-lto \
 %endif
@@ -602,6 +548,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Feb 12 2019 Fr. Br. George <george@altlinux.ru> 6.2.0.3-alt1
+- Update to 6.2.0.3
+- Build with native kde5 SAL instead of gtk3/kde5
+
 * Wed Nov 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.3.1-alt3
 - NMU: fixed build with new poppler.
 
