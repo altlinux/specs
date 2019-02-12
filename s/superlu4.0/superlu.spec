@@ -4,7 +4,7 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt6
+Release: alt7
 
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
@@ -84,11 +84,17 @@ mkdir lib
 %build
 sed -i "s|(HOME)|$PWD|" make.inc
 sed -i "s|(LIBDIR)|%_libdir|" make.inc
-%ifarch %arm %e2k
+%ifarch %arm %e2k riscv64
 sed -i "s|-lopenblas|-lblas|" make.inc
+%define blas -lblas
+%else
+%define blas -lopenblas
 %endif
 %ifarch %e2k
 sed -i "s|-lgfortran||" make.inc
+%define gfortran %nil
+%else
+%define gfortran -lgfortran
 %endif
 %make install
 %make lib
@@ -139,15 +145,7 @@ for i in libsuperlu_%over libtmglib; do
 		ADDLIB="-L. -lsuperlu_%over"
 	fi
 	ar x $i.a
-%ifarch %arm
-	g++ -shared *.o $ADDLIB -llapack -lblas -lgfortran -lm \
-%else
-%ifarch %e2k
-	g++ -shared *.o $ADDLIB -llapack -lblas -lm \
-%else
-	g++ -shared *.o $ADDLIB -llapack -lopenblas -lgfortran -lm \
-%endif
-%endif
+	g++ -shared *.o $ADDLIB -llapack %blas %gfortran -lm \
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
@@ -175,6 +173,10 @@ popd
 # - install -p
 
 %changelog
+* Tue Feb 12 2019 Nikita Ermakov <arei@altlinux.org> 4.3-alt7
+- liblapack is built with libblas.so on riscv64, not libopenblas.so
+- Minor spec changes
+
 * Sun Jun 10 2018 Michael Shigorin <mike@altlinux.org> 4.3-alt6
 - support e2kv4 through %%e2k macro
 - gear: avoid tarball compression
