@@ -5,7 +5,7 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -13,6 +13,8 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# 2b311ef67909bc20d0e87f334fe37bf5c4e9f29f
+Patch: %name-3.28.2-up-2b311ef.patch
 
 BuildArch: noarch
 
@@ -52,6 +54,7 @@ The GNOME application for record and play sound files.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -76,6 +79,10 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- applied upstream patch to "Fix crashes when selecting a recording"
+  (ALT #36071)
+
 * Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
