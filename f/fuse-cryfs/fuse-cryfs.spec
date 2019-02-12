@@ -1,8 +1,8 @@
 %define oname cryfs
 %def_without system_spdlog
 Name: fuse-cryfs
-Version: 0.9.9
-Release: alt2.1
+Version: 0.9.10
+Release: alt1
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -65,6 +65,9 @@ rm -rf vendor/spdlog/
 %_man1dir/*
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
+- new version 0.9.10 (with rpmrb script)
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt2.1
 - NMU: autorebuild with libcryptopp.so.7
 
