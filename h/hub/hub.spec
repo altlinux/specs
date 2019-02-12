@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.6.0
+Version: 2.7.1
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -38,7 +38,7 @@ BuildRequires: git-core
 #BuildRequires: golang(github.com/kballard/go-shellquote)
 #BuildRequires: golang(github.com/mitchellh/go-homedir)
 
-Requires: git-core
+Requires: git-core vim-common
 
 #Provides: bundled(golang(github.com/inconshreveable/go-update))
 #Provides: bundled(golang(github.com/mattn/go-colorable))
@@ -116,8 +116,13 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 %_man1dir/*
 %_sysconfdir/bash_completion.d/
 %_datadir/zsh/site-functions/_hub
+/usr/share/vim/vimfiles/ftdetect/pullrequest.vim
+/usr/share/vim/vimfiles/syntax/pullrequest.vim
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1 (with rpmrb script)
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 
