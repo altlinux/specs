@@ -1,13 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: opendx
 Version: 4.4.4
-Release: alt7
+Release: alt8
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
 Url: http://www.opendx.org/
 
-Source: dx-%version.tar
-Patch1: %name-%version-alt-gcc.patch
+ExclusiveArch: %ix86 x86_64
+
+Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: libhdf5-devel libtiff-devel flex
 BuildRequires: libnetcdf-devel libX11-devel libcdf-devel gcc-c++
@@ -18,7 +22,7 @@ BuildRequires: libfreetype-devel libjpeg-devel liblqr-devel glib2-devel
 BuildRequires: fontconfig-devel bzlib-devel libXinerama-devel
 BuildRequires: libImageMagick-devel
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 If you need visualization for anything from examining simple data sets
@@ -51,7 +55,7 @@ This package contains shared libraries of OpenDX.
 %package -n lib%name-devel
 Summary: Development files of Open Visualization Data Explorer
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 If you need visualization for anything from examining simple data sets
@@ -76,7 +80,7 @@ This package contains documentation for OpenDX.
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
 rm -f aclocal.m4
 
 %build
@@ -128,6 +132,9 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Mon Feb 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt8
+- Fixed build with gcc-8.
+
 * Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt7
 - Rebuilt with new toolchain.
 
