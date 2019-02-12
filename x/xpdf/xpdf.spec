@@ -4,7 +4,7 @@
 
 Name: xpdf
 Version: 3.03
-Release: alt1.1
+Release: alt2
 
 Summary: Portable Document Format (PDF) suite
 License: GPLv2 or GPLv3
@@ -59,7 +59,7 @@ Requires: urlview
 Obsoletes: xpdf-thai
 
 # Automatically added by buildreq on Fri Oct 01 2010
-BuildRequires: gcc4.3-c++ imake libXp-devel libXpm-devel libfreetype-devel libopenmotif-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libXp-devel libXpm-devel libfreetype-devel libopenmotif-devel xorg-cf-files
 
 # xpdf now - virtual fileless package that depends on both splitted
 # subpackages for compatability with previous versions
@@ -188,7 +188,6 @@ Korean PDF files.
 
 %remove_optflags -Wtrampolines
 export CXXFLAGS="%optflags %optflags_nocpp"
-export CXX="g++-4.3"
 %configure \
 	--without-t1-library \
 	--enable-opi \
@@ -268,6 +267,9 @@ install -pD -m644 %_sourcedir/xpdf-48x48.png %buildroot%_liconsdir/xpdf.png
 %_datadir/xpdf/korean
 
 %changelog
+* Tue Feb 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.03-alt2
+- Rebuilt with default gcc-c++.
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.03-alt1.1
 - Disabled -Wtrampolines flag
 
