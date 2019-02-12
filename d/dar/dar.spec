@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.5.17
+Version: 2.6.1
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -12,12 +12,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 # manually removed: glibc-devel-static libgnustep-corebase-devel libgtk+3-devel libpolkit-devel libstdc++-devel-static man python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy zlib-devel-static
 # Automatically added by buildreq on Tue Jan 03 2017
 # optimized out: glib2-devel glibc-devel-static gnustep-base-devel groff-base libgpg-error libgpg-error-devel libstdc++-devel perl python-base python-modules python3 python3-base xz zlib-devel
-BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libcap-devel libe2fs-devel libgcrypt-devel libgpgme-devel liblzma-devel liblzo2-devel zlib-devel
+BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libcap-devel libe2fs-devel libgcrypt-devel libgpgme-devel liblzma-devel liblzo2-devel zlib-devel libcurl-devel librsync-devel
 
 BuildRequires: perl-devel groff-base man
 
@@ -36,7 +36,7 @@ This package contains library for %name.
 %package -n lib%name-devel
 Summary: Devel files for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains header files for %name.
@@ -54,6 +54,13 @@ This package contains documentation files for %name.
 %__subst "s@\(O_WRONLY|O_CREAT|O_TRUNC|O_BINARY\)@\1, 0666@" src/testing/test_generic_file.cpp
 # for autopoint
 %__subst "s|AM_GNU_GETTEXT_VERSION|AM_GNU_GETTEXT_VERSION(0.18.2)|g" configure.ac
+
+cat >>src/libdar/Makefile.am <<EOF
+libdar64_la_LIBADD = -lcurl
+libdar32_la_LIBADD = -lcurl
+libdar_la_LIBADD = -lcurl
+EOF
+
 %autoreconf
 
 %build
@@ -62,7 +69,8 @@ This package contains documentation files for %name.
 %ifarch x86_64
            --enable-mode=64 \
 %endif
-           --disable-rpath
+           --disable-rpath \
+           --enable-curl-linking --enable-gpgme-linking
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -90,6 +98,11 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt1
+- new version 2.6.1 (with rpmrb script)
+- add BR: libcurl-devel, librsync-devel
+- fix build with libcurl
+
 * Sat Nov 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.17-alt1
 - new version 2.5.17 (with rpmrb script)
 
