@@ -2,7 +2,7 @@
 
 Name:    cadaver
 Version: 0.23.3
-Release: alt3
+Release: alt4
 
 Summary: a command-line WebDAV client
 Summary(ru_RU.UTF-8): консольный клиент WebDAV
@@ -56,6 +56,9 @@ autoconf -f
 %_man1dir/%{name}*
 
 %changelog
+* Tue Feb 12 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.23.3-alt4
+- Rebuild with readline7
+
 * Sun Nov 24 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.23.3-alt3
 - Rebuild with libneon 0.30
 
