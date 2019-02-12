@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -66,6 +66,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Feb 12 2019 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
+- Show localized date and time in installer (ALT #35985).
+
 * Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 4.2.1-alt1
 - Avoid touching nonexistent service.
 
