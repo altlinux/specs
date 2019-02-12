@@ -20,7 +20,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt12
+Release: alt13
 Epoch: 1
 %K5init altplace
 
@@ -364,6 +364,9 @@ done
 
 
 %changelog
+* Tue Feb 12 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt13
+- memory notifier: fix timer
+
 * Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:5.12.7-alt12
 - wayland session for p8 branch excluded
 
