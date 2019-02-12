@@ -1,6 +1,6 @@
 Name: megafuse
 Version: 1.0.0
-Release: alt3.3
+Release: alt4
 
 # commit 50bc488cb54826b452b54a960efc25181519b3ba
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 Source2: %name.service
 Source3: %name.conf
 
+Patch: megafuse-alt-gcc8-fix.patch
+
 Packager: Danil Mikhailov <danil@altlinux.org>
 
 # Automatically added by buildreq on Tue Aug 11 2015
@@ -28,6 +30,7 @@ Megafuse client for mega.nz
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make_build
@@ -59,6 +62,9 @@ cp %SOURCE3 %buildroot/etc/
 
 
 %changelog
+* Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 1.0.0-alt4
+- GCC8 fix
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3.3
 - NMU: autorebuild with libcryptopp.so.7
 
