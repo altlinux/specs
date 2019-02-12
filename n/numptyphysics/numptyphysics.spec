@@ -1,6 +1,6 @@
 Name: numptyphysics
 Version: 0.3.160
-Release: alt1
+Release: alt2
 Summary: A crayon-drawing based physics puzzle game
 
 Group: Games/Puzzles
@@ -12,6 +12,7 @@ Source1: numptyphysics.desktop
 Source10: %name-levels-%version.tar
 
 Patch0: numptyphysics-0.4-gcc47.patch
+Patch1: numptyphysics-gcc8-fix.patch
 
 Requires: %name-levels
 
@@ -35,6 +36,7 @@ Game levels for numptyphysics, including "NP-complete" level set.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 %autoreconf
@@ -68,6 +70,9 @@ tar xf %SOURCE10 -C %buildroot%_datadir/numptyphysics
 %_datadir/numptyphysics/levels/*
 
 %changelog
+* Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 0.3.160-alt2
+- GCC8 fix
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.3.160-alt1
 - Autobuild version bump to 0.3.160
 
