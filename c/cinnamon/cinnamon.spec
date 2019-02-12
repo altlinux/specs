@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 4.0.9
-Release: alt2
+Release: alt3
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -55,6 +55,8 @@ Requires: python3-module-pygobject3
 Requires: polkit-gnome
 Requires: typelib(Keybinder) >= 3.0
 Requires: python3-module-PAM
+Requires: python3-module-Pillow
+Requires: python3-module-pexpect
 # required by keyboard applet
 Requires: libxapps-gir
 # needed to install applets
@@ -224,6 +226,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Tue Feb 12 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt3
+- add pillow and pexpect python modules to requires (closes: #36078)
+
 * Mon Feb 4 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt2
 - add gettext-tools to requires
 
