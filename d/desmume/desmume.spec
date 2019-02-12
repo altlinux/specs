@@ -1,6 +1,6 @@
 Name: desmume
 Version: 0.9.11
-Release: alt2
+Release: alt3
 Summary: A Nintendo DS emulator
 Group: Emulators
 License: GPLv2+
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 # Do not look into builddir
 Patch: %name-0.9-dontlookinbuilddir.patch
 Patch1: %name-0.9.11-alt-c++-compat.patch
+Patch2: %name-0.9.11-alt-gcc-8.patch
 
 BuildRequires: libgtkglext-devel
 BuildRequires: libglade-devel
@@ -49,6 +50,7 @@ This is the CLI version.
 %setup
 %patch -p1
 %patch1 -p2
+%patch2 -p2
 
 # Fix end-of-line encoding
 sed -i 's/\r//' AUTHORS
@@ -145,6 +147,9 @@ done
 %doc AUTHORS ChangeLog COPYING README README.LIN
 
 %changelog
+* Tue Feb 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.11-alt3
+- NMU: fixed build with gcc-8.
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.11-alt2
 - Fixed FTBFS (corrected build requires).
 
