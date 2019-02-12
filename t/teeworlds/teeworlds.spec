@@ -1,12 +1,13 @@
 %def_without instagib
 %define origname teeworlds
 
+%define _unpackaged_files_terminate_build 1 
 %define _pseudouser_user     _teeworlds
 %define _pseudouser_group    _teeworlds
 %define _pseudouser_home     %_localstatedir/teeworlds
 
 Name: teeworlds
-Version: 0.7.0
+Version: 0.7.2
 Release: alt1
 
 Summary: Cute little buggers with guns
@@ -20,10 +21,11 @@ Source: %name-%version.tar
 Source1: altlinux.tar
 
 Patch:%name-alt-build.patch
+Patch1:%name-alt-debuginfo.patch
 
-Requires: %name-gamedata = %version-%release
+Requires: %name-gamedata = %EVR
 
-Obsoletes: teeworlds-alt < %version-%release
+Obsoletes: teeworlds-alt < %EVR
 
 ExclusiveArch: %ix86 x86_64
 
@@ -50,7 +52,7 @@ Game data for teeworlds 2D shooter.
 %package server
 Summary: Teeworlds dedicated server
 Group: System/Servers
-Requires: %name-gamedata = %version-%release
+Requires: %name-gamedata = %EVR
 
 %description server
 Teeworlds dedicated server
@@ -59,7 +61,7 @@ Teeworlds dedicated server
 %package server-instagib
 Summary: Instagib initscripts and config for teeworlds server
 Group: System/Servers
-Requires: %name-server = %version-%release
+Requires: %name-server = %EVR
 
 %description server-instagib
 :: Features ::
@@ -75,6 +77,7 @@ Requires: %name-server = %version-%release
 %setup -a1
 rm -rf src/engine/external/{wavpack,zlib,pnglite}
 %patch -p1 
+%patch1 -p1
 
 %build
 bam target=release conf=release builddir=build
@@ -192,6 +195,10 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_datadir/teeworlds
 
 %changelog
+* Tue Feb 12 2019 Slava Aseev <ptrnine@altlinux.org> 0.7.2-alt1
+- Updated to upstream version 0.7.2
+- Switch on debug info
+
 * Wed Dec 05 2018 Alexey Melyashinsky <bip@altlinux.org> 0.7.0-alt1
 - Updated to upstream version 0.7.0
 
