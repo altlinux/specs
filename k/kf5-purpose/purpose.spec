@@ -5,8 +5,8 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.54.0
-Release: alt2
+Version: 5.55.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -127,6 +127,9 @@ KF5 library
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
+- new version
+
 * Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.54.0-alt2
 - new version
 
