@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: A kerberos KDC HTTP proxy WSGI module
@@ -19,21 +19,19 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
-
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-mock
-BuildRequires: python-module-dns
-BuildRequires: python-module-coverage
-BuildRequires: python-module-webtest
-BuildRequires: python-module-asn1crypto
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-dns
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-webtest
-BuildRequires: python3-module-asn1crypto
+BuildRequires: python2.7(asn1crypto)
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(dns)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pyasn1)
+BuildRequires: python2.7(webtest)
+BuildRequires: python3(asn1crypto)
+BuildRequires: python3(coverage)
+BuildRequires: python3(dns)
+BuildRequires: python3(pyasn1)
+BuildRequires: python3(tox)
+BuildRequires: python3(webtest)
 %endif
 
 BuildArch: noarch
@@ -75,13 +73,14 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export KDCPROXY_ASN1MOD=asn1crypto
-TOX_TESTENV_PASSENV=KDCPROXY_ASN1MOD tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+export PIP_NO_INDEX=YES
+%define py_nodot py%{python_version_nodots python}
+%define py3_nodot py%{python_version_nodots python3}
+export TOXENV=%py_nodot-asn1crypto,%py_nodot-pyasn1,%py3_nodot-asn1crypto,\
+%py3_nodot-pyasn1
 
-pushd ../python3
-TOX_TESTENV_PASSENV=KDCPROXY_ASN1MOD tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+%_bindir/tox.py3 --sitepackages -p auto -o -v
+
 
 %files
 %doc COPYING README
@@ -94,6 +93,9 @@ popd
 %python3_sitelibdir/%mname-*.egg-info
 
 %changelog
+* Tue Feb 12 2019 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4 -> 0.4.1.
+
 * Tue Aug 14 2018 Stanislav Levin <slev@altlinux.org> 0.4-alt1
 - 0.3.3 -> 0.4.
 
