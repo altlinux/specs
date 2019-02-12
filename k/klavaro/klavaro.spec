@@ -1,6 +1,6 @@
 Name: klavaro
-Version: 3.03
-Release: alt2
+Version: 3.04
+Release: alt1
 
 Summary: Yet another touch typing tutor
 License: GPLv3+
@@ -9,7 +9,7 @@ Group: Education
 Url: http://klavaro.sourceforge.net/en/
 Source: http://downloads.sourceforge.net/klavaro/klavaro-%version.tar.bz2
 
-BuildPreReq: libgtk+3-devel >= 3.8.0
+BuildRequires: libgtk+3-devel >= 3.8.0
 BuildRequires: libcurl-devel intltool libappstream-glib-devel
 
 %description
@@ -25,7 +25,8 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %add_optflags -D_FILE_OFFSET_BITS=64
 export DATADIRNAME=share
 %autoreconf
-%configure --disable-shared
+%configure --disable-shared \
+	LIBS=%(pkg-config --libs cairo)
 %make_build
 
 %install
@@ -45,6 +46,9 @@ export DATADIRNAME=share
 
 
 %changelog
+* Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.04-alt1
+- 3.04
+
 * Thu Apr 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.03-alt2
 - fixed PACKAGE_LOCALE_DIR (ALT #34798)
 - fixed appdatadir
