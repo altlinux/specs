@@ -1,6 +1,6 @@
 Name:		picmicrosim
 Version:	1.0
-Release:	alt3
+Release:	alt4
 Summary:	PIC Microprocessor Simulator on Linux
 
 License:	GPLv2+
@@ -15,8 +15,10 @@ Patch1:		picmicrosim-fix-permissive.patch
 Patch2:		picmicrosim-fix-missing-includes.patch
 Patch3:		picmicrosim-use-stuff-from-app-dir.patch
 Patch4:		%name-%version-alt-gcc6.patch
+Patch5:     %name-g++8.patch
 
 BuildRequires:  gcc-c++ libqt3-devel
+ExclusiveArch:  i586 x86_64
 
 %description
 Microprocessor simulator for the PIC16F84A on Linux using a GUI to allow
@@ -30,6 +32,7 @@ parallel port for real world interfacing.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 qmake-qt3 "QMAKE_CXXFLAGS+=%optflags `pkg-config --cflags qt-mt`" "DEFINES+=APPSDIR=\\\"%_datadir/apps/microsim/\\\"" microsim.pro
 
@@ -48,6 +51,9 @@ cp -a documentation images %buildroot%_datadir/apps/microsim
 %_datadir/apps/microsim
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt4
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3
 - Updated to build with gcc-6
 
