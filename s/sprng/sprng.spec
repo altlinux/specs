@@ -3,7 +3,7 @@
 
 Name: sprng
 Version: 4.4
-Release: alt1
+Release: alt2
 Summary: The Scalable Parallel Random Number Generators Library
 License: GPL v2
 Group: Sciences/Mathematics
@@ -11,6 +11,7 @@ Url: http://sprng.cs.fsu.edu/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://sprng.cs.fsu.edu/Version4.0/sprng4.tar.gz
+Patch: sprng-gcc8-fix.patch
 
 BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel
@@ -67,6 +68,7 @@ This package contains example source codes for SPRNG.
 
 %prep
 %setup
+%patch -p2
 
 %build
 mpi-selector --set %mpiimpl
@@ -129,6 +131,9 @@ install -p -m644 TESTS/mpitests/*.cpp TESTS/mpitests/*.h \
 %_datadir/%name/examples
 
 %changelog
+* Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 4.4-alt2
+- GCC8 fix
+
 * Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4-alt1
 - Version 4.4
 
