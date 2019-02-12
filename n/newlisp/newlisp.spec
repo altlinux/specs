@@ -6,9 +6,9 @@
 %define Name newLISP
 Name: newlisp
 Version: 10.6.2
-Release: alt1
+Release: alt2
 Summary: Lisp-like, general purpose scripting language
-License: %gpl3only
+License: GPLv3
 Group: Development/Lisp
 URL: http://www.%name.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -26,7 +26,7 @@ Patch4:         %{name}-0003-Don-t-strip-the-resulting-binary.patch
 #BuildRequires: libpcre-devel libreadline-devel
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_ext_pcre:BuildRequires: libpcre-devel}
-BuildRequires: rpm-build-licenses vim-devel libffi-devel openssl-devel 
+BuildRequires: rpm-build-vim vim-devel libffi-devel openssl-devel
 BuildRequires: libgmp-devel libgsl-devel libmysqlclient-devel libsqlite-devel postgresql-devel zlib-devel
 
 
@@ -77,7 +77,7 @@ Java APIs.
 %package doc
 Summary: %Name documentation and samples
 Group: Documentation
-License: %fdl
+License: FDL
 BuildArch: noarch
 Provides: %name-examples = %version-%release
 
@@ -122,6 +122,11 @@ This package contains VIm syntax for %Name.
 
 install -m 0644 %SOURCE1 ./Makefile.alt
 
+# Fix like in debian or fedora
+# aarch64-alt-linux-gcc: error: unrecognized command line option '-m64'
+%ifarch aarch64
+find . -type f | xargs sed -i "s/-m64//g"
+%endif
 
 %build
 %add_optflags %{?_with_readline:-DREADLINE} %{?_with_utf8:-DSUPPORT_UTF8}
@@ -209,6 +214,9 @@ ln -s %name-%version %name
 
 
 %changelog
+* Tue Feb 12 2019 Grigory Ustinov <grenka@altlinux.org> 10.6.2-alt2
+- Rebuild with libreadline7.
+
 * Wed Jan 21 2015 Ilya Mashkin <oddity@altlinux.ru> 10.6.2-alt1
 - 10.6.2
 
