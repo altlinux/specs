@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt1
+Release: alt2
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -15,6 +15,7 @@ Patch: FreeImage_unbundle.patch
 Patch1: FreeImage_doxygen.patch
 # Fix incorrect variable names in BIGENDIAN blocks
 Patch2: FreeImage_bigendian.patch
+Patch3: FreeImage-3.18.0-alt-return-type.patch
 
 BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
@@ -43,6 +44,7 @@ find ./ -type f -print0| xargs -r0 dos2unix --
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 # remove bundled libraries
 rm -r Source/Lib* Source/ZLib Source/OpenEXR
@@ -73,6 +75,9 @@ sh ./genfipsrclist.sh
 %_libdir/libfreeimage.so
 
 %changelog
+* Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
+- fixed build with -Werror=return-type enabled in g++
+
 * Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0 with modified fc patches and some tricks
 
