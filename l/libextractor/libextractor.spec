@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: libextractor
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -96,6 +96,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Wed Nov 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
 - 1.8
 
