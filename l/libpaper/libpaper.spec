@@ -1,6 +1,6 @@
 Name: libpaper
-Version: 1.1.24
-Release: alt4
+Version: 1.1.26
+Release: alt1
 
 Summary: Library and tools for handling papersize
 
@@ -8,11 +8,13 @@ License: GPL
 Group: System/Libraries
 Url: http://packages.qa.debian.org/libp/libpaper.html
 
+# Source-url: http://deb.debian.org/debian/pool/main/libp/libpaper/libpaper_%version.tar.gz
 Source: %name-%version.tar
 
-Patch: libpaper-1.1.20-fedora-automake_1.10.patch
-Patch1: libpaper-1.1.23-fedora-debianbug475683.patch
-Patch2: libpaper-fedora-useglibcfallback.patch
+# Fedora's patches:
+Patch1: libpaper-covscan.patch
+Patch2: libpaper-file-leak.patch
+Patch3: libpaper-useglibcfallback.patch
 
 # Automatically added by buildreq on Sun Jan 08 2006
 BuildRequires: gcc-c++ libstdc++-devel
@@ -34,22 +36,21 @@ Requires: %name = %version-%release
 Header files for %name library.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%setup
+#patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
 %configure --disable-static
 # Disable rpath
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%make
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+%make_build
 
 %install
-%make_install install \
-	DESTDIR=%buildroot
+%makeinstall_std
 rm %buildroot%_libdir/*.la
 mkdir -p %buildroot%_sysconfdir
 echo '# Simply write the paper name. See papersize(5) for possible values' > %buildroot%_sysconfdir/papersize
@@ -77,6 +78,10 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.26-alt1
+- new version (1.1.26) with rpmgs script
+- update all patches from Fedora project
+
 * Wed Sep 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.24-alt4
 - steal Fedora patches for proper papersize setting (ALT #26176)
 
