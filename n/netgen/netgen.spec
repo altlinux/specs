@@ -12,7 +12,7 @@
 
 Name: netgen
 Version: 6.2.1808
-Release: alt1
+Release: alt2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -42,6 +42,7 @@ Patch7: 0007-Add-missing-USE_JPEG-propagation.patch
 Patch8: 0008-Add-missing-ldl.patch
 # Only include immintrin.h on x86 arches
 Patch9: 0009-immintrin.patch
+Patch10: netgen-6.2.1808-alt-fix-gcc8-explicit-non-void-return.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -193,6 +194,7 @@ This package contains Python bindings of NETGEN.
 %patch7 -p1
 #%%patch8 -p1
 %patch9 -p1
+%patch10 -p0
 
 %if_with shared_togl
 # Remove bundled togl
@@ -373,6 +375,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Feb 11 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt2
+- Fix build with gcc8 [-Werror=return-type]
+
 * Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt1
 - New version
 - Remove %%ubt
