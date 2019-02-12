@@ -54,7 +54,7 @@ Name: erlang
 Epoch: 1
 %define subver 2.4
 Version: %ver.%subver
-Release: alt2
+Release: alt3
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -944,7 +944,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/hipe-*/icode
 %_otplibdir/hipe-*/main
 %_otplibdir/hipe-*/misc
-%ifnarch aarch64
+%if_enabled hipe
 %_otplibdir/hipe-*/rtl
 %_otplibdir/hipe-*/llvm
 %endif
@@ -1069,10 +1069,8 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/hipe-*/icode
 %exclude %_otplibdir/hipe-*/main
 %exclude %_otplibdir/hipe-*/misc
-%ifnarch aarch64
 %exclude %_otplibdir/hipe-*/rtl
 %exclude %_otplibdir/hipe-*/llvm
-%endif
 %exclude %_otplibdir/hipe-*/doc
 %endif
 %_otplibdir/observer-*/ebin
@@ -1249,6 +1247,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Tue Feb 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:21.2.4-alt3
+- Fixed build on other architectures without hipe support.
+
 * Tue Feb 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1:21.2.4-alt2
 - Use pre BuildRequires for macros
 - Remove unnecessary BuildRequires
