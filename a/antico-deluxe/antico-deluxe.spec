@@ -2,7 +2,7 @@
 
 Name: antico-deluxe
 Version: 0.1.96
-Release: alt1.2
+Release: alt1.3
 Summary: Antico Deluxe is a Qt4 Window/Desktop manager
 Source: http://anticodeluxe.googlecode.com/files/%srcname-%version.tar.bz2
 Source1: 07antico-deluxe
@@ -10,6 +10,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 Patch: %srcname-0.1.96-link.patch
 Patch1: antico-deluxe-0.1.96-alt-DSO.patch
 Patch2: antico-deluxe-0.1.96-alt-glibc-2.16.patch
+Patch3: %name-0.1.96-gcc8-fix.patch
 Url: http://code.google.com/p/anticodeluxe/
 Group: Graphical desktop/Other
 License: GPLv2 Artistic
@@ -53,6 +54,7 @@ programs which make use of Antico Deluxe.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 find -type f -name \*.pro | xargs subst "s|/usr/lib|%_libdir|g"
 
@@ -86,6 +88,9 @@ convert -resize 32x32 wm/theme/default/appicon.png %buildroot%_niconsdir/%name.p
 %_includedir/ame/*
 
 %changelog
+* Tue Feb 12 2019 Pavel Moseev <mars@altlinux.org> 0.1.96-alt1.3
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.96-alt1.2
 - Fixed build with glibc 2.16
 
