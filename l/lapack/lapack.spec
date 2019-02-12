@@ -1,10 +1,11 @@
 Name: lapack
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 %define sover 4
 %define soname lib%name.so.%sover
+%def_without bootstrap
 
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 License: BSD
@@ -14,7 +15,15 @@ Url: http://www.netlib.org/
 Source: %name-%version.tar
 Source1: manpages.tar
 
-BuildRequires: cmake gcc-fortran libopenblas-devel libsuperlu-devel libxblas-devel
+BuildRequires: cmake gcc-fortran libxblas-devel
+%{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
+%ifarch %arm %e2k riscv64
+BuildRequires: libblas-devel
+%define blas libblas.so
+%else
+BuildRequires: libopenblas-devel
+%define blas libopenblas.so
+%endif
 
 %package -n lib%name
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
@@ -26,7 +35,11 @@ Obsoletes: liblapack3
 %package -n lib%name-devel
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: Development/Other
+%ifarch %arm %e2k riscv64
+Requires: libblas-devel
+%else
 Requires: libopenblas-devel
+%endif
 Requires: lib%name = %epoch:%version-%release
 Conflicts: lib%name-devel < %epoch:%version-%release
 Obsoletes: lib%name-devel < %epoch:%version-%release
@@ -124,7 +137,7 @@ rm -fR BLAS
 %cmake \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
+	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/%blas \
 	-DUSE_XBLAS:BOOL=ON \
 	-DBUILD_DEPRECATED:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
@@ -169,6 +182,10 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Tue Feb 12 2019 Nikita Ermakov <arei@altlinux.org> 1:3.8.0-alt2
+- Add bootstrap option
+- Use libblas.so for %%arm %%e2k and riscv64 instead of libopenblas.so
+
 * Thu May 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.8.0-alt1
 - 3.8.0 released
 
