@@ -1,6 +1,6 @@
 Name: megasync
-Version: 3.6.6.0
-Release: alt3
+Version: 3.7.1.0
+Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
 
@@ -27,6 +27,9 @@ BuildRequires: libmegasdk-devel >= 3.2 libmegasdk-devel-qt5
 # optimized out: fontconfig glib2-devel glibc-devel-static libGL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libdc1394-22 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-sql libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libsodium-devel libstdc++-devel libswscale-devel libvpx-devel libwayland-client libwayland-server python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools xorg-scrnsaverproto-devel xorg-xproto-devel
 BuildRequires: gcc-c++ qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-svg-devel
 
+# instead of internal fonts OpenSans, SourceSansPro
+Requires: fonts-ttf-open-sans fonts-otf-adobe-source-sans-pro
+
 %description
 Easy automated syncing between your computers and your MEGA cloud drive.
 
@@ -43,7 +46,12 @@ cp %SOURCE1 src/MEGASync/mega/bindings/qt/sdk.pri
 mkdir -p src/MEGASync/mega/include/mega/
 ln -s %_includedir/mega/config.h src/MEGASync/mega/include/mega/config.h
 
-# TODO: use external only
+# drop fonts
+%__subst 's|.*fonts/.*||' src/MEGASync/gui/Resources_linux.qrc
+%__subst 's|.*//fonts/.*||' src/MEGASync/MegaApplication.cpp
+rm -rfv src/MEGASync/gui/fonts/
+
+# TODO: use external one only
 #rm -rf src/MEGASync/google_breakpad
 
 %build
@@ -70,6 +78,10 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.7.1.0-alt1
+- new version 3.7.1.0 (with rpmrb script)
+- use system fonts instead of compiled in ones
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.6.0-alt3
 - rebuild with libcryptopp.so.7
 
