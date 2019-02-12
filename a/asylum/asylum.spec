@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_16
+Release:        alt2_16
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -16,6 +16,7 @@ URL:            http://sdl-asylum.sourceforge.net
 Source0:        http://downloads.sourceforge.net/sdl-%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
 Patch0:         asylum-0.3.2-paths.patch
+Patch1:         asylum-0.3.2-alt-gcc8.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
@@ -34,6 +35,7 @@ pulsating neurons scattered through the immense map.
 %setup -q
 
 %patch0 -p0
+%patch1 -p2
 
 # Character encoding fixes
 iconv -f iso8859-1 README -t utf8 > README.conv \
@@ -133,6 +135,9 @@ done
 
 
 %changelog
+* Tue Feb 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt2_16
+- NMU: fixed build with gcc-8.
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_16
 - update to new release by fcimport
 
