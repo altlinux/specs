@@ -3,7 +3,7 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.196
+Version: 0.197
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -44,6 +44,9 @@ BuildRequires: perl-RPM-Source-Editor
 %endif
 
 %changelog
+* Tue Feb 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.197-alt1
+- added has_external_commits and external_commits to API
+
 * Thu Oct 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.196-alt1
 - subtree merge support
 
