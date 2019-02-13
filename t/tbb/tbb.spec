@@ -1,8 +1,9 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
+%def_without python2
 
 Name: tbb
-Version: 2018
-Release: alt1.u1.1.qa1
+Version: 2019
+Release: alt1.u2
 Summary: Threading Building Blocks
 License: Apache 2.0
 Group: Development/Tools
@@ -11,7 +12,16 @@ Url: http://threadingbuildingblocks.org/
 # https://github.com/01org/tbb.git
 Source: %name-%version.tar
 
-Patch1: %name-%{version}.u1-alt-build.patch
+# These are downstream sources. (from mageia spec file)
+Source6:	tbb.pc
+Source7:	tbbmalloc.pc
+Source8:	tbbmalloc_proxy.pc
+
+# (Fedora) Don't snip -Wall from C++ flags.  Add -fno-strict-aliasing, as that
+# uncovers some static-aliasing warnings.
+# Related: https://bugzilla.redhat.com/show_bug.cgi?id=1037347
+Patch0: tbb-2019-dont-snip-Wall.patch
+Patch1: %name-2019.u2-alt-build.patch
 
 Requires: lib%name = %EVR
 
@@ -90,6 +100,7 @@ having to be a threading expert.
 
 This package contains examples for Threading Building Blocks.
 
+%if_with python2
 %package -n python-module-%name
 Summary: Python 2 Threading Building Blocks module
 Group: Development/Python
@@ -101,8 +112,8 @@ leverage multi-core processors for performance and scalability without
 having to be a threading expert.
 
 This package contains python module for Threading Building Blocks.
+%endif
 
-%if_with python3
 %package -n python3-module-%name
 Summary: Python 3 Threading Building Blocks module
 Group: Development/Python3
@@ -114,14 +125,13 @@ leverage multi-core processors for performance and scalability without
 having to be a threading expert.
 
 This package contains python3 module for Threading Building Blocks.
-%endif
 
 %prep
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -a python python3
+%if_with python2
+cp -a python python2
 %endif
 
 %build
@@ -130,14 +140,31 @@ export CXXFLAGS="${CXXFLAGS:-%optflags}"
 
 %make_build stdver=c++14
 
+for file in %{SOURCE6} %{SOURCE7} %{SOURCE8}; do
+    base=$(basename ${file})
+    sed 's/_FEDORA_VERSION/%{version}/' ${file} > ${base}
+    touch -r ${file} ${base}
+done
+
 . build/linux*release/tbbvars.sh
 pushd python
-%python_build_debug
+%make_build -C rml stdver=c++14 \
+  CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD" \
+  PIC_KEY="-fPIC -Wl,--as-needed" \
+  LDFLAGS="$RPM_LD_FLAGS"
+cp -p rml/libirml.so* .
+%python3_build_debug
 popd
 
-%if_with python3
-pushd python3
-%python3_build_debug
+# Build for python 2
+%if_with python2
+pushd python2
+%make_build -C rml stdver=c++14 \
+  CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD" \
+  PIC_KEY="-fPIC -Wl,--as-needed" \
+  LDFLAGS="$RPM_LD_FLAGS"
+cp -p rml/libirml.so* .
+%python_build_debug
 popd
 %endif
 
@@ -167,30 +194,49 @@ done
 pushd %buildroot%_docdir/%name
 	rm -fr examples
 	rm -fr python
-%if_with python3
-	rm -fr python3
+%if_with python2
+	rm -fr python2
 %endif
 popd
 
 install -p -m644 CHANGES LICENSE README* %buildroot%_docdir/%name
 
+for file in %{SOURCE6} %{SOURCE7} %{SOURCE8}; do
+    install -p -D -m 644 $(basename ${file}) \
+        $RPM_BUILD_ROOT/%{_libdir}/pkgconfig/$(basename ${file})
+done
+
+# Install the rml headers
+mkdir -p $RPM_BUILD_ROOT%{_includedir}/rml
+cp -p src/rml/include/*.h $RPM_BUILD_ROOT%{_includedir}/rml
+
 . build/linux*release/tbbvars.sh
 pushd python
-%python_install
+%python3_install
+cp -p libirml.so.1 $RPM_BUILD_ROOT%{_libdir}
+ln -s libirml.so.1 $RPM_BUILD_ROOT%{_libdir}/libirml.so
 popd
 
-%if_with python3
-pushd python3
-%python3_install
+%if_with python2
+pushd python2
+%python_install
 popd
 %endif
+
+# Install the cmake files
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/cmake
+cp -a cmake $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}
+rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 
 %files -n lib%name
 %_libdir/*.so.*
 
 %files devel
-%_includedir/*
-%_libdir/*.so
+%_includedir/rml
+%_includedir/tbb
+%_libdir/cmake/tbb
+%_libdir/lib*.so
+%_libdir/pkgconfig/*.pc
 
 %files docs
 %_docdir/%name
@@ -198,20 +244,22 @@ popd
 %files examples
 %_datadir/%name/
 
+%if_with python2
 %files -n python-module-%name
-%doc python/index.html
-%python_sitelibdir/TBB*
-%python_sitelibdir/_TBB.so
-
-%if_with python3
-%files -n python3-module-%name
-%doc python3/index.html
-%python3_sitelibdir/TBB*
-%python3_sitelibdir/_TBB.*.so
-%python3_sitelibdir/__pycache__/TBB*
+%doc python2/index.html
+%python_sitelibdir/*
 %endif
 
+%files -n python3-module-%name
+%doc python/index.html
+%python3_sitelibdir/*
+
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2019-alt1.u2
+- NMU: new version
+- packed cmake
+- added and packed pkgconfig
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1.u1.1.qa1
 - NMU: applied repocop patch
 
