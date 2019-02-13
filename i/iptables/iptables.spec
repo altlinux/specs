@@ -1,9 +1,9 @@
 Name: iptables
 Version: 1.4.21
-Release: alt3
+Release: alt4
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
-License: GPLv2+
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: http://www.netfilter.org/projects/iptables/
 
@@ -225,11 +225,15 @@ fi
 %endif
 
 %changelog
+* Thu Feb 14 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt4
+- Fixed License tag.
+- Rebuilt to remove automatic dependency on i586-glibc-kernheaders.
+
 * Wed Jul 01 2015 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt3
 - Packaged libip6t_NETFLOW.so (closes: #29813).
 
 * Sat Feb 14 2015 Anton Farygin <rider@altlinux.ru> 1.4.21-alt2
-- xtables: SET target: Add mapping of meta informations 
+- xtables: SET target: Add mapping of meta informations
   (skbinfo ipset extension) (closes: #30729)
 
 * Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt1

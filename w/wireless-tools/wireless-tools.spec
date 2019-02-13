@@ -1,12 +1,16 @@
 Name: wireless-tools
 Version: 29
-Release: alt10
+Release: alt11
 %define fullname wireless_tools.%version
 
 Summary: Wireless ethernet configuration tools
 Summary(ru_RU.UTF-8): Утилиты для настройки беспроводных сетей
 Group: System/Kernel and hardware
-License: GPL
+# Most of the code contains the following notice:
+# This file is released under the GPL license.
+# The COPYING file contains the text of GPLv2.
+# iwevent.c contains code copied from a GPLv2+ project.
+License: GPL-2.0-or-later
 Url: http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
 # http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/%fullname.tar.gz
 Source0: %fullname.tar
@@ -144,6 +148,10 @@ exec /lib/ifrename/iftab2rules
 %_includedir/*
 
 %changelog
+* Thu Feb 14 2019 Dmitry V. Levin <ldv@altlinux.org> 29-alt11
+- Fixed License tag.
+- Rebuilt to remove automatic dependency on i586-glibc-kernheaders.
+
 * Fri May 25 2012 Dmitry V. Levin <ldv@altlinux.org> 29-alt10
 - ifrename: dropped udev-rule-generator requirement, added a warning
   to %%pre script for the rare case when old udev rules file still
