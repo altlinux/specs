@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module PathTools
 %define real_name PathTools
 
@@ -6,7 +7,7 @@ Name: perl-PathTools
 ##### Parts of the module are included into perl-base ####
 ##### Module version MUST BE THE SAME as in perl-base ####
 #####         CHECK IT BEFORE UPGRADING!              ####
-Version: 3.67
+Version: 3.75
 #####  ATTENTION  ATTENTION  ATTENTION ATTENTION    ######
 Release: alt1
 
@@ -66,11 +67,14 @@ rm -f -- %buildroot%perl_vendor_archlib/Cwd.pm
 rm -rf -- %buildroot%perl_vendor_autolib
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_archlib/File/Spec*
 
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.75-alt1
+- new version
+
 * Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.67-alt1
 - New version
 
