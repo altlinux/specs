@@ -5,13 +5,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Class-Field
-Version:        0.23
-Release:        alt1_8
+Version:        0.24
+Release:        alt1
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/Class-Field
-Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -55,11 +55,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE CONTRIBUTING
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_8
 - update to new release by fcimport
 
