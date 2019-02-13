@@ -1,20 +1,20 @@
 Name: rpm-build-pear
-Version: 0.4
-Release: alt2
+Version: 0.5
+Release: alt1
 
 Summary: RPM helper scripts for build PEAR packages
 
 License: GPL
 Group: Development/Other
-Url: http://www.freesource.info/wiki/Altlinux/Policy/Pear
+Url: https://www.altlinux.org/Pear_Policy
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://etersoft.ru/download/%name/%name-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-php5 rpm-build-compat
-Requires: rpm-build-php5 php5 php5-simplexml
+BuildRequires: rpm-build-php7 rpm-build-compat
+Requires: rpm-build-php7 php7 php7-simplexml
 
 %description
 RPM helper scripts for build PEAR packages.
@@ -23,20 +23,23 @@ pear make-rpm-spec <package> command from pear-PEAR_Command_Packaging package.
 See %url for detailed PEAR packaging policy.
 
 %prep
-%setup -q
+%setup
 
 %install
 install -D -m644 macros %buildroot/%_rpmmacrosdir/pear
-install -D -m644 xml2changelog %buildroot/%php5_peardir/xml2changelog
-install -D -m644 PHP-LICENSE-3.01 %buildroot/%php5_peardir/PHP-LICENSE-3.01
+install -D -m644 xml2changelog %buildroot/%php7_peardir/xml2changelog
+install -D -m644 PHP-LICENSE-3.01 %buildroot/%php7_peardir/PHP-LICENSE-3.01
 
 %files
 %doc README
 %_rpmmacrosdir/pear
-%php5_peardir/xml2changelog
-%php5_peardir/PHP-LICENSE-3.01
+%php7_peardir/xml2changelog
+%php7_peardir/PHP-LICENSE-3.01
 
 %changelog
+* Wed Feb 13 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- switch to php7
+
 * Tue Jul 01 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt2
 - cleanup spec, move to build from git
 
