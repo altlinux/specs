@@ -2,20 +2,19 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.3
-Release: alt2
+Version: %major.5
+Release: alt0.1.rc1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
 Group: System/Libraries
 URL: http://www.fltk.org/
 
-# http://seriss.com/public/fltk/fltk/branches/branch-1.3/
+# https://github.com/fltk/fltk
 Source: %name-%version.tar
-Source2: fltk-%version-docs-html.tar.gz
+Source2: fltk-%{version}rc1-docs-html.tar.gz
 
-Patch1: fltk-1.3-L3156.patch
-Patch2: fltk-1.3.2-fltk_config.patch
+Patch: fltk-fix-soname.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -75,16 +74,16 @@ FLTK applications.
 
 %prep
 %setup
-tar xf %SOURCE2
-%patch1 -p0
-%patch2 -p1
-perl -pi -e 's/\bcat([1-3])\b/man$1/g' documentation/Makefile
 
-# change soname from so.1.3 to so.2 .
-sed -r -e 's/FL_API_VERSION=.*/FL_API_VERSION=2/' -i configure configure.in
-sed -r -e 's/(libfltk[^\.]*\.so)\.1\.3/\1.2/g' -i src/Makefile
+%patch -p1
+
+tar xf %SOURCE2
 
 %build
+./autogen.sh
+
+perl -pi -e 's/\bcat([1-3])\b/man$1/g' documentation/Makefile
+
 %configure --disable-static --enable-shared --enable-largefile --enable-xdbe --enable-xinerama --enable-xft --enable-threads
 %make_build
 
@@ -94,7 +93,7 @@ install -d %buildroot%_mandir
 
 %makeinstall_std docdir=%buildroot%_docdir/fltk-%version
 cp -p ANNOUNCEMENT CHANGES CREDITS README %buildroot%_docdir/fltk-%version/
-cp -fR fltk-%version/documentation/html %buildroot%_docdir/fltk-%version/
+cp -fR fltk-%{version}rc1/documentation/html %buildroot%_docdir/fltk-%version/
 
 %files
 %_bindir/fluid
@@ -120,6 +119,9 @@ cp -fR fltk-%version/documentation/html %buildroot%_docdir/fltk-%version/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt0.1.rc1
+- Build new version.
+
 * Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 1.3.3-alt2
 - Dropped BR: libopensm-devel (what was it doing here?!)
 
