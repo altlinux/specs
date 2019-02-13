@@ -1,6 +1,6 @@
 %define dist Module-Load
 Name: perl-%dist
-Version: 0.32
+Version: 0.34
 Release: alt1
 
 Summary: runtime require of both modules and files
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-devel
 either a file or a module.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n Module-Load-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ either a file or a module.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- automated CPAN update
+
 * Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
