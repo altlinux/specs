@@ -1,11 +1,6 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 Name: MySQL-server-control
-Version: 0.2
-Release: %branch_release alt1
+Version: 0.3
+Release: alt1
 
 Summary: MySQL and mariadb server facilities control
 License: %gpl2plus
@@ -31,6 +26,9 @@ install -pD -m0755 %SOURCE0 %buildroot%_controldir/MySQL-server
 %_controldir/*
 
 %changelog
+* Wed Feb 13 2019 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
+- Support included config from /etc/my.cnf.d directory.
+
 * Wed Apr 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - added mariadb support
 
