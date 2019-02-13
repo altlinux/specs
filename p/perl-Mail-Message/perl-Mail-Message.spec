@@ -6,14 +6,14 @@ BuildRequires: perl(Date/Format.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.007
+Version: 3.008
 Release: alt1
 Summary: MIME message handling
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Message-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -32,7 +32,7 @@ There are various ways to install this module:
        tar -xf Mail-Message-3.002.tar
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n Mail-Message-%{version}
 
 %build
 %perl_vendor_build
@@ -45,6 +45,9 @@ There are various ways to install this module:
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.008-alt1
+- automated CPAN update
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 3.007-alt1
 - automated CPAN update
 
