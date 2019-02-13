@@ -1,7 +1,7 @@
 %def_enable utils
 
 Name: libnfs
-Version: 3.0.0
+Version: 4.0.0
 Release: alt1
 
 Summary: NFS client library
@@ -67,6 +67,9 @@ This package provides utilities from LibNFS package.
 %endif
 
 %changelog
+* Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Sun Jul 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 

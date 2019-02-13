@@ -33,7 +33,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -525,6 +525,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt4
+- rebuilt against libnfs.so.13
+
 * Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt3
 - updated to 1.38.1-8-ge4eec2bc (fixed GLI ##348, 355)
 - disabled obsolete logind-state.patch
