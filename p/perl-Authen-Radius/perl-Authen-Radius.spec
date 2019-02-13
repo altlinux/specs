@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Authen::Radius
 
 %define real_name Authen-Radius
 %define dist_name RadiusPerl
 
 Name: perl-Authen-Radius
-Version: 0.27
+Version: 0.29
 Release: alt1
 
 Summary: provide simple Radius client facilities
@@ -46,12 +47,15 @@ response.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README
 %exclude /.perl.req
 %perl_vendor_privlib/Authen/Radius*
 
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- new version
+
 * Sun Jul 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.27-alt1
 - New version
 
