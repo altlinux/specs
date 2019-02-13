@@ -1,7 +1,7 @@
 Summary: GPL rendition of old Arcade Volleyball game
 Name: gav
 Version: 0.8.0
-Release: alt4.qa2
+Release: alt4.qa3
 URL: http://gav.sourceforge.net
 Source: %name-%version.tar.gz
 Patch: %name.patch
@@ -61,6 +61,9 @@ make depend
 %doc README CHANGELOG 
 
 %changelog
+* Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt4.qa3
+- NMU: fixed build with gcc-8.
+
 * Tue Apr 12 2011 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt4.qa2
 - NMU: .desktop files should use /usr/bin/sound_wrapper
 
