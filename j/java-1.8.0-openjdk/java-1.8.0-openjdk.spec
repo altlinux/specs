@@ -303,7 +303,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_5.b12jpp8
+Release: alt2_5.b12jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -423,6 +423,8 @@ Patch100: %{name}-s390-java-opts.patch
 Patch102: %{name}-size_t.patch
 # Use "%z" for size_t on s390 as size_t != intptr_t
 Patch103: s390-size_t_format_flags.patch
+# AArch64: PR3519: Fix further functions with a missing return value (AArch64)
+Patch106: pr3519-fix_further_functions_with_a_missing_return_value.patch
 
 # Patches which need backporting to 8u
 # S8073139, RH1191652; fix name of ppc64le architecture
@@ -445,12 +447,21 @@ Patch507: pr2842-02.patch
 Patch400: 8154313.patch
 # S6260348, PR3066: GTK+ L&F JTextComponent not respecting desktop caret blink rate
 Patch526: 6260348-pr3066.patch
+# PR3601: Fix additional -Wreturn-type issues introduced by 8061651
+Patch530: pr3601-fix_additional_Wreturn_type_issues_introduced_by_8061651_for_prims_jvm_cpp.patch
 # 8061305, PR3335, RH1423421: Javadoc crashes when method name ends with "Property"
 Patch538: 8061305-pr3335-rh1423421.patch
 
 # Patches upstream and appearing in 8u151
 # 8075484, PR3473, RH1490713: SocketInputStream.socketRead0 can hang even with soTimeout set
 Patch561: 8075484-pr3473-rh1490713.patch
+
+# 8197981, PR3548: Missing return statement in __sync_val_compare_and_swap_8
+Patch575: jdk8197981-pr3548-missing_return_statement_in_sync_val_compare_and_swap_8.patch
+# 8064786, PR3599: Fix debug build after 8062808: Turn on the -Wreturn-type warning
+Patch576: jdk8064786-pr3599-fix_debug_build_after_8062808_Turn_on_the_wreturn_type_warning.patch
+# 8062808, PR3548: Turn on the -Wreturn-type warning
+Patch577: jdk8062808-pr3548-turn_on_the_wreturn_type_warning.patch
 
 # Patches upstream and appearing in 8u152
 # 8153711, PR3313, RH1284948: [REDO] JDWP: Memory Leak: GlobalRefs never deleted when processing invokeMethod command
@@ -484,6 +495,18 @@ Patch558: 8170328-pr3466-rh1498321.patch
 # 8181810, PR3466, RH1498319: PPC64: Leverage extrdi for bitfield extract
 Patch559: 8181810-pr3466-rh1498319.patch
 
+#############################################
+#
+# Patches appearing in 8u211
+#
+# This section includes patches which are present
+# in the listed OpenJDK 8u release and should be
+# able to be removed once that release is out
+# and used by this RPM.
+#############################################
+# JDK-8145096, PR3693: Undefined behaviour in HotSpot
+Patch588: jdk8145096-pr3693-undefined_behaviour.patch
+
 # Patches ineligible for 8u
 # 8043805: Allow using a system-installed libjpeg
 Patch201: system-libjpeg.patch
@@ -495,6 +518,8 @@ Patch525: pr1834-rh1022017.patch
 Patch534: always_assumemp.patch
 # PR2888: OpenJDK should check for system cacerts database (e.g. /etc/pki/java/cacerts)
 Patch539: pr2888.patch
+
+Patch900: upstream-gcc8-return-type-fixes.patch
 
 # Non-OpenJDK fixes
 
@@ -945,6 +970,9 @@ sh %{SOURCE12}
 %patch102
 %patch103
 
+# AArch64 fixes
+%patch106
+
 # ppc64le fixes
 
 %patch603
@@ -973,6 +1001,7 @@ sh %{SOURCE12}
 %patch523
 %patch526
 %patch528
+%patch530
 %patch532
 %patch535
 %patch538
@@ -984,6 +1013,10 @@ sh %{SOURCE12}
 %patch560
 %patch561
 %patch564
+%patch575
+%patch576
+%patch577
+%patch588
 
 # PPC64 updates
 %patch556
@@ -1005,6 +1038,8 @@ sh %{SOURCE12}
 %else
 %patch554
 %endif
+
+%patch900 -p1
 
 # Extract systemtap tapsets
 %if_enabled systemtap
@@ -1812,6 +1847,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0:1.8.0.151-alt2_5.b12jpp8
+- NMU: fixed build with gcc-8.
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.151-alt1_5.b12jpp8
 - new version
 
