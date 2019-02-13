@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          69663f0bd4b60df09991c08812a60108003fa340
+%global commit          0a012df867a2d525f62a146d8ebdf2e6ab8a5ad5
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt6.rc6
+Release:        alt7.git%shortcommit
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -65,6 +65,10 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Wed Feb 13 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt7.git0a012df
+- snapshot of master branch.
+- Fixes CVE-2019-5736.
+
 * Tue Jan 29 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt6.rc6
 - New version (for docker 18.09.1-ce).
 
