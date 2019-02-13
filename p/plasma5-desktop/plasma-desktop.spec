@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.7
-Release: alt6
+Release: alt7
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -42,6 +42,8 @@ Patch19: alt-disable-kwin-runner.patch
 Patch21: alt-fix-icon-dilation.patch
 # https://phabricator.kde.org/D17809
 Patch22: alt-fix-overlapping-icons.patch
+# https://phabricator.kde.org/D18979
+Patch23: alt-folderview-store-screen.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -139,6 +141,7 @@ KF5 library
 %patch19 -p1
 %patch21 -p1
 %patch22 -p2
+%patch23 -p2
 
 %build
 %K5cmake \
@@ -227,6 +230,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Feb 13 2019 Oleg Solovyov <mcpain@altlinux.org> 5.12.7-alt7
+- plasmashell: filter out items from disabled folderviews
+
 * Mon Jan 14 2019 Oleg Solovyov <mcpain@altlinux.org> 5.12.7-alt6
 - use better patch from upstream
 
