@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Dist::Zilla::Plugin::OurPkgVersion
 
 %define real_name Dist-Zilla-Plugin-OurPkgVersion
 
 Name: perl-Dist-Zilla-Plugin-OurPkgVersion
-Version: 0.12
+Version: 0.14
 Release: alt1
 
 Summary: Dist::Zilla plugin for package version management
@@ -50,6 +51,9 @@ specify your version.
 %perl_vendor_privlib/Dist/Zilla/Plugin/OurPkgVersion*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- new version
+
 * Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.12-alt1
 - New version
 
