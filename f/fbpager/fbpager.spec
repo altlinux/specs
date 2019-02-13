@@ -3,7 +3,7 @@
 
 Name: fbpager
 Version: 0.1.4
-Release: alt8.qa1
+Release: alt8.qa2
 
 Summary: Workspaces pager for Fluxbox
 Summary(ru_RU.CP1251): Пейджер рабочих столов для Fluxbox
@@ -17,6 +17,7 @@ Source0: http://fluxbox.org/download/%name-%version.tar.gz
 Source1: %name.menu
 
 Patch1: %name-0.1.4-alt-warnings-Wall_fix.patch
+Patch2: %name-%version-alt-gcc8.patch
 
 Requires: fluxbox >= 0.9.13-alt2
 Provides: fluxter >= 0.1.0-alt1
@@ -38,6 +39,7 @@ supports transparency.
 %setup
 
 #patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -55,6 +57,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt8.qa2
+- NMU: fixed build with gcc-8.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.4-alt8.qa1
 - NMU: rebuilt for debuginfo.
 
