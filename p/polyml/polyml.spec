@@ -1,8 +1,9 @@
 %def_disable static
+ExclusiveArch: %ix86 x86_64 
 
 Name: polyml
 Version: 5.4.1
-Release: alt3.1
+Release: alt4
 
 Summary: Standard ML implementation
 Summary(ru_RU.UTF-8): Реализация Standard ML
@@ -12,6 +13,7 @@ Url: http://www.polyml.org
 
 Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
 Source0: %name-%version.tar
+Patch0: %name-5.4.1-gcc8-fix.patch
 
 Requires: lib%name = %version
 BuildRequires(pre): rpm-build-licenses
@@ -43,6 +45,7 @@ Static files for Poly/ML runtime library.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 # Quick fix for RPATH bug
@@ -68,6 +71,9 @@ Static files for Poly/ML runtime library.
 %endif
 
 %changelog
+* Wed Feb 13 2019 Pavel Moseev <mars@altlinux.org> 5.4.1-alt4
+- no return statement in the non-void function fixed (according g++8)
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt3.1
 - Rebuilt with gmp 5.0.5
 
