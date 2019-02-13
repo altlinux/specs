@@ -2,7 +2,7 @@ Packager:	Alex Negulescu <alecs@altlinux.org>
 Summary:	Advanced Linux Sound Architecture (ALSA) graphical mixer
 Name:		alsamixergui
 Version:	0.9.0
-Release:	alt3
+Release:	alt4
 License:	GPL
 Group:		Sound
 URL:		http://www.iua.upf.es/~mdeboer/projects/alsamixergui/
@@ -62,6 +62,9 @@ rm -rf %buildroot
 %_datadir/applnk/Multimedia/%name.desktop
 
 %changelog
+* Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt4
+- Rebuild with libfltk13.
+
 * Sat Apr 21 2012 Alex Negulescu <alecs@altlinux.org> 0.9.0-alt3
 - fixed build failure
 
