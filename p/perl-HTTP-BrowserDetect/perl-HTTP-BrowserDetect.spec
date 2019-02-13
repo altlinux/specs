@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module HTTP::BrowserDetect
 
 %define real_name HTTP-BrowserDetect
 
 Name: perl-HTTP-BrowserDetect
-Version: 3.16
+Version: 3.21
 Release: alt1
 
 Summary: determine Web browser from an HTTP user agent string
@@ -23,7 +24,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Sat Dec 23 2017
 # optimized out: perl perl-Algorithm-Diff perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Devel-StackTrace perl-Encode perl-Exception-Class perl-JSON-PP perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-Test-Deep perl-Test-Differences perl-Test-Exception perl-Test-Warn perl-Text-Diff perl-devel perl-parent python-base python-modules python3 python3-base
-BuildRequires: perl-CPAN-Meta perl-Path-Tiny perl-Test-FailWarnings perl-Test-Most perl-Test-NoWarnings
+BuildRequires: perl-CPAN-Meta perl-Path-Tiny perl-Test-FailWarnings perl-Test-Most perl-Test-NoWarnings perl(Hash/Merge.pm)
 
 %description
 Perl module HTTP::BrowserDetect does a number of tests on an HTTP
@@ -49,10 +50,13 @@ sed -e '/List::Util/ s/1\.49/1.46/' -i t/01-detect.t
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTORS TODO Changes
+%doc CONTRIBUTORS TODO Changes README.md examples
 %perl_vendor_privlib/HTTP/BrowserDetect*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.21-alt1
+- new version
+
 * Sat Dec 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.16-alt1
 - New version
 
