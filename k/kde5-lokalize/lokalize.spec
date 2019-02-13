@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
 
 Name: kde5-%rname
-Version: 18.12.1
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Development/Tools
@@ -61,8 +61,14 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5notif/lokalize*
 
 %changelog
+* Wed Feb 13 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Fri Feb 01 2019 Pavel Moseev <mars@altlinux.org> 18.12.1-alt2
 - add language-team settings to Lokalize
+
+* Thu Jan 31 2019 Pavel Moseev <mars@altlinux.org> 18.08.1-alt2
+- add language-team settings to Lokalize  
 
 * Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - new version
