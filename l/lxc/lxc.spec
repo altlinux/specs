@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 3.0.3
-Release: alt2
+Release: alt3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -202,6 +202,9 @@ fi
 %_pam_modules_dir/*
 
 %changelog
+* Wed Feb 13 2019 Denis Pynkin <dans@altlinux.org> 3.0.3-alt3
+- Apply patch fixing the startup of LXD containers (after CVE-2019-5736)
+
 * Tue Feb 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt2
 - built lxc-3.0.3-15-g94bb05e0 snapshot.
 - fixes:
