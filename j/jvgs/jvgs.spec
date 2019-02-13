@@ -1,12 +1,14 @@
 Name:		jvgs
 Version:	0.5
-Release:	alt2.1.qa1
+Release:	alt3
 Summary:	Minimalistic platform game with xkc-like graphics
 Group:		Games/Arcade
 License:	GPL
 Source:		%name-%version-src.tar.gz
 Requires:	%name-data
 URL:		http://jvgs.sourceforge.net/
+
+Patch0:     %name-g++8.patch
 
 # Automatically added by buildreq on Mon Mar 14 2011
 BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_mixer-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel lua5.1-devel libxkbfile-devel swig zlib-devel
@@ -41,6 +43,7 @@ BuildArch: noarch
 
 %prep
 %setup -n %name-%version-src
+%patch0 -p2
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX:PATH=%_prefix -DCMAKE_SKIP_RPATH:BOOL=YES .
@@ -95,6 +98,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/resources/music/*
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2.1.qa1
 - NMU: applied repocop patch
 
