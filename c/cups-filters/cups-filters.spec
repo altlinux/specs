@@ -5,7 +5,7 @@
 
 Name: cups-filters
 Version: 1.22.0
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -27,6 +27,7 @@ Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
 Patch3: %name-pjl-as-ps.patch
 Patch4: %name-1.22.0-pftoopvp-gcc8.patch
+Patch5: %name-1.22.0-poppler-0.74.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -122,6 +123,7 @@ serial backend for cups
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 # work-around Rpath
@@ -235,6 +237,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Feb 13 2019 Anton Farygin <rider@altlinux.ru> 1.22.0-alt2
+- fixed build with poppler 0.74
+
 * Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.22.0-alt1
 - 1.22.0
 - enabled opvp filter
