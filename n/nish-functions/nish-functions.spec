@@ -1,12 +1,11 @@
 Name: nish-functions
-Version: 2.02
+Version: 2.03
 Release: alt1
 
 Summary: Shell functions collection featuring isolated namespace
 License: Public domain
 Group: Development/Other
 BuildArch: noarch
-Packager: Fr. Br. George <george@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -32,6 +31,10 @@ No bash/zsh/whatever extension used. Runs on Linux and (losely) FreeBSD.
 %_libexecdir/nish/*
 
 %changelog
+* Thu Feb 14 2019 Fr. Br. George <george@altlinux.ru> 2.03-alt1
+- Actualize status
+- Introduce date arithmetic
+
 * Wed Nov 28 2018 Fr. Br. George <george@altlinux.ru> 2.02-alt1
 - Actualize status
 
