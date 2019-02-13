@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.2
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed Feb 13 2019 Elena Mishina <lepata@altlinux.org> 8.2-alt5
+- added moodle, mediawiki, owncloud, rujel
+- added install fonts (closes: 35820)
+
 * Tue Jan 15 2019 Elena Mishina <lepata@altlinux.org> 8.2-alt4
 - added kde
 - added boot option
