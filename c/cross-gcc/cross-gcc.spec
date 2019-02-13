@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
+BuildRequires: /usr/bin/expect /usr/bin/m4 perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
 # END SourceDeps(oneline)
 # due to explicit symlinks
 %set_compress_method off
@@ -9,11 +9,11 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporte
 %add_debuginfo_skiplist /usr
 %remove_optflags -g
 
-%define fedora 26
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 3
+%define release 1.1
 %global cross cross
 %global rpmprefix %{nil}
 
@@ -21,6 +21,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporte
 %global build_aarch64		%{build_all}
 %global build_alpha		%{build_all}
 %global build_arm		%{build_all}
+%global build_arc		%{build_all}
 %global build_avr32		%{build_all}
 %global build_blackfin		%{build_all}
 %global build_c6x		%{build_all}
@@ -38,6 +39,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporte
 %global build_nios2		%{build_all}
 %global build_powerpc64		%{build_all}
 %global build_powerpc64le	%{build_all}
+%global build_riscv64		%{build_all}
 %global build_s390x		%{build_all}
 %global build_sh		%{build_all}
 %global build_sparc64		%{build_all}
@@ -81,34 +83,39 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporte
 # The gcc versioning information.  In a sed command below, the specfile winds
 # pre-release version numbers in BASE-VER back to the last actually-released
 # number.
-%global DATE 20170622
-%global SVNREV 249497
-%global gcc_version 7.1.1
-%global gcc_major 7
+%global DATE 20181105
+%global SVNREV 265809
+%global gcc_version 8.2.1
+%global gcc_major 8
 
 # Note, cross_gcc_release must be integer, if you want to add suffixes
-# to %{release}, append them after %{cross_gcc_release} on Release:
+# to %%{release}, append them after %%{cross_gcc_release} on Release:
 # line.  gcc_release is the Fedora gcc release that the patches were
 # taken from.
-%global gcc_release 3
-%global cross_gcc_release 3
-%global cross_binutils_version 2.27-5
+%global gcc_release 5
+%global cross_gcc_release 1
+%global cross_binutils_version 2.31.1-1
 %global isl_version 0.16.1
 %global isl_libmajor 15
 
 %global _performance_build 1
 # Hardening slows the compiler way too much.
 %undefine _hardened_build
+%if 0%{?fedora} > 27 || 0%{?rhel} >= 8
+# Until annobin is fixed (#1519165).
+%undefine _annotated_build
+%endif
 
 Summary: Cross C compiler
 Name: %{cross}-gcc
 Version: %{gcc_version}
-Release: alt1_3
+Release: alt1_1.1
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
 License: GPLv3+ and GPLv3+ with exceptions and GPLv2+ with exceptions and LGPLv2+ and BSD
 Group: Development/Other
 URL: http://gcc.gnu.org
+BuildRequires:  gcc-c++
 BuildRequires: libisl-devel >= %{isl_version}
 
 # sh5 is deprecrated: https://gcc.gnu.org/ml/gcc/2015-08/msg00101.html
@@ -119,38 +126,47 @@ Obsoletes: gcc-c++-sh64-linux-gnu < 6.0.0-1
 
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
-# svn export svn://gcc.gnu.org/svn/gcc/branches/redhat/gcc-4_7-branch@%{SVNREV} gcc-%{version}-%{DATE}
-# tar cf - gcc-%{version}-%{DATE} | bzip2 -9 > gcc-%{version}-%{DATE}.tar.bz2
+# svn export svn://gcc.gnu.org/svn/gcc/branches/redhat/gcc-8-branch@%%{SVNREV} gcc-%%{version}-%%{DATE}
+# tar cf - gcc-%%{version}-%%{DATE} | xz -9e > gcc-%%{version}-%%{DATE}.tar.xz
 %global srcdir gcc-%{version}-%{DATE}
-Source0: %{srcdir}.tar.bz2
+Source0: %{srcdir}.tar.xz
 
-Patch0: gcc7-hack.patch
-Patch1: gcc7-ppc32-retaddr.patch
-Patch2: gcc7-i386-libgomp.patch
-Patch3: gcc7-sparc-config-detection.patch
-Patch4: gcc7-libgomp-omp_h-multilib.patch
-Patch5: gcc7-libtool-no-rpath.patch
-Patch6: gcc7-isl-dl.patch
-Patch7: gcc7-libstdc++-docs.patch
-Patch8: gcc7-no-add-needed.patch
-Patch9: gcc7-aarch64-async-unw-tables.patch
-Patch10: gcc7-foffload-default.patch
-Patch11: gcc7-Wno-format-security.patch
+Patch0: gcc8-hack.patch
+Patch2: gcc8-i386-libgomp.patch
+Patch3: gcc8-sparc-config-detection.patch
+Patch4: gcc8-libgomp-omp_h-multilib.patch
+Patch5: gcc8-libtool-no-rpath.patch
+Patch6: gcc8-isl-dl.patch
+Patch7: gcc8-libstdc++-docs.patch
+Patch8: gcc8-no-add-needed.patch
+Patch9: gcc8-foffload-default.patch
+Patch10: gcc8-Wno-format-security.patch
+Patch11: gcc8-rh1512529-aarch64.patch
+Patch12: gcc8-mcet.patch
+Patch13: gcc8-rh1574936.patch
 
 Patch900: cross-intl-filename.patch
 Patch901: cross-gcc-microblaze.patch
 Patch902: cross-gcc-format-config.patch
+Patch903: cross-gcc-arc.patch
 
+%if 0%{?fedora} >= 29 || 0%{?rhel} > 7
+BuildRequires: binutils >= 2.31
+%else
 BuildRequires: binutils >= 2.24
+%endif
 BuildRequires: zlib-devel gettext gettext-tools, dejagnu, bison, flex, makeinfo, sharutils
 BuildRequires: %{cross}-binutils-common >= %{cross_binutils_version}
+
+# right now, we only have this for arm
+#BuildRequires: glibc-arm-linux-gnu
 
 # Make sure pthread.h doesn't contain __thread tokens
 # Make sure glibc supports stack protector
 # Make sure glibc supports DT_GNU_HASH
 BuildRequires: glibc-devel >= 2.4.90
-BuildRequires: elfutils-devel >= 0.147
-BuildRequires: elfutils-devel libelf-devel
+BuildRequires: libasm-devel libdw-devel libdw-devel-static libelf-devel
+BuildRequires: libelf-devel >= 0.147
 BuildRequires: libgmp-devel libgmpxx-devel, libmpfr-devel >= 2.2.1, libmpc-devel >= 0.8.1
 Provides: bundled(libiberty)
 Source44: import.info
@@ -174,33 +190,6 @@ number of packages.
 
 ###############################################################################
 #
-# Debuginfo
-#
-###############################################################################
-%if 0%{?_enable_debug_packages}
-%global debug_package %{nil}
-%global __debug_package 1
-%global __debug_install_post \
-   %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_find_debuginfo_opts} "%{_builddir}/gcc-%{version}-%{DATE}"\
-    %{_builddir}/gcc-%{version}-%{DATE}/split-debuginfo.sh\
-%{nil}
-
-%package debuginfo
-Summary: Debug information for package %{name}
-Group: Development/Debug
-AutoReqProv: 0
-
-%description debuginfo
-This package provides debug information for package %{name}.
-Debug information is useful when developing applications that use this
-package or when debugging this package.
-
-%files debuginfo -f debugfiles.list
-
-%endif
-
-###############################################################################
-#
 # Conditional arch package definition
 #
 ###############################################################################
@@ -208,7 +197,7 @@ package or when debugging this package.
 %if %2 \
 %package -n %{rpmprefix}gcc-%1 \
 Summary: Cross-build binary utilities for %1 \
-Group: Development/Tools \
+Group: Development/C \
 Requires: %{cross}-gcc-common == %{version}-%{release} \
 BuildRequires: %{rpmprefix}binutils-%1 >= %{cross_binutils_version} \
 Requires: %{rpmprefix}binutils-%1 >= %{cross_binutils_version} \
@@ -226,7 +215,7 @@ the number of packages. \
 \
 %package -n %{rpmprefix}gcc-c++-%1 \
 Summary: Cross-build binary utilities for %1 \
-Group: Development/Tools \
+Group: Development/C++ \
 Requires: %{rpmprefix}gcc-%1 == %{version}-%{release} \
 %description -n %{rpmprefix}gcc-c++-%1 \
 Cross-build GNU C++ compiler. \
@@ -240,7 +229,7 @@ the number of packages. \
 %if %2 \
 %package -n gcc-%1 \
 Summary: Cross-build binary utilities for %1 \
-Group: Development/Tools \
+Group: Development/C \
 Requires: gcc-%3 == %{version}-%{release} \
 %description -n gcc-%1 \
 Cross-build GNU C++ compiler. \
@@ -251,7 +240,7 @@ the number of packages. \
 \
 %package -n gcc-c++-%1 \
 Summary: Cross-build binary utilities for %1 \
-Group: Development/Tools \
+Group: Development/C++ \
 Requires: gcc-%1 == %{version}-%{release} \
 Requires: gcc-c++-%3 == %{version}-%{release} \
 %description -n gcc-c++-%1 \
@@ -262,9 +251,10 @@ user space programs is not currently provided as that would massively multiply \
 the number of packages. \
 %endif
 
-%do_package alpha-linux-gnu	%{build_alpha}
-%do_package arm-linux-gnu	%{build_arm}
 %do_package aarch64-linux-gnu	%{build_aarch64}
+%do_package alpha-linux-gnu	%{build_alpha}
+%do_package arc-linux-gnu	%{build_arc}
+%do_package arm-linux-gnu	%{build_arm}
 %do_package avr32-linux-gnu	%{build_avr32}
 %do_package bfin-linux-gnu	%{build_blackfin}
 %do_package c6x-linux-gnu	%{build_c6x}
@@ -290,6 +280,7 @@ the number of packages. \
 %do_symlink ppc-linux-gnu	%{build_powerpc}	powerpc-linux-gnu
 %do_symlink ppc64-linux-gnu	%{build_powerpc64}	powerpc64-linux-gnu
 %do_symlink ppc64le-linux-gnu	%{build_powerpc64le}	powerpc64le-linux-gnu
+%do_package riscv64-linux-gnu	%{build_riscv64}
 %do_package s390-linux-gnu	%{build_s390}
 %do_package s390x-linux-gnu	%{build_s390x}
 %do_package score-linux-gnu	%{build_score}
@@ -313,27 +304,35 @@ the number of packages. \
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
 %patch0 -p0 -b .hack~
-%patch1 -p0 -b .ppc32-retaddr~
 %patch2 -p0 -b .i386-libgomp~
 %patch3 -p0 -b .sparc-config-detection~
 %patch4 -p0 -b .libgomp-omp_h-multilib~
 %patch5 -p0 -b .libtool-no-rpath~
-# %if %{build_isl}
+# % if %{build_isl}
 %patch6 -p0 -b .isl-dl~
-# %endif
-# %if %{build_libstdcxx_docs}
-# %patch7 -p0 -b .libstdc++-docs~
-# %endif
+# % endif
+# % if %{build_libstdcxx_docs}
+# % patch7 -p0 -b .libstdc++-docs~
+# % endif
 %patch8 -p0 -b .no-add-needed~
-%patch9 -p0 -b .aarch64-async-unw-tables~
-%patch10 -p0 -b .foffload-default~
-%patch11 -p0 -b .Wno-format-security~
+%patch9 -p0 -b .foffload-default~
+%patch10 -p0 -b .Wno-format-security~
+%patch11 -p0 -b .rh1512529-aarch64~
+%if 0%{?fedora} == 28
+%patch12 -p0 -b .mcet~
+%endif
+%if 0%{?fedora} >= 29 || 0%{?rhel} > 7
+%patch13 -p0 -b .rh1574936~
+%endif
 
 %patch900 -p0 -b .cross-intl~
 %patch901 -p0 -b .microblaze~
 %patch902 -p0 -b .format-config~
+%patch903 -p0 -b .arc~
 
 echo 'Red Hat Cross %{version}-%{cross_gcc_release}' > gcc/DEV-PHASE
+
+echo 'TM_H += $(srcdir)/config/rs6000/rs6000-modes.h' >> gcc/config/rs6000/t-rs6000
 
 ./contrib/gcc_update --touch
 
@@ -356,59 +355,11 @@ function prep_target () {
 
 cd ..
 
-%if 0%{?_enable_debug_packages}
-# We don't need the dwz-wrapper script here
-cat > split-debuginfo.sh <<\EOF
-#!/bin/sh
-BUILDDIR="%{_builddir}/gcc-%{version}-%{DATE}"
-if [ -f "${BUILDDIR}"/debugfiles.list \
-     -a -f "${BUILDDIR}"/debuglinks.list ]; then
-  > "${BUILDDIR}"/debugsources-base.list
-  > "${BUILDDIR}"/debugfiles-base.list
-  cd "${RPM_BUILD_ROOT}"
-  for f in `find usr/lib/debug -name \*.debug \
-	    | egrep 'lib[0-9]*/lib(gcc[_.]|gomp|stdc|quadmath|itm)'`; do
-    echo "/$f" >> "${BUILDDIR}"/debugfiles-base.list
-    if [ -f "$f" -a ! -L "$f" ]; then
-      cp -a "$f" "${BUILDDIR}"/test.debug
-      /usr/lib/rpm/debugedit -b "${RPM_BUILD_DIR}" -d /usr/src/debug \
-			     -l "${BUILDDIR}"/debugsources-base.list \
-			     "${BUILDDIR}"/test.debug
-      rm -f "${BUILDDIR}"/test.debug
-    fi
-  done
-  for f in `find usr/lib/debug/.build-id -type l`; do
-    ls -l "$f" | egrep -q -- '->.*lib[0-9]*/lib(gcc[_.]|gomp|stdc|quadmath|itm)' \
-      && echo "/$f" >> "${BUILDDIR}"/debugfiles-base.list
-  done
-  cp -a "${BUILDDIR}"/debugfiles-base.list "${BUILDDIR}"/debugfiles-remove.list
-  grep -v -f "${BUILDDIR}"/debugfiles-remove.list \
-    "${BUILDDIR}"/debugfiles.list > "${BUILDDIR}"/debugfiles.list.new
-  mv -f "${BUILDDIR}"/debugfiles.list.new "${BUILDDIR}"/debugfiles.list
-  for f in `LC_ALL=C sort -z -u "${BUILDDIR}"/debugsources-base.list \
-	    | grep -E -v -z '(<internal>|<built-in>)$' \
-	    | xargs --no-run-if-empty -n 1 -0 echo \
-	    | sed 's,^,usr/src/debug/,'`; do
-    if [ -f "$f" ]; then
-      echo "/$f" >> "${BUILDDIR}"/debugfiles-base.list
-      echo "%%exclude /$f" >> "${BUILDDIR}"/debugfiles.list
-    fi
-  done
-  mv -f "${BUILDDIR}"/debugfiles-base.list{,.old}
-  echo "%%dir /usr/lib/debug" > "${BUILDDIR}"/debugfiles-base.list
-  awk 'BEGIN{FS="/"}(NF>4&&$NF){d="%%dir /"$2"/"$3"/"$4;for(i=5;i<NF;i++){d=d"/"$i;if(!v[d]){v[d]=1;print d}}}' \
-    "${BUILDDIR}"/debugfiles-base.list.old >> "${BUILDDIR}"/debugfiles-base.list
-  cat "${BUILDDIR}"/debugfiles-base.list.old >> "${BUILDDIR}"/debugfiles-base.list
-  rm -f "${BUILDDIR}"/debugfiles-base.list.old
-fi
-EOF
-chmod 755 split-debuginfo.sh
-%endif
-
 (
-    prep_target alpha-linux-gnu		%{build_alpha}
-    prep_target arm-linux-gnu		%{build_arm}
     prep_target aarch64-linux-gnu	%{build_aarch64}
+    prep_target alpha-linux-gnu		%{build_alpha}
+    prep_target arc-linux-gnu		%{build_arc}
+    prep_target arm-linux-gnu		%{build_arm}
     prep_target avr32-linux-gnu		%{build_avr32}
     prep_target bfin-linux-gnu		%{build_blackfin}
     prep_target c6x-linux-gnu		%{build_c6x}
@@ -431,6 +382,7 @@ chmod 755 split-debuginfo.sh
     prep_target powerpc-linux-gnu	%{build_powerpc}
     prep_target powerpc64-linux-gnu	%{build_powerpc64}
     prep_target powerpc64le-linux-gnu	%{build_powerpc64le}
+    prep_target riscv64-linux-gnu	%{build_riscv64}
     prep_target s390-linux-gnu		%{build_s390}
     prep_target s390x-linux-gnu		%{build_s390x}
     prep_target score-linux-gnu		%{build_score}
@@ -502,8 +454,9 @@ function config_target () {
     build_dir=$1
 
     case $arch in
-	arm-*)		target=arm-linux-gnueabi;;
 	aarch64-*)	target=aarch64-linux-gnu;;
+	arc-*)		target=arc-linux-gnu;;
+	arm-*)		target=arm-linux-gnueabi;;
 	avr32-*)	target=avr-linux;;
 	bfin-*)		target=bfin-uclinux;;
 	c6x-*)		target=c6x-uclinux;;
@@ -525,8 +478,12 @@ function config_target () {
 
     CONFIG_FLAGS=
     case $arch in
+	arc-*)
+	    CONFIG_FLAGS="--with-cpu=hs38"
+	    ;;
+
 	arm-*)
-	    CONFIG_FLAGS="--with-tune=cortex-a8 --with-arch=armv7-a \
+	    CONFIG_FLAGS="--with-tune=generic-armv7-a --with-arch=armv7-a \
 		--with-float=hard --with-fpu=vfpv3-d16 --with-abi=aapcs-linux"
 	    ;;
 	mips64-*)
@@ -539,7 +496,7 @@ function config_target () {
 	    CONFIG_FLAGS="--with-cpu-32=power8 --with-tune-32=power8 --with-cpu-64=power8 --with-tune-64=power8 --enable-secureplt"
 	    ;;
 	s390*-*)
-%if 0%{?fedora} >= 26
+%if 0%{?fedora} >= 26 || 0%{?rhel} > 7
 	    CONFIG_FLAGS="--with-arch=zEC12 --with-tune=z13 --enable-decimal-float"
 %else
 	    CONFIG_FLAGS="--with-arch=z9-109 --with-tune=z10 --enable-decimal-float"
@@ -564,7 +521,7 @@ function config_target () {
 	    #CONFIG_FLAGS="--with-arch_32=tilepro"
 	    ;;
 	x86_64-*)
-	    CONFIG_FLAGS="--with-arch_32=i686 --with-tune=generic"
+	    CONFIG_FLAGS="--with-arch_32=i686 --with-tune=generic --enable-cet"
 	    ;;
     esac
 
@@ -576,6 +533,12 @@ function config_target () {
     case $arch in
 	i[3456]86*|x86_64*|ppc*|ppc64*|s390*|arm*|aarch64*|mips*)
 	    CONFIG_FLAGS="$CONFIG_FLAGS --enable-gnu-indirect-function" ;;
+    esac
+
+# Right now, the only cross glibc is glibc-arm-linux-gnu
+    case $arch in
+#	arm*) CONFIG_FLAGS="$CONFIG_FLAGS --enable-shared" ;;
+	*) CONFIG_FLAGS="$CONFIG_FLAGS --disable-shared" ;;
     esac
 
 %ifnarch %{mips}
@@ -621,7 +584,6 @@ function config_target () {
 	--disable-libquadmath \
 	--disable-libssp \
 	--disable-libunwind-exceptions \
-	--disable-shared \
 	--disable-silent-rules \
 	--disable-sjlj-exceptions \
 	--disable-threads \
@@ -654,9 +616,6 @@ function config_target () {
 	--sysconfdir=%{_sysconfdir} \
 	--target=$target \
 	--with-bugurl=http://bugzilla.altlinux.org/ \
-%if 0%{fedora} >= 21 && 0%{fedora} <= 22
-	--with-default-libstdcxx-abi=gcc4-compatible \
-%endif
 	--with-gcc-major-version-only \
 	--with-isl \
 	--with-newlib \
@@ -840,6 +799,11 @@ function install_lang () {
 	echo '%{_mandir}/man1/'$arch'*-gcc*'
 	echo '%{_mandir}/man1/'$arch'*-gcov*'
 	case $cpu in
+	    arm*)
+#		echo '/usr/arm-linux-gnueabi/lib/libgcc_s.so*'
+		;;
+	esac
+	case $cpu in
 	    ppc*|ppc64*)
 		;;
 	    *)
@@ -847,7 +811,8 @@ function install_lang () {
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/cc1'
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/collect2'
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/[abd-z]*'
-		echo '%%attr(0755,root,root)' %{_libexecdir}/$arch/sys-root
+		echo %{_libexecdir}/$arch/sys-root
+		;;
 	esac
 
     ) >files.$arch
@@ -889,7 +854,7 @@ chmod +x %{__ar_no_strip}
 
 ###############################################################################
 #
-# Cleanup
+# Filesets
 #
 ###############################################################################
 %files -n %{cross}-gcc-common -f %{cross}-gcc.lang
@@ -903,9 +868,10 @@ chmod +x %{__ar_no_strip}
 %files -n %{rpmprefix}gcc-c++-%1 -f files-c++.%1 \
 %endif
 
-%do_files alpha-linux-gnu	%{build_alpha}
-%do_files arm-linux-gnu		%{build_arm}
 %do_files aarch64-linux-gnu	%{build_aarch64}
+%do_files alpha-linux-gnu	%{build_alpha}
+%do_files arc-linux-gnu		%{build_arc}
+%do_files arm-linux-gnu		%{build_arm}
 %do_files avr32-linux-gnu	%{build_avr32}
 %do_files bfin-linux-gnu	%{build_blackfin}
 %do_files c6x-linux-gnu		%{build_c6x}
@@ -931,6 +897,7 @@ chmod +x %{__ar_no_strip}
 %do_files ppc-linux-gnu		%{build_powerpc}
 %do_files ppc64-linux-gnu	%{build_powerpc64}
 %do_files ppc64le-linux-gnu	%{build_powerpc64le}
+%do_files riscv64-linux-gnu	%{build_riscv64}
 %do_files s390-linux-gnu	%{build_s390}
 %do_files s390x-linux-gnu	%{build_s390x}
 %do_files score-linux-gnu	%{build_score}
@@ -945,6 +912,9 @@ chmod +x %{__ar_no_strip}
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 8.2.1-alt1_1.1
+- update to new release by fcimport
+
 * Mon Oct 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt1_3
 - update to new release by fcimport
 
