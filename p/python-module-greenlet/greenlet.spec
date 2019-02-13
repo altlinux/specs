@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.11
-Release: alt1.1.1
+Version: 0.4.15
+Release: alt1
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2019 Nikita Ermakov <arei@altlinux.org> 0.4.15-alt1
+- Update to 0.4.15
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.11-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
