@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Net::IDN::Encode
 
 %define real_name Net-IDN-Encode
 
 Name: perl-Net-IDN-Encode
-Version: 2.401
-Release: alt1.1
+Version: 2.500
+Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
 
@@ -48,6 +49,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %perl_vendor_archlib/Net
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.500-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.401-alt1.1
 - rebuild with new perl 5.28.1
 
