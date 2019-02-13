@@ -7,7 +7,7 @@ Summary(ru.UTF-8): Программирование для детей на ос�
 
 Group: Education
 Version: 1.4.0.7
-Release: alt3
+Release: alt4
 
 License: Artistic License
 Url: http://scratch.mit.edu/
@@ -15,10 +15,9 @@ Url: http://scratch.mit.edu/
 Source: %name.tar.gz
 Source1: %name.png
 
-
-
 Patch: scratch-1.4.0.7-use-fedora-squeak.patch
 Patch1: 002-locale-fix.patch
+Patch2: scratch-1.4.0.7-open-from-commandline.patch
 Patch4: 005-fix-desktop-file.patch
 # deprecated patches, as plugins moved to squeak-vm.
 Patch5: 006-unicodeplugin-dirty-rollback.patch
@@ -111,6 +110,7 @@ Projects files for %name
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 %patch4 -p2
 %patch5 -p1
 %patch6 -p1
@@ -181,6 +181,9 @@ mv Projects %buildroot%installdir/
 %installdir/Projects
 
 %changelog
+* Wed Feb 13 2019 Andrey Cherepanov <cas@altlinux.org> 1.4.0.7-alt4
+- Fix open Scratch file from command line and file manager.
+
 * Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.0.7-alt3
 - Add Russian GenericName in desktop file
 
