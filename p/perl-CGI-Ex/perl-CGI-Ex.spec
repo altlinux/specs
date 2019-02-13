@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module CGI::Ex
 
 %define real_name CGI-Ex
 
 Name: perl-CGI-Ex
-Version: 2.47
+Version: 2.48
 Release: alt1
 
 Summary: CGI utility suite
@@ -58,13 +59,16 @@ This package sample application and examples for CGI::Ex.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes README.md
 %perl_vendor_privlib/CGI/Ex*
 
 %files samples
 %doc samples
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.48-alt1
+- new version
+
 * Sat Aug 18 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.47-alt1
 - New version
 
