@@ -10,7 +10,7 @@
 
 Name: ocaml
 Version: 4.07.1
-Release: alt2
+Release: alt3
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -196,7 +196,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
 %_libdir/ocaml/stublibs/dllvmthreads.so
-%ifarch x86_64 aarch64
+# ocaml builds raw_spacetime_lib on
+# architectures with 64bit pointers.
+%if "%_lib" == lib64
 %_libdir/ocaml/stublibs/dllraw_spacetime_lib.so
 %endif
 %_libdir/ocaml/target_camlheaderd
@@ -217,6 +219,10 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Wed Feb 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.07.1-alt3
+- Removed erroneous %%ifarch (ocaml builds dllraw_spacetime_lib.so
+  on all architectures with 64 bit pointers).
+
 * Fri Nov 09 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt2
 - disabled mark as config file for ocaml/ld.conf
 
