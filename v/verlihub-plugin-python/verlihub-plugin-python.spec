@@ -1,7 +1,7 @@
 %define oname python
 Name: verlihub-plugin-python
 Version: 1.1
-Release: alt2.1.1.1
+Release: alt3
 
 Summary: Python Plugin for verlihub
 
@@ -10,6 +10,8 @@ License: GPL
 Group: Development/C
 
 Source: %oname.tar.bz2
+Patch: verlihub-plugin-python-gcc8-fix.patch
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Tue Apr 29 2008
@@ -22,6 +24,7 @@ in your hub.
 %prep
 %setup -n %oname
 sed -i 's|python2\.5|python%__python_version|g' configure.in
+%patch -p2
 
 %build
 %autoreconf
@@ -36,6 +39,9 @@ sed -i 's|python2\.5|python%__python_version|g' configure.in
 %_libdir/*.so*
 
 %changelog
+* Wed Feb 13 2019 Ivan Razzhivin <underwit@altlinux.org> 1.1-alt3
+- GCC8 fix
+
 * Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt2.1.1.1
 - (NMU) rebuild with gcc5-c++ (for new C++ ABI).
 
