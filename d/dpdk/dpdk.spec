@@ -19,7 +19,7 @@
 
 Name: dpdk
 Version: 18.08
-Release: alt1
+Release: alt2
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
@@ -29,6 +29,7 @@ Patch0: dpdk-16.11-move-to-libdir.patch
 Patch1: dpdk-18.02-aarch64-link-fix.patch
 Patch3: dpdk-alt-pci.ids.patch
 Patch4: dpdk-18.05-fix-redefinition.patch
+Patch5: dpdk-18.08-fix-build-on-ppc64le.patch
 
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
@@ -145,6 +146,7 @@ as L2 and L3 forwarding.
 %patch1 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 # set up a method for modifying the resulting .config file
@@ -312,6 +314,9 @@ EOF
 %endif
 
 %changelog
+* Wed Feb 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 18.08-alt2
+- Fixed build on ppc64le (patch by Christian Ehrhardt).
+
 * Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 18.08-alt1
 - 18.08
 - build with Mellanox nic support
