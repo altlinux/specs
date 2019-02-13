@@ -10,7 +10,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	3.8
+Version:	3.10
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -246,6 +246,9 @@ help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benc
 %go_path/src/*
 
 %changelog
+* Wed Feb 13 2019 Denis Pynkin <dans@altlinux.org> 3.10-alt1
+- Update
+
 * Thu Jan 10 2019 Denis Pynkin <dans@altlinux.org> 3.8-alt1
 - Update
 - Add manpages generation
