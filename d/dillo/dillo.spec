@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 3.0.5
-Release: alt2
+Release: alt3
 
 Summary: a small FLTK-based web browser
 Group: Networking/WWW
@@ -27,8 +27,8 @@ BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Aug 19 2018
 # optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libcom_err-devel libkrb5-devel libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby sh3 xorg-proto-devel zlib-devel
 BuildRequires: gcc-c++ libfltk-devel libjpeg-devel libpng-devel libssl-devel
-
-BuildRequires: perl-libnet
+BuildRequires: libXrender-devel libXcursor-devel libXfixes-devel libXext-devel
+BuildRequires: perl-libnet libXinerama-devel libXft-devel fontconfig-devel
 
 %description
 Dillo 3 is a graphical multi-platform web browser known for its
@@ -93,6 +93,9 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.5-alt3
+- Rebuild with libfltk1.3.5rc1.
+
 * Thu Sep 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt2
 - Rebuild with openssl 1.1.0i
 
