@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           fbg
 Version:        0.9.1
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Falling Block Game
 Group:          Games/Other
 License:        GPLv2+
@@ -19,6 +19,7 @@ Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
 Patch0:         fbg-fixes.patch
 Patch1:         fbg-0.9-wx28.patch
+Patch2:         %name-g++8.patch
 BuildRequires:  libSDL-devel libphysfs-devel libmikmod-devel wxGTK-devel libtool
 BuildRequires:  desktop-file-utils ImageMagick
 Requires:       icon-theme-hicolor
@@ -34,6 +35,7 @@ rows the screen will fill up and when it reaches the top the game is over.
 %setup -q
 %patch0 -p1 -z .fix
 %patch1 -p1 -z .wx28
+%patch2 -p2
 ./autogen.sh
 
 
@@ -45,7 +47,7 @@ convert startfbg/icon.xpm %{name}.png
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-# rm make install installed docs as we install them with %doc
+# rm make install installed docs as we install them with %%doc
 rm $RPM_BUILD_ROOT/usr/doc/fbg/COPYING $RPM_BUILD_ROOT/usr/doc/fbg/README
 
 # below is the desktop file and icon stuff.
@@ -68,6 +70,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt3_13
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_12
 - update to new release by fcimport
 

@@ -1,13 +1,14 @@
 Summary:        Open source color profiler
 Name:           lprof
 Version:        1.11.4.1
-Release:       	alt7.20100921
+Release:       	alt8
 License:        GPL
 Group:          Graphics
 Url:		http://lprof.sourceforge.net/
 Packager: Alexandra Panyukova <mex3@altlinux.ru>
 
 Source0:	%name.tar
+Patch1:     %name-g++8.patch
 
 # Automatically added by buildreq on Wed Feb 13 2008 (-bi)
 BuildRequires: scons gcc-c++ libvigra-devel libX11-devel libusb-devel libjpeg-devel libusb-compat-devel libvigra strace vim
@@ -20,6 +21,7 @@ LProf is an open source color profiler that creates ICC compliant profiles for d
 
 %prep
 %setup -q -c
+%patch1 -p0
 
 %build
 cd lprof
@@ -38,6 +40,9 @@ scons ccflags='%optflags' cxxflags='%optflags' install PREFIX=%buildroot/usr
 %_datadir/lprof
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.11.4.1-alt8
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.4.1-alt7.20100921
 - NMU: updated build dependencies, forced using system compilation flags, fixed URL.
 

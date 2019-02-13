@@ -77,10 +77,11 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.9.0
-Release: alt2
+Release: alt3
 Source: openscada-%version.tar
 Source1: openscada-res.tar.xz
 Patch: added_lsb_header.patch
+Patch1: %name-g++8.patch
 License: GPLv2
 Group: Engineering
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -1358,6 +1359,7 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 %setup -q -n %srcname
 %setup -T -D -a 1 -n %srcname
 %patch -p1
+%patch1 -p2
 
 %build
 %autoreconf
@@ -1774,6 +1776,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Oct 01 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt2
 - rebuilt with openssl-1.1
 - build with qt4 (with qt-5.11 FTBFS)

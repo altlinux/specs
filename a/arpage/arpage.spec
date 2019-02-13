@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize gcc-c++ pk
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt3_24
+Release:	alt3_25
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -20,6 +20,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{name}.desktop
 Patch0:		%{name}-gcc46.patch
 Patch1:		%{name}-gcc47.patch
+Patch2:     %{name}-g++8.patch
 
 BuildRequires:	libjack-devel
 BuildRequires:	libgtkmm2-devel
@@ -43,6 +44,7 @@ data, synchronized to JACK.
 %patch0 -p1 -b .%{name}-gcc46.patch
 #fix compilation with gcc 4.7
 %patch1 -p1 -b .%{name}.gcc47.patch
+%patch2 -p1
 
 # fix bad permissions in debuginfo
 chmod 644 %{_builddir}/%{name}-%{version}/src/main.cc
@@ -76,6 +78,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.3-alt3_25
+- no return statement in the non-void function fixed (according g++8)
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_24
 - update to new release by fcimport
 
