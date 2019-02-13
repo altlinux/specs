@@ -5,7 +5,7 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt4
+Release: alt5
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -17,6 +17,7 @@ Requires: lib%name-devel = %version-%release
 Requires: lib%name = %version-%release
 Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc6.patch
+Patch2: %name-0.0.8-gcc8-fix.patch
 
 %package -n libfreehdl
 Summary: VHDL simulator
@@ -48,6 +49,7 @@ VHDL simulator
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 
 %build
 sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
@@ -120,6 +122,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Wed Feb 13 2019 Pavel Moseev <mars@altlinux.org> 0.0.8-alt5
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.8-alt4
 - Fixed build with gcc-6
 
