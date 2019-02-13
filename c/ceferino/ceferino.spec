@@ -1,11 +1,12 @@
 Summary: Fight evil balls by dividing each to a pair of smaller one
 Name: ceferino
 Version: 0.97.8
-Release: alt2.qa1
+Release: alt3
 URL: http://www.losersjuegos.com.ar
 Source: %name-%version.tar.gz
 Source1: %name.desktop
 Patch: %name-gcc44.patch
+Patch2: ceferino-gcc8-fix.patch
 License: GPL
 Group: Games/Arcade
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -20,6 +21,7 @@ Fight evil balls by dividing each to a pair of smaller one until they disappear
 %prep
 %setup -q
 %patch -p1
+%patch2 -p2
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
@@ -41,6 +43,9 @@ install -D data/ima/icono.png %buildroot%_liconsdir/%name.png
 %doc README ChangeLog TODO AUTHORS
 
 %changelog
+* Wed Feb 13 2019 Ivan Razzhivin <underwit@altlinux.org> 0.97.8-alt3
+- GCC8 fix
+
 * Tue Apr 12 2011 Igor Vlasenko <viy@altlinux.ru> 0.97.8-alt2.qa1
 - NMU: .desktop files should use /usr/bin/sound_wrapper
 
