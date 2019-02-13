@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.8
 #define cvsdate 20031019
-Release: alt1
+Release: alt2
 
 %def_with fribidi
 %def_with libstroke
@@ -45,11 +45,12 @@ Patch12: fvwm-2.5.26-alt-bound.patch
 Patch13: fvwm-2.6.5-alt-perl-syntax.patch
 Patch14: fvwm-rh-FvwmPager-be-more-careful-with-window-labels.patch
 Patch15: fvwm-rh-Change-html-viewer-to-xdg-open.patch
+Patch16: fvwm-2.6.8-alt-fvwmbug-printf.patch
 
 %{?_with_fribidi:BuildPreReq: fribidi libfribidi-devel}
 %{?_with_libstroke:BuildPreReq: libstroke-devel}
 
-BuildRequires: imlib-devel libXcursor-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libncurses-devel libreadline-devel perl-Tk perl-X11-Protocol perl-XML-Parser xsltproc
+BuildRequires: libpng-devel librsvg-devel imlib2-devel libXcursor-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libncurses-devel libreadline-devel perl-Tk perl-X11-Protocol perl-XML-Parser xsltproc
 
 %description
 Fvwm is an ICCCM-compliant X window manager providing a 3D look for
@@ -148,7 +149,7 @@ This package contains documentation for the fvwm window manager.
 Summary: F(?) Virtual Window Manager - Perl parts
 Summary(ru_RU.UTF-8): Модули Perl для fvwm
 Group: Graphical desktop/FVWM based
-PreReq: %name-base = %version-%release
+Requires(pre,postun): %name-base = %version-%release
 BuildArch: noarch
 
 %description perl
@@ -206,6 +207,7 @@ fvwm.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 # Fix default fonts.
 find -type f -print0 |
@@ -354,6 +356,12 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Wed Feb 13 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.6.8-alt2
+- build with imlib2 instead of imlib
+- spec: replace PreReq with Requires(pre,postun)
+- spec: add missing BuildRequires: libpng-devel librsvg-devel
+- fvwm-bug: use printf instead of echo (to remove checkbashisms repocop warning)
+
 * Sat Aug 04 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.6.8-alt1
 - Updated to 2.6.8
 
