@@ -1,20 +1,22 @@
-%if_with backport
-%define mansuff gz
-%else
+%def_with tools
+%define _unpackaged_files_terminate_build 1
 %define mansuff xz
-%endif
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 1.999
+Version: 2.001
 Release: alt1
 
-Summary: git.alt client utilities for NMU automation
+Summary: girar client utilities for NMU automation
 License: GPL-2.0-or-later
 Group: Development/Other
 Packager: Igor Vlasenko <viy@altlinux.org>
 Url: http://www.altlinux.org/Git.alt/girar-nmu
 #BuildArch: noarch
+
+%if_with tools
+Requires: girar-tools = %EVR
+%endif
 
 Source: %name-%version.tar
 
@@ -23,11 +25,21 @@ BuildRequires: m4
 BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm) perl(Source/Repository/RPM/ALTLinuxSrcList.pm) perl(Source/Shared/FindMirror/ALTLinux.pm)
 
 Requires: gear
-Requires: perl-RPM-Source-Editor >= 0.9220
+Requires: perl-RPM-Source-Editor >= 0.9229
 
 %description
-This package contains client utilities for git.alt
-for NMU automation.
+This package contains girar utilities for NMU automation.
+
+%package -n  girar-tools
+Summary: girar client tools for easy girar upload
+Group: Development/Other
+BuildArch: noarch
+Conflicts: girar-nmu < 2
+
+%description -n girar-tools
+This package contains useful client utilities for girar and gitery
+to guery upload methods, clone gits from tasks and gitery
+and to help upload and manage tasks.
 
 %prep
 %setup
@@ -40,7 +52,8 @@ gcc -O2 %optflags -o girar-nmu-helper-pos-sort pos-sort.c
 %install
 %makeinstall_std
 
-install -D -m 644 lib/RPM/Source/Transformation/InputHandler/GirarNMU.pm %buildroot%perl_vendor_privlib/RPM/Source/Transformation/InputHandler/GirarNMU.pm
+mkdir -p %buildroot%perl_vendor_privlib/RPM/Source/Transformation/
+cp -a lib/RPM/Source/Transformation/* %buildroot%perl_vendor_privlib/RPM/Source/Transformation/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 config/* %buildroot%_sysconfdir/%name/
@@ -76,13 +89,31 @@ EOF
 
 %files
 %doc README
-%_bindir/*
-%_man1dir/*
+%perl_vendor_privlib/RPM*
+%_bindir/srpmlschangelog*
+%_man1dir/srpmlschangelog*
+%_bindir/girar-nmu-*
+%_man1dir/girar-nmu-*
+
+%if_with tools
+%files -n girar-tools
+%exclude %_bindir/girar-nmu-*
+%exclude %_man1dir/girar-nmu-*
+%endif
+
 %config(noreplace) %_sysconfdir/%name/default
 %config(noreplace) %_sysconfdir/%name/e2k
-%perl_vendor_privlib/RPM*
+%_bindir/rpm-sign-*
+%_bindir/girar-*
+%_man1dir/girar-*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1
+- new version
+
+* Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1
+- release
+
 * Wed Feb 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.999-alt1
 - 2.0 beta 6
 
