@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libgit2-glib
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Git library for GLib
@@ -24,7 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define libgit2_ver 0.27.7
+%define libgit2_ver 0.27.8
 %define glib_ver 2.44
 
 BuildRequires(pre): meson
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.27.8-alt1
+- 0.27.8
+
 * Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.27.7-alt1
 - 0.27.7
 
