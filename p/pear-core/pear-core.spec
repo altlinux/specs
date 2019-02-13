@@ -1,8 +1,9 @@
 Name: pear-core
 Version: 1.10.1
-Release: alt1
+Release: alt2
 
 Summary: PHP Extension and Application Repository
+
 License: PHP
 Group: Development/Other
 Url: http://pear.php.net
@@ -13,9 +14,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 Requires: /usr/bin/php
 
-BuildPreReq: php5
-BuildRequires: rpm-build-pear >= 0.3
-BuildRequires: rpm-build-php5
+BuildRequires: php7
+BuildRequires: rpm-build-pear >= 0.5
 
 Obsoletes: php-pear
 Provides: php-pear
@@ -28,7 +28,7 @@ Provides: pear-Console_Getopt = 1.4.1
 Provides: pear-Structures_Graph = 1.1.1
 Provides: pear-Archive_Tar = 1.4.2
 Provides: pear-XML_Util = 1.4.1
-
+Obsoletes: pear-XML_Util < 1.3
 
 %description
 PEAR is a code repository for PHP extensions and PHP library code
@@ -39,6 +39,7 @@ Console_Getopt, Structures_Graph, Archive_Tar modules.
 
 %prep
 %setup
+
 %build
 
 %install
@@ -50,7 +51,7 @@ for i in PEAR Archive_Tar Structures_Graph Console_Getopt XML_Util ; do
 done
 INCARG="-d include_path='$INCPATH'"
 
-php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir="" \
+php7 -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir="" \
     -d safe_mode=0 -d register_argc_argv="On" -d auto_prepend_file="" -d auto_append_file="" \
     PEAR/scripts/pearcmd.php install --force --offline --packagingroot=%buildroot $XMLLIST
 
@@ -66,6 +67,10 @@ install -m 755 scripts/peardev.sh %buildroot%_bindir/peardev
 %_bindir/peardev
 
 %changelog
+* Wed Feb 13 2019 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt2
+- switch to php7 only
+- Obsoletes pear-XML_Util (ALT bug 34669)
+
 * Thu Feb 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
 - New versions: 
   + PEAR-1.10.1
