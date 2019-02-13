@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: ananas
 Version: 0.9.5
-Release: alt10
+Release: alt11
 
 Summary: Runtime and development environment of Finance Applications
 Summary(ru_RU.UTF8): Среда разработки и исполнения прикладных решений автоматизации оперативного, бухгалтерского и других видов учета.
@@ -17,6 +17,7 @@ Source: http://prdownloads.sf.net/ananasproject/%name-%version.tar.bz2
 Patch0: ananas-0.9.5-alt-DSO.patch
 Patch1: ananas-0.9.5-alt-glibc-2.16.patch
 Patch2: ananas-0.9.5-fix-desktop-files.patch
+Patch3: ananas-0.9.5-alt-gcc8-fix.patch
 
 Provides: ananas-engine-qt = %version
 Obsoletes: ananas-engine-qt
@@ -163,6 +164,7 @@ Grigory Panov <gr1313 at mail dot ru>
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 find -type f | xargs sed -i "s|/usr/share/ananas/extensions|%_libdir/ananas/extensions|g"
 find -type f | xargs sed -i "s|QString::QString|QString|g"
 
@@ -264,6 +266,9 @@ mysql -u root -e "create database ananas_inventory_demo character set utf8" > /d
 %_datadir/ananas/inventory/
 
 %changelog
+* Wed Feb 13 2019 Ivan Razzhivin <underwit@altlinux.org> 0.9.5-alt11
+- GCC8 fix
+
 * Thu Sep 27 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt10
 - Remove kdepim support.
 
