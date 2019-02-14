@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.15
-Release: alt1.2
+Release: alt1.3
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -15,6 +15,8 @@ Summary: Perl && C++/XS module to access static db (SDB) files.
 License: GPL or Artistic
 Group: Development/Perl
 Source: %module-%version.tar.gz
+
+Patch1: %name-alt-gcc8.patch
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: gcc-c++ perl-devel
@@ -31,6 +33,7 @@ header files for mapsdb library (access to static db (SDB) files).
 
 %prep
 %setup -q -n %module-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -50,6 +53,9 @@ cp -a sdblib %buildroot%_includedir/mapsdb
 %_includedir/mapsdb
 
 %changelog
+* Thu Feb 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15-alt1.3
+- NMU: fixed build with gcc-8.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.2
 - rebuild with new perl 5.28.1
 
