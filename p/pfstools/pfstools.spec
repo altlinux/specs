@@ -6,7 +6,7 @@
 
 Name: pfstools
 Version: 2.1.0
-Release: alt3
+Release: alt4
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -14,6 +14,7 @@ Group: Graphics
 
 Url: http://pfstools.sourceforge.net/
 Source: %name-%version.tar
+Patch0: %name-2.1.0-gcc8-fix.patch
 
 BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libGLUT-devel libgeos-devel
 BuildRequires: libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel
@@ -76,6 +77,7 @@ channels or luminance channels in pfs stream using Octave.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -223,6 +225,9 @@ channels or luminance channels in pfs stream using Octave.
 %endif
 
 %changelog
+* Thu Feb 14 2019 Pavel Moseev <mars@altlinux.org> 2.1.0-alt4
+- no return statement in the non-void function fixed (according g++8)
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt3
 - rebuilt with libGLUT
 
