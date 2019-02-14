@@ -1,11 +1,11 @@
 Name: wxMaxima
 Version: 17.05.0
-Release: alt2
+Release: alt3
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
 Group: Sciences/Mathematics
-URL: http://wxmaxima.sourceforge.net
+URL: https://wxmaxima-developers.github.io/wxmaxima
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source0: wxmaxima-Version-%version.tar.gz
@@ -13,8 +13,7 @@ Source1: %name-16.xpm
 Source2: %name-32.xpm
 Source3: %name-48.xpm
 Source5: wxmaxima-ru.po.bz2
-
-ExcludeArch: aarch64
+Patch0: wxMaxima-alt-fixed-url.patch
 
 Requires: maxima
 
@@ -33,6 +32,7 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup -q -n wxmaxima-Version-%version
+%patch0 -p2
 
 bzcat %SOURCE5 >locales/ru.po
 
@@ -83,6 +83,10 @@ install -D -m644 wxmaxima.info %buildroot%_infodir/wxmaxima.info
 
 
 %changelog
+* Thu Feb 14 2019 Leontiy Volodin <lvol@altlinux.org> 17.05.0-alt3
+- Fixed links to url (ALT #36097)
+- Built with aarch64 support
+
 * Fri Sep 21 2018 Anton Midyukov <antohami@altlinux.org> 17.05.0-alt2
 - rebuilt with libwxGTK3.0
 - exclude aarch64
