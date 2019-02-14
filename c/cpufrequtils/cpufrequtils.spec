@@ -2,7 +2,7 @@
 
 Name: cpufrequtils
 Version: 008
-Release: alt1.1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -12,6 +12,8 @@ Group: System/Base
 
 URL: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html
 Source: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils-%version.tar.bz2
+
+Patch0: 0001-Only-x86-has-cpuid-instruction.patch
 
 Requires: %libname = %version-%release
 
@@ -44,6 +46,7 @@ applications which will use %libname.
 
 %prep
 %setup
+%patch -p1
 
 subst 's/--mode=/--tag=CC --mode=/' Makefile
 
@@ -67,6 +70,9 @@ subst 's/--mode=/--tag=CC --mode=/' Makefile
 %_libdir/libcpufreq.so
 
 %changelog
+* Thu Feb 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 008-alt2
+- Fixed build on non-x86 architectures (patch by Zhang Le).
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 008-alt1.1
 - Rebuilt for set-versions
 
