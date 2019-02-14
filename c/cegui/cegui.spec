@@ -1,19 +1,20 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake gcc-c++ glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(CEGUI-0-IRRLICHT) pkgconfig(tinyxml2) python-devel rpm-build-python
+BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(tinyxml2) python-devel rpm-build-python
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt3_10.1
+Release:        alt3_14
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
-Group:          System/Libraries
 License:        MIT
 URL:            http://www.cegui.org.uk
 Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Patch0:         cegui-0.8.4-lua53.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  libdevil-devel
 BuildRequires:  libfreeimage-devel
 BuildRequires:  libexpat-devel
@@ -51,8 +52,8 @@ games, not building GUI sub-systems!
 
 
 %package devel
+Group: Development/Other
 Summary:        Development files for cegui
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Requires:       %{name}-DevIL-imagecodec = %{version}-%{release}
 Requires:       %{name}-freeimage-imagecodec = %{version}-%{release}
@@ -67,8 +68,8 @@ Development files for cegui
 
 
 %package devel-doc
+Group: Documentation
 Summary:        API documentation for cegui
-Group:          Documentation
 Requires:       cegui = %{version}-%{release}
 BuildArch:      noarch
 
@@ -87,8 +88,8 @@ the CEGUI library.
 
 
 %package DevIL-imagecodec
+Group: System/Libraries
 Summary:        Alternative imagecodec library for CEGUI using DevIL
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description DevIL-imagecodec
@@ -96,8 +97,8 @@ Alternative imagecodec library for CEGUI using DevIL.
 
 
 %package freeimage-imagecodec
+Group: System/Libraries
 Summary:        Alternative imagecodec library for CEGUI using freeimage
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description freeimage-imagecodec
@@ -105,8 +106,8 @@ Alternative imagecodec library for CEGUI using freeimage.
 
 
 %package irrlicht-renderer
+Group: System/Libraries
 Summary:        Irrlicht renderer for CEGUI
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description irrlicht-renderer
@@ -114,8 +115,8 @@ Irrlicht renderer for CEGUI.
 
 
 %package ogre-renderer
+Group: System/Libraries
 Summary:        OGRE renderer for CEGUI
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description ogre-renderer
@@ -123,8 +124,8 @@ OGRE renderer for CEGUI.
 
 
 %package null-renderer
+Group: System/Libraries
 Summary:        Null renderer for CEGUI
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description null-renderer
@@ -132,8 +133,8 @@ Null renderer for CEGUI. Useful for headless deployments or unit testing.
 
 
 %package libxml-xmlparser
+Group: System/Libraries
 Summary:        Alternative xml parsing library for CEGUI using libxml
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description libxml-xmlparser
@@ -141,8 +142,8 @@ Alternative xml parsing library for CEGUI using libxml.
 
 
 %package tinyxml-xmlparser
+Group: System/Libraries
 Summary:        Alternative xml parsing library for CEGUI using tinyxml
-Group:          System/Libraries
 Requires:       cegui = %{version}-%{release}
 
 %description tinyxml-xmlparser
@@ -186,6 +187,15 @@ cp -r doc/doxygen/html %{buildroot}/%{_docdir}/cegui-0.8.4/
 
 # CEGUITests is not very useful to install
 find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
+
+
+
+
+
+
+
+
+
 
 
 %files
@@ -249,6 +259,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt3_14
+- rebuild with new ogre
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt3_10.1
 - NMU: rebuilt with boost-1.67.0
 
