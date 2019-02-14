@@ -4,7 +4,7 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt7
+Release: alt8
 
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
@@ -84,7 +84,7 @@ mkdir lib
 %build
 sed -i "s|(HOME)|$PWD|" make.inc
 sed -i "s|(LIBDIR)|%_libdir|" make.inc
-%ifarch %arm %e2k riscv64
+%ifarch %e2k riscv64
 sed -i "s|-lopenblas|-lblas|" make.inc
 %define blas -lblas
 %else
@@ -173,6 +173,9 @@ popd
 # - install -p
 
 %changelog
+* Thu Feb 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3-alt8
+- exclude %%arm from crippled arches
+
 * Tue Feb 12 2019 Nikita Ermakov <arei@altlinux.org> 4.3-alt7
 - liblapack is built with libblas.so on riscv64, not libopenblas.so
 - Minor spec changes
