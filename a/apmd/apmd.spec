@@ -1,6 +1,6 @@
 Name: apmd
 Version: 3.2.2
-Release: alt7
+Release: alt8
 Epoch: 1
 %define subver 3
 
@@ -35,8 +35,6 @@ Requires: libapm = %{?epoch:%epoch:}%version-%release
 PreReq: powermgmt-base
 Requires(post): %post_service
 Requires(preun): %preun_service
-
-ExclusiveArch: %{ix86} x86_64 ppc %arm aarch64
 
 Summary(ru_RU.UTF-8): Утилиты управления системой питания (APM BIOS)
 
@@ -227,6 +225,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %endif
 
 %changelog
+* Thu Feb 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.2-alt8
+- Removed ExclusiveArch tag.
+
 * Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 1:3.2.2-alt7
 - rebuilt for aarch64
 
