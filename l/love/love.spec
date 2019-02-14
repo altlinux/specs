@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/lua gcc-c++
 %define _localstatedir %{_var}
 Name:           love
 Version:        11.1
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A free 2D game engine which enables easy game creation in Lua
 Group:          Development/Other
 # All is licensed as zlib with one exception:
@@ -14,6 +14,7 @@ License:        zlib and Public domain
 Url:            http://love2d.org
 Source0:        https://bitbucket.org/rude/love/downloads/%{name}-%{version}-linux-src.tar.gz
 Patch0:         love-hg-pthread-linking.patch
+Patch1:         love-gcc8-fix.patch
 
 BuildRequires:  pkgconfig(physfs)
 BuildRequires:  pkgconfig(freetype2)
@@ -47,6 +48,7 @@ allowing it to be used for both free and non-free projects.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 autoreconf -fisv
@@ -64,6 +66,9 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.so
 
 
 %changelog
+* Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 11.1-alt1_3
+- GCC8 fix
+
 * Thu Jan 03 2019 Igor Vlasenko <viy@altlinux.ru> 11.1-alt1_2
 - resurrected as mageia import
 
