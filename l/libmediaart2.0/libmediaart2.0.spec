@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name libmediaart
 %define ver_major 1.9
@@ -8,7 +8,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Library for handling media art (2.0 API)
 Group: System/Libraries
@@ -119,6 +119,9 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Thu Feb 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt2
+- updated to 1.9.4-2-ged015a5 (fixed BGO #792272 and related ALT #36091)
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
 - 1.9.4
 
