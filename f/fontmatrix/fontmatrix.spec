@@ -1,6 +1,6 @@
 Name:		fontmatrix
 Version:	0.9.99
-Release:	alt1
+Release:	alt2
 Summary:	Is a font manager for Linux users
 Summary(ru_RU.UTF8): Менеджер шрифтов для пользователей Linux
 Url:		http://www.fontmatrix.net/
@@ -11,6 +11,7 @@ License:	GPLv2
 Patch0:		%name-0.6.0-desktopmenu.diff
 Patch1:		bug_564904_fix-missing-DSO-icuuc.diff
 Patch2:		%name-0.9.99-arm.diff
+Patch3:     %name-g++8.patch
 
 BuildRequires: cmake gcc-c++ ImageMagick-tools libqt4-devel libSM-devel libXcursor-devel libXi-devel
 BuildRequires: libXinerama-devel libXrandr-devel libicu-devel
@@ -36,6 +37,7 @@ Fontmatrix выпускается под лицензией GPL. В некото
 %patch0 -p1
 %patch1 -p0
 %patch2 -p0
+%patch3 -p2
 
 %build
 cmake \
@@ -67,6 +69,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_datadir/%name
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.99-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Dec 09 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.99-alt1
 - 0.9.99
 - add patches NN 1 & 2 from FC

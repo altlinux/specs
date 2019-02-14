@@ -1,6 +1,6 @@
 Name:		qcat
 Version:	0.5
-Release:	alt5.1.qa1
+Release:	alt6
 Summary:	A catalog application for various media types
 Group:		Databases
 License:	GPLv2
@@ -11,6 +11,7 @@ Source1:	%name.desktop
 Patch0:		%name-0.5-x86_64.diff
 Patch1:		%name-0.5-qt4.7.diff
 Patch2:		%name-0.5-qt4.7-2.diff
+Patch3:     %name-g++8.patch
 
 Requires:	libqt4-sql-sqlite
 
@@ -28,6 +29,7 @@ try to make a WhereIsIt-like application for Linux.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -54,6 +56,9 @@ convert -resize 16x16 icons/db_icons/catalog_enabled.png %buildroot%_miconsdir/%
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5-alt6
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt5.1.qa1
 - NMU: rebuilt for debuginfo.
 
