@@ -22,8 +22,8 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 Source0:	%php7_extension.tar
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
-
 Source3:	README.ALT
+Patch0: php7-pdo_sqlsrv-5.2.0-alt-gcc8.patch
 
 BuildRequires(pre): rpm-build-php7 rpm-build-licenses
 
@@ -47,6 +47,7 @@ must be installed for this extension to work - see README.ALT for details.
 
 %prep
 %setup -c
+%patch0 -p2
 
 %build
 phpize
