@@ -4,7 +4,7 @@ Name: adobe-flash-player
 %define ver_fake 32
 %define ver_ix86 32.0.0.114
 %define ver_x86_64 32.0.0.114
-Release: alt1
+Release: alt2
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Thu Feb 14 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt2
+- fix cronbuid support
+
 * Tue Jan 15 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt1
 - bump version
 
