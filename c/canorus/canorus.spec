@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 Name: canorus
 Version: 0.6svn
 %define svnver 877
-Release: alt1.qa2
+Release: alt2
 
 Summary: Free cross-platform music score editor
 Group: Sound
@@ -19,6 +19,7 @@ Source1: %name.desktop
 
 # Patch1: %name-...patch
 Patch2: %name-0.6svn-alt-DSO.patch
+Patch3: %name-0.6svn-gcc8-fix.patch
 
 # Automatically added by buildreq on Thu Jan 03 2008
 BuildRequires: ImageMagick cmake gcc-c++ libalsa-devel libqt4-devel libqt4-svg
@@ -42,6 +43,7 @@ Canorus is a free next generation cross-platform music score editor
 %setup -q -n %name-%version.R%svnver
 #%%patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 cmake -D CMAKE_INSTALL_PREFIX=/usr \
@@ -90,6 +92,9 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS DEVELOPERS NEWS README TODO
 
 %changelog
+* Tue Feb 12 2019 Pavel Moseev <mars@altlinux.org> 0.6svn-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6svn-alt1.qa2
 - Fixed build
 
