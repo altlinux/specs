@@ -1,6 +1,6 @@
 Name: lib2geom
 Version: 20081103
-Release: alt1.5
+Release: alt1.6
 
 Summary: A robust computational geometry framework for Inkscape
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://inkscape.modevia.com/2geom/src/%name%version.tar.bz2
 Patch0: %name-no-rpath.patch
 Patch1: %name-20081103-alt-gc4.6.patch
+Patch2: lib2geom-20081103-alt-gcc8-fix.patch
 
 # Automatically added by buildreq on Mon Mar 31 2008
 BuildRequires: boost-devel ccmake gcc-c++ libgsl-devel libgtk+2-devel
@@ -36,6 +37,7 @@ in development of the %name-based applications.
 %setup -q -n %name
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
 # fix target lib dir
 sed -i "s| lib| %_lib|g" src/2geom/CMakeLists.txt
 sed -i 's,^SET(CMAKE_CXX_FLAGS ",SET(CMAKE_CXX_FLAGS "%optflags -fno-inline -fpermissive ,' CMakeLists.txt
@@ -61,6 +63,9 @@ cmake \
 %_libdir/lib2geom.so
 
 %changelog
+* Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 20081103-alt1.6
+- GCC8 fix
+
 * Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20081103-alt1.5
 - Fixed build with gcc-6
 
