@@ -5,7 +5,7 @@ Summary: Mozilla SpiderMonkey (JavaScript-C) Engine
 Name: js
 %define lname lib%name
 Version: 1.7.0
-Release: alt7
+Release: alt8
 License: %lgpl2only
 URL: http://www.mozilla.org/%name/spidermonkey/
 Group: Development/Other
@@ -58,6 +58,9 @@ Static library of SpiderMonkey.
 cd %name
 %patch -p1
 
+%ifarch aarch64
+sed -E -i '/^LIBDIR\s*:=/ s,\w+$,lib64,' src/config.mk
+%endif
 
 %build
 %add_optflags %optflags_shared
@@ -112,6 +115,9 @@ install -m 0644 dist/include/* %name/src/jsutil.h %buildroot/%_includedir/%name/
 
 
 %changelog
+* Thu Feb 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt8
+- Rebuild with readline7.
+
 * Wed Mar 16 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7.0-alt7
 - rebuild for debuginfo (ALT #25234)
 
