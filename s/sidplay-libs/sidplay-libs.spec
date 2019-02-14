@@ -16,7 +16,7 @@ BuildRequires: gcc-c++ swig
 Summary:        A Commodore 64 music player and SID chip emulator library
 Name:           sidplay-libs
 Version:        2.1.1
-Release:        alt1_23
+Release:        alt1_24
 Source:         http://prdownloads.sourceforge.net/sidplay2/%{name}-%version.tar.bz2
 Patch:		sidplay-libs-2.1.1-gcc4.3.patch
 #gw from xsidplay 2.0.3
@@ -28,6 +28,7 @@ Group:          System/Libraries
 URL:            http://sidplay2.sourceforge.net/
 BuildRequires:  chrpath
 Source44: import.info
+Patch33: sidplay-libs-2.1.1-alt-gcc8.patch
 
 %description
 This is a cycle-based version of a C64 music playing library
@@ -106,6 +107,7 @@ for developing applications to use %libnamesu.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch33 -p1
 
 %build
 for dir in . resid libsidutils libsidplay builders/resid-builder builders/hardsid-builder; do
@@ -160,6 +162,9 @@ echo #multiarch_includes %buildroot%_includedir/sidplay/sidconfig.h
 
 
 %changelog
+* Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_24
+- fixed build
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_23
 - update by mgaimport
 
