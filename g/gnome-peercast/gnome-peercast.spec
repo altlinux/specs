@@ -1,6 +1,6 @@
 Name: gnome-peercast
 Version: 0.5.4
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: Graphical user interface for PeerCast
 
@@ -14,6 +14,7 @@ Source: http://ftp.debian.org/debian/pool/main/g/gnome-peercast/%{name}_%version
 Patch: gnome-peercast-0.5.4.debian.patch
 Patch1: gnome-peercast-0.5.4-fix.patch
 Patch2: gnome-peercast-0.5.4-alt-DSO.patch
+Patch3: gnome-peercast-0.5.4-alt-gcc8.patch
 
 Requires(post): GConf2
 BuildPreReq: GConf2
@@ -32,6 +33,7 @@ So, GNOME PeerCast includes full features of PeerCast v0.1217.
 %patch -p1
 %patch1
 %patch2 -p2
+%patch3 -p2
 
 %build
 %configure --disable-static
@@ -67,6 +69,9 @@ fi
 %_pixmapsdir/*
 
 %changelog
+* Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.4-alt3.qa3
+- NMU: fixed build with gcc-8.
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt3.qa2
 - Fixed build
 
