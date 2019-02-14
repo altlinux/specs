@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.14
+Version: 7.2.15
 Release: alt1
 
 %define php7_name      %name
@@ -432,6 +432,9 @@ chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
 %doc tests run-tests.php 
 
 %changelog
+* Thu Feb 14 2019 Anton Farygin <rider@altlinux.ru> 7.2.15-alt1
+- 7.2.15
+
 * Tue Jan 15 2019 Anton Farygin <rider@altlinux.ru> 7.2.14-alt1
 - 7.2.14 (fixes: CVE-2018-19935)
 - removed the .a archive from php7-mysqlnd package (closes: #34521)
