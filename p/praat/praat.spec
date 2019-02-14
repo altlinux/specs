@@ -1,6 +1,6 @@
 Name: praat
 Version: 6.0.46
-Release: alt1
+Release: alt2
 
 Summary: A program for speech analysis and synthesis
 License: GPL (and others for libraries used)
@@ -10,6 +10,7 @@ Url: http://www.praat.org
 
 # https://github.com/praat/praat.git
 Source: v%version.tar.gz
+Patch0: %name-6.0.46-gcc8-fix.patch
 
 # Automatically added by buildreq on Sun Sep 25 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
@@ -36,6 +37,7 @@ Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 cp -a makefiles/makefile.defs.linux.alsa makefile.defs
@@ -56,6 +58,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Wed Feb 13 2019 Pavel Moseev <mars@altlinux.org> 6.0.46-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 6.0.46-alt1
 - Autobuild version bump to 6.0.46
 
