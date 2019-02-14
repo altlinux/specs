@@ -1,14 +1,15 @@
 Name: gawk
-Version: 4.1.0
-Release: alt2
+Version: 4.2.1.0.170.dc189d
+Release: alt1
 
-%def_with doc
 %define _libexecdir %prefix/libexec
+# Documentation build requirements are insane.
+%def_without doc
 
-Summary: The GNU version of the awk text processing utility
+Summary: The GNU version of the AWK text processing utility
 License: GPLv3+
 Group: Text tools
-Url: http://www.gnu.org/software/gawk/
+Url: https://www.gnu.org/software/gawk/
 
 # git://git.altlinux.org/gears/g/gawk.git
 Source: %name-%version-%release.tar
@@ -16,27 +17,27 @@ Source: %name-%version-%release.tar
 Provides: awk = %version, dgawk = %version, gawk-profile = %version
 Obsoletes: dgawk < %version, gawk-profile < %version
 
+# Automatically added by buildreq on Wed Feb 13 2019
+# optimized out: fontconfig fonts-type1-urw ghostscript-classic ghostscript-common glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libgpg-error libsasl2-3 perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent python-base python-modules sh4 tex-common texlive texlive-collection-basic texlive-dist tzdata
 BuildRequires: libreadline-devel makeinfo
-# Automatically added by buildreq on Sat Sep 22 2012
-# optimized out: fontconfig fonts-type1-urw ghostscript-classic ghostscript-common gnu-config groff-base tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base tzdata
 %{?_with_doc:BuildRequires: ghostscript-utils groff-ps texi2dvi texlive-generic-recommended}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 
 %description
-This packages contains the GNU version of awk, a text processing utility.
-Awk interprets a special-purpose programming language to do quick
+This packages contains the GNU version of AWK, a text processing utility.
+AWK interprets a special-purpose programming language to do quick
 and easy text pattern matching and reformatting jobs.  Gawk should be
-upwardly compatible with the Bell Labs research version of awk and is
-almost completely compliant with the 1993 POSIX 1003.2 standard for awk.
+upwardly compatible with the Bell Labs research version of AWK and is
+almost completely compliant with the 1993 POSIX 1003.2 standard for AWK.
 
 %package doc
-Summary: Documentation about the GNU version of the awk text processing utility
+Summary: Documentation about the GNU version of the AWK text processing utility
 Group: Text tools
 BuildArch: noarch
 Requires: %name = %version-%release
 
 %description doc
-This packages contains documentation about the GNU version of the awk
+This packages contains documentation about the GNU version of the AWK
 text processing utility.
 
 %prep
@@ -44,7 +45,7 @@ text processing utility.
 
 %build
 ./bootstrap.sh
-rm awkgram.c command.c version.c doc/*.info awklib/eg/prog/igawk.sh awklib/stamp-eg
+rm awkgram.c command.c doc/*.info awklib/stamp-eg
 %configure --bindir=/bin --without-libsigsegv-prefix
 # SMP-incompatible
 make awkgram.c command.c
@@ -58,11 +59,9 @@ cd -
 
 %install
 %makeinstall_std
-rm %buildroot%_libdir/gawk/*.la
-rm %buildroot/bin/*-%{version}*
+rm %buildroot/bin/gawk-4.2.1a
 mkdir -p %buildroot%_bindir
-mv %buildroot/bin/?gawk %buildroot%_bindir/
-ln -s ../../bin/gawk %buildroot%_bindir/
+ln -rs %buildroot/bin/gawk %buildroot%_bindir/
 for n in awk dgawk pgawk; do
 	ln -s gawk %buildroot%_bindir/$n
 	ln -s gawk.1 %buildroot%_man1dir/$n.1
@@ -76,7 +75,7 @@ install -pm644 AUTHORS NEWS POSIX.STD README \
 %find_lang %name
 
 %check
-%make_build -k check diffout
+%make_build -k check
 
 %files -f %name.lang
 /bin/*
@@ -98,6 +97,13 @@ install -pm644 AUTHORS NEWS POSIX.STD README \
 %endif
 
 %changelog
+* Thu Feb 14 2019 Dmitry V. Levin <ldv@altlinux.org> 4.2.1.0.170.dc189d-alt1
+- Updated to gawk-4.2.1-170-gdc189dc6.
+- Ceased packaging of obsolete igawk script.
+- Suspended build and packaging of gawk.pdf and awkcard.pdf files
+  because their build requirements include texlive-dist
+  which is insanely huge and pulls in hordes of irrelevant packages.
+
 * Mon Nov 18 2013 Dmitry V. Levin <ldv@altlinux.org> 4.1.0-alt2
 - Rebuilt with libreadline.so.6.
 
