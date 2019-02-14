@@ -1,12 +1,12 @@
 #filter_from_requires /^debug64.libtolua..-5.1.so./d
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmllint boost-interprocess-devel gcc-c++ pkgconfig(sigc++-2.0) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmllint boost-interprocess-devel pkgconfig(sigc++-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ember
 Version:        0.7.2
-Release:        alt2_22.1
+Release:        alt2_25
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -19,9 +19,10 @@ Patch6:         ember-doc-nover.patch
 # From upstream commit f605bd4bd15ea83da4d7864d45018e6f9a175b76
 Patch7:         ember-0.7.2-fix-boost-m4.patch
 Patch8:         ember-0.7.2-sigc++.patch
-# Use cegui06 to avoid cegui's dependency on lua >= 5.2
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL-devel tinyxml-devel libdevil-devel cegui-devel libogre-devel
-BuildRequires:  lua-devel tolua++-devel libopenal-devel libopenal1 libalut-devel
+BuildRequires:  lua-devel tolua++-devel libopenal-devel libalut-devel
 BuildRequires:  libatlascpp-devel 
 BuildRequires:  liberis-devel >= 1.3.16 
 BuildRequires:  libmercator-devel 
@@ -31,7 +32,7 @@ BuildRequires:  libwfut-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  cppunit-devel
 # libtool is only needed while we need to run autogen.sh
-BuildRequires:  libtool-common
+BuildRequires:  libtool
 
 Requires:       %{name}-media >= 0.7.2 %{name}-media < 0.7.3
 
@@ -109,6 +110,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2_25
+- rebuild with ogre 1.9.0
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2_22.1
 - NMU: rebuilt with boost-1.67.0.
 
