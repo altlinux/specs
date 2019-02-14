@@ -2,7 +2,7 @@
 
 Name: verlihub-plugins
 Version: 0.1
-Release: alt2.qa2.1
+Release: alt2.qa2.2
 
 Summary: Plugins for verlihub
 
@@ -12,6 +12,8 @@ Group: Development/C
 
 Source: http://prdownloads.sourceforge.net/verlihub/All-0.1.tar.bz2
 Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Patch: verlihub-plugins-gcc8-fix.patch
 
 # Automatically added by buildreq on Fri Apr 25 2008
 BuildRequires: gcc-c++ libGeoIP-devel libMySQL-devel liblua5-devel libpcre-devel libverlihub-devel python-base zlib-devel
@@ -23,6 +25,7 @@ This package contains various plugins for verlihub:
 
 %prep
 %setup -n %name -c %name-%version
+%patch -p1
 
 %build
 for i in `echo %pluginlist` ; do
@@ -47,6 +50,9 @@ done
 #%python_sitelibdir/*
 
 %changelog
+* Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 0.1-alt2.qa2.2
+- GCC8 fix
+
 * Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt2.qa2.1
 - (NMU) rebuild with gcc5-c++ (for new C++ ABI).
 
