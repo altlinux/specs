@@ -65,7 +65,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_7
+Release:	alt2_10
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -108,7 +108,7 @@ Requires:	texlive-collection-basic
 BuildRequires:	bison
 %if %{enable_xindy}
 BuildRequires:	clisp
-BuildRequires:	libffcall-devel libffcall-devel-static
+BuildRequires:	libffcall-devel
 %endif
 %if %{enable_asymptote}
 BuildRequires:	libfftw3-devel libfftw3-mpi-devel
@@ -163,6 +163,9 @@ Patch108: poppler-compat-fixes-up-to-0.70.patch
 Patch109: luatex-poppler-0.70-const-fixes.patch
 Patch110: texlive-poppler-0.71.patch
 Patch111: luatex-poppler-0.71.patch
+Patch112: texlive-poppler-0.72.patch
+Patch113: luatex-poppler-0.72.patch
+Patch114: luatex-poppler-0.73.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -192,6 +195,7 @@ Conflicts: texlive-metapost < 2009
 Conflicts: texlive-omega < 2009
 Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
+Patch34: texlive-2018-alt-gcc8.patch
 Provides: texlive-collection-binextra = %{tl_version}
 
 #mga22386, fix from https://bugs.gentoo.org/621252
@@ -447,11 +451,14 @@ This package includes the static ptexenc library.
 %patch109 -p1
 %patch110 -p0
 %patch111 -p1
+%patch112 -p0
+%patch113 -p1
+%patch114 -p1
 
 #%patch200 -p1 -b .gcc7align
 
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.71.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.71.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.72.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.72.0,}.cc
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -465,6 +472,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	 -e 's%%^(OSFONTDIR\s+= ).*%%$1%{_datadir}/fonts%%;'		  \
 	texk/kpathsea/texmf.cnf
 %patch33 -p0
+%patch34 -p1
 
 #-----------------------------------------------------------------------
 %build
@@ -689,6 +697,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_10
+- fixed build
+
 * Wed Dec 05 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_7
 - built with new poppler (closes: #35711)
 
