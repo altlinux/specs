@@ -1,15 +1,16 @@
 Name:		pure-doc
 Version:	0.3
-Release:	alt2
+Release:	alt3
 Summary:	A simple utility for documenting source code in the Pure programming language
 Source:		http://pure-lang.googlecode.com/files/%name-%version.tar.gz
 URL:		http://code.google.com/p/pure-lang
 Group:		Development/Functional
 License:	GPLv.3
 Packager:	Fr. Br. George <george@altlinux.ru>
-BuildRequires:	gcc-c++ /usr/bin/rst2html
+BuildRequires:	gcc-c++ /usr/bin/rst2html flex
 
 Patch1: %name-%version-alt-compat.patch
+Patch2: %name-0.3-gcc8-fix.patch
 
 %description
 pure-doc is a simple utility for literate programming and documenting source
@@ -28,6 +29,7 @@ rst2latex to create the documentation in a variety of formats.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 
 %build
 make realclean
@@ -42,6 +44,9 @@ install -Ds %name %buildroot%_bindir/%name
 
 
 %changelog
+* Thu Feb 14 2019 Pavel Moseev <mars@altlinux.org> 0.3-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt2
 - NMU: rebuilt with new python-module-docutils.
 
