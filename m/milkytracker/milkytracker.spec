@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto gcc-c++ libalsa-deve
 %define _localstatedir %{_var}
 Name:           milkytracker
 Version:        1.02.00
-Release:        alt2_1
+Release:        alt3_1
 Summary:        Module tracker software for creating music
 
 Group:          Sound
@@ -14,6 +14,7 @@ License:        GPLv3+
 URL:            http://www.milkytracker.org/
 Source0:        https://github.com/milkytracker/MilkyTracker/archive/v%{version}.tar.gz
 Patch0:         milkytracker-1.0.0-sdlmain.patch
+Patch1:         milkytracker-1.02.00-gcc8-fix.patch
 
 BuildRequires:  libSDL2-devel
 BuildRequires:  ctest cmake
@@ -35,6 +36,7 @@ Its goal is to be free replacement for the popular Fasttracker II software.
 find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 mkdir build
@@ -74,6 +76,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_docdir}/%{name}
 
 %changelog
+* Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 1.02.00-alt3_1
+- GCC8 fix
+
 * Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt2_1
 - rebuild with new librtmidi
 
