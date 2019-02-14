@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     4
-%define postgresql_subminor  20
+%define postgresql_subminor  21
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -20,7 +20,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel.1
+Release: alt%postgresql_altrel
 
 Summary: PostgreSQL client programs and libraries
 License: PostgreSQL
@@ -30,7 +30,6 @@ URL: http://www.postgresql.org/
 Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 %define PGSQL pgsql
-%define ROOT %_localstatedir/%PGSQL-root
 %define docdir %_docdir/%prog_name-%version
 
 Source0: %name-%version.tar
@@ -52,7 +51,7 @@ Conflicts: %{prog_name}9.6
 Conflicts: %{prog_name}10
 Conflicts: %{prog_name}11
 
-BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
+BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
 %if_without devel
 BuildRequires: postgresql-devel
@@ -184,8 +183,8 @@ the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 %package server
 Summary: The programs needed to create and run a PostgreSQL server
 Group: Databases
-PreReq: shadow-utils, syslogd-daemon, grep, sed, chrooted
-PreReq: postgresql-common > 1.0-alt3
+Requires(pre): shadow-utils, syslogd-daemon, grep, sed
+Requires(pre): postgresql-common > 1.0-alt3
 Requires: %name = %version-%release
 Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
@@ -317,10 +316,6 @@ pushd altlinux
 
 # The initscripts....
 install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
-#install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
-#install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
-#install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
-#install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
@@ -343,14 +338,6 @@ install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-di
 sed -i 's,@VERSION@,%postgresql_major.%postgresql_minor,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
-#pushd %buildroot%_sysconfdir/chroot.d
-#for f in %prog_name.*; do
-# if [ -f "$f" ]; then
-#   subst -p 's|@LIB@|%_lib|g' $f
-# fi
-#done
-#popd
-
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
 install -d -m700 %buildroot%_localstatedir/%PGSQL/data
 
@@ -363,14 +350,6 @@ cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
 
-# Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
-
-#mksock %buildroot%ROOT/dev/log
-#mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
-#ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
-
-mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
 install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
@@ -447,16 +426,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 SYSLOGD_SCRIPT=/etc/init.d/syslogd
 SYSLOGD_CONFIG=/etc/sysconfig/syslogd
-#if grep -qs '^SYSLOGD_OPTIONS=.*-a %ROOT/dev/log' "$SYSLOGD_CONFIG"; then
-#    subst 's|^\(SYSLOGD_OPTIONS=.*\) \?-a %ROOT/dev/log|\1|' "$SYSLOGD_CONFIG"
-#    if [ -x "$SYSLOGD_SCRIPT" ]; then
-#        "$SYSLOGD_SCRIPT" condreload ||:
-#    fi
-#fi
-
-#if [ $1 -eq 2 ]; then
-#	%_sysconfdir/chroot.d/%prog_name.all force
-#fi
 
 %post_service %prog_name
 
@@ -636,7 +605,6 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-#%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
@@ -685,27 +653,11 @@ fi
 %docdir/README.ALT-ru_RU.UTF-8
 %docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_datadir/%PGSQL/contrib
 %_datadir/%PGSQL/contrib/sepgsql.sql
 %_unitdir/*
-
-%attr(751,root,root)  %dir %ROOT
-%attr(751,root,root)  %dir %ROOT/bin
-%attr(751,root,root)  %dir %ROOT/etc
-%attr(751,root,root)  %dir %ROOT/etc/%PGSQL
-%attr(751,root,root)  %dir %ROOT/dev
-%attr(751,root,root)  %dir %ROOT/%_lib
-%attr(1777,root,root) %dir %ROOT/tmp
-%attr(751,root,root)  %dir %ROOT/usr
-%attr(751,root,root)  %dir %ROOT/var
-%attr(751,root,root)  %dir %ROOT%_libdir
-%attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
-%attr(751,root,root)  %dir %ROOT%_libdir/locale
-%attr(751,root,root)  %dir %ROOT%_localstatedir
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/data
-#attr(666,root,root) %ghost %ROOT/dev/log
 
 %if_with devel
 %files -f devel.lang devel
@@ -765,6 +717,11 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Feb 13 2019 Alexei Takaseev <taf@altlinux.org> 9.4.21-alt1
+- 9.4.21
+- Replace PreReq to Requires(pre)
+- Remove deadcode for chroot
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 9.4.20-alt1.1
 - rebuild with new perl 5.28.1
 
@@ -784,15 +741,15 @@ fi
 
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt1
 - 9.4.19
-- Fix CVE-2018-10915
+- (Fixes CVE-2018-10915)
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.4.18-alt1
 - 9.4.18
-- Fix CVE-2018-1115
+- (Fixes CVE-2018-1115)
 
 * Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 9.4.17-alt1
 - 9.4.17
-- Fix CVE-2018-1058
+- (Fixes CVE-2018-1058)
 
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.4.16-alt1
 - 9.4.16
@@ -812,7 +769,7 @@ fi
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.4.13-alt1
 - 9.4.13
-- fix CVE-2017-7547
+- (Fixes CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt2
 - Delete conflict with postgresql for 1C
@@ -937,7 +894,7 @@ fi
 - Fix symlink adjustment when chroot mode enabled.
 
 * Tue Oct 11 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.5-alt1
-- 9.0.5 fixes CVE-2011-2483.
+- 9.0.5 (Fixes CVE-2011-2483).
 - Disable devel subpackage.
 
 * Wed Apr 27 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.4-alt1
@@ -951,7 +908,7 @@ fi
 - rebuilt for debuginfo provides
 
 * Wed Feb 02 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.3-alt1
-- 9.0.3. Fixes CVE-2010-4015.
+- 9.0.3 (Fixes CVE-2010-4015).
 - Chroot scripts: exit silently when PG_CHROOT_DIR is not set.
 - Initscript: remove LOCKFILE when stopping the service.
 

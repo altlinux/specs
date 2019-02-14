@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     6
-%define postgresql_altrel    3
+%define postgresql_minor     7
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -32,7 +32,6 @@ URL: http://www.postgresql.org/
 Packager: Alexei Takaseev <taf@altlinux.org>
 
 %define PGSQL pgsql
-%define ROOT %_localstatedir/%PGSQL-root
 %define docdir %_docdir/%prog_name-%version
 
 Source0: %name-%version.tar
@@ -104,7 +103,7 @@ if you're installing the postgresql-server package.
 
 %if_with devel
 %package -n %libpq_name
-Summary: The shared libraries required for any PostgreSQL clients (edition for 1C 8.3.3 and later)
+Summary: The shared libraries required for any PostgreSQL clients (edition for 1C 8.3.13 and later)
 Group: Databases
 Provides: libpq = %version-%release
 Provides: libpq%libpq_major = %version-%release
@@ -117,7 +116,7 @@ PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
 
 %package -n %libpq_name-devel
-Summary: Development shared library for %libpq_name (edition for 1C 8.3.3 and later)
+Summary: Development shared library for %libpq_name (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: %libpq_name = %version-%release
 Provides: libpq-devel = %version-%release
@@ -131,7 +130,7 @@ Conflicts: libpq%libpq_major-devel > %version-%release
 Development shared library for %libpq_name
 
 %package -n %libpq_name-devel-static
-Summary: Development static library for %libpq_name (edition for 1C 8.3.3 and later)
+Summary: Development static library for %libpq_name (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: %libpq_name-devel = %version-%release
 Provides: libpq-devel-static = %version-%release
@@ -145,7 +144,7 @@ Conflicts: libpq%libpq_major-devel-static > %version-%release
 Development static library for %libpq_name
 
 %package -n %libecpg_name
-Summary: Shared library %libecpg_name for PostgreSQL (edition for 1C 8.3.3 and later)
+Summary: Shared library %libecpg_name for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %libpq_name = %version-%release
 Provides: libecpg = %version-%release
@@ -158,7 +157,7 @@ Conflicts: libecpg%libecpg_major > %version-%release
 Use postgresql-dev to develop such programs.
 
 %package -n %libecpg_name-devel
-Summary: Development shared library to %libecpg_name (edition for 1C 8.3.3 and later)
+Summary: Development shared library to %libecpg_name (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: %libecpg_name = %version-%release
 Provides: libecpg-devel = %version-%release
@@ -173,7 +172,7 @@ Development shared library for %libecpg_name and the ecpg Embedded C
 Postgres preprocessor.
 
 %package -n %libecpg_name-devel-static
-Summary: Development static library to %libecpg_name (edition for 1C 8.3.3 and later)
+Summary: Development static library to %libecpg_name (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: %libecpg_name-devel = %version-%release
 Provides: libecpg-devel-static = %version-%release
@@ -188,7 +187,7 @@ Development static library to %libecpg_name
 %endif
 
 %package docs
-Summary: Extra documentation for PostgreSQL (edition for 1C 8.3.3 and later)
+Summary: Extra documentation for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 BuildArch: noarch
 
@@ -199,7 +198,7 @@ Install this package if you want to help with the PostgreSQL documentation
 project, or if you want to generate printed documentation.
 
 %package contrib
-Summary: Contributed source and binaries distributed with PostgreSQL (edition for 1C 8.3.3 and later)
+Summary: Contributed source and binaries distributed with PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name = %version-%release
 
@@ -208,9 +207,9 @@ The postgresql-contrib package includes the contrib tree distributed with
 the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 
 %package server
-Summary: The programs needed to create and run a PostgreSQL server (edition for 1C 8.3.3 and later)
+Summary: The programs needed to create and run a PostgreSQL server (edition for 1C 8.3.13 and later)
 Group: Databases
-Requires(pre): shadow-utils, syslogd-daemon, grep, sed, chrooted
+Requires(pre): shadow-utils, syslogd-daemon, grep, sed
 Requires(pre): postgresql-common > 1.0-alt3
 Requires: %name = %version-%release %name-contrib = %version-%release
 Requires: glibc-locales
@@ -231,7 +230,7 @@ to install the postgresql package.
 
 %if_with devel
 %package devel
-Summary: PostgreSQL development header files (edition for 1C 8.3.3 and later)
+Summary: PostgreSQL development header files (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: %libpq_name-devel = %version-%release, %libecpg_name-devel = %version-%release
 Provides: postgresql-devel = %version-%release
@@ -243,7 +242,7 @@ You need to install this package if you want to develop applications which will 
 with a PostgreSQL server.
 
 %package devel-static
-Summary:  Development static library for postgresql-devel (edition for 1C 8.3.3 and later)
+Summary:  Development static library for postgresql-devel (edition for 1C 8.3.13 and later)
 Group: Development/Databases
 Requires: postgresql-devel = %version-%release
 Provides: postgresql-devel-static = %version-%release
@@ -253,7 +252,7 @@ Development static library for postgresql-devel
 %endif
 
 %package tcl
-Summary: The PL/Tcl procedural language for PostgreSQL (edition for 1C 8.3.3 and later)
+Summary: The PL/Tcl procedural language for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name = %version-%release tcl >= 8.4.0-alt1
 Provides: postgresql-tcl
@@ -264,7 +263,7 @@ system.  The postgresql-tcl package contains the PL/Tcl procedural language
 for the backend.
 
 %package perl
-Summary: The PL/Perl procedural language for PostgreSQL (edition for 1C 8.3.3 and later)
+Summary: The PL/Perl procedural language for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name = %version-%release
 
@@ -274,7 +273,7 @@ system.  The postgresql-perl package contains the PL/Perl procedural
 language for the backend.
 
 %package python
-Summary: Development module for Python code to access a PostgreSQL DB (edition for 1C 8.3.3 and later)
+Summary: Development module for Python code to access a PostgreSQL DB (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name = %version-%release
 
@@ -388,10 +387,6 @@ mkdir -p %buildroot%_includedir/%PGSQL/port
 cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 
-# Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
-
-mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
 install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
@@ -646,7 +641,6 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-#%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
@@ -697,27 +691,11 @@ fi
 %docdir/README.ALT-ru_RU.UTF-8
 %docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_datadir/%PGSQL/contrib
 %_datadir/%PGSQL/contrib/sepgsql.sql
 %_unitdir/*
-
-%attr(751,root,root)  %dir %ROOT
-%attr(751,root,root)  %dir %ROOT/bin
-%attr(751,root,root)  %dir %ROOT/etc
-%attr(751,root,root)  %dir %ROOT/etc/%PGSQL
-%attr(751,root,root)  %dir %ROOT/dev
-%attr(751,root,root)  %dir %ROOT/%_lib
-%attr(1777,root,root) %dir %ROOT/tmp
-%attr(751,root,root)  %dir %ROOT/usr
-%attr(751,root,root)  %dir %ROOT/var
-%attr(751,root,root)  %dir %ROOT%_libdir
-%attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
-%attr(751,root,root)  %dir %ROOT%_libdir/locale
-%attr(751,root,root)  %dir %ROOT%_localstatedir
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/data
-#attr(666,root,root) %ghost %ROOT/dev/log
 
 %if_with devel
 %files -f devel.lang devel
@@ -776,6 +754,9 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt1
+- 10.7
+
 * Mon Feb 04 2019 Alexei Takaseev <taf@altlinux.org> 10.6-alt3
 - Re-applay patches from 1C:
     * 00007-remove_selfjoin.patch
@@ -800,7 +781,7 @@ fi
 
 * Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 10.6-alt1
 - 10.6
-- (Fix CVE-2018-16850)
+- (Fixes CVE-2018-16850)
 
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Disable package libs for --without devel. This will provide
@@ -812,7 +793,7 @@ fi
 
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
 - 10.5
-- (Fix CVE-2018-10915, CVE-2018-10925)
+- (Fixes CVE-2018-10915, CVE-2018-10925)
 
 * Mon Jul 16 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
 - 10.4
@@ -830,7 +811,7 @@ fi
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.6.9-alt1
 - 9.6.9
-- (Fix CVE-2018-1115)
+- (Fixes CVE-2018-1115)
 
 * Wed Feb 28 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
 - 9.6.8
@@ -839,7 +820,7 @@ fi
     * 00004-postgresql-1c-9.6.patch
     * 00005-exists_opt-2.patch
 - Remove path 00001-1c_create_append_path.patch (fixed in 00001-1c_FULL_96.patch)
-- (Fix CVE-2018-1058)
+- (Fixes CVE-2018-1058)
 
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
 - 9.6.7
@@ -870,7 +851,7 @@ fi
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
 - 9.6.4
-- (Fix CVE-2017-7547)
+- (Fixes CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt1
 - Initial build for ALT Linux Sisyphus
