@@ -1,3 +1,4 @@
+ExclusiveArch: %ix86 x86_64 
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 %ifarch %ix86
@@ -11,7 +12,7 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt6.svn20140313
+Release: alt7.svn20140313
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
@@ -21,6 +22,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # svn://svn.code.sf.net/p/mpip/code/trunk
 Source: mpip.tar.gz
 Source1: farg.f
+Patch0: %name-3.3-gcc8-fix.patch
 
 Requires: lib%name = %version-%release
 
@@ -95,6 +97,7 @@ This package contains development files of this library.
 
 %prep
 %setup
+%patch0 -p1
 install -m644 %SOURCE1 .
 
 %build
@@ -171,6 +174,9 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %_libdir/libfarg.so
 
 %changelog
+* Thu Feb 14 2019 Pavel Moseev <mars@altlinux.org> 3.3-alt7.svn20140313
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt6.svn20140313
 - Updated build dependencies
 
