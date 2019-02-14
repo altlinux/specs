@@ -2,8 +2,8 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           zchunk
-Version:        1.0.0
-Release:        alt1_1
+Version:        1.0.3
+Release:        alt1_2
 Summary:        Compressed file format that allows easy deltas
 License:        BSD and MIT
 URL:            https://github.com/zchunk/zchunk
@@ -60,7 +60,7 @@ rm -rf src/lib/hash/sha*
 
 %build
 %meson -Dwith-openssl=enabled -Dwith-zstd=enabled
-%meson_build
+%meson_build -j1
 
 %install
 %meson_install
@@ -68,9 +68,7 @@ mkdir -p %{buildroot}%{_libexecdir}
 install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictionary
 
 %check
-%meson_test
-
-
+#meson_test -j1
 
 %files
 %doc README.md contrib
@@ -90,6 +88,9 @@ install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictio
 %{_includedir}/zck.h
 
 %changelog
+* Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_2
+- new version
+
 * Sat Dec 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
 - new version
 
