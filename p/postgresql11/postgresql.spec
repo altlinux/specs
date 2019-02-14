@@ -1,9 +1,12 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %def_with devel
 
+# Use ICU
+%def_with icu
+
 %define prog_name            postgresql
 %define postgresql_major     11
-%define postgresql_minor     1
+%define postgresql_minor     2
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -19,7 +22,7 @@
 
 Name: %prog_name%postgresql_major
 Version: %postgresql_major.%postgresql_minor
-Release: alt%postgresql_altrel.1
+Release: alt%postgresql_altrel
 
 Summary: PostgreSQL client programs and libraries
 License: PostgreSQL
@@ -50,8 +53,14 @@ Conflicts: %{prog_name}10
 # 1C
 Conflicts: %{prog_name}10-1C
 
-BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
+BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
+%if_without devel
+BuildRequires: postgresql-devel
+%endif
+%if_with icu
+BuildRequires: libicu-devel
+%endif
 
 %description
 PostgreSQL is an advanced Object-Relational database management system
@@ -183,8 +192,8 @@ the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 %package server
 Summary: The programs needed to create and run a PostgreSQL server
 Group: Databases
-PreReq: shadow-utils, syslogd-daemon, grep, sed, chrooted
-PreReq: postgresql-common > 1.0-alt3
+Requires(pre): shadow-utils, syslogd-daemon, grep, sed
+Requires(pre): postgresql-common > 1.0-alt3
 Requires: %name = %version-%release
 Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
@@ -284,6 +293,9 @@ database.
     --disable-rpath \
     --enable-nls \
     --enable-thread-safety \
+%if_with icu
+    --with-icu \
+%endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
     --with-pam \
@@ -746,12 +758,16 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt1
+- 11.2
+- Build with ICU
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 11.1-alt1.1
 - rebuild with new perl 5.28.1
 
 * Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 11.1-alt1
 - 11.1
-- Fix CVE-2018-16850
+- (Fixes CVE-2018-16850)
 
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt2
 - Disable package libs for --without devel. This will provide
@@ -782,15 +798,15 @@ fi
 
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
 - 10.5
-- Fix CVE-2018-10915, CVE-2018-10925
+- (Fixes CVE-2018-10915, CVE-2018-10925)
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
 - 10.4
-- Fix CVE-2018-1115
+- (Fixes CVE-2018-1115)
 
 * Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 10.3-alt1
 - 10.3
-- Fix CVE-2018-1058
+- (Fixes CVE-2018-1058)
 
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 10.2-alt1
 - 10.2
@@ -822,7 +838,7 @@ fi
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
 - 9.6.4
-- fix CVE-2017-7547
+- (Fix CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt2
 - Add conflict with postgresql for 1C
@@ -945,7 +961,7 @@ fi
 - Fix symlink adjustment when chroot mode enabled.
 
 * Tue Oct 11 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.5-alt1
-- 9.0.5 fixes CVE-2011-2483.
+- 9.0.5 (Fixes CVE-2011-2483).
 - Disable devel subpackage.
 
 * Wed Apr 27 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.4-alt1
@@ -959,7 +975,7 @@ fi
 - rebuilt for debuginfo provides
 
 * Wed Feb 02 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.3-alt1
-- 9.0.3. Fixes CVE-2010-4015.
+- 9.0.3 (Fixes CVE-2010-4015).
 - Chroot scripts: exit silently when PG_CHROOT_DIR is not set.
 - Initscript: remove LOCKFILE when stopping the service.
 
