@@ -3,7 +3,7 @@
 
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
-Version: 1.4.1
+Version: 1.5.2
 Release: alt1
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
@@ -148,6 +148,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Thu Feb 14 2019 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
+- new version 1.5.2
+
 * Sat Nov 17 2018 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 
