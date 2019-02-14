@@ -1,7 +1,7 @@
 
 Name: libqaccessibilityclient
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Accessibility client library for Qt
@@ -15,6 +15,7 @@ Patch50: qaccessibilityclient-0.1.0-dso.patch
 # ALT
 Patch100: alt-qt4.patch
 Patch101: alt-version.patch
+Patch102: alt-gcc8.patch
 
 # Automatically added by buildreq on Wed May 15 2013 (-bi)
 # optimized out: cmake-modules elfutils fontconfig libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel python-base ruby ruby-stdlibs
@@ -36,6 +37,7 @@ Requires: libqt4-devel
 %setup
 %patch50 -p1
 %patch100 -p1
+%patch102 -p1
 
 %build
 %Kbuild \
@@ -55,6 +57,9 @@ Requires: libqt4-devel
 %_libdir/libqaccessibilityclient.so
 
 %changelog
+* Thu Feb 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
+- NMU: fixed build with gcc-8.
+
 * Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
 - new version
 
