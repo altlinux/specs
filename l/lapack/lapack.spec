@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 %define sover 4
@@ -17,7 +17,7 @@ Source1: manpages.tar
 
 BuildRequires: cmake gcc-fortran libxblas-devel
 %{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
-%ifarch %arm %e2k riscv64
+%ifarch %e2k riscv64
 BuildRequires: libblas-devel
 %define blas libblas.so
 %else
@@ -35,7 +35,7 @@ Obsoletes: liblapack3
 %package -n lib%name-devel
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: Development/Other
-%ifarch %arm %e2k riscv64
+%ifarch %e2k riscv64
 Requires: libblas-devel
 %else
 Requires: libopenblas-devel
@@ -182,6 +182,9 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Thu Feb 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.8.0-alt3
+- exclude %%arm from crippled arches
+
 * Tue Feb 12 2019 Nikita Ermakov <arei@altlinux.org> 1:3.8.0-alt2
 - Add bootstrap option
 - Use libblas.so for %%arm %%e2k and riscv64 instead of libopenblas.so
