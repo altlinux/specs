@@ -8,7 +8,7 @@ BuildRequires: xsltproc
 %define _localstatedir %{_var}
 Name:		gdcm
 Version:	2.8.4
-Release:	alt2_11
+Release:	alt3_11
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -49,6 +49,10 @@ BuildRequires:	libxml2-devel
 #BuildRequires:	vtk-devel
 BuildRequires: gcc gcc-c++
 Source44: import.info
+# debian
+Patch134: poppler0.71.patch
+# me
+Patch135: gdcm-2.8.4-alt-poppler.patch
 
 
 %description
@@ -94,7 +98,7 @@ compile applications based on gdcm
 Group: Development/Other
 Summary:	CSharp, C++, Java, PHP and Python example programs for GDCM
 Requires:	%{name} = %{version}-%{release}
-AutoReqProv: no
+AutoReq: no
 
 %description examples
 GDCM examples
@@ -119,6 +123,8 @@ used this library with python
 %patch7 -p 1
 %patch8 -p 1
 %patch9 -p 1
+%patch134 -p1
+%patch135 -p1
 
 # Fix cmake command
 sed -i.backup 's/add_dependency/add_dependencies/' Utilities/doxygen/CMakeLists.txt
@@ -140,9 +146,6 @@ rm -rf Utilities/wxWidgets
 
 # Needed for testing:
 #rm -rf Utilities/gdcmmd5 
-
-# see https://gitlab.freedesktop.org/poppler/poppler/merge_requests/83
-sed -i 's,gTrue,true,g;s,gFalse,false,g;s,GBool,bool,g;' Applications/Cxx/gdcmpdf.cxx Applications/Cxx/gdcminfo.cxx
 
 %build
 mkdir -p %{_target_platform}
@@ -232,6 +235,9 @@ make test -C %{_target_platform} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt3_11
+- fixed build
+
 * Wed Jan 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt2_11
 - fixed build
 
