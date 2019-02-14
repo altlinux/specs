@@ -1,6 +1,6 @@
 Name: scim
-Version: 1.4.17
-Release: alt2
+Version: 1.4.18
+Release: alt1
 Summary: Smart Common Input Method platform
 Packager: Andrey Cherepanov <cas@altlinux.org>
 License: LGPLv2+
@@ -58,7 +58,6 @@ Obsoletes: scim-python-xingma-wubi
 Obsoletes: scim-python-xingma-zhengma
 Patch1: scim-add-restart.patch
 Patch7: scim_panel_gtk-emacs-cc-style.patch
-Patch8: scim-fix-build.patch
 
 %description
 SCIM is a user friendly and full featured input method user interface and
@@ -131,7 +130,6 @@ mv configs/global{,.orig}
 cp -p %SOURCE4 configs/global
 
 %patch7 -p1 -b .7-emacs-ccmode~
-%patch8 -p1
 
 # patch17 touches configure.ac and Makefile.am
 ./bootstrap
@@ -223,6 +221,9 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %_libdir/qt4/plugins/
 
 %changelog
+* Thu Feb 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.18-alt1
+- Build new version.
+
 * Wed Oct 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.17-alt2
 - Fix build by upstream commit b32c2f9.
 
