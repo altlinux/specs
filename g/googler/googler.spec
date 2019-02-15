@@ -1,7 +1,7 @@
 %global _unpacked_files_terminate_build 1
 
 Name:    googler
-Version: 3.7
+Version: 3.7.1
 Release: alt1
 
 Summary: Google Search, Google Site Search, Google News from the terminal
@@ -38,6 +38,9 @@ install -Dm 644 auto-completion/fish/googler.fish %buildroot%_datadir/fish/vendo
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 3.7.1-alt1
+- new version 3.7.1
+
 * Fri Sep 21 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.7-alt1
 - new version 3.7
 
