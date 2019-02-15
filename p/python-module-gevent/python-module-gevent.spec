@@ -4,8 +4,8 @@
 %def_disable embed
 
 Name: python-module-%oname
-Version: 1.2.2
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 Group: Development/Python
 License: MIT
@@ -18,6 +18,7 @@ Url: http://pypi.python.org/pypi/gevent
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-repoze.sphinx.autointerface
 BuildRequires: libev-devel libcares-devel
 BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-objects.inv
 BuildRequires: python-module-greenlet
@@ -25,6 +26,7 @@ BuildRequires: python-module-greenlet
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-OpenSSL
 BuildRequires: python3-module-Cython python3-module-cryptography python3-module-html5lib
@@ -208,6 +210,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2019 Nikita Ermakov <arei@altlinux.org> 1.4.0-alt1
+- Updated to upstream version 1.4.0.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
