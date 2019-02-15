@@ -11,7 +11,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.5.0
+Version:	60.5.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -469,6 +469,14 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Feb 15 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.1-alt1
+- New version (60.5.1).
+- Fixes:
+  + CVE-2018-18356 Use-after-free in Skia
+  + CVE-2019-5785 Integer overflow in Skia
+  + CVE-2018-18335 Buffer overflow in Skia with accelerated Canvas 2D
+  + CVE-2018-18509 S/MIME signature spoofing
+
 * Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.0-alt1
 - New version (60.5.0).
 - Fixes:
