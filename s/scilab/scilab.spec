@@ -5,8 +5,8 @@
 %def_without docs
 
 Name:     scilab
-Version:  6.0.1
-Release:  alt4
+Version:  6.0.2
+Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -29,9 +29,7 @@ Patch4:	 scilab-fix-make-doc-ja_JP.patch
 Patch5:  scilab-6.0.0-jogl-2.3.patch
 Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
-# Fix build with gfortran 8 (see https://svnweb.freebsd.org/ports?view=revision&revision=484280)
-Patch10: scilab-gfortran8.patch
-Patch11: scilab-alt-gcc8-fix.patch
+Patch10: scilab-alt-gcc8-fix.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
@@ -40,6 +38,7 @@ AutoReq: yes, noshell
 ExcludeArch:   %{arm} aarch64
 
 BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: java-devel
 BuildRequires: gcc-fortran
 BuildRequires: gcc-c++
@@ -162,8 +161,7 @@ tar xf %SOURCE1
 %patch5 -p1
 %patch8 -p2
 %patch9 -p2
-%patch10 -p0
-%patch11 -p2
+%patch10 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -211,8 +209,6 @@ cd scilab
 rm -fr %buildroot%_desktopdir/%{name}-*.desktop
 # Remove la files
 rm -fr %buildroot%_libdir/%name/*.la
-# Remove MIME package
-rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 
 %if_without docs
 tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
@@ -231,6 +227,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Fri Feb 15 2019 Andrey Cherepanov <cas@altlinux.org> 6.0.2-alt1
+- New version.
+
 * Fri Feb 15 2019 Ivan Razzhivin <underwit@altlinux.org> 6.0.1-alt4
 - GCC8 fix
 
