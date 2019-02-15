@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%package_name
-Version: 17.0.0
+Version: 18.1.0
 Release: alt1
 
 Summary: Service identity verification for pyOpenSSL
@@ -16,6 +16,8 @@ Url: https://github.com/pyca/service_identity
 # Source-url: https://pypi.python.org/packages/source/s/service_identity/service_identity-1.0.0.tar.gz
 Source: %oname-%version.tar
 BuildArch: noarch
+Provides: python-module-service_identity = %version-%release
+Obsoletes: python-module-service_identity <= 18.1.0
 
 #BuildPreReq: rpm-build-python
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
@@ -41,6 +43,7 @@ other relevant RFCs too.
 %package -n python3-module-%package_name
 Summary: Service identity verification for pyOpenSSL (Python3)
 Group: Development/Python3
+Provides: python3-module-service_identity = %version-%release
 
 %description -n python3-module-%package_name
 Use this package if you use pyOpenSSL and don't want to be MITMed.
@@ -89,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Fri Feb 15 2019 Vladimir Didenko <cow@altlinux.org> 18.1.0-alt1
+- new version
+- obsolete duplicate package (closes: #35296)
+
 * Fri Jun 9 2017 Vladimir Didenko <cow@altlinux.org> 17.0.0-alt1
 - new version
 
