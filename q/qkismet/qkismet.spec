@@ -1,6 +1,6 @@
 Name: qkismet
 Version: 0.3.1
-Release: alt1.qa1
+Release: alt2
 
 Summary: Qt4 frontend to kismet
 License: %gpl2plus
@@ -10,6 +10,8 @@ Url: http://qkismet.sf.net/
 Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 Source0: %name-%version.tar
+
+Patch1: %name-%version-alt-gcc8.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: gcc-c++ libqt4-devel
@@ -22,6 +24,7 @@ status messages and allows to sort and filter them.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 pushd src
@@ -36,6 +39,9 @@ sed -i 's,-pipe ,%optflags ,g' Makefile.Release
 %_bindir/*
 
 %changelog
+* Thu Feb 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt2
+- NMU: fixed build with gcc-8.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
