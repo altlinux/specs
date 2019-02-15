@@ -3,7 +3,7 @@
 %def_disable palettes
 
 Name: elementary-icon-theme
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
@@ -45,6 +45,9 @@ theme.
 %doc AUTHORS README*
 
 %changelog
+* Fri Feb 15 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
+- 5.0.3
+
 * Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
 - 5.0.2
 
