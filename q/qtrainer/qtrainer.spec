@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 Name:		qtrainer
 Summary:	Qtrainer is a personal home trainer for Qt4
 Version:	0.5.2
-Release:	alt2.qa2
+Release:	alt2.qa3
 Group:		Office
 License:	GPLv2+
 Packager: 	Mikhail Pokidko <pma@altlinux.ru>
@@ -10,6 +10,7 @@ URL:		http://tuxer.ulyssis.be/homepage/qtrainer.html
 Source:		%name-%{version}_SRC.tar.gz
 Source1:	%name.desktop
 Patch0:		%name.patch
+Patch1:		%name-%version-alt-gcc8.patch
 
 BuildRequires: gcc-c++ libqt4-devel libqt4-network libqt4-svg
 
@@ -23,6 +24,7 @@ Qtrainer also has an online database of exercises.
 %prep
 %setup -q
 #patch0 -p1
+%patch1 -p2
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -40,6 +42,9 @@ install -Dp -m 0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Fri Feb 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.2-alt2.qa3
+- NMU: fixed build with gcc-8.
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.2-alt2.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
