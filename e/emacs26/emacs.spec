@@ -21,7 +21,7 @@
 
 Name: emacs26
 Version: 26.1.91
-Release: alt3
+Release: alt4
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1162,7 +1162,7 @@ fi
 find "$RPM_BUILD_ROOT%_libexecdir/%shortname/%emacs_version" \
     "$RPM_BUILD_ROOT%_datadir/%shortname/%emacs_version/etc" -type d -print \
     | awk '// {gsub ("%buildroot","",$0); print "%%dir " $0}' > main.ls
-find "$RPM_BUILD_ROOT%_libexecdir/%shortname/%emacs_version" -type f -print | awk '/\/movemail$/ { printf "%%attr(-,root,mail) "} // {gsub ("%buildroot","",$0); print $0}' >> main.ls
+find "$RPM_BUILD_ROOT%_libexecdir/%shortname/%emacs_version" -type f -print | awk '/\/movemail$/ { printf "%%%%attr(-,root,mail) "} // {gsub ("%buildroot","",$0); print $0}' >> main.ls
 find "$RPM_BUILD_ROOT%_datadir/%shortname/%emacs_version/etc" -type f -print | awk '/gnus/ { printf "#"} // {gsub ("%buildroot","",$0); print $0}' >> main.ls
 
 # FIXME look into el-pkgutils.el to see what broken
@@ -1516,6 +1516,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 
 
 %changelog
+* Fri Feb 15 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt4
+- Fix FTBFS (#36101)
+
 * Wed Jan 16 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt3
 - Build emacs26-X11-athena and emacs26-X11-motif with librsvg (ALT#35910)
 
