@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.175
+Version: 0.176
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -259,6 +259,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Feb 15 2019 Dmitry V. Levin <ldv@altlinux.org> 0.176-alt1
+- 0.175 -> 0.176 (fixes: CVE-2019-7146, CVE-2019-7148,
+  CVE-2019-7149, CVE-2019-7150, CVE-2019-7664, CVE-2019-7665).
+
 * Fri Nov 16 2018 Dmitry V. Levin <ldv@altlinux.org> 0.175-alt1
 - 0.174 -> 0.175.
 
