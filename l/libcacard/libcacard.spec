@@ -3,7 +3,7 @@
 
 Name: libcacard
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
 License: LGPLv2.1+
@@ -54,6 +54,10 @@ echo "%version" > .tarball-version
 %_libdir/libcacard.so
 
 %changelog
+* Fri Feb 15 2019 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt2
+- really build 2.6.1
+- fixed build with autoconf-archive-2019.01.06
+
 * Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
 - new version 2.6.1
 
