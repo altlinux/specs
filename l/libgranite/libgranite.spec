@@ -7,7 +7,7 @@
 %define sover 5
 
 Name: libgranite
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Extension of GTK+3 libraries
@@ -22,7 +22,10 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-BuildRequires: cmake rpm-build-gir vala-tools libgtk+3-devel libgee0.8-devel
+%define gtk_ver 3.22
+
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: vala-tools libgtk+3-devel >= %gtk_ver libgee0.8-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgtk+3-gir-devel libgee0.8-gir-devel
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
@@ -90,13 +93,11 @@ GObject introspection devel data for the granite library.
 %setup -n %_name-%version
 
 %build
-%cmake_insource -DCMAKE_BUILD_TYPE:STRING="Release"
-%make_build VERBOSE=1
-%{?_enable_docs:%make docs}
+%meson %{?_enable_docs:-Ddocumentation=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name
 
 %files -f %_name.lang
@@ -125,6 +126,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Fri Feb 15 2019 Yuri N. Sedunov <aris@altlinux.org> 5.2.3-alt1
+- 5.2.3 (ported to Meson build system)
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.2-alt1
 - 5.2.2
 
