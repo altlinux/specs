@@ -7,7 +7,7 @@
 %define oname lua
 Name: verlihub-plugins-lua51
 Version: 1.8.1
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Lua 5.1 plugin for verlihub
 
@@ -18,6 +18,8 @@ Group: Development/C
 # Uwaga! there is three versions of lua 1.6 on the site
 # use cvs -d :pserver:anonymous@verlihub.cvs.sourceforge.net:/cvsroot/verlihub co lua
 Source: http://downloads.sourceforge.net/verlihub/%{oname}_%version.tar.bz2
+Patch: verlihub-plugins-lua51-gcc8-fix.patch
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: verlihub
@@ -30,6 +32,7 @@ Lua 5.1 plugin for verlihub
 
 %prep
 %setup -n %oname
+%patch -p1
 
 %build
 %configure --disable-static
@@ -43,6 +46,9 @@ Lua 5.1 plugin for verlihub
 %_libdir/*.so*
 
 %changelog
+* Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 1.8.1-alt1.qa3
+- GCC8 fix
+
 * Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1.qa2
 - NMU: build with new lua5.1
 
