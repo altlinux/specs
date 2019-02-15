@@ -24,7 +24,7 @@
 %define nv_version 410
 %define nv_release 93
 %define nv_minor %nil
-%define pkg_rel alt193
+%define pkg_rel alt194
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -352,6 +352,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt194
+- exclude 10DE:1C02 from .xinf list
+
 * Wed Jan 09 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt193
 - new version
 

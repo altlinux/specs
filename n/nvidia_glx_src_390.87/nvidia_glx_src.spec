@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt192
+%define pkg_rel alt193
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -102,6 +102,7 @@ Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: buildfix_kernel_4.19.patch
 Patch4: buildfix_kernel_4.4.patch
+Patch5: buildfix_kernel_4.20.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -171,6 +172,7 @@ pushd kernel
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 rm -rf precompiled
 popd
 
@@ -354,6 +356,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 15 2019 Sergey V Turchin <zerg@altlinux.org> 390.87-alt193
+- add fix against kernel 4.20
+
 * Mon Feb 04 2019 Sergey V Turchin <zerg@altlinux.org> 390.87-alt192
 - add fix against kernel 4.4 get_user_pages
 
