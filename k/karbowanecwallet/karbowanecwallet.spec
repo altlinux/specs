@@ -1,20 +1,22 @@
 Name:		karbowanecwallet
 Version:	1.3.1
-Release:	alt1
+Release:	alt2
 Summary:	Karbowanec KRB wallet
 Url:		https://karbo.io/
 Group:		Office
 License:	MIT
-ExclusiveArch:	%ix86 x86_64
+# ExclusiveArch:	%%ix86 x86_64
 Source0:	%name.tar.xz
 Source1:	cryptonote.tar.xz
 Source2:	libqrencode.tar.xz
 Source3:	karbowanec.png
 
 Patch0:		%name-1.2.6-alt_lang_dir.patch
+Patch1:     %name-g++8.patch
 
 BuildRequires: boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel
 BuildRequires: /usr/bin/convert
+ExclusiveArch: x86_64
 
 %description
   Karbowanec (Karbo) is Ukrainian decentralized, privacy oriented peer-to-peer
@@ -26,6 +28,7 @@ BuildRequires: /usr/bin/convert
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 %patch0 -p1
+%patch1 -p2
 
 %build
 subst 's|Categories=Office;Finance;|Categories=Qt;Office;Finance;|g' ./src/%name.desktop
@@ -57,6 +60,9 @@ convert -resize 16x16 %SOURCE3 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Fri Feb 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.1-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Sun Oct 28 2018 Motsyo Gennadi <drool@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 - disable aarch64
