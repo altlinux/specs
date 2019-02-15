@@ -1,7 +1,7 @@
 
 Name: lopsus
 Version: 1.4.0.1
-Release: alt1.qa1
+Release: alt2
 
 URL: http://www.marigostra.ru/developments/lopsus.html
 License: %gpl3plus
@@ -15,6 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: rpm-build-licenses
 
 Source: %name-%version.tar.gz
+Patch0: %name-g++8.patch
 
 %description
 Lopsus is small, light website generator. It has special form to
@@ -41,6 +42,8 @@ This package contains the utility to translate %name page content files.
 
 %prep
 %setup -q
+%patch0 -p2
+
 %build
 
 %configure
@@ -60,6 +63,9 @@ make DESTDIR=%buildroot install
 %_bindir/%name-page
 
 %changelog
+* Thu Feb 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.0.1-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.0.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

@@ -4,7 +4,7 @@
 
 Name: kismet
 Version: 2014.02.R1
-Release: alt1
+Release: alt2
 
 Summary: Kismet wireless tools
 License: GPLv2+
@@ -14,6 +14,7 @@ Url: http://www.kismetwireless.net/
 
 # https://github.com/kismetwireless/kismet.git
 Source: %name-%version.tar
+Patch0: %name-g++8.patch
 
 BuildRequires: control gcc-c++ libcap-devel libncurses-devel libnl-devel
 BuildRequires: libpcap-devel libpcre-devel libssl-devel setproctitle-devel
@@ -104,6 +105,7 @@ This package contains plugins shipped by the kismet package.
 
 %prep
 %setup
+%patch0 -p1
 
 sed -i \
 	-e '\!^ouifile=/etc/manuf!d' \
@@ -190,6 +192,9 @@ rm -f %buildroot%_bindir/%name
 %_docdir/%name-plugins-%version/
 
 %changelog
+* Thu Feb 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 2014.02.R1-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.02.R1-alt1
 - Updated to upstream version 2014.02.R1.
 

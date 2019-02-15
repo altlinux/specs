@@ -6,7 +6,7 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
 Version: 0.8.4.%subver
-Release: alt1
+Release: alt2
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -21,6 +21,7 @@ Patch1: qt5-fsarchiver_qmake_pro.patch
 #Patch2: qt5-fsarchiver-0.6.20-cppcheck.patch
 Patch3: qt5-fsarchiver-sudo-0.6.19-21.patch
 Patch4: qt5-fsarchiver-findsmb-0.8.0.patch
+Patch5: %name-g++8.patch
 
 License: GPLv2+
 Group: Archiving/Backup
@@ -106,6 +107,7 @@ fsarchiver  - системный инструментарий, позволяя�
 #%%patch1 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 # cp %%SOURCE4 ./translations/%{sname}_ru.ts
 
@@ -159,6 +161,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Fri Feb 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.4.0-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri Apr 06 2018 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.0-alt1
 - Version 0.8.4-0
 

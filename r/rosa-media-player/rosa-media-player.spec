@@ -1,6 +1,6 @@
 Name:		rosa-media-player
 Version:	1.6.11
-Release:	alt2
+Release:	alt3
 Summary:	Multimedia player based on mplayer technology
 
 License:	GPLv2+
@@ -8,6 +8,7 @@ Group:		Video
 Url:		https://abf.rosalinux.ru/uxteam/ROSA_Media_Player/tree/develop
 
 Source:		%name-%version.tar.gz
+Patch0:     %name-g++8.patch
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
@@ -40,6 +41,7 @@ record screen presentations and many other things.
 
 %prep
 %setup -q -n %name
+%patch0 -p2
 
 %build
 %make_build QMAKE=%_qt4dir/bin/qmake LRELEASE=%_qt4dir/bin/lrelease PREFIX=%_prefix
@@ -59,6 +61,9 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Fri Feb 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.6.11-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Jan 30 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.11-alt2
 - Build without kdelibs support.
 
