@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.11.3
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -62,6 +62,7 @@ Patch1005: alt-hidpi_scale_at_192.patch
 Patch1006: e2k-qt-5.9.6.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 Patch1008: alt-mkspecs-features.patch
+Patch1009: alt-sql-mysql.patch
 
 # macros
 %define _qt5 %gname
@@ -384,6 +385,7 @@ EGL integration library for the Qt%major toolkit
 %endif
 %patch1007 -p1
 %patch1008 -p1
+#%patch1009 -p1
 bin/syncqt.pl -version %version
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -445,7 +447,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %endif
     -openssl-linked \
     -libproxy \
-    -nomake examples \
+    -make examples \
+    -no-compile-examples \
     -nomake tests \
     -make tools \
     -no-pch \
@@ -493,7 +496,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = -O2|" %buildr
 sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3|" %buildroot%_qt5_archdatadir/mkspecs/common/gcc-base.conf
 
 # create/own dirs
-mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir}
+mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir,%_qt5_examplesdir}
 mkdir -p %buildroot/%_qt5_plugindir/{accessible,iconengines,script,styles}/
 
 # debug logging config
@@ -610,6 +613,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %dir %_sysconfdir/qt5/
 %dir %_qt5_docdir/
 %dir %_qt5_archdatadir/
+%dir %_qt5_examplesdir/
 %dir %_qt5_importdir/
 %dir %_qt5_qmldir/
 %dir %_qt5_translationdir/
@@ -646,6 +650,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %doc %_qt5_docdir/*
 %exclude %_qt5_docdir/global/
 %endif
+%_qt5_examplesdir/*
 
 %files -n rpm-macros-%gname
 %_rpmmacrosdir/%gname
@@ -793,6 +798,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Feb 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2
+- package examples
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
