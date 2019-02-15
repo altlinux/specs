@@ -1,6 +1,6 @@
 Name: librsync
 Version: 0.9.7
-Release: alt3
+Release: alt4
 
 Summary: rsync remote network-delta algorithm library
 Group: System/Libraries
@@ -11,6 +11,9 @@ Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
 Patch1: librsync-debian-manpage.patch
 Patch2: librsync-debian-4gb.patch
 Patch3: librsync-debian-getopt.patch
+Patch4: librsync-debian-format-security.patch
+Patch5: librsync-debian-implicit-declaration.patch
+Patch6: librsync-debian-fix-tests.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: bzlib-devel libpopt-devel zlib-devel
@@ -40,6 +43,9 @@ which will use %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %autoreconf
@@ -50,6 +56,9 @@ which will use %name.
 %makeinstall_std
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+
+%check
+%make_build check
 
 %files
 %_libdir/*.so.*
@@ -63,6 +72,10 @@ which will use %name.
 %_man3dir/*
 
 %changelog
+* Fri Feb 15 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.7-alt4
+- synced with Debian librsync-0.9.7-10.
+- %%check added.
+
 * Fri Dec 09 2011 Dmitry V. Levin <ldv@altlinux.org> 0.9.7-alt3
 - Synced with Debian librsync-0.9.7-8.
 
