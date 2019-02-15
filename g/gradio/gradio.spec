@@ -1,5 +1,5 @@
 Name: gradio
-Version: 7.1
+Version: 7.2
 Release: alt1
 Summary: GTK3 app for finding and listening to internet radio stations
 License: GPL-3.0+
@@ -61,6 +61,9 @@ website for its database backend.
 %_iconsdir/hicolor/symbolic/apps/de.haeckerfelix.gradio-symbolic.svg
 
 %changelog
+* Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 7.2-alt1
+- Build new version.
+
 * Mon Jul 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 7.1-alt1
 - new version 7.1
 
