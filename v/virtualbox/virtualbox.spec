@@ -59,8 +59,8 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 5.2.24
-Release: alt3
+Version: 5.2.26
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -87,6 +87,7 @@ Source15:	os_altlinux.png
 Source16:	os_altlinux_64.png
 Source22:	%name.service
 Source23:	virtualbox.conf
+Source24:	virtualbox.drvpre.in
 
 %if_enabled debug
 Source99:	%vboxdbg.in
@@ -564,16 +565,8 @@ cd additions >/dev/null
   ln -s VBoxEGL.so %buildroot%vboxadddir/libEGL.so.1
 
   install -d %buildroot%xdrv_pre_d
-  cat >%buildroot%xdrv_pre_d/virtualbox <<EOF
-#!/bin/bash
-
-if test -f /proc/bus/pci/devices && grep -q 80eebeef /proc/bus/pci/devices; then
-	mkdir -p %ld_so_confdir
-	echo %vboxadddir > %ld_so_conf
-else
-	rm -f %ld_so_conf
-fi
-EOF
+  install -m755 %SOURCE24 %buildroot%xdrv_pre_d/virtualbox
+  sed -i -e 's|@bindir@|%_bindir|g' -e 's|@ld_so_confdir@|%ld_so_confdir|g' -e 's|@ld_so_conf@|%ld_so_conf|g' -e 's|@vboxadddir@|%vboxadddir|g' %buildroot%xdrv_pre_d/virtualbox
 
 # create links
   ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
@@ -805,6 +798,17 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Feb 08 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.26-alt1
+- Update to latest of 5.2 release
+
+* Fri Feb 08 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt5
+- Replace drvpre script from spec to separate file
+
+* Thu Feb 07 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 5.2.24-alt4
+- Propperly check if 3D acceleration is supported before preloading
+  VirtualBox's libGL.so.1 and libEGL.so.1 and update ldconfig cache
+  after changes to /etc/ld.so.conf.d/*.conf (Closes: 36035)
+
 * Fri Jan 25 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.24-alt3
 - Fix rEFInd 0.11.4 icons missing due to inaccessible files on ISO9660 partition (Closes: 34435)
 
