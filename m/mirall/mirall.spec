@@ -1,6 +1,6 @@
 Name: mirall
 Version: 1.0.2
-Release: alt5
+Release: alt6
 
 Group: Networking/Other
 Summary: Applet for ownflowd files syncronization
@@ -9,6 +9,7 @@ License: GPL
 Source: %name-%version.tar
 Patch1: mirall-1.0.2-alt-notwarn-notconfigured.patch
 Patch2: mirall-1.0.2-alt-dont-check-updates.patch
+Patch3: %name-g++8.patch
 
 BuildRequires: rpm-macros-cmake cmake libqt4-devel gcc-c++ libcsync-devel
 
@@ -19,6 +20,7 @@ Applet for file syncronization via owncloud.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %cmake
@@ -39,6 +41,9 @@ install -m0644 mirall.desktop %buildroot/%_sysconfdir/xdg/autostart
 %_iconsdir/hicolor/*/apps/mirall.*
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt6
+- no return statement in the non-void function fixed (according g++8)
+
 * Tue Aug 28 2012 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt5
 - Complete Russian translation
 

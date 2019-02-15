@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -15,6 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://gitlab.eterfund.ru/rx-etersoft/rxclient/-/archive/%version-%release/rxclient-%version-%release.tar.bz2
 Source: %oname-%version.tar
 Source1: rxclient.conf
+
+Patch0:  %name-g++8.patch
 
 # Automatically added by buildreq on Sat Sep 19 2009
 BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
@@ -40,6 +42,7 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %autoreconf
@@ -86,6 +89,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - change versioning scheme
 - implement readonly mode for rxclient (eterbug 12856)

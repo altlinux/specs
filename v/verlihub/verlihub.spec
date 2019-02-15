@@ -5,7 +5,7 @@
 
 Name: verlihub
 Version: 0.9.8e
-Release: alt2
+Release: alt3
 
 Summary: Direct Connect (p2p) Server
 
@@ -18,6 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: verlihub-%version%rel.tar
 Patch:  verlihub-fix-build.patch
 Patch1: %name-%version-alt-gcc6.patch
+Patch2: %name-g++8.patch
 
 # Automatically added by buildreq on Fri Mar 21 2008
 BuildRequires: gcc-c++ glibc-devel libGeoIP-devel libMySQL-devel libpcre-devel zlib-devel
@@ -48,6 +49,7 @@ The lib%name package contains the necessary library for %name
 %setup -n %name
 %patch -p2
 %patch1 -p2
+%patch2 -p2
 
 %build
 export PTHREAD_LIBS=-lpthread
@@ -91,6 +93,9 @@ ln -s ../../..%_libdir/libplug_pi.so.0.0.0 %buildroot%_sysconfdir/%name/plugins
 %_includedir/%name/
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.8e-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8e-alt2
 - Fixed build with gcc-6
 

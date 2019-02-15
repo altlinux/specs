@@ -1,6 +1,6 @@
 Name: 	  qstopmotion
 Version:  2.3.2
-Release:  alt2
+Release:  alt3
 
 Summary:  A program for stopmotion animation
 License:  GPLv2
@@ -10,6 +10,7 @@ Url: 	  https://sourceforge.net/p/qstopmotion/
 Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
+Patch0:   %name-g++8.patch
 
 BuildPreReq: cmake rpm-macros-cmake
 BuildRequires: libv4l-devel  libexif-devel libavdevice57 v4l-utils qt5-qtbase qt5-imageformats qt5-qtbase-gui qt5-base-devel ffmpeg gstreamer-devel libgphoto2-devel libv4l 
@@ -23,6 +24,7 @@ are arranged as a movie.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 #%%cmake
@@ -47,6 +49,9 @@ are arranged as a movie.
 %doc AUTHORS COPYING
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.2-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Dec 24 2018 Denis Medvedev <nbr@altlinux.org> 2.3.2-alt2
 - fix compilation and group
 

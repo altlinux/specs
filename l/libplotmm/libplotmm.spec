@@ -1,7 +1,7 @@
 %define oname plotmm
 Name: libplotmm
 Version: 0.1.2
-Release: alt2
+Release: alt3
 
 Summary: PlotMM - GTKmm plot widget for scientific applications
 
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/plotmm/%oname-%version.tar
 Patch: %name-as-needed.patch
 Patch1: %name-sigc.patch
+Patch2: %name-g++8.patch
 
 # Automatically added by buildreq on Wed Mar 30 2011
 BuildRequires: doxygen gcc-c++ glibc-devel libgtkmm2-devel
@@ -40,6 +41,7 @@ of %name library.
 %setup -n %oname-%version
 %patch
 %patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -63,6 +65,9 @@ of %name library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.2-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Mar 30 2011 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt2
 - cleanup spec, update buildreqs
 

@@ -1,6 +1,6 @@
 Name: CGenius
 Version: 1.9.9.6beta
-Release: alt1
+Release: alt2
 
 Summary: the clone of Commander Keen
 License: GPL
@@ -12,6 +12,8 @@ Url: http://clonekeenplus.sourceforge.net
 #Source: %name-%version.tar
 # https://github.com/gerstrong/Commander-Genius/archive/v1996beta.tar.gz
 Source: Commander-Genius-1996beta.tar.gz
+
+Patch0: %name-g++8.patch
 
 # Automatically added by buildreq on Fri Sep 15 2017
 # optimized out: cmake-modules libSDL2-devel libX11-devel libogg-devel libstdc++-devel pkg-config python-base python-modules xorg-xproto-devel
@@ -76,6 +78,8 @@ added to Episode 1, 2, 3 and 4 so far. More is about to come!
 %setup -n Commander-Genius-1996beta
 rm -rf Build dlls
 
+%patch0 -p2
+
 %build
 %cmake \
 	-DGAMES_SHAREDIR=/usr/share/games \
@@ -103,6 +107,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.9.6beta-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri Sep 15 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.9.9.6beta-alt1
 - new version
 - add hqp subpackage

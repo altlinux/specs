@@ -1,11 +1,12 @@
 Name:		sfxr-sdl
 Version:	1.1
-Release:	alt1
+Release:	alt2
 Group:		Sound
 Summary:	GUI-based sound effect generator
 License:	MIT
 Source:		%name-%version.tar.gz
 Patch:		sfxr-sdl-1.1-asneeded.patch
+Patch1:     %name-g++8.patch
 URL:		http://drpetter.se/project_sfxr.html
 
 BuildRequires:	desktop-file-utils
@@ -26,6 +27,7 @@ that the user could accept/reject each proposed sound.
 %prep
 %setup
 %patch -p3
+%patch1 -p2
 
 %build
 %make
@@ -41,6 +43,9 @@ that the user could accept/reject each proposed sound.
 %_liconsdir/*
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Thu May 12 2011 Fr. Br. George <george@altlinux.ru> 1.1-alt1
 - Initial build from scratch
 

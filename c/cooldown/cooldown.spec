@@ -1,7 +1,7 @@
 Name:		cooldown
 # svn info cooldown | sed -n 's/Revision: *//p'
 Version:	24
-Release:	alt1.1
+Release:	alt2
 Summary:	Advanced PipeMania clone
 Group:		Games/Arcade
 # svn checkout http://cooldown-game.googlecode.com/svn/trunk cooldown
@@ -9,6 +9,7 @@ Source:		%name-%version.tar
 Source1:	%{name}4.png
 Patch:		%name-linux.patch
 Patch1:   %name-24-alt-glibc-2.16.patch
+Patch2:     %name-g++8.patch
 License:	GPLv3
 URL:		http://cooldown-game.googlecode.com
 
@@ -47,6 +48,7 @@ Distributable non-free font for %name game
 %setup
 %patch -p1
 %patch1 -p2
+%patch2 -p2
 
 find . -depth -name .svn -exec rm -rf {} \;
 sed -i 's|@DATADIR@|%_gamesdatadir/%name|' src/main.cpp
@@ -107,6 +109,9 @@ install -D %name %buildroot%_gamesbindir/%name
 %_gamesdatadir/%name/fonts
 
 %changelog
+* Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 24-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 24-alt1.1
 - Fixed build with glibc 2.16
 

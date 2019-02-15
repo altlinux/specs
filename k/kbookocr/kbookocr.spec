@@ -1,6 +1,6 @@
 Name:		kbookocr	
 Version:	2.1.0
-Release:	alt2
+Release:	alt3
 Summary:	Kbookocr - an intelligent system for recognition documents (OCR system)
 
 License:	GPL
@@ -12,6 +12,7 @@ Packager:	Andrey Cherepanov <cas@altlinux.org>
 Source0:	KBookocr.tar.gz
 Source1:	KBookocr.desktop
 Patch1:		%name-fix-missing-libs.patch
+Patch2:     %name-g++8.patch
 
 BuildPreReq:    libksane4-devel
 BuildRequires:  gcc-c++ 
@@ -29,6 +30,7 @@ Kbookocr - an intelligent system for recognition documents (OCR system).
 %setup -q -n KBookocr
 cp %SOURCE1 .
 %patch1 -p2
+%patch2 -p1
 
 %add_optflags -I%_K4includedir 
 PREFIX=%prefix qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" "QMAKE_LFLAGS+=-L%_K4lib/devel" KBookocr.pro 
@@ -54,6 +56,9 @@ install -m0755 %name.png %buildroot%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt3
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Jun 27 2012 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt2
 - Fix build in Sisyphus
 
