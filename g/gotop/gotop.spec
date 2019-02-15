@@ -1,6 +1,6 @@
 %global import_path github.com/cjbassi/gotop
 Name:     gotop
-Version:  2.0.0
+Version:  2.0.1
 Release:  alt1
 
 Summary:  A terminal based graphical activity monitor inspired by gtop and vtop
@@ -42,5 +42,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+
 * Tue Feb 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
