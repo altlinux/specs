@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: ReadTheDocs.org theme for Sphinx
 License: MIT
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
+- Build new version.
+
 * Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
 - Build new version.
 
