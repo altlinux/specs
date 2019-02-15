@@ -57,8 +57,8 @@
 
 Name: systemd
 Epoch: 1
-Version: 240
-Release: alt4
+Version: 241
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -113,7 +113,7 @@ Patch1: %name-%version.patch
 
 %define dbus_ver 1.4.6
 
-BuildPreReq: rpm-build-xdg meson >= 0.46
+BuildRequires(pre): rpm-build-xdg meson >= 0.49
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
@@ -122,7 +122,7 @@ BuildRequires: libpam-devel
 BuildRequires: libacl-devel acl
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds python3-module-lxml
 BuildRequires: libdbus-devel >= %dbus_ver
-%{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 1.0.0}
+%{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 2.3.1}
 %{?_enable_selinux:BuildRequires: pkgconfig(libselinux) >= 2.1.9}
 %{?_enable_apparmor:BuildRequires: pkgconfig(libapparmor)}
 %{?_enable_elfutils:BuildRequires: elfutils-devel >= 0.158}
@@ -164,19 +164,20 @@ Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
+Requires: libseccomp >= 2.3.1
 %{?_enable_libidn:Requires: libidn >= 1.33-alt2}
 %{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
 
 
 # Requires: selinux-policy >= 3.8.5
-PreReq: %name-utils = %EVR
-PreReq: %name-services = %EVR
-PreReq: pam_%name = %EVR
+Requires: %name-utils = %EVR
+Requires: %name-services = %EVR
+Requires: pam_%name = %EVR
 
 Requires: libnss-myhostname = %EVR
 
 # Copy from SysVinit
-PreReq: coreutils
+Requires: coreutils
 Requires: /sbin/sulogin
 Requires: sysvinit-utils
 
@@ -499,14 +500,15 @@ Zsh completion for %name.
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
-PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
-PreReq: udev-rules = %EVR
-PreReq: udev-hwdb = %EVR
-PreReq: systemd-utils = %EVR
+Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
+Requires: udev-rules = %EVR
+Requires: udev-hwdb = %EVR
+Requires: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
+Conflicts: make-initrd < 2.2.10
 
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -671,7 +673,9 @@ Static library for libudev.
 	%{?_enable_utmp:-Dutmp=true} \
 	%{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
 	-Ddefault-hierarchy=%hierarchy \
-	-Db_lto=false \
+	-Db_lto=true \
+	-Db_pie=true \
+	-Dversion-tag=v%version-%release \
 	-Dcertificate-root=/etc/pki/tls \
 	-Ddocdir=%_defaultdocdir/%name-%version
 
@@ -1840,6 +1844,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Feb 15 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt1
+- 241
+- allow execute logind without systemd
+
 * Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 1:240-alt4
 - merge with v240-stable branch
 - udevadm: refuse to run trigger, control, settle and monitor commands in chroot
