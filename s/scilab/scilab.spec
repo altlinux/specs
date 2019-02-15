@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.0.1
-Release:  alt3
+Release:  alt4
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -31,6 +31,7 @@ Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
 # Fix build with gfortran 8 (see https://svnweb.freebsd.org/ports?view=revision&revision=484280)
 Patch10: scilab-gfortran8.patch
+Patch11: scilab-alt-gcc8-fix.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
@@ -162,6 +163,7 @@ tar xf %SOURCE1
 %patch8 -p2
 %patch9 -p2
 %patch10 -p0
+%patch11 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -229,6 +231,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Fri Feb 15 2019 Ivan Razzhivin <underwit@altlinux.org> 6.0.1-alt4
+- GCC8 fix
+
 * Thu Nov 29 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt3
 - Fix build with gfortran 8.
 - Do not build on aarch64.
