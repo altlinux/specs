@@ -1,12 +1,13 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libaesgm
 Version:	20090429
-Release:	alt2_15
+Release:	alt2_20
 License:	BSD
 Summary:	Library implementation of AES (Rijndael) cryptographic methods
 URL:		http://gladman.plushost.co.uk/oldsite/AES/index.php
@@ -15,15 +16,16 @@ Source1:	Makefile.aes
 # Add fileencryption support
 # http://www.gladman.me.uk/cryptography_technology/fileencrypt/
 Patch0:		libaesgm-20090429-fileencrypt.patch
-Group:		System/Libraries
+
+BuildRequires: gcc
 Source44: import.info
 
 %description
 Library implementation of AES (Rijndael) cryptographic methods.
 
 %package devel
+Group: Development/Other
 Summary:	Development files for libaesgm
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
@@ -36,10 +38,12 @@ cp %{SOURCE1} Makefile
 sed -i 's/\r//' *.txt
 
 %build
-make CFLAGS="%{optflags} -fPIC -DUSE_SHA1"
+make CFLAGS="%{optflags} -fPIC -DUSE_SHA1" LDFLAGS="%{build_ldflags}"
 
 %install
 make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
+
+
 
 %files
 %doc *.txt
@@ -50,6 +54,9 @@ make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
 %{_libdir}/libaesgm.so
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_20
+- fc merge
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_15
 - update to new release by fcimport
 
