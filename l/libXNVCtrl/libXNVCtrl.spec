@@ -1,17 +1,20 @@
-%add_optflags %optflags_shared
+Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libXNVCtrl
 Version:        352.21
-Release:        alt1_6
+Release:        alt1_11
 Summary:        Library providing the NV-CONTROL API
-Group:          System/Libraries
 License:        GPLv2+
 URL:            ftp://download.nvidia.com/XFree86/nvidia-settings/
 Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-%{version}.tar.bz2
 Patch0:         libxnvctrl_so_0.patch
 Patch1:         libxnvctrl_optflags.patch
 
+BuildRequires: gcc
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: coreutils
@@ -26,8 +29,8 @@ themselves.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -46,6 +49,7 @@ developing applications that use %{name}.
    CC="gcc" \
    NV_VERBOSE=1 \
    OPTFLAGS="%{optflags}" \
+   LDFLAGS="%{build_ldflags}" \
    -C src/%{name}
 
 
@@ -60,6 +64,11 @@ install -p -m 0644 {nv_control,NVCtrl,NVCtrlLib}.h $RPM_BUILD_ROOT%{_includedir}
 popd
 
 
+
+
+
+
+
 %files
 %doc COPYING
 %{_libdir}/%{name}.so.0*
@@ -71,6 +80,9 @@ popd
 
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_11
+- fc merge
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_6
 - update to new release by fcimport
 
