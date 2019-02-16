@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           google-gson
 Version:        2.8.2
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Java lib for conversion of Java objects into JSON representation
 License:        ASL 2.0
 URL:            https://github.com/google/gson
@@ -70,6 +70,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_2jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_1jpp8
 - java update
 
