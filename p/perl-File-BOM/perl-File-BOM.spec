@@ -6,14 +6,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-BOM
-Version:        0.15
-Release:        alt2_10
+Version:        0.16
+Release:        alt1
 Summary:        Utilities for handling Byte Order Marks
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-BOM
-Source0:        https://cpan.metacpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
-# Adapt tests to stricter Encode-2.99, bug #1668818, CPAN RT#128334
-Patch0:         File-BOM-0.15-Adapt-to-stricter-Encode-2.99.patch
+Source0:        http://www.cpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  rpm-build-perl
@@ -55,7 +53,6 @@ are to be found at the beginning of some files and streams.
 
 %prep
 %setup -q -n File-BOM-%{version}
-%patch0 -p1
 # Normalize EOLs
 sed -i -e 's/\r//' README
 
@@ -75,6 +72,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_10
 - update to new release by fcimport
 
