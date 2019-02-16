@@ -1,24 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libpcre-devel
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname sord
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.16.0
+%define version 0.16.2
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.16.0
-Release:    alt1_4
+Version:    0.16.2
+Release:    alt1_3
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
-Group:      System/Libraries
 License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -27,7 +27,9 @@ BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
 BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: python
-BuildRequires: libserd-devel >= 0.22.4
+BuildRequires: python-devel
+BuildRequires: libserd-devel >= 0.30.0
+BuildRequires: gcc
 BuildRequires: gcc-c++
 Source44: import.info
 Provides: sord = %{version}-%{release}
@@ -39,8 +41,8 @@ a lightweight RDF tool-set for resource limited or performance critical
 applications.
 
 %package devel
+Group: Development/Other
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/Other
 Requires:   %{name} = %{version}-%{release}
 Provides: sord-devel = %{version}-%{release}
 
@@ -58,10 +60,9 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
 |cflags          = [ '-DSORD_INTERNAL' ] + '%optflags'.split(' ') |" wscript
 
 %build
-export CXXFLAGS="%{optflags}"
-export CFLAGS="%{optflags}"
+
 export LINKFLAGS="%{__global_ldflags}"
-./waf configure \
+%{__python} waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -69,10 +70,10 @@ export LINKFLAGS="%{__global_ldflags}"
     --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
-./waf build -v %{?_smp_mflags}
+%{__python} waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} ./waf install
+DESTDIR=%{buildroot} %{__python} waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 
@@ -94,6 +95,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_3
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_4
 - removed boost form BR:
 
