@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define lang es
@@ -6,9 +7,8 @@ Summary: Spanish dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 1.11
-Release: alt2_14
+Release: alt2_17
 License: GPLv2
-Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
 Buildrequires: aspell libaspell
@@ -38,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_17
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_14
 - update to new release by fcimport
 
