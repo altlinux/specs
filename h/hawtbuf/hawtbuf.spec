@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          hawtbuf
 Version:       1.11
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       A rich byte buffer library
 License:       ASL 2.0
 URL:           https://github.com/fusesource/hawtbuf/
@@ -94,6 +94,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference license.txt notice.md
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_8jpp8
+- fc29 update
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_7jpp8
 - java update
 
