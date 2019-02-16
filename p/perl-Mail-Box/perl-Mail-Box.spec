@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
-Version: 3.005
+Version: 3.006
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Box-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ to be a replacement of MailTools and Mail::Folder, an alternative to
 the Email::* set of modules.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n Mail-Box-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +34,13 @@ rm %buildroot%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.{pm,pod}
 rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 
 %files
-%doc ChangeLog README README.FAQ README.todo examples README.md
+%doc ChangeLog README README.todo examples README.md
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1
+- automated CPAN update
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
 - automated CPAN update
 
