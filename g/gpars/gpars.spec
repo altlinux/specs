@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           gpars
 Version:        1.2.1
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Groovy Parallel Systems
 License:        ASL 2.0 and Public Domain
 URL:            http://gpars.codehaus.org
@@ -66,6 +66,9 @@ rm -rf src/main/groovy/groovyx/gpars/extra166y/
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_12jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_11jpp8
 - java update
 
