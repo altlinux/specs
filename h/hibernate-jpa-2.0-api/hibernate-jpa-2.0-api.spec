@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_21jpp8
+Release:          alt3_22jpp8
 Summary:          Java Persistence 2.0 (JSR 317) API
 License:          EPL and BSD
 URL:              http://www.hibernate.org/
@@ -62,11 +62,6 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 sed -i 's/\r//' target/site/apidocs/jdstyle.css
 %mvn_install
 
-# compat symlink for eclipselink-2.3.2-alt1_1jpp7, jasperreports-4.0.2-alt1_3jpp7
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/hibernate
-ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
-
-
 %files -f .mfiles
 %doc readme.txt
 %doc --no-dereference license.txt
@@ -75,6 +70,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 %doc --no-dereference license.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_22jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_21jpp8
 - java update
 
