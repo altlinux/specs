@@ -2,7 +2,7 @@
 
 Name: postgis
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
@@ -113,6 +113,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.5.1-alt2
+- Rebuild with libproj 5.2.0
+
 * Wed Nov 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
 - New version.
 

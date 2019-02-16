@@ -1,6 +1,6 @@
 Name: mapsoft
 Version: 20190213
-Release: alt1
+Release: alt2
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
 Group: Sciences/Geosciences
@@ -69,6 +69,9 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_mandir/man1/mapsoft_vmap.*
 
 %changelog
+* Fri Feb 15 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190213-alt2
+- rebuild with libproj 5.2.0
+
 * Wed Feb 13 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190213-alt1
 - current snapshot
 

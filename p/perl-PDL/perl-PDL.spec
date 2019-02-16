@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.019
 Version:        2.19.0
-Release:        alt2_3
+Release:        alt3_3
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -245,6 +245,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.19.0-alt3_3
+- rebuild with libproj 5.2.2
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt2_3
 - rebuild with new perl 5.28.1
 

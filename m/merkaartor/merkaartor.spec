@@ -1,6 +1,6 @@
 Name: merkaartor
 Version: 0.18.3
-Release: alt1.1
+Release: alt2
 
 Summary: an OpenStreetMap editor
 License: LGPL
@@ -38,11 +38,7 @@ qmake-qt5 \
 %make_build
 
 %install
-LIB_SUFFIX=
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%make_install INSTALL_ROOT=%buildroot LIB_SUFFIX=$LIB_SUFFIX install
+%make_install INSTALL_ROOT=%buildroot LIB_SUFFIX=%_libsuff install
 
 %files
 %_bindir/merkaartor
@@ -52,6 +48,10 @@ LIB_SUFFIX=64
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.18.3-alt2
+- Rebuild with libproj 5.2.0
+- Fix build on aarch64
+
 * Sun Nov 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.18.3-alt1.1
 - NMU: Rebuild with gdal 2.2.2
 

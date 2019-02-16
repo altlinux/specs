@@ -3,7 +3,7 @@
 %define oname shapelib
 Name: libshape
 Version: 1.4.1
-Release: alt1%ubt
+Release: alt2
 Summary: API in "C" for Shapefile handling
 Group: Development/C
 # No version of the LGPL is given.
@@ -11,8 +11,6 @@ License: LGPLv2+ or MIT
 Url: http://shapelib.maptools.org/
 
 Source: http://download.osgeo.org/shapelib/%oname-%version.tar
-
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libproj-devel
 
 %package devel
@@ -52,7 +50,11 @@ This package contains libshp and the appropriate header files.
 %_pkgconfigdir/*
 
 %changelog
-* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1%ubt
+* Fri Feb 15 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.4.1-alt2
+- rebuild with libproj 5.2.0
+- remove ubt macro
+
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1
 - Updated to upstream version 1.4.1.
 
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0b2-alt1.qa1

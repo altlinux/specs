@@ -2,7 +2,7 @@
 
 Name: libspatialite
 Version: 4.3.0a
-Release: alt1
+Release: alt2
 Summary: Enables SQLite to support spatial data
 Group: System/Libraries
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -63,6 +63,9 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/pkgconfig/spatialite.pc
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 4.3.0a-alt2
+- Rebuild with libproj 5.2.0
+
 * Wed Feb 28 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0a-alt1
 - New version. (ALT #34590)
 
