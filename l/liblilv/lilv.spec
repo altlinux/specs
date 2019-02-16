@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libnumpy-devel
@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:       liblilv
 Version:    0.24.4
-Release:    alt1_3
+Release:    alt1_5
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
@@ -28,7 +28,7 @@ BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.14.0
 BuildRequires:  libsratom-devel >= 0.4.4
 BuildRequires:  lv2-devel >= 1.14.0
-BuildRequires:  python-devel
+BuildRequires:  python3
 BuildRequires:  swig
 BuildRequires:  python-module-numpy
 BuildRequires:  libserd-devel >= 0.18.0
@@ -65,14 +65,14 @@ sed -i -e "s|'-ftest-coverage'\]|\
 %build
 
 export LINKFLAGS="%{__global_ldflags}"
-%{__python} waf configure -v --prefix=%{_prefix}\
+python3 waf configure -v --prefix=%{_prefix}\
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
  --docdir=%{_docdir}/%{oldname}\
  --docs --test --dyn-manifest
-%{__python} waf -v build %{?_smp_mflags}
+python3 waf -v build %{?_smp_mflags}
 
 %install
-%{__python} waf -v install --destdir=%{buildroot}
+python3 waf -v install --destdir=%{buildroot}
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %check
@@ -98,6 +98,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_mandir}/man3/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.24.4-alt1_5
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.24.4-alt1_3
 - update to new release by fcimport
 
