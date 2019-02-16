@@ -1,7 +1,7 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.155
+Version: 0.156
 Release: alt1
 License: GPL
 Group: System/Base
@@ -31,6 +31,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.156-alt1
+- added build_ldflags
+
 * Fri Jan 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.155-alt1
 - added %%_metainfodir %%_datadir/metainfo
 
