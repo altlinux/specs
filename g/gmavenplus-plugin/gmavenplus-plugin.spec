@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          gmavenplus-plugin
 Version:       1.5
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Integrates Groovy into Maven projects
 License:       ASL 2.0
 URL:           http://groovy.github.io/GMavenPlus/
@@ -100,6 +100,9 @@ rm README.markdown.orig
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_4jpp8
 - java update
 
