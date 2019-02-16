@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          hazelcast
 Version:       3.2.2
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Hazelcast CE In-Memory DataGrid
 License:       ASL 2.0
 URL:           http://www.hazelcast.com/
@@ -233,6 +233,9 @@ rm -rf hazelcast*/src/test/java/*
 %doc --no-dereference license.txt notice.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_10jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_9jpp8
 - java update
 
