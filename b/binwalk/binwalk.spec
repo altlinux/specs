@@ -1,16 +1,16 @@
 Name: binwalk
 Version: 2.1.1
-Release: alt2.git298cc28d
+Release: alt3.git2e0ccfbf
 
 Summary: Firmware Analysis Tool
 
 License: MIT License
 Group: File tools
-Url: https://github.com/devttys0/binwalk
+Url: https://github.com/ReFirmLabs/binwalk
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/devttys0/binwalk/archive/v%version.tar.gz
+# Source-url: https://github.com/ReFirmLabs/binwalk/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # TODO:
@@ -61,6 +61,10 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Feb 16 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.1.1-alt3.git2e0ccfbf
+- new version based on Git commit 2e0ccfbf3eff09c310cf3c8cbff3a72e8b41a845
+- update project URL
+
 * Sat May 05 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.1.1-alt2.git298cc28d
 - new Git version based on 298cc28d493df7fa71236aac4f2b71d79763a435
 
