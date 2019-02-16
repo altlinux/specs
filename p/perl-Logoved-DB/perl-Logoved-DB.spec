@@ -1,8 +1,8 @@
-%def_without db
+%def_with db
 %define module Logoved-DB
 
 Name: perl-%module
-Version: 0.004
+Version: 0.008
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -16,21 +16,53 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://wiki.altlinux.org/Logoved
 
 BuildRequires: perl-devel perl(Logoved/Stream.pm) perl(autodie.pm) perl(Source/Shared/CLI.pm)
-
-%if_with db
-Requires: logoved-db = %EVR
-%endif
+BuildRequires: perl-RPM-Source-Dependency-Analyzer
 
 %description
 perl library for Logoved framework and DB.
 
 %package -n logoved
 Summary: Logoved is a tool for build log analysis and processing.
-Group: Development/Perl
+Group: Development/Tools
 Requires: perl-%module = %EVR
+%if_with db
+Requires: logoved-db = %EVR
+%endif
 
 %description -n logoved
 Logoved is a tool for build log analysis and processing.
+
+%package -n logoved-batchfix
+Summary: fix packages in batch using logoved-report's FIXSCRIPT.
+Group: Development/Tools
+Requires: perl-RPM-Source-Transformation-Logoved-Batch = %EVR
+BuildRequires: girar-nmu >= 2
+Requires: girar-nmu >= 2
+%if_with db
+Requires: logoved-db = %EVR
+%endif
+
+%description -n logoved-batchfix
+Logoved-batchfix is a tool to fix packages in batch
+by applying to them logoved-report's 00FIXSCRIPT file
+
+%package -n logoved-autorepo
+Summary: helper scripts for using logoved in autorepo builder.
+Group: Development/Tools
+Requires: perl-%module = %EVR
+Requires: logoved = %EVR
+Requires: logoved-batchfix = %EVR
+
+%description -n logoved-autorepo
+Helper scripts for using logoved in autorepo builder.
+
+%package -n perl-RPM-Source-Transformation-Logoved-Batch
+Summary: libraary to fix packages in batch using FIXSCRIPT
+Group: Development/Perl
+BuildRequires: perl(RPM/Source/Transformation/Factory.pm) perl(Source/Repository/RPM/ALTLinuxSrcList.pm)
+
+%description -n perl-RPM-Source-Transformation-Logoved-Batch
+Perl library to fix packages in batch using FIXSCRIPT
 
 %if_with db
 %package -n logoved-db
@@ -51,8 +83,9 @@ Logoved Database.
 %perl_vendor_install
 
 %if_with db
-mkdir -p %buildroot%_datadir/logoved
-cp -a db %buildroot%_datadir/logoved/
+mkdir -p %buildroot%_datadir/{logoved,srpmtools}/
+cp -a db addon %buildroot%_datadir/logoved/
+cp -a hooks %buildroot%_datadir/srpmtools/
 %endif
 
 %files
@@ -61,13 +94,42 @@ cp -a db %buildroot%_datadir/logoved/
 %perl_vendor_privlib/Logoved*
 
 %files -n logoved
-%_bindir/logoved-*
+%_bindir/logoved-grep
+%_bindir/logoved-report
+# TODO: write mans!!!
+
+%files -n logoved-batchfix
+%_bindir/logoved-batchfix*
+%_man1dir/logoved-batchfix*
+%_bindir/girar-nmu-prepare-logoved-batchfix*
+%_man1dir/girar-nmu-prepare-logoved-batchfix*
+
+%files -n logoved-autorepo
+%_bindir/logoved-autoimports
+%_bindir/logoved-autorepo-helper-*
+
+%files -n perl-RPM-Source-Transformation-Logoved-Batch
+%perl_vendor_privlib/RPM/Source/Transformation
 
 %if_with db
+%files -n logoved-db
 %_datadir/logoved
+%_datadir/srpmtools/hooks
 %endif
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- logoved-batchfix first release
+
+* Sun Feb 10 2019 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
+- new version
+
+* Fri Feb 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- new version
+
+* Wed Feb 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
+- new version
+
 * Thu Jan 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
 - new version
 - note: DB is constantly updated, it is not packaged yet.
