@@ -2,12 +2,12 @@ Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.0.0
-Release: alt2_25
+Release: alt2_27
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -27,11 +27,12 @@ Patch1: %{name}-Fix_bug_C++_Parser_Expat_Support.patch
 Patch2: %{name}-xerces_3-2.patch
 
 BuildRequires: m4, libxerces-c-devel, libcutl-devel, gcc-c++
-%if 0%{?rhel}
+
+%if 0%{?rhel} >= 8 || 0%{?fedora}
+BuildRequires: boost-complete
+%else
 BuildRequires: boost148-devel
 Requires: boost148
-%else
-BuildRequires: boost-complete
 %endif
 Source44: import.info
 
@@ -62,7 +63,7 @@ This package contains API documentation for %{name}.
 rm -rf libcutl
 
 %build
-%if 0%{?rhel} < 7
+%if 0%{?rhel} && 0%{?rhel} < 7
 %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
 %make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
@@ -128,6 +129,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_27
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_25
 - update to new release by fcimport
 
