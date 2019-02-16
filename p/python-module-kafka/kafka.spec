@@ -1,42 +1,47 @@
+%define _unpackaged_files_terminate_build 1
 %define oname kafka
 
-%def_with python3
+%def_with docs
+%def_with check
 
 Name: python-module-%oname
-Version: 1.3.3
-Release: alt1.1
+Version: 1.4.4
+Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/kafka-python/
+Url: https://pypi.org/project/kafka-python/
 
-# https://github.com/mumrah/kafka-python.git
-Source: %name-%version.tar
+# https://github.com/dpkp/kafka-python.git
+Source: %name-%version.tar.gz
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-tox python-module-mock 
-BuildRequires: python-module-six python-module-snappy
-BuildRequires: python-module-pytest python-module-mocker python-module-pytest-mock
-BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
-BuildRequires: python-module-sphinxcontrib-napoleon
-BuildRequires: python-modules-json
-BuildRequires: python-module-lz4
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-tox python3-module-mock
-BuildRequires: python3-module-six python3-module-snappy
-BuildRequires: python3-module-pytest python3-module-mocker
-BuildRequires: python3-module-lz4
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python2.7(sphinx)
+BuildRequires: python2.7(sphinx_rtd_theme)
 %endif
 
-%py_provides %oname
-%py_provides kafka.vendor.six.moves
-%py_requires six gzip snappy json
+%if_with check
+BuildRequires: liblz4
+BuildRequires: python2.7(crc32c)
+BuildRequires: python2.7(lz4)
+BuildRequires: python2.7(pytest-mock)
+BuildRequires: python2.7(snappy)
+BuildRequires: python2.7(selectors34)
+BuildRequires: python2.7(xxhash)
+BuildRequires: python3(crc32c)
+BuildRequires: python3(lz4)
+BuildRequires: python3(mock)
+BuildRequires: python3(pytest-mock)
+BuildRequires: python3(snappy)
+BuildRequires: python3(tox)
+BuildRequires: python3(xxhash)
+%endif
+
+%py_requires enum34 selectors34
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -44,6 +49,7 @@ as high-level consumer and producer classes. Request batching is
 supported by the protocol as well as broker-aware request routing. Gzip
 and Snappy compression is also supported for message sets.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
@@ -68,13 +74,11 @@ supported by the protocol as well as broker-aware request routing. Gzip
 and Snappy compression is also supported for message sets.
 
 This package contains documentation for %oname.
+%endif
 
 %package -n python3-module-%oname
 Summary: Pure Python client for Apache Kafka
 Group: Development/Python3
-%py3_provides %oname
-%py3_provides kafka.vendor.six.moves
-%py3_requires six gzip snappy
 
 %description -n python3-module-%oname
 This module provides low-level protocol support for Apache Kafka as well
@@ -84,51 +88,84 @@ and Snappy compression is also supported for message sets.
 
 %prep
 %setup
+%patch -p1
 
+# remove bundled packages, raise an error on unexpected one
+rm %oname/vendor/{__init__,enum34,selectors34,six,socketpair}.py
+rmdir %oname/vendor || { echo "There is a new bundled package: $(ls -A \
+%oname/vendor)"; exit 1; }
+grep -rlEZ \
+-e 'from kafka\.vendor( import|\.)' \
+-e 'import kafka\.vendor\.' | \
+xargs -0 sed -i \
+-e '/from kafka\.vendor import socketpair/d' \
+-e 's/from kafka\.vendor import /import /g' \
+-e 's/from kafka\.vendor\./from /g' \
+-e 's/import kafka\.vendor\./import /g'
+
+# check unbundling result
+find -name '*.py' -print0 | xargs -0 \
+grep -qsF 'kafka.vendor' && { echo "There is the usage of bundled package"; \
+exit 1; }
+
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
-
-%if_with python3
-cp -fR . ../python3
 %endif
+
+cp -fR . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
-export PYTHONPATH=$PWD
+%if_with docs
+export PYTHONPATH="$(pwd)"/build/lib
 %make -C docs pickle
 %make -C docs html
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
-#%check
-#export PYTHONPATH=$PWD
-#py.test
-#%if_with python3
-#pushd ../python3
-#export PYTHONPATH=$PWD
-#py.test-%_python3_version
-#popd
-#%endif
+# since we are packaging example.py as doc
+sed -i '1{/#!/d}' example.py
+chmod -x example.py
+
+%check
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+
+# set the CRC32C_SW_MODE environment variable before loading the package to
+# one of the following values:
+#
+#  * 'auto' to use software implementation if no CPU hardware support is found.
+#  * 'force' to use software implementation regardless of CPU hardware support.
+#  * '1' means 'force', but will be eventually discontinued.
+export CRC32C_SW_MODE=auto
+export TOX_TESTENV_PASSENV='CRC32C_SW_MODE'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+%_bindir/tox.py3 --sitepackages -p auto -o -v -- -ra
 
 %files
 %doc *.md example.py
-%python_sitelibdir/*
+%python_sitelibdir/kafka/
+%python_sitelibdir/kafka_python-%version-py%_python_version.egg-info/
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -136,14 +173,18 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files docs
 %doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md example.py
-%python3_sitelibdir/*
 %endif
 
+%files -n python3-module-%oname
+%doc *.md example.py
+%python3_sitelibdir/kafka/
+%python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
+
 %changelog
+* Sat Feb 16 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt1
+- 1.3.3 -> 1.4.4.
+- Dropped dependency on sphinxcontrib.napoleon.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
