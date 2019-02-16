@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           httpcomponents-project
 Summary:        Common POM file for HttpComponents
 Version:        9
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 License:        ASL 2.0
 URL:            http://hc.apache.org/
 Source0:        http://archive.apache.org/dist/httpcomponents/httpcomponents-parent/9/httpcomponents-parent-9.pom
@@ -57,6 +57,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 9-alt1_3jpp8
+- fc29 update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 9-alt1_1jpp8
 - new version
 
