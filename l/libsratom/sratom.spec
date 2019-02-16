@@ -1,33 +1,34 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python
 BuildRequires: waf
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname sratom
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
-%define version 0.6.0
+%define version 0.6.2
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
-Version:    0.6.0
+Version:    0.6.2
 Release:    alt1_3
 Summary:    A C library for serializing LV2 plugins
 
-Group:      System/Libraries
 License:    MIT
 URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires:  python
+BuildRequires:  python-devel
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
-BuildRequires:  libsord-devel >= 0.12.0
-BuildRequires:  libserd-devel >= 0.23.0
+BuildRequires:  libsord-devel >= 0.14.0
+BuildRequires:  libserd-devel >= 0.30.0
 BuildRequires:  lv2-devel >= 1.10.0
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 Source44: import.info
 Provides: sratom = %{version}-%{release}
 
@@ -39,8 +40,8 @@ This is particularly useful for saving plugin state, or implementing plugin
 control with network transparency.
 
 %package devel
+Group: Development/Other
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/Other
 Requires:   %{name} = %{version}-%{release}
 Provides: sratom-devel = %{version}-%{release}
 
@@ -61,9 +62,8 @@ sed -i -e "s| '-ftest-coverage'\]|\
  '-ftest-coverage'\] + '%{optflags}'.split(' ')|" wscript
 
 %build
-export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
-export LDFLAGS="%{__global_ldflags}"
-./waf configure -v \
+
+%{__python} waf configure -v \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -71,21 +71,21 @@ export LDFLAGS="%{__global_ldflags}"
     --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
-./waf build -v %{?_smp_mflags}
+%{__python} waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} ./waf install
+DESTDIR=%{buildroot} %{__python} waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 
-#check
-#./build/sratom_test
+%check
+./build/sratom_test
 
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %exclude %{_docdir}/%{oldname}/COPYING
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 
 %files devel
@@ -96,6 +96,9 @@ install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_3
+- update to new release by fcimport
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3
 - update to new release by fcimport
 
