@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate
 Version:       5.0.10
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Relational persistence and query service
 License:       LGPLv2+ and ASL 2.0
 URL:           http://www.hibernate.org/
@@ -490,6 +490,9 @@ done
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_4jpp8
 - java update
 
