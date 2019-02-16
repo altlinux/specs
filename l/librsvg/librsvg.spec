@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 Epoch: 1
 
@@ -188,6 +188,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Feb 16 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.44.13-alt1
+- 2.44.13
+
 * Mon Jan 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.44.12-alt1
 - 2.44.12
 
