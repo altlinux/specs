@@ -3,7 +3,6 @@
 %def_disable shared_libraries
 %def_enable  widevine
 %def_enable  ffmpeg
-%def_disable wayland
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
@@ -28,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        71.0.3578.98
+Version:        72.0.3626.81
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -72,9 +71,10 @@ Patch018: 0018-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
 Patch019: 0019-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
 Patch020: 0020-FEDORA-Fix-gcc-round.patch
 Patch021: 0021-FEDORA-Fix-memcpy.patch
-Patch022: 0022-ALT-remove-obsolete-option.patch
-Patch023: 0023-ALT-openh264-always-pic-on-x86.patch
-Patch024: 0024-ALT-allow-to-override-clang-through-env-variables.patch
+Patch022: 0022-ALT-openh264-always-pic-on-x86.patch
+Patch023: 0023-ALT-allow-to-override-clang-through-env-variables.patch
+Patch024: 0024-ALT-Remove-hardcoded-icf-option.patch
+Patch025: 0025-ALT-Hack-to-avoid-build-error-with-clang7.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -88,21 +88,14 @@ BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
-BuildRequires:  clang6.0
-BuildRequires:  clang6.0-devel
-BuildRequires:  llvm6.0-devel
+BuildRequires:  clang7.0
+BuildRequires:  clang7.0-devel
+BuildRequires:  llvm7.0-devel
 BuildRequires:  lld-devel
 %endif
 BuildRequires:  ninja-build
 BuildRequires:  gperf
 BuildRequires:  libcups-devel
-%if_enabled wayland
-BuildRequires:  libdrm-devel
-BuildRequires:  libwayland-server-devel
-BuildRequires:  libwayland-client-devel
-BuildRequires:  libwayland-cursor-devel
-BuildRequires:  libwayland-egl-devel
-%endif
 BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(alsa)
@@ -156,8 +149,6 @@ BuildRequires:  usbids
 BuildRequires:  xdg-utils
 
 Provides:       webclient, /usr/bin/xbrowser
-BuildPreReq:    alternatives >= 0.2.0
-PreReq(post,preun): alternatives >= 0.2
 
 Requires: libva
 
@@ -231,6 +222,7 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
+%patch025 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -309,6 +301,7 @@ gn_arg treat_warnings_as_errors=false
 gn_arg fatal_linker_warnings=false
 gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
+gn_arg use_icf=false
 
 # Remove debug
 gn_arg is_debug=false
@@ -319,8 +312,6 @@ gn_arg enable_nacl=%{is_enabled nacl}
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
 gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
-gn_arg use_ozone=%{is_enabled wayland}
-gn_arg enable_wayland_server=%{is_enabled wayland}
 
 %if_enabled clang
 gn_arg clang_base_path=\"%_prefix\"
@@ -490,6 +481,40 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Feb 04 2019 Alexey Gladkov <legion@altlinux.ru> 72.0.3626.81-alt1
+- New version (72.0.3626.81).
+- Security fixes:
+  - CVE-2019-5754: Inappropriate implementation in QUIC Networking.
+  - CVE-2019-5755: Inappropriate implementation in V8.
+  - CVE-2019-5756: Use after free in PDFium.
+  - CVE-2019-5757: Type Confusion in SVG.
+  - CVE-2019-5758: Use after free in Blink.
+  - CVE-2019-5759: Use after free in HTML select elements.
+  - CVE-2019-5760: Use after free in WebRTC.
+  - CVE-2019-5761: Use after free in SwiftShader.
+  - CVE-2019-5762: Use after free in PDFium.
+  - CVE-2019-5763: Insufficient validation of untrusted input in V8.
+  - CVE-2019-5764: Use after free in WebRTC.
+  - CVE-2019-5765: Insufficient policy enforcement in the browser.
+  - CVE-2019-5766: Insufficient policy enforcement in Canvas.
+  - CVE-2019-5767: Incorrect security UI in WebAPKs.
+  - CVE-2019-5768: Insufficient policy enforcement in DevTools.
+  - CVE-2019-5769: Insufficient validation of untrusted input in Blink.
+  - CVE-2019-5770: Heap buffer overflow in WebGL.
+  - CVE-2019-5771: Heap buffer overflow in SwiftShader.
+  - CVE-2019-5772: Use after free in PDFium.
+  - CVE-2019-5773: Insufficient data validation in IndexedDB.
+  - CVE-2019-5774: Insufficient validation of untrusted input in SafeBrowsing.
+  - CVE-2019-5775: Insufficient policy enforcement in Omnibox.
+  - CVE-2019-5776: Insufficient policy enforcement in Omnibox.
+  - CVE-2019-5777: Insufficient policy enforcement in Omnibox.
+  - CVE-2019-5778: Insufficient policy enforcement in Extensions.
+  - CVE-2019-5779: Insufficient policy enforcement in ServiceWorker.
+  - CVE-2019-5780: Insufficient policy enforcement.
+  - CVE-2019-5781: Insufficient policy enforcement in Omnibox.
+  - CVE-2019-5782: Inappropriate implementation in V8.
+  - CVE-2019-5783: Insufficient validation of untrusted input in DevTools.
+
 * Fri Dec 14 2018 Alexey Gladkov <legion@altlinux.ru> 71.0.3578.98-alt1
 - New version (71.0.3578.98).
 - Security fixes:
