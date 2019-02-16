@@ -9,7 +9,7 @@
 %define _localstatedir %{_var}
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_15.r1
+Release:        alt2_17.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -49,6 +49,7 @@ rm -rf cockpits/bomber-cockpit.cpt/#cockpit.xmesh# \
   modules/.cvsignore modules/builtin `find -name "*.xmesh"`
 find . -type f -print0 | xargs -0 chmod -x
 chmod +x units/findunits.py modules/webpageize.py
+sed -i 's|/usr/bin/python|/usr/bin/python2|' modules/webpageize.py units/findunits.py
 sed -i 's/\r//g' documentation/mission_howto.txt
 # remove the stale included manpages and the .xls abonimation
 rm documentation/*.1 documentation/*.xls
@@ -107,7 +108,7 @@ cat data.pyc >> data.files
 # multiple -f flags in %files: merging -f data.pyo into -f data.files
 cat data.pyo >> data.files
 
-%files -f data.files   
+%files -f data.files 
 %doc documentation/*
 %doc --no-dereference vega-license.txt
 %dir %{_datadir}/vegastrike
@@ -118,6 +119,9 @@ cat data.pyo >> data.files
 
 
 %changelog
+* Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_17.r1
+- explicitly use python2
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_15.r1
 - update to new release by fcimport
 
