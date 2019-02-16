@@ -4,7 +4,7 @@
 #define _without_test 1
 
 Name: perl-%module
-Version: 0.067
+Version: 0.068
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,6 +19,7 @@ Conflicts: perl-RPM-Source-Editor < 0.909
 
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-Source-Bundle perl-RPM-Source-Editor perl(Pod/Strip.pm)
 BuildRequires: perl-DistroMap perl-Marpa-R2
+
 
 %description
 %summary
@@ -41,8 +42,13 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 %_datadir/%module
 %_bindir/buildreq-*
 %_man1dir/buildreq-*
+%_bindir/sourcedep-resolve
+%_man1dir/sourcedep-resolve*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.068-alt1
+- new version
+
 * Fri Feb 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.067-alt1
 - new version
 
