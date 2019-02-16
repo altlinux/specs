@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-commons-annotations
 Version:          5.0.1
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Hibernate Annotations
 
 # For details see:
@@ -149,6 +149,9 @@ cp %{SOURCE1} pom.xml
 %doc --no-dereference lgpl.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_4jpp8
 - java update
 
