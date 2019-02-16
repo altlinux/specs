@@ -1,22 +1,22 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define aspellversion 6
 %define lang sk
-%define langrelease 2
+%define langrelease 0
 %define aspellname aspell%{aspellversion}-%{lang}
 
 Name:           aspell-%{lang}
-Version:        2.01
-Release:        alt2_15
+Version:        2.02
+Release:        alt1_2
 Summary:        Slovak dictionaries for Aspell
 
-Group:          Text tools
 License:        GPLv2 or LGPLv2 or MPLv1.1
 URL:            http://sk-spell.sk.cx/aspell-sk
 Source0:        http://www.sk-spell.sk.cx/files/%{aspellname}-%{version}-%{langrelease}.tar.bz2
 
-BuildRequires:  aspell >= 0.60
-Requires:       aspell >= 0.60
+BuildRequires:  aspell libaspell
+Requires:       aspell libaspell
 
 %define debug_package %{nil}                                                    
 Source44: import.info
@@ -38,6 +38,7 @@ sh configure
 make install DESTDIR=$RPM_BUILD_ROOT
 
 
+
 %files
 %doc doc/* Copyright README
 %{_libdir}/aspell*/*
@@ -45,6 +46,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_15
 - update to new release by fcimport
 
