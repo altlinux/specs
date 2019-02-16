@@ -1,16 +1,17 @@
+Group: Development/Tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.8
+Version:        2.3.9
 Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
-Group:          Development/Tools
 License:        GPLv2+
 URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
 # update the build system, reported in private email
 Patch0:         %{name}-2.3.7-make.patch
+BuildRequires:  gcc
 # Perl needed for test-suite
 BuildRequires:  rpm-build-perl
 Source44: import.info
@@ -65,6 +66,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_1
 - update to new release by fcimport
 
