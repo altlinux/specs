@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 17.05.0
-Release: alt3
+Version: 19.02.0
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -13,11 +13,11 @@ Source1: %name-16.xpm
 Source2: %name-32.xpm
 Source3: %name-48.xpm
 Source5: wxmaxima-ru.po.bz2
-Patch0: wxMaxima-alt-fixed-url.patch
+Patch1: wmMaxima-alt-drop-COPY.patch
 
 Requires: maxima
 
-#BuildRequires: autoconf_2.60
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libwxGTK3.0-devel libpango-devel libxml2-devel zlib-devel makeinfo
 
 %description
@@ -32,46 +32,35 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup -q -n wxmaxima-Version-%version
-%patch0 -p2
-
+%patch1 -p2
 bzcat %SOURCE5 >locales/ru.po
 
 %build
-
-#set_automake_version 1.10
-#set_autoconf_version 2.60
-
-./bootstrap
-
-#configure --disable-xmltest
-%configure \
-  --with-wx-config=/usr/bin/wx-config
-
-%make
+%cmake
+%cmake_build
 
 makeinfo info/wxmaxima.texi
 
 %install
+%cmakeinstall_std
 # icons
 install -D -m644 %SOURCE1 %buildroot%_miconsdir/%name.xpm
 install -D -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
 install -D -m644 %SOURCE3 %buildroot%_liconsdir/%name.xpm
-%makeinstall
 
 install -D -m644 wxmaxima.info %buildroot%_infodir/wxmaxima.info
 %find_lang %name
 
-
 %files -f %name.lang
 %_bindir/wxmaxima
-%_desktopdir/%name.desktop
+%_desktopdir/*%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 %dir %_datadir/%name
 %_datadir/%name/*
 
-%{_datadir}/appdata/wxMaxima.appdata.xml
+%{_datadir}/metainfo/*wxMaxima.appdata.xml
 %{_datadir}/bash-completion/completions/wxmaxima
 %{_datadir}/pixmaps/wxmaxima*
 %{_datadir}/pixmaps/*wxma*svg
@@ -80,9 +69,13 @@ install -D -m644 wxmaxima.info %buildroot%_infodir/wxmaxima.info
 %{_docdir}/wxmaxima/
 %{_mandir}/man1/wxmaxima.1*
 %{_infodir}/wxmaxima.info*
-
+%{_pixmapsdir}/*%name.png
 
 %changelog
+* Sat Feb 16 2019 Andrey Cherepanov <cas@altlinux.org> 19.02.0-alt1
+- New version (ALT #36096).
+- Build by cmake.
+
 * Thu Feb 14 2019 Leontiy Volodin <lvol@altlinux.org> 17.05.0-alt3
 - Fixed links to url (ALT #36097)
 - Built with aarch64 support
