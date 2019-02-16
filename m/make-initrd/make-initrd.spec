@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.9
+Version: 2.2.10
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,10 @@ fi
 %endif
 
 %changelog
+* Sat Feb 16 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.10-alt1
+- New:
+  + Add wrapper for udevd --version
+
 * Thu Jan 31 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.9-alt1
 - Utilities:
   + Replace /sys by SYSFS_PATH
