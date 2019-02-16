@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define lang pt_PT
@@ -6,9 +7,8 @@ Summary: European Portuguese dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 20070510
-Release: alt2_13
+Release: alt2_16
 License: GPLv2+
-Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
 Buildrequires: aspell libaspell
@@ -38,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 20070510-alt2_16
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20070510-alt2_13
 - update to new release by fcimport
 
