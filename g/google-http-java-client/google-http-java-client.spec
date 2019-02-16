@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          google-http-java-client
 Version:       1.22.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Google HTTP Client Library for Java
 License:       ASL 2.0
 URL:           https://github.com/google/google-http-java-client/
@@ -272,6 +272,9 @@ rm -r google-http-client/src/test/java/com/google/api/client/http/apache/ApacheH
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.22.0-alt1_5jpp8
+- fc29 update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.22.0-alt1_4jpp8
 - new version
 
