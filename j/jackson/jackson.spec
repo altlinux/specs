@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    jackson
 Version: 1.9.11
-Release: alt1_13jpp8
+Release: alt1_14jpp8
 Summary: Jackson Java JSON-processor
 License: ASL 2.0 or LGPLv2
 URL:     http://jackson.codehaus.org
@@ -120,6 +120,9 @@ done
 %doc release-notes
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_14jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_13jpp8
 - java update
 
