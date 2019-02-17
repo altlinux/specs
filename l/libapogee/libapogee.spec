@@ -1,16 +1,15 @@
+Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ pkgconfig(libusb-1.0)
+BuildRequires: boost-devel pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
-Group: Development/C
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorver 3 
 
 Name: libapogee
-Version: 3.0.3234
-Release: alt1_8.1
+Version: 3.1
+Release: alt1_4
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -21,7 +20,8 @@ URL: http://indilib.org
 Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-generate-tarball.sh
 
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel ctest cmake libusb-compat-devel libcurl-devel libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  gcc-c++
+BuildRequires: boost-complete ctest cmake libusb-compat-devel libcurl-devel libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Source44: import.info
 
 %description
@@ -46,6 +46,8 @@ make VERBOSE=1 %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
+
+
 %files
 %doc --no-dereference LICENSE
 %doc README
@@ -58,6 +60,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_4
+- new version
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3234-alt1_8.1
 - NMU: rebuilt with boost-1.67.0
 
