@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jaxws-jboss-httpserver-httpspi
 Version:          1.0.1
-Release:          alt1_13jpp8
+Release:          alt1_14jpp8
 Summary:          JBoss httpserver to JAXWS 2.2 HTTP SPI bridge
 Group:            Development/Other
 License:          LGPLv2+
@@ -71,6 +71,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_14jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_13jpp8
 - java update
 
