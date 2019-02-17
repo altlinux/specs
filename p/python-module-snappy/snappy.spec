@@ -1,75 +1,65 @@
+%define _unpackaged_files_terminate_build 1
 %define oname snappy
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 0.5
-Release: alt2.1.1
+Version: 0.5.3
+Release: alt1
 Summary: Python library for the snappy compression library from Google
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/python-snappy
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/python-snappy/
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel gcc-c++ libsnappy-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: gcc-c++
+BuildRequires: libsnappy-devel
 
 %description
 Python bindings for the snappy compression library from Google.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python3 library for the snappy compression library from Google
 Group: Development/Python3
 
 %description -n python3-module-%oname
 Python bindings for the snappy compression library from Google.
-%endif
 
 %prep
 %setup
-%if_with python3
+grep -qs '#!/usr/bin/env python' snappy/snappy.py || exit 1
+sed -i '1,/#!\/usr\/bin\/env python/d' snappy/snappy.py
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
 
-%if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' snappy.py
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc AUTHORS *.rst
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sun Feb 17 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1
+- 0.5 -> 0.5.3.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt2.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
