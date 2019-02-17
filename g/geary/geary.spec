@@ -1,13 +1,14 @@
-%def_enable snapshot
-# hardcoded lib/geary path
-#%%define _libexecdir %_prefix/libexec
-%define ver_major 0.12
+%def_disable snapshot
+%define _libexecdir %_prefix/libexec
+%define ver_major 0.13
 %define xdg_name org.gnome.Geary
-%def_enable contractor
+# Elementary OS-specific
+%def_disable contractor
+%def_enable valadoc
 
 Name: geary
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Email client
 License: LGPLv2.1+
@@ -20,34 +21,27 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Patch: geary-0.12-libdir.patch
-# https://gitlab.gnome.org/GNOME/geary/issues/37
-Patch1: geary-0.12-use-upstream-jsc.patch
-
 %define vala_ver 0.26
 %define gtk_ver 3.14.0
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
 %define webkit_ver 2.10
 
-BuildRequires(pre): cmake
+BuildRequires(pre): meson
 BuildRequires: vala-tools >= %vala_ver libvala-devel
+BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
-BuildRequires: intltool desktop-file-utils gnome-doc-utils
-BuildRequires: iso-codes-devel
+BuildRequires: iso-codes-devel libgmime-devel
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
-BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
-BuildRequires: libpixman-devel libharfbuzz-devel libwebkit2gtk-devel >= %webkit_ver
-BuildRequires: libenchant-devel libpng-devel libsecret-devel at-spi2-atk-devel libxml2-devel
-BuildRequires: libXdmcp-devel libXdamage-devel libxshmfence-devel
-BuildRequires: libXxf86vm-devel libXinerama-devel libXrandr-devel libXi-devel
-BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
+BuildRequires: libsoup-devel libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libgnome-online-accounts-devel libjson-glib-devel
+BuildRequires: libenchant-devel libsecret-devel libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
+BuildRequires: libunwind-devel
+%{?_enable_valadoc:BuildRequires: valadoc}
 
 %description
 Geary is an email client built for the GNOME desktop environment.  It
@@ -58,17 +52,14 @@ Geary's development.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+subst "/\--thread/d" src/meson.build
 
 %build
-%cmake -DGSETTINGS_COMPILE:BOOL=OFF \
-	-DICON_UPDATE:BOOL=OFF \
-	-DDESKTOP_UPDATE:BOOL=OFF
-%cmake_build VERBOSE=1
+%meson %{?_enable_contractor:-Dcontractor=true}
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -81,11 +72,14 @@ Geary's development.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/*/*/apps/*
 %_iconsdir/hicolor/scalable/actions/*.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Feb 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1.1
 - updated to 0.12.4-12-gefca27c7
 - fixed BR
