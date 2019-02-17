@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jms-1.1-api
 Version:       1.0.1
-Release:       alt2_16jpp8
+Release:       alt2_17jpp8
 Summary:       JBoss JMS API 1.1 Spec
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_17jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_16jpp8
 - java update
 
