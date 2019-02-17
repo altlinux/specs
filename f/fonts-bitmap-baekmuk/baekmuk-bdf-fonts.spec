@@ -1,22 +1,24 @@
+Group: System/Fonts/True type
 %define oldname baekmuk-bdf-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 BuildRequires: fontpackages-devel
-%define fontname   baekmuk-bdf
+%global fontname   baekmuk-bdf
 
-%define fontdir      %{_datadir}/fonts/%{fontname}
-%define catalogue    %{_sysconfdir}/X11/fontpath.d
+%global fontdir      %_bitmapfontsdir/%{fontname}
+%global catalogue    %{_sysconfdir}/X11/fontpath.d
 
 Name:           fonts-bitmap-baekmuk
 Version:        2.2
-Release:        alt3_13
+Release:        alt3_24
 Summary:        Korean bitmap fonts
 
-Group:          System/Fonts/True type
 License:        Baekmuk
 URL:            http://kldp.net/projects/baekmuk/
 Source:  http://kldp.net/frs/download.php/1428/%{fontname}-%{version}.tar.gz
 Patch0:	 baekmuk-bdf-fonts-fix-fonts-alias.patch
 BuildArch:      noarch
-BuildRequires:  xorg-x11-font-utils
+BuildRequires:  bdftopcf mkfontdir mkfontscale xorg-font-utils
 Source44: import.info
 
 %description
@@ -48,43 +50,8 @@ mkfontdir $RPM_BUILD_ROOT%{fontdir}
 
 # convert Korean copyright file to utf8
 iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 %files
-%define fontdir %{_datadir}/fonts/bitmap/%{_fontstem}
 %doc COPYRIGHT COPYRIGHT.ko README
 %dir %{fontdir}
 %{fontdir}/*.gz
@@ -94,6 +61,9 @@ fi
 
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_24
+- sync with fc
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_13
 - update to new release by fcimport
 
