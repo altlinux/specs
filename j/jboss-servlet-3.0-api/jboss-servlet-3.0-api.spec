@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.0-api
 Version:          1.0.2
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          Java Servlet 3.0 API
 License:          CDDL
 Url:              http://www.jboss.org
@@ -58,6 +58,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE README cddl.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_9jpp8
 - java update
 
