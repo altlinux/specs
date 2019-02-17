@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-devel pkgconfig(cairo)
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libxml2-devel pkgconfig(cairo)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tuxmath
 Version:        2.0.3
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Educational math tutor for children
 
-Group:          Games/Other
 License:        GPLv3+ and CC-BY and OFL
 URL:            http://tux4kids.alioth.debian.org/
 Source0:        https://alioth.debian.org/frs/download.php/3271/%{name}_w_fonts-%{version}.tar.gz
@@ -17,6 +17,7 @@ Source1:        %{name}.appdata.xml
 Patch1:         tuxmath_w_fonts-2.0.1-gcc5.patch
 #Patch2:         tuxmath_w_fonts-2.0.1-powerup-crash.patch
 
+BuildRequires:  gcc
 BuildRequires:  desktop-file-utils libappstream-glib
 BuildRequires:  libSDL-devel
 BuildRequires:  libSDL_image-devel
@@ -80,6 +81,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_5
+- fixed build (closes: #221688)
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_2
 - update to new release by fcimport
 
