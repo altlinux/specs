@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-negotiation
 Version:       3.0.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JBoss Negotiation
 # NOT available license file https://github.com/wildfly-security/jboss-negotiation/issues/32
 License:       LGPLv2+
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_4jpp8
 - java update
 
