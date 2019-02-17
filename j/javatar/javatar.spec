@@ -3,12 +3,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javatar
 Version:        2.5
-Release:        alt1_19jpp8
+Release:        alt1_20jpp8
 Summary:        Java tar archive io package
 
 Group:          Development/Other
@@ -82,6 +82,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_20jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_19jpp8
 - java update
 
