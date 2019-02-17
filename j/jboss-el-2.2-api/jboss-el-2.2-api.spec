@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:         jboss-el-2.2-api
 Version:      1.0.2
-Release:      alt1_8jpp8
+Release:      alt1_9jpp8
 Summary:      Expression Language 2.2 API
 License:      CDDL or GPLv2 with exceptions
 URL:          http://www.jboss.org
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_9jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8jpp8
 - java update
 
