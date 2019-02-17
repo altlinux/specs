@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 19.02.0
-Release: alt1
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -13,7 +13,6 @@ Source1: %name-16.xpm
 Source2: %name-32.xpm
 Source3: %name-48.xpm
 Source5: wxmaxima-ru.po.bz2
-Patch1: wmMaxima-alt-drop-COPY.patch
 
 Requires: maxima
 
@@ -32,7 +31,6 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup -q -n wxmaxima-Version-%version
-%patch1 -p2
 bzcat %SOURCE5 >locales/ru.po
 
 %build
@@ -72,6 +70,9 @@ install -D -m644 wxmaxima.info %buildroot%_infodir/wxmaxima.info
 %{_pixmapsdir}/*%name.png
 
 %changelog
+* Sun Feb 17 2019 Andrey Cherepanov <cas@altlinux.org> 19.02.0-alt2
+- Return some source files ignored by .gitignore.
+
 * Sat Feb 16 2019 Andrey Cherepanov <cas@altlinux.org> 19.02.0-alt1
 - New version (ALT #36096).
 - Build by cmake.
