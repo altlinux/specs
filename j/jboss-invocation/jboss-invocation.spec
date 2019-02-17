@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-invocation
 Version:          1.4.1
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBoss Invocation API 
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-invocation
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_4jpp8
 - java update
 
