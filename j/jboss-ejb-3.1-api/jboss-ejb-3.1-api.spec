@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-ejb-3.1-api
 Version:          1.0.2
-Release:          alt2_18jpp8
+Release:          alt2_19jpp8
 Summary:          EJB 3.1 API
 License:          CDDL or GPLv2 with exceptions
 Url:              http://www.jboss.org
@@ -59,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_19jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_18jpp8
 - java update
 
