@@ -1,22 +1,24 @@
+Group: System/Fonts/True type
 %define oldname lohit-telugu-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname lohit-telugu
 %global fontconf 65-0-%{fontname}.conf
+%global metainfo io.pagure.lohit.telugu.font.metainfo
 
 Name:           fonts-ttf-lohit-telugu
-Version:        2.5.3
-Release:        alt1_6
+Version:        2.5.5
+Release:        alt1_5
 Summary:        Free Telugu font
 
-Group:          System/Fonts/True type
 License:        OFL
-URL:            https://fedorahosted.org/lohit/
-Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
-Source1:       %{fontname}.metainfo.xml
+URL:            https://pagure.io/lohit
+Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge >= 20080429
+BuildRequires: fontforge libfontforge
 BuildRequires:  fontpackages-devel
+BuildRequires:  ttfautohint
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1: bug-1105878.patch
 Source44: import.info
 
 
@@ -26,11 +28,10 @@ This package provides a free Telugu truetype/opentype font.
 %prep
 %setup -q -n %{fontname}-%{version} 
 mv 66-%{fontname}.conf 65-0-lohit-telugu.conf
-%patch1 -p1 -b .1-Conjunct-character-rendering-issue
 
 
 %build
-make %{?_smp_mflags}
+make ttf %{?_smp_mflags}
 
 %install
 
@@ -46,8 +47,8 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE1} \
-       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{metainfo}.xml \
+       %{buildroot}%{_datadir}/metainfo/%{metainfo}.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,13 +87,17 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README
+%{_datadir}/metainfo/%{metainfo}.xml
 
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_5
+- new version
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_6
 - update to new release by fcimport
 
