@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jackson-annotations
 Version:       2.9.4
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Core annotations for Jackson data processor 
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-annotations/
@@ -56,6 +56,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_3jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
 - java update
 
