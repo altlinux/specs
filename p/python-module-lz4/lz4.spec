@@ -1,34 +1,38 @@
 %define _unpackaged_files_terminate_build 1
 %define oname lz4
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.1.1
+Version: 2.1.6
+Release: alt1
 Summary: LZ4 Bindings for Python
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/lz4/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/lz4/
 
-# https://github.com/steeve/python-lz4.git
-Source0: https://pypi.python.org/packages/b5/f0/e1de2bb7feb54011f3c4dcf35b7cca3536e19526764db051b50ea26b58e7/%{oname}-%{version}.tar.gz
+# https://github.com/python-lz4/python-lz4.git
+Source: %name-%version.tar.gz
 
-#BuildPreReq: liblz4-devel
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-nose python-module-snappy
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-nose python3-module-snappy
+
+BuildRequires: liblz4-devel
+BuildRequires: py3c-devel
+BuildRequires: python2.7(pkgconfig)
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(pkgconfig)
+BuildRequires: python3(setuptools_scm)
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: python2.7(future)
+BuildRequires: python2.7(psutil)
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python3(future)
+BuildRequires: python3(psutil)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(tox)
 %endif
-
-%py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-nose python-module-setuptools python-module-snappy python3-devel python3-module-nose python3-module-setuptools python3-module-snappy rpm-build-python3
 
 %description
 This package provides bindings for the lz4 compression library by Yann
@@ -37,56 +41,63 @@ Collet.
 %package -n python3-module-%oname
 Summary: LZ4 Bindings for Python
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 This package provides bindings for the lz4 compression library by Yann
 Collet.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+# remove bundled libs in favor of system ones
+rm -r lz4libs py3c
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
+# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
+# its used as the primary source for the version number in which
+# case it will be a unparsed string
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+%_bindir/tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python_sitelibdir/lz4-%version-py%_python_version.egg-info/
+%python_sitelibdir/lz4/
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/lz4-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/lz4/
 
 %changelog
+* Sat Feb 16 2019 Stanislav Levin <slev@altlinux.org> 2.1.6-alt1
+- 0.8.2 -> 2.1.6.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
