@@ -1,7 +1,7 @@
 %define		src qOrganizer
 Version:	3.1.5
 Name:		qorganizer
-Release:	alt1
+Release:	alt2
 Summary:	qOrganizer is a personal organizer
 License: 	GPLv2
 Group: 		Office
@@ -9,6 +9,7 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		https://sourceforge.net/projects/qorganizer
 Source0:	http://kent.dl.sourceforge.net/sourceforge/qorganizer/%src-%version.tar.gz
 Source1:	%name.desktop
+Patch0: %name-3.1.5-gcc8-fix.patch
 
 # Automatically added by buildreq on Mon Apr 06 2009 (-bi)
 BuildRequires: ImageMagick-tools gcc-c++ libqt4-devel
@@ -22,6 +23,7 @@ a booklet with marks and absences.
 
 %prep
 %setup -q -n %src
+%patch0 -p2
 
 %build
 cd src
@@ -45,6 +47,9 @@ convert -resize 48x48 images/logo.png %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Feb 15 2019 Pavel Moseev <mars@altlinux.org> 3.1.5-alt2
+- no return statement in the non-void function fixed (according g++8)
+
 * Wed Oct 22 2014 Motsyo Gennadi <drool@altlinux.ru> 3.1.5-alt1
 - 3.1.5
 
