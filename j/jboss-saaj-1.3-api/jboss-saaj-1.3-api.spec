@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-saaj-1.3-api
 Version:       1.0.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       SOAP with Attachments API for Java 1.3
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc README
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4jpp8
 - java update
 
