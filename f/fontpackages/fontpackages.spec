@@ -3,7 +3,7 @@ Group: System/Configuration/Other
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 0
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -16,7 +16,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt6_21
+Release: alt6_24
 Summary: Common directory and macro definitions used by font packages
 
 # Mostly means the scriptlets inserted via this package do not change the
@@ -26,6 +26,7 @@ URL:       http://fedoraproject.org/wiki/fontpackages
 Source0:   http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
 Patch0:    dnf.patch
 Patch1:    %{name}-drop-fccache.patch
+Patch2:    %{name}-add-ghost-uuid.patch
 
 BuildArch: noarch
 BuildRequires: rpm-build-perl
@@ -96,6 +97,7 @@ Install this package if you want to create RPM packages that use %name.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %if 0%{?rhel}
 sed -i 's|/usr/bin/fedoradev-pkgowners|""|g' bin/repo-font-audit
@@ -142,6 +144,7 @@ cat <<EOF > %{name}-%{version}.files
 %dir ${_fontconfig_masterdir}
 %dir ${_fontconfig_confdir}
 %dir ${_fontconfig_templatedir}
+%ghost ${_fontbasedir}/.uuid
 EOF
 rm -rf %buildroot%{spectemplatedir}
 # rename macros.xxx
@@ -155,6 +158,9 @@ mv %buildroot%_rpmmacrosdir/macros.fonts  %buildroot%_rpmmacrosdir/%name
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.44-alt6_24
+- fc update
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt6_21
 - merged repocop patch
 
