@@ -1,12 +1,13 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel libSDL-devel libmad-devel libogg-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-install libSDL-devel libglvnd-devel libmad-devel libogg-devel zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           vavoom
 Version:        1.33
-Release:        alt2_25
+Release:        alt2_28
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port - meta package
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -42,12 +43,14 @@ Patch6:         vavoom-1.33-misc-fixes.patch
 Patch7:         vavoom-1.33-cx11.patch
 # Hack for crash on exit when building with -std=c++11, not used
 Patch8:         vavoom-1.33-crash-on-exit.patch
+Patch9:         vavoom-1.33-wxwidgets3.0.patch
 URL:            http://vavoom-engine.com/
-Group:          Games/Other
 License:        GPLv2+
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL_mixer-devel libSDL_net-devel libpng-devel libjpeg-devel
-BuildRequires:  libvorbis-devel libmikmod-devel libflac++-devel libflac-devel libopenal-devel libopenal1
-BuildRequires:  libGLU-devel libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel desktop-file-utils ctest cmake
+BuildRequires:  libvorbis-devel libmikmod-devel libflac++-devel libflac-devel libopenal-devel
+BuildRequires:  libGLU-devel libwxGTK3.0-devel desktop-file-utils ctest cmake
 BuildRequires:  libappstream-glib
 Requires:       %{name}-engine = %{version}-%{release}
 Requires:       %{name}-doom-shareware = %{version}-%{release}
@@ -160,6 +163,7 @@ datafiles for you.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch9 -p1
 %patch33 -p1
 
 
@@ -261,6 +265,9 @@ install -p -m 644 %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_28
+- build with wxwidgets 3.0
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_25
 - update to new release by fcimport
 
