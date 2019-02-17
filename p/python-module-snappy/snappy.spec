@@ -1,19 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname snappy
 
+%def_with check
+
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 Summary: Python library for the snappy compression library from Google
 License: BSD
 Group: Development/Python
 Url: https://pypi.org/project/python-snappy/
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libsnappy-devel
+
+%if_with check
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Python bindings for the snappy compression library from Google.
@@ -27,8 +35,9 @@ Python bindings for the snappy compression library from Google.
 
 %prep
 %setup
+%patch -p1
 grep -qs '#!/usr/bin/env python' snappy/snappy.py || exit 1
-sed -i '1,/#!\/usr\/bin\/env python/d' snappy/snappy.py
+sed -i '1{/#!\/usr\/bin\/env python/d}' snappy/snappy.py
 
 rm -rf ../python3
 cp -a . ../python3
@@ -40,6 +49,11 @@ cp -a . ../python3
 pushd ../python3
 %python3_build_debug
 popd
+
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %install
 %python_install
@@ -57,6 +71,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 17 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt2
+- Fixed ImportError.
+- Enabled testing.
+
 * Sun Feb 17 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1
 - 0.5 -> 0.5.3.
 
