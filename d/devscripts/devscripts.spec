@@ -13,7 +13,7 @@ BuildRequires: perl(Authen/SASL.pm) perl(Date/Format.pm) perl(Date/Parse.pm) per
 %define _localstatedir %{_var}
 Name:           devscripts
 Version:        2.19.2
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Scripts for Debian Package maintainers
 
 License:        GPLv2+
@@ -88,14 +88,18 @@ BuildRequires:  /usr/bin/dpkg-buildflags
 BuildRequires:  /usr/bin/dpkg-vendor
 BuildRequires:  /usr/bin/dpkg-parsechangelog
 BuildRequires:  /usr/bin/help2man
+BuildRequires:  pkgconfig(bash-completion)
 
 Requires:       dpkg
 # man for manpage-alert
 Requires:       %{_bindir}/man
 
 Requires:       checkbashisms
-Source44: import.info
 
+# rhbz 1508087, 1536718
+Obsoletes:      hardening-check < 2.6-8
+Provides:       hardening-check = 2.6-8
+Source44: import.info
 
 %description
 Scripts to make the life of a Debian Package maintainer easier.
@@ -111,22 +115,12 @@ Python bingings for %name, %summary
 %package -n checkbashisms
 Group: Development/Other
 Summary:        Devscripts checkbashisms script
+Obsoletes:      devscripts-minimal < 2.16.6-1
+# Removed in F30
+Obsoletes:      devscripts-compat < 2.19.2-4
 
 %description -n checkbashisms
 This package contains the devscripts checkbashisms script.
-
-
-%package compat
-Group: Development/Other
-Summary:        Compatibility package for devscripts-minimal
-Requires:       perl-App-Licensecheck
-Requires:       checkbashisms = %{version}-%{release}
-Obsoletes:      devscripts-minimal < 2.16.6-1
-
-%description compat
-This package only exists to help transition from devscripts-minimal to
-licensecheck and devscripts-checkbashisms. It will be removed after one
-distribution release cycle, please do not reference it or depend on it in any way.
 
 
 %prep
@@ -169,12 +163,14 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %files
 %doc README
 %doc --no-dereference COPYING
+%{_datadir}/bash-completion
 %{_bindir}/*
 %{_datadir}/%{name}/
 %{_mandir}/man1/*
 %{perl_vendor_privlib}/Devscripts
 %exclude %{_bindir}/checkbashisms
 %exclude %{_mandir}/man1/checkbashisms.1*
+%exclude %{_datadir}/bash-completion/completions/checkbashisms
 %config %_sysconfdir/cvsdeb.conf
 %files -n python3-module-%name
 %{python3_sitelibdir_noarch}/%{name}
@@ -186,8 +182,15 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %{_bindir}/checkbashisms
 %{_mandir}/man1/checkbashisms.1*
 %{_mandir}/man5/devscripts.conf.5*
+%dir %{_datadir}/bash-completion
+%dir %{_datadir}/bash-completion/completions
+%{_datadir}/bash-completion/completions/checkbashisms
+
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.19.2-alt1_4
+- fc merge, fixed checkbashisms hook
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.19.2-alt1_1
 - update to new release by fcimport
 
