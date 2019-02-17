@@ -1,18 +1,30 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-setuptools
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %{!?qt5_qtwebengine_arches:%global qt5_qtwebengine_arches %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el}
 
+%bcond_without check
+
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.5
-Release:	alt1_3
-URL:		http://www.mnemosyne-proj.org/
+Version:	2.6
+Release:	alt1_4
+URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
+# contains missing tests and LICENSE files from upstream repo
+Source1:        Mnemosyne-tests-%{version}.tar.xz
+# run this script to obtain the above tarball
+Source10:       mnemosyne-mktarball.sh
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
 
@@ -22,6 +34,15 @@ ExclusiveArch:	noarch %{qt5_qtwebengine_arches}
 BuildRequires:	desktop-file-utils
 BuildRequires:	python3-devel
 BuildRequires:	python3-module-distribute
+%if %{with check}
+# unpackaged https://pypi.python.org/pypi/Cheroot
+#BuildRequires: python3-cheroot
+BuildRequires:	python3-module-cherrypy
+BuildRequires:	python3-module-nose
+BuildRequires:	python-module-PyQt5 python3-module-PyQt5
+BuildRequires:	texlive-collection-latexrecommended
+BuildRequires:	texlive
+%endif
 Requires:	icon-theme-hicolor
 Requires:	python3-module-PyQt5
 Requires:	python3-module-PyQt5
@@ -29,6 +50,7 @@ Requires:	python3-module-matplotlib-qt5
 Requires:	python3-module-cherrypy
 Requires:	python3-module-webob
 Requires:	python3-module-Pillow
+Requires:       python3-module-OpenGL python3-module-OpenGL_accelerate
 Source44: import.info
 
 %description
@@ -40,9 +62,13 @@ Optional dependencies:
 * latex: enables entering formulas using latex syntax.
 
 %prep
-%setup -q -n Mnemosyne-%{version}
+%setup -q -n Mnemosyne-%{version} -a 1
 %patch0 -p1 -b .d
 rm -r Mnemosyne.egg-info
+# requires unpackaged Cheroot python module
+rm tests/test_sync.py
+cp -p mnemosyne/LICENSE LICENSE.mnemosyne
+cp -p openSM2sync/LICENSE LICENSE.openSM2sync
 
 %build
 %python3_build
@@ -62,11 +88,15 @@ popd
 
 %find_lang %{name}
 
+%if %{with check}
+%check
+# tests fail if run in parallel
+#PYTHONPATH=%{buildroot}%{python3_sitelibdir_noarch} %{__python3} -m nose tests
+%endif
+
 %files -f %{name}.lang
-%doc ChangeLog README
-# https://bugs.launchpad.net/mnemosyne-proj/+bug/1346903
-# http://bazaar.launchpad.net/~peter-bienstman/mnemosyne-proj/trunk/view/head:/mnemosyne/mnemosyne/LICENSE
-#%%license docmnemosyne/libmnemosyne/LICENSE
+%doc ChangeLog README.md
+%doc --no-dereference LICENSE LICENSE.mnemosyne LICENSE.openSM2sync
 %{_bindir}/%{name}
 %{python3_sitelibdir_noarch}/%{name}
 %{python3_sitelibdir_noarch}/Mnemosyne-%{version}-py%{__python3_version}.egg-info
@@ -75,6 +105,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_4
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3
 - update to new release by fcimport
 
