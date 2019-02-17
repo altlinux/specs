@@ -1,7 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname polyclipping
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -14,14 +15,15 @@ BuildRequires: gcc-c++ unzip
 
 Name:           libpolyclipping
 Version:        6.4.2
-Release:        alt1_1
+Release:        alt1_6
 Summary:        Polygon clipping library
 
-Group:          System/Libraries
 License:        Boost
 URL:            http://sourceforge.net/projects/polyclipping
 Source0:        http://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  dos2unix
 Source44: import.info
@@ -37,8 +39,8 @@ filling modes. The clipping code is based on the Vatti clipping algorithm,
 and outperforms other clipping libraries.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{oldname}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Provides: polyclipping-devel = %{version}-%{release}
 
@@ -56,19 +58,16 @@ find . \( -name "*.exe" -o -name "*.dll" \) -delete
 # Correct line ends and encodings
 find . -type f -exec dos2unix -k {} \;
 
-for filename in perl/perl_readme.txt README; do
+for filename in "Third Party/perl/perl_readme.txt" README; do
   iconv -f iso8859-1 -t utf-8 "${filename}" > "${filename}".conv && \
     touch -r "${filename}" "${filename}".conv && \
     mv "${filename}".conv "${filename}"
 done
 
-# Enable use_lines
-sed -i 's|^//#define use_lines$|#define use_lines|' cpp/clipper.hpp
-
 
 %build
 pushd cpp
-  %{fedora_cmake}
+  %{fedora_cmake} .
 %make_build
 popd
 
@@ -80,9 +79,12 @@ pushd cpp
 # Install agg header with corrected include statement
   sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
 popd
-
 # viy hack
 sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{oldname}.pc
+
+
+
+
 
 %files
 %doc License.txt README
@@ -95,6 +97,9 @@ sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{o
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 6.4.2-alt1_6
+- fc update
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 6.4.2-alt1_1
 - new version
 
