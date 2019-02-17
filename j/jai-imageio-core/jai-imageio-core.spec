@@ -10,13 +10,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.22.20100217cvsjpp8
+Release:	alt1_0.24.20100217cvsjpp8
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
 License:	BSD
 URL:		https://java.net/projects/jai-imageio-core
 Source0:	jai-imageio-core-cvs%{cvs_ver}-CLEANED.tar.xz
-Source1:	README-fedora-epel.txt
+Source1:	README-dist.txt
 
 # jai-imageio-core contains code under a restrictive licence that we
 # cannot ship. This script will download and generate a tarball from
@@ -96,13 +96,16 @@ ant -DBUILD_TARGET=linux-i586 jar-opt docs-jcp
 %mvn_install -J %build/linux-i586/javadocs/docs-jcp
 
 %files -f .mfiles
-%doc LICENSE.txt COPYRIGHT.txt README-fedora-epel.txt
+%doc LICENSE.txt COPYRIGHT.txt README-dist.txt
 
 %files javadoc -f .mfiles
-%doc LICENSE.txt COPYRIGHT.txt README-fedora-epel.txt
+%doc LICENSE.txt COPYRIGHT.txt README-dist.txt
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.24.20100217cvsjpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.22.20100217cvsjpp8
 - java update
 
