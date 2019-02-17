@@ -3,12 +3,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_14jpp8
+Release:	alt1_15jpp8
 Summary:	Multi-paradigm scripting language for Java
 
 Group:		Development/Other
@@ -99,6 +99,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_15jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_14jpp8
 - java update
 
