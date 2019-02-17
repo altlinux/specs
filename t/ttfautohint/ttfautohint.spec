@@ -1,58 +1,118 @@
-Name: ttfautohint
-Version: 1.1
-Release: alt1
-Summary: A tool to auto-hint TrueType fonts
-License: FTL, GPLv2+
 Group: File tools
-Url: http://www.freetype.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/xelatex perl(English.pm) perl(open.pm)
+# END SourceDeps(oneline)
+BuildRequires: chrpath
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           ttfautohint
+Version:        1.8.2
+Release:        alt1_2
+Summary:        Automated hinting utility for TrueType fonts
+License:        FTL or GPLv2
+URL:            http://www.freetype.org/ttfautohint
+Source0:        http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz
+# https://bugzilla.redhat.com/1646687
+Patch0:         f18b7c859c92111446ca991743dd709e347d0301.patch
 
-Source: %name-%version.tar
-
-BuildPreReq: libfreetype-devel libqt4-devel libharfbuzz-devel
-BuildPreReq: gcc-c++ inkscape pandoc texlive-xetex ImageMagick
+BuildRequires:  gcc gcc-c++
+BuildRequires:  libfreetype-devel
+BuildRequires:  libharfbuzz-devel libharfbuzz-utils
+BuildRequires:  qt5-base-devel
+Provides:       bundled(gnulib)
+Requires:       %{name}-libs = %{version}-%{release}
+Source44: import.info
 
 %description
-ttfautohint - a tool to auto-hint TrueType fonts, based on FreeType's
-auto-hinting engine (still under development).
+This is a utility which takes a TrueType font as the input, removes its 
+bytecode instructions (if any), and returns a new font where all glyphs 
+are bytecode hinted using the information given by FreeType's autohinting 
+module. The idea is to provide the excellent quality of the autohinter on 
+platforms which don't use FreeType.
 
-%package docs
-Summary: Documentation for %name
-Group: Documentation
-BuildArch: noarch
+%package        gui
+Group: File tools
+Summary:        GUI for %{name} based on Qt
+Requires:       %{name}-libs = %{version}-%{release}
 
-%description docs
-ttfautohint - a tool to auto-hint TrueType fonts, based on FreeType's
-auto-hinting engine (still under development).
+%description    gui
+%{name} is a utility which takes a TrueType font as the input, removes its 
+bytecode instructions (if any), and returns a new font where all glyphs 
+are bytecode hinted using the information given by FreeType's autohinting 
+module. The idea is to provide the excellent quality of the autohinter on 
+platforms which don't use FreeType.
 
-This package contains documentation for %name.
+This is a GUI of %{name} based on Qt. 
+
+%package        libs
+Group: File tools
+Summary:        Library for %{name}
+
+%description    libs
+lib%{name} is a library which takes a TrueType font as the input, removes its 
+bytecode instructions (if any), and returns a new font where all glyphs 
+are bytecode hinted using the information given by FreeType's autohinting 
+module. The idea is to provide the excellent quality of the autohinter on 
+platforms which don't use FreeType.
+
+%package        devel
+Group: File tools
+Summary:        Development files for %{name}-libs
+Requires:       %{name}-libs = %{version}-%{release}
+
+%description    devel
+lib%{name} is a library which takes a TrueType font as the input, removes its 
+bytecode instructions (if any), and returns a new font where all glyphs 
+are bytecode hinted using the information given by FreeType's autohinting 
+module. The idea is to provide the excellent quality of the autohinter on 
+platforms which don't use FreeType.
+
 
 %prep
-%setup
+%setup -q
+%patch0 -p1
 
 %build
-%autoreconf
-export DISPLAY=:0.0
-%configure \
-	--enable-threads=posix \
-	--disable-rpath \
-	--enable-static=no \
-	--with-qt=%_qt4dir/bin \
-	--with-doc
+%configure --disable-silent-rules --disable-static
 %make_build
 
 %install
 %makeinstall_std
 
-%files
-%doc AUTHORS ChangeLog COPYING *.TXT NEWS README THANKS TODO
-%_bindir/*
-%_man1dir/*
+find %{buildroot} -name '*.la' -delete
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
-%files docs
-%_docdir/%name
+
+
+%files
+%doc AUTHORS NEWS README THANKS TODO *.TXT
+%doc doc/img doc/ttfautohint.html
+%doc doc/img doc/ttfautohint.pdf
+%doc doc/img doc/ttfautohint.txt
+%doc --no-dereference COPYING
+%{_bindir}/ttfautohint
+
+%files gui
+%doc --no-dereference COPYING
+%{_bindir}/ttfautohintGUI
+
+%files libs
+%doc --no-dereference COPYING
+%{_libdir}/libttfautohint.so.1*
+
+%files devel
+%doc --no-dereference COPYING
+%{_includedir}/ttfautohint*.h
+%{_libdir}/libttfautohint.so
+%{_libdir}/pkgconfig/ttfautohint.pc
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_2
+- new version
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 
