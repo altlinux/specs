@@ -1,13 +1,16 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-devel pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %_libexecdir/xinputinfo.sh
 %add_findreq_skiplist /etc/X11/xinit/xinitrc.d/50-xinput.sh
+BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
 Version:	1.7.3
-Release:	alt1_2.2
+Release:	alt1_7
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
@@ -16,7 +19,6 @@ BuildRequires:	libtool automake autoconf
 BuildRequires:	libgio >= 2.32.0, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	libnotify-devel libnotify-gir-devel
 BuildRequires:	libX11-devel, libgxim-devel >= 0.5.0
-BuildRequires:  libdbus-devel
 %if !0%{?rhel}
 BuildRequires:	libxfconf-devel
 %endif
@@ -33,7 +35,6 @@ Patch3:		%{name}-force-enable-for-cinnamon.patch
 Patch4:		%{name}-fix-unbound-var.patch
 
 Summary:	Delivery framework for general Input Method configuration
-Group:		System/Base
 Requires:	xinit >= 1.0.2
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-desktop-module = %{version}-%{release}
@@ -49,8 +50,8 @@ or the desktop.
 This package contains the core DBus services and some utilities.
 
 %package	libs
+Group: Development/Other
 Summary:	Libraries for imsettings
-Group:		Development/Other
 
 %description	libs
 IMSettings is a framework that delivers Input Method
@@ -61,8 +62,8 @@ or the desktop.
 This package contains the shared library for imsettings.
 
 %package	devel
+Group: Development/Other
 Summary:	Development files for imsettings
-Group:		Development/Other
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	pkgconfig
 Requires:	libgio
@@ -77,8 +78,8 @@ This package contains the development files to make any
 applications with imsettings.
 
 %package	xim
+Group: System/Base
 Summary:	XIM support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser
 
@@ -91,8 +92,8 @@ or the desktop.
 This package contains a module to get this working with XIM.
 
 %package	gsettings
+Group: System/Base
 Summary:	GSettings support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 Requires:	dconf libdconf
 Provides:	imsettings-desktop-module = %{version}-%{release}
@@ -110,8 +111,8 @@ GNOME and Cinnamon which requires GSettings in their
 own XSETTINGS daemons.
 
 %package	qt
+Group: System/Base
 Summary:	Qt support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser
 Provides:	imsettings-desktop-module = %{version}-%{release}
@@ -127,8 +128,8 @@ applications.
 
 %if !0%{?rhel}
 %package	xfce
+Group: System/Base
 Summary:	Xfce support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser-xfce
 Requires:	xfce4-settings >= 4.5.99.1
@@ -140,11 +141,11 @@ settings and applies the changes so they take effect
 immediately without any need to restart applications
 or the desktop.
 
-This package contains a module to get this working on Xfce.
+This package contains a module to get this working on Xfce.  
 
 %package	lxde
+Group: System/Base
 Summary:	LXDE support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 Requires:	lxde-settings-daemon
 # Hack for upgrades: see https://bugzilla.redhat.com/show_bug.cgi?id=693809
@@ -162,8 +163,8 @@ or the desktop.
 This package contains a module to get this working on LXDE.
 
 %package	mate
+Group: System/Base
 Summary:	MATE support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 # need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
 Requires:	mate-settings-daemon >= 1.5.0
@@ -180,11 +181,11 @@ or the desktop.
 This package contains a module to get this working on MATE.
 
 %package	cinnamon
+Group: System/Base
 Summary:	Cinnamon support on imsettings
-Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
 # need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
-Requires:	cinnamon
+Requires:	cinnamon cinnamon-data
 Requires:	cinnamon-session
 Requires:	im-chooser
 Provides:	imsettings-desktop-module = %{version}-%{release}
@@ -320,16 +321,21 @@ EOF
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-mate-gsettings.so
 
-%ifnarch e2k
+# note: done by robot; when cinnamon is supported, not just unifdef me, notify viy@ too
 # because cinnamon isn't supported on e2k yet
+%ifnarch e2k
 %files cinnamon
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-cinnamon-gsettings.so
 %endif
-%endif
 
+
+%endif
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_7
+- merged git fixes to hook, sync with fc
+
 * Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 1.7.3-alt1_2.2
 - Fix build: add libdbus-devel to BR.
 - Rebuild with libxfconf-0.so.3.
