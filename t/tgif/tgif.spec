@@ -1,15 +1,15 @@
+Group: Graphics
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_14
+Release:	alt2_18
 Summary:	2-D drawing tool
-Group:		Graphics
 
 License:	QPL
 URL:		http://bourbon.usc.edu/tgif/
@@ -20,6 +20,7 @@ Patch10:	tgif-textcursor-a-urasim.patch
 Patch101:	tgif-QPL-4.1.45-size-debug.patch
 Patch102:	tgif-QPL-4.2.5-format-security.patch
 
+BuildRequires:	gcc
 BuildRequires:	xorg-cf-files gccmakedep imake
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext gettext-tools
@@ -119,10 +120,10 @@ install -cpm 0644 *.obj \
 
 
 # Japanese specific
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/X11/ja/app-defaults/
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/X11/ja/app-defaults/
 install -cpm 0644 \
 	po/ja/Tgif.ad \
-	$RPM_BUILD_ROOT%{_datadir}/X11/ja/app-defaults/Tgif
+	$RPM_BUILD_ROOT%{_sysconfdir}/X11/ja/app-defaults/Tgif
 
 pushd po
 make \
@@ -162,14 +163,17 @@ desktop-file-install \
 
 %{_datadir}/%{name}/
 # Currently no package owns the following directories
-%dir %{_datadir}/X11/ja/
-%dir %{_datadir}/X11/ja/app-defaults/
-%{_datadir}/X11/ja/app-defaults/Tgif
+%dir %{_sysconfdir}/X11/ja/
+%dir %{_sysconfdir}/X11/ja/app-defaults/
+%{_sysconfdir}/X11/ja/app-defaults/Tgif
 
 %{_datadir}/icons/hicolor/*/apps/%{name}icon.png
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_18
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_14
 - update to new release by fcimport
 
