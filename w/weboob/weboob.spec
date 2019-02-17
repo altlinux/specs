@@ -1,5 +1,5 @@
 Name:    weboob
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Weboob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
@@ -48,5 +48,8 @@ Python module for Weboob.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 17 2019 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
+- New version.
+
 * Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - Initial build in Sisyphus
