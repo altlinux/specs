@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jboss-parent
 Version:        20
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        JBoss Parent POM
 License:        CC0
 URL:            http://www.jboss.org/
@@ -54,6 +54,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:20-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:20-alt1_4jpp8
 - java update
 
