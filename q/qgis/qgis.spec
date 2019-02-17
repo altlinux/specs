@@ -4,7 +4,7 @@
 
 Name:    qgis
 Version: 2.18.27
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -60,7 +60,6 @@ BuildRequires: libqt4-devel
 # Fail to build with Qt-Mobility. See http://hub.qgis.org/issues/7753
 #BuildRequires: qt4-mobility-devel
 BuildRequires: libqt4-webkit
-BuildRequires: python-module-PyQwt-devel
 BuildRequires: qextserialport-devel
 BuildRequires: libqwtpolar-devel
 BuildRequires: python-module-sip-devel >= 4.15
@@ -331,6 +330,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Sun Feb 17 2019 Andrey Cherepanov <cas@altlinux.org> 2.18.27-alt3
+- Fixed build (ALT #36127).
+
 * Mon Jan 07 2019 Andrey Cherepanov <cas@altlinux.org> 2.18.27-alt2
 - Rebuild with grass 7.4.4.
 
