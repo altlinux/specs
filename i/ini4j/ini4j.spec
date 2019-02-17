@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           ini4j
 Version:        0.5.1
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Summary:        Java API for handling files in Windows .ini format
 Group:          Development/Other
 License:        ASL 2.0
@@ -117,6 +117,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_19jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_18jpp8
 - java update
 
