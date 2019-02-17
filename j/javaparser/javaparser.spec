@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          javaparser
 Version:       1.0.11
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java 1.7 Parser and AST
 License:       GPLv3+ and LGPLv3+
 # https://github.com/before/javaparser/
@@ -61,6 +61,9 @@ sed -i 's/\r//' readme.md
 %doc --no-dereference COPYING COPYING.LESSER
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_6jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_5jpp8
 - java update
 
