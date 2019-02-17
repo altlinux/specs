@@ -1,86 +1,147 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: swig
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           4ti2
-Version:        1.6
-Release:        alt1_0
-Summary:        A software package for problems on linear spaces
+Version:        1.6.9
+Release:        alt1_2
+Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
-Group:          System/Libraries
+%global relver %(tr . _ <<< %{version})
+
 License:        GPLv2+
-URL:            http://www.4ti2.de/
-Source0:        http://www.4ti2.de/version_%{version}/%{name}-%{version}.tar.gz
-Source1:        http://www.4ti2.de/4ti2_manual.pdf
-Source2:        4ti2.module.in
-Patch0:         4ti2-1.3.2-gcc47.patch
-Requires:       environment-modules
-BuildRequires:  libgmp-devel libgmp_cxx-devel
+URL:            https://4ti2.github.io/
+Source0:        https://github.com/4ti2/4ti2/releases/download/Release_%{relver}/%{name}-%{version}.tar.gz
+Source1:        4ti2.module.in
+# Deal with a boolean variable that can somehow hold the value 2
+Patch0:         %{name}-maxnorm.patch
+
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libglpk-devel
+BuildRequires:  libgmp-devel libgmpxx-devel
+BuildRequires:  tex(latex)
+BuildRequires:  tex(epic.sty)
+
+# 4ti2 contains a copy of gnulib, which has been granted a bundling exception:
+# https://fedoraproject.org/wiki/Bundled_Libraries_Virtual_Provides
+Provides:       bundled(gnulib)
+
+Requires:       4ti2-libs = %{version}-%{release}
+Requires:       environment-modules
 Source44: import.info
 
 %description
-A software package for algebraic, geometric and combinatorial
-problems on linear spaces.
+A software package for algebraic, geometric and combinatorial problems
+on linear spaces.
 
-This package uses Environment Modules, to load the binaries onto
-your PATH you will need to run module load %%{name}-%{_arch}
+This package uses Environment Modules.  Prior to invoking the binaries,
+you must run "module load 4ti2-%%{arch}" to modify your PATH.
+
+%package devel
+Group: System/Libraries
+Summary:        Headers needed to develop software that uses 4ti2
+Requires:       4ti2-libs = %{version}-%{release}
+
+%description devel
+Headers and library files needed to develop software that uses 4ti2.
+
+%package libs
+Group: System/Libraries
+Summary:        Library for problems on linear spaces
+
+%description libs
+A library for algebraic, geometric and combinatorial problems on linear
+spaces.
 
 %prep
 %setup -q
-cp -p %{SOURCE1} .
-#patch0 -p1 -b .gcc47
+%patch0 -p0
+
+# Add a missing executable bit
+chmod a+x ltmain.sh
+
+# Fix encodings
+iconv -f ISO8859-1 -t UTF-8 NEWS > NEWS.utf8
+touch -r NEWS NEWS.utf8
+mv -f NEWS.utf8 NEWS
+
+# Update the C++ standard
+sed -i 's/c++0x/c++11/g' configure
 
 %build
-CXXFLAGS="%{optflags} -I%{_includedir}/glpk" \
-CFLAGS="%{optflags} -I%{_includedir}/glpk" \
-./configure --disable-shared --disable-static \
-            --prefix=%{_libdir}/%{name} \
-            --libdir=%{_libdir}/%{name}/lib/ \
-            --bindir=%{_libdir}/%{name}/bin/
-perl -pi -e 's|hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=\"-L\\\$libdir\"|g;' libtool
+%configure --enable-shared --disable-static --enable-fiber
 
-make %{?_smp_mflags}
+# Get rid of undesirable hardcoded rpaths; workaround libtool reordering
+# -Wl,--as-needed after all the libraries.
+sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+    -e 's|CC="\(.*g..\)"|CC="\1 -Wl,--as-needed"|' \
+    -i libtool
+
+%make_build
+
+# Build the manual
+export LD_LIBRARY_PATH=$PWD/src/4ti2/.libs:$PWD/src/fiber/.libs:$PWD/src/groebner/.libs:$PWD/src/ppi/.libs:$PWD/src/util/.libs:$PWD/src/zsolve/.libs
+pushd doc
+make update-manual
+bibtex 4ti2_manual
+pdflatex 4ti2_manual
+pdflatex 4ti2_manual
+popd
 
 %install
-make install-exec DESTDIR=%{buildroot}
+%makeinstall_std
+
+# Move the include files into a private directory
+mkdir -p %{buildroot}%{_includedir}/tmp
+mv %{buildroot}%{_includedir}/{4ti2,groebner,util,zsolve} \
+   %{buildroot}%{_includedir}/tmp
+mv %{buildroot}%{_includedir}/tmp %{buildroot}%{_includedir}/4ti2
+
+# Move the 4ti2 binaries
+mkdir -p %{buildroot}%{_libdir}/4ti2
+mv %{buildroot}%{_bindir} %{buildroot}%{_libdir}/4ti2
 
 # Make the environment-modules file
 mkdir -p %{buildroot}%{_datadir}/Modules/modulefiles/
 # Since we're doing our own substitution here, use our own definitions.
-sed 's#@LIBDIR@#'%{_libdir}/%{name}'#g;' < %SOURCE2 >%{buildroot}%{_datadir}/Modules/modulefiles/%{name}-%{_arch} 
+sed 's#@LIBDIR@#'%{_libdir}/4ti2'#g;' < %SOURCE1 >%{buildroot}%{_datadir}/Modules/modulefiles/4ti2-%{_arch}
 
-# The libraries are not really fit for use outside the package.
-rm -rf %{buildroot}/%{_libdir}/%{name}/lib*
+# We don't need or want libtool files
+rm -f %{buildroot}%{_libdir}/*.la
+
+# We don't want documentation in _datadir
+rm -fr %{buildroot}%{_datadir}/4ti2/doc
+
+
 
 %check
+export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 make check
 
 %files
-%doc COPYING TODO 4ti2_manual.pdf
-%dir %{_libdir}/%{name}/bin
-%dir %{_libdir}/%{name}
-%{_datadir}/Modules/modulefiles/%{name}-%{_arch} 
-%{_libdir}/%{name}/bin/output
-%{_libdir}/%{name}/bin/4ti2gmp
-%{_libdir}/%{name}/bin/4ti2int32
-%{_libdir}/%{name}/bin/4ti2int64
-%{_libdir}/%{name}/bin/circuits
-%{_libdir}/%{name}/bin/genmodel
-%{_libdir}/%{name}/bin/gensymm
-%{_libdir}/%{name}/bin/graver
-%{_libdir}/%{name}/bin/groebner
-%{_libdir}/%{name}/bin/hilbert
-%{_libdir}/%{name}/bin/markov
-%{_libdir}/%{name}/bin/minimize
-%{_libdir}/%{name}/bin/normalform
-%{_libdir}/%{name}/bin/ppi
-%{_libdir}/%{name}/bin/qsolve
-%{_libdir}/%{name}/bin/rays
-%{_libdir}/%{name}/bin/walk
-%{_libdir}/%{name}/bin/zbasis
-%{_libdir}/%{name}/bin/zsolve
+%doc doc/4ti2_manual.pdf
+%{_libdir}/4ti2/
+%{_datadir}/Modules/modulefiles/4ti2-%{_arch}
+
+%files devel
+%{_includedir}/4ti2/
+%{_libdir}/lib4ti2*.so
+%{_libdir}/libzsolve*.so
+
+%files libs
+%doc NEWS README THANKS TODO
+%doc --no-dereference COPYING
+%{_libdir}/lib4ti2*.so.0*
+%{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_2
+- new version
+
 * Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_0
 - new version (manual update)
 
