@@ -1,6 +1,6 @@
 Name: fish
-Version: 3.0.0
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -67,6 +67,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Sun Feb 17 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
 - remove completion for docker, fixed file conflict with docker-ce package
 
