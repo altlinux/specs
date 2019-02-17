@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global alternate_name iText
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt3_39jpp8
+Release:          alt3_40jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -343,6 +343,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_40jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_39jpp8
 - java update
 
