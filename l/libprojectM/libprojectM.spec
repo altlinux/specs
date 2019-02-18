@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt12
+Release: alt13
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
@@ -18,6 +18,7 @@ Patch2: %name-complete-2.1.0-link.patch
 Patch3: %name-%version-alt-gcc6.patch
 Patch4: %name-2.1.0-paths.patch
 Patch5: %name-qt-2.1.0-paths.patch
+Patch6: %name-g++8.patch
 
 Requires: fonts-ttf-dejavu
 
@@ -97,6 +98,7 @@ Static projectM library.
 %patch3 -p2
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 %build
 %cmake -DUSE_FBO:STRING=FALSE \
@@ -159,6 +161,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Thu Feb 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt13
+- no return statement in the non-void function fixed (according g++8)
+
 * Fri Jul 06 2018 Michael Shigorin <mike@altlinux.org> 2.1.0-alt12
 - replaced x86_64/aarch64 specific kludge with proper fedora patches
 - minor spec cleanup
