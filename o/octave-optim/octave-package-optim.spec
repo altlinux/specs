@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 Epoch: 1
 Name: octave-%octave_pkg_name
 Version: 1.5.2
-Release: alt3
+Release: alt4
 Summary: Optimization.
 
 Group: Sciences/Mathematics
@@ -54,6 +54,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt4
+- no return statement in the non-void function fixed (according g++8)
+
 * Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.5.2-alt3
 - rebuild with octave 4.4
 
