@@ -1,90 +1,101 @@
+%define _unpackaged_files_terminate_build 1
 %define modname daemon
 
+%def_with check
+
 Name: python-module-%modname
-Version: 2.1.2
+Version: 2.2.3
 Release: alt1
 
 Summary: Library to implement a well-behaved Unix daemon process
 License: Apache-2.0 / GPLv3
 Group: Development/Python
-Url: http://pypi.python.org/pypi/python-daemon/
+Url: https://pypi.org/project/python-daemon/
 Packager: Python Development Team <python@packages.altlinux.org>
 BuildArch: noarch
 
-Source: daemon-%version.tar
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-docutils
-BuildRequires: python-module-html5lib
-BuildRequires: python-modules-json
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-html5lib
-BuildPreReq: python3-module-sphinx
-BuildPreReq: python3-module-setuptools
-#BuildPreReq: python-module-docutils
-#BuildPreReq: python-module-html5lib
-#BuildPreReq: python-modules-json
-#BuildRequires: python-module-setuptools
-#BuildPreReq: python-module-lockfile > 0.10 python-module-docutils
 
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildRequires: python3-module-lockfile > 0.10 python3-module-simplejson python3-module-docutils
-#BuildPreReq: python-tools-2to3
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(docutils)
+BuildRequires: python3(docutils)
 
+%if_with check
+BuildRequires: python3(lockfile)
+BuildRequires: python3(mock)
+BuildRequires: python3(testscenarios)
+BuildRequires: python3(tox)
+%endif
 
 %description
-A well-behaved Unix daemon process is tricky to get right, but the required steps are much the same for every daemon program. A DaemonContext instance holds the behaviour and configured process environment for the program; use the instance as a context manager to enter a daemon state.
+A well-behaved Unix daemon process is tricky to get right, but the required
+steps are much the same for every daemon program. A DaemonContext instance
+holds the behaviour and configured process environment for the program; use the
+instance as a context manager to enter a daemon state.
 
 %package -n python3-module-%modname
 Summary: Library to implement a well-behaved Unix daemon process
 Group: Development/Python3
-%py3_provides %modname
 
 %description -n python3-module-%modname
-A well-behaved Unix daemon process is tricky to get right, but the required steps are much the same for every daemon program. A DaemonContext instance holds the behaviour and configured process environment for the program; use the instance as a context manager to enter a daemon state.
+A well-behaved Unix daemon process is tricky to get right, but the required
+steps are much the same for every daemon program. A DaemonContext instance
+holds the behaviour and configured process environment for the program; use the
+instance as a context manager to enter a daemon state.
 
 %prep
-%setup -n daemon-%version
+%setup
+%patch -p1
 
 rm -rf ../python3
 cp -fR . ../python3
 
 %build
+# workaround https://pagure.io/python-daemon/issue/31
+python setup.py egg_info
 %python_build
 
-export LANG=en_GB.utf8
-echo $LANG
-
 pushd ../python3
+python3 setup.py egg_info
 %python3_build
 popd
 
 %install
 %python_install
 
-export LANG=en_GB.utf8
-echo $LANG
-
 pushd ../python3
 %python3_install
 popd
 
+%check
+# skip for now PEP517/PEP518
+rm pyproject.toml
+# relax requirements
+sed -i '/deps = -r{toxinidir}\/pip-requirements\/test\.txt/d' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+%_bindir/tox.py3 --sitepackages -p auto -o -v -- -ra
+
 %files
 %doc ChangeLog LICENSE.* README doc/*
-%python_sitelibdir/%modname
-%python_sitelibdir/python_daemon*
+%python_sitelibdir/%modname/
+%python_sitelibdir/python_daemon-%version-py%_python_version.egg-info/
 
 %files -n python3-module-%modname
 %doc ChangeLog LICENSE.* README doc/*
-%python3_sitelibdir/%modname
-%python3_sitelibdir/python_daemon*
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/python_daemon-%version-py%_python3_version.egg-info/
 
 
 %changelog
+* Mon Feb 18 2019 Stanislav Levin <slev@altlinux.org> 2.2.3-alt1
+- 2.1.2 -> 2.2.3.
+- Enable testing.
+- Fixed build against setuptools 40.7.0+.
+
 * Wed Mar 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.1.2-alt1
 - Version 2.1.2
 
