@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/octave-config makeinfo
 Epoch: 1
 Name: octave-%octave_pkg_name
 Version: 1.0.15
-Release: alt1
+Release: alt2
 Summary: Structure Handling.
 
 Group: Sciences/Mathematics
@@ -57,6 +57,9 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %changelog
+* Mon Feb 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:1.0.15-alt2
+- rebuild fixed
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1
 - regenerated from template by package builder
 
