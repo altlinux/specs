@@ -3,7 +3,7 @@
 
 Name:    python-module-%modulename
 Version: 3.3.0
-Release: alt1
+Release: alt2
 
 Summary: SIP SIMPLE implementation for Python
 License: GPLv3
@@ -29,8 +29,8 @@ BuildRequires: libalsa-devel
 BuildRequires: libpjsip-devel
 %endif
 
-Source:  python-%modulename-%version.tar
-Patch1: python-module-sipsimple-aarch64-webrtc-define.patch
+Source: python-%modulename-%version.tar
+Patch1: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
 
 %description
 SIP SIMPLE client SDK is a Software Development Kit for easy development
@@ -41,6 +41,7 @@ types can be easily added by using an extensible high-level API.
 %prep
 %setup -n python-%modulename-%version
 %patch1 -p1
+cp /usr/share/gnu-config/config.* deps/pjsip/
 chmod +x deps/pjsip/*configure
 
 %build
@@ -54,6 +55,9 @@ chmod +x deps/pjsip/*configure
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Feb 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.0-alt2
+- Fixed build on ppc64le.
+
 * Mon Dec 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
 - New version.
 
