@@ -1,6 +1,6 @@
 Name:          linux-gpib
 Version:       4.2.0
-Release:       alt1
+Release:       alt2
 
 Summary:       Support package for GPIB (IEEE 488) hardware.
 Group:         System/Kernel and hardware
@@ -72,6 +72,8 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 # fix folders
 sed -i -e 's|\$DATADIR/usb/|/lib/firmware/|'\
   %buildroot/%_sysconfdir/hotplug/usb/*
+sed -i -e '/^DATADIR=/d'\
+  %buildroot/%_sysconfdir/hotplug/usb/*
 sed -i -e 's|%buildroot||'\
   %buildroot/%_sysconfdir/udev/rules.d/*
 
@@ -79,6 +81,8 @@ sed -i -e 's|%buildroot||'\
 %_sbindir/groupadd -r -f gpib 2> /dev/null ||:
 
 %files
+%dir %_docdir/%name-%version
+%dir %_docdir/%name-%version/html
 %doc %_docdir/%name-%version/COPYING
 %doc %_docdir/%name-%version/README
 %doc %_docdir/%name-%version/linux-gpib.pdf
@@ -107,6 +111,9 @@ sed -i -e 's|%buildroot||'\
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Feb 18 2019 Vladislav Zavjalov <slazav@altlinux.org> 4.2.0-alt2
+- fix Repocop warnings: docdir-is-not-owned, buildroot
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 4.2.0-alt1
 - v4.2.0
 
