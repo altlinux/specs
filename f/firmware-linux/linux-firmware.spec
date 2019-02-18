@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190118
+Version: 20190213
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,22 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Feb 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20190213-alt1
+- upstream changes (GIT 710963f):
+  + nvidia: add TU10x typec controller firmware (thx Ajay Gupta)
+  + bnx2x: Add FW 7.13.11.0. (thx Rahul Verma)
+  + amdgpu: add firmware for vega20 from 18.50 (thx Alex Deucher)
+  + amdgpu: bump year on license (thx Alex Deucher)
+  + update Marvell PCIe-USB8997 firmware image (thx Ganapathi Bhat)
+  + update Marvell SD8897-B0 firmware image (thx Ganapathi Bhat)
+  + add Marvell SD8977 firmware image (thx Ganapathi Bhat)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.9.0.2-00021 (thx Kalle Valo)
+  + ath10k: QCA988X hw2.0: update firmware-5.bin to 10.2.4-1.0-00043 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to
+    10.4-3.9.0.2-00024 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update board-2.bin (thx Kalle Valo)
+
 * Sun Jan 20 2019 Cronbuild Service <cronbuild@altlinux.org> 20190118-alt1
 - upstream changes (GIT a8b75ca):
   + brcm: Add BCM43455 NVRAM for Raspberry Pi 3 B+ (thx Matthias Brugger)
