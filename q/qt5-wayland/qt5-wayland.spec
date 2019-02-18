@@ -3,7 +3,7 @@
 
 Name: qt5-wayland
 Version: 5.11.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Wayland platform support and QtCompositor module
@@ -88,7 +88,7 @@ syncqt.pl-qt5 -version %version
 
 %build
 #qmake_qt5 CONFIG+=wayland-compositor
-%qmake_qt5
+%qmake_qt5 QT_BUILD_PARTS-=examples
 
 %make_build
 export QT_HASH_SEED=0
@@ -133,6 +133,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Mon Feb 18 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2
+- fix to build
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
