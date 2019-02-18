@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define soversion 1
+%define soversion 5
 ExclusiveArch: %ix86 x86_64
 Name:     intel-gmmlib
-Version:  18.3.0
+Version:  18.4.1
 Release:  alt1
 Summary:  Intel(R) Graphics Memory Management Library
 License:  MIT
@@ -50,6 +50,9 @@ rm -f %buildroot/%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 18 2019 Anton Farygin <rider@altlinux.ru> 18.4.1-alt1
+- 18.4.1
+
 * Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 18.3.0-alt1
 - first build for ALT
 
