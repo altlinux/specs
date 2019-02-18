@@ -1,6 +1,6 @@
 Name: procbench
 Version: 0.9.0a
-Release: alt3.1
+Release: alt4
 
 Summary: CPU benchmark and information tool
 License: GPLv2+
@@ -10,10 +10,12 @@ Url: http://procbench.sourceforge.net/
 Source: http://download.sourceforge.net/procbench/procbench_%version.tar.gz
 Patch0: procbench-0.9.0-stdio.patch
 Patch1: procbench-0.9.0a-alt-glibc-2.16.patch
+Patch2: %name-g++8.patch
 
 BuildRequires: automake_1.10
 # Automatically added by buildreq on Fri Jun 12 2009
 BuildRequires: gcc-c++
+ExclusiveArch: i586 x86_64
 
 %description
 Procbench is an information tool and CPU benchmark that tests memory transfer
@@ -25,6 +27,7 @@ pb_gcc) to get the best GCC optimization parameters for a CPU.
 %setup -n procbench_0.9.0aubuntu3~intrepid
 %patch0 -p1
 %patch1 -p3
+%patch2 -p3
 
 %build
 # QnD... :\
@@ -48,6 +51,9 @@ cp -f /usr/share/automake-1.10/config.guess .
 %_libdir/libpbbench.so*
 
 %changelog
+* Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0a-alt4
+- no return statement in the non-void function fixed (according g++8)
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0a-alt3.1
 - Fixed build with glibc 2.16
 
