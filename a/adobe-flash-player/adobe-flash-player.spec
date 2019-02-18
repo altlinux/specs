@@ -4,7 +4,7 @@ Name: adobe-flash-player
 %define ver_fake 32
 %define ver_ix86 32.0.0.142
 %define ver_x86_64 32.0.0.142
-Release: alt3
+Release: alt4
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Mon Feb 18 2019 Cronbuild Service <cronbuild@altlinux.org> 3:32-alt4
+- repocop cronbuild 20190218. At your service.
+
 * Thu Feb 14 2019 Cronbuild Service <cronbuild@altlinux.org> 3:32-alt3
 - repocop cronbuild 20190214. At your service.
 
