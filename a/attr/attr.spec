@@ -1,5 +1,5 @@
 Name: attr
-Version: 2.4.48.0.7.14ad
+Version: 2.4.48.0.9.cb478
 Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
@@ -107,6 +107,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 17 2018 Dmitry V. Levin <ldv@altlinux.org> 2.4.48.0.9.cb478-alt1
+- v2.4.48-7-g14adc89 -> v2.4.48-9-gcb4786f.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2.4.48.0.7.14ad-alt1
 - v2.4.48 -> v2.4.48-7-g14adc89.
 
