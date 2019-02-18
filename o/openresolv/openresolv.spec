@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.9.0
-Release: alt2
+Release: alt3
 
 Summary: A framework for managing DNS information 
 License: %bsdstyle
@@ -106,8 +106,8 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 
 %files dnsmasq
 %subscribers_dir/dnsmasq
+%config(noreplace) %_sysconfdir/resolv.conf.dnsmasq
 %ghost %_sysconfdir/dnsmasq.conf.d/60-resolvconf
-%ghost %_sysconfdir/resolv.conf.dnsmasq
 
 %files unbound
 %subscribers_dir/unbound
@@ -120,6 +120,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Mon Feb 18 2019 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt3
+- dnsmasq: Fix first start.
+
 * Tue May 08 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.9.0-alt2
 - Rebuilt with pdnsd subscriber subpackage.
 
