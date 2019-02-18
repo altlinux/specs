@@ -7,7 +7,7 @@ BuildRequires: makeinfo
 %define octave_descr_name OctPROJ
 Name: octave-%octave_pkg_name
 Version: 1.1.5
-Release: alt3
+Release: alt4
 Summary: GNU Octave bindings to PROJ.4
 
 Group: Sciences/Mathematics
@@ -56,6 +56,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.1.5-alt4
+- rebuild with libproj 5.2.2
+
 * Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt3
 - rebuild with octave 4.4
 

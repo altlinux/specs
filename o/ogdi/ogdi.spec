@@ -1,6 +1,6 @@
 Name: ogdi
 Version: 3.2.0
-Release: alt1.beta2.1.qa1
+Release: alt1.beta2.2
 Summary: Open Geographic Datastore Interface
 Group: Sciences/Geosciences
 License: BSD
@@ -167,6 +167,9 @@ touch -r ogdi-config.in %buildroot%_bindir/%name-config
 %_libdir/%name/libecs_tcl.so
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 3.2.0-alt1.beta2.2
+- rebuild with libproj 5.2.2
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.0-alt1.beta2.1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 

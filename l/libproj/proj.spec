@@ -1,14 +1,12 @@
 Name: libproj
-Version: 4.8.0
+Version: 5.2.0
 Release: alt1
-
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 Summary: PROJ.4 - cartographic projections library
 Group: Sciences/Geosciences
 License: MIT
-Url: http://trac.osgeo.org/proj/
-Source0: http://download.osgeo.org/proj/proj-%version.tar.gz
+Url: https://proj4.org/
+Source: proj-%version.tar.gz
 
 BuildRequires: gcc-c++ libstdc++-devel
 
@@ -77,6 +75,7 @@ install -p -m 0755 nad/test27 nad/test83 nad/testvarious %buildroot%_datadir/pro
 %_mandir/man3/*.3*
 %_includedir/*.h
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files devel-static
@@ -91,6 +90,9 @@ install -p -m 0755 nad/test27 nad/test83 nad/testvarious %buildroot%_datadir/pro
 %_datadir/proj
 
 %changelog
+* Fri Feb 15 2019 Vladislav Zavjalov <slazav@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Wed Apr 18 2012 Vladislav Zavjalov <slazav@altlinux.org> 4.8.0-alt1
 - 4.8.0
 

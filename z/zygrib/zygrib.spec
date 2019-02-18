@@ -3,7 +3,7 @@
 
 Name: zygrib
 Version: 8.0.1
-Release: alt3
+Release: alt4
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -116,6 +116,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 8.0.1-alt4
+- rebuild with libproj 5.2.2
+
 * Thu Aug 16 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.0.1-alt3
 - fixed build with libjasper 2.x:
   http://www.zygrib.org/forum/viewtopic.php?f=3&t=1066

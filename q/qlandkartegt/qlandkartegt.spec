@@ -1,6 +1,6 @@
 Name: qlandkartegt
 Version: 1.8.1
-Release: alt1
+Release: alt2
 Summary: GPS mapping (GeoTiff and vector) and GPSr management
 
 Group: Sciences/Geosciences
@@ -8,6 +8,8 @@ License: GPLv2+
 Url: http://www.qlandkarte.org
 
 Source: qlandkartegt-%version.tar
+Patch0: 01_literal-suffix.patch
+Patch1: 02_map2rmp_signedchar.patch
 
 BuildRequires: cmake gcc-c++ gdal gpsbabel libXScrnSaver-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXft-devel libXmu-devel libXpm-devel
@@ -26,6 +28,8 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 %cmake_insource
@@ -44,6 +48,10 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %_datadir/%name/*
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.8.1-alt2
+- Rebuild with libproj 5.2.0.
+- Fix build of 3rdparty/map2rmp
+
 * Wed Mar 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
 - New version
 

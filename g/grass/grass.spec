@@ -2,7 +2,7 @@
 
 Name:    grass
 Version: 7.4.4
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -330,6 +330,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 7.4.4-alt2
+- Rebuild with libproj 5.2.0
+
 * Mon Jan 07 2019 Andrey Cherepanov <cas@altlinux.org> 7.4.4-alt1
 - New version.
 

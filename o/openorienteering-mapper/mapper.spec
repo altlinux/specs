@@ -2,7 +2,7 @@
 
 Name: openorienteering-mapper
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -24,8 +24,10 @@ BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-sql-sqlite3
 BuildRequires: qt5-tools-devel
 BuildRequires: sqlite3
-# for tests (github #1062)
+# NAD grids are needed for tests (github #1062).
+# File BETA2007.gsb from proj-datumgrid is also used for tests
 BuildRequires: libproj-nad
+BuildRequires: proj-datumgrid
 BuildRequires: ctest
 
 #brings gdal libs and licensing information for help menu
@@ -82,6 +84,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.8.3-alt2
+- Rebuild with proj 5.2.0
+
 * Tue Nov 27 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.3-alt1
 - New version
 - Remove ubt
