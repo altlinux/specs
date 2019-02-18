@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.3
-%define major 4.0
+%define major 4.2
 
 Name: wine
 Version: %major.1
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/4.0/wine-%major.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/4.x/wine-%major.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major.tar.gz
 Source1: %name-staging-%version.tar
@@ -471,6 +471,13 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Feb 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.2.1-alt1
+- new version 4.2.1 (with rpmrb script)
+
+* Thu Feb 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.1.1-alt1
+- new version 4.1.1 (with rpmrb script)
+- disable file open associations by default (eterbug #13662)
+
 * Wed Jan 23 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.1-alt1
 - new version 4.0.1 (with rpmrb script)
 
