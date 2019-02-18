@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: 1.25.1
-Release: alt5
+Release: alt6
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -96,6 +96,10 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt6
+- Pass the decrypt/unwrap/derive result code out of the decryptAny()
+  function.
+
 * Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt5
 - Really fix bad result code override.
 
