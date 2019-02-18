@@ -1,8 +1,8 @@
 %global import_path code.gitea.io/gitea
 
 Name:    gitea
-Version: 1.7.1
-Release: alt3
+Version: 1.7.2
+Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -73,6 +73,9 @@ useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 %doc *.md
 
 %changelog
+* Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
+- Build new version.
+
 * Fri Feb 08 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.1-alt3
 - Fix ownership of catalogs
 - Fix showing version
