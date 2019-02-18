@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -178,12 +178,12 @@ cat synfig.lang >> %name.lang
 %_pixmapsdir/*
 %_iconsdir/*/*/*/*.png
 %_iconsdir/*/*/*/*.svg
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_datadir/synfig/
 %_datadir/mime-info/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/*.appdata.xml
 %_xdgmimedir/application/x-sif.xml
-%_xdgmimedir/packages/%name.xml
+%_xdgmimedir/packages/*.xml
 
 %files -n lib%name
 %_bindir/synfig
@@ -196,6 +196,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 17 2019 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt1
+- New version.
+
 * Tue Sep 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
 - New version.
 
