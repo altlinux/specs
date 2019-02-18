@@ -1,9 +1,9 @@
 %define cfg %_builddir/%name-%version/
-%define rev 57468
+%define rev 60436
 
 Name:       lazarus
-Version:    1.8.4
-Release:    alt2
+Version:    2.0.1
+Release:    alt1.r%rev
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -33,12 +33,16 @@ Patch12: lazarus-lcl-with-multple-widget-sets.patch
 # Other patches
 Patch13: lazarus-customform-sigsegv-fix.patch
 
+# Upstream fixes
+Patch14: lazarus-r60298.patch
+Patch15: lazarus-r60328.patch
+Patch16: lazarus-r60397.patch
+
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 
-Requires:   fpc >= 2.6.4 fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
-Requires:   glibc-devel glib-devel libGLU-devel libode-devel
-Requires:   fonts-bitmap-terminus
+Requires:   fpc >= 2.6.4 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
+Requires:   glibc-devel
 Requires:   libdbus-devel
 Requires:   xterm
 
@@ -73,12 +77,17 @@ subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
+%patch14 -p0
+%patch15 -p0
+%patch16 -p0
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
 
 # Replace xterm call with real path
 find . -name *.lpi -print0 -o -name *.kof -print0 | xargs -0 -L 1 subst 's,[\\/]usr[\\/]\(X11R6[\\/]\)\?bin[\\/]\(xterm\|gnome-terminal\),/usr/bin/xterm,'
+
+mkdir docs/chm
 
 %build
 MAKEOPTS="-Fl/opt/gnome/lib"
@@ -111,7 +120,8 @@ mkdir -p tools/lazdatadesktop/lib
 # Generate documentation
 pushd docs/html
 ../../lazbuild --ws="$LCL_PLATFORM" --pcp=%cfg build_lcl_docs.lpi
-sh build_html.sh
+./build_lcl_docs
+./build_html.sh
 popd
 
 export LCL_PLATFORM=
@@ -194,6 +204,10 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Mon Feb 18 2019 Andrey Cherepanov <cas@altlinux.org> 1:2.0.1-alt1.r60436
+- New version.
+- Remove requirements only needed for old version.
+
 * Wed Jan 23 2019 Andrey Cherepanov <cas@altlinux.org> 1:1.8.4-alt2
 - Remove requirement of fpc-src.
 
