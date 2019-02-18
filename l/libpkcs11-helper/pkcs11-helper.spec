@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: 1.25.1
-Release: alt3
+Release: alt4
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -96,6 +96,10 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt4
+- Fix: Don't override the bad result code of the key decrypt,
+  unwrap and derive operations.
+
 * Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt3
 - Build with GOST-derive patch. Generate it with gear.
 - Deversify the KEK.
