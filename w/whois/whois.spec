@@ -1,6 +1,6 @@
 Name: whois
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 
 Summary: Intelligent WHOIS client
 License: GPLv2+
@@ -54,6 +54,9 @@ install -Dpm644 whois.conf %buildroot/etc/whois.conf
 %_mandir/man?/mkpasswd.*
 
 %changelog
+* Sun Jan 27 2019 Dmitry V. Levin <ldv@altlinux.org> 5.4.1-alt1
+- v5.4.0 -> v5.4.1.
+
 * Thu Nov 29 2018 Dmitry V. Levin <ldv@altlinux.org> 5.4.0-alt2
 - Packaged mkpasswd in a separate subpackage.
 - Built with libidn2 instead of libidn.
