@@ -1,4 +1,4 @@
-# 6.2.0.3
+# 6.2.1.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -23,7 +23,7 @@
 
 Name: LibreOffice
 %define hversion 6.2
-%define urelease 0.3
+%define urelease 1.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -71,9 +71,9 @@ Patch4: FC-0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-##Patch402: libreoffice-4-alt-drop-gnome-open.patch
-Patch403: alt-002-tmpdir.patch
-Patch404: alt-003-poppler-compat.patch
+Patch402: alt-002-tmpdir.patch
+Patch403: alt-003-poppler-compat.patch
+Patch404: alt-004-shortint.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -122,12 +122,14 @@ Requires: %name-common = %EVR
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
-%package gtk
+%package gtk2
 Summary: GTK2 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-%description gtk
+Provides: %name-gtk = %EVR
+Obsoletes: %name-gtk
+%description gtk2
 GTK2 extensions for %name
 
 %package gtk3
@@ -135,7 +137,8 @@ Summary: GTK3 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Provides: %name-gnome
+Provides: %name-gnome = %EVR
+Obsoletes: %name-gnome
 %description gtk3
 GTK3 extensions for %name
 
@@ -145,6 +148,7 @@ Summary: Qt5 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
 %description qt5
 qt5 extensions for %name
 %endif
@@ -155,8 +159,7 @@ Summary: KDE5 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-kde4 < %EVR
-Provides: LibreOffice4-kde4 = %EVR
+Provides: LibreOffice-kde = %EVR
 %description kde5
 KDE5 extensions for %name
 %endif
@@ -256,9 +259,9 @@ echo Direct build
 
 ## ALT apply patches
 %patch401 -p0
-##patch402 -p1
-%patch403 -p1
-#patch404 -p1
+%patch402 -p1
+#patch403 -p1
+%patch404 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -436,7 +439,7 @@ find %buildroot%lodir -name "*kde4*"  | sed 's@^%buildroot@@' > files.kde4
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
 # Create kde5 plugin list
-find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
+find %buildroot%lodir -name "*_kde5*" -o -name "libkde5*" | sed 's@^%buildroot@@' > files.kde5
 
 # Generate base filelist by removing files from  separated packages
 { cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
@@ -458,13 +461,13 @@ done
 
 # TODO icon-themes/
 
+# Hack out "Education" category from Math
+sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
+
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math;  do
 	ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
-
-# Hack out "Education" category from Math
-sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
 
 # TODO some other hack with .mime (?)
 mkdir -p %buildroot%_datadir/mime-info %buildroot%_datadir/mimelnk/application %buildroot%_datadir/application-registry
@@ -504,7 +507,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_iconsdir/*/*/apps/*
 %exclude %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
-%files gtk -f files.gtk2
+%files gtk2 -f files.gtk2
 
 %files gtk3 -f files.gtk3
 
@@ -548,6 +551,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Feb 18 2019 Fr. Br. George <george@altlinux.ru> 6.2.1.1-alt1
+- Update to 6.2.1.1 (Closes: #36107, #35504, #35420, #35292)
+- Move KDE-depended library to -kde5 package (Closes: #36100)
+
 * Tue Feb 12 2019 Fr. Br. George <george@altlinux.ru> 6.2.0.3-alt1
 - Update to 6.2.0.3
 - Build with native kde5 SAL instead of gtk3/kde5
