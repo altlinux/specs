@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: 1.25.1
-Release: alt4
+Release: alt5
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 Provides: %_name = %version-%release
 Obsoletes: %_name < %version-%release
 
-%define vkoversion 1.0.0
+%define vkoversion 1.0.1
 Patch0: %name-%version-gost-derive-%vkoversion.patch
 Provides: %name(vko) = %vkoversion
 
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt5
+- Really fix bad result code override.
+
 * Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt4
 - Fix: Don't override the bad result code of the key decrypt,
   unwrap and derive operations.
