@@ -2,7 +2,7 @@
 
 Name: alterator-xkb
 Version: 3.0
-Release: alt2.qa1
+Release: alt3
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -40,6 +40,10 @@ alterator module for XKB administration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Feb 18 2019 Paul Wolneykien <manowar@altlinux.org> 3.0-alt3
+- Workaround ALTBUG #35797: replace ';' with ',' in the enumerated
+  data (closes: #35797).
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
