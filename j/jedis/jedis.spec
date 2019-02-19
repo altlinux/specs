@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jedis
 Version:       2.7.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       A redis Java client
 License:       MIT
 URL:           https://github.com/xetorthio/jedis
@@ -94,6 +94,9 @@ rm -r src/test/java/redis/clients/jedis/tests/ConnectionCloseTest.java \
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_8jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_7jpp8
 - java update
 
