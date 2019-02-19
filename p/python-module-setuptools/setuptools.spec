@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 40.6.3
+Version: 40.8.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -214,6 +214,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1:40.8.0-alt1
+- 40.6.3 -> 40.8.0.
+
 * Thu Jan 10 2019 Stanislav Levin <slev@altlinux.org> 1:40.6.3-alt1
 - 40.5.0 -> 40.6.3.
 
