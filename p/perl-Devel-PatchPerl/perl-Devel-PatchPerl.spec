@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Devel-PatchPerl
-Version: 1.52
+Version: 1.54
 Release: alt1
 
 Summary: Patch perl source a la Devel::PPPort's buildperl.pl
@@ -31,6 +32,9 @@ BuildRequires: perl-Module-Pluggable perl-File-pushd perl-devel perl-IPC-Cmd
 %doc Changes LICENSE README
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- new version
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - automated CPAN update
 
