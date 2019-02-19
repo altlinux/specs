@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openorienteering-mapper
-Version: 0.8.3
-Release: alt2
+Version: 0.8.4
+Release: alt1
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -84,6 +84,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.8.4-alt1
+- New version
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.8.3-alt2
 - Rebuild with proj 5.2.0
 
