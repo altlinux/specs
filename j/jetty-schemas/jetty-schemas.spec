@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:       jetty-schemas
 Version:    4.0.1
-Release:    alt1_2jpp8
+Release:    alt1_3jpp8
 Summary:    XML Schemas for Jetty
 License:    CDDL-1.1 or GPLv2 with exceptions
 URL:        http://www.eclipse.org/jetty/
@@ -41,6 +41,9 @@ cp %SOURCE1 .
 %doc --no-dereference CDDL+GPL_1_1.html
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_3jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_2jpp8
 - java update
 
