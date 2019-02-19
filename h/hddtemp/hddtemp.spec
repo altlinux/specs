@@ -3,7 +3,7 @@
 
 Name: hddtemp
 Version: 0.3
-Release: alt12.beta%beta
+Release: alt13.beta%beta
 Epoch: 20110629
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -22,6 +22,7 @@ Source5: hddtemp.db-alt
 
 Patch1: hddtemp-0.3beta15-guessedvalue.patch
 Patch2: hddtemp-0.3beta15-compile.patch
+Patch3: hddtemp-fedora-user-context-type.patch
 
 %description
 hddtemp is a tool that gives you the temperature of your IDE,
@@ -31,6 +32,7 @@ SATA or SCSI hard drive by reading S.M.A.R.T. information.
 %setup -n %name-%fullver
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 %build
 %autoreconf
@@ -72,6 +74,9 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Tue Feb 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20110629:0.3-alt13.beta15
+- NMU: fixed build on i586.
+
 * Sun Feb 10 2013 Sergey Kurakin <kurakin@altlinux.org> 20110629:0.3-alt12.beta15
 - i586 build fixed
 
