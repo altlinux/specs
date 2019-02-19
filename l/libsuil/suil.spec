@@ -9,27 +9,30 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name suil
-%define version 0.10.0
+%define version 0.10.2
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsuil
-Version:    0.10.0
-Release:    alt1_1
+Version:    0.10.2
+Release:    alt1_3
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 License:    MIT 
 URL:        http://drobilla.net/software/suil/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+Patch0:     %{oldname}-wrong-cocoa-detection.patch
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
-BuildRequires:  python
+# https://fedoraproject.org/wiki/Packaging:Python#Dependencies
+BuildRequires:  python3
 BuildRequires:  lv2-devel >= 1.12.0
 # we need to track changess to these toolkits manually due to the 
 # requires filtering below
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
 BuildRequires:  rpm-macros-qt5 qt5-designer qt5-3d-devel qt5-base-devel qt5-connectivity-devel qt5-declarative-devel qt5-location-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-tools-devel qt5-wayland-devel qt5-webchannel-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 BuildRequires:  gcc-c++
 
@@ -65,30 +68,33 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch0 -p1
 # we'll run ldconfig, and add our optflags 
 sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
 export CXXFLAGS="%{optflags}"
 export LINKFLAGS="%{__global_ldflags}"
-./waf configure \
+python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --docdir=%{_docdir}/%{oldname} \
     --docs 
-./waf build -v %{?_smp_mflags}
+python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} ./waf install
+DESTDIR=%{buildroot} python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
-install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
+install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
+
+
 
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}
 %exclude %{_docdir}/%{oldname}/COPYING
-%doc COPYING
+%doc --no-dereference COPYING
 %dir %{_libdir}/suil-%{maj}
 %{_libdir}/lib%{oldname}-*.so.*
 %{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt4.so
@@ -99,6 +105,7 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_libdir}/suil-%{maj}/libsuil_x11_in_qt5.so
 %{_libdir}/suil-%{maj}/libsuil_qt5_in_gtk2.so
 %{_libdir}/suil-%{maj}/libsuil_x11.so
+%{_libdir}/suil-%{maj}/libsuil_x11_in_gtk3.so
 
 %files devel
 %{_libdir}/lib%{oldname}-%{maj}.so
@@ -108,6 +115,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.2-alt1_3
+- update to new release by fcimport
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_1
 - new version
 
