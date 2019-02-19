@@ -1,42 +1,45 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libossp-uuid-devel
+BuildRequires(pre): rpm-macros-generic-compat
+BuildRequires: libossp-uuid-devel
 # END SourceDeps(oneline)
+BuildRequires: /usr/bin/groff
 BuildRequires: chrpath
-%add_optflags %optflags_shared
-%define mips mips
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.18.3
-Release: alt3_4
+Version: 3.19.1
+Release: alt1_3
 
 License: LGPLv2+
-Group: Development/Other
 URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0: libdap-offline.patch
-Patch1: libdap-alt-cppunit-pkgconfig.patch
+# Use libtirpc
+Patch1: https://raw.githubusercontent.com/funtoo/science-kit/master/sci-libs/libdap/files/libdap-3.19.1-use-libtirpc.patch
 
+BuildRequires: gcc-c++
 # For autoreconf
 BuildRequires: libtool
 BuildRequires: bison >= 3.0
 BuildRequires: cppunit-devel
-BuildRequires: libcurl-devel
+BuildRequires: curl-devel
 BuildRequires: doxygen
 BuildRequires: flex
 BuildRequires: graphviz libgraphviz
+BuildRequires: libtirpc-devel
 BuildRequires: libuuid-devel
 BuildRequires: libxml2-devel
 BuildRequires: libssl-devel
 %ifnarch s390 %{mips}
 BuildRequires: valgrind
 %endif
-BuildRequires: /usr/bin/groff
 
 Provides: bundled(gnulib)
 Source44: import.info
+Patch33: libdap-alt-cppunit-pkgconfig.patch
 
 
 %description
@@ -48,10 +51,10 @@ library and demonstrates simple uses of it.
 
 
 %package devel
-Summary: Development and header files from libdap
 Group: Development/Other
+Summary: Development and header files from libdap
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 # for the /usr/share/aclocal directory ownership
 Requires: automake
 
@@ -61,8 +64,8 @@ will use libdap.
 
 
 %package doc
-Summary: Documentation of the libdap library
 Group: Documentation
+Summary: Documentation of the libdap library
 BuildArch: noarch
 
 %description doc
@@ -71,16 +74,17 @@ Documentation of the libdap library.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .offline
-%patch1 -p2
+%patch0 -p1
+%patch1 -p1
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
+%patch33 -p2
 
 
 %build
 # To fix rpath
-%autoreconf
+autoreconf -f -i
 %configure --disable-static --disable-dependency-tracking
 # --enable-valgrind - missing valgrind exclusions file
 %make_build
@@ -89,31 +93,31 @@ make docs
 
 
 %install
-%makeinstall_std
+%makeinstall_std INSTALL="install -p"
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/libdap
 mv $RPM_BUILD_ROOT%{_libdir}/libtest-types.a $RPM_BUILD_ROOT%{_libdir}/libdap/
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
 rm -rf __dist_docs
-cp -pr docs __dist_docs
+cp -pr html __dist_docs
 # those .map and .md5 are of dubious use, remove them
-rm -f __dist_docs/html/*.map __dist_docs/html/*.md5
+rm -f __dist_docs/*.map __dist_docs/*.md5
 # use the ChangeLog timestamp to have the same timestamps for the doc files 
 # for all arches
-touch -r ChangeLog __dist_docs/html/*
+touch -r ChangeLog __dist_docs/*
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
 
 %files
-%doc COPYRIGHT_W3C COPYING COPYRIGHT_URI
+%doc --no-dereference COPYRIGHT_W3C COPYING COPYRIGHT_URI
 %doc README NEWS README.dodsrc
 %{_bindir}/getdap
 %{_bindir}/getdap4
-%{_libdir}/libdap.so.23*
+%{_libdir}/libdap.so.25*
 %{_libdir}/libdapclient.so.6*
 %{_libdir}/libdapserver.so.7*
 %{_mandir}/man1/getdap.1*
@@ -131,11 +135,14 @@ done
 %{_mandir}/man1/dap-config.1*
 
 %files doc
-%doc COPYING COPYRIGHT_URI COPYRIGHT_W3C
-%doc __dist_docs/html/
+%doc --no-dereference COPYING COPYRIGHT_URI COPYRIGHT_W3C
+%doc __dist_docs/
 
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 3.19.1-alt1_3
+- new version
+
 * Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.18.3-alt3_4
 - Fixed build.
 
