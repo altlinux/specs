@@ -1,5 +1,5 @@
 Name: seaview
-Version: 4.6
+Version: 4.7
 Release: alt1
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -8,11 +8,12 @@ License: GPLv2+
 Url: http://pbil.univ-lyon1.fr/software/seaview.html
 Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview_%version.tar.gz
 Source1: seaview.desktop
-Patch: no-interactive.patch
 
 # Automatically added by buildreq on Wed Apr 27 2016
 # optimized out: fontconfig libX11-devel libstdc++-devel python-base python-modules python3 python3-base xorg-xproto-devel
-BuildRequires: gcc-c++ libfltk-devel python3-dev zlib-devel
+BuildRequires: gcc-c++ libfltk-devel python3-dev zlib-devel libXinerama-devel
+BuildRequires: libpng-devel libjpeg-devel libXrender-devel libXcursor-devel
+BuildRequires: libXfixes-devel libXext-devel libXft-devel fontconfig-devel
 
 %description
 SeaView is a graphical multiple sequence alignment editor developed by Manolo
@@ -23,7 +24,6 @@ alignment.
 
 %prep
 %setup -q -n seaview
-%patch -p1
 
 chmod -x *.cxx
 chmod -x csrc/*.[ch]
@@ -56,6 +56,9 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Thu Feb 14 2019 Grigory Ustinov <grenka@altlinux.org> 4.7-alt1
+- Build new version.
+
 * Wed Apr 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6-alt1
 - Updated to 4.6.
 - Rebuilt with libfltk13-1.3.3-alt1.
