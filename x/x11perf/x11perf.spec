@@ -1,16 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: x11perf
-Version: 1.5.4
-Release: alt1
+Version: 1.6.0
+Release: alt1.git5e8ed9b
 
 Summary: x11perf application - X11 server performance test program
 License: MIT
 Group: System/X11
 
-Url: http://cgit.freedesktop.org/xorg/app/x11perf/
-Source: http://xorg.freedesktop.org/releases/individual/app/x11perf-%version.tar.bz2
+Url: https://gitlab.freedesktop.org/xorg/test/x11perf.git
 
-# Automatically added by buildreq on Mon Aug 01 2011
-BuildRequires: libXext-devel libXft-devel libXmu-devel
+Source: %name-%version.tar
+
+BuildRequires: libXext-devel
+BuildRequires: libXft-devel
+BuildRequires: libXmu-devel
+BuildRequires: xorg-util-macros
 
 %description
 The x11perf program runs one or more performance tests and reports how
@@ -20,6 +25,7 @@ fast an X server can execute the tests.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build V=1
 
@@ -32,6 +38,9 @@ fast an X server can execute the tests.
 %_man1dir/*
 
 %changelog
+* Fri Feb 15 2019 Egor Zotov <egorz@altlinux.org> 1.6.0-alt1.git5e8ed9b
+- Update to current upstream version.
+
 * Mon Aug 01 2011 Victor Forsiuk <force@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
