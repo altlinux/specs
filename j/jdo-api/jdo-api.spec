@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jdo-api
 Version:       3.1
-Release:       alt1_0.11.rc1jpp8
+Release:       alt1_0.12.rc1jpp8
 Summary:       JDO 3.1 API
 License:       ASL 2.0
 URL:           http://db.apache.org/jdo/
@@ -114,6 +114,9 @@ rm -r api/test/java/javax/jdo/EnhancerTest.java \
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_0.12.rc1jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_0.11.rc1jpp8
 - java update
 
