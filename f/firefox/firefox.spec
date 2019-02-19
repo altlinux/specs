@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        65.0
+Version:        65.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -33,6 +33,7 @@ Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
+Patch7:         firefox-alt-werror-return-type.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
@@ -151,6 +152,7 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
+%patch7 -p2
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
@@ -356,6 +358,13 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Feb 19 2019 Alexey Gladkov <legion@altlinux.ru> 65.0.1-alt1
+- New release (65.0.1).
+- Fixed:
+  + CVE-2018-18356: Use-after-free in Skia
+  + CVE-2019-5785: Integer overflow in Skia
+  + CVE-2018-18511: Cross-origin theft of images with ImageBitmapRenderingContext
+
 * Thu Jan 31 2019 Alexey Gladkov <legion@altlinux.ru> 65.0-alt1
 - New release (65.0).
 - Fixed:
