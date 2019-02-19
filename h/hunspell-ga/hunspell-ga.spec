@@ -3,16 +3,16 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name: hunspell-ga
 Summary: Irish hunspell dictionaries
-Version: 4.6
-Release: alt1_14
-Source0: http://gaelspell.googlecode.com/files/ispell-gaeilge-%{version}.tar.gz
+Version: 5.0
+Release: alt1_4
+Source0: https://github.com/kscanne/gaelspell/releases/download/v%{version}/ispell-gaeilge-%{version}.tar.gz
 Source1: myspell-header
 Source2: hunspell-header
 URL: http://borel.slu.edu/ispell/index.html
 License: GPLv2+
 BuildArch: noarch
-BuildRequires: libhunspell-devel hunspell-utils
-Patch1: ispell-gaeilge-4.2-buildhunspell.patch
+BuildRequires: hunspell-utils libhunspell-devel
+Patch1: ispell-gaeilge-5.0-buildhunspell.patch
 
 Requires: hunspell
 Source44: import.info
@@ -22,12 +22,12 @@ Irish hunspell dictionaries.
 
 %prep
 %setup -q -n ispell-gaeilge-%{version}
-%patch1 -p1 -b .buildhunspell.patch
+%patch1 -p1
 
 %build
 make
 cat %{SOURCE1} %{SOURCE2} > header
-export LANG=en_IE.UTF-8
+export LANG=C.UTF-8
 iconv -f utf-8 -t iso-8859-1 < gaeilge.aff > gaeilge.aff.iso-8859-1
 ispellaff2myspell gaeilge.aff.iso-8859-1 --myheader header | sed -e "s/\"\"/0/g" | sed -e "s/\"//g" > ga_IE.aff
 
@@ -37,10 +37,14 @@ cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc README COPYING ChangeLog
+%doc README ChangeLog
+%doc --no-dereference COPYING
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_4
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_14
 - update to new release by fcimport
 
