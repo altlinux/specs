@@ -45,7 +45,7 @@
 
 Name: mariadb
 Version: 10.3.12
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -108,6 +108,7 @@ Patch30: mariadb-errno.patch
 Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
+Patch35: mariadb-10.3.12-alt-fix-build-on-ppc64.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -353,6 +354,7 @@ tar -xf %SOURCE102 -C storage/rocksdb/rocksdb
 %patch32 -p1
 #%patch33 -p1
 #%patch34 -p1
+%patch35 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -864,6 +866,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.12-alt2
+- Fixed build on ppc64le architecture.
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.12-alt1
 - 10.3.12
 
