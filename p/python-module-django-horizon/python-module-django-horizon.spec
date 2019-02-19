@@ -4,7 +4,7 @@
 
 Name: python-module-django-%oname
 Version: 14.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Django application for talking to Openstack
 
@@ -13,10 +13,8 @@ Group: System/Servers
 License: ASL 2.0 and BSD
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: openstack-dashboard-httpd-2.2.conf
-Source11: openstack-dashboard-httpd-2.2-ssl.conf
-
-Source2: openstack-dashboard-httpd-2.4.conf
+Source1: openstack-dashboard-httpd.conf
+Source11: openstack-dashboard-httpd-ssl.conf
 
 # systemd snippet to collect static files and compress on httpd restart
 Source3:    python-django-horizon-systemd.conf
@@ -363,7 +361,7 @@ Documentation for the Django Horizon application for talking with Openstack
 %setup -n %oname-%version
 
 # remove precompiled egg-info
-rm -rf horizon.egg-info
+# rm -rf horizon.egg-info
 
 # remove unnecessary .mo files
 # they will be generated later during package build
@@ -439,9 +437,6 @@ install -m 0644 -D -p %SOURCE11 %buildroot%apache2_sites_available/openstack-das
 mkdir -p %buildroot%apache2_sites_enabled
 touch %buildroot%apache2_sites_enabled/openstack-dashboard.conf
 touch %buildroot%apache2_sites_available/openstack-dashboard-ssl.conf
-
-# httpd-2.4 changed the syntax
-# install -m 0644 -D -p %SOURCE2 %buildroot%_sysconfdir/httpd/conf.d/openstack-dashboard.conf
 
 install -d -m 755 %buildroot%_datadir/openstack-dashboard
 install -d -m 755 %buildroot%_sharedstatedir/openstack-dashboard
@@ -549,6 +544,10 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 #%doc html
 
 %changelog
+* Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.0.2-alt2
+- fixed apache config for run wsgi.py
+- fixed collectstatic and compress static files in systemd drop-in config with python3
+
 * Mon Jan 14 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.0.2-alt1
 - 14.0.2
 
