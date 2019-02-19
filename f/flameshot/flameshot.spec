@@ -1,6 +1,6 @@
 Name:     flameshot
-Version:  0.6.0
-Release:  alt2
+Version:  0.6.0.0.25.git94daa4f
+Release:  alt1
 
 Summary:  Powerful yet simple to use screenshot software
 
@@ -12,6 +12,8 @@ Packager: Anton Shevtsov <x09@altlinux.org>
 
 Source:   %name-%version.tar
 
+Patch: flameshot-0.6.0-fix-autostart-icon.patch
+
 BuildRequires: qt5-base-devel qt5-tools qt5-svg-devel
 
 %description
@@ -20,6 +22,7 @@ editor with advanced features.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt5 PREFIX=%_prefix
@@ -45,6 +48,10 @@ editor with advanced features.
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Feb 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.0.0.25.git94daa4f-alt1
+- Fix icon in autostarted program (Closes: #36134).
+- Update russian translation.
+
 * Fri Nov 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
 - Corrected the previous build according good sense.
 
