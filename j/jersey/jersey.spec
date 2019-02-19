@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_with jetty
 Name:          jersey
 Version:       2.23.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -409,6 +409,9 @@ sed -i "s|Xmx1024m|Xmx512m|" pom.xml
 %doc --no-dereference LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_4jpp8
 - java update
 
