@@ -8,11 +8,12 @@ Name: hunspell-mk
 Summary: Macedonian hunspell dictionaries
 %global upstreamid 20051126
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://mk.openoffice.org/files/documents/215/3053/mk_MK.zip
-URL: http://mk.openoffice.org
+Release: alt2_19
+Source: http://download.services.openoffice.org/contrib/dictionaries/mk_MK.zip
+URL: https://wiki.openoffice.org/wiki/Dictionaries
 License: GPL+
 BuildArch: noarch
+#change encoding name to use the name that iconv knows this under
 Patch0: hunspell-mk-iconv.patch
 
 Requires: hunspell
@@ -23,8 +24,7 @@ Macedonian hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-mk
-#change encoding name to use the name that iconv knows this under
-%patch0 -p1 -b .iconv.patch
+%patch0 -p1
 
 %build
 
@@ -38,6 +38,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_14
 - update to new release by fcimport
 
