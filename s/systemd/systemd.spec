@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 241
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1844,6 +1844,13 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt3
+- backport patches from master:
+  + backlight: handle loading truncated file
+  + udev-rules: update log messages about OWNER= or GROUP= settings on --resolve=names=never
+    This also set lower log level for the messages. (fixes ALT#36135)
+  + udev-rule, ethtool: several coding style cleanups
+
 * Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt2
 - Fixes for the following security vulnerabilities:
   + CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message
