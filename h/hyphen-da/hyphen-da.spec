@@ -8,8 +8,8 @@ Name: hyphen-da
 Summary: Danish hyphenation rules
 %global upstreamid 20070903
 Version: 0.%{upstreamid}
-Release: alt1_15
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_da_DK.zip
+Release: alt1_19
+Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_da_DK.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 Patch0: hyphen-da-lppl-license-fix.patch
 License: LGPLv2+
@@ -37,6 +37,9 @@ cp -p hyph_da_DK.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_15
 - update to new release by fcimport
 
