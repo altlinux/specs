@@ -1,11 +1,10 @@
 %global import_path     github.com/golang/protobuf
 
-%global commit 6133ef809ad485ae85f29ef379ad05b01ab099b1
-%global abbrev %(c=%{commit}; echo ${c:0:8})
-
+#global commit 6133ef809ad485ae85f29ef379ad05b01ab099b1
+#global abbrev %(c=%{commit}; echo ${c:0:8})
 
 Name: golang-github-golang-protobuf
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Go support for Protocol Buffers
 License: BSD
@@ -19,7 +18,6 @@ ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 
 BuildArch: noarch
-BuildRequires: golang-tools
 
 # TODO: create a binary
 %description
@@ -72,6 +70,10 @@ rm -rf -- %buildroot/%go_path/src/%import_path/_conformance/_conformance
 %go_path/src/*
 
 %changelog
+* Wed Feb 20 2019 Denis Pynkin <dans@altlinux.org> 1.2.0-alt1
+- Version updated
+- Remove golang-tools from build requires
+
 * Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 1.1.0-alt1
 - Version updated 
 
