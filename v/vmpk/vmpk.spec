@@ -1,6 +1,6 @@
 Name:           vmpk
-Version:        0.6.2a
-Release:        alt2
+Version:        0.7.1
+Release:        alt1
 
 # repacked tarball http://sf.net/vmpk/%name-%version.tar.bz2
 Source:         %name-%version.tar
@@ -57,6 +57,9 @@ xz ChangeLog NEWS
 
 
 %changelog
+* Tue Feb 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.1-alt1
+- 0.7.1.
+
 * Fri Dec 16 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.2a-alt2
 - changed BuildPreReq to BuildRequires(pre) in spec.
 - packaged watch file.
@@ -64,5 +67,5 @@ xz ChangeLog NEWS
 - added url in spec.
 
 * Sun Jul 31 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.2a-alt1
-- Initial build
+- Initial build.
 
