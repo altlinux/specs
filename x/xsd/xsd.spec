@@ -6,25 +6,21 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: xsd
-Version: 4.0.0
-Release: alt2_27
+Version: 4.1.0
+Release: alt1_0.1.a11
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
-URL: http://www.codesynthesis.com/products/xsd/
-Source0: http://www.codesynthesis.com/download/xsd/4.0/xsd-%{version}+dep.tar.bz2
+URL: https://www.codesynthesis.com/products/xsd/
+Source0: https://codesynthesis.com/~boris/tmp/xsd/%{version}.a11/xsd-%{version}.a11+dep.tar.bz2
 
 # Sent suggestion to upstream via e-mail 20090707
 # http://anonscm.debian.org/cgit/collab-maint/xsd.git/tree/debian/patches/0001-xsd_xsdcxx-rename.patch
-Patch0: %{name}-3.3.0-xsdcxx-rename.patch
-
-# Fix bug in C++/Parser Expat Support
-# http://codesynthesis.com/pipermail/xsd-users/2015-October/004705.html
-Patch1: %{name}-Fix_bug_C++_Parser_Expat_Support.patch
+Patch0: %{name}-%{version}-xsdcxx-rename.patch
 
 # Remove tests for character reference values unsupported by Xerces-C++ 3.2
 # https://anonscm.debian.org/cgit/collab-maint/xsd.git/diff/debian/patches/0110-xerces-c3.2.patch?id=442e98604d4158dae11056c4f94aaa655cb480fa
-Patch2: %{name}-xerces_3-2.patch
+Patch1: %{name}-xerces_3-2.patch
 
 BuildRequires: m4, libxerces-c-devel, libcutl-devel, gcc-c++
 
@@ -48,22 +44,22 @@ dealing with intricacies of reading and writing XML.
 %package   doc
 Group: Documentation
 BuildArch: noarch
+BuildRequires: ghostscript-utils ghostscript
 Summary:   API documentation files for %{name}
 
 %description    doc
 This package contains API documentation for %{name}.
 
 %prep
-%setup -q -n xsd-%{version}+dep
+%setup -q -n xsd-%{version}.a11+dep
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
 
 ##Unbundle libcutl
 rm -rf libcutl
 
 %build
-%if 0%{?rhel} && 0%{?rhel} < 7
+%if 0%{?rhel} < 7
 %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
 %make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
@@ -129,6 +125,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_0.1.a11
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_27
 - update to new release by fcimport
 
