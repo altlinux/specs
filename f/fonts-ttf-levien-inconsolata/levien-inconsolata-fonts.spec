@@ -1,7 +1,4 @@
 Group: System/Fonts/True type
-# BEGIN SourceDeps(oneline):
-BuildRequires: python
-# END SourceDeps(oneline)
 %define oldname levien-inconsolata-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,44 +6,33 @@ BuildRequires: python
 %global fontconf 75-%{fontname}.conf
 
 Name:           fonts-ttf-levien-inconsolata
-Version:        1.01
-Release:        alt3_15
+Version:        2.012
+Release:        alt1_3
 Summary:        Inconsolata fonts
 
 License:        OFL
 URL:            http://www.levien.com/type/myfonts/inconsolata.html
-Source0:        http://www.levien.com/type/myfonts/Inconsolata.sfd
+Source0:        https://github.com/googlefonts/Inconsolata/archive/v%{version}/%{oldname}-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 BuildRequires:  fontforge libfontforge
-
-Obsoletes: inconsolata-fonts < 1.009-3
 Source44: import.info
 
 %description
 A monospace font, designed for code listings and the like, in print.
 
-%prep
 
-%build
-fontforge -lang=ff -script "-" %{SOURCE0} <<_EOF
-i = 1
-while ( i < \$argc )
-  Open (\$argv[i], 1)
-  Generate (\$fontname + ".ttf")
-  PrintSetup (5)
-  PrintFont (0, 0, "", \$fontname + "-sample.pdf")
-  Close()
-  i++
-endloop
-_EOF
+%prep
+%setup -q -n Inconsolata-%{version}
+
+
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/ttf/*.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -58,7 +44,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -94,14 +80,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+        
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc documentation/*.pdf
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
+
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.012-alt1_3
+- new version
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_15
 - update to new release by fcimport
 
