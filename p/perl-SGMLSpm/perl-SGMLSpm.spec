@@ -1,6 +1,7 @@
 Name: perl-SGMLSpm
-Version: 1.03ii
-Release: alt6
+Epoch: 1
+Version: 1.1
+Release: alt1
 
 Summary: Perl library for parsing the output of nsgmls
 License: GPL
@@ -12,25 +13,36 @@ Source: http://www.cpan.org/modules/by-module/SGMLS/SGMLSpm-%version.tar.gz
 BuildArch: noarch
 
 Requires: jade >= 1.2.1
+# due to rpm downgrade
+Provides: %name = 1.03ii-alt6
 
 %description
 Perl programs can use the SGMLSpm module to help convert SGML, HTML or XML
 documents into new formats.
 
 %prep
-%setup -q -n SGMLSpm
+%setup -q -n SGMLSpm-%version
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%perl_vendor_privlib
-make install_system BINDIR=%buildroot%_bindir PERL5DIR=%buildroot%perl_vendor_privlib
+mkdir -p %buildroot%_bindir %buildroot%perl_vendor_privlib/SGMLS
+install lib/SGMLS.pm %buildroot%perl_vendor_privlib
+install lib/sgmlspl-specs/skel.pl %buildroot%perl_vendor_privlib
+install lib/SGMLS/Output.pm lib/SGMLS/Refs.pm %buildroot%perl_vendor_privlib/SGMLS
+install script/sgmlspl.pl %buildroot%_bindir/sgmlspl
+
+mv DOC/sample.pl DOC/HTML/SGMLSpm/sample.pl
 
 %files
-%doc BUGS DOC/ elisp
+%doc COPYING
+%doc README BUGS ChangeLog TODO DOC/HTML/*
 %_bindir/sgmlspl
 %perl_vendor_privlib/SGMLS*
 %perl_vendor_privlib/skel.pl
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1
+- new version
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 1.03ii-alt6
 - rebuilt
 
