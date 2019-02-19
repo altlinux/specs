@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dpkg /usr/bin/latex /usr/bin/mex /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel unzip
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: /usr/bin/dpkg /usr/bin/latex /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel python-devel rpm-build-python unzip
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
@@ -11,7 +11,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -32,7 +32,6 @@ BuildRequires:  zlib-devel
 BuildRequires:  libhdf5-devel
 BuildRequires:  libgtest-devel
 
-BuildRequires:  python-devel
 BuildRequires:  python3-devel
 Source44: import.info
 Provides: flann = %{version}-%{release}
@@ -44,8 +43,8 @@ to work best for nearest neighbor search and a system for automatically
 choosing the best algorithm and optimum parameters depending on the data sets.
 
 %package devel
-Summary: Development headers and libraries for flann
 Group: Development/Other
+Summary: Development headers and libraries for flann
 Requires: %{name} = %{version}-%{release}
 # flann/flann_mpi.hpp requires boost/mpi.hpp, which is a convenience header
 # inside of the boost-devel package
@@ -56,26 +55,16 @@ Provides: flann-devel = %{version}-%{release}
 Development headers and libraries for flann.
 
 %package static
-Summary: Static libraries for flann
 Group: Development/Other
+Summary: Static libraries for flann
 Provides: flann-static = %{version}-%{release}
 
 %description static
 Static libraries for flann.
 
-%package -n python-module-libflann
-Summary: Python bindings for flann
-Group: Development/Other
-Requires: %{name} = %{version}-%{release}
-Obsoletes: python-flann < 1.8.4-8
-%{?python_provide:%python_provide python2-%{srcname}}
-
-%description -n python-module-libflann
-Python 2 bindings for flann
-
 %package -n python3-module-flann
-Summary: Python bindings for flann
 Group: Development/Other
+Summary: Python bindings for flann
 Requires: %{name} = %{version}-%{release}
 %{?python_provide:%python_provide python3-%{srcname}}
 
@@ -104,26 +93,22 @@ make install DESTDIR=%{buildroot} -C %{_target_platform}
 rm -rf %{buildroot}%{_datadir}/%{oldname}/python
 
 # install the python bindings
-cp -r src/python src/python2
 cp -r src/python src/python3
 
-cp %{_target_platform}/src/python/setup.py src/python2
 cp %{_target_platform}/src/python/setup.py src/python3
 
-pushd src/python2
-%{__python} setup.py install --prefix=/usr --root=%{buildroot} --install-lib=%{python_sitelibdir}
-popd
 pushd src/python3
 %{__python3} setup.py install --prefix=/usr --root=%{buildroot} --install-lib=%{python3_sitelibdir}
 popd
 
 # get rid of duplicate shared libraries
-rm -rf %{buildroot}%{python_sitelibdir}/pyflann/lib
 rm -rf %{buildroot}%{python3_sitelibdir}/pyflann/lib
 # Remove example binaries
 rm -rf %{buildroot}%{_bindir}*
 # Remove installed documentation, we'll install it later with the doc macro
 rm -rf %{buildroot}%{_datadir}/doc/flann
+
+
 
 %files
 %doc doc/manual.pdf
@@ -137,15 +122,14 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %files static
 %{_libdir}/*.a
 
-%files -n python-module-libflann
-%{python_sitelibdir}/pyflann
-%{python_sitelibdir}/flann-%{version}*.egg-info
-
 %files -n python3-module-flann
 %{python3_sitelibdir}/pyflann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_20
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_18
 - update to new release by fcimport
 
