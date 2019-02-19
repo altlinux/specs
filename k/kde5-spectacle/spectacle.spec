@@ -1,8 +1,8 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt4
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -61,6 +61,7 @@ developing applications that use %name.
 
 %files -f %name.lang
 %doc COPYING*
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5bin/spectacle
 %_K5xdgapp/org.kde.spectacle.desktop
 %_K5icon/hicolor/*/apps/spectacle.*
@@ -72,6 +73,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
 - update russian translation
 

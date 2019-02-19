@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt4%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: File tools
@@ -20,6 +20,7 @@ Requires: kf5-kio
 Source: %rname-%version.tar
 Patch1: alt-dbus-service.patch
 Patch2: alt-close-inactive-panel.patch
+Patch3: alt-linking.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -74,6 +75,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -126,6 +128,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4%ubt
 - update russian translation
 

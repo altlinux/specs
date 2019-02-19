@@ -1,8 +1,8 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Video
@@ -20,7 +20,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: libavcodec-devel libavutil-devel libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel libavfilter-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
-BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-ki18n-devel
 
 %description
 Video thumbnail generator for KDE.
@@ -37,10 +37,14 @@ Video thumbnail generator for KDE.
 
 %files -f %name.lang
 %doc COPYING*
+%_K5cfg/ffmpegthumb*.kcfg
 %_K5plug/ffmpegthumbs.so
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Feb 13 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - rebuild
 

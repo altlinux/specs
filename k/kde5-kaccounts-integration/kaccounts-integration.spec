@@ -3,8 +3,8 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -87,12 +87,14 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5lib/libkaccounts.so.%sover
 %_K5lib/libkaccounts.so.*
 %_K5plug/*accounts.so
-#%_K5plug/kaccounts/daemonplugins/kaccounts_*.so
+%_K5plug/kf5/kded/accounts.so
 %_K5qml/org/kde/kaccounts/
 %_K5srv/*_kaccounts.desktop
-%_K5srv/kded/accounts.desktop
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

@@ -1,8 +1,8 @@
 %define rname libkdcraw
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2%ubt
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -12,8 +12,6 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-libraw-ver.patch
-# upstream
-Patch100: libraw-0.19.patch
 
 # Automatically added by buildreq on Tue Jan 12 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -51,7 +49,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch100 -p1
 
 %build
 %K5build
@@ -74,6 +71,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Mon Aug 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
 - fix to build with new libraw
 

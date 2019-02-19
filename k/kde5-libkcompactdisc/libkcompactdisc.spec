@@ -4,8 +4,8 @@
 %define libkf5compactdisc libkf5compactdisc%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5CompactDisc.so.*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
