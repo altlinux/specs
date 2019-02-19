@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-parent
 Version:          1.3.0
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBossWS Parent
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
@@ -42,6 +42,9 @@ This package contains the JBossWS Parent.
 %files -f .mfiles
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_5jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_4jpp8
 - java update
 
