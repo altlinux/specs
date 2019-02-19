@@ -1,12 +1,12 @@
 %global import_path     github.com/dustinkirkland/golang-petname
 
-%global commit 7ff34179c702c0520311e1a68e01ce3aa1d21cb1
+%global commit d3c2ba80e75eeef10c5cf2fc76d2c809637376b3
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-dustinkirkland-golang-petname
-Version: 2.5
-Release: alt1.git%abbrev
+Version: 2.8
+Release: alt2.git%abbrev
 Summary: This utility will generate "pet names", consisting of a random combination
 License: BSD
 Group: Development/Other
@@ -58,6 +58,12 @@ rm -rf -- %buildroot/%go_path/src/%import_path/debian
 %go_path/src/*
 
 %changelog
+* Wed Feb 20 2019 Denis Pynkin <dans@altlinux.org> 2.8-alt2.gitd3c2ba80
+- Remove golang-tools from build requires
+
+* Fri Feb 02 2018 Denis Pynkin <dans@altlinux.org> 2.8-alt1.gitd3c2ba80
+- Update
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.5-alt1.git7ff34179
 - Update
 
