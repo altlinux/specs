@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 241
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1844,6 +1844,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt2
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message
+
 * Fri Feb 15 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt1
 - 241
 - allow execute logind without systemd
