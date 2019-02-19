@@ -1,6 +1,6 @@
 Name:           nautilus-share
 Version:        0.7.3
-Release:        alt1
+Release:        alt1.qa1
 Packager:       Alex Negulescu <alecs@altlinux.org>
 License:        GPLv2+
 Summary:        Nautilus Share allows you to quickly share a folder from the GNOME Nautilus file manager without requiring root access.
@@ -61,5 +61,8 @@ make install DESTDIR=%buildroot
 %_libdir/nautilus/extensions-3.0/*
 
 %changelog
+* Tue Nov 13 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.7.3-alt1.qa1
+- Rebuild due it was already built but no source id has been recorded
+
 * Fri Sep 2 2011 Alex Negulescu <alecs@altlinux.org> 0.7.3-alt1
 - Initial build, 0.7.3-alt1.

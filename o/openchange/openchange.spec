@@ -6,7 +6,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt33.zentyal23
+Release: alt34.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -25,10 +25,10 @@ BuildRequires: libtevent-devel
 BuildRequires: libldb-devel
 BuildRequires: libtdb-devel
 BuildRequires: bison
-BuildRequires: samba-DC-devel >= %samba_version
-BuildRequires: samba-DC-util-private-headers = %samba_version
-BuildRequires: python-module-samba-DC
-BuildRequires: samba-DC-pidl
+BuildRequires: samba-devel >= %samba_version
+BuildRequires: samba-util-private-headers = %samba_version
+BuildRequires: python-module-samba
+BuildRequires: samba-pidl
 BuildRequires: doxygen
 BuildRequires: libical-devel >= 3.0.1
 BuildRequires: libmagic-devel
@@ -44,7 +44,7 @@ BuildRequires: python-module-pylons
 BuildRequires: python-module-PasteScript
 BuildRequires: python-module-PasteDeploy
 
-%filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
+%filter_from_requires /^\/usr\/%_lib\/samba\/lib/d
 
 ### Patches ###
 
@@ -68,7 +68,7 @@ native protocols.
 %package -n libmapi
 Summary: libmapi is a Main client-side library
 Group: System/Libraries
-Requires: samba-DC-libs
+Requires: samba-libs
 
 %description -n libmapi
 Main client-side library. libmapi closely reflects the underlying
@@ -96,7 +96,7 @@ protocol.
 %package -n libmapistore
 Summary: Storage library for MAPI objects
 Group: System/Libraries
-Requires: samba-DC-libs
+Requires: samba-libs
 
 %description -n libmapistore
 Library that can store arbitrary MAPI objects.
@@ -122,8 +122,8 @@ Requires: libocpf = %version-%release
 Requires: libmapiproxy = %version-%release
 Requires: libmapistore = %version-%release
 %endif
-Requires: samba-DC-devel
-Requires: samba-DC-util-private-headers = %samba_version
+Requires: samba-devel
+Requires: samba-util-private-headers = %samba_version
 
 %description devel
 This package provides the development tools and headers for OpenChange,
@@ -197,7 +197,7 @@ mkdir -p setup/mapistore
 %if_enabled python
 	--enable-pymapi \
 %endif
-	--with-modulesdir=%_libdir/samba-dc
+	--with-modulesdir=%_libdir/samba
 
 # fake replace.h for private samba headers
 cat >replace.h <<__EOF
@@ -295,7 +295,7 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %if_enabled server
 %files -n libmapiproxy
 %_libdir/libmapiproxy.so.*
-%_libdir/samba-dc/dcerpc_mapiproxy
+%_libdir/samba/dcerpc_mapiproxy
 
 %files -n libmapistore
 %_libdir/libmapistore.so.*
@@ -303,8 +303,8 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %files server
 %_sbindir/*
 %_libdir/libmapiserver.so.*
-%_libdir/samba-dc/dcerpc_server
-%_libdir/samba-dc/dcerpc_mapiproxy_server
+%_libdir/samba/dcerpc_server
+%_libdir/samba/dcerpc_mapiproxy_server
 %_datadir/samba/setup/*
 %endif
 
@@ -324,6 +324,9 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Tue Jan 29 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt34.zentyal23
+- Rebuild with merged samba and samba-DC packages
+
 * Thu Dec 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt33.zentyal23
 - Rebuild with headers from new release of Samba-4.9.4
 
