@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.1.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -12,6 +12,7 @@ Group: System/Libraries
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: 0001-Restore-loading-usr-share-alsa-alsa.conf.d.patch
 Url: http://www.alsa-project.org
 
 # tse3 still depends on that, argh
@@ -77,6 +78,7 @@ Advanced Linux Sound Architecture (ALSA) Developer Documentation
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 # Replace "include" with "__include__" in public header files
 # to make them compilable by "gcc -ansi" again.
 find include -type f -print0 |
@@ -178,6 +180,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Feb 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1:1.1.8-alt2
+- Patch: restore loading /usr/share/alsa/alsa.conf.d/* (Closes: 35790)
+
 * Thu Jan 24 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.8-alt1
 - 1.1.8
 

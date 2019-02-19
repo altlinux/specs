@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.3.0
-Release: alt1.git20181205.2140
+Release: alt2.git20190217.2345
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -26,6 +26,9 @@ Patch60: ALT-system-sbsms.patch
 Patch130: NetBSD-ffmpeg3.patch
 Patch140: Fedora-libmp3lame-default.patch
 Patch150: Fedora-libdir.patch
+# This patch is applied on MIPS only
+Patch160: ALT-link-with-libatomic.patch
+Patch170: ALT-Remove-warning-about-alpha-version.patch
 
 # Patents on mp3 (liblame) expired in April 2017
 BuildRequires: gcc-c++ libportaudio2-devel libstdc++-devel-static libfftw3-devel gettext-devel libjpeg-devel ladspa_sdk liblame-devel
@@ -100,6 +103,11 @@ For the most up to date manual content, use the on-line manual.
 %patch130 -p0
 %patch140 -p1
 %patch150 -p1
+%ifarch mips mipsel mips32 mips64
+%patch160 -p1
+%endif
+%patch170 -p1
+
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0/" || true
 
 %build
@@ -177,6 +185,14 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Sun Feb 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt2.git20190217.2345
+- Git master from 17.02.2019 23:45 UTC+0300 (commit e609a9d)
+- Patch: remove warning that it's an alpha version from the welcome screen
+  and don't recommend to install an "official" build
+
+* Fri Jan 25 2019 Ivan A. Melnikov <iv@altlinux.org> 2.3.0-alt1.git20181205.2140.0.mips1
+- Link with latomic to fix build on mipsel
+
 * Mon Dec 05 2018 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt1.git20181205.2140
 - New version 2.3.0 + git master from 05.12.2018 21:40 UTC+0300 (release 2.3.0 is officially buggy on Linux, so took git master)
 - Now Russian translation is better than in previous versions
