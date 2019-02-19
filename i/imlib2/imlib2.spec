@@ -1,6 +1,6 @@
 Name: imlib2
-Version: 1.4.5
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
@@ -105,6 +105,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Feb 19 2019 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
+- Updated to 1.5.1 (ALT #36086).
+
 * Mon Apr 15 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt2
 - Fixed "imlib2-config --libs" output.
 
