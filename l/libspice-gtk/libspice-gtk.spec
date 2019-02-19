@@ -8,15 +8,13 @@
 %def_enable usbredir
 %def_enable webdav
 %def_enable lz4
-%def_disable gtk_doc
-%def_enable pulse
-%def_enable gstaudio
-%def_enable gstvideo
+%def_enable gtk_doc
+%def_disable pulse
 %def_enable epoxy
 
 Name: libspice-gtk
-Version: 0.35
-Release: alt3%ubt
+Version: 0.36
+Release: alt1
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -33,27 +31,27 @@ Source3: keycodemapdb.tar
 
 Requires: libspice-glib = %version-%release
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): meson >= 0.49
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.14
+BuildRequires: spice-protocol >= 0.12.15
 BuildRequires: glib2-devel >= 2.46 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
+BuildRequires: libjson-glib-devel
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
-%{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
+%{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
 %{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.16 libusbredir-devel >= 0.4.2}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libpolkit-devel >= 0.96 libacl-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel }
-BuildRequires: libgtk+3-devel >= 3.12
-%{?_enable_introspection:BuildRequires: libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgstreamer1.0-gir-devel}
+BuildRequires: libgtk+3-devel >= 3.22
 %{?_enable_epoxy:BuildRequires: libepoxy-devel libdrm-devel}
-%{?_enable_gstaudio:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0}
-%{?_enable_gstvideo:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0
+BuildRequires: gst-plugins-bad1.0 gst-libav
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
-BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing python-module-six
+BuildRequires: perl-Text-CSV perl-Text-CSV_XS python3-module-pyparsing python3-module-six
 BuildRequires: /usr/bin/pod2man
 
 %description
@@ -154,7 +152,7 @@ screen-shots of a SPICE desktop
 
 %prep
 %setup
-tar -xf %SOURCE2 -C spice-common
+tar -xf %SOURCE2 -C subprojects/spice-common
 tar -xf %SOURCE3 -C src/keycodemapdb
 
 # %patch -p1
@@ -162,29 +160,28 @@ tar -xf %SOURCE3 -C src/keycodemapdb
 echo "%version" > .tarball-version
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable introspection} \
-	%{subst_with sasl} \
-	%{subst_enable vala} \
-	%{subst_enable smartcard} \
-	%{subst_enable webdav} \
-	%{subst_enable lz4} \
-%if_disabled usbredir
-	--enable-usbredir=no \
-%endif
-	--disable-static \
-	--disable-rpath \
-	--enable-polkit \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
-	--with-usb-ids-path=%_datadir/misc \
-	--with-gtk=3.0
+%meson \
+        %{?_enable_webdav:-Dwebdav=enabled} \
+        %{?_enable_pulse:-Dpulse=enabled} \
+        %{?_enable_gstvideo:-Dgstvideo=enabled} \
+        %{?_enable_usbredir:-Dusbredir=enabled} \
+        -Dcoroutine=gthread \
+        %{?_enable_introspection:-Dintrospection=enabled} \
+        %{?_enable_vala:-Dvapi=enabled} \
+        %{?_enable_lz4:-Dlz4=enabled} \
+        %{?_with_sasl:-Dsasl=enabled} \
+        %{?_enable_smartcard:-Dsmartcard=enabled -Dspice-common:smartcard=true} \
+        %{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+        -Dgtk=enabled \
+        -Dpolkit=enabled \
+        -Dusb-acl-helper-dir=%_libexecdir/spice-gtk \
+        -Dusb-ids-path=%_datadir/misc \
+        -Dpie=true
 
-%make_build
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %find_lang %_name
 
@@ -234,6 +231,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.36-alt1
+- 0.36
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt3%ubt
 - backport patches from upstream master
 
