@@ -3,8 +3,8 @@
 %def_disable qwt
 
 Name: smokeqt
-Version: 4.14.0
-Release: alt6%ubt
+Version: 4.14.3
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -374,6 +374,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.3-alt1
+- NMU: this is git v4.14.3 - set correct spec version
+
 * Fri Jan 04 2019 Vitaly Lipatov <lav@altlinux.ru> 4.14.0-alt6
 - NMU: build without libqwt
 
