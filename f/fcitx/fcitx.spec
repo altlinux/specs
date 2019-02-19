@@ -1,6 +1,7 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(xkbcommon)
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-install pkgconfig(blkid) pkgconfig(cairo-xlib) pkgconfig(expat) pkgconfig(fontconfig) pkgconfig(fribidi) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(libdrm) pkgconfig(libpcre) pkgconfig(libtiff-4) pkgconfig(mount) pkgconfig(pixman-1) pkgconfig(uuid) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-protocols) pkgconfig(xcomposite) pkgconfig(xdamage) pkgconfig(xdmcp) pkgconfig(xkbcommon) pkgconfig(xxf86vm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,21 +11,20 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 
 Name:			fcitx
 Summary:		An input method framework
-Version:		4.2.9.4
-Release:		alt1_1
+Version:		4.2.9.6
+Release:		alt1_4
 License:		GPLv2+
-Group:			Graphical desktop/Other
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
 Source1:		xinput-%{name}
 BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
-BuildRequires:		ctest cmake, libtool, doxygen, libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel qt4-designer gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu
-BuildRequires:		xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel, xorg-xtrans-devel
+BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
+BuildRequires:		libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu63
+BuildRequires:		xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
-BuildRequires:		libenchant-devel, iso-codes-devel, libicu-devel
+BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
 BuildRequires:		libX11-devel, libdbus-glib-devel, dbus-tools-gui
 BuildRequires:		desktop-file-utils, libxml2-devel
 BuildRequires:		lua-devel, extra-cmake-modules
@@ -35,7 +35,6 @@ Requires:		%{name}-libs = %{version}-%{release}
 Requires:		%{name}-gtk3 = %{version}-%{release}
 Requires:		%{name}-gtk2 = %{version}-%{release}
 Source44: import.info
-#AutoReq: yes,noshell
 
 %description
 Fcitx is an input method framework with extension support. Currently it
@@ -45,18 +44,18 @@ Fcitx tries to provide a native feeling under all desktop as well as a light
 weight core. You can easily customize it to fit your requirements.
 
 %package data
+Group: System/Libraries
 Summary:		Data files of Fcitx
-Group:			System/Libraries
 BuildArch:		noarch
 Requires:		icon-theme-hicolor
-Requires:		dbus dbus-tools
+Requires:		dbus
 
 %description data
 The %{name}-data package provides shared data for Fcitx.
 
 %package libs
+Group: System/Libraries
 Summary:		Shared libraries for Fcitx
-Group:			System/Libraries
 Provides:		%{name}-keyboard = %{version}-%{release}
 Obsoletes:		%{name}-keyboard =< 4.2.3
 
@@ -64,8 +63,8 @@ Obsoletes:		%{name}-keyboard =< 4.2.3
 The %{name}-libs package provides shared libraries for Fcitx
 
 %package devel
+Group: Development/Other
 Summary:		Development files for Fcitx
-Group:			Development/Other
 Requires:		%{name}-libs = %{version}-%{release}
 
 %description devel
@@ -73,8 +72,8 @@ The %{name}-devel package contains libraries and header files necessary for
 developing programs using Fcitx libraries.
 
 %package table-chinese
+Group: System/Libraries
 Summary:		Chinese table of Fcitx
-Group:			System/Libraries
 BuildArch:		noarch
 Requires:		%{name}-table = %{version}-%{release}
 
@@ -82,8 +81,8 @@ Requires:		%{name}-table = %{version}-%{release}
 The %{name}-table-chinese package provides other Chinese table for Fcitx.
 
 %package gtk2
+Group: System/Libraries
 Summary:		Fcitx IM module for gtk2
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
 
@@ -91,18 +90,18 @@ Requires:		%{name}-libs = %{version}-%{release}
 This package contains Fcitx IM module for gtk2.
 
 %package gtk3
+Group: System/Libraries
 Summary:		Fcitx IM module for gtk3
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
-Requires:		imsettings-gsettings
+Requires:		imsettings-gnome
 
 %description gtk3
 This package contains Fcitx IM module for gtk3.
 
 %package qt4
+Group: System/Libraries
 Summary:		Fcitx IM module for qt4
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
 
@@ -110,9 +109,9 @@ Requires:		%{name}-libs = %{version}-%{release}
 This package contains Fcitx IM module for qt4.
 
 %package pinyin
+Group: System/Libraries
 Summary:		Pinyin Engine for Fcitx
 URL:			https://fcitx-im.org/wiki/Built-in_Pinyin
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
 Requires:		%{name}-data = %{version}-%{release}
@@ -121,9 +120,9 @@ Requires:		%{name}-data = %{version}-%{release}
 This package contains pinyin engine for Fcitx.
 
 %package qw
+Group: System/Libraries
 Summary:		Quwei Engine for Fcitx
 URL:			https://fcitx-im.org/wiki/QuWei
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
 Requires:		%{name}-data = %{version}-%{release}
@@ -132,9 +131,9 @@ Requires:		%{name}-data = %{version}-%{release}
 This package contains Quwei engine for Fcitx.
 
 %package table
+Group: System/Libraries
 Summary:		Table Engine for Fcitx
 URL:			https://fcitx-im.org/wiki/Table
-Group:			System/Libraries
 Requires:		%{name} = %{version}-%{release}
 Requires:		%{name}-libs = %{version}-%{release}
 Requires:		%{name}-data = %{version}-%{release}
@@ -146,6 +145,7 @@ This package contains table engine for Fcitx.
 
 %prep
 %setup -q
+sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 
 %build
 mkdir -p build
@@ -184,12 +184,10 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/xinputrc_fcit
 %{_sysconfdir}/X11/xinit/xinputrc	%{_xinputconf}	55
 EOF
 
-sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
-
 %files -f %{name}.lang
 %_altdir/xinputrc_fcitx
 %doc AUTHORS ChangeLog THANKS TODO
-%doc COPYING
+%doc --no-dereference COPYING
 %config %{_xinputconf}
 %{_bindir}/fcitx-*
 %{_bindir}/fcitx
@@ -217,19 +215,18 @@ sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
 %{_mandir}/man1/txt2mb.1*
 
 %files libs
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/libfcitx*.so.*
 %dir %{_libdir}/%{name}/
 %{_libdir}/%{name}/%{name}-[!pqt]*.so
 %{_libdir}/%{name}/%{name}-punc.so
 %{_libdir}/%{name}/%{name}-quickphrase.so
-%{_libdir}/%{name}/qt/
 %{_libdir}/%{name}/libexec/
 %dir %{_libdir}/girepository-1.0/
 %{_libdir}/girepository-1.0/Fcitx-1.0.typelib
 
 %files data
-%doc COPYING
+%doc --no-dereference COPYING
 %{_datadir}/icons/hicolor/16x16/apps/*.png
 %{_datadir}/icons/hicolor/22x22/apps/*.png
 %{_datadir}/icons/hicolor/24x24/apps/*.png
@@ -254,7 +251,7 @@ sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
 %{_datadir}/dbus-1/services/org.fcitx.Fcitx.service
 
 %files devel
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/fcitx4-config
 %{_libdir}/libfcitx*.so
 %{_libdir}/pkgconfig/fcitx*.pc
@@ -265,12 +262,12 @@ sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
 %{_datadir}/gir-1.0/Fcitx-1.0.gir
 
 %files table-chinese
-%doc
+%doc %_docdir/%name
 %{_datadir}/%{name}/table/*
 %{_datadir}/%{name}/imicon/[!ps]*.png
 
 %files pinyin
-%doc
+%doc %_docdir/%name
 %{_datadir}/%{name}/inputmethod/pinyin.conf
 %{_datadir}/%{name}/inputmethod/shuangpin.conf
 %{_datadir}/%{name}/pinyin/
@@ -285,13 +282,13 @@ sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
 %{_datadir}/%{name}/py-enhance/
 
 %files qw
-%doc
+%doc %_docdir/%name
 %{_datadir}/%{name}/inputmethod/qw.conf
 %{_libdir}/%{name}/%{name}-qw.so
 %{_datadir}/%{name}/addon/fcitx-qw.conf
 
 %files table
-%doc
+%doc %_docdir/%name
 %{_datadir}/%{name}/configdesc/table.desc
 %{_libdir}/%{name}/%{name}-table.so
 %{_datadir}/%{name}/addon/fcitx-table.conf
@@ -306,6 +303,9 @@ sed -i -e '1,1s/env bash$/env bash4/' %{buildroot}%{_bindir}/fcitx-diagnose
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.9.6-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.9.4-alt1_1
 - update by fc import
 

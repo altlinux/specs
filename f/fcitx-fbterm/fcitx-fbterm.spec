@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: fcitx-fbterm
 Version: 0.2.0
-Release: alt2
+Release: alt2_4
 Summary: Fbterm Support for Fcitx
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: System/Libraries
@@ -41,6 +41,9 @@ popd
 %_bindir/%name-helper
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_4
+- rebuild with new fcitx
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 0.2.0-alt2
 - build for Sisyphus
 
