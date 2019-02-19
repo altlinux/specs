@@ -2,7 +2,7 @@
 %define module Logoved-DB
 
 Name: perl-%module
-Version: 0.008
+Version: 0.009
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -16,7 +16,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://wiki.altlinux.org/Logoved
 
 BuildRequires: perl-devel perl(Logoved/Stream.pm) perl(autodie.pm) perl(Source/Shared/CLI.pm)
-BuildRequires: perl-RPM-Source-Dependency-Analyzer
+BuildRequires: perl-RPM-Source-Dependency-Analyzer >= 0.069
 
 %description
 perl library for Logoved framework and DB.
@@ -118,6 +118,9 @@ cp -a hooks %buildroot%_datadir/srpmtools/
 %endif
 
 %changelog
+* Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- new version
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - logoved-batchfix first release
 
