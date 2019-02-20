@@ -10,12 +10,15 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(fftw3f)
 
 Name:             libosmo-dsp
 Summary:          A library with SDR DSP primitives
-Version:          0.3
-Release:          alt1_3
+Version:          0.4.0
+Release:          alt1_1
 License:          GPLv2+
 Group:            Communications
 URL:              http://cgit.osmocom.org/libosmo-dsp/
-Source0:          http://cgit.osmocom.org/libosmo-dsp/snapshot/%{name}-%{version}.tar.bz2
+# git clone git://git.osmocom.org/libosmo-dsp && cd libosmo-dsp
+# git checkout %%{version} && cd ..
+# tar --exclude='.git' -cjf libosmo-dsp-%%{version}.tar.bz2 libosmo-dsp/
+Source0:          %{name}-%{version}.tar.bz2
 
 BuildRequires:    autoconf
 BuildRequires:    automake
@@ -56,7 +59,7 @@ BuildArch:        noarch
 HTML documentation for osmo-dsp.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 
 %build
 autoreconf -fi
@@ -106,6 +109,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
+- update by mgaimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_3
 - update by mgaimport
 
