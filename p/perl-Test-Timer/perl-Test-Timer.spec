@@ -6,21 +6,21 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(English.pm) perl(Error.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators perl(JSON/PP.pm)
 
 Name: perl-%module_name
-Version: 2.09
+Version: 2.10
 Release: alt1
 Summary: a test module to test/assert response times
 Group: Development/Perl
 License: artistic_2
 URL: http://logiclab.jira.com/wiki/display/TESTT/Home
 
-Source0: http://www.cpan.org/authors/id/J/JO/JONASBN/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JO/JONASBN/Test-Timer-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n Test-Timer-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README LICENSE Changes docs
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
