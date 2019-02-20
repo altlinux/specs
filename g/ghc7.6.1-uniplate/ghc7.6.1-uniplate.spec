@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 1.6.10
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -70,5 +70,8 @@ library.
 %files -f %name-files.all
 
 %changelog
+* Wed Feb 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.10-alt2
+- Rebuild for aarch64.
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.10-alt1
 - Spec created by cabal2rpm 0.20_08
