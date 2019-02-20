@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt4_15jpp8
+Release:        alt4_16jpp8
 Summary:        A Java API to read, write and modify Excel spreadsheets
 License:        LGPLv3
 URL:            http://www.andykhan.com/jexcelapi
@@ -115,6 +115,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt4_16jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt4_15jpp8
 - java update
 
