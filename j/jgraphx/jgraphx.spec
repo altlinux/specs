@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java Graph Drawing Component
 
 Group:          Development/Other
@@ -91,17 +91,20 @@ popd
 %if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
-  %doc --no-dereference license.txt
+ %doc --no-dereference license.txt
 %endif
 
 %files javadoc -f .mfiles-javadoc
 %if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
-  %doc --no-dereference license.txt
+ %doc --no-dereference license.txt
 %endif
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_7jpp8
+- fc29 update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_6jpp8
 - java fc28+ update
 
