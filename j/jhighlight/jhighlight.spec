@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jhighlight
 Version:        1.0.1
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        An embeddable pure Java syntax highlighting library
 
 Group:          Development/Other
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_9jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_8jpp8
 - java update
 
