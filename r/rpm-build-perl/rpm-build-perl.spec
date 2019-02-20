@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt14
+Release: alt15
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -13,6 +13,10 @@ Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Nov 17 2011
 BuildRequires: perl-Encode-JP perl-Encode-KR perl-Filter perl-Try-Tiny perl-devel
+
+# for .perl.req to work with ExtUtils::Makefile
+# Unparsable version '0.1.9' for prerequisite Pod::Weaver::Plugin::Include treated as 0.1 (CPAN::Meta::Requirements not available) at Makefile.PL line 58.      
+Requires: perl(CPAN/Meta/Requirements.pm)
 
 %if_with bootstrap
 BuildArch: noarch
@@ -75,6 +79,10 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.84-alt15
+- added requires to perl(CPAN/Meta/Requirements.pm)
+- still bootstrap (B::ConstOptree should be fixed)
+
 * Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.84-alt14
 - patched for newer perls OPTREE
 - still bootstrap (B::ConstOptree should be fixed)
