@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jgoodies-animation
 Version:       1.4.3
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Framework for time-based real-time animations in Java
 License:       BSD
 #Alt. URL:     http://java.net/projects/animation
@@ -66,6 +66,9 @@ sed -i 's|\r||g' LICENSE.txt RELEASE-NOTES.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_7jpp8
+- fc29 update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_6jpp8
 - java update
 
