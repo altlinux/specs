@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.30.0
+Version: 3.40.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -11,8 +12,6 @@ Url: http://filezilla.sourceforge.net/
 # Repacked http://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
 Source: %oname-%version.tar
 
-# Automatically added by buildreq on Fri Sep 02 2016 (-ba)
-# optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libp11-kit libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xz
 BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgnutls-devel libgtk+3-devel libnettle-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
 
 %description
@@ -33,19 +32,19 @@ of useful features and an intuitive interface
 
 %files -f %name.lang
 %_bindir/*
-%dir %_datadir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/appdata/filezilla.appdata.xml
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*x*/apps/%name.png
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/filezilla.svg
 %_man1dir/*
 %_man5dir/*
 
 %changelog
+* Tue Feb 19 2019 Egor Zotov <egorz@altlinux.org> 3.40.0-alt1
+- Updated to upstream version 3.40.0.
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.30.0-alt1
 - Updated to upstream version 3.30.0.
 

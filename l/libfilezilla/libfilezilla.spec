@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libfilezilla
-Version: 0.11.2
+Version: 0.15.1
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -8,9 +10,7 @@ Url: https://lib.filezilla-project.org/
 # Repacked http://download.filezilla-project.org/libfilezilla/%name-%version.tar.bz2
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Mar 30 2016
-# optimized out: fontconfig fonts-bitmap-misc gnu-config libstdc++-devel libwayland-client libwayland-server
-BuildRequires: cppunit-devel doxygen gcc-c++ graphviz
+BuildRequires: cppunit-devel doxygen gcc-c++ graphviz libnettle-devel
 
 %description
 libfilezilla is a free, open source C++ library, offering some basic
@@ -47,7 +47,7 @@ Some of the highlights include:
 %package devel
 Summary: Development package for %name
 Group: Development/C++
-Requires: libfilezilla0 = %version-%release
+Requires: libfilezilla0 = %EVR
 
 %description devel
 Header files for development with %name.
@@ -82,9 +82,12 @@ LC_ALL=en_US.UTF-8 make check
 %doc doc/doxygen-doc/*
 %_includedir/%name/
 %_libdir/%name.so
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 19 2019 Egor Zotov <egorz@altlinux.org> 0.15.1-alt1
+- Updated to upstream version 0.15.1.
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.2-alt1
 - Updated to upstream version 0.11.2.
 
