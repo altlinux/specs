@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Ouch
 
 Name: perl-Ouch
-Version: 0.0500
+Version: 0.0501
 Release: alt1
 
 Summary: Perl class for exception handling
@@ -49,10 +50,13 @@ cd %real_name-%version
 cp README ..
 
 %files
-%doc README
+%doc README Changes README.md
 %perl_vendor_privlib/Ouch*
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.0501-alt1
+- new version
+
 * Tue Jun 27 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.0500-alt1
 - New version
 
