@@ -1,6 +1,6 @@
 Name: mingw64-binutils
-Version: 2.28
-Release: alt2%ubt
+Version: 2.32
+Release: alt1
 
 Summary: MinGW Windows binutils
 
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-mingw64
 BuildRequires: flex
 BuildRequires: bison
 BuildRequires: texinfo
-BuildRequires: gcc5-c++
+BuildRequires: gcc-c++
 
 # NB: This must be left in.
 Requires: mingw64-filesystem
@@ -66,13 +66,22 @@ ln -sf ../../..%_bindir/%_mingw64_target-dllwrap \
 %exclude %_man5dir/x86_64-pc-mingw32-gdbinit.5.xz
 
 %changelog
-* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt2%ubt
+* Wed Feb 20 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.32-alt1
+- 2.32 release
+
+* Mon Jan 14 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.31.1-alt1
+- 2.31.1 release
+
+* Sat Jun 16 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.30-alt1
+- 2.30 release
+
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt2
 - fix ubt-macro usage in changelog
 
-* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt1%ubt
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt1
 - 2.28 release
 
-* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt2%ubt
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt2
 - rebuild
 
 * Sat Dec 24 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt1
