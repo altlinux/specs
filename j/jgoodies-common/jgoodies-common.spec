@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jgoodies-common
 Version:        1.8.1
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Common library shared by JGoodies libraries and applications
 
 License:        BSD
@@ -82,6 +82,9 @@ done
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_2jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1jpp8
 - java update
 
