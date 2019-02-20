@@ -1,18 +1,17 @@
 %define native_code_gen %nil
 %define dyn_libs %nil
-%define interpreter %nil
+%define no_interpreter %nil
 
 %ifarch %ix86 x86_64
 %define native_code_gen --enable-split-objs
 %define dyn_libs --enable-shared
 %else
-%define interpreter --flags=-templateHaskell
+%define no_interpreter --ghc-option=-DALT_NO_GHCI --flags=-templateHaskell
 %endif
 
 Name: rpm-build-haskell
-Version: 1.3
+Version: 1.3.1
 Release: alt1
-BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
 License: Public domain
@@ -40,7 +39,7 @@ mkdir -p %buildroot%_rpmmacrosdir
 sed \
 	-e 's/@ENABLE_SPLIT_OBJS@/%{native_code_gen}/' \
 	-e 's/@ENABLE_SHARED@/%{dyn_libs}/' \
-	-e 's/@DISABLE_TEMPLATEHASKELL@/%{interpreter}/' \
+	-e 's/@NO_INTERPRETER@/%{no_interpreter}/' \
 	%SOURCE1 > %buildroot%_rpmmacrosdir/haskell
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
@@ -53,6 +52,11 @@ install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Wed Feb 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.1-alt1
+- Removed BuildArch: noarch to fix regression in %%hs_configure2 macro
+  definition on x86_64 and %%ix86 architectures.
+- %%hs_configure2: Pass -DALT_NO_GHCI on architectures without GHCi support.
+
 * Fri Feb 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt1
 - Fixed build of ghc modules on non-x86 architectures.
 - Added mipsel, aarch64, and ppc64le architectures
