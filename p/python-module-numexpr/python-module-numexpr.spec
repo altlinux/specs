@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.6.2
-Release:        alt3
+Release:        alt4
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -106,7 +106,7 @@ This package contains tests for numexpr.
 %patch1 -p1
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
-%ifnarch %ix86 x86_64 aarch64 ppc64le
+%ifnarch %ix86 x86_64 armh aarch64 ppc64le
 sed -i 's@ openblas,@ blas,@' site.cfg
 %endif
 %if_with python3
@@ -168,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 20 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt4
+- exclude armh from crippled arches
+
 * Tue Feb 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.6.2-alt3
 - Fixed build on aarch64 and ppc64le.
 
