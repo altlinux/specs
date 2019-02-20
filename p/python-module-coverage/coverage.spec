@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 4.5.1
-Release: alt1
+Release: alt2
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -20,7 +20,7 @@ Patch1: %oname-alt-build-docs.patch
 
 BuildRequires: python-devel python-module-setuptools
 %if_with doc
-BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-napoleon python-module-sphinxcontrib-spelling
+BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-spelling
 BuildRequires: python-module-sphinx_rtd_theme
 %endif
 
@@ -158,6 +158,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Feb 20 2019 Stanislav Levin <slev@altlinux.org> 4.5.1-alt2
+- Dropped dependency on sphinxcontrib-napoleon.
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.1-alt1
 - Updated to upstream version 4.5.1.
 
