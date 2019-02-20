@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:         jgroups212
 Version:      2.12.3
-Release:      alt1_15jpp8
+Release:      alt1_16jpp8
 Summary:      A toolkit for reliable multicast communication
 License:      LGPLv2
 URL:          http://www.jgroups.org
@@ -76,6 +76,9 @@ chmod 644 README
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_16jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_15jpp8
 - java update
 
