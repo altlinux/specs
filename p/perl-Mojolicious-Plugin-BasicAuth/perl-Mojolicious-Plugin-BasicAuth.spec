@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.08
-Release: alt1
+Release: alt2
 Summary: helper for basic http authentication
 
 Group: Development/Perl
@@ -26,13 +26,16 @@ BuildRequires: perl-Mojolicious perl(Pod/Text.pm)
 %install
 %perl_vendor_install
 
-rm %buildroot%perl_vendor_privlib/Mojolicious/Plugin/README.pod
+rm -f %buildroot%perl_vendor_privlib/Mojolicious/Plugin/README.pod
 
 %files
 %perl_vendor_privlib/Mojolicious/Plugin/*.pm
 %doc README.pod
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2
+- fixed build
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
