@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.14.alpha4jpp8
+Release:       alt2_0.15.alpha4jpp8
 Summary:       Java REST Annotations
 License:       ASL 2.0
 Group:         Development/Other
@@ -72,6 +72,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.15.alpha4jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.14.alpha4jpp8
 - java update
 
