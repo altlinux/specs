@@ -1,6 +1,6 @@
 Name:		burp
-Version:	2.2.4
-Release:	alt1.1
+Version:	2.3.0
+Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
 License:	GPL
@@ -18,6 +18,7 @@ BuildRequires:  libncurses-devel
 BuildRequires:  libacl-devel
 BuildRequires:  libuthash-devel
 BuildRequires:  libyajl-devel
+BuildRequires:  check libcheck-devel
 
 BuildRequires: rpm-macros-intro-conflicts
 %filter_from_requires /^\/usr\/local\/bin\/mail\.php$/d
@@ -34,8 +35,7 @@ amount of space that is used by each backup.
 %autoreconf
 %configure \
     --sysconfdir="%_sysconfdir/burp" \
-    --disable-static \
-    --with-tcp-wrappers
+    --disable-static
 
 %make_build
 
@@ -47,6 +47,9 @@ install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.ser
 chmod go-rwx %{buildroot}%_sysconfdir/burp
 chmod go-rwx %{buildroot}%_sysconfdir/burp/clientconfdir
 chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
+
+%check
+%make_build check
 
 %files
 %doc %_docdir/%name/
@@ -72,6 +75,9 @@ chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 %preun_service burp-server
 
 %changelog
+* Wed Feb 20 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.0-alt1
+- Update to 2.3.0-12-g3d093f25
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
