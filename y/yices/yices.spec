@@ -1,16 +1,9 @@
-%ifarch x86_64
-%define abi 64
-%define arch x86_64
-%else
-%define abi 32
-%define arch i586
-%endif
-%define target %arch-alt-linux
+%define target %_configure_platform
 %define make_include configs/make.include.%target
 
 Name: yices
 Version: 2.3.0
-Release: alt2
+Release: alt3
 Summary: The Yices SMT Solver
 License: Noncommercial use only
 Group: Sciences/Mathematics
@@ -85,7 +78,7 @@ This package contains development files of %name.
 %setup
 
 %build
-%add_optflags %optflags_shared -m%abi
+%add_optflags %optflags_shared
 %autoreconf
 %configure \
 	--enable-shared \
@@ -123,6 +116,9 @@ sed -i 's|%prefix|%buildroot%prefix|' %make_include
 %_libdir/*.so
 
 %changelog
+* Wed Feb 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.0-alt3
+- Fixed build on non-x86 architectures.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt2
 - It fails during parallel builds randomly (sometimes); therefore: NPROCS=1
 
