@@ -1,6 +1,6 @@
 Name: xpilot-ng
 Version: 4.7.3
-Release: alt3
+Release: alt4
 
 Summary: An X Window System based multiplayer aerial combat game
 License: GPL
@@ -36,6 +36,7 @@ machines.
 %patch -p1 -b .getline
 
 %build
+%autoreconf
 #xmkmf
 #make Makefiles
 #make INSTMANDIR=%_mandir
@@ -111,6 +112,9 @@ ln -srf %buildroot%_datadir/fonts/ttf/TrueType-vera/VeraMoBd.ttf %buildroot%_dat
 %_niconsdir/*.png
 
 %changelog
+* Wed Feb 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.7.3-alt4
+- %%build: run autoreconf to fix build on modern architectures.
+
 * Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 4.7.3-alt3
 - Remove bundled fonts (Closes: 25329).
 
