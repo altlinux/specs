@@ -2,9 +2,9 @@
 %define module Test-Differences
 
 Name: perl-%module
-Version: 0.64
+Version: 0.65
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -13,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/D/DC/DCANTRELL/Test-Differences-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCANTRELL/Test-Differences-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,10 +24,7 @@ BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Text-
 Test strings and data structures and show differences if not ok.
 
 %prep
-%setup -n %module-%version
-
-# hack; remove if perl version > 5.12.3
-sed -i "s,2\.126,2.125," Makefile.PL Build.PL
+%setup -q -n Test-Differences-%{version}
 
 %build
 %perl_vendor_build
@@ -36,9 +33,13 @@ sed -i "s,2\.126,2.125," Makefile.PL Build.PL
 %perl_vendor_install
 
 %files
+%doc Changes README
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.65-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.64-alt1
 - automated CPAN update
 
