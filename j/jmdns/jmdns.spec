@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jmdns
 Version:        3.4.1
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        Java implementation of multi-cast DNS
 
 # The project was originally developed under the GNU
@@ -82,6 +82,9 @@ sed -i 's/\r//' LICENSE-LGPL.txt
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_15jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_14jpp8
 - java update
 
