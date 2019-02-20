@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jsonic
 Version:       1.3.0
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       Simple JSON encoder/decoder for Java
 License:       ASL 2.0
 URL:           http://jsonic.sourceforge.jp/
@@ -84,6 +84,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_11jpp8
+- fc29 update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_10jpp8
 - new version
 
