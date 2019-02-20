@@ -6,14 +6,14 @@ BuildRequires: libsowing-devel perl(AnyEvent.pm) perl(Exporter.pm) perl(ExtUtils
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.003
-Release: alt2
+Version: 0.004
+Release: alt1
 Summary: Another Promises library, this time implemented in XS for performance
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TV/TVDW/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TV/TVDW/AnyEvent-XSPromises-%{version}.tar.gz
 
 %description
 This library provides a Promises interface, written in XS for performance, conforming to the Promises/A+ specification.
@@ -22,7 +22,7 @@ Performance may not immediately seem important, but when promises are used as th
 of database queries per second from a single Perl process, those extra microseconds suddenly start to matter.
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n AnyEvent-XSPromises-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ of database queries per second from a single Perl process, those extra microseco
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- automated CPAN update
+
 * Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2
 - to Sisyphus as perl-Cassandra-Client dep
 
