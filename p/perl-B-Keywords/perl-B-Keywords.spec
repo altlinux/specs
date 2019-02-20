@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.19
+%define version    1.20
 %define release    alt1
 
 Name: perl-B-Keywords
 Version: %version
-Release: %release
+Release: alt1
 
 Summary: Perl module with lists of reserved barewords and symbol names
 
@@ -49,6 +50,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- new version
+
 * Sat Aug 25 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.19-alt1
 - New version
 
