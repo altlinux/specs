@@ -2,7 +2,7 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.29
+Version: 2.1.29.0.9.e227c
 Release: alt1
 Epoch: 5
 
@@ -322,6 +322,7 @@ fi
 %post_service mailman
 
 %files
+%dir %docdir
 %docdir/[^m]*
 %config(noreplace) %logrotate/%name
 %config(noreplace) %crontabdir/%name
@@ -374,9 +375,13 @@ fi
 %config(noreplace) %ngxconfdir/%name.conf
 
 %files docs
+%dir %docdir
 %docdir/mailman-*
 
 %changelog
+* Tue Jan 29 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29.0.9.e227c-alt1
+- 2.1.29 -> 2.1.29-9-ge227cb9f.
+
 * Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29-alt1
 - 2.1.26 -> 2.1.29 (fixes: CVE-2018-0618, CVE-2018-13796).
 - Enhanced init script.
