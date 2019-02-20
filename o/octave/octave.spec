@@ -2,7 +2,7 @@
 
 Name: octave
 Version: 4.4.1
-Release: alt2
+Release: alt3
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -19,7 +19,7 @@ BuildRequires: libSM-devel libICE-devel liblcms-devel bzlib-devel libltdl-devel
 BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-devel
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
-BuildRequires: libarpack-ng-devel
+BuildRequires: libarpack-ng-devel libXcursor-devel
 %if_with qt5
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
@@ -184,6 +184,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Feb 20 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt3
+- Fixed FTBFS (Add libXcursor to BR's).
+
 * Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.1-alt2
 - rebuilt with recent GraphickMagick
 
