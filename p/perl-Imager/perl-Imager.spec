@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 1.006
-Release: alt1.2
+Version: 1.010
+Release: alt1
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -17,7 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Sep 10 2017
 # optimized out: perl perl-Class-Inspector perl-Class-Tiny perl-Devel-Symdump perl-Encode perl-File-ShareDir perl-Lingua-EN-Inflect perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Text-Balanced perl-devel perl-parent perl-threads pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs t1lib
-BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb
+BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb perl(bignum.pm)
 
 %description
 Imager is a module for creating and altering images. It can
@@ -42,12 +43,15 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %perl_vendor_install
 
 %files
-%doc Changes README samples*
+%doc Changes README Changes.old adobe.txt
 %perl_vendor_archlib/Imager*
 %perl_vendor_autolib/Imager
 %exclude /.perl.req
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.010-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.006-alt1.2
 - rebuild with new perl 5.28.1
 
