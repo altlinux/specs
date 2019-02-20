@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             joni
 Version:          2.1.3
-Release:          alt2_7jpp8
+Release:          alt2_8jpp8
 Summary:          Java port of Oniguruma regexp library 
 Group:            Development/Other
 License:          MIT
@@ -72,6 +72,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_7jpp8
 - java update
 
