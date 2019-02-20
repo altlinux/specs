@@ -1,6 +1,6 @@
 Name: valgrind
 Version: 3.14.0
-Release: alt1
+Release: alt2
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -9,13 +9,47 @@ URL: http://www.valgrind.org/
 Source: https://sourceware.org/pub/valgrind/%name-%version.tar
 
 Patch0: valgrind-alt-arm.patch
-Patch1: valgrind-rh-cachegrind-improvements.patch
-Patch2: valgrind-rh-helgrind-race-supp.patch
-Patch3: valgrind-rh-ldso-supp.patch
+Patch1: valgrind-alt-loongson-is-mips.patch
+Patch2: valgrind-rh-cachegrind-improvements.patch
+Patch3: valgrind-rh-helgrind-race-supp.patch
+Patch4: valgrind-rh-ldso-supp.patch
+Patch104: valgrind-3.14.0-s390x-fix-reg-alloc-vr-vs-fpr.patch
+Patch105: valgrind-3.14.0-s390x-sign-extend-lochi.patch
+Patch106: valgrind-3.14.0-s390x-vec-reg-vgdb.patch
+Patch107: valgrind-3.14.0-s390x-vec-float-point-code.patch
+Patch108: valgrind-3.14.0-s390x-vec-float-point-tests.patch
+Patch109: valgrind-3.14.0-s390z-more-z13-fixes.patch
+Patch110: valgrind-3.14.0-get_otrack_shadow_offset_wrk-ppc.patch
+Patch111: valgrind-3.14.0-new-strlen-IROps.patch
+Patch112: valgrind-3.14.0-ppc-instr-new-IROps.patch
+Patch113: valgrind-3.14.0-memcheck-new-IROps.patch
+Patch114: valgrind-3.14.0-ppc-frontend-new-IROps.patch
+Patch115: valgrind-3.14.0-transform-popcount64-ctznat64.patch
+Patch116: valgrind-3.14.0-enable-ppc-Iop_Sar_Shr8.patch
+Patch117: valgrind-3.14.0-wcsncmp.patch
+Patch118: valgrind-3.14.0-final_tidyup.patch
+Patch119: valgrind-3.14.0-ppc64-ldbrx.patch
+Patch120: valgrind-3.14.0-ppc64-unaligned-words.patch
+Patch121: valgrind-3.14.0-ppc64-lxvd2x.patch
+Patch122: valgrind-3.14.0-ppc64-unaligned-vecs.patch
+Patch123: valgrind-3.14.0-ppc64-lxvb16x.patch
+Patch124: valgrind-3.14.0-set_AV_CR6.patch
+Patch125: valgrind-3.14.0-undef_malloc_args.patch
+Patch126: valgrind-3.14.0-jm-vmx-constraints.patch
+Patch127: valgrind-3.14.0-sigkill.patch
+Patch128: valgrind-3.14.0-ppc64-ptrace.patch
+Patch129: valgrind-3.14.0-arm64-ptrace-traceme.patch
+Patch130: valgrind-3.14.0-mc_translate-vecret.patch
+Patch131: valgrind-3.14.0-vbit-test-sec.patch
+Patch132: valgrind-3.14.0-x86-Iop_Sar64.patch
+Patch133: valgrind-3.14.0-power9-addex.patch
+Patch134: valgrind-3.14.0-rsp-clobber.patch
+Patch135: valgrind-3.14.0-subrange_type-count.patch
+Patch136: valgrind-3.14.0-s390x-vec-facility-bit.patch
 
 # valgrind needs /proc to work
 Requires: /proc
-%{?!_disable_check:BuildRequires: /proc gdb}
+%{?!_disable_check:BuildRequires: /proc gdb-light}
 
 BuildRequires: gcc-c++
 
@@ -65,6 +99,40 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+%patch118 -p1
+%patch119 -p1
+%patch120 -p1
+%patch121 -p1
+%patch122 -p1
+%patch123 -p1
+%patch124 -p1
+%patch125 -p1
+%patch126 -p1
+%patch127 -p1
+%patch128 -p1
+%patch129 -p1
+%patch130 -p1
+%patch131 -p1
+%patch132 -p1
+%patch133 -p1
+%patch134 -p1
+%patch135 -p1
+%patch136 -p1
 
 %build
 autoreconf -vi
@@ -75,8 +143,8 @@ autoreconf -vi
 # compiled with -O2 unless explicitely requested.
 %define optflags_optimization %nil
 
-# No need to buildreq gdb just to find out the executable.
-export ac_cv_path_GDB=%_bindir/gdb
+# Use gdb-light as gdb.
+export ac_cv_path_GDB=%_bindir/gdb-light
 
 # Currently there is no usable MPI implementation in Sisyphus.
 %configure \
@@ -155,6 +223,12 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Wed Feb 20 2019 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt2
+- Made valgrind work on Loongson 3A CPUs
+  (at least for mips32r2 binaries; by iv@).
+- Merged with valgrind-3.14.0-13 from Fedora.
+- %%check: use gdb-light instead of gdb.
+
 * Tue Oct 09 2018 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt1
 - 3.13.0 -> 3.14.0.
 
