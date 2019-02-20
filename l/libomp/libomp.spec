@@ -1,11 +1,15 @@
-# tmp hack til clang update
-%filter_from_requires /^clang/d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 BuildRequires: gcc-c++ openmpi-devel perl(Net/Domain.pm) perl(Pod/Usage.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 7.0.1
+#%%global rc_ver 3
+%global libomp_srcdir openmp-%{version}%{?rc_ver:rc%{rc_ver}}.src
+
+
 %ifarch ppc64le
 %global libomp_arch ppc64
 %else
@@ -14,14 +18,14 @@ BuildRequires: gcc-c++ openmpi-devel perl(Net/Domain.pm) perl(Pod/Usage.pm)
 
 
 Name: libomp
-Version: 7.0.0
-Release: alt1_2
+Version: 7.0.1
+Release: alt1_1
 Summary: OpenMP runtime for clang
 Group: Development/Other
 
 License: NCSA
 URL: http://openmp.llvm.org
-Source0: http://llvm.org/releases/%{version}/openmp-%{version}%{?rc_ver:rc%{rc_ver}}.src.tar.xz
+Source0: http://%{?rc_ver:pre}releases.llvm.org/%{version}/%{?rc_ver:rc%{rc_ver}}/%{libomp_srcdir}.tar.xz
 Source1: runtest.sh
 
 Patch0: 0001-CMake-Make-LIBOMP_HEADERS_INSTALL_PATH-a-cache-varia.patch
@@ -43,7 +47,7 @@ OpenMP runtime for clang.
 %package devel
 Group: Development/Other
 Summary: OpenMP header files
-#Requires: clang-devel%{?isa} = %{version}
+Requires: clang-devel%{?isa} = %{version}
 
 %description devel
 OpenMP header files.
@@ -53,8 +57,8 @@ Group: Development/Other
 Summary: OpenMP regression tests
 Requires: %{name}%{?isa} = %{version}
 Requires: %{name}-devel%{?isa} = %{version}
-Requires: clang6.0
-Requires: llvm6.0
+Requires: clang7.0 llvm7.0
+Requires: llvm7.0
 Requires: gcc
 Requires: gcc-c++
 Requires: python3-module-lit
@@ -138,13 +142,15 @@ install -m 0755 %{SOURCE1} %{buildroot}%{_datadir}/libomp
 %{_libdir}/clang/%{version}/include/ompt.h
 %endif
 
-%if 0
-%files test
-%{_datadir}/libomp
-%endif
+#%files test
+#%{_datadir}/libomp
+
 
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_1
+- new version
+
 * Sun Dec 23 2018 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_2
 - new version
 
