@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Plack-Middleware-ReverseProxy
-Version: 0.15
+Version: 0.16
 Release: alt1
 Summary: Plack::Middleware::ReverseProxy - supports app to run as a reverse proxy backend
 
@@ -25,9 +26,12 @@ BuildRequires: perl-devel perl-parent perl-Plack perl-YAML perl-Module-Install p
 
 %files
 %perl_vendor_privlib/Plack/Middleware/ReverseProxy.pm
-%doc Changes README 
+%doc Changes README*
 
 %changelog
+* Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- new version
+
 * Sun Jun 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
