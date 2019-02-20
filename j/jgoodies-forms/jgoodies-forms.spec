@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jgoodies-forms
 Version:        1.8.0
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Framework to lay out and implement elegant Swing panels in Java
 
 Group:          Development/Other
@@ -93,6 +93,9 @@ done
 
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_8jpp8
+- fc29 update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_7jpp8
 - java update
 
