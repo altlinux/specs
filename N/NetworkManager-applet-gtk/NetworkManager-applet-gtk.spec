@@ -18,7 +18,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.8.20
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -189,6 +189,7 @@ This package contains development documentation for libnma-devel-doc.
 %endif
 	--enable-mobile-broadband-provider-info \
 	--enable-gtk-doc \
+	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
 
 %make_build
@@ -249,6 +250,11 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Wed Feb 20 2019 Mikhail Efremov <sem@altlinux.org> 1.8.20-alt2
+- Disable silent rules.
+- Patch from upstream:
+  + wifi-dialog: fix wrong free.
+
 * Mon Feb 11 2019 Mikhail Efremov <sem@altlinux.org> 1.8.20-alt1
 - Updated to 1.8.20.
 
