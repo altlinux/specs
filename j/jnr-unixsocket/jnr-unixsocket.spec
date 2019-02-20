@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
 Version:        0.18
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Unix sockets for Java
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -79,6 +79,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_6jpp8
+- fc29 update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_5jpp8
 - java update
 
