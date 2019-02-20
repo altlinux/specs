@@ -1,22 +1,21 @@
 %define origname v
-%set_verify_elf_method unresolved=relaxed
 
 Name:		libv
 Version:	1.90
-Release:	alt10
+Release:	alt11
 Summary:	V is a free, multiple platform C++ graphical user interface framework
 License:	LGPL
 Group:		Development/C++
 Source0:	%origname-%version.tar.bz2
-Patch: libv-1.90-alt-make-3.82.patch
-Patch1: %name-g++8.patch
+Patch:      libv-1.90-alt-make-3.82.patch
+Patch1:     %name-g++8.patch
+Patch2:     fix-build-on-aarch64.patch
 URL:		http://www.objectcentral.com/
 Packager:	Evgeny Sinelnikov <sin@altlinux.ru>
 # Automatically added by buildreq on Thu Oct 25 2007
 BuildRequires: gcc-c++ libXaw-devel libXmu-devel
 
 BuildRequires:	lesstif-devel, libXext-devel, libGLw-devel, libGLU-devel
-ExclusiveArch: i586 x86_64
 
 %description
 V is a free, multiple platform C++ graphical user interface framework designed
@@ -37,6 +36,7 @@ Libraries, include files and other resources you can use to develop
 %setup -q -n home/vgui
 %patch -p3
 %patch1 -p2
+%patch2 -p2
 
 %build
 perl -pi -e "s|^HOMEV\s*=.*|HOMEV=`pwd`|" Config.mk
@@ -72,6 +72,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_libdir/*.so
 
 %changelog
+* Tue Feb 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.90-alt11
+- Build on aarch64 fixed
+
 * Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.90-alt10
 - no return statement in the non-void function fixed (according g++8)
 
