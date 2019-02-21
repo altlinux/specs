@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 5.0.33
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -47,6 +47,10 @@ control function used by PVE.
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
+
+grep '/var/run' * -rl | while read f; do
+    sed -i 's|/var/run|/run|' $f
+done
 
 %install
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
@@ -148,6 +152,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Feb 21 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt4
+- use /run instead of /var/run
+
 * Thu Jan 31 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.0.33-alt3
 - rebuild with perl 5.28.1
 
