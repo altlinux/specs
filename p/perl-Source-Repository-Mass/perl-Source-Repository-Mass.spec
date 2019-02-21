@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.424
+Version: 0.425
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,9 +33,13 @@ Conflicts: perl-Source-Repository < 0.391
 %doc Changes
 #doc README
 %_bindir/*mass
+%_bindir/sourcerepo-mass-compare-*
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Feb 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.425-alt1
+- new version
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.424-alt1
 - new version
 
