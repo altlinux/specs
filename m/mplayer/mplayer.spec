@@ -296,7 +296,7 @@
 
 Name: %lname
 Version: 1.3.0
-Release: alt3
+Release: alt4
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1091,6 +1091,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Thu Feb 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.0-alt4
+- fixed FTBFS with new Samba
+
 * Wed Jan 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.0-alt3
 - rebuilt without librtmp
 
