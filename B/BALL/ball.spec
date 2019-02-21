@@ -1,6 +1,6 @@
 Name:       BALL
 Version:    1.4.3_beta1.793.git37fc53c
-Release:    alt1
+Release:    alt2
 
 Summary:    Biochemical Algorithms Library
 License:    LGPL, GPL
@@ -65,7 +65,6 @@ cp -vf %SOURCE1 %buildroot%_datadir/applications/
 %files
 %_bindir/*
 %_datadir/%name
-%_libdir/*.py*
 %_libdir/*so.1.5
 %exclude %_libdir/lib*.so
 %_sysconfdir/profile.d/ball.sh
@@ -78,5 +77,8 @@ cp -vf %SOURCE1 %buildroot%_datadir/applications/
 %_libdir/cmake/BALL/*.cmake
 
 %changelog
+* Thu Feb 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.3_beta1.793.git37fc53c-alt2
+- Fixed FTBFS.
+
 * Fri Sep 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.3_beta1.793.git37fc53c-alt1
 - Initial build for Sisyphus (Closes: #21629).
