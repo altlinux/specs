@@ -1,6 +1,6 @@
 Name: libunwind
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Summary: An unwinding library
 License: BSD
@@ -10,6 +10,7 @@ Url: http://savannah.nongnu.org/projects/libunwind
 Source: %name-%version.tar
 Patch1: libunwind-1.1-aarch64.patch
 Patch2: libunwind-1.1-fix-CVE-2015-3239.patch
+Patch3: libunwind-1.1-fix-ppc-test-link-fail.patch
 
 %description
 Libunwind provides a C ABI to determine the call-chain of a program.
@@ -27,6 +28,7 @@ libunwind.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -47,6 +49,9 @@ make
 %_includedir/*
 
 %changelog
+* Thu Feb 21 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt3
+- Fixed build on ppc64le.
+
 * Mon Sep 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt2
 - Fixed CVE-2015-3239.
 - Added aarch64 architecture support.
