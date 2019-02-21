@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -58,8 +58,18 @@ autoreconf -fisv
 %_bindir/mpeg2vaenc
 %_bindir/putsurface
 %_bindir/putsurface_wayland
+%_bindir/sfcsample
+%_bindir/vppblending
+%_bindir/vppchromasitting
+%_bindir/vppdenoise
+%_bindir/vppscaling_csc
+%_bindir/vppsharpness
+
 
 %changelog
+* Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
