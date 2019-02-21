@@ -1,6 +1,6 @@
 Name: bsign
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Embed hash and signature in elf executables
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildPreReq: libstdc++-devel-static
 
-BuildRequires: gcc-c++ libgpm-devel
+BuildRequires: gcc-c++
 
 %description
 This package embeds secure hashes (SHA1) and digital signatures (GNU
@@ -28,6 +28,7 @@ maintain a database.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -42,5 +43,8 @@ mkdir %buildroot
 %doc %_docdir/%name/
 
 %changelog
+* Thu Feb 21 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt2
+- fix build
+
 * Mon Feb 24 2014 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt1
 - initial build for ALT Linux Sisyphus
