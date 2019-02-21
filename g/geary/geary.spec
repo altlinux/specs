@@ -1,13 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.13
 %define xdg_name org.gnome.Geary
 # Elementary OS-specific
 %def_disable contractor
 %def_enable valadoc
+%def_enable libunwind
 
 Name: geary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -40,7 +41,7 @@ BuildRequires: libenchant-devel libsecret-devel libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
-BuildRequires: libunwind-devel
+%{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
 
 %description
@@ -55,7 +56,8 @@ Geary's development.
 subst "/\--thread/d" src/meson.build
 
 %build
-%meson %{?_enable_contractor:-Dcontractor=true}
+%meson %{?_enable_contractor:-Dcontractor=true} \
+	%{?_disable_libunwind:-Dlibunwind_optional=true}
 %meson_build
 
 %install
@@ -77,6 +79,9 @@ subst "/\--thread/d" src/meson.build
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Feb 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- updated to geary-0.13.1-1-g618d33eb
+
 * Sun Feb 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
