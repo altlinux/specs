@@ -3,7 +3,6 @@
 %def_with kcm
 %def_without secrets
 %def_disable local_provider
-%def_with python3
 %def_with check
 
 %define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
@@ -22,7 +21,7 @@
 
 Name: sssd
 Version: 2.0.0
-Release: alt3.gitf0603645f
+Release: alt4.gitf0603645f
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -61,9 +60,7 @@ Requires: libkrb5 >= 1.14.4-alt2
 %endif
 
 BuildRequires(pre):rpm-build-ubt
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-%endif
 
 ### Build Dependencies ###
 BuildRequires: libpopt-devel
@@ -86,10 +83,7 @@ BuildRequires: libxml2-devel
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc xml-utils
 BuildRequires: libkrb5-devel
 BuildRequires: libcares-devel
-BuildRequires: python-devel
-%if_with python3
 BuildRequires: python3-devel
-%endif
 BuildRequires: libcheck-devel
 BuildRequires: doxygen
 BuildRequires: libselinux-devel
@@ -182,13 +176,8 @@ Summary: Userspace tools for use with the SSSD
 Group: System/Configuration/Networking
 License: GPLv3+
 Requires: %name = %version-%release
-%if_with python3
 Requires: python3-module-sss = %EVR
 Requires: python3-module-sssdconfig = %EVR
-%else
-Requires: python-module-sssdconfig = %version-%release
-Requires: python-module-sss = %version-%release
-%endif
 
 %description tools
 Provides userspace tools for manipulating users, groups, and nested groups in
@@ -198,15 +187,6 @@ Also provides several other administrative tools:
     * sss_debuglevel to change the debug level on the fly
     * sss_seed which pre-creates a user entry for use in kickstarts
     * sss_obfuscate for generating an obfuscated LDAP password
-
-%package -n python-module-sssdconfig
-Summary: SSSD and IPA configuration file manipulation classes and functions
-Group: Development/Python
-License: GPLv3+
-BuildArch: noarch
-
-%description -n python-module-sssdconfig
-Provides python files for manipulation SSSD and IPA configuration files.
 
 %package ldap
 Summary: The LDAP back end of the SSSD
@@ -346,16 +326,6 @@ Requires: libipa_hbac = %version-%release
 %description -n libipa_hbac-devel
 Utility library to validate FreeIPA HBAC rules for authorization requests
 
-%package -n python-module-ipa_hbac
-Summary: Python bindings for the FreeIPA HBAC Evaluator library
-Group: Development/Python
-License: LGPLv3+
-Requires: libipa_hbac = %version-%release
-
-%description -n python-module-ipa_hbac
-The python-module-libipa_hbac contains the bindings so that libipa_hbac can be
-used by Python applications.
-
 %package -n libsss_nss_idmap
 Summary: Library for SID based lookups and certificate based lookups
 Group: System/Libraries
@@ -401,34 +371,6 @@ Requires: libsss_simpleifp = %version-%release
 %description -n libsss_simpleifp-devel
 Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
 
-%package -n python-module-sss_nss_idmap
-Summary: Python bindings for libsss_nss_idmap
-Group: Development/Python
-License: LGPLv3+
-Requires: libsss_nss_idmap = %version-%release
-
-%description -n python-module-sss_nss_idmap
-The python-module-libsss_nss_idmap contains the bindings so that libsss_nss_idmap can
-be used by Python applications.
-
-%package -n python-module-sss
-Summary: Python bindings for sss
-Group: Development/Python
-License: LGPLv3+
-Requires: %name = %version-%release
-
-%description -n python-module-sss
-The python-module-sss contains the bindings so that sss can
-be used by Python applications.
-
-%package -n python-module-sss-murmur
-Summary: Python bindings for murmur hash function
-Group: Development/Python
-License: LGPLv3+
-
-%description -n python-module-sss-murmur
-Provides python module for calculating the murmur hash version 3
-
 %package -n libwbclient-%name
 Summary: The SSSD libwbclient implementation
 Group: System/Libraries
@@ -466,7 +408,6 @@ The libnfsidmap sssd module provides a way for rpc.idmapd to call SSSD to map
 UIDs/GIDs to names and vice versa. It can be also used for mapping principal
 (user) name to IDs(UID or GID) or to obtain groups which user are member of.
 
-%if_with python3
 %package -n python3-module-sssdconfig
 Summary: SSSD and IPA configuration file manipulation classes and functions
 Group: Development/Python3
@@ -513,7 +454,6 @@ License: LGPLv3+
 
 %description -n python3-module-sss-murmur
 Provides python3 module for calculating the murmur hash version 3
-%endif
 
 %prep
 %setup
@@ -545,18 +485,14 @@ Provides python3 module for calculating the murmur hash version 3
     --disable-static \
     %{subst_with kcm} \
     %{subst_with secrets} \
-%if_without python3
-    --without-python3-bindings \
-%endif
+    --without-python2-bindings \
     #
 
 %make_build all
 %make docs
 
 %install
-%if_with python3
 sed -i -e 's:/usr/bin/python:/usr/bin/python3:' src/tools/sss_obfuscate
-%endif
 
 %make install DESTDIR=%buildroot
 
@@ -694,7 +630,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %dir %_localstatedir/cache/krb5rcache
 %attr(700,%sssd_user,%sssd_user) %dir %dbpath
 %attr(755,%sssd_user,%sssd_user) %dir %mcpath
-%attr(751,%sssd_user,%sssd_user) %dir %deskprofilepath
+%attr(700,%sssd_user,%sssd_user) %dir %deskprofilepath
 %attr(700,root,root) %dir %secdbpath
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
@@ -729,12 +665,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sss_rpcidmapd.5*
 %_man8dir/sssd.8*
 %_man8dir/sss_cache.8*
-
-%files -n python-module-sss
-%python_sitelibdir/pysss.so
-
-%files -n python-module-sss-murmur
-%python_sitelibdir/pysss_murmur.so
 
 %files ldap
 %_libdir/%name/libsss_ldap.so
@@ -804,11 +734,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %exclude %_sbindir/sss_cache
 %exclude %_man8dir/sss_cache*
 
-%files -n python-module-sssdconfig
-%dir %python_sitelibdir_noarch/SSSDConfig
-%python_sitelibdir_noarch/SSSDConfig*.egg-info
-%python_sitelibdir_noarch/SSSDConfig/*.py*
-
 %files -n libsss_idmap
 %_libdir/libsss_idmap.so.*
 
@@ -836,9 +761,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_includedir/ipa_hbac.h
 %_libdir/libipa_hbac.so
 %_pkgconfigdir/ipa_hbac.pc
-
-%files -n python-module-ipa_hbac
-%python_sitelibdir/pyhbac.so
 
 %files -n libsss_nss_idmap
 %_libdir/libsss_nss_idmap.so.*
@@ -883,9 +805,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/libsss_simpleifp.so
 %_pkgconfigdir/sss_simpleifp.pc
 
-%files -n python-module-sss_nss_idmap
-%python_sitelibdir/pysss_nss_idmap.so
-
 %files -n libwbclient-%name
 %_libdir/%name/modules/libwbclient.so.*
 %ghost %_libdir/libwbclient.so.0
@@ -906,8 +825,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files nfs-idmap
 %nfsidmapdir/sss.so
 
-%if_with python3
-
 %files -n python3-module-sss
 %python3_sitelibdir/pysss.so
 
@@ -927,9 +844,11 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %dir %python3_sitelibdir_noarch/SSSDConfig/__pycache__
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
-%endif
-
 %changelog
+* Thu Feb 21 2019 Stanislav Levin <slev@altlinux.org> 2.0.0-alt4.gitf0603645f
+- Fixed FleetCommander integration.
+- Stopped build Python2 bindings.
+
 * Fri Dec 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.0.0-alt3.gitf0603645f
 - Remove build requires for selinux-policy-targeted
 
