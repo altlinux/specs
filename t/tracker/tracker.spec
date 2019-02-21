@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 2.1
 %define api_ver 2.0
 
@@ -17,8 +17,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.6
-Release: alt2.2
+Version: %ver_major.8
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -235,6 +235,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Thu Feb 21 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
+- 2.1.8
+
 * Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2.2
 - disabled bootstrap again after rebuild tracker-miners against libexempi.so.8
 
