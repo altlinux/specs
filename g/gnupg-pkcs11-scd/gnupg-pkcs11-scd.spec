@@ -4,7 +4,7 @@
 
 Name: gnupg-pkcs11-scd
 Version: 0.9.2
-Release: alt6
+Release: alt7
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
@@ -59,6 +59,9 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Feb 21 2019 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt7
+- Fixed copying of overlapped memory areas.
+
 * Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt6
 - Don't reverse the UKM.
 
