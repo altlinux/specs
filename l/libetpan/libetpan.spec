@@ -1,5 +1,5 @@
 Name: libetpan
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
@@ -78,6 +78,12 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Thu Feb 21 2019 Mikhail Efremov <sem@altlinux.org> 1.9.3-alt1
+- Patches from upstream:
+  + Fix the compiler warning against uninitialized use (#323)
+  + add missing stddef.h include for 'NULL' (#322)
+- Updated to 1.9.3.
+
 * Fri Dec 21 2018 Mikhail Efremov <sem@altlinux.org> 1.9.2-alt1
 - Drop upstreamed patch.
 - Use liblmdb instead of libdb4.7.
