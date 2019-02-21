@@ -1,8 +1,8 @@
 %define rname signon-kwallet-extension
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -36,6 +36,9 @@ BuildRequires: kf5-kwallet-devel signon-devel
 %_libdir/signon/extensions/*kwallet*.so*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

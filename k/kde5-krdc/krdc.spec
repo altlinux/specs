@@ -4,8 +4,8 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Networking/Remote access
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel libvncserver-devel python-module-google python3-dev rpm-build-ruby xfreerdp
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: libvncserver-devel xfreerdp
+BuildRequires: libvncserver-devel xfreerdp libssh-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel
@@ -94,6 +94,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

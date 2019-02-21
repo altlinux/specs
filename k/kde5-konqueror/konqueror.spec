@@ -10,8 +10,8 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Networking/WWW
@@ -97,7 +97,7 @@ KF5 library
 #    cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
 #    rm -rf %buildroot/%_K5data/konqueror/
 #fi
-#%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml kwebkitpart templates konqueror
+%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml kwebkitpart templates konqueror webenginepart
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -154,6 +154,7 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 %_K5lib/libkdeinit5_kfmclient.so
 %_K5lib/libkwebenginepartlib.so
 %_K5plug/*.so
+%_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/parts/*.so
 %_K5start/konqy_preload.desktop
 %_K5data/fsview/
@@ -161,6 +162,7 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 %_K5data/konqueror/
 %_K5data/khtml/
 %_K5data/kwebkitpart/
+%_K5data/webenginepart/
 %_K5data/kcmcss/
 %_K5data/dolphinpart/
 %_K5data/domtreeviewer/
@@ -191,6 +193,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

@@ -6,8 +6,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt3
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Office
@@ -26,6 +26,7 @@ Patch2: alt-def-memory-level.patch
 #BuildRequires: ebook-tools-devel extra-cmake-modules kde5-libkexiv2-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libchm-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel python-module-google qt5-declarative-devel qt5-phonon-devel qt5-svg-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-phonon-devel qt5-svg-devel
+BuildRequires: qt5-speech-devel
 BuildRequires: zlib-devel libdiscount-devel
 BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel
 BuildRequires: kde5-libkexiv2-devel
@@ -38,6 +39,7 @@ BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-dev
 BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
+BuildRequires: qt5-quickcontrols2-devel kf5-kirigami-devel
 %if_enabled msits
 BuildRequires: libchm-devel libzip-devel
 %endif
@@ -117,8 +119,8 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %if_enabled mobile
 %files mobile
-%_K5data/kpackage/genericqml/org.kde.mobile.okular/
-%_K5xdgapp/org.kde.mobile.okular.desktop
+%_K5bin/okularkirigami
+%_K5xdgapp/org.kde.okular.kirigami.desktop
 %_K5xdgapp/org.kde.mobile.okular_*.desktop
 %else
 %exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/
@@ -150,6 +152,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Mon Nov 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - build without purpose
 

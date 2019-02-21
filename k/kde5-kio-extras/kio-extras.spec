@@ -8,8 +8,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt4
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -104,10 +104,12 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 
 %files common -f %name.lang
 #%doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5xdgmime/*.xml
 
 %files
 %_K5plug/kf5/kio/*.so
+%_K5plug/kf5/kiod/*.so
 %_K5plug/*.so
 %_K5plug/kf5/kded/*.so
 %_K5data/kio_*/
@@ -139,6 +141,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
 - add fix to avoid crash by not checking free space for smb://
 
