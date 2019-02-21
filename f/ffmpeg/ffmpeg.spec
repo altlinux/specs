@@ -89,7 +89,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.1
+Version:	4.1.1
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -739,6 +739,9 @@ xz Changelog
 %endif
 
 %changelog
+* Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.1-alt1
+- 4.1.1
+
 * Thu Nov 08 2018 Anton Farygin <rider@altlinux.ru> 2:4.1-alt1
 - 4.1
 
