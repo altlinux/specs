@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-suse-compat
-BuildRequires: gcc-c++ libtinfo-devel
+BuildRequires: libtinfo-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #
 # spec file for package diskscan
 #
-# Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -24,17 +24,17 @@ BuildRequires: gcc-c++ libtinfo-devel
 
 Name:           diskscan
 Version:        0.20
-Release:        alt1_1.2
+Release:        alt1_2.3
 Summary:        Scan disk for bad or near failure sectors
-License:        GPL-3.0+
+License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
-Url:            http://blog.disksurvey.org/proj/diskscan/
+URL:            http://blog.disksurvey.org/proj/diskscan/
 Source0:        https://github.com/baruch/diskscan/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-BuildRequires:  cmake >= 3.0.2
-BuildRequires:  gcc-c++-common
-BuildRequires:  python-module-yaml
-BuildRequires:  python-module-BeautifulSoup
-BuildRequires:  python-module-markdown
+BuildRequires:  ccmake cmake ctest
+BuildRequires:  gcc-c++
+BuildRequires:  python-module-markdown python3-module-markdown
+BuildRequires:  python3-module-yaml
+BuildRequires:  python3-module-BeautifulSoup4
 BuildRequires:  pkgconfig(ncurses)
 BuildRequires:  pkgconfig(zlib)
 Source44: import.info
@@ -60,11 +60,15 @@ the disk vendor decision making logic.
 %{suse_cmake_install}
 
 %files
-%doc COPYING README*
+%doc --no-dereference COPYING
+%doc README*
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Thu Feb 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2.3
+- update by suseimport
+
 * Tue Feb 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_1.2
 - new version
 
