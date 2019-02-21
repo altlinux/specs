@@ -2,7 +2,7 @@
 
 Name: libxine2
 Version: 1.2.9
-Release: alt1
+Release: alt2
 
 Summary: Free libraries for play video and audio
 License: GPLv2+
@@ -103,6 +103,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Mon Feb 25 2019 Anton Farygin <rider@altlinux.ru> 1.2.9-alt2
+- rebuild with libvpx-1.8.0
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 1.2.9-alt1
 - 1.2.9
 
