@@ -1,14 +1,11 @@
 Summary:   An intrusion detection system
 Name:      snort
 Version:   2.9.7.0
-Release:   alt2
+Release:   alt3
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
 
-# You can omit building some target packages via 'rpmbuild --without xxx'
-%def_without prelude
-%def_with    inline
 # You can omit this feature via 'rpmbuild --disable flexresp'
 %def_enable flexresp
 
@@ -24,24 +21,20 @@ Patch0:    %name-%version-%release.patch
 Requires:  libpcap >= 0.4
 Requires:  service >= 0.5.6
 Requires:  snort-base, snort-rules
-PreReq:    alternatives >= 0.2.0-alt0.7
+Requires:  alternatives >= 0.2.0-alt0.7
 BuildPreReq: libltdl-devel, m4, bzip2
-BuildRequires: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-macros-alternatives
 
 BuildRequires: libpcap-devel >= 0.4, libpcre-devel
 BuildRequires: zlib-devel libdnet-devel libdaq-devel flex
 
 Conflicts: snort-rules < 2.8
 
-%if_with prelude
-Requires:  libprelude
-%endif
-%if_with prelude
-BuildRequires: libprelude-devel
-%endif
-%if_with inline
-BuildRequires: iptables-devel
-%endif
+Provides: snort-inline = %EVR
+Obsoletes: snort-inline <= 2.9.7.0-alt2
+
+%define _unpackaged_files_terminate_build 1
 
 Summary(ru_RU.UTF-8): Автоматический анализатор/блокировщик сетевых пакетов
 
@@ -73,7 +66,7 @@ Snort имеет возможность оповещения в реальном
 или как WinPopup-сообщение, отправленное с помощью smbclient.
 
 Базовая версия не блокирует опасные соединения. Если вам требуется эта функция,
-инсталлируйте один из пакетов snort с суффиксом flexresp или bloat в названии.
+инсталлируйте один из пакетов snort с суффиксом flexresp в названии.
 
 Пожалуйста, обязательно ознакомьтесь с документацией,
 которая размещена в %_docdir/%name-%version
@@ -102,6 +95,10 @@ Summary: Snort (plain) with Flexible Response
 Summary(ru_RU.UTF-8): Snort с поддержкой автоматического блокирования соединений
 Group: Security/Networking
 Requires: %name = %version
+
+Provides: snort-inline+flexresp = %EVR
+Obsoletes: snort-inline+flexresp <= 2.9.7.0-alt2
+
 %description plain+flexresp
 Snort compiled with flexresp support.
 Flexible Response allows snort to actively close offending connections.
@@ -111,41 +108,6 @@ Snort, скомпилированный с поддержкой flexresp. Flexib
 на основании соответствующих правил.
 %description -l uk_UA.UTF-8 plain+flexresp
 Snort, скомп╕льований з п╕дтримкою flexresp.
-
-%package inline
-Summary: Snort with IPTables support
-Summary(ru_RU.UTF-8): Snort с чтением трафика через IPTables вместо PCAP
-Group: Security/Networking
-Requires: %name = %version
-Requires: iptables
-%description inline
-Snort-Inline takes packets from iptables instead of libpcap.
-It then uses new rule types to help iptables make pass or drop decisions
-based on snort rules.
-%description -l ru_RU.UTF-8 inline
-Snort, использующий для просмотра трафика функции пакетного фильтра IPTables
-вместо библиотеки PCAP. Дополнительные типы правил служат для передачи указаний
-от Snort'а пакетному фильтру.
-%description -l uk_UA.UTF-8 inline
-Snort, скомп╕льований з п╕дтримкою IPTables
-
-%package inline+flexresp
-Summary: Snort with IPTables and FlexibleResponse support
-Summary(ru_RU.UTF-8): Snort с чтением трафика через IPTables и автоблокировкой
-Group: Security/Networking
-Requires: %name = %version
-Requires: iptables
-%description inline+flexresp
-Snort-Inline takes packets from iptables instead of libpcap.
-It then uses new rule types to help iptables make pass or drop decisions
-based on snort rules.
-%description -l ru_RU.UTF-8 inline+flexresp
-Snort, использующий для просмотра трафика функции пакетного фильтра IPTables
-вместо библиотеки PCAP. Дополнительные типы правил служат для передачи указаний
-от Snort'а пакетному фильтру. Flexresp означает возможность автоматически
-блокировать соединения на основании соответствующих правил.
-%description -l uk_UA.UTF-8 inline+flexresp
-Snort, скомп╕льований з п╕дтримкою IPTables та flexresp.
 
 %package doc
 Summary: Various documentation from Snort IDS distribution.
@@ -192,8 +154,6 @@ function prepconf() {
 	--sysconfdir=%_sysconfdir/%name \
 	--enable-linux-smp-stats \
 	--disable-static-daq \
-	--enable-dynamicplugin \
-	%{subst_with prelude} \
 	"$@"
     %make    
     mv src/%name ../building/%name-$d
@@ -207,11 +167,9 @@ function prepconf() {
     popd
 }
 
-prepconf   xxx                    plain               --enable-inline=no
-prepconf %{subst_with inline}     inline              --enable-inline=yes
+prepconf   xxx                    plain
 %if_enabled flexresp
-prepconf   xxx                    plain+flexresp      --enable-inline=no  --enable-flexresp3
-prepconf %{subst_with inline}     inline+flexresp     --enable-inline=yes --enable-flexresp3
+prepconf   xxx                    plain+flexresp      --enable-flexresp3
 %endif
 
 %install
@@ -233,11 +191,8 @@ mkdir -p %buildroot%_libdir/%name/dynamicengine
 mkdir -p %buildroot%_libdir/%name/dynamicpreprocessor/
 mkdir -p %buildroot%_libdir/%name/dynamicrules
 pushd building
-for c in %name-{plain,inline}; do
-    myinstall "$c"
-    myinstall "$c+flexresp"
-done
-myinstall "%name-bloat"
+myinstall "%name-plain"
+myinstall "%name-plain+flexresp"
 cp -P libsf_engine.so* %buildroot%_libdir/%name/dynamicengine/
 chmod 0644 %buildroot%_libdir/%name/dynamicengine/libsf_engine.so*
 cp -P snort_dynamicpreprocessor/libsf_*_preproc.so* %buildroot%_libdir/%name/dynamicpreprocessor/
@@ -295,23 +250,11 @@ touch %buildroot%_sysconfdir/%name/rules/black_list.rules
 %_altdir/%name-plain
 %_libdir/%name
 
-%if_with inline
-%files inline
-%_sbindir/%name-inline
-%_altdir/%name-inline
-%endif
-
 %if_enabled flexresp
 
 %files plain+flexresp
 %_sbindir/%name-plain+flexresp
 %_altdir/%name-plain+flexresp
-
-%if_with inline
-%files inline+flexresp
-%_sbindir/%name-inline+flexresp
-%_altdir/%name-inline+flexresp
-%endif
 
 %endif  # flexresp
 
@@ -319,6 +262,17 @@ touch %buildroot%_sysconfdir/%name/rules/black_list.rules
 %doc doc/snort_manual.*
 
 %changelog
+* Thu Feb 21 2019 Mikhail Efremov <sem@altlinux.org> 2.9.7.0-alt3
+- Drop remnants of bloat subpackage from spec.
+- README-ALT.ru.m4: Drop inline from doc.
+- Drop inline subpackages.
+- Drop obsoleted configure options.
+- Fix some compiler warnings.
+- Use _unpackaged_files_terminate_build.
+- Don't use deprecated PreReq for alternatives.
+- Fix build: add rpm-macros-alternatives to BR.
+- Fix BR: use BuildRequires(pre) for rpm-build-licenses.
+
 * Mon Dec 14 2015 Mikhail Efremov <sem@altlinux.org> 2.9.7.0-alt2
 - Drop libnet from BR.
 
