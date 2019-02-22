@@ -6,7 +6,7 @@
 
 Name: avidemux-qt
 Version: 2.7.1
-Release: alt1%ubt
+Release: alt2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -126,7 +126,7 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 
 
 %build
-%add_optflags -std=c++11
+%add_optflags -Wno-error=return-type
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
 sh bootStrap.bash \
@@ -200,6 +200,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Fri Feb 22 2019 Sergey V Turchin <zerg@altlinux.org> 2.7.1-alt2
+- fix compile with gcc-8
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 2.7.1-alt1%ubt
 - new version
 - build on all arches
