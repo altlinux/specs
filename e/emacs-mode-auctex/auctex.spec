@@ -11,12 +11,13 @@
 
 Name: emacs-mode-%ModeName
 Version: 11.87
-Release: alt2
+Release: alt3
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPL
 Group: Editors
 Url: http://www.gnu.org/software/auctex/index.html
+Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 BuildArch: noarch
 
 #Source0: ftp://sunsite.auc.dk/packages/auctex/%ModeName-%version.tar.bz2
@@ -49,7 +50,10 @@ Requires: gnu-ghostscript /usr/bin/dvips /usr/bin/latex
 
 %define require_compiler %(rpm -qf "$(which %emacsbin)" --queryformat=%%{NAME} 2> /dev/null)
 
-# Automatically added by buildreq on Tue Sep 26 0000
+# Automatically added by buildreq on Fri Feb 22 2019
+# optimized out: emacs-base emacs-common fontconfig ghostscript-classic libX11-locales libp11-kit libsasl2-3 perl python-base python-modules sh4 tex-common texlive texlive-collection-basic
+BuildRequires: emacs-nox texlive-dist
+
 BuildRequires(pre): rpm-build-tex
 BuildRequires: fontconfig /usr/bin/dvips /usr/bin/latex
 
@@ -167,6 +171,9 @@ mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 %endif
 
 %changelog
+* Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 11.87-alt3
+- NMU: updated build dependencies.
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 11.87-alt2
 - fixed build
 - build with rpm-build-tex
