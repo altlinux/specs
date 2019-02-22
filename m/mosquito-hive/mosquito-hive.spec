@@ -1,5 +1,5 @@
 Name: mosquito-hive
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: rebuild a collection of packages in hasher
@@ -12,6 +12,7 @@ Packager: Ivan Zakharyaschev <imz@altlinux.org>
 Source: %name-%version.tar
 
 Requires: hasher
+Requires: altlinux-repolist-utils
 
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses
@@ -49,9 +50,6 @@ mkdir -p %buildroot%_datadir/%name
 install --preserve-timestamps -m 755 \
 	rebuild{,1} \
 	-t %buildroot%_datadir/%name/
-install --preserve-timestamps -m 644 \
-	rebuild-functions.sh \
-	-t %buildroot%_datadir/%name/
 
 # Executables to be run by the user
 # (they need to be symlinks to the place where the helpers are):
@@ -61,8 +59,9 @@ for f in rebuild; do
        -T %buildroot%_bindir/mosquito-"$f"
 done
 
-# For shell.req:
-%global __spec_autodep_custom_pre export BASHOPTS=extglob
+install --preserve-timestamps -m 755 \
+	stripVerRel \
+	-t %buildroot%_bindir/
 
 %files
 %_bindir/*
@@ -70,6 +69,11 @@ done
 %doc README.md
 
 %changelog
+* Thu Jan 17 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1
+- rebuild1: use altlinux-repolist-utils (with limitations on SRPMDIR)
+  instead of shell globs (not effective) to find the SRPM file.
+- stripVerRel: new simple util.
+
 * Fri May 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1
 - hide rebuild1 (the handler for a single arg) from PATH, because a
   user gets nothing from it compared to mosquito-rebuild (many args).
