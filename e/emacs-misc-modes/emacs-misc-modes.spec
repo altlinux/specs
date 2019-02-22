@@ -2,13 +2,13 @@
 # $Id: emacs-misc-modes.spec,v 1.8 2006/02/04 17:54:06 eugene Exp $
 
 Version: 0.2
-Release: alt10.2
+Release: alt10.3
 Name: emacs-misc-modes
 License: GPL
 Group: Editors
 Summary: Various packages for Emacs
 Summary(ru_RU.UTF-8): Дополнительные пакеты для Emacs
-Requires: emacs-common emacs-elib
+Requires: emacs-common
 
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
@@ -20,9 +20,8 @@ BuildPreReq: emacs-devel >= 0.0.1-alt2
 BuildPreReq: emacs26-X11-athena
 
 # Automatically added by buildreq on Tue Dec 24 2002
-BuildRequires: emacs-bbdb emacs-cedet emacs-elib emacs-gnus
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: emacs-bbdb emacs-cedet emacs-gnus
+BuildRequires: makeinfo
 
 %description
 Various packages for Emacs.
@@ -45,6 +44,9 @@ install -m 644 *.info* %buildroot%_infodir/
 %_infodir/*
 
 %changelog
+* Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt10.3
+- NMU: dropped obsolete emacs-elib.
+
 * Sat Dec  1 2018 Terechkov Evgenii <evg@altlinux.org> 0.2-alt10.2
 - Rebuild with emacs26-X11-athena
 
