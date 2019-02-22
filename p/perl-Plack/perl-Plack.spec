@@ -1,6 +1,6 @@
 Name: perl-Plack
 Version: 1.0047
-Release: alt1
+Release: alt2
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
 License: Perl
@@ -16,6 +16,9 @@ BuildRequires: perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI 
 BuildRequires: perl-Net-FastCGI perl-Module-Refresh perl-podlators perl-Stream-Buffered
 BuildRequires: perl(Cookie/Baker.pm) perl(HTTP/Headers/Fast.pm) perl(HTTP/Entity/Parser.pm) perl(HTTP/Entity/Parser/JSON.pm) perl(JSON/PP.pm)
 BuildArch: noarch
+
+# faster that way than to fix incorrect dependencies
+Provides: perl(Plack/Component.pm) = 1.004.700
 
 %description
 Plack is a set of tools for using the PSGI stack. It contains middleware
@@ -77,6 +80,9 @@ find . -iname 'apache1*' -delete
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.0047-alt2
+- added versioned Provides for not versioned Plack::Component
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.0047-alt1
 - automated CPAN update
 
