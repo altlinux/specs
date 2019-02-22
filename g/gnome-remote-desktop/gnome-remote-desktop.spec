@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-remote-desktop
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: GNOME Remote Desktop
@@ -19,25 +19,24 @@ Source: https://gitlab.gnome.org/jadahl/gnome-remote-desktop/uploads/7d3cc32efb1
 Source: %name-%version.tar
 %endif
 
-%define pipewire_ver 0.2.1
+%define pipewire_ver 0.2.5
 %define vnc_ver 0.9.11
 %define gst_ver 1.10
 
 Requires: pipewire >= %pipewire_ver
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: pkgconfig(libpipewire-0.2) >= %pipewire_ver
 BuildRequires: libgio-devel libvncserver-devel >= %vnc_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
-BuildRequires: libsecret-devel libnotify-devel  libsystemd-devel
+BuildRequires: libsecret-devel libnotify-devel
 
 %description
 Remote desktop daemon for GNOME using pipewire.
 
 %prep
 %setup
-sed -i -e 's/\(pipewire-0.\)1/\12/' meson.build
 
 %build
 %meson -Dsystemd_user_unit_dir=%_userinitdir
@@ -54,6 +53,9 @@ sed -i -e 's/\(pipewire-0.\)1/\12/' meson.build
 %doc README
 
 %changelog
+* Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - 0.1.6
 
