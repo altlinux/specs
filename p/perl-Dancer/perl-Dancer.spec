@@ -1,5 +1,7 @@
-Name: perl-Dancer
-Version: 1.3202
+%define _unpackaged_files_terminate_build 1
+%define module_name Dancer
+Name: perl-%module_name
+Version: 1.3500
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -9,10 +11,9 @@ Url: %CPAN Dancer
 
 BuildArch: noarch
 # Cloned from https://github.com/PerlDancer/Dancer.git
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %module_name-%version.tar.gz
 
-BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm) perl(Test/NoWarnings.pm)
+BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm) perl(Test/NoWarnings.pm) perl(HTTP/CookieJar.pm)
 Requires: perl-Clone
 
 %description
@@ -22,11 +23,10 @@ to be created with very few lines of code, but allowing the flexibility
 to scale to much more complex applications.
 
 %prep
-%setup -q
-%patch -p1
+%setup -q -n %{module_name}-%{version}
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build
 
 %install
 %perl_vendor_install
@@ -35,9 +35,16 @@ to scale to much more complex applications.
 %_bindir/dancer
 %_man1dir/dancer.1*
 %perl_vendor_privlib/Dancer*
+%dir %perl_vendor_privlib/HTTP
+%dir %perl_vendor_privlib/HTTP/Tiny
+%perl_vendor_privlib/HTTP/Tiny/NoProxy.pm
 %doc LICENSE Changes README*
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.3500-alt1
+- updated as official srpm;
+- abandoned git due to git merge conflicts
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.3202-alt1
 - automated CPAN update
 
