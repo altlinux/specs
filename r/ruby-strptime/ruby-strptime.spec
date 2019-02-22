@@ -2,10 +2,10 @@
 
 Name:    ruby-%pkgname
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: a fast strpitme engine
-License: NOASSERTION
+License: BSD-2-Clause
 Group:   Development/Ruby
 Url:     https://github.com/nurse/strptime/
 
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Feb 22 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.3-alt2
+- Fix license
+
 * Sun Sep 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus
