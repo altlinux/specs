@@ -1,13 +1,14 @@
 %def_without info
 Version: 2.2
-Release: alt9.1.qa3
+Release: alt9.1.qa4
 Name: emacs-xslt-process
 License: GPL-2.0-or-later
 Group: Editors
 Url: http://xslt-process.sourceforge.net/
+Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 Summary: Emacs XSLT Process Minor Mode
 Summary(ru_RU.UTF-8): Вспомогательный режим для работы с XSLT в Emacs
-Requires: emacs-X11 emacs-speedbar emacs-elib
+Requires: emacs-X11 emacs-speedbar
 Source: xslt-process-%version.tar.gz
 Source1: xslt-process-emacs.el
 Patch: xslt-process.diff
@@ -18,8 +19,8 @@ BuildArch: noarch
 # optimized out: java java-headless javazi python-base python-modules python3 python3-base sh4
 BuildRequires: java-devel
 
-#BuildRequires: emacs-X11 emacs-cedet emacs-elib ImageMagick texinfo texlive-collection-latexrecommended texlive-collection-fontsrecommended texlive-collection-basic texlive-collection-basic java-devel java-common bc update-alternatives texi2html
-Requires: emacs-X11 emacs-cedet emacs-elib java java-common
+#BuildRequires: emacs-X11 emacs-cedet ImageMagick texinfo texlive-collection-latexrecommended texlive-collection-fontsrecommended texlive-collection-basic texlive-collection-basic java-devel java-common bc update-alternatives texi2html
+Requires: emacs-X11 emacs-cedet java java-common
 
 %description
 XSLT-process is a minor mode for XEmacs or GNU Emacs which transforms
@@ -64,6 +65,9 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/xslt-process.el
 %endif
 
 %changelog
+* Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt9.1.qa4
+- NMU: dropped obsolete emacs-elib.
+
 * Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt9.1.qa3
 - Automatically updated build dependencies using buildreq.
 
