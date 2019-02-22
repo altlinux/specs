@@ -2,7 +2,7 @@
 
 Name: mailman3
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: Managing electronic mail discussion and e-newsletter lists.
 License: GPLv3
@@ -51,10 +51,13 @@ case second 'm'. Any other spelling is incorrect.
 Summary: Managing electronic mail discussion and e-newsletter lists.
 Group: Development/Python3
 BuildArch: noarch
+%add_python3_req_skip flufl lazr
 
 Requires: python3-module-atpublic
 Requires: python3-module-editor
 Requires: python3-module-nose
+
+%py3_requires flufl.bounce flufl.i18n flufl.lock lazr.config
 
 %description -n python3-module-%name
 This is GNU Mailman, a mailing list management system distributed under the
@@ -140,5 +143,8 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt2
+- Broken reqs for p8 branch fixed
+
 * Thu Feb 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt1
 - Initial build for Sisyphus
