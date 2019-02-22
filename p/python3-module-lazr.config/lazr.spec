@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Create configuration schemas, and process and validate configurations.
 License: LGPLv3
@@ -21,6 +21,7 @@ BuildRequires: python3-module-zope.interface
 
 Requires: python3-module-zope.interface
 Requires: python3-module-lazr.delegates
+%add_python3_req_skip lazr
 
 
 %description
@@ -43,5 +44,8 @@ machines, or under different circumstances.
 
 
 %changelog
+* Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2.1-alt2
+- Broken reqs for p8 branch fixed
+
 * Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2.1-alt1
 - Initial build for Sisyphus

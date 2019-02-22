@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.2
-Release: alt1
+Release: alt2
 
 Summary: An NFS-safe file lock.
 License: Apache-2.0
@@ -19,6 +19,7 @@ BuildPreReq: python3-devel
 BuildRequires: python3-module-atpublic
 
 Requires: python3-module-atpublic
+%add_python3_req_skip flufl
 
 
 %description
@@ -40,5 +41,8 @@ timeouts for POSIX systems.
 
 
 %changelog
+* Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2-alt2
+- Broken reqs for p8 branch fixed
+
 * Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2-alt1
 - Initial build for Sisyphus
