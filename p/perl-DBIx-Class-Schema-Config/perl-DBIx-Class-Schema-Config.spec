@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-DBIx-Class-Schema-Config
-Version: 0.001011
+Version: 0.001012
 Release: alt1
 Summary: Credential Management for DBIx::Class
 License: GPL+ or Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/DBIx-Class-Schema-Config/
-Source: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/S/SY/SYMKAT/DBIx-Class-Schema-Config-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: perl-devel
@@ -42,7 +42,7 @@ configuration file. This aims to make it simpler for operations teams to
 manage database credentials.
 
 %prep
-%setup
+%setup -q -n DBIx-Class-Schema-Config-%{version}
 
 %build
 %perl_vendor_build
@@ -55,5 +55,8 @@ manage database credentials.
 %perl_vendorlib/DBIx/Class/Schema*
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.001012-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.001011-alt1
 - initial build for ALT
