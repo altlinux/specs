@@ -4,7 +4,7 @@
 %define pkg_name prog-modes
 
 Version: 0.2
-Release: alt7
+Release: alt8
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -27,8 +27,8 @@ BuildArch: noarch
 
 BuildPreReq: emacs-devel >= 0.0.1-alt2
 
-# Automatically added by buildreq on Thu Oct 13 2005
-BuildRequires: emacs-cedet emacs-common emacs-elib emacs-leim fontconfig freetype2 libX11-locales
+# Automatically added by buildreq on Fri Feb 22 2019 (-bi)
+BuildRequires: emacs-cedet emacs-nox libX11-locales
 
 %description
 Various programming packages for Emacs, including packages for editing
@@ -68,6 +68,9 @@ install -pD -m0644 %SOURCE9 %buildroot%_emacs_sitestart_dir/xbase.el
 
 
 %changelog
+* Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt8
+- NMU: updated build dependencies.
+
 * Sun Dec 13 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt7
 - rpm-spec-mode:
   + do our best for the automatic initial filling not to intervene in
