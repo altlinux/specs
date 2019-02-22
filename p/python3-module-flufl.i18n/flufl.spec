@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A high level API for internationalization.
 License: Apache-2.0
@@ -19,6 +19,7 @@ BuildPreReq: python3-devel
 BuildRequires: python3-module-atpublic
 
 Requires: python3-module-atpublic
+%add_python3_req_skip flufl
 
 
 %description
@@ -45,5 +46,8 @@ different tasks.
 
 
 %changelog
+* Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.1-alt2
+- Broken reqs for p8 branch fixed
+
 * Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.1-alt1
 - Initial build for Sisyphus

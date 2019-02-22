@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Email bounce detectors.
 License: Apache-2.0
@@ -20,6 +20,7 @@ BuildRequires: python3-module-atpublic
 BuildRequires: python3-module-zope.interface
 
 Requires: python3-module-atpublic
+%add_python3_req_skip flufl
 
 
 %description
@@ -42,5 +43,8 @@ in the wild are supported, as are VERP and RFC 3464 (DSN).
 
 
 %changelog
+* Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0-alt2
+- Broken dependencies fixed
+
 * Fri Feb 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0-alt1
 - Initial build for Sisyphus
