@@ -1,38 +1,32 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 0.4.7
-Release: alt1.1
+Version: 1.8.3
+Release: alt1
 
 Summary: Fast and modular antispam system written in C
 
 License: BSD
 Group: Networking/Other
-Url: http://bitbucket.org/vstakhov/rspamd/
+Url: https://rspamd.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Original repo cloning instruction:
-# $ hg clone http://bitbucket.org/vstakhov/rspamd rspamd.hg
-# $ mkdir rspamd && cd mkdir rspamd
-# $ hg-fast-export -r ../rspamd.hg [--force]
-# $ git branch
-
-# For update hg:
-# $ hg pull ; hg update
-# $ cd rspamd (check branch hg after)
-# $ hg-fast-export -r ../rspamd.hg [--force]
-
+# Source-url: https://github.com/rspamd/rspamd/archive/%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.init
 
-# Automatically added by buildreq on Sat May 05 2012
-# optimized out: cmake cmake-modules glib2-devel libgio-devel libgpg-error pkg-config python-base python-module-distribute python-module-peak python-module-zope python-modules
-# BuildRequires: ccmake dpkg git-core glibc-devel-static libbsd-devel libdb4-devel libevent-devel libgmime-devel lua-devel libpcre-devel libsqlite3-devel mercurial python-module-mwlib python-module-paste
-BuildRequires: ccmake libbsd-devel libdb4-devel libevent-devel libgmime-devel liblua5.1-devel libpcre-devel libsqlite3-devel python-module-mwlib python-module-paste
+BuildRequires: cmake libdb4-devel libevent-devel libgmime-devel liblua5-devel
+BuildRequires: libpcre2-devel libsqlite3-devel python-module-paste libunwind-devel libicu-devel
+BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel
 
-BuildPreReq: perl-XML-Parser perl-Term-Cap
+BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
 
-BuildPreReq(pre): rpm-build-intro
+BuildRequires: ragel
+
+BuildRequires(pre): rpm-build-intro
+
+%add_verify_elf_skiplist %_libdir/rspamd/lib*.so
+#./usr/lib64/librspamd-actrie.so
 
 %description
 Rspamd filtering system is created as a replacement of popular
@@ -47,23 +41,31 @@ anywhere in code.
 
 %build
 #__subst "s|/init.d|/rc.d/init.d|g" CMakeLists.txt
-%__subst 's|SET(ETC_PREFIX "\${CMAKE_INSTALL_PREFIX}/etc")|SET(ETC_PREFIX "/etc")|g' CMakeLists.txt
-%__subst 's|gmime-2.4|gmime-2.6|g' CMakeLists.txt
-%__subst 's|TARGET_LINK_LIBRARIES(rspamdclient pcre)|TARGET_LINK_LIBRARIES(rspamdclient pcre m)|g' lib/CMakeLists.txt
-%cmake_insource
-# SMP incompatible build
+#__subst 's|SET(ETC_PREFIX "\${CMAKE_INSTALL_PREFIX}/etc")|SET(ETC_PREFIX "/etc")|g' CMakeLists.txt
+#__subst 's|gmime-2.4|gmime-2.6|g' CMakeLists.txt
+#__subst 's|TARGET_LINK_LIBRARIES(rspamdclient pcre)|TARGET_LINK_LIBRARIES(rspamdclient pcre m)|g' lib/CMakeLists.txt
+%cmake_insource -DSYSTEMDDIR=%{_unitdir} \
+                -DENABLE_LUAJIT=ON \
+                -DLIBDIR=%{_libdir}/rspamd/ \
+                -DNO_SHARED=ON \
+                -DENABLE_LIBUNWIND=ON \
+                -DENABLE_PCRE2=ON \
+                -DCONFDIR=%{_sysconfdir}/rspamd \
+                -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF
+
 %make_build
 
 %install
 %makeinstall_std
-mkdir -p %buildroot%_runtimedir/%name/
+mkdir -p %buildroot/%_runtimedir/%name/
 
-mkdir -p %buildroot%_datadir/
+mkdir -p %buildroot/%_datadir/
 #mv -f %buildroot/usr/man/ %buildroot/%_datadir/
 #mv -f %buildroot/usr/etc/ %buildroot/
-test -d %buildroot%_libdir/ || mv -f %buildroot/usr/lib/ %buildroot%_libdir/
+#test -d %buildroot%_libdir/ || mv -f %buildroot/usr/lib/ %buildroot%_libdir/
+#mv %buildroot/%_libdir/rspamd/librspamd-actrie.so %buildroot%_libdir/
 
-mv -f %buildroot%_sysconfdir/%name.xml.sample %buildroot%_sysconfdir/%name/%name
+#mv -f %buildroot%_sysconfdir/%name.xml.sample %buildroot%_sysconfdir/%name/%name
 
 # TODO
 rm -f %buildroot%_includedir/librspamdclient.h
@@ -77,19 +79,28 @@ install -m755 -D %SOURCE1 %buildroot%_initddir/%name
 
 %files
 %config(noreplace) %_initddir/%name
-%_sysconfdir/%name/
-%config(noreplace) %_sysconfdir/%name/%name
+%dir %_sysconfdir/%name/
+%dir %_sysconfdir/%name/modules.d/
+%dir %_sysconfdir/%name/scores.d/
+%config(noreplace) %_sysconfdir/%name/*.conf
+%config(noreplace) %_sysconfdir/%name/modules.d/*.conf
+%config(noreplace) %_sysconfdir/%name/scores.d/*.conf
 %config(noreplace) %_sysconfdir/%name/*.inc
 %config(noreplace) %_sysconfigdir/%name
 %_bindir/rspamc*
 %_bindir/rspamd*
-%_libdir/librspamdclient.so.*
-%_libdir/*.so
+%_bindir/rspamadm*
+%_datadir/rspamd/
+#_libdir/librspamdclient.so.*
+%_libdir/%name/*.so
 %_man1dir/*
 %_man8dir/*
 %attr(0710,root,root) %dir %_runtimedir/%name/
 
 %changelog
+* Thu Feb 21 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
+- build new version
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.7-alt1.1
 - NMU: rebuild with new lua 5.1
 
