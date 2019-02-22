@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libgweather
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library for weather information
@@ -161,6 +161,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Wed Jun 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
