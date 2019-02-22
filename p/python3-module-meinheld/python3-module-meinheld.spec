@@ -2,10 +2,10 @@
 
 Name:    python3-module-%modulename
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: meinheld is a high performance asynchronous WSGI Web Server (based on picoev)
-License: NOASSERTION
+License: BSD
 Group:   Development/Python3
 URL:     https://github.com/mopemope/meinheld
 
@@ -33,5 +33,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 22 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.1-alt2
+- Fix license
+
 * Thu Dec 13 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
