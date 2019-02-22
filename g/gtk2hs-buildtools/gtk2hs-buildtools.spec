@@ -7,7 +7,7 @@
 
 Name: %f_pkg_name
 Version: 0.13.0.2
-Release: alt1
+Release: alt2
 License: GPL-2
 
 Group: Development/Haskell
@@ -45,6 +45,9 @@ Haskell. These tools are not needed to actually run Gtk2Hs programs.
 %files -f %name-files.all
 
 %changelog
+* Fri Feb 22 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.0.2-alt2
+- Backported __float128 support (upstream commit).
+
 * Sat Oct 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.13.0.2-alt1
 - 0.13.0.2
 
