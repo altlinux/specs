@@ -1,5 +1,5 @@
 Name: ncdu
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: Text-based disk usage viewer
@@ -33,6 +33,9 @@ and provides a fast way to see what directories are using your disk space.
 %_man1dir/ncdu.1.*
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 1.14-alt1
+- new version 1.14 (with rpmrb script)
+
 * Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
 - new version 1.13 (with rpmrb script)
 
