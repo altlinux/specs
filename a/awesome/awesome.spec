@@ -1,5 +1,5 @@
 Name: awesome
-Version: 4.2
+Version: 4.3
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -13,12 +13,12 @@ Patch0:%name-%version-alt.patch
 
 Summary: A window manager initialy based on a dwm code rewriting
 
-BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
+BuildRequires: ImageMagick-tools asciidoctor cmake gcc-c++ gperf
 BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5.3-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
 BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
-BuildRequires: lua5.3 libpango-gir
+BuildRequires: lua5.3 libpango-gir libgdk-pixbuf-gir libcairo-gobject
 BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
 
 BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
@@ -44,6 +44,7 @@ pushd build
 CFLAGS="%optflags" \
 CXXFLAGS="%optflags" \
 cmake \
+  -Wno-dev \
   -DPREFIX=%prefix \
   -DAWESOME_DOC_PATH=%_docdir/%name-%version \
   -DCMAKE_INSTALL_PREFIX=%prefix \
@@ -90,6 +91,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE build/docs/*.md
 
 %changelog
+* Fri Feb 22 2019 Terechkov Evgenii <evg@altlinux.org> 4.3-alt1
+- 4.3 (Too Long)
+
 * Thu Aug 24 2017 Terechkov Evgenii <evg@altlinux.org> 4.2-alt1
 - 4.2 (Human after all)
 
