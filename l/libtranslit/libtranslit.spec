@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: glib2-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
@@ -5,17 +6,16 @@ BuildRequires: glib2-devel pkgconfig(gio-2.0)
 %define _localstatedir %{_var}
 Name:		libtranslit
 Version:	0.0.3
-Release:	alt1_20
+Release:	alt1_23
 Summary:	ASCII to Unicode transliteration library with multiple backends
 
 License:	GPLv3+
-Group:		System/Libraries
 URL:		http://github.com/ueno/libtranslit
 Source0:	http://du-a.org/files/libtranslit/%{name}-%{version}.tar.gz
 
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	intltool
-BuildRequires:	libvala-devel, vala-tools
+BuildRequires:	vala vala-tools
 Source44: import.info
 
 %description
@@ -25,7 +25,6 @@ ASCII to Unicode transliteration library with multiple backends.
 Group: System/Libraries
 Summary:	Development files for %{name}
 Requires:	%{name} = %{version}-%{release}
-Requires:	vala vala-tools
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -66,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f '{}' ';'
 
 
+
+
+
 %files
 %{_libdir}/*.so.*
 %dir %{_libdir}/libtranslit
@@ -88,6 +90,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f '{}' ';'
 
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_23
+- rebuild with icu63
+
 * Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_20
 - rebuild with new libicu/ical
 
