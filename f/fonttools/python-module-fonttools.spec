@@ -5,7 +5,7 @@
 %define modulename fontTools
 
 Name: %oname
-Version: 3.37.0
+Version: 3.37.3
 Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
@@ -121,6 +121,9 @@ rm -f %buildroot/%python3_sitelibdir/%modulename/__pycache__/inspect.*
 %endif
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 3.37.3-alt1
+- new version 3.37.3 (with rpmrb script)
+
 * Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.37.0-alt1
 - new version 3.37.0 (with rpmrb script)
 
