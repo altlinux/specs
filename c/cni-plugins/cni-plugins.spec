@@ -1,6 +1,6 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit 72b62babeeb3d7b25c9809ea9eb9fc9c02cc0f71
+%global commit 9ebe139e77e82afb122e335328007bca86905ae4
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -14,8 +14,8 @@
 %define cni_dir %_libexecdir/cni
 
 Name: cni-plugins
-Version: 0.7.1
-Release: alt2%ubt
+Version: 0.7.4
+Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: ASL 2.0
@@ -25,7 +25,7 @@ ExclusiveArch: %go_arches
 
 Provides: containernetworking-plugins = %EVR
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc
 
 Requires: cni
@@ -57,6 +57,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.4-alt1
+- 0.7.4
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt2%ubt
 - rebuild for aarch64
 
