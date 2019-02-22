@@ -1,5 +1,5 @@
 Name: altlinux-repolist-utils
-Version: 0.003
+Version: 0.004
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -22,7 +22,7 @@ BuildRequires: rpm-build-perl perl(Source/Shared/FindLocalMirror/ALTLinux.pm)
 
 %install
 mkdir -p %buildroot%_bindir
-install -m 755 altlinux-repolist-*-to-* %buildroot%_bindir/
+cp -a altlinux-repolist-*-to-* %buildroot%_bindir/
 mkdir -p %buildroot%perl_vendor_privlib/ALTLinux/
 install -m 644 *.pm %buildroot%perl_vendor_privlib/ALTLinux/
 
@@ -32,6 +32,9 @@ install -m 644 *.pm %buildroot%perl_vendor_privlib/ALTLinux/
 %perl_vendor_privlib/ALTLinux/*.pm
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- use symlinks (closes: #36157)
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - new version
 
