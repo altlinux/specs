@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 5.20190120
+Version: 5.20190220
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-CoreList-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ Module::CoreList provides information on which core and dual-life modules
 shipped with each version of perl.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n Module-CoreList-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 5.20190220-alt1
+- automated CPAN update
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 5.20190120-alt1
 - automated CPAN update
 
