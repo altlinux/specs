@@ -2,10 +2,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.2.13
+%define sover %somver.2.15
 Name: hypre
-Version: 2.13.0
-Release: alt2
+Version: 2.15.1
+Release: alt1
 Summary: Scalable algorithms for solving linear systems of equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -18,8 +18,8 @@ Patch1: %name-%version-alt.patch
 Requires: lib%name-devel = %version-%release
 
 BuildRequires(pre): rpm-build-python rpm-build-java /proc
-BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs24-nox
-BuildRequires: liblapack-devel w3c-libwww-devel doc++ netpbm
+BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs-nox
+BuildRequires: liblapack-devel doc++ netpbm
 BuildRequires: libsuperlu-devel babel cmake texlive-base-bin
 BuildRequires: java-devel-default python-devel
 BuildRequires: libnumpy-devel libxml2-devel python-module-libxml2
@@ -146,6 +146,9 @@ popd
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Fri Feb 22 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.15.1-alt1
+- Update to latest release
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13.0-alt2
 - Updated build dependencies.
 
