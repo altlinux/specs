@@ -1,14 +1,16 @@
 Name: bmake
-Version: 20171207
+Version: 20181221
 Release: alt1
 
 Summary: The NetBSD make(1) tool
+
 License: BSD with advertising
 Group: Development/Tools
-
 Url: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/
-Source: %name-%version.tar.gz
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/%name-%version.tar
 
 Requires: pkgsrc-mk-files
 
@@ -47,6 +49,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 20181221-alt1
+- new version (20181221) with rpmgs script
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 20171207-alt1
 - Autobuild version bump to 20171207
 
