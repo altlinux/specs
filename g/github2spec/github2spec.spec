@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.9
+Version:  1.4.10
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Feb 22 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.10-alt1
+- Treat NOASSERTION license as none license
+
 * Fri Jan 25 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.9-alt1
 - Fix name translation
 
