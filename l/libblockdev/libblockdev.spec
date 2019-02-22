@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.20
+%define ver_major 2.21
 %define rev 1
 
 %ifnarch %ix86 x86_64
@@ -11,6 +11,7 @@
 %endif
 
 %def_without dmraid
+%def_with tools
 
 Name: lib%_name
 Version: %ver_major
@@ -430,6 +431,15 @@ Requires: %name-s390 = %version-%release
 %description plugins
 A meta-package that pulls all the libblockdev plugins as dependencies.
 
+%package tools
+Summary: Tools from libblockdev package
+Group: System/Kernel and hardware
+Requires: %name-lvm = %version-%release
+
+%description tools
+This package contains cli libblockdev tools.
+vm-cache-stats -- for displaying stats for LVM cache devices.
+
 %prep
 %setup -n %name-%version
 subst 's/mkfs\.vfat/mkfs.fat/g
@@ -440,7 +450,8 @@ subst 's/mkfs\.vfat/mkfs.fat/g
 %autoreconf
 %configure \
 	%{subst_with vdo} \
-	%{subst_with dmraid}
+	%{subst_with dmraid} \
+	%{subst_with tools}
 %make_build
 
 %install
@@ -617,8 +628,16 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 %files plugins
 
+%if_with tools
+%files tools
+%_bindir/lvm-cache-stats
+%endif
 
 %changelog
+* Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 2.21-alt1
+- 2.21
+- new tools subpackage
+
 * Sat Sep 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20-alt1
 - 2.20
 
