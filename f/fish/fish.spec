@@ -1,5 +1,5 @@
 Name: fish
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -67,6 +67,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Sun Feb 17 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
