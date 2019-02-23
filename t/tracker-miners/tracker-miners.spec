@@ -5,8 +5,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -64,25 +64,25 @@ BuildRequires: intltool
 BuildRequires: tracker-devel >= %ver_major
 BuildRequires: libupower-devel libstemmer-devel libicu-devel libenca-devel libseccomp-devel
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
-%{?_enable_libxml2:BuildPreReq: libxml2-devel >= %libxml2_ver}
-%{?_enable_rss:BuildPreReq: libgrss-devel >= %libgrss_ver}
-%{?_enable_libpng:BuildPreReq: libpng-devel >= %libpng_ver}
-%{?_enable_poppler:BuildPreReq: libpoppler-glib-devel >= %poppler_ver}
-%{?_enable_libgxps:BuildPreReq: libgxps-devel}
-%{?_enable_libexif:BuildPreReq: libexif-devel >= %libexif_ver}
-%{?_enable_libiptcdata:BuildPreReq: libiptcdata-devel}
-%{?_enable_libgsf:BuildPreReq: libgsf-devel >= %libgsf_ver}
-%{?_enable_libjpeg:BuildPreReq: libjpeg-devel}
-%{?_enable_libtiff:BuildPreReq: libtiff-devel}
-%{?_enable_libvorbis:BuildPreReq: libvorbis-devel >= %vorbis_ver}
-%{?_enable_libvorbis:BuildPreReq: libflac-devel >= %flac_ver}
-%{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
-%{?_enable_taglib:BuildPreReq: libtag-devel >= %taglib_ver}
-%{?_enable_gtk_doc:BuildPreReq: gtk-doc docbook-utils graphviz}
-%{?_enable_libgif:BuildPreReq: libgif-devel}
-%{?_enable_libcue:BuildPreReq: libcue-devel}
-%{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
-%{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
+%{?_enable_libxml2:BuildRequires: libxml2-devel >= %libxml2_ver}
+%{?_enable_rss:BuildRequires: libgrss-devel >= %libgrss_ver}
+%{?_enable_libpng:BuildRequires: libpng-devel >= %libpng_ver}
+%{?_enable_poppler:BuildRequires: libpoppler-glib-devel >= %poppler_ver}
+%{?_enable_libgxps:BuildRequires: libgxps-devel}
+%{?_enable_libexif:BuildRequires: libexif-devel >= %libexif_ver}
+%{?_enable_libiptcdata:BuildRequires: libiptcdata-devel}
+%{?_enable_libgsf:BuildRequires: libgsf-devel >= %libgsf_ver}
+%{?_enable_libjpeg:BuildRequires: libjpeg-devel}
+%{?_enable_libtiff:BuildRequires: libtiff-devel}
+%{?_enable_libvorbis:BuildRequires: libvorbis-devel >= %vorbis_ver}
+%{?_enable_libvorbis:BuildRequires: libflac-devel >= %flac_ver}
+%{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
+%{?_enable_taglib:BuildRequires: libtag-devel >= %taglib_ver}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc docbook-utils graphviz}
+%{?_enable_libgif:BuildRequires: libgif-devel}
+%{?_enable_libcue:BuildRequires: libcue-devel}
+%{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
+%{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -166,6 +166,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Sat Feb 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
+- 2.1.6
+
 * Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt2
 - rebuilt against libexempi.so.8
 
