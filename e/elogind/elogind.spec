@@ -1,6 +1,6 @@
 Name:     elogind
 Version:  239.3
-Release:  alt3
+Release:  alt4
 Summary:  The systemd project's "logind", extracted to a standalone package
 Group:    System/Configuration/Boot and Init
 License:  GPL2, LGPL2.1
@@ -22,6 +22,8 @@ Conflicts: ConsoleKit2
 Conflicts: ConsoleKit2-x11
 Conflicts: systemd
 Conflicts: systemd-services
+
+Requires: lib%name = %version-%release
 
 BuildRequires: meson
 BuildRequires: ninja-build
@@ -226,6 +228,9 @@ ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Feb 23 2019 Alexey Gladkov <legion@altlinux.ru> 239.3-alt4
+- elogind requires libelogind.
+
 * Sun Jan 13 2019 Alexey Gladkov <legion@altlinux.ru> 239.3-alt3
 - Rename packages according policy;
 - Add smack support;
