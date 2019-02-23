@@ -1,8 +1,8 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.12.0
-Release: alt1%ubt
+Version: 1.14.0
+Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: ASL 2.0 and ISC and MIT and zlib
@@ -10,7 +10,6 @@ Url: https://github.com/mongodb/mongo-c-driver
 #vsc-git https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: cmake >= 3.1
 BuildRequires: python-module-sphinx
@@ -60,6 +59,7 @@ This package contains development files of libbson.
 
 %build
 %cmake \
+    -DBUILD_VERSION=%version \
     -DENABLE_STATIC:STRING=OFF \
     -DENABLE_BSON:STRING=ON \
     -DENABLE_MONGOC:BOOL=ON \
@@ -125,6 +125,9 @@ exit $ret
 
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1%ubt
 - 1.12.0
 
