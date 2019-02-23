@@ -4,8 +4,13 @@
 %def_enable selinux
 %define _root_sbindir /sbin
 
+# defaults from configure
+# crypto backend (gcrypt/openssl/nss/kernel/nettle)
+%define default_crypto_backend openssl
+%define default_luks_format LUKS2
+
 Name: cryptsetup
-Version: 2.0.6
+Version: 2.1.0
 Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
@@ -27,7 +32,6 @@ BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Nov 15 2009
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel
-BuildRequires: python-devel
 BuildRequires: libpasswdqc-devel
 BuildRequires: libjson-c-devel >= 0.12.1-alt2
 BuildRequires: libargon2-devel
@@ -35,8 +39,19 @@ BuildRequires: libsystemd-devel
 BuildRequires: libblkid-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
+%if "%default_crypto_backend" == "gcrypt"
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
-BuildRequires: libgcrypt-devel  >= 1.6.1
+BuildRequires: libgcrypt-devel >= 1.6.1
+%endif
+%if "%default_crypto_backend" == "openssl"
+BuildRequires: libssl-devel >= 0.9.8
+%endif
+%if "%default_crypto_backend" == "nss"
+BuildRequires: libnss-devel
+%endif
+%if "%default_crypto_backend" == "nettle"
+BuildRequires: libnettle-devel
+%endif
 
 # Rename package from cryptsetup-luks-1.0.6-alt0.pre2 to cryptsetup-1.0.6-alt1
 Provides:  cryptsetup-luks = %version
@@ -126,15 +141,6 @@ LUKS ( Linux Unified Key Setup ) - разрабатываемый стандар
 необходим Вам  только  если Вы планируете  разрабатывать или
 компилировать какие-либо приложения с поддержкой LUKS.
 
-%package -n python-module-%name
-Group: Development/Python
-Summary: Python bindings for libcryptsetup
-Requires: lib%name = %version-%release
-
-%description -n python-module-%name
-This package provides Python bindings for libcryptsetup, a library
-for setting up disk encryption using dm-crypt kernel module.
-
 %prep
 %setup -n %name-%version -a2
 %patch0 -p1
@@ -150,9 +156,10 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %configure \
 	--sbindir=%_root_sbindir \
 	--libdir=/%_lib \
+	--with-crypto_backend=%default_crypto_backend \
+	--with-default-luks-format=%default_luks_format \
 	--disable-internal-argon2 \
 	--enable-libargon2 \
-	--enable-python \
 	--enable-passwdqc=/etc/passwdqc.conf
 
 %make
@@ -210,11 +217,13 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_libdir/lib%name.so
 %_pkgconfigdir/*
 
-%files -n python-module-%name
-%python_sitelibdir/*.so
-%exclude %python_sitelibdir/*.la
-
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
+- 2.1.0
+- Switch default cryptographic backend to OpenSSL.
+- Switch to default LUKS2 format.
+- Remove python bindings.
+
 * Mon Dec 03 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.6-alt1
 - 2.0.6
 
