@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: volume_key
-Version: 0.3.11
+Version: 0.3.12
 Release: alt1
 
 Summary: An utility for manipulating storage encryption keys and passphrases
@@ -89,7 +89,7 @@ for other formats is possible, some formats are planned for future releases.
 
 %build
 %autoreconf
-%configure
+%configure --without-python
 %make_build
 
 %install
@@ -119,6 +119,9 @@ for other formats is possible, some formats are planned for future releases.
 %exclude %python3_sitelibdir/_%name.la
 
 %changelog
+* Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
+- updated to 0.3.12-2-ge236747
+
 * Wed Jul 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
 - 0.3.11 (switched to python3)
 - %%check section
