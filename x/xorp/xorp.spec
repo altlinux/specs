@@ -9,7 +9,7 @@ Name: xorp
 %define baseversion 1.8.6
 
 %if %snapshot
-%define snapshotdate 20180423
+%define snapshotdate 20190128
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %else
@@ -145,6 +145,9 @@ exit 0
 %_libexecdir/%name/*
 
 %changelog
+* Sat Feb 23 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.8.6-alt0.20190128.1
+- 20190128 git snapshot
+
 * Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.8.6-alt0.20180423.1
 - 20180423 git snapshot
 - removed %%set_gcc_version 4.5, added "-Wno-error=deprecated"
