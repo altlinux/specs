@@ -1,8 +1,8 @@
 %define modulename seafobj
 
 Name: python-module-seafobj
-Version: 6.2.2
-Release: alt2
+Version: 6.3.3
+Release: alt1
 
 Summary: Python library for accessing seafile data model
 
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 %add_python_req_skip oss2
 
 # disable ceph storage
-%add_python_req_skip rdos
+%add_python_req_skip rados
 
 %setup_python_module %modulename
 
@@ -42,6 +42,10 @@ cp -a %modulename/ %buildroot%python_sitelibdir/
 %python_sitelibdir/%modulename/
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3.3-alt1
+- new version 6.3.3 (with rpmrb script)
+- really disable rados
+
 * Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt2
 - disable rados, oss2 requires
 
