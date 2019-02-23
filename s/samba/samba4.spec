@@ -41,22 +41,21 @@
 %def_with systemd
 %def_enable avahi
 
-%ifarch e2k e2kv4
-%def_disable glusterfs
+%ifarch %ix86 %arm %mips32 ppc %e2k
 %def_without libcephfs
 %else
-%ifarch mipsel
-%def_enable glusterfs
-%def_without libcephfs
-%else
-%def_enable glusterfs
 %def_with libcephfs
 %endif
+
+%ifarch %e2k
+%def_disable glusterfs
+%else
+%def_enable glusterfs
 %endif
 
 Name:    samba
 Version: 4.9.4
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1586,6 +1585,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 4.9.4-alt4
+- disable support ceph on 32-bit arch
+
 * Mon Jan 28 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.4-alt3
 - Merge samba and samba-DC packages into single package
 - Rename samba-DC to samba-dc for compatibilty

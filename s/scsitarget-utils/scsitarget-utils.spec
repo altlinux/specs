@@ -1,10 +1,14 @@
 
 %def_with rdma
-%def_with rbd
 %def_with glfs
+%ifarch %ix86 %arm %mips32 ppc
+%def_without rbd
+%else
+%def_with rbd
+%endif
 
 Name: scsitarget-utils
-Version: 1.0.62
+Version: 1.0.74
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -21,7 +25,7 @@ Source4: sample.conf
 Source5: tgtd.conf
 Source6: tgt.init
 
-Patch10: %name-snapshot.patch
+# Patch10: %name-snapshot.patch
 # Patch2: %name-alt-patches.patch
 
 # fedora patches
@@ -68,7 +72,7 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 
 %prep
 %setup
-%patch10 -p1
+# %%patch10 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -145,6 +149,10 @@ pushd usr
 %endif
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.74-alt1
+- new version 1.0.74
+- disable support ceph on 32-bit arch
+
 * Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.62-alt1
 - 1.0.62
 
