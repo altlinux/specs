@@ -16,7 +16,7 @@
 
 Name: cni
 Version: 0.6.0
-Release: alt2%ubt
+Release: alt3
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
 License: ASL 2.0
@@ -26,7 +26,7 @@ ExclusiveArch: %go_arches
 
 Provides: containernetworking-cni = %EVR
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc
 
 %description
@@ -59,6 +59,9 @@ install -m0755 bin/cnitool %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.6.0-alt3
+- delete ubt macros from release
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt2%ubt
 - rebuild for aarch64
 
