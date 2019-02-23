@@ -1,5 +1,5 @@
 Name: pcre
-Version: 8.42
+Version: 8.43
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -297,6 +297,9 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Sat Feb 23 2019 Dmitry V. Levin <ldv@altlinux.org> 8.43-alt1
+- 8.42 -> 8.43.
+
 * Thu Jul 12 2018 Dmitry V. Levin <ldv@altlinux.org> 8.42-alt1
 - 8.41 -> 8.42.
 
