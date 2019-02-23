@@ -1,12 +1,12 @@
 Name: pdf2djvu
-Version: 0.9.11
+Version: 0.9.12
 Release: alt1
 
 Summary: PDF to DjVu converter
 License: GPLv2
 Group: Office
 Url: http://jwilk.net/software/pdf2djvu/
-# http://pdf2djvu.googlecode.com/files/%{name}_%version.tar.gz
+# https://github.com/jwilk/pdf2djvu/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Requires: djvu-utils
 # Automatically added by buildreq on Fri Nov 19 2010
@@ -37,13 +37,16 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 %_man1dir/*
 
 %changelog
+* Sat Feb 23 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.12-alt1
+- 0.9.12
+
 * Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.11-alt1
 - 0.9.11
 
-* Thu Aug 09 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.9.10-alt1%ubt
+* Thu Aug 09 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.9.10-alt1
 - new version
 
-* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1%ubt
+* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
 - new version
 
 * Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt3
