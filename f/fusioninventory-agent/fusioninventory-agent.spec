@@ -1,5 +1,5 @@
 Name:     fusioninventory-agent
-Version:  2.4.2
+Version:  2.4.3
 Release:  alt1
 
 Summary:  FusionInventory Agent
@@ -117,5 +117,8 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
+- New version.
+
 * Thu Dec 27 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt1
 - Initial build for Sisyphus (ALT #35816).
