@@ -1,5 +1,5 @@
 Name: libbsd
-Version: 0.7.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
@@ -50,7 +50,7 @@ rm %buildroot/%_man3dir/setproctitle*
 %_libdir/%name.so.*
 
 %files devel
-%_man3dir/*.3.*
+%_man7dir/*
 %_man3dir/*.3bsd.*
 %_includedir/bsd/
 %_libdir/%name.so
@@ -59,6 +59,9 @@ rm %buildroot/%_man3dir/setproctitle*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1 (with rpmrb script)
+
 * Sat Sep 13 2014 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
