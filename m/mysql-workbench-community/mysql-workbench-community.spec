@@ -1,7 +1,6 @@
 Name: mysql-workbench-community
-Version: 6.3.10
-Release: alt2
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
+Version: 8.0.15
+Release: alt1
 
 Summary: A MySQL visual database modeling tool
 
@@ -9,7 +8,8 @@ License: %gpllgpl2only
 Group: Development/Databases
 Url: http://wb.mysql.com
 Source0: %name-%version.tar.gz
-Source1: antlr-3.4-complete.jar
+Source1: antlr-4.7.1-complete.jar
+Source2: antlr4-cpp-runtime-4.7.1-source.zip
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
 ExclusiveArch: %ix86 x86_64
@@ -19,6 +19,7 @@ Patch2: mysql-workbench-mariadb-check.patch
 Patch3: mysql-workbench-6.3.4-c++11.patch
 Patch4: %name-6.3.4-alt-gcc6.patch
 Patch5: mysql-workbench-community-6.3.10-32bit.patch
+Patch6: mysql-workbench-community-8.0.15-antlr4-runtime.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -49,20 +50,19 @@ Requires: python-module-paramiko python-module-pexpect
 Requires: mysql-client gnome-keyring
 Requires: %name-data = %version
 
+BuildRequires(pre): unzip
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-xdg
+
+# MySQL only
+BuildRequires: libmysqlclient-devel
+BuildConflicts: libmariadb-devel
 
 # Automatically added by buildreq on Sun Mar 20 2011
 # and edited manualy
 # - removed mysql-workbench-gpl
 # - boost-devel-headers changed to boost-devel
 BuildRequires: boost-devel gcc-c++ libglade-devel libgnome-devel libgtkmm2-devel liblua5-devel libpcre-devel libsqlite3-devel libuuid-devel libxml2-devel libzip-devel python-devel
-
-# MariaDB
-#BuildRequires: libmysqlclient-devel
-
-# MySQL
-BuildRequires: libmysqlclient20-devel
 
 BuildRequires: boost-signals-devel
 
@@ -72,7 +72,8 @@ BuildRequires: libiodbc-devel
 
 # 6.3.4
 BuildRequires(pre): rpm-macros-cmake cmake
-BuildRequires: mysql-connector-c++-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel
+#BuildRequires: mysql-connector-c++-devel
+BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: swig libgdal-devel libpcrecpp-devel libpixman-devel libexpat-devel libvsqlite++-devel
 BuildRequires: libgnome-keyring-devel libharfbuzz-devel libxshmfence-devel tinyxml-devel
 
@@ -81,9 +82,17 @@ BuildRequires: boost-locale-devel
 
 # 6.3.10
 BuildRequires: libgtk+3-devel wayland-protocols libxkbcommon-devel libgtkmm3-devel libproj-devel
+BuildRequires: mysql-connector-c++-devel >= 1.1.9
 
 # 6.3.10 antlr-3.4-complete.jar
 BuildRequires: java-1.8.0-openjdk stringtemplate
+
+# 8.0.15
+BuildRequires: libdrm-devel libsecret-devel libssl-devel libfribidi-devel libmount-devel libblkid-devel
+BuildRequires: libtiff-devel libpng-devel libepoxy-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel
+BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
+BuildRequires: libssh-devel >= 0.8.5
 
 %description
 MySQL Workbench is modeling tool that allows you to design
@@ -111,21 +120,35 @@ Architecture independent files for %name
 %ifarch %ix86
 %patch5 -p1
 %endif
+%patch6 -p2
 
-sed -i "s|pcre.h|pcre/pcre.h|" library/base/util_functions.cpp
 sed -i "s|pcre.h|pcre/pcre.h|" library/grt/src/grtpp_shell.cpp
-
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
 %set_verify_elf_method unresolved=relaxed
 
 %build
-export ANTLR_JAR_PATH=%SOURCE1
-%add_optflags -Wno-error=deprecated-declarations -std=c++11
+
+mkdir %_builddir/%name-%version/ANTLR-CPP
+pushd %_builddir/%name-%version/ANTLR-CPP
+ unzip %SOURCE2
+ mkdir build && mkdir run && cd build
+ cmake ..
+ make
+ DESTDIR=%_builddir/%name-%version/ANTLR-CPP make install
+popd
+
+%add_optflags -Wno-error=maybe-uninitialized -Wno-error=deprecated-declarations -std=c++11
 %ifarch %ix86
 %add_optflags -Wno-error=format=
 %endif
-%cmake
+
+%cmake \
+    -DWITH_ANTLR_JAR=%SOURCE1 \
+    -DANTLR4_INCLUDE_DIR=%_builddir/%name-%version/ANTLR-CPP/usr/local/include \
+    -DANTLR4_LIBRARIES="-static -L%_builddir/%name-%version/ANTLR-CPP/dist -lantlr4-runtime" \
+#
+
 cd BUILD
 #make_build VERBOSE=1
 %make_build
@@ -142,15 +165,19 @@ mkdir -p %buildroot%_iconsdir/hicolor/32x32/mimetypes
 cp %_builddir/%name-%version/images/icons/MySQLPlugin-32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-plugin.png
 cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-model.png
 
+pushd %_builddir/%name-%version/ANTLR-CPP/dist
+ cp -a *.so* %buildroot/%_libdir/mysql-workbench/
+popd
+
 %files
 %exclude %_libdir/mysql-workbench/modules/*.py?
 
 %exclude %_datadir/applications/*.desktop
 %exclude %_datadir/mysql-workbench/*
 
-%doc COPYING COPYING.LGPL README AUTHORS
-%exclude %_datadir/doc/mysql-workbench/COPYING
-%exclude %_datadir/doc/mysql-workbench/README
+%doc License.txt README.md AUTHORS
+%exclude %_datadir/doc/mysql-workbench/License.txt
+%exclude %_datadir/doc/mysql-workbench/README.md
 
 %_bindir/mysql-workbench
 %_bindir/mysql-workbench-bin
@@ -175,6 +202,15 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Feb 21 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.0.15-alt1
+- Updated to last release
+- Updated antlr jar to antlr-4.7.1-complete.jar from http://www.antlr4.org/download/
+- Added antlr4-cpp-runtime-4.7.1-source.zip from http://www.antlr4.org/download/
+- Added -Wno-error=maybe-uninitialized
+- Changed libmysqlclient20-devel to libmysqlclient-devel in BuildRequires
+  (libmariadb-devel doesn't provide libmysqlclient-devel since 10.2.15-alt3)
+- Removed "Packager" field
+
 * Tue Jul 03 2018 Sergey Y. Afonin <asy@altlinux.ru> 6.3.10-alt2
 - Added rpm-build-xdg to BuildRequires
 
