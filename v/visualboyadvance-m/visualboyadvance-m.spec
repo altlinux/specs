@@ -1,6 +1,6 @@
 Name: visualboyadvance-m
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -86,6 +86,9 @@ export NPROCS=1
 %_datadir/vbam/vba-over.ini
 
 %changelog
+* Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt2
+- Rebuilt with new SFML
+
 * Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 
