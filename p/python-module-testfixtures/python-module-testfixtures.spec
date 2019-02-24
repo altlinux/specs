@@ -3,7 +3,7 @@
 %def_without docs
 
 Name:    python-module-%modulename
-Version: 6.4.3
+Version: 6.6.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -20,11 +20,15 @@ BuildRequires: python-devel
 BuildRequires: python-module-distribute
 BuildRequires: python2.7(sybil) python2.7(mock) python2.7(django.db) python2.7(zope.component)
 BuildRequires: python2.7(pkginfo)
+BuildRequires: python-module-twisted-logger
+BuildRequires: python-module-twisted-core-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
 BuildRequires: python3(sybil) python3(mock) python3(django.db) python3(zope.component)
+BuildRequires: python3-module-twisted-logger
+BuildRequires: python3-module-twisted-core-test
 %endif
 %if_with docs
 BuildRequires: python-module-sphinx-devel
@@ -115,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt1
+- New version.
+
 * Fri Jan 11 2019 Andrey Cherepanov <cas@altlinux.org> 6.4.3-alt1
 - New version.
 
