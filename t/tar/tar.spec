@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -64,6 +64,9 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Sat Feb 23 2019 Dmitry V. Levin <ldv@altlinux.org> 1.32-alt1
+- release_1_31 -> release_1_32.
+
 * Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 1.31-alt1
 - tar: release_1_30-38-g3c2a2cd -> release_1_31 (fixes: CVE-2018-20482).
 - gnulib: v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
