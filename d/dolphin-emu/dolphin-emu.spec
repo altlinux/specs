@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt10
+Release: alt11
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -95,6 +95,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 5.0-alt11
+- Rebuilt with new SFML
+
 * Tue Jan 15 2019 Nazarov Denis <nenderus@altlinux.org> 5.0-alt10
 - Remove %ubt macro
 

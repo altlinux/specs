@@ -1,8 +1,8 @@
-%define soversion 2.4
+%define soversion 2.5
 
 Name: SFML
-Version: 2.4.2
-Release: alt3
+Version: 2.5.1
+Release: alt1
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -10,8 +10,7 @@ Group: System/Libraries
 
 Url: http://www.sfml-dev.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-# https://github.com/%name/%name/archive/%version.tar.gz
-Source: %name-%version.tar.gz
+Source: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -27,11 +26,9 @@ BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libflac-devel
-BuildRequires: libjpeg-devel
 BuildRequires: libopenal-devel
 BuildRequires: libudev-devel
 BuildRequires: libvorbis-devel
-BuildRequires: libxcbutil-image-devel
 
 %description
 SFML is a simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing, graphics, audio and network.
@@ -79,26 +76,22 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__rm -rf %buildroot%_datadir/%name/{license,readme}.txt
-
-# move FindSFML.cmake to the standard location
-%__mkdir_p %buildroot%_datadir/cmake/Modules
-%__mv %buildroot%_datadir/%name/cmake/Modules/Find%name.cmake %buildroot%_datadir/cmake/Modules
+%__rm -rf %buildroot%_datadir/%name/{license,readme}.md
 
 %files -n lib%name%soversion
-%doc changelog.txt license.txt readme.txt
+%doc changelog.md license.md readme.md
 %_libdir/libsfml-*.so.*
 
 %files -n lib%name-devel
-%dir %_datadir/%name
-%dir %_datadir/cmake
-%dir %_datadir/cmake/Modules
-%_datadir/cmake/Modules/Find%name.cmake
 %_includedir/%name
 %_pkgconfigdir/sfml-*.pc
 %_libdir/libsfml-*.so
+%_libdir/cmake/%name/%{name}*.cmake
 
 %changelog
+* Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 2.5.1-alt1
+- Version 2.5.1
+
 * Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 2.4.2-alt3
 - fixed build on aarch64
 

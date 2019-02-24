@@ -2,7 +2,7 @@
 
 Name: extreme-tuxracer
 Version: 0.7.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -71,6 +71,9 @@ EOF
 %_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 1:0.7.5-alt3
+- Rebuilt with new SFML
+
 * Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 1:0.7.5-alt2
 - Add desktop file (Closes: #26342).
 
