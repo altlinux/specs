@@ -1,5 +1,5 @@
 Name: git
-Version: 2.19.2
+Version: 2.21.0
 Release: alt1
 
 Summary: Git core and tools
@@ -70,7 +70,6 @@ This package contains core set of Git tools with minimal dependencies.
 Summary: Simple TCP git server for git repositories
 Group: System/Servers
 Requires: %name-core = %EVR
-PreReq: shadow-utils
 
 %description server
 Git is a fast, scalable, distributed revision control system with an
@@ -494,6 +493,9 @@ popd
 %doc contrib/diff-highlight/README
 
 %changelog
+* Sun Feb 24 2019 Dmitry V. Levin <ldv@altlinux.org> 2.21.0-alt1
+- 2.19.2 -> 2.21.0.
+
 * Wed Nov 21 2018 Dmitry V. Levin <ldv@altlinux.org> 2.19.2-alt1
 - 2.17.2 -> 2.19.2.
 
