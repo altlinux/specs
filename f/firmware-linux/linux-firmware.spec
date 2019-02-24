@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190213
+Version: 20190221
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Feb 24 2019 Cronbuild Service <cronbuild@altlinux.org> 20190221-alt1
+- upstream changes (GIT 54b0a74):
+  + WHENCE: Correct errant entries (thx Josh Boyer)
+  + amdgpu: update raven2 rlc firmware (thx Alex Deucher)
+  + amdgpu: drop raven2_sdma1.bin (thx Alex Deucher)
+  + Update firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + qca: Add firmware files for BT chip wcn3990. (thx Balakrishna Godavarthi)
+
 * Mon Feb 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20190213-alt1
 - upstream changes (GIT 710963f):
   + nvidia: add TU10x typec controller firmware (thx Ajay Gupta)
