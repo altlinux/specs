@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.18.1
-Release: alt1.1
+Version: 0.18.2
+Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -90,8 +90,11 @@ popd
 
 
 %changelog
+* Sun Feb 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
+- 0.18.2
+
 * Thu Jan 10 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1.1
-- skipped polkit tests
+- skipped broken polkit tests
 
 * Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - 0.18.1
