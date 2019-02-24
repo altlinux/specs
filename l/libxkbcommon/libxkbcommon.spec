@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: libxkbcommon
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -97,6 +97,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Feb 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- updated to 0.8.4-1-g9badb4e
+
 * Sat Feb 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
