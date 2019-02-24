@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.1.91
+%define emacs_version 26.1.92
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -20,8 +20,8 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.1.91
-Release: alt4
+Version: 26.1.92
+Release: alt5
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1516,6 +1516,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 
 
 %changelog
+* Sat Feb 23 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.92-alt5
+- 26.1.92
+
 * Fri Feb 15 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.91-alt4
 - Fix FTBFS (#36101)
 
