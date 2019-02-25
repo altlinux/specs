@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -434,6 +434,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt4
+- cleanup plymouth theme
+
 * Mon Feb 11 2019 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt3
 - remove requires to pam-limits-desktop (ALT#36064)
 
