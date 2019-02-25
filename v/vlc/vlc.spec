@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.6
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -1378,6 +1378,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 3.0.6-alt2
+- added upstream path for build with libvpx-1.8.0
+
 * Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 3.0.6-alt1
 - 3.0.6
 
