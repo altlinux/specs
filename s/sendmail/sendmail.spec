@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.16.0.29
+%define tarbolversion 8.16.0.41
 
 Version: %tarbolversion
-Release: alt2
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Mon Feb 25 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.41-alt1
+- New version
+- enabled _FFR_AUTH_FAIL_LOG_USER
+
 * Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.29-alt2
 - disabled tcpwrappers support
 - rebuilt with openssl 1.1
