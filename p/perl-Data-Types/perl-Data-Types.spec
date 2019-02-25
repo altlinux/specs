@@ -15,7 +15,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %define _enable_test 1
 
 Name: perl-Data-Types
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Data-Types - validating and converting data types functions for Perl5 
@@ -25,7 +25,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/~dwheeler/Data-Types-0.07
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/Data-Types-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 23 2007
 BuildRequires: perl-Module-Build perl-Test-Pod
@@ -37,7 +37,7 @@ are more important than they typically are in Perl -- e.g., for database
 applications.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n Data-Types-%{version}
 %build
 %perl_vendor_build
 
@@ -51,6 +51,9 @@ applications.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
