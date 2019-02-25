@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 19.4
+Version: 19.5
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -51,6 +51,8 @@ This package provides noarch data needed for Fotox to work.
 %prep
 %setup -n %name
 chmod -x doc/*
+# fix for champlain > 0.12.16
+subst "s|\/lib\(champlain-\)|/\1|" Makefile
 
 %build
 %make_build PREFIX=/usr CXXFLAGS="%optflags -D_FILE_OFFSET_BITS=64"
@@ -79,6 +81,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Mon Feb 25 2019 Yuri N. Sedunov <aris@altlinux.org> 19.5-alt1
+- 19.5
+
 * Wed Jan 30 2019 Yuri N. Sedunov <aris@altlinux.org> 19.4-alt1
 - 19.4
 
