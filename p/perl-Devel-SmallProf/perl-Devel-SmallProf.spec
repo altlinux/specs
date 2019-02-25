@@ -15,7 +15,7 @@
 
 Name: perl-Devel-SmallProf
 Version: 2.02
-Release: alt2
+Release: alt3
 
 Summary: per-line Perl profiler
 
@@ -28,6 +28,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 BuildArch: noarch
 Source: http://search.cpan.org//CPAN/authors/id/S/SA/SALVA/%m_distro-%version.tar.gz
 Patch: Devel-SmallProf-2.02-alt-perl522.patch
+Patch1: 0001-Remove-DB-sub-declaration.patch
 
 # Automatically added by buildreq on Wed Apr 09 2008
 BuildRequires: perl-devel
@@ -68,7 +69,8 @@ or a perl script:
 
 %prep
 %setup -q -n %m_distro-%version
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %perl_vendor_build
@@ -81,6 +83,9 @@ or a perl script:
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.02-alt3
+- fixed build with perl 528
+
 * Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt2
 - NMU: fixed build with perl 522
 
