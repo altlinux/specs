@@ -33,7 +33,11 @@
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
+%ifarch %ix86 %arm %mips32 ppc
+%def_disable rbd
+%else
 %def_enable rbd
+%endif
 %def_enable libnfs
 %def_enable seccomp
 %def_enable glusterfs
@@ -109,7 +113,7 @@
 
 Name: qemu
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -202,17 +206,17 @@ BuildRequires: libtasn1-devel
 %global requires_all_modules         \
 Requires: %name-block-curl = %EVR    \
 Requires: %name-block-dmg = %EVR     \
-Requires: %name-block-gluster = %EVR \
-Requires: %name-block-iscsi = %EVR   \
-Requires: %name-block-nfs = %EVR     \
-Requires: %name-block-rbd = %EVR     \
-Requires: %name-audio-alsa = %EVR    \
-Requires: %name-audio-oss = %EVR     \
-Requires: %name-audio-pa = %EVR      \
-Requires: %name-audio-sdl = %EVR     \
-Requires: %name-ui-curses = %EVR     \
-Requires: %name-ui-gtk = %EVR        \
-Requires: %name-ui-sdl = %EVR 
+%{?_enable_glusterfs:Requires: %name-block-gluster = %EVR} \
+%{?_enable_libiscsi:Requires: %name-block-iscsi = %EVR}   \
+%{?_enable_libnfs:Requires: %name-block-nfs = %EVR}     \
+%{?_enable_rbd:Requires: %name-block-rbd = %EVR}     \
+%{?_enable_alsa:Requires: %name-audio-alsa = %EVR}    \
+%{?_enable_oss:Requires: %name-audio-oss = %EVR}     \
+%{?_enable_pulseaudio:Requires: %name-audio-pa = %EVR}      \
+%{?_enable_sdl:Requires: %name-audio-sdl = %EVR}     \
+%{?_enable_curses:Requires: %name-ui-curses = %EVR}     \
+%{?_enable_gtk:Requires: %name-ui-gtk = %EVR}        \
+%{?_enable_sdl:Requires: %name-ui-sdl = %EVR}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -533,7 +537,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %package system-x86
 Summary: QEMU system emulator for x86
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-x86-core = %EVR
 %requires_all_modules
 
@@ -575,7 +578,6 @@ platform.
 %package system-alpha
 Summary: QEMU system emulator for Alpha
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-alpha-core = %EVR
 %requires_all_modules
 %description system-alpha
@@ -598,7 +600,6 @@ This package provides the system emulator for Alpha systems.
 %package system-arm
 Summary: QEMU system emulator for ARM
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-arm-core = %EVR
 %requires_all_modules
 %description system-arm
@@ -621,7 +622,6 @@ This package provides the system emulator for ARM boards.
 %package system-mips
 Summary: QEMU system emulator for MIPS
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-mips-core = %EVR
 %requires_all_modules
 %description system-mips
@@ -644,7 +644,6 @@ This package provides the system emulator for MIPS boards.
 %package system-cris
 Summary: QEMU system emulator for CRIS
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-cris-core = %EVR
 %requires_all_modules
 %description system-cris
@@ -667,7 +666,6 @@ This package provides the system emulator for CRIS boards.
 %package system-hppa
 Summary: QEMU system emulator for HPPA
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-cris-core = %EVR
 %requires_all_modules
 %description system-hppa
@@ -683,7 +681,6 @@ This package provides the QEMU system emulator for HPPA.
 %package system-lm32
 Summary: QEMU system emulator for LatticeMico32
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-lm32-core = %EVR
 %requires_all_modules
 %description system-lm32
@@ -706,7 +703,6 @@ This package provides the system emulator for LatticeMico32 boards.
 %package system-m68k
 Summary: QEMU system emulator for ColdFire (m68k)
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-m68k-core = %EVR
 %requires_all_modules
 %description system-m68k
@@ -729,7 +725,6 @@ This package provides the system emulator for ColdFire boards.
 %package system-microblaze
 Summary: QEMU system emulator for Microblaze
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-microblaze-core = %EVR
 %requires_all_modules
 %description system-microblaze
@@ -752,7 +747,6 @@ This package provides the system emulator for Microblaze boards.
 %package system-or1k
 Summary: QEMU system emulator for OpenRisc32
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-or1k-core = %EVR
 %requires_all_modules
 %description system-or1k
@@ -775,7 +769,6 @@ This package provides the system emulator for OpenRisc32 boards.
 %package system-s390x
 Summary: QEMU system emulator for S390
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-s390x-core = %EVR
 %requires_all_modules
 %description system-s390x
@@ -798,7 +791,6 @@ This package provides the system emulator for S390 systems.
 %package system-sh4
 Summary: QEMU system emulator for SH4
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-sh4-core = %EVR
 %requires_all_modules
 %description system-sh4
@@ -821,7 +813,6 @@ This package provides the system emulator for SH4 boards.
 %package system-sparc
 Summary: QEMU system emulator for SPARC
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-sparc-core = %EVR
 %requires_all_modules
 %description system-sparc
@@ -846,7 +837,6 @@ This package provides the system emulator for SPARC and SPARC64 systems.
 %package system-ppc
 Summary: QEMU system emulator for PPC
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-ppc-core = %EVR
 %requires_all_modules
 %description system-ppc
@@ -888,7 +878,6 @@ This package provides the QEMU system emulator for RISC-V systems.
 %package system-xtensa
 Summary: QEMU system emulator for Xtensa
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-xtensa-core = %EVR
 %requires_all_modules
 %description system-xtensa
@@ -911,7 +900,6 @@ This package provides the system emulator for Xtensa boards.
 %package system-unicore32
 Summary: QEMU system emulator for Unicore32
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-unicore32-core = %EVR
 %requires_all_modules
 %description system-unicore32
@@ -934,7 +922,6 @@ This package provides the system emulator for Unicore32 boards.
 %package system-moxie
 Summary: QEMU system emulator for Moxie
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-moxie-core = %EVR
 %requires_all_modules
 %description system-moxie
@@ -957,7 +944,6 @@ This package provides the system emulator for Moxie boards.
 %package system-aarch64
 Summary: QEMU system emulator for AArch64
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-aarch64-core = %EVR
 %requires_all_modules
 %description system-aarch64
@@ -988,7 +974,6 @@ This package provides the system emulator for AArch64.
 %package system-tricore
 Summary: QEMU system emulator for tricore
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-tricore-core = %EVR
 %requires_all_modules
 %description system-tricore
@@ -1011,7 +996,6 @@ This package provides the system emulator for Tricore.
 %package system-nios2
 Summary: QEMU system emulator for nios2
 Group: Emulators
-BuildArch: noarch
 Requires: %name-system-nios2-core = %EVR
 %requires_all_modules
 %description system-nios2
@@ -1612,6 +1596,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Fri Feb 22 2019 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt2
+- disable support ceph on 32-bit arch
+
 * Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
 - 3.1.0
 

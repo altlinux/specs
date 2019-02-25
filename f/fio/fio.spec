@@ -1,12 +1,17 @@
 %def_enable gfio
 %def_enable numa
-%def_enable rbd
 %def_enable gfapi
 %def_enable rdmacm
+%ifarch %ix86 %arm %mips32 ppc
+%def_disable rbd
+%else
+%def_enable rbd
+%endif
+%def_enable http
 
 Name: fio
-Version: 3.0
-Release: alt2
+Version: 3.13
+Release: alt1
 
 Summary: IO testing tool
 License: GPLv2
@@ -23,6 +28,7 @@ BuildRequires: libaio-devel zlib-devel python-module-sphinx
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_gfapi:BuildRequires: libglusterfs3-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel}
+%{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -60,6 +66,7 @@ This package conteon gtk frontend for %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 ./configure \
@@ -93,6 +100,11 @@ This package conteon gtk frontend for %name
 %_bindir/gfio
 
 %changelog
+* Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.13-alt1
+- 3.13
+- disable support ceph on 32-bit arch
+- build with http support for WebDAV and S3
+
 * Tue Aug 29 2017 Terechkov Evgenii <evg@altlinux.org> 3.0-alt2
 - Build documentation
 
