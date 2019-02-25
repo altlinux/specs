@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-calculator-plugin
-Version: 0.6.90
+Version: 0.7.0
 Release: alt1
 
 Summary: A calculator plugin for the Xfce panel
@@ -50,6 +50,9 @@ make check
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Feb 25 2019 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Mon Jan 14 2019 Mikhail Efremov <sem@altlinux.org> 0.6.90-alt1
 - Enable debug (minimum level).
 - Update url.
