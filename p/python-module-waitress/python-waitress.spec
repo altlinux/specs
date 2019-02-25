@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Waitress WSGI server
 License: ZPLv2.1
@@ -105,6 +105,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/waitress-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Feb 25 2019 Stanislav Levin <slev@altlinux.org> 1.2.1-alt2
+- Fixed test (test_functional.SleepyThreadTests, closes: #36156).
+
 * Sun Feb 03 2019 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 0.8.10 -> 1.2.1.
 - Enabled testing.
