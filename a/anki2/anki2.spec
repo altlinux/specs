@@ -1,6 +1,6 @@
 Name: anki2
 Version: 2.0.50
-Release: alt1
+Release: alt2
 Summary: Flashcard program for using space repetition learning
 
 Group: Games/Educational
@@ -10,9 +10,9 @@ Source0: %name-%version.tar
 
 Conflicts: anki < %version-%release
 
-# Automatically added by buildreq on Wed Apr 18 2018 (-bb)
-# optimized out: fontconfig libqt4-core libqt4-xml perl python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope rpm-build-python3 shared-mime-info xz
-BuildRequires: desktop-file-utils kdelibs libicu56 python-module-PyQt4 python3-module-yieldfrom rpm-build-gir selinux-policy xdg-utils
+# Automatically added by buildreq on Mon Feb 25 2019 (-bb)
+# optimized out: bash4 bashrc libqt4-core libqt4-xml perl python-base python-module-nose python-modules python-modules-compiler python3 python3-base rpm-build-python3 sh4 shared-mime-info xz
+BuildRequires: desktop-file-utils libicu62 libnss-myhostname python-module-PyQt4 python3-dev python3-module-yieldfrom rpm-build-gir selinux-policy xdg-utils
 
 #BuildRequires: python-module-setuptools 
 #BuildRequires: python-modules-sqlite3 python-module-SQLAlchemy
@@ -77,6 +77,9 @@ install -m 644 designer/icons/anki.png %buildroot%_datadir/pixmaps/
 %doc README* LICENSE LICENSE.logo
 
 %changelog
+* Mon Feb 25 2019 Denis Smirnov <mithraen@altlinux.ru> 2.0.50-alt2
+- fix build
+
 * Tue Apr 17 2018 Denis Smirnov <mithraen@altlinux.ru> 2.0.50-alt1
 - first build for Sisyphus
 
