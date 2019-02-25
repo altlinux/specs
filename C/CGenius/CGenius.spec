@@ -1,23 +1,17 @@
 Name: CGenius
-Version: 1.9.9.6beta
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: the clone of Commander Keen
 License: GPL
 Group: Games/Arcade
 Url: http://clonekeenplus.sourceforge.net
 
-# git://github.com/gerstrong/Commander-Genius.git
-# GIT commit 91d6de9
-#Source: %name-%version.tar
-# https://github.com/gerstrong/Commander-Genius/archive/v1996beta.tar.gz
-Source: Commander-Genius-1996beta.tar.gz
+Source: https://gitlab.com/Dringgstein/Commander-Genius/-/archive/v%version/Commander-Genius-v%version.tar.bz2
 
-Patch0: %name-g++8.patch
-
-# Automatically added by buildreq on Fri Sep 15 2017
-# optimized out: cmake-modules libSDL2-devel libX11-devel libogg-devel libstdc++-devel pkg-config python-base python-modules xorg-xproto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libGL-devel libSDL2_image-devel libcurl-devel libvorbis-devel zlib-devel
+# Automatically added by buildreq on Fri Feb 08 2019
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libsasl2-3 libstdc++-devel python-base python-modules python3 python3-base sh4 xorg-proto-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ libSDL2_image-devel libSDL2_mixer-devel libcurl-devel python3-dev zlib-devel
 
 %description
 Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which
@@ -75,10 +69,8 @@ in the first three episodes of the game. High quality SVGA tilesets have been
 added to Episode 1, 2, 3 and 4 so far. More is about to come!
 
 %prep
-%setup -n Commander-Genius-1996beta
+%setup -n Commander-Genius-v%version
 rm -rf Build dlls
-
-%patch0 -p2
 
 %build
 %cmake \
@@ -107,6 +99,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Mon Feb 25 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.3.1-alt1
+- new version
+
 * Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.9.6beta-alt2
 - no return statement in the non-void function fixed (according g++8)
 
