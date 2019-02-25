@@ -16,7 +16,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    5.0.13
-Release:    alt1
+Release:    alt2
 
 Summary:    Tapper frontend web application based on Catalyst
 License:    GPL+ or Artistic
@@ -89,12 +89,14 @@ BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
 Source44: import.info
+Patch: Tapper-Reports-Web-5.0.13-syntax.patch
 
 %description
 Tapper frontend web application based on Catalyst.
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
+%patch -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -127,6 +129,9 @@ Tapper frontend web application based on Catalyst.
 
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.13-alt2
+- fixed build
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.13-alt1
 - automated CPAN update
 
