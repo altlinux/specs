@@ -1,5 +1,5 @@
-%define git_hash .git542e340f01b2
-#define git_hash %nil
+#define git_hash .git542e340f01b2
+%define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -47,7 +47,7 @@
 %ifarch %e2k
 %define more_warnings no
 %else
-%define more_warnings yes
+%define more_warnings error
 %endif
 
 %define _name %name-daemon
@@ -58,8 +58,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.14.5
-Release: alt3%git_hash
+Version: 1.15.90
+Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -67,7 +67,7 @@ Url: http://www.gnome.org/projects/NetworkManager/
 # git://git.freedesktop.org/git/NetworkManager/NetworkManager.git
 Source: %name-%version.tar
 Source1: %name.conf
-Source2: 50-ntpd
+Source2: 50-ntp
 Source5: 20-hostname
 Source6: NetworkManager.sysconfig
 Source7: 30-efw
@@ -84,9 +84,9 @@ BuildRequires(pre): rpm-build-licenses
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
-BuildRequires: iproute2 libnl-devel libwireless-devel ppp-devel
+BuildRequires: iproute2 ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
-BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc perl-YAML
+BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc
 BuildRequires: libudev-devel
 BuildRequires: iptables
 BuildRequires: libmm-glib-devel
@@ -100,6 +100,7 @@ BuildRequires: python-module-pygobject3
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala}
 %{?_enable_vala:BuildRequires: vala-tools}
 # For create-exports-NetworkManager.sh
 BuildRequires: /proc
@@ -458,10 +459,8 @@ GObject introspection devel data for the NetworkManager.
 	--enable-modify-system=no \
 	--enable-etcnet-alt \
 	--disable-ifcfg-rh \
-	--disable-ifcfg-suse \
 	--disable-ifupdown \
-	--disable-ifnet \
-	--disable-ibft \
+	--enable-config-plugin-ibft \
 	--with-config-plugins-default='etcnet-alt' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
@@ -488,10 +487,10 @@ GObject introspection devel data for the NetworkManager.
 %endif
 	--with-libpsl=yes \
 %if_enabled sanitizers
-	--enable-address-sanitizer \
+	--with-address-sanitizer=yes \
 	--enable-undefined-sanitizer \
 %else
-	--disable-address-sanitizer \
+	--without-address-sanitizer \
 	--disable-undefined-sanitizer \
 %endif
 %if_with libnm_glib
@@ -770,6 +769,24 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 25 2019 Mikhail Efremov <sem@altlinux.org> 1.15.90-alt1
+- Drop non-existent plugins from configure options.
+- Fix configure options for support sanitizer build.
+- Fix configure option to disable ibft plugin.
+- Treat warnings as errors again.
+- Add rpm-build-vala to BR(pre).
+- dispatcher hooks: Rename 50-ntpd -> 50-ntp.
+- dispatcher hooks: Rewrite 50-ntpd.
+- etcnet-alt: Update copyright year.
+- etcnet-alt: Drop get_ether_addr_array() declaration.
+- etcnet-alt: Fix read_supplicant_network() if no memory.
+- etcnet-alt: Fix headers scope in the includes.
+- Drop perl-YAML from BR.
+- Drop libwireless-devel from BR.
+- etcnet-alt: Drop unneeded includes.
+- Drop libnl from BR.
+- Updated to 1.15.90 (1.16-rc1).
+
 * Fri Jan 25 2019 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt3.git542e340f01b2
 - Fix build: don't treat warnings as errors.
 - Upstream git snapshot (nm-1-14 branch).
