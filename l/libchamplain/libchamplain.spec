@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name champlain
 %define ver_major 0.12
@@ -7,9 +7,11 @@
 %def_enable vala
 %def_enable gtk_doc
 %def_disable memphis
+%def_enable demos
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.16
+Version: %ver_major.18
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -23,19 +25,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.16
+%define glib_ver 2.38
 %define cairo_ver 1.4
 %define gtk_ver 3.0.1
-%define clutter_ver 1.12
+%define clutter_ver 1.24
 %define soup_ver 2.42
 %define gir_ver 0.10.3
 %define memphis_ver 0.2.1
 
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libclutter-devel >= %clutter_ver
-BuildPreReq: libsoup-devel >= %soup_ver
+BuildRequires(pre): meson
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libclutter-devel >= %clutter_ver
+BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libclutter-gtk3-devel libsoup-devel libsqlite3-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_memphis:BuildRequires: libmemphis-devel >= %memphis_ver}
@@ -58,9 +61,12 @@ Summary: Development documentation for %name
 Group: Development/C
 BuildArch: noarch
 Conflicts: %name < %version
+Obsoletes: %name-gtk3-devel-doc < 0.12.17
+Provides: %name-gtk3-devel-doc = %version-%release
 
 %description devel-doc
-This package contains development documentation for %name.
+This package contains development documentation for %name and %name-gtk
+libraries.
 
 %package gtk3
 Summary: Gtk+ widget wrapper for %name
@@ -132,19 +138,20 @@ GObject introspection devel data for the Libchamplain library
 %setup -n %name-%version
 
 %build
-gtkdocize --copy
-%autoreconf
-%configure --disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable vala} \
-	%{?_disable_vala:--disable-vala-demos} \
-	--enable-introspection=auto \
-	%{subst_enable memphis}
-
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_vala:-Dvapi=false} \
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_enable_demos:-Ddemos=true} \
+	%{?_enable_memphis:-Dmemphis=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -152,35 +159,34 @@ gtkdocize --copy
 
 %files devel
 %_libdir/%name-%api_ver.so
-%dir %_includedir/%name-%api_ver
-%_includedir/%name-%api_ver/champlain
+%dir %_includedir/%_name-%api_ver
+%_includedir/%_name-%api_ver/%_name
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/%_name-%api_ver.vapi
+%{?_enable_vala:%_vapidir/%_name-%api_ver.*}
 %doc demos/animated-marker.c
 %doc demos/launcher.c
 %doc demos/polygons.c
 
-#%if_enabled gtk_doc
+%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%name-%ver_major/
-#%endif
+%_datadir/gtk-doc/html/%_name-%ver_major/
+%endif
 
 %files gtk3
 %_libdir/%name-gtk-%api_ver.so.*
 
 %files gtk3-devel
 %_libdir/%name-gtk-%api_ver.so
-%dir %_includedir/%name-gtk-%api_ver
-%_includedir/%name-gtk-%api_ver/%_name-gtk
+%_includedir/%_name-%api_ver/%_name-gtk
 %_pkgconfigdir/%_name-gtk-%api_ver.pc
-%_vapidir/%_name-gtk-%api_ver.vapi
+%{?_enable_vala:%_vapidir/%_name-gtk-%api_ver.*}
 %doc demos/launcher-gtk.c
 %doc demos/markers.c
 
-#%if_enabled gtk_doc
-%files gtk3-devel-doc
-%_datadir/gtk-doc/html/%name-gtk-%ver_major/
-#%endif
+%if_enabled gtk_doc
+#%files gtk3-devel-doc
+#%_datadir/gtk-doc/html/%name-gtk-%ver_major/
+%endif
 
 %if_enabled introspection
 %files gir
@@ -197,6 +203,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Sun Feb 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.18-alt1
+- updated to LIBCHAMPLAIN_0_12_18-10-g20cd17c
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.12.16-alt1
 - 0.12.16
 
