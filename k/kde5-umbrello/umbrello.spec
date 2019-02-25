@@ -1,8 +1,8 @@
 %define rname umbrello
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -59,6 +59,9 @@ standard language.
 
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Mon Dec 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - fix compile with new Qt
 

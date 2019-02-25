@@ -2,8 +2,8 @@
 %def_disable tunepimp
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Sound
@@ -75,6 +75,9 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 %_K5srv/ServiceMenus/*juk*
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

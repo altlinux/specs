@@ -30,8 +30,8 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 18.04.3
-Release: alt4
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Networking/Instant messaging
@@ -283,9 +283,9 @@ done
 %files -n %libkopete_videodevice
 %_K5lib/libkopete_videodevice.so.*
 %_K5lib/libkopete_videodevice.so.%sover
-%files -n %libkyahoo
-%_K5lib/libkyahoo.so.*
-%_K5lib/libkyahoo.so.%sover
+#%files -n %libkyahoo
+#%_K5lib/libkyahoo.so.*
+#%_K5lib/libkyahoo.so.%sover
 %files -n %libkopeteaddaccountwizard
 %_K5lib/libkopeteaddaccountwizard.so.*
 %_K5lib/libkopeteaddaccountwizard.so.%sover
@@ -323,6 +323,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Fri Dec 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
 - return XMPP
 

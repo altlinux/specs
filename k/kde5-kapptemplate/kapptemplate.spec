@@ -1,8 +1,8 @@
 %define rname kapptemplate
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -49,6 +49,9 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 %_K5xdgapp/*kapptemplate.desktop
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Nov 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - wrap picture label text
 
