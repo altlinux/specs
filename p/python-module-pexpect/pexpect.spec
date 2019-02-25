@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6
-Release: alt2
+Release: alt3
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
 License: Python Software Foundation License
@@ -173,6 +173,13 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Feb 25 2019 Stanislav Levin <slev@altlinux.org> 4.6-alt3
+- Fixed testing:
+  + increased timeout for test_large_stdout_stream
+  + skipped assertion of trailing output (test_interact_escape_None
+    and test_interact_exit_unicode)
+  + added closing of child in test_spawn_uses_env
+
 * Fri Feb 01 2019 Grigory Ustinov <grenka@altlinux.org> 4.6-alt2
 - Fixed FTBFS (Added BR on python-module-pyte) (Closes: #36015).
 
