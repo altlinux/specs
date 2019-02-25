@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON
 Name: perl-%dist
-Version: 4.01
+Version: 4.02
 Release: alt1
 
 Summary: Parse and convert to JSON (JavaScript Object Notation)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/JSON-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ This module converts between JSON (JavaScript Object Notation)
 and Perl data structure into each other.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n JSON-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ and Perl data structure into each other.
 %perl_vendor_privlib/JSON*
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.02-alt1
+- automated CPAN update
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1
 - automated CPAN update
 
