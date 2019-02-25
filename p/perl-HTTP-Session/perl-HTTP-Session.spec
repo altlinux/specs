@@ -1,6 +1,7 @@
+%define __spec_autodep_custom_pre export PERL5OPT='-MCarp'
 Name: perl-HTTP-Session
 Version: 0.49
-Release: alt1
+Release: alt2
 Summary: HTTP::Session - simple session
 
 Group: Development/Perl
@@ -28,6 +29,9 @@ BuildRequires: perl-devel perl-HTTP-Message perl-CGI-Simple perl-Module-Runtime 
 %doc Changes README*
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.49-alt2
+- fixed build
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
