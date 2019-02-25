@@ -1,9 +1,9 @@
 %define module_name     vhba
 %define module_version  20170610
-%define module_release alt1.k
+%define module_release alt2
 
 %define flavour         std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -60,7 +60,7 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %module_dir/%module_name.ko
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
 * Mon Jul 31 2017 Nazarov Denis <nenderus@altlinux.org> 20170610-alt1
