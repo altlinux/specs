@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-DBIx-Class-Schema-Config
-Version: 0.001012
+Version: 0.001013
 Release: alt1
 Summary: Credential Management for DBIx::Class
 License: GPL+ or Artistic
@@ -55,6 +55,9 @@ manage database credentials.
 %perl_vendorlib/DBIx/Class/Schema*
 
 %changelog
+* Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.001013-alt1
+- automated CPAN update
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.001012-alt1
 - automated CPAN update
 
