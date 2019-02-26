@@ -1,6 +1,6 @@
 Name: devscripts
 Version: 2.19.3
-Release: alt1
+Release: alt2
 Source: %{name}_%version.tar.xz
 Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
@@ -94,6 +94,7 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %exclude %_bindir/checkbashisms
 %exclude %_man1dir/checkbashisms.1*
 %exclude %_datadir/bash-completion/completions/checkbashisms
+%exclude %_datadir/bash-completion/completions/bts
 
 %files -n checkbashisms
 %_bindir/checkbashisms
@@ -105,6 +106,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Feb 26 2019 Fr. Br. George <george@altlinux.ru> 2.19.3-alt2
+- REmove conflict woth bash-completion
+
 * Mon Feb 18 2019 Fr. Br. George <george@altlinux.ru> 2.19.3-alt1
 - Autobuild version bump to 2.19.3
 
