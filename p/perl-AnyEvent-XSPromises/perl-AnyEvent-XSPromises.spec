@@ -6,7 +6,7 @@ BuildRequires: libsowing-devel perl(AnyEvent.pm) perl(Exporter.pm) perl(ExtUtils
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.004
+Version: 0.005
 Release: alt1
 Summary: Another Promises library, this time implemented in XS for performance
 Group: Development/Perl
@@ -36,6 +36,9 @@ of database queries per second from a single Perl process, those extra microseco
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Feb 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
+- automated CPAN update
+
 * Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
 - automated CPAN update
 
