@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt127
+Release: alt128
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -86,7 +86,7 @@ Source: rpm-%version-%release.tar
 %{?_with_selinux:BuildPreReq: libselinux-devel >= 2.0.96}
 %{?_with_profile:BuildPreReq: coreutils >= 6.0}
 
-BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel >= 4.2.1,
+BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel >= 4.2.1
 BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 
 # For debugedit.
@@ -542,6 +542,26 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Mon Feb 25 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt128
+- Reverted one of the changes (for disttag-unaware tools compatibility)
+  from 4.0.4-alt127 (useful in rare cases, but bad for external dependencies
+  on virtual Provides when interpreted by the old rpm):
+  + %%EVR macro (for intersubpackage deps) upgraded to include %%disttag
+- Always fix interpackage deps that need Epoch or Disttag (ALT#36180).
+  (This completes the improvement of 4.0.4-alt100.63.)
+- Made deps optimization more aware of disttag:
+  + build/reqprov.c: made addReqProv() aware of the disttag of
+    the package (affects deps optimization).
+  + add disttag to struct availablePackage (like buildtime; affects
+    rpm -U & interdep.c)
+  [rpm-4.13.0.1-alt5 alike]
+  + Implemented DistTag support when comparing package versions (with
+    help by Vladimir D. Seleznev).
+  [rpm-4.13.0.1-alt6 alike]
+  + rpmEVRcmp() (and hence rpmRangesOverlap()) made asymmetric w.r.t.
+    underspecified release. (Provides: N = V can't anymore satisfy
+    Requires: N = V-R.) (with help of Vladimir D. Seleznev)
+
 * Tue Feb 19 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt127
 - Make "new" packages (with disttags) be treated better
   by the "old" disttag-unaware rpm in some cases; primarily those with
