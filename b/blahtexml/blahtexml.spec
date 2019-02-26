@@ -1,6 +1,6 @@
 Name: blahtexml
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: TeX / MathML converter
 
@@ -41,6 +41,9 @@ install -p -D -m0755 blahtexml %buildroot%_bindir/blahtexml
 %_bindir/blahtexml
 
 %changelog
+* Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt2
+- rebuild with libxerces-c-3.2.2
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - new version 0.9 (with rpmrb script)
 
