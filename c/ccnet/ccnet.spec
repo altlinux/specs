@@ -1,17 +1,16 @@
-%def_disable server
 Name: ccnet
-Version: 6.1.8
-Release: alt1.1
+Version: 6.3.4
+Release: alt2
 
 Summary: Framework for writing networked applications in C
 
 Group: Networking/File transfer
 License: GPLv2 with permissions for OpenSSL
-Url: https://github.com/haiwen/ccnet
+Url: https://github.com/haiwen/ccnet-server
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/haiwen/ccnet/archive/v%version.tar.gz
+# Source-url: https://github.com/haiwen/ccnet-server/archive/v%version-server.tar.gz
 Source: %name-%version.tar
 
 # manually removed: python-module-mwlib 
@@ -25,12 +24,12 @@ BuildRequires: libsearpc-devel >= 3.0.4
 
 BuildRequires: vala >= 0.8
 
-%if_enabled server
-# server requirements
-BuildRequires: libzdb-devel >= 2.10.2
-%endif
+# TODO: postgresql
+BuildRequires: libmysqlclient-devel
 
-Requires: lib%name = %version-%release
+BuildRequires: libzdb-devel >= 2.10.2
+
+#Requires: lib%name = %version-%release
 
 %description
 Ccnet is a framework for writing networked applications in C.
@@ -58,6 +57,7 @@ Summary: Ccnet server
 Requires: lib%name = %version-%release
 Requires: %name = %version-%release
 Group: Networking/File transfer
+Conflicts: %name < %EVR
 
 %description server
 Ccnet server part.
@@ -77,8 +77,7 @@ Ccnet python module.
 
 %build
 %autoreconf
-%configure --disable-static \
-           %subst_enable server
+%configure --disable-static
 
 # smp build does not work
 %make_build || %make
@@ -87,8 +86,7 @@ Ccnet python module.
 %makeinstall_std
 
 %files
-%_bindir/ccnet
-%_bindir/ccnet-init
+#_bindir/ccnet
 #%_bindir/ccnet-tool
 
 %files -n lib%name
@@ -97,11 +95,10 @@ Ccnet python module.
 %files -n python-module-%name
 %python_sitelibdir/%name/
 
-%if_enabled server
 %files server
+%_bindir/ccnet-init
 %_bindir/%name-server
-%_bindir/%name-servtool
-%endif
+#_bindir/%name-servtool
 
 %files -n lib%name-devel
 %doc HACKING
@@ -111,6 +108,13 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3.4-alt2
+- rebuild with libevent2.1
+
+* Sun Oct 07 2018 Vitaly Lipatov <lav@altlinux.ru> 6.3.4-alt1
+- new version (6.3.4) with rpmgs script
+- build from ccnet-server only for SeaFile server purposes
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 6.1.8-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
