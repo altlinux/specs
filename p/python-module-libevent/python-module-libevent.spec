@@ -2,7 +2,7 @@
 
 Name: python-module-libevent
 Version: 0.9.2
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for libevent
 
@@ -37,15 +37,16 @@ timed events and signal handlers.
 %python_install
 
 %files
-#%python_sitelibdir/%modulename/
-#%python_sitelibdir/%modulename-%version-*.egg-info
 %python_sitelibdir/_libevent.so
 %python_sitelibdir/libevent.py
 %python_sitelibdir/libevent.pyc
 %python_sitelibdir/libevent.pyo
-%python_sitelibdir/python_libevent-%version-*.egg-info/*
+%python_sitelibdir/python_libevent-%version-*.egg-*
 
 %changelog
+* Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt3
+- rebuid with libevent2.1
+
 * Sun Nov 10 2013 Denis Baranov <baraka@altlinux.ru> 0.9.2-alt2
 - Fix requires
 
