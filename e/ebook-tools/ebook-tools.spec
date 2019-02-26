@@ -1,7 +1,7 @@
 
 Name: ebook-tools
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Group: Publishing
 Summary: Tools for accessing and converting various ebook file formats
@@ -14,8 +14,10 @@ Patch2: ebook-tools-0.2.2-fix-version.patch
 
 # Automatically added by buildreq on Mon Aug 31 2009 (-bi)
 #BuildRequires: cmake doxygen gcc-c++ ghostscript-utils graphviz latex2html libxml2-devel libzip-devel xml-utils
-BuildRequires: cmake doxygen gcc-c++ ghostscript-utils graphviz latex2html libxml2-devel libzip-devel xml-utils
 BuildRequires: kde-common-devel
+BuildRequires: cmake gcc-c++ xml-utils
+BuildRequires: doxygen ghostscript-utils graphviz latex2html
+BuildRequires: libxml2-devel libzip-devel zlib-devel
 
 %description
 Tools for accessing and converting various ebook file formats
@@ -66,6 +68,9 @@ based on %name
 %_libdir/lib*.so
 
 %changelog
+* Tue Feb 26 2019 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt3
+- fix build requires
+
 * Tue Dec 15 2015 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt2
 - rebuild with new libzip
 
