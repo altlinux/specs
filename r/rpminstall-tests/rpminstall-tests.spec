@@ -1,6 +1,6 @@
 Name: rpminstall-tests
-Version: 1.0
-Release: alt4
+Version: 1.1
+Release: alt1
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -70,6 +70,12 @@ cd  "$tmpdir"; \
 '
 
 %changelog
+* Mon Feb 25 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1
+- Test the upgradable order
+  (a package can be upgraded only to a more fresh release or buildtime).
+- Marked one of the new tests XFAIL: strict buildtime-based
+  upgradability order is broken at least in rpm-4.13.0.1-alt5.
+
 * Thu Feb 21 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt4
 - In disttag, use xxx (instead of zzz), because rpm-build-4.0.4-alt127
   now uses z as the "maximal" disttag. This makes the tests more
