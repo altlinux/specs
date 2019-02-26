@@ -1,19 +1,21 @@
 Name: scanssh
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 Epoch: 1
 
 Summary: Network scaner for SSH servers and open proxies
-License: BSD-style
+License: BSD-3-Clause and BSD-4-Clause
 Group: Monitoring
 Url: https://github.com/ofalk/scanssh/wiki
 
-# https://github.com/ofalk/scanssh/archive/%name-%version.tar.gz
+# https://github.com/ofalk/scanssh/archive/%version.tar.gz
 Source: scanssh-%version.tar
 Source1: scanssh.control
-Patch1: scanssh-2.0-alt-configure.patch
-Patch2: scanssh-2.0-alt-log.patch
-Patch3: scanssh-2.1-alt-warnings.patch
+Patch1: scanssh-rh-configure.patch
+Patch2: scanssh-rh-makefile.patch
+Patch3: scanssh-alt-configure.patch
+Patch4: scanssh-2.0-alt-log.patch
+Patch5: scanssh-2.1-alt-warnings.patch
 
 Requires: control >= 0.6.1
 BuildRequires: libdnet-devel libevent-devel libpcap-devel
@@ -46,6 +48,8 @@ ScanSSH сканирует сеть по заданным адресам, выв
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %autoreconf
@@ -71,6 +75,9 @@ install -pD -m755 %_sourcedir/scanssh.control %buildroot%_controldir/scanssh
 %doc README.md
 
 %changelog
+* Tue Feb 26 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.2-alt1
+- 2.1.1 -> 2.1.2.
+
 * Thu Oct 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.1-alt1
 - Updated to 2.1.1.
 
