@@ -10,7 +10,7 @@
 
 Name:		telegraf
 Version:	1.9.2
-Release:	alt1
+Release:	alt2
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
 Group:		Development/Other
@@ -122,6 +122,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Feb 26 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.9.2-alt2
+- Added support parked ("P") state of processes.
+
 * Mon Jan 21 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
 - 1.9.2
 
