@@ -3,8 +3,8 @@
 %define libname libzip%sover
 %define utilsname libzip-utils
 Name: libzip
-Version: 1.4.0
-Release: alt1%ubt
+Version: 1.5.1
+Release: alt1
 
 Group: System/Libraries
 Summary: C library for reading, creating, and modifying zip archives
@@ -12,11 +12,11 @@ License: BSD
 Url: http://www.nih.at/libzip/
 
 Source: %name-%version.tar
-# FC
-Patch1: libzip-upstream.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ zlib-devel bzlib-devel cmake
+BuildRequires: gcc-c++ cmake
+BuildRequires: /usr/bin/groff
+BuildRequires: libssl-devel zlib-devel bzlib-devel
 
 %description
 libzip is a C library for reading, creating, and modifying zip archives. Files
@@ -52,7 +52,6 @@ developing applications that use %name.
 
 %prep
 %setup -q
-%patch1 -p1
 sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 
 %build
@@ -85,6 +84,9 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 %_man3dir/*ZIP*
 
 %changelog
+* Tue Feb 26 2019 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- new version
+
 * Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1%ubt
 - new version
 
