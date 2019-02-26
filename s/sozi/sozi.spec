@@ -1,5 +1,5 @@
 Name: sozi
-Version: 11.10.a
+Version: 12.09
 Release: alt1
 
 Summary: Makes SVG animated presentations that can be played in a browser
@@ -43,6 +43,7 @@ according to the terms of the GPL 3.0.
 cmake -DCMAKE_INSTALL_PREFIX=%buildroot%_usr \
       -Dinkscape_path=%buildroot%inkscape_dir \
       -Dminifier_type=sed
+export NPROCS=1
 %make_build
 
 %install
@@ -55,5 +56,11 @@ cmake -DCMAKE_INSTALL_PREFIX=%buildroot%_usr \
 %doc README samples
 
 %changelog
+* Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 12.09-alt1
+- Fixed multithread build errors.
+- Fresh up to version 12.09.
+- Fix the extension installation path.
+- Require Inkscape instead of 'inkex' module.
+
 * Tue Nov 15 2011 Paul Wolneykien <manowar@altlinux.ru> 11.10.a-alt1
 - Initial release for ALT Linux.
