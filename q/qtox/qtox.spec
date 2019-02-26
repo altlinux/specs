@@ -1,7 +1,7 @@
 %def_with ffmpeg
 Name: qtox
 Version: 1.16.3
-Release: alt1
+Release: alt2
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -70,6 +70,9 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.16.3-alt2
+- rebuild with libqrencode4
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.16.3-alt1
 - new version 1.16.3 (with rpmrb script)
 
