@@ -1,8 +1,8 @@
 %define rname ktp-filetransfer-handler
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -79,6 +79,9 @@ KF5 library
 #%_K5lib/libktp-filetransfer-handler.so.*
 
 %changelog
+* Tue Feb 26 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Jul 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
