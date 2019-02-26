@@ -7,21 +7,21 @@ BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMak
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.013
+Version: 0.014
 Release: alt1
 Summary: tie a variable to a type constraint
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Type-Tie
 
-Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/Type-Tie-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n Type-Tie-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Feb 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
+- automated CPAN update
+
 * Mon Jan 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - automated CPAN update
 
