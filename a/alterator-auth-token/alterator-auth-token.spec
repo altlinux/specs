@@ -1,6 +1,6 @@
 Name: alterator-auth-token
-Version: 0.1.2
-Release: alt1
+Version: 0.1.3
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -27,7 +27,7 @@ Requires: openssl-engines
 Conflicts: alterator-fbi < 5.16-alt1
 Conflicts: alterator-lookout < 2.1-alt1
 
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: guile22-devel
 BuildRequires: alterator >= 5.0
 BuildRequires: alterator-fbi >= 5.33-alt1
 
@@ -50,6 +50,17 @@ BuildRequires: alterator-fbi >= 5.33-alt1
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
+- Rebuild for aarch64 repo.
+
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
+- Enable "Install GOST CAs" switch only when these certs are
+  available.
+- Use the "GOST" switch only to install the CA certs.
+  
+* Thu May 31 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt2
+- Don't require a particular rpm-build version.
+
 * Tue Mar 06 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
 - SDDM-ready version (closes: #34334).
 

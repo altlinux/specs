@@ -1,6 +1,12 @@
+%ifarch %ix86 x86_64 armh mips64el
+%def_enable rutokenecp
+%else
+%def_disable rutokenecp
+%endif
+
 Name: installer-distro-token-desktop
 Version: 0.1.1
-Release: alt2
+Release: alt5
 
 Summary: Installer configuration (desktop, h/w token authentication)
 License: GPL
@@ -8,7 +14,8 @@ Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer
 Source: %name-%version.tar
-BuildArch: noarch
+
+BuildPreReq: alternatives
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
@@ -23,6 +30,7 @@ It is derived from installer-distro-altlinux-desktop.
 Summary: Installer configuration and scripts (desktop, h/w token authentication, stage2 part)
 License: GPL
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: installer-stage2
 # modules
 Requires: alterator-sysconfig
@@ -45,11 +53,13 @@ The stage2 part is included into the live installer system.
 Summary: Auth-token installer step with no profile preselected
 License: GPL
 Group: System/Configuration/Other
+BuildArch: noarch
 Provides: installer-feature-token-profile = 50
 
 %description -n installer-feature-token-default
 Auth-token installer step with no profile preselected
 
+%if_enabled rutokenecp
 %package -n installer-feature-token-rutokenecp
 Summary: Auth-token installer step with RuTokenECP profile preselected
 License: GPL
@@ -59,11 +69,13 @@ Requires: pkcs11-profiles-rutokenecp
 
 %description -n installer-feature-token-rutokenecp
 Auth-token installer step with RuTokenECPprofile preselected
+%endif
 
 %package -n installer-feature-token-p11-kit-proxy
 Summary: Auth-token installer step with p11-kit-proxy profile preselected
 License: GPL
 Group: System/Configuration/Other
+BuildArch: noarch
 Provides: installer-feature-token-profile = 40
 Requires: pkcs11-profiles-p11-kit-proxy
 
@@ -74,7 +86,7 @@ Auth-token installer step with p11-kit-proxy profile preselected
 Summary: Installer configuration and scripts (desktop, h/w token authentication, stage3 part)
 License: GPL
 Group: System/Configuration/Other
-
+BuildArch: noarch
 Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-auth-token
@@ -95,7 +107,7 @@ and executed off there during installation process.
 Summary: Installer configuration and scripts (desktop, h/w token authentication, livecd-install part)
 License: GPL
 Group: System/Configuration/Other
-
+BuildArch: noarch
 Requires: %name-stage3 = %version-%release
 Requires: livecd-install >= 0.9.10
 Requires: installer-feature-token-profile
@@ -133,9 +145,11 @@ cp -a alterator-menu %buildroot%_datadir/livecd-install/
 install -m0644 -D installer-feature-token-default \
         %buildroot%_altdir/installer-feature-token-default
 
+%if_enabled rutokenecp
 # RuTokenECP
 install -m0644 -D installer-feature-token-rutokenecp \
         %buildroot%_altdir/installer-feature-token-rutokenecp
+%endif
 
 # PKCS#11 Kit Proxy
 install -m0644 -D installer-feature-token-p11-kit-proxy \
@@ -157,15 +171,28 @@ install -m0644 -D installer-feature-token-p11-kit-proxy \
 %_altdir/installer-feature-token-default
 %_datadir/alterator/steps/*.default.desktop
 
+%if_enabled rutokenecp
 %files -n installer-feature-token-rutokenecp
 %_altdir/installer-feature-token-rutokenecp
 %_datadir/alterator/steps/*.rutokenecp.desktop
+%endif
 
 %files -n installer-feature-token-p11-kit-proxy
 %_altdir/installer-feature-token-p11-kit-proxy
 %_datadir/alterator/steps/*.p11-kit-proxy.desktop
 
 %changelog
+* Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt5
+- Workaround the 'different set of noarch packages' build error:
+  Make 'rutokenecp' an arch-dependent package.
+
+* Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt4
+- Build 'installer-feature-token-rutokenecp' on some specific
+  archs only.
+
+* Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt3
+- Fix build: require 'alternatives' package.
+
 * Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt2
 - Add 'p11-kit-proxy' profile.
 
