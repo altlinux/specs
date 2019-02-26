@@ -1,6 +1,6 @@
 Name: libpng12
-Version: 1.2.50
-Release: alt2
+Version: 1.2.59
+Release: alt1
 
 Summary: PNG runtime legacy library
 License: zlib
@@ -86,6 +86,8 @@ install -p -m644 CHANGES KNOWNBUG LICENSE README TODO example.c libpng*.txt \
 	%buildroot%docdir/
 xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 
+%filter_from_provides /^pkgconfig(libpng)/d
+
 %check
 %make_build -k check
 
@@ -110,6 +112,10 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %endif
 
 %changelog
+* Tue Feb 26 2019 Dmitry V. Levin <ldv@altlinux.org> 1.2.59-alt1
+- 1.2.50 -> 1.2.59.
+- libpng12-devel: filtered pkgconfig(libpng) from Provides.
+
 * Thu Sep 13 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.50-alt2
 - Renamed: libpng-devel -> libpng12-devel.
 - Packaged libpng12 as a legacy library.
