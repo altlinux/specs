@@ -2,6 +2,7 @@
 
 %define	quagga_user	quagga
 %define	quagga_gid	quagga
+%define quagga_log_mask	0640
 %define	vty_gid		quaggavty
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -10,7 +11,7 @@
 Name: quagga
 
 %define baseversion 1.2.4
-Release: alt1
+Release: alt2
 
 %if %cvs
 %define cvsdate 20060505
@@ -61,6 +62,7 @@ Source28:	%name-pimd.conf
 Patch1:		quagga-libzebra_to_libospf.patch
 Patch2:		quagga-libospf_to_libospfclient.patch
 Patch3:		quagga-1.2.2-man.patch
+Patch4:		quagge-1.2.4-configure.ac-builconf.patch
 
 #Errata
 #Patch1001:
@@ -139,6 +141,7 @@ Quagga documentation
 #patch1 -p1
 #patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 #Errata
 #patch1001 -p1
@@ -177,6 +180,7 @@ export IPFORWARD=ipforward_proc.o; export zebra_ipforward_path=proc; %configure 
 	--enable-user=%quagga_user \
 	--enable-group=%quagga_gid \
 	--enable-vty-group=%vty_gid \
+	--enable-logfile-mask=%quagga_log_mask \
 	--enable-gcc-rdynamic \
 	--sysconfdir=%_sysconfdir/%name \
 	--localstatedir=%_localstatedir/%name
@@ -271,7 +275,7 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %_sbindir/*
 
 %_mandir/man?/*
-%doc AUTHORS README SERVICES NEWS
+%doc AUTHORS README SERVICES NEWS README-build-config
 
 %files -n libquagga
 %_libdir/lib*.so.*
@@ -299,6 +303,10 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Tue Feb 26 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt2
+- changed logfile mask to 0640 (from default 0600)
+- added README-build-config to documentation's directory
+
 * Tue Mar 06 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt1
 - new version
 
