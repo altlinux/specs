@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		89349
+%define svnrev		90164
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -666,6 +666,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Feb 26 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.5-alt1
+- 4.0.5
+
 * Tue Feb 05 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.4-alt1
 - 4.0.4
 
@@ -874,7 +877,7 @@ fi
 - 2.0.5 release
 
 * Wed Jan 23 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt3
-- CVE-2013-1364
+- (Fixes: CVE-2013-1364)
 
 * Tue Dec 25 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt2
 - Add define %%_unitdir macro for compatible with P6/T6 branches
