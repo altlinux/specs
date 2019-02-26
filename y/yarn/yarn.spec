@@ -1,6 +1,6 @@
 
 Name: yarn
-Version: 1.10.1
+Version: 1.14.0
 Release: alt1
 Summary: Fast, reliable, and secure dependency management
 Group: Development/Tools
@@ -32,6 +32,9 @@ ln -s %nodejs_sitelib/%name/bin/%name.js %buildroot%_bindir/yarnpkg
 %nodejs_sitelib/%name
 
 %changelog
+* Tue Feb 26 2019 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Fri Oct 19 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.10.1-alt1
 - update to 1.10.1
 - remove ubt macros due binary package identity changes
