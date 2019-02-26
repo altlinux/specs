@@ -28,8 +28,8 @@
 %define libringclient libringclient%ringclient_sover
 
 Name: ring-project
-Version: 20180826
-Release: alt4
+Version: 20190215
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -56,6 +56,7 @@ BuildRequires: chrpath
 BuildRequires: libalsa-devel libdbus-c++-devel libgnutls-devel libgsm-devel
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel libavutil-devel libavcodec-devel libavfilter-devel
 BuildRequires: libssl-devel libgpg-error-devel libgcrypt-devel
+#BuildRequires: libssl-devel-static
 BuildRequires: libnettle-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libvpx-devel
 BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel libuuid-devel jsoncpp-devel
 BuildRequires: zlib-devel libopus-devel libspeex-devel ilbc-devel libmsgpack-devel libx264-devel libx265-devel libva-devel libvdpau-devel
@@ -145,6 +146,11 @@ developing applications that use %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+# don't build internal vpx
+rm -rf daemon/contrib/src/vpx
+rm -rf daemon/contrib/tarballs/libvpx*.tar.gz
+sed -i '/DEPS_ffmpeg/s/vpx//' daemon/contrib/src/ffmpeg/rules.mak
 
 %build
 %add_optflags %optflags_shared -Wno-error=return-type
@@ -241,7 +247,7 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %find_lang ring-client-gnome
 
 %files common
-%_iconsdir/hicolor/*/apps/ring.*
+%_iconsdir/hicolor/*/apps/jami.*
 
 %files -n ring-daemon
 %doc daemon/AUTHORS daemon/COPYING daemon/README
@@ -283,6 +289,15 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Mon Feb 18 2019 Sergey V Turchin <zerg@altlinux.org> 20190215-alt1
+- new version
+
+* Fri Feb 15 2019 Sergey V Turchin <zerg@altlinux.org> 20190214-alt1
+- new version
+
+* Tue Feb 12 2019 Sergey V Turchin <zerg@altlinux.org> 20190129-alt1
+- new version
+
 * Tue Feb 12 2019 Sergey V Turchin <zerg@altlinux.org> 20180826-alt4
 - disable return-type error
 
