@@ -1,6 +1,6 @@
 Name: libpng15
-Version: 1.5.28
-Release: alt2
+Version: 1.5.30
+Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
 License: zlib
@@ -53,6 +53,8 @@ install -p -m644 CHANGES LICENSE README TODO example.c libpng*.txt \
 	%buildroot%docdir/
 xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 
+%filter_from_provides /^pkgconfig(libpng)/d
+
 %check
 %make_build -k check
 
@@ -71,6 +73,10 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Tue Feb 26 2019 Dmitry V. Levin <ldv@altlinux.org> 1.5.30-alt1
+- 1.5.28 -> 1.5.30.
+- libpng15-devel: filtered pkgconfig(libpng) from Provides.
+
 * Tue Jun 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.28-alt2
 - rebuilt as legacy library in favor of libpng16
 
