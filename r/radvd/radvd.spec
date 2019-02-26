@@ -5,8 +5,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.17
-Release: alt1.qa1
+Version: 2.18
+Release: alt1
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
@@ -19,6 +19,7 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name-tmpfs.conf
+Source4: %name.conf.empty
 Patch: %name-%version-%release.patch
 
 BuildRequires: libcheck-devel
@@ -42,9 +43,12 @@ services.
 %build
 %autoreconf
 %add_optflags -fno-strict-aliasing -fno-strict-overflow
+%add_optflags -fpie
+export LDFLAGS=-pie
 %configure \
 	--with-pidfile=/var/run/radvd/radvd.pid \
-	--with-systemdsystemunitdir=%systemd_unitdir
+	--with-systemdsystemunitdir=%systemd_unitdir \
+	--disable-silent-rules
 %make_build
 
 #check
@@ -57,10 +61,10 @@ mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot/var/run/radvd
 
-install -m 644 redhat/radvd.conf.empty %buildroot%_sysconfdir/radvd.conf
 install -m 755 %SOURCE1 %buildroot%_initdir/radvd
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
 install -Dm0644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
+install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 
 %post
 %post_service %name
@@ -87,6 +91,12 @@ install -Dm0644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/radvdump
 
 %changelog
+* Tue Feb 26 2019 Mikhail Efremov <sem@altlinux.org> 2.18-alt1
+- Disable silent rules.
+- Add radvd.conf.empty file again.
+- Build with -pie.
+- Updated to 2.18.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1.qa1
 - NMU: applied repocop patch
 
