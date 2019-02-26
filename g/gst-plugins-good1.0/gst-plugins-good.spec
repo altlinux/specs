@@ -12,7 +12,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -20,6 +20,7 @@ License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
+Patch: gst-plugins-good-1.14.4-up-vpx-1.8.patch
 
 Provides: %_name-good = %version-%release
 
@@ -52,6 +53,7 @@ This package contains development documentation for GStreamer Good Plugins
 
 %prep
 %setup -n %_name-good-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -81,6 +83,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Tue Feb 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
+- rebuild against libvpx.so.6
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 
