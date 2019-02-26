@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .25
@@ -613,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Feb 26 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.25-alt2
+- SCSI_SMARTPQI set to m
+
 * Mon Feb 25 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.25-alt1
 - v4.19.25
 
