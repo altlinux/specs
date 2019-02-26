@@ -90,7 +90,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.1.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -176,6 +176,8 @@ This package contains documentation for FFmpeg.
 %package -n	ffplay
 Summary:	A minimalistic multimedia player
 Group:		Video
+Obsoletes:	avplay
+Provides:	avplay
 
 %description -n	ffplay
 %common_descr
@@ -195,6 +197,8 @@ This package contains documentation for ffplay.
 %package -n	ffprobe
 Summary:	A simple analysis tool to inspect multimedia content
 Group:		Video
+Obsoletes:	avprobe
+Provides:	avprobe
 
 %description -n	ffprobe
 %common_descr
@@ -739,6 +743,9 @@ xz Changelog
 %endif
 
 %changelog
+* Tue Feb 26 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.1-alt2
+- added provides and obsoletes for avplay and avprobe packages (closes: #36109)
+
 * Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.1-alt1
 - 4.1.1
 
