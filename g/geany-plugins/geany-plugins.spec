@@ -1,6 +1,6 @@
 Name: geany-plugins
-Version: 1.33
-Release: alt1
+Version: 1.34.1
+Release: alt0.1
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -12,13 +12,31 @@ Url: http://plugins.geany.org/
 Source: %name-%version.tar.bz2
 
 BuildRequires(pre): geany geany-devel intltool
+# Hack out self-providing symbols
+%add_python_req_skip app
+%add_python_req_skip dialogs
+%add_python_req_skip document
+%add_python_req_skip encoding
+%add_python_req_skip filetypes
+%add_python_req_skip glog
+%add_python_req_skip highlighting
+%add_python_req_skip keybindings
+%add_python_req_skip main
+%add_python_req_skip msgwindow
+%add_python_req_skip navqueue
+%add_python_req_skip prefs
+%add_python_req_skip project
+%add_python_req_skip scintilla
+%add_python_req_skip search
+%add_python_req_skip ui_utils
 
 Requires: geany-plugins-vc
 
-# Automatically added by buildreq on Tue Jul 05 2016
-# optimized out: fontconfig fontconfig-devel geany glib2-devel gnu-config libX11-devel libXext-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel libpango-devel libsoup-devel perl-XML-Parser pkg-config python-base python-devel python-module-pygobject-devel python-modules vala xorg-xproto-devel zlib-devel
-BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel lua-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel
-# TODO python-module-pygtk-devel
+# Automatically added by buildreq on Wed Feb 27 2019
+# optimized out: fontconfig fontconfig-devel geany glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libatk-devel libcairo-devel libcrypt-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel liblua5.1-devel libpango-devel libsoup-devel perl perl-XML-Parser pkg-config python-base python-devel python-module-docutils python-module-pygobject-devel python-modules python-modules-distutils sh4 vala xorg-proto-devel zlib-devel
+BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel python-module-pygtk-devel libctpl-devel
+
+BuildRequires: liblua5.1-devel
 
 %description
 This is Geany plugin collection
@@ -42,6 +60,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 
 %prep
 %setup
+sed -i '/^geanyluadir/s@.*@geanyluadir = %_libdir/geany@' geanylua/Makefile.am
 
 %build
 %autoreconf
@@ -70,6 +89,10 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Wed Feb 27 2019 Fr. Br. George <george@altlinux.ru> 1.34.1-alt0.1
+- Autobuild version bump to 1.34
+- Build with Geany 1.34.1
+
 * Mon Mar 19 2018 Fr. Br. George <george@altlinux.ru> 1.33-alt1
 - Autobuild version bump to 1.33
 

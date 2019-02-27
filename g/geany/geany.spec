@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.33
+Version: 1.34.1
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -118,6 +118,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Wed Feb 27 2019 Fr. Br. George <george@altlinux.ru> 1.34.1-alt1
+- Autobuild version bump to 1.34.1
+
 * Mon Mar 19 2018 Fr. Br. George <george@altlinux.ru> 1.33-alt1
 - Autobuild version bump to 1.33
 
