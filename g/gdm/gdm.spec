@@ -24,9 +24,10 @@
 %def_enable xsession
 #Enable running X server as user
 %def_enable user_display_server
+%def_enable check
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -71,7 +72,7 @@ Provides: gnome-dm
 Provides: %name-user-switch-applet = %version-%release
 Obsoletes: %name-user-switch-applet
 
-PreReq: %_rpmlibdir/update-dconf-database.filetrigger
+Requires(pre): %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
 Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
@@ -98,14 +99,13 @@ BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-de
 BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel libXevie-devel
 BuildRequires: xorg-xephyr xorg-server
 
-BuildPreReq: libcheck-devel >= %check_ver
+BuildRequires: libcheck-devel >= %check_ver
 
 BuildRequires: libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdaemon-devel libudev-devel
-# for check
-BuildRequires: /proc dbus-tools-gui xvfb-run
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -238,7 +238,7 @@ install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/def
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
 %check
-xvfb-run %make check
+dbus-run-session %make check
 
 %pre
 %pre_control gdm_xdmcp
@@ -319,6 +319,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Feb 27 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
+- 3.30.3 (fixed CVE-2019-3825)
+
 * Wed Nov 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
