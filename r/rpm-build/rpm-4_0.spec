@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt128
+Release: alt129
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -542,6 +542,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt129
+- Fixed deps optimization "due to repentancy": if subpkg A requires subpkg B,
+  and B has a dependency on C, a weaker dependency on C is removed from A
+  (say, without an epoch or disttag).
+
 * Mon Feb 25 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt128
 - Reverted one of the changes (for disttag-unaware tools compatibility)
   from 4.0.4-alt127 (useful in rare cases, but bad for external dependencies
