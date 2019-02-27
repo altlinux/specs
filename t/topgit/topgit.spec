@@ -2,7 +2,7 @@
 
 Name: topgit
 Version: 0.9
-Release: alt4.git20150225
+Release: alt5.git20150225
 
 Summary: A different patch queue manager for Git
 License: GPLv2
@@ -14,7 +14,7 @@ Source0: topgit-%version.tar
 Patch0: topgit-tg_rename.patch
 Patch1: topgit-custom-merge.patch
 
-BuildRequires(check): git-core
+%{?!_without_test:%{?!_disable_test:%{?!_without_check:%{?!_disable_check:BuildRequires: git-core}}}}
 
 %description
 TopGit aims to make handling of large amounts of interdependent topic
@@ -85,6 +85,10 @@ make precheck
 %doc README COPYING
 
 %changelog
+* Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt5.git20150225
+- (.spec) Corrected the BuildRequires tag name
+  to fix build with rpm-build-4.0.4-alt125.
+
 * Thu Feb 25 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt4.git20150225
 - tg update, tg create: pass a custom merge command with either TG_MERGE or
   --this-with (useful for rebasing or for "merge -s ours" in certain
