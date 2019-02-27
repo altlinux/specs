@@ -1,62 +1,75 @@
-Name: sqlite3-ruby
-Version: 1.3.13
-Release: alt2.6
+%define        gemname sqlite3
 
-Summary: A Ruby interface for the SQLite database engine
-Group: Development/Ruby
-License: BSD
-Url: http://rubyforge.org/projects/sqlite-ruby/
+Name:          sqlite3-ruby
+Version:       1.4.0
+Release:       alt1
+Summary:       A Ruby interface for the SQLite database engine
+Group:         Development/Ruby
+License:       BSD
+Url:           https://github.com/sparklemotion/sqlite3-ruby
+# VCS:         https://github.com/sparklemotion/sqlite3-ruby.git
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel libsqlite3-devel ruby-test-unit ruby-tool-setup
-BuildRequires: rake-compiler ruby-mini_portile2 ruby-hoe
+BuildRequires: libsqlite3-devel
+BuildRequires: gem(rake-compiler)
+BuildRequires: ruby-mini_portile2
+BuildRequires: ruby-hoe
 
-%filter_from_requires \,ruby(sqlite3/#{$1}/sqlite3_native),d
-
-Source: %name-%version.tar
-Patch:  alt-use-mini_portile2.patch
+Source:        %name-%version.tar
 
 %description
 A Ruby interface for the SQLite database engine.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name
+%package       devel
+Summary:       Development files for %gemname gem
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Development files for %gemname gem.
+
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
 %setup
-%patch -p0
-%update_setup_rb
-# Threaded tests fail for some reason.
-rm -f test/test_integration_pending.rb
-rake debug_gem > sqlite3-%version.gemspec
-echo "gemspec" >> Gemfile
+# fix version bug, TODO remove
+sed 's|1.3.13.20180326210955|1.4.0|' -i *.gemspec
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:ext test/test_*.rb
+%gem_test
 
 %files
-%doc API_CHANGES.rdoc CHANGELOG.rdoc README.rdoc
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc CHANGELOG* README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/SQLite3*
+%files         devel
+%ruby_includedir/*
+
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Mar 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
+- Bump to 1.4.0
+- Use Ruby Policy 2.0
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt2.6
 - Rebuild with new Ruby autorequirements.
 
