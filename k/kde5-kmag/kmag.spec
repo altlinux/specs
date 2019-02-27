@@ -1,8 +1,8 @@
 %define rname kmag
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Summary: %rname is a small utility to magnify a part of the screen
@@ -40,6 +40,9 @@ those working in the fields of image analysis, web development etc.
 %_K5data/%rname/
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Wed Nov 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - build without qaccessibilityclient
 

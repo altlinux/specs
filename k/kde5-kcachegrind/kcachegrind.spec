@@ -1,8 +1,8 @@
 %define rname kcachegrind
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Summary: GUI to profilers such as Valgrind
@@ -21,7 +21,7 @@ BuildRequires: qt5-tools-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-karchive-devel kf5-kdoctools-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kio-devel kf5-kdbusaddons-devel
 
 %description
 %rname is a profile data visualization tool, used to determine the most time
@@ -56,6 +56,9 @@ rm -f %buildroot/%_K5i18n/*/LC_MESSAGES/*.qm
 %_K5data/%rname/
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

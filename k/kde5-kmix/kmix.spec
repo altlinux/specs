@@ -1,8 +1,11 @@
 %define rname kmix
 
+%define sover 5
+%define libkmixcore libkmixcore%sover
+
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init altplace
 
 Group: Sound
@@ -30,13 +33,27 @@ A sound mixer applet for KDE.
 It allows you to control the volumes of your
 sound card from a KDE panel applet.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: kf5-filesystem
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package -n %libkmixcore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common
+%description -n %libkmixcore
+KF5 library
 
 
 %prep
@@ -52,26 +69,33 @@ developing applications that use %name.
 %K5install_move data kmix
 %find_lang %name --with-kde --all-name
 
-
-%files -f %name.lang
+%files common -f %name.lang
 %doc COPYING*
+
+%files
 %config(noreplace) %_K5xdgconf/*
 %_K5bin/*
-%_K5lib/libkdeinit5_*.so
-%_K5plug/*kmix*.so
+%_K5plug/kf5/kded/*kmix*.so
 %_K5plug/plasma/dataengine/plasma_engine_mixer.so
 %_K5data/plasma/services/mixer.operations
 %_K5data/kmix/
 %_K5xmlgui/kmix/
 %_K5xdgapp/*kmix.desktop
 %_K5srv/*.desktop
-%_K5srv/kded/*.desktop
+%_K5notif/*kmix*.notifyrc
 %_K5icon/*/*/actions/kmix.*
 
 %files devel
 %_K5dbus_iface/*.xml
 
+%files -n %libkmixcore
+%_K5lib/libkmixcore.so.*
+%_K5lib/libkmixcore.so.%sover
+
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

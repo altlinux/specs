@@ -1,8 +1,8 @@
 %define rname kfind
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,8 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel python-module-google python3-dev ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kf5-kdoctools-devel-static kf5-kio-devel kf5-karchive-devel
+BuildRequires: kf5-kfilemetadata-devel kf5-kwidgetsaddons-devel kf5-ktextwidgets-devel kf5-ki18n-devel
 
 %description
 KDE utility to find files.
@@ -42,6 +43,9 @@ KDE utility to find files.
 %_K5icon/*/*/apps/kfind.*
 
 %changelog
+* Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
