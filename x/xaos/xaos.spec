@@ -1,18 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/msgmerge /usr/bin/nasm libICE-devel libSM-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) 
-# END SourceDeps(oneline)
-
 Name: xaos
 Version: 3.6
-Release: alt2
+Release: alt3
 Summary: A real-time fractal zoomer
 Serial: 1
 
-License: GPL
+License: GPLv3+
 
 Group: Sciences/Mathematics
 Url: http://xaos.sourceforge.net
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Packager: Igor Vlasenko <viy@altlinux.org>
 Source0: http://prdownloads.sourceforge.net/xaos/xaos-%version.tar.gz
 Source1: xaos.png
 Source10: %name.16.xpm.bz2
@@ -28,13 +24,9 @@ Patch5: xaos-3.6-upstream-qt5.patch
 Provides : XaoS = %version, %name-aalib = %version
 Obsoletes: XaoS, %name-aalib
 
-BuildRequires: aalib-devel imake libICE-devel libXxf86dga-devel zlib-devel  gettext
-BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl-devel
-BuildRequires: libncurses-devel libpng12-devel libslang-devel nasm xorg-cf-files libgtk+2-devel libXext-devel
-BuildRequires:	texlive-base-bin
-# explicitly added texinfo for info files
-BuildRequires: texinfo
-
+# Automatically added by buildreq on Wed Feb 27 2019 (-bi)
+# optimized out: aalib elfutils fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libXext-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libpng-devel pkg-config python-base python-modules tex-common texlive xorg-proto-devel xz zlib-devel
+BuildRequires: aalib-devel imake libICE-devel libgsl-devel libgtk+2-devel texlive-collection-basic xorg-cf-files
 
 %description
 XaoS is a real-time fractal zoomer. It is highly optimized. It features an
@@ -125,6 +117,9 @@ cp %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Feb 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1:3.6-alt3
+- NMU: updated build dependencies.
+
 * Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6-alt2
 - Rebuilt with new libgsl.
 
