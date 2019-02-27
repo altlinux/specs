@@ -1,5 +1,5 @@
 Name: libXau
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: Xau Library
 License: MIT/X11
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Feb 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt1
+- 1.0.9
+
 * Sun May 26 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 

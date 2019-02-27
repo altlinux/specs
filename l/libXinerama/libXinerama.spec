@@ -1,6 +1,6 @@
 Name: libXinerama
-Version: 1.1.3
-Release: alt2
+Version: 1.1.4
+Release: alt1
 Summary: The Xinerama Library
 License: MIT/X11
 Group: System/Libraries
@@ -47,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Feb 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
+- 1.1.4
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt2
 - update build dependensies
 
