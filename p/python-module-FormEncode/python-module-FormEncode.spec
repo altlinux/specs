@@ -1,6 +1,7 @@
 %define modulename FormEncode
 
 %def_with python3
+%def_with doc
 
 %if_with python3
 %define py3name python3-module-%modulename
@@ -9,7 +10,7 @@
 
 Name: python-module-%modulename
 Version: 1.3.0
-Release: alt1.git20150207.1.2
+Release: alt1.git20150207.1.3
 Epoch: 1
 
 %setup_python_module %modulename
@@ -110,17 +111,21 @@ rm -rf %buildroot%python3_sitelibdir/docs
 popd
 %endif
 
+%if_with doc
 pushd docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make html
 %make pickle
 cp -fR _build/pickle %buildroot%python_sitelibdir/formencode/
 popd
+%endif
 
 %files
 %doc docs/*.txt
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
+%endif
 
 %if_with python3
 %files -n %py3name
@@ -128,13 +133,18 @@ popd
 %python3_sitelibdir/*
 %endif
 
+%if_with doc
 %files doc
 %doc docs/_build/html examples
 
 %files pickles
 %python_sitelibdir/*/pickle
+%endif
 
 %changelog
+* Wed Feb 27 2019 Michael Shigorin <mike@altlinux.org> 1:1.3.0-alt1.git20150207.1.3
+- introduce doc knob (on by default)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.3.0-alt1.git20150207.1.2
 - (NMU) rebuild with python3.6
 
