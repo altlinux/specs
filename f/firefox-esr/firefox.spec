@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        60.5.2
-Release:        alt1
+Release:        alt1.1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -79,7 +79,7 @@ BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libproxy-devel
 BuildRequires: libshell
-BuildRequires: libvpx-devel
+BuildRequires: libvpx5-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
@@ -345,6 +345,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1.1
+- Rebuild vith libvpx5.
+
 * Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1
 - New ESR version (60.5.2).
 
