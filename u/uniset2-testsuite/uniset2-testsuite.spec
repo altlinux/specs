@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt13
+Release: alt14
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -68,6 +68,9 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Wed Feb 27 2019 Pavel Vainerman <pv@altlinux.ru> 2.6-alt14
+- fix error for supplierID (uniset plugin)
+
 * Tue Jan 22 2019 Pavel Vainerman <pv@altlinux.ru> 2.6-alt13
 - up build
 
