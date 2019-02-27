@@ -11,7 +11,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.5.1
+Version:	60.5.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -70,7 +70,7 @@ BuildRequires: libwireless-devel
 BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
-BuildRequires: libvpx-devel
+BuildRequires: libvpx5-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
@@ -469,6 +469,9 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1
+- New version (60.5.2).
+
 * Fri Feb 15 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.1-alt1
 - New version (60.5.1).
 - Fixes:
