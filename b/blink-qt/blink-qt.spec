@@ -1,5 +1,5 @@
 Name:    blink-qt
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Blink SIP Client
@@ -63,6 +63,9 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version.
 
