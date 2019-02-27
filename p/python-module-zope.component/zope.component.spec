@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.component
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
-Version: 4.4.1
-Release: alt1%ubt
+Version: 4.5
+Release: alt1
 
 Summary: Zope Component Architecture
 License: ZPLv2.1
@@ -31,6 +31,9 @@ BuildRequires: python-module-zope.event
 BuildRequires: python-module-zope.location
 BuildRequires: python-module-zope.proxy
 BuildRequires: python-module-zope.security
+BuildRequires: python-module-zope.deferredimport
+BuildRequires: python-module-zope.hookable
+BuildRequires: python-module-zope.deprecation
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.configuration
@@ -39,6 +42,9 @@ BuildRequires: python3-module-zope.event
 BuildRequires: python3-module-zope.location
 BuildRequires: python3-module-zope.proxy
 BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.deferredimport
+BuildRequires: python3-module-zope.hookable
+BuildRequires: python3-module-zope.deprecation
 %endif
 
 %py_requires zope.interface zope.event
@@ -83,7 +89,7 @@ Requires: %name = %EVR
 This package contains tests for %oname
 
 %prep
-%setup
+%setup -n %name
 rm -rf ../python3
 cp -a . ../python3
 
@@ -139,6 +145,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt1
+- Version updated to 4.5
+
 * Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1%ubt
 - 4.2.3 -> 4.4.1
 

@@ -1,33 +1,23 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150113.1.1.1
 %define oname zope.deprecation
-
-%def_with python3
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.1.3
-#Release: alt1.dev0.git20150113.1.1
+Version: 4.4.0
+Release: alt1
+
 Summary: Zope 3 Deprecation Infrastructure
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.deprecation/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # git://github.com/zopefoundation/zope.deprecation.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+
 BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
-#BuildRequires: python3-devel python3-module-distribute
-%endif
-
 %py_requires zope
+
 
 %description
 When we started working on Zope 3.1, we noticed that the hardest part of
@@ -37,7 +27,6 @@ properties. This package provides a simple function called
 'deprecated(names, reason)' to deprecate the previously mentioned Python
 objects.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope 3 Deprecation Infrastructure (Python 3)
 Group: Development/Python3
@@ -67,7 +56,6 @@ properties. This package provides a simple function called
 objects.
 
 This package contains tests for Zope 3 Deprecation Infrastructure.
-%endif
 
 %package tests
 Summary: Tests for Zope 3 Deprecation Infrastructure
@@ -88,18 +76,16 @@ This package contains tests for Zope 3 Deprecation Infrastructure.
 
 %prep
 %setup
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -109,7 +95,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -117,7 +102,6 @@ popd
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
-%endif
 %endif
 
 %files
@@ -129,7 +113,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
@@ -140,9 +123,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/__pycache__/tests.*
-%endif
+
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.4.0-alt1
+- Version updated to 4.4.0
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.1.3-alt1.dev0.git20150113.1.1.1
 - (AUTO) subst_x86_64.
 

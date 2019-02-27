@@ -1,32 +1,23 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define oname zope.event
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 4.0.3
-#Release: alt1.1.1
+Version: 4.4
+Release: alt1
+
 Summary: Very basic event publishing system
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.event/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # git://github.com/zopefoundation/zope.event.git
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python3-devel python3-module-distribute
-%endif
+BuildRequires: python-module-setuptools
+BuildPreReq: python3-module-setuptools
 
 %py_requires zope
+
 
 %description
 The zope.event package provides a simple event system. It provides:
@@ -37,7 +28,6 @@ The zope.event package provides a simple event system. It provides:
   event dispatching system that builds on zope.event can be found in
   zope.component.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Very basic event publishing system (Python 3)
 Group: Development/Python3
@@ -67,7 +57,6 @@ The zope.event package provides a simple event system. It provides:
   zope.component.
 
 This package contains tests for zope.event.
-%endif
 
 %package tests
 Summary: Tests for zope.event
@@ -87,36 +76,32 @@ This package contains tests for zope.event.
 
 %prep
 %setup
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 %if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
+    %buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
@@ -128,7 +113,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt docs/*.rst
 %python3_sitelibdir/*
@@ -137,9 +121,13 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests*
-%endif
+
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.4-alt1
+- Version updated to 4.4
+- Cleanup spec
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.3-alt1.1.1.1
 - (AUTO) subst_x86_64.
 

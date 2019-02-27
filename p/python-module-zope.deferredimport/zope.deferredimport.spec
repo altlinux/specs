@@ -1,30 +1,26 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150402.1.1.1
 %define oname zope.deferredimport
-
-%def_with python3
+%def_without check
 
 Name: python-module-%oname
-Version: 4.1.1
-#Release: alt1.dev0.git20150402.1
+Version: 4.3
+Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.deferredimport/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/zopefoundation/zope.deferredimport.git
+
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-zope.proxy python-module-zope.testrunner
-%if_with python3
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-zope.proxy python-module-zope.testrunner
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.proxy python3-module-zope.testrunner
-%endif
 
 %py_requires zope zope.proxy
+
 
 %description
 Often, especially for package modules, you want to import names for
@@ -88,18 +84,14 @@ Example files for %oname.
 %setup
 mv src/zope/deferredimport/samples ./
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -109,7 +101,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -118,18 +109,19 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 install -d %buildroot%_docdir/%name
 cp -fR samples %buildroot%_docdir/%name
 
+%if_with check
 %check
 python setup.py test -v
-%if_with python3
+
 pushd ../python3
 python3 setup.py test -v
 popd
 %endif
+
 
 %files
 %doc *.txt *.rst
@@ -140,7 +132,6 @@ popd
 %files tests
 %python_sitelibdir/*/*/tests.*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -151,13 +142,15 @@ popd
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
 
 %files examples
 %doc %_docdir/%name/samples
 
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.3-alt1
+- Version updated to 4.3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 - Move samples to examples subpackage
