@@ -1,6 +1,6 @@
 Name: traceroute
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Traces the route taken by packets over an IPv4/IPv6 network
@@ -15,6 +15,9 @@ Patch: traceroute-%version-%release.patch
 
 # due to traceroute6
 Conflicts: iputils < 0:20020927-alt3
+
+Provides: tcptraceroute = 1.5.0
+Obsoletes: tcptraceroute < 1.5.0
 
 %description
 traceroute tracks the route packets taken from an IP network on their way
@@ -32,14 +35,20 @@ along the path to the host.
 %install
 install -pD -m755 traceroute/traceroute %buildroot/bin/traceroute
 install -pD -m644 traceroute/traceroute.8 %buildroot%_man1dir/traceroute.1
+install -pD -m755 wrappers/tcptraceroute %buildroot%_bindir/tcptraceroute
+install -pD -m644 wrappers/tcptraceroute.8 %buildroot%_man1dir/tcptraceroute.1
 ln -s traceroute %buildroot/bin/traceroute6
 ln -s traceroute.1 %buildroot%_man1dir/traceroute6.1
 
 %files
 /bin/*
+%_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Feb 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.0-alt2
+- Packaged tcptraceroute wrapper.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.0-alt1
 - 2.0.21 -> 2.1.0.
 
