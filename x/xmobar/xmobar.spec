@@ -7,7 +7,7 @@
 
 Name: xmobar
 Version: 0.21
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -36,13 +36,16 @@ color management, output templates, and extensibility through plugins.
 %hs_build
 
 %install
-runghc Setup copy --destdir=%buildroot
+%hs_setup copy --destdir=%buildroot
 
 %files
 %_bindir/%name
 %doc news.md readme.md
 
 %changelog
+* Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.21-alt2
+- fix build with rpm-build-haskell >= 1.3-alt1
+
 * Sun Sep 28 2014 Denis Smirnov <mithraen@altlinux.ru> 0.21-alt1
 - 0.21
 
