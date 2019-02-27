@@ -1,5 +1,5 @@
 Name: rpminstall-tests
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Tests for rpm: how it interprets packages when installing
@@ -70,6 +70,10 @@ cd  "$tmpdir"; \
 '
 
 %changelog
+* Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1
+- More complete set of tests of the upgradability order
+  (for different releases and buildtimes, not yet disttags).
+
 * Mon Feb 25 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1
 - Test the upgradable order
   (a package can be upgraded only to a more fresh release or buildtime).
