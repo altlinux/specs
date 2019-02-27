@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-%def_with python3
 
 Name: libtalloc
-Version: 2.1.14
-Release: alt2
+Version: 2.1.16
+Release: alt1
 Epoch: 1
 
 Summary: The talloc library
@@ -18,10 +17,8 @@ Patch: talloc-alt-fix-python-ldflags.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
 
 %description
 A library that implements a hierarchical allocator with destructors.
@@ -56,7 +53,6 @@ Obsoletes: libpytalloc-devel < 2.1.14
 %description -n python-module-talloc-devel
 Development libraries for python-module-talloc
 
-%if_with python3
 %package -n python3-module-talloc
 Group: Development/Python3
 Summary: Python3 bindings for the Talloc library
@@ -72,7 +68,6 @@ Requires: python3-module-talloc = %EVR
 
 %description -n python3-module-talloc-devel
 Development libraries for python3-module-talloc
-%endif
 
 %prep
 %setup -n talloc-%version
@@ -84,9 +79,7 @@ Development libraries for python3-module-talloc
 		--disable-rpath-install \
 		--bundled-libraries=NONE \
 		--builtin-libraries=replace \
-%if_with python3
-                --extra-python=python3 \
-%endif
+		--extra-python=python2.7 \
 		--disable-silent-rules
 %make_build
 
@@ -117,7 +110,6 @@ make test
 %_pkgconfigdir/pytalloc-util.pc
 %_libdir/libpytalloc-util.so
 
-%if_with python3
 %files -n python3-module-talloc
 %_libdir/libpytalloc-util.cpython*.so.*
 %python3_sitelibdir/talloc.cpython*.so
@@ -126,9 +118,11 @@ make test
 %_includedir/pytalloc.h
 %_pkgconfigdir/pytalloc-util.cpython-*.pc
 %_libdir/libpytalloc-util.cpython*.so
-%endif
 
 %changelog
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.16-alt1
+- Update to latest release with python3 by default
+
 * Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.14-alt2
 - Disable ubt macros due binary package identity changes
 
