@@ -29,7 +29,7 @@
 
 Name: qt5-webengine
 Version: 5.11.3
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -65,15 +65,16 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): libavformat-devel
 %if %is_ffmpeg
-BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel libvpx-devel
+BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel
 %endif
+BuildRequires: libvpx5-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
 BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel libXNVCtrl-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
-BuildRequires: libvpx-devel libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
+BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
 BuildRequires: python-devel python-module-simplejson python-modules-json
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel
 BuildRequires: qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel
@@ -344,6 +345,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Feb 27 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt3
+- update build requires
+
 * Tue Feb 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.11.3-alt2
 - Added ExclusiveArch: %%qt5_qtwebengine_arches (to disable build
   on architectures webengine does't support).
