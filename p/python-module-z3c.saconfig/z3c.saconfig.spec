@@ -1,31 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname z3c.saconfig
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 0.14
-#Release: alt2.1
+Version: 0.15
+Release: alt1
+
 Summary: Minimal SQLAlchemy ORM session configuration for Zope
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.saconfig/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/21/32/3438268db1f44fbedccc68d8e5d893f5db157b1b78605494ed2ff5713838/%{oname}-%{version}.zip
+Source0: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-tools-2to3
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
 
 %py_requires zope.sqlalchemy zope.interface zope.component zope.hookable
 %py_requires zope.security zope.event zope.configuration
+
 
 %description
 This aim of this package is to offer a simple but flexible way to
@@ -86,21 +83,18 @@ transaction integration between Zope and SQLAlchemy.
 This package contains tests for z3c.saconfig.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %name
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -110,7 +104,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -119,10 +112,9 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 %files
-%doc CREDITS.rst INSTALL.rst PKG-INFO README.rst COPYRIGHT.rst CHANGES.rst LICENSE.rst
+%doc CREDITS.* INSTALL.* README.* COPYRIGHT.* CHANGES.* LICENSE.*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -130,9 +122,8 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc CREDITS.rst INSTALL.rst PKG-INFO README.rst COPYRIGHT.rst CHANGES.rst LICENSE.rst
+%doc CREDITS.* INSTALL.* README.* COPYRIGHT.* CHANGES.* LICENSE.*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -141,9 +132,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
+
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.15-alt1
+- Version updated to 0.15
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated PyPI update
 
