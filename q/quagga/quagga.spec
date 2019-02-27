@@ -11,7 +11,7 @@
 Name: quagga
 
 %define baseversion 1.2.4
-Release: alt2
+Release: alt3
 
 %if %cvs
 %define cvsdate 20060505
@@ -303,6 +303,10 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Wed Feb 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt3
+- added nocreate option to the quagga's logrotate config:
+  the quagga doesn't change permissions for existent files
+
 * Tue Feb 26 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt2
 - changed logfile mask to 0640 (from default 0600)
 - added README-build-config to documentation's directory
