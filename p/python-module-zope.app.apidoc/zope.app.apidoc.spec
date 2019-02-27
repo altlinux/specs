@@ -1,26 +1,21 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
 %define oname zope.app.apidoc
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 3.7.5
-#Release: alt3.1
+Version: 4.2.0
+Release: alt1
+
 Summary: API Documentation and Component Inspection for Zope 3
 License: ZPLv2.1
 Group: Development/Python
+
 Url: http://pypi.python.org/pypi/zope.app.apidoc/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-tools-2to3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
 
 %py_requires zope.app ZODB3 zope.annotation zope.app.appsetup
 %py_requires zope.app.basicskin zope.app.onlinehelp zope.app.preference
@@ -30,6 +25,7 @@ BuildPreReq: python-tools-2to3
 %py_requires zope.i18n zope.site zope.hookable zope.interface
 %py_requires zope.location zope.proxy zope.publisher zope.schema
 %py_requires zope.security zope.testbrowser zope.testing zope.traversing
+
 
 %description
 This Zope 3 package provides fully dynamic API documentation of Zope 3
@@ -84,22 +80,18 @@ This package contains tests for zope.app.apidoc.
 %prep
 %setup
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -113,7 +105,6 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 %if "%python_sitelibdir_noarch" != "%python_sitelibdir"
@@ -123,12 +114,11 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt docs/
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/*
+
+%exclude %_bindir/*.py3
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/test*
 %exclude %python_sitelibdir/*/*/*/*/test*
@@ -139,11 +129,11 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/*/test*
 %python_sitelibdir/*/*/*/*/*/test*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt docs/
 %_bindir/*.py3
 %python3_sitelibdir/*
+
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/*/test*
@@ -155,9 +145,13 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/*/*/test*
 %python3_sitelibdir/*/*/*/*/*/test*
 %python3_sitelibdir/*/*/*/*/*/*/test*
-%endif
+
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt1
+- Version updated to 4.2.0
+- Cleanup spec
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.7.5-alt3.1.1
 - (AUTO) subst_x86_64.
 
