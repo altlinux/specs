@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 85b24361752aaa26f3e8cfe0efa23a51d67eb855
+%global commit 4d5dda70165a34321f967f2b448114731e46b4d5
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.6.5
+Version:	1.7.4
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -66,7 +66,11 @@ export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
 
-go install -ldflags "-X main.version=$VERSION -X main.commit=$COMMIT -X main.branch=$BRANCH" ./...
+CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
+    -X main.version=$VERSION \
+    -X main.commit=$COMMIT \
+    -X main.branch=$BRANCH \
+    " -a -installsuffix nocgo ./...
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -119,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Mon Jan 21 2019 Alexey Shabalin <shaba@altlinux.org> 1.6.5-alt1
 - 1.6.5
 
