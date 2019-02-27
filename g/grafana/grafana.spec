@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit 653918056c594d7f56a65771b2c9681bdf8a3b9a 
+%global commit 34a9a621b6b6f14d9ad15690d0a38047905b5423 
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	5.4.3
+Version:	6.0.0
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -152,6 +152,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Wed Jan 23 2019 Alexey Shabalin <shaba@altlinux.org> 5.4.3-alt1
 - 5.4.3
 
