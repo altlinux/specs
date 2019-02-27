@@ -1,17 +1,18 @@
 Name:     setbranding
-Version:  1.1.2
+Version:  1.1.3
 Release:  alt1
 
 Summary:  Script for manipulation ALT Linux branding packages
 License:  GPLv3+
 Group:    System/Configuration/Packaging
-URL: 	  http://altlinux.org/setbranding
+URL:      http://altlinux.org/setbranding
 Packager: Andrey Cherepanov <cas@altlinux.org> 
 BuildArch: noarch
 
 Source:   setbranding
 
-Requires:  apt make-initrd grub2-common
+Requires: apt make-initrd
+%add_findreq_skiplist %_bindir/%name
 
 %description
 Script for manipulation ALT Linux branding (distribution design profile)
@@ -25,6 +26,9 @@ install -Dm755 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Feb 27 2019 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt1
+- fix build for non-x86 (closes: 36139)
+
 * Fri Dec 16 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Remove path from rpm
 
