@@ -4,7 +4,7 @@
 
 Name: golang-dep
 Version: 0.5.0
-Release: alt1%ubt
+Release: alt2
 Summary: Go dependency management tool
 License: BSD
 Group: Development/Other
@@ -15,10 +15,8 @@ Source: %name-%version.tar
 
 ExclusiveArch:	%go_arches
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
-BuildRequires: golang-tools-devel
 
 %description
 dep is a prototype dependency management tool for Go.
@@ -52,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
+- delete ubt macros
+
 * Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1%ubt
 - 0.5.0
 
