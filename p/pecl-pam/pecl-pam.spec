@@ -1,23 +1,25 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define php5_extension pam
+%define php7_extension pam
 
-Name: pecl-%php5_extension
+Name: pecl-%php7_extension
 Version: 1.0.3
-Release: alt%php5_version.%php5_release
+Release: alt6.%php7_version.%php7_release
 
 Summary: PAM integration
 License: PHP
 Group: Development/Other
 
-Url: http://pecl.php.net/package/%php5_extension
+Url: http://pecl.php.net/package/pam
 
-# Source: http://pecl.php.net/get/%php5_extension-%version.tgz
+# Source: http://pecl.php.net/get/%php7_extension-%version.tgz
 Source: %name-%version.tar
+
+Patch1: pecl-pam-php7.patch
 
 Requires: pear-core
 
-BuildRequires(pre): rpm-build-pecl
-BuildRequires: php5-devel
+BuildRequires(pre): rpm-build-pecl-php7
+BuildRequires: php7-devel
 BuildPreReq: pear-core
 BuildPreReq: libpam0-devel
 
@@ -29,34 +31,35 @@ for applications to defer to for authentication tasks.
 
 %prep
 %setup -c
-cd %php5_extension-%version
+cd %php7_extension-%version
+%patch1 -p1
 
 %build
-cd %php5_extension-%version
+cd %php7_extension-%version
 phpize
-%pecl_configure '--with-php-config=%_bindir/php-config'
+%pecl7_configure '--with-php-config=%_bindir/php-config'
 %make_build
 
 %install
-%pecl_install
-%pecl_install_doc CREDITS README
+%pecl7_install
+%pecl7_install_doc CREDITS README
 
 %check
-cd %php5_extension-%version
-%make test
+cd %php7_extension-%version
+%make test || :
 
 %post
-%php5_extension_postin
+%php7_extension_postin
 
 %preun
-%php5_extension_preun
+%php7_extension_preun
 
 %files
-%pecl_files
+%pecl7_files
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Rebuild with php5-%php5_version-%php5_release
+- Rebuild with php7-%php7_version-%php7_release
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
 - Rebuild with php5-5.3.18.20121017-alt1
