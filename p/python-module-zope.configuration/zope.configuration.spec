@@ -1,45 +1,51 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150225.1.1.1.1
 %define oname zope.configuration
-
-%def_with python3
+%def_without check
 
 Name: python-module-%oname
-Version: 4.0.4
-#Release: alt1.dev0.git20150225.1.1
+Version: 4.3.1
+Release: alt1
+
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.configuration/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: http://pypi.python.org/pypi/zope.configuration/
 # https://github.com/zopefoundation/zope.configuration.git
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-zope.i18nmessageid
-#BuildPreReq: python-module-zope.schema
-#BuildPreReq: python-module-nose python-module-coverage
-#BuildPreReq: python-module-nosexcover
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.event python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-nose python3-module-pytest python3-module-setuptools python3-module-zope python3-module-zope.event python3-module-zope.interface xz
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools python-module-zope.i18nmessageid python-module-zope.schema python3-module-coverage python3-module-nosexcover python3-module-setuptools python3-module-zope.i18nmessageid python3-module-zope.schema rpm-build-python3 time
 
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-zope.i18nmessageid
-#BuildPreReq: python3-module-zope.schema
-#BuildPreReq: python3-module-nose python3-module-coverage
-#BuildPreReq: python3-module-nosexcover
-#BuildPreReq: python-tools-2to3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-coverage
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-nosexcover
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-repoze.sphinx.autointerface
+BuildRequires: python-module-zope.i18nmessageid
+BuildRequires: python-module-zope.schema
+BuildRequires: time
+
+BuildPreReq: python3-module-coverage
+BuildPreReq: python3-module-nosexcover
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-module-zope.i18nmessageid
+BuildPreReq: python3-module-zope.schema
+
+%if_with check
+BuildRequires: python-module-manuel-tests
+BuildRequires: python-module-manuel
+
+BuildPreReq: python3-module-manuel-tests
+BuildPreReq: python3-module-manuel
 %endif
 
 Requires: python-module-zope.i18nmessageid
 %py_requires zope.interface zope.schema
+
 
 %description
 The zope configuration system provides an extensible system for
@@ -50,7 +56,6 @@ configuration system provide configuration directives in some language
 that express configuration choices. The intent is that the language be
 pluggable. An XML language is provided by default.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope Configuration Markup Language (ZCML) (Python 3)
 Group: Development/Python3
@@ -84,7 +89,6 @@ pluggable. An XML language is provided by default.
 
 This package contains tests for Zope Configuration Markup Language
 (ZCML).
-%endif
 
 %package pickles
 Summary: Pickles for Zope Configuration Markup Language (ZCML)
@@ -123,22 +127,20 @@ This package contains tests for Zope Configuration Markup Language
 
 %prep
 %setup
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -148,7 +150,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -157,7 +158,6 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 export PYTHONPATH=$PWD/src
 %make -C docs pickle
@@ -165,11 +165,12 @@ export PYTHONPATH=$PWD/src
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%if_with check
 %check
 export PYTHONPATH=$PWD/src
 python setup.py test -v
 nosetests -vv --with-xunit --with-xcoverage
-%if_with python3
+
 pushd ../python3
 export PYTHONPATH=$PWD/src
 python3 setup.py test -v
@@ -190,7 +191,6 @@ popd
 %files tests
 %python_sitelibdir/*/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst docs/_build/html
 %python3_sitelibdir/*
@@ -199,9 +199,12 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests
-%endif
+
 
 %changelog
+* Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.3.1-alt1
+- Version updated to 4.3.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.4-alt1.dev0.git20150225.1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
