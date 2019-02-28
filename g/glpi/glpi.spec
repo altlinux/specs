@@ -1,8 +1,8 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.3.3
-Release: alt2
+Version: 9.4.0
+Release: alt1
 
 Summary: IT and asset management software
 License: GPLv2
@@ -134,6 +134,9 @@ fi
 %files php7
 
 %changelog
+* Thu Feb 28 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.0-alt1
+- New version 9.4.0
+
 * Wed Feb 06 2019 Pavel Zilke <zidex at altlinux dot org> 9.3.3-alt2
 - Fixed glpi-apache2 postun
 
