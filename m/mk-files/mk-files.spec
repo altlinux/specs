@@ -1,6 +1,6 @@
 Name: mk-files
-Version: 20081111
-Release: alt3
+Version: 20180528
+Release: alt1
 
 Summary: Support files for bmake, the NetBSD make(1) tool
 
@@ -10,11 +10,11 @@ Url: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/mk-%version.tar.bz2
+Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/mk-%version.tar
 
 BuildArch: noarch
 
-Requires: bmake
+#Requires: bmake
 
 Conflicts: pkgsrc-mk-files
 
@@ -39,6 +39,9 @@ env FORCE_BSD_MK=%buildroot/nonexistent \
 %_datadir/mk/*
 
 %changelog
+* Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 20180528-alt1
+- new version (20180528) with rpmgs script
+
 * Wed Jul 29 2009 Vitaly Lipatov <lav@altlinux.ru> 20081111-alt3
 - cleanup spec, pack only files in mk dir
 

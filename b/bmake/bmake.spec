@@ -1,6 +1,6 @@
 Name: bmake
 Version: 20181221
-Release: alt1
+Release: alt2
 
 Summary: The NetBSD make(1) tool
 
@@ -12,7 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/%name-%version.tar
 
-Requires: pkgsrc-mk-files
+#Requires: pkgsrc-mk-files
 
 %description
 bmake, the NetBSD make(1) tool, is a program designed to simplify
@@ -25,6 +25,8 @@ happens.
 
 bmake is similar to GNU make, even though the syntax for the
 advanced features supported in Makefiles is very different.
+
+Please install mk-files or pkgsrc-mk-files to use bmake.
 
 %prep
 %setup -n %name
@@ -49,6 +51,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Thu Feb 28 2019 Vitaly Lipatov <lav@altlinux.ru> 20181221-alt2
+- drop pkgsrc-mk-files requirement
+
 * Sat Feb 23 2019 Vitaly Lipatov <lav@altlinux.ru> 20181221-alt1
 - new version (20181221) with rpmgs script
 
