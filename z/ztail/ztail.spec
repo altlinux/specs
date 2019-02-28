@@ -7,7 +7,7 @@
 
 Name: ztail
 Version: 1.0.2
-Release: alt3
+Release: alt4
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -34,12 +34,15 @@ full regex-based filtering, substitution, and colorization.
 %hs_build
 
 %install
-runghc Setup copy --destdir=%buildroot
+%hs_setup copy --destdir=%buildroot
 
 %files
 %_bindir/ztail
 
 %changelog
+* Thu Feb 28 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt4
+- fix build with rpm-build-haskell >= 1.3-alt1
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt3
 - fix Url tag
 
