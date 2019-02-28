@@ -4,7 +4,7 @@
 %def_enable python3
 %def_disable luajit
 
-%define cantor_sover 18
+%define cantor_sover 20
 %define libcantorlibs libcantorlibs%cantor_sover
 %define cantor_pythonbackend_sover 0
 %define libcantor_pythonbackend libcantor_pythonbackend%cantor_pythonbackend_sover
@@ -12,8 +12,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Education
@@ -42,6 +42,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel k
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-syntax-highlighting-devel
 
 %description
 Cantor is a front-end to powerful mathematics and statistics packages.
@@ -140,6 +141,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 

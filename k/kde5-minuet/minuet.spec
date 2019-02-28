@@ -3,8 +3,8 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt2
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Education
@@ -87,6 +87,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 %_K5inc/minuet/
 
 %changelog
+* Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Fri Jan 18 2019 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - rebuild with new fluidsynth
 
