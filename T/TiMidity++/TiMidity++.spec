@@ -3,7 +3,7 @@
 
 Name: TiMidity++
 Version: 2.14.0
-Release: alt7%prerel.qa1
+Release: alt7%prerel.qa2
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -28,12 +28,11 @@ Requires: tcl >= %tcl_ver, tk >= %tk_ver
 # just a file conflict
 Conflicts: fluid-soundfont-lite-patches
 
-# Automatically added by buildreq on Sun Apr 13 2014
-# optimized out: emacs-base emacs-common fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libX11-locales libXext-devel libXmu-devel libXt-devel libatk-devel libaudiofile-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libp11-kit libpango-devel libpng-devel libtinfo-devel libwayland-client libwayland-server pkg-config tcl-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: emacs-nox libXaw3d-devel libalsa-devel libao-devel libesd-devel libflac-devel libgtk+2-devel libjack-devel libopenmotif-devel libslang2-devel libspeex-devel tk-devel
+# Automatically added by buildreq on Thu Feb 28 2019
+# optimized out: emacs-base emacs-common fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libX11-locales libXext-devel libXmu-devel libXt-devel libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libp11-kit libpango-devel libpng-devel libtinfo-devel pkg-config python-base python-modules xorg-proto-devel zlib-devel
+BuildRequires: emacs-nox libXaw3d-devel libalsa-devel libao-devel libesd-devel libflac-devel libgtk+2-devel libjack-devel libncurses-devel libopenmotif-devel libslang2-devel libspeex-devel libvorbis-devel
 
 BuildRequires: tcl-devel >= %tcl_ver, tk-devel >= %tk_ver
-BuildRequires: libogg-devel libvorbis-devel
 
 Summary(ru_RU.UTF-8): Конвертер/проигрыватель MIDI-файлов
 Summary(uk_UA.UTF-8): Конвертер/програвач MIDI-файлів
@@ -124,6 +123,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Thu Feb 28 2019 Dmitry V. Levin <ldv@altlinux.org> 2.14.0-alt7.qa2
+- NMU: updated build dependencies, built with libpng16.so.16.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.14.0-alt7.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
