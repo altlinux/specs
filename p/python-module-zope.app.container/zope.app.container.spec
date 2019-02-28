@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt2.1.1.1
 %define oname zope.app.container
 
 %def_with python3
@@ -42,6 +42,7 @@ Group: Development/Python3
 %py3_requires zope.lifecycleevent zope.location zope.publisher
 %py3_requires zope.schema zope.security zope.size zope.traversing
 %py3_requires zope.app.publisher zope.app
+%add_python3_req_skip zope.container.dependency
 
 %description -n python3-module-%oname
 This package define interfaces of container components, and provides
@@ -136,6 +137,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Feb 28 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.9.2-alt2.1.1.1
+- Rebuilt for new python3 autoreq/prov.
+- python3-module-%oname: skip python3 req zope.container.dependency.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.9.2-alt2.1.1
 - (AUTO) subst_x86_64.
 
