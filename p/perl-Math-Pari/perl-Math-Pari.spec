@@ -1,44 +1,78 @@
-%define _unpackaged_files_terminate_build 1
-%define dist Math-Pari
-Name: perl-%dist
-Version: 2.01080900
-Release: alt2.2
-Epoch: 1
-
-Summary: Perl interface to PARI
-License: GPL or Artistic
+Epoch: 2
 Group: Development/Perl
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global extraversion	%{nil}
+%global extrasuffix	%{nil}
 
-URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.zip
-Source1: http://pari.math.u-bordeaux.fr/pub/pari/unix/OLD/pari-2.3.5.tar.gz
-# from fc perl-Math-Pari-2.010809-7
-Patch0:		Math-Pari-2.010809b-no-fake-version.patch
-Patch1:		Math-Pari-2.010802-docs-and-testsuite.patch
-Patch2:		Math-Pari-2.01080605-include-path.patch
-Patch3:		Math-Pari-2.010809b-utf8.patch
-Patch4:		Math-Pari-2.010809b-escape-left-braces-in-regex.patch
+Summary:	Perl interface to PARI
+Name:		perl-Math-Pari
+Version:	2.030507
+Release:	alt1_2
+License:	GPL+ or Artistic
+URL:		https://metacpan.org/release/Math-Pari
+Source0:	https://cpan.metacpan.org/modules/by-module/Math/Math-Pari-%{version}%{extraversion}%{?extrasuffix}.zip
+Patch0:		Math-Pari-2.030506-system-pari.patch
+Patch1:		Math-Pari-2.030506-docs-and-testsuite.patch
+Patch3:		Math-Pari-2.030507-utf8.patch
+Patch4:		Math-Pari-2.030506-escape-left-braces-in-regex.patch
 Patch5:		Math-Pari-2.010809b-MP_NOGNUPLOT.patch
+# Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
+BuildRequires:	gcc
+BuildRequires:	libpari23-devel
+BuildRequires:	perl-devel
+BuildRequires:	perl-devel
+BuildRequires:	rpm-build-perl
+BuildRequires:	perl(Config.pm)
+BuildRequires:	perl(Cwd.pm)
+BuildRequires:	perl(ExtUtils/Constant.pm)
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+BuildRequires:	perl(File/Basename.pm)
+BuildRequires:	perl(File/Copy.pm)
+BuildRequires:	perl(strict.pm)
+BuildRequires:	sed
+# Module Runtime
+BuildRequires:	perl(Carp.pm)
+BuildRequires:	perl(DynaLoader.pm)
+BuildRequires:	perl(Exporter.pm)
+BuildRequires:	perl(overload.pm)
+BuildRequires:	perl(subs.pm)
+# Test Suite
+# (no additional dependencies)
+# Dependencies
 
-# Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: perl-devel unzip
+# Enforce dependency against same version of pari that we're built for
+Requires:	libpari23 = %(pkg-config --modversion libpari23 2>/dev/null || echo 0)
+
+# Don't "provide" private Perl libs or the redundant unversioned perl(Math::Pari)
+
+Source44: import.info
+%filter_from_provides /^\(perl(Math.Pari\\)$\|Pari\\.so\)/d
 
 %description
-This package is a Perl interface to famous library PARI for
-numerical/scientific/number-theoretic calculations.  It allows use of
-most PARI functions as Perl functions, and (almost) seamless merging
-of PARI and Perl data. In what follows we suppose prior knowledge of
-what PARI is (see <ftp://megrez.math.u-bordeaux.fr/pub/pari>, or
-Math::libPARI).
+This package is a Perl interface to the famous library PARI for numerical/
+scientific/ number-theoretic calculations. It allows use of most PARI functions
+as Perl functions, and (almost) seamless merging of PARI and Perl data.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n Math-Pari-%{version}%{extraversion}
+
+# Create a directory structure for libpari23 like Math::Pari expects it to be
+mkdir libpari23
+ln -s $(pkg-config --cflags-only-I libpari23 | sed -e 's/-I//') libpari23/include
+ln -s $(pkg-config --variable=paridir libpari23)/src libpari23/src
+
+# Fix for using system pari library (with source available)
+%patch0
 
 # We want to build the docs and test suite too
-%patch1 -p1
-
-# Use <pari/pari.h> as per pari upstream documentation
-#patch2
+%patch1
 
 # Recode Changes file as UTF-8
 %patch3
@@ -49,21 +83,37 @@ Math::libPARI).
 # Fix operation of MP_NOGNUPLOT
 %patch5
 
-
 %build
-# TODO: remove
-export PERL_USE_UNSAFE_INC=1
-%perl_vendor_build pari_tgz=%SOURCE1
+paridir=$(pkg-config --variable=paridir libpari23)
+perl Makefile.PL \
+	INSTALLDIRS=vendor \
+	OPTIMIZE="$(pkg-config --cflags-only-I libpari23) %{optflags}" \
+	paridir="${paridir}" \
+	pariincludes=$(pwd)/libpari23 \
+	parilibs="$(pkg-config --libs libpari23)"
+%make_build
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name '*.bs' -empty -delete
+# %{_fixperms} -c %{buildroot}
+
+%check
+make test MP_NOGNUPLOT=1
 
 %files
 %doc Changes README
-%perl_vendor_archlib/Math
-%perl_vendor_autolib/Math
+%dir %{perl_vendor_archlib}/Math/
+%exclude %doc %{perl_vendor_archlib}/Math/libPARI.dumb.pod
+%doc %{perl_vendor_archlib}/Math/libPARI.pod
+%{perl_vendor_archlib}/Math/*.pm
+%{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030507-alt1_2
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt2.2
 - rebuild with new perl 5.28.1
 
