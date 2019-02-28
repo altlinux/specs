@@ -12,7 +12,7 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
 Version:	2.030507
-Release:	alt1_2
+Release:	alt2_2
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
 Source0:	https://cpan.metacpan.org/modules/by-module/Math/Math-Pari-%{version}%{extraversion}%{?extrasuffix}.zip
@@ -49,11 +49,9 @@ BuildRequires:	perl(subs.pm)
 
 # Enforce dependency against same version of pari that we're built for
 Requires:	libpari23 = %(pkg-config --modversion libpari23 2>/dev/null || echo 0)
+Source44: import.info
 
 # Don't "provide" private Perl libs or the redundant unversioned perl(Math::Pari)
-
-Source44: import.info
-%filter_from_provides /^\(perl(Math.Pari\\)$\|Pari\\.so\)/d
 
 %description
 This package is a Perl interface to the famous library PARI for numerical/
@@ -111,6 +109,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030507-alt2_2
+- clean up thanks to ldv
+
 * Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030507-alt1_2
 - new version
 
