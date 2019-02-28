@@ -10,7 +10,7 @@
 
 Name: traefik
 Version: 1.7.9
-Release: alt1
+Release: alt2
 Summary: The Cloud Native Edge Router
 
 License: MIT
@@ -89,7 +89,15 @@ CGO_ENABLED=0 GOGC=off go build -ldflags " -s -w  \
 %install
 install -p -D -m 0755 .gopath/src/%import_path/dist/traefik %buildroot%_bindir/%name
 install -p -D -m 0644 contrib/systemd/traefik.service %buildroot%_unitdir/%name.service
+install -d -m 750 %buildroot%_sysconfdir/%name
+install -d -m 750 %buildroot%_sysconfdir/%name/%name.d
+touch %buildroot%_sysconfdir/%name/acme.json
 install -p -D -m 0644 traefik.sample.toml %buildroot%_sysconfdir/%name/%name.toml
+# Setup directories
+install -d -m 755 %buildroot%_logdir/%name
+install -d -m 755 %buildroot%_sharedstatedir/%name
+# Install logrotate
+#install -p -D -m 644 %%SOURCE10 %buildroot%_logrotatedir/%name
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -102,13 +110,23 @@ install -p -D -m 0644 traefik.sample.toml %buildroot%_sysconfdir/%name/%name.tom
 %preun_service %name
 
 %files
+%doc LICENSE.md
 %_bindir/%name
 %dir %attr(750, root, %name) %_sysconfdir/%name
+%dir %attr(750, root, %name) %_sysconfdir/%name/%name.d
 %config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/traefik.toml
+%ghost %config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/acme.json
 %_unitdir/%name.service
-%doc LICENSE.md
+%dir %attr(0770, root, %name) %_logdir/%name
+%dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Feb 28 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.9-alt2
+- build webui
+- update sample config
+- listen api entryPoint on localhost by default for security reason
+- update systemd unit
+
 * Mon Feb 25 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.9-alt1
 - Initial build
 
