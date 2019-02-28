@@ -8,7 +8,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 0.13.3
-Release: alt3
+Release: alt3.1
 Summary: The official C client for Redis
 
 Group: System/Libraries
@@ -87,6 +87,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu Feb 28 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt3.1
+- Rebuild with new libevent2
+
 * Mon Oct 30 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.13.3-alt3
 - Added to devel subpkg: Conflicts: libhiredis* <= 0.12-alt1
   (which included the example & test executables, too)
