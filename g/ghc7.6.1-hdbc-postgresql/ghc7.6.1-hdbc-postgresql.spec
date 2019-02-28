@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 2.3.2.1
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -41,6 +41,13 @@ This package provides a PostgreSQL driver for HDBC
 %files -f %name-files.all
 
 %changelog
+* Thu Feb 28 2019 Ivan Zakharyaschev <imz@altlinux.org> 2.3.2.1-alt3
+- https://github.com/hdbc/hdbc-postgresql/pull/47 :
+  Starting from PostgreSQL 10.5, 9.6.10, 9.5.14, 9.4.19, 9.3.24,
+  and 11 Beta 3 PostgreSQL comes with its own pgtypes.h as a part of
+  the ecpg interface. This fix renames internal header to prevent
+  name collision. (Thanks Maxim Mamontov <faust.madf@gmail.com>)
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 2.3.2.1-alt2
 - rebuild
 
