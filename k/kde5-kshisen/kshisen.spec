@@ -1,8 +1,8 @@
 %define rname kshisen
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.12.2
+Release: alt1
 %K5init
 
 Group: Games/Boards
@@ -37,6 +37,7 @@ BuildRequires: kf5-kxmlgui-devel kf5-kcrash-devel
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
+%config(noreplace) %_K5xdgconf/*.*categories
 %doc COPYING*
 %_K5bin/kshisen
 %_K5snd/kshisen/
@@ -46,6 +47,9 @@ BuildRequires: kf5-kxmlgui-devel kf5-kcrash-devel
 %_K5cfg/kshisen.kcfg
 
 %changelog
+* Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
+- new version
+
 * Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
