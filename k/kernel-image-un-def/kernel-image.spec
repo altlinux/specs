@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	4.19
-%define kernel_sublevel .25
+%define kernel_sublevel .26
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -613,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Feb 28 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.26-alt1
+- v4.19.26
+
 * Tue Feb 26 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.25-alt2
 - SCSI_SMARTPQI set to m
 
