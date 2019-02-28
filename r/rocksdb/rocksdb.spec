@@ -11,7 +11,7 @@
 %def_without rocksdb_lite
 
 Name: rocksdb
-Version: 5.14.3
+Version: 5.17.2
 Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
@@ -111,6 +111,9 @@ rm build_tools/gnu_parallel
 %_libdir/*.a
 
 %changelog
+* Thu Feb 28 2019 Alexey Shabalin <shaba@altlinux.org> 5.17.2-alt1
+- 5.17.2
+
 * Fri Oct 26 2018 Alexey Shabalin <shaba@altlinux.org> 5.14.3-alt1
 - 5.14.3
 - build with PORTABLE=ON
