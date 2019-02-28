@@ -1,5 +1,5 @@
 Name: rpminstall-tests
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Tests for rpm: how it interprets packages when installing
@@ -70,6 +70,14 @@ cd  "$tmpdir"; \
 '
 
 %changelog
+* Thu Feb 28 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt1
+- Tests for upgradability according to the disttag. (XFAIL: incorrect
+  behavior in rpm-4.13.0.1-alt5, but different in 4.0.4-alt101.M80P.5;
+  XFAIL: fails in non-standard configuration without honor_buildtime.)
+- Extended the tests for the overlapping of constraints and packages
+  with cases of "elusive deps" (a dependency with a release, but no epoch:
+  should it match any epoch? Marked XFAIL for now.)
+
 * Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1
 - More complete set of tests of the upgradability order
   (for different releases and buildtimes, not yet disttags).
