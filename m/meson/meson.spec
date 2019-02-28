@@ -7,7 +7,7 @@
 
 Name: meson
 Version: 0.49.2
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -88,6 +88,11 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.2-alt2
+- meson.macros: %%meson_build: use %%_smp_mflags to specify number of
+  parallel jobs from NPROCS environment variable or from %%__nprocs
+  (see ninja bug https://github.com/ninja-build/ninja/issues/1278)
+
 * Wed Feb 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.2-alt1
 - 0.49.2
 
