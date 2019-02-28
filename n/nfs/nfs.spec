@@ -1,6 +1,6 @@
 Name: nfs
-Version: 2.3.2
-Release: alt3
+Version: 2.3.3
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -98,7 +98,6 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
-    --without-tcp-wrappers \
     --disable-static \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
@@ -300,6 +299,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Feb 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.3-alt1
+- 2.3.3 released
+
 * Thu Aug 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.2-alt3
 - rebuilt without libwrap
 
