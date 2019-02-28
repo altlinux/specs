@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 18.12.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -22,7 +22,7 @@ Patch2: alt-clean-maps.patch
 #BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libgps-devel libshape-devel python-module-google python3.3-site-packages qt5-location-devel qt5-phonon-devel qt5-quick1-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-location-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-serialport-devel
-#BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-webengine-devel
 #BuildRequires: libwlocate-devel
 BuildRequires: libgps-devel libshape-devel zlib-devel libprotobuf-devel protobuf-compiler
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -130,6 +130,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt2
+- build with qtwebengine
+
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
