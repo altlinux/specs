@@ -3,7 +3,7 @@
 
 Name: tcl-img
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: Tcl Image Formats (Img)
 License: BSD
@@ -18,7 +18,7 @@ Conflicts: tcl < 8.6.7-alt2
 Source0: %name-%version-%release.tar
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
-BuildRequires: libjpeg-devel libpng12-devel tk-devel zlib-devel
+BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
 BuildRequires: tcllib
 
 %description
@@ -48,6 +48,9 @@ gzip -9 ChangeLog
 %_mandir/mann/*
 
 %changelog
+* Thu Feb 28 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.2-alt2
+- rebuilt against libpng16
+
 * Tue Sep 12 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.2-alt1
 - 1.4.2 released
 
