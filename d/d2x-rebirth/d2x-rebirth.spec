@@ -1,7 +1,7 @@
 Summary: The port of Descent 2 for Linux
 Name: d2x-rebirth
 Version: 0.58.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Games/Arcade
 Url: http://www.dxx-rebirth.de/
@@ -81,7 +81,7 @@ sed -i '/MAX_MULTI_MESSAGE_LEN+4/s/MAX_MULTI_MESSAGE_LEN+4/MAX_MULTI_MESSAGE_LEN
 
 %build
 # d2x-sdl
-scons -j%__nprocs \
+CFLAGS="-D__EXPORT__=" scons -j%__nprocs \
 	sharepath=%_gamesdatadir/descent2 \
 	sdl_only=1 \
 	sdlmixer=1 \
@@ -90,7 +90,7 @@ mv d2x-rebirth d2x-rebirth-sdl
 
 # d2x-gl
 scons -c
-scons -j%__nprocs \
+CFLAGS="-D__EXPORT__=" scons -j%__nprocs \
 	sharepath=%_gamesdatadir/descent2 \
 	sdlmixer=1 \
 	PREFIX=%buildroot%prefix
@@ -163,6 +163,9 @@ install -m 644 %name-gl.desktop %buildroot%_desktopdir
 %_desktopdir/%name-gl.desktop
 
 %changelog
+* Thu Feb 28 2019 Fr. Br. George <george@altlinux.ru> 0.58.1-alt2
+- Fix build
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.58.1-alt1
 - Autobuild version bump to 0.58.1
 
