@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 
 Name:           GeoLite2-City
-Version: 20190219
+Version: 20190226
 Release: alt1
 Summary:        Free IP geolocation %name database
 License:        CC-BY-SA
@@ -35,6 +35,9 @@ install -D -p -m 0644 %{name}.mmdb %{buildroot}%{_datadir}/GeoIP/%{name}.mmdb
 %verify(not md5 size mtime) %{_datadir}/GeoIP/%{name}.mmdb
 
 %changelog
+* Thu Feb 28 2019 Cronbuild Service <cronbuild@altlinux.org> 20190226-alt1
+- repocop cronbuild 20190228. At your service.
+
 * Wed Feb 20 2019 Cronbuild Service <cronbuild@altlinux.org> 20190219-alt1
 - repocop cronbuild 20190220. At your service.
 
