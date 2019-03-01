@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-IO-AIO-Util
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: aio_mkpath and aio_mktree functions missing from IO::AIO
@@ -50,6 +50,9 @@ rm -f t/01_mkpath.t
 %doc Changes README
 
 %changelog
+* Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
