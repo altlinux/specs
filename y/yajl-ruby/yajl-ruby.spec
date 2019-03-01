@@ -1,59 +1,71 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname yajl-ruby
 
-Name: %pkgname
-Version: 1.4.0
-Release: alt1.1
+Name:          %pkgname
+Version:       1.4.1
+Release:       alt1
+Summary:       YAJL C Bindings for Ruby
+Group:         Development/Ruby
+License:       MIT/Ruby
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Url:           https://github.com/brianmario/yajl-ruby
+# VCS:         https://github.com/brianmario/yajl-ruby.git
+Source:        %name-%version.tar
 
-Summary: YAJL C Bindings for Ruby
-Group: Development/Ruby
-License: MIT/Ruby
-Url: http://rubyforge.org/projects/yajl-ruby/
-
-Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
-
-# Automatically added by buildreq on Sun Apr 11 2010 (-bi)
-BuildRequires: libruby-devel ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rspec)
+BuildRequires: gem(rake-compiler)
 
 %description
 This package is a C binding to the excellent YAJL JSON parsing and
 generation library.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
+%package       devel
+Summary:       Development files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   devel
+Development files for %name.
+
+
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation files for %name.
 
+
 %prep
-%setup -n %pkgname-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install -m lust
+
+%check
+%gem_test
 
 %files
-%doc README.md CHANGELOG.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_sitearchdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         devel
+%ruby_includedir/*
+
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
+- Bump to 1.4.1;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

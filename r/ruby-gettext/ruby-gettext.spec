@@ -1,26 +1,24 @@
-Name:    ruby-gettext
-Version: 3.2.9
-Release: alt1.6
+%define        pkgname gettext
 
-Summary: Native Language Support Library for Ruby
-Group:   Development/Ruby
-License: Ruby or LGPLv3+
-Url: http://ruby-gettext.github.io/
+Name:          ruby-%pkgname
+Version:       3.2.9
+Release:       alt2
+Summary:       Native Language Support Library for Ruby
+Group:         Development/Ruby
+License:       GPLv2
+Url:           https://ruby-gettext.github.io/
+# VCS:         https://github.com/ruby-gettext/locale.git
+BuildArch:     noarch
+Source:        %name-%version.tar
 
-BuildArch: noarch
-
-Obsoletes: %name-cgi
-Obsoletes: %name-erb
-Provides: %name-cgi = %version-%release
-Provides: %name-erb = %version-%release
+Obsoletes:     %name-cgi
+Obsoletes:     %name-erb
+Provides:      %name-cgi = %version-%release
+Provides:      %name-erb = %version-%release
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-locale ruby-racc-runtime ruby-rake ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-locale ruby-racc-runtime ruby-rake
 BuildRequires: ruby-test-unit
-
-Requires: ruby-text
-
-Source: gettext-%version.tar
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools
@@ -32,71 +30,54 @@ Features:
    The po-file is compatible to GNU gettext.
  * rmsgfmt creates a mo-file from a po-file.
 
-%package utils
-Summary: GetText utils
-Group: Development/Ruby
+This library was called as "Ruby-Locale". Since 2.0.6, this library is called
+just "locale". You can call this library as "locale gem" or "Ruby Locale" to
+distinguish from other "locale"s.
 
-%description utils
-GetText utils
+This library aims to support all environments which Ruby works and all kind of
+programs (GUI, WWW, library, etc), and becomes the hub of other
+i18n/l10n libs/apps to handle major locale ID standards.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %name
+Group:         Documentation
+
+%description   doc
+Documentation files for %name.
+
+
+%package       -n tools
+Summary:       Ruby GetText Package CLI tools
+Group:         Documentation
+
+%description   -n tools
+%summary.
+
 
 %prep
 %setup
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-
-%find_lang rgettext
-
-# It is the file in the package whose name matches the format emacs or vim uses 
-# for backup and autosave files. It may have been installed by  accident.
-find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-# failsafe cleanup if the file is declared as %%doc
-find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,Object/identify_comment-i.ri,cache.ri,created.rid}
-
-# Install additional documentation
-install -d %buildroot%_defaultdocdir/%name-doc-%version
-cp -a samples ChangeLog* %buildroot%_defaultdocdir/%name-doc-%version
-
-%check
-%if %(rpmvercmp %version 2.0) < 0
-cd test
-%ruby_vendor -I../lib -e 'require "gettext/tools"; GetText.create_mofiles(:mo_root => "locale")'
-find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
-%endif
+%gem_install
 
 %files
-%doc README.md
-%ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/gettext/tools
-%exclude %ruby_sitelibdir/gettext/tools.rb
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files -f rgettext.lang utils
+%files         -n tools
 %_bindir/*
-%ruby_sitelibdir/gettext/tools
-%ruby_sitelibdir/gettext/tools.rb
 
-%files doc
-%doc samples ChangeLog*
-%ruby_ri_sitedir/GetText*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.2.9-alt2
+- Use Ruby Policy 2.0.
+
 * Sun Jan 20 2019 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.6
 - Drop deprecated macro (ALT #35937).
 

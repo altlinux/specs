@@ -1,14 +1,15 @@
-Name:    foreman
-Version: 1.19.0
-Release: alt5
+Name:       foreman
+Version:    1.20.1
+Release:    alt1
 
-Summary: An application that automates the lifecycle of servers
-License: GPLv3+ with exceptions
-Group:  System/Servers
-Url:     https://theforeman.org
+Summary:    An application that automates the lifecycle of servers
+License:    GPLv3+ with exceptions
+Group:      System/Servers
+Url:        https://theforeman.org
+# VCS:      https://github.com/theforeman/foreman.git
 
-Packager:  Andrey Cherepanov <cas@altlinux.org>
-BuildArch: noarch
+Packager:   Andrey Cherepanov <cas@altlinux.org>
+BuildArch:  noarch
 
 Source:  %name-%version.tar
 Source1: %name.init
@@ -19,19 +20,16 @@ Source5: %name.tmpfiles
 Source6: dynflowd.sysconfig
 Source7: dynflowd.service
 
-Patch1: alt-use-new-fog-google-gem.patch
-Patch2: fix-v1.19.0-to-support-rails-5.2.patch
+Patch1:  alt-use-new-fog-google-gem.patch
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: asciidoc-a2x
+BuildRequires: ruby-gem(asciidoctor)
 
 Requires: wget
 Requires: vixie-cron
 Requires: %name-debug
 
-%add_findreq_skiplist %_datadir/%name/app/views/unattended/provisioning_templates/script/grubby_default.erb
-%filter_from_requires \,^ruby-gem(fog_extensions/vsphere/mini_server,d
+%add_findreq_skiplist *.erb
 
 %description
 Foreman is a free open source project that gives you the power to easily
@@ -206,7 +204,9 @@ Meta Package to install requirements for sqlite support
 %prep
 %setup -n %name-%version
 %patch1 -p1
-%patch2 -p1
+sed -e "s/'5.2.1'/'5.2.2'/" -e "s/self.instance_eval.*//" -e "s/SETTINGS\[:rails\]/'5.2'/" -e "/require_relative/d" -i Gemfile # NOTE fixup Gemfilke
+sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
+
 rm -rf script/perfomance
 %update_setup_rb
 
@@ -224,7 +224,7 @@ rake -f Rakefile.dist install PREFIX=%buildroot%_prefix SBINDIR=%buildroot%_sbin
 
 mkdir -p %buildroot%_sbindir
 for i in dynflowd %name-debug %name-rake %name-tail;do
-	install -Dm0755 script/$i %buildroot%_sbindir/$i
+   install -Dm0755 script/$i %buildroot%_sbindir/$i
 done
 
 mkdir -p %buildroot%_datadir/%name/plugins
@@ -328,10 +328,10 @@ fi
 
 # We need to run the db:migrate after the install transaction
 # always attempt to reencrypt after update in case new fields can be encrypted
-foreman_rake db:migrate db:encrypt_all >> %_localstatedir/log/%name/db_migrate.log 2>&1 || :
-foreman_rake db:seed >> %_localstatedir/log/%name/db_seed.log 2>&1 || :
-foreman_rake apipie:cache:index >> %_localstatedir/log/%name/apipie_cache.log 2>&1 || :
-foreman_rake tmp:clear >> %_localstatedir/log/%name/tmp_clear.log 2>&1 || :
+foreman_rake db:migrate db:encrypt_all >> %_datadir/%name/log/db_migrate.log 2>&1 || :
+foreman_rake db:seed >> %_datadir/%name/log/db_seed.log 2>&1 || :
+foreman_rake apipie:cache:index >> %_datadir/%name/log/apipie_cache.log 2>&1 || :
+foreman_rake tmp:clear >> %_datadir/%name/log/tmp_clear.log 2>&1 || :
 (/bin/systemctl try-restart %name.service) >/dev/null 2>&1
 exit 0
 
@@ -415,6 +415,9 @@ exit 0
 %_datadir/%name/bundler.d/sqlite.rb
 
 %changelog
+* Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 1.20.1-alt1
+- Bump to 1.20.1.
+
 * Thu Sep 27 2018 Pavel Skrylev <majioa@altlinux.org> 1.19.0-alt5
 - Patch to support 5.2 rails from master.
 - Rake tasks moved to named subfolder.

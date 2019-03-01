@@ -1,238 +1,313 @@
-%define  pkgname rails
+%define        pkgname rails
 
-Name:    ruby-%pkgname
-Version: 5.2.0
-Release: alt1.2
+Name:          ruby-%pkgname
+Version:       5.2.2
+Release:       alt1
+Summary:       Ruby on Rails
+License:       MIT
+Group:         Development/Ruby
+Url:           https://rubyonrails.org/
+# VCS:         https://github.com/rails/rails.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Ruby on Rails
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/rails/rails
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-Source1: rails
-Patch1:  %pkgname-alt-fix-path-to-bundle.patch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-Requires: ruby-actioncable
-Requires: ruby-actionmailer
-Requires: ruby-actionpack
-Requires: ruby-actionview
-Requires: ruby-activejob
-Requires: ruby-activemodel
-Requires: ruby-activerecord
-Requires: ruby-activestorage
-Requires: ruby-activesupport
-Requires: ruby-railties
 
 %description
 Ruby on Rails (metapackage).
 
-%package -n ruby-actioncable
-Summary: WebSocket framework for Rails
-Group: Development/Ruby
-Requires: ruby-actionpack
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      activerecord-gems-doc = %EVR
+Obsoletes:     activerecord-gems-doc < %EVR
+Provides:      activesupport-gems-doc = %EVR
+Obsoletes:     activesupport-gems-doc < %EVR
 
-%description -n ruby-actioncable
+%description   doc
+Documentation files for %{name}.
+
+
+%package       -n ruby-actioncable
+Summary:       WebSocket framework for Rails
+Group:         Development/Ruby
+
+%description   -n ruby-actioncable
 Structure many real-time application concerns into channels over a
 single WebSocket connection.
 
-%package -n ruby-actionmailer
-Summary: Email composition, delivery, and receiving framework (part of Rails)
-Group: Development/Ruby
-Requires: ruby-actionpack ruby-actionview ruby-activejob
 
-%description -n ruby-actionmailer
+%package       -n ruby-actioncable-doc
+Summary:       Documentation files for "ruby-actioncable" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-actioncable-doc
+%summary
+
+
+%package       -n ruby-actionmailer
+Summary:       Email composition, delivery, and receiving framework (part of Rails)
+Group:         Development/Ruby
+
+%description   -n ruby-actionmailer
 Email on Rails. Compose, deliver, receive, and test emails using the
 familiar controller/view pattern. First-class support for multipart
 email and attachments.
 
-%package -n ruby-actionpack
-Summary: Web-flow and rendering framework putting the VC in MVC (part of Rails)
-Group: Development/Ruby
-Requires: ruby-activesupport
 
-%description -n ruby-actionpack
+%package       -n ruby-actionmailer-doc
+Summary:       Documentation files for "ruby-actionmailer" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-actionmailer-doc
+%summary
+
+
+%package       -n ruby-actionpack
+Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails)
+Group:         Development/Ruby
+
+%description   -n ruby-actionpack
 Web apps on Rails. Simple, battle-tested conventions for building and
 testing MVC web applications. Works with any Rack-compatible server.
 
-%package -n ruby-actionview
-Summary: Rendering framework putting the V in MVC (part of Rails)
-Group: Development/Ruby
-Requires: ruby-activesupport
 
-%description -n ruby-actionview
+%package       -n ruby-actionpack-doc
+Summary:       Documentation files for "ruby-actionpack" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-actionpack-doc
+%summary
+
+
+%package       -n ruby-actionview
+Summary:       Rendering framework putting the V in MVC (part of Rails)
+Group:         Development/Ruby
+
+%description   -n ruby-actionview
 Simple, battle-tested conventions and helpers for building web pages.
 
-%package -n ruby-activejob
-Summary: Job framework with pluggable queues
-Group: Development/Ruby
-Requires: ruby-activesupport
 
-%description -n ruby-activejob
+%package       -n ruby-actionview-doc
+Summary:       Documentation files for "ruby-actionview" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-actionview-doc
+%summary
+
+
+%package       -n ruby-activejob
+Summary:       Job framework with pluggable queues
+Group:         Development/Ruby
+
+%description   -n ruby-activejob
 Declare job classes that can be run by a variety of queueing backends.
 
-%package -n ruby-activemodel
-Summary: A toolkit for building modeling frameworks (part of Rails)
-Group: Development/Ruby
-Requires: ruby-activesupport
 
-%description -n ruby-activemodel
+%package       -n ruby-activejob-doc
+Summary:       Documentation files for "ruby-activejob" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-activejob-doc
+%summary
+
+
+%package       -n ruby-activemodel
+Summary:       A toolkit for building modeling frameworks (part of Rails)
+Group:         Development/Ruby
+
+%description   -n ruby-activemodel
 A toolkit for building modeling frameworks like Active Record. Rich
 support for attributes, callbacks, validations, serialization,
 internationalization, and testing.
 
-%package -n ruby-activerecord
-Summary: Object-relational mapper framework (part of Rails)
-Group: Development/Ruby
-Requires: ruby-activesupport ruby-activemodel
-Provides: activerecord-gems = %EVR
-Obsoletes: activerecord-gems < %EVR
 
-%description -n ruby-activerecord
+%package       -n ruby-activemodel-doc
+Summary:       Documentation files for "ruby-activemodel" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-activemodel-doc
+%summary
+
+
+%package       -n ruby-activerecord
+Summary:       Object-relational mapper framework (part of Rails)
+Group:         Development/Ruby
+Provides:      activerecord-gems = %EVR
+Obsoletes:     activerecord-gems < %EVR
+
+%description   -n ruby-activerecord
 Databases on Rails. Build a persistent domain model by mapping database
 tables to Ruby classes. Strong conventions for associations,
 validations, aggregations, migrations, and testing come baked-in.
 
-%package -n ruby-activestorage
-Summary: Local and cloud file storage framework
-Group: Development/Ruby
-Requires: ruby-activesupport ruby-actionpack
 
-%description -n ruby-activestorage
+%package       -n ruby-activerecord-doc
+Summary:       Documentation files for "ruby-activerecord" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-activerecord-doc
+%summary
+
+
+%package       -n ruby-activestorage
+Summary:       Local and cloud file storage framework
+Group:         Development/Ruby
+
+%description   -n ruby-activestorage
 Attach cloud and local files in Rails applications.
 
-%package -n ruby-activesupport
-Summary: A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
-Group: Development/Ruby
-Provides: activesupport-gems = %EVR
-Obsoletes: activesupport-gems < %EVR
 
-%description -n ruby-activesupport
+%package       -n ruby-activestorage-doc
+Summary:       Documentation files for "ruby-activestorage" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-activestorage-doc
+%summary
+
+
+%package       -n ruby-activesupport
+Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
+Group:         Development/Ruby
+Provides:      activesupport-gems = %EVR
+Obsoletes:     activesupport-gems < %EVR
+
+%description   -n ruby-activesupport
 A toolkit of support libraries and Ruby core extensions extracted from
 the Rails framework. Rich support for multibyte strings,
 internationalization, time zones, and testing.
 
-%package -n ruby-railties
-Summary: Tools for creating, working with, and running Rails applications
-Group: Development/Ruby
-Requires: ruby-activesupport ruby-actionpack
 
-%description -n ruby-railties
+%package       -n ruby-activesupport-doc
+Summary:       Documentation files for "ruby-activesupport" gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ruby-activesupport-doc
+%summary
+
+
+%package       -n ruby-railties
+Summary:       Tools for creating, working with, and running Rails applications
+Group:         Development/Ruby
+
+%description   -n ruby-railties
 Rails internals: application bootup, plugins, generators, and rake tasks.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-Provides: activerecord-gems-doc = %EVR
-Obsoletes: activerecord-gems-doc < %EVR
-Provides: activesupport-gems-doc = %EVR
-Obsoletes: activesupport-gems-doc < %EVR
 
-BuildArch: noarch
+%package       -n ruby-railties-doc
+Summary:       Documentation files for "ruby-railties" gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   -n ruby-railties-doc
+%summary
+
 
 %prep
-%setup -n %pkgname-%version
-%patch1 -p1
-for dir in . actioncable actionmailer actionpack actionview activejob activemodel activerecord activestorage activesupport railties;do
-	pushd $dir
-	%update_setup_rb
-	popd
-done
+%setup
 
 %build
-for dir in . actioncable actionmailer actionpack actionview activejob activemodel activerecord activestorage activesupport railties;do
-	pushd $dir
-	%ruby_config
-	%ruby_build
-	popd
-done
+%gem_build
 
 %install
-for dir in . actioncable actionmailer actionpack actionview activejob activemodel activerecord activestorage activesupport railties;do
-	pushd $dir
-	%ruby_install
-	popd
-done
-rm -rf %buildroot%_bindir/*
-install -Dm0755 %SOURCE1 %buildroot%_bindir/rails
-#%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
-%rubygem_specdir/rails*
+%ruby_gemspecdir/rails-%version.gemspec
+%ruby_gemslibdir/rails-%version
 
-%files -n ruby-actioncable
-%ruby_sitelibdir/action_cable*
-%ruby_sitelibdir/rails/generators/channel
-%rubygem_specdir/actioncable*
+%files         -n ruby-actioncable
+%ruby_gemspecdir/actioncable-%version.gemspec
+%ruby_gemslibdir/actioncable-%version
 
-%files -n ruby-actionmailer
-%ruby_sitelibdir/action_mailer*
-%ruby_sitelibdir/rails/generators/mailer
-%rubygem_specdir/actionmailer*
+%files         -n ruby-actioncable-doc
+%ruby_gemsdocdir/actioncable-%version
 
-%files -n ruby-actionpack
-%ruby_sitelibdir/abstract_controller*
-%ruby_sitelibdir/action_controller*
-%ruby_sitelibdir/action_dispatch*
-%ruby_sitelibdir/action_pack*
-%rubygem_specdir/actionpack*
+%files         -n ruby-actionmailer
+%ruby_gemspecdir/actionmailer-%version.gemspec
+%ruby_gemslibdir/actionmailer-%version
 
-%files -n ruby-actionview
-%ruby_sitelibdir/action_view*
-%rubygem_specdir/actionview*
+%files         -n ruby-actionmailer-doc
+%ruby_gemsdocdir/actionmailer-%version
 
-%files -n ruby-activejob
-%ruby_sitelibdir/active_job*
-%ruby_sitelibdir/rails/generators/job
-%rubygem_specdir/activejob*
+%files         -n ruby-actionpack
+%ruby_gemspecdir/actionpack-%version.gemspec
+%ruby_gemslibdir/actionpack-%version
 
-%files -n ruby-activemodel
-%ruby_sitelibdir/active_model*
-%rubygem_specdir/activemodel*
+%files         -n ruby-actionpack-doc
+%ruby_gemsdocdir/actionpack-%version
 
-%files -n ruby-activerecord
-%ruby_sitelibdir/active_record*
-%ruby_sitelibdir/rails/generators/active_record*
-%rubygem_specdir/activerecord*
+%files         -n ruby-actionview
+%ruby_gemspecdir/actionview-%version.gemspec
+%ruby_gemslibdir/actionview-%version
 
-%files -n ruby-activestorage
-%ruby_sitelibdir/active_storage*
-%ruby_sitelibdir/tasks/activestorage.rake
-%rubygem_specdir/activestorage*
+%files         -n ruby-actionview-doc
+%ruby_gemsdocdir/actionview-%version
 
-%files -n ruby-activesupport
-%ruby_sitelibdir/active_support*
-%rubygem_specdir/activesupport*
+%files         -n ruby-activejob
+%ruby_gemspecdir/activejob-%version.gemspec
+%ruby_gemslibdir/activejob-%version
 
-%files -n ruby-railties
-%_bindir/rails
-%ruby_sitelibdir/rails*
-%ruby_sitelibdir/minitest/rails_plugin.rb
-%exclude %ruby_sitelibdir/rails/generators/channel
-%exclude %ruby_sitelibdir/rails/generators/mailer
-%exclude %ruby_sitelibdir/rails/generators/job
-%exclude %ruby_sitelibdir/rails/generators/active_record*
-%rubygem_specdir/railties*
+%files         -n ruby-activejob-doc
+%ruby_gemsdocdir/activejob-%version
 
-%files doc
-#%ruby_ri_sitedir/*
+%files         -n ruby-activemodel
+%ruby_gemspecdir/activemodel-%version.gemspec
+%ruby_gemslibdir/activemodel-%version
+
+%files         -n ruby-activemodel-doc
+%ruby_gemsdocdir/activemodel-%version
+
+%files         -n ruby-activerecord
+%ruby_gemspecdir/activerecord-%version.gemspec
+%ruby_gemslibdir/activerecord-%version
+
+%files         -n ruby-activerecord-doc
+%ruby_gemsdocdir/activerecord-%version
+
+%files         -n ruby-activestorage
+%ruby_gemspecdir/activestorage-%version.gemspec
+%ruby_gemslibdir/activestorage-%version
+
+%files         -n ruby-activestorage-doc
+%ruby_gemsdocdir/activestorage-%version
+
+%files         -n ruby-activesupport
+%ruby_gemspecdir/activesupport-%version.gemspec
+%ruby_gemslibdir/activesupport-%version
+
+%files         -n ruby-activesupport-doc
+%ruby_gemsdocdir/activesupport-%version
+
+%files         -n ruby-railties
+%_bindir/*
+%ruby_gemspecdir/railties-%version.gemspec
+%ruby_gemslibdir/railties-%version
+
+%files         -n ruby-railties-doc
+%ruby_gemsdocdir/railties-%version
+
 
 %changelog
+* Sat Mar 09 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2-alt1
+- Bump to 5.2.2;
+- Use Ruby Policy 2.0.
+
 * Wed Jan 23 2019 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1.2
 - Remove deprecated macros.
 

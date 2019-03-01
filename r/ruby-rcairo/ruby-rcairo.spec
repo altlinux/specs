@@ -1,84 +1,82 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname cairo
 
-%define     pkgname cairo
+Name:          ruby-r%pkgname
+Version:       1.16.2
+Release:       alt2
+Summary:       ruby bindings for cairo
+Group:         Development/Ruby
+License:       GPLv2
+Url:           http://cairographics.org/rcairo
+# VCS:         https://github.com/rcairo/rcairo.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Name:       ruby-r%pkgname
-Version:    1.16.2
-Release:    alt1
-
-Summary:    ruby bindings for cairo
-Group:      Development/Ruby
-License:    GPLv2
-Url:        http://cairographics.org/rcairo
-# VCS:      https://github.com/rcairo/rcairo.git
-Provides:   rcairo = %version-%release
-Obsoletes:  rcairo < 1.7.0
-
-Source: %pkgname-%version.tar
+Source:        %name-%version.tar
+Provides:      rcairo = %version-%release
+Obsoletes:     rcairo < 1.7.0
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(native-package-installer) >= 1.0.3 ruby-pkg-config >= 1.2.2 
 BuildRequires: libcairo-devel
-BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel libpcre-devel libuuid-devel libossp-uuid-dce-devel libdrm-devel
+BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel
+BuildRequires: xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel
+BuildRequires: libXdamage-devel libXxf86vm-devel libpcre-devel libuuid-devel
+BuildRequires: libossp-uuid-dce-devel libdrm-devel
 BuildRequires: pkgconfig(expat) pkgconfig(harfbuzz) pkgconfig(xshmfence)
+BuildRequires: gem(native-package-installer) >= 1.0.3
+BuildRequires: gem(pkg-config) >= 1.2.2
 
 %description
 Ruby bindings for cairo // cairo extension for Ruby.
 
-%package devel
-Summary: Development files for %name
-Group: Development/Ruby
-Requires: %name = %version-%release
-PreReq: libruby-devel
-Obsoletes: rcairo-devel < 1.7.0
-Provides: rcairo-devel = %version-%release
-# due to #include <cairo.h>
-Requires: libcairo-devel
 
-%description devel
+%package       devel
+Summary:       Development files for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Obsoletes:     rcairo-devel < 1.7.0
+Provides:      rcairo-devel = %version-%release
+# due to #include <cairo.h>
+Requires:      libcairo-devel
+
+%description   devel
 Ruby bindings for cairo // cairo extension for Ruby.
 
 This package contains development files.
 
-%package doc
-Summary: Documentation for Nokogiri
-Group: Development/Documentation
-BuildArch: noarch
 
-%description doc
+%package       doc
+Summary:       Documentation for Nokogiri
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation for Nokogiri.
 
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config -- --use-system-libraries
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/
-find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/ \;
-touch %buildroot%rubygem_extdir/%pkgname-%version/gem.build_complete
-mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+%gem_install
 
 %files
-%doc AUTHORS NEWS README.rdoc
-%rubygem_gemdir/*
-%rubygem_extdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files devel
-%doc samples
-#%_includedir/*
+%files         devel
+%ruby_includedir/*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Mar 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt2
+- Use Ruby Policy 2.0
+
 * Sat Jan 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt1
 - Bump to 1.16.2.
 - Place library files into gem folder.

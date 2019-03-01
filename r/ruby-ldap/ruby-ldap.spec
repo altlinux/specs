@@ -1,17 +1,17 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname ruby-ldap
 
-Name: ruby-ldap
-Version: 0.9.20
-Release: alt1
+Name:          %pkgname
+Version:       0.9.20
+Release:       alt2
+Summary:       Ruby LDAP library
+Group:         Development/Ruby
+License:       BSD
+Url:           https://github.com/bearded/ruby-ldap
+# VCS:         https://github.com/bearded/ruby-ldap.git
+Source:        %pkgname-%version.tar
 
-Summary: Ruby LDAP library
-Group: Development/Ruby
-License: BSD
-Url: http://ruby-ldap.sourceforge.net/
-
-BuildRequires: libldap-devel libruby-devel libssl-devel libsasl2-devel
-
-Source: %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libldap-devel libssl-devel libsasl2-devel
 
 %description
 Ruby/LDAP is an extension library for Ruby. It provides the interface
@@ -19,34 +19,35 @@ to some LDAP libraries (e.g. OpenLDAP, UMich LDAP, Netscape SDK,
 ActiveDirectory). The common API for application development is
 described in RFC1823 and is supported by Ruby/LDAP.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
 
 %description doc
-Documentation files for %name
+%summary
 
 %prep
-%setup
+%setup -n %pkgname-%version
 
 %build
-%ruby_configure
-%make_build
+%gem_build
 
 %install
-%make_install DESTDIR=%buildroot install
-%rdoc *.c lib/
+%gem_install
 
 %files
-%doc NOTES README FAQ TODO COPYING
-%ruby_sitearchdir/*
-%ruby_sitelibdir/ldap*
+%ruby_gemspec
+%ruby_gemextdir/*
+%ruby_gemlibdir/*
 
-%files doc
-%ruby_ri_sitedir/LDAP*
+%files         doc
+%ruby_gemdocdir/*
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.20-alt2
+- Use Ruby Policy 2.0.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.20-alt1
 - New version.
 

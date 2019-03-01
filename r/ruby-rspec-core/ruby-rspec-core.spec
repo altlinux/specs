@@ -1,65 +1,69 @@
-%define  pkgname rspec-core
- 
-Name: 	 ruby-%pkgname
-Version: 3.8.0
-Release: alt1
- 
-Summary: RSpec runner and formatters
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/rspec/rspec-core
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
- 
+%define        pkgname rspec-core
+
+Name:          ruby-%pkgname
+Version:       3.8.0
+Release:       alt2
+Summary:       RSpec runner and formatters
+License:       MIT
+Group:         Development/Ruby
+Url:           http://relishapp.com/rspec/rspec-core
+# VCS:         https://github.com/rspec/rspec-core.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
- 
+BuildRequires: gem(rspec)
+
+%add_findreq_skiplist *.sh
+
 %description
 rspec-core provides the structure for writing executable examples of how
 your code should behave, and an rspec command with tools to constrain
 which examples get run and tailor the output.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+
+%package       -n rspec
+Summary:       Executable file for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n rspec
+Executable file for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-rm -f Gemfile
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-install -Dm 0755 exe/rspec %buildroot%_bindir/rspec
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
-%check
-%ruby_test_unit -Ilib:test test
- 
+%gem_install
+
 %files
-%doc README*
-%_bindir/rspec
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
-%files doc
-%ruby_ri_sitedir/*
- 
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         doc
+%ruby_gemdocdir
+
+%files         -n rspec
+%_bindir/*
+
 %changelog
+* Fri Mar 1 2019 Pavel Skrylev <majioa@altlinux.org> 3.8.0-alt2
+- Use Ruby Policy 2.0.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 

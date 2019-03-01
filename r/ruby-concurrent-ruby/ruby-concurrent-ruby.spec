@@ -1,141 +1,130 @@
-%define  pkgname concurrent-ruby
+%define        pkgname concurrent-ruby
+%define        core_version   1.1.4
+%define        edge_version   0.4.1
 
-Name:    ruby-%pkgname
-Version: 1.0.5
-Release: alt2
+Name:          ruby-%pkgname
+Version:       %core_version
+Release:       alt1
+Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
+License:       MIT
+Group:         Development/Ruby
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Url:           http://www.concurrent-ruby.com
+# VCS:         https://github.com/ruby-concurrency/concurrent-ruby.git
 
-Summary: Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/ruby-concurrency/concurrent-ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
-%summary
+Modern concurrency tools for Ruby. Inspired by Erlang, Clojure, Scala, Haskell,
+F#, C#, Java, and classic concurrency patterns.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+The design goals of this gem are:
 
-BuildArch: noarch
+* Be an 'unopinionated' toolbox that provides useful utilities without debating
+  which is better or why
+* Remain free of external gem dependencies
+* Stay true to the spirit of the languages providing inspiration
+* But implement in a way that makes sense for Ruby
+* Keep the semantics as idiomatic Ruby as possible
+* Support features that make sense in Ruby
+* Exclude features that don't make sense in Ruby
+* Be small, lean, and loosely coupled
+* Thread-safety
+* Backward compatibility
 
-%description doc
+
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation files for %{name}.
 
-%package edge
-Summary: Edge features and additions to the concurrent-ruby gem
-Group: Development/Ruby
 
-BuildArch: noarch
+%package       -n gem-%pkgname-edge
+Version:       %edge_version
+Summary:       Edge features and additions to the concurrent-ruby gem
+Group:         Development/Ruby
+BuildArch:     noarch
 
-%description edge
+%description   -n gem-%pkgname-edge
 These features are under active development and may change frequently. They are
 expected not to keep backward compatibility (there may also lack tests and
 documentation). Semantic versions will be obeyed though. Features developed in
 `concurrent-ruby-edge` are expected to move to `concurrent-ruby` when final.
 Please see http://concurrent-ruby.com for more information.
 
-%package edge-doc
-Summary: Documentation files for %name-edge
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-edge-doc
+Version:       %edge_version
+Summary:       Documentation files for %pkgname-edge gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description edge-doc
-Documentation files for %{name}-edge.
+%description   -n gem-%pkgname-edge-doc
+Documentation files for %{pkgname}-edge gem.
 
-%package ext
-Summary: C extensions to optimize concurrent-ruby under MRI
-Group: Development/Ruby
 
-%description ext
+%package       -n gem-%pkgname-ext
+Version:       %core_version
+Summary:       C extensions to optimize concurrent-ruby under MRI
+Group:         Development/Ruby
+
+%description   -n gem-%pkgname-ext
 C extensions to optimize the concurrent-ruby gem when running under MRI.
 Please see http://concurrent-ruby.com for more information.
 
 
-%prep
-%setup -n %pkgname-%version
-rm -f Gemfile
-mkdir -p %{name}-ext %{name}-edge
-mv *ext.gemspec %{name}-ext
-mv *edge.gemspec %{name}-edge
-ln -s ../lib %{name}-edge/lib
-ln -s ../support/file_map.rb %{name}-edge/lib/file_map.rb
-ln -s ../lib %{name}-ext/lib
+%package       -n gem-%pkgname-ext-devel
+Summary:       Development files for %pkgname-ext gem
+Group:         Development/Ruby
+BuildArch:     noarch
 
-for dir in . %{name}-ext %{name}-edge ;do
-   pushd $dir
-   %update_setup_rb
-   popd
-done
+%description   -n gem-%pkgname-ext-devel
+Development files for %pkgname-ext gem.
+
+
+%prep
+%setup
 
 %build
-for dir in . %{name}-ext %{name}-edge ;do
-   pushd $dir
-   %ruby_config
-   %ruby_build
-   popd
-done
+%gem_build
 
 %install
-for dir in . %{name}-ext %{name}-edge ;do
-   pushd $dir
-   echo 1111
-   pwd
-   ls
-   %ruby_install
-   ls -la
-   popd
-done
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README* CHANGELOG*
-%ruby_sitelibdir/concurrent*
-%exclude %ruby_sitelibdir/concurrent-edge.rb
-%exclude %ruby_sitelibdir/concurrent/actor*
-%exclude %ruby_sitelibdir/concurrent/channel*
-%exclude %ruby_sitelibdir/concurrent/edge*
-%exclude %ruby_sitelibdir/concurrent/lazy_register.rb
-%rubygem_specdir/%{pkgname}*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/lib/concurrent/thread_safe/page-readme_txt.ri
-%ruby_ri_sitedir/Concurrent*
-%exclude %ruby_ri_sitedir/Concurrent/Actor*
-%exclude %ruby_ri_sitedir/Concurrent/Channel*
-%exclude %ruby_ri_sitedir/Concurrent/Edge*
+%files         doc
+%ruby_gemdocdir
 
-%files edge
-%ruby_sitelibdir/concurrent-edge.rb
-%ruby_sitelibdir/concurrent/actor*
-%ruby_sitelibdir/concurrent/channel*
-%ruby_sitelibdir/concurrent/edge*
-%ruby_sitelibdir/concurrent/lazy_register.rb
-%rubygem_specdir/%{name}-edge*
+%files         -n gem-%pkgname-edge
+%ruby_gemspecdir/concurrent-ruby-edge-%edge_version.gemspec
+%ruby_gemslibdir/concurrent-ruby-edge-%edge_version
 
-%files edge-doc
-%ruby_ri_sitedir/Concurrent/Actor*
-%ruby_ri_sitedir/Concurrent/Channel*
-%ruby_ri_sitedir/Concurrent/Edge*
+%files         -n gem-%pkgname-edge-doc
+%ruby_gemsdocdir/concurrent-ruby-edge-%edge_version
 
-%files ext
-%ruby_sitearchdir/concurrent/extension.so
-%rubygem_specdir/%{name}-ext*
+%files         -n gem-%pkgname-ext
+%ruby_gemspecdir/concurrent-ruby-ext-%version.gemspec
+%ruby_gemslibdir/concurrent-ruby-ext-%version
+%ruby_gemsextdir/concurrent-ruby-ext-%version
+
+%files         -n gem-%pkgname-ext-devel
+%ruby_includedir/concurrent-ruby-ext
 
 %changelog
+* Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
+- Bump to 1.1.4;
+- Use Ruby Policy 2.0.
+
 * Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt2
 - Gemify build for Sisyphus
 

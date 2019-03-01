@@ -1,52 +1,62 @@
-Name: ruby-capistrano
-Version: 2.5.10
-Release: alt1.3
+%define        pkgname capistrano
 
-Summary: Capistrano -- Welcome to easy deployment with Ruby over SSH
-Group: Development/Ruby
-License: MIT
-Url: http://github.com/capistrano/capistrano
-Source0: capistrano.tar.bz2
+Name:          ruby-%pkgname
+Version:       3.11.0
+Release:       alt1
+Summary:       Capistrano -- Welcome to easy deployment with Ruby over SSH
+Group:         Development/Ruby
+License:       MIT
+Url:           https://capistranorb.com/
+# VCS:         https://github.com/capistrano/capistrano.git
+BuildArch:     noarch
+Source:        %pkgname-%version.tar
 
-BuildArch: noarch
-
-# Automatically added by buildreq on Sat Dec 12 2009 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
 
 %description
-Capistrano is a utility and framework for executing commands in parallel on
-multiple remote machines, via SSH.
+Capistrano is a framework for building automated deployment scripts. Although
+Capistrano itself is written in Ruby, it can easily be used to deploy projects
+of any language or framework, be it Rails, Java, or PHP.
 
-%package doc
+%package       doc
 Summary: Documentation files for %name
 Group: Documentation
 
-%description doc
+%description   doc
 Documentation files for %name.
 
+%package       -n cap
+Summary:       Documentation files for %name
+Group:         Development/Tools
+
+%description   -n cap
+Capistrano gives you a cap tool to perform your deployments from the comfort of
+your command line.
+
 %prep
-%setup -q -n capistrano
-%update_setup_rb
+%setup -q -n %pkgname-%version
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-
-rm -f %buildroot%ruby_sitelibdir/capistrano/recipes/compat.rb
+%gem_install
 
 %files
-%doc CHANGELOG.rdoc README.rdoc
-%_bindir/*
-%ruby_sitelibdir/*
+%ruby_gemspec
+%ruby_gemlibdir/*
 
-%files doc
-%ruby_ri_sitedir/Capistrano
+%files         -n cap
+%_bindir/*
+
+%files         doc
+%ruby_gemdocdir/*
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.11.0-alt1
+- Bump to 3.11.0;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.10-alt1.3
 - Rebuild with new Ruby autorequirements.
 

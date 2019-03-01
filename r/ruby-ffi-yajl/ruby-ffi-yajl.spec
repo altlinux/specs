@@ -1,27 +1,25 @@
 %define  pkgname ffi-yajl
 %def_without benchmark
  
-Name: 	 ruby-%pkgname
-Version: 2.3.1
-Release: alt2.1
+Name: 	       ruby-%pkgname
+Version:       2.3.1
+Release:       alt3
+Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/chef/ffi-yajl
+# VCS:         https://github.com/chef/ffi-yajl.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
  
-Summary: ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/chef/ffi-yajl
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:  %pkgname-%version.tar
-Patch:   use-system-yajl-without-wrapper.patch  
-Patch1:  alt-fix-yajl-library-path.patch
+Source:        %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-BuildRequires: ruby-ffi
-BuildRequires: ruby-mime-types
-BuildRequires: yajl-ruby
+BuildRequires: gem(rack)
+BuildRequires: gem(rspec)
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(rake)
+BuildRequires: gem(ffi)
+BuildRequires: gem(libyajl2)
 BuildRequires: libyajl-devel
 
 %description
@@ -32,50 +30,40 @@ Ruby implementations as possible while providing good performance where
 possible.
 
 %package doc
-Summary: Documentation files for %name
-Group: Documentation
+Summary:       Documentation files for %name
+Group:         Documentation
  
-BuildArch: noarch
+BuildArch:     noarch
  
 %description doc
 Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
-%patch1 -p1
-sed -i '/libyajl2/d' ffi-yajl.gemspec.shared
-%update_setup_rb
- 
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-%if_without benchmark
-rm -rf %buildroot%_bindir/ffi-yajl-bench %buildroot%ruby_sitelibdir/ffi_yajl/benchmark*
-%endif
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
 %doc README*
-%if_with benchmark
 %_bindir/ffi-yajl-bench
-%endif
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
+%ruby_gemlibdir/*
+%ruby_gemextdir/*
+%ruby_gemspecdir/*
+
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir/*
  
 %changelog
+* Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt3
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt2.1
 - Rebuild with new Ruby autorequirements.
 

@@ -1,24 +1,20 @@
-%define  pkgname pkg-config
+%define pkgname pkg-config
  
-Name: 	 ruby-%pkgname
-Version: 1.3.1
-Release: alt1.1
+Name: 	       ruby-%pkgname
+Version:       1.3.3
+Release:       alt1
+Summary:       pkg-config implemented by pure Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/ruby-gnome2/pkg-config
+# VCS:         https://github.com/ruby-gnome2/pkg-config.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
  
-Summary: pkg-config implemented by pure Ruby
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/ruby-gnome2/pkg-config
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
+Source:        %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
  
-%filter_from_requires \,^ruby(dl/import),d
-
 %description
 A pkg-config implementation by Ruby.
 
@@ -33,30 +29,29 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%update_setup_rb
  
 %build
-%ruby_config
-%ruby_build
+%gem_build
  
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
  
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
  
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemlibdir/*
+%ruby_gemspecdir/*
  
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir/*
  
 %changelog
+* Fri Feb 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.3-alt1
+- Bump to 1.3.3;
+- Use Ruby Policy 2.0 macros.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 - Disable tests.

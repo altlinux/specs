@@ -1,53 +1,53 @@
-%define origname rmagick
+%define        pkgname rmagick
 
-Name: ruby-rmagick
-Version: 2.16.0
-Release: alt5.1
+Name:          ruby-%pkgname
+Version:       3.0.0
+Release:       alt1
+Summary:       ImageMagick for Ruby
+Group:         Development/Ruby
+License:       MIT
+Url:           https://rmagick.github.io/
+# VCS:         https://github.com/rmagick/rmagick.git
+Source:        %pkgname-%version.tar
 
-Summary: ImageMagick for Ruby
-Group: Development/Ruby
-License: MIT
-Url: https://github.com/rmagick/rmagick
-
-Source: %origname-%version.tar
-
-BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1 libruby-devel ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1
 
 %description
-ImageMagick for Ruby.
+RMagick is an interface between the Ruby programming language and the
+ImageMagick image processing library.
 
-%package doc
-Summary: ImageMagick for Ruby - docs
-Group: Development/Documentation
-BuildArch: noarch
+%package       doc
+Summary:       ImageMagick for Ruby documentation
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-ImageMagick for Ruby documentation.
+%description   doc
+%summary.
 
 %prep
-%setup -n %origname-%version
-%update_setup_rb
+%setup -n %pkgname-%version
 
 %build
-#ruby_config --disable-htmldoc
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/ ext/*/*.c
+%gem_install
 
 %files
-%doc README* *.md
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-#%%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+%ruby_includedir/*
 
-%files doc
-%doc doc examples
-%ruby_ri_sitedir/Magick*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+- Bump to 3.0.0;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt5.1
 - Rebuild with new Ruby autorequirements.
 

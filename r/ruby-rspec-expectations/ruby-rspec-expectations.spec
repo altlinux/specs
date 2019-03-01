@@ -1,63 +1,53 @@
-%define  pkgname rspec-expectations
- 
-Name: 	 ruby-%pkgname
-Version: 3.8.2
-Release: alt1
- 
-Summary: Provides a readable API to express expected outcomes of a code example
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/rspec/rspec-expectations
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
- 
+%define        pkgname rspec-expectations
+
+Name:          ruby-%pkgname
+Version:       3.8.2
+Release:       alt2
+Summary:       Provides a readable API to express expected outcomes of a code example
+License:       MIT
+Group:         Development/Ruby
+Url:           http://relishapp.com/rspec/rspec-expectations
+# VCS:         https://github.com/rspec/rspec-expectations.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-rspec-support
- 
+
 %description
 RSpec::Expectations lets you express expected outcomes on an object in
 an example.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-rm -f Gemfile
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
-%check
-%ruby_test_unit -Ilib:test test
- 
+%gem_install
+
 %files
-%doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
-%files doc
-%ruby_ri_sitedir/*
- 
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         doc
+%ruby_gemdocdir
+
 %changelog
+* Fri Mar 1 2019 Pavel Skrylev <majioa@altlinux.org> 3.8.2-alt2
+- Use Ruby Policy 2.0.
+
 * Wed Oct 10 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.2-alt1
 - New version.
 

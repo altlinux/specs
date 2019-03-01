@@ -1,63 +1,56 @@
-%define orig_name httpclient
+%define        pkgname httpclient
 
-Summary: HTTP accessing library for Ruby
-Name: ruby-%orig_name
-Version: 2.8.2.4
-Release: alt1.2
-Group: Development/Ruby
-License: GPLv2 or Ruby License
-URL: https://github.com/nahi/httpclient
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Summary:       HTTP accessing library for Ruby
+Name:          ruby-%pkgname
+Version:       2.8.3
+Release:       alt1
+Group:         Development/Ruby
+License:       Ruby
+Url:           https://github.com/nahi/httpclient
+# VCS:         https://github.com/nahi/httpclient.git
+BuildArch:     noarch
 
-BuildArch: noarch
+Source:        %name-%version.tar
 
-BuildRequires: rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-tool-rdoc
-BuildRequires: ruby-test-unit
-
-%filter_from_requires /^ruby(httpclient\/jruby_ssl_socket)/d
+BuildRequires(pre): rpm-build-ruby
 
 %description
 HTTP library gives something like the functionality of libwww-perl (LWP) in Ruby
 
 
-%package doc
-Summary: Documentation for %name
-Group: Documentation
-Requires: %name = %version-%release
-BuildArch: noarch
+%package       doc
+Summary:       Documentation for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation for %name
 
 %prep
-%setup -n %name-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
 
 %check
+%gem_test
 
 %files
-%doc README.md CHANGELOG.md
-%_bindir/httpclient
-%_bindir/jsonclient
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%_bindir/*
+%ruby_gemlibdir
+%ruby_gemspec
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.8.3-alt1
+- Bump to 2.8.3;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.2.4-alt1.2
 - Rebuild with new Ruby autorequirements.
 

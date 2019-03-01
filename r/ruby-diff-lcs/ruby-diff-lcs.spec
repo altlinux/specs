@@ -1,24 +1,18 @@
-# vim: set ft=spec : -*- rpm-spec -*-
+%define        pkgname diff-lcs
 
-%define pkgname diff-lcs
+Name:          ruby-%pkgname
+Version:       1.3
+Release:       alt1
+Summary:       Port of Algorithm::Diff
+License:       MIT
+Group:         Development/Ruby
+Url:           http://halostatue.github.io/diff-lcs/
+# VCS:         https://github.com/halostatue/diff-lcs.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Name:    ruby-%pkgname
-Version: 1.2.5
-Release: alt1.1
-
-Summary: Port of Algorithm::Diff
-Group:   Development/Ruby
-License: MIT
-Url:     http://diff-lcs.rubyforge.org/
-#VCS:	 https://github.com/halostatue/diff-lcs.git
-
-Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
-
-BuildArch: noarch
-
-# Automatically added by buildreq on Mon Aug 25 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
 Diff::LCS is a port of Algorithm::Diff that uses the McIlroy-Hunt
@@ -27,37 +21,49 @@ differences between two sequenced enumerable containers. The
 implementation is based on Mario I. Wolczko's Smalltalk version (1.2,
 1993) and Ned Konz's Perl version (Algorithm::Diff).
 
-%package doc
-Summary: Documentation files for %pkgname
-Group: Documentation
 
-%description doc
-Documentation files for %pkgname
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+
+%package       -n ldiff
+Summary:       Executable file for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n ldiff
+Executable file for %gemname gem.
+
 
 %prep
-%setup -q -n %pkgname-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-%ruby_test_unit -Ilib tests/*.rb
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
 
 %files
-%doc *.rdoc
-%_bindir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/Diff*
+%files         doc
+%ruby_gemdocdir
+
+%files         -n ldiff
+%_bindir/*
 
 %changelog
+* Fri Mar 01 2019 Pavel Skrylev <majioa@altlinux.org> 1.3-alt1
+- Bump to 1.3;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1.1
 - Rebuild with new Ruby autorequirements.
 
