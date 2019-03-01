@@ -2,8 +2,10 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Data-DPath
-%define upstream_version 0.55
+%define upstream_version 0.57
 
 %{?perl_default_filter}
 
@@ -21,6 +23,9 @@ BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(File/Spec.pm)
+BuildRequires: perl(IO/Handle.pm)
+BuildRequires: perl(IPC/Open3.pm)
 BuildRequires: perl(Iterator/Util.pm)
 BuildRequires: perl(List/MoreUtils.pm)
 BuildRequires: perl(List/Util.pm)
@@ -32,7 +37,9 @@ BuildRequires: perl(Test/Deep.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Text/Balanced.pm)
 BuildRequires: perl(aliased.pm)
+BuildRequires: perl(blib.pm)
 BuildRequires: perl(constant.pm)
+BuildRequires: perl(if.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
@@ -45,7 +52,7 @@ no description found
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -59,8 +66,10 @@ no description found
 %doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
-
 %changelog
+* Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1_3
+- update by mgaimport
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1_3
 - update by mgaimport
 
