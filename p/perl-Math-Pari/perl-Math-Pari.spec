@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 Epoch: 2
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
@@ -11,11 +13,11 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.030507
-Release:	alt2_2
+Version:	2.030508
+Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
-Source0:	https://cpan.metacpan.org/modules/by-module/Math/Math-Pari-%{version}%{extraversion}%{?extrasuffix}.zip
+Source0:	http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.zip
 Patch0:		Math-Pari-2.030506-system-pari.patch
 Patch1:		Math-Pari-2.030506-docs-and-testsuite.patch
 Patch3:		Math-Pari-2.030507-utf8.patch
@@ -59,7 +61,7 @@ scientific/ number-theoretic calculations. It allows use of most PARI functions
 as Perl functions, and (almost) seamless merging of PARI and Perl data.
 
 %prep
-%setup -q -n Math-Pari-%{version}%{extraversion}
+%setup -q -n Math-Pari-%{version}
 
 # Create a directory structure for libpari23 like Math::Pari expects it to be
 mkdir libpari23
@@ -109,6 +111,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030508-alt1
+- automated CPAN update
+
 * Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030507-alt2_2
 - clean up thanks to ldv
 
