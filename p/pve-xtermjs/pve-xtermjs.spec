@@ -1,6 +1,6 @@
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
-Version: 1.0.5
+Version: 3.10.1
 Release: alt1
 License: GPL
 Group: Networking/WWW
@@ -32,6 +32,9 @@ sed -i 's|Proxmox|PVE|' src/www/index.html.tpl.in
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Mar 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.10.1-alt1
+- 3.10.1-2
+
 * Fri Jul 20 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.5-alt1
 - 1.0-5
 
