@@ -1,6 +1,6 @@
 Name: apt-scripts-nvidia
-Version: 0.4.6
-Release: alt1%ubt
+Version: 0.4.7
+Release: alt1
 
 Summary: APT Lua scripts for NVIDIA driver
 License: GPL
@@ -42,6 +42,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Fri Mar 01 2019 Sergey V Turchin <zerg@altlinux.org> 0.4.7-alt1
+- add workaround against alt disttags
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 0.4.6-alt1%ubt
 - notify about update-kernel if driver not found
 
