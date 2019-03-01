@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: lib%oname
-Version: 0.1
-Release: alt1.git6cd8e17
+Version: 1.0.0
+Release: alt1
 Summary: AV1 Codec Library
 
 Group: System/Libraries
@@ -16,6 +16,7 @@ Url: http://aomedia.org/
 
 # https://aomedia.googlesource.com/aom/
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
 
@@ -52,6 +53,7 @@ The %name-docs package contains documentation files for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake \
@@ -90,5 +92,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/BUILD/third_party/googletest/sr
 %doc BUILD/docs/html
 
 %changelog
+* Thu Feb 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+
 * Fri Jan 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt1.git6cd8e17
 - Initial build for ALT.
