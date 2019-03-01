@@ -1,7 +1,7 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.8
-Release: alt1
+Release: alt2
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
@@ -15,9 +15,7 @@ Patch0: %name-%version-alt.patch
 
 Requires: %name-common
 
-# Automatically added by buildreq on Wed Apr 03 2013
-# optimized out: gnu-config libICE-devel libSM-devel libstdc++-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ imake libjpeg-devel libpng12-devel libtiff-devel libXpm-devel libXt-devel
+BuildRequires: gcc-c++ imake libjpeg-devel libpng-devel libtiff-devel libXpm-devel libXt-devel
 BuildRequires: boost-devel boost-flyweight-devel
 
 %description
@@ -83,6 +81,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Fri Mar 01 2019 Anton Farygin <rider@altlinux.ru> 3.7.0.8-alt2
+- rebuilt with libpng16
+
 * Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 3.7.0.8-alt1
 - 3.7.0.8
 
