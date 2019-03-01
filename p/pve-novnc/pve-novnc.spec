@@ -3,8 +3,8 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 0.6.4
-Release: alt2
+Version: 1.0.0
+Release: alt1
 License: MPL 2.0
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -26,7 +26,7 @@ Proxmox VE to provide HTML VM console
 %setup -q -n %pname -a1
 
 cd %sname
-ls ../debian/patches/*.patch | while read p; do patch -p1 < $p; done
+cat ../debian/patches/series | while read p; do patch -p1 < ../debian/patches/$p; done
 
 install -m0644 %SOURCE3 app/locale/ru.json
 install -m0644 %SOURCE4 app.js
@@ -45,6 +45,9 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Fri Mar 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
+- 1.0.0-3
+
 * Fri Jul 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.4-alt2
 - added russian translation
 
