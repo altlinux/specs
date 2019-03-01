@@ -5,7 +5,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt2
+Release: alt3
 License: LGPL
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -219,7 +219,6 @@ Group: Sound
 %package -n libsox3
 Summary: The SoX sound file format converter libraries
 Group: Development/C
-Provides: libsox-fmt-sndfile = %version-%release
 
 %description -n libsox3
 This package contains libraries for SoX
@@ -391,6 +390,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Fri Mar 01 2019 Dmitry V. Levin <ldv@altlinux.org> 14.4.2-alt3
+- NMU: removed bogus Provides from libsox3.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 14.4.2-alt2
 - E2K: avoid lcc-unsupported option properly
 
