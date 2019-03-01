@@ -1,5 +1,5 @@
 Name: alt-domain-server 
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: All needed for alt-domain server
@@ -34,6 +34,9 @@ cp preinstall.d/* %buildroot/usr/share/install2/preinstall.d/
 /usr/share/install2/preinstall.d/*
 
 %changelog
+* Fri Mar 01 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
+- add hook for reissue service certificates for new domain
+
 * Sun Jul  8 2018 Leonid Krivoshein <klark@altlinux.org> 0.5-alt1
 - fix preinstall script for work with openldap >= 2.4.45-alt3
 - removed virtual dependency to /usr/sbin/smbd
