@@ -13,7 +13,7 @@
 %def_enable unicode_dict
 
 Name: ibus
-Version: 1.5.19
+Version: 1.5.20
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -30,19 +30,21 @@ Source1: ibus-xinput
 
 #Patch: ibus-%version-up.patch
 
-%define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
-%define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
+%define gtk2_binary_version %(pkg-config --variable=gtk_binary_version gtk+-2.0)
+%define gtk3_binary_version %(pkg-config --variable=gtk_binary_version gtk+-3.0)
 
 Requires: iso-codes setxkbmap xmodmap
 Requires: lib%name = %version-%release
 Requires: lib%name-gir = %version-%release
 
 %{?_enable_gconf:Requires(post,preun):GConf}
-%{?_enable_dconf:Requires: dconf}
+%{?_enable_dconf:Requires(pre): dconf}
 
+%{?_enable_python:BuildRequires(pre): rpm-build-python3}
+%{?_enable_python2:BuildRequires(pre): rpm-build-python}
 BuildRequires: vala-tools >= 0.18
-BuildPreReq: libgtk+2-devel
-BuildPreReq: libgtk+3-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc
@@ -50,10 +52,11 @@ BuildRequires: intltool
 BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
-BuildRequires: libXi-devel
+BuildRequires: libXi-devel libXtst-devel
 BuildRequires: libnotify-devel
 %{?_enable_unicode_dict:BuildRequires: unicode-ucd}
-%{?_enable_python2:BuildRequires: rpm-build-python python-modules-compiler  python-module-dbus-devel python-module-pygobject3-devel}
+%{?_enable_python:BuildRequires: python3-devel python3-module-dbus-devel python3-module-pygobject3-devel}
+%{?_enable_python2:BuildRequires: python-devel python-modules-compiler python-module-dbus-devel python-module-pygobject3-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
 BuildRequires: libGConf-devel
@@ -89,7 +92,7 @@ This package contains typelib file for the IBus library.
 %package gtk2
 Summary: IBus im module for gtk2
 Group: System/Libraries
-PreReq: libgtk+2
+Requires(pre): libgtk+2
 Requires: lib%name = %version-%release
 
 %description gtk2
@@ -98,7 +101,7 @@ This package contains IBus im module for gtk2.
 %package gtk3
 Summary: IBus im module for gtk3
 Group: System/Libraries
-PreReq: libgtk+3
+Requires(pre): libgtk+3
 Requires: lib%name = %version-%release
 
 %description gtk3
@@ -173,7 +176,8 @@ override some functions in GObject-Introspection.
     --enable-introspection \
     %{?_disable_emoji_dict:--disable-emoji-dict} \
     %{?_disable_unicode_dict:--disable-unicode-dict} \
-    %{subst_enable appindicator}
+    %{subst_enable appindicator} \
+    %{?_disable_python2:--with-python=PATH=%__python3}
 %make_build
 
 %install
@@ -275,6 +279,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.20-alt1
+- 1.5.20
+
 * Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.19-alt1
 - 1.5.19
 
