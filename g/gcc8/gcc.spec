@@ -1,8 +1,8 @@
 %define gcc_branch 8
 
 Name: gcc%gcc_branch
-Version: 8.2.1
-Release: alt5
+Version: 8.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20190209
+%define snapshot 20190223
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -2055,6 +2055,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Feb 23 2019 Dmitry V. Levin <ldv@altlinux.org> 8.3.1-alt1
+- Updated to redhat/gcc-8-branch r269162 (Fedora gcc-8.3.1-2).
+
 * Mon Feb 11 2019 Dmitry V. Levin <ldv@altlinux.org> 8.2.1-alt5
 - Updated to redhat/gcc-8-branch r268720 (Fedora gcc-8.2.1-8).
 
