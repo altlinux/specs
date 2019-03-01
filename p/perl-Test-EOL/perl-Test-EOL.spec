@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
 Version:	2.00
-Release:	alt1_5
+Release:	alt1_7
 Summary:	Check the correct line endings in your project
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-EOL
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_7
+- fixed build
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_5
 - update to new release by fcimport
 
