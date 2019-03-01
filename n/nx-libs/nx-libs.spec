@@ -2,7 +2,7 @@
 
 Name:    nx-libs
 Version: 3.5.2.31
-Release: alt8
+Release: alt9
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
@@ -350,6 +350,9 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Fri Mar 01 2019 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt9
+- added patches for compilation with gcc8 (altbug #36207)
+
 * Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 3.5.2.31-alt8
 - use Obsoletes: nx instead Conflicts
 
