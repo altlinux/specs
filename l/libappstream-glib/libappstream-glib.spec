@@ -12,7 +12,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -29,8 +29,13 @@ Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
 Provides: %_bindir/appstream-util
+Provides: %_bindir/appstream-builder
 
-BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel
+Obsoletes: libappstream-builder < 0.9.15
+Conflicts: libappstream-builder < 0.9.15
+
+BuildRequires(pre): meson
+BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
@@ -39,6 +44,7 @@ BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: librpm-devel
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
+
 %description
 This library provides GObjects and helper methods to make it easy to read and
 write AppStream metadata. It also provides a simple DOM implementation that
@@ -49,6 +55,8 @@ representation.
 Summary: GLib Libraries and headers for %name
 Group: Development/C
 Requires: %name = %version-%release
+Obsoletes: libappstream-builder-devel < 0.9.15
+Conflicts: libappstream-builder-devel < 0.9.15
 
 %description devel
 GLib headers and libraries for appstream-glib.
@@ -57,6 +65,8 @@ GLib headers and libraries for appstream-glib.
 Summary: GObject introspection data for the %_name library
 Group: System/Libraries
 Requires: %name = %version-%release
+Obsoletes: libappstream-builder-gir < 0.9.15
+Conflicts: libappstream-builder-gir < 0.9.15
 
 %description gir
 GObject introspection data for the AppStream metadata library.
@@ -67,6 +77,8 @@ Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
 Requires: %name-devel = %version-%release
+Obsoletes: libappstream-builder-gir-devel < 0.9.15
+Conflicts: libappstream-builder-gir-devel < 0.9.15
 
 %description gir-devel
 GObject introspection devel data for the AppStream metadata library.
@@ -80,44 +92,6 @@ Conflicts: %name < %version
 %description devel-doc
 This package provides development documentation for the AppStream
 metadata library.
-
-%package -n libappstream-builder
-Summary: A library and tools to build an AppStream database
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description -n libappstream-builder
-This library provides GObjects and helper methods to make it easy to
-build AppStream database.
-
-%package -n libappstream-builder-devel
-Summary: Development files for libappstream-bulder
-Group: Development/C
-Requires: libappstream-builder = %version-%release
-Requires: %name-devel = %version-%release
-
-%description -n libappstream-builder-devel
-This package provides development files for libappstream-bulder.
-
-%package -n libappstream-builder-gir
-Summary: GObject introspection data for the libappstream-bulder library
-Group: System/Libraries
-Requires: libappstream-builder = %version-%release
-Requires: %name-gir = %version-%release
-
-%description -n libappstream-builder-gir
-GObject introspection data for the AppStream builder library.
-
-%package -n libappstream-builder-gir-devel
-Summary: GObject introspection devel data for the libappstream-bulder library
-Group: Development/Other
-BuildArch: noarch
-Requires: libappstream-builder-gir = %version-%release
-Requires: %name-gir-devel = %version-%release
-Requires: libappstream-builder-devel = %version-%release
-
-%description -n libappstream-builder-gir-devel
-GObject introspection devel data for the AppStream builder library.
 
 %package tests
 Summary: Tests for the %_name package
@@ -148,10 +122,15 @@ the functionality of the installed %_name library.
 %files -f %_name.lang
 %_bindir/appstream-util
 %_bindir/appstream-compose
+%_bindir/appstream-builder
 %_libdir/%name.so.*
+%dir %_libdir/asb-plugins-%asb_ver
+%_libdir/asb-plugins-%asb_ver/*.so
 %_man1dir/appstream-util.1.*
 %_man1dir/appstream-compose.1.*
+%_man1dir/appstream-builder.1.*
 %_datadir/bash-completion/completions/appstream-util
+%_datadir/bash-completion/completions/appstream-builder
 %doc README.md AUTHORS NEWS
 
 %files devel
@@ -172,35 +151,16 @@ the functionality of the installed %_name library.
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
 
-%files -n libappstream-builder
-%_bindir/appstream-builder
-%_libdir/libappstream-builder.so.*
-%dir %_libdir/asb-plugins-%asb_ver
-%_libdir/asb-plugins-%asb_ver/*.so
-%_man1dir/appstream-builder.1.*
-%_datadir/bash-completion/completions/appstream-builder
-
-
-%files -n libappstream-builder-devel
-%_libdir/libappstream-builder.so
-%_pkgconfigdir/appstream-builder.pc
-%_includedir/libappstream-builder/
-
-%files -n libappstream-builder-gir
-%_typelibdir/AppStreamBuilder-%api_ver.typelib
-
-%files -n libappstream-builder-gir-devel
-%_girdir/AppStreamBuilder-%api_ver.gir
-
 %if_enabled installed_tests
 %files tests
 %_datadir/installed-tests/%_name/
 %endif
 
-#%files -n libappstream-builder-devel-doc
-#%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Fri Mar 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.15-alt1
+- 0.7.15 (libappstream-builder shared library is no longer installed)
+
 * Tue Oct 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.14-alt1
 - 0.7.14
 
