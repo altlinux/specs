@@ -1,19 +1,26 @@
 %define Name QXmlEdit
 Name: qxmledit
-Version: 0.9.7.1
+Version: 0.9.12
 Release: alt1
+
 Summary: Simple XML editor and XSD viewer
+
 Group: Editors
 License: GPLv2+
 URL: https://github.com/lbellonda/%name
+
+# Source-url: https://github.com/lbellonda/qxmledit/archive/%version.tar.gz
 Source: %name-%version.tar
-#Patch: %%name-%%version-%%release.patch
+
 Provides: %Name = %version-%release
 
-BuildRequires: gcc-c++ libqt4-devel rpm-macros-qt4
+BuildRequires: gcc-c++ qt5-base-devel qt5-scxml-devel qt5-xmlpatterns-devel qt5-svg-devel rpm-macros-qt5
+
+# ../include/qwt3d_openglhelper.h
+BuildRequires: libGLU-devel
 
 %description
-%Name is a simple XML editor written in qt4. Its main features are unusual
+%Name is a simple XML editor written in Qt 5. Its main features are unusual
 data visualization modes, nice XML manipulation and presentation. It can split
 very big XML files into fragments, and compare XML files. It is one of the few
 graphical Open Source XSD viewers.
@@ -33,16 +40,14 @@ Main features:
   - Visual compare of XML Schema files.
   - Visual compare of XML files.
   - XML Snippets.
-  - XSL specialized mode. 
+  - XSL specialized mode.
 
 
 %prep
-%setup -q
-#patch -p1
-
+%setup
 
 %build
-%qmake_qt4 "CONFIG+=release staticlib" %Name.pro
+%qmake_qt5 "CONFIG+=release staticlib" %Name.pro
 %make_build \
 	QXMLEDIT_INST_DATA_DIR=%_datadir/%name \
 	QXMLEDIT_INST_DIR=%_bindir \
@@ -74,6 +79,11 @@ mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
 
 
 %changelog
+* Fri Mar 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.12-alt1
+- new version (0.9.12) with rpmgs script
+- move source code to the subdir
+- build with Qt 5
+
 * Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7.1-alt1
 - Update to upstream version 0.9.7-1
 
