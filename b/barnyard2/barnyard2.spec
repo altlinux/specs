@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt5
+Release: alt6
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -15,6 +15,8 @@ Patch1: barnyard2-1.11-alt-confpath.patch
 Patch2: barnyard2-1.11-alt-default_output.patch
 # in upstream, remove on next version
 Patch3: barnyard2-1.13-alt-sguild-padding.patch
+Patch4: barnyard2-1.13-alt-mysql8-transition.patch
+Patch5: barnyard2-1.13-alt-fix-libpcap-typedef-collision.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: tcl-devel
@@ -36,7 +38,7 @@ Group: Networking/Other
 BuildArch: noarch
 Requires: %name = %version-%release
 Requires: mysql
-BuildRequires: mysql-devel libmysqlclient-devel
+BuildRequires: libmysqlclient-devel
 %description mysql
 barnyard2 binary compiled with mysql support.
 
@@ -46,6 +48,8 @@ barnyard2 binary compiled with mysql support.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
+%patch5 -p0
 
 %build
 %autoreconf
@@ -83,6 +87,11 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.1.13-alt6
+- Fix FTBFS against libmysqlclient21
+- Fix FTBFS against libpcap
+- Remove excessive BR
+
 * Thu Jun 21 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.13-alt5
 - Fixed FTBFS.
 
