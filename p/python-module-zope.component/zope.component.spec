@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.component
 
-%def_without check
+%def_with check
 
 Name: python-module-%oname
 Version: 4.5
-Release: alt1
+Release: alt2
 
 Summary: Zope Component Architecture
 License: ZPLv2.1
@@ -47,7 +47,11 @@ BuildRequires: python3-module-zope.hookable
 BuildRequires: python3-module-zope.deprecation
 %endif
 
-%py_requires zope.interface zope.event
+%py_requires zope.interface zope.event zope.configuration
+%py_requires zope.deferredimport zope.deprecation
+%py_requires zope.hookable zope.i18nmessageid
+%py_requires zope.proxy zope.schema zope.security
+
 
 %description
 This package is intended to be independently reusable in any Python
@@ -145,6 +149,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Fri Mar 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt2
+- requires fixed
+
 * Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt1
 - Version updated to 4.5
 
