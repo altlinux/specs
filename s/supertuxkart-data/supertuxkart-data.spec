@@ -1,6 +1,6 @@
 Name: supertuxkart-data
-Version: 0.9.3git20181210
-Release: alt1
+Version: 0.10
+Release: alt0.1.beta1
 
 License: GPL
 Url: http://supertuxkart.sourceforge.net
@@ -8,7 +8,7 @@ Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
 BuildArch: noarch
 
-# svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets stk-assets
+# svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets supertuxkart-data
 Source: %name-%version.tar.xz
 
 %description
@@ -49,6 +49,10 @@ rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 %_datadir/supertuxkart/data
 
 %changelog
+* Thu Feb 28 2019 Leontiy Volodin <lvol@altlinux.org> 0.10-alt0.1.beta1
+- Update to beta1
+- Added wayland support
+
 * Tue Dec 11 2018 Leontiy Volodin <lvol@altlinux.org> 0.9.3git20181210-alt1
 - Update to unreleased version (from git)
 
