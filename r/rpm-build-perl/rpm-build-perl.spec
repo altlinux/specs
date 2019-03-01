@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt15
+Release: alt16
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -79,6 +79,10 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.84-alt16
+- bugfixes for Data-DPath-0.57 and Net-Kubernetes-1.03
+- still bootstrap (B::ConstOptree should be fixed)
+
 * Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.84-alt15
 - added requires to perl(CPAN/Meta/Requirements.pm)
 - still bootstrap (B::ConstOptree should be fixed)
