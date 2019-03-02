@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.38.0
+%define glib_ver 2.44.0
 %define vala_ver 0.17.2.12
 %define gcrypt_ver 1.4.5
 
@@ -131,6 +131,9 @@ dbus-run-session %make check
 
 
 %changelog
+* Sat Mar 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.8-alt1
+- 0.18.8
+
 * Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt2
 - disabled %%check
 
