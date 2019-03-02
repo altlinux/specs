@@ -1,6 +1,6 @@
 Name: make
 Version: 4.2.1
-Release: alt4
+Release: alt5
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -16,7 +16,7 @@ Patch03: make-4.0-rh-newlines.patch
 Patch04: make-4.0-rh-weird-shell.patch
 Patch05: make-4.2.1-upstream-compat.patch
 Patch06: make-4.2.1-upstream-glob-compat.patch
-Patch07: make-4.2.1-alt-increase-timeout-for-test-output-sync.patch
+Patch07: make-4.2.1-alt-disable-test-output-sync.patch
 
 BuildRequires: /proc
 BuildRequires: makeinfo
@@ -70,6 +70,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Mar 02 2019 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt5
+- Disable the flaking text.
+
 * Tue Jan 15 2019 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt4
 - Increase timeout for slow test once more.
 
