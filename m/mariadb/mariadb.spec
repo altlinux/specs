@@ -44,8 +44,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.3.12
-Release: alt2
+Version: 10.3.13
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -109,6 +109,9 @@ Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
 Patch35: mariadb-10.3.12-alt-fix-build-on-ppc64.patch
+
+Patch101: rocksdb-5.4.13-alt-add-libatomic-if-needed.patch
+Patch102: mariadb-10.3.10-alt-link-with-latomic-if-needed.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -355,6 +358,9 @@ tar -xf %SOURCE102 -C storage/rocksdb/rocksdb
 #%patch33 -p1
 #%patch34 -p1
 %patch35 -p1
+
+%patch101 -p1 -d ./storage/rocksdb/rocksdb
+%patch102 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -866,6 +872,16 @@ fi
 %endif
 
 %changelog
+* Sat Mar 02 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.13-alt1
+- 10.3.13
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-2510
+  + CVE-2019-2537
+
+* Wed Feb 27 2019 Ivan A. Melnikov <iv@altlinux.org> 10.3.12-alt2.0.mips1
+- Link with -latomic if needed.
+- Build on mipsel.
+
 * Tue Feb 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.12-alt2
 - Fixed build on ppc64le architecture.
 
