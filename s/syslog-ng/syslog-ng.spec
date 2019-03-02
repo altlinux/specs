@@ -10,15 +10,16 @@
 %def_enable	mongodb
 %def_enable	curl
 %def_enable	systemd
+%def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.18.1
+Version: 3.19.1
 Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
 License: %gpllgpl2only
-URL: https://syslog-ng.org
+URL: https://www.syslog-ng.com
 Provides: syslogd-daemon
 Prereq:	syslog-common
 Conflicts: klogd < 1.4.1-alt7
@@ -53,15 +54,12 @@ BuildRequires: xsltproc docbook-style-xsl python-devel
 %{?_enable_curl:BuildRequires: libcurl-devel}
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 
-## Test suite (from Fedora Core)
-#BuildRequires: python-devel
-#BuildRequires: python-module-unittest2
-#BuildRequires: python-module-nose
-#BuildRequires: python-module-ply
-#BuildRequires: python-module-pytest-pep8
-#BuildRequires: python-module-six
-#BuildRequires: pylint
-#BuildRequires: libdbi-drivers-dbd-sqlite
+%if_enabled unit_tests
+# The "criterion" does not exist in the repository at 02/03/2019
+BuildRequires: criterion
+BuildRequires: CUnit-devel
+BuildRequires: valgrind-devel
+%endif
 
 %description
 syslog-ng, as the name shows, is a syslogd replacement, but with new
@@ -165,6 +163,8 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch1 -p1
+patch -p1 < altlinux/syslog-ng-3.19.1-README-build-config.patch
+
 %if_enabled amqp
 pushd modules/afamqp/rabbitmq-c
 tar -xf ../../../altlinux/rabbitmq-c-v0.3.0-80-gc9f6312.tar.gz
@@ -213,6 +213,9 @@ skip_submodules=1 ./autogen.sh
  %{subst_enable json} \
  %{subst_enable amqp} \
  %{subst_enable systemd} \
+%if_enabled unit_tests
+ --enable-valgrind \
+%endif
 %if_enabled mongodb
  %{subst_enable mongodb} \
  --with-mongoc=system \
@@ -227,6 +230,11 @@ skip_submodules=1 ./autogen.sh
 ##
 
 %make_build XSL_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/manpages/docbook.xsl
+
+%if_enabled unit_tests
+%check
+make check
+%endif
 
 %install
 mkdir -p %buildroot%_initdir
@@ -271,7 +279,7 @@ if [ $1 = 0 ]; then
 fi
 
 %files
-%doc AUTHORS COPYING NEWS.md README.md
+%doc AUTHORS COPYING NEWS.md README.md README-build-config
 %doc doc/security/*.txt
 %doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc}
 
@@ -418,6 +426,11 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Sat Mar 02 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.19.1-alt1
+- 3.19.1
+- updated URL
+- created and packaged README-build-config
+
 * Mon Oct 22 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.18.1-alt1
 - 3.18.1 (ALT #35411)
 - removed subpackage devel-test
