@@ -3,7 +3,7 @@ Name: readline5
 %define rl_patch 14
 %define srcname readline-%rl_version
 Version: %rl_version.%rl_patch
-Release: alt5.1
+Release: alt6
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -16,10 +16,7 @@ Source: readline-%version.tar
 
 Patch: readline-%version-%release.patch
 
-# Automatically added by buildreq on Mon Sep 02 2002
-BuildRequires: libtinfo-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: libtinfo-devel makeinfo
 
 %package -n lib%name
 Summary: A library for editing typed in command lines
@@ -33,7 +30,7 @@ Provides: libreadline = %version-%release
 Summary: Files needed to develop programs which use the readline library
 Group: Development/C
 Obsoletes: readline-devel
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 
 %package -n lib%name-devel-static
 Summary: Files needed to develop statically linked programs which use the readline library
@@ -136,6 +133,10 @@ popd
 %_libdir/*.a
 
 %changelog
+* Fri Mar 01 2019 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt6
+- Use AC_SYS_LARGEFILE to fix strict build on x86.
+- Use makeinfo instead of texinfo in BR.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.2.14-alt5.1
 - NMU: added BR: texinfo
 
