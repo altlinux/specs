@@ -1,15 +1,19 @@
-Summary: NetBSD version of mkdep(1)
 Name: bmkdep
 Version: 20140112
-Release: alt4
+Release: alt5
+
+Summary: NetBSD version of mkdep(1)
+
 License: 2-clause BSD
 Group: Development/Tools
 URL: http://code.google.com/p/bmkdep/
+
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
-Source0: http://bmkdep.googlecode.com/files/bmkdep-%{version}.tar.gz
+# Source-url: http://bmkdep.googlecode.com/files/bmkdep-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: bmake
+BuildRequires: bmake pkgsrc-mk-files
 
 %description
 This is NetBSD version of mkdep(1).
@@ -40,10 +44,13 @@ install -pDm644 bmkdep.1 %buildroot%_man1dir/bmkdep.1
 install -pDm755 bmkdep %buildroot%_bindir/bmkdep
 
 %files
-%doc %{_mandir}/man1/bmkdep.1*
-%{_bindir}/bmkdep
+%_man1dir/bmkdep.1*
+%_bindir/bmkdep
 
 %changelog
+* Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 20140112-alt5
+- cleanup spec, fix buildreq
+
 * Thu Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 20140112-alt4
 - Make hasher(1) happy
 
