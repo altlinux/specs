@@ -1,6 +1,6 @@
 Name: pcsxr
 Version: 1.9.93
-Release: alt2
+Release: alt3
 
 Summary: A plugin based PlayStation (PSX) emulator with high compatibility
 License: GPLv2 / Public Domain
@@ -9,7 +9,8 @@ Group: Emulators
 Url: http://pcsxr.codeplex.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: %name-%version.tar.bz2
+Source: %name-%version.tar.bz2
+Patch0: %name-zlib-alt.patch
 
 BuildRequires: glibc-devel-static
 BuildRequires: intltool >= 0.35.0
@@ -18,8 +19,7 @@ BuildRequires: libXtst-devel
 BuildRequires: libXv-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-module-zope
+BuildRequires: python-modules-compiler
 
 %description
 PCSX-Reloaded is an advanced PlayStation (PSX) emulator, which uses a plugin
@@ -29,6 +29,7 @@ important PSX components, and is able to play many games without problems.
 
 %prep
 %setup -n %name
+%patch0 -p1
 
 %build
 %autoreconf
@@ -54,6 +55,9 @@ important PSX components, and is able to play many games without problems.
 %_datadir/psemu/*.ui
 
 %changelog
+* Sat Mar 02 2019 Nazarov Denis <nenderus@altlinux.org> 1.9.93-alt3
+- Rename uncompress2 to avoid conflict with zlib (ALT #36177)
+
 * Sun Jan 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.9.93-alt2
 - Fix man file
 
