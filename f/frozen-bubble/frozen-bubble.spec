@@ -1,21 +1,44 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(File/ShareDir.pm) perl(File/Slurp.pm) perl(File/Which.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm)
+# END SourceDeps(oneline)
 Name: frozen-bubble
-Version: 2.2.0
-Release: alt4.1
+Version: 2.212
+Release: alt1
 
+Summary(ru_RU.UTF-8): игра Frozen Bubble
 Summary: Frozen Bubble arcade game
 License: GPL
 Group: Games/Arcade
 
 Url: http://www.frozen-bubble.org/
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source2: fb-server.service
+Patch0:	frozen-bubble-2.2.1-setuid.patch
+Patch1:	0001-Fix-buffer-size-when-formatting-current-date.patch
 
 Requires: %name-data = %version
 
-# Automatically added by buildreq on Sun Oct 16 2011 (-bi)
-BuildRequires: libSDL_mixer-devel libSDL_pango-devel perl-Locale-gettext perl-Math-Complex perl-SDL_Perl perl-devel
+#BuildRequires: perl-Math-Complex
 
-Summary(ru_RU.UTF-8): игра Frozen Bubble
+BuildRequires:	perl(Alien/SDL.pm)
+BuildRequires:	perl(Archive/Extract.pm)
+BuildRequires:	perl(autodie.pm)
+BuildRequires:	perl(Compress/Bzip2.pm)
+BuildRequires:	perl(IPC/System/Simple.pm)
+BuildRequires:	perl(Locale/Maketext/Extract.pm)
+BuildRequires:	perl(parent.pm)
+BuildRequires:	perl-SDL
+BuildRequires:	perl-devel
+BuildRequires:	pkgconfig(SDL_image)
+BuildRequires:	pkgconfig(SDL_mixer) >= 1.2.2
+BuildRequires:	pkgconfig(SDL_Pango)
+BuildRequires:	libsmpeg-devel
+
+# due to conflict perl-SDL <-> perl-SDL_Perl
+%filter_from_requires /^perl(SDL/d
+Requires:	perl-SDL
+
 
 %description
 Colorful 3D rendered penguin animations, 100 levels of 1p game,
@@ -31,53 +54,6 @@ transition effects, 8 unique logo eye-candies.
 звукового сопровождения профессионального качества, 15 стереоэффектов,
 8 уникальных эффектов графического перехода и 8 просто красивостей.
 
-%prep
-%setup
-%patch -p1
-
-%build
-cd c_stuff
-%perl_vendor_build MAKEFILE=Makefile
-
-%install
-mkdir -p %buildroot{%_bindir,%_man6dir,%_datadir/%name,%_desktopdir}
-install -pm755 %name %name-editor %buildroot%_bindir
-install -pm644 doc/%name.6 doc/%name-editor.6 %buildroot%_man6dir
-cp -a data gfx snd %buildroot%_datadir/%name
-
-cat <<EOF >%buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Type=Application
-Encoding=UTF-8
-Name=Frozen Bubble
-TryExec=frozen-bubble
-Exec=frozen-bubble
-Categories=Application;Game;ArcadeGame
-Icon=/usr/share/icons/hicolor/48x48/apps/frozen-bubble.png
-Comment=Frozen Bubble Arcade Game
-Comment[ru]=Игра Frozen Bubble
-EOF
-
-install -pDm644 icons/%name-icon-16x16.png %buildroot%_miconsdir/%name.png
-install -pDm644 icons/%name-icon-32x32.png %buildroot%_niconsdir/%name.png
-install -pDm644 icons/%name-icon-48x48.png %buildroot%_liconsdir/%name.png
-
-cd c_stuff
-%perl_vendor_install
-
-%files
-%doc README AUTHORS TIPS NEWS
-%_bindir/%name
-%_bindir/%name-editor
-%_man6dir/%name.6*
-%_man6dir/%name-editor.6*
-%_desktopdir/%name.desktop
-%_niconsdir/*.png
-%_miconsdir/*.png
-%_liconsdir/*.png
-%perl_vendor_archlib/*.pm
-%perl_vendor_autolib/fb_c_stuff
-
 %package data
 Summary: Frozen Bubble arcade game
 Group: Games/Arcade
@@ -91,17 +67,156 @@ over LAN or Internet, a level-editor, 3 professional quality
 digital soundtracks, 15 stereo sound effects, 8 unique graphical
 transition effects, 8 unique logo eye-candies.
 
+%description -l ru_RU.UTF-8
+Данные для игры Frozen Bubble.
+
+%package server
+Group: Games/Arcade
+Summary: Frozen Bubble network game dedicated server
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+
+%description server
+Frozen Bubble network game dedicated server. The server is already included
+with the game in order to be launched automatically for LAN games, so you
+only need to install this package if you want to run a fully dedicated
+Frozen Bubble network game server.
+
+%prep
+%setup
+%patch1 -p1
+
+# -------- from fedora -----------------------------------------------
+# Rename this README since the main server README has the same name
+mv server/init/README server/README.init
+# Change the example server configuration file to be a working one, which only
+# launches a LAN server and doesn't try to register itself on the Internet
+sed -ie "s#^a .*#z\nq\nL#" server/init/fb-server.conf
+# -------- from fedora -----------------------------------------------
+
+
+%build
+export CFLAGS="%{optflags} -Wno-error=unused-result"
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+mkdir -p %buildroot%_desktopdir
+cat <<EOF >%buildroot%_desktopdir/%name.desktop
+[Desktop Entry]
+Type=Application
+Name=Frozen Bubble
+Comment=Frozen Bubble Arcade Game
+Comment[ru]=Игра Frozen Bubble
+TryExec=%name
+Exec=%name
+Icon=%name
+Categories=Game;ArcadeGame;
+Terminal=false
+StartupNotify=false
+EOF
+
+install -pDm644 share/icons/%name-icon-16x16.png %buildroot%_miconsdir/%name.png
+install -pDm644 share/icons/%name-icon-32x32.png %buildroot%_niconsdir/%name.png
+install -pDm644 share/icons/%name-icon-48x48.png %buildroot%_liconsdir/%name.png
+
+rm -rf %buildroot%perl_vendor_autolib/share/dist/Games-FrozenBubble/icons
+mv %buildroot%perl_vendor_autolib/share/dist/Games-FrozenBubble %buildroot%_datadir/%name
+ln -s `relative %_datadir/%name %perl_vendor_autolib/share/dist/Games-FrozenBubble` \
+   %buildroot%perl_vendor_autolib/share/dist/Games-FrozenBubble
+
+
+# -------- from fedora -----------------------------------------------
+# Install server init script and default configuration
+install -D -p -m 0644 %{SOURCE2} \
+    %{buildroot}%{_unitdir}/fb-server.service
+install -D -p -m 0644 server/init/fb-server.conf \
+    %{buildroot}%{_sysconfdir}/fb-server.conf
+
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<!--
+EmailAddress: contact2@frozen-bubble.org
+SentUpstream: 2014-09-17
+-->
+<application>
+  <id type="desktop">frozen-bubble.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>An addictive game about frozen bubbles</summary>
+  <description>
+    <p>
+      Frozen Bubble is a free and open source game in which you throw colorful
+      bubbles and build groups to destroy them.
+    </p>
+    <p>
+      You can play this game locally or over the Internet.
+      It also contains a level editor for you to create your own games.
+    </p>
+  </description>
+  <url type="homepage">http://www.frozen-bubble.org/</url>
+  <screenshots>
+    <screenshot type="default">https://www.filepicker.io/api/file/zfCHFlCsR4OnStuPBwmQ</screenshot>
+    <screenshot>http://blog.kii.com/wp-content/uploads/2013/06/frozenbubble.jpg</screenshot>
+    <screenshot>https://www.filepicker.io/api/file/eqPdEWZMTtS1Un1LoRQ0</screenshot>
+  </screenshots>
+  <updatecontact>contact2_at_frozen-bubble.org</updatecontact>
+</application>
+EOF
+# -------- from fedora -----------------------------------------------
+
+%post server
+/usr/sbin/useradd -r -s /sbin/nologin -d %{_datadir}/%{name} fbubble \
+    &>/dev/null || :
+%post_service fb-server
+
+%preun server
+%preun_service fb-server
+
+%files
+%perl_vendor_archlib/G*
+%perl_vendor_autolib/G*
+%perl_vendor_autolib/share/dist/Games-FrozenBubble
+
 %files data
+%doc README AUTHORS HISTORY COPYING
+%_bindir/%name
+%_bindir/%name-editor
+%_man1dir/%name.1*
+%_man1dir/%name-editor.1*
+%_desktopdir/%name.desktop
+%_niconsdir/*.png
+%_miconsdir/*.png
+%_liconsdir/*.png
+%{_datadir}/appdata/%{name}.appdata.xml
 %dir %_datadir/%name
 %_datadir/%name/data
 %_datadir/%name/gfx
 %_datadir/%name/snd
+%_datadir/%name/locale
+
+%files server
+%doc server/AUTHORS server/README*
+%doc COPYING
+%config(noreplace) %{_sysconfdir}/fb-server.conf
+%{_unitdir}/fb-server.service
+%{_bindir}/fb-server
 
 # TODO:
 # - package server
-# - package locales
 
 %changelog
+* Sat Mar 02 2019 Igor Vlasenko <viy@altlinux.ru> 2.212-alt1
+- new version (2.2.1-beta1, CPAN version is 2.212)
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt4.1
 - rebuild with new perl 5.28.1
 
