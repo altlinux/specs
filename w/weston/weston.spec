@@ -1,8 +1,8 @@
-%global libweston_major 4
+%global libweston_major 5
 
 Name:           weston
-Version:        4.0.0
-Release:        alt2
+Version:        5.0.0
+Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
 License:        BSD and CC-BY-SA
@@ -119,7 +119,6 @@ find %buildroot -name \*.la | xargs rm -f
 %_man1dir/weston*
 %_man5dir/weston*
 %_man7dir/weston*
-%doc README data/COPYING
 
 %files devel
 %_includedir/weston
@@ -135,6 +134,9 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/libweston*.pc
 
 %changelog
+* Sat Mar 02 2019 Alexey Gladkov <legion@altlinux.ru> 5.0.0-alt1
+- Version (5.0.0).
+
 * Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 4.0.0-alt2
 - Add rpm-build-xdg to buildrequires.
 
