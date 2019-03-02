@@ -1,7 +1,7 @@
 %define dist Net-Pcap
 Name: perl-%dist
 Version: 0.18
-Release: alt1.2
+Release: alt2
 
 Summary: Interface to pcap(3) LBL packet capture library
 License: GPL or Artistic
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/SA/SAPER/Net-Pcap-%{version}.tar.gz
+
+Patch1: Net-Pcap-0.18-Adapt-a-test-to-libpcap-1.8.0.patch
+Patch2: Net-Pcap-0.18-Fix-build-with-libpcap-1.9.0.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libpcap-devel perl-Test-Exception perl-Test-Pod perl-podlators
@@ -25,6 +28,9 @@ security monitoring, network debugging, etc."
 %prep
 %setup -q -n %dist-%version
 
+%patch1 -p1
+%patch2 -p1
+
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -39,6 +45,11 @@ security monitoring, network debugging, etc."
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Mar 02 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.18-alt2
+- added patches from Fedora Core:
+  Net-Pcap-0.18-Adapt-a-test-to-libpcap-1.8.0.patch
+  Net-Pcap-0.18-Fix-build-with-libpcap-1.9.0.patch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1.2
 - rebuild with new perl 5.28.1
 
