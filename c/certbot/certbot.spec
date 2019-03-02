@@ -3,7 +3,7 @@
 
 Name: certbot
 Version: 0.31.0
-Release: alt1
+Release: alt2
 
 Summary: A free, automated certificate authority client
 
@@ -47,7 +47,15 @@ Provides: letsencrypt = %version
 Obsoletes: letsencrypt
 
 %define certbotdir %_datadir/%name
-%add_python_req_skip certbot
+#add_python_req_skip certbot
+%py_provides certbot
+
+%add_python_lib_path %certbotdir/certbot/
+%add_python_lib_path %certbotdir/certbot_nginx/
+%add_python_lib_path %certbotdir/certbot_apache/
+%add_python_lib_path %certbotdir/certbot_dns-rfc2136/
+%add_python_lib_path %certbotdir/certbot_dns-route53/
+%add_python_lib_path %certbotdir/certbot_postfix/
 
 %description
 Let's Encrypt is a free, automated certificate authority that aims
@@ -77,7 +85,7 @@ The python2 libraries to interface with letsencrypt.
 Group: Networking/Other
 Summary: Certbot Apache plugin
 AutoProv: no
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description apache
 Certbot Apache plugin.
@@ -86,10 +94,39 @@ Certbot Apache plugin.
 Group: Networking/Other
 Summary: Certbot nginx plugin
 AutoProv: no
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nginx
 Certbot nginx plugin.
+
+%package postfix
+Group: Networking/Other
+Summary: Certbot postfix plugin
+AutoProv: no
+Requires: %name = %EVR
+
+%description postfix
+Certbot postfix plugin.
+
+
+%package dns_rfc2136
+Group: Networking/Other
+Summary: Certbot dns_rfc2136 plugin
+AutoProv: no
+Requires: %name = %EVR
+
+%description dns_rfc2136
+Certbot dns-rfc2136 plugin.
+
+%package dns_route53
+Group: Networking/Other
+Summary: Certbot dns_route53 plugin
+AutoProv: no
+Requires: %name = %EVR
+
+%description dns_route53
+Certbot dns_route53 plugin.
+
 %endif
 
 %prep
@@ -102,6 +139,12 @@ cd certbot-apache
 %python_build
 cd ../certbot-nginx
 %python_build
+cd ../certbot-postfix
+%python_build
+cd ../certbot-dns-route53
+%python_build
+cd ../certbot-dns-rfc2136
+%python_build
 
 
 %install
@@ -110,6 +153,12 @@ cd ../certbot-nginx
 cd certbot-apache
 %python_install --install-purelib=%certbotdir
 cd ../certbot-nginx
+%python_install --install-purelib=%certbotdir
+cd ../certbot-postfix
+%python_install --install-purelib=%certbotdir
+cd ../certbot-dns-route53
+%python_install --install-purelib=%certbotdir
+cd ../certbot-dns-rfc2136
 %python_install --install-purelib=%certbotdir
 cd -
 
@@ -122,6 +171,8 @@ mkdir -p %buildroot%_logdir/letsencrypt
 ln -s letsencrypt %buildroot%_logdir/%name
 
 ln -s %name %buildroot%_bindir/letsencrypt
+
+rm -rfv %buildroot%certbotdir/certbot*/tests/
 
 #  it is better do not require argparse on python >= 2.7.
 #__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
@@ -164,9 +215,28 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %doc LICENSE.txt
 %certbotdir/certbot_apache/
 %certbotdir/certbot_apache-%{version}*.egg-info
+
+%files postfix
+%doc LICENSE.txt
+%certbotdir/certbot_postfix/
+%certbotdir/certbot_postfix-*.egg-info
+
+%files dns_rfc2136
+%doc LICENSE.txt
+%certbotdir/certbot_dns_rfc2136/
+%certbotdir/certbot_dns_rfc2136-%{version}*.egg-info
+
+%files dns_route53
+%doc LICENSE.txt
+%certbotdir/certbot_dns_route53/
+%certbotdir/certbot_dns_route53-%{version}*.egg-info
 %endif
 
 %changelog
+* Sat Mar 02 2019 Vitaly Lipatov <lav@altlinux.ru> 0.31.0-alt2
+- add dns_rfc2136, dns_route53 and postfix plugins
+- provide python2.7(cerbot)
+
 * Sat Feb 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.31.0-alt1
 - new version 0.31.0 (with rpmrb script)
 
