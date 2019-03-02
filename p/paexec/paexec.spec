@@ -1,13 +1,16 @@
 Name: paexec
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 
 Summary: paexec distributes tasks over network or CPUs
+
 License: MIT
 Group: Networking/Other
-
 Url: http://paexec.sourceforge.net/
-Source: %name-%version.tar.gz
+
+# Source-url: https://prdownloads.sourceforge.net/paexec/paexec/paexec-%version/paexec-%version.tar.gz
+Source: %name-%version.tar
+
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildRequires: %_bindir/pod2man %_bindir/pod2html
@@ -68,6 +71,9 @@ mkcmake install
 # - investigate and re-enable tests
 
 %changelog
+* Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version (1.1.1) with rpmgs script
+
 * Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
