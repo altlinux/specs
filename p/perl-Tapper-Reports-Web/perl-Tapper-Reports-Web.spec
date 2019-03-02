@@ -15,14 +15,14 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %define upstream_version 5.0.12
 
 Name:       perl-%{upstream_name}
-Version:    5.0.13
-Release:    alt2
+Version:    5.0.14
+Release:    alt1
 
 Summary:    Tapper frontend web application based on Catalyst
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-Web-%{version}.tar.gz
 
 BuildRequires: perl(Catalyst.pm)
 BuildRequires: perl(Catalyst/Controller.pm)
@@ -95,7 +95,7 @@ Patch: Tapper-Reports-Web-5.0.13-syntax.patch
 Tapper frontend web application based on Catalyst.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n Tapper-Reports-Web-%{version}
 %patch -p1
 
 %build
@@ -129,6 +129,9 @@ Tapper frontend web application based on Catalyst.
 
 
 %changelog
+* Sat Mar 02 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.14-alt1
+- automated CPAN update
+
 * Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.13-alt2
 - fixed build
 
