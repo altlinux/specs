@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        65.0.1
+Version:        65.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -78,7 +78,7 @@ BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libproxy-devel
 BuildRequires: libshell
-BuildRequires: libvpx-devel
+BuildRequires: libvpx5-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
@@ -358,6 +358,10 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sat Mar 02 2019 Alexey Gladkov <legion@altlinux.ru> 65.0.2-alt1
+- New release (65.0.2).
+- Use libvpx5.
+
 * Tue Feb 19 2019 Alexey Gladkov <legion@altlinux.ru> 65.0.1-alt1
 - New release (65.0.1).
 - Fixed:
