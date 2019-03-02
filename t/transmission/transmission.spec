@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.94
-Release: alt3
+Release: alt4
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -274,6 +274,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Sat Mar 02 2019 Anton Farygin <rider@altlinux.ru> 2.94-alt4
+- rebuilt with libevent-2.1
+
 * Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.94-alt3
 - rebuilt with libopenssl1.1
 
