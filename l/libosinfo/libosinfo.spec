@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 License: LGPLv2+
@@ -11,8 +11,8 @@ Source: %name-%version.tar
 #Patch2: %name-%version-altlinux.patch
 
 Url: https://libosinfo.org
-BuildRequires: intltool >= 0.40.0
-BuildRequires: gnome-common gtk-doc
+BuildRequires: gettext >= 0.19.8
+BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.38 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 BuildRequires: pkgconfig(libxslt) >= 1.0.0
@@ -76,7 +76,7 @@ Contains developer documentation for %name.
 #%%patch2 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-introspection \
@@ -99,7 +99,7 @@ rm -f %buildroot%_libdir/*.{a,la}
 %make check
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING.LIB NEWS README
+%doc COPYING.LIB NEWS README
 %_bindir/*
 %_man1dir/*
 %_libdir/%name-*.so.*
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Mar 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 

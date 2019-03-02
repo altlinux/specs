@@ -1,15 +1,15 @@
 
 Summary: Tools for managing the osinfo database
 Name: osinfo-db-tools
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
 Source: %name-%version.tar
 Url: http://libosinfo.org/
 
-BuildRequires: intltool >= 0.40.0
-BuildRequires: gnome-common gtk-doc
+BuildRequires: gettext >= 0.19.8
+BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.36 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 BuildRequires: pkgconfig(libxslt) >= 1.0.0
@@ -28,7 +28,7 @@ information about operating systems for use with virtualization
 %setup
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure
 %make_build
 
@@ -38,11 +38,14 @@ NOCONFIGURE=1 ./autogen.sh
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README
+%doc NEWS README
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Mar 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
