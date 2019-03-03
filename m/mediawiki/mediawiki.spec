@@ -1,8 +1,8 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.31
+%define major 1.32
 
 Name: mediawiki
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -24,20 +24,20 @@ Source5: README.UPGRADE.ALT-ru_RU.UTF-8
 Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
-Patch: %name-%major-alt.patch
-Patch1: %name-%major-config-path.patch
+Patch: %name-1.31-alt.patch
+Patch1: %name-1.32-config-path.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-mediawiki >= 0.5
 BuildRequires(pre): rpm-build-webserver-common
 
-BuildPreReq: apache2-devel
+BuildRequires: apache2-devel
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
 
-Requires: ImageMagick
+Requires: ImageMagick-tools
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -51,7 +51,7 @@ configuration.
 
 This is a typical %name installation (with Apache2 and MySQL support).
 Also, optional dependency will be installed:
-ImageMagick.
+ImageMagick-tools.
 
 If you wish pure %name, install only %name-common package.
 
@@ -59,9 +59,9 @@ If you wish pure %name, install only %name-common package.
 %package -n %name-common
 Summary: Common files for %name
 Group: Networking/WWW
-PreReq: webserver-common
+Requires: webserver-common
 Requires: php7-libs >= 7.0.0
-Requires: php7-dom php7-fileinfo php7-mbstring
+Requires: php7-dom php7-fileinfo php7-mbstring php7-mcrypt
 Requires: diffutils
 
 AutoProv:no
@@ -302,7 +302,7 @@ exit 0
 %webappdir/images/*
 %webappdir/config/AdminSettings.sample
 
-%doc COPYING CREDITS FAQ HISTORY README RELEASE-NOTES-%major UPGRADE StartProfiler.sample
+%doc COPYING CREDITS FAQ HISTORY README RELEASE-NOTES-%major UPGRADE
 %doc README.ALT-ru_RU.UTF-8 README.UPGRADE.ALT-ru_RU.UTF-8 install_php_config.sh mediawiki.ini
 %doc docs
 
@@ -321,6 +321,9 @@ exit 0
 
 
 %changelog
+* Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.32.0-alt1
+- new version 1.32.0 (with rpmrb script)
+
 * Sat Sep 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1.31.1-alt1
 - new version 1.31.1 (with rpmrb script)
 - CVE-2018-0503, CVE-2018-0505, CVE-2018-1325
