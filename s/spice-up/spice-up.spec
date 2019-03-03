@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name Spice-up
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Desktop presentation application
@@ -16,8 +16,8 @@ Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/%_name
 %else
 Source: %_name-%version.tar
 %endif
-
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib-devel
 BuildRequires: pkgconfig(gee-0.8)
@@ -45,7 +45,7 @@ based upon SpiceOfDesign's presentation concept.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %cmake_insource -DGSETTINGS_COMPILE=OFF
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -67,6 +67,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 
 
 %changelog
+* Sun Mar 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - updated to 1.7.0-4-g6c23e27
 
