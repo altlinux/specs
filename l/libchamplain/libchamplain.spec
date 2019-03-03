@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name champlain
 %define ver_major 0.12
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.18
+Version: %ver_major.19
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -203,6 +203,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 03 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.19-alt1
+- 0.12.19
+
 * Sun Feb 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.18-alt1
 - updated to LIBCHAMPLAIN_0_12_18-10-g20cd17c
 
