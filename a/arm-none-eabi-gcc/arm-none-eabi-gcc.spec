@@ -1,7 +1,7 @@
 %global processor_arch arm
 %global target         %processor_arch-none-eabi
-%global gcc_ver        7.3.1
-%global gcc_short_ver  7.3
+%global gcc_ver        8.3.1
+%global gcc_short_ver  8.3
 %define _libexecdir /usr/libexec
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
@@ -10,7 +10,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt3
+Release: alt1
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -275,6 +275,12 @@ popd
 %endif
 
 %changelog
+* Sun Mar 03 2019 Anton Midyukov <antohami@altlinux.org> 8.3.1-alt1
+- new version 8.3.1
+
+* Sun Feb 10 2019 Anton Midyukov <antohami@altlinux.org> 8.2.1-alt1
+- new version 8.2.1
+
 * Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 7.3.1-alt3
 - first build for aarch64
 - skip requires python(gdb)
