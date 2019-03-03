@@ -4,7 +4,7 @@
 #define _binaries_in_noarch_packages_terminate_build 0
 
 %define target arm-none-eabi
-%define pkg_version 3.0.0
+%define pkg_version 3.1.0
 %define _libexecdir /usr/libexec
 %add_verify_elf_skiplist %_libexecdir/%target/lib/*
 
@@ -21,10 +21,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source:  %name-%version.tar
 Source1: README.alt
 Source2: NEWLIB-LICENSING
-Patch0: ftbfs.patch
-Patch1: ftbfs2.patch
 
-BuildRequires: %target-binutils %target-gcc %target-gcc-c++ texinfo
+BuildRequires: %target-binutils %target-gcc %target-gcc-c++
 BuildArch: noarch
 
 %description
@@ -34,8 +32,6 @@ that make them easily usable on embedded products.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 rm -rf build-{newlib,nano}
@@ -48,8 +44,6 @@ export CFLAGS="-g -O2 -ffunction-sections -fdata-sections"
     --prefix=%_libexecdir \
     --libdir=%_libexecdir \
     --mandir=%_mandir \
-    --htmldir=%_docdir/html \
-    --pdfdir=%_docdir/pdf \
     --target=%target \
     --enable-interwork \
     --enable-multilib \
@@ -80,7 +74,8 @@ export CFLAGS="-g -Os -ffunction-sections -fdata-sections"
     --disable-newlib-unbuf-stream-opt \
     --enable-lite-exit \
     --enable-newlib-global-atexit \
-    --enable-newlib-nano-formatted-io
+    --enable-newlib-nano-formatted-io \
+    --disable-nls
 
 %make_build
 
@@ -119,6 +114,9 @@ rm -rf $NANO_ROOT
 %_libexecdir/%target/lib/*
 
 %changelog
+* Tue Apr 09 2019 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
+- New version 3.1.0
+
 * Wed Apr 18 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - New version 3.0.0
 
