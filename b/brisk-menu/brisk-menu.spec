@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 Name: brisk-menu
 Version: 0.5.0
-Release: alt1.1
+Release: alt2
 
 Summary: An efficient menu for the MATE Desktop
 Summary(ru_RU.UTF-8): Эффективное меню для MATE Desktop
@@ -50,12 +50,16 @@ Features:
 %setup
 
 %build
+export NPROCS=1
 %meson
 %meson_build
 
 %install
 %meson_install
 %find_lang %name
+
+# remove unpackages files
+rm -fr %buildroot%_datadir/locale/es_419
 
 %files -f %name.lang
 %doc LICENSE* README.md
@@ -66,6 +70,9 @@ Features:
 %_libexecdir/%name
 
 %changelog
+* Sun Mar 03 2019 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt2
+- single threaded build
+
 * Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1.1
 - Rebuilt dor aarch64
 
