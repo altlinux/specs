@@ -1,6 +1,6 @@
 Name: mk-configure
 Version: 0.30.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
@@ -15,7 +15,7 @@ Packager: Aleksey Cheusov <cheusov@altlinux.org>
 BuildArch: noarch
 
 Requires:      bmake bmkdep
-BuildRequires: bmake binutils
+BuildRequires: bmake mk-files binutils
 
 # required for tests
 BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel bmkdep
@@ -66,6 +66,9 @@ bmake test
 %_man7dir/*
 
 %changelog
+* Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 0.30.0-alt2
+- build with mk-files (ALT bug 36211)
+
 * Wed Dec 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.30.0-alt1
 - new version 0.30.0 (with rpmrb script)
 
