@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Data-UUID
 Name: perl-%dist
-Version: 1.221
-Release: alt1.2
+Version: 1.224
+Release: alt1
 
 Summary: Perl extension for generating Globally/Universally Unique Identifiers (GUIDs/UUIDs)
 License: BSD
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Data-UUID-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/Data-UUID-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Pod-Parser perl-devel perl-threads
@@ -26,7 +26,7 @@ for instance, uses GUIDs very extensively to uniquely identify classes,
 applications and components across network-connected systems.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n Data-UUID-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +40,9 @@ applications and components across network-connected systems.
 %perl_vendor_autolib/Data
 
 %changelog
+* Sun Mar 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.224-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.221-alt1.2
 - rebuild with new perl 5.28.1
 
