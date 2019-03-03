@@ -1,12 +1,12 @@
 Name: RODOS5_6
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Control tool for RODOS-5, 6, 6B controllers
 Summary(ru_RU.UTF-8): Инструмент управления для контроллеров RODOS-5, 6, 6B
 License: GPL
-Group: System/Kernel and hardware
-Url: https://www.olimp-z.ru/products/RODOS-5/RODOS5_6.tar.gz
+Group: System/Configuration/Hardware
+Url: https://silines.ru/software/RODOS/RODOS-5_6/RODOS5_6.tar.gz
 
 Packager: Pavel Isopenko <pauli@altlinux.org>
 Source: %name-%version.tar
@@ -36,6 +36,10 @@ install -D -m0644 %_sourcedir/udev.rules %buildroot%_udevrulesdir/40-%name.rules
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Sun Mar 03 2019 Pavel isopenko <pauli@altlinux.org> 1.1-alt2
+- change Group
+- change Url
+
 * Sun Jan 06 2019 Pavel isopenko <pauli@altlinux.org> 1.1-alt1
 - initial build for Sisyphus
 
