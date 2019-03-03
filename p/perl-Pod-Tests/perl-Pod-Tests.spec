@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Pod-Tests
-Version: 1.19
-Release: alt1.1
+Version: 1.20
+Release: alt1
 
 Summary: Extracts embedded tests and code examples from POD
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/A/AD/ADAMK/%m_distro-%version.tar.bz2
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/Pod-Tests-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 24 2005
 BuildRequires: perl-Pod-Escapes perl-Pod-Simple perl-Test-Pod perl-devel
@@ -41,7 +41,7 @@ examples from POD.  It doesn't do much more than that.  pod2test does
 the useful work.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n Pod-Tests-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -50,12 +50,15 @@ the useful work.
 %perl_vendor_install
 
 %files
-%doc README
+%doc README CONTRIBUTING Changes
 %_bindir/*
 %_man1dir/*
 %perl_vendor_privlib/Pod/
 
 %changelog
+* Sun Mar 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
