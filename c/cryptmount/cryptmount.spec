@@ -1,5 +1,5 @@
 Name: cryptmount
-Version: 5.3
+Version: 5.3.1
 Release: alt1
 Group: File tools
 Packager: Pavel Isopenko <pauli@altlinux.org>
@@ -37,7 +37,6 @@ s|%_sysconfdir/init.d|%_initdir|g;
 
 %build
 %configure --enable-delegation --enable-fsck
-
 %make_build
 
 %install
@@ -66,6 +65,9 @@ install -d -m0755 %buildroot%_sysconfdir/default/cryptmount/
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Sun Mar 03 2019 Pavel Isopenko <pauli@altlinux.org> 5.3.1-alt1
+- new version 5.3.1
+
 * Fri May 11 2018 Pavel Isopenko <pauli@altlinux.org> 5.3-alt1
 - version 5.3
 
