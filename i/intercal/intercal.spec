@@ -1,46 +1,39 @@
 Name: intercal
-Version: 0.29
-Release: alt1.git20140828.1
+Version: 0.30
+Release: alt1
 
-Summary: The language that kills the weak and drives mad the strong
-License: GPL, except for ick-wrap.c
+Summary: A compiler for the INTERCAL language
+License: GPL-2.0-or-later and GFDL-1.2-or-later
 Group: Development/Other
 Url: http://www.catb.org/~esr/intercal/
 
-# git://gitorious.org/intercal/intercal.git
-Source: %url/%name-%version.tar.gz
+# https://gitlab.com/esr/intercal
+# git://git.altlinux.org/gears/i/intercal.git
+Source: %name-%version-%release.tar
 
-BuildPreReq: flex groff-base groff-ps tidy
-
-Requires: gcc
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: flex makeinfo
 
 %description
-An implementation of the language INTERCAL, legendary for
-its perversity and horribleness (this version adds COME FROM
-for extra flavor).  Comes with language manual and examples
-including possibly the entire extant body of INTERCAL code.
-Now supports i18n and l14n (to Ancient Roman locale only)
-Now with fix patch by Donald Knuth.
+INTERCAL is the original esoteric language, a farrago of features
+that will test the mettle of any programmer and bend the minds of
+most.  The INTERCAL suite includes not just a compiler and debugger
+for the language but most of the code ever written for it as well.
 
 %prep
-%setup
+%setup -n %name-%version-%release
+cp -a pit examples
+rm -r examples/{lib,Makefile}
 
 %build
 %autoreconf
 %configure
 %make_build
-pushd doc
-%make_build all
-%__rm -f Makefile intercal.refs.tmp
-popd
 
 %install
 %makeinstall_std
 
-cp -a pit examples
-rm -fr examples/{lib,Makefile}
+%check
+%make_build -k fuzz
 
 %files
 %_bindir/*
@@ -49,9 +42,12 @@ rm -fr examples/{lib,Makefile}
 %_datadir/ick*
 %_infodir/*
 %_mandir/man?/*
-%doc BUGS NEWS README HISTORY doc/ examples/ etc/%name.el
+%doc BUGS NEWS README HISTORY examples/ etc/%name.el
 
 %changelog
+* Mon Mar 04 2019 Dmitry V. Levin <ldv@altlinux.org> 0.30-alt1
+- Updated to 0.30.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1.git20140828.1
 - NMU: added BR: texinfo
 
