@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,13 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Mon Mar 04 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.0-alt1
+- Handling SUID, GUID and Sticky bits;
+- Escaping and unescaping special symbols when writing to
+  or reading from ini-file;
+- Ability to sort lines of file in alphabetical order;
+- Custom mode for whitelists is disallowed.
+
 * Mon Dec 10 2018 Alexey Appolonov <alexey@altlinux.org> 0.17.1-alt1
 - Simple line (not "left part - tie symbols - right part" structure)
   can be printed with LineEnd method of TPrinter.

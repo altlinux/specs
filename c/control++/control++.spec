@@ -1,7 +1,7 @@
-%define libcontrolppver 0.17
+%define libcontrolppver 0.18
 
 Name: control++
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: System configuration tool
@@ -59,6 +59,12 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Mon Mar 04 2019 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
+- Ability to add comments into lists of files for the permission unit;
+- Fixed determination of disallowed essential applications;
+- Silent termination in case user chose to abort mode setting;
+- Reduced number of warning/error messages displayed on every access error.
+
 * Mon Dec 03 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.0-alt1
 - Mode reset is marked by cleared internal configuration file;
 - 'mode for dirs' is applicable for all directories, not nested only;
