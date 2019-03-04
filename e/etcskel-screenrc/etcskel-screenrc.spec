@@ -2,7 +2,7 @@
 %define skelfile .screenrc
 
 Name: etcskel-screenrc
-Version: 20180925
+Version: 20190301
 Release: alt1
 BuildArch: noarch
 BuildRequires: etcskel
@@ -27,6 +27,9 @@ Default %summary
 %config(noreplace) %_sysconfdir/skel/%skelfile
 
 %changelog
+* Fri Mar 01 2019 Gremlin from Kremlin <gremlin@altlinux.ru> 20190301-alt1
+- fixed typo
+
 * Tue Sep 25 2018 Gremlin from Kremlin <gremlin@altlinux.ru> 20180925-alt1
 - disabled hardstatus (avoid TIOCSTI-related issues)
 - reduced shelltitle length down to 1 symbol
