@@ -1,38 +1,36 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: isomd5sum
-Version: 1.0.12
-Release: alt1.1
+Version: 1.2.3
+Release: alt1
 
 Summary: Utilities to implant/verify md5sum in ISO images
 License: %gpl2plus
 Group: System/Base
 Url: https://github.com/rhinstaller/isomd5sum
-
-#Url: http://git.fedorahosted.org/git/?p=isomd5sum.git;a=summary
-#Source: http://fedorahosted.org/releases/i/s/isomd5sum/%name-%version.tar.bz2
 Source: %name-%version.tar
-Packager: Andriy Stepanov <stanv@altlinux.ru>
 
-# Automatically added by buildreq on Tue Feb 19 2008
-BuildRequires: libpopt-devel python-devel
-BuildPreReq: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-python3
+BuildRequires: libpopt-devel python3-devel
 
 %description
 This package contains utilities for implanting and verifying
 MD5 checksum in an ISO9660 image.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python module for isomd5sum
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
-%description -n python-module-%name
+%description -n python3-module-%name
 This package contains python module for implanting and verifying
 MD5 checksum in an ISO9660 image.
 
 %package devel
 Summary: Development headers and library for isomd5sum
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains header files and a library for implanting
@@ -42,10 +40,10 @@ and verifying MD5 checksum in an ISO9660 image.
 %setup
 
 %build
-%make
+PYTHON=%__python3 make checkisomd5 implantisomd5 pyisomd5sum.so
 
 %install
-%makeinstall_std
+PYTHON=%__python3 %makeinstall_std
 
 %files
 %doc COPYING
@@ -53,14 +51,18 @@ and verifying MD5 checksum in an ISO9660 image.
 %_bindir/checkisomd5
 %_mandir/man*/*
 
-%files -n python-module-%name
-%python_sitelibdir/pyisomd5sum.so
+%files -n python3-module-%name
+%python3_sitelibdir/pyisomd5sum.so
 
 %files devel
 %_includedir/*.h
 %_libdir/*.a
+%_datadir/pkgconfig/isomd5sum.pc
 
 %changelog
+* Mon Mar 04 2019 Anton Midyukov <antohami@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.12-alt1.1
 - NMU: added URL
 
