@@ -12,7 +12,7 @@
 
 Name: mailutils
 
-%define baseversion 3.5.90
+%define baseversion 3.6
 
 %if %snapshot
 %define snapshotdate 20170306
@@ -37,10 +37,13 @@ Source0:        %name-%version-%snapshotdate.tar.gz
 Source0:        %name-%version.tar.gz
 %endif
 
-Patch1: mailutils-2.0.90-pkg-config-hack.diff
-
 URL: http://www.gnu.org/software/%{name}/%{name}.html
 Group: Networking/Mail
+
+Patch1: mailutils-2.0.90-pkg-config-hack.diff
+
+# errata patches
+Patch10: 4e66a6a9e5f5696d60f7df875175f2e0ad8f7376.diff
 
 Conflicts: mailx
 
@@ -80,7 +83,6 @@ agent maidag, and other tools including guimb, dotlock, movemail, frm.
 Summary: GNU Mailutils: mailbox access library.
 License: %lgpl3plus
 Group: System/Libraries
-Provides: libmailutils-sieve = %{version}
 Obsoletes: libmailutils-sieve
 
 %description -n libmailutils
@@ -92,7 +94,7 @@ handling, and sending mail via SMTP and /sbin/sendmail.
 %package -n libmailutils-devel
 Summary: GNU Mailutils: mailbox access development.
 License: %lgpl3plus
-Requires: libmailutils, libmailutils-sieve
+Requires: libmailutils
 Group: Development/Other
 
 %description -n libmailutils-devel
@@ -141,7 +143,7 @@ mailboxes.
 %package sieve
 Summary: GNU Mailutils: mail filtering language Sieve.
 License: %lgpl3plus
-Requires: libmailutils = %{version}-%{release}, libmailutils-sieve = %{version}-%{release}
+Requires: libmailutils = %{version}-%{release}
 Group: Networking/Mail
 
 %description sieve
@@ -249,6 +251,9 @@ python-module-mailutils.
 
 #patch1 -p0
 
+# errata patches
+%patch10 -p1
+
 gzip ChangeLog
 
 # some includes for info-documentation are absent in 2.9.91
@@ -293,7 +298,7 @@ cp -f po/Makefile.in.in~ po/Makefile.in.in
     %{!?_enable_python: --disable-python} \
     #
 
-./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-config.status
+./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-build-config
 
 # SMP-incompatible build.
 %make V=1
@@ -337,6 +342,8 @@ done
 %find_lang %name
 
 %files -n mailutils
+%doc AUTHORS THANKS COPYING* NEWS README* TODO ChangeLog.gz
+
 %_bindir/mailutils
 %_bindir/dotlock
 %_bindir/frm
@@ -400,7 +407,6 @@ done
 %_libdir/mailutils/editheader.*a
 
 %files doc
-%doc AUTHORS THANKS COPYING* NEWS README* TODO ChangeLog.gz
 %_infodir/*
 
 %files pop3d
@@ -458,6 +464,13 @@ done
 %endif
 
 %changelog
+* Mon Mar 04 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.6-alt1
+- New version
+- Removed libmailutils-sieve from Requires of subpackages
+- Removed "Provides: libmailutils-sieve" from libmailutils subpackage
+- Moved %%doc macro to mailutils subpackage
+- Renamed README-config.status to README-build-config
+
 * Sun Jan 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.5.90-alt1
 - New version
 

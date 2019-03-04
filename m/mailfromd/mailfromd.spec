@@ -12,7 +12,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt1
+Release: alt2
 %define srcdir %name-%version
 %endif
 
@@ -156,7 +156,7 @@ LIBS="-lresolv" \
 #   --enable-syslog-async \
     #
 
-./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-config.status
+./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-build-config
 
 # NO SMP BUILD
 %make V=1
@@ -247,6 +247,8 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %preun_service mailfromd-clamav
 
 %files
+%doc COPYING README* AUTHORS INSTALL NEWS THANKS ChangeLog.gz
+
 %dir %_sysconfdir/mailfromd
 %dir %_sysconfdir/mailfromd/config.d
 %dir %_sysconfdir/mailfromd/config.d.shared
@@ -297,7 +299,6 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %attr(3775,root,mail) %dir %_localstatedir/mailfromd-clamav
 
 %files doc
-%doc COPYING README* AUTHORS INSTALL NEWS THANKS ChangeLog.gz
 %_infodir/*
 
 %files mfl
@@ -306,6 +307,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Mon Mar 04 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.7-alt2
+- Moved %%doc macro to mailfromd subpackage
+- Renamed README-config.status to README-build-config
+
 * Fri Jan 11 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.7-alt1
 - new version
 
