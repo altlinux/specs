@@ -1,12 +1,14 @@
 Name: phpMyAdmin
 Version: 4.8.5
-Release: alt1
+Release: alt2
 
 Summary: phpMyAdmin - web-based MySQL administration
 
 License: GPL
 Group: System/Servers
 Url: http://www.phpmyadmin.net
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
 Source: https://files.phpmyadmin.net/phpMyAdmin/%version/phpMyAdmin-%version-all-languages.tar
@@ -47,6 +49,7 @@ manual. Currently phpMyAdmin can:
   - administer multiple servers and single databases
   - communicate in more than 20 different languages
 
+%if_with php5
 %package apache2
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php5)
 Group: System/Servers
@@ -77,6 +80,8 @@ manual. Currently phpMyAdmin can:
   - communicate in more than 20 different languages
 
 Install this package if you need phpMyAdmin for apache 2.x and php5.
+
+%endif
 
 %package apache2-php7
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php7)
@@ -154,10 +159,12 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
+%if_with php5
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
+%endif
 
 %files apache2-php7
 %config(noreplace) %apache2_extra_available/%name.conf
@@ -165,6 +172,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Mon Mar 04 2019 Vitaly Lipatov <lav@altlinux.ru> 4.8.5-alt2
+- disable php5 subpackage
+
 * Thu Feb 21 2019 Vitaly Lipatov <lav@altlinux.ru> 4.8.5-alt1
 - new version 4.8.5 (with rpmrb script)
 
