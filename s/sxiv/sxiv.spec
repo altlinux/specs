@@ -1,6 +1,6 @@
 Name: sxiv
-Version: 1.32
-Release: alt1
+Version: 25
+Release: alt2
 
 Summary: Simple X Image Viewer
 License: GPLv2
@@ -10,9 +10,8 @@ Url: https://github.com/muennich/sxiv
 Packager: %packager
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Mar 22 2015
-# optimized out: imlib2 libX11-devel libcloog-isl4 xorg-xproto-devel
-BuildRequires: imlib2-devel libexif-devel libgif-devel
+# Automatically added by buildreq on Mon Mar 04 2019
+BuildRequires: git-core imlib2-devel libXft-devel libexif-devel libgif-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy-alt
 
 %add_findreq_skiplist %_datadir/%name/exec/key-handler
 
@@ -60,6 +59,12 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 %doc %docdir/*
 
 %changelog
+* Mon Mar 04 2019 Andrey Bergman <vkni@altlinux.org> 25-alt2
+- Updated build req.
+
+* Mon Mar 04 2019 Andrey Bergman <vkni@altlinux.org> 25-alt1
+- Version update.
+
 * Tue Dec 22 2015 Andrey Bergman <vkni@altlinux.org> 1.32-alt1
 - Version update.
 
