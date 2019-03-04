@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.11.3
-Release: alt2
+Release: alt3
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -385,7 +385,7 @@ EGL integration library for the Qt%major toolkit
 %endif
 %patch1007 -p1
 %patch1008 -p1
-#%patch1009 -p1
+%patch1009 -p1
 bin/syncqt.pl -version %version
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -798,6 +798,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt3
+- build with new libmysqlclient
+
 * Thu Feb 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2
 - package examples
 
