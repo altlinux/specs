@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 4.8.2
+Version: 4.9
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -92,6 +92,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %endif
 
 %changelog
+* Mon Mar 04 2019 Grigory Ustinov <grenka@altlinux.org> 4.9-alt1
+- Build new version.
+
 * Tue Jan 29 2019 Grigory Ustinov <grenka@altlinux.org> 4.8.2-alt1
 - Build new version.
 
