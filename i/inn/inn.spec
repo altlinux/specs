@@ -2,7 +2,7 @@
 
 Name: inn
 Version: 2.6.2
-Release: alt2.1
+Release: alt3
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -124,7 +124,7 @@ export CFLAGS="%optflags %optflags_shared"
 	--with-control-dir=%_libexecdir/%name/control \
 	--libdir=%_libdir \
 	--mandir=%_mandir \
-	--includedir=%_includedir/%name \
+	--includedir=%_includedir \
 	\
 	--sysconfdir=%_sysconfdir/news \
 	--with-filter-dir=%_sysconfdir/news/filter \
@@ -460,6 +460,9 @@ fi
 %_bindir/inews
 
 %changelog
+* Mon Mar 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt3
+- NMU: fixed /inn/inn/ in includedir
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt2.1
 - rebuild with new perl 5.28.1
 
