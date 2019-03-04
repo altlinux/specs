@@ -15,15 +15,15 @@
 
 %define rname digikam
 %define label digiKam
-%define sover 5
+%define sover 6
 %define libdigikamdatabase libdigikamdatabase%sover
 %define libdigikamcore libdigikamcore%sover
 %define libdigikamgui libdigikamgui%sover
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.9.0
-Release: alt2%ubt
+Version: 6.0.0
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -51,7 +51,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libopencv-devel
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
-BuildRequires: qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
+BuildRequires: qt5-multimedia-devel qt5-webengine-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 BuildRequires: libqtav-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
@@ -195,6 +195,7 @@ done
 
 %build
 %K5build \
+    -DENABLE_QWEBENGINE=ON \
     -DENABLE_INTERNALMYSQL=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
     -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
@@ -240,7 +241,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5data/solid/actions/%rname-*.desktop
 
 %files data -f %rname.lang
-%doc AUTHORS ChangeLog HACKING NEWS README* TODO
+#%doc AUTHORS ChangeLog HACKING NEWS README* TODO
 %if_enabled obsolete_kde4
 %_datadir/%rname/about/
 %_datadir/%rname/colorschemes/
@@ -259,6 +260,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5data/showfoto/*
 %endif
 %_K5icon/hicolor/*/apps/%rname.*
+%_K5icon/hicolor/*/apps/dk-*.*
 %_K5icon/hicolor/*/apps/showfoto.*
 %_K5icon/hicolor/*/apps/panorama.*
 %_K5icon/hicolor/*/apps/expoblending.*
@@ -282,6 +284,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt1
+- new version
+
 * Thu May 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2%ubt
 - build with mysql
 
