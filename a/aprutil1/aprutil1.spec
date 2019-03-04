@@ -68,7 +68,7 @@
 
 Name: aprutil%aprver
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -77,6 +77,8 @@ Url: http://apr.apache.org/
 
 #Source url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
 Source: apr-util-%version.tar
+
+Patch1: aprutil1-1.6.1-alt-mysql8-transition.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -206,6 +208,15 @@ This package provides the ODBC driver for the apr-util DBD
 
 %prep
 %setup -n apr-util-%version
+%patch1 -p0
+
+# my_global.h and my_sys.h are gone in MySQL8 API, so loosen autodetection restrictions
+sed -i 's|#include <my_global\.h>|#include <mysql\.h>|g' build/dbd.m4
+sed -i 's|#include <mysql\/my_global\.h>|#include <mysql\/mysql\.h>|g' build/dbd.m4
+sed -i 's|mysql\/my_global\.h||g' build/dbd.m4
+sed -i 's|my_global\.h||g' build/dbd.m4
+sed -i 's|mysql\/my_sys.h||g' build/dbd.m4
+sed -i 's|my_sys\.h||g' build/dbd.m4
 
 # GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
 # With -Werror this produce a compilation error and makes this test
@@ -276,6 +287,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Mon Mar 04 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.6.1-alt2
+- Fix FTBFS against libmysqlclient21
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
 - New version.
 - Drop upsupported lib%name-freetds.
