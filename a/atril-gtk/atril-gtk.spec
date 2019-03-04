@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.21.1
+Version:        1.22.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -208,7 +208,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 
 # don't package appdata file:
 # for atril-gtk there should be changed description at least
-%exclude %_datadir/appdata/atril.appdata.xml
+%exclude %_datadir/metainfo/atril.appdata.xml
 
 %if_enabled libs_subpackage
 %files -n lib%name
@@ -274,6 +274,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Mon Mar 04 2019 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt1
+- Updated to 1.22.0.
+
 * Fri Nov 16 2018 Mikhail Efremov <sem@altlinux.org> 1.21.1-alt1
 - Updated url.
 - Updated to 1.21.1.
