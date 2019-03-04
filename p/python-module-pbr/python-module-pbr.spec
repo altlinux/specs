@@ -12,7 +12,7 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python-module-%pypi_name
-Version:    5.1.2
+Version:    5.1.3
 Release:    alt1
 
 Summary:    Python Build Reasonableness
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 04 2019 Grigory Ustinov <grenka@altlinux.org> 5.1.3-alt1
+- Build new version.
+
 * Fri Feb 01 2019 Grigory Ustinov <grenka@altlinux.org> 5.1.2-alt1
 - Build new version.
 
