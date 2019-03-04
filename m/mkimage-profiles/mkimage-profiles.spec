@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,12 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Mar 04 2019 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1
+- Spring 2019 patch queue cleanup
+  + antohami@, jqt4@, iv@, obirvalger@, zerg@, me
+  + tar2fs fixes for mipsel, qemu etc
+  + lots of pkglist updates
+
 * Mon Jan 14 2019 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - new 2019 year release ;-)
 - tar2fs related security fix (iv@) iff sudo's been configured
