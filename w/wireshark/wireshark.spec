@@ -7,8 +7,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.6
-Release: alt2
+Version: 2.6.7
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -270,6 +270,12 @@ _EOF_
 
 
 %changelog
+* Mon Mar 04 2019 Anton Farygin <rider@altlinux.ru> 2.6.7-alt1
+- 2.6.7
+- fixes:
+     * ASN.1 BER and related dissectors crash. CVE-2019-9209
+     * TCAP dissector crash. CVE-2019-9208
+
 * Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 2.6.6-alt2
 - libwiretap included to wireshark-base package
 - libwiretap-devel included to wireshark-devel package
