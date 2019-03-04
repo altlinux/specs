@@ -2,7 +2,7 @@
 
 Name:    puppet
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -21,6 +21,9 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: ruby-facter
 BuildRequires: ruby-hiera
+
+Requires: shadow-change
+
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -172,6 +175,9 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %rubygem_specdir/*
 
 %changelog
+* Mon Mar 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.1.0-alt2
+- Requires fixed.
+
 * Tue Dec 18 2018 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt1
 - New version.
 

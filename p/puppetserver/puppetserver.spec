@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    6.1.0
+Version:    6.2.1
 Release:    alt1
 
 Summary:    Server automation framework and application
@@ -80,8 +80,8 @@ install -m 0755 puppetserver/cli/ca %buildroot%_datadir/%name/cli/apps/ca
 install -m 0755 puppetserver/cli_defaults/cli-defaults.sh %buildroot%_datadir/%name/cli/
 
 install -d -m 0755 %buildroot%_var/run/%name
-install -d -m 700 %buildroot%_var/log/%name
-install -d -m 700 %buildroot%_localstatedir/%name/jars
+install -d -m 0700 %buildroot%_var/log/%name
+install -d -m 0700 %buildroot%_localstatedir/%name/jars
 
 install -d -m 0755 %buildroot%_sysconfdir/default
 install -m 0644 puppetserver/default %buildroot%_sysconfdir/default/%name
@@ -118,19 +118,19 @@ install --directory %_sysconfdir/puppet/code
 chown -R puppet:puppet %_sysconfdir/puppet/ssl
 chown -R puppet:puppet %_sysconfdir/puppet/code
 
-find %_sysconfdir/puppet/ssl -type d -print0 | xargs -0 chmod 770
-find %_sysconfdir/puppet/code -type d -print0 | xargs -0 chmod 770
+find %_sysconfdir/puppet/ssl -type d -print0 | xargs -0 chmod 0770
+find %_sysconfdir/puppet/code -type d -print0 | xargs -0 chmod 0770
 
 chown puppet:puppet /var/log/puppetserver
-chmod 700 /var/log/puppetserver
+chmod 0700 /var/log/puppetserver
 chown puppet:puppet /var/lib/puppetserver
-chmod 770 /var/lib/puppetserver
+chmod 0770 /var/lib/puppetserver
 chown puppet:puppet /etc/puppetserver
-chmod 750 /etc/puppetserver
+chmod 0750 /etc/puppetserver
 chown puppet:puppet /var/run/puppetserver
 chmod 0755 /var/run/puppetserver
 chown puppet:puppet /var/lib/puppetserver/jars
-chmod 700 /var/lib/puppetserver/jars
+chmod 0700 /var/lib/puppetserver/jars
 
 %files
 %_datadir/%name
@@ -147,6 +147,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Fri Mar 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.1-alt1
+- Version updated to 6.2.1
+
 * Tue Dec 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.1.0-alt1
 - version updated to 6.1.0
 
