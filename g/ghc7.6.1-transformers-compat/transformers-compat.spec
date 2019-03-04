@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.5.0.3
-Release: alt1
+Release: alt2
 
 Summary: A small compatibility shim for the transformers library
 
@@ -18,7 +18,6 @@ Url: https://hackage.haskell.org/package/transformers-compat
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 Source: %name-%version.tar
-ExclusiveArch: %ix86 x86_64
 
 BuildRequires: ghc7.6.1-generic-deriving
 BuildRequires: ghc7.6.1-mtl ghc7.6.1-transformers
@@ -49,5 +48,8 @@ to be used.
 %files -f %name-files.all
 
 %changelog
+* Tue Mar 05 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0.3-alt2
+- make not ExclusiveArch
+
 * Wed Oct 31 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.0.3-alt1
 - Initial build for Sisyphus.
