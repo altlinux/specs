@@ -2,7 +2,7 @@
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
-Release:	%php7_release
+Release:	%php7_release.1
 Summary:	ZIP functions
 Group:		System/Servers
 License:	PHP Licence
@@ -14,7 +14,7 @@ Prereq:		php7-libs >= %php7_version-%php7_release
 
 BuildRequires(pre): rpm-build-php7
 
-BuildRequires: libzip-devel
+BuildRequires: libzip-devel zlib-devel
 BuildRequires: php7-devel = %php7_version
 
 %description
