@@ -2,8 +2,8 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.8.6
-Release: alt2
+Version: 0.8.7
+Release: alt1
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -15,7 +15,6 @@ Source: http://www.libssh.org/files/%name-%version.tar.gz
 Source1: version-script.libssh
 Source2: compat.lds
 Patch1: version-script.patch
-Patch2: libssh-0.8.6-server-Correctly-handle-extensions.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen ghostscript-utils graphviz latex2html
@@ -64,7 +63,6 @@ This package contains the development files for %name.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 install -m 0644 %SOURCE1 ./
 install -m 0644 %SOURCE2 ./
 
@@ -89,6 +87,9 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 0.8.7-alt1
+- new version
+
 * Wed Feb 20 2019 Stanislav Levin <slev@altlinux.org> 0.8.6-alt2
 - fix: correctly handle extensions
 
