@@ -1,15 +1,20 @@
 Name: libsigsegv
-Version: 2.10
+Version: 2.12.0.11.f2e3
 Release: alt1
 
 Summary: Library for handling page faults in user mode
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
-Url: http://www.gnu.org/software/libsigsegv/
+
+Url: https://www.gnu.org/software/libsigsegv/
+# https://git.sv.gnu.org/git/libsigsegv
 # git://git.altlinux.org/gears/l/libsigsegv
-Source: %name-%version-%release.tar
+%define srcname %name-%version-%release
+Source: %srcname.tar
+
+BuildRequires: gnulib >= 0.1.2433.3043e
+
 %define libname %{name}2
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %description
 This is a library for handling page faults in user mode.  A page fault
@@ -25,8 +30,8 @@ technique for implementing:
 %package -n %libname
 Summary: Library for handling page faults in user mode
 Group: System/Libraries
-Provides: %name = %version-%release
-Obsoletes: %name < %version-%release
+Provides: %name = %EVR
+Obsoletes: %name < %version
 
 %description -n %libname
 This is a library for handling page faults in user mode.  A page fault
@@ -42,18 +47,21 @@ technique for implementing:
 %package devel
 Summary: GNU libsigsegv development library and header files
 Group: Development/C
-Requires: %libname = %version-%release
+Requires: %libname = %EVR
+Obsoletes: libsigsegv0-devel < %version
 
 %description devel
 The development library and header files for building applications
 with GNU libsigsegv.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n %srcname
+# Build scripts expect to find the version in this file.
+echo -n %version > .tarball-version
 
 %build
-%autoreconf
-%configure --enable-shared --disable-static
+GNULIB_TOOL=gnulib-tool sh -x ./autogen.sh
+%configure --disable-silent-rules --enable-shared --disable-static
 %make_build
 
 %install
@@ -61,6 +69,9 @@ with GNU libsigsegv.
 
 %check
 %make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files -n %libname
 %_libdir/*.so.*
@@ -71,6 +82,10 @@ with GNU libsigsegv.
 %_includedir/*
 
 %changelog
+* Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 2.12.0.11.f2e3-alt1
+- v2.10 -> v2.12-11-gf2e3824.
+- Enabled LFS on 32-bit systems.
+
 * Wed Sep 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10-alt1
 - Version 2.10
 
@@ -122,4 +137,3 @@ with GNU libsigsegv.
 
 * Sat Oct 19 2002 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 2.0.1-alt1csv20021019
 - First ALT Linux release.
-
