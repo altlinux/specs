@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.1.1.0
+Version: 4.1.2.0
 Release: alt1
 
 Summary: A boulderdash like game
@@ -17,7 +17,8 @@ Source12: %name.48.png
 Requires: %name-data = %version-%release
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libsmpeg-devel
+BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel
+BuildRequires: zlib-devel libsmpeg-devel
 
 %description
 Arcade style game for Unix, DOS and Windows.
@@ -53,7 +54,7 @@ This package contains levels for Rocks'N'Diamonds
 
 %build
 %define _pkgdatadir %_gamesdatadir/%name
-%make_build sdl OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
+%make_build sdl2 OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
 
 %install
 install -pD -m755 %name %buildroot%_gamesbindir/%name
@@ -63,7 +64,6 @@ install -pD -m644 %SOURCE2 %buildroot%_mandir/man1/%name.1
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_pkgdatadir
-##cp -a graphics levels scores sounds music  %buildroot%_pkgdatadir
 cp -a docs graphics levels sounds music  %buildroot%_pkgdatadir
 
 install -m644 %SOURCE10 -D %buildroot/%_miconsdir/%name.png
@@ -81,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Tue Mar 05 2019 Grigory Ustinov <grenka@altlinux.org> 4.1.2.0-alt1
+- Build new version.
+
 * Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 4.1.1.0-alt1
 - Build new version.
 
