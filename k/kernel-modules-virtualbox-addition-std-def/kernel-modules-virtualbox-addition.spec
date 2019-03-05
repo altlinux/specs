@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  5.2.26
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
 %define karch %ix86 x86_64
@@ -57,8 +57,23 @@ ExclusiveArch: %karch
 # %%endif
 
 %description
-This package contains VirtualBox addition modules (vboxguest, vboxsf, vboxvideo)
+This package contains VirtualBox addition modules (vboxguest, vboxsf)
 that are needed for additonal guests support for VirtualBox.
+
+%package -n kernel-modules-%module_name-video-%flavour
+Summary: VirtualBox video modules
+Version: %module_version
+Release: %module_release.%kcode.%kbuildrelease
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+License: GPL
+Group: System/Kernel and hardware
+%description -n kernel-modules-%module_name-video-%flavour
+This package contains VirtualBox addition vboxvideo module
+that are needed for additonal guests support for VirtualBox.
+You can also use vboxvideo module from staging subpackage of
+your kernel.
+
+
 
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
@@ -98,6 +113,10 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %files
 %defattr(644,root,root,755)
 %module_dir
+%exclude %module_dir/vboxvideo.ko
+
+%files -n kernel-modules-%module_name-video-%flavour
+%exclude %module_dir/vboxvideo.ko
 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
