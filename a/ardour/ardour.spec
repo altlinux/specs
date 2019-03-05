@@ -4,7 +4,7 @@
 
 Name:    ardour
 Version: 5.12
-Release: alt1
+Release: alt1.1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -24,7 +24,7 @@ BuildRequires: gcc-c++
 BuildRequires: graphviz
 BuildRequires: libalsa-devel
 BuildRequires: libarchive-devel
-BuildRequires: libaubio-devel >= 0.3.2
+BuildRequires: pkgconfig(aubio) > 0.4
 BuildRequires: libcurl-devel >= 7.0.0
 BuildRequires: libcwiid-devel
 BuildRequires: libfftw3-devel
@@ -125,6 +125,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_iconsdir/ardour3.png
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.12-alt1.1
+- NMU: rebuild with libaubio5
+
 * Mon Sep 17 2018 Grigory Ustinov <grenka@altlinux.org> 5.12-alt1
 - Build new version.
 

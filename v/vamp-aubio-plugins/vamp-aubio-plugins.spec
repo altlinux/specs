@@ -1,6 +1,6 @@
 Name: vamp-aubio-plugins
 Version: 0.5.1
-Release: alt2
+Release: alt3
 Summary: A set of Vamp plugins
 License: GPLv2
 Group: Sound
@@ -10,7 +10,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-make 
-BuildPreReq: libvamp-devel libaubio5-devel gcc-c++ waf >= 1.9.12
+BuildRequires: libvamp-devel gcc-c++ waf >= 1.9.12
+BuildRequires: pkgconfig(aubio) > 0.4
 ExclusiveArch: %ix86 x86_64
 
 %description
@@ -41,6 +42,9 @@ waf install --destdir=%buildroot
 %_libdir/vamp
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3
+- NMU: prepared for libaubio-devel update
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 0.5.1-alt2
 - rebuilt with libaubio5
 - build only for x86
