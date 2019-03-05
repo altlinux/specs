@@ -1,11 +1,11 @@
 %def_with python
 %def_with python3
-%def_without ruby
+%def_with ruby
 %def_without doc
 
 Name: xapian-bindings
 Version: 1.4.5
-Release: alt2.qa1
+Release: alt3
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -137,6 +137,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Tue Mar 05 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.5-alt3
+- Enable building of ruby module
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.5-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
