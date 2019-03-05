@@ -13,7 +13,7 @@
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.19.1
+Version: 3.20.1
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -242,7 +242,12 @@ make DESTDIR=%buildroot sbindir=/sbin sysconfdir=%_sysconfdir/%name \
   mandir=%_mandir prefix=%prefix install
 
 install -m755 -D -p altlinux/%name.init %buildroot%_initdir/%name
-install -m640 -D -p altlinux/%name.conf %buildroot%_sysconfdir/%name/%name.conf
+
+#install -m640 -D -p altlinux/%name.conf %buildroot%_sysconfdir/%name/%name.conf
+mkdir -p %buildroot%_sysconfdir/%name
+VER=`echo %version | sed "s/^\([0-9]\+\.[0-9]\+\).*/\1/"`
+sed "s/@ver@/$VER/" < altlinux/%name.conf > %buildroot%_sysconfdir/%name/%name.conf
+
 install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 install -m644 -D -p altlinux/%name.service %buildroot%_unitdir/%name.service
 rm -f %buildroot%_unitdir/%{name}@.service
@@ -426,6 +431,9 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Tue Mar 05 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt1
+- 3.20.1
+
 * Sat Mar 02 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.19.1-alt1
 - 3.19.1
 - updated URL
