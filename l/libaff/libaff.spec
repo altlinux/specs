@@ -1,5 +1,5 @@
 Name: libaff
-Version: 3.7.17
+Version: 3.7.18
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
@@ -107,6 +107,9 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 05 2019 Vitaly Lipatov <lav@altlinux.ru> 3.7.18-alt1
+- new version 3.7.18 (with rpmrb script)
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 3.7.17-alt1
 - new version 3.7.17 (with rpmrb script)
 
