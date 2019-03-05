@@ -1,48 +1,48 @@
-%define php5_extension smbclient
-%define pecl_name smbclient
+%define php7_extension smbclient
+%define pecl7_name smbclient
 
-Name: pecl-%pecl_name
+Name: pecl-%pecl7_name
 Version: 0.9.0
-Release: alt1.%php5_version.%php5_release
+Release: alt1.%php7_version.%php7_release
 
 Summary: A PHP wrapper for libsmbclient
 
 License: New BSD License
 Group: Development/Other
-Url: http://pecl.php.net/package/%pecl_name
+Url: http://pecl.php.net/package/%pecl7_name
 
-Source: http://pecl.php.net/get/%pecl_name-%version.tar
+Source: http://pecl.php.net/get/%pecl7_name-%version.tar
 
-BuildRequires:php5-devel libsmbclient-devel
+BuildRequires:php7-devel libsmbclient-devel
 
-BuildRequires(Pre): rpm-build-pecl
+BuildRequires(Pre): rpm-build-pecl-php7
 
 %description
 smbclient is a PHP extension that uses Samba's libsmbclient library to provide
 Samba related functions and 'smb' streams to PHP programs.
 
 %prep
-%setup -n %pecl_name-%version
+%setup -n %pecl7_name-%version
 
 %build
-cd %pecl_name-%version
+cd %pecl7_name-%version
 phpize
-%pecl_configure '--with-smbclient'
+%pecl7_configure '--with-smbclient'
 %make_build
 
 %install
-%pecl_install
+%pecl7_install
 mkdir -p %buildroot%_docdir/%name-%version/
 
 %post
-%php5_extension_postin
+%php7_extension_postin
 
 %preun
-%php5_extension_preun
+%php7_extension_preun
 
 %files
-%pecl_files
+%pecl7_files
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Rebuild with php5-%php5_version-%php5_release
+- Rebuild with php7-%php7_version-%php7_release
