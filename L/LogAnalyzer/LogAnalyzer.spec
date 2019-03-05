@@ -3,7 +3,7 @@
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
 Version: 4.1.7
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Monitoring
 Url: http://loganalyzer.adiscon.com/
@@ -31,20 +31,6 @@ Requires: %name-php
 Requires: apache2-httpd-prefork-like php-engine
 
 %description apache2
-%summary
-
-%package php5
-Group: Networking/WWW
-BuildArch: noarch
-Summary: php5 virtual package for %name
-Provides: %name-php
-Requires: %name = %version-%release
-Requires: php5-mysqli 
-Requires: php5-ldap php5-pdo php5-mbstring
-Requires: php5-gd2
-#Requires: php5-jpgraph
-
-%description php5
 %summary
 
 %package php7
@@ -95,10 +81,12 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
-%files php5
 %files php7
 
 %changelog
+* Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 4.1.7-alt2
+- drop php5 package
+
 * Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 4.1.7-alt1
 - 4.1.7
 
