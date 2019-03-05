@@ -16,7 +16,7 @@
 
 Name: %base_name-client
 Version: %version
-Release: alt1%{?cvsbuild:.cvs%cvsbuild}.qa5
+Release: alt2
 Summary: Client for connecting to crossfire servers
 Summary(ru_RU.UTF-8): Клиент для подключения к серверам crossfire
 License: GPL
@@ -155,6 +155,7 @@ Sound effects for people who want sounds with their game.
 # -a 4
 %patch0 -p2
 %patch1 -p2
+cp -av /usr/share/gnu-config/* utils/
 
 %build
 CFLAGS="${CFLAGS:-%optflags}" ./configure \
@@ -280,6 +281,9 @@ install -m755 gtk-v2/src/gcfclient2 %buildroot%_gamesbindir
 
 
 %changelog
+* Tue Mar 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.11.0-alt2
+- fixed build on arm
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa5
 - Rebuilt with libpng15
 
