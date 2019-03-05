@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.component
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 4.5
-Release: alt2
+Release: alt3
 
 Summary: Zope Component Architecture
 License: ZPLv2.1
@@ -120,6 +120,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
+%if_with check
 %check
 export PYTHONPATH=src
 zope-testrunner --test-path=src -vv
@@ -127,6 +128,7 @@ zope-testrunner --test-path=src -vv
 pushd ../python3
 zope-testrunner3 --test-path=src -vv
 popd
+%endif
 
 %files
 %doc *.txt
@@ -149,6 +151,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Mar 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt3
+- check disabled for build in p8
+
 * Fri Mar 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt2
 - requires fixed
 
