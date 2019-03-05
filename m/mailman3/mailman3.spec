@@ -2,7 +2,7 @@
 
 Name: mailman3
 Version: 3.2.0
-Release: alt2
+Release: alt3
 
 Summary: Managing electronic mail discussion and e-newsletter lists.
 License: GPLv3
@@ -19,8 +19,8 @@ Source5: %name-digests.service
 Source6: %name-digests.timer
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
 BuildRequires: python3-module-aiosmtpd
 BuildRequires: python3-module-alembic
 BuildRequires: python3-module-atpublic
@@ -53,11 +53,26 @@ Group: Development/Python3
 BuildArch: noarch
 %add_python3_req_skip flufl lazr
 
+Requires: python3-module-alembic
 Requires: python3-module-atpublic
 Requires: python3-module-editor
 Requires: python3-module-nose
+Requires: python3-module-aiosmtpd
+Requires: python3-module-alembic
+Requires: python3-module-atpublic
+Requires: python3-module-click
+Requires: python3-module-dns >= 1.14.0
+Requires: python3-module-falcon >= 1.0.0
+Requires: python3-module-flufl.bounce
+Requires: python3-module-flufl.i18n >= 2.0.1
+Requires: python3-module-flufl.lock >= 3.1
+Requires: python3-module-passlib >= 1.6.0
+Requires: python3-module-SQLAlchemy >= 1.0.9
+Requires: python3-module-requests
 
-%py3_requires flufl.bounce flufl.i18n flufl.lock lazr.config
+%py3_requires lazr.config zope.interface requests zope.hookable
+%py3_requires zope.component zope.configuration zope.event
+%py3_requires zope.deprecation zope.deferredimport
 
 %description -n python3-module-%name
 This is GNU Mailman, a mailing list management system distributed under the
@@ -143,6 +158,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Tue Mar 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt3
+- Requires fixed
+
 * Fri Feb 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt2
 - Broken reqs for p8 branch fixed
 
