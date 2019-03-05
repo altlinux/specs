@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 1.12.2
-Release: alt1
+Release: alt2
 
 Summary: Generic programming library for generalised deriving.
 
@@ -18,7 +18,6 @@ Url: https://hackage.haskell.org/package/generic-deriving
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 Source: %name-%version.tar
-ExclusiveArch: %ix86 x86_64
 
 BuildRequires: ghc7.6.1-th-abstraction
 
@@ -39,5 +38,8 @@ Generic programming library for generalised deriving.
 %files -f %name-files.all
 
 %changelog
+* Tue Mar 05 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.12.2-alt2
+- is not ExclusiveArch
+
 * Wed Oct 31 2018 Grigory Ustinov <grenka@altlinux.org> 1.12.2-alt1
 - Initial build for Sisyphus.
