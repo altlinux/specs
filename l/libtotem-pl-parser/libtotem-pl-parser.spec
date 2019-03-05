@@ -9,7 +9,7 @@
 %def_enable quvi
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
@@ -117,6 +117,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Tue Mar 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
+- 3.26.3
+
 * Wed Jan 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 
