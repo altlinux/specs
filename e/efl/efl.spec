@@ -37,7 +37,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -51,6 +51,8 @@ Source: %name-%version.tar
 %endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
 Patch1: efl-1.19.1-luajitfix.patch
+#fc
+Patch2: efl-1.21.1-fc-khrplatform.patch
 
 # to skip libreoffice dependency for evas_generic_loaders
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
@@ -229,6 +231,8 @@ developing applications that use Elementary libraries.
 %setup -n %name-%version%beta
 %patch -p1
 %patch1 -p1
+%patch2 -p1 -b .khrplatform
+
 # fix path to soffice.bin
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
 
@@ -455,6 +459,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Mar 05 2019 Yuri N. Sedunov <aris@altlinux.org> 1.21.1-alt3
+- fixed FTBFS on 32-bit architectures (ALT #36233)
+
 * Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.21.1-alt2
 - rebuilt against libraw.so.19
 
