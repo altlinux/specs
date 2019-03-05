@@ -2,7 +2,7 @@
 
 Name: openssl1.1
 Version: 1.1.0j
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -23,6 +23,7 @@ Patch03: openssl-alt-config.patch
 Patch04: openssl-alt-engines-path.patch
 # Current /etc/openssl/cipher-list.conf (from libssl10) breaks IDEA tests
 Patch05: openssl-alt-disable-idea-test.patch
+Patch06: openssl-add-gost-ids.patch
 
 # Patches from Fedora
 # Build changes
@@ -222,6 +223,7 @@ on the command line.
 %patch03 -p1
 %patch04 -p1
 %patch05 -p1
+%patch06 -p1
 
 %patch101 -p1
 # %%patch102 -p1 (different config)
@@ -303,6 +305,7 @@ fi
 	%optflags \
 #
 
+make generate_crypto_objects
 %make_build
 
 # Make soname symlinks.
@@ -463,6 +466,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
 %endif
 
 %changelog
+* Mon Mar 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0j-alt2
+- Backport new gost algorithm identificators from upstream.
+
 * Tue Nov 20 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0j-alt1
 - Updated to v1.1.0j.
 
