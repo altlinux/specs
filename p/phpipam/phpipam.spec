@@ -1,7 +1,7 @@
 
 Name: phpipam
-Version: 1.32.000
-Release: alt1%ubt
+Version: 1.32.003
+Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -14,11 +14,16 @@ Source11: %name-apache.conf
 
 # Patch: %name-%version-%release.patch
 
+Provides: %name-php = %EVR
+Provides: %name-php7 = %EVR
+Obsoletes: %name-php7 < %EVR
+Conflicts: %name-php5
 BuildArch: noarch
-PreReq: webserver-common
+Requires: webserver-common
+Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-pcntl php7-mbstring php7-mcrypt php7-snmp php7-gd2 pear-core
 
-BuildRequires(pre): rpm-build-ubt
-BuildPreReq: rpm-macros-webserver-common rpm-macros-apache2
+BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2
+
 
 %description
 phpipam is an open-source web IP address management application. Its goal is to provide light and simple IP address management application.
@@ -50,32 +55,9 @@ Group: Networking/WWW
 BuildArch: noarch
 Summary: apache2 configs for %name
 Requires: %name = %version-%release
-Requires: %name-php
 Requires: apache2-httpd-prefork-like php-engine
 
 %description apache2
-%summary
-
-%package php5
-Group: Networking/WWW
-BuildArch: noarch
-Summary: php5 virtual package for %name
-Provides: %name-php
-Requires: %name = %version-%release
-Requires: php5-gmp php5-ldap php5-sockets php5-openssl php5-pdo php5-pdo_mysql php5-pcntl php5-mbstring php5-mcrypt php5-snmp php5-gd2 pear-core
-
-%description php5
-%summary
-
-%package php7
-Group: Networking/WWW
-BuildArch: noarch
-Summary: php7 virtual package  for %name
-Provides: %name-php
-Requires: %name = %version-%release
-Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-pcntl php7-mbstring php7-mcrypt php7-snmp php7-gd2 pear-core
-
-%description php7
 %summary
 
 %prep
@@ -121,17 +103,18 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
-%files php5
-%files php7
-
 %changelog
-* Fri Jul 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1.32.000-alt1%ubt
+* Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.32.003-alt1
+- 1.32 rev003
+- drop php5 and php7 packages
+
+* Fri Jul 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1.32.000-alt1
 - 1.3.2 release
 
-* Fri Dec 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.31.000-alt1%ubt
+* Fri Dec 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.31.000-alt1
 - 1.3.1 release
 
-* Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt1%ubt
+* Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt1
 - 1.3 release
 
 * Wed May 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.6
