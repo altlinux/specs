@@ -25,7 +25,7 @@
 %endif
 
 Name: %{_name}2
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -42,7 +42,7 @@ Source1: %name.control
 
 Obsoletes: %_name
 
-%define glib_ver 2.31.13
+%define glib_ver 2.50
 %define gi_ver 1.30.0
 %define polkit_ver 0.101
 %define udev_ver 165
@@ -66,12 +66,12 @@ Requires: libblockdev-mdraid
 Requires: libblockdev-part
 Requires: libblockdev-swap
 
-BuildRequires: intltool gtk-doc gnome-common
+BuildRequires: gtk-doc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
-BuildRequires: libsystemd-devel libmount-devel >= %libmount_ver
+BuildRequires: pkgconfig(systemd) libmount-devel >= %libmount_ver
 BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
 BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
 BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
@@ -259,8 +259,8 @@ fi
 %dir %_libdir/%name
 %dir %_libdir/%name/modules
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.policy
+%_datadir/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
-%_sysconfdir/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %_datadir/bash-completion/completions/udisksctl
 %_man1dir/*
 %_man5dir/%name.conf.5.*
@@ -338,6 +338,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Tue Mar 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
 * Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 
