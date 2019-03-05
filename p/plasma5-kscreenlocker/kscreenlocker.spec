@@ -6,9 +6,9 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.14.4
-Release: alt2
-Epoch: 1
+Version: 5.12.8
+Release: alt1
+Epoch: 2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -123,6 +123,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 2:5.12.8-alt1
+- new version
+
 * Tue Feb 05 2019 Andrey Bychkov <mrdrew@altlinux.ru> 1:5.14.4-alt2
 - lock screen focus on x11 platform fixed
 
