@@ -27,13 +27,13 @@
 %def_enable sensors
 %def_enable snmp
 %def_enable tokyotyrant
-%def_enable xmms
+%def_disable xmms
 
 %def_disable static
 
 Name: collectd
 Version: 5.8.1
-Release: alt3.1
+Release: alt4
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -816,6 +816,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Mar 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.1-alt4
+- rebuilt without x11amp plugin
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 5.8.1-alt3.1
 - rebuild with new perl 5.28.1
 
