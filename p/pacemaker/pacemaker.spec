@@ -1,6 +1,6 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -15,9 +15,10 @@ Requires: resource-agents
 Requires: lib%name = %version-%release
 Requires: %name-cli = %version-%release
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 BuildRequires: glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-devel libdbus-devel  perl(Pod/Text.pm)
-BuildRequires: python-devel gcc-c++ bzlib-devel libpam-devel
+BuildRequires: python3-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: help2man xsltproc
@@ -65,6 +66,7 @@ be part of the cluster.
 License: GPLv2+ and LGPLv2+
 Summary: Core Pacemaker libraries
 Group: System/Servers
+Requires: %name-schemas = %version-%release
 
 %description -n lib%name
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -131,6 +133,18 @@ Documentation for Pacemaker.
 Pacemaker is an advanced, scalable High-Availability cluster resource
 manager for Linux-HA (Heartbeat) and/or Corosync.
 
+%package schemas
+License: GPLv2+
+Summary: Schemas and upgrade stylesheets for Pacemaker
+Group: System/Servers
+BuildArch: noarch
+
+%description   schemas
+Schemas and upgrade stylesheets for Pacemaker
+
+Pacemaker is an advanced, scalable High-Availability cluster resource
+manager.
+
 %prep
 %setup
 %patch -p1
@@ -138,21 +152,22 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
 %build
 %autoreconf
 %configure \
-	--disable-fatal-warnings \
-        --disable-static	\
-        --with-profiling	\
-        --with-gcov		\
-        --with-acl		\
-        --with-ais		\
-        --with-corosync		\
-        --with-cs-quorum	\
+	PYTHON=/usr/bin/python3 \
+	--disable-fatal-warnings	\
+	--disable-static	\
+	--with-profiling	\
+	--with-gcov		\
+	--with-acl		\
+	--with-ais		\
+	--with-corosync		\
+	--with-cs-quorum	\
 	--with-stonithd		\
-        --enable-thread-safe	\
-        --with-initdir=%_initdir	\
-        --enable-systemd	\
-        --disable-upstart	\
-        --localstatedir=%_var	\
-        --with-version=%version-%release
+	--enable-thread-safe	\
+	--with-initdir=%_initdir	\
+	--enable-systemd	\
+	--disable-upstart	\
+	--localstatedir=%_var	\
+	--with-version=%version-%release
 
 subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefile
 
@@ -265,6 +280,8 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 %_datadir/pacemaker
 %_datadir/snmp/mibs/PCMK-MIB.txt
+%exclude %{_datadir}/pacemaker/*.rng
+%exclude %{_datadir}/pacemaker/*.xsl
 %exclude %_datadir/pacemaker/tests
 %exclude %_datadir/pacemaker/alerts
 
@@ -304,7 +321,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %doc %_docdir/%name
 
 %files cts
-%python_sitelibdir_noarch/cts
+%python3_sitelibdir_noarch/cts
 %_datadir/pacemaker/tests
 %_libexecdir/pacemaker/cts-log-watcher
 %_libexecdir/pacemaker/cts-support
@@ -312,9 +329,18 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %files -n lib%name-devel
 %_includedir/pacemaker
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
+
+%files schemas
+%_datadir/pacemaker/*.rng
+%_datadir/pacemaker/*.xsl
 
 %changelog
+* Wed Mar 06 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt1
+- New version.
+- build with python3
+- move schemas to sepatated package
+
 * Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
