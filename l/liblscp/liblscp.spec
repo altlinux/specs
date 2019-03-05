@@ -1,49 +1,83 @@
-Version: 0.3.1
-Release: alt1.qa2
-Name: liblscp
-Summary: LinuxSampler control protocol API
-License: LGPL
-Group: Sound
-Url: http://www.linuxsampler.org/
-Source: %name-%version.tar.gz
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/doxygen
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name liblscp
+%define major   6
+%define libname lib%{oname}%{major}
+%define develname lib%{oname}-devel
+%define old_libname lib%{name}%{major}
+%define oname   lscp
 
-# Automatically added by buildreq on Sat Nov 05 2005
-BuildRequires: doxygen gcc-c++ libstdc++-devel
-
-%package devel
-Summary: Include files for developing apps which will use %name
-Group: Development/C++
-Requires: %name = %version-%release
+Name:          liblscp
+Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
+Version:       0.5.8
+Release:       alt1_2
+License:       GPLv2
+Group:         System/Libraries
+URL:           http://www.linuxsampler.org/
+Source0:       http://download.linuxsampler.org/packages/liblscp-%{version}.tar.gz
+Source44: import.info
 
 %description
-liblscp is an implementation of the LinuxSampler control protocol,
-proposed as a C language API.
+LinuxSampler Control Protocol (LSCP) wrapper library
 
-This package is required to use qsampler, GUI frontend to LinuxSampler.
+#--------------------------------------------------------------------
 
-%description devel
-This package contains development files needed to develop programs that
-use the %name library.
+%package -n     %libname
+Group:          System/Libraries
+Summary:        Libraries for %name
+Provides:       %name = %version-%release
+Obsoletes:      %old_libname <= %version-%release
+
+%description -n %libname 
+LinuxSampler Control Protocol (LSCP) wrapper library
+
+%files -n %libname
+%_libdir/liblscp.so.%{major}*
+
+#--------------------------------------------------------------------
+
+%package -n     %develname
+Group:          Development/Other
+Summary:        Libraries for %name
+Requires:       %libname = %{version}-%{release}
+Provides:       %{name}-devel = %{version}-%{release}
+Obsoletes:      %old_libname-devel <= %{version}-%{release}
+Obsoletes:      %{_lib}%{oname}5-devel < %{version}-%{release}
+
+%description -n %develname
+Development libraries from %oname
+
+%files -n %develname
+%doc COPYING
+%dir %_includedir/lscp
+%_includedir/lscp/*.h
+%_libdir/liblscp.a
+%_libdir/liblscp.so
+%_libdir/pkgconfig/lscp.pc
+
+#--------------------------------------------------------------------
 
 %prep
 %setup -q
 
 %build
+[[ -f Makefile.svn ]] && make -f Makefile.svn
 %configure
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+find %{buildroot} -name "*.la" -delete
 
-%files
-%_libdir/*.so*
-%doc ChangeLog AUTHORS README TODO
-
-%files devel
-%_libdir/pkgconfig/lscp.pc
-%_includedir/*
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_2
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
