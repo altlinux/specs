@@ -1,6 +1,6 @@
 %def_without debug
 %def_with libs
-%def_with devel
+%def_without devel
 %def_without server
 %def_without client
 %def_disable static
@@ -10,7 +10,7 @@
 
 Name: MySQL5.7
 Version: 5.7.24
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -84,18 +84,16 @@ Group: System/Libraries
 Provides: libMySQL = %version
 Obsoletes: libMySQL < %version
 
+%if_with devel
 %package -n libmysqlclient%soname-devel
 Summary: Development header files and libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
 Group: Development/C
 Requires: libmysqlclient%soname = %version-%release
-Provides: MySQL-devel = %version mysql-devel = %version
 Obsoletes: MySQL-devel < %version mysql-devel < %version
-Provides: libMySQL-devel = %version
 Obsoletes: libMySQL-devel < %version
 Conflicts: libmariadb-devel
-Provides: libmysqlclient-devel = %EVR
 
 %package -n libmysqlclient%soname-devel-static
 Summary: Development static libraries for MySQL
@@ -106,6 +104,7 @@ Requires: libmysqlclient%soname-devel = %EVR
 Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
 Conflicts: libmariadb-devel-static
+%endif
 
 %if_with client
 %package client
@@ -239,6 +238,7 @@ languages and applications need to dynamically load and use MySQL.
 требуемые для работы большинства клиентских приложений, взаимодействующих
 с СУБД MySQL.
 
+%if_with devel
 %description -n libmysqlclient%soname-devel
 This package contains the development header files and libraries
 necessary to develop MySQL client applications.
@@ -264,6 +264,7 @@ necessary to develop MySQL client applications.
 взаимодействующих с SQL-сервером MySQL.
 
 %see_base_ru
+%endif
 
 %if_with client
 %description client
@@ -527,6 +528,15 @@ rm -rf %buildroot%_docdir/MySQL-%version
 rm -f %buildroot%_docdir/MySQL-%version/README*
 %endif
 
+%if_without devel
+rm -f %buildroot%_bindir/mysql_config
+rm -f %buildroot%_libdir/libmysqlclient.so
+rm -f %buildroot%_includedir/mysql/*.h
+rm -rf %buildroot%_includedir/mysql/mysql
+rm -f %buildroot%_aclocaldir/mysql.m4
+rm -f %buildroot%_pkgconfigdir/mysqlclient.pc
+%endif
+
 %if_with server
 %define get_datadir \
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
@@ -663,13 +673,13 @@ fi
 %_includedir/*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/*.pc
-%endif
 
 %if_enabled static
 %files -n libmysqlclient%soname-devel-static
 %_libdir/*.a
 %_libdir/mysql
 %_pkgconfigdir/*.pc
+%endif
 %endif
 
 %if_with client
@@ -759,6 +769,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 15 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.7.24-alt3
+- quit providing libmysql(client)-devel (so.20)
+
 * Wed Nov 21 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.24-alt2
 - rename to MySQL5.7 and adjust as a provider of libmysqlclient20 only
 
