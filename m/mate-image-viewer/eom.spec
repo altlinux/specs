@@ -1,7 +1,7 @@
 %define rname eom
 
 Name: mate-image-viewer
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Eye of MATE image viewer
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc intltool itstool libdbus-glib-devel libexempi-devel libexif-devel libjpeg-devel liblcms2-devel
+BuildRequires: mate-common gtk-doc libdbus-glib-devel libexempi-devel libexif-devel libjpeg-devel liblcms2-devel
 BuildRequires: libpeas-devel librsvg-devel libxml2-devel mate-desktop-devel yelp-tools
 
 %description
@@ -67,6 +67,9 @@ Development files for eom
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

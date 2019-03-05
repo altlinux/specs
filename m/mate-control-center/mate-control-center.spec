@@ -1,5 +1,5 @@
 Name: mate-control-center
-Version: 1.20.4
+Version: 1.22.0
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop control-center
@@ -14,7 +14,7 @@ Patch: %name-%version-%release.patch
 Provides: %name-filesystem = %version-%release
 Requires: gsettings-desktop-schemas mate-settings-daemon gnome-keyring
 
-BuildRequires: mate-common intltool itstool libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
+BuildRequires: mate-common libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdconf-devel mate-desktop-devel libmatekbd-devel librsvg-devel libxml2-devel mate-menus-devel mate-settings-daemon-devel
 BuildRequires: mate-window-manager-devel yelp-tools desktop-file-utils
 
@@ -74,6 +74,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.4-alt1
 - 1.20.4
 

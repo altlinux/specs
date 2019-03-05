@@ -1,5 +1,5 @@
 Name: mate-backgrounds
-Version: 1.20.0
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop backgrounds
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: mate-common intltool glib2-devel
+BuildRequires: mate-common glib2-devel
 
 %description
 Backgrounds for MATE Desktop
@@ -38,6 +38,9 @@ Backgrounds for MATE Desktop
 %_datadir/backgrounds/mate
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Mar 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 

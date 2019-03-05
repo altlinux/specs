@@ -1,7 +1,7 @@
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
@@ -15,7 +15,7 @@ Requires: mate-control-center mate-polkit mate-desktop polkit
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common intltool libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel xmlto xorg-xtrans-devel
+BuildRequires: mate-common libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel xmlto xorg-xtrans-devel
 
 %description
 This package contains a session that can be started from a display
@@ -65,6 +65,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

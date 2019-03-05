@@ -1,7 +1,7 @@
 %define rname mozo
 
 Name: mate-menu-editor
-Version: 1.20.0
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop menu editor
@@ -14,7 +14,7 @@ Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: mate-common glib2-devel gtk-update-icon-cache intltool python-devel
+BuildRequires: mate-common glib2-devel gtk-update-icon-cache python3-devel
 BuildRequires: pkgconfig(libmate-menu) pkgconfig(pygobject-3.0)
 
 %description
@@ -41,10 +41,16 @@ MATE Desktop menu editor
 %_iconsdir/hicolor/*/apps/%rname.png
 %_datadir/%rname
 %_desktopdir/%rname.desktop
-%python_sitelibdir_noarch/Mozo
+%python3_sitelibdir_noarch/Mozo
 %_man1dir/%rname.1.*
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
+* Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Wed Mar 21 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 

@@ -1,5 +1,5 @@
 Name: mate-media
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE media programs
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool libcanberra-gtk3-devel libmatemixer-devel libxml2-devel mate-desktop-devel
+BuildRequires: mate-common libcanberra-gtk3-devel libmatemixer-devel libxml2-devel mate-desktop-devel
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -45,6 +45,9 @@ including a volume control.
 %_man1dir/*.1*
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

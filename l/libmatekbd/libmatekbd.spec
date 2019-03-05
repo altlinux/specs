@@ -1,5 +1,5 @@
 Name: libmatekbd
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Libraries for mate kbd
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 Requires: iso-codes
 
-BuildRequires: mate-common intltool libICE-devel libgtk+3-gir-devel libxklavier-gir-devel
+BuildRequires: mate-common libICE-devel libgtk+3-gir-devel libxklavier-gir-devel
 
 %description
 Libraries for matekbd
@@ -57,6 +57,9 @@ Development libraries for libmatekbd
 %_datadir/gir-1.0/Matekbd-1.0.gir
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

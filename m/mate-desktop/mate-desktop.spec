@@ -1,5 +1,5 @@
 Name: mate-desktop
-Version: 1.20.4
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Shared code for mate-panel, mate-session, mate-file-manager, etc
@@ -18,7 +18,7 @@ Obsoletes: mate-mime-data mate-mime-data-devel mate-vfs mate-vfs-devel mate-vfs-
 Obsoletes: mate-keyring mate-keyring-pam mate-keyring-devel mate-bluetooth mate-bluetooth-libs mate-bluetooth-devel
 Obsoletes: mate-doc-utils mate-character-map mate-character-map-devel libmatewnck libmatewnck-devel mate-dialogs
 
-BuildRequires: mate-common gtk-doc intltool libXrandr-devel libdconf-devel libgtk+3-gir-devel libstartup-notification-devel
+BuildRequires: mate-common iso-codes-devel gtk-doc libXrandr-devel libdconf-devel libgtk+3-gir-devel libstartup-notification-devel
 
 %description
 The mate-desktop package contains an internal library
@@ -52,7 +52,7 @@ libmatedesktop.
 %configure \
 	--enable-gtk-doc \
 	--disable-schemas-compile \
-	--with-pnp-ids-path=%_datadir/hwdatabase/pnp.ids \
+	--with-pnp-ids-path=%_datadir/misc/pnp.ids \
 	--enable-gtk-doc-html \
 	--enable-introspection \
 	--disable-static
@@ -102,6 +102,9 @@ __EOF__
 %_datadir/gir-1.0/MateDesktop-2.0.gir
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.4-alt1
 - 1.20.4
 

@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.20.3
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: File manager for MATE
@@ -16,7 +16,7 @@ Requires: mate-file-manager-extensions = %epoch:%version-%release mate-file-mana
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc intltool libSM-devel libexempi-devel libexif-devel libgail3-devel libnotify-devel libselinux-devel libxml2-devel mate-desktop-devel
+BuildRequires: mate-common gtk-doc libSM-devel libexempi-devel libexif-devel libgail3-devel libnotify-devel libselinux-devel libxml2-devel mate-desktop-devel
 
 %description
 Caja (mate-file-manager) is the file manager and graphical shell
@@ -77,7 +77,7 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_libdir/%rname
 %_datadir/%rname
 %_datadir/pixmaps/%rname
-%_datadir/appdata/caja.appdata.xml
+%_datadir/metainfo/caja.appdata.xml
 %_datadir/dbus-1/services/org.mate.freedesktop.FileManager1.service
 %_datadir/mime/packages/caja.xml
 %_desktopdir/*.desktop
@@ -99,6 +99,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
 - 1.20.3
 

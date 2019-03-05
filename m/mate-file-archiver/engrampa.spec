@@ -2,7 +2,7 @@
 %define rname engrampa
 
 Name: mate-file-archiver
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop file archiver
@@ -17,7 +17,7 @@ Requires: p7zip zip
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common intltool itstool libSM-devel libjson-glib-devel libmagic-devel mate-file-manager-devel yelp-tools
+BuildRequires: mate-common libSM-devel libjson-glib-devel libmagic-devel mate-file-manager-devel yelp-tools
 
 %description
 Mate File Archiver is an application for creating and viewing archives files,
@@ -57,7 +57,7 @@ Mate-file-manager extension for mount archiver
 %_libexecdir/%rname
 %_libexecdir/%rname-server
 %_datadir/%rname
-%_datadir/appdata/engrampa.appdata.xml
+%_datadir/metainfo/engrampa.appdata.xml
 %_desktopdir/%rname.desktop
 %_datadir/dbus-1/services/org.mate.Engrampa.service
 %_iconsdir/hicolor/*/apps/*
@@ -69,6 +69,9 @@ Mate-file-manager extension for mount archiver
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 
