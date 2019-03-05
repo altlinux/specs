@@ -1,79 +1,68 @@
-#
-# spec file for package libx86emu (Version 1.1)
-#
-# Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
-# Copyright (c) 2008 Steffen Winterfeldt
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
-#
-
-
-ExclusiveArch:  %ix86 x86_64
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define major 2
+%define libname libx86emu%{major}
+%define develname libx86emu-devel
 
 Name:           libx86emu
-License:        BSD 3-Clause
+License:        BSD
 Group:          System/Libraries
-Summary:        A small x86 emulation library.
-Version:        1.1
-Release:        alt1
-Url:            http://download.opensuse.org/source/factory/repo/oss/suse/src/
-Source:         %name-%version.tar
-Packager:       Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
+Summary:        A small x86 emulation library
+Version:        2.1
+Release:        alt1_1
+URL:		https://github.com/wfeldt/libx86emu.git
+Source:         %{name}-%{version}.tar.xz
+Source44: import.info
+# use sys/io outb, outw ...
+ExclusiveArch: %ix86 x86_64
+ 
 %description
 Small x86 emulation library with focus of easy usage and extended
 execution logging functions.
-
-
-
-Authors:
---------
-    Steffen Winterfeldt
-
-%package        devel
+ 
+%package -n     %{libname}
 License:        BSD 3-Clause
-Summary:        A small x86 emulation library.
+Summary:        A small x86 emulation library
 Group:          System/Libraries
-Requires:       %name = %version-%release
-
-%description    devel
+ 
+%description -n %{libname}
 Small x86 emulation library with focus of easy usage and extended
 execution logging functions.
 
-
-
-Authors:
---------
-    Steffen Winterfeldt
-
+%package -n     %{develname}
+License:        BSD
+Summary:        Headers for %{name}
+Group:          System/Libraries
+Provides: 	%{name}-devel = %{version}-%{release}
+Requires:       %{libname} = %{version}
+ 
+%description -n %{develname}
+Devel files for %{name}
+ 
 %prep
-%setup
-
+%setup -q 
+ 
 %build
-%make_build LIBDIR=%_libdir
-
+make LIBDIR=%{_libdir}
+ 
 %install
-install -d -m 755 %buildroot%_libdir
-%makeinstall_std LIBDIR=%_libdir
+install -d -m 755 %{buildroot}%{_libdir}
+make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
 
-%files
-%_libdir/*.so.*
+%files -n %{libname}
+%{_libdir}/%{name}.so.%{major}
+%{_libdir}/%{name}.so.%{major}.*
+ 
+%files -n %{develname}
+%{_libdir}/%{name}.so
+%{_includedir}/x86emu.h
+%doc README.md LICENSE
 
-%files devel
-%_libdir/*.so
-%_includedir/x86emu.h
-%doc README LICENSE
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1
+- new version
+
 * Mon Mar 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 
