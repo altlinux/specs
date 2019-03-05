@@ -7,8 +7,8 @@
 %define libprocessui libprocessui%sover
 
 Name: plasma5-%rname
-Version: 5.12.7
-Release: alt2
+Version: 5.12.8
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -154,6 +154,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
+- new version
+
 * Wed Nov 28 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt2
 - added killBtn column
 

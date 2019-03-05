@@ -1,8 +1,8 @@
 %define rname discover
 
 Name: plasma5-%rname
-Version: 5.12.7
-Release: alt4
+Version: 5.12.8
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Packaging
@@ -111,6 +111,9 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 %_K5xdgapp/org.kde.discover-flatpak.desktop
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
+- new version
+
 * Thu Jan 31 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt4
 - require packagekit
 - require flatpak for flatpak-backend

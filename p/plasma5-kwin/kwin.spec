@@ -14,7 +14,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.12.7
+Version: 5.12.8
 Release: alt1
 %K5init altplace
 
@@ -189,6 +189,9 @@ KF5 library
 
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
+- new version
+
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
 - new version
 
