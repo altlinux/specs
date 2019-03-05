@@ -1,6 +1,6 @@
 
 Name: cacti
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -34,8 +34,10 @@ Provides: cacti-plugin-ssl = %version-%release
 Conflicts: cacti-plugin-ssl < %version-%release
 
 
-Requires: %name-config = %version-%release webserver webserver-common rrd-utils net-snmp net-snmp-utils
-BuildPreReq: rpm-macros-webserver-common
+Requires: webserver webserver-common rrd-utils net-snmp net-snmp-utils
+Requires: php7-snmp php7-sockets php7-pdo php7-pdo_mysql php7-mbstring php7-openssl php7-gd2 php7-gmp
+
+BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
 # build docs
 BuildRequires: lynx docbook-utils
@@ -55,26 +57,6 @@ Cacti - это полнофункциональная оболочка для RR
 Программа полностью написана на PHP. Вместе с возможностью управления
 графиками, источниками данных и архивами round robin Cacti также занимается
 сбором данных.
-
-%package config-php7
-License: GPL
-Group: Monitoring
-Summary: Virtual package for php's depend.
-Requires: php7-snmp php7-sockets php7-pdo php7-pdo_mysql php7-mbstring php7-openssl php7-gd2 php7-gmp
-Provides: %name-config = %version-%release
-
-%description config-php7
-Virtual package for php's depend.
-
-%package config-php5
-License: GPL
-Group: Monitoring
-Summary: Virtual package for php's depend.
-Requires: php5-snmp php5-sockets php5-pdo php5-pdo_mysql php5-mbstring php5-openssl php5-gd2 php5-gmp
-Provides: %name-config = %version-%release
-
-%description config-php5
-Virtual package for php5's depend.
 
 %package setup
 Summary: Cacti setup package
@@ -181,10 +163,11 @@ fi
 %files setup
 %cactidir/install
 
-%files config-php5
-%files config-php7
-
 %changelog
+* Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- drop php5 package, php7 package merge with main
+
 * Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
