@@ -1,7 +1,7 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 4.7.5
+Version: 4.8.0
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
@@ -14,7 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: unpack automatically
 # Source-url: http://dl.winehq.org/wine/wine-mono/%version/wine-mono-%version.msi
-Source: wine-mono-%version.msi
+Source: wine-mono.msi
 
 BuildArch: noarch
 
@@ -24,8 +24,7 @@ Framework. Wine can use a Windows build of Mono to run .NET applications.
 For Wine releases 1.5.3 and later, the Wine Mono package is recommended.
 
 %install
-mkdir -p %buildroot%winemonodir
-install -m 644 %SOURCE0 %buildroot%winemonodir
+install -D -m 644 %SOURCE0 %buildroot%winemonodir/%name-%version.msi
 
 %files
 %dir %_datadir/wine/
@@ -33,6 +32,9 @@ install -m 644 %SOURCE0 %buildroot%winemonodir
 %winemonodir/%name-%version.msi
 
 %changelog
+* Tue Mar 05 2019 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt1
+- new version 4.8.0 (with rpmrb script)
+
 * Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 4.7.5-alt1
 - new version 4.7.5 (with rpmrb script)
 
