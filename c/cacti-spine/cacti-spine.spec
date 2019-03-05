@@ -1,6 +1,6 @@
 
 Name: cacti-spine
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 License: GPL2
@@ -50,6 +50,9 @@ mv %buildroot%_sysconfdir/cacti/{spine.conf.dist,spine.conf}
 %_man1dir/*
 
 %changelog
+* Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Fri Jan 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
