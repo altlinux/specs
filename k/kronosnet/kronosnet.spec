@@ -13,7 +13,7 @@
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
 Version: 1.7
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
 Url: https://github.com/kronosnet/kronosnet/
@@ -179,6 +179,9 @@ meta package to install all of libknet1 plugins
 %setup
 %patch -p1
 
+echo %version > .version
+cp .version .tarball-version
+
 %build
 %autoreconf
 
@@ -301,6 +304,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.7-alt2
+- fixed show version
+
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.7-alt1
 - initial build for ALT
 
