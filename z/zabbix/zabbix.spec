@@ -16,7 +16,7 @@
 
 Name: zabbix
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -152,12 +152,6 @@ Requires: php-engine
 Obsoletes: %name-phpfrontend < 1:1.1.7-alt1
 BuildArch: noarch
 
-%package phpfrontend-php5
-Summary: zabbix web frontend, edition for php5
-Group: Monitoring
-Requires: php5-gd2 php5-mysqli php5-pgsql php5-sockets php5-mbstring php5-dom
-BuildArch: noarch
-
 %package phpfrontend-php7
 Summary: zabbix web frontend, edition for php7
 Group: Monitoring
@@ -168,14 +162,6 @@ BuildArch: noarch
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
 Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache2-base
-BuildArch: noarch
-
-%package phpfrontend-apache2-mod_php5
-Summary: Requirements for the use of apache2-mod_php5
-Group: Monitoring
-Requires: %name-phpfrontend-apache2
-Requires: apache2-httpd-prefork-like
-Requires: apache2-mod_php5
 BuildArch: noarch
 
 %package phpfrontend-apache2-mod_php7
@@ -287,19 +273,12 @@ Sudo entry for zabbix agent.
 %description phpfrontend-apache2
 zabbix's apache2 config files
 
-%description phpfrontend-apache2-mod_php5
-Contains requirements for the use of apache2-mod_php5
-in to zabbix phpfrontend
-
 %description phpfrontend-apache2-mod_php7
 Contains requirements for the use of apache2-mod_php7
 in to zabbix phpfrontend
 
 %description phpfrontend-engine
 a php frontend for zabbix - core
-
-%description phpfrontend-php5
-zabbix web frontend, edition for php5
 
 %description phpfrontend-php7
 zabbix web frontend, edition for php7
@@ -645,14 +624,10 @@ fi
 %webserver_webappsdir/%name
 %doc add_new_language.sh make_mo.sh update_po.sh
 
-%files phpfrontend-php5
-
 %files phpfrontend-php7
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
-
-%files phpfrontend-apache2-mod_php5
 
 %files phpfrontend-apache2-mod_php7
 
@@ -666,6 +641,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Mar 05 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.5-alt2
+- Remove support PHP5
+
 * Tue Feb 26 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.5-alt1
 - 4.0.5
 
