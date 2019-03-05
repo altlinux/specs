@@ -2,7 +2,7 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.1.96
+Version: 1.1.101
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -204,6 +204,14 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/icd.d
 
 %changelog
+* Tue Mar 05 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.101-alt1
+- Updated to SDK 1.1.101:
+  + spirv-tools GIT 5994ae2a0.
+  + spirv-headers GIT 79b6681aa.
+  + vulkan-headers GIT 8e2c4cd55.
+  + vulkan-loader GIT 3d7d8dc83.
+  + vulkan-tools GIT 18ac58d9c.
+
 * Wed Jan 02 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.96-alt1
 - Updated to SDK 1.1.96:
   - headers v1.1.96
