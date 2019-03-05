@@ -2,7 +2,7 @@
 
 Name: glpi
 Version: 9.4.0
-Release: alt1
+Release: alt2
 
 Summary: IT and asset management software
 License: GPLv2
@@ -35,13 +35,6 @@ Group: Networking/Other
 Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
-
-%package php5
-Summary: PHP5 dependencies for %name
-Group: Networking/Other
-Requires: %name = %version-%release, php5-mysqli, php5-ldap, php5-imap, php5-curl, php5-gd2, php5-fileinfo, php5-mbstring, php5-apcu, php5-opcache, php5-xmlrpc
-%description php5
-PHP5 dependencies for %name
 
 %package php7
 Summary: PHP7 dependencies for %name
@@ -129,11 +122,12 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php5
-
 %files php7
 
 %changelog
+* Tue Mar 05 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.0-alt2
+- Deleted glpi-php5
+
 * Thu Feb 28 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.0-alt1
 - New version 9.4.0
 
