@@ -1,14 +1,15 @@
-Name: libstatgrab
+%define oldname libstatgrab
+Name: libstatgrab6
 Version: 0.17
-Release: alt1.1
+Release: alt1.2
 
 Summary: libstatgrab library helps to collect many system infomation
 License: LGPL, GPL
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://www.i-scream.org/libstatgrab/
-Source: %name-%version.tar.gz
-Patch: %name-alt-makefile.patch
+Source: %oldname-%version.tar.gz
+Patch: %oldname-alt-makefile.patch
 Packager: Sergey Zhumatiy <zhum@altlinux.org>
 
 %description
@@ -18,7 +19,7 @@ Such as loadaverage, cpu usage, network usage, memory usage, etc.
 %package tools
 Summary: Console program to check system activity
 Group: Monitoring
-Requires: %name = %version-%release
+Requires: %{name} = %version-%release
 
 %description tools
 Console program to check system activity, using libstatgrab.
@@ -27,31 +28,31 @@ Console program to check system activity, using libstatgrab.
 Summary: Console program to check system activity
 Group: Monitoring
 Requires: libncurses
-Requires: %name = %version-%release
+Requires: %{name} = %version-%release
 BuildRequires: libncurses-devel
 
 %description saidar
 Console program to check system activity, using libstatgrab.
 
 %package devel
-Summary: Headers for %name
+Summary: Headers for %oldname
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %{name} = %version-%release
 
 %description devel
-Headers for building software that uses %name
+Headers for building software that uses %oldname
 %if_enabled static
 %package devel-static
-Summary: Static libraries for %name
+Summary: Static libraries for %oldname
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %{name}-devel = %version-%release
 
 %description devel-static
-Static libs for building statically linked software that uses %name
+Static libs for building statically linked software that uses %oldname
 %endif
 
 %prep
-%setup
+%setup -n %{oldname}-%{version}
 %patch -p1
 
 %build
@@ -68,9 +69,10 @@ make DESTDIR=$RPM_BUILD_ROOT
 %files
 %_libdir/*.so.*
 #%%_libdir/*.la
-%_libdir/%name.a
+#%_libdir/%oldname.a
 %doc AUTHORS README NEWS
 
+%if 0
 %files saidar
 %_bindir/saidar
 %_man1dir/saidar.1*
@@ -90,13 +92,17 @@ make DESTDIR=$RPM_BUILD_ROOT
 %_man3dir/*
 %_libdir/pkgconfig/libstatgrab.pc
 #%%_mandir/*/*
+%endif
 
 #%%if_enabled static
-#%%files -n %name-devel-static
+#%%files -n %oldname-devel-static
 #
 #%%endif
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.2
+- compat library
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1.1
 - Removed bad RPATH
 
