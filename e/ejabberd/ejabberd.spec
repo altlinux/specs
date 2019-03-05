@@ -9,11 +9,10 @@
 %def_enable pam
 %def_enable zlib
 %def_enable riak
-%def_enable iconv
 %def_enable tools
 
 Name: ejabberd
-Version: 18.12.1
+Version: 19.02
 Release: alt1
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
@@ -51,6 +50,7 @@ BuildRequires: erlang-jose
 BuildRequires: erlang-eimp
 BuildRequires: erlang-sd_notify
 BuildRequires: erlang-pkix
+BuildRequires: erlang-mqtree
 %{?_enable_stun:BuildRequires: erlang-stun}
 %{?_enable_sip:BuildRequires: erlang-esip}
 %{?_enable_mysql:BuildRequires: erlang-p1_mysql}
@@ -59,8 +59,7 @@ BuildRequires: erlang-pkix
 %{?_enable_pam:BuildRequires: erlang-epam}
 %{?_enable_zlib:BuildRequires: erlang-ezlib}
 %{?_enable_riak:BuildRequires: erlang-riak_client}
-%{?_enable_iconv:BuildRequires: erlang-iconv}
-%{?_enable_tools:BuildRequires: erlang-luerl erlang-meck}
+%{?_enable_tools:BuildRequires: erlang-luerl}
 
 Requires: erlang
 Requires: jabber-common >= 0.2
@@ -149,7 +148,6 @@ sed -i -e "s|@ERL_LIBS@|%_erllibdir/%name-%version:|g" ejabberdctl.template
 	%{subst_enable pam} \
 	%{subst_enable zlib} \
 	%{subst_enable riak} \
-	%{subst_enable iconv} \
 	%{subst_enable tools}
 
 #--enable-user=ejabberd
@@ -211,6 +209,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Tue Mar 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 19.02-alt1
+- Updated to upstream version 19.02.
+
 * Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 18.12.1-alt1
 - Updated to upstream version 18.12.1.
 
