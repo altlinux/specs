@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.2.8.0
-Release: alt1
+Release: alt2
 
 Summary: Nicer interface for reified information about data types
 
@@ -18,7 +18,6 @@ Url: https://hackage.haskell.org/package/th-abstraction
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 Source: %name-%version.tar
-ExclusiveArch: %ix86 x86_64
 
 BuildRequires: ghc7.6.1
 
@@ -42,5 +41,8 @@ Template Haskell.
 %files -f %name-files.all
 
 %changelog
+* Tue Mar 05 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.2.8.0-alt2
+- make not ExclusiveArch
+
 * Wed Oct 31 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.8.0-alt1
 - Initial build for Sisyphus.
