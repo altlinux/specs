@@ -9,7 +9,7 @@
 
 Name: libredland
 Version: 1.0.17
-Release: alt2
+Release: alt3
 
 Summary: Redland - a library that provides a high-level interface for RDF
 
@@ -22,6 +22,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://download.librdf.org/source/%oname-%version.tar.bz2
 Patch: %oname-link.patch
 Patch1: %oname-sqlite.patch
+Patch2: %oname-mysql8.patch
 
 # Automatically added by buildreq on Thu Sep 01 2011 (-bi)
 # optimized out: elfutils libpq-devel pkg-config raptor2-devel
@@ -65,8 +66,8 @@ Requires: %name = %version-%release
 Python bindings for Redland RDF library
 
 %prep
-%setup -q -n %oname-%version
-#patch1 -p2
+%setup -n %oname-%version
+%patch2 -p2
 
 #autoreconf
 NOCONFIGURE=1 ./autogen.sh
@@ -115,6 +116,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_gtkdocdir/redland/
 
 %changelog
+* Wed Mar 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt3
+- fix build with MySQL 8.x
+
 * Thu Mar 27 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.17-alt2
 - clean build requires
 
