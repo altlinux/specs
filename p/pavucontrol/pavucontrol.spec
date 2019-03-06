@@ -1,6 +1,6 @@
 Name: pavucontrol
-Version: 3.0
-Release: alt4
+Version: 4.0
+Release: alt1
 
 Summary: PulseAudio Volume Control
 Group: Sound
@@ -41,6 +41,9 @@ the volume of hardware devices and of each playback stream seperately.
 %doc README doc/README.html doc/style.css
 
 %changelog
+* Wed Mar 06 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0-alt1
+- 4.0 released
+
 * Wed Nov 07 2018 Ivan Razzhivin <underwit@altlinux.org> 3.0-alt4
 - fix jumps of the scale widget
 
