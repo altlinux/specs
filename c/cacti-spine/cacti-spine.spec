@@ -1,7 +1,7 @@
 
 Name: cacti-spine
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 License: GPL2
 Group: Monitoring
@@ -12,6 +12,7 @@ Summary(ru_RU.UTF8): Быстрый сборщик данных для Cacti, н
 URL: http://www.cacti.net
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-1.2.0-alt-mysql8-transition.patch
 
 Obsoletes: cacti-cactid
 Provides: cacti-cactid = %version-%release
@@ -32,6 +33,7 @@ pthreads для достижения высокой производительн
 %prep
 %setup -q
 %patch -p1
+%patch1 -p0
 
 %build
 %autoreconf
@@ -50,6 +52,9 @@ mv %buildroot%_sysconfdir/cacti/{spine.conf.dist,spine.conf}
 %_man1dir/*
 
 %changelog
+* Wed Mar 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.2.2-alt2
+- fix FTBFS against libmysqlclient21
+
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
