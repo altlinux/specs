@@ -1,17 +1,18 @@
+Group: Graphical desktop/Window Maker
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: wmvolman
 Version: 2.0.1
-Release: alt2_9
+Release: alt2_12
 
 Summary: Window Maker Volume Manager
 License: GPLv2+
-Group: Graphical desktop/Window Maker
 
 Url: http://github.com/raorn/%{name}
 Source: %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: autoconf-common automake glib2-devel libgio libgio-devel libudisks2-devel libudisks2-gir-devel libdockapp-devel libX11-devel
+BuildRequires:  gcc
+BuildRequires: autoconf automake glib2-devel libgio libgio-devel libudisks2-devel libudisks2-gir-devel libdockapp-devel libX11-devel
 Source44: import.info
 
 %description
@@ -37,6 +38,9 @@ autoreconf -fisv
 %{_datadir}/wmvolman
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_12
+- rebuild with new libdockapp
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_9
 - update to new release by fcimport
 
