@@ -1,72 +1,83 @@
-Name: libosip2
-Summary: The GNU oSIP library
-Version: 4.1.0
-Release: alt1
-License: LGPL
-Group: System/Libraries
-Url: http://www.gnu.org/software/osip/osip.html
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define major 12
+%define libname libosip2_%{major}
+%define libname_devel libosip2-devel
 
-# git://git.savannah.gnu.org/osip.git
-Source0: %name-%version.tar
-BuildRequires: OpenSP docbook-dtds docbook-to-man
+Summary:	Impleimentation of SIP - rfc3261
+Name:		libosip2
+Version: 	5.0.0
+Release: 	alt1_3
+License: 	LGPLv2+
+Group:		System/Libraries
+URL: 		http://savannah.gnu.org/projects/osip/
+Source0:	http://ftp.gnu.org/gnu/osip/%{name}-%{version}.tar.gz
+Patch0:		1ae06daf3b2375c34af23083394a6f010be24a45.patch
+Source44: import.info
 
 %description
-This is "the GNU oSIP library". It has been designed to provide
-the Internet Community a simple way to support the Session Initiation
+This is the oSIP library. It has been designed to provide the
+Internet Community a simple way to support the Session Initiation
 Protocol. SIP is described in the RFC3261 which is available at
 http://www.ietf.org/rfc/rfc3261.txt.
 
-%package devel
-Summary: The GNU oSIP library - development files
-Group: System/Libraries
-Requires: %name = %version-%release
+%package -n	%{libname}
+Summary:	Implementation of SIP - rfc2543
+Group:		System/Libraries
+Obsoletes:	libosip2 < %version
+Obsoletes:	%{_lib}osip2_4 < %version
+Conflicts:	libosip2_7 < %version
 
-%description devel
-Development files for the GNU oSIP library.
+%description -n	%{libname}
+This is the oSIP library. It has been designed to provide the
+Internet Community a simple way to support the Session Initiation
+Protocol. SIP is described in the RFC3261 which is available at
+http://www.ietf.org/rfc/rfc3261.txt.
 
-%package static
-Summary: The GNU oSIP library - static version
-Group: System/Libraries
-Requires: %name-devel = %version-%release
+%package -n	%{libname_devel}
+Summary:	Header file required to build programs using liboSIP
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description static
-Static version of the GNU oSIP library.
-
-%def_disable static
+%description -n	%{libname_devel}
+Developments files for %{libname} (oSIP Library). Needed to build
+apps such as linphone and siproxd.
 
 %prep
-%setup
+%setup -q
+%patch0 -p1
 
 %build
-./autogen.sh
-%configure \
-	--enable-pthread \
-	%{subst_enable static} \
-	--enable-debug \
-	--enable-semaphore \
-	--enable-sysv \
-	--enable-test
+autoreconf -fi -Iscripts
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
 
-%files
-%doc AUTHORS BUGS NEWS README TODO
-%_libdir/lib*.so.*
+mv %{buildroot}%{_mandir}/man1/osip.1 %{buildroot}%{_mandir}/man1/osip2.1
 
-%files devel
-%_includedir/*
-%_libdir/lib*.so
-%_pkgconfigdir/*.pc
-%_man1dir/*
+# don't ship .a, .la
+rm -f %{buildroot}%{_libdir}/*.la
 
-%if_enabled static
-%files static
-%_libdir/lib*.a
-%endif
+%files -n %{libname}
+%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
+%{_mandir}/man1/*
+
+%files -n %{libname_devel}
+%{_libdir}/*.so
+%{_includedir}/osip2
+%{_includedir}/osipparser2
+%{_libdir}/pkgconfig/*.pc
+
 
 %changelog
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_3
+- new version
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
