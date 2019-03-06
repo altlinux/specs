@@ -1,6 +1,6 @@
 Name: netxms
 Version: 2.2.11
-Release: alt1
+Release: alt2
 
 Summary: Open source network monitoring system
 License: GPL
@@ -14,7 +14,9 @@ Source2: nxagentd.init
 Source3: netxmsd.service
 Source4: nxagentd.service
 
-BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel libsensors3-devel libldap-devel libcurl-devel libssh-devel
+Patch1: netxms-2.2.11-alt-mysql8-transition.patch
+
+BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libmysqlclient-devel postgresql-devel libunixODBC-devel libsensors3-devel libldap-devel libcurl-devel libssh-devel
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -72,6 +74,7 @@ Group: System/Servers
 
 %prep
 %setup
+%patch1 -p0
 
 %build
 subst "s/git describe --tags --always/echo 'Release-%version'/g" configure.ac
@@ -244,6 +247,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Sat Mar 02 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.11-alt2
+- fix FTBFS against libmysqlclient21
+
 * Fri Jan 11 2019 Eugene Prokopiev <enp@altlinux.ru> 2.2.11-alt1
 - new version
 
