@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle2.5
 Version: %packagversion.%packagedate
-Release: %branch_release alt1
+Release: alt2
 
 Summary: The Course Management System Moodle
 License: %gpl3plus
@@ -32,9 +32,6 @@ Source23: %moodle_name.httpd2.inc.conf
 
 Patch1: %name-alt-lang_installer.patch
 
-Requires: %name-base = %version-%release
-Requires: %name-auth-pam >= 2.5.0.2013050100.0.20130514
-Provides: %moodle_name = %version-%release
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-moodle >= 2.4
@@ -65,12 +62,6 @@ PreReq: %_sbindir/mt-newdatadir
 PreReq: %_sbindir/mt-getdef
 PreReq: %_sbindir/mt-setdef
 Requires: %webserver_webappsdir
-Requires: php-engine php5-gd2 php5-openssl php5-xmlrpc php5-curl iconv php5-mbstring php5-ldap
-Requires: texlive-base-bin ImageMagick
-Requires: php5-soap
-Requires: php5-zip
-Requires: php5-intl
-Requires: php5-dom
 Provides: %moodle_name-base = %version-%release
 Provides: %{moodle_name}2.0-base = %version-%release
 Provides: %moodle_dir
@@ -147,7 +138,6 @@ Requires: %apache2_confdir_inc
 Requires: %name-base >= 2.5.0.20130514
 Requires: %moodle_dir
 Requires: %moodle_datadir
-Requires: apache2-mod_php5
 Provides: %moodle_name-apache2 = %version-%release
 Conflicts: %moodle_name >= 2.6
 Conflicts: %moodle_name-base >= 2.6
@@ -160,7 +150,6 @@ Summary: installed mysql-server on localhost for Moodle
 Group: Networking/WWW
 Requires: %name-base >= 2.5.0.20130514
 Requires: /usr/sbin/mysqld
-Requires: php5-mysqli
 Provides: %moodle_name-local-mysql = %version-%release
 Conflicts: %moodle_name >= 2.6
 Conflicts: %moodle_name-base >= 2.6
@@ -186,7 +175,6 @@ Version: %auth_pam_packagemoodlerelease.%auth_pam_packagemoodleversion.0.%packag
 Summary: PAM authentication for Moodle
 Group: Networking/WWW
 
-Requires: pecl-pam
 Requires: %name-base >= 2.5.0.20130514
 Requires: %moodle_authdir
 Requires: %moodle_name-version >= %auth_pam_moodlerequires
@@ -411,6 +399,9 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 2.5.9.20141110-alt2
+- dependencies on php5 has been removed due to cleaning sisyphus
+
 * Tue Nov 11 2014 Cronbuild Service <cronbuild@altlinux.org> 2.5.9.20141110-alt1
 - repocop cronbuild 20141111. At your service.
 - 2.5.9 (Build: 20141110)
