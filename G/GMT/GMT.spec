@@ -29,7 +29,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        5.4.4
-Release:        alt1_4
+Release:        alt2
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -217,6 +217,9 @@ done
 
 
 %changelog
+* Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 5.4.4-alt2
+- removed ganglia-gmond requires (via gstat binary)
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_4
 - update to new release by fcimport
 
