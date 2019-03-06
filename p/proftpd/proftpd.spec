@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt5.rel.e
+Release: alt6.rel.e
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -68,6 +68,7 @@ Patch6: %name-1.3.2rc1-mod_sql_mysql.patch
 Patch7: %name-1.3.2rc1-mod_sql_postgres.patch
 Patch9: %name-1.3.0-alt-ltdl.patch
 Patch10: %name-1.3.5-inc-pcre.patch
+Patch11: %name-1.3.5-alt-mysql8-transition.patch
 
 # Debian patches
 Patch50: %name-deb-change_pam_name.patch
@@ -374,6 +375,7 @@ See control(8) for details.
 %patch7 -p1
 #%%patch9 -p1
 %patch10 -p2
+%patch11 -p0
 
 # debian patches
 %patch50 -p1
@@ -662,6 +664,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Wed Mar 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.3.5-alt6.rel.e
+- Fix FTBFS against libmysqlclient21
+
 * Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt5.rel.e
 - Rebuild without libwrap.
 
