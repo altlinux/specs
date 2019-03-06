@@ -3,7 +3,7 @@
 Name: hwinfo
 %define lname lib%name
 Version: 21.23
-Release: alt1
+Release: alt1.1
 Summary: Hardware detection tool
 License: GPL2
 Group: System/Kernel and hardware
@@ -22,7 +22,10 @@ Requires: %lname = %version-%release
 # Automatically added by buildreq on Thu Sep 25 2008 (-bi)
 BuildRequires: doxygen flex perl-XML-Parser perl-XML-Writer perl-devel
 BuildRequires: rpm-build-licenses
-BuildRequires: libdbus-devel libx86emu-devel
+BuildRequires: libdbus-devel
+%ifarch %ix86 x86_64
+BuildRequires: libx86emu-devel
+%endif
 
 %description
 A simple program that lists results from the hardware detection
@@ -143,6 +146,9 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 21.23-alt1.1
+- NMU: rebuild with new libx86emu (closes: #36239)
+
 * Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 21.23-alt1
 - new version (QA NMU)
 
