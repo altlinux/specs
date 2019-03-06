@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.16.0.41
 
 Version: %tarbolversion
-Release: alt1
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,9 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Wed Mar 06 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.41-alt2
+- sendmail-access.main: added IPv6 example for cidrexpand
+
 * Mon Feb 25 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.41-alt1
 - New version
 - enabled _FFR_AUTH_FAIL_LOG_USER
