@@ -3,7 +3,7 @@
 
 Name: zoneminder
 Version: 1.32.3
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -16,6 +16,7 @@ Source4: README.alt
 Source5: README-nginx-ru.alt
 Source6: nginx-zoneminder.conf.sample
 Source7: zm-fcgi.inc
+Patch1: zoneminder-1.32.3-alt-mysql8-transition.patch
 
 Conflicts: zm <= 1.22.3
 Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php7-pdo_mysql su perl-Sys-Mmap webserver perl-Pod-Usage perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU
@@ -53,6 +54,7 @@ Zoneminder configuration file and requires for nginx
 
 %prep
 %setup -n %name-%version-alt
+%patch1 -p1
 tar xvf %SOURCE1 --strip 1 -C web/api/app/Plugin/Crud
 tar xvf %SOURCE2 --strip 1 -C web/api/app/Plugin/CakePHP-Enum-Behavior
 cp %SOURCE4 README.alt
@@ -145,6 +147,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Jan 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.32.3-alt2
+- fix FTBFS due to transition to libmysqlclient21
+
 * Fri Dec 14 2018 Anton Farygin <rider@altlinux.ru> 1.32.3-alt1
 - 1.32.3
 
