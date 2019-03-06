@@ -9,7 +9,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.12.2
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -100,6 +100,7 @@ Patch4:		%name-3.12.0-use-libv4l1.patch
 Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
 Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-3.11.4-alt-mysql8-bool-type-fix.patch
+Patch8:		%name-3.12.2-alt-libpoppler-Guint-type-fix.patch
 
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
@@ -1111,6 +1112,7 @@ terminal applications.
 %patch5 -p0
 %patch6 -p0
 %patch7 -p0
+%patch8 -p0
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1663,6 +1665,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.term.*
 
 %changelog
+* Mon Mar 04 2019 Nikolai Kostrigin <nickel@altlinux.org> 3.12.2-alt2
+- Fix FTBFS due to libpoppler Guint type issue
+
 * Sun Jan 13 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.2-alt1
 - New version.
 
