@@ -8,7 +8,7 @@
 
 Name: gssproxy
 Version: 0.8.0
-Release: alt2
+Release: alt3
 Summary: GSSAPI Proxy
 
 Group: System/Servers
@@ -89,9 +89,12 @@ GSSAPI Proxy configuration for NFS client
 %make_build test_proxymech
 
 # https://pagure.io/gssproxy/issue/227
-%ifnarch %ix86
-%make check
+%make check \
+%ifarch %ix86 mipsel
+	CHECKARGS="--valgrind-cmd=/usr/bin/env" \
 %endif
+	%nil
+
 
 %install
 %makeinstall_std
@@ -161,6 +164,9 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-nfs-client.conf
 
 %changelog
+* Wed Mar 06 2019 Ivan A. Melnikov <iv@altlinux.org> 0.8.0-alt3
+- Run tests without valgrind on %%ix86 and mipsel.
+
 * Sun Dec 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2
 - Added gssproxy config for nfs-server.
 - Enabled running gssproxy as a non-privileged user.
