@@ -1,7 +1,7 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gm /usr/bin/gs /usr/bin/svn /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
+BuildRequires: /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: chrpath
@@ -28,13 +28,15 @@ BuildRequires: gcc-c++
 %global completion_dir /etc/bash_completion.d
 
 Name:           GMT
-Version:        5.4.4
-Release:        alt2
+Version:        5.4.5
+Release:        alt1_1
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
 URL:            http://gmt.soest.hawaii.edu/
 Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.xz
+# Clarify some GSHH error messages
+Patch0:         https://patch-diff.githubusercontent.com/raw/GenericMappingTools/gmt/pull/252.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
@@ -64,6 +66,7 @@ Obsoletes:      GMT-octave <= 4.5.11
 # Do not generate provides for plugins
 %global __provides_exclude_from ^%{_libdir}/gmt/.*\\.so$
 Source44: import.info
+Patch33: GMT-gstat.patch
 
 %description
 GMT is an open source collection of ~60 tools for manipulating geographic and
@@ -135,6 +138,8 @@ applications that use %{name}.
 
 %prep
 %setup -q -n gmt-%{version}
+%patch0 -p1
+%patch33 -p2
 
 
 %build
@@ -144,7 +149,7 @@ pushd build
   -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
-  -DGMT_MANDIR=%{_mandir} \
+  -DGMT_MANDIR=share/man \
   -DLICENSE_RESTRICTED=LGPL \
 %if %with octave
   -DGMT_OCTAVE=BOOL:ON \
@@ -157,7 +162,7 @@ pushd build
 
 
 %install
-make -C build DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std -C build
 #Setup configuration files 
 mkdir -p $RPM_BUILD_ROOT%{gmtconf}/{mgg,dbase,mgd77}
 pushd $RPM_BUILD_ROOT%{gmthome}/
@@ -181,6 +186,9 @@ for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -ty
 done
 
 
+
+
+
 %files
 %doc COPYING.LESSERv3 COPYINGv3 LICENSE.TXT README
 %{_bindir}/*
@@ -198,13 +206,10 @@ done
 %config(noreplace) %{gmtconf}/mgd77/mgd77_paths.txt
 %{gmthome}/
 %{completion_dir}/*
-%{_mandir}/man1/*.1*
-%{_mandir}/man5/*.5*
 
 %files devel
 %{_includedir}/*
 %{_libdir}/*.so
-%{_mandir}/man3/*.3*
 
 %files doc
 %{gmtdoc}/
@@ -217,6 +222,9 @@ done
 
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.5-alt1_1
+- new version
+
 * Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 5.4.4-alt2
 - removed ganglia-gmond requires (via gstat binary)
 
