@@ -2,7 +2,7 @@
 
 Name: control++
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -59,6 +59,9 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt2
+- Enhanced manual.
+
 * Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt1
 - File links are ignored during recursive mode setting for dirs
   (hence links that are not in the whitelist ignored as well).
