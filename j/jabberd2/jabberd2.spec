@@ -21,7 +21,7 @@
 #%%define git d3a2b96
 %define majver 2.7
 %define minver 0
-%define rel alt1
+%define rel alt2
 
 Name: jabberd2
 Version: %majver.%minver
@@ -51,6 +51,7 @@ Patch2: jabberd2-alt-ldapvcard-fix.patch
 Patch3: jabberd2-alt-ldapvcard-jpeg-fix.patch
 Patch4: jabberd2-alt-sysconf.patch
 Patch5:	jabberd2-alt-systemddir.patch
+Patch6:	jabberd2-2.7.0-alt-mysql8-transition.patch
 
 BuildRequires(pre): rpm-build-licenses jabber-common libidn-devel >= 0.3.0 libudns-devel
 # Automatically added by buildreq on Mon Oct 22 2007
@@ -255,6 +256,7 @@ Oracle auth and storage module for Jabberd.
 %patch4 -p1
 #fix systemd dir location
 %patch5 -p2
+%patch6 -p0
 
 %build
 %autoreconf
@@ -482,6 +484,9 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.7.0-alt2
+- Fix FTBFS against libmysqlclient.so.21
+
 * Mon Dec 10 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
 - Built new version.
 - Built with openssl1.1.
