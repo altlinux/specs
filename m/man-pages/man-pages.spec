@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 4.16
+Version: 5.0
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -99,6 +99,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Wed Mar 06 2019 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt1
+- 4.16 -> 5.0.
+
 * Mon Jun 25 2018 Dmitry V. Levin <ldv@altlinux.org> 4.16-alt1
 - 4.15 -> 4.16.
 - Moved Owl crypt*(3) manual pages to libcrypt-devel.
