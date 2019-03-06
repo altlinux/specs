@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-users
-Version: 10.10
+Version: 10.11
 Release: alt1
 
 Source: %name-%version.tar
@@ -43,6 +43,9 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Mar 06 2019 Andrey Cherepanov <cas@altlinux.org> 10.11-alt1
+- Add support of kiosk profile.
+
 * Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 10.10-alt1
 - Return Autologin label
 

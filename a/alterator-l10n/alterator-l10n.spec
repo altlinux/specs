@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.43
+Version: 2.9.44
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Mar 06 2019 Andrey Cherepanov <cas@altlinux.org> 2.9.44-alt1
+- Add kiosk profile fo alterator-users.
+
 * Thu Dec 06 2018 Sergey V Turchin <zerg@altlinux.org> 2.9.43-alt1
 - update russian translation
 
