@@ -1,6 +1,6 @@
 Name: ccnet
 Version: 6.3.4
-Release: alt2
+Release: alt3
 
 Summary: Framework for writing networked applications in C
 
@@ -74,6 +74,8 @@ Ccnet python module.
 %prep
 %setup
 %__subst 's/(DESTDIR)//' libccnet.pc.in
+# since MySQL 8.0
+%__subst "s|my_bool|bool|" net/common/db-wrapper/mysql-db-ops.c
 
 %build
 %autoreconf
@@ -108,6 +110,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Mar 06 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3.4-alt3
+- fix build with MySQL 8.x
+
 * Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3.4-alt2
 - rebuild with libevent2.1
 
