@@ -2,7 +2,7 @@
 
 Name: gnokii
 Version: 0.6.31
-Release: alt1
+Release: alt2
 
 Summary: Unix tool suite for Nokia mobile phones
 Group: Communications
@@ -11,6 +11,7 @@ Url: http://www.gnokii.org/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-0.6.31-alt-mysql8-transition.patch
 
 Requires: lib%name = %EVR
 
@@ -83,6 +84,7 @@ SQLite plugin for gnokii-smsd.
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 %build
 # SMP-incompatible
@@ -182,6 +184,9 @@ sed 's,/usr/local/sbin,%_sbindir,g' \
 %_libdir/smsd/libsmsd_sqlite.so
 
 %changelog
+* Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.6.31-alt2
+- Fix FTBFS against libmysqlclient.so.21
+
 * Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.31-alt1
 - Updated to upstream version 0.6.31.
 
