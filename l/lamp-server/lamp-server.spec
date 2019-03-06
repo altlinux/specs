@@ -1,5 +1,5 @@
 Name: 	 lamp-server
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Metapackage to install LAMP server (Linux+Apache+MariaDB+PHP)
@@ -14,13 +14,13 @@ Source: %name-%version.tar
 
 Requires: apache2-base 
 Requires: mariadb-server
-Requires: apache2-mod_php5
-Requires: php5-mysql 
-Requires: php5-mysqli
+Requires: apache2-mod_php7
+Requires: php7-mysqlnd 
+Requires: php7-mysqlnd-mysqli
 
 %description
 This is to help people setup and install a LAMP
-(Linux+Apache+MariaDB+PHP) server, including Apache 2, PHP 5 and
+(Linux+Apache+MariaDB+PHP) server, including Apache 2, PHP  and
 MariaDB.
 
 %prep
@@ -30,6 +30,9 @@ MariaDB.
 %doc README
 
 %changelog
+* Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 1.2-alt1
+- switch to php7
+
 * Mon Apr 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Change mysql-server to mariadb-server (ALT #33416)
 
