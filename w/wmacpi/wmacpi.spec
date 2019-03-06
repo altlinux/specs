@@ -1,6 +1,6 @@
 Name: wmacpi
 Version: 2.2rc4
-Release: alt0.1
+Release: alt0.2
 
 Summary: This is a ACPI status monitor for Window Maker.
 License: GPL
@@ -15,19 +15,20 @@ Packager: Pavlov Konstantin <thresh@altlinux.ru>
 # Automatically added by buildreq on Sat May 06 2006
 BuildRequires: libdockapp-devel libXext-devel libXpm-devel
 
-Summary(ru_RU.KOI8-R): Удобный монитор состояния батарей для Window Maker
+Summary(ru_RU.UTF-8): пёп╢п╬п╠п╫я▀п╧ п╪п╬п╫п╦я┌п╬я─ я│п╬я│я┌п╬я▐п╫п╦я▐ п╠п╟я┌п╟я─п╣п╧ п╢п╩я▐ Window Maker
 
 %description
 This is an ACPI status monitor for Window Maker.
 This version is a complete rewrite of wmacpi-1.34.
 
-%description -l ru_RU.KOI8-R
-Удобный монитор состояния батарей для Window Maker. Поддерживается ACPI.
-Эта версия полностью переписана от версии wmacpi-1.34.
+%description -l ru_RU.UTF-8
+пёп╢п╬п╠п╫я▀п╧ п╪п╬п╫п╦я┌п╬я─ я│п╬я│я┌п╬я▐п╫п╦я▐ п╠п╟я┌п╟я─п╣п╧ п╢п╩я▐ Window Maker. п÷п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌я│я▐ ACPI.
+п╜я┌п╟ п╡п╣я─я│п╦я▐ п©п╬п╩п╫п╬я│я┌я▄я▌ п©п╣я─п╣п©п╦я│п╟п╫п╟ п╬я┌ п╡п╣я─я│п╦п╦ wmacpi-1.34.
 
 %prep
 %setup
 %patch -p1
+sed -i -e s,dockapp.h,libdockapp/dockapp.h, wmacpi.c
 
 %build
 %make_build OPT="%optflags"
@@ -47,6 +48,9 @@ install -pD -m644 %SOURCE1 %buildroot%_menudir/%name
 # - replace debian menufile with freedesktop one some day
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 2.2rc4-alt0.2
+- NMU: rebuild with new libdockapp
+
 * Sat Jan 17 2009 Michael Shigorin <mike@altlinux.org> 2.2rc4-alt0.1
 - NMU: 2.2rc4 (closes: #18543)
   + should be better regarding wakeups

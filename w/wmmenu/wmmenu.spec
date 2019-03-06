@@ -3,7 +3,7 @@
 
 Name: wmmenu
 Version: 1.2
-Release: alt3
+Release: alt4
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -34,25 +34,25 @@ want; dunno what it's useful for...).
 
 %prep
 %setup -q -n %name
+sed -i -e s,dockapp.h,libdockapp/dockapp.h, wmmenu.c pixmaps.c events.c buttonbar.c
 
 %build
 %make_build ETCDIR=%_sysconfdir/X11/%name
 
 %install
-%__mkdir_p %buildroot%_sysconfdir/X11/%name
-%__mkdir_p %buildroot%_x11bindir
-%__mkdir_p %buildroot%_x11datadir/%name
-%__mkdir_p %buildroot%_x11mandir/man1
-#%__mkdir_p %buildroot
+mkdir -p %buildroot%_sysconfdir/X11/%name
+mkdir -p %buildroot%_x11bindir
+mkdir -p %buildroot%_x11datadir/%name
+mkdir -p %buildroot%_x11mandir/man1
 
-%__install -m755 wmmenu   %buildroot%_x11bindir
-%__install -m755 wmmenu.1 %buildroot%_x11mandir/man1
+install -m755 wmmenu   %buildroot%_x11bindir
+install -m755 wmmenu.1 %buildroot%_x11mandir/man1
 
-%__install -m644 defaultIcon.xpm  %buildroot%_x11datadir/%name
-%__install -m644 defaultTile.xpm  %buildroot%_x11datadir/%name
-%__install -m644 target-white.xpm %buildroot%_x11datadir/%name
+install -m644 defaultIcon.xpm  %buildroot%_x11datadir/%name
+install -m644 defaultTile.xpm  %buildroot%_x11datadir/%name
+install -m644 target-white.xpm %buildroot%_x11datadir/%name
 
-%__install -m644 %SOURCE1 %buildroot%_sysconfdir/X11/%name/defaults
+install -m644 %SOURCE1 %buildroot%_sysconfdir/X11/%name/defaults
 
 %files
 %doc COPYING README TODO example
@@ -64,6 +64,9 @@ want; dunno what it's useful for...).
 %_x11mandir/man1/wmmenu.1*
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4
+- build with new libdocapp
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
 - Fix FTBFS.
 

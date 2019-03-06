@@ -1,21 +1,22 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%define _unpackaged_files_terminate_build 1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: libdockapp
-Version: 0.6.2
-Release: alt1.1.qa1
-
+%define major   3
+%define libname %{name}%{major}
+Version: 0.7.2
+Release: alt2
 Summary: DockApp Making Standard Library
 Group: System/Libraries
 License: MIT/X11
 Url: http://solfertje.student.utwente.nl/~dalroi/libdockapp/
 
-Packager: Sir Raorn <raorn@altlinux.ru>
-
 Source: %name-%version.tar
-Patch: %name-%version-alt1.patch
 
-# Automatically added by buildreq on Thu Jun 19 2008
 BuildRequires: libXext-devel libXpm-devel libXt-devel
+BuildRequires:  xorg-font-utils
 
 %description
 This is a simple (trivial) library for writing Window Maker dock
@@ -25,10 +26,17 @@ It is very limited and can be only used for dockapps that open a single
 appicon for process in only be single display, but this seems to be
 enough for most, if not all, dockapps.
 
+%package -n %{libname}
+Summary:        A library that eases the creation of dock apps
+Group:          System/Libraries
+
+%description -n %{libname}
+%{summary}.
+
 %package devel
 Summary: DockApp Making Standard Library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %libname = %EVR
 Requires: libX11-devel libXpm-devel
 
 %description devel
@@ -43,7 +51,6 @@ This package contains header files needed for development.
 
 %prep 
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -55,17 +62,28 @@ This package contains header files needed for development.
 
 %install
 %make_install DESTDIR=%buildroot install
+# compat symlink
+ln -s %name/dockapp.h %buildroot%_includedir/dockapp.h
 
-%files
+%files -n %libname
 %doc AUTHORS ChangeLog COPYING NEWS README
-%_libdir/lib*.so.*
+%_libdir/lib*.so.%{major}*
 
 %files devel
 %doc examples fonts
 %_libdir/lib*.so
+%dir %_includedir/%name
+%_includedir/%name/*.h
 %_includedir/*.h
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2
+- added compat symlink
+
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1
+- new version
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.2-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
