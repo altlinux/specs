@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -43,7 +43,7 @@ BuildRequires: libpugixml-devel libcups-devel
 BuildRequires: libosm-gps-map1.0-devel
 BuildRequires: python-module-jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
-# for build from git tree
+# for not recommended build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
 %description
@@ -55,6 +55,7 @@ light table. It also enables you to develop raw images and enhance them.
 %setup -n %name-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %cmake -DCMAKE_SKIP_RPATH:BOOL=OFF \
 -DCMAKE_BUILD_TYPE=Release \
 -DBINARY_PACKAGE_BUILD:BOOL=ON
@@ -82,6 +83,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Wed Mar 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Mon Dec 24 2018 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
