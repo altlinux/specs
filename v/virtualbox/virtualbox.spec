@@ -60,7 +60,7 @@
 
 Name: virtualbox
 Version: 5.2.26
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -798,6 +798,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed Mar 06 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.26-alt2
+- Fix drv preload in check if 3D acceleration is supported (Closes: 36235)
+
 * Fri Feb 08 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.26-alt1
 - Update to latest of 5.2 release
 
