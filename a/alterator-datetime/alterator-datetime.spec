@@ -4,7 +4,7 @@
 
 Name: alterator-datetime
 Version: 4.2.3
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
@@ -66,6 +66,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Mar 06 2019 Ivan Razzhivin <underwit@altlinux.org> 4.2.3-alt2
+- Avoid possible script failure.
+
 * Wed Mar 06 2019 Ivan Razzhivin <underwit@altlinux.org> 4.2.3-alt1
 - Add chrony support to the postinstall script (ALT #36213).
 
