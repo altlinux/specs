@@ -3,8 +3,8 @@
 %define _libexecdir /usr/libexec
 
 Name: arm-none-eabi-binutils
-Version: 2.30
-Release: alt1.2
+Version: 2.32
+Release: alt1
 Summary: GNU Binutils for cross-compilation for %target target
 Group: Development/Tools
 # Most of the sources are licensed under GPLv3+ with these exceptions:
@@ -18,7 +18,6 @@ Url: http://www.codesourcery.com/sgpp/lite/%processor_arch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-
 Source1: README.alt
 BuildRequires: texinfo perl-podlators
 
@@ -69,8 +68,6 @@ make check
 
 %install
 %makeinstall_std
-# these are for win targets only
-rm %buildroot%_man1dir/%target-{dlltool,nlmconv,windres}.1
 # we don't want these as we are a cross version
 rm -r %buildroot%_infodir
 
@@ -81,6 +78,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Sun Feb 10 2019 Anton Midyukov <antohami@altlinux.org> 2.32-alt1
+- New version 2.32
+
 * Mon Oct 01 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1.2
 - Update buildrequires
 
