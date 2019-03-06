@@ -3,13 +3,15 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: 1.1.18
-Release: alt1.2
+Release: alt2
 License: BSD
 Group: Development/C
 URL: http://gearman.org
 
 # https://github.com/gearman/gearmand.git
 Source: %name-%version.tar
+
+Patch1: gearmand-1.1.18-alt-mysql8-transition.patch
 
 BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-devel libuuid-devel gperf
 BuildRequires: libsqlite3-devel libtokyocabinet-devel libmemcached-devel memcached libhiredis-devel
@@ -30,6 +32,7 @@ This package contains necessary header files for Gearman development.
 
 %prep
 %setup
+%patch1 -p0
 # provide information about version needed for bootstrap
 sed -i -e 's:git describe --always:echo %version:' \
 	version.m4 \
@@ -69,6 +72,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Wed Mar 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.1.18-alt2
+- Fix FTBFS against libmysqlclient.so.21
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.18-alt1.2
 - NMU: Rebuild with new openssl 1.1.0.
 
