@@ -1,6 +1,6 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major 2
+%define major 3
 %define libname libx86emu%{major}
 %define develname libx86emu-devel
 
@@ -8,10 +8,10 @@ Name:           libx86emu
 License:        BSD
 Group:          System/Libraries
 Summary:        A small x86 emulation library
-Version:        2.4
+Version:        3.1
 Release:        alt1_1
-URL:		https://github.com/wfeldt/libx86emu.git
-Source:         %{name}-%{version}.tar.gz
+URL:		https://github.com/wfeldt/libx86emu
+Source:         https://github.com/wfeldt/libx86emu/archive/%{version}/%{name}-%{version}.tar.gz
 Source44: import.info
 ExclusiveArch: %ix86 x86_64
  
@@ -60,6 +60,9 @@ make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_1
+- update by mgaimport
+
 * Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1
 - update by mgaimport
 
