@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:     puppetdb
-Version:  6.1.0
+Version:  6.2.0
 Release:  alt1
 
 Summary:  Centralized Puppet Storage
@@ -141,7 +143,11 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %files terminus
 %ruby_sitelibdir/*
 
+
 %changelog
+* Wed Mar 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.0-alt1
+- Version updated to 6.2.0
+
 * Thu Dec 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.1.0-alt1
 - Version updated to 6.1.0
 
