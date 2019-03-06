@@ -1,52 +1,58 @@
 Name: libnetfilter_queue
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
-Summary: API to packets that have been queued by the kernel packet filter
-Url: http://netfilter.org/projects/libnetfilter_queue/
-License: GPL
+Summary: Netfilter queue userspace library
+Url: https://www.netfilter.org/projects/libnetfilter_queue/
+License: GPL-2.0-or-later and GPL-2.0-only
 Group: System/Libraries
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Aug 08 2007
-BuildRequires: gcc-c++ libnfnetlink-devel libmnl-devel
+BuildRequires: libnfnetlink-devel libmnl-devel
 
 %description
-libnetfilter_queue is a userspace library providing an API to packets that have 
-been queued by the kernel packet filter. It is is part of a system that deprecates 
-the old ip_queue / libipq mechanism.
+libnetfilter_queue is a userspace library providing an API to packets that have
+been queued by the kernel packet filter.  It is is part of a system that
+deprecates the old ip_queue / libipq mechanism.
+
+libnetfilter_queue has been previously known as libnfnetlink_queue.
 
 %package devel
-Summary: Development part of libnetfilter_queue.
+Summary: Development part of libnetfilter_queue
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
-%description devel 
-Development part of libnetfilter_queue.
+%description devel
+This package contains the development part of libnetfilter_queue.
 
 %prep
 %setup
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure --disable-static
 %make_build
 
 %install
-mkdir -p %buildroot%_libdir/%name
-mkdir -p %buildroot%_includedir/%name
-make install DESTDIR=%buildroot
+%makeinstall_std
+rm %buildroot%_libdir/*.la
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_libdir/*.so.*
 %doc COPYING
 
 %files devel
-%_includedir/%name/*
+%_includedir/%name/
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3.
+
 * Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - New version
 - cleanup spec
