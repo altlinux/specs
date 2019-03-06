@@ -1,52 +1,60 @@
 Name: libnfnetlink
-Version: 1.0.1
-Release: alt1.qa1
+Version: 1.0.1.0.8.5087
+Release: alt1
 Epoch: 1
 
-Summary: libnfnetlink - low-level nfnetlink message processing functions
-Url: http://netfilter.org/projects/libnfnetlink/
-License: GPL
+Summary: Netfilter netlink userspace library
+Url: https://netfilter.org/projects/libnfnetlink/
+License: GPL-2.0-or-later
 Group: System/Libraries
-
-Source: %name-%version.tar
+# https://git.netfilter.org/libnfnetlink/
+# git://git.altlinux.org/gears/l/libnfnetlink
+%define srcname %name-%version-%release
+Source: %srcname.tar
 
 %description
-libnfnetlink is the low-level library for netfilter related kernel/userspace 
-communication. It provides a generic messaging infrastructure for in-kernel 
-netfilter subsystems (such as nfnetlink_log, nfnetlink_queue, nfnetlink_conntrack) 
-and their respective users and/or management tools in userspace.
+libnfnetlink is the low-level library for netfilter related kernel/userspace
+communication.  It provides a generic messaging infrastructure for in-kernel
+netfilter subsystems (such as libnetfilter_log, libnetfilter_queue, and
+libnetfilter_conntrack) and their respective users and/or management tools
+in userspace.
 
 %package devel
-Summary: development part of libnfnetlink
+Summary: Development part of libnfnetlink
 Group: Development/C
-Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
 
 %description devel
-Development part of libnfnetlink
+This package contains the development part of libnfnetlink.
 
 %prep
-%setup
+%setup -n %srcname
 
 %build
-%autoreconf -fisv
+%autoreconf
 %configure --disable-static
-%make_build DESTDIR=%buildroot
+%make_build V=1
 
 %install
-mkdir -p %buildroot%_libdir/%name
-mkdir -p %buildroot%_includedir/%name
-make install DESTDIR=%buildroot
+%makeinstall_std V=1
+rm %buildroot%_libdir/*.la
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_libdir/*.so.*
 %doc README
 
 %files devel
-%_includedir/%name
+%_includedir/%name/
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.1.0.8.5087-alt1
+- 1.0.1 -> 1.0.1-8-g5087de4.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1.qa1
 - NMU: applied repocop patch
 
