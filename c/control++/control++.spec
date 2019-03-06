@@ -1,7 +1,7 @@
-%define libcontrolppver 0.18
+%define libcontrolppver 0.19
 
 Name: control++
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: System configuration tool
@@ -59,6 +59,10 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt1
+- File links are ignored during recursive mode setting for dirs
+  (hence links that are not in the whitelist ignored as well).
+
 * Mon Mar 04 2019 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
 - Ability to add comments into lists of files for the permission unit;
 - Fixed determination of disallowed essential applications;

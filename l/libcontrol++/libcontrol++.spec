@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,11 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt1
+- Fix of the FormatFilePath function;
+- Default mode for whitelists is 'neutral' mode;
+- Custom mode for whitelists is allowed again.
+
 * Mon Mar 04 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.0-alt1
 - Handling SUID, GUID and Sticky bits;
 - Escaping and unescaping special symbols when writing to
