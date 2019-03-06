@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.3
+Version: 1.2.5
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -173,6 +173,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/lvfs-testing.conf
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/vendor.conf
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/vendor-directory.conf
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
 %_sysconfdir/dbus-1/system.d/org.freedesktop.fwupd.conf
@@ -199,6 +200,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 /lib/udev/rules.d/*.rules
 %dir %_libdir/fwupd-plugins-3
 %_libdir/fwupd-plugins-3/libfu_plugin_altos.so
+%_libdir/fwupd-plugins-3/libfu_plugin_ata.so
 %_libdir/fwupd-plugins-3/libfu_plugin_csr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_amt.so
 %_libdir/fwupd-plugins-3/libfu_plugin_colorhug.so
@@ -235,6 +237,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_unifying.so
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_usb.so
+%_libdir/fwupd-plugins-3/libfu_plugin_wacom_raw.so
 
 %ghost %_localstatedir/fwupd/gnupg
 
@@ -260,6 +263,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
+* Mon Feb 11 2019 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Mon Jan 07 2019 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
