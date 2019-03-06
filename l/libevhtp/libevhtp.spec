@@ -1,68 +1,107 @@
-# seafile-server hungs with it, see http://bugs.etersoft.ru/show_bug.cgi?id=11271
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define major		0
+%define libname		libevhtp%{major}
+%define develname	libevhtp-devel
 
-Name: libevhtp
-Version: 1.2.16
-Release: alt1%ubt.1
-
-Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
-License: BSD
-Group: System/Libraries
-
-Url: https://github.com/criticalstack/libevhtp
-# Source-git: https://github.com/criticalstack/libevhtp.git
-Source: %name-%version.tar
-
-
-# Automatically added by buildreq on Sat Mar 16 2013 (-bi)
-# optimized out: cmake cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base
-BuildRequires: ccmake gcc-c++ glibc-devel libevent-devel libssl-devel
-
-# need for build with external liboniguruma
-BuildRequires: liboniguruma-devel >= 6.8.1
-BuildRequires: libjemalloc-devel
-BuildRequires(pre): rpm-build-ubt
+Name:		libevhtp
+Version:	1.2.18
+Release:	alt1_1
+Summary:	A more flexible replacement for libevent's http API
+License:	BSD
+Group:		System/Libraries
+Url:		https://criticalstack.com/
+Source0:	https://github.com/criticalstack/libevhtp/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:		libevhtp-1.2.18-fix-libraries-path.patch
+BuildRequires:	ccmake cmake ctest
+BuildRequires:	glibc-devel glibc-devel-static
+BuildRequires:	pkgconfig(jemalloc)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(libevent)
+BuildRequires:	pkgconfig(oniguruma)
+Source44: import.info
 
 %description
-Libevhtp was created as a replacement API for Libevent's
-current HTTP API. The reality of libevent's http interface
-is that it was created as a JIT server, meaning the developer
-never thought of it being used for creating a full-fledged
-HTTP service. Infact I am under the impression that the
-libevent http API was designed almost as an example of
-what you can do with libevent. It's not Apache in a box,
-but more and more developers are attempting to use it as so.
+Libevhtp was created as a replacement API for Libevent's current
+HTTP API. The reality of libevent's http interface is that it
+was created as a JIT server, meaning the developer never thought
+of it being used for creating a full-fledged HTTP service.
+Infact I am under the impression that the libevent http API was
+designed almost as an example of what you can do with libevent.
+It's not Apache in a box, but more and more developers are
+attempting to use it as so.
 
-%package devel
-Summary: Development files for %name
-Requires: %name = %version-%release
-Group: Development/C
+#----------------------------------------------------
 
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%package -n	%{libname}
+Summary:	Library for %{name}
+Group:		System/Libraries
+
+%description -n	%{libname}
+Libevhtp was created as a replacement API for Libevent's current
+HTTP API. The reality of libevent's http interface is that it
+was created as a JIT server, meaning the developer never thought
+of it being used for creating a full-fledged HTTP service.
+Infact I am under the impression that the libevent http API was
+designed almost as an example of what you can do with libevent.
+It's not Apache in a box, but more and more developers are
+attempting to use it as so.
+This package contains library files for %{name}.
+
+#----------------------------------------------------
+
+%package -n	%{develname}
+Summary:	Development files for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	evhtp-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+
+%description -n	%{develname}
+The %{develname} package contains libraries and header files for
+developing applications that use %{name}.
+
+#----------------------------------------------------
 
 %prep
-%setup
-%__subst "s|PREFIX}/lib|PREFIX}/\${LIB_DESTINATION}|g" CMakeLists.txt
+%setup -q
+%patch0 -p1
 
 %build
-%cmake_insource -DEVHTP_BUILD_SHARED:STRING=ON -DEVHTP_USE_JEMALLOC:STRING=ON
+%{mageia_cmake} -DEVHTP_BUILD_SHARED:STRING=ON \
+       -DEVHTP_USE_JEMALLOC:STRING=ON
+
+%make_build
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 
-%files
-%_libdir/libevhtp.so.0
-%_libdir/libevhtp.so.1.*
+%files -n %{libname}
+%{_libdir}/libevhtp.so.%{major}
+%{_libdir}/libevhtp.so.%{version}
 
-%files devel
-%_includedir/evhtp/
-%_includedir/evhtp.h
-%_libdir/libevhtp.so
-%_pkgconfigdir/evhtp.pc
+%files -n %{develname}
+%doc ChangeLog README.markdown
+%doc --no-dereference LICENSE
+%{_includedir}/evhtp.h
+%{_includedir}/evhtp/
+%{_libdir}/libevhtp.so
+%{_libdir}/pkgconfig/evhtp.pc
+%{_libdir}/cmake/libevhtp/
+
 
 %changelog
-* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1%ubt.1
+* Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.18-alt1_1
+- new version
+
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1.S1.1
+- NMU: rebuilt with new openssl.
+
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1.1
 - NMU: rebuilt with new openssl.
 
 * Fri Apr 06 2018 Anton Farygin <rider@altlinux.ru> 1.2.16-alt1%ubt
