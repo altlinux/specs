@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q1.6
+Version: 2019.Q1.7
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -83,6 +83,13 @@ subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Mar 06 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.7-alt1
+- 2019-3-1 update:
+  + llvm: c7a5a5c3bac75699d45824523b4fcf045913413f
+  + llpc: 8eecb4baef898f0a5b9902406626887c3646dbb6
+  + pal: e8a5acd90310871053a40015ebcea5b32391a824
+  + xgl: f2af4b0c33963842f544107d005f0a6c82ea513f
+
 * Tue Feb 26 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.6-alt1
 - 2019-2-25 update:
   + llvm: 666d463e73a67dd3ccb304a5b13a5b1f09f784f0
