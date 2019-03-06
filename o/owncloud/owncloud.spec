@@ -3,7 +3,7 @@
 
 Name: owncloud
 Version: 7.0.9
-Release: alt1
+Release: alt1.1
 
 Summary: Cloud platform
 Group: Networking/WWW
@@ -14,9 +14,6 @@ BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
 
 Requires(pre): webserver-common
-Requires: php5-dom
-Requires: owncloud-apps = %version
-Requires: owncloud-3rdparty = %version
 
 Source0: %name-%version.tar
 
@@ -28,7 +25,6 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release apache2 php5-gd2 php5-zip php5-mbstring php5-pdo_mysql
 %description apache2
 Apache 2.x web-server configuration for %name
 
@@ -86,6 +82,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 7.0.9-alt1.1
+- dependencies on php5 and old owncloud modules removed due to cleaning sisyphus
+
 * Wed Jun 29 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 7.0.9-alt1
 - 7.0.9
 
