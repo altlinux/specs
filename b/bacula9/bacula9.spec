@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.6
-Release: alt3
+Release: alt4
 
 License: AGPLv3
 Summary: Network based backup program
@@ -36,6 +36,7 @@ Source15: %name-gui-%version.tar
 Source16: baculum-apache2.logrotate
 Patch1: %name-alt.patch
 Patch2: %name-gui-alt.patch
+Patch3: %name-9.0.6-alt-mysql8-transition.patch
 
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
 
@@ -410,6 +411,8 @@ pushd ../%name-gui-%version/baculum
 %patch2 -p2
 popd
 %endif
+
+%patch3 -p0
 
 mv ../%name-icons-%version icons
 
@@ -819,6 +822,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 9.0.6-alt4
+- fix FTBFS against libmysqlclient21
+
 * Thu Jan 10 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt3
 - Updated build dependencies and cleaned up spec.
 
