@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt5
+Release: alt6
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -28,6 +28,7 @@ Source11: snmptrapd.service
 Patch: %name-%version-%release.patch
 Patch6: net-snmp-5.7.3-systemd.patch
 Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
+Patch8: net-snmp-5.7.3-alt-mysql8-transition.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -303,6 +304,7 @@ for run-time access to parsed MIB data.
 %patch -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p0
 
 sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -594,6 +596,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.7.3-alt6
+- Fix FTBFS against libmysqlclient21
+
 * Thu Jan 24 2019 Stanislav Levin <slev@altlinux.org> 5.7.3-alt5
 - Applied patches from upstream (closes: #35969).
 
