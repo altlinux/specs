@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-XS
 Name: perl-%dist
-Version: 4.01
+Version: 4.02
 Release: alt1
 Epoch: 3
 
@@ -40,6 +40,9 @@ fi
 %perl_vendor_autolib/JSON
 
 %changelog
+* Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 3:4.02-alt1
+- automated CPAN update
+
 * Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 3:4.01-alt1
 - automated CPAN update
 
