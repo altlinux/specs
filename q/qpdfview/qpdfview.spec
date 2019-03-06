@@ -1,6 +1,6 @@
 Name: qpdfview
-Version: 0.4.17
-Release: alt3.beta1%ubt
+Version: 0.4.18
+Release: alt1.beta1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPLv2
 Group: Office
@@ -8,7 +8,6 @@ Url: https://launchpad.net/qpdfview
 
 Source: %name-%version.tar
 
-Buildrequires(pre): rpm-build-ubt
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(poppler-qt5)
 BuildRequires: pkgconfig(Qt5DBus)
@@ -47,9 +46,7 @@ ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 	%buildroot%_niconsdir
 
-%find_lang %name --with-qt --without-mo
-
-%files -f %name.lang
+%files
 %doc CHANGES CONTRIBUTORS README TODO
 %_bindir/*
 %_man1dir/*
@@ -63,7 +60,10 @@ ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
-* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.4.17-alt3.beta1%ubt
+* Wed Mar 06 2019 Anton Midyukov <antohami@altlinux.org> 0.4.18-alt1.beta1
+- Version 0.4.18beta1
+
+* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.4.17-alt3.beta1.S1
 - Build translations
 - Update buildrequires
 
