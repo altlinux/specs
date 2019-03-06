@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.2.2
+Version: 4.2.3
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -66,6 +66,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Mar 06 2019 Ivan Razzhivin <underwit@altlinux.org> 4.2.3-alt1
+- Add chrony support to the postinstall script (ALT #36213).
+
 * Tue Feb 12 2019 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
 - Show localized date and time in installer (ALT #35985).
 
