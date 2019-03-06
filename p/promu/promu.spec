@@ -1,5 +1,5 @@
 %global import_path github.com/prometheus/promu
-%global commit 264dc36af9ea3103255063497636bd5713e3e9c1
+%global commit 295a70a7f580b886572861b19545b28accfd4491
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name: promu
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Summary: Prometheus Utility Tool
 
@@ -54,6 +54,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Wed Mar 06 2019 Alexey Shabalin <shaba@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sat Jan 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
