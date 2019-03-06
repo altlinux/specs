@@ -1,9 +1,8 @@
 %define soversion 2
-%def_with xmms
 
 Name: faad
 Version: 2.7
-Release: alt5
+Release: alt6
 
 Summary: FAAD is a Freeware Advanced Audio Decoder
 License: GPL
@@ -22,7 +21,6 @@ Requires: lib%name%soversion = %version-%release
 BuildPreReq: libsndfile >= %libsndfile_ver
 
 BuildRequires: gcc-c++ id3lib-devel libstdc++-devel zlib-devel
-%{?_with_xmms:BuildRequires: libxmms-devel glib-devel gtk+-devel}
 
 %description
 FAAD is a LC, MAIN and LTP profile MPEG2 and MPEG-4 AAC decoder.
@@ -46,18 +44,6 @@ Requires: libsndfile-devel >= %libsndfile_ver
 This package provides header files development libraries and
 documentation for lib%name.
 
-%package -n xmms-in-faad
-Summary: FAAD input plugin for XMMS
-Group: Sound
-Requires: lib%name%soversion = %version-%release
-Requires: xmms
-Provides: xmms-input-faad = %version-%release
-Obsoletes: xmms-input-faad <= %version-%release
-
-%description -n xmms-in-faad
-This package provides input plugin allowing XMMS to read .aac and .mp4
-files.
-
 %prep
 %setup -n %{name}2-%version
 
@@ -69,17 +55,14 @@ xargs -r0 subst 's,^\(CFLAGS\),AM_\1,g
 		    s,^\(LDFLAGS\),AM_\1,g
 		    s,^[[:blank:]*],\t,' --
 
-%if_with xmms
-%define _xmms_input_plugin_dir %(xmms-config --input-plugin-dir)
-%endif
-
 %build
 %add_optflags %optflags_shared
 #_buildshell ./bootstrap
 %autoreconf
-%configure --disable-static \
-	    --without-drm \
-	    %{subst_with xmms}
+%configure \
+	--disable-static \
+	--without-drm \
+	#
 
 %make_build
 
@@ -101,13 +84,10 @@ rm -f %buildroot%_libdir/*.la
 %_includedir/*
 %_libdir/*.so
 
-%if_with xmms
-%files -n xmms-in-faad
-%_xmms_input_plugin_dir/*
-%doc plugins/xmms/{AUTHORS,ChangeLog,NEWS,README,TODO}
-%endif
-
 %changelog
+* Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7-alt6
+- Removed xmms plugin subpackage.
+
 * Fri Jul 28 2017 Michael Shigorin <mike@altlinux.org> 2.7-alt5
 - BOOTSTRAP: introduced xmms knob (still on by default)
 

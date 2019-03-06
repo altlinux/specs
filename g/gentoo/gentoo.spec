@@ -1,6 +1,6 @@
 %define name	gentoo
 %define version	0.20.7
-%define release	alt2
+%define release	alt3
 
 Summary: gentoo is a Gtk+ file manager for Linux
 Name: %name
@@ -22,7 +22,6 @@ Source2: gentoo_32.xpm.bz2
 Source3: gentoo_48.xpm.bz2
 Source4: gentoo.desktop
 Patch1: gentoo-0.15.3-0.2-nmu.diff
-Requires: gtk+ >= 1.2.3
 
 %description
 gentoo is a file manager for Linux written from scratch in pure C. It
@@ -87,6 +86,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE4
 %_miconsdir/*.xpm
 
 %changelog
+* Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.20.7-alt3
+- Removed erroneous R: gtk+.
+
 * Sun Nov 05 2017 Ilya Mashkin <oddity@altlinux.ru> 0.20.7-alt2
 - update urls, update spec
 

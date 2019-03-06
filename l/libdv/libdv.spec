@@ -5,7 +5,6 @@
 %def_enable asm
 %def_enable sdl
 %def_enable xv
-%def_enable gtk
 %def_with x
 # YV12|YUY2
 %define pal-yuv YUY2
@@ -13,7 +12,7 @@
 
 Name: libdv
 Version: 1.0.0
-Release: alt5.6
+Release: alt5.7
 Summary: DV software video codec
 License: %lgpl2plus
 Group: System/Libraries
@@ -29,7 +28,6 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpopt-devel >= %popt_ver
 %{?_enable_sdl:BuildRequires: libSDL-devel >= 1.1.6}
 %{?_enable_xv:BuildRequires: libXv-devel libXext-devel xorg-xextproto-devel}
-%{?_enable_gtk:BuildRequires: gtk+-devel > 1.2}
 %{?_with_x:BuildRequires: libXt-devel xorg-cf-files}
 
 %description
@@ -114,7 +112,6 @@ and SMPTE 314M.
     --disable-asm \
 %endif
     %{subst_enable sdl} \
-    %{subst_enable gtk} \
     %{subst_enable xv} \
     %{subst_with x} \
     %{?pal_yuv:--with-pal-yuv=%pal_yuv}
@@ -162,6 +159,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt5.7
+- Rebuilt without libgtk+.
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt5.6
 - Fixed build
 

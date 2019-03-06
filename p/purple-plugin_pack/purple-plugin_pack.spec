@@ -2,12 +2,11 @@
 %add_findprov_lib_path %_libdir/purple-2
 
 %define pidgin_ver 2.0.0
-%def_enable xmms
 
 Summary: Plugin Pack for libpurple and derived IM clients
 Name: purple-plugin_pack
 Version: 2.7.0
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Networking/Instant messaging
 Url: http://plugins.guifications.org/
@@ -30,10 +29,6 @@ BuildRequires: python-modules
 BuildRequires: libjson-glib-devel
 BuildRequires: zlib-devel
 
-%if_enabled xmms
-BuildRequires: libxmms-devel gtk+-devel
-%endif
-
 Obsoletes: gaim-plugin_pack
 
 %description
@@ -49,16 +44,6 @@ Provides: gaim-plugin_pack = %version-%release
 
 %description -n pidgin-plugin_pack
 All the other plugins for Pidgin
-
-%if_enabled xmms
-%package -n pidgin-plugin-xmms
-Summary:    XMMS plugin for Pidgin
-Group:      Networking/Instant messaging
-Requires:   pidgin >= %pidgin_ver
-
-%description -n pidgin-plugin-xmms
-xmms-remote - Control xmms from Pidgin conversations
-%endif
 
 %prep
 %setup -q -n purple-plugin-pack-%version
@@ -84,18 +69,12 @@ xmms-remote - Control xmms from Pidgin conversations
 %doc AUTHORS ChangeLog COPYING README
 %_libdir/pidgin/*.so
 %exclude %_libdir/pidgin/*.la
-%exclude %_libdir/pidgin/xmmsremote.so
-%dir %_datadir/pixmaps/pidgin/plugin_pack
 %_datadir/pixmaps/pidgin/protocols/??/*
-%exclude %_datadir/pixmaps/pidgin/plugin_pack/xmmsremote
-
-%if_enabled xmms
-%files -n pidgin-plugin-xmms
-%_libdir/pidgin/xmmsremote.so
-%_datadir/pixmaps/pidgin/plugin_pack/xmmsremote
-%endif
 
 %changelog
+* Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.0-alt2
+- Removed xmms plugin subpackage.
+
 * Tue Mar 13 2012 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
 - 2.7.0
 
