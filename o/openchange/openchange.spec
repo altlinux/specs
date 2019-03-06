@@ -6,7 +6,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt34.zentyal23
+Release: alt35.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -192,6 +192,11 @@ ln -s %_includedir/samba-4.0/private/libcli libcli
 mkdir -p bin
 mkdir -p setup/mapistore
 
+# fix FTBFS against libmysqlclient21
+CFLAGS="%optflags -I%_includedir/mysql"
+CXXFLAGS="%optflags -I%_includedir/mysql"
+export CFLAGS CXXFLAGS
+
 ./autogen.sh
 %configure \
 %if_enabled python
@@ -324,6 +329,10 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.4-alt35.zentyal23
+- Fix FTBFS against libmysqlclient21
+  + spec: add missing include subdirectory to find udf_registration_types.h
+
 * Tue Jan 29 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt34.zentyal23
 - Rebuild with merged samba and samba-DC packages
 
