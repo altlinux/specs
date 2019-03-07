@@ -10,7 +10,7 @@
 %define minor 9
 %define bugfix 2
 Name: qt5-tools
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -55,8 +55,8 @@ BuildRequires: qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-BuildArch: noarch
 Requires: qt5-base-common
+BuildArch: noarch
 %description common
 Common package for %name
 
@@ -80,7 +80,6 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
-BuildArch: noarch
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
@@ -158,9 +157,9 @@ Requires: %name-common = %EVR
 %patch10 -p1
 %endif
 syncqt.pl-qt5 -version %version 
-%qmake_qt5
 
 %build
+%qmake_qt5
 %make_build
 %make_build -C src/qdoc
 %if_disabled bootstrap
@@ -227,24 +226,24 @@ done
 %_bindir/pixeltool*
 %_bindir/qcollectiongenerator*
 %_bindir/qdoc*
-%_bindir/qhelpconverter*
 %_bindir/qhelpgenerator*
 %_bindir/qtpaths*
 %_bindir/qtdiag*
 %_bindir/qtplugininfo*
 %_bindir/qtattributionsscanner*
+%_bindir/qdistancefieldgenerator*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
 %_qt5_bindir/pixeltool*
 %_qt5_bindir/qcollectiongenerator*
 %_qt5_bindir/qdoc*
-%_qt5_bindir/qhelpconverter*
 %_qt5_bindir/qhelpgenerator*
 %_qt5_bindir/qtpaths*
 %_qt5_bindir/qtdiag*
 %_qt5_bindir/qtplugininfo*
 %_qt5_bindir/qtattributionsscanner*
+%_qt5_bindir/qdistancefieldgenerator*
 %kf5_bindir/qtpaths
 
 %if_enabled qtconfig
@@ -316,6 +315,7 @@ done
 %exclude %_qt5_docdir/qtassistant/
 %exclude %_qt5_docdir/qtassistant.qch
 %endif
+%_qt5_examplesdir/*
 
 #%files -n libqt5-uitools
 #%_qt5_libdir/libQt5UiTools.so.*
@@ -329,6 +329,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Mar 06 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

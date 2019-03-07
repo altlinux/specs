@@ -28,8 +28,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.11.3
-Release: alt3
+Version: 5.12.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -41,21 +41,19 @@ Source: %qt_module-opensource-src-%version.tar
 # FC
 Patch1:  qtwebengine-everywhere-src-5.10.0-linux-pri.patch
 Patch2:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
-Patch3:  qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
+Patch3:  qtwebengine-opensource-src-5.12.1-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
 Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
 Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
-Patch10: qtwebengine-everywhere-src-5.10.0-gn-bootstrap-verbose.patch
-Patch11: qtwebengine-everywhere-src-5.10.0-icu59.patch
-Patch12: qtwebengine-everywhere-src-5.10.1-gcc8-alignof.patch
-Patch13: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
-
+Patch10: qtwebengine-everywhere-src-5.12.0-gn-bootstrap-verbose.patch
+Patch11: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
+# SuSE
+Patch30: chromium-non-void-return.patch
 # ALT
-Patch100: alt-pepflashplayer.patch
-Patch101: alt-codecs.patch
+Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
@@ -64,10 +62,11 @@ Patch102: alt-fix-shrank-by-one-character.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): libavformat-devel
+BuildRequires: libstdc++-devel-static
 %if %is_ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel
 %endif
-BuildRequires: libvpx5-devel
+BuildRequires: libvpx-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel
@@ -108,7 +107,6 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -147,6 +145,7 @@ Requires: qt5-quickcontrols2
 %def_disable system_icu
 %endif
 %setup -n %qt_module-opensource-src-%version
+mv .gear/gn src/3rdparty/
 mv .gear/chromium src/3rdparty/
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch1 -p1
@@ -159,24 +158,21 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %if_enabled no_sse2
 %patch6 -p1
 %endif
-%patch7 -p1
+#%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%if_enabled system_icu
-#%patch11 -p1
-%endif
-%patch12 -p1
-%patch13 -p1
+%patch11 -p1
 #
-%patch100 -p1
+%patch30 -p1
+#
 %patch101 -p1
 %patch102 -p1
 syncqt.pl-qt5 -version %version
 
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
-sed -i -e 's!gpu//!gpu/!g' \
-  src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
+#sed -i -e 's!gpu//!gpu/!g' \
+#  src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
 # and another one in 2 files in WebRTC
 sed -i -e 's!audio_processing//!audio_processing/!g' \
   src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
@@ -227,6 +223,7 @@ mkdir -p bin
 ln -s %_bindir/ninja-build bin/ninja
 
 %build
+%add_optflags -Wno-error=return-type
 export PATH=$PWD/bin:$PATH
 %if_enabled no_sse2
 # workaround against linking
@@ -249,12 +246,13 @@ export OPTFLAGS=`echo "$OPTFLAGS" | sed -e 's/ -g / -g1 /g'`
 export OPTFLAGS=`echo "$OPTFLAGS" | sed -e 's/ -g / -g1 /g'`
 %endif
 export RPM_OPT_FLAGS="$OPTFLAGS"
-export CFLAGS="$OPTFLAGS"
+export CFLAGS="$OPTFLAGS" CXXFLAGS="$OPTFLAGS"
 
 mkdir -p %_target_platform
 pushd %_target_platform
 #    CONFIG+="webcore_debug v8base_debug" \
 %_qt5_qmake \
+    QMAKE_CFLAGS="$CFLAGS" \
     QMAKE_CXXFLAGS="$CXXFLAGS" \
     CONFIG+="release force_debug_info pulseaudio system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
     WEBENGINE_CONFIG+=" use_proprietary_codecs enable_hevc_demuxing use_spellchecker" \
@@ -263,7 +261,7 @@ pushd %_target_platform
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
 %endif
 %if %is_ffmpeg
-    QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
+    QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg -webengine-proprietary-codecs" \
 %endif
     ..
 (while true; do date; sleep 7m; done) &
@@ -327,6 +325,7 @@ done
 
 %files doc
 %_qt5_docdir/*
+%_qt5_examplesdir/*
 
 %files devel
 %_bindir/qwebengine_convert_dict*
@@ -345,6 +344,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Wed Feb 27 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt3
 - update build requires
 

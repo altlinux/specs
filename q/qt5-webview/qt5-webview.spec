@@ -1,7 +1,7 @@
 %define qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -34,7 +34,6 @@ Requires: qt5-base-devel rpm-build-qml
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -80,8 +79,12 @@ syncqt.pl-qt5 -version %version
 
 %files doc
 %_qt5_docdir/*
+%_qt5_examplesdir/*
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

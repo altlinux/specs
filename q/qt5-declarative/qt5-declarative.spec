@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -16,9 +16,6 @@ Source1: qml
 Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-# FC
-Patch10: qtdeclarative-opensource-src-5.9.0-no_sse2.patch
-Patch11: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
 
 %include %SOURCE1
 %qml_req_skipall 0
@@ -27,7 +24,7 @@ Patch11: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
 %define __find_requires %SOURCE4
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -104,6 +101,13 @@ Requires: %name-common = %EVR
 %description -n libqt5-quickwidgets
 %summary
 
+%package -n libqt5-quickshapes
+Group: System/Libraries
+Summary: Qt5 - library
+Requires: %name-common = %EVR
+%description -n libqt5-quickshapes
+%summary
+
 %package -n rpm-build-qml
 Group: Development/Other
 Summary: RPM helper macros to rebuild QML packages
@@ -114,8 +118,6 @@ QML modules by some Alt Linux Team Policy compatible way.
 %prep
 %include %SOURCE2
 %setup -n %qt_module-opensource-src-%version
-%patch10 -p1
-#%patch11 -p1
 syncqt.pl-qt5 -version %version 
 
 %build
@@ -167,17 +169,18 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %if_disabled bootstrap
 %_qt5_docdir/*
 %endif
+%_qt5_examplesdir/*
 
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
 %_qt5_qmldir/builtins.qmltypes
 %_qt5_qmldir/Qt/labs/folderlistmodel/
-%_qt5_qmldir/Qt/labs/handlers/
+%_qt5_qmldir/Qt/labs/qmlmodels/
 %_qt5_qmldir/Qt/labs/settings/
 %_qt5_qmldir/Qt/labs/sharedimage/
+%_qt5_qmldir/Qt/labs/wavefrontmesh/
 %_qt5_qmldir/QtQml/*
 %_qt5_qmldir/QtQuick/LocalStorage/
-%_qt5_qmldir/QtQuick/XmlListModel/
 %_qt5_qmldir/QtQuick/Layouts/
 %_qt5_qmldir/QtQuick/Shapes/
 
@@ -199,6 +202,10 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 
 %files -n libqt5-quickwidgets
 %_qt5_libdir/libQt5QuickWidgets.so.*
+
+%files -n libqt5-quickshapes
+%_qt5_libdir/libQt5QuickShapes.so.*
+
 
 %files devel
 %_bindir/qml*
@@ -236,6 +243,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

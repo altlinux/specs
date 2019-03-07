@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -55,7 +55,6 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -145,8 +144,12 @@ export QT_HASH_SEED=0
 %if_disabled bootstrap
 %_qt5_docdir/*
 %endif
+%_qt5_examplesdir/*
 
 %changelog
+* Wed Mar 06 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

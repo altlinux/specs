@@ -31,8 +31,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.11.3
-Release: alt3
+Version: 5.12.2
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -59,10 +59,9 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
-Patch1006: e2k-qt-5.9.6.patch
+Patch1006: e2k-qt-5.12.2.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 Patch1008: alt-mkspecs-features.patch
-Patch1009: alt-sql-mysql.patch
 
 # macros
 %define _qt5 %gname
@@ -379,13 +378,12 @@ EGL integration library for the Qt%major toolkit
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
-%patch1005 -p1 -b .dpi
+#%patch1005 -p1 -b .hidpi-scale
 %ifarch %e2k
 %patch1006 -p1 -b .e2k
 %endif
 %patch1007 -p1
 %patch1008 -p1
-%patch1009 -p1
 bin/syncqt.pl -version %version
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -401,7 +399,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QM
 
 # remove some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
-rm -rf freetype libjpeg libpng pcre2 sqlite zlib xcb xkbcommon
+rm -rf freetype libjpeg libpng zlib xcb
 popd
 
 %build
@@ -476,8 +474,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -system-pcre \
     -system-zlib \
     -system-harfbuzz \
-    -sm -xcb -system-xcb \
-    -xkb -system-xkbcommon \
+    -sm -xcb -xcb-xinput -system-xcb \
+    -xkb -xkbcommon \
     #
 
 %make_build
@@ -609,7 +607,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %files -n qt5-qtbase-gui
 
 %files common
-%doc LICENSE.* LGPL_EXCEPTION.txt
+%doc LICENSE.*
 %dir %_sysconfdir/qt5/
 %dir %_qt5_docdir/
 %dir %_qt5_archdatadir/
@@ -798,6 +796,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt3
 - build with new libmysqlclient
 

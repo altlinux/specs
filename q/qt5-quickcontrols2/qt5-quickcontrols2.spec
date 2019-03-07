@@ -3,7 +3,7 @@
 #qml_add_req_skip HelperWidgets
 
 Name: qt5-quickcontrols2
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -99,12 +99,8 @@ syncqt.pl-qt5 -version %version
 %_qt5_qmldir/QtQuick/Templates.2/
 
 %files doc
-%_qt5_docdir/qtquickcontrols2.qch
-%_qt5_docdir/qtquickcontrols2/
-%_qt5_docdir/qtlabsplatform.qch
-%_qt5_docdir/qtlabsplatform/
-%_qt5_docdir/qtlabscalendar.qch
-%_qt5_docdir/qtlabscalendar/
+%_qt5_docdir/*
+%_qt5_examplesdir/*
 
 %files -n libqt5-quicktemplates2
 %_qt5_libdir/libQt?QuickTemplates2.so.*
@@ -128,6 +124,9 @@ syncqt.pl-qt5 -version %version
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Thu Mar 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

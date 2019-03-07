@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt5-doc
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: Development/KDE and QT
@@ -67,7 +67,9 @@ Requires: %name-common = %EVR
 syncqt.pl-qt5 -version %version 
 
 %build
-%qmake_qt5
+%qmake_qt5 \
+    QT_BUILD_PARTS-=examples \
+    #
 %make_build
 export QT_HASH_SEED=0
 %make docs
@@ -80,6 +82,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

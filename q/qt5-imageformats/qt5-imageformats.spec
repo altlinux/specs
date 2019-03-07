@@ -5,7 +5,7 @@
 %def_enable fmt_jp2
 
 Name: qt5-imageformats
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -73,7 +73,7 @@ export QT_HASH_SEED=0
 
 %files common
 %files
-%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
+%doc LICENSE*EXCEPT*
 %_qt5_plugindir/imageformats/*.so
 %_libdir/cmake/Qt5Gui/Qt5Gui_*Plugin.cmake
 
@@ -81,6 +81,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Thu Mar 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
