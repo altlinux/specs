@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.9
-Release: alt1%ubt
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -15,8 +15,6 @@ Url: http://www.libsdl.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://www.libsdl.org/release/%name-%version.tar.gz
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildPreReq: libXext-devel
 BuildPreReq: libdbus-devel
@@ -67,6 +65,7 @@ to develop SDL applications.
 
 %build
 %configure \
+    --enable-video-vulkan \
     --enable-video-wayland \
     --disable-static
     
@@ -92,6 +91,9 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Thu Mar 07 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.9-alt2
+- Add vulkan support (ALT #36246)
+
 * Fri Nov 02 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.9-alt1%ubt
 - Version 2.0.9
 
