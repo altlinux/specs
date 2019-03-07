@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.13
 %define xdg_name org.gnome.Geary
@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Email client
@@ -79,6 +79,9 @@ subst "/\--thread/d" src/meson.build
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Mar 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.2-alt1
+- 0.13.2
+
 * Thu Feb 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
 - updated to geary-0.13.1-1-g618d33eb
 
