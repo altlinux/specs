@@ -8,8 +8,8 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.12.7
-Release: alt3
+Version: 5.12.8
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -147,6 +147,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
+- new version
+
 * Wed Nov 21 2018 Pavel Moseev <mars@altlinux.org> 1:5.12.7-alt3
 - add two patches to fix comic widget crash
 

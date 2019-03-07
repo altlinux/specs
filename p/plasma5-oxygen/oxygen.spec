@@ -1,8 +1,8 @@
 %define rname oxygen
 
 Name: plasma5-%rname
-Version: 5.12.7
-Release: alt1.qa1
+Version: 5.12.8
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -99,6 +99,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
+- new version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.12.7-alt1.qa1
 - NMU: applied repocop patch
 

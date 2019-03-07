@@ -17,10 +17,15 @@
 %define libcolorcorrect libcolorcorrect%colorcorrect_sover
 
 %def_disable qalculate
+%_K5if_ver_gteq %ubt_id M90
+%def_enable appstream
+%else
+%def_disable appstream
+%endif
 
 Name: plasma5-workspace
-Version: 5.12.7
-Release: alt13
+Version: 5.12.8
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -29,14 +34,14 @@ Summary: KDE Workspace 5 Plasma
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Requires: sddm-theme-breeze
+Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
 Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
 Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
-Requires: sddm-theme-breeze = %EVR
-Requires: %name-qml = %EVR
 
 Source: %rname-%version.tar
 Patch100: alt-startkde.patch
@@ -59,7 +64,7 @@ Patch115: alt-dbus-sessionchange.patch
 Patch117: alt-disable-ctrl-alt-r.patch
 Patch118: alt-session-exclude.patch
 Patch119: alt-freespace-new-thread.patch
-Patch120: alt-krunner-fix-bookmarks.patch
+#
 Patch121: alt-freememorynotifier.patch
 Patch122: alt-systemmonitor-ignoreconfig.patch
 Patch123: alt-fix-general-configuration-widget-correctly-set-check.patch
@@ -74,6 +79,9 @@ BuildRequires: qt5-phonon-devel qt5-script-devel qt5-x11extras-devel
 BuildRequires: libgps-devel libpam0-devel zlib-devel
 %if_enabled qalculate
 libqalculate-devel
+%endif
+%if_enabled appstream
+BuildRequires: appstream-qt-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libxapian-devel prison-devel libnm-devel
@@ -102,7 +110,6 @@ KDE Plasma Workspace
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
 Requires: kf5-filesystem
 Provides: kf5-plasma-workspace-common = %EVR
 Obsoletes: kf5-plasma-workspace-common < %EVR
@@ -201,8 +208,9 @@ popd
 #%patch116 -p1
 %patch117 -p1
 %patch118 -p1
-%patch119 -p2
-%patch120 -p1
+# TODO
+#%patch119 -p2
+#
 %patch121 -p2
 %patch122 -p2
 %patch123 -p2
@@ -271,6 +279,9 @@ done
 %config(noreplace) %_K5xdgconf/*rc
 %config(noreplace) %_K5xdgconf/*.*categories
 %dir %_K5data/desktop-directories/
+%dir %_K5qml/org/kde/plasma/workspace/
+%dir %_K5qml/org/kde/plasma/private/
+%dir %_K5qml/org/kde/plasma/wallpapers/
 
 %files
 %config(noreplace) %x11confdir/wmsession.d/*PLASMA*
@@ -278,10 +289,6 @@ done
 %dir %_K5plug/plasma/
 %dir %_K5plug/plasma/*/
 %dir %_K5plug/phonon_platform/
-%dir %_K5qml/org/kde/plasma/private/
-%dir %_K5qml/org/kde/plasma/wallpapers/
-#%dir %_K5qml/org/kde/plasma/workspace/
-#%dir %_K5qml/org/kde/private/
 %_bindir/*
 %_K5bin/*
 %_K5exec/*
@@ -323,7 +330,6 @@ done
 %endif
 
 %files -n %name-qml
-%dir %_K5qml/org/kde/plasma/workspace/
 %_K5qml/org/kde/plasma/workspace/*/
 
 %files -n sddm-theme-breeze
@@ -364,6 +370,9 @@ done
 
 
 %changelog
+* Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
+- new version
+
 * Tue Feb 12 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt13
 - memory notifier: fix timer
 
