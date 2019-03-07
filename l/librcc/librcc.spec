@@ -1,6 +1,6 @@
 Name: librcc
 Version: 0.2.12
-Release: alt2
+Release: alt3
 
 Summary: RusXMMS Charset Conversion Library
 License: GPL
@@ -11,19 +11,12 @@ Packager: Nick S. Grechukh <gns@altlinux.org>
 Source: %name-%version.tar
 Patch: librcc-0.2.12-alt-gtk3_build.patch
 
-BuildRequires: gcc-c++ gtk+-devel libenca-devel libgtk+2-devel libgtk+3-devel
+BuildRequires: gcc-c++ libenca-devel libgtk+2-devel libgtk+3-devel
 BuildRequires: librcd-devel libxml2-devel libtranslate-devel libguess-devel
 BuildRequires: libaspell-devel libdb4-devel
 
 %description
 RusXMMS Charset Conversion Library.
-
-%package gtk
-Group: Development/Other
-Summary: RusXMMS Encoding Conversion Library GTK1 bindings
-
-%description gtk
-This package contains %name GTK1 bindings.
 
 %package gtk2
 Group: Development/Other
@@ -76,10 +69,6 @@ find %buildroot%_libdir/rcc/engines -depth -name \*.la -delete
 %_libdir/librccui.so.*
 %_libdir/rcc
 
-%files gtk
-%_libdir/librccgtk.so.*
-%_bindir/rcc-gtk-config
-
 %files gtk2
 %_libdir/librccgtk2.so.*
 %_bindir/rcc-gtk2-config
@@ -94,6 +83,9 @@ find %buildroot%_libdir/rcc/engines -depth -name \*.la -delete
 %_libdir/lib*.so
 
 %changelog
+* Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.12-alt3
+- Rebuilt without gtk+.
+
 * Mon Jan 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt2
 - enabled multilanguage support with DB4
 - enabled language autodetection using aspell
