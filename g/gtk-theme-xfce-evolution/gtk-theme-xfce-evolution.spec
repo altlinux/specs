@@ -1,7 +1,7 @@
 %define theme_name "Xfce Evolution"
 
 Name: gtk-theme-xfce-evolution
-Version: 5.6.7
+Version: 5.8.0
 Release: alt1
 Summary: Xfce Evolution is a Gtk2 & Gtk3 themes
 Group: Graphical desktop/XFce
@@ -83,5 +83,8 @@ done
 %_datadir/themes/*/xfwm4/
 
 %changelog
+* Thu Mar 07 2019 Mikhail Efremov <sem@altlinux.org> 5.8.0-alt1
+- Updated to 5.8.0.
+
 * Thu Feb 14 2019 Mikhail Efremov <sem@altlinux.org> 5.6.7-alt1
 - Initial build.
