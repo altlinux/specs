@@ -1,12 +1,11 @@
 Name:		etcnet
-Version:	0.9.17
-Release:	alt2
-#Url:		http://etcnet.org/
-Url:		https://www.altlinux.org/Etcnet
+Version:	0.9.18
+Release:	alt1
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
 Group:		System/Base
+Url:		https://www.altlinux.org/Etcnet
 
 Source:		%name-%version.tar
 
@@ -141,6 +140,9 @@ fi
 %files full
 
 %changelog
+* Thu Mar 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.18-alt1
+- dropped iftab/ifrename support
+
 * Mon Jan 21 2019 Fr. Br. George <george@altlinux.ru> 0.9.17-alt2
 - remove incorrect quotation when doing restart (Closes: #35943)
 
