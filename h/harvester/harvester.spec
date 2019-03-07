@@ -1,13 +1,13 @@
 Name:		harvester
 Summary:	OpenVZ stats harvester
 Version:	0.1
-Release:	alt2
+Release:	alt3
 Group:		Monitoring
 License:	GPL
 Packager: 	Mikhail Pokidko <pma@altlinux.org>
 Source:		%name-%version-%release.tar
 
-Requires: python-modules python-modules-encodings python-module-simplejson python-module-MySQLdb
+Requires: python-modules python-modules-encodings python-module-simplejson python-module-mysqlclient
 BuildArch: noarch
 
 %description
@@ -23,7 +23,7 @@ Requires: python-module-django >= 0.10-alt1
 OVZ harvester web interface.
 
 %prep
-%setup -q
+%setup
 
 %install
 mkdir -p %buildroot%_datadir/%name \
@@ -49,6 +49,9 @@ install -pm 640 %name.conf %buildroot%_sysconfdir/%name/
 
 
 %changelog
+* Thu Mar 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt3
+- fix build with python-module-mysqlclient
+
 * Mon Apr 09 2012 Mikhail Pokidko <pma@altlinux.org> 0.1-alt2
 - _mysql_exception --> _mysql
 
