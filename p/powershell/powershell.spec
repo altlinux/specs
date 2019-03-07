@@ -3,7 +3,7 @@
 
 Name: powershell
 Version: 6.0.0
-Release: alt3
+Release: alt5
 
 Summary: PowerShell for every system!
 
@@ -30,9 +30,6 @@ BuildRequires: cmake gcc-c++ dotnet >= 2.0.0 dotnet-sdk >= 2.0.0
 # for libpsl-native build
 BuildRequires: ctest libgtest-devel
 
-# hack until new dotnet-coreclr will released
-BuildRequires: libicu56
-
 # >= 1.2.100035
 Requires: libomi >= 1.2.0
 BuildRequires: libpsrp
@@ -58,6 +55,15 @@ an associated scripting language and a framework for processing cmdlets.
 #rm -f DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY
 
 %build
+# make native library in any case
+pushd src/libpsl-native
+%cmake_insource -DCMAKE_BUILD_TYPE=Debug
+%make_build
+# need LANG due FAILED LocaleTest
+# FIXME: commented out due hasher
+#LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix make test
+popd
+
 %if_without prebuild
 #export NUGET_PACKAGES=$(pwd)/nuget
 #export NUGET_FALLBACK_PACKAGES=$(pwd)/nuget-fallback
@@ -69,14 +75,6 @@ sh -x ./build.sh || :
 # /usr/lib64/dotnet/sdk/2.0.0-preview1-005977/Microsoft.Common.CurrentVersion.targets(4326,5): error MSB3030: Could not copy the file "/tmp/.private/lav/RPM/BUILD/powershell-6.0.0/DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY" because it was not found.
 touch DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY
 echo "%version-%release" > powershell.version
-
-pushd src/libpsl-native
-%cmake_insource -DCMAKE_BUILD_TYPE=Debug
-%make_build
-# need LANG due FAILED LocaleTest
-# FIXME: commented out due hasher
-#LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix make test
-popd
 
 #dotnet msbuild src/Microsoft.PowerShell.SDK/Microsoft.PowerShell.SDK.csproj /t:_GetDependencies "/property:DesignTimeBuild=true;_DependencyFile=$(pwd)/src/TypeCatalogGen/powershell.inc" /nologo
 
@@ -101,6 +99,9 @@ dotnet build --configuration Linux
 %if_with prebuild
 mkdir -p %buildroot%_libdir/%name/
 cp -a %name-prebuild/* %buildroot%_libdir/%name/
+# hack to use latest runtime
+%__subst "s|2.0.0-preview1-002111-00|2.1.6|g" %buildroot%_libdir/%name/powershell.runtimeconfig.json
+cp -f src/powershell-unix/libpsl-native.so %buildroot%_libdir/%name/
 %else
 #dotnet publish --configuration Linux src/powershell-unix/ --output %buildroot%_libdir/%name/ --runtime linux-x64
 dotnet publish --configuration Linux src/powershell-unix/ --output %buildroot%_libdir/%name/
@@ -129,6 +130,13 @@ cp %SOURCE2 %buildroot%_man1dir/
 %doc docs/*
 
 %changelog
+* Thu Mar 07 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt5
+- drop obsoleted libicu56 require (ALT bug 36210)
+- add hack to use latest runtime (ALT bug 36198)
+
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt4
+- always build libpsl-native.so
+
 * Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt3
 - add dotnet requires
 
