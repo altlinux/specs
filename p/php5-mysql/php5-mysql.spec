@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	MySQL database module for PHP5
 Group:		System/Servers
@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
 Conflicts: php5-mysqlnd-mysql
 
-BuildRequires: libmysqlclient20-devel
+BuildRequires: libmysqlclient-devel
 
 %description
 The %name package includes a dynamic shared object (DSO) that adds MySQL
@@ -61,6 +61,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Wed Mar 06 2019 Nikolai Kostrigin <nickel@altlinux.org> php5-mysql-5.6.38.20180912-alt1.1
+- Change explicit libmysqlclient20-devel BR to libmysqlclient-devel
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
