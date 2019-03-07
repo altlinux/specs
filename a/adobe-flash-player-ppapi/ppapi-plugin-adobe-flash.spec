@@ -10,7 +10,7 @@ Name: adobe-flash-player-ppapi
 %define ver_fake 32
 %define ver_ix86 32.0.0.142
 %define ver_x86_64 32.0.0.142
-Release: alt7
+Release: alt8
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -117,6 +117,9 @@ install -m0644 %SOURCE0 %buildroot/%_desktopdir/
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
 
 %changelog
+* Thu Mar 07 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt8
+- fix cronbuild support
+
 * Wed Mar 06 2019 Sergey V Turchin <zerg@altlinux.org> 3:32-alt7
 - fix cronbuild support
 
