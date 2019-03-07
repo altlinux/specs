@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define theme sisyphus
 %define Theme Sisyphus
 %define codename sisyphus
@@ -6,19 +9,15 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20170925
+Version: 20190303
 Release: alt1
 
 Url: http://en.altlinux.org
 
-BuildArch: noarch
+BuildRequires: cpio fonts-ttf-dejavu
 
-BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
-BuildRequires: design-bootloader-source >= 5.0-alt2
-
-BuildRequires(pre): libqt4-core
+BuildRequires: qt5-base-devel
 BuildRequires: libalternatives-devel
-BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 BuildRequires: fribidi
@@ -43,12 +42,15 @@ License: GPL
 %description
 Distro-specific packages with design and texts
 
+%ifarch %ix86 x86_64
 %package bootloader
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 License: GPL
 
-PreReq: coreutils
+BuildRequires: gfxboot >= 4
+BuildRequires: design-bootloader-source >= 5.0-alt2
+Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
@@ -67,12 +69,12 @@ License: Distributable
 Group:  System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-script
-PreReq: plymouth
+Requires: plymouth
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootsplash ";done )
 %description bootsplash
 This package contains graphics for boot process, displayed via Plymouth
-
+%endif #ifarch
 
 %package alterator
 Summary: Design for alterator for %Brand %Theme
@@ -84,7 +86,7 @@ Obsoletes: branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-alterator-browser-desktop design-alterator-browser-server
-PreReq(post,preun): alternatives >= 0.2 alterator
+Requires: alternatives >= 0.2 alterator
 
 %description alterator
 Design for QT and web alterator for %Brand %Theme
@@ -97,7 +99,7 @@ Group: Graphics
 Provides: design-graphics-%theme branding-alt-%theme-graphics
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 Obsoletes: branding-alt-%theme-graphics design-graphics-%theme
-PreReq(post,preun): alternatives >= 0.2
+Requires: alternatives >= 0.2
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 Conflicts: design-graphics-default
 
@@ -108,7 +110,6 @@ This package contains some graphics for ALT design.
 %define obsolete_list altlinux-release fedora-release redhat-release
 %define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
 %package release
-
 Summary: %distribution %Theme release file
 Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
@@ -130,68 +131,6 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 
 %description notes
 Distribution license and release notes
-
-%package kde4-settings
-
-Summary: KDE4 settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/KDE
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde4-settings ";done )
-PreReq: %name-graphics
-
-%description kde4-settings
-KDE4 settings for %Brand %version %Theme
-
-%package kde3-settings
-
-Summary: KDE3 settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/KDE
-PreReq: %name-graphics
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
-
-%description kde3-settings
-KDE3 settings for %Brand %version %Theme
-
-%package themes
-
-Summary: Themes for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/GNOME
-Provides: gnome-theme-%brand-%theme = %version-%release
-Provides: metacity-theme-%brand-%theme = %version-%release
-Provides: metacity-theme
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-themes ";done )
-
-%description themes
-%Brand %version %Theme themes
-
-%package gnome-settings
-
-Summary: GNOME settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/GNOME
-Requires: gtk2-theme-mist
-Requires: %name-themes = %version-%release
-#Provides: gnome-menus
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
-
-%description gnome-settings
-GNOME settings for %Brand %version %Theme
-
-%package xfce-settings
-
-Summary: XFCE settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/XFce
-Requires: PolicyKit-gnome
-Requires: %name-themes = %version-%release
-Obsoletes: xfce-settings-lite xfce-settings-school-lite
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
-
-%description xfce-settings
-XFCE settings for %Brand %version %Theme
-
 
 %package slideshow
 
@@ -280,87 +219,11 @@ pushd notes
 %makeinstall
 popd
 
-#kde4-settings
-pushd kde4-settings
-mkdir -p %buildroot%_sysconfdir/skel/.kde4
-cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
-mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
-install -m 644 menu/* %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
-popd
-
-#kde3-settings
-pushd kde3-settings
-mkdir -p %buildroot%_sysconfdir/skel/.kde
-cp -a kde/* %buildroot%_sysconfdir/skel/.kde/
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/config
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/apps
-cp -a config/* %buildroot%_sysconfdir/skel/.kde/share/config/
-cp -a apps/* %buildroot%_sysconfdir/skel/.kde/share/apps/
-popd
-
-#kde3-splash
-pushd kde3-styles-splash
-mkdir -p "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme"
-install -m 644 *.jpg "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.png "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.rc "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-popd
-
-#gnome-settings
-%define XdgThemeName %Brand %Theme
-pushd gnome-settings
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-install -m 644 gtkrc '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1'
-install -m 644 metacity-theme-1.xml '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1/'
-install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
-mkdir -p '%buildroot/etc/gnome/xdg/menus/applications-merged/'
-install -m 644 applications.menu '%buildroot/etc/gnome/xdg/menus/applications-merged/'
-mkdir -p '%buildroot/etc/xdg/menus/'
-install -m 644 settings.menu '%buildroot/etc/xdg/menus/'
-cp -a skel/.gconf '%buildroot/etc/skel/'
-popd
-
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
 
-#xfce-settings
-pushd xfce-settings
-mkdir -p %buildroot/etc/skel/.config/xfce4/desktop
-mkdir -p %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-mkdir -p %buildroot/etc/skel/.config/xfce4/panel
-mkdir -p %buildroot/etc/skel/.config/xfce4-session
-mkdir -p %buildroot/etc/skel/.config/autostart
-mkdir -p %buildroot/etc/skel/.local/share/applications
-mkdir -p %buildroot/etc/skel/Templates
-install -m 644 etcskel/Templates/* %buildroot/etc/skel/Templates/
-install -m 644 etcskel/.config/xfce4/helpers.rc %buildroot/etc/skel/.config/xfce4/
-install -m 644 etcskel/.config/xfce4/desktop/* %buildroot/etc/skel/.config/xfce4/desktop
-install -m 644 etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/* %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-install -m 644 etcskel/.config/xfce4/panel/* %buildroot/etc/skel/.config/xfce4/panel
-install -m 644 etcskel/.config/xfce4-session/* %buildroot/etc/skel/.config/xfce4-session/
-install -m 644 etcskel/.config/autostart/* %buildroot/etc/skel/.config/autostart
-install -m 644 etcskel/.local/share/applications/* %buildroot/etc/skel/.local/share/applications
-install -m 644 etcskel/.wm-select %buildroot/etc/skel/
-install -m 644 etcskel/.Xdefaults %buildroot/etc/skel/
-
-mkdir -p %buildroot/usr/share/xfce4/backdrops
-install -m 644 ../graphics/backgrounds/default.png %buildroot/usr/share/xfce4/backdrops
-install -m 644 ../graphics/backgrounds/xdm.png %buildroot/usr/share/xfce4/backdrops
-mkdir -p '%buildroot/usr/share/themes/ALTLinux-%Theme/gtk-2.0'
-install -m 644 themes/ALTLinux/gtk-2.0/* '%buildroot/usr/share/themes/ALTLinux-%Theme/gtk-2.0/'
-install -m 644 themes/ALTLinux/*.png '%buildroot/usr/share/themes/ALTLinux-%Theme/'
-
-mkdir -p %buildroot/%_bindir
-install -m 755 bin/* %buildroot/%_bindir
-
-mkdir -p %buildroot/etc/sysconfig/
-install -m 644 xinitrc %buildroot/etc/sysconfig/xinitrc.xfce
-popd
-
+%ifarch %ix86 x86_64
 #bootloader
 %pre bootloader
 [ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
@@ -382,10 +245,12 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 [ $1 = 0 ] || exit 0
 [ "`readlink /boot/splash/message`" != "%theme/message" ] ||
     rm -f /boot/splash/message
+%endif #ifarch
 
 %post indexhtml
 %_sbindir/indexhtml-update
 
+%ifarch %ix86 x86_64
 %files bootloader
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
@@ -396,13 +261,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ -f /etc/sysconfig/grub2 ] && \
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
-
-%post gnome-settings
-%gconf2_set string /desktop/gnome/interface/font_name Sans 11
-%gconf2_set string /desktop/gnome/interface/monospace_font_name Monospace 10
-
-%post xfce-settings
-cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
+%endif #ifarch
 
 %files alterator
 %config %_altdir/*.rcc
@@ -413,8 +272,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 
+%ifarch %ix86 x86_64
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
+%endif #ifarch
 
 %files release
 %_sysconfdir/*-release
@@ -422,22 +283,6 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 %files notes
 %_datadir/alt-notes/*
-
-%files kde4-settings
-%_sysconfdir/skel/.kde4
-%_sysconfdir/kde4/xdg/menus/applications-merged/*
-
-%files kde3-settings
-%_sysconfdir/skel/.kde
-%_datadir/apps/ksplash/Themes/*
-
-%files themes
-%_datadir/themes/*
-
-%files gnome-settings
-#/etc/gnome/xdg/menus/applications-merged/
-#/etc/xdg/menus/*
-/etc/skel/.gconf
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -451,20 +296,16 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 %indexhtmldir/img
 %_desktopdir/indexhtml.desktop
 
-%files xfce-settings
-/etc/skel/Templates
-%exclude /etc/skel/Templates/*
-/etc/skel/.wm-select
-/etc/skel/.Xdefaults
-/etc/skel/.config
-/etc/skel/.config
-/etc/skel/.local
-/usr/share/xfce4/backdrops
-/etc/sysconfig/xinitrc.xfce
-%_bindir/*
-
-
 %changelog
+* Sun Mar 03 2019 Anton Midyukov <antohami@altlinux.org> 20190303-alt1
+- Cleanup plymouth theme (Closes: 36179)
+- Use resources generator from Qt5
+- Use _unpackaged_files_terminate_build
+- drop kde3-settings
+- drop kde4-settings
+- drop gnome-settings and gnome-themes
+- fix build for non-x86
+
 * Mon Sep 25 2017 Michael Shigorin <mike@altlinux.org> 20170925-alt1
 - don't require ksplash-engine-moodin (zerg@)
 
