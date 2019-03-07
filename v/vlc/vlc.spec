@@ -1,8 +1,9 @@
 %def_disable freerdp
+%def_disable goom
 
 Name: vlc
 Version: 3.0.6
-Release: alt2
+Release: alt3
 
 Summary: VLC media player
 License: GPLv2
@@ -25,7 +26,7 @@ BuildRequires: libmad-devel libmodplug-devel libspeex-devel libspeexdsp-devel li
 BuildRequires: libncurses-devel libncursesw-devel libogg-devel libpng-devel
 BuildRequires: libstdc++-devel libtheora-devel libtiff-devel libtinfo-devel
 BuildRequires: libvcd-devel libvorbis-devel libxml2-devel
-BuildRequires: libpulseaudio-devel libgoom-devel libx264-devel vim-devel
+BuildRequires: libpulseaudio-devel libx264-devel vim-devel
 BuildRequires: jackit-devel liblame-devel zlib-devel libavahi-devel dbus
 BuildRequires: libtag-devel libfluidsynth-devel libdbus-devel
 BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
@@ -43,9 +44,10 @@ BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel 
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
 BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
+%{?_enable_goom:BuildRequires: libgoom-devel}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
-%define allplugins aa ass audiocd bluray caca chromaprint dbus dv dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls goom h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast projectm pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml
+%define allplugins aa ass audiocd bluray caca chromaprint dbus dv dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast projectm pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom}
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -660,7 +662,7 @@ export BUILDCC=gcc
 	--enable-fribidi \
 	--enable-gles2 \
 	--enable-gnutls \
-	--enable-goom \
+	%{subst_enable goom} \
 	--enable-httpd \
 	--enable-jack \
 	--enable-kate \
@@ -1162,8 +1164,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/liblinsys_sdi_plugin.so
 %vlc_plugindir/access/liblinsys_hdsdi_plugin.so
 
+%if_enabled goom
 %files plugin-goom
 %vlc_plugindir/visualization/libgoom_plugin.so
+%endif
 
 %files plugin-v4l
 %vlc_plugindir/access/libv4l2_plugin.so
@@ -1378,6 +1382,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Mar 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.6-alt3
+- Added goom knob (disable by default to get rid of libgoom ->
+  libxmms -> glib in Sisyphus).
+
 * Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 3.0.6-alt2
 - added upstream path for build with libvpx-1.8.0
 
