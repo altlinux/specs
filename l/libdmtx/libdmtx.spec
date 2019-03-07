@@ -1,6 +1,6 @@
 Name: libdmtx
 Version: 0.7.2
-Release: alt7
+Release: alt8
 Summary: Library for working with Data Matrix 2D bar-codes
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ BuildRequires: libSDL_image-devel libpng-devel
 
 # Automatically added by buildreq on Thu May 12 2011
 # optimized out: fontconfig libGL-devel libGLU-devel libSDL-devel pkg-config python-base python-modules ruby ruby-stdlibs zlib-devel
-BuildRequires: libImageMagick-devel libruby-devel php5-devel python-devel
+BuildRequires: libImageMagick-devel libruby-devel python-devel
 
 %description
 libdmtx is open source software for reading and writing Data Matrix 2D
@@ -48,16 +48,6 @@ official interface to %name from the command line, and also serve as
 a good reference for programmers who wish to write their own programs
 that interact with %name.
 
-# language bindings
-%package -n     php-libdmtx
-Summary: PHP bindings for %name
-Group: System/Libraries
-License: GPLv2+
-Requires: %name = %version-%release
-
-%description -n php-libdmtx
-The php-%name package contains bindings for using %name from PHP.
-
 %package -n     python-module-dmtx
 Summary: Python bindings for %name
 Group: System/Libraries
@@ -87,25 +77,20 @@ The vala-%name package contains bindings for using %name from Vala.
 %setup
 
 # fix permissions
-chmod a-x wrapper/{php,python}/README
 %patch0 -p0
 
-sed -i 's|static function_entry |static zend_function_entry |' wrapper/php/dmtx_write.c
 
 %build
-%configure --disable-static --enable-php --enable-python --enable-ruby --enable-vala
+%configure --disable-static --disable-php --enable-python --enable-ruby --enable-vala
 #  --enable-java           enable Java bindings
 #    --enable-net            enable .NET bindings
 
 # Don't use rpath!
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' wrapper/php/libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' wrapper/php/libtool
-
 sed -i 's@setup.py install@setup.py install --skip-build --root=$(DESTDIR)@' wrapper/python/Makefile
 
 #sed -i 's@^\(RUBY[A-Z]*DIR.*\)site@\1vendor@' wrapper/ruby/Makefile
 
-for d in php python ruby; do echo "check:" >> wrapper/$d/Makefile; done
+for d in python ruby; do echo "check:" >> wrapper/$d/Makefile; done
 
 %make_build CFLAGS="-I`pwd` -fPIC" LDFLAGS=-L`pwd`/.libs LOCAL_LIBS="-L`pwd`/.libs -ldmtx"
 
@@ -136,10 +121,6 @@ popd
 %_bindir/dmtx*
 %_mandir/man1/dmtx*.1*
 
-%files -n php-libdmtx
-%doc COPYING wrapper/php/README
-%_libdir/php/*/*/*.so
-
 %files -n python-module-dmtx
 %doc wrapper/python/README
 %python_sitelibdir/*
@@ -153,6 +134,9 @@ popd
 %_datadir/vala/vapi/libdmtx.vapi
 
 %changelog
+* Thu Mar 07 2019 Anton Farygin <rider@altlinux.ru> 0.7.2-alt8
+- removed php-5 bindings
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.7.2-alt7
 - rebuild with new libImageMagick
 
