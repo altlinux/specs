@@ -1,16 +1,17 @@
 Name:    libcpp-hocon
 Version: 0.2.1
-Release: alt2
+Release: alt3
 Summary: A C++ port of the Typesafe Config library
- 
+
 Group:   System/Libraries
 License: Apache 2.0
 Url:     https://github.com/puppetlabs/cpp-hocon
 Packager: Andrey Cherepanov <cas@altlinux.org>
- 
+
 Source: cpp-hocon-%version.tar
 Patch1: libcpp-hocon-shared-library.patch
- 
+Patch2: libcpp-hocon-0.2.1-fix-Werror-catch-value.patch
+
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
@@ -37,6 +38,7 @@ Development libraries for cpp-hocon.
 %prep
 %setup -n cpp-hocon-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake
@@ -54,6 +56,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt3
+- Fixed FTBFS (Closes #36184).
+
 * Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt2
 - Rebuild with libleatherman 1.5.3.
 
