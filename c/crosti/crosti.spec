@@ -1,5 +1,5 @@
 Name: crosti
-Version: 1.13.2
+Version: 1.14.0
 Release: alt1
 
 Summary: Tool to create cross stitch scheme from custom image
@@ -53,6 +53,12 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/mimetypes/*
 
 %changelog
+* Thu Mar 07 2019 Michael Shigorin <mike@altlinux.org> 1.14.0-alt1
+- new version (watch file uupdate)
+
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.13.3-alt1
+- 1.13.3
+
 * Wed Jul 27 2016 Michael Shigorin <mike@altlinux.org> 1.13.2-alt1
 - added watch file
 - new version (watch file uupdate)
