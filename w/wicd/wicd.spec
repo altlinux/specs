@@ -10,7 +10,7 @@
 
 Name:                wicd
 Version:             1.7.4
-Release:             alt1
+Release:             alt2
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
@@ -32,6 +32,7 @@ BuildRequires:       babel
 BuildRequires:       python-devel
 BuildRequires:       desktop-file-utils
 BuildRequires:       gettext
+BuildRequires:       /usr/bin/pybabel
 
 Requires:            %{name}-common = %{version}-%{release}
 BuildArch:	     noarch
@@ -261,6 +262,9 @@ desktop-file-install \
 %{_datadir}/wicd/icons/*
 
 %changelog
+* Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt2
+- Fixed FTBFS, added /usr/bin/pybabel to BR (Closes: #36223).
+
 * Fri Nov 11 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.4-alt1
 - New version
 
