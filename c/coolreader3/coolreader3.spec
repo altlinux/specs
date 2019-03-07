@@ -1,11 +1,8 @@
-# SPEC file for Cool Reader 3
-#
-
 %define real_name    cr3
 
 Name:     coolreader3
-Version:  3.0.56
-Release:  alt3
+Version:  3.2.29
+Release:  alt1
 
 Summary: E-Book reader
 
@@ -15,23 +12,18 @@ URL:      http://coolreader.org
 #URL: http://sourceforge.net/projects/crengine
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
+# https://github.com/buggins/coolreader
 Source0: %name-%version.tar
-Patch0:  %name-%version-%release.patch
 
 Source1: %real_name-16.png
 Source2: %real_name-32.png
 Source3: %real_name-48.png
 
-Patch1: %name-3.0.54-alt-desktop.patch
-Patch2: %name-3.0.56-save_settings.patch
-Patch3: %name-3.0.56-alt-gcc6.patch
-
 BuildRequires(pre): rpm-build-licenses
 
-
-# Automatically added by buildreq on Wed Sep 10 2014
-# optimized out: cmake-modules fontconfig fontconfig-devel libcloog-isl4 libfreetype-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config zlib-devel
-BuildRequires: cmake gcc-c++ libicu50 libjpeg-devel phonon-devel
+BuildRequires: cmake gcc-c++ libicu-devel libjpeg-devel qt5-phonon-devel
+BuildRequires: qt5-tools-devel libfreetype-devel fontconfig-devel
+BuildRequires: libpcre-devel libuuid-devel libexpat-devel
 BuildRequires(pre): libpng-devel
 
 %description
@@ -42,21 +34,21 @@ CHM, PDB.
 
 %prep
 %setup
-%patch0 -p1
-
-%patch1
-%patch2 -p1
-%patch3
 
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 mkdir qtbuild
 cd qtbuild
-cmake -D GUI=QT -D CMAKE_BUILD_TYPE=Release -D MAX_IMAGE_SCALE_MUL=2 -D DOC_DATA_COMPRESSION_LEVEL=3 -D DOC_BUFFER_SIZE=0x1400000 -D CMAKE_INSTALL_PREFIX=/usr \
-	-DCMAKE_C_FLAGS="%optflags" \
-	-DCMAKE_CXX_FLAGS="%optflags" \
-	..
+cmake -D GUI=QT5 \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DMAX_IMAGE_SCALE_MUL=2 \
+    -DDOC_DATA_COMPRESSION_LEVEL=3 \
+    -DDOC_BUFFER_SIZE=0x1400000 \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_C_FLAGS="%optflags" \
+    -DCMAKE_CXX_FLAGS="%optflags" \
+    ..
 %make VERBOSE=1
 
 %install
@@ -87,6 +79,10 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.29-alt1
+- Build new version (Closes: #36164).
+- Transfer to Qt5.
+
 * Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.0.56-alt3
 - Fix build with GCC 6.3
 
