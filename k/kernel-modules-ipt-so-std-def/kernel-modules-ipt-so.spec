@@ -1,6 +1,6 @@
 %define module_name     ipt-so
 %define module_version  1.0
-%define module_release  alt2
+%define module_release  alt3
 %define flavour         std-def
 
 %setup_kernel_module %flavour
@@ -95,6 +95,10 @@ cat > config.mk <<'EOF'
   PUT_FILES += /%_lib/iptables/lib*.so
   MODULES_ADD += xt_so iptable_filter iptable_security ip_tables
 EOF
+if [ -e /lib/modules/*/kernel/net/bpfilter/bpfilter.ko* ]; then
+  # Required for iptables since v4.18
+  echo MODULES_ADD += bpfilter >> config.mk
+fi
 make-initrd --no-checks --config=/usr/src/config.mk --kernel=%kversion-%flavour-%krelease
 %ifarch i586
 %define qemu qemu-system-i386
