@@ -7,7 +7,7 @@ merges some pull requests.
 %def_enable check
 
 Name: %fname
-Version: 1.4.2
+Version: 1.4.2.post1
 Release: alt1
 
 %if ""==""
@@ -23,14 +23,14 @@ Url: https://pypi.python.org/pypi/mysqlclient/
 # https://github.com/PyMySQL/mysqlclient-python.git
 Source: %name-%version.tar
 
-Conflicts: python-module-MySQLdb
-Conflicts: python-module-MySQLdb2
-
 %if ""!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
 %else
+Conflicts: python3-module-MySQLdb
+Conflicts: python3-module-MySQLdb2
+Provides: python3-module-MySQLdb
 %py3_provides MySQLdb
 %endif
 
@@ -98,6 +98,10 @@ python3 setup.py test
 %endif
 
 %changelog
+* Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2.post1-alt1
+- Upstream changed version without changes.
+- Add provides of python-module-MySQLdb (Closes: #36247).
+
 * Sat Feb 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
 - Build new version.
 
