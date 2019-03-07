@@ -2,7 +2,7 @@
 
 Name: ocaml-mysql
 Version: 1.2.2
-Release: alt3
+Release: alt4
 
 Summary: MySQL bindings for OCaml
 License: LGPL
@@ -11,6 +11,7 @@ Group: Development/ML
 URL: http://ygrek.org.ua/p/ocaml-mysql/
 # https://github.com/ygrek/ocaml-mysql
 Source: ocaml-mysql-%version.tar
+Patch0: ocaml-mysql-1.2.2-alt-mysql8-transition.patch
 
 Requires: %name-runtime = %version-%release
 
@@ -33,6 +34,8 @@ a module Mysql intended for application development.
 
 %prep
 %setup -q
+
+%patch0 -p0
 
 %build
 %configure
@@ -60,6 +63,9 @@ mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.2.2-alt4
+- fix FTBFS against libmysqlclient21
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt3
 - rebuilt with ocaml-4.07.1
 
