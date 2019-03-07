@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.13
+Version: 0.14
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -120,6 +120,9 @@ fi
 %_sysconfdir/autorepo/apt/sources.list.*
 
 %changelog
+* Thu Mar 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- p9 support
+
 * Sat Jan 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - apt configs moved out to apt subpackage
 
