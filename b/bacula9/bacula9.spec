@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method relaxed
 
 %def_enable bat
@@ -10,8 +12,8 @@
 %endif
 
 Name: bacula9
-Version: 9.0.6
-Release: alt4
+Version: 9.4.2
+Release: alt1
 
 License: AGPLv3
 Summary: Network based backup program
@@ -34,11 +36,19 @@ Source13: bacula-sd.service
 Source14: bacula-dir.service
 Source15: %name-gui-%version.tar
 Source16: baculum-apache2.logrotate
+# Image taken from Fedora's bacula package
+Source17: generic.xpm
 Patch1: %name-alt.patch
 Patch2: %name-gui-alt.patch
 Patch3: %name-9.0.6-alt-mysql8-transition.patch
+Patch4: bacula-9.4.0-fedora-seg-fault.patch
 
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
+
+%if_enabled bat
+BuildRequires: qt5-base-devel
+BuildRequires: /usr/bin/convert
+%endif
 
 %filter_from_requires /libbaccats-%version\.so/d
 
@@ -80,12 +90,14 @@ Requires: %name-common = %EVR
 
 %if_enabled bat
 %package bat
-Summary: Network based backup program (QT4 Bacula Administration Tool)
+Summary: Network based backup program (Qt5 Bacula Administration Tool)
 Group: Archiving/Backup
-BuildRequires(pre): libqt4-devel
-Requires: libqt4-core >= %{get_version libqt4-core}
 Conflicts: bacula-bat
 Conflicts: bacula7-bat
+
+%package traymonitor
+Summary: Bacula system tray monitor
+Group: Archiving/Backup
 %endif
 
 %package director-common
@@ -276,6 +288,9 @@ This package contains text based management console.
 %if_enabled bat
 %description bat
 Bacula Administration Tool package.
+
+%description traymonitor
+Tray monitor for your bacula server.
 %endif
 
 %description common
@@ -413,6 +428,7 @@ popd
 %endif
 
 %patch3 -p0
+%patch4 -p1
 
 mv ../%name-icons-%version icons
 
@@ -493,14 +509,25 @@ chmod 755 %buildroot%_bindir/bconsole
 mv %buildroot%_sysconfdir/bacula/bconsole.conf %buildroot%_datadir/bacula/sample-configs/
 
 %if_enabled bat
-mv %buildroot%_sbindir/bat %buildroot%_bindir/bat
+rm -f %buildroot%_sbindir/bat
+install -m755 src/qt-console/.libs/bat %buildroot%_bindir/bat
 install -pD -m644 icons/bat16x16.png %buildroot%_miconsdir/bat.png
 install -pD -m644 icons/bat32x32.png %buildroot%_niconsdir/bat.png
 install -pD -m644 icons/bat48x48.png %buildroot%_liconsdir/bat.png
 install -pD -m644 scripts/bat.desktop %buildroot%_desktopdir/bat.desktop
 mv %buildroot%_sysconfdir/bacula/bat.conf %buildroot%_datadir/bacula/sample-configs/
 install -d %buildroot%_defaultdocdir/bacula/html
-cp -a src/qt-console/help/*.html %buildroot%_defaultdocdir/bacula/html/
+mv %buildroot%_defaultdocdir/bacula/*.{html,png} %buildroot%_defaultdocdir/bacula/html/
+
+# QT Tray monitor
+convert %SOURCE17 bacula-tray-monitor.png
+rm -f %buildroot%_sbindir/bacula-tray-monitor
+install -m755 src/qt-console/tray-monitor/.libs/bacula-tray-monitor %buildroot%_sbindir/bacula-tray-monitor
+install -p -m 644 -D src/qt-console/tray-monitor/tray-monitor.conf %buildroot%_sysconfdir/bacula/tray-monitor.conf
+install -p -m 644 -D manpages/bacula-tray-monitor.1 %buildroot%_man1dir/bacula-tray-monitor.1
+install -p -m 644 -D bacula-tray-monitor.png %buildroot%_pixmapsdir/bacula-tray-monitor.png
+install -p -m 644 -D scripts/bacula-tray-monitor.desktop %buildroot%_desktopdir/bacula-tray-monitor.desktop
+rm -f %buildroot%_datadir/bacula/scripts/bacula-tray-monitor.desktop
 %endif
 
 cp -ar ../%name-configs-default-%version/* %buildroot%_sysconfdir/bacula/
@@ -510,6 +537,10 @@ install -pD -m644 %buildroot%_datadir/bacula/scripts/mtx-changer.conf %buildroot
 sed -i "s|%_datadir/bacula/scripts|%_sysconfdir/bacula|g" %buildroot%_sbindir/mtx-changer
 install -pD -m755 %buildroot%_datadir/bacula/scripts/disk-changer %buildroot%_sbindir
 chmod 755 %buildroot%_sbindir/*
+
+rm -f %buildroot%_datadir/bacula/scripts/mtx-changer
+rm -f %buildroot%_datadir/bacula/scripts/mtx-changer.conf
+rm -f %buildroot%_datadir/bacula/scripts/disk-changer
 
 # install the nagios plugin
 install -d %buildroot%_sysconfdir/nagios/commands
@@ -576,6 +607,18 @@ install -pm 644 %SOURCE16 %buildroot%_sysconfdir/logrotate.d/baculum-apache2
 %find_lang baculum-api baculum-web --output baculum.lang
 %endif
 
+# remove unpackaged files
+rm -f %buildroot%_libdir/libbaccats.so
+rm -f %buildroot%_libdir/libbaccats-%version.so
+rm -fr %buildroot%_sysconfdir/baculum/Config-api-lighttpd
+rm -fr %buildroot%_sysconfdir/baculum/Config-web-lighttpd
+rm -f %buildroot%_sysconfdir/baculum/baculum-api-lighttpd.conf
+rm -f %buildroot%_sysconfdir/baculum/baculum-web-lighttpd.conf
+rm -f %buildroot%_sbindir/bacula
+rm -f %buildroot%_datadir/bacula/scripts/{bacula,bacula-ctl-*,startmysql,stopmysql,bconsole,make_catalog_backup}
+rm -f %buildroot%_prefix%_unitdir/baculum-api-lighttpd.service
+rm -f %buildroot%_prefix%_unitdir/baculum-web-lighttpd.service
+
 %pre common
 %_sbindir/groupadd -r -f bacula
 %_sbindir/useradd -r -n -g bacula -d /var/empty -s /bin/false -c "Bacula pseudo user" bacula >/dev/null 2>&1 ||:
@@ -632,13 +675,22 @@ fi
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-*-password.conf
 %dir %_datadir/bacula
 %dir %_datadir/bacula/scripts
+%_datadir/bacula/scripts/bacula_config
+%_datadir/bacula/scripts/btraceback.mdb
 %dir %_docdir/bacula
+%_docdir/bacula/ReleaseNotes
+%_docdir/bacula/LICENSE
+%_docdir/bacula/ChangeLog
+%_docdir/bacula/INSTALL
+%_docdir/bacula/LICENSE-FAQ
+%_docdir/bacula/LICENSE-FOSS
+%_docdir/bacula/README
+%_docdir/bacula/VERIFYING
+
 %_tmpfilesdir/*
 %_man8dir/bacula.8*
 %_sbindir/bsmtp
 %_man1dir/bsmtp.1*
-%_docdir/bacula/ReleaseNotes
-%_docdir/bacula/LICENSE
 %_libdir/libbac-%version.so
 %_libdir/libbaccfg-%version.so
 %_libdir/libbacfind-%version.so
@@ -664,6 +716,13 @@ fi
 %_liconsdir/bat.png
 %_niconsdir/bat.png
 %_desktopdir/bat.desktop
+
+%files traymonitor
+%config(noreplace) %attr(640,root,root) %{_sysconfdir}/bacula/tray-monitor.conf
+%_desktopdir/bacula-tray-monitor.desktop
+%_pixmapsdir/bacula-tray-monitor.png
+%_man1dir/bacula-tray-monitor.1*
+%_sbindir/bacula-tray-monitor
 %endif
 
 %files client
@@ -689,6 +748,8 @@ fi
 %_sbindir/btape
 %_sbindir/mtx-changer
 %_sbindir/disk-changer
+%_datadir/bacula/scripts/isworm
+%_datadir/bacula/scripts/tapealert
 %_man8dir/bacula-sd.8*
 %_man8dir/bextract.8*
 %_man8dir/bls.8*
@@ -728,9 +789,6 @@ fi
 %_man8dir/bcopy.8*
 %_man8dir/bregex.8*
 %_man8dir/bwild.8*
-%_datadir/bacula/scripts/delete_catalog_backup
-%_datadir/bacula/scripts/make_catalog_backup
-%_datadir/bacula/scripts/make_catalog_backup.pl
 %_sysconfdir/logrotate.d/bacula
 %_unitdir/bacula-dir.service
 %_sbindir/bacula-dir
@@ -739,6 +797,16 @@ fi
 %_sbindir/dbcheck
 %_libdir/libbacsql-%version.so
 %_libdir/libbacsql.so
+%_datadir/bacula/scripts/baculabackupreport
+%_datadir/bacula/scripts/create_bacula_database
+%_datadir/bacula/scripts/delete_catalog_backup
+%_datadir/bacula/scripts/drop_bacula_database
+%_datadir/bacula/scripts/drop_bacula_tables
+%_datadir/bacula/scripts/grant_bacula_privileges
+%_datadir/bacula/scripts/make_bacula_tables
+%_datadir/bacula/scripts/make_catalog_backup.pl
+%_datadir/bacula/scripts/update_bacula_tables
+%_datadir/bacula/scripts/query.sql
 
 %files director-mysql
 %_altdir/bacula-dir.mysql
@@ -822,6 +890,10 @@ fi
 %endif
 
 %changelog
+* Thu Mar 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt1
+- Updated to upstream version 9.4.2 (Closes: #36244).
+- Replaced Qt4 by Qt5.
+
 * Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 9.0.6-alt4
 - fix FTBFS against libmysqlclient21
 
