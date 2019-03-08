@@ -1,7 +1,7 @@
 %define api_ver 0.0
 
 Name: libhandy
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices
@@ -99,6 +99,9 @@ This package contains development documentation for handy library.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 0.0.9-alt1
+- 0.0.9
+
 * Sat Feb 16 2019 Yuri N. Sedunov <aris@altlinux.org> 0.0.8-alt1
 - 0.0.8
 
