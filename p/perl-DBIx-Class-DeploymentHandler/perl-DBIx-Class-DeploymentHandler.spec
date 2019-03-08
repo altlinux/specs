@@ -2,13 +2,13 @@
 %define sname dbix-class-deploymenthandler
 
 Name:           perl-DBIx-Class-DeploymentHandler
-Version:        0.002222
+Version:        0.002223
 Release:        alt1
 Summary:        Extensible DBIx::Class deployment
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DBIx-Class-DeploymentHandler/
-Source:         %sname-%version.tar
+Source0:         http://www.cpan.org/authors/id/E/ET/ETJ/DBIx-Class-DeploymentHandler-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  make
@@ -65,7 +65,7 @@ flexible than DBIx::Class::Schema::Versioned, hence the use of Moose and lots
 of roles.
 
 %prep
-%setup -q -n %sname-%version
+%setup -q -n DBIx-Class-DeploymentHandler-%{version}
 
 %build
 %perl_vendor_build
@@ -74,9 +74,12 @@ of roles.
 %perl_vendor_install
 
 %files
-%doc Changes TODO
+%doc Changes TODO README
 %{perl_vendorlib}/DBIx/Class/DeploymentHandler*
 
 %changelog
+* Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.002223-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.002222-alt1
 - initial build for ALT
