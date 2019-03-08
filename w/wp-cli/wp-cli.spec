@@ -1,7 +1,5 @@
-# TODO pack in phar archive with https://github.com/clue/phar-composer
-
 Name: wp-cli
-Version: 1.2.1
+Version: 2.1.0
 Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
@@ -10,18 +8,17 @@ License: MIT
 Group: System/Configuration/Packaging
 Url: https://github.com/wp-cli/wp-cli
 
-# Source-url: https://github.com/wp-cli/wp-cli/archive/v%version.tar.gz
+# Source-url: https://github.com/wp-cli/wp-cli-bundle/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-#!!! Create new vendor cache for new wp-cli version by get_vendor_cache.sh !!!
 Source1: %name-vendor-%version.tar
 
-Packager: Danil Mikhailov <danil@altlinux.org>
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
 #composer 
-BuildRequires: php5-openssl pear-PHPUnit
+BuildRequires: php7 php7-openssl php7-readline
 
 %define wpcli %_datadir/wp-cli
 
@@ -32,43 +29,26 @@ WP-CLI is a set of command-line tools for managing WordPress installations.
 %setup -a1
 
 %build
-
-#!!! Create new vendor cache for new wp-cli version by get_vendor_cache.sh !!!
-
-
-#composer install --no-interaction
-# --prefer-source
-
-%install
-rm -rf %buildroot/%wpcli/vendor/
-
-mkdir -p %buildroot/%wpcli/
-cp -a ./ %buildroot/%wpcli/
-rm -rf %buildroot/%wpcli/.gear/ %buildroot/%wpcli/{.editorconfig,.gitattributes,.mailmap,.travis.yml}
-rm -rf %buildroot/%wpcli/{tests,utils}/
-
-# TODO: do not working after it
 echo "Generating PHAR ..."
 php -dphar.readonly=0 utils/make-phar.php wp-cli.phar --quiet --version=%version --store-version
-# FIXME: do not work after build
+
+%install
 
 mkdir -p %buildroot/%_bindir/
-cat >%buildroot/%_bindir/%name <<EOF
-#!/bin/sh
-%wpcli/bin/wp "\$@"
-EOF
-chmod 0755 %buildroot/%_bindir/%name
+install wp-cli.phar %buildroot%_bindir/%name
 ln -s %name %buildroot/%_bindir/wp
 
 %check
-test "$(%buildroot%wpcli/bin/wp cli version)" = "WP-CLI %version"
+test "$(%buildroot%_bindir/wp cli version)" = "WP-CLI %version"
 
 %files
 %_bindir/%name
 %_bindir/wp
-%wpcli/
 
 %changelog
+* Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version (2.1.0) with rpmgs script
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version (1.2.1) with rpmgs script
 - update vendor dir
