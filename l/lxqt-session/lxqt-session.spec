@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: Session manager
@@ -57,6 +57,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt1
+- new version 0.14.1
+
 * Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
 - new version 0.14.0
 
