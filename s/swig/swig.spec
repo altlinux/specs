@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt6
+Release: alt7
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -36,7 +36,7 @@ BuildRequires: libracket-devel racket
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: ocaml-findlib gcc-c++ guile22-devel imake java-devel
 BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3
-BuildRequires: perl-devel php5-devel python-devel ruby ruby-module-etc
+BuildRequires: perl-devel python-devel ruby ruby-module-etc
 BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
 
 %if_enabled testsuite
@@ -45,7 +45,7 @@ BuildRequires: perl(Math/BigInt.pm) ocaml-camlp4-devel
 
 Provides: %name-devel = %version
 Obsoletes: %name-deve
-Obsoletes: %name-runtime-guile  %name-runtime-php  %name-runtime-python  %name-runtime-perl  %name-runtime-ruby  %name-runtime-tcl
+Obsoletes: %name-runtime-guile   %name-runtime-python  %name-runtime-perl  %name-runtime-ruby  %name-runtime-tcl
 Requires: %name-data = %EVR
 
 %package data
@@ -63,10 +63,6 @@ Requires: %name = %EVR
 %package runtime-guile
 Group: System/Libraries
 Summary: SWIG runtime guile library
-
-%package runtime-php
-Group: System/Libraries
-Summary: SWIG runtime php library
 
 %package runtime-perl
 Group: System/Libraries
@@ -110,13 +106,6 @@ and special directives and produces interfaces to Perl, Python, and Tcl.
 It allows scripting languages to use C/C++ code with minimal effort.
 
 This package contains SWIG runtime guile library.
-
-%description runtime-php
-SWIG takes an interface description file written in a combination of C/C++
-and special directives and produces interfaces to Perl, Python, and Tcl.
-It allows scripting languages to use C/C++ code with minimal effort.
-
-This package contains SWIG runtime php library.
 
 %description runtime-perl
 SWIG takes an interface description file written in a combination of C/C++
@@ -173,7 +162,6 @@ subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 	--with-pylib=%_libdir/python%_python_version \
 	--with-tclconfig=%_libdir \
 	--with-perl5
-	#--with-tcl --with-python --with-perl5 --with-java --with-guile --with-ruby --with-php4
 
 #%__subst -p 's,/usr/local/include/Py,%_includedir/python%__python_version,g' Runtime/Makefile
 # SMP incompatible
@@ -230,10 +218,6 @@ cp -a Examples Doc %buildroot%docdir/
 #%_libdir/libswigguile*.so*
 #%doc CHANGES.current LICENSE
 
-#%files runtime-php
-#%_libdir/libswigphp*.so*
-#%doc CHANGES.current LICENSE
-
 #files runtime-perl
 #_libdir/libswigpl*.so*
 #doc CHANGES.current LICENSE
@@ -251,6 +235,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Fri Mar 08 2019 Anton Farygin <rider@altlinux.ru> 1:3.0.12-alt7
+- cleanup spec (removed php5  buildrequires)
+
 * Tue Jan 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt6
 - NMU: additional fixes for code generated for python and gcc-8.
 
