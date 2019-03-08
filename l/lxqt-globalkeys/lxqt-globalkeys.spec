@@ -3,7 +3,7 @@
 
 Name: lxqt-globalkeys
 Version: 0.14.2
-Release: alt1
+Release: alt1.1
 
 Summary: Service used to register global keyboard shortcuts
 License: LGPL
@@ -44,6 +44,10 @@ This package provides the development files for %name.
 %install
 %cmakeinstall_std
 
+# Fix FTBFS for lxqt-runner, lxqt-panel 0.14.1
+sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
+  %buildroot%_datadir/cmake/lxqt-globalkeys-ui/lxqt-globalkeys-ui-config.cmake
+
 %files
 %_bindir/*
 %_libdir/*.so.*
@@ -60,6 +64,9 @@ This package provides the development files for %name.
 %_datadir/cmake/*/
 
 %changelog
+* Mon Oct 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.2-alt1.1
+- Fix FTBFS for lxqt-runner, lxqt-panel
+
 * Tue Oct 15 2019 Anton Midyukov <antohami@altlinux.org> 0.14.2-alt1
 - new version 0.14.2
 
