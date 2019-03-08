@@ -4,18 +4,19 @@
 %def_enable introspection
 %def_enable vala
 %def_enable print_profiles
-%def_disable bash_completion
+%def_enable bash_completion
 %def_enable installed_tests
 %def_enable libcolordcompat
 %def_enable systemd
 %def_enable docs
+%def_disable check
 
 %define _libexecdir %_prefix/libexec
 %define _icccolordir %_datadir/color/icc
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Color daemon
@@ -27,25 +28,27 @@ Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.x
 
 %define colord_group %name
 %define colord_user %name
-%define glib_ver 2.36
+%define glib_ver 2.46
 %define polkit_ver 0.113-alt2
 %define lcms_ver 2.6
-%define gusb_ver 0.2.2
+%define gusb_ver 0.2.7
 %define bash_completion_ver 2.0
 
 Requires: lib%name = %version-%release
 
-BuildRequires: meson glib2-devel >= %glib_ver
-BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
+BuildRequires(pre): meson
+BuildRequires: /proc glib2-devel >= %glib_ver
+BuildRequires: docbook-utils docbook5-style-xsl gtk-doc
+BuildRequires: libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= %polkit_ver
-BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver 
-%{?_enable_systemd:BuildRequires: libsystemd-devel}
+BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver
+BuildRequires: valgrind-tool-devel
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
 %{?_enable_bash_completion:BuildRequires: bash-completion > %bash_completion_ver}
-# for check
-BuildRequires: /proc dbus-tools-gui valgrind
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 colord is a low level system activated daemon that maps color devices to color
@@ -111,7 +114,6 @@ This may be useful for CMYK soft-proofing or for extra device support.
 %package tests
 Summary: Tests for the Colord
 Group: Development/Other
-BuildArch: noarch
 Requires: lib%name = %version-%release
 
 %description tests
@@ -155,7 +157,8 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %find_lang %name
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %pre
 %_sbindir/groupadd -r -f %colord_group 2>/dev/null ||:
@@ -164,7 +167,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 %files -f %name.lang
 %_bindir/*
-#%config %_sysconfdir/%name.conf
 %_datadir/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %_libexecdir/%name
 %_libexecdir/colord-session
@@ -187,11 +189,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
 %_libdir/colord-sensors/libcolord_sensor_dtp94.so
-#%_libdir/colord-sensors/libcolord_sensor_spark.so
-#%_libdir/colord-sensors/libdtp94-private.so
-#%_libdir/colord-sensors/libhuey-private.so
-#%_libdir/colord-sensors/libmunki-private.so
-#%_libdir/colord-sensors/libospark-private.so
 
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcolord_sensor_camera.so
@@ -201,7 +198,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
 %_man1dir/cd-it8.1.*
-#%_man1dir/colord.conf.1.*
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
 %dir %_localstatedir/lib/color
@@ -306,6 +302,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
 - 1.4.3
 
