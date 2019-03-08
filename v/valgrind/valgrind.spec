@@ -1,6 +1,6 @@
 Name: valgrind
 Version: 3.14.0
-Release: alt2
+Release: alt3
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -10,9 +10,10 @@ Source: https://sourceware.org/pub/valgrind/%name-%version.tar
 
 Patch0: valgrind-alt-arm.patch
 Patch1: valgrind-alt-loongson-is-mips.patch
-Patch2: valgrind-rh-cachegrind-improvements.patch
-Patch3: valgrind-rh-helgrind-race-supp.patch
-Patch4: valgrind-rh-ldso-supp.patch
+Patch2: valgrind-alt-vki_siginfo.patch
+Patch3: valgrind-rh-cachegrind-improvements.patch
+Patch4: valgrind-rh-helgrind-race-supp.patch
+Patch5: valgrind-rh-ldso-supp.patch
 Patch104: valgrind-3.14.0-s390x-fix-reg-alloc-vr-vs-fpr.patch
 Patch105: valgrind-3.14.0-s390x-sign-extend-lochi.patch
 Patch106: valgrind-3.14.0-s390x-vec-reg-vgdb.patch
@@ -46,6 +47,10 @@ Patch133: valgrind-3.14.0-power9-addex.patch
 Patch134: valgrind-3.14.0-rsp-clobber.patch
 Patch135: valgrind-3.14.0-subrange_type-count.patch
 Patch136: valgrind-3.14.0-s390x-vec-facility-bit.patch
+Patch137: valgrind-3.14.0-ppc-subfe.patch
+Patch138: valgrind-3.14.0-ppc64-quotactl.patch
+Patch139: valgrind-3.14.0-gettid.patch
+
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -100,6 +105,7 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
@@ -133,6 +139,9 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch134 -p1
 %patch135 -p1
 %patch136 -p1
+%patch137 -p1
+%patch138 -p1
+%patch139 -p1
 
 %build
 autoreconf -vi
@@ -223,6 +232,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Fri Mar 08 2019 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt3
+- Synced with valgrind-3.14.0-16 from Fedora.
+- Fixed siginfo_t definition on 64-bit architectures.
+
 * Wed Feb 20 2019 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt2
 - Made valgrind work on Loongson 3A CPUs
   (at least for mips32r2 binaries; by iv@).
