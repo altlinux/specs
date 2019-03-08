@@ -1,5 +1,5 @@
 Name:     ovirt-guest-agent
-Version:  1.0.14
+Version:  1.0.16
 Release:  alt1
 
 Summary:  The oVirt Guest Agent
@@ -16,6 +16,11 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 BuildRequires: libpam-devel
 BuildRequires: python-module-pycodestyle
+
+Requires: python-module-ethtool
+Requires: python-module-rpm
+Requires: qemu-guest-agent
+Requires: udev >= 095
 
 %description
 This is the oVirt management agent running inside the guest. The agent
@@ -167,5 +172,13 @@ fi
 %_pam_modules_dir/pam_ovirt_cred.so
 
 %changelog
+* Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt1
+- New version.
+
+* Tue Jan 22 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.15-alt1
+- New version.
+- Requires python-module-rpm for correct package system detection.
+- Add some additional requirements.
+
 * Fri Dec 07 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.14-alt1
 - Initial build for Sisyphus.
