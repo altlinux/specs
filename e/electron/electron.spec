@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron
-Version: 2.0.4
+Version: 3.1.6
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -13,10 +13,12 @@ Group: Development/Other
 Source: %name-%version.tar
 # Source1-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-ia32.zip
 Source1: %name-%version-i586.tar
+# Source2-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-arm64.zip
+Source2: %name-%version-aarch64.tar
 
-Source2: patch_binary.sh
+Source10: patch_binary.sh
 
-ExclusiveArch: x86_64 i586
+ExclusiveArch: x86_64 i586 aarch64
 
 %set_verify_elf_method skip
 #add_findreq_skiplist %_libdir/%name/bin/code
@@ -37,8 +39,14 @@ Build cross platform desktop apps with JavaScript, HTML, and CSS.
 tar xfv %SOURCE1
 %endif
 
-%build
-sh %SOURCE2 ./%name
+%ifarch aarch64
+tar xfv %SOURCE2
+# hack: we have lib64/ld-linux-aarch64.so.1
+sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" ./%name
+%endif
+
+# drop undefined symbols from binaries
+#sh %SOURCE10 ./%name
 
 %install
 mkdir -p %buildroot%_libdir/%name/
@@ -51,6 +59,15 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
+- new version 3.1.6 (with rpmrb script)
+
+* Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- new version 2.0.5 (with rpmrb script)
+
+* Thu Jul 12 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt2
+- enable build on aarch64
+
 * Thu Jul 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - new version 2.0.4 (with rpmrb script)
 - GTK3 now
