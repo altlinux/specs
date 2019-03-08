@@ -1,11 +1,9 @@
-%def_without php
-%define php5_extension cups
 %define _cups_serverbin %_libexecdir/cups
 %global _localstatedir %_var
 
 Name: cups-filters
 Version: 1.22.1
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -23,7 +21,6 @@ Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version
 Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
-Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
 Patch3: %name-pjl-as-ps.patch
 Patch4: %name-1.22.0-pftoopvp-gcc8.patch
@@ -57,10 +54,8 @@ BuildRequires: libgs-devel
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
-%{?_with_php:BuildRequires: php5-devel}
 BuildRequires: libgio-devel
 BuildRequires: libavahi-devel libavahi-glib-devel
-BuildRequires(pre): rpm-build-ubt
 
 # Make sure we get postscriptdriver tags.
 BuildRequires: python-module-cups
@@ -94,18 +89,6 @@ This package provides cupsfilters and fontembed libraries.
 %description devel
 This is the development package for OpenPrinting CUPS filters and backends.
 
-%if_with php
-%package -n php5-cups
-Epoch: 1
-Summary: PHP5 module for the Common Unix Printing System
-License: GPL
-Group: System/Servers
-Requires: php5 = %php5_version
-BuildRequires(pre): rpm-build-php5
-
-%description -n php5-cups
-PHP5 module for the Common Unix Printing System
-%endif
 
 %package -n cups-backend-serial
 Epoch: 1
@@ -119,7 +102,6 @@ serial backend for cups
 %prep
 %setup
 %patch0 -p2
-%patch1 -p2
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
@@ -144,39 +126,15 @@ serial backend for cups
 
 %make
 
-%if_with php
-pushd scripting/php
-phpize
-
-BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
-%add_optflags -fPIC -L%_libdir
-export LDFLAGS=-lphp-%_php5_version
-%configure \
-	--with-%php5_extension=%_usr
-%php5_make
-popd
-%endif
 
 %install
 %make install DESTDIR=%buildroot
-%if_with php
-install -D -m 755 scripting/php/.libs/cups.so %buildroot/%php5_extdir/cups.so
-install -D -m 644 scripting/php/php-cups.ini %buildroot/%php5_extconf/%php5_extension/config
-install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php5_extension/params
-%endif
 install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 rm -rf %buildroot%_docdir/%name
 
-%if_with php
-%post -n php5-cups
-%php5_extension_postin
-
-%preun -n php5-cups
-%php5_extension_preun
-%endif
 
 %files
 %doc README AUTHORS NEWS
@@ -217,12 +175,6 @@ rm -rf %buildroot%_docdir/%name
 %files -n cups-backend-serial
 %attr(0700,root,root) %_prefix/lib/cups/backend/serial
 
-%if_with php
-%files -n php5-cups
-%php5_extdir/cups.so
-%php5_extconf/%php5_extension
-%endif
-
 %files libs
 %doc COPYING fontembed/README
 %attr(0755,root,root) %_libdir/libcupsfilters.so.*
@@ -237,6 +189,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Mar 08 2019 Anton Farygin <rider@altlinux.ru> 1.22.1-alt2
+- clenup spec (removed php5 support)
+
 * Thu Feb 28 2019 Anton Farygin <rider@altlinux.ru> 1.22.1-alt1
 - new version 1.22.1
 
