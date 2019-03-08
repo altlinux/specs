@@ -8,7 +8,7 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           liberis
 Version:        1.3.23
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Client-side session layer for Atlas-C++
 
 # All files untagged except for Eris/Operations.{cpp,h} which is labeled
@@ -24,7 +24,7 @@ BuildRequires: libatlascpp-devel >= 0.5.98
 BuildRequires: libwfmath-devel >= 0.3.2
 BuildRequires: libskstream-devel >= 0.3.5
 
-BuildRequires:  libsigc++2-devel glib-devel
+BuildRequires:  libsigc++2-devel
 Source44: import.info
 Provides: eris = %{version}-%{release}
 
@@ -81,6 +81,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt2_15
+- fixed build
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt2_14
 - update to new release by fcimport
 
