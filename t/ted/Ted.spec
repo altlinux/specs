@@ -1,7 +1,7 @@
 Summary:        An easy Rich Text Processor
 Name:           ted
 Version:        2.23
-Release:        alt2
+Release:        alt2.1
 License:        GPLv2+
 Group:          Office
 Source:         ftp://ftp.nluug.nl/pub/editors/ted/ted-2.23.src.tar.gz
@@ -9,7 +9,7 @@ URL:            http://www.nllgg.nl/Ted/index.html
 
 # Automatically added by buildreq on Tue Apr 30 2013
 # optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXft-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libpng-devel libwayland-client libwayland-server pkg-config xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: ImageMagick-tools gtk+-devel libXpm-devel libgtk+2-devel libjpeg-devel libopenmotif-devel libpaper-devel libpcre-devel libtiff-devel lsb-release
+BuildRequires: ImageMagick-tools libXpm-devel libgtk+2-devel libjpeg-devel libpaper-devel libpcre-devel libtiff-devel lsb-release
 
 %description
 Ted is an easy rich text processor. It can edit RTF files
@@ -28,7 +28,7 @@ This package is the general part.
 sed -i '/Icon=/s/.*/Icon=Ted/' tedPackage/Ted.desktop.in
 
 %build
-make CONFIGURE_OPTIONS=--with-GTK
+make
 %make package
 for N in 16 24 32 48 64; do convert Ted/tedmain.xpm $N.png; done
 
@@ -47,6 +47,9 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.23-alt2.1
+- NMU: drop gtk1, openmotif requires
+
 * Thu Jan 10 2019 Fr. Br. George <george@altlinux.ru> 2.23-alt2
 - Avoid parallel build race
 
