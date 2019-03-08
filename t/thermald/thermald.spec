@@ -7,7 +7,7 @@
 
 Name: thermald
 Version: 1.8
-Release: alt1
+Release: alt2
 
 Summary: Thermal daemon for IA
 
@@ -24,7 +24,10 @@ Source2: %name-monitor.svg
 
 ExclusiveArch: x86_64
 
-BuildRequires: gcc-c++ pkgconfig(glib) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) libgomp-devel pkgconfig(libxml-2.0)
+BuildRequires: gcc-c++ libgomp-devel
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: libdbus-glib-devel
 BuildRequires: systemd-devel
 Requires: dbus
 
@@ -174,6 +177,9 @@ exit 0
 %endif
 
 %changelog
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 1.8-alt2
+- Update buildrequires (Fix FTBFS)
+
 * Sun Oct 21 2018 Anton Midyukov <antohami@altlinux.org> 1.8-alt1
 - new version 1.8
 - exclusive arch x86_64
