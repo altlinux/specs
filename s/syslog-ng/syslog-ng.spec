@@ -1,5 +1,4 @@
 #!TODO
-# systemd support (trivial)
 # chroot support
 # improve modules packaging (add config examples)
 
@@ -12,9 +11,11 @@
 %def_enable	systemd
 %def_disable	unit_tests
 
+%define _unpackaged_files_terminate_build 1
+
 Name: syslog-ng
 Version: 3.20.1
-Release: alt1
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -247,6 +248,7 @@ install -m755 -D -p altlinux/%name.init %buildroot%_initdir/%name
 mkdir -p %buildroot%_sysconfdir/%name
 VER=`echo %version | sed "s/^\([0-9]\+\.[0-9]\+\).*/\1/"`
 sed "s/@ver@/$VER/" < altlinux/%name.conf > %buildroot%_sysconfdir/%name/%name.conf
+sed "s/@ver@/$VER/" -i altlinux/conf.d.example/*.conf
 
 install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 install -m644 -D -p altlinux/%name.service %buildroot%_unitdir/%name.service
@@ -287,6 +289,7 @@ fi
 %doc AUTHORS COPYING NEWS.md README.md README-build-config
 %doc doc/security/*.txt
 %doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc}
+%doc altlinux/conf.d.example
 
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/patterndb.d
@@ -305,6 +308,7 @@ fi
 %_bindir/pdbtool
 %_bindir/update-patterndb
 %_bindir/dqtool
+%_bindir/persist-tool
 
 %dir %_libdir/%name
 # basic plugin set
@@ -431,6 +435,13 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Fri Mar 08 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt2
+- syslog-ng.conf: placed @include "/etc/syslog-ng/conf.d/*.conf"
+  before all standard log statements
+- added some examples for syslog-ng/conf.d to %%doc
+- set _unpackaged_files_terminate_build to 1
+- packed /usr/bin/persist-tool
+
 * Tue Mar 05 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt1
 - 3.20.1
 
