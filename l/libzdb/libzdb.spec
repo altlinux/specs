@@ -7,15 +7,16 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libzdb
 Version:        3.1
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Small, easy to use Database Connection Pool Library
 License:        GPLv3+ and MIT
 URL:            http://www.tildeslash.com/libzdb/
 Source0:        http://www.tildeslash.com/%{name}/dist/%{name}-%{version}.tar.gz
+BuildRequires:  gcc
 BuildRequires:  flex
-BuildRequires:  libmysqlclient-devel
+BuildRequires:  libmariadb-devel
 BuildRequires:  libssl-devel
-BuildRequires:  libecpg-devel libpq-devel postgresql-devel
+BuildRequires:  libpq5.11-devel postgresql11-devel
 BuildRequires:  libsqlite3-devel >= 3.6.12
 Source44: import.info
 
@@ -47,6 +48,8 @@ rm -f doc/api-docs/._*
 %install
 make install DESTDIR=%{buildroot}
 
+
+
 %files
 %doc AUTHORS CHANGES COPYING README
 %{_libdir}/%{name}.so.*
@@ -58,6 +61,9 @@ make install DESTDIR=%{buildroot}
 %doc doc/api-docs
 
 %changelog
+* Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_8
+- fixed build
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_5
 - new version
 
