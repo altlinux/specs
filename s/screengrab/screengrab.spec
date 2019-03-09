@@ -4,7 +4,7 @@
 %set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 1.100
+Version: 1.101
 Release: alt1
 Summary: ScreenGrab is a tool for geting screenshots
 License: GPLv2
@@ -79,6 +79,9 @@ convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 1.101-alt1
+- new version 1.101
+
 * Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 1.100-alt1
 - new version 1.100
 

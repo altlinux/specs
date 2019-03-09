@@ -1,13 +1,15 @@
-Name:		qps
-Version:	1.10.19
-Release:	alt1
-Summary:	Visual process status monitor
-License:	GPLv2+
-Group:		Monitoring
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
-URL:		https://github.com/lxqt/qps
-Source0:	%name-%version.tar.xz
-Source1:	%name.desktop
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+Name:    qps
+Version: 1.10.20
+Release: alt1
+Summary: Visual process status monitor
+License: GPLv2+
+Group:   Monitoring
+URL:     https://github.com/lxqt/qps
+Source0: %name-%version.tar
+Source1: %name.desktop
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -61,6 +63,10 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 1.10.20-alt1
+- 1.10.20
+- swith to github
+
 * Mon Jan 28 2019 Anton Midyukov <antohami@altlinux.org> 1.10.19-alt1
 - 1.10.19
 

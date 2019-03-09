@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: compton
-Version: 5
+Version: 5.1
 Release: alt1
 Summary: fork of xcompmgr
 Summary(ru_RU.UTF-8): Форк xcompmgr
@@ -57,6 +57,9 @@ That is, I'm partially doing this out of a desire to learn Xlib.
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 5.1-alt1
+- new version 5.1
+
 * Sun Jan 27 2019 Anton Midyukov <antohami@altlinux.org> 5-alt1
 - new version 5
 - fix license
