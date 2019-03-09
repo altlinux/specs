@@ -1,15 +1,15 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit c92349444f88427d8ddef2fb1ac6c4932cf6c8bb
+%define release_commit 19e4b1c85e8e43788a08617af4cbacff0d8a170e
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.10.0
-Release: alt2
+Version: 1.12.1
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
 License: GPLv3+
-Group: File tools
+Group: Monitoring
 Url: http://netdata.firehol.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -22,7 +22,7 @@ Source1: netdata.logrotate
 # manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs
 # Automatically added by buildreq on Fri Aug 05 2016
 # optimized out: perl pkg-config python-base python-modules python3 python3-base
-BuildRequires: libuuid-devel zlib-devel bash4
+BuildRequires: libuuid-devel zlib-devel bash4 libcups-devel
 
 Requires: bash4
 
@@ -33,6 +33,8 @@ BuildRequires: rpm-build-intro >= 2.1.1
 BuildRequires: libmnl-devel
 BuildRequires: libnetfilter_acct-devel
 %endif
+
+AutoReq: yes, noshell
 
 %add_findreq_skiplist %_libexecdir/%name/plugins.d/*.plugin
 %add_findreq_skiplist %_libexecdir/%name/charts.d/*.sh
@@ -82,7 +84,14 @@ done
 	--with-zlib \
 	--with-math \
 	%{?with_nfacct:--enable-plugin-nfacct} \
+        --enable-plugin-cups \
 	--with-user=netdata
+
+# TODO
+#%ifarch i586 x86_64
+#        --enable-plugin-freeipmi \
+#%endif
+
 %make_build
 
 %install
@@ -93,6 +102,11 @@ rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml3/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
+
+# This should be opt-in, not opt-out. I do not believe most users would agree
+# with sending usage data to Google Analytics, whether anonymized or not.
+# Hence, disable statistics by default.
+touch %buildroot%_sysconfdir/%name/.opt-out-from-anonymous-statistics
 
 #mkdir -p %buildroot%_sysconfdir/%name/charts.d/
 
@@ -107,8 +121,9 @@ find %buildroot -name .keep | xargs rm
 
 install -d %buildroot%_unitdir/
 install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
+
 # /run vs /var/run workaround
-%__subst "s|/run/netdata/netdata.pid|%_runtimedir/netdata/netdata.pid|" %buildroot%_unitdir/netdata.service
+#__subst "s|/run/netdata/netdata.pid|%_runtimedir/netdata/netdata.pid|" %buildroot%_unitdir/netdata.service
 
 # fill with original commit id for %version release
 echo "%release_commit" > %buildroot%_datadir/%name/web/version.txt
@@ -127,22 +142,25 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %preun_service %name
 
 %files
+%doc README.md LICENSE REDISTRIBUTED.md
 %attr(0700,%netdatauser,%netdatauser) %dir %_cachedir/%name/
 %attr(0770,root,%netdatauser) %dir %_logdir/%name/
 %attr(0700,%netdatauser,%netdatauser) %dir %_sharedstatedir/%name/
 %dir %_sysconfdir/%name/
+%_sysconfdir/%name/.opt-out-from-anonymous-statistics
+%_sysconfdir/%name/edit-config
 #config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
-%dir %_sysconfdir/%name/node.d/
-%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/node.d/*
+#dir %_sysconfdir/%name/node.d/
+#config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/node.d/*
 %dir %_sysconfdir/%name/health.d/
-%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/health.d/*.conf
+#config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/health.d/*.conf
 %dir %_sysconfdir/%name/python.d/
-%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/python.d/*.conf
-%dir %_sysconfdir/%name/charts.d/
-%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/statsd.d/*.conf
+#config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/python.d/*.conf
+#dir %_sysconfdir/%name/charts.d/
+#config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/statsd.d/*.conf
 %dir %_sysconfdir/%name/statsd.d/
-%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/charts.d/*.conf
+#config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/charts.d/*.conf
 %config(noreplace) %_logrotatedir/%name
 %_sbindir/%name
 %_unitdir/netdata.service
@@ -153,6 +171,8 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/
 %exclude %_libexecdir/%name/python.d/postgres.chart.py
 %dir %_datadir/%name
+%dir %_libdir/%name/
+%_libdir/%name/conf.d/
 
 # override defattr for web files (see netdata.conf for web access user/group)
 %defattr(644,root,%netdatauser,755)
@@ -162,6 +182,15 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
+- new version 1.12.1 (with rpmrb script)
+
+* Sun Dec 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.11.1-alt1
+- new version 1.11.1 (with rpmrb script)
+
+* Wed Nov 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
+- new version 1.11.0 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt2
 - adopt logrotate conf for ALT
 
