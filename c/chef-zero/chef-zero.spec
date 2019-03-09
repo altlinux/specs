@@ -1,66 +1,72 @@
-Name: 	 chef-zero
-Version: 14.0.11
-Release: alt1
- 
-Summary: Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
-License: Apache 2.0
-Group:   Development/Ruby
-Url:     http://www.opscode.com/
-# VCS:   https://github.com/chef/chef-zero
+%define        pkgname chef-zero
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %name-%version.tar
- 
+Name: 	       %pkgname
+Version:       14.0.11
+Release:       alt2
+Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
+License:       Apache 2.0
+Group:         Development/Ruby
+Url:           http://www.opscode.com/
+# VCS:         https://github.com/chef/chef-zero
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+BuildRequires: gem(ffi-yajl)
 BuildRequires: ruby-mixlib-log
 BuildRequires: ruby-hashie
 BuildRequires: ruby-uuidtools
-BuildRequires: ruby-ffi-yajl
- 
-Requires: ruby-rack-handler-webrick
+
+Requires:      ruby-stdlibs
 
 %description
-rubyzip is a ruby module for reading and writing zip files.
+Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
+for Chef Client testing and chef-solo-like tasks that require a full Chef
+Server. It IS intended to be simple, Chef 11+ compliant, easy to run and fast to
+start. It is NOT intended to be secure, scalable, performant or persistent. It
+does NO input validation, authentication or authorization (it will not throw a
+400, 401 or 403). It does not save data, and will start up empty each time you
+start it.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
+Because Chef Zero runs in memory, it's super fast and lightweight. This makes it
+perfect for testing against a "real" Chef Server without mocking the entire
+Internet.
+
+
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation files for %{name}.
+
 
 %prep
 %setup
-%update_setup_rb
- 
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
-%doc CHANGELOG.md LICENSE README.md
 %_bindir/chef-zero
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
-%files doc
-%ruby_ri_sitedir/*
- 
+%ruby_gemlibdir
+%ruby_gemspec
+
+%files         doc
+%ruby_gemdocdir
+
 %changelog
+* Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.11-alt2
+- Use Ruby Policy 2.0.
+
 * Tue Nov 20 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.11-alt1
 - New version.
 

@@ -1,60 +1,59 @@
-%define  pkgname concourse-gem
+%define        pkgname concourse
 
-Name:    ruby-concourse
-Version: 0.19.0
-Release: alt1
-
-Summary: Provide Rake tasks to ease management of Concourse pipelines. See https://concourse.ci/ to learn about Concourse.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/flavorjones/concourse-gem
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
+Name:          ruby-concourse
+Version:       0.26.0
+Release:       alt1
+Summary:       Provide Rake tasks to ease management of Concourse pipelines. See https://concourse.ci/ to learn about Concourse.
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/flavorjones/concourse-gem
+# VCS:         https://github.com/flavorjones/concourse-gem.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
-%summary
+The concourse gem provides rake tasks to help you manage Concourse CI pipelines,
+jobs, and workers, to assist in running tasks with fly execute, and even run
+a local ephemeral deployment of Concourse on your development machine.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+If you're not familiar with Concourse CI, you can read up on it at
+https://concourse-ci.org
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 0.26.0-alt1
+- Bump to 0.26.0.
+- Use Ruby Policy 2.0.
+
 * Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt1
 - New version.
 

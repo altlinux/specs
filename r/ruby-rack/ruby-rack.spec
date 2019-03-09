@@ -1,23 +1,19 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname rack
 
-%define pkgname rack
-
-Name: ruby-%pkgname
-Version: 2.0.4
-Release: alt1
-Epoch:   1
-
-Summary: Modular Ruby webserver interface
-Group: Development/Ruby
-License: MIT/Ruby
-Url: http://rubyforge.org/projects/rack/
-
-BuildArch: noarch
-
-Source: %pkgname-%version.tar
+Name:          ruby-%pkgname
+Version:       2.0.6
+Release:       alt1
+Epoch:         1
+Summary:       Modular Ruby webserver interface
+Group:         Development/Ruby
+License:       MIT
+Url:           https://rack.github.io/
+# VCS:         https://github.com/rack/rack.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 Rack provides a minimal, modular and adaptable interface for developing
@@ -28,58 +24,52 @@ middleware) into a single method call.
 
 You may need to install appropriate %name-handler-XXX.
 
-# Different handler autoload
-%add_findreq_skiplist %ruby_sitelibdir/rack/handler.rb
-# name Class file
-%define ruby_rack_subpackage() \
-%package handler-%1 \
-Summary: %2 handler for Rack \
-Group: Development/Ruby \
-PreReq: %name = %version-%release \
-\
-%description handler-%1 \
-%2 handler for Rack. \
-\
-%files handler-%1 \
-%ruby_sitelibdir/rack/handler/%3.rb \
-%nil
 
-%ruby_rack_subpackage cgi CGI cgi
-%ruby_rack_subpackage fastcgi FastCGI fastcgi
-#ruby_rack_subpackage mongrel Mongrel mongrel
-%ruby_rack_subpackage webrick WEBrick webrick
+%package       doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-
-%description doc
+%description   doc
 Documentation files for %name
 
+
+%package       -n rackup
+Summary:       Rackup is an executable file for rack gem.
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n rackup
+Rackup is an executable file for rack gem.
+
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README*
-%_bindir/rackup
-%ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/rack/handler/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc example
-%ruby_ri_sitedir/Rack*
+%files         doc
+%ruby_gemdocdir
+
+%files         -n rackup
+%_bindir/rackup
 
 %changelog
+* Thu Jan 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.0.6-alt1
+- Bump to 2.0.6.
+- Use Ruby Policy 2.0.
+
 * Fri Aug 24 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.0.4-alt1
 - New version.
 
@@ -144,4 +134,3 @@ Documentation files for %name
 
 * Sat Nov 01 2008 Sir Raorn <raorn@altlinux.ru> 0.4.0-alt1
 - Built for Sisyphus
-

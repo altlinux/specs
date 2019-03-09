@@ -1,54 +1,52 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname ruby-dbus
 
-Name: ruby-dbus
-Version: 0.2.12
-Release: alt1.3
+Name:          ruby-dbus
+Version:       0.15.0
+Release:       alt1
+Summary:       Ruby D-BUS library
+Group:         Development/Ruby
+License:       LGPLv2.1
+Url:           https://trac.luon.net/ruby-dbus/
+# VCS          https://github.com/mvidner/ruby-dbus.git
+BuildArch:     noarch
+Source:        %pkgname-%version.tar
 
-Summary: Ruby D-BUS library
-Group: Development/Ruby
-License: LGPLv2.1
-Url: https://trac.luon.net/ruby-dbus/
-
-Source: %name-%version.tgz
-
-BuildArch: noarch
-
-# Automatically added by buildreq on Sun Mar 14 2010 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
 
 %description
 Ruby D-Bus provides an implementation of the D-Bus protocol such that
 the D-Bus system can be used in the Ruby programming language.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation files for %name.
 
 %prep
-%setup -q
-%update_setup_rb
+%setup -q -n %pkgname-%version
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-
-%rdoc lib/
+%gem_install
 
 %files
-%doc ChangeLog NEWS README
-%ruby_sitelibdir/dbus*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/DBus*
+
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
+- Bump to 0.15.0;
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.12-alt1.3
 - Rebuild with new Ruby autorequirements.
 
@@ -72,5 +70,3 @@ Documentation files for %name.
 
 * Sat Aug 08 2009 Igor Zubkov <icesik@altlinux.org> 0.2.1-alt1
 - build
-
-

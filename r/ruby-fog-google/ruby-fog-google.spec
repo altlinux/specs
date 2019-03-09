@@ -1,61 +1,59 @@
-%define  pkgname fog-google
+%define        pkgname fog-google
 
-Name:    ruby-%pkgname
-Version: 1.8.1
-Release: alt1
-Epoch:   1
+Name:          ruby-%pkgname
+Version:       1.8.2
+Release:       alt1
+Epoch:         1
+Summary:       Fog for Google Cloud Platform
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/fog/fog-google
+# VCS:         https://github.com/fog/fog-google.git
 
-Summary: Fog for Google Cloud Platform
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/fog/fog-google
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+
+%gem_replace_version google-api-client ~> 0.24
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Fri Mar 08 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.8.2-alt1
+- Bump to 1.8.2;
+- Use Ruby Policy 2.0.
+
 * Tue Nov 13 2018 Pavel Skrylev <majioa@altlinux.org> 1:1.8.1-alt1
 - Bump to 1.8.1.
 

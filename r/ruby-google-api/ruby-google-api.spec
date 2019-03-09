@@ -1,64 +1,63 @@
-%define  pkgname google-api-ruby-client
+%define        pkgname google-api-client
+%define        gemname %pkgname
 
-Name:    ruby-google-api
-Version: 0.25.0
-Release: alt1
+Name:          ruby-google-api
+Version:       0.28.4
+Release:       alt1
+Summary:       Google API Client for Ruby
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://developers.google.com/api-client-library/ruby/
+# VCS:         https://github.com/google/google-api-ruby-client.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Google API Client for Ruby
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     https://github.com/google/google-api-ruby-client
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
-%filter_from_requires /^ruby(java\|rails/d
+%add_findreq_skiplist %ruby_gemlibdir/*
 
 %description
-%summary
+These client libraries are officially supported by Google. However,
+the libraries are considered complete and are in maintenance mode. This means
+that we will address critical bugs and security issues but will not add any new
+features.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%__setup_rb config # TODO
 
 %install
-%ruby_install
-cp -a generated/* %buildroot%ruby_sitelibdir/
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc *.md
 %_bindir/generate-api
-%ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+#%ruby_gemdocdir
 
 %changelog
+* Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 0.28.4-alt1
+- Use Ruby Policy 2.0;
+- Bump to v0.28.4;
+- Gem build rocedure replaced with only config.
+
 * Tue Nov 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.25.0-alt1
 - New version.
 

@@ -1,64 +1,69 @@
-%define  pkgname oj
- 
-Name: 	 ruby-%pkgname
-Version: 3.7.0
-Release: alt1
- 
-Summary: A fast JSON parser and Object marshaller as a Ruby gem
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     http://www.ohler.com/oj/
- 
-Packager: Andrey Cherepanov <cas@altlinux.org>
- 
-Source:  %pkgname-%version.tar
- 
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
- 
-%description
-A fast JSON parser and Object marshaller as a Ruby gem.
+%define        pkgname oj
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+Name: 	       ruby-%pkgname
+Version:       3.7.9
+Release:       alt1
+Summary:       A fast JSON parser and Object marshaller as a Ruby gem
+License:       MIT
+Group:         Development/Ruby
+Url:           http://www.ohler.com/oj/
+# VCS:         https://github.com/ohler55/oj.git
+Packager:      Andrey Cherepanov <cas@altlinux.org>
+
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+
+%description
+%summary.
+
+Version 3.0 is out! 3.0 provides better json gem and Rails compatibility.
+It also provides additional optimization options.
+
+
+%package       devel
+Summary:       Development files for %gemname gem
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Development files for %gemname gem.
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %pkgname-%version
-# Remove unmet to C extension
-#subst 's,^require.*oj/oj.*,,' lib/oj.rb
-rm -f lib/oj/active_support_helper.rb
-%update_setup_rb
- 
-%build
-%ruby_config
-%ruby_build
- 
-%install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
-%check
-#%%ruby_test_unit -Ilib:test test
- 
-%files
-%doc README*
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%setup
 
-%files doc
-%ruby_ri_sitedir/*
- 
+%build
+%gem_build
+
+%install
+%gem_install
+
+%check
+%gem_test
+
+%files
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         devel
+%ruby_includedir/*
+
+%files         doc
+%ruby_gemdocdir
+
 %changelog
+* Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 3.7.9-alt1
+- Bump to 3.7.9.
+- Use Ruby Policy 2.0.
+
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.7.0-alt1
 - new version 3.7.0
 

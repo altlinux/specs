@@ -1,23 +1,19 @@
-%define  pkgname thor
- 
-Name: 	 %pkgname
-Version: 0.20.3
-Release: alt1
- 
-Summary: Thor is a toolkit for building powerful command-line interfaces.
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     http://whatisthor.com/
-# VCS:	 https://github.com/erikhuda/thor
+%define        pkgname thor
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
- 
+Name: 	       %pkgname
+Version:       0.20.3
+Release:       alt2
+Summary:       Thor is a toolkit for building powerful command-line interfaces.
+License:       MIT
+Group:         Development/Ruby
+Url:           http://whatisthor.com/
+# VCS:	       https://github.com/erikhuda/thor.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
- 
+
 %description
 Thor is a simple and efficient tool for building self-documenting
 command line utilities. It removes the pain of parsing command line
@@ -25,42 +21,55 @@ options, writing "USAGE:" banners, and can also be used as an
 alternative to the Rake build tool. The syntax is Rake-like, so it
 should be familiar to most Rake users.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+
+%package       -n gem-%pkgname
+Summary:       %summary
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname
+Thor is a simple and efficient tool for building self-documenting
+command line utilities. It removes the pain of parsing command line
+options, writing "USAGE:" banners, and can also be used as an
+alternative to the Rake build tool. The syntax is Rake-like, so it
+should be familiar to most Rake users.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %pkgname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %pkgname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
-%doc README*
 %_bindir/%name
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
-%files doc
-%ruby_ri_sitedir/*
- 
+
+%files         -n gem-%pkgname
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
 %changelog
+* Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 0.20.3-alt2
+- Use Ruby Policy 2.0.
+
 * Mon Nov 12 2018 Andrey Cherepanov <cas@altlinux.org> 0.20.3-alt1
 - New version.
 

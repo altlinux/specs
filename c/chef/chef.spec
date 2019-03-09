@@ -1,29 +1,23 @@
+Name:          chef
+Version:       15.0.167
+Release:       alt1
+Summary:       Clients for the chef systems integration framework
+Group:         Networking/Other
+License:       Apache-2.0
+URL:           https://www.chef.io/
+# VCS:         https://github.com/opscode/chef.git
+Packager:      Andrey Cherepanov <cas@altlinux.org>
+BuildArch:     noarch
 
-Name:    chef
-Version: 15.0.120
-Release: alt1
+Source:        %name-%version.tar
+Source1:       chef-client.init
+Source2:       chef-client.service
+Source3:       chef-client.default
+Source4:       chef-client.rb
 
-Summary: Clients for the chef systems integration framework
-Group:   Networking/Other
-License: Apache-2.0
-URL:     https://www.chef.io/
-# VCS:   https://github.com/opscode/chef.git
-
-Packager:  Andrey Cherepanov <cas@altlinux.org>
-
-BuildArch: noarch
-
-Source:  %name-%version.tar
-Source1: chef-client.init
-Source2: chef-client.service
-Source3: chef-client.default
-Source4: chef-client.rb
+Requires:      chef-config
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-Requires: chef-config
-Requires: ruby-highline
 
 %description
 Chef is a systems integration framework and configuration management
@@ -38,49 +32,40 @@ Ruby DSL.
 This package contains the chef-client, chef-solo and knife binaries as
 well as the chef library.
 
-%package config
-Summary:   Chef's default configuration and config loading
-Group:     Development/Ruby
-BuildArch: noarch
+%package       config
+Summary:       Chef's default configuration and config loading
+Group:         Development/Ruby
+BuildArch:     noarch
 
-%description config
+%description   config
 Chef's default configuration and config loading.
 
-%package doc
-Summary:   Documentation for %name
-Group:     Development/Documentation
-Requires:  %name = %version-%release
-BuildArch: noarch
 
-%description doc
+%package       doc
+Summary:       Documentation for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation for %{name}.
+
+
+%package       config-doc
+Summary:       Documentation for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   config-doc
+%summary.
 
 %prep
 %setup
-rm -f Gemfile chef-config/Gemfile
-%update_setup_rb
-pushd chef-config
-%update_setup_rb
-popd
 
 %build
-%ruby_config
-%ruby_build
-pushd chef-config
-%ruby_config
-%ruby_build
-popd
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-pushd chef-config
-%ruby_install
-%rdoc lib/
-popd
-
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 # Install init scripts
 install -Dm 0755 %SOURCE1 %buildroot%_initdir/chef-client
@@ -93,12 +78,12 @@ mkdir -p %buildroot%_var/lib/chef
 mkdir -p %buildroot%_var/cache/chef
 mkdir -p %buildroot/run/chef
 
-
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc *.md LICENSE NOTICE
+%ruby_gemspecdir/chef-%version.gemspec
+%ruby_gemslibdir/chef-%version
 %_bindir/*
 %_initdir/chef-client
 %_unitdir/chef-client.service
@@ -108,23 +93,25 @@ mkdir -p %buildroot/run/chef
 %dir %attr(0750, _chef, _chef) %_var/log/chef
 %dir %attr(0750, _chef, _chef) %_var/lib/chef
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
-%ruby_sitelibdir/*
-%rubygem_specdir/chef-*
-%exclude %rubygem_specdir/chef-config*
-%exclude %ruby_sitelibdir/chef-config/*
 
 %files config
-%ruby_sitelibdir/chef-config/*
-%rubygem_specdir/chef-config*
+%ruby_gemspecdir/chef-config-%version.gemspec
+%ruby_gemslibdir/chef-config-%version
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemsdocdir/chef-%version
+
+%files config-doc
+%ruby_gemsdocdir/chef-config-%version
 
 %pre
 getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Wed Feb 20 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.167-alt1
+- Bump to 15.0.167;
+- Use Ruby Policy 2.0.
 * Fri Jan 04 2019 Andrey Cherepanov <cas@altlinux.org> 15.0.120-alt1
 - New version.
 

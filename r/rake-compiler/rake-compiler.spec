@@ -1,19 +1,18 @@
-Name:    rake-compiler
-Version: 1.0.7
-Release: alt1
+Name:          rake-compiler
+Version:       1.0.7
+Release:       alt2
 
-Summary: Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/rake-compiler/rake-compiler
+Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue.
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/rake-compiler/rake-compiler
+# VCS:         https://github.com/rake-compiler/rake-compiler.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 rake-compiler is first and foremost a productivity tool for Ruby
@@ -21,42 +20,38 @@ developers. Its goal is to make the busy developer's life easier by
 simplifying the building and packaging of Ruby extensions by simplifying
 code and reducing duplication.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
+%description   doc
 Documentation files for %{name}.
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
+%ruby_gemspec
 %_bindir/%name
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Feb 26 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.7-alt2
+- Use Ruby Policy 2.0.
+
 * Fri Jan 04 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
 - New version.
 

@@ -1,18 +1,19 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname rexical
 
-Name: ruby-rexical
-Version: 1.0.5
-Release: alt3.1
+Name:          ruby-%pkgname
+Version:       1.0.5
+Release:       alt4.gitd8af06b89
+Summary:       Lexical scanner generator for ruby
+Group:         Development/Ruby
+License:       LGPL
+Url:           https://github.com/tenderlove/rexical
+# VCS:         https://github.com/tenderlove/rexical.git
+BuildArch:     noarch
+Source:        %pkgname-%version.tar
 
-Summary: Lexical scanner generator for ruby
-Group: Development/Ruby
-License: LGPL
-Url: https://github.com/tenderlove/rexical
-BuildArch: noarch
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-setup
-
-Source: %name-%version.tar
-Patch1: ruby-rexical-1.0.5-alt-pick-of-rubygems.patch
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-hoe
+Conflicts: rex
 
 %description
 Rexical is a lexical scanner generator. It is written in Ruby itself,
@@ -26,37 +27,27 @@ Group: Documentation
 Documentation files for %name
 
 %prep
-%setup -n %name-%version
-%patch1 -p1
-# Rename for avoid file conflict with (R)?ex (rex package)
-sed 's/ rex / rexical /g' README.* DOCUMENTATION.*.rdoc sample/{sample?,xhtmlparser}.rex
-%update_setup_rb
+%setup -n %pkgname-%version
 
 %build
-%ruby_config
-%ruby_build
-pushd test
-%ruby_vendor -I../lib
-find . -name 'test*.rb' -print0 |
-	xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
-popd
+%gem_build
 
 %install
-%ruby_install
-mv %buildroot%_bindir/rex{,ical}
-%rdoc lib/
+%gem_install
 
 %files
 %_bindir/*
-%ruby_sitelibdir/*
-#%%rubygem_specdir/*
-%doc README.rdoc DOCUMENTATION.en.rdoc
+%ruby_gemspec
+%ruby_gemlibdir/*
 
-%files doc
-%doc CHANGELOG*
-%ruby_ri_sitedir/Rexical*
+%files         doc
+%ruby_gemdocdir/*
 
 %changelog
+* Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt4.gitd8af06b89
+- Use Ruby Policy 2.0;
+- Use latest git commit.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt3.1
 - Rebuild with new Ruby autorequirements.
 

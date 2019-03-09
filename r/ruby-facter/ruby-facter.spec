@@ -1,24 +1,26 @@
-%define pkgname facter
+%define        pkgname facter
 
-Name: 	 ruby-%pkgname
-Version: 2.5.1
-Release: alt2
+Name: 	       ruby-%pkgname
+Version:       2.5.1
+Release:       alt3
+Summary:       Ruby library for retrieving facts from operating systems
+Group:         Development/Ruby
+License:       Apache-2.0
+Url:           https://tickets.puppetlabs.com/browse/FACT
+# VCS:         https://github.com/puppetlabs/facter
+BuildArch:     noarch
 
-Summary: Ruby library for retrieving facts from operating systems
-Group:   Development/Ruby
-License: Apache-2.0
-Url: 	 https://tickets.puppetlabs.com/browse/FACT
-# VCS:	 https://github.com/puppetlabs/facter
+Source:        %pkgname-%version.tar
+Patch1:        %name-alt-support.patch
 
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-Patch1:  %name-alt-support.patch
+Requires:      coreutils dmidecode net-tools pciutils bind-utils
+%add_findreq_skiplist *.erb
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-Requires: coreutils dmidecode net-tools pciutils bind-utils
+BuildRequires: libcpp-hocon-devel
+BuildRequires: libyaml-cpp-devel
+BuildRequires: libleatherman-devel
+BuildRequires: boost-program_options-devel
 
 %description
 A cross-platform Ruby library for retrieving facts from
@@ -31,22 +33,20 @@ addresses, and SSH keys.
 It is easy to extend Facter to include your own custom facts or
 to include additional mechanisms for retrieving facts.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation files for %{name}.
 
-%package -n facter
-Summary: Terminal executable called 'facter'
-Group: System/Base
 
-BuildArch: noarch
-
-Requires: ruby-gem(%pkgname) = %version
+%package       -n facter
+Summary:       Terminal executable called 'facter'
+Group:         System/Base
+BuildArch:     noarch
 
 %description -n facter
 %summary, for retrieving facts from
@@ -56,40 +56,37 @@ systems or environments. Facter is especially useful for
 retrieving things like operating system names, IP addresses, MAC
 addresses, and SSH keys.
 
+
 %prep
 %setup -n %pkgname-%version
+# patches
 %patch1 -p1
 sed "s|read_timeout|timeout|" -i lib/facter/ec2/rest.rb
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
-cp .gemspec facter.gemspec
-rm -f Gemfile
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc *.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 %doc %_man8dir/%{pkgname}.*
 
-%files doc
-%ruby_ri_sitedir/*
- 
-%files -n facter
-%_bindir/%pkgname
+%files         doc
+%ruby_gemdocdir
+
+%files         -n facter
+%_bindir/*
 
 %changelog
+* Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt3
+- Use Ruby Policy 2.0.
+
 * Thu Dec 20 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt2
 - Fixed ALT Release detection.
 - Decrease timeout when accessing to EC2 from virtual env.
@@ -126,4 +123,3 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 * Wed Sep 03 2008 Sir Raorn <raorn@altlinux.ru> 1.5.1-alt1
 - Built for Sisyphus
-

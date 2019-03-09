@@ -1,39 +1,67 @@
-Name: ruby-term-ansicolor
-Version: 1.6.0
-Release: alt1
+%define        pkgname term-ansicolor
 
-Summary: Ruby library that colors strings using ANSI escape sequences
-Group: Development/Ruby
-License: GPLv2
-Url: http://flori.github.io/term-ansicolor/
+Name:          ruby-%pkgname
+Version:       1.7.1
+Release:       alt1
+Summary:       Ruby library that colors strings using ANSI escape sequences
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           http://flori.github.io/term-ansicolor/
+# VCS:         https://github.com/flori/term-ansicolor.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Source0: term-ansicolor-%version.tar
-
-BuildArch: noarch
-
-BuildRequires: rpm-build-ruby
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
-Ruby library that colors strings using ANSI escape sequences.
+This library can be used to color/decolor strings using ANSI escape sequences.
+
+
+%package       doc
+Summary:       Documentation files for %pkgname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %pkgname.
+
+
+%package       -n %pkgname
+Summary:       Executable files for %pkgname
+Group:         Text tools
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable files for %pkgname.
 
 %prep
-%setup -q -n term-ansicolor-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc CHANGES README* examples
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         doc
+%ruby_gemdocdir
+
+%files         -n %pkgname
 %_bindir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
 
 %changelog
+* Fri Mar 01 2019 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
+- Bump to 1.7.1;
+- Use Ruby Policy 2.0.
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 

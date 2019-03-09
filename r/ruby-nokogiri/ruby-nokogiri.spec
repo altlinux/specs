@@ -1,21 +1,25 @@
-%define   pkgname nokogiri
-Name:     ruby-%pkgname
-Version:  1.10.1
-Release:  alt3
-Summary:  Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
-Group:    Development/Ruby
-License:  MIT
-URL:      https://nokogiri.org/
-# VCS:    https://github.com/sparklemotion/nokogiri.git
-Source:   %pkgname-%version.tar
-Patch:    shutdown-libxml2-warning.patch
+%define        pkgname nokogiri
+
+Name:          ruby-%pkgname
+Version:       1.10.1
+Release:       alt4
+Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
+Group:         Development/Ruby
+License:       MIT
+URL:           https://nokogiri.org/
+# VCS:         https://github.com/sparklemotion/nokogiri.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
+Patch:         shutdown-libxml2-warning.patch
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires(pre): ruby-tool-setup
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config zlib-devel
 #BuildRequires: db2latex-xsl xhtml1-dtds
-BuildRequires: ruby-hoe rake-compiler ruby-concourse
-BuildRequires: ruby-racc ruby-rexical
+BuildRequires: ruby-hoe
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(concourse)
+BuildRequires: gem(rexical)
+BuildRequires: gem(racc)
 BuildRequires: gem(mini_portile2)
 
 %description
@@ -23,61 +27,66 @@ Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
-%package -n %pkgname
-Summary: HTML, XML, SAX, and Reader parser
-Group: Development/Other
-BuildArch: noarch
-Requires: %name = %version-%release
+%package       -n %pkgname
+Summary:       HTML, XML, SAX, and Reader parser
+Group:         Development/Other
+BuildArch:     noarch
 
-%description -n %pkgname
+%description   -n %pkgname
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
-%package doc
-Summary: Documentation for Nokogiri
-Group: Development/Documentation
-BuildArch: noarch
+
+%package       devel
+Summary:       Development files for Nokogiri
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Development files for Nokogiri.
+
+
+%package       doc
+Summary:       Documentation for Nokogiri
+Group:         Development/Documentation
+BuildArch:     noarch
 
 %description doc
 Documentation for Nokogiri.
 
+
 %prep
-%setup -q -n %pkgname-%version
+%setup
 %patch -p1
-%update_setup_rb
 
 %build
-export CFLAGS="$CFLAGS -Wno-unused-parameter"
-%ruby_config --  --use-system-libraries --sodir=%rubygem_extdir/  --rbdir=%rubygem_gemdir/
-%ruby_build
-rake debug_gem > %pkgname-%version.gemspec
-echo "gemspec" >> Gemfile
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/ %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/
-find %buildroot%ruby_sitelibdir/ -type f -name "*.so" -exec mv {} %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/ \;
-touch %buildroot%rubygem_extdir/%pkgname-%version/%pkgname/gem.build_complete
-mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+%gem_install
 
 %check
-%ruby_test
+%gem_test
 
 %files
-%rubygem_gemdir/*
-%rubygem_extdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files -n %pkgname
+%files         -n %pkgname
 %_bindir/*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
+%files         devel
+%ruby_includedir/*
 
 %changelog
+* Mon Feb 04 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt4
+- Use Ruby Policy 2.0.
+
 * Fri Jan 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt3
 - Fixed extension installation folder.
 

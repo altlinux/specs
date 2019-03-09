@@ -1,59 +1,58 @@
-%def_disable check
+%define        pkgname net-ssh
 
-%define pkgname net-ssh
+Name:          ruby-%pkgname
+Version:       4.2.0
+Release:       alt3
+Epoch:         1
+Summary:       Pure-Ruby implementation of the SSH2 client protocol
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/net-ssh/net-ssh
+# VCS:         https://github.com/net-ssh/net-ssh.git
+BuildArch:     noarch
 
-Name: ruby-%pkgname
-Version: 4.2.0
-Release: alt2
-Epoch:   1
+Source:        %name-%version.tar
 
-Summary: Pure-Ruby implementation of the SSH2 client protocol
-Group:   Development/Ruby
-License: MIT/Ruby
-Url:     https://github.com/net-ssh/net-ssh
-BuildArch: noarch
-
-Source: %pkgname-%version.tar
-
-BuildRequires: rpm-build-ruby ruby-tool-setup ruby-mocha
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-mocha
 
 %description
 Net::SSH is a pure-Ruby implementation of the SSH2 client protocol. It
 allows you to write programs that invoke and interact with processes on
 remote servers, via SSH2.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+
+%description   doc
 Documentation files for %name
 
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test/test_all.rb
+%gem_test
 
 %files
-%doc README.rdoc THANKS.txt
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%dir %ruby_ri_sitedir/Net
-%ruby_ri_sitedir/Net/SSH
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 1:4.2.0-alt3
+- Use Ruby Policy 2.0.
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:4.2.0-alt2
 - Reset to old version for chef and ruby-specinfra.
 

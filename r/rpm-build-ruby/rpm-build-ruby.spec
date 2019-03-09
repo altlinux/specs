@@ -1,24 +1,28 @@
 %def_disable check
 
-Name:       rpm-build-ruby
-Epoch:      1
-Version:    0.7.3
-Release:    alt1
-Summary:    RPM helper scripts to calculate Ruby dependencies
-License:    GPLv2
-Group:      Development/Ruby
-Source:     %name-%version.tar
-BuildArch:  noarch
+Name:          rpm-build-ruby
+Epoch:         1
+Version:       1.0.0
+Release:       alt1
+Summary:       RPM helper scripts to calculate Ruby dependencies
+License:       GPLv2
+Group:         Development/Ruby
+Source:        %name-%version.tar
+BuildArch:     noarch
 
-Requires:   ruby >= 1.9
-Conflicts:  rpm-build <= 4.0.4-alt24
-AutoReq:    yes,noruby
-Requires:   ruby >= 1.9
-Requires:   ruby-stdlibs >= 1.9
-Requires:   rdoc rake ruby-bundler
-Requires:   rpm-macros-ruby = %EVR
-Requires:   ruby-tool-setup
-Requires:   libruby-devel
+Requires:      rpm-macros-ruby = %EVR
+Requires:      ruby >= 1.9
+Conflicts:     rpm-build <= 4.0.4-alt24
+AutoReq:       yes,noruby
+Requires:      ruby >= 1.9
+Requires:      ruby-stdlibs >= 1.9
+Requires:      libruby-devel
+Requires:      /usr/bin/rdoc
+Requires:      /usr/bin/rake
+Requires:      /bin/sed
+Requires:      gem(setup)
+Requires:      gem(bundler)
+Requires:      ruby-tool-setup
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -27,11 +31,11 @@ These helper scripts will look at Ruby source files in your package, and will
 use this information to generate automatic Requires and Provides tags for the
 package.
 
-%package -n rpm-macros-ruby
+%package       -n rpm-macros-ruby
 Summary: rpm macros for Ruby packages
 Group: Development/Ruby
 
-%description -n rpm-macros-ruby
+%description   -n rpm-macros-ruby
 rpm macros for Ruby packages.
 
 %prep
@@ -40,7 +44,6 @@ rpm macros for Ruby packages.
 %install
 install -d -m 0755 %buildroot{%_rpmlibdir,%_rpmmacrosdir}
 install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
-install -p -m 0644 rubyreq.rb %buildroot%_rpmlibdir/
 install -p -m 0644 ruby.macros %buildroot%_rpmmacrosdir/ruby
 install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 
@@ -49,10 +52,16 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmlibdir/ruby*
 %_rpmmacrosdir/ruby.env
 
-%files -n rpm-macros-ruby
+%files         -n rpm-macros-ruby
 %_rpmmacrosdir/ruby
 
 %changelog
+* Tue Jan 29 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt1
+- Use macros and prov/req detection code for Ruby Policy 2.0.
+
+* Tue Jan 22 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.4-alt1
+- Fixed provides output if no gemspec specified.
+
 * Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.7.3-alt1
 - Added a filter pilling out the non-ASCII chars in input to ruby.prov.
 

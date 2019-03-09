@@ -1,26 +1,29 @@
-%define confdir ext/redhat
+%define        pkgname        puppet
+%define        confdir        ext/redhat
+%define        core_version   6.3.0
+%define        dm_version     1.0.1
 
-Name:    puppet
-Version: 6.1.0
-Release: alt2
+Name:          %pkgname
+Version:       %core_version
+Release:       alt1
+Summary:       A network tool for managing many disparate systems
+Group:         System/Servers
+License:       ASL 2.0
+URL:           https://puppet.com/
+# VCS:         https://github.com/puppetlabs/puppet.git
+BuildArch:     noarch
 
-Summary: A network tool for managing many disparate systems
-Group:   System/Servers
-License: ASL 2.0
-URL:     https://github.com/puppetlabs/puppet
-
-BuildArch: noarch
-
-Source:  %name-%version.tar
-Patch:   %name-%version.patch
-Source1: client.init
-Source3: puppet.service
-Source5: puppet-nm-dispatcher
+Source:        %name-%version.tar
+Source1:       client.init
+Source2:       puppet.service
+Source3:       puppet-nm-dispatcher
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-facter
-BuildRequires: ruby-hiera
+BuildRequires: gem(yard)
+
+%gem_replace_version CFPropertyList ~> 3.0
+%gem_replace_version fast_gettext ~> 1.7
+%add_findreq_skiplist %ruby_gemslibdir/*
 
 Requires: shadow-change
 
@@ -32,60 +35,65 @@ all the separate elements normally aggregated in different files,
 like users, cron jobs, and hosts, along with obviously discrete
 elements like packages, services, and files.
 
+
+%package       -n gem-deep-merge
+Version:       %dm_version
+Summary:       Deep merge hash
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-deep-merge
+%summary.
+
+
+%package       -n gem-deep-merge-doc
+Version:       %dm_version
+Summary:       Documentation for gem-deep-merge gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-deep-merge-doc
+%summary.
+
+
+%package       -n gem-%pkgname
+Version:       %core_version
+Summary:       Core library code for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname
+%summary.
+
+
+%package       -n gem-%pkgname-doc
+Version:       %core_version
+Summary:       Documentation for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+%summary.
+
+
 %prep
-%setup
-%patch -p1
-chmod +x ext/regexp_nodes/regexp_nodes.rb
-# remove vendor copy of libraries and support non-Linux platforms
-#subst 's/require /#require /' \
-#       lib/puppet/util/windows.rb
-##      lib/puppet/vendor/require_vendored.rb \
-
-#rm -rf \
-#       ext/windows \
-#       ext/puppet-test \
-#       lib/puppet/feature/cfacter.rb \
-#       lib/puppet/util/rdoc \
-#       lib/puppet/util/windows \
-#       lib/puppet/vendor/safe_yaml/spec \
-#       lib/puppet/module_tool/skeleton/templates/generator/spec
-
-echo "require 'rdoc'" > lib/puppet/util/rdoc.rb
-
-# Unbundle
-rm -r lib/puppet/vendor/*{pathspec,deep_merge}*
+%setup -n %name-%version
 
 %build
+%gem_build
 
 %install
-%ruby_vendor install.rb \
-	     --destdir=%buildroot \
-	     --configdir=/etc/puppet \
-	     --codedir=/etc/puppet/code \
-	     --localedir=%_datadir/puppet/locale \
-	     --vardir=%_localstatedir/puppet \
-	     --rundir=%_runtimedir/puppet \
-	     --logdir=%_logdir/puppet \
-	     --no-rdoc \
-	     --no-tests
-cp .gemspec %name-%version.gemspec
-%update_setup_rb
-%ruby_config
-%ruby_install
+%gem_install
 
 # SysVInit files
 install -Dp -m0644 %confdir/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
 install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
 # Systemd files
-install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/puppet.service
+install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/puppet.service
 ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppetagent.service
 
 install -Dp -m0644 %confdir/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
 install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver.conf
-
-# Install the ext/ directory to %%_datadir/%%name
-install -d %buildroot%_datadir/%name
-cp -a ext/ %buildroot%_datadir/%name
 
 # Create other configuration directories
 mkdir -p %buildroot%_sysconfdir/puppet/ssl/{public_keys,certificate_requests,certs,ca/requests,ca/private,ca/signed,private,private_keys}
@@ -103,15 +111,8 @@ mkdir -p %buildroot%_sysconfdir/%name/modules
 mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run}/puppet
 
 # Install NetworkManager dispatcher
-install -Dpv %SOURCE5 \
+install -Dpv %SOURCE3 \
     %buildroot%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
-
-# remove misc packaging artifacts in source not applicable to rpm
-rm -rf %buildroot%_datadir/%name/ext/{gentoo,freebsd,solaris,suse,windows,osx,ips,debian}
-rm -rf %buildroot%_datadir/%name/ext/{redhat,systemd}
-rm -f %buildroot%_datadir/%name/ext/{build_defaults.yaml,project_data.yaml}
-# remove obsoleted checks
-rm -rf %buildroot%_datadir/%name/ext/nagios
 
 # Add puppetdb example configuration to puppet.conf
 cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
@@ -122,8 +123,6 @@ cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
 #report = true
 #reports = puppetdb
 END.
-
-rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 
 %pre
 %_sbindir/groupadd -r -f puppet
@@ -136,6 +135,7 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %preun_service puppet
 
 %files
+%_bindir/puppet
 %_initdir/puppet
 %_unitdir/puppet.service
 %_unitdir/puppetagent.service
@@ -157,24 +157,38 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %dir %_sysconfdir/puppet/code
 %dir %_sysconfdir/puppet/modules
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
-%config(noreplace) %_sysconfdir/puppet/auth.conf
-%config(noreplace) %_sysconfdir/puppet/hiera.yaml
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
 %config(noreplace) %_sysconfdir/puppet/fileserver.conf
-%_bindir/puppet
-%ruby_sitelibdir/*
-%_datadir/%name
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
-%_man8dir/*
-%_man5dir/puppet.conf.5*
 %attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
 %_localstatedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
 %attr(1770,_puppet,puppet) %dir %_var/run/puppet
-%rubygem_specdir/*
+%doc %_man8dir/*
+%doc %_man5dir/puppet.conf.5*
+
+
+%files         -n gem-%pkgname
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-deep-merge
+%ruby_gemspecdir/deep_merge-%dm_version.gemspec
+%ruby_gemslibdir/deep_merge-%dm_version
+
+%files         -n gem-deep-merge-doc
+%ruby_gemsdocdir/deep_merge-%dm_version
+
 
 %changelog
+* Sat Mar 09 2019 Pavel Skrylev <majioa@altlinux.org> 6.3.0-alt1
+- Bump to 6.3.0;
+- Use Ruby Policy 2.0.
+
 * Mon Mar 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.1.0-alt2
 - Requires fixed.
 

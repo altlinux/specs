@@ -10,7 +10,7 @@
 
 Name:     ruby
 Version:  2.5.4
-Release:  alt2
+Release:  alt3
 Summary:  An Interpreted Object-Oriented Scripting Language
 License:  BSD (revised) or Ruby
 Group:    Development/Ruby
@@ -101,6 +101,7 @@ Requires: gem(xmlrpc) >= 0.3.0
 Requires: gem(rdoc) >= 6.1.1
 Provides: %name-libs = %version-%release
 Provides: %name-racc-runtime = %version
+Provides: ruby(%ruby_version)
 Provides: ruby(thread)
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
@@ -340,6 +341,9 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Fri Feb 01 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt3
+- Allow provide ruby version.
+
 * Thu Jan 17 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt2
 - Added some gem dependencies to spec.
 

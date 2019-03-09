@@ -1,62 +1,78 @@
-%define pkgname ffi
+%define        pkgname ffi
 
-Name: ruby-%pkgname
-Version: 1.9.25
-Release: alt1.1
-
-Summary: Ruby foreign function interface
-Group: Development/Ruby
-License: BSD
-Url: https://github.com/ffi/ffi
-
-Source: %pkgname-%version.tar
-Patch1: %name-alt-fix-requires.patch
+Name:          ruby-%pkgname
+Version:       1.10.0
+Release:       alt1
+Summary:       Ruby foreign function interface
+Group:         Development/Ruby
+License:       BSD
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Url:           https://github.com/ffi/ffi/wiki
+# VCS:         https://github.com/ffi/ffi.git
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libffi-devel libruby-devel ruby-tool-setup
+BuildRequires: libffi-devel
+BuildRequires: vim
+BuildRequires: ruby-pry
+BuildRequires: gem(rspec)
+BuildRequires: gem(rake)
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(rubygems-tasks)
 
 %description
-A Ruby foreign function interface.
+Ruby-FFI is a gem for programmatically loading dynamically-linked native
+libraries, binding functions within them, and calling those functions from Ruby
+code. Moreover, a Ruby-FFI extension works without changes on CRuby (MRI),
+JRuby, Rubinius and TruffleRuby. Discover why you should write your next
+extension using Ruby-FFI.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
+%package       devel
+Summary:       Developement files for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Developement files for %name.
+
+
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation files for %name
 
 %prep
-%setup -n %pkgname-%version
-%patch1 -p1
-%update_setup_rb
-
-sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layout->fields\[i\])(\).*)$/\2\3;\n\1\4\5/' \
-	ext/ffi_c/StructLayout.c
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install -m lust
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README.md LICENSE
-%ruby_sitelibdir/*
-%ruby_sitearchdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
+%files         devel
+%ruby_includedir/ffi
 
 %changelog
+* Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
+- Bump to 1.10.0;
+- Use Ruby Policy 2.0.
+
 * Wed Aug 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.25-alt1.1
 - Rebuild for new Ruby autorequirements.
 

@@ -1,23 +1,18 @@
-%define  pkgname rgen
+%define        pkgname rgen
 
-Name:    ruby-%pkgname
-Version: 0.8.4
-Release: alt1
-
-Summary: Ruby Modelling and Generator Framework
-Group:   Development/Ruby
-License: MIT/Ruby
-URL:     https://github.com/mthiede/rgen.git
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-BuildArch: noarch
+Name:          ruby-%pkgname
+Version:       0.8.4
+Release:       alt2
+Summary:       Ruby Modelling and Generator Framework
+Group:         Development/Ruby
+License:       MIT/
+URL:           https://github.com/mthiede/rgen
+# VCS:         https://github.com/mthiede/rgen.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-test-unit
-BuildRequires: ruby-tool-setup
-
-Source: rgen-%version.tar
 
 %description
 RGen is a framework for Model Driven Software Development (MDSD)in Ruby.
@@ -46,41 +41,37 @@ RGen features include:
 * UML-to-ECore and ECore-to-UML transformation (UML class models)
 * Enterprise Architect support (UML1.3/XMI1.1)
 
-%package doc
-Summary:   Documentation for %name
-Group:     Development/Documentation
-Requires:  %name = %version-%release
-BuildArch: noarch
+%package       doc
+Summary:       Documentation for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
-
-%check
-%ruby_test_unit -Ilib:test tests
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README* TODO
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir/*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir/*
 
 %changelog
+* Tue Feb 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.4-alt2
+- Use Ruby Policy 2.0.
+
 * Thu Nov 29 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.4-alt1
 - Bump gemified to 0.8.4.
 
@@ -89,4 +80,3 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
 - Initial build for ALT Linux
-
