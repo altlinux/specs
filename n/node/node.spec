@@ -36,7 +36,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.3
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -45,18 +45,20 @@ Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
 
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 ##Source-git: https://github.com/nodejs/node.git
 # Source-url: https://nodejs.org/dist/v%version/node-v%version.tar.gz
 Source: %name-%version.tar
-
 Source7: nodejs_native.req.files
+
+Patch: node-disable-external-libs.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 
 BuildRequires: python-devel gcc-c++ zlib-devel
 
-# can we use external gyp (not yet released)
-#BuildRequires: gyp
+BuildRequires: gyp
 BuildRequires: python-modules-json python-module-simplejson
 
 %if_with systemv8
@@ -155,23 +157,31 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup
+%patch -p2
+
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
 cp -a deps/v8/include/libplatform src
 rm -rf deps/v8/
 %endif
+
 %if_with systemicu
 rm -rf deps/icu-small/
 %endif
+
 %if_with systemuv
-# TODO:
-#rm -rf deps/uv/
+rm -rf deps/uv/
 %endif
+
 %if_with systemnghttp2
 rm -rf deps/nghttp2/
 %endif
+
 # TODO:
-# rm -rf deps/zlib deps/openssl deps/cares deps/http-parser deps/gtest
+# deps/gtest
+rm -rf tools/gyp
+rm -rf deps/zlib deps/openssl deps/cares deps/http-parser
+
 %if_without npm
 #true
 # don't use: keep internal npm (used for doc build)
@@ -180,7 +190,11 @@ ln -s %_libexecdir/node_modules/npm deps/npm
 %endif
 
 # use rpm's cflags
-%__subst "s|'cflags': \[\],|'cflags': ['%optflags'],|" ./configure
+%__subst "s|'cflags': \[\],|'cflags': ['%optflags'],|" ./configure.py
+# TODO: move to upstream?
+%ifarch mipsel
+%__subst "s|'libraries': \[\],|'libraries': ['-latomic'],|" ./configure.py
+%endif
 
 %build
 ./configure \
@@ -289,7 +303,7 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 # deps/http_parser
 #_includedir/node/nameser.h
 #_datadir/node/common.gypi
-%_rpmlibdir/nodejs_native.req*
+%_rpmlibdir/nodejs_native.req.files
 #%_datadir/node/sources
 
 %if_with npm
@@ -300,6 +314,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 10.15.3-alt1
+- new version 10.15.3 (with rpmrb script)
+- 2018-03-05, Version 10.15.3 'Dubnium' (LTS), @BethGriggs
+- CVE-2019-5737
+- fix rpm's cflags using, add -latomic on mipsel
+- use external gyp
+
 * Thu Jan 17 2019 Vitaly Lipatov <lav@altlinux.ru> 10.15.0-alt1
 - new version 10.15.0 (with rpmrb script)
 - 2018-12-26, Version 10.15.0 'Dubnium' (LTS), @MylesBorins
