@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.12.5
+Version: 0.12.6
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -130,6 +130,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.6-alt1
+- New version.
+
 * Sun Jan 27 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt1
 - New version.
 
