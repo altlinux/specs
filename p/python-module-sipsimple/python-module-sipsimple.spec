@@ -2,8 +2,8 @@
 %def_enable bundled_pjsip
 
 Name:    python-module-%modulename
-Version: 3.3.0
-Release: alt2
+Version: 3.4.1
+Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
 License: GPLv3
@@ -55,6 +55,9 @@ chmod +x deps/pjsip/*configure
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
+- New version.
+
 * Mon Feb 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.0-alt2
 - Fixed build on ppc64le.
 
