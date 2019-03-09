@@ -1,5 +1,5 @@
 Name: code
-Version: 1.25.0
+Version: 1.32.1
 Release: alt1
 
 Summary: Visual Studio Code
@@ -28,7 +28,7 @@ AutoProv: no
 BuildRequires: libsecret
 
 # we need it for AutoReq
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+BuildRequires: libgtk+3 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
 
 %description
 Visual Studio Code is a new choice of tool that combines the simplicity
@@ -61,6 +61,13 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.32.1-alt1
+- new version 1.32.1 (with rpmrb script)
+
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 1.26.0-alt1
+- new version 1.26.0 (with rpmrb script)
+- use gtk 3 now
+
 * Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt1
 - new version 1.25.0 (with rpmrb script)
 - use direct download links
