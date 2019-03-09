@@ -1,11 +1,11 @@
 Name: rpm-build-mozilla.org
 Version: 41.0.2
-Release: alt2
+Release: alt3
 Summary: RPM helpers to build Mozilla.org packages
 License: GPL
 Group: Development/Other
 BuildArch: noarch
-Requires: raptor rpm-utils
+Requires: rpm-utils
 
 Source: rpm-build.tar
 
@@ -44,5 +44,8 @@ sed \
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 41.0.2-alt3
+- Do not require raptor.
+
 * Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 41.0.2-alt2
 - Build rpm-build-mozilla.org separately from xulrunner.
