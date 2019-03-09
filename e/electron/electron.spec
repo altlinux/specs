@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron
-Version: 3.1.6
+Version: 4.0.8
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -42,7 +42,8 @@ tar xfv %SOURCE1
 %ifarch aarch64
 tar xfv %SOURCE2
 # hack: we have lib64/ld-linux-aarch64.so.1
-sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" ./%name
+sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" ./%name 
+rm -rf swiftshader
 %endif
 
 # drop undefined symbols from binaries
@@ -59,6 +60,12 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.8-alt1
+- new version 4.0.8 (with rpmrb script)
+
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.6-alt1
+- new version 4.0.6 (with rpmrb script)
+
 * Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
 - new version 3.1.6 (with rpmrb script)
 
