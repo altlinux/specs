@@ -1,5 +1,5 @@
 Name: webtorrent-desktop
-Version: 0.19.0
+Version: 0.20.0
 Release: alt2
 
 Summary: Streaming torrent app for Mac, Windows, and Linux
@@ -12,13 +12,18 @@ Group: Networking/Instant messaging
 # Source-url: https://github.com/webtorrent/webtorrent-desktop/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Source1: %name-preloaded-%version.tar
-Source2: %name-production-%version.tar
+# auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
+# ask me about description using: lav@etersoft.ru
+Source1: %name-development-%version.tar
+#Source2: %name-production-%version.tar
+
+#ExclusiveArch: ix86 x86_64
 
 BuildArch: noarch
 
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64
-Requires: electron
+
+Requires: electron >= 4.0
 
 BuildRequires: npm node-asar
 
@@ -27,21 +32,23 @@ Streaming torrent app for Mac, Windows, and Linux.
 
 %prep
 %setup -a1
+# for electron >= 4.0
+%__subst "s|shouldQuit = app.makeSingleInstance(\(.*\))|shouldQuit = !app.requestSingleInstanceLock()|" src/main/index.js
 
 %build
 npm run build
-
-# replace node_modules with got after npm install --production
-rm -rf node_modules
-tar xf %SOURCE2
+npm prune --production
 
 cat <<EOF >%name
 #!/bin/sh
-electron %_datadir/%name/resources/app.asar
+electron %_datadir/%name/resources/app.asar "\$@"
 EOF
 
+# ignore files listed in original package command
+RULE=$(grep ignore: bin/package.js | sed -e "s|.*ignore: */\(.*\)/,|\1|")
+find . | sed -e "s|^\.||" | egrep "($RULE)" | sed -e "s|^/||" | xargs rm -rfv
+
 asar pack --unpack-dir static . resources/app.asar
-#asar pack . resources/app.asar
 
 %__subst "s|/opt/%name/WebTorrent|%_bindir/%name|g" static/linux/share/applications/%name.desktop
 %__subst "s|Path=/opt/%name||g" static/linux/share/applications/%name.desktop
@@ -66,6 +73,13 @@ cp -a static/linux/share/applications/%name.desktop %buildroot%_desktopdir/%name
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt2
+- fix run with electron 4.x
+
+* Thu Jul 12 2018 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt1
+- new version 0.20.0 (with rpmrb script)
+- use new node_modules predownloading implementation from rpmgs
+
 * Sun Jan 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt2
 - build with external electron
 
