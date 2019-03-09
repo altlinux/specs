@@ -1,7 +1,7 @@
 
 Name: virt-viewer
-Version: 7.0
-Release: alt2
+Version: 8.0
+Release: alt1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -12,14 +12,15 @@ Source: %name-%version.tar
 
 Obsoletes: spice-client < 0.12.5-alt3
 
-BuildRequires: glib2-devel >= 2.38.0 libgio-devel
+BuildRequires: glib2-devel >= 2.40 libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: libvirt-devel >= 0.9.7 libvirt-glib-devel >= 0.1.8
 BuildRequires: libgtk+3-devel >= 3.12
 BuildRequires: perl-podlators intltool
 BuildRequires: libspice-gtk3-devel >= 0.35 libspice-glib-devel spice-protocol >= 0.12.7
 BuildRequires: libgtk3vnc-devel >= 0.4.0
-BuildRequires: libgovirt-devel >= 0.3.2
+BuildRequires: libvte3-devel
+BuildRequires: libgovirt-devel >= 0.3.3 librest-devel >= 0.8
 
 %description
 Virt Viewer provides a graphical viewer for the guest OS
@@ -40,6 +41,8 @@ intltoolize --force
 %configure \
 	--disable-static \
 	--disable-update-mimedb \
+    --with-spice-gtk \
+    --with-vte \
 	--with-buildid=-%release
 
 %make_build
@@ -49,7 +52,7 @@ intltoolize --force
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md COPYING AUTHORS ChangeLog NEWS
+%doc README.md COPYING NEWS
 %_bindir/*
 %_man1dir/*
 %_datadir/mime/packages/*.xml
@@ -59,6 +62,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Sun Mar 10 2019 Alexey Shabalin <shaba@altlinux.org> 8.0-alt1
+- 8.0
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 7.0-alt2
 - app: Remove VirtViewerApp::has-focus
 - app: Always add guest name comment
