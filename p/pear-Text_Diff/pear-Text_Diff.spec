@@ -2,7 +2,7 @@
 
 Name: pear-Text_Diff
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Generate and display difference analysis between files/strings
 
@@ -18,12 +18,8 @@ BuildArchitectures: noarch
 
 Requires: pear-core
 
-# Automatically added by buildreq on Thu Apr 11 2013
-# optimized out: php5 php5-libs php5-suhosin
-BuildRequires: php5-xdebug rpm-build-pear
-
 BuildPreReq: rpm-build-pear
-BuildRequires: pear-core php5-xdebug rpm-build-pear
+BuildRequires: pear-core php7-xdebug rpm-build-pear
 
 
 %description
@@ -55,6 +51,9 @@ http://pear.php.net/manual/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Mar 09 2019 Pavel isopenko <pauli@altlinux.org> 1.1.1-alt2
+- switch to php7
+
 * Thu Apr 11 2013 Pavel Isopenko <pauli@altlinux.org> 1.1.1-alt1
 - initial build for ALT Linux Sisyphus
 
