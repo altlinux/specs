@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-asar
-Version: 0.14.3
+Version: 1.0.0
 Release: alt1
 
 Summary: Simple extensive tar-like archive format with indexing
@@ -76,6 +76,9 @@ mkdir -p %buildroot%_bindir/
 %nodejs_sitelib/%node_module
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Thu Jul 12 2018 Vitaly Lipatov <lav@altlinux.ru> 0.14.3-alt1
 - new version 0.14.3 (with rpmrb script)
 - use new node_modules predownloading implementation from rpmgs
