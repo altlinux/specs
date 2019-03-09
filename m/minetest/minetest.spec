@@ -3,7 +3,7 @@
 %global gitname celeron55
 
 Name:		minetest
-Version:	0.4.17.1
+Version:	5.0.0
 Release:	alt1
 Summary:	Multiplayer infinite-world block sandbox with survival mode
 
@@ -37,6 +37,7 @@ BuildRequires:	libirrlicht-devel
 BuildRequires:	bzip2-devel jthread-devel libsqlite3-devel
 BuildRequires:	libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel
 BuildRequires:	libopenal-devel libvorbis-devel
+BuildRequires:	libfreetype-devel
 BuildRequires:	systemd
 BuildRequires:	gettext-tools
 
@@ -137,7 +138,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 %files -f %{name}.lang
-%doc doc/lgpl-2.1.txt README
+%doc README.md doc/lgpl-2.1.txt README
 %doc %_docdir/%name
 %_bindir/%name
 %_datadir/%name
@@ -148,7 +149,7 @@ fi
 %_datadir/metainfo/*.appdata.xml
 
 %files server
-%doc README.txt doc/lgpl-2.1.txt doc/world_format.txt doc/protocol.txt README
+%doc README.md doc/lgpl-2.1.txt doc/world_format.txt doc/protocol.txt README
 #_bindir/%{name}server
 %_unitdir/%{name}.service
 %config(noreplace) %{_sysconfdir}/%{name}.conf
@@ -158,6 +159,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.17.1-alt1
 - New version.
 
