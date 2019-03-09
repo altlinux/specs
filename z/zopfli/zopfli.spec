@@ -1,6 +1,7 @@
+# TODO: build to upstream
 Name: zopfli
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Summary: Zlib compatible better compressor
 
@@ -67,11 +68,16 @@ libraries.
 # TODO: use cmake
 # TODO: add LDFLAGS with -lm
 %make_build CFLAGS="%optflags -lm" \
-    zopfli zopflipng
+    zopfli
+%make_build CFLAGS="%optflags -lm" \
+    zopflipng
 mkdir static && cp zopfli zopflipng static/
 make clean
+
 %make_build CFLAGS="%optflags -lm" CXXFLAGS="%optflags" \
-    libzopfli libzopflipng
+    libzopfli
+%make_build CFLAGS="%optflags -lm" CXXFLAGS="%optflags" \
+    libzopflipng
 
 %install
 mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
@@ -104,6 +110,9 @@ ln -s libzopflipng.so.%version %buildroot%_libdir/libzopflipng.so.1
 
 
 %changelog
+* Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt3
+- fix parallel build issue
+
 * Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
 - build with -D_FILE_OFFSET_BITS=64
 
