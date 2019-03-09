@@ -7,16 +7,17 @@
 
 Name: %{_name}3
 Version: %ver_major.12
-Release: alt1
+Release: alt1.1
 
 Summary: The Typesafe Callback Framework for C++
 License: LGPLv2+
 Group: System/Libraries
-Url: http://libsigc.sourceforge.net/
+Url: https://libsigcplusplus.github.io/libsigcplusplus/
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
+#VCS: https://github.com/libsigcplusplus/libsigcplusplus.git
 Source: %_name-%version.tar
 %endif
 
@@ -80,6 +81,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Sat Mar 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.99.12-alt1.1
+- fixed %%url (ALT #36250)
+
 * Tue Oct 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.99.12-alt1
 - 2.99.12
 
