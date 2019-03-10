@@ -6,11 +6,29 @@
 %def_with parallelism
 %def_without fetch
 %def_without lto
-%def_with kde
+
+# enable gtk3/kde5 UI
+%def_enable kde5
+
+%ifarch mipsel
+%def_without java
+%def_disable kde4
+%def_disable qt5
+%else
+%def_with java
+%if_enabled kde5
+%def_disable kde4
+%def_disable qt5
+%else
+%def_enable kde4
+%def_disable qt5
+%endif
+%endif
+%def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 6.0
-%define urelease 7.3
+%define hversion 6.1
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -53,30 +71,28 @@ Source401:      libreoffice6.1-scalable-desktop-icons.tar
 
 ## FC patches
 Patch1: FC-0001-don-t-suppress-crashes.patch
-Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
-Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-gtk3-only-for-3.20.patch
-Patch5: FC-0001-Related-tdf-105998-except-cut-and-paste-as-bitmap-in.patch
-Patch6: FC-0001-request-installation-of-langpack-via-packagekit.patch
-Patch7: FC-0001-disable-libe-book-support.patch
+Patch2: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch3: FC-0001-gtk3-only-for-3.20.patch
+Patch4: FC-0001-Update-mdds-to-1.4.1.patch
+Patch5: FC-0001-Update-orcus-to-0.14.0.patch
+Patch6: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-Patch402: libreoffice-4-alt-drop-gnome-open.patch
+##Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
-Patch404: fix-unexpected-abort.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
 BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
-%if_with kde
+%if_with kde4
 BuildRequires: kde4libs-devel
 %endif
-BuildRequires: python2.7(distutils) libunixODBC-devel libXrandr-devel libssl-devel
+BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libssl-devel
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
@@ -95,6 +111,25 @@ BuildRequires: doxygen e2fsprogs
 BuildRequires: libxmlsec1-nss-devel libgpgme-devel
 # 6.0.1
 BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
+# 6.0.5
+%if_enabled qt5
+BuildRequires: qt5-base-devel
+%endif
+
+# 6.1.0
+BuildRequires: libnumbertext-devel
+
+# 6.1.1
+BuildRequires: python3-module-setuptools
+
+# 6.1.3.1 gtk3/kde5 UI
+%if_enabled kde5
+BuildRequires: qt5-base-devel qt5-x11extras-devel
+BuildRequires: kde4libs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
+%endif
+
+# 6.1.5.2
+BuildRequires: libpoppler-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -126,26 +161,39 @@ Requires: %name-common = %EVR
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
-%package gnome
-Summary: GNOME Extensions for %name
+%package gtk2
+Summary: GTK2 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
 Obsoletes: LibreOffice4-gnome
 Conflicts: LibreOffice-gnome
-%description gnome
-GNOME extensions for %name
+%description gtk2
+GTK2 extensions for %name
 
 %package gtk3
 Summary: GTK3 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
+Provides: %name-gnome = %EVR
+Obsoletes: %name-gnome < %EVR
 Conflicts: LibreOffice-gtk3
 %description gtk3
 GTK3 extensions for %name
 
-%if_with kde
+%if_enabled qt5
+%package qt5
+Summary: Qt5 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+Conflicts: LibreOffice-qt5
+%description qt5
+qt5 extensions for %name
+%endif
+
+%if_with kde4
 %package kde4
 Summary: KDE4 Extensions for %name
 Group:  Office
@@ -155,6 +203,17 @@ Obsoletes: LibreOffice4-kde4
 Conflicts: LibreOffice-kde4
 %description kde4
 KDE4 extensions for %name
+%endif
+
+%if_enabled kde5
+%package kde5
+Summary: KDE5 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+Conflicts: LibreOffice-kde5
+%description kde5
+KDE5 extensions for %name
 %endif
 
 %package -n libreofficekit-still
@@ -254,7 +313,6 @@ echo Direct build
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#patch7 -p1
 
 ## Long-term FC patches applying
 
@@ -262,7 +320,6 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p1
-%patch404 -p1
 
 tar xf %SOURCE401
 
@@ -271,6 +328,12 @@ sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgt
 
 # Hack hardcoded lsattr path
 for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin/lsattr@g' $f; done
+
+# Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
+fgrep -q "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
+
+# hack hardcoded libodbc version
+sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
 
 rm -fr %name-tnslations/git-hooks
 
@@ -303,23 +366,23 @@ test -r %conffile && . %conffile ||:
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 ./autogen.sh \
-	--without-system-poppler \
-	--without-system-mdds \
-	--without-system-orcus \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--disable-lto \
         --with-vendor="ALT Linux Team" \
+        --without-system-poppler \
+        %{subst_enable mergelibs} \
         --enable-odk \
-        --enable-systray \
 	--disable-firebird-sdbc \
 	--disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
+        %{subst_with java} \
         --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
+        --without-doxygen \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
@@ -337,10 +400,14 @@ export CXX=%_target_platform-g++
 	--enable-release-build \
 	--with-help \
   \
-%if_with kde
-	--enable-kde4 \
+        %{subst_enable kde4} \
+        %{subst_enable qt5} \
+        --enable-gtk \
+        --enable-gtk3 \
+%if_enabled kde5
+        --enable-gtk3-kde5 \
+        --disable-kde5 \
 %endif
-	--enable-gtk3 \
 	--disable-gstreamer-0-10 \
   \
   	--enable-avahi \
@@ -348,7 +415,7 @@ export CXX=%_target_platform-g++
   	--enable-lto \
 %endif
 %if_with parallelism
-	--with-parallelism \
+	--with-parallelism=`nproc` \
 %else   
         --without-parallelism \
 %endif
@@ -418,16 +485,22 @@ for l in %with_lang; do
 done
 
 # Create gnome plugin list
-find %buildroot%lodir -name "gnome*" -o -name "*_gtk*" | sed 's@^%buildroot@@' > files.gnome
+find %buildroot%lodir -name "*_gtk[^3]*" | sed 's@^%buildroot@@' > files.gtk2
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name "*_gtk3*" ! -name "*_kde5*" | sed 's@^%buildroot@@' > files.gtk3
 
-# Create kde plugin list
+# Create kde4 plugin list
 find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 
+# Create qt5 plugin list
+find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
+
+# Create kde5 plugin list
+find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
+
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 # Return Oxygen icon theme from LibreOffice 5.3 (see https://bugs.documentfoundation.org/show_bug.cgi?id=110353 for details)
 install -D %SOURCE400 %buildroot%lodir/share/config/images_oxygen.zip
@@ -438,6 +511,7 @@ unset RPM_PYTHON
 # Install wrappers
 for n in lo*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/loffice
+install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice
 install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
 
 # install icons
@@ -495,12 +569,20 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_iconsdir/*/*/apps/*
 %exclude %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
-%files gnome -f files.gnome
+%files gtk2 -f files.gtk2
 
 %files gtk3 -f files.gtk3
 
-%if_with kde
+%if_with kde4
 %files kde4 -f files.kde4
+%endif
+
+%if_enabled qt5
+%files qt5 -f files.qt5
+%endif
+
+%if_enabled kde5
+%files kde5 -f files.kde5
 %endif
 
 %files extensions
@@ -531,6 +613,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 6.1.5.2-alt1
+- New version 6.1.5.2 (Still).
+
 * Fri Feb 08 2019 Andrey Cherepanov <cas@altlinux.org> 6.0.7.3-alt1
 - New version 6.0.7.3 (Still).
 - Link with bundled poppler-0.66.
