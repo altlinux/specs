@@ -1,6 +1,6 @@
 Name: tcb
 Version: 1.1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Libraries and tools implementing the %name password shadowing scheme
 License: GPL or BSD
@@ -36,7 +36,7 @@ Group: System/Libraries
 Summary: Libraries and header files for building %name-aware applications
 License: GPL or BSD
 Group: Development/C
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 
 %package -n lib%name-devel-static
 Summary: Static libraries for building statically linked %name-aware applications
@@ -48,14 +48,14 @@ Requires: lib%name-devel = %version-%release
 Summary: %name NSS module
 License: GPL or BSD
 Group: System/Libraries
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 
 %set_pam_name pam_%name
 %package -n %pam_name
 Summary: %name PAM module
 License: GPL or BSD
 Group: System/Base
-PreReq: nss_%name = %version-%release, libpam%_pam_name_suffix, control
+Requires: nss_%name = %version-%release, libpam%_pam_name_suffix
 Provides: pam_%name = %version-%release
 Obsoletes: pam_%name
 
@@ -64,7 +64,7 @@ Summary: %name utilities
 License: GPL
 Group: System/Base
 Provides: /etc/tcb
-PreReq: %pam_name = %version-%release, shadow-convert
+Requires: %pam_name = %version-%release, shadow-convert
 
 %description -n lib%name
 This package contains code shared by the PAM and NSS modules and is also used
@@ -166,6 +166,9 @@ fi
 %_man8dir/tcb_*
 
 %changelog
+* Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1.1.0.1-alt2
+- Replaced PreReq with Requires.
+
 * Tue Jun 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.1.0.1-alt1
 - pam_tcb:
   + dropped obsolete nis/nis+ support (closes: #34919);
