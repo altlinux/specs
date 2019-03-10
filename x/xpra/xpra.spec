@@ -4,7 +4,7 @@
 
 Name: xpra
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 
@@ -17,7 +17,7 @@ Source: https://xpra.org/src/xpra-%version.tar
 BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libxkbfile-devel libpam0-devel libsystemd-devel
 
 # TODO use gtk3
-BuildRequires: python-module-pygtk-devel
+BuildRequires: python-module-pygtk-devel python-module-pycairo-devel
 
 # Video
 BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python-module-yuicompressor
@@ -25,7 +25,10 @@ BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libvpx-devel 
 # Sound
 BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
 
-BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate python-module-Pillow python-module-websockify
+# GL
+BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate
+
+BuildRequires: python-module-Pillow python-module-websockify
 
 BuildRequires: xorg-server brotli
 
@@ -42,9 +45,11 @@ BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
 %add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3) typelib(GtkosxApplication)
 
 # Note: we have no linking requires to libwebp.so.x
-Requires: libwebp xorg-xvfb setxkbmap
+Requires: libwebp
 
-Requires: python-module-pyinotify python-module-rencode
+Requires: xorg-xvfb setxkbmap
+
+Requires: python-module-pyinotify python-module-rencode python-module-lz4
 
 %description
 Xpra is 'screen for X': it allows you to run X programs,
@@ -73,13 +78,9 @@ If connecting from a remote machine, you would use something like (or you can al
 %prep
 %setup
 %__subst "s|-Werror|-Wall|g" setup.py
+
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
 %__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
-#patch -p1
-
-# already have turbojpeg, but there are some differences in headers
-#__subst "s|libturbojpeg|libjpeg|" setup.py
-#__subst "s|turbojpeg.h|jpeglib.h|" xpra/codecs/jpeg/encoder.pyx
 
 # move systemd service to correct %_unitdir
 %__subst "s|/bin/systemctl|NONONO|g" setup.py
@@ -128,6 +129,10 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Sun Mar 10 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt2
+- cleanup spec
+- add python-module-lz4 require
+
 * Sun Feb 10 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
 - new version 2.4.3 (with rpmrb script)
 
