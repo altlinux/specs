@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.6
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Extremely powerful file compression utility
@@ -21,7 +21,7 @@ Patch6: bzip2-1.0.6-alt-progname.patch
 Patch7: bzip2-1.0.6-flok-show-progress.patch
 Patch8: CVE-2016-3189.patch
 
-PreReq: bzlib = %epoch:%version-%release
+Requires: bzlib = %EVR
 BuildPreReq: glibc-devel-static makeinfo
 
 %package -n bzlib
@@ -34,20 +34,20 @@ Summary: Include files for developing apps which will use bzip2
 Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel
-PreReq: bzlib = %epoch:%version-%release
+Requires: bzlib = %EVR
 
 %package -n bzlib-devel-static
 Summary: Static library for developing apps which will use bzip2
 Group: Development/C
 Provides: %name-devel-static = %version
 Obsoletes: %name-devel-static
-Requires: bzlib-devel = %epoch:%version-%release
+Requires: bzlib-devel = %EVR
 
 %package doc
 Summary: Documentation for developing apps which will use bzip2
 Group: Development/C
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description
 bzip2 is a freely available, patent-free, high quality data compressor.
@@ -144,6 +144,21 @@ pushd %buildroot
 	rm .{/bin,%_man1dir}/{bzdiff,bzcmp,bzgrep,bzfgrep,bzegrep}*
 popd
 
+# Package pkgconfig file
+mkdir -p %buildroot%_pkgconfigdir
+cat > %buildroot%_pkgconfigdir/%name.pc <<'EOF'
+prefix=%_prefix
+exec_prefix=%_exec_prefix
+libdir=%_libdir
+includedir=%_includedir
+
+Name: %name
+Version: %version
+Description: bzlib compression and decompression library
+Libs: -lbz2
+Cflags:
+EOF
+
 %define docdir %_docdir/%name-%version
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
@@ -158,6 +173,7 @@ install -pm644 CHANGES LICENSE README *.html %buildroot%docdir/
 %_libdir/*.so
 %_includedir/*
 %_infodir/*.info*
+%_pkgconfigdir/%name.pc
 
 %files -n bzlib-devel-static
 %_libdir/*.a
@@ -176,6 +192,9 @@ install -pm644 CHANGES LICENSE README *.html %buildroot%docdir/
 %docdir/*.html
 
 %changelog
+* Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.6-alt6
+- bzlib-devel: packaged pkgconfig file (requested by viy@).
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.6-alt5
 - bzip2recover: fixed a use-after-free bug (by sem@; fixes: CVE-2016-3189).
 
