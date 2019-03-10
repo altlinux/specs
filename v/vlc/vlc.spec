@@ -3,7 +3,7 @@
 
 Name: vlc
 Version: 3.0.6
-Release: alt3
+Release: alt4
 
 Summary: VLC media player
 License: GPLv2
@@ -40,7 +40,7 @@ BuildRequires: libupnp-devel liblua5-devel lua5
 BuildRequires: libtiger-devel libudev-devel libprojectM-devel libsqlite3-devel
 BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
 BuildRequires: libchromaprint-devel libvncserver-devel libwayland-egl-devel wayland-protocols
-BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel libsidplay qt5-svg-devel
+BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel qt5-svg-devel
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
 BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
@@ -1382,6 +1382,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Mar 10 2019 Anton Farygin <rider@altlinux.ru> 3.0.6-alt4
+- fixed FTBFS by removing build requires of the old libsidplay package
+
 * Thu Mar 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.6-alt3
 - Added goom knob (disable by default to get rid of libgoom ->
   libxmms -> glib in Sisyphus).
