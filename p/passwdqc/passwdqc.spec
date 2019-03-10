@@ -1,6 +1,6 @@
 Name: passwdqc
 Version: 1.3.1.2
-Release: alt1
+Release: alt2
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -29,7 +29,7 @@ BuildArch: noarch
 Summary: Passphrase quality checker shared library
 License: LGPLv2+
 Group: System/Libraries
-PreReq: %name-control = %version-%release, control
+Requires(pre,post): %name-control = %version-%release
 
 %package -n lib%name-devel
 Summary: Library and header file for building passwdqc-aware applications
@@ -151,6 +151,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.2-alt2
+- lib%name: replaced PreReq with more appropriate dependencies.
+
 * Fri Aug 24 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.2-alt1
 - pam_passwdqc:
   + implemented audit logging (by Oleg Solovyov and me).
