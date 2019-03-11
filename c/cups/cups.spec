@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.2.10
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -107,6 +107,7 @@ Patch508: ALT-644.patch
 Patch509: ALT-1.7.2-local_ipv6.patch
 Patch510: ALT-config-nolibs.patch
 Patch511: ALT-pwg-raster-attributes.patch
+Patch512: ALT-2.1.0-lpd-sanitizer.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -252,6 +253,7 @@ services using the main CUPS library "libcups".
 %patch509 -p1
 %patch510 -p1
 %patch511 -p1
+%patch512 -p2
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
@@ -396,6 +398,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Mon Mar 11 2019 Fr. Br. George <george@altlinux.ru> 2.2.10-alt2
+- Fix UTF8->ASCII task header conversion (thanks klark@)
+
 * Thu Feb 28 2019 Fr. Br. George <george@altlinux.ru> 2.2.10-alt1
 - Autobuild version bump to 2.2.10
 - Update patches
