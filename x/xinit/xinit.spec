@@ -1,5 +1,5 @@
 Name: xinit
-Version: 1.3.2
+Version: 1.4.1
 Release: alt1
 Summary: X Window System initializer
 License: MIT/X11
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: xinitrc > 2.4.23-alt1
 
-BuildRequires: libConsoleKit-devel libX11-devel xorg-util-macros
+BuildRequires: libX11-devel xorg-util-macros
 
 %description
 The  xinit  program  is  used to start the X Window System server and a
@@ -41,6 +41,10 @@ nate.
 %_man1dir/*
 
 %changelog
+* Mon Mar 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+- removed ck-xinit-session
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
