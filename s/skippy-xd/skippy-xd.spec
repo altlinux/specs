@@ -1,4 +1,5 @@
-%define gitdate git20131106
+%define gitdate git20150224
+#Tue Feb 24 21:35:00 2015 
 
 Name: skippy-xd
 Version: 0.5
@@ -41,6 +42,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Tue Mar 05 2019 Fr. Br. George <george@altlinux.ru> 0.5-alt1.git20150224
+- Upstream git snapshot
+
 * Thu Nov 28 2013 Mikhail Efremov <sem@altlinux.org> 0.5-alt1.git20131106
 - Upstream git snapshot.
 
