@@ -1,5 +1,5 @@
 %def_with    java
-%def_with    php
+%def_without php
 %def_without perl
 %def_with    python
 %def_without wsf
@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.6.0
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -33,7 +33,7 @@ BuildRequires: perl-devel
 BuildRequires: perl-Error
 %endif
 %if_with php
-BuildRequires(pre): rpm-build-php5
+BuildRequires: rpm-build-php5
 BuildRequires: php5-devel
 BuildRequires: libexpat-devel
 BuildRequires: python
@@ -230,6 +230,9 @@ make check
 %endif
 
 %changelog
+* Mon Mar 11 2019 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt2
+- Build without PHP5 support.
+
 * Tue Sep 18 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - New version.
 
