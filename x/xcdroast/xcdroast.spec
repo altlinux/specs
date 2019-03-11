@@ -1,7 +1,7 @@
 Name: xcdroast
 Epoch: 6
 Version: 1.18
-Release: alt1
+Release: alt2
 
 %define _xcdroastlibdir %_prefix/lib/%name
 
@@ -17,7 +17,7 @@ Provides: %name-manual
 Obsoletes: %name-manual < 0.98alpha15
 
 BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libcairo-devel libgtk+2-devel
-BuildRequires: libpango-devel pkg-config gtk+-devel
+BuildRequires: libpango-devel pkg-config
 
 # http://prdownloads.sourceforge.net/xcdroast/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -128,6 +128,9 @@ mkdir -p %buildroot%_xcdroastlibdir/{lang,xpms}
 %_man1dir/%name.1*
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:1.18-alt2
+- Removed redundant BR: gtk+-devel (fixes FTBFS).
+
 * Mon Aug 06 2018 Grigory Ustinov <grenka@altlinux.org> 6:1.18-alt1
 - Build new version (Closes: #26958).
 
