@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -91,6 +91,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt2
+- fix compile with old Qt
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 
