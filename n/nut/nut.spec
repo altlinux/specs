@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.7.4
-Release: alt2
+Release: alt3
 
 Summary: Network UPS Tools
 License: GPL
@@ -99,7 +99,6 @@ BuildRequires: %libusb
 
 BuildRequires: libdbus-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: glib-devel
 
 %package server
 Summary: The UPS information server
@@ -553,6 +552,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Mon Mar 11 2019 Anton Farygin <rider@altlinux.ru> 2.7.4-alt3
+- cleanup build requires for fix FTBFS (closes: #36253)
+
 * Wed Oct 03 2018 Anton Farygin <rider@altlinux.ru> 2.7.4-alt2
 - added patch for build with openssl-1.1
 - build from upstream git
