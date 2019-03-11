@@ -1,6 +1,6 @@
 Name: ibam
 Version: 0.5.2
-Release: alt3
+Release: alt4
 
 Summary: Intelligent Battery Monitor
 License: GPL
@@ -17,7 +17,7 @@ Packager: Ilya Mashkin <oddity@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 01 2012
 # optimized out: glib2-devel libatk-devel libcairo-devel libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libstdc++-devel pkg-config
-BuildRequires: gcc-c++ gkrellm-devel gtk+-devel
+BuildRequires: gcc-c++ gkrellm-devel
 
 %description
 IBAM is an advanced battery monitor for laptops, which uses statistical
@@ -58,6 +58,9 @@ install -pDm644 ibam-krell.so %buildroot%_libdir/gkrellm2/plugins/ibam-krell.so
 %_libdir/gkrellm2/plugins/%name-*
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.2-alt4
+- Removed redundant BR: gtk+-devel (fixes FTBFS).
+
 * Mon Aug 06 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt3
 - Fixed FTBFS (removed extra BR).
 
