@@ -1,5 +1,5 @@
 Name:     flameshot
-Version:  0.6.0.0.25.git94daa4f
+Version:  0.6.0.0.46.git4261915
 Release:  alt1
 
 Summary:  Powerful yet simple to use screenshot software
@@ -13,6 +13,8 @@ Packager: Anton Shevtsov <x09@altlinux.org>
 Source:   %name-%version.tar
 
 Patch: flameshot-0.6.0-fix-autostart-icon.patch
+Patch1: 270e19a155c426431d437fb699b919ce30823d20.patch
+Patch2: 8b78eff9bdae89449f236640402eb04e67b5dc52.patch
 
 BuildRequires: qt5-base-devel qt5-tools qt5-svg-devel
 
@@ -23,6 +25,8 @@ editor with advanced features.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %qmake_qt5 PREFIX=%_prefix
@@ -48,6 +52,17 @@ editor with advanced features.
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.0.0.46.git4261915-alt1
+- Fixed translation of system buttons in dialogs.
+  + (https://github.com/lupoDharkael/flameshot/pull/474)
+- Added russian translation of desktop file.
+  + (https://github.com/lupoDharkael/flameshot/pull/475)
+- Fixed errors in russian translation.
+  + (https://github.com/lupoDharkael/flameshot/pull/476)
+- Fixed export of startup option in configuration file (Closes: #36149).
+  + (https://github.com/lupoDharkael/flameshot/pull/477)
+- Fixed icon in autostarted program for i586 arch (Closes: #36134).
+
 * Tue Feb 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.0.0.25.git94daa4f-alt1
 - Fix icon in autostarted program (Closes: #36134).
 - Update russian translation.
