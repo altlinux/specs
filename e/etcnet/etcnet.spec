@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.18
-Release:	alt1
+Release:	alt2
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -140,6 +140,12 @@ fi
 %files full
 
 %changelog
+* Mon Mar 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.18-alt2
+- iface status check for ifdown added (Closes: #22658)
+- loading of kernel module 8021q disabled in VE (patch by Denis Yagofarov) (Closes: #13607)
+- dhcpd service stop fixed (Closes: #19582)
+- fixed unable to manage bridge ifaces on 2.6.32 OpenVZ kernels (patch by Nikolay A. Fetisov) (Closes: #33296)
+
 * Thu Mar 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.18-alt1
 - dropped iftab/ifrename support
 
