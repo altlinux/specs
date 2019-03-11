@@ -1,13 +1,13 @@
-%define section Multimedia/Video
-%define lib_name lib%name
+%define _unpackaged_files_terminate_build 1
 
 Name: smpeg
 Summary: summary SDL MPEG Library
 Version: 0.4.5
-Release: alt2.svn20120121
+Release: alt3.svn20120121
 License: LGPL
 Group: Video
 URL: http://icculus.org/smpeg/
+
 # svn://svn.icculus.org/smpeg/trunk
 Source: %name-%version.tar
 Source10: gtv_16x16.xpm
@@ -17,9 +17,8 @@ Source12: gtv_48x48.xpm
 Patch1: %name-%version-debian-gcc-6.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
-BuildRequires: gcc-c++ glib-devel glibc-devel-static gtk+2-devel imake libICE-devel libSDL-devel libX11-devel libXt-devel libstdc++-devel xorg-cf-files
-
-BuildPreReq: libGL-devel libGLU-devel
+BuildRequires: gcc-c++ glibc-devel-static gtk+2-devel imake libICE-devel libSDL-devel libX11-devel libXt-devel libstdc++-devel xorg-cf-files
+BuildRequires: libGL-devel libGLU-devel
 
 %description
 SMPEG is based on UC Berkeley's mpeg_play software MPEG decoder and SPLAY,
@@ -27,51 +26,42 @@ an mpeg audio decoder created by Woo-jae Jung. We have completed the
 initial work to wed these two projects in order to create a general
 purpose MPEG video/audio player for the Linux OS.
 
-%package -n %lib_name
+%package -n lib%name
 Summary: Main library for %name
 Group: System/Libraries
-Obsoletes: %lib_name
-Provides: %lib_name = %version-%release
 
-%description -n %lib_name
+%description -n lib%name
 This package contains the library needed to run programs dynamically
 linked with %name.
 
-%package -n %lib_name-devel
+%package -n lib%name-devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: %lib_name = %version
-Provides: %lib_name-devel = %version-%release
-Obsoletes: %lib_name-devel
+Requires: lib%name = %EVR
 
-%description -n %lib_name-devel
+%description -n lib%name-devel
 This package contains the headers that programmers will need to develop
 applications which will use %name.
 
-%package -n %lib_name-devel-static
+%package -n lib%name-devel-static
 Summary: Static libraries for developing programs that will use %name
 Group: Development/C
-Requires: %lib_name-devel = %version
-Obsoletes: %lib_name-devel-static
+Requires: lib%name-devel = %EVR
 
-%description -n %lib_name-devel-static
+%description -n lib%name-devel-static
 This package contains the static libraries that programmers will need to develop
 applications which will use %name.
 
-%package -n %name-player
+%package player
 Summary: Simple MPEG player baed on %name library
 Group: Video
-Obsoletes: %name-player
 
-%description -n %name-player
+%description player
 This package contains a MPEG player based on %name.
 
 %prep
 %setup
 %patch1 -p1
-
-# needed by Patch6
-#automake --foreign
 
 %build
 # Needed for snapshot releases.
@@ -105,7 +95,7 @@ Terminal=false
 Categories=AudioVideo;Video;Player;
 EOF
 
-%files -n %name-player
+%files player
 %doc CHANGES COPYING README
 %_bindir/plaympeg
 %_bindir/gtv
@@ -115,21 +105,24 @@ EOF
 %_miconsdir/gtv.xpm
 %_liconsdir/gtv.xpm
 
-%files -n %lib_name
+%files -n lib%name
 %doc CHANGES COPYING README
 %_libdir/lib*.so.*
 
-%files -n %lib_name-devel
+%files -n lib%name-devel
 %doc CHANGES COPYING README
 %_bindir/smpeg-config
 %_includedir/*
 %_libdir/*.so
 %_datadir/aclocal/*.m4
 
-%files -n %lib_name-devel-static
+%files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt3.svn20120121
+- Updated build dependencies (Closes: #36254)
+
 * Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt2.svn20120121
 - Fixed build with gcc-6.
 
