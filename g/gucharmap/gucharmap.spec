@@ -1,12 +1,12 @@
 %def_disable snapshot
 %def_enable introspection
 
-%define ver_major 11.0
+%define ver_major 12.0
 %define api_ver 2.90
-%define unicode_ver 11.0.0
+%define unicode_ver 12.0.0
 
 Name: gucharmap
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -118,6 +118,9 @@ export LDFLAGS="$LDFLAGS -ldl"
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 12.0.0-alt1
+- 12.0.0
+
 * Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 11.0.3-alt1
 - 11.0.3
 
