@@ -1,14 +1,15 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define gtk_api_ver 3.0
+%def_enable pycairo
 %def_disable devel_doc
 %def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -21,7 +22,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-Patch: pygobject-3.30.1-alt-fix-egg_info_install.patch
 
 %setup_python_module pygobject3
 
@@ -35,21 +35,19 @@ Requires: typelib(GdkX11) = %gtk_api_ver
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
 
-%define glib_ver 2.46.0
+%define glib_ver 2.48.0
 %define gi_ver 1.46.0
 %define pycairo_ver 1.11.1
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python rpm-build-python3
 BuildRequires: gnome-common gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings
-BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel
+BuildRequires: python-devel python-modules-encodings python-module-pytest
+%{?_enable_pycairo:BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel}
 BuildRequires: gobject-introspection-devel >= %gi_ver
 # python3
-BuildRequires: python3-devel python3-module-pycairo-devel
-# for tests
-BuildRequires: python3-module-pytest python-module-pytest dbus-tools-gui libgtk+3-gir-devel xvfb-run
-BuildRequires: glibc-i18ndata
+BuildRequires: python3-devel python3-module-pytest %{?_enable_pycairo:python3-module-pycairo-devel}
+%{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
 %description
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -142,15 +140,11 @@ Development documentation for %_name.
 
 %prep
 %setup -n %_name-%version
-%patch -b .egg
 %setup -D -c -n %_name-%version
 mv %_name-%version py3build
-pushd py3build
-%patch -b .egg
-popd
 
 %build
-%define opts -Dpycairo=true
+%define opts %{?_disable_pycairo:-Dpycairo=false}
 %meson %opts -Dpython=python
 %meson_build
 
@@ -207,6 +201,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sat Dec 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.4-alt1
 - 3.30.4
 

@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name chess
+%define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A chess game for GNOME
@@ -22,13 +23,15 @@ Provides:  gnome-games-glchess = %version-%release
 Requires: gnuchess >= 6.2.3
 
 %define glib_ver 2.40
-%define gtk_ver 3.19.0
+%define gtk_ver 3.22.0
 %define vala_ver 0.22.0
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: librsvg-devel gsettings-desktop-schemas-devel libappstream-glib-devel
-BuildRequires: libGL-devel libGLU-devel vala-tools >= %vala_ver
+BuildRequires: vala-tools >= %vala_ver
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: librsvg-devel gsettings-desktop-schemas-devel
+BuildRequires: libGL-devel libGLU-devel
 
 %description
 A chess game which supports several chess engines, with 2D and optionally
@@ -36,7 +39,6 @@ A chess game which supports several chess engines, with 2D and optionally
 
 %prep
 %setup -n %__name-%version
-[ ! -d m4 ] && mkdir m4
 
 %build
 %meson
@@ -44,21 +46,22 @@ A chess game which supports several chess engines, with 2D and optionally
 
 %install
 %meson_install
-
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
-%_desktopdir/%__name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%__name
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/scalable/apps/%{__name}*.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %config(noreplace) %_sysconfdir/%__name/engines.conf
-%_datadir/metainfo/%__name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

@@ -1,11 +1,13 @@
-%define ver_major 3.30
+%def_disable snapshot
+
+%define ver_major 3.32
 %def_enable python
 %def_enable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -13,12 +15,15 @@ License: GPL
 Group: Editors
 Url: https://wiki.gnome.org/Apps/Gedit/ShippedPlugins
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
-%define gtksourceview_ver 3.18.0
+%define gtksourceview_ver 4.0.2
 %define gedit_ver 3.28.0
 %define peas_ver 1.14
 %define git2_ver 0.0.12
@@ -34,18 +39,17 @@ AutoReqProv: nopython
 
 # From configure.ac
 BuildRequires(pre): rpm-build-gir rpm-build-gnome
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= 0.35.0
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildPreReq: gedit-devel >= %gedit_ver
-BuildPreReq: libpeas-devel >= %peas_ver
+BuildRequires: gnome-common libappstream-glib-devel
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: gedit-devel >= %gedit_ver
+BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: yelp-tools
 # for git plugin
 BuildRequires: libgit2-glib-devel >= %git2_ver
 # for Charmap plugin
-BuildPreReq: libgucharmap-devel >= 3.0.0 libgucharmap-gir-devel
+BuildRequires: libgucharmap-devel >= 3.0.0 libgucharmap-gir-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
 %if_enabled python
 BuildRequires(pre): rpm-build-python3
@@ -87,10 +91,13 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.terminal.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.wordcompletion.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
-%_datadir/appdata/gedit-*.metainfo.xml
+%_datadir/metainfo/gedit-*.metainfo.xml
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

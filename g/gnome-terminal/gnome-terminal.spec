@@ -1,11 +1,11 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,20 +17,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.54.2
+%define vte_ver 0.56.0
 
 Provides: xvt
 
-PreReq: libvte3 >= %vte_ver
+Requires(pre): libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: rpm-build-gnome gnome-common intltool
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libvte3-devel >= %vte_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: libvala-devel vala-tools
 BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
@@ -90,6 +90,7 @@ EOF
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_altdir/%name
 %doc --no-dereference COPYING
@@ -103,6 +104,9 @@ EOF
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

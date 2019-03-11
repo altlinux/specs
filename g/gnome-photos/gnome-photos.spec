@@ -2,12 +2,15 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.30
+%define ver_major 3.31
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.4
 
+# dogtail with python3 required
+%def_disable check
+
 Name: gnome-photos
-Version: %ver_major.1
+Version: %ver_major.91
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -33,22 +36,23 @@ Source: %name-%version.tar
 
 Requires: grilo-plugins >= %grilo_ver
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-# From configure.ac
-BuildRequires: yelp-tools desktop-file-utils
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: tracker-devel >= %tracker_ver
-BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libgegl-devel >= %gegl_ver
-BuildPreReq: libgrilo-devel >= %grilo_ver
-BuildPreReq: libpng-devel >= %png_ver
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: tracker-devel >= %tracker_ver
+BuildRequires: libgdata-devel >= %gdata_ver
+BuildRequires: libgegl-devel >= %gegl_ver
+BuildRequires: libgrilo-devel >= %grilo_ver
+BuildRequires: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
 BuildRequires: libjpeg-devel libgfbgraph-devel >= %gfbgraph_ver
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
 BuildRequires: libgeocode-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libdazzle-devel > %dazzle_ver
+BuildRequires: libdbus-devel
+%{?_enable_check:BuildRequires: dogtail}
 
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
@@ -59,26 +63,27 @@ patterns and objectives.
 
 %prep
 %setup
-%{?_enable_snapshot:touch AUTHORS}
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 rm -rf %buildroot/%_datadir/doc/%name
 %find_lang --with-gnome %name
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
+
 %files -f %name.lang
 %_bindir/%name
+%dir %_libdir/%name
+%_libdir/%name/*.so
 %_libexecdir/gnome-photos-thumbnailer
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%xdg_name.*
-%_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/dbus-1/services/%xdg_name.service
@@ -86,6 +91,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.91-alt1
+- 3.31.91
+
 * Thu Sep 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

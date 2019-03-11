@@ -1,18 +1,20 @@
 %def_disable snapshot
 
-%define ver_major 2.58
+%define ver_major 2.60
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
+# Only one TLS or SSL can be enabled
+%def_enable tls
+%def_disable ssl
+
 %def_enable libproxy
 %def_enable gnome_proxy
-%def_enable tls
-%def_enable pkcs11
 %def_enable installed_tests
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Networking support for GIO
@@ -27,24 +29,34 @@ Source: %name-%version.tar
 %endif
 
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
-%{?_enable_pkcs11:Requires: ca-certificates}
+Requires: ca-certificates
 
 %define glib_ver 2.56.1
 %define gnutls_ver 2.12.8
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
 
-BuildRequires: meson libgio-devel >= %glib_ver
+BuildRequires(pre): meson
+BuildRequires: libgio-devel >= %glib_ver libsystemd-devel
+%{?_enable_ssl:BuildRequires: libssl-devel}
 %{?_enable_gnome_proxy:BuildRequires: gsettings-desktop-schemas-devel}
 %{?_enable_tls:BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel}
 %{?_enable_pkcs11:BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates}
 %{?_enable_libproxy:BuildRequires: libproxy-devel >= %libproxy_ver}
-BuildRequires: libsystemd-devel
 
 %description
 This package contains modules that extend the networking support in GIO.
 In particular, it contains a libproxy-based GProxyResolver implementation
 and a gnutls-based GTlsConnection implementation.
+
+%package -n glib-openssl
+Summary: Network-related giomodule for glib using openssl
+Group: System/Libraries
+
+%description -n glib-openssl
+This package contains the implementations of certain GLib openssl
+features that cannot be implemented directly in GLib itself because of
+their dependencies
 
 %package tests
 Summary: Tests for the %name package
@@ -61,15 +73,15 @@ the functionality of the installed %name package.
 
 %build
 %meson \
-	%{?_enable_libproxy:-Dlibproxy_support=true} \
-	%{?_enable_gnome_proxy:-Dgnome_proxy_support=true} \
-	%{?_enable_pkcs11:-Dpkcs11_support=true} \
+	%{?_enable_tls:-Dgnutls=enabled} \
+	%{?_enable_ssl:-Dopenssl=enabled} \
+	%{?_enable_libproxy:-Dlibproxy=enabled} \
+	%{?_enable_gnome_proxy:-Dgnome_proxy=enabled} \
 	%{?_enable_installed_tests:-Dinstalled_tests=true}
 %meson_build
 
 %install
 %meson_install
-
 %find_lang %name
 
 %check
@@ -86,6 +98,12 @@ the functionality of the installed %name package.
 %endif
 %doc NEWS README
 
+%if_enabled ssl
+%files -n glib-openssl
+%_libdir/gio/modules/libgioopenssl.so
+%doc NEWS README
+%endif
+
 %if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/%name/
@@ -93,6 +111,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.0.1-alt1
+- 2.60.0.1
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
 - 2.58.0
 

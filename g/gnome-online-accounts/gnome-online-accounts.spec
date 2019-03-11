@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.31
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -23,7 +23,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: Provide online accounts information
@@ -148,7 +148,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/dbus-1/services/org.gnome.Identity.service
 %_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
 %_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
-%_datadir/icons/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
 %{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
 %{?_enable_docs:%_man8dir/goa-daemon.*}
 %doc README NEWS
@@ -182,6 +182,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Mon Feb 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.90-alt1
+- 3.31.90
+
 * Mon Feb 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

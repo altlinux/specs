@@ -1,7 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 %define xdg_name org.gnome.FileRoller
-%define ver_major 3.30
+%define xdg_name1 org.gnome.ArchiveManager
+%define ver_major 3.32
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -9,7 +10,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -21,7 +22,7 @@ Url: http://fileroller.sourceforge.net
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
 # find ./ -type f -print0| xargs -r0 subst "s/x-lzop-compressed-tar/x-tzo/" --
-Patch2: %name-3.29.91-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.31.92-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -119,8 +120,7 @@ rm -f data/%xdg_name.desktop{,.in}
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/%xdg_name.ArchiveManager1.service
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name1}*.*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
@@ -132,6 +132,9 @@ rm -f data/%xdg_name.desktop{,.in}
 
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

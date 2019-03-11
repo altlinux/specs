@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 3.30
-%define _libexecdir %_prefix/libexec
+%define ver_major 3.32
+%define xdg_name org.gnome.SwellFoop
 
 Name: gnome-games-%_name
 Version: %ver_major.0
@@ -18,10 +19,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Provides:  %_name = %version-%release
 
 %define glib_ver 2.36.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.22.23
 
-BuildRequires(pre): meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel
 BuildRequires: gsettings-desktop-schemas-devel
 
@@ -43,14 +45,17 @@ area in as few moves as possible.
 
 %files -f %_name.lang
 %attr(-,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

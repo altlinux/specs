@@ -1,16 +1,21 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name gst-plugins
-%define ver_major 1.14
+%define ver_major 1.15
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%{?_enable_snapshot:%def_enable gtk_doc}
+%def_enable gtk_doc
+%def_disable debug
+%def_disable libunwind
+%def_disable libdw
+%def_disable examples
+%def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.4
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -34,15 +39,19 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 
 %define opus_ver 0.9.4
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel gtk-doc
 BuildRequires: gstreamer%api_ver-devel >= %version libgstreamer%api_ver-gir-devel
 BuildRequires: libgudev-devel libGL-devel libGLES-devel libdrm-devel libgbm-devel
-BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
+BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
-BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
+BuildRequires: libcdio-paranoia-devel liboil-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
 BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
 BuildRequires: gobject-introspection-devel
+%{?_enable_libunwind:BuildRequires: libunwind-devel}
+%{?_enable_libdw:BuildRequires: libdw-devel}
+%{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
 
 %description
 GStreamer Base Plug-ins is a well-groomed and well-maintained
@@ -116,33 +125,27 @@ GObject introspection devel data for the GStreamer library
 %setup -n %_name-base-%version
 
 %build
-%autoreconf
-%configure \
-	--with-default-audiosrc=pulsesrc \
-	--with-default-audiosink=pulsesink \
-	--with-default-videosrc=v4l2src \
-	--with-default-videosink=xvimagesink \
-	--disable-examples \
-	--disable-valgrind \
-	--enable-experimental \
-	--enable-gio \
-	--disable-debug \
-	--disable-static \
-	--with-html-dir=%_gtk_docdir \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+	-Dexamples=disabled \
+	-Dgio=enabled \
+	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_debug:-Dgst_debug=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name-base-%api_ver
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %_name-base-%api_ver.lang
 %dir %_gst_libdir
 %_gst_libdir/*.so
 %_datadir/%_name-base/%api_ver/*.dict
-%exclude %_gst_libdir/*.la
 
 %files -n lib%_name%api_ver
 %_libdir/*.so.*
@@ -171,7 +174,7 @@ GObject introspection devel data for the GStreamer library
 %_pkgconfigdir/*.pc
 
 %files -n %_name%api_ver-devel-doc
-%_gtk_docdir/%_name-base-*-%api_ver/
+%_gtk_docdir/%_name-base-*/
 
 %files -n %_name%api_ver-gir-devel
 %_girdir/GstAllocators-1.0.gir
@@ -187,6 +190,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Sun Nov 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt3
 - libgst-plugins1.0: added conflict to gst-plugins-bad1.0 < 1.13 (ALT #35636)
 

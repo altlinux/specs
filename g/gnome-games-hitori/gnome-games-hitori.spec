@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name hitori
 %define xdg_name org.gnome.Hitori
-%define ver_major 3.22
+%define ver_major 3.31
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.92
+Release: alt1
 
 Summary: GTK+ application to generate and let you play games of Hitori
 Group: Games/Boards
@@ -20,8 +20,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-# serial 25
-Source1: ax_code_coverage.m4
 
 Provides:  %_name = %version-%release
 
@@ -29,8 +27,8 @@ Provides:  %_name = %version-%release
 %define gtk_ver 3.16.0
 %define cairo_ver 1.4
 
-BuildRequires: gnome-common yelp-tools
-BuildRequires: desktop-file-utils libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 
@@ -52,31 +50,26 @@ multiple solutions to a Hitori puzzle board.
 
 %prep
 %setup -n %_name-%version
-[ ! -d m4 ] && mkdir m4
-# save last (good) version of AX_CODE_COVERAGE
-rm -f m4/ax_code_coverage.m4
-cp %SOURCE1 m4/code_coverage.m4
-subst 's/AX_\(CODE_COVERAGE\)/HITORI_\1/' m4/code_coverage.m4 configure.ac
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.92-alt1
+- 3.31.92
+
 * Sat Feb 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt2
 - updated to 3.22.4-37-g7d90827
 - fixed build with new autoconf-archive-2019.01.06

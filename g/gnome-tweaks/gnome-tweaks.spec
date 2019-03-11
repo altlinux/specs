@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -60,7 +60,6 @@ Features:
 
 %install
 %meson_install
-
 %find_lang %name
 
 %files -f %name.lang
@@ -69,12 +68,14 @@ Features:
 %python3_sitelibdir_noarch/gtweak/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

@@ -1,14 +1,15 @@
 %define _name libwnck
-%define ver_major 3.30
+%define ver_major 3.31
 %define api_ver 3.0
 
 %def_enable introspection
 %def_enable startup_notification
 %def_disable static
 %def_disable debug
+%def_enable gtk_doc
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -20,6 +21,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): rpm-build-gnome rpm-build-licenses
 # From configure.ac
+BuildRequires: autoconf-archive
 BuildRequires: libX11-devel libXres-devel libXext-devel libXt-devel libXi-devel
 BuildRequires: libgtk+3-devel >= 3.22.0
 BuildRequires: glib2-devel >= 2.32.0
@@ -90,6 +92,7 @@ libraries and objects.
 %configure \
     %{subst_enable static} \
     %{?_disable_startup_notification:--disable-startup-notification} \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
     --program-suffix=-3
 %make_build
 
@@ -111,8 +114,10 @@ libraries and objects.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -128,6 +133,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.4-alt1
+- 3.31.4
+
 * Tue Sep 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

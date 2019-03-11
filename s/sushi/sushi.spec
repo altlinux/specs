@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
@@ -22,8 +22,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: gst-plugins-base%gst_api_ver
 Requires: %lo_bin
 
-BuildRequires(pre): rpm-build-gir
-BuildRequires: intltool
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtksourceview3-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
 BuildRequires: libevince-devel libmusicbrainz5-devel libwebkit2gtk-devel
@@ -79,12 +79,11 @@ GObject introspection devel data for the Sushi library.
 sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 
 %build
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -92,7 +91,6 @@ sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 %_libexecdir/*
 %dir %_libdir/%name
 %_libdir/%name/*.so
-%exclude %_libdir/%name/*.la
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
 %_datadir/%name/
@@ -100,6 +98,9 @@ sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

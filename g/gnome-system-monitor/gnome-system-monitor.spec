@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.30
+%define ver_major 3.32
 %def_enable systemd
 %def_disable wnck
 
@@ -25,23 +25,20 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
-%define gnome_icon_theme_ver 3.0.0
-%define systemd_ver 44
 
 BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: gcc-c++ libappstream-glib-devel
 BuildRequires: yelp-tools
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libglibmm-devel >= %glibmm_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgtkmm3-devel >= %libgtkmm3_ver
-BuildPreReq: libgtop-devel >= %libgtop_ver
-BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
-BuildPreReq: libxml2-devel >= %libxml_ver
-BuildPreReq: librsvg-devel >= %rsvg_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libglibmm-devel >= %glibmm_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtkmm3-devel >= %libgtkmm3_ver
+BuildRequires: libgtop-devel >= %libgtop_ver
+BuildRequires: libxml2-devel >= %libxml_ver
+BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
-%{?_enable_wnck:BuildPreReq: libwnck3-devel >= %libwnck_ver}
-%{?_enable_systemd:BuildRequires: systemd-devel libsystemd-devel}
+%{?_enable_wnck:BuildRequires: libwnck3-devel >= %libwnck_ver}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
 %description
 Gnome-system-monitor is a simple process and system monitor.
@@ -75,6 +72,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

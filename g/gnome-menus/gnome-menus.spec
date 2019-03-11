@@ -1,26 +1,22 @@
-%define ver_major 3.13
+%define ver_major 3.32
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME desktop menu
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch1: %name-2.14-alt-add-config-dir.patch
-Patch2: %name-3.8.0-alt-applications-menu-no-legacy-kde.patch
+Patch1: %name-3.31.4-alt-add-config-dir.patch
 
-BuildPreReq: rpm-build-gnome rpm-build-xdg
+BuildRequires(pre): rpm-build-gnome rpm-build-xdg
 
-# From configure.in
-BuildPreReq: intltool >= 0.35 gnome-common
-BuildPreReq: libgio-devel >= 2.29.15
+BuildRequires: gnome-common libgio-devel >= 2.29.15
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
@@ -91,28 +87,26 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %prep
-%setup -q
-%patch1 -p0
-%patch2 -p1
+%setup
+%patch1 -b .config_dir
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     --disable-static \
     %{subst_enable introspection}
-
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-
-%find_lang %name-%api_ver
+%makeinstall_std
+%find_lang %name
 
 %files default
 %_datadir/desktop-directories/*
 %exclude %_xdgmenusdir/gnome-applications.menu
 
-%files -n lib%name -f %name-%api_ver.lang
+%files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -131,6 +125,9 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Aug 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.13.3-alt1
 - 3.13.3
 

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.28
+%define ver_major 3.32
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -13,8 +13,6 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-# 2b311ef67909bc20d0e87f334fe37bf5c4e9f29f
-Patch: %name-3.28.2-up-2b311ef.patch
 
 BuildArch: noarch
 
@@ -24,9 +22,9 @@ Provides:  gnome-media-grecord = %version-%release
 
 %define glib_ver 2.31.10
 %define gtk_ver 3.10.8
-%define gjs_ver 1.41
+%define gjs_ver 1.48
 
-Requires: libgjs >= 1.41
+Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 Requires: gstreamer%gst_api_ver-utils
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -43,8 +41,9 @@ Requires: typelib(Pango)
 # explicitly required to avoid installation old version
 Requires: libgst-plugins%gst_api_ver-gir
 
-BuildRequires: gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgjs-devel libgtk+3-gir-devel intltool yelp-tools
+BuildRequires(pre): meson
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgjs-devel libgtk+3-gir-devel yelp-tools
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
@@ -54,31 +53,29 @@ The GNOME application for record and play sound files.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome --output=%name.lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
-%_datadir/applications/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_desktopdir/%xdg_name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc NEWS README
+%doc NEWS README*
 
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - applied upstream patch to "Fix crashes when selecting a recording"
   (ALT #36071)

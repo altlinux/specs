@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 3.22
-%define _libexecdir %_prefix/libexec
+%define ver_major 3.32
+%define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
 Version: %ver_major.0
@@ -20,10 +21,13 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.32.0
 %define gtk_ver 3.12.0
 
-BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: librsvg-devel libclutter-gtk3-devel libcanberra-gtk3-devel
+BuildRequires: librsvg-devel libclutter-gtk3-devel libcanberra-gtk3-devel libcanberra-vala
+BuildRequires: libmanette-devel
 
 %description
 GNOME version of the popular russian game Tetris.
@@ -32,28 +36,29 @@ GNOME version of the popular russian game Tetris.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/scalable/apps/%{_name}*.svg
-%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
+%_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
 %_man6dir/%_name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

@@ -2,7 +2,8 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.22
+%define xdg_name org.gnome.Tetravex
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -21,10 +22,12 @@ Obsoletes: gnome-games-gnotravex
 Provides:  gnome-games-gnotravex = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.14.0
+%define gtk_ver 3.22.0
 
-BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
 %description
@@ -36,26 +39,26 @@ times are stored in a system-wide scoreboard.
 %setup -n %__name-%version
 
 %build
-%autoreconf
-%configure  --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f %__name.lang
 %_bindir/%__name
-%_desktopdir/%__name.desktop
-%_iconsdir/hicolor/*x*/apps/*.png
-%_iconsdir/hicolor/scalable/apps/*.svg
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*/apps/*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%__name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

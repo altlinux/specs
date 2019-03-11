@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -39,7 +39,7 @@ Source5: gtk-icon-cache.filetrigger
 
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 # move cloudproviders flags from gdk to gtk
-Patch1: gtk+-3.22.29-alt-build.patch
+Patch1: gtk+-3.24.6-alt-build.patch
 
 %define glib_ver 2.50.2
 %define gi_ver 1.41.0
@@ -56,6 +56,7 @@ Patch1: gtk+-3.22.29-alt-build.patch
 %define wayland_protocols_ver 1.12
 %define epoxy_ver 1.4
 %define cloudproviders_ver 0.2.5
+%define fribidi_ver 0.19.7
 
 Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
@@ -84,7 +85,7 @@ BuildRequires: sassc
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
-BuildRequires: libfribidi-devel
+BuildRequires: libfribidi-devel >= %fribidi_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
@@ -458,6 +459,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.7-alt1
+- 3.24.7
+
 * Mon Feb 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.5-alt1
 - 3.24.5
 

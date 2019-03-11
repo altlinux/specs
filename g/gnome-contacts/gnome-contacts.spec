@@ -1,11 +1,13 @@
-%define ver_major 3.30
+%def_disable snapshot
+
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -13,11 +15,14 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Contacts
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
-%define glib_ver 2.37.6
-%define gtk_ver 3.20.0
+%define glib_ver 2.44
+%define gtk_ver 3.24
 %define vala_ver 0.17.2
 %define tp_glib_ver 0.17.5
 %define folks_ver 0.9.5
@@ -26,13 +31,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define geocode_ver 3.15.3
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools docbook-dtds docbook-style-xsl libappstream-glib-devel
+BuildRequires: yelp-tools docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel
+BuildRequires: libhandy-devel
+
 # for build from git
 BuildRequires: libfolks-vala
 
@@ -65,6 +72,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32-alt1
+- 3.32
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

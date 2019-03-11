@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -30,11 +30,11 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib_ver 2.44.0
 %define desktop_ver 3.30.1
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.28.0
+%define gsds_ver 3.31.90
 %define nm_ver 1.2
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.29.90
+%define sett_daemon_ver 3.31.90
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -56,9 +56,8 @@ Requires: accountsservice
 #Requires: userpasswd
 Requires: gnome-online-accounts >= %goa_ver
 %{?_with_cheese:Requires: cheese >= %cheese_ver}
-BuildPreReq: rpm-build-gnome >= 0.9
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-gnome
 BuildPreReq: desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -87,9 +86,11 @@ BuildRequires: libclutter-gtk3-devel
 BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel
+BuildRequires: libudisks2-devel
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
-BuildRequires: libgudev-devel
+BuildRequires: libgudev-devel libgsound-devel
+BuildRequires: libhandy-devel
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -148,11 +149,6 @@ NOCONFIGURE=1 ./autogen.sh
 %dir %_datadir/%name
 %_datadir/%name/keybindings
 %_datadir/%name/pixmaps
-%dir %_datadir/%name/sounds
-%_datadir/%name/sounds/gnome-sounds-default.xml
-#%dir %_datadir/%name/datetime
-#%_datadir/%name/datetime/backward
-%_datadir/%name/icons/
 %_desktopdir/*.desktop
 %_datadir/pixmaps/faces/
 %_iconsdir/hicolor/*/*/*
@@ -179,6 +175,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0.1-alt1
+- 3.32.0.1
+
 * Fri Feb 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

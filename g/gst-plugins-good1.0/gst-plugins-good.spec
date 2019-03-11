@@ -1,18 +1,22 @@
 %define _name gst-plugins
-%define ver_major 1.14
+%define ver_major 1.15
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_enable gtk_doc
 %def_enable jack
 %def_enable pulse
 
+%def_disable gtk_doc
+%def_disable debug
+%def_disable examples
+%def_disable check
+
 Name: %_name-good%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -20,10 +24,10 @@ License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
-Patch: gst-plugins-good-1.14.4-up-vpx-1.8.patch
 
 Provides: %_name-good = %version-%release
 
+BuildRequires(pre): meson
 BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %version
 BuildRequires: gtk-doc libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
@@ -33,8 +37,10 @@ BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 BuildRequires: libmpg123-devel liblame-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: liborc-test-devel valgrind-tool-devel
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
 
 %description
 GStreamer Good Plug-ins is is a set of plug-ins that the developers consider
@@ -53,36 +59,38 @@ This package contains development documentation for GStreamer Good Plugins
 
 %prep
 %setup -n %_name-good-%version
-%patch -p1
 
 %build
-%autoreconf
-%configure \
-	--enable-experimental \
-	--disable-examples \
-	--disable-valgrind \
-	--disable-oss \
-	--disable-oss4 \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--disable-debug \
-	--disable-static
-%make_build
+%meson \
+	-Dexamples=disabled \
+	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_debug:-Dgst_debug=true}
+
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name-good-%api_ver
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %_name-good-%api_ver.lang
 %_gst_libdir/*.so
-%exclude %_gst_libdir/*.la
 %_gst_datadir/*
 %doc AUTHORS NEWS README RELEASE
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
+%endif
 
 %changelog
+* Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Tue Feb 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
 - rebuild against libvpx.so.6
 

@@ -1,5 +1,5 @@
-%define ver_major 3.30
-%define plugins_ver 12
+%define ver_major 3.32
+%define plugins_ver 13
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -17,7 +17,6 @@
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
-%def_enable steam
 %def_disable valgrind
 %def_disable tests
 # dropped since 3.27.90
@@ -26,8 +25,8 @@
 %def_disable external_appstream
 
 Name: gnome-software
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -44,21 +43,24 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define packagekit_ver 1.1.9
 %define gnome_desktop_ver 3.18
 %define fwupd_ver 1.0.3
-%define flatpak_ver 0.6.12
+%define flatpak_ver 0.99.3
 %define limba_ver 0.5.6
 %define ostree_ver 2018.4
+%define xmlb_ver 0.1.4
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libsoup-devel >= %soup_ver
-BuildRequires: gnome-common rpm-build-xdg intltool yelp-tools gtk-doc xsltproc docbook-style-xsl
+BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
+BuildRequires: libgnome-online-accounts-devel
+BuildRequires: libxmlb-devel >= %xmlb_ver
 BuildRequires: valgrind-tool-devel
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gspell:BuildRequires: libgspell-devel}
@@ -117,7 +119,6 @@ GNOME Software.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -137,19 +138,16 @@ GNOME Software.
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
 %_datadir/%name/
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
-%_iconsdir/hicolor/*x*/*/%xdg_name.png
-%_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
-%_iconsdir/hicolor/scalable/apps/software-installed-symbolic.svg
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
 %{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
-%{?_enable_steam:%_datadir/metainfo/%xdg_name.Plugin.Steam.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 %_man1dir/%name.1.*
 %_man1dir/%name-editor.1.*
-%doc AUTHORS README*
+%doc AUTHORS README* NEWS
 
 %files devel
 %_includedir/%name/
@@ -159,6 +157,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Dec 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.6-alt2
 - enabled PackageKit support (ALT #35817)
 

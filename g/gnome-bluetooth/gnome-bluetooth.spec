@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.32
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -29,10 +29,14 @@ Source: %name-%version.tar
 
 %define gtk_ver 3.12.0
 
-BuildRequires: meson gtk-doc yelp-tools
+BuildRequires(pre): meson rpm-macros-alternatives
+BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libudev-devel libnotify-devel
 BuildRequires: libcanberra-gtk3-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+%if_enabled introspection
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+%endif
 
 %description
 The GNOME Bluetooth Subsystem
@@ -131,6 +135,9 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Aug 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

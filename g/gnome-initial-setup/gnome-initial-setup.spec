@@ -1,4 +1,4 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -28,7 +28,7 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 Requires: gnome-shell >= %ver_major gdm dconf geoclue2 >= %geoclue_ver
 Requires: ibus gnome-keyring gnome-getting-started-docs
 
-BuildRequires: intltool
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
@@ -55,12 +55,12 @@ you through configuring it. It is integrated with gdm.
 %setup
 
 %build
-%configure --disable-static \
-	%{?_disable_software_sources:--disable-software-sources}
-%make_build
+%meson \
+	%{?_enable_software_sources:-Dsoftware-sources=enabled}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot%_localstatedir/lib/%name
 mkdir -p %buildroot%_localstatedir/run/%name
@@ -87,6 +87,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -75,7 +75,7 @@ This package provides Calendar reference manual.
 #%_man1dir/*
 %_datadir/glib-2.0/schemas/org.gnome.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README.md
@@ -86,6 +86,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sat Nov 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

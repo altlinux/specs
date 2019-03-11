@@ -3,15 +3,15 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
+%def_enable plugins
 %def_enable introspection
-%def_enable python
-%def_enable gspell
-%{?_enable_snapshot:%def_enable gtk_doc}
+%def_enable vala
+%def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -38,40 +38,37 @@ AutoReqProv: nopython
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-# From configure.ac
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
-%define gtksourceview_ver 3.22.0
+%define gtksourceview_ver 4.0.3
 %define peas_ver 1.14.1
-%define enchant_ver 1.2.0
 %define gspell_ver 1.0.0
+%define soup_ver 2.60.0
 
 Requires: %name-data = %version-%release
 Requires: %name-gir = %version-%release
 Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
 
-BuildRequires(pre): rpm-build-gnome >= 0.6
+BuildRequires(pre): meson rpm-build-gnome
 
-# From configure.ac
-BuildPreReq: intltool >= 0.50.1
-BuildRequires: yelp-tools xmllint itstool
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: desktop-file-utils >= 0.22
-BuildPreReq: libenchant-devel >= %enchant_ver
-BuildPreReq: iso-codes-devel >= 0.35
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libpeas-devel >= %peas_ver
-BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
-BuildRequires: vala-tools
-%if_enabled python
+BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: desktop-file-utils >= 0.22
+BuildRequires: gtk-doc >= 1.0
+BuildRequires: iso-codes-devel >= 0.35
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libpeas-devel >= %peas_ver
+BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libgspell-devel >= %gspell_ver
+BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: libattr-devel libxml2-devel gsettings-desktop-schemas-devel
+%{?_enable_vala:BuildRequires: vala-tools}
+%if_enabled plugins
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-pygobject3-devel
 %endif
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
-%{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview4-gir-devel}
 
 %description
 gEdit is the official text editor of the GNOME desktop environment.
@@ -130,19 +127,15 @@ This package contains documentation needed to develop plugins for gedit.
 #%%patch -p1 -b .settings
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable python} \
-    --disable-schemas-compile \
-    --disable-static \
-    --disable-updater \
-    --enable-gvfs-metadata \
-    %{?_disable_introspection:--enable-introspection=no} \
-    %{?_enable_gtk_doc:--enable-gtk-doc}
-%make V=1
+%meson \
+    %{?_disable_plugins:-Dplugins=false} \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_disable_vala:-Dvapi=flalse} \
+    %{?_enable_gtk_doc:-Ddocumentation=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # additional mime types
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -183,16 +176,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files
 %_bindir/*
 %dir %pkglibdir
-%pkglibdir/lib%name.so
+%pkglibdir/lib%{name}*.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
-%{?_enable_python:%python3_sitelibdir/gi/overrides/Gedit.py*}
-%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/}
+%{?_enable_plugins:%python3_sitelibdir/gi/overrides/Gedit.py*}
+%{?_enable_plugins:%python3_sitelibdir/gi/overrides/__pycache__/}
 
 %exclude %_libexecdir/%name/gedit-bugreport.sh
-%exclude %gedit_pluginsdir/*.la
-%exclude %pkglibdir/lib%name.la
-
 
 %files data -f %name.lang
 %pkgdatadir/
@@ -200,11 +190,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/dbus-1/services/org.gnome.gedit.service
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/GConf/gsettings/gedit.convert
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README AUTHORS NEWS
+%doc README* AUTHORS NEWS
 
 %exclude %pkgdatadir/gir-1.0/
 
@@ -225,6 +214,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Oct 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

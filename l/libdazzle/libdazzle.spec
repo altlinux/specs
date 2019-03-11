@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: libdazzle
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to delight your users with fancy features
@@ -25,7 +25,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.55.0
 
-BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel
+BuildRequires(pre): meson
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel
 %{?_with_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_with_vapi:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -113,6 +114,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

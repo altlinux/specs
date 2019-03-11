@@ -1,13 +1,17 @@
 %define _name gstreamer
-%define ver_major 1.14
+%define ver_major 1.15
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
 %def_enable gtk_doc
+%def_disable debug
+%def_disable libunwind
+%def_disable libdw
+%def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -19,16 +23,19 @@ Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
 Provides: %_name = %version-%release
 
-PreReq: libcap-utils
+Requires(pre): libcap-utils
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.40.0
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libcap-devel libcap-utils
+BuildRequires: bash-completion
+%{?_enable_libunwind:BuildRequires: libunwind-devel}
+%{?_enable_libdw:BuildRequires: libdw-devel}
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -102,26 +109,23 @@ Gstreamer plugins.
 # till lcc ~1.23
 export LIBS=-lcxa
 %endif
-%autoreconf
-%configure \
-	--with-package-name=GStreamer \
-	--with-package-origin=%name \
-	--disable-examples \
-	--disable-valgrind \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--disable-gtk-doc-pdf \
-	--disable-rpath \
-	--disable-tests \
-	--disable-debug \
-	--disable-static \
-	--with-bash-completion-dir=%_datadir/bash-completion \
-	--with-ptp-helper-permissions=capabilities
-%make_build
+%meson \
+	-Dpackage-name="GStreamer" \
+	-Dpackage-origin=%name \
+	-Dexamples=disabled \
+	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_debug:-Dgst_debug=true} \
+	-Dptp-helper-permissions="capabilities"
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name-%api_ver
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %post
 setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-ptp-helper 2>/dev/null ||:
@@ -132,7 +136,6 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-ptp-helper
 %dir %_libdir/%_name-%api_ver
 %_libdir/%_name-%api_ver/*.so
-%exclude %_libdir/%_name-%api_ver/*.la
 %doc AUTHORS NEWS README RELEASE
 
 %files -n lib%name
@@ -150,6 +153,11 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
+%if_enabled debug
+%_datadir/gdb/auto-load/%_libdir/lib%name-%api_ver.so.*-gdb.py
+%_datadir/glib-2.0/gdb/glib_gobject_helper.py
+%_datadir/glib-2.0/gdb/gst_gdb.py
+%endif
 
 %files -n lib%name-gir-devel
 %_girdir/Gst-%api_ver.gir
@@ -171,6 +179,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/bash-completion/helpers/gst
 
 %changelog
+* Wed Feb 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 

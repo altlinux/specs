@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name sudoku
+%define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -22,8 +23,10 @@ Provides:  %__name = %version-%release
 %define gtk_ver 3.22.0
 
 BuildRequires(pre): meson
-BuildRequires: vala-tools gsettings-desktop-schemas-devel libappstream-glib-devel
-BuildRequires: gcc-c++ gnome-common yelp-tools libgio-devel >= %glib_ver
+BuildRequires: vala-tools gcc-c++
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgee0.8-devel libjson-glib-devel
 BuildRequires: libqqwing-devel
 
@@ -40,20 +43,20 @@ in popularity.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %__name
 
 %files -f %__name.lang
 %_bindir/%__name
-%_desktopdir/%__name.desktop
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/scalable/apps/%__name.svg
-%_iconsdir/hicolor/symbolic/apps/%__name-symbolic.svg
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%__name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

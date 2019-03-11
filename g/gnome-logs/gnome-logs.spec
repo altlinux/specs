@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.30
-%define _name org.gnome.Logs
+%define ver_major 3.32
+%define xdg_name org.gnome.Logs
 
 %def_with man
 %def_enable tests
@@ -52,18 +52,20 @@ GNOME Logs is a log viewer for the systemd journal.
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_datadir/dbus-1/services/%_name.service
-%_datadir/glib-2.0/schemas/%_name.enums.xml
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_man1dir/%name.1.*
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

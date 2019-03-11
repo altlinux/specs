@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -21,12 +21,12 @@ Source: %name-%version.tar
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
 
-BuildRequires(pre): meson
-BuildPreReq: rpm-build-licenses rpm-build-gnome
-BuildPreReq: yelp-tools libappstream-glib-devel
-BuildPreReq: libgtk+3-devel >= 3.20.0
-BuildRequires: libgio-devel >= 2.48.0 libxml2-devel vala-tools >= 0.24
-BuildRequires: libmpfr-devel libgtksourceview3-devel >= 3.16
+BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
+BuildRequires: vala-tools >= 0.24
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: libgtk+3-devel >= 3.20.0
+BuildRequires: libgio-devel >= 2.48.0 libxml2-devel
+BuildRequires: libmpfr-devel libgtksourceview4-devel >= 4.0.2
 BuildRequires: libsoup-devel >= 2.42 libmpc-devel
 
 %description
@@ -60,12 +60,15 @@ find ./ -name "*.stamp" -delete
 %_man1dir/%name.1.*
 %_man1dir/gcalccmd.1.*
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
-%_iconsdir/hicolor/*/*/%{name}*
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

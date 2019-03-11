@@ -1,13 +1,12 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Documents
-%define xdg_name1 org.gnome.Books
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -30,12 +29,10 @@ Source: %name-%version.tar
 %define gdata_ver 0.17.2
 %define soup_ver 2.41.3
 %define gi_ver 1.31.6
-%define gepub_ver 0.6
 
 Requires: %name-data = %version-%release
 Requires: gnome-online-miners
 Requires: libreofficekit >= %lok_ver
-Requires: typelib(Gepub) = %gepub_ver
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(cairo)
@@ -46,7 +43,6 @@ Requires: typelib(GData)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(GdPrivate)
-Requires: typelib(Gepub)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
@@ -65,7 +61,6 @@ Requires: typelib(Zpj)
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -79,7 +74,7 @@ BuildRequires: libzapojit-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel libgnome-desktop3-gir-devel
 BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel >= %tracker_ver
-BuildRequires: libzapojit-gir-devel libgepub-gir-devel >= %gepub_ver
+BuildRequires: libzapojit-gir-devel
 BuildRequires: librsvg
 
 %description
@@ -138,15 +133,13 @@ GObject introspection devel data for the %name library.
 
 %files
 %_bindir/%name
-%_bindir/gnome-books
 %dir %pkglibdir
 %pkglibdir/*.so
 %_man1dir/%name.1.*
-%_man1dir/gnome-books.1.*
 # contains arch dependent scripts
 %pkgdatadir/
 %exclude %pkgdatadir/gir-1.0
-%doc README AUTHORS NEWS TODO
+%doc README* AUTHORS NEWS TODO
 
 %files gir
 %dir %pkglibdir/girepository-1.0
@@ -155,19 +148,19 @@ GObject introspection devel data for the %name library.
 
 %files data -f %name.lang
 %_desktopdir/%xdg_name.desktop
-%_desktopdir/%xdg_name1.desktop
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/dbus-1/services/%xdg_name1.service
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.books.gschema.xml
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
-%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/symbolic/apps/*.svg
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%_datadir/metainfo/%xdg_name1.appdata.xml
+
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

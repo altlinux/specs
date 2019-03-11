@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.30
-%def_disable packagekit
+%define ver_major 3.32
+%def_enable packagekit
 # tests require colord running and g-c-m installed
 %def_disable check
 
@@ -39,6 +39,7 @@ BuildPreReq: colord-devel >= %colord_ver
 BuildPreReq: libcolord-gtk-devel >= %colord_gtk_ver
 BuildRequires: libgnome-desktop3-devel libexif-devel libexiv2-devel libcanberra-gtk3-devel
 BuildRequires: libtiff-devel liblcms2-devel >= %lcms_ver libXrandr-devel
+%{?_enable_packagekit:BuildRequires: libexiv2-devel}
 %{?_enable_check:BuildRequires: /proc xvfb-run}
 
 %description
@@ -103,6 +104,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

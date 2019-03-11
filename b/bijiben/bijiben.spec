@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.30
-%define xdg_name org.gnome.bijiben
+%define ver_major 3.32
+%define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -24,6 +24,8 @@ Source: %name-%version.tar
 %define gtk_ver 3.11.4
 %define tracker_ver 0.18
 %define eds_ver 3.19.90
+
+Requires: dconf tracker >= %tracker_ver
 
 BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: yelp-tools libappstream-glib-devel
@@ -61,17 +63,19 @@ desktop integration.
 %_libexecdir/%name-shell-search-provider
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/*x*/*/%xdg_name.png
-%_iconsdir/hicolor/scalable/*/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_datadir/dbus-1/services/%xdg_name.SearchProvider.service
 %_xdgmimedir/packages/%xdg_name.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

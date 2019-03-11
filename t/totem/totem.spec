@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Totem
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
@@ -23,18 +23,19 @@
 
 %if_enabled vala
 %def_enable rotation
-%def_enable zeitgeist
 %endif
+# removed in 3.31.x
+%def_disable zeitgeist
 
 %def_enable introspection
 %def_enable gtk_doc
-%def_enable nautilus
+# in 3.31.91 nautilus properties page moved to nautilus module
+%def_disable nautilus
 %def_enable lirc
 %def_disable tracker
 %def_enable python
 %def_disable coherence_upnp
 %def_disable jamendo
-%def_disable gromit
 
 Name: totem
 Version: %ver_major.0
@@ -79,7 +80,6 @@ AutoReqProv: nopython
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: gcc-c++ gtk-doc perl-podlators
 BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
-BuildPreReq: intltool >= 0.40.0
 BuildRequires: libappstream-glib-devel
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
 
@@ -90,13 +90,13 @@ BuildRequires: gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
 
-BuildPreReq: iso-codes-devel gnome-icon-theme
-BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
-BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
-BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-proto-devel
-BuildPreReq: libclutter-devel >= %clutter_ver
-BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
+BuildRequires: iso-codes-devel gnome-icon-theme
+BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
+BuildRequires: libtotem-pl-parser-devel >= %parser_ver
+BuildRequires: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-proto-devel
+BuildRequires: libclutter-devel >= %clutter_ver
+BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
+BuildRequires: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libgnome-desktop3-devel
 %if_enabled python
@@ -110,7 +110,7 @@ BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
-BuildRequires: libX11-devel libXext-devel libXi-devel
+BuildRequires: libX11-devel libXrandr-devel libXi-devel
 
 %description
 Totem is simple movie player for the Gnome desktop.
@@ -160,7 +160,6 @@ Requires: %name = %version-%release
 
 %description plugins
 A default plugins for Totem:
-	ontop
 	screensaver
 	skipto
 	properties
@@ -220,14 +219,6 @@ Requires: python-module-coherence coherence
 
 %description plugins-coherence_upnp
 This package contains a DLNA/UPnP client for Totem powered by Coherence
-
-%package plugins-gromit
-Summary: Gromit Annotations plugin for totem
-Group: Video
-Requires: %name = %version-%release
-
-%description plugins-gromit
-This package contains presentation helper to make annotations on screen
 
 %package plugins-brasero
 Summary: Video disc recorder plugin for Totem
@@ -306,7 +297,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 # depends on pygtk
 #%_libexecdir/%name/totem-bugreport.py
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/%name/
 %_man1dir/*
@@ -316,7 +306,7 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README TODO COPYING
+%doc AUTHORS NEWS README COPYING
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -337,7 +327,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %files plugins
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/dbus/
-%_libdir/%name/plugins/ontop/
 %_libdir/%name/plugins/screensaver/
 %_libdir/%name/plugins/skipto/
 %_libdir/%name/plugins/properties/
@@ -384,13 +373,10 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/GConf/gsettings/jamendo.convert
 %endif
 
-%if_enabled gromit
-%files plugins-gromit
-%_libdir/%name/plugins/gromit/
-%endif
-
+%if_enabled nautilus
 %files nautilus
 %nautilus_extdir/*
+%endif
 
 %if_enabled coherence_upnp
 %files plugins-coherence_upnp
@@ -410,6 +396,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

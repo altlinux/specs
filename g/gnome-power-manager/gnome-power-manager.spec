@@ -1,4 +1,4 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
@@ -68,6 +68,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

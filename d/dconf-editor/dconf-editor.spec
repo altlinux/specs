@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.30
-%define _name ca.desrt.dconf-editor
+%define ver_major 3.32
+%define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -56,17 +56,20 @@ This package provides graphical dconf configuration editor.
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/applications/%_name.desktop
-%_datadir/dbus-1/services/%_name.service
-%_iconsdir/hicolor/*/apps/*.*
+%_datadir/applications/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_iconsdir/hicolor/*/*/*.*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%_name.appdata.xml
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-# "nosort" bad option
-%exclude %_datadir/bash-completion/completions/%name
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+# "nosort" bad option?
+%_datadir/bash-completion/completions/%name
 %doc README
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

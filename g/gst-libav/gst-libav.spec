@@ -1,15 +1,18 @@
-%define ver_major 1.14
+%define ver_major 1.15
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
 # was 11.4 for libav fork
-%define libav_ver 3.0
+%define libav_ver 4.0.2
+
 %ifarch %ix86 x86_64
 %def_enable mmx
 %else
 %def_disable mmx
 %endif
-%def_without system_libav
+
+%def_with system_libav
+
 %if_without system_libav
 %def_enable doc
 %def_enable gpl
@@ -52,8 +55,8 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -63,7 +66,7 @@ Url: http://gstreamer.freedesktop.org/
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
 BuildRequires: gst-plugins%gst_api_ver-devel >= %version
-BuildRequires: orc liborc-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
+BuildRequires: orc liborc-test-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
 %if_with system_libav
 BuildRequires: libavformat-devel >= %libav_ver
 BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
@@ -146,6 +149,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Wed Mar 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
 - disabled obsolete librtmp support
 

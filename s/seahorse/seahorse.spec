@@ -1,7 +1,8 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
+%define xdg_name org.gnome.seahorse
 
 %def_disable debug
 # ldap support broken (incomplete) now
@@ -17,7 +18,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.1.1
+Version: %ver_major
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -46,9 +47,10 @@ BuildRequires: gnupg2
 BuildRequires: libgpgme-devel >= 1.0.0
 BuildRequires: libgpg-error-devel
 BuildRequires: vala-tools
+BuildRequires: pkgconfig(pwquality)
 %{?_enable_ldap:BuildRequires: libldap-devel}
 %{?_enable_hkp:BuildRequires: libsoup-devel >= 2.4}
-%{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= 0.5}
+%{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= 0.16}
 %{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= 3.11.91 gcr-libs-vala}
 %{?_enable_sharing:BuildRequires: libavahi-glib-devel >= 0.6 libavahi-devel }
 %{?_enable_ssh:BuildRequires: openssh openssh-clients}
@@ -80,7 +82,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %_libexecdir/%name/xloadimage
 %dir %_datadir/%name
 %_datadir/%name/*
-%_iconsdir/hicolor/*/apps/%{name}*.*
+%_iconsdir/hicolor/*/*/*.*
 %_desktopdir/*.desktop
 %_man1dir/*
 %_datadir/dbus-1/services/org.gnome.seahorse.Application.service
@@ -88,10 +90,16 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.window.gschema.xml
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%{xdg_name}*.appdata.xml
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32-alt1
+- 3.32
+
+* Tue Feb 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.91-alt1
+- 3.31.91
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1.1-alt1
 - 3.30.1.1
 

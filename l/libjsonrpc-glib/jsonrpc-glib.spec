@@ -4,7 +4,7 @@
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc-glib
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 
 %def_enable introspection
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -110,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Oct 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

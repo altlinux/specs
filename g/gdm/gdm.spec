@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -27,7 +27,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -319,6 +319,9 @@ dbus-run-session %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Feb 27 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3 (fixed CVE-2019-3825)
 

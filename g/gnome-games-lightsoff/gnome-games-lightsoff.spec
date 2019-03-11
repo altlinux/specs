@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name lightsoff
-%define ver_major 3.30
+%define xdg_name org.gnome.LightsOff
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -18,12 +19,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Provides:  %_name = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.22.0
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires: vala-tools
+BuildRequires: gsettings-desktop-schemas-devel 
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libclutter-gtk3-devel librsvg-devel vala-tools
+BuildRequires: libclutter-gtk3-devel librsvg-devel
 
 %description
 Lights Off is a puzzle game, where the objective is to turn off all of
@@ -32,8 +35,6 @@ and its non-diagonal neighbors.
 
 %prep
 %setup -n %_name-%version
-mv data/icons/hicolor/symbolic/apps/%_name-symbolic \
-data/icons/hicolor/symbolic/apps/%_name-symbolic.svg
 
 %build
 %meson
@@ -41,19 +42,20 @@ data/icons/hicolor/symbolic/apps/%_name-symbolic.svg
 
 %install
 %meson_install
-
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
 %attr(-,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/scalable/apps/%{_name}*.svg
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
+%_iconsdir/hicolor/*/*/%{xdg_name}*.*
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
