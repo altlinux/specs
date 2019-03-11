@@ -3,24 +3,22 @@
 %def_disable debug
 %def_disable mailme
 %def_enable doxygen
+%def_enable check
 
 Name: lib%oname
+Version: 1.1.1
+Release: alt1
+
 Summary: Lotus Sametime Community Client library
-License: LGPLv2+
 Group: Networking/Instant messaging
-Version: 1.1.0
-Release: alt2
-Source: http://dl.sf.net/%oname/%oname-1.0.2.tar.gz
-Patch0: meanwhile-1.1.0.patch
-Patch1: meanwhile-crash.patch
-Patch2: meanwhile-fix-glib-headers.patch
+License: LGPLv3+
+Url: https://github.com/obriencj/%oname
 
-Url: http://meanwhile.sourceforge.net
+Source: %oname-%version.tar.gz
 
-# Automatically added by buildreq on Mon Dec 01 2008
 BuildRequires: gcc-c++ glib2-devel
 
-%{?_enable_doxygen:BuildPreReq: doxygen}
+%{?_enable_doxygen:BuildRequires: doxygen}
 
 %description
 The heart of the Meanwhile Project is the Meanwhile library, providing the
@@ -51,10 +49,7 @@ BuildArch: noarch
 Documentation for the Meanwhile library
 
 %prep
-%setup -q -n %oname-1.0.2
-%patch0 -p1
-%patch1 -p0
-%patch2 -p1
+%setup -n %oname-%version
 
 %build
 %autoreconf
@@ -67,7 +62,10 @@ Documentation for the Meanwhile library
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
+
+%check
+%make check
 
 %files
 %doc AUTHORS ChangeLog README TODO
@@ -82,6 +80,9 @@ Documentation for the Meanwhile library
 %_defaultdocdir/%oname-doc-%version
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1 (new %%url)
+
 * Sat Mar 10 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt2
 - fixed build against glib2 >= 2.31 (fc patch)
 
