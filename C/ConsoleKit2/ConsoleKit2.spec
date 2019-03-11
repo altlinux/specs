@@ -6,7 +6,7 @@
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.2.1
-Release: alt4
+Release: alt5
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -47,6 +47,7 @@ Summary: Dbus service ConsoleKit
 Group: System/X11
 Requires: %name-x11 = %EVR
 Conflicts: systemd-services
+Conflicts: libnss-systemd
 
 %description service
 Dbus service ConsoleKit.
@@ -173,10 +174,14 @@ mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
 %_man1dir/*.1*
 
 %changelog
+* Mon Mar 11 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt5
+- Added conflict ConsoleKit2 vs libnss-systemd
+- fix changelog
+
 * Sat Jan 19 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt4
 - Fix conflict with systemd-services
 - New subpackage ConsoleKit2-service
-- Drop obsoletes ConsoleKit2
+- Drop obsoletes ConsoleKit
 
 * Sun Oct 21 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt3
 - disable systemd support
