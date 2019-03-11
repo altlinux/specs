@@ -17,6 +17,8 @@ Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
 
+Patch1:		php7-pdo_mysql-7.2.15-alt-mysql8-transition.patch
+
 BuildRequires(pre): rpm-build-php7
 BuildRequires: gcc-c++ libMySQL-devel
 BuildRequires: php7-devel = %php7_version
@@ -34,6 +36,7 @@ This package contains a MySQL driver for PDO.
 %prep
 %setup -T -c
 cp -pr -- %php7_extsrcdir/%php7_extension/* .
+%patch1 -p0
 
 # Fix path to pdo*.h
 subst 's@php/ext@php/%_php7_version/ext@g' config.m4
@@ -76,3 +79,5 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
 
+* Sun Mar 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 7.2.15.20180912-alt1.1
+- Fix FTBFS against libmysqlclient21
