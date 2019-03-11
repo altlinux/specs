@@ -1,5 +1,5 @@
 %define vrs	3.1
-%define tstamp 	20141030
+%define tstamp 	20181209
 #def_enable Werror
 
 Name: libedit3
@@ -11,14 +11,13 @@ License: BSD
 Group: System/Libraries
 Url: http://www.thrysoee.dk/editline/
 
-Source: http://www.thrysoee.dk/editline/libedit-%tstamp-%vrs.tar.gz
+# Repacked http://www.thrysoee.dk/editline/libedit-%tstamp-%vrs.tar.gz
+Source: libedit-%tstamp-%vrs.tar
 
 Patch0: libedit-alt-use-OpenBSD-soname.patch
 
 # Automatically added by buildreq on Tue Feb 15 2011
 BuildRequires: groff-base libncurses-devel
-
-Provides: libedit = %version-%release
 
 %description
 This is an autotool- and libtoolized port of the NetBSD Editline
@@ -29,7 +28,7 @@ tokenization functions, similar to those found in GNU Readline.
 %package -n libedit-devel
 Summary: Files needed to develop programs which use the %name library
 Group: Development/C
-PreReq: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n libedit-devel
 This package contains the files needed to develop programs which use
@@ -43,11 +42,20 @@ command line interface for users.
 %build
 %add_optflags %optflags_warnings -Wunused-function -Wunused-label -Wunused-variable -Wunused-value
 %autoreconf
-%configure --enable-widec --disable-examples
+%configure \
+	--disable-examples \
+#
 %make_build
 
 %install
 %makeinstall
+
+# In 20160618-3.1 some manpages dropped prefix for some reason.
+cd %buildroot%_man3dir
+	for m in tok_*.3 history*.3 ; do
+		mv -v "$m" el_"$m"
+	done
+cd -
 
 %files
 %_libdir/*.so.*
@@ -59,10 +67,14 @@ command line interface for users.
 %_includedir/*
 %_man3dir/*
 %_man5dir/*
+%_man7dir/*
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20181209-alt1
+- Updated to 20181209-3.1.
+
 * Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20141030-alt1
-- Build new version.
+- Built new version.
 - Made use of OpenBSD soname for library.
 
 * Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 3.0.20121213-alt1
