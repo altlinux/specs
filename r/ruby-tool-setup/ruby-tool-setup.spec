@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt13
+Release: alt15
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -23,8 +23,8 @@ Source: %pkgname-%version.tar
 Patch: %name-%version-%release.patch
 
 %description
-setup.rb is a generic installer for ruby scripts and libraries.
-You can use setup.rb to install your any ruby programs.
+setup-rb is a generic installer for ruby scripts and libraries.
+You can use setup-rb to install your any ruby programs.
 
 %package doc
 Summary: Documentation files for %name
@@ -47,7 +47,7 @@ Documentation files for %name
 %install
 %__mkdir_p %buildroot%_datadir/ruby-%pkgname
 %__install -p -m644 Template.README.* %buildroot%_datadir/ruby-%pkgname
-%__install -p -m644 setup.rb %buildroot%_datadir/ruby-%pkgname
+%__install -p -m644 setup-rb %buildroot%_datadir/ruby-%pkgname
 
 %files
 %doc ChangeLog NEWS.* README.* TODO Usage_*.txt
@@ -58,6 +58,12 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt15
+- Renamed setup.rb to setup-rb to fix package build.
+
+* Fri Dec 28 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt14
+- Fixed gemspec cleanup.
+
 * Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt13
 - Add copying Gemfile w/o .gemspec to spec folder. Now name of the spec
   folder depends on the package name, not gem name,
