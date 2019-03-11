@@ -1,7 +1,8 @@
+%def_disable check
 
 Name: libvirt-glib
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: libvirt glib integration for events
 Group: System/Libraries
 License: LGPLv2+
@@ -209,6 +210,9 @@ intltoolize --force
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Mon Mar 11 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt2
+- disable check
+
 * Fri Oct 19 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
