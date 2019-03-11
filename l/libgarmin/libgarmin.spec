@@ -4,7 +4,7 @@
 
 Name: libgarmin
 Version: 0.1.0
-Release: alt2.1
+Release: alt2.2
 Summary: Libgarmin is an open source (GPLv2) for Garmin image format maps.
 License: GPL2
 Group: Sciences/Geosciences
@@ -12,7 +12,7 @@ Url: http://libgarmin.sourceforge.net
 Source: %name-%svn_ver.tar.bz2
 
 # Automatically added by buildreq on Mon Dec 15 2008
-BuildRequires: libGConf-devel rpm-build-java rpm-macros-fillup rpm-macros-xmms subversion
+BuildRequires: libGConf-devel rpm-build-java rpm-macros-fillup subversion
 
 %description
 Garmin is a leader in the gps navigation, so learn from
@@ -66,6 +66,9 @@ svn upgrade
 #%_man7dir/*
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt2.2
+- Removed redundant BR: rpm-macros-xmms (fixes FTBFS).
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.1
 - Fixed build
 
