@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.38
 
@@ -32,8 +32,8 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
-Release: alt4
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -525,6 +525,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.2-alt1
+- 1.38.2 (fixed CVE-2019-3827)
+
 * Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt4
 - rebuilt against libnfs.so.13
 
