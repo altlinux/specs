@@ -6,18 +6,21 @@ Summary:	Purple-based antispam bot for Pidgin
 Name:		purple-plugin-bot-sentry
 Version:	1.1.0
 
-Release:	alt3.qa2
+Release:	alt3.qa3
 License:	GPL
 Group:		Networking/Instant messaging
 Url:		http://sourceforge.net/projects/pidgin-bs/
 Source:		%name-%version.tar
 
 Requires:      libpurple >= %pidgin_ver
-BuildRequires: libgtk+2-devel libtalkfilters-devel libxmms-devel  perl-XML-Parser
+BuildRequires: libgtk+2-devel libtalkfilters-devel perl-XML-Parser
 BuildRequires: pidgin-devel >= %pidgin_ver
 
 %description
-Bot Sentry is a Pidgin (libpurple) plugin to prevent Instant Message (IM) spam. It allows you to ignore IMs unless the sender is in your Buddy List, the sender is in your Allow List, or the sender correctly answers a question you have predefined. This release also contains Russian translations by Yury A. Romanov.
+Bot Sentry is a Pidgin (libpurple) plugin to prevent Instant Message (IM) spam.
+It allows you to ignore IMs unless the sender is in your Buddy List, the sender
+is in your Allow List, or the sender correctly answers a question you have
+predefined. This release also contains Russian translations by Yury A. Romanov.
 
 %prep
 %setup -q -n %name-%version
@@ -37,6 +40,9 @@ Bot Sentry is a Pidgin (libpurple) plugin to prevent Instant Message (IM) spam. 
 %_libdir/purple-2
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt3.qa3
+- Removed redundant BR: libxmms-devel (fixes FTBFS).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt3.qa2
 - NMU: rebuilt for debuginfo.
 
