@@ -28,7 +28,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 18.12.2
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -56,7 +56,8 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-multimedia-devel qt5-declarative-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel
-BuildRequires: libmusicbrainz-devel libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel
+#BuildRequires: libmusicbrainz-devel
+BuildRequires: libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel
 BuildRequires: kde5-libkcddb-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static
@@ -184,6 +185,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt2
+- build without musicbrainz
+
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
