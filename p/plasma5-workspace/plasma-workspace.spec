@@ -25,7 +25,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -208,9 +208,7 @@ popd
 #%patch116 -p1
 %patch117 -p1
 %patch118 -p1
-# TODO
-#%patch119 -p2
-#
+%patch119 -p2
 %patch121 -p2
 %patch122 -p2
 %patch123 -p2
@@ -370,6 +368,9 @@ done
 
 
 %changelog
+* Mon Mar 11 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt2
+- free space checking: restore notification
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 
