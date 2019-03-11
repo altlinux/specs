@@ -13,7 +13,7 @@
 
 Name: bacula9
 Version: 9.4.2
-Release: alt1
+Release: alt2
 
 License: AGPLv3
 Summary: Network based backup program
@@ -130,7 +130,7 @@ Conflicts: bacula7-director-sqlite3
 Summary: Network based backup program (PostgreSQL director only)
 Group: Archiving/Backup
 Requires(pre): %name-director-common = %EVR
-Requires: postgresql10
+Requires: postgresql
 Provides: %name-dir = %EVR
 Conflicts: bacula-director-postgresql
 Conflicts: bacula7-director-postgresql
@@ -890,6 +890,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt2
+- Updated runtime dependencies.
+
 * Thu Mar 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt1
 - Updated to upstream version 9.4.2 (Closes: #36244).
 - Replaced Qt4 by Qt5.
