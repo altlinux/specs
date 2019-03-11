@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hgview
-Version: 1.10.2
+Version: 1.10.4
 Release: alt1
 
 Summary: Qt4 based Mercurial log navigator
@@ -11,15 +11,17 @@ Group: Development/Tools
 BuildArch: noarch
 
 Url: http://www.logilab.org/project/hgview
+
 # hg clone http://hg.logilab.org/review/hgview
 Source0: %{name}-%{version}.tar
 
 %setup_python_module hgviewlib
 %py_requires mx.DateTime
+
 Requires: python-module-qscintilla2-qt4
 Requires: mercurial mercurial-hgext
 
-BuildPreReq: mercurial mercurial-hgext asciidoc xmlto python-module-PyQt4
+BuildRequires: mercurial mercurial-hgext asciidoc xmlto python-module-PyQt4
 
 %description
 hgview is a simple tool aiming at visually navigate in a Mercurial
@@ -38,16 +40,20 @@ repositories.
 %python_install
 mv %buildroot/usr/man %buildroot/usr/share
 rm -rf %buildroot/usr/share/doc/%name
+# conflicts with hgext3rd from mercurial
+rm -rf %buildroot%python_sitelibdir/hgext3rd/
 
 %files
 %_bindir/*
-%python_sitelibdir/hgext3rd/
 %python_sitelibdir/hgviewlib/
 %python_sitelibdir/*.egg-info
 %_man1dir/*
-%doc ChangeLog README COPYING PKG-INFO
+%doc ChangeLog README COPYING
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.4-alt1
+- Updated to upstream version 1.10.4.
+
 * Wed Sep 19 2018 Pavel Moseev <mars@altlinux.org> 1.10.2-alt1
 - Updated to upstream version 1.10.2 (closes: 31467)
 
