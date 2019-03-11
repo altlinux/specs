@@ -2,7 +2,7 @@
 
 Name:           kdiff3
 Version:        1.7.90
-Release:        alt1.gitd59b742
+Release:        alt2.gitd59b742
 Summary:        Compare + merge 2 or 3 files or directories
  
 License:        GPLv2
@@ -15,7 +15,6 @@ BuildRequires:  cmake
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
-BuildRequires:  glib-devel
 BuildRequires:  kf5-kio-devel 
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kparts-devel
@@ -66,6 +65,9 @@ KDiff3 is a program that
 %_K5xmlgui/kdiff3part/kdiff3_part.rc
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.90-alt2.gitd59b742
+- Updated build dependencies.
+
 * Thu Dec 20 2018 Alexey Melyashinsky <bip@altlinux.org> 1.7.90-alt1.gitd59b742
 - Update to upstream snapshot d59b742
 
