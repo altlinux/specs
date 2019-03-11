@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -22,6 +22,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
 BuildPreReq: libxml2-devel libXi-devel
 BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
+BuildRequires: help2man
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
 Obsoletes: xfce4-screenshooter-plugin < %version-%release
@@ -75,6 +76,10 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt1
+- Added help2man to BR.
+- Updated to 1.9.3.
+
 * Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.9.3-alt1
 - Update url.
 - Enable debug (minimum level).
