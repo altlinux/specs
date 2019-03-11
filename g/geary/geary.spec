@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Email client
@@ -79,6 +79,9 @@ subst "/\--thread/d" src/meson.build
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt1
+- 0.13.3
+
 * Thu Mar 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.2-alt1
 - 0.13.2
 
