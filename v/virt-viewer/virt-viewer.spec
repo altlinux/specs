@@ -1,7 +1,7 @@
 
 Name: virt-viewer
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -62,6 +62,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0-alt2
+- Allow toggling clipboard sharing between host and guest.
+
 * Sun Mar 10 2019 Alexey Shabalin <shaba@altlinux.org> 8.0-alt1
 - 8.0
 
