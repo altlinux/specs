@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -294,7 +294,7 @@ Provides: %name-full = %version
 Requires: mate-system-log
 #Requires: mate-user-share
 #Requires: mate-mplayer
-Requires: caja-gnome-mplayer-properties-page
+#Requires: caja-gnome-mplayer-properties-page
 #Requires: mate-file-manager-actions
 #Requires: mate-file-manager-terminal >= 0.9
 
@@ -392,6 +392,10 @@ itself).
 #%files a11y
 
 %changelog
+* Mon Mar 11 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt2
+- mate-maxi: removed dependency to caja-gnome-mplayer-properties-page cause
+  package deletion
+
 * Thu Mar 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.20.0-alt1
 - updated to mate 1.20
 
