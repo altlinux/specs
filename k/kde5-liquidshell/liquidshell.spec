@@ -7,7 +7,7 @@
 
 Name: kde5-liquidshell
 Version: 1.4
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -125,6 +125,9 @@ install -Dm 0644 liquidshell-session.desktop %buildroot/%_datadir/xsessions/liqu
 %_datadir/xsessions/liquidshell-session.desktop
 
 %changelog
+* Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt3
+- update from master branch
+
 * Mon Jan 28 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt2
 - update from master branch
 - build with packagekit
