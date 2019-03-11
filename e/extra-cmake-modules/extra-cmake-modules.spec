@@ -5,7 +5,7 @@
 %endif
 
 Name: extra-cmake-modules
-Version: 5.55.0
+Version: 5.56.0
 Release: alt1
 
 Group: Development/Other
@@ -61,6 +61,9 @@ sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cma
 %doc %_man7dir/*
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
+- new version
+
 * Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
 - new version
 

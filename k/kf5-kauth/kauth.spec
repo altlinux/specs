@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.55.0
+Version: 5.56.0
 Release: alt1
 %K5init altplace
 
@@ -52,6 +52,13 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n libkf5auth
+KF5 library
+
+%package -n libkf5authcore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5authcore
 KF5 library
 
 %if_enabled python
@@ -122,6 +129,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5archdata/mkspecs/modules/qt_KAuth.pri
 %_K5data/kauth/
 
+%files -n libkf5authcore
+%_K5lib/libKF5AuthCore.so.*
+
 %files -n libkf5auth
 %config(noreplace) %_K5conf_dbus_sysd/*auth*.conf
 %_K5lib/libKF5Auth.so.*
@@ -140,6 +150,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
+- new version
+
 * Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
 - new version
 

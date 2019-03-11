@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.55.0
+Version: 5.56.0
 Release: alt1
 %K5init altplace
 
@@ -48,6 +48,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common = %version-%release
 Requires: kf5-kwindowsystem-devel
 %description devel
 The %name-devel package contains libraries and header files for
@@ -73,7 +74,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 
-cat %SOURCE10 >po/ru/libplasma5.po
+#cat %SOURCE10 >po/ru/libplasma5.po
 
 %build
 %K5build
@@ -91,7 +92,7 @@ cat %SOURCE10 >po/ru/libplasma5.po
 %_K5data/plasma/desktoptheme/
 #%_K5notif/*.notifyrc
 
-#%files
+%files
 #%_K5qml/*
 #%exclude %_K5qml/org/kde/plasma/components/private/
 #%exclude %_K5qml/org/kde/plasma/core/private/
@@ -127,6 +128,9 @@ cat %SOURCE10 >po/ru/libplasma5.po
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
+- new version
+
 * Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
 - new version
 

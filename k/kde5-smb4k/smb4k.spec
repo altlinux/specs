@@ -4,8 +4,8 @@
 
 %define rname smb4k
 Name: kde5-%rname
-Version: 2.0.1
-Release: alt1%ubt
+Version: 2.1.1
+Release: alt1
 %K5init altplace
 
 Group: Networking/Other
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-declarative-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-ktextwidgets-devel kf5-kwallet-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-plasma-framework-devel kf5-kcrash-devel
 
 %description
 Smb4K is an SMB/CIFS share browser for KDE. It uses the Samba software suite to
@@ -62,15 +62,17 @@ rm -rf po/*/docs
 %_K5bin/*
 %_K5plug/*.so
 %_K5libexecdir/kauth/mounthelper
+%_K5qml/org/kde/smb4k/smb4kqmlplugin/
 %_K5conf_up/*
 %_K5xdgapp/org.kde.smb4k.desktop
-#%_K5data/smb4k/
+%_K5data/plasma/plasmoids/org.kde.smb4kqml/
 %_K5cfg/smb4k.kcfg
 %_K5icon/*/*/apps/*.*
 %_K5conf_dbus_sysd/org.kde.smb4k.mounthelper.conf
 %_K5dbus_sys_srv/org.kde.smb4k.mounthelper.service
 %_K5xmlgui/smb4k/
 %_K5notif/smb4k.*
+%_K5srv/*smb4k*.desktop
 %_datadir/polkit-1/actions/org.kde.smb4k.mounthelper.policy
 
 %files -n %libsmb4kcore
@@ -78,6 +80,9 @@ rm -rf po/*/docs
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1%ubt
 - security fixes: CVE-2017-8849
 
