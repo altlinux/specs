@@ -1,8 +1,8 @@
-%define libcontrolppver 0.19
+%define libcontrolppver 0.20
 
 Name: control++
-Version: 0.17.0
-Release: alt2
+Version: 0.18.0
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -59,6 +59,10 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Mon Mar 11 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.0-alt1
+- Verbose output option;
+- Bug fixes.
+
 * Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt2
 - Enhanced manual.
 
