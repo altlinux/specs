@@ -1,6 +1,6 @@
 Name: libmesode
 Version: 0.9.2
-Release: alt1
+Release: alt2
 Summary: Profanity project fork of libstrophe, an XMPP client library written in C
 Group: System/Libraries
 License: GPLv3
@@ -41,6 +41,8 @@ Static version of %name
 
 %prep
 %setup
+# XXX enable TLS1.0
+sed -i '/SSL_OP_NO_TLSv1/s|^|//|' "src/tls_openssl.c"
 
 %build
 %autoreconf
@@ -67,6 +69,9 @@ make check
 %_libdir/*.a
 
 %changelog
+* Mon Mar 11 2019 Fr. Br. George <george@altlinux.ru> 0.9.2-alt2
+- Enable some insecure protocols
+
 * Fri Sep 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
 - Updated to upstream version 0.9.2.
 
