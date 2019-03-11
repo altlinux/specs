@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
-BuildRequires: intltool libSM-devel libglade-devel libwnck3-devel time xorg-cf-files
+BuildRequires: intltool libSM-devel libwnck3-devel time xorg-cf-files
 BuildRequires: libICE-devel libnotify-devel
 
 Requires: exo-utils
@@ -65,6 +65,10 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 4.13.3-alt1
+- Drop libglade-devel from BR.
+- Updated to 4.13.3.
+
 * Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.2-alt1
 - Update url.
 - Require exo-utils.
