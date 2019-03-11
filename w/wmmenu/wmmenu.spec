@@ -3,7 +3,7 @@
 
 Name: wmmenu
 Version: 1.2
-Release: alt4
+Release: alt5
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -16,7 +16,7 @@ Source: http://www.fcoutant.freesurf.fr/download/%name-%version.tar.gz
 Source1: %name.defaults
 
 # Automatically added by buildreq on Mon Apr 11 2005
-BuildRequires: glib-devel gtk+-devel libdockapp-devel
+BuildRequires: libdockapp-devel
 BuildRequires: libXt-devel libXext-devel
 
 %description
@@ -64,6 +64,9 @@ install -m644 %SOURCE1 %buildroot%_sysconfdir/X11/%name/defaults
 %_x11mandir/man1/wmmenu.1*
 
 %changelog
+* Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2-alt5
+- Removed redundant BR: glib-devel gtk+-devel (fixes FTBFS).
+
 * Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4
 - build with new libdocapp
 
