@@ -1,6 +1,6 @@
 Name: smpeg2
 Version: 2.0.0
-Release: alt4
+Release: alt5
 
 Summary: SDL MPEG Player Library
 License: LGPLv2
@@ -61,7 +61,7 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %files
 %doc BUGS CHANGES COPYING README README.SDL_mixer TODO
 %_bindir/plaympeg
-%_man1dir/plaympeg.1.*
+%_man1dir/plaympeg.1*
 
 %files -n lib%name
 %_libdir/lib%name-2.0.so.*
@@ -74,6 +74,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_aclocaldir/%name.m4
 
 %changelog
+* Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt5
+- Updated to current version from svn.
+
 * Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt4
 - Fixed build with gcc-6.
 
