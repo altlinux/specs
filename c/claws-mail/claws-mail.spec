@@ -31,7 +31,7 @@
 
 Name:   	claws-mail
 Version:	3.17.3
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -869,6 +869,14 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Tue Mar 12 2019 Mikhail Efremov <sem@altlinux.org> 3.17.3-alt3
+- Patches from upstream:
+  + Fix buf #4166: corrupted double-linked list.
+  + Fix possible segmentation fault.
+  + Check result of fputs (CID 1440024).
+  + Check writting crash-indicator (CID 1440021).
+  + Fix a small memory leak in rssyl_remove_msgs().
+
 * Fri Feb 01 2019 Mikhail Efremov <sem@altlinux.org> 3.17.3-alt2
 - Patches from upstream:
   + Fix possible stack overflow in vcalendar's Curl data handler.
