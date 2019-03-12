@@ -1,10 +1,8 @@
-# TODO:
-# typelib(GdkGLExt)
-# typelib(GtkGLExt)
+# TODO: python-uinput
 
 Name: xpra
 Version: 2.4.3
-Release: alt2
+Release: alt4
 
 Summary: X Persistent Remote Applications
 
@@ -14,19 +12,35 @@ Url: http://xpra.org/
 
 Source: https://xpra.org/src/xpra-%version.tar
 
+# TODO: improve detection
+BuildRequires(pre): rpm-build-ubt
+%if %ubt_id == "M80P"
+%def_with ffmpeg_static
+%else
+%def_without ffmpeg_static
+%endif
+
 BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libxkbfile-devel libpam0-devel libsystemd-devel
 
 # TODO use gtk3
 BuildRequires: python-module-pygtk-devel python-module-pycairo-devel
 
 # Video
-BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python-module-yuicompressor
+BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python-module-yuicompressor
+
+%if_with ffmpeg_static
+BuildRequires: libffmpeg-devel-static
+%else
+BuildRequires: libavformat-devel libavcodec-devel libswscale-devel 
+%endif
+
 
 # Sound
 BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
 
 # GL
 BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate
+Requires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate
 
 BuildRequires: python-module-Pillow python-module-websockify
 
@@ -43,6 +57,9 @@ BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
 
 # Unity specific?
 %add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3) typelib(GtkosxApplication)
+
+# TODO:
+%add_typelib_req_skiplist typelib(GdkGLExt) typelib(GtkGLExt)
 
 # Note: we have no linking requires to libwebp.so.x
 Requires: libwebp
@@ -87,10 +104,14 @@ If connecting from a remote machine, you would use something like (or you can al
 %__subst "s|.*/etc/default/xpra.*||g" service/xpra
 
 %build
-%python_build --without-opengl
+%if_with ffmpeg_static
+export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
+%endif
+
+%python_build --without-mdns
 
 %install
-%python_install --without-opengl
+%python_install --without-mdns
 mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 mkdir -p %buildroot%_udevrulesdir/
@@ -129,6 +150,13 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Mon Mar 11 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt4
+- build with OpenGL support (ALT bug 36154)
+- disable mdns
+
+* Mon Mar 11 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt3
+- allow build with static ffmpeg
+
 * Sun Mar 10 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt2
 - cleanup spec
 - add python-module-lz4 require
