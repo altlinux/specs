@@ -12,8 +12,8 @@
 %define pre %nil
 
 Name: dotnet-corefx
-Version: 2.1.6
-Release: alt3
+Version: 2.1.9
+Release: alt1
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -29,48 +29,69 @@ ExclusiveArch: x86_64
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
-BuildRequires(pre): rpm-macros-dotnet = %version
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires(pre): rpm-macros-dotnet
+#= %version
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-runtime = %version
+BuildRequires: dotnet-bootstrap-runtime
+#= %version
 %define bootstrapdir %_libdir/dotnet-bootstrap
 # currently binary version supports only OpenSSL-1.0 library
 # System.Security.Cryptography.Native.OpenSsl.so
-Requires: libssl10
+#Requires: libssl10
 %else
 BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
+#Requires: dotnet-common = %version
+Requires: dotnet-common = 2.1.6
+Provides: dotnet-corefx = 2.1.6
 
-Requires: dotnet-common = %version
+%remove_optflags -frecord-gcc-switches
+BuildRequires: clang llvm cmake libstdc++-devel
 
-BuildRequires: libcurl-devel libssl-devel
+BuildRequires: libcurl-devel libssl-devel zlib-devel libkrb5-devel
 
 %description
 This package contains the the .NET Core foundational libraries, called CoreFX.
 It includes classes for collections, file systems, console, XML, async and many others.
 
-Just copied binaries now.
+Just copied managed binaries now.
 
 %prep
 %setup
 
+%__subst "s|.*-Werror.*||" src/Native/Unix/CMakeLists.txt
 #find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
+cat <<EOF >src/version.c
+static char sccsid[] __attribute__((used)) = "@(#)Version %version-%release @BuiltBy: %vendor";
+EOF
 
 %build
+export CC=clang
+export CXX=clang++
+export __CMakeBinDir=%buildroot%_dotnet_shared/
+cd src/Native/Unix
+%cmake_insource -DCMAKE_BUILD_TYPE=RELEASE -DFEATURE_DISTRO_AGNOSTIC_SSL=0 -DCMAKE_STATIC_LIB_LINK=0
+# TODO
+%__subst "s|HAVE_IN_PKTINFO 0|HAVE_IN_PKTINFO 1|" Common/pal_config.h
+%make_build
 %if_with bootstrap
-#
+#DOTNET_TOOL_DIR=%bootstrapdir
+# original process:
+#./build-native.sh -release -SkipManagedPackageBuild
+
+#dotnet run config.json -release -SkipManagedPackageBuild
 %else
 #DOTNET_TOOL_DIR=%bootstrapdir ./build.sh x64 release managed verbose
-#DOTNET_TOOL_DIR=%bootstrapdir ./build-native.sh x64 release verbose
 %endif
 
 %install
 mkdir -p %buildroot%_dotnet_shared/
 %if_with bootstrap
-# native
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System*.so %buildroot%_dotnet_shared/
 # managed
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/*.dll %buildroot%_dotnet_shared/
 
@@ -80,37 +101,57 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.
 # read during dotnet --version
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Native.a %buildroot%_dotnet_shared/
 
+# native
+#cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System*.so %buildroot%_dotnet_shared/
 # FIXME: needed due to new Microsoft.NETCore.App.deps.json
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.IO.Compression.Native.a                %buildroot%_dotnet_shared/
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Http.Native.a                      %buildroot%_dotnet_shared/
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Security.Native.a                  %buildroot%_dotnet_shared/
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Security.Cryptography.Native.OpenSsl.a %buildroot%_dotnet_shared/
+#cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.IO.Compression.Native.a                %buildroot%_dotnet_shared/
+#cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Http.Native.a                      %buildroot%_dotnet_shared/
+#cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Security.Native.a                  %buildroot%_dotnet_shared/
+#cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Security.Cryptography.Native.OpenSsl.a %buildroot%_dotnet_shared/
 
 # already in coreclr
 rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %endif
 
-%triggerpostun -- %name <= %version
+cd src/Native/Unix
+make install
+
+
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name.filetrigger << EOF
+#!/bin/sh
 # remove obsoleted empty dirs (see discussion at https://github.com/dotnet/sdk/issues/2772)
 rmdir %_dotnetdir/shared/Microsoft.NETCore.App/* 2>/dev/null || :
+EOF
+chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
+
 
 %files
+%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/Microsoft.NETCore.App.deps.json
+# managed code
+%_dotnet_shared/*.dll
+# native code
 %_dotnet_shared/System.IO.Compression.Native.so
 %_dotnet_shared/System.Native.so
 %_dotnet_shared/System.Net.Http.Native.so
 %_dotnet_shared/System.Net.Security.Native.so
-# search for openssl 1.0 dinamically
+# search for openssl dinamically
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.so
-# FIXME
 %_dotnet_shared/System.IO.Compression.Native.a
 %_dotnet_shared/System.Native.a
 %_dotnet_shared/System.Net.Http.Native.a
 %_dotnet_shared/System.Net.Security.Native.a
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
-%_dotnet_shared/*.dll
 
 %changelog
+* Tue Mar 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- new version (2.1.9) with rpmgs script
+- build native, linking with openssl
+
+* Sat Dec 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt4
+- drop obsoleted empty dir within filetrigger
+
 * Mon Dec 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt3
 - drop obsoleted empty dir from shared/Microsoft.NETCore.App/
 
