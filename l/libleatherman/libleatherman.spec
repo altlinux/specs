@@ -1,5 +1,5 @@
 Name:    libleatherman
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
@@ -37,7 +37,7 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 	$( grep -rl rb_data_object_alloc ruby )
 
 %build
-%cmake -DLEATHERMAN_SHARED=TRUE
+%cmake -DLEATHERMAN_SHARED=TRUE -DENABLE_CXX_WERROR=OFF
 %cmake_build
 
 %install
@@ -56,6 +56,10 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 %_libdir/cmake/leatherman
 
 %changelog
+* Tue Mar 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1.5.4-alt1
+- New version.
+- Disable -Werror to build with recent gcc.
+
 * Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
 - New version.
 
