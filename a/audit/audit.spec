@@ -5,13 +5,9 @@
 %def_without prelude
 
 Name: audit
-Version: 2.8.4
-Release: alt1%ubt
-
-Packager: Anton Farygin <rider@altlinux.com>
-
+Version: 2.8.5
+Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
-
 License: GPL
 Group: Monitoring
 URL: http://people.redhat.com/sgrubb/audit/
@@ -20,7 +16,6 @@ Patch0: %name-%version-alt.patch
 
 Requires: lib%{name}1 = %version-%release
 Requires: service >= 0.5.26-alt1
-BuildRequires(pre):rpm-build-ubt
 
 %if_without bootstrap
 # Automatically added by buildreq on Wed Mar 04 2009
@@ -216,50 +211,56 @@ fi
 %endif
 
 %changelog
-* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 2.8.4-alt1%ubt
+* Tue Mar 12 2019 Anton Farygin <rider@altlinux.ru> 2.8.5-alt1
+- 2.8.5
+
+* Thu Oct 04 2018 Stanislav Levin <slev@altlinux.org> 2.8.4-alt2
+- Fixed log's server mode on IPV4 machines.
+
+* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 2.8.4-alt1
 - 2.8.4
 
-* Fri Apr 20 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt3%ubt
+* Fri Apr 20 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt3
 - Fix dependency to systemd in post script
 
-* Wed Apr 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt2%ubt
+* Wed Apr 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt2
 - Make it possible not to limit the restart of a crashed plugin
 
-* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 2.8.3-alt1%ubt
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 2.8.3-alt1
 - new version
 
-* Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 2.8.2-alt1%ubt
+* Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 2.8.2-alt1
 - new version
 - disabled prelude support (code is outdated and needs to be revised)
 
-* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1%ubt
+* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1
 - new version
 
-* Fri Sep 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.8-alt1%ubt
+* Fri Sep 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.8-alt1
 - new version
 
-* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2.7.7-alt2%ubt
+* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2.7.7-alt2
 - BOOTSTRAP:
   + make krb5/ldap/prelude/python support conditional
   + make zos-remote plugin build depend on ldap support explicitly
   - minor spec cleanup
 
-* Thu Jun 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.7-alt1%ubt
+* Thu Jun 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.7-alt1
 - new version
 
-* Mon Apr 24 2017 Anton Farygin <rider@altlinux.ru> 2.7.6-alt1%ubt
+* Mon Apr 24 2017 Anton Farygin <rider@altlinux.ru> 2.7.6-alt1
 - new version
 
-* Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.7.5-alt1%ubt
+* Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.7.5-alt1
 - new version
 
-* Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.7.3-alt1%ubt
+* Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.7.3-alt1
 - new version
 
-* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 2.7.2-alt1%ubt
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 2.7.2-alt1
 - new version
 
-* Wed Feb 08 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1%ubt
+* Wed Feb 08 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
 - new version
 
 * Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1.1
