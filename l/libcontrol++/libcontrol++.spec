@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,10 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Mon Mar 11 2019 Alexey Appolonov <alexey@altlinux.org> 0.20.0-alt1
+- Ability to get string with current permission status for applied mode;
+- Improved performance.
+
 * Wed Mar 06 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt1
 - Fix of the FormatFilePath function;
 - Default mode for whitelists is 'neutral' mode;
