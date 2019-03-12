@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.20.3
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Document viewer
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common
-BuildRequires: gcc-c++ gtk-doc intltool itstool libdjvu-devel libgail3-devel libkpathsea-devel
+BuildRequires: gcc-c++ gtk-doc libdjvu-devel libgail3-devel libkpathsea-devel
 BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel libSM-devel
 BuildRequires: libxml2-devel mate-file-manager-devel yelp-tools
 
@@ -142,7 +142,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_iconsdir/hicolor/*/apps/*
 %_datadir/dbus-1/services/org.mate.atril.Daemon.service
 %_datadir/glib-2.0/schemas/org.mate.Atril.gschema.xml
-%_datadir/appdata/atril.appdata.xml
+%_datadir/metainfo/atril.appdata.xml
 %_man1dir/*.1*
 
 %files -n lib%name
@@ -197,6 +197,9 @@ find %buildroot%_libdir -name \*.la -delete
 # -default subpackage to pull in backend deps
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
 - 1.20.3
 

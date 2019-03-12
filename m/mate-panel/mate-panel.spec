@@ -1,5 +1,5 @@
 Name: mate-panel
-Version: 1.20.5
+Version: 1.22.0
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc intltool itstool libSM-devel libXi-devel libXrandr-devel libdbus-glib-devel libdconf-devel
+BuildRequires: mate-common gtk-doc libSM-devel libXi-devel libXrandr-devel libdbus-glib-devel libdconf-devel
 BuildRequires: libmateweather-devel librsvg-devel libwnck3-devel mate-desktop-devel mate-menus-devel yelp-tools
 
 %description
@@ -83,6 +83,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.22.0-alt1
+- 1.22.0
+
 * Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.5-alt1
 - 1.20.5
 

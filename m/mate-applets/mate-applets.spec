@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-applets
-Version: 1.20.3
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop panel applets
@@ -16,8 +16,8 @@ Obsoletes: mate-netspeed
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool itstool libSM-devel libdbus-glib-devel libgtksourceview3-devel
-BuildRequires: libgtop-devel libgucharmap-devel libmateweather-devel libnotify-devel libpolkit-devel libupower-devel
+BuildRequires: mate-common libSM-devel libdbus-glib-devel libgtksourceview3-devel
+BuildRequires: libgtop-devel libgucharmap-devel libnotify-devel libpolkit-devel libupower-devel
 BuildRequires: libwireless-devel libwnck3-devel libxml2-devel mate-panel-devel yelp-tools
 
 %description
@@ -26,6 +26,8 @@ MATE Desktop panel applets
 %prep
 %setup
 %patch -p1
+
+rm -fr mateweather/docs/ru
 
 %build
 %autoreconf
@@ -61,6 +63,9 @@ rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 %_man1dir/*.1*
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
 - 1.20.3
 

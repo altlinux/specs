@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-settings-daemon
-Version: 1.20.4
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop settings daemon
@@ -15,7 +15,7 @@ Requires: dconf
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool libSM-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
+BuildRequires: mate-common libSM-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdbus-glib-devel libdconf-devel libmatekbd-devel libmatemixer-devel libnotify-devel
 BuildRequires: libnss-devel libpolkit-devel libpulseaudio-devel mate-desktop-devel
 
@@ -61,6 +61,7 @@ find %buildroot%_libdir -name \*.la -delete
 %dir %_sysconfdir/%name/xrandr
 %config %_sysconfdir/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %_sysconfdir/xdg/autostart/mate-settings-daemon.desktop
+%_udevrulesdir/*.rules
 %_sysconfdir/xrdb
 %_libdir/%name
 %_libexecdir/%name
@@ -69,7 +70,6 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/mate-control-center/keybindings/50-accessibility.xml
 %_datadir/dbus-1/services/org.mate.SettingsDaemon.service
 %_datadir/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
-%_iconsdir/mate/*/*/*
 %_iconsdir/hicolor/*/*/*
 %_datadir/%name
 %_datadir/glib-2.0/schemas/org.mate.*.xml
@@ -81,6 +81,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.4-alt1
 - 1.20.4
 

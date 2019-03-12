@@ -1,5 +1,5 @@
 Name: mate-menus
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Displays menus for MATE Desktop
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 Conflicts: altlinux-freedesktop-menu-mate
 
-BuildRequires: mate-common gobject-introspection-devel intltool python-devel
+BuildRequires: mate-common gobject-introspection-devel
 
 %description
 Displays menus for MATE Desktop
@@ -40,7 +40,6 @@ Development files for mate-menus
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-python \
 	--enable-introspection
 
 %make_build
@@ -61,7 +60,6 @@ Development files for mate-menus
 %files -n libmate-menus
 %_libdir/girepository-1.0/MateMenu-2.0.typelib
 %_libdir/libmate-menu.so.*
-%python_sitelibdir/matemenu.so
 
 %files devel
 %_includedir/mate-menus
@@ -70,6 +68,9 @@ Development files for mate-menus
 %_datadir/gir-1.0/MateMenu-2.0.gir
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

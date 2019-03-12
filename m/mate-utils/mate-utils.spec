@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.20.0
-Release: alt1.qa1
+Version: 1.22.0
+Release: alt1
 Epoch: 1
 Summary: MATE utility programs
 License: GPLv3+
@@ -10,17 +10,17 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: mate-dictionary = %EVR
-Requires: mate-screenshot = %EVR
-Requires: mate-search-tool = %EVR
-Requires: mate-system-log = %EVR
-Requires: mate-disk-usage-analyzer = %EVR
+Requires: mate-dictionary = %epoch:%version-%release
+Requires: mate-screenshot = %epoch:%version-%release
+Requires: mate-search-tool = %epoch:%version-%release
+Requires: mate-system-log = %epoch:%version-%release
+Requires: mate-disk-usage-analyzer = %epoch:%version-%release
 Obsoletes: mate-utils-libs
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gcc-c++ gtk-doc intltool itstool libSM-devel libcanberra-gtk3-devel libgtop-devel mate-panel-devel yelp-tools
+BuildRequires: mate-common gcc-c++ gtk-doc libSM-devel libcanberra-gtk3-devel libgtop-devel mate-panel-devel yelp-tools
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -39,7 +39,7 @@ BuildArch: noarch
 Group: Development/C
 Summary: Development files for mate-utils
 Obsoletes: mate-dictionary-devel
-Requires:  mate-dictionary = %EVR
+Requires:  mate-dictionary = %epoch:%version-%release
 
 %description devel
 The mate-utils-devel package contains header files and other resources
@@ -48,7 +48,7 @@ needed to develop programs using the libraries contained in mate-utils
 %package -n mate-system-log
 Group: Graphical desktop/MATE
 Summary: A log file viewer for the MATE desktop
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-system-log
 An application that lets you view various system log files
@@ -56,7 +56,7 @@ An application that lets you view various system log files
 %package -n mate-screenshot
 Group: Graphical desktop/MATE
 Summary: A utility to take a screen-shot of the desktop
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop
@@ -64,7 +64,7 @@ An application that let you take a screen-shot of your desktop
 %package -n mate-dictionary
 Group: Graphical desktop/MATE
 Summary: A dictionary for MATE Desktop
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop
@@ -72,7 +72,7 @@ The mate-dictionary package contains a dictionary application for MATE Desktop
 %package -n mate-search-tool
 Group: Graphical desktop/MATE
 Summary: A file searching tool for MATE Desktop
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-search-tool
 An application to search for files on your computer
@@ -80,7 +80,7 @@ An application to search for files on your computer
 %package -n mate-disk-usage-analyzer
 Group: Graphical desktop/MATE
 Summary: A disk usage analyzing tool for MATE Desktop
-Requires: %name-common = %EVR
+Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage
@@ -88,6 +88,8 @@ An application to help analyze disk usage
 %prep
 %setup -q
 %patch -p1
+
+rm -fr gsearchtool/help/pt
 
 %build
 %autoreconf
@@ -132,7 +134,7 @@ An application to help analyze disk usage
 %files -n mate-screenshot
 %_bindir/mate-screenshot
 %_bindir/mate-panel-screenshot
-%_datadir/appdata/mate-screenshot.appdata.xml
+%_datadir/metainfo/mate-screenshot.appdata.xml
 %_desktopdir/mate-screenshot.desktop
 %_datadir/mate-screenshot
 %_datadir/glib-2.0/schemas/org.mate.screenshot.gschema.xml
@@ -142,7 +144,7 @@ An application to help analyze disk usage
 %files -n mate-dictionary -f mate-dictionary.lang
 %doc mate-dictionary/AUTHORS mate-dictionary/README
 %_bindir/mate-dictionary
-%_datadir/appdata/mate-dictionary.appdata.xml
+%_datadir/metainfo/mate-dictionary.appdata.xml
 %_desktopdir/mate-dictionary.desktop
 %_datadir/mate-dict
 %_datadir/mate-dictionary
@@ -155,7 +157,7 @@ An application to help analyze disk usage
 
 %files -n mate-search-tool -f mate-search-tool.lang
 %_bindir/mate-search-tool
-%_datadir/appdata/mate-search-tool.appdata.xml
+%_datadir/metainfo/mate-search-tool.appdata.xml
 %_desktopdir/mate-search-tool.desktop
 %_datadir/glib-2.0/schemas/org.mate.search-tool.gschema.xml
 %_datadir/pixmaps/mate-search-tool
@@ -164,7 +166,7 @@ An application to help analyze disk usage
 %files -n mate-disk-usage-analyzer -f mate-disk-usage-analyzer.lang
 %doc baobab/AUTHORS baobab/README
 %_bindir/mate-disk-usage-analyzer
-%_datadir/appdata/mate-disk-usage-analyzer.appdata.xml
+%_datadir/metainfo/mate-disk-usage-analyzer.appdata.xml
 %_desktopdir/mate-disk-usage-analyzer.desktop
 %_datadir/mate-disk-usage-analyzer
 %_datadir/glib-2.0/schemas/org.mate.disk-usage-analyzer.gschema.xml
@@ -172,6 +174,12 @@ An application to help analyze disk usage
 %_man1dir/mate-disk-usage-analyzer.1*
 
 %changelog
+* Thu Mar 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
+* Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20.0-alt1.qa1
 - NMU: applied repocop patch
 

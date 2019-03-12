@@ -1,5 +1,5 @@
 Name: mate-terminal
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Terminal emulator for MATE
@@ -13,7 +13,7 @@ Provides: xvt
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool itstool libSM-devel libdconf-devel libvte3-devel yelp-tools
+BuildRequires: mate-common libSM-devel libdconf-devel libvte3-devel yelp-tools
 
 %description
 Mate-terminal is a terminal emulator for MATE. It supports translucent
@@ -49,10 +49,13 @@ __EOF__
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/org.mate.terminal.gschema.xml
-%_datadir/appdata/mate-terminal.appdata.xml
+%_datadir/metainfo/mate-terminal.appdata.xml
 %_man1dir/*.1*
 
 %changelog
+* Thu Mar 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

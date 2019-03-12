@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-screensaver
-Version: 1.20.3
-Release: alt2
+Version: 1.22.0
+Release: alt1
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -15,7 +15,7 @@ Requires: pam_gnome-keyring
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool libSM-devel libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: mate-common libSM-devel libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libdbus-glib-devel libmatekbd-devel libnotify-devel libpam-devel libsystemd-devel
 BuildRequires: mate-desktop-devel mate-menus-devel xmlto
 
@@ -86,6 +86,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.22.0-alt1
+- 1.22.0
+
 * Fri Jan 11 2019 Paul Wolneykien <manowar@altlinux.org> 2:1.20.3-alt2
 - Added helper protocol library.
 - Improved PAM helper (supports PAM conversation).

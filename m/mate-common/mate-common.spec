@@ -1,5 +1,5 @@
 Name: mate-common
-Version: 1.20.0
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE common build files
@@ -7,6 +7,8 @@ License: GPLv3+
 Group: Development/Tools
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Requires: intltool itstool
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -36,6 +38,9 @@ Common scripts and macros to develop with MATE
 %_man1dir/*
 
 %changelog
+* Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Wed Feb 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 

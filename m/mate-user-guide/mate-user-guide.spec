@@ -1,5 +1,5 @@
 Name: mate-user-guide
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: User Guide for MATE desktop
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: mate-common glib2-devel intltool itstool yelp-tools
+BuildRequires: mate-common glib2-devel yelp-tools
 
 %description
 Documentations for MATE desktop
@@ -39,6 +39,9 @@ Documentations for MATE desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-polkit
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: Integrates polkit authentication for MATE desktop
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool libappindicator-gtk3-devel libpolkit-devel
+BuildRequires: mate-common libappindicator-gtk3-devel libpolkit-devel
 
 %description
 Integrates polkit with the MATE Desktop environment
@@ -41,6 +41,9 @@ Integrates polkit with the MATE Desktop environment
 %_libexecdir/polkit-mate-authentication-agent-1
 
 %changelog
+* Tue Mar 05 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Mon Dec 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 

@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-sensors-applet
-Version: 1.20.3
+Version: 1.22.0
 Release: alt1
 Epoch: 1
 Summary: MATE panel applet for hardware sensors
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common intltool itstool libXNVCtrl-devel libnotify-devel libsensors3-devel mate-panel-devel xsltproc yelp-tools
+BuildRequires: mate-common libXNVCtrl-devel libnotify-devel libsensors3-devel mate-panel-devel xsltproc yelp-tools
 
 %description
 MATE Sensors Applet is an applet for the MATE Panel to display readings
@@ -75,6 +75,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libmate-sensors-applet-plugin.so
 
 %changelog
+* Thu Mar 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
+- 1.22.0
+
 * Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
 - 1.20.3
 

@@ -1,5 +1,5 @@
 Name: mate-themes
-Version: 3.22.17
+Version: 3.22.18
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop themes
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: mate-common glib2-devel intltool pkgconfig(gtk+-2.0) pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: mate-common glib2-devel pkgconfig(gtk+-2.0) pkgconfig(gdk-pixbuf-2.0)
 
 %description
 MATE Desktop themes
@@ -39,6 +39,9 @@ MATE Desktop themes
 %_iconsdir/*
 
 %changelog
+* Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.18-alt1
+- 3.22.18
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.17-alt1
 - 3.22.17
 
