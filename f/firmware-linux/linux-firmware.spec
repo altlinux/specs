@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190221
+Version: 20190308
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Tue Mar 12 2019 Cronbuild Service <cronbuild@altlinux.org> 20190308-alt1
+- upstream changes (GIT b0d9583):
+  + drm/amdgpu: update picasso to latest from 18.50 branch (thx Alex Deucher)
+  + drm/amdgpu: update polaris12 to latest from 18.50 branch (thx Alex Deucher)
+  + drm/amdgpu: update vega20 to latest from 18.50 branch (thx Alex Deucher)
+  + rtw88: RTL8822C: update rtw8822c_fw.bin to v5.0 (thx Yan-Hsuan Chuang)
+  + rtl_bt: Update firmware for BT part of RTL8822C (thx Larry Finger)
+  + update Marvell 8787/8801/8887 firmware images (thx Ganapathi Bhat)
+  + update Marvell 8897/8997 firmware images (thx Ganapathi Bhat)
+  + nfp: update Agilio SmartNIC firmware to rev 2.1.16.1 (thx Louis Peens)
+  + QCA: Add the fw files for BT Chip QCA6174. (thx Balakrishna Godavarthi)
+
 * Sun Feb 24 2019 Cronbuild Service <cronbuild@altlinux.org> 20190221-alt1
 - upstream changes (GIT 54b0a74):
   + WHENCE: Correct errant entries (thx Josh Boyer)
