@@ -28,7 +28,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 187
+Version: 189
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -485,7 +485,7 @@ sed -i 's/timeout 5m/timeout 15m/' Makefile.am
 %make -j4 all
 
 %check
-%make -j4 check
+%make -j4 check || { cat ./test-suite.log; exit 1; }
 
 %install
 %makeinstall_std
@@ -741,6 +741,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Tue Mar 12 2019 Stanislav Levin <slev@altlinux.org> 189-alt1
+- 187 -> 189.
+
 * Thu Feb 07 2019 Stanislav Levin <slev@altlinux.org> 187-alt1
 - 185 -> 187.
 - Increased build timeout.
