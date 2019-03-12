@@ -3,7 +3,7 @@
 
 Name: xfce4-screenshooter
 Version: 1.9.4
-Release: alt1%git_date
+Release: alt2%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -22,7 +22,10 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
 BuildPreReq: libxml2-devel libXi-devel
 BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
-BuildRequires: help2man
+# Seems GTK-based programs needed X server even to display a version.
+# So don't install help2man and use pre-generated man page from upstream
+# instead.
+#BuildRequires: help2man
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
 Obsoletes: xfce4-screenshooter-plugin < %version-%release
@@ -76,6 +79,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Mar 12 2019 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt2
+- Fix man page.
+
 * Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt1
 - Added help2man to BR.
 - Updated to 1.9.3.
