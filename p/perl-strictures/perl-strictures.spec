@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-strictures
-Version: 2.000005
+Version: 2.000006
 Release: alt1
 
 Summary: strictures - turn on strict and make all warnings fatal
@@ -32,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/strictures*
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 2.000006-alt1
+- new version
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.000005-alt1
 - automated CPAN update
 
