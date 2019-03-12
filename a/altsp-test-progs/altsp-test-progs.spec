@@ -1,5 +1,5 @@
 Name:     altsp-test-progs
-Version:  1.0
+Version:  1.2
 Release:  alt1
 
 Summary:  Programs for tests for ALT SP OS
@@ -23,19 +23,32 @@ and tuning its features
 %build
 cd testIsol
 make
+cd ..
+cd testAlloc
+make
+cd ..
+cd page-analyze
+make
 
 %install
 mkdir -p %buildroot%_libdir/%name-%version
 cp -ar testIsol %buildroot%_libdir/%name-%version
+cp -ar testAlloc %buildroot%_libdir/%name-%version
+cp -ar page-analyze %buildroot%_libdir/%name-%version
 cp -ar *.tgz %buildroot%_libdir/%name-%version
+cp -ar autoinstall %buildroot%_libdir/%name-%version
 
 %files
 %_libdir/%name-%version/*
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README ejector.sh
 
 %changelog
-* Fri Aug 17 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0-alt1
-- build for Sisyphus
+* Tue Mar 12 2019 Denis Medvedev <nbr@altlinux.org> 1.2-alt1
+- incorporated changes from branch c
+
+* Thu Feb 28 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt0.M80C.6
+- added page-analyze,testAlloc and testAllocator, ejector.sh
+and autoinstall scm scripts.
 
 * Wed May 30 2018 Denis Medvedev <nbr@altlinux.org> 1.0-alt0.M80C.5
 - testIsol now allows compile with lower version of C compilator.
