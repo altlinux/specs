@@ -1,5 +1,5 @@
 Name: R-base
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -208,6 +208,7 @@ make check
 Summary: Meta-package that installs all components of R Statitical Environment
 Group: Development/Other
 Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %version-%release gcc-c++ gcc-fortran liblapack-devel make
+BuildArch: noarch
 
 %description -n R-full
 Meta-package that installs all components of R Statitical Environment
@@ -217,7 +218,7 @@ Meta-package that installs all components of R Statitical Environment
 %package -n R-devel
 Summary: Development files for the R Statistical Environment
 Group: Development/Other
-PreReq: R-base = %version-%release
+Requires(pre,postun): R-base = %version-%release
 
 %description -n R-devel
 R is `GNU S' - A language and environment for statistical computing
@@ -334,6 +335,10 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Tue Mar 12 2019 Kirill Maslinsky <kirill@altlinux.org> 3.5.3-alt1
+- Version 3.5.3
+- R-full metapackage is marked as noarch
+
 * Wed Jan 09 2019 Kirill Maslinsky <kirill@altlinux.org> 3.5.2-alt1
 - Version 3.5.2
 
