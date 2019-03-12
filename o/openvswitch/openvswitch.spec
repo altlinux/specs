@@ -1,4 +1,4 @@
-%def_without check
+%def_disable check
 %def_without ksrc
 %def_without xenserver
 %def_with debugtools
@@ -6,7 +6,7 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.10.1
+Version: 2.11.0
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -29,7 +29,6 @@ Source12: %name.tmpfiles
 Patch1: openvswitch-2.0_alt_fix_function.patch
 Patch2: openvswitch-2.5.0-fix-link.patch
 Patch3: openvswitch-2.9.2-alt-systemd-unit.patch
-Patch4: openvswitch-2.10-netdev-dpdkv18.08.patch
 
 Obsoletes: %name-controller <= %name-%version
 Obsoletes: %name-ovsdbmonitor <= %name-%version
@@ -48,7 +47,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
 %endif
 
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 18.08 libpcap-devel libnuma-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 18.08 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
 
 %define ksrcdir %_usrsrc/kernel/sources
 
@@ -114,6 +113,17 @@ Requires: %name = %EVR
 
 %description devel
 Devel files for Open vSwitch.
+
+%package ipsec
+Summary: Open vSwitch IPsec tunneling support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+# libreswan
+Requires: python-module-%name = %EVR
+  
+%description ipsec
+This package provides IPsec tunneling support for OVS tunnels.
 
 %package ovn-central
 Summary: Open vSwitch - Open Virtual Network support
@@ -206,7 +216,6 @@ Bash completion for %name.
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %if_with ksrc
 # it's not datapath/linux due to shared configure script; thx led@
@@ -238,10 +247,8 @@ popd
 make rhel/usr_lib_systemd_system_ovs-vswitchd.service
 
 # test 591 fails, reported upstream
-%if_with check
 %check
 LC_CTYPE=en_US.UTF-8 LC_COLLATE=en_US.UTF-8 make check
-%endif
 
 %install
 %makeinstall_std
@@ -422,6 +429,8 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 # TODO
 #files ipsec
 #_initdir/openvswitch-ipsec
+#_datadir/openvswitch/scripts/ovs-monitor-ipsec
+#_unitdir/openvswitch-ipsec.service
 
 %files vtep
 %_bindir/vtep-ctl
@@ -491,6 +500,9 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Tue Mar 12 2019 Alexey Shabalin <shaba@altlinux.org> 2.11.0-alt1
+- 2.11.0
+
 * Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 2.10.1-alt1
 - 2.10.1
 

@@ -18,8 +18,8 @@
 
 
 Name: dpdk
-Version: 18.08
-Release: alt2
+Version: 18.11
+Release: alt1
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 Patch0: dpdk-16.11-move-to-libdir.patch
 Patch1: dpdk-18.02-aarch64-link-fix.patch
 Patch3: dpdk-alt-pci.ids.patch
-Patch4: dpdk-18.05-fix-redefinition.patch
+Patch4: dpdk-18.11-fix-redefinition.patch
 Patch5: dpdk-18.08-fix-build-on-ppc64le.patch
 
 Summary: Set of libraries and drivers for fast packet processing
@@ -145,7 +145,7 @@ as L2 and L3 forwarding.
 %patch0 -p2
 %patch1 -p2
 %patch3 -p2
-%patch4 -p2
+#%patch4 -p2
 %patch5 -p2
 
 %build
@@ -314,6 +314,9 @@ EOF
 %endif
 
 %changelog
+* Tue Mar 12 2019 Alexey Shabalin <shaba@altlinux.org> 18.11-alt1
+- 18.11
+
 * Wed Feb 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 18.08-alt2
 - Fixed build on ppc64le (patch by Christian Ehrhardt).
 
