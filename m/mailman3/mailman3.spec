@@ -2,7 +2,7 @@
 
 Name: mailman3
 Version: 3.2.0
-Release: alt3
+Release: alt4
 
 Summary: Managing electronic mail discussion and e-newsletter lists.
 License: GPLv3
@@ -117,7 +117,7 @@ install -D -m 0644 %SOURCE6 %buildroot%_unitdir/%name-digests.timer
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_spooldir/%name
-mkdir -p %buildroot%_runtimedir/%name %buildroot%_runtimedir/lock/%name
+mkdir -p %buildroot%_runtimedir/%name %buildroot%_lockdir/%name
 mkdir -p %buildroot%_sysconfdir/%name.d
 mkdir -p %buildroot%_localstatedir/%name/data
 
@@ -146,18 +146,21 @@ getent passwd mailman >/dev/null || \
 %_unitdir/*.timer
 %_prefix/lib/tmpfiles.d/%name.conf
 %dir %_sysconfdir/%name.d
-%dir %attr(755,mailman,mailman) %_localstatedir/%name
+%dir %attr(0755,mailman,mailman) %_localstatedir/%name
 %dir %attr(2775,mailman,mail)   %_localstatedir/%name/data
-%dir %attr(755,mailman,mailman) %_spooldir/%name
-%dir %attr(755,mailman,mailman) %_logdir/%name
-%dir %attr(755,mailman,mailman) %_runtimedir/%name
-%dir %attr(755,mailman,mailman) %_runtimedir/lock/%name
+%dir %attr(0755,mailman,mailman) %_spooldir/%name
+%dir %attr(0755,mailman,mailman) %_logdir/%name
+%dir %attr(0755,mailman,mailman) %_runtimedir/%name
+%dir %attr(0755,mailman,mailman) %_lockdir/%name
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
 
 %changelog
+* Tue Mar 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt4
+- Lockdir path fixed
+
 * Tue Mar 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt3
 - Requires fixed
 
