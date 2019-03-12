@@ -31,6 +31,7 @@
 %else
 %def_disable ovs
 %endif
+%def_without iwd
 
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests yes
@@ -50,6 +51,12 @@
 %define more_warnings error
 %endif
 
+%if_with iwd
+%define iwd_support yes
+%else
+%define iwd_support no
+%endif
+
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 %define nmlibdir %_prefix/lib/NetworkManager
@@ -58,7 +65,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.15.90
+Version: 1.15.91
 Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -498,6 +505,7 @@ GObject introspection devel data for the NetworkManager.
 %else
 	--without-libnm-glib \
 %endif
+	--with-iwd=%iwd_support \
 	--with-dist-version=%version-%release \
 	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
@@ -769,6 +777,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.15.91-alt1
+- Added iwd support knob.
+- Updated to 1.15.90 (1.16-rc2).
+
 * Mon Feb 25 2019 Mikhail Efremov <sem@altlinux.org> 1.15.90-alt1
 - Drop non-existent plugins from configure options.
 - Fix configure options for support sanitizer build.
