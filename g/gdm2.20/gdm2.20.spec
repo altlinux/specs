@@ -15,7 +15,7 @@
 
 Name: gdm2.20
 Version: %ver_major.8
-Release: alt11
+Release: alt12
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -184,6 +184,9 @@ install -pDm755 %SOURCE4 %buildroot%_sbindir/gdm-termok-command
 %exclude %_libdir/gtk-2.0/modules/lib*.la
 
 %changelog
+* Mon Mar 11 2019 Anton Midyukov <antohami@altlinux.org> 2.20.8-alt12
+- Change theme circles (Closes: 33545)
+
 * Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt11
 - Disable tcp_wrappers support.
 
