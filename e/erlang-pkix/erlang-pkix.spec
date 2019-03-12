@@ -3,7 +3,7 @@
 %global realname pkix
 
 Name: erlang-%realname
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: PKIX certificates management for Erlang
@@ -49,5 +49,8 @@ ln -s $(relative %_sysconfdir/pki/tls/certs/ca-bundle.trust.crt %_erllibdir/%rea
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Mar 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
+- Updated to upstream version 1.0.1.
+
 * Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Initial build for ALT.

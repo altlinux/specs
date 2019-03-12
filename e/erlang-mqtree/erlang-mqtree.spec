@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
-%global realname iconv
+%global realname mqtree
 
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.10
+Version: 1.0.2
 Release: alt1
-Summary: Fast encoding conversion library for Erlang / Elixir
+Summary: Index tree for MQTT topic filters
 Group: Development/Erlang
 License: ASL 2.0
-Url: https://github.com/processone/iconv
+Url: https://github.com/processone/mqtree
 
-# https://github.com/processone/iconv.git
+# https://github.com/processone/mqtree.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -21,29 +21,26 @@ BuildRequires: rebar
 BuildRequires: erlang-p1_utils
 
 %description
-Erlang bindings for libiconv.
+mqtree is an Erlang NIF implementation of N-ary tree to keep MQTT
+topic filters for efficient matching.
 
 %prep
 %setup
 
 %build
-%configure
 %rebar_compile
 
 %install
 %rebar_install %realname
 
 %check
-%rebar_eunit
+%rebar_eunit -C rebar.test.config
 
 %files
-%doc LICENSE.txt
+%doc LICENSE
 %doc README.md
 %_erllibdir/%realname-%version
 
 %changelog
-* Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.10-alt1
-- Updated to upstream version 1.0.10.
-
-* Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt1
+* Tue Mar 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
 - Initial build for ALT.

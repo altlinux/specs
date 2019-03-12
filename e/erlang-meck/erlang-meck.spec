@@ -3,7 +3,7 @@
 %global realname meck
 
 Name: erlang-%realname
-Version: 0.8.12
+Version: 0.8.13
 Release: alt1
 Summary: A mocking library for Erlang
 Group: Development/Erlang
@@ -45,6 +45,9 @@ modules, such as making sure no function is called in a way it should not.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Mar 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.13-alt1
+- Updated to upstream version 0.8.13.
+
 * Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.12-alt1
 - Updated to upstream version 0.8.12.
 
