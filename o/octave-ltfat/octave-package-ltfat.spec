@@ -2,11 +2,9 @@
 BuildRequires: libportaudio2-devel makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.3.0
 %define octave_pkg_name ltfat
-%define octave_descr_name LTFAT
 Name: octave-%octave_pkg_name
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: The Large Time-Frequency Analysis Toolbox
 
@@ -14,7 +12,7 @@ Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://ltfat.github.io/
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
+Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
@@ -31,10 +29,6 @@ Requires: octave >= 3.8.0
 
 
 %description
-Octave-Forge - Extra packages for GNU Octave.
-This package contains the %octave_descr_name GNU Octave extension.
-
-Extension Description:
 The Large Time/Frequency Analysis Toolbox (LTFAT) is a
 
 %prep
@@ -47,18 +41,22 @@ octave -q -H --no-window-system --no-site-file --eval "pkg build -verbose -nodep
 mkdir -p %buildroot%_datadir/octave/packages
 mkdir -p %buildroot%_libdir/octave/packages
 %if_with _octave_arch
-octave -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%octave_pkg_version-$(octave -H --no-window-system --no-site-file --eval "printf([__octave_config_info__(\"canonical_host_type\"), \"-\",  __octave_config_info__(\"api_version\")])").tar.gz"
+octave -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%version-$(octave -H --no-window-system --no-site-file --eval "printf([__octave_config_info__(\"canonical_host_type\"), \"-\",  __octave_config_info__(\"api_version\")])").tar.gz"
 %else
-octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%octave_pkg_version-any-none.tar.gz"
+octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%version-any-none.tar.gz"
 %endif
 
 %files
-%_datadir/octave/packages/%octave_pkg_name-%octave_pkg_version
+%doc NEWS COPYING DESCRIPTION
+%_datadir/octave/packages/%octave_pkg_name-%version
 %if_with _octave_arch
-%_libdir/octave/packages/%octave_pkg_name-%octave_pkg_version
+%_libdir/octave/packages/%octave_pkg_name-%version
 %endif
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1
+- regenerated from template by package builder
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1
 - regenerated from template by package builder
 
