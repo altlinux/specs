@@ -2,7 +2,7 @@
 %define sname dbix-class-deploymenthandler
 
 Name:           perl-DBIx-Class-DeploymentHandler
-Version:        0.002223
+Version:        0.002227
 Release:        alt1
 Summary:        Extensible DBIx::Class deployment
 License:        GPL+ or Artistic
@@ -11,7 +11,7 @@ URL:            http://search.cpan.org/dist/DBIx-Class-DeploymentHandler/
 Source0:         http://www.cpan.org/authors/id/E/ET/ETJ/DBIx-Class-DeploymentHandler-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  make
+BuildRequires:  make perl(IO/All.pm) perl(Type/Library.pm)
 BuildRequires:  perl-devel
 BuildRequires:  perl-Package-Generator
 BuildRequires:  perl(Carp.pm)
@@ -78,6 +78,9 @@ of roles.
 %{perl_vendorlib}/DBIx/Class/DeploymentHandler*
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.002227-alt1
+- automated CPAN update
+
 * Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.002223-alt1
 - automated CPAN update
 
