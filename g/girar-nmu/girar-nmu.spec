@@ -4,7 +4,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 2.002
+Version: 2.003
 Release: alt1
 
 Summary: girar client utilities for NMU automation
@@ -109,6 +109,9 @@ EOF
 %_man1dir/girar-*
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 2.003-alt1
+- new version
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.002-alt1
 - new version
 - if not configured, ssh aliases are detected from git config
