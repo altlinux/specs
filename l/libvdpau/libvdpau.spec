@@ -1,7 +1,9 @@
 %define docdir %_docdir/%name
 
+%define sover 1
+
 Name: libvdpau
-Version: 1.1.1
+Version: 1.2
 Release: alt1
 Epoch: 1
 Group: System/Libraries
@@ -12,8 +14,8 @@ License: Nvidia Free
 Source: %name-%version.tar
 Patch1: alt-allow-force-flash.patch
 
-Provides: libvdpau1 = %version-%release
-Obsoletes: libvdpau1
+Provides: libvdpau1 = %EVR
+Obsoletes: libvdpau1 < %EVR
 
 # Automatically added by buildreq on Wed Jan 15 2014 (-bi)
 # optimized out: elfutils fontconfig fonts-type1-urw ghostscript-common libX11-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base xorg-xproto-devel
@@ -32,8 +34,8 @@ VDPAU_DRIVER environment variable.
 Group: Development/C
 Summary: Development files for VDPAU library
 Requires: %name = %{?epoch:%epoch:}%version-%release
-Provides: libvdpau1-devel = %version-%release
-Obsoletes: libvdpau1-devel
+Provides: libvdpau1-devel = %EVR
+Obsoletes: libvdpau1-devel < %EVR
 
 %description devel
 Development files needed to build VDPAU applications
@@ -43,8 +45,8 @@ Group: Development/C
 Summary: Documentation for VDPAU library
 Requires: %name-devel = %version
 BuildArch: noarch
-Provides: libvdpau1-doc = %version-%release
-Obsoletes: libvdpau1-doc
+Provides: libvdpau1-doc = %EVR
+Obsoletes: libvdpau1-doc < %EVR
 
 %description devel-doc
 Documentation for VDPAU library
@@ -64,9 +66,11 @@ Documentation for VDPAU library
 %files
 %doc AUTHORS COPYING
 %config(noreplace) %_sysconfdir/vdpau_wrapper.cfg
+%_libdir/libvdpau.so.%sover
+%_libdir/libvdpau.so.%sover.*
 %dir %_libdir/vdpau
-%_libdir/vdpau/*.so*
-%_libdir/libvdpau*.so.*
+%_libdir/vdpau/*.so
+%_libdir/vdpau/*.so.*
 
 %files devel
 %_includedir/vdpau
@@ -78,6 +82,12 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Tue Mar 12 2019 Sergey V Turchin <zerg@altlinux.org> 1:1.2-alt1
+- new version
+
+* Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 1:1.1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 1:1.1.1-alt1
 - new version
 - security fixes: CVE-2015-5198, CVE-2015-5199, CVE-2015-5200
