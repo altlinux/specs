@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: ntp
-Version: 4.2.8p12
+Version: 4.2.8p13
 Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
@@ -34,8 +36,8 @@ Requires: ntpd = %version-%release
 # man8/ntpq.8 is a symlink to man1/ntp.1 which in ntp-utils
 %add_findreq_skiplist %_man8dir/ntpq.*
 
-BuildRequires: rpm-build-licenses
-BuildRequires: zlib-devel 
+BuildPreReq: rpm-build-licenses
+BuildRequires: zlib-devel
 
 # due to readline library linked with tinfo.
 BuildPreReq: libreadline-devel >= 4.3-alt5
@@ -97,7 +99,7 @@ Summary: The Network Time Protocol daemon
 Group: System/Servers
 Obsoletes: xntp3
 Requires(pre): shadow-utils
-PreReq: service, coreutils
+Requires(pre): service, coreutils
 # due to ntp_intres.
 Requires: /var/resolv
 Provides: ntp-server
@@ -340,6 +342,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Tue Mar 12 2019 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p13-alt1
+- 4.2.8p13
+
 * Tue Aug 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p12-alt1
 - 4.2.8p12 (CVE-2018-12327)
 
