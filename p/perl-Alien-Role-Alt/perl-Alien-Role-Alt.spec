@@ -6,14 +6,14 @@ BuildRequires: perl(Alien/Base.pm) perl(Class/Method/Modifiers.pm) perl(Config.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.04
+Version: 0.05
 Release: alt1
 Summary: Alien::Base role that supports alternates
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/pod/Alien::Role::Alt
 
-Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/Alien-Role-Alt-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -22,7 +22,7 @@ use with them.  This the Role::Tiny manpage role can be used with the Alien::Bas
 to access different configurations.
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n Alien-Role-Alt-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ to access different configurations.
 %perl_vendor_privlib/A*
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
