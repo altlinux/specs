@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm) perl(Module/Build/Tiny.pm)
 Name: perl-Protocol-WebSocket
-Version: 0.24
+Version: 0.26
 Release: alt1
 
 Summary: Protocol::WebSocket - WebSocket protocol
@@ -32,6 +32,9 @@ BuildRequires: perl-Module-Install perl-Digest-SHA1 perl(Digest/SHA.pm)
 %doc Changes
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
