@@ -1,5 +1,5 @@
 Name: rpminstall-tests
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Tests for rpm: how it interprets packages when installing
@@ -46,10 +46,10 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 %check
 # To pass the usual parallelism flags etc:
 %global _make_bin ./makeme.sh
-%make_build
+%make_build %{?opts}
 # Also test with "Epoch: 0" instead of no Epoch:
-%make_build clean
-%make_build minimal_epoch=0
+%make_build %{?opts} clean
+%make_build %{?opts} minimal_epoch=0
 
 %files
 %_datadir/%name
@@ -64,12 +64,30 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 'export TMPDIR=/tmp; \
 . /usr/lib/rpm/tmpdir.sh; \
 cd  "$tmpdir"; \
-%_datadir/%name/makeme.sh; \
-%_datadir/%name/makeme.sh clean; \
-%_datadir/%name/makeme.sh minimal_epoch=0; \
+%_datadir/%name/makeme.sh %{?opts}; \
+%_datadir/%name/makeme.sh %{?opts} clean; \
+%_datadir/%name/makeme.sh %{?opts} minimal_epoch=0; \
 '
 
 %changelog
+* Wed Mar 13 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt1
+- New tests for disttag comparison with the obsolete (.) and current format (+)
+  (Correct comparison would rely on a fix or a new feature in rpm:
+  %%_priority_distbranch.)
+- New tests for the %%_priority_distbranch feature in normal situation.
+- The reasons of the currently XFAILing tests (with rpm-4.13.0.1-alt6):
+  1. upgrade w.r.t. buildtime is not a strict order;
+  2. upgrade w.r.t. disttag:
+    2a. not a strict order;
+    2b. %%_priority_distbranch not honored;
+    2c. unrecognized disttag format is not "older"
+        than a disttag with a recognized branch prefix;
+  3. upgrade w.r.t. disttag fails in non-standard configuration
+     without honor_buildtime;
+  4. obsoleting an exact disttag (which is an unrealistic situation)
+     doesn't work;
+  5. mishandled elusive dep with a release but no epoch.
+
 * Thu Feb 28 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt1
 - Tests for upgradability according to the disttag. (XFAIL: incorrect
   behavior in rpm-4.13.0.1-alt5, but different in 4.0.4-alt101.M80P.5;
