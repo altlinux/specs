@@ -2,7 +2,7 @@
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
 Version: 1.6.5
-Release: alt3
+Release: alt4
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
@@ -65,13 +65,17 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files -n ocaml-%libname-devel
 %_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/*.dune
+%_libdir/ocaml/%libname/dune-package
+%_libdir/ocaml/cppo/dune-package
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.cmt*
 %_libdir/ocaml/%libname/*.mli
 %_libdir/ocaml/%libname/*.ml
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.6.5-alt4
+- rebuilt with dune-1.8
+
 * Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 1.6.5-alt3
 - added findlib META and opam files
 
