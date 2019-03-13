@@ -2,7 +2,7 @@
 %define libname qcheck
 Name: ocaml-%libname
 Version: 0.9
-Release: alt1
+Release: alt2
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
 License: BSD
@@ -50,17 +50,16 @@ dune runtest
 %dir %_libdir/ocaml/%{libname}*
 %dir %_libdir/ocaml/%{libname}-core/runner
 %_libdir/ocaml/%{libname}*/META
-%_libdir/ocaml/%{libname}*/*.dune
 %_libdir/ocaml/%{libname}*/*.cmi
 %_libdir/ocaml/%{libname}*/*.cma
 %_libdir/ocaml/%{libname}*/*.a
-%_libdir/ocaml/%{libname}*/*/*.dune
 %_libdir/ocaml/%{libname}*/*/*.cmi
 %_libdir/ocaml/%{libname}*/*/*.cma
 %_libdir/ocaml/%{libname}*/*/*.a
 
 %files devel
 %_libdir/ocaml/%{libname}*/opam
+%_libdir/ocaml/%{libname}*/dune-package
 %_libdir/ocaml/%{libname}*/*.cmt
 %_libdir/ocaml/%{libname}*/*.cmti
 %_libdir/ocaml/%{libname}*/*.cmx
@@ -75,6 +74,9 @@ dune runtest
 %_libdir/ocaml/%{libname}*/*/*.cmxs
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.9-alt2
+- rebuilt with dune-1.8
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 0.9-alt1
 - first build for ALT
 
