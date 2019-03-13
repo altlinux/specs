@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 4.5.1
-Release: alt2
+Release: alt3
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -115,6 +115,7 @@ pushd ../python3
 %python3_install
 popd
 mv %buildroot%_bindir/coverage %buildroot%_bindir/coverage3
+ln -s coverage3 %buildroot%_bindir/python3-coverage
 %endif
 
 %python_install
@@ -137,6 +138,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 %_bindir/*
 %if_with python3
+%exclude %_bindir/python3-coverage
 %exclude %_bindir/coverage3
 %exclude %_bindir/coverage-%_python3_version
 %endif
@@ -153,11 +155,15 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %files -n python3-module-%oname
 %_bindir/coverage3
 %_bindir/coverage-%_python3_version
+%_bindir/python3-coverage
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Wed Mar 13 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt3
+- NMU: added _bindir/python3-coverage compat symlink
+
 * Wed Feb 20 2019 Stanislav Levin <slev@altlinux.org> 4.5.1-alt2
 - Dropped dependency on sphinxcontrib-napoleon.
 
