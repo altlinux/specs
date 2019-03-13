@@ -1,7 +1,7 @@
 %define module_name     kvdo
 %define module_version  6.2.0.293
 %define module_release  alt2
-%define flavour         std-def
+%define flavour         un-def
 
 %setup_kernel_module %flavour
 
@@ -18,7 +18,7 @@ Url: http://github.com/dm-vdo/kvdo
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
