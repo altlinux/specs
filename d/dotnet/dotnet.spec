@@ -5,7 +5,7 @@
 
 Name: dotnet
 Version: 2.1.9
-Release: alt1
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -73,6 +73,7 @@ sh -x ./build.sh \
 %install
 mkdir -p %buildroot%_dotnetdir/
 install -m755 src/corehost/cli/exe/dotnet/dotnet %buildroot%_dotnetdir/
+install -m755 src/corehost/cli/exe/apphost/apphost %buildroot%_dotnetdir/
 
 mkdir -p %buildroot%_dotnet_shared/
 install -m755 src/corehost/cli/dll/libhostpolicy.so %buildroot%_dotnet_shared/
@@ -87,12 +88,16 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 %doc THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md LICENSE.TXT
 %_bindir/dotnet
 %_dotnetdir/dotnet
+%_dotnetdir/apphost
 
 %dir %_dotnet_hostfxr/
 %_dotnet_hostfxr/libhostfxr.so
 %_dotnet_shared/libhostpolicy.so
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt2
+- install apphost
+
 * Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
 - new version (2.1.9) with rpmgs script
 

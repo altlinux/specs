@@ -7,7 +7,7 @@
 # TODO: build from sources
 Name: dotnet-sdk
 Version: 2.1.9
-Release: alt1
+Release: alt2
 
 Summary: SDK for the .NET Core runtime and libraries
 
@@ -23,6 +23,7 @@ BuildRequires: rpm-build-intro
 BuildRequires(pre): rpm-macros-dotnet = %version
 
 BuildRequires: dotnet-bootstrap-sdk = %_dotnet_sdkrelease
+BuildRequires: dotnet
 
 Requires: dotnet-common = %version
 
@@ -43,6 +44,9 @@ cp -a %_libdir/dotnet-bootstrap/sdk/%_dotnet_sdkrelease/* %buildroot%_dotnet_sdk
 # dotnet --info get RID string from this .version, line 3
 cp -a %_libdir/dotnet-bootstrap/sdk/%_dotnet_sdkrelease/.version %buildroot%_dotnet_sdk/
 
+# override binary file
+cp -afv %_dotnetdir/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
+
 mkdir -p %buildroot%_cachedir/dotnet/NuGetFallbackFolder/
 ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet/sdk/NuGetFallbackFolder
 
@@ -57,6 +61,9 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt2
+- override apphost binary from our build
+
 * Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
 - .NET Core SDK 2.1.505 Release
 
