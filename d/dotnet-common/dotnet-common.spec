@@ -1,9 +1,10 @@
-%define corerelease 2.1.6
-%define sdkrelease 2.1.500
+%define dotnetmajor 2.1
+%define corerelease 2.1.9
+%define sdkrelease 2.1.505
 
 Name: dotnet-common
-Version: 2.1.6
-Release: alt2
+Version: 2.1.9
+Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -11,6 +12,8 @@ License: MIT
 Group: Development/Other
 
 Source: %name-%version.tar
+
+Provides: %name = 2.1.6
 
 %description
 Common dir and files for the .NET Core runtime and libraries.
@@ -41,6 +44,7 @@ VERSION_ID="26"
 EOF
 
 cat <<EOF >macros
+%%_dotnet_major %dotnetmajor
 %%_dotnet_corerelease %corerelease
 %%_dotnet_sdkrelease %sdkrelease
 %%_dotnetdir %_libdir/dotnet
@@ -77,6 +81,9 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- .NET Core 2.1.9 release
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
 - move versioned dirs to the appropriate packages
 

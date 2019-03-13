@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 # FIXME:
-%define _dotnet_sdkrelease 2.1.500
+%define _dotnet_sdkrelease 2.1.505
 # TODO: change package version to sdk version?
 
 # TODO: build from sources
 Name: dotnet-sdk
-Version: 2.1.6
+Version: 2.1.9
 Release: alt1
 
 Summary: SDK for the .NET Core runtime and libraries
@@ -57,6 +57,9 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- .NET Core SDK 2.1.505 Release
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
 - .NET Core SDK 2.1.500 Release
 
