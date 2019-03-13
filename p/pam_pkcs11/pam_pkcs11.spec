@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.10
-Release: alt5
+Release: alt6
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -13,12 +13,13 @@ Source: %name-%version.tar
 Patch: %name-%version-alt-cumulative.patch
 Patch1: pam_pkcs11-0.6.9-build-with-LibreSSL.patch
 Patch2: pam_pkcs11-0.6.9-elvis-gost-support.patch
+Patch3: pam_pkcs11-0.6.10-build-with-openssl11.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
 Requires: pcsc-lite pcsc-lite-ccid
 
-BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel LibreSSL-devel xsltproc
+BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
 BuildRequires: docbook-dtds
 
@@ -77,8 +78,9 @@ This package contains ISBC (ESMART) low-level modules for pam_pkcs11
 %prep
 %setup
 %patch -p1
-%patch1 -p1
+#patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 # fixup configs
 sed -i -e '
@@ -162,6 +164,9 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Tue Mar 12 2019 Oleg Solovyov <mcpain@altlinux.org> 0.6.10-alt6
+- rebuild with openssl 1.1
+
 * Fri Jan 11 2019 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt5
 - Fix/improve: Write a message when the token authentication is
   cancelled.
