@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
 Version: 3.3.0
-Release: alt1
+Release: alt2
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -85,13 +85,11 @@ done
 %doc LICENSE README.md
 %dir %_libdir/ocaml/%name
 %dir %_libdir/ocaml/%name/deriving
-%_libdir/ocaml/%{name}*/*.dune
 %_libdir/ocaml/%{name}*/opam
 %_libdir/ocaml/%{name}*/META
 %_libdir/ocaml/%{name}*/*.cma
 %_libdir/ocaml/%{name}*/*.cmi
 %_libdir/ocaml/%{name}*/*.cmxs
-%_libdir/ocaml/%{name}*/*/*.dune
 %_libdir/ocaml/%{name}*/*/*.cma
 %_libdir/ocaml/%{name}*/*/*.cmi
 %_libdir/ocaml/%{name}*/*/*.cmxs
@@ -101,6 +99,7 @@ done
 %files -n ocaml-%name-devel
 %doc examples
 %doc LICENSE README.md examples doc/api doc/manual
+%_libdir/ocaml/%{name}*/dune-package
 %_libdir/ocaml/%{name}*/*.ml
 %_libdir/ocaml/%{name}*/*.mli
 %_libdir/ocaml/%{name}*/*.a
@@ -115,6 +114,9 @@ done
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 3.3.0-alt2
+- rebuilt with dune-1.8
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 3.3.0-alt1
 - 3.3.0
 
