@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-mccs
 Version: 1.1.9
-Release: alt2
+Release: alt3
 Summary: Multi Criteria CUDF Solver with OCaml bindings
 # Original C/C++ code is BSD, OCaml bindings are LGPL.
 # Linking exception, see included COPYING file.
@@ -51,7 +51,6 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %dir %_libdir/ocaml/mccs/
 %_libdir/ocaml/mccs/META
 %_libdir/ocaml/mccs/opam
-%_libdir/ocaml/mccs/*.dune
 %_libdir/ocaml/mccs/*.cma
 %_libdir/ocaml/mccs/*.cmi
 %_libdir/ocaml/mccs/*.cmx
@@ -59,7 +58,6 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/stublibs/*.so
 %dir %_libdir/ocaml/mccs/glpk/
 %dir %_libdir/ocaml/mccs/glpk/internal/
-%_libdir/ocaml/mccs/glpk/internal/*.dune
 %_libdir/ocaml/mccs/glpk/internal/*.cma
 %_libdir/ocaml/mccs/glpk/internal/*.cmi
 %_libdir/ocaml/mccs/glpk/internal/*.cmx
@@ -68,6 +66,7 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %files devel
 %_libdir/ocaml/mccs/*.a
 %_libdir/ocaml/mccs/*.cmxa
+%_libdir/ocaml/mccs/dune-package
 %_libdir/ocaml/mccs/*.cmt
 %_libdir/ocaml/mccs/*.cmti
 %_libdir/ocaml/mccs/*.ml
@@ -78,6 +77,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/mccs/glpk/internal/*.ml
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.1.9-alt3
+- rebuilt with dune-1.8
+
 * Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.1.9-alt2
 - fixed built with dune-1.6.4
 
