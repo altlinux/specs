@@ -1,16 +1,18 @@
 %set_verify_elf_method textrel=relaxed
 %define libname parsexp
 Name: ocaml-%libname
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
 Url: https://github.com/ocaml-ppx/ppx_derivers
 Source0: %name-%version.tar
-BuildRequires: dune
+BuildRequires: dune >= 1.8
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib ocaml-sexplib0-devel
+BuildRequires: ocaml-findlib 
+BuildRequires: ocaml-sexplib0-devel >= 0.12.0
+BuildRequires: ocaml-base-devel >= 0.12.0
 BuildRequires: opam
 
 %description
@@ -59,7 +61,6 @@ dune runtest
 %doc README.org CHANGES.md
 %dir %_libdir/ocaml/%libname
 %_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.dune
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %_libdir/ocaml/%libname/*.a
@@ -67,6 +68,7 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmxs
 
 %files devel
+%_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.cmt
 %_libdir/ocaml/%libname/*.cmti
@@ -74,6 +76,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - first build for ALT
 
