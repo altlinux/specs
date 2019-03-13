@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 2.1.500
-%define coreversion 2.1.6
+%define sdkversion 2.1.505
+%define coreversion 2.1.9
 
 Name: dotnet-bootstrap
-Version: 2.1.6
+Version: 2.1.9
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -17,8 +17,8 @@ Group: Development/Other
 # FIXME: broken due sdk/core versions mismatch
 #%define downloadversion 2.1.403
 # from https://www.microsoft.com/net/download/dotnet-core/2.1
-# SHA512 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/e5eef3df-d2e3-429b-8204-f58372eb6263/20c825ddcc6062e93ff0c60e8354d3af/dotnet-sdk-%sdkversion-linux-x64.tar.gz
+
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/17fcc97d-d9b7-4bef-9ab5-46ba26cf9959/d044cf5547b58920ddbdc068ea64197d/dotnet-sdk-%sdkversion-linux-x64.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -84,6 +84,11 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/dotnet
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- new version 2.1.9 (with rpmrb script)
+- includes .NET Core 2.1.9, ASP.NET Core 2.1.9 and .NET Core SDK 2.1.505
+- CVE-2019-0657: .NET Core NuGet Tampering Vulnerability
+
 * Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
 - new version 2.1.6 (with rpmrb script)
 - includes .NET Core 2.1.6, ASP.NET Core 2.1.6 and .NET Core SDK 2.1.500

@@ -4,8 +4,8 @@
 %define pre %nil
 
 Name: dotnet
-Version: 2.1.6
-Release: alt2
+Version: 2.1.9
+Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -26,7 +26,9 @@ BuildRequires(pre): rpm-macros-dotnet = %version
 
 BuildRequires: dotnet-common = %version
 
-Requires: dotnet-common = %version
+# FIXME
+#Requires: dotnet-common >= %_dotnet_major
+Requires: dotnet-common >= 2.1
 Requires: dotnet-coreclr = %version
 Requires: dotnet-corefx = %version
 #Requires: dotnet-sdk >= %version
@@ -35,7 +37,7 @@ Requires: dotnet-corefx = %version
 BuildRequires: dotnet-bootstrap
 %define bootstrapdir %_libdir/dotnet-bootstrap
 %else
-BuildRequires: dotnet
+#BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
@@ -57,7 +59,8 @@ find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_dotnetdir/fake-os-r
 %build
 #DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose
 cd src/corehost
-DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh \
+#DOTNET_TOOL_DIR=%bootstrapdir
+sh -x ./build.sh \
     --arch x64 \
     --hostver %_dotnet_corerelease \
     --apphostver %_dotnet_corerelease \
@@ -90,6 +93,9 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 %_dotnet_shared/libhostpolicy.so
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- new version (2.1.9) with rpmgs script
+
 * Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
 - move versioned dirs to the appropriate packages
 
