@@ -1,14 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname uri
 Name: ocaml-%libname
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
 License: BSD
 Url: https://github.com/ocaml-ppx/ppx_derivers
 Source0: %name-%version.tar
-BuildRequires: dune
+BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: opam
@@ -87,6 +87,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname syndic
 Name: ocaml-%libname
-Version: 1.5.3
+Version: 1.6.0
 Release: alt1
 Summary: RSS1, RSS2, Atom and OPML1 parsing for OCaml
 Group: Development/ML
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-oasis
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: dune
 BuildRequires: opam
 BuildRequires: ocaml-xmlm-devel
 BuildRequires: ocaml-uri-devel
@@ -35,16 +35,10 @@ developing applications that use %name.
 %setup
 
 %build
-oasis setup
-ocaml setup.ml -configure --prefix %buildroot%prefix
-ocaml setup.ml -build
-
+dune build --verbose -p %libname
 
 %install
-export DESTDIR=$RPM_BUILD_ROOT
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%ocamldir
-mkdir -p $OCAMLFIND_DESTDIR
-ocaml setup.ml -install
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
 
 %files
 %doc README.md LICENSE
@@ -53,9 +47,10 @@ ocaml setup.ml -install
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.annot
 
 %files devel
+%_libdir/ocaml/%libname/opam
+%_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/*.cmt
@@ -64,6 +59,9 @@ ocaml setup.ml -install
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 1.5.3-alt1
 - first build for ALT
 

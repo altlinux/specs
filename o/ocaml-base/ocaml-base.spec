@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.11.1
-Release: alt3
+Version: 0.12.0
+Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache 2.0
 Group: Development/ML
@@ -10,9 +10,9 @@ Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
-BuildRequires: jbuilder
+BuildRequires: dune >= 1.8
 BuildRequires: opam
-BuildRequires: ocaml-sexplib0-devel  >= 0.11
+BuildRequires: ocaml-sexplib0-devel  >= 0.12
 
 %description
 Base is a complete and portable alternative to the OCaml standard
@@ -47,7 +47,7 @@ rm -rf %buildroot/usr/doc
 jbuilder runtest
 
 %files
-%doc README.org LICENSE.txt
+%doc README.org LICENSE.md
 %dir %_libdir/ocaml/%oname
 %dir %_libdir/ocaml/%oname/md5
 %dir %_libdir/ocaml/%oname/caml
@@ -68,13 +68,12 @@ jbuilder runtest
 
 %files devel
 %_libdir/ocaml/%oname/opam
-%_libdir/ocaml/%oname/*.dune
+%_libdir/ocaml/%oname/dune-package
 %_libdir/ocaml/%oname/*.cmt
 %_libdir/ocaml/%oname/*.cmti
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.ml
 %_libdir/ocaml/%oname/*.mli
-%_libdir/ocaml/%oname/*/*.dune
 %_libdir/ocaml/%oname/*/*.cmt
 %_libdir/ocaml/%oname/*/*.cmti
 %_libdir/ocaml/%oname/*/*.cmx
@@ -83,6 +82,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/internalhash.h
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt3
 - fixed build with dune 1.4
 

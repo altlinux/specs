@@ -1,18 +1,18 @@
 %set_verify_elf_method textrel=relaxed
 %define oname sexplib
 Name: ocaml-%oname
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache 2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
-BuildRequires: dune
+BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-num
 BuildRequires: opam
-BuildRequires: ocaml-parsexp-devel
+BuildRequires: ocaml-parsexp-devel >= 0.12.0
 
 %description
 This library contains functionality for parsing and pretty-printing
@@ -50,7 +50,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 rm -rf %buildroot/usr/doc
 
 %files
-%doc LICENSE.txt LICENSE-Tywith.txt
+%doc LICENSE.md LICENSE-Tywith.txt
 %dir %_libdir/ocaml/sexplib
 %dir %_libdir/ocaml/sexplib/num
 %dir %_libdir/ocaml/sexplib/unix
@@ -74,15 +74,17 @@ rm -rf %buildroot/usr/doc
 %_libdir/ocaml/sexplib/*.cmx
 %_libdir/ocaml/sexplib/*.mli
 %_libdir/ocaml/sexplib/*.ml
-%_libdir/ocaml/sexplib/*.dune
+%_libdir/ocaml/sexplib/dune-package
 %_libdir/ocaml/sexplib/*/*.cmt
 %_libdir/ocaml/sexplib/*/*.cmti
 %_libdir/ocaml/sexplib/*/*.cmx
 %_libdir/ocaml/sexplib/*/*.mli
 %_libdir/ocaml/sexplib/*/*.ml
-%_libdir/ocaml/sexplib/*/*.dune
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - 0.11.0
 
