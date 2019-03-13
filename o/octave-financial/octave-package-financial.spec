@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %define octave_pkg_name financial
 Epoch: 1
 Name: octave-%octave_pkg_name
-Version: 0.5.1
+Version: 0.5.3
 Release: alt1
 Summary: Financial
 
@@ -21,8 +21,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(financial) = %version
-# Depends: octave (>= 4.0.0), io (>= 1.0.18)
-Requires: octave >= 4.0.0 octave(io) >= 1.0.18
+# Depends: octave (>= 4.4.0), io (>= 2.4.11), statistics (>= 1.4.0)
+Requires: octave >= 4.4.0 octave(io) >= 2.4.11 octave(statistics) >= 1.4.0
 
 
 %description
@@ -44,13 +44,16 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %files
-%doc NEWS DESCRIPTION COPYING
+%doc COPYING DESCRIPTION NEWS
 %_datadir/octave/packages/%octave_pkg_name-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octave_pkg_name-%version
 %endif
 
 %changelog
+* Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.5.3-alt1
+- regenerated from template by package builder
+
 * Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.1-alt1
 - build for octave 4.4
 
