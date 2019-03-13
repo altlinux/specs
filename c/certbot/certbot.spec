@@ -1,9 +1,10 @@
-# TODO
+# TODO: augeas botocore
+
 %def_with plugins
 
 Name: certbot
-Version: 0.31.0
-Release: alt2
+Version: 0.32.0
+Release: alt1
 
 Summary: A free, automated certificate authority client
 
@@ -233,6 +234,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 0.32.0-alt1
+- new version 0.32.0 (with rpmrb script)
+
 * Sat Mar 02 2019 Vitaly Lipatov <lav@altlinux.ru> 0.31.0-alt2
 - add dns_rfc2136, dns_route53 and postfix plugins
 - provide python2.7(cerbot)
