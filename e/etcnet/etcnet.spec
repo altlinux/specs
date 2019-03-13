@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.18
-Release:	alt2
+Release:	alt3
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -140,6 +140,9 @@ fi
 %files full
 
 %changelog
+* Wed Mar 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.18-alt3
+- some errs fixed
+
 * Mon Mar 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.18-alt2
 - iface status check for ifdown added (Closes: #22658)
 - loading of kernel module 8021q disabled in VE (patch by Denis Yagofarov) (Closes: #13607)
