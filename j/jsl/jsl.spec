@@ -3,7 +3,7 @@
 
 Name: jsl
 Version: 0.3.0
-Release: alt2
+Release: alt3
 
 Summary: Check JavaScript code for common mistakes
 License: MPLv1.1
@@ -56,6 +56,9 @@ perl run_tests.pl ../BUILD/jsl
 %_bindir/jsl
 
 %changelog
+* Wed Mar 13 2019 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt3
+- Fix build on mipsel.
+
 * Sun Sep 09 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2
 - Build for aarch64.
 
