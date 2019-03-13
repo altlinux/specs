@@ -7,7 +7,7 @@
 
 Name: meson
 Version: 0.49.2
-Release: alt2
+Release: alt3
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -21,6 +21,9 @@ Source: %name-%version.tar
 %endif
 Source1: %name.macros
 Source2: %name.env
+# do not duplicate external dependencies in list
+# cfe82db5ab0d35832da474014dff4b6dfe33f8b7
+Patch: meson-0.49.2-up-dedup.patch
 
 BuildArch: noarch
 
@@ -63,6 +66,7 @@ reports, Valgrind, CCache and the like.
 
 %prep
 %setup
+%patch -p1 -b .dedup
 
 %build
 %python3_build
@@ -88,6 +92,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.2-alt3
+- backported fix for https://github.com/mesonbuild/meson/issues/2150
+
 * Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.2-alt2
 - meson.macros: %%meson_build: use %%_smp_mflags to specify number of
   parallel jobs from NPROCS environment variable or from %%__nprocs
