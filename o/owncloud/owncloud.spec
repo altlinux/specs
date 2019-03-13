@@ -1,21 +1,29 @@
-%define installdir %webserver_webappsdir/%name
-%define installdir %webserver_webappsdir/%name
-
 Name: owncloud
-Version: 7.0.9
-Release: alt1.1
+Version: 10.1.0
+Release: alt2
+
+%define installdir %webserver_webappsdir/%name
 
 Summary: Cloud platform
 Group: Networking/WWW
 License: AGPLv3
-Url: http://www.owncloud.org/
+Url: https://owncloud.org/
 
 BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
 
 Requires(pre): webserver-common
 
+#https://doc.owncloud.org/server/9.1/admin_manual/installation/source_installation.html
+Requires: php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip php7-curl php7-fileinfo php7-intl
+#For SQL DBs:
+Requires: php7-pdo-driver
+
 Source0: %name-%version.tar
+
+# Automatically added by buildreq on Mon Oct 03 2016
+# optimized out: python-base python-modules python3
+BuildRequires: python3-base
 
 %description
 ownCloud gives you easy and universal access to all of your files.
@@ -23,65 +31,100 @@ It also provides a platform to easily view, sync and share your contacts
 calendars, bookmarks and files across all your devices.
 
 %package apache2
-Summary: Apache 2.x web-server configuration for %name
+Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
+Requires: %name = %EVR apache2-mod_php7 apache2-mod_ssl
+Requires(post): cert-sh-functions
+
 %description apache2
-Apache 2.x web-server configuration for %name
+Apache 2.x web-server default configuration for %name.
+
+%package nginx
+Summary: nginx web-server default configuration for %name
+Group: Networking/WWW
+Requires: %name = %EVR nginx
+
+%description nginx
+nginx web-server default configuration for %name.
 
 %prep
 %setup
 
 %install
-# install apache config
-install -pD -m0644 alt/apache2.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
-# install owncloud
 mkdir -p %buildroot%installdir
+cp -rp %name/* %buildroot%installdir/
+cp %name/.htaccess %buildroot%installdir/
+cp %name/.user.ini %buildroot%installdir/
 
-cp -rp * %buildroot%installdir/
+find %buildroot%installdir/ -name tests -type d | xargs rm -fr
 
-mv %buildroot%installdir/config %buildroot%_sysconfdir/owncloud
-ln -s %_sysconfdir/owncloud %buildroot%installdir/config
+mkdir -p %buildroot%_sysconfdir/%name
+mv %buildroot%installdir/config/ %buildroot%_sysconfdir/%name/.
+ln -s %_sysconfdir/%name/config %buildroot%installdir/config
 
-mkdir -p %buildroot%_localstatedir/owncloud
-ln -s %_localstatedir/owncloud %buildroot%installdir/data
+mkdir -p %buildroot%_localstatedir/%name
+ln -s %_localstatedir/%name %buildroot%installdir/data
 
-rm -rf %buildroot%installdir/alt
-rm -f %buildroot%installdir/l10n/l10n.pl
+#install apache2
+install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
+
+#install nginx
+install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
 %post apache2
+a2ensite %name
+a2enmod ssl
+a2enport https
+a2enmod rewrite
+a2enmod env
+a2enmod headers
+# Generate SSL key
+. cert-sh-functions
+ssl_generate "owncloud"
 %_initdir/httpd2 condreload
 
 %postun apache2
 %_initdir/httpd2 condreload
 
 %files
-%doc AUTHORS
-%doc COPYING-AGPL
-%doc COPYING-README
-#%installdir/3rdparty
+%dir %installdir
 %dir %attr(0775,root,_webserver) %installdir/apps
 %installdir/apps/*
-%dir %attr(0770,root,_webserver) %_sysconfdir/owncloud
-%installdir/config
-%_sysconfdir/owncloud/*.php
 %installdir/core
-%installdir/l10n
 %installdir/lib
-%installdir/ocs
-%installdir/search
+%installdir/oc*
+%installdir/resources
 %installdir/settings
-%installdir/tests
-%installdir/*.php
-%installdir/*.html
-%installdir/*.xml
-%dir %attr(0770,root,_webserver) %_localstatedir/owncloud
+%installdir/updater
+%dir %attr(0770,root,_webserver) %_sysconfdir/%name/config/
+%_sysconfdir/%name
+%installdir/config
+%dir %attr(0770,root,_webserver) %_localstatedir/%name
 %installdir/data
+%installdir/*.php
+%installdir/.htaccess
+%installdir/.user.ini
+%doc %installdir/AUTHORS
+%doc %installdir/CHANGELOG.md
+%doc %installdir/COPYING
+%installdir/*.xml
+%installdir/index.html
 %installdir/robots.txt
 
 %files apache2
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
+
+%files nginx
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Mar 13 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 10.1.0-alt2
+- fix deps and conf (apache/nginx)
+
+* Thu Mar 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 10.1.0-alt1
+- 10.1.0 (closes: #35308, #36099)
+- NMU: Generate SSL key diring package installation (by cas@) (closes: #36095)
+
 * Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 7.0.9-alt1.1
 - dependencies on php5 and old owncloud modules removed due to cleaning sisyphus
 
