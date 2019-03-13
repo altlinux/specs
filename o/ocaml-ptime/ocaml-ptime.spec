@@ -2,7 +2,7 @@
 %define libname ptime
 Name: ocaml-%libname
 Version: 0.8.4
-Release: alt2
+Release: alt3
 Summary: POSIX time for OCaml
 License: ISC
 Group: Development/ML
@@ -57,6 +57,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.8.4-alt3
+- rebuilt with js_of_ocaml
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 0.8.4-alt2
 - rebuilt with js_of_ocaml 3.3.0
 

@@ -2,7 +2,7 @@
 %define libname logs
 Name:           ocaml-%libname
 Version:        0.6.2
-Release:        alt2
+Release:        alt3
 Summary:        Logging infrastructure for OCaml
 License:        ISC
 Group:          Development/ML
@@ -55,6 +55,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.6.2-alt3
+- rebuilt with js_of_ocaml
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 0.6.2-alt2
 - rebuild with js_of_ocaml 3.3.0
 
