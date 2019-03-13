@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname postgresql
 Name: ocaml-%libname
-Version: 4.4.1
+Version: 4.4.2
 Release: alt1
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
@@ -47,7 +47,6 @@ dune runtest
 %doc README.md LICENSE.md CHANGES.md
 %dir %_libdir/ocaml/%libname
 %_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.dune
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %_libdir/ocaml/%libname/*.a
@@ -55,6 +54,7 @@ dune runtest
 
 %files devel
 %_libdir/ocaml/%libname/opam
+%_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/*.cmt
 %_libdir/ocaml/%libname/*.cmti
 %_libdir/ocaml/%libname/*.cmx
@@ -63,5 +63,8 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 4.4.2-alt1
+- 4.4.2
+
 * Fri Nov 02 2018 Anton Farygin <rider@altlinux.ru> 4.4.1-alt1
 - first build for ALT
