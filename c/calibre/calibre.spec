@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.39.1
+Version: 3.40.1
 Release: alt1
 
 Summary: A e-book library management application
@@ -60,7 +60,8 @@ BuildRequires: libchm-devel >= 0.40
 BuildRequires: libicu-devel >= 5.6
 BuildRequires: libmtp-devel >= 1.1.11
 
-%py_use msgpack >= 0.4.8
+# with msgpack 0.4.x: TypeError: unpackb() got an unexpected keyword argument 'raw'
+%py_use msgpack >= 0.5.6
 %py_use html5-parser
 %py_use mechanize
 # TODO
@@ -167,6 +168,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 3.40.1-alt1
+- new version 3.40.1 with rpmgs script
+
 * Sat Feb 09 2019 Vitaly Lipatov <lav@altlinux.ru> 3.39.1-alt1
 - new version 3.39.1 (with rpmrb script)
 
