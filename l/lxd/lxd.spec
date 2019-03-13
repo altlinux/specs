@@ -11,7 +11,7 @@
 
 Name:		lxd
 Version:	3.10
-Release:	alt1
+Release:	alt2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -53,85 +53,8 @@ BuildRequires: help2man
 # Needed for manpages generation. Accessing to '/proc/self/...'
 BuildRequires: /proc
 
-# lxc
-BuildRequires: golang(gopkg.in/flosch/pongo2.v3)
-BuildRequires: golang(github.com/gorilla/websocket)
-BuildRequires: golang(github.com/olekukonko/tablewriter)
-BuildRequires: golang(github.com/gosexy/gettext)
-BuildRequires: golang(golang.org/x/crypto/ssh/terminal)
-BuildRequires: golang(gopkg.in/inconshreveable/log15.v2)
-BuildRequires: golang(gopkg.in/yaml.v2)
-BuildRequires: golang(github.com/pkg/errors)
-BuildRequires: golang(github.com/spf13/cobra)
-BuildRequires: golang(github.com/spf13/cobra/doc)
-BuildRequires: golang(gopkg.in/juju/environschema.v1/form)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery/form)
-BuildRequires: golang(github.com/juju/persistent-cookiejar)
-BuildRequires: golang(gopkg.in/errgo.v1)
-
-# fuidshift
-BuildRequires:  golang(github.com/spf13/cobra)
-
-# lxd
 BuildRequires:	lxc-devel
 BuildRequires:	libacl-devel
-BuildRequires: golang(github.com/coreos/go-systemd/activation)
-BuildRequires: golang(github.com/dustinkirkland/golang-petname)
-BuildRequires: golang(github.com/golang/protobuf/proto)
-BuildRequires: golang(github.com/gorilla/mux)
-BuildRequires: golang(github.com/mattn/go-sqlite3)
-BuildRequires: golang(github.com/pborman/uuid)
-BuildRequires: golang(github.com/syndtr/gocapability/capability)
-BuildRequires: golang(gopkg.in/lxc/go-lxc.v2)
-BuildRequires: golang(gopkg.in/tomb.v2)
-BuildRequires: golang(github.com/CanonicalLtd/candidclient)
-BuildRequires: golang(github.com/CanonicalLtd/go-dqlite)
-BuildRequires: golang(github.com/boltdb/bolt)
-BuildRequires: golang(github.com/flosch/pongo2)
-BuildRequires: golang(github.com/gorilla/websocket)
-BuildRequires: golang(github.com/hashicorp/raft)
-BuildRequires: golang(github.com/hashicorp/raft-boltdb)
-BuildRequires: golang(github.com/miekg/dns)
-BuildRequires: golang(github.com/olekukonko/tablewriter)
-BuildRequires: golang(github.com/pkg/errors)
-BuildRequires: golang(github.com/spf13/cobra)
-BuildRequires: golang(github.com/spf13/cobra/doc)
-BuildRequires: golang(golang.org/x/net/context)
-BuildRequires: golang(gopkg.in/lxc/go-lxc.v2)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery/checkers)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/bakery/identchecker)
-BuildRequires: golang(gopkg.in/macaroon-bakery.v2/httpbakery)
-BuildRequires: golang(gopkg.in/robfig/cron.v2)
-BuildRequires: golang(gopkg.in/yaml.v2)
-BuildRequires: golang(github.com/Rican7/retry)
-BuildRequires: golang(github.com/armon/go-metrics)
-BuildRequires: golang(github.com/gogo/protobuf/proto)
-BuildRequires: golang(gopkg.in/CanonicalLtd/candidclient.v1)
-BuildRequires: golang(github.com/CanonicalLtd/raft-http)
-BuildRequires: golang(github.com/CanonicalLtd/raft-membership)
-BuildRequires: golang(github.com/CanonicalLtd/raft-test)
-BuildRequires: golang(github.com/hashicorp/go-msgpack/codec)
-BuildRequires: golang(github.com/ryanfaerman/fsm)
-BuildRequires: golang(github.com/stretchr/testify)
-BuildRequires: golang(github.com/juju/gomaasapi)
-
-#lxd-p2c
-BuildRequires:  golang(github.com/gorilla/websocket)
-BuildRequires:  golang(github.com/pborman/uuid)
-BuildRequires:  golang(github.com/spf13/cobra)
-BuildRequires:  golang(golang.org/x/crypto/ssh/terminal)
-
-#lxc-to-lxd
-BuildRequires:  golang(github.com/gorilla/websocket)
-BuildRequires:  golang(github.com/pborman/uuid)
-BuildRequires:  golang(github.com/spf13/cobra)
-BuildRequires:  golang(golang.org/x/crypto/ssh/terminal)
-BuildRequires:  golang(gopkg.in/lxc/go-lxc.v2)
-
-#lxd-benchmark
-BuildRequires:  golang(github.com/spf13/cobra)
 
 %description
 REST API, command line tool and OpenStack integration plugin for LXC.
@@ -244,8 +167,14 @@ help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benc
 
 %files devel
 %go_path/src/*
+%exclude %go_path/src/%import_path/vendor
+%exclude %go_path/src/%import_path/go.mod
+%exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Wed Mar 13 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.10-alt2
+- Fix build by vendorizing build dependencies
+
 * Wed Feb 13 2019 Denis Pynkin <dans@altlinux.org> 3.10-alt1
 - Update
 
