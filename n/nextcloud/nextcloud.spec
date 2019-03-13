@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 13.0.8
+Version: 15.0.5
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -37,7 +37,8 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name >= 12.0.0 apache2-mod_php7 apache2-mod_ssl
+Requires: %name = %EVR apache2-mod_php7 apache2-mod_ssl
+Requires(post): cert-sh-functions
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
@@ -45,8 +46,8 @@ Apache 2.x web-server default configuration for %name.
 %package nginx
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name >= 12.0.0 nginx
-#Requires: php5-cgi php5-fpm-fcgi php5-apcu
+Requires: %name = %EVR nginx
+Requires(post): cert-sh-functions
 
 %description nginx
 nginx web-server default configuration for %name.
@@ -83,10 +84,18 @@ a2enport https
 a2enmod rewrite
 a2enmod env
 a2enmod headers
+# Generate SSL key
+. cert-sh-functions
+ssl_generate "nextcloud"
 %_initdir/httpd2 condreload
 
 %postun apache2
 %_initdir/httpd2 condreload
+
+%post nginx
+# Generate SSL key
+. cert-sh-functions
+ssl_generate "nextcloud"
 
 %files
 %dir %installdir
@@ -96,7 +105,7 @@ a2enmod headers
 %installdir/core
 #%installdir/l10n
 %installdir/lib
-%installdir/ocs*
+%installdir/oc*
 %installdir/resources
 %installdir/settings
 %installdir/themes
@@ -110,9 +119,9 @@ a2enmod headers
 %installdir/.htaccess
 %installdir/.user.ini
 %doc %installdir/AUTHORS
+%doc %installdir/COPYING
 %installdir/index.html
 %installdir/robots.txt
-%installdir/occ
 
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
@@ -121,6 +130,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Mar 13 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 15.0.5-alt1
+- version 15.0.5 (Feb 28 2019)
+- NMU: Generate SSL key diring package installation (by cas@) 
+
 * Wed Dec 05 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.8-alt1
 - version 13.0.8 (Nov 22 2018)
 
