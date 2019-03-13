@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 4.1.0
-Release: alt3
+Release: alt4
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -59,14 +59,13 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/stublibs/*.so*
 
 %files devel
-%_libdir/ocaml/lwt*/*.dune
+%_libdir/ocaml/lwt*/dune-package
 %_libdir/ocaml/lwt*/opam
 %_libdir/ocaml/lwt*/*.a
 %_libdir/ocaml/lwt*/*.cmt*
 %_libdir/ocaml/lwt*/*.cmxa
 %_libdir/ocaml/lwt*/*.cmx
 %_libdir/ocaml/lwt*/*.mli
-%_libdir/ocaml/lwt/unix/*.dune
 %_libdir/ocaml/lwt/unix/*.a
 %_libdir/ocaml/lwt/unix/*.cmt*
 %_libdir/ocaml/lwt/unix/*.cmxa
@@ -74,6 +73,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.mli
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 4.1.0-alt4
+- rebuilt with dune-1.8
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 4.1.0-alt3
 - rebuilt with ocaml-migrate-parsetree 1.2.0-alt1
 
