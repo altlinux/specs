@@ -1,17 +1,17 @@
-%define  pkgname ffi-yajl
-%def_without benchmark
- 
-Name: 	       ruby-%pkgname
+%define        pkgname ffi-yajl
+
+Name:          ruby-%pkgname
 Version:       2.3.1
-Release:       alt3
+Release:       alt4
 Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/chef/ffi-yajl
 # VCS:         https://github.com/chef/ffi-yajl.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:        %pkgname-%version.tar
+
+Source:        %name-%version.tar
+Patch:         use-system-yajl-without-wrapper.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rack)
@@ -29,17 +29,19 @@ MRI native extensions and FFI in order to be compatible with as many
 Ruby implementations as possible while providing good performance where
 possible.
 
+
 %package doc
 Summary:       Documentation files for %name
 Group:         Documentation
- 
 BuildArch:     noarch
- 
-%description doc
+
+%description   doc
 Documentation files for %{name}.
 
+
 %prep
-%setup -n %pkgname-%version
+%setup
+%patch -p1
 
 %build
 %gem_build
@@ -53,14 +55,17 @@ Documentation files for %{name}.
 %files
 %doc README*
 %_bindir/ffi-yajl-bench
-%ruby_gemlibdir/*
-%ruby_gemextdir/*
-%ruby_gemspecdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
 %files doc
-%ruby_gemdocdir/*
- 
+%ruby_gemdocdir
+
 %changelog
+* Tue Mar 12 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt4
+- Fix built extensions by the patch.
+
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt3
 - Use Ruby Policy 2.0.
 
