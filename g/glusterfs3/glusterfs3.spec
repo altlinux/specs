@@ -29,7 +29,7 @@
 
 Name: glusterfs3
 Version: %major.15
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -399,6 +399,7 @@ rm -rf %buildroot%_sbindir/conf.py
 rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
 # drop req on policycoreutils (semanage)
 rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fcontext.sh
+%__subst "s|    restorecon|    a= restorecon|" %buildroot%_libexecdir/glusterfs/peer_add_secret_pub
 
 # TODO: move common part to -common?
 %files
@@ -575,6 +576,9 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 %preun_service glusterd
 
 %changelog
+* Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 3.12.15-alt3
+- mask restorecon (skip policycoreutils req)
+
 * Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.15-alt2
 - disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
