@@ -5,23 +5,12 @@
 
 Name: python-module-%oname
 Version: 2.2.5
-Release: alt1.1.1
+Release: alt2
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
 Url: https://github.com/KeepSafe/aiohttp.git
 Source: %name-%version.tar
-Requires: python3-multidict >= 3.0.0
-Requires: python3-async-timeout >= 1.2.0
-Requires: python3-yarl >= 0.11
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
-BuildRequires: python3-module-setuptools python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
-%if_with docs
-BuildRequires(pre): python3-module-sphinx-devel
-BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
-%endif
 
 %description
 http client/server for asyncio (PEP-3156).
@@ -29,7 +18,15 @@ http client/server for asyncio (PEP-3156).
 %package -n python3-module-%oname
 Summary: http client/server for asyncio
 Group: Development/Python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
+BuildRequires: python3-module-setuptools python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
+%if_with docs
+BuildRequires(pre): python3-module-sphinx-devel
+BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
+%endif
 %py3_provides %oname
+%py3_requires chardet
 
 %description -n python3-module-%oname
 http client/server for asyncio (PEP-3156).
@@ -100,6 +97,10 @@ python3 setup.py test
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Thu Mar 14 2019 Anton Midyukov <antohami@altlinux.org> 2.2.5-alt2
+- Added py3_requires chardet (Closes: 36270)
+- Cleanup spec
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
