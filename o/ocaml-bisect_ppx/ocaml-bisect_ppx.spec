@@ -2,7 +2,7 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL2
@@ -46,11 +46,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %dir %_libdir/ocaml/%libname
 %_libdir/ocaml/%libname/META
 %_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/*.dune
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %dir %_libdir/ocaml/%libname/runtime
-%_libdir/ocaml/%libname/runtime/*.dune
 %_libdir/ocaml/%libname/runtime/*.cmi
 %_libdir/ocaml/%libname/runtime/*.cma
 
@@ -59,6 +57,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_libdir/ocaml/%libname/*.ml*
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.cmt*
+%_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/*.a
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
@@ -70,6 +69,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_libdir/ocaml/%libname/runtime/*.cmxs
 
 %changelog
+* Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.4.0-alt2
+- rebuilt with dune-1.8
+
 * Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - first build for ALT
 
