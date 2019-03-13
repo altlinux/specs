@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d
@@ -114,6 +114,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Mar 13 2019 Andrey Cherepanov <cas@altlinux.org> 0.38-alt1
+- Make ldap/krb5 authentication by SSSD instead on nss-ldapd.
+- Use own parser to set values in /etc/krb5.conf.
+
 * Wed Oct 03 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.37-alt1
 - AD: configure sssd to obey the group policy
 - AD: correctly update the (A) DNS record of the newly joined host
