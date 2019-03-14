@@ -6,14 +6,14 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel pkgco
 %define _localstatedir %{_var}
 Name:		android-file-transfer
 Version:	3.7
-Release:	alt1_1
+Release:	alt2_1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
 URL:		https://github.com/whoozle/android-file-transfer-linux
 Source0:	%{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:	libappstream-builder libappstream-glib
+BuildRequires:	libappstream-glib
 BuildRequires:	ccmake cmake ctest
 BuildRequires:	desktop-file-utils
 BuildRequires:	gcc-c++
@@ -72,6 +72,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Thu Mar 14 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt2_1
+- fixed build
+
 * Mon Jan 07 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_1
 - new version
 
