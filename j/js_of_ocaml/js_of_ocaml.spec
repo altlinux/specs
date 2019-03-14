@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
 Version: 3.3.0
-Release: alt2
+Release: alt3
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -114,6 +114,9 @@ done
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 3.3.0-alt3
+- rebuilt with ocaml-yojson-1.7.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 3.3.0-alt2
 - rebuilt with dune-1.8
 
