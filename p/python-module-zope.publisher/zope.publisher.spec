@@ -8,7 +8,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.3.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: The Zope publisher publishes Python objects on the web
 License: ZPLv2.1
@@ -18,6 +18,7 @@ Url: http://pypi.python.org/pypi/zope.publisher
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: %oname-fix-tests.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -37,6 +38,10 @@ BuildRequires: python-module-zope.testing
 BuildRequires: python-module-zope.testrunner
 BuildRequires: python-module-zope.security
 BuildRequires: python-module-zope.security-tests
+BuildRequires: python-module-zope.deferredimport
+BuildRequires: python-module-zope.hookable
+BuildRequires: python-module-zope.deprecation
+BuildRequires: python-module-zope.event
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
@@ -47,6 +52,10 @@ BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.security
 BuildRequires: python3-module-zope.security-tests
+BuildRequires: python3-module-zope.deferredimport
+BuildRequires: python3-module-zope.hookable
+BuildRequires: python3-module-zope.deprecation
+BuildRequires: python3-module-zope.event
 %endif
 
 %py_requires zope.browser
@@ -99,6 +108,7 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 rm -rf ../python3
 cp -a . ../python3
@@ -156,6 +166,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.3.2-alt2
+- Tests fixed
+
 * Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 1:4.3.2-alt1%ubt
 - 4.2.1 -> 4.3.2
 
