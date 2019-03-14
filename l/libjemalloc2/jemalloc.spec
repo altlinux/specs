@@ -3,7 +3,7 @@
 %define sorev 2
 Name: libjemalloc2
 Version: 5.1.0
-Release: alt3
+Release: alt4
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -31,6 +31,15 @@ active use, including:
    operating systems into this version of jemalloc, but it is probable
    that the stand-alone jemalloc library's platform support will
     broaden over time.
+
+%package -n libjemalloc-tools
+Summary: Shell wrapper  for preloading %title
+Group: System/Libraries
+License: BSD
+Requires: %name = %EVR
+
+%description -n libjemalloc-tools
+Starting up wrapper for use %title.
 
 %package -n libjemalloc-devel
 Summary: Development files, debugging and profiling version of %title
@@ -84,6 +93,8 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %doc COPYING README TUNING* VERSION
 %_libdir/libjemalloc.so.%sorev
 %_libdir/libjemalloc.so.%sorev.0
+
+%files -n libjemalloc-tools
 %_bindir/jemalloc.sh
 
 %files -n libjemalloc-devel
@@ -100,6 +111,10 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 5.1.0-alt4
+- shell wrapper with LD_PRELOAD moved to package libjemalloc-tools to avoid files
+  conflict with previouis libjemalloc build
+
 * Sun Aug 26 2018 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt3
 - fix soname, fix libname for libjemalloc with prof and stats (ALT bug 31642)
 - fix duplicated files
