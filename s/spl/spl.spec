@@ -1,6 +1,6 @@
 Name: spl
-Version: 0.7.12
-Release: alt2
+Version: 0.7.13
+Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: CDDL
 Group: System/Kernel and hardware
@@ -56,6 +56,9 @@ xz %kernel_srcdir/%name-%version.tar
 %_usrsrc/kernel
 
 %changelog
+* Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 0.7.13-alt1
+- 0.7.13
+
 * Tue Dec 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt2
 - did the installaton of the original source tarbool for
   kernel-source-spl package (closes: #35719)

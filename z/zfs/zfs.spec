@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.7.12
-Release: alt3
+Version: 0.7.13
+Release: alt1
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -12,7 +12,7 @@ Conflicts: fuse-zfs
 Requires: spl-utils = %version
 
 Source0: %name-%version.tar
-Patch1: zfs-0.7.9-import-by-disk-id.patch
+Patch1: zfs-0.7.13-import-by-disk-id.patch
 Patch2: zfs-0.7.12-alt-fix-replication-overflow.patch
 
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
@@ -183,6 +183,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 0.7.13-alt1
+- 0.7.13
+
 * Thu Dec 06 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt3
 - fixed buffer overflow during zfs replication (thanks shrek@) (closes: #35730)
 
