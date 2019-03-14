@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ rpm-build-golang
 %define _localstatedir %{_var}
 Name:           arduino-builder
 Version:        1.3.25
-Release:        alt1_1
+Release:        alt2_1
 Summary:        A command line tool for compiling Arduino sketches
 License:        GPLv2+
 URL:            http://www.arduino.cc
@@ -22,10 +22,12 @@ BuildRequires:  gcc-common
 BuildRequires:  golang >= 1.4.3
 BuildRequires:  git
 
-BuildRequires:  golang(github.com/go-errors/errors)
+ExcludeArch: aarch64
+
+# BuildRequires:  golang(github.com/go-errors/errors)
 
 # Needed for unit tests
-BuildRequires:  golang(github.com/stretchr/testify)
+# BuildRequires:  golang(github.com/stretchr/testify)
 Source44: import.info
 # These are not available, check will not be enabled
 #BuildRequires:  golang(github.com/jstemmer/go-junit-report)
@@ -52,7 +54,7 @@ providing gcc with all the needed -I params.
 mkdir -p ./_build
 ln -s $(pwd)/src ./_build/
 
-export GOPATH=$(pwd)/_build:%{go_path}
+export GOPATH="$(pwd)/_build:%{go_path}:$(pwd)/vendor"
 
 # Fix missing build-id
 function gobuild { go build -a -ldflags "-B 0x$(head -c20 /dev/urandom|od -An -tx1|tr -d ' \n')" -v -x "$@"; }
@@ -81,6 +83,10 @@ install -p src/arduino.cc/builder/hardware/*.txt %{buildroot}%{_datadir}/arduino
 %{_datadir}/arduino/hardware
 
 %changelog
+* Thu Mar 14 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.25-alt2_1
+- Use vendorized BuildRequires
+- Add ExcludeArch aarch64
+
 * Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.25-alt1_1
 - new version
 
