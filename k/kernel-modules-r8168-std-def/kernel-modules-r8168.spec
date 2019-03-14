@@ -1,9 +1,9 @@
 %define module_name	r8168
-%define module_release	alt1.k
+%define module_release	alt2.k
 %define module_version	8.045.08
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 
 %setup_kernel_module %flavour
 
@@ -19,6 +19,7 @@ Group: System/Kernel and hardware
 
 URL: http://www.realtek.com/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+Patch: r8168-kernel-4.15.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %karch
@@ -47,6 +48,7 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
