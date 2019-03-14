@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.i18n
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
-Version: 4.3.1
-Release: alt1%ubt
+Version: 4.6.2
+Release: alt1
 
 Summary: Zope Internationalization Support
 License: ZPLv2.1
@@ -155,6 +155,9 @@ popd
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt1
+- Version updated to 4.6.2
+
 * Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 4.3.1-alt1%ubt
 - 4.1.0 -> 4.3.1
 
