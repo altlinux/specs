@@ -1,3 +1,12 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%def_disable permhelper
+%_K5if_ver_gteq %ubt_id M90
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 
 %define mp3gain_ver %{get_version mp3gain}
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
@@ -9,8 +18,8 @@
 %define tname soundkonverter
 Name: kde5-soundkonverter
 Version: 3.0.1
-Release: alt2%ubt
-%K5init
+Release: alt3
+%K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: A frontend to various audio converters
 License: GPLv2
@@ -26,6 +35,10 @@ Patch2: alt-lib-sover.patch
 Patch3: alt-mp2-range.patch
 Patch4: alt-load-translations.patch
 
+%if_enabled obsolete_kde4
+Provides: kde4-soundkonverter = %version-%release
+Obsoletes: kde4-soundkonverter < %version-%release
+%endif
 %if %is_ffmpeg
 Requires: /usr/bin/ffmpeg
 %else
@@ -110,6 +123,9 @@ popd
 %_K5lib/libsoundkonvertercore.so.*
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt3
+- obsolete kde4-sounkonverter
+
 * Fri Oct 27 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt2%ubt
 - fix mp2 bitrate range (ALT#34073)
 - fix load translations
