@@ -1,5 +1,5 @@
 Name: xmedcon
-Version: 0.15.0
+Version: 0.16.1
 Release: alt1
 
 Summary: A medical image conversion utility and library
@@ -69,6 +69,9 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_datadir/aclocal/*
 
 %changelog
+* Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
+- 0.16.1
+
 * Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 
