@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 8.3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20190223
+%define snapshot 20190311
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -145,6 +145,7 @@ Patch108: gcc-no-add-needed.patch
 Patch109: gcc-foffload-default.patch
 Patch110: gcc-Wno-format-security.patch
 Patch111: gcc-rh1512529-aarch64.patch
+Patch112: gcc-pr89629.patch
 
 # Debian patches.
 Patch201: gcc-textdomain.diff
@@ -984,6 +985,7 @@ version %version.
 %patch109 -p0
 %patch110 -p0
 %patch111 -p0
+%patch112 -p0
 
 # Debian patches.
 %patch201 -p2
@@ -2055,6 +2057,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Mar 11 2019 Dmitry V. Levin <ldv@altlinux.org> 8.3.1-alt2
+- Updated to redhat/gcc-8-branch r269592 (Fedora gcc-8.3.1-3).
+
 * Sat Feb 23 2019 Dmitry V. Levin <ldv@altlinux.org> 8.3.1-alt1
 - Updated to redhat/gcc-8-branch r269162 (Fedora gcc-8.3.1-2).
 
