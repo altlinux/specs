@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -10,8 +10,8 @@ Group: System/Servers
 %define _chrootdir %_localstatedir/%name
 %define with_python 1
 
-PreReq: chrooted
-PreReq: lib%name = %version-%release
+Requires(pre): chrooted
+Requires(pre): lib%name = %version-%release
 
 Provides: %name-chroot(%_chrootdir)
 
@@ -194,6 +194,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Thu Mar 14 2019 Alexei Takaseev <taf@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Thu Feb 07 2019 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
