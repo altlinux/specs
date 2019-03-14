@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: fsextender
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 Summary: Extend filesystems with underliing layers: partitions, lvm on mbr and gpt disks
 License: MIT
@@ -30,7 +30,7 @@ Group: System/Configuration/Hardware
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: golang golang-github-rekby-gpt-devel golang-github-rekby-mbr-devel  golang-github-rekby-pflag-devel
+BuildRequires: golang
 
 %description
 Extend filesystem to max size with underliing layers. It can extend:
@@ -86,5 +86,9 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Fri Mar 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.5-alt1
+- new version 0.1.5
+- use vendorized BuildRequires
+
 * Sun Jan  3 2016 Terechkov Evgenii <evg@altlinux.org> 0.1.4-alt1
 - Initial build for ALT Linux Sisyphus
