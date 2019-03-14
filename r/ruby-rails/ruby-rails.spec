@@ -1,7 +1,7 @@
 %define        pkgname rails
 
 Name:          ruby-%pkgname
-Version:       5.2.2
+Version:       5.2.2.1
 Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
@@ -16,7 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
-Ruby on Rails (metapackage).
+Ruby on Rails metapackage gem.
 
 %package       doc
 Summary:       Documentation files for %name
@@ -304,6 +304,10 @@ BuildArch:     noarch
 
 
 %changelog
+* Thu Mar 14 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2.1-alt1
+- Bump to 5.2.2.1;
+- fix CVE-2019-5418, CVE-2019-5420.
+
 * Sat Mar 09 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2-alt1
 - Bump to 5.2.2;
 - Use Ruby Policy 2.0.
