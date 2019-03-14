@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: lib%{_name}
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -124,6 +124,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Thu Mar 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
