@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt193
+%define pkg_rel alt194
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -39,7 +39,7 @@
 %endif
 %def_enable kernelsource
 %ifarch %ix86
-%def_enable package_egl_wayland
+%def_disable package_egl_wayland
 %else
 %def_disable package_egl_wayland
 %endif
@@ -356,6 +356,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 390.87-alt194
+- don't package libnvidia-egl-wayland
+
 * Fri Feb 15 2019 Sergey V Turchin <zerg@altlinux.org> 390.87-alt193
 - add fix against kernel 4.20
 

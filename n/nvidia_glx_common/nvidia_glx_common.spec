@@ -18,9 +18,9 @@
 # version-release
 
 %define nv_version 410
-%define nv_release 93
+%define nv_release 104
 %define nv_minor %nil
-%define pkg_rel alt212
+%define pkg_rel alt213
 %define set_gl_nvidia_ver 1.1.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -310,6 +310,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.104-alt213
+- new version
+
 * Tue Feb 26 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt212
 - fix detect intel videocards
 
