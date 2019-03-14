@@ -1,9 +1,6 @@
-%define soname 10
-%define sover 1.0.1
-
 Name: vmware-view-userinstall
 Version: 4.10.0
-Release: alt1
+Release: alt3
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -11,10 +8,12 @@ Group: System/Configuration/Other
 
 Url: http://altlinux.org/vmware-view
 Source: %name-%version.tar
-ExclusiveArch: %ix86
 
-Requires: vmware-view-preinstall >= 3.4.0-alt3
+ExclusiveArch: %ix86 x86_64
+
+Requires: vmware-view-preinstall >= 4.10.0-alt3
 Requires: userinstall-helper >= 0.2
+Requires: python-modules-sqlite3
 
 %define uinstdir %_cachedir/userinstall
 
@@ -26,10 +25,10 @@ VMware-Horizon-Client-%version bundle on this system.
 %setup
 
 %install
-install -pDm644 vmware-view-client.desktop \
-	%buildroot%_desktopdir/vmware-view-client.desktop
-install -pDm644 vmware-view-client-vmware.png \
-	%buildroot%_pixmapsdir/vmware-view-client-vmware.png
+install -pDm644 vmware-view.desktop \
+	%buildroot%_desktopdir/vmware-view.desktop
+install -pDm644 vmware-view.png \
+	%buildroot%_pixmapsdir/vmware-view.png
 install -pDm755 vmware-view.sh %buildroot%_bindir/vmware-view
 
 mkdir -p %buildroot%uinstdir
@@ -39,11 +38,19 @@ cp -a checksums %buildroot%uinstdir/goodsums
 # this one will clobber itself during real vmware-view deployment
 # that shouldn't get clobbered again by this package upgrade
 %config(noreplace) %_bindir/vmware-view
-%_desktopdir/vmware-view-client.desktop
-%_pixmapsdir/vmware-view-client-vmware.png
+%_desktopdir/vmware-view.desktop
+%_pixmapsdir/vmware-view.png
 %uinstdir/goodsums/*
 
 %changelog
+* Thu Mar 14 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt3
+- Fix URL for Zenity dialog.
+- Use latest desktop file and icon from VMware Horizon Client 4.10.0.
+
+* Tue Mar 12 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt2
+- Support both clients for i586 and x86_64.
+- Add python-modules-sqlite3 to requirements.
+
 * Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
 - support for VMware-Horizon-Client-4.10.0-11053294.x86.bundle
 

@@ -1,32 +1,36 @@
-%define soname 10
-%define sover 1.0.1
-
 Name: vmware-view-preinstall
 Version: 4.10.0
-Release: alt1
+Release: alt3
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
 Group: System/Configuration/Other
 
 Url: http://altlinux.org/vmware-view
-ExclusiveArch: %ix86
+ExclusiveArch: %ix86 x86_64
 
-BuildRequires: libXScrnSaver
+Requires: libXScrnSaver
+Requires: libXtst
+Requires: libgst-plugins
+Requires: libgtk+2
+Requires: libgtkmm2
+Requires: libpng12
 Requires: libudev0
+Requires: libusb
 
 %description
 Install this package if you plan to deploy
 VMware-Horizon-Client-%version bundle on this system.
 
-%install
-mkdir -p %buildroot%_libdir/%name
-ln -s /usr/lib/libXss.so.1 %buildroot%_libdir/%name/
-
 %files
-%_libdir/%name
 
 %changelog
+* Thu Mar 14 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt3
+- Update requirements from VMware Horizon Client 4.10.0.
+
+* Tue Mar 12 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt2
+- Build for i586 and x86_64.
+
 * Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
 - New version of VMware-Horizon-Client uses bundled libssl and libcrypto.
 
