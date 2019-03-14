@@ -3,10 +3,29 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
-License: GPLv2
+# grep -Fhwr SPDX-License-Identifier: /usr/include/linux-default/include |sort |uniq -c |sort -n
+#   1 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) AND MIT) */
+#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) */
+#   1 /* SPDX-License-Identifier: BSD-3-Clause */
+#   1 /* SPDX-License-Identifier: GPL-2.0+ */
+#   2 /* SPDX-License-Identifier: (GPL-2.0 OR CDDL-1.0) */
+#   2 /* SPDX-License-Identifier: MIT */
+#   3 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
+#   3 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
+#   4 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
+#   4 /* SPDX-License-Identifier: LGPL-2.0+ WITH Linux-syscall-note */
+#   5 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
+#   9 /* SPDX-License-Identifier: GPL-2.0 */
+#  14 /* SPDX-License-Identifier: GPL-1.0+ WITH Linux-syscall-note */
+#  15 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
+#  16 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+#  18 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB) */
+# 115 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+# 587 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: http://www.kernel.org/
 
@@ -33,6 +52,7 @@ Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch18: 0018-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch19: 0019-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
 Patch20: 0020-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
+Patch21: 0021-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -172,6 +192,7 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 
 # No exceptions, please!
 sed -i 's/^no-export-headers/#&/' include/uapi/linux/Kbuild
@@ -309,6 +330,11 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Thu Mar 14 2019 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt2
+- Fixed linux/sysctl.h "Obsolete types detected" warning
+  reported by confused glibc misc/check-installed-headers-c test.
+- Updated license information.
+
 * Sun Mar 03 2019 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt1
 - v4.20 -> v5.0.
 
