@@ -1,8 +1,8 @@
-%def_with translation
+%def_disable translation
 
 Name: nvidia-settings
-Version: 410.73
-Release: alt3
+Version: 410.104
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -60,7 +60,7 @@ Development files for %name
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%if_with translation
+%if_enabled translation
 mkdir -p po/msg
 %patch100 -p2
 install -p -m644 %SOURCE100 src/gtk+-2.x/gettext.h
@@ -126,6 +126,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.104-alt1
+- new version
+
 * Tue Dec 11 2018 Ivan Razzhivin <underwit@altlinux.org> 410.73-alt3
 - add the ability to translate the GUI
 

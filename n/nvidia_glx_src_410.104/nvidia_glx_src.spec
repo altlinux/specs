@@ -22,7 +22,7 @@
 
 # version-release
 %define nv_version 410
-%define nv_release 93
+%define nv_release 104
 %define nv_minor %nil
 %define pkg_rel alt195
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
@@ -43,7 +43,7 @@
 %else
 %def_enable kernelsource
 %define subd ./
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %endif
 #
 %def_disable package_wfb
@@ -352,8 +352,8 @@ fi
 %endif
 
 %changelog
-* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt195
-- don't package libnvidia-egl-wayland
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.104-alt195
+- new version
 
 * Thu Feb 14 2019 Sergey V Turchin <zerg@altlinux.org> 410.93-alt194
 - exclude 10DE:1C02 from .xinf list
