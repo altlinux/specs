@@ -2,7 +2,7 @@
 
 Name: spice-html5
 Version: 0.1.7
-Release: alt2.gitf9f700e
+Release: alt3.gitf9f700e
 Summary: Pure Javascript SPICE client
 Group: Networking/Remote access
 
@@ -13,6 +13,8 @@ Patch0: %name-gitf9f700e.patch
 Patch1: Spice-devel-Add-Send-Ctrl-Alt-Delete-button-to-spice_auto.html.patch
 
 BuildArch: noarch
+# this path is used for symlinking into an actual project
+Provides: %_datadir/spice-html5
 
 %description
 %name is a Javascript SPICE client.  This includes a simple HTML
@@ -34,6 +36,9 @@ file for Apache, but should work with any web server.
 %doc COPYING COPYING.LESSER README TODO apache.conf.sample
 
 %changelog
+* Wed Apr 17 2019 Stanislav Levin <slev@altlinux.org> 0.1.7-alt3.gitf9f700e
+- Fixed Provides.
+
 * Mon Nov 12 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt2.gitf9f700e
 - Updated to a latest git snapshot for the FleetCommander.
 
