@@ -1,5 +1,5 @@
 Name:		burp
-Version:	2.3.0
+Version:	2.3.2
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -9,6 +9,7 @@ Url:		https://burp.grke.org/
 
 # https://github.com/grke/burp.git master
 Source:		%{name}-%{version}.tar
+Patch:		%{name}-%{version}-%{release}.patch
 
 BuildRequires:  libtool
 BuildRequires:  librsync-devel
@@ -30,6 +31,7 @@ amount of space that is used by each backup.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -75,6 +77,9 @@ chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 %preun_service burp-server
 
 %changelog
+* Fri Mar 15 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.2-alt1
+- new version 2.3.2
+
 * Wed Feb 20 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.0-alt1
 - Update to 2.3.0-12-g3d093f25
 
