@@ -1,7 +1,7 @@
 %define module octave
 Name: rpm-build-%module
 Summary: %module packaging macros
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -23,5 +23,8 @@ install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1
+- fix in %%octave_build
+
 * Thu Mar 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1
 - initial build for ALT Linux Sisyphus
