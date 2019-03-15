@@ -1,6 +1,6 @@
 Name: fuse-common
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 BuildArch: noarch
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Conflicts: fuse <= 2.9.7-alt1
+Conflicts: fuse < 2.9.9-alt1 fuse3 < 3.4.1-alt2
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -27,18 +27,28 @@ as well as for using them.
 %install
 install -pD fusermount-control %buildroot%_sysconfdir/control.d/facilities/fusermount
 install -D -m644 udev.rules    %buildroot%_udevrulesdir/60-fuse.rules
-install -pD fuserumount        %buildroot%_bindir/fuserumount
 
 %pre
 %_sbindir/groupadd -r -f fuse
 %_sbindir/groupadd -r -f cuse
+if [ $1 -ge 2 ]; then
+    %_sbindir/control-dump fusermount
+fi
+
+%post
+if [ $1 -ge 2 ]; then
+    %_sbindir/control-restore fusermount
+fi
 
 %files
 %_sysconfdir/control.d/facilities/fusermount
 %_udevrulesdir/*
-%attr(0755,root,root) %_bindir/fuserumount
 
 %changelog
+* Sun Feb 03 2019 Rustem Bapin <rbapin@altlinux.org> 1.1.0-alt1
+- fuserumount moved back to fuse package
+- add support control both fuse and fuse3
+
 * Thu Oct 25 2018 Denis Smirnov <mithraen@altlinux.ru> 1.0.0-alt2
 - remove unneeded %%post (ALT #33754)
 
