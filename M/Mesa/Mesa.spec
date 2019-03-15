@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.3.4
+Version: 19.0.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -30,6 +30,7 @@ Mesa is an OpenGL compatible 3D graphics library
 %package -n libGLX-mesa
 Summary: OpenGL 1.3 compatible 3D graphics library for X Window server
 Group: System/Libraries
+Conflicts: libGL < 4:18.2.2-alt1
 
 %description -n libGLX-mesa
 Mesa is an OpenGL compatible 3D graphics library
@@ -163,17 +164,18 @@ ln -s %_bindir/ld.lld $(pwd)/bin/ld
 export PATH=$(pwd)/bin:$PATH
 %autoreconf
 %configure \
+	--enable-autotools \
 %ifarch %ix86 x86_64
 	--with-dri-drivers=r200,radeon,i915,i965,nouveau \
 	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,virgl \
 %endif
 %ifarch %arm
 	--with-dri-drivers=no \
-	--with-gallium-drivers=swrast,vc4,imx,etnaviv,freedreno \
+	--with-gallium-drivers=swrast,vc4,etnaviv,freedreno \
 %endif
 %ifarch aarch64
 	--with-dri-drivers=r200,radeon,nouveau \
-	--with-gallium-drivers=swrast,r300,r600,nouveau,virgl,vc4,imx,etnaviv,freedreno \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,virgl,vc4,etnaviv,freedreno \
 %endif
 	--enable-vdpau \
 	--enable-xvmc \
@@ -367,13 +369,15 @@ d=%buildroot%_libdir
 %ifarch %arm aarch64
 %files -n xorg-dri-armsoc
 %_libdir/X11/modules/dri/etnaviv_dri.so
-%_libdir/X11/modules/dri/imx-drm_dri.so
 %_libdir/X11/modules/dri/kgsl_dri.so
 %_libdir/X11/modules/dri/msm_dri.so
 %_libdir/X11/modules/dri/vc4_dri.so
 %endif
 
 %changelog
+* Thu Mar 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.0.0-alt1
+- 19.0.0
+
 * Tue Feb 19 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:18.3.4-alt1
 - 18.3.4
 
