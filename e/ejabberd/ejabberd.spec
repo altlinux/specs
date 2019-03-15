@@ -13,7 +13,7 @@
 
 Name: ejabberd
 Version: 19.02
-Release: alt2
+Release: alt3
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
@@ -209,6 +209,10 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Fri Mar 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 19.02-alt3
+- ejabberd.service: service type was changed to notify again (was changed by
+  mistake in the previous release).
+
 * Fri Mar 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 19.02-alt2
 - Fixed and refactored SysVinit script and systemd service files.
 - Added reload command for ejabberd service.
