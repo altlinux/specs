@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    18.09.1
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -39,7 +39,7 @@ Patch1: %name-18.09.1-bash-completion.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
-BuildRequires: golang-github-cpuguy83-go-md2man
+BuildRequires: go-md2man
 Requires: tar xz
 Provides: docker-io = %version-%release
 Obsoletes: docker-io <= 17.05.0
@@ -177,6 +177,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Fri Mar 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 18.09.1-alt2
+- Change golang-github-cpuguy83-go-md2man to go-md2man in BuildRequires
+
 * Tue Jan 29 2019 Vladimir Didenko <cow@altlinux.org> 18.09.1-alt1
 - New version
 
