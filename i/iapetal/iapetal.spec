@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           iapetal
-Version:        1.3
-Release:        alt1_5
+Version:        1.4
+Release:        alt1_10
 Summary:        A 2D space rescue game
 
-Group:          Games/Other
 License:        GPLv3+
 URL:            http://iapetal.sourceforge.net
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -57,6 +57,9 @@ desktop-file-install \
 %{_datadir}/appdata/iapetal.appdata.xml
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_10
+- update to new release by fcimport
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_5
 - NMU (for oddity@): new version by fcimport
 
