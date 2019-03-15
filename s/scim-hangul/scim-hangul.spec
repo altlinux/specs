@@ -1,11 +1,12 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(Shell.pm)
+BuildRequires: perl(Shell.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		scim-hangul
 Version:	0.3.2
-Release:	alt1.2.qa1_24
+Release:	alt2_28
 
 License:	GPLv3
 URL:		http://www.scim-im.org/
@@ -15,8 +16,8 @@ Patch0:		scim-hangul-0.3.2.gcc43.patch
 Patch1:         scim-hangul-0.3.2.gcc47.patch
 
 Summary:	Hangul Input Method Engine for SCIM
-Group:		System/Libraries
 Requires:	scim
+BuildRequires:  gcc-c++
 %ifarch aarch64
 BuildRequires:	autoconf
 %endif
@@ -57,6 +58,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_28
+- fc update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1.2.qa1_24
 - NMU (for oddity@): new version by fcimport
 
