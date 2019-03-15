@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libbotan
-Version: 2.7.0
+Version: 2.9.0
 Release: alt1
 
 Summary: A C++ Crypto Library
@@ -13,11 +13,14 @@ Url: http://botan.randombit.net
 # https://github.com/randombit/botan.git
 Source: %name-%version.tar
 
+Patch1: botan-fedora-remove-rpath-gcc.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzlib-devel gcc-c++ libssl-devel zlib-devel
 BuildRequires: python2.7(json)
 BuildRequires: liblzma-devel
 BuildRequires: boost-complete
+BuildRequires: %_bindir/sphinx-build %_bindir/rst2man
 
 %description
 Botan is a C++ library that provides support for many common
@@ -60,24 +63,37 @@ Python extensions for botan
 
 %prep
 %setup
+%patch1 -p0
 
 %build
-./configure.py --prefix=%prefix \
+export CXXFLAGS="${CXXFLAGS:-%optflags}"
+
+./configure.py \
+	--prefix=%prefix \
 	--libdir=%_libdir \
 	--docdir=%_defaultdocdir \
 	--includedir=%_includedir \
 	--disable-static-library \
+	--with-debug-info \
 	--with-bzip2 \
 	--with-lzma \
 	--with-zlib \
 	--with-boost \
 	--with-openssl \
-	--with-python-version=%_python_version,%_python3_version
+	--with-python-version=%_python_version,%_python3_version \
+	--with-documentation \
+	--with-sphinx \
+	%nil
 
 %make_build
 
 %install
 %makeinstall_std
+
+rm -rf %buildroot%_defaultdocdir/botan-%version/manual/{.doctrees,.buildinfo}
+
+%check
+LD_LIBRARY_PATH=. ./botan-test
 
 %files
 %_libdir/*.so.*
@@ -87,9 +103,9 @@ Python extensions for botan
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_man1dir/botan.1*
 
 %files doc
-%doc readme.rst
 %doc %_defaultdocdir/botan-%version
 
 %files -n python-module-botan
@@ -100,6 +116,9 @@ Python extensions for botan
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.0-alt1
+- Updated to upstream version 2.9.0.
+
 * Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.0-alt1
 - Updated to upstream version 2.7.0.
 
