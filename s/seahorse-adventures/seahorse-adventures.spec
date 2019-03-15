@@ -1,24 +1,23 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           seahorse-adventures
-Version:        1.0
-Release:        alt4_19
+Version:        1.1
+Release:        alt1_1
 Summary:        Help barbie the seahorse float on bubbles to the moon
-Group:          Games/Other
 License:        GPL+
 URL:            http://www.imitationpickles.org/barbie/
-Source0:        http://www.imitationpickles.org/barbie/files/barbie-1.0.tar.gz
+Source0:        http://www.imitationpickles.org/barbie/files/barbie-%{version}.tgz
 Source1:        %{name}.desktop
-Source2:        Seahorse-Adventures-license.eml
+Source2:        %{name}.appdata.xml
 Patch0:         seahorse-adventures-1.0-symlink.patch
 Patch1:         seahorse-adventures-1.0-build.patch
-BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-file-utils libappstream-glib
 BuildArch:      noarch
-Requires:       icon-theme-hicolor pygame fonts-ttf-dejavu
+Requires:       icon-theme-hicolor python-module-pygame fonts-ttf-dejavu
 Source44: import.info
 
 %description
@@ -29,9 +28,10 @@ soundtrack, graphics, and 15 levels!
 
 %prep
 %setup -q -n barbie-%{version}
-%patch0 -p1 -b .ln
+%patch0 -p1
 %patch1 -p1
-cp %{SOURCE2} .
+sed -i 's:/usr/bin/python:/usr/bin/python2:' leveledit.py tileedit.py
+sed -i 's:/usr/bin/env python:/usr/bin/python2:' run_game.py
 rm data/themes/*/Vera.ttf
 
 
@@ -54,30 +54,36 @@ ln -s ../share/%{name}/run_game.py $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
-install -p -m 644 data/images/player/right.png \
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+install -p -m 644 icon32.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+install -p -m 644 icon64.png \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+install -p -m 644 icon128.png \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
-%doc *.txt Seahorse-Adventures-license.eml
+%doc CHANGES.txt LEVELS.txt NOTES.txt README.txt TODO.txt
+%doc --no-dereference LICENSE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%if 0%{?fedora} && 0%{?fedora} < 19
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19
 - update to new release by fcimport
 
