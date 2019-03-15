@@ -1,6 +1,6 @@
 Name: tinycdb
 Version: 0.78
-Release: alt1
+Release: alt2
 
 Summary: A package for maintenance of constant databases
 License: GPLv2+
@@ -12,6 +12,7 @@ Source: tinycdb-%version.tar
 
 Patch1: tinycdb-alt-makefile.patch
 Patch2: tinycdb-alt-warnings.patch
+Patch3: tinycdb-alt-portable-tests.patch
 
 Requires: libcdb = %version-%release
 
@@ -75,6 +76,7 @@ This package contains development static library.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %def_enable Werror
@@ -126,6 +128,9 @@ make %{?_enable_static:test} test-shared
 %endif
 
 %changelog
+* Fri Mar 15 2019 Ivan A. Melnikov <iv@altlinux.org> 0.78-alt2
+- Fix tests on mips*.
+
 * Thu Nov 13 2014 Dmitry V. Levin <ldv@altlinux.org> 0.78-alt1
 - Updated to 0.78.
 
