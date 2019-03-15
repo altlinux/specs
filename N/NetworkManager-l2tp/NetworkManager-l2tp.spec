@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.10
+Version: 1.2.12
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -26,7 +26,6 @@ Requires: ppp = %ppp_version
 
 Requires: strongswan
 
-BuildRequires: libgnome-keyring-devel
 BuildRequires: ppp-devel
 BuildRequires: rpm-build-licenses
 BuildRequires: libnm-devel >= %nm_version
@@ -48,7 +47,6 @@ with NetworkManager.
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: gnome-keyring
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-l2tp = %version-%release
 
@@ -104,6 +102,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Mar 15 2019 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt1
+- Don't pull gnome-keyring.
+- Updated to 1.2.12.
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
