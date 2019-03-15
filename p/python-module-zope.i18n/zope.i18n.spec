@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6.2
-Release: alt1
+Release: alt2
 
 Summary: Zope Internationalization Support
 License: ZPLv2.1
@@ -49,6 +49,8 @@ BuildRequires: python3-module-zope.publisher
 %py_requires zope.schema
 %py_requires zope.i18nmessageid
 %py_requires zope.component
+%py_requires zope.deferredimport
+%py_requires zope.hookable
 
 %description
 This package implements several APIs related to internationalization and
@@ -61,6 +63,13 @@ localization.
 %package -n python3-module-%oname
 Summary: Zope Internationalization Support (Python 3)
 Group: Development/Python3
+
+%py3_requires zope.deprecation
+%py3_requires zope.schema
+%py3_requires zope.i18nmessageid
+%py3_requires zope.component
+%py3_requires zope.deferredimport
+%py3_requires zope.hookable
 
 %description -n python3-module-%oname
 This package implements several APIs related to internationalization and
@@ -155,6 +164,9 @@ popd
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Fri Mar 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt2
+- py3 requires fixed
+
 * Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt1
 - Version updated to 4.6.2
 
