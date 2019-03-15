@@ -6,11 +6,14 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel
 %define _localstatedir %{_var}
 Name:           advancecomp
 Version:        2.1
-Release:        alt1_7
+Release:        alt1_10
 Summary:        Recompression utilities for png, mng, zip and gz files
 License:        GPLv3
 URL:            http://www.advancemame.it/
 Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
+
+# CVE-2019-9210 advancecomp: integer overflow in png_compress in pngex.cc
+Patch0:         advancecomp-CVE-2019-9210.patch
 
 BuildRequires:  gcc gcc-c++
 BuildRequires:  tofrodos
@@ -32,6 +35,8 @@ This package contains:
 
 %prep
 %setup -q
+%patch0 -p1 -b .CVE-2019-9210
+
 dos2unix -k doc/*.txt
 
 %build
@@ -52,6 +57,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_10
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_7
 - update to new release by fcimport
 
