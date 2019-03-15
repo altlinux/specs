@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.30.0.31.69df9
+Version: 8.31.0.3.6bd78
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: gnulib >= 0.1.2433.3043e
 BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
@@ -210,6 +210,11 @@ export SHELL VERBOSE
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Fri Mar 15 2019 Dmitry V. Levin <ldv@altlinux.org> 8.31.0.3.6bd78-alt1
+- coreutils: v8.30-31-g69df9e20e -> v8.31-3-g6bd78f27f.
+- gnulib: v0.1-2305-g95c96b6dd -> v0.1-2433-g3043e43a7.
+- Updated translations from translationproject.org.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 8.30.0.31.69df9-alt1
 - coreutils: v8.27-23-gf4570a9 -> v8.30-31-g69df9e20e.
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
