@@ -1,18 +1,21 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      spatialindex
 Version:   1.8.5
-Release:   alt1_7
+Release:   alt1_12
 Summary:   Spatial index library 
-Group:     System/Libraries
 License:   MIT
 URL:       http://libspatialindex.org
 Source0:   http://download.osgeo.org/lib%{name}/%{name}-src-%{version}.tar.bz2
+# https://github.com/libspatialindex/libspatialindex/pull/108
+Patch0001: fix-oob-crash.patch
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:    ctest cmake
 Source44: import.info
 
@@ -23,8 +26,8 @@ disk based storage managers and a robust implementation of an R*-tree,
 an MVR-tree and a TPR-tree.
 
 %package devel
-Summary: Development files for %{name}
 Group: Development/Other
+Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -32,7 +35,8 @@ Development files for %{name}.
 
 
 %prep
-%setup -qn %{name}-src-%{version}
+%setup -q -n %{name}-src-%{version}
+%patch1 -p1
 
 
 %build
@@ -48,6 +52,9 @@ make install DESTDIR=%{buildroot}
 # See changelog 2011-10-11
 
 
+
+
+
 %files 
 %doc AUTHORS ChangeLog COPYING README
 %{_libdir}/lib%{name}*.so.*
@@ -58,6 +65,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.5-alt1_12
+- update to new release by fcimport
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.5-alt1_7
 - new version
 
