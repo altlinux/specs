@@ -7,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Group: Publishing
 Summary: A program for printing sheet music
@@ -19,20 +19,20 @@ Source1: russian-lirycs-test.ly
 
 Requires: ghostscript
 
-BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile-devel
+BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile18-devel
 BuildRequires: help2man libfreetype-devel libpango-devel makeinfo python-devel texlive
 
 %package -n emacs-mode-%name
 Summary: Major mode for editing GNU LilyPond music scores 
 Group: Editors
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n emacs-mode-%name-el
 Summary: The Emacs Lisp sources for bytecode included in emacs-mode-%name
 Group: Development/Other
 BuildArch: noarch
-Requires: emacs-mode-%name = %version-%release
+Requires: emacs-mode-%name = %EVR
 
 %description
 LilyPond is a music typesetter. It produces beautiful sheet music using
@@ -99,6 +99,9 @@ done
 %_emacslispdir/%{name}*.el
 
 %changelog
+* Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt2
+- Rebuilt with guile18 (Closes: #36005)
+
 * Wed Nov 28 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.18.2-alt1
 - rebuilt with guile22
 
