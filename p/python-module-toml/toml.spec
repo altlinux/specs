@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
@@ -14,17 +14,14 @@ Group: Development/Python
 Url: https://pypi.org/project/toml/
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-pytest-cov
-BuildRequires: golang-github-BurntSushi-toml-test
-BuildRequires: pytest
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-pytest-cov
-BuildRequires: pytest3
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -49,6 +46,7 @@ toml file.
 
 %prep
 %setup
+%patch -p1
 rm -rf ../python3
 cp -a . ../python3
 
@@ -67,23 +65,15 @@ popd
 %python_install
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-ln -s %_datadir/toml-test toml-test
-
-# copy nessecary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
-
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-ln -s %_datadir/toml-test toml-test
-# copy nessecary exec deps
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %python_sitelibdir/toml/
@@ -94,6 +84,9 @@ popd
 %python3_sitelibdir/toml-*.egg-info/
 
 %changelog
+* Fri Mar 15 2019 Stanislav Levin <slev@altlinux.org> 0.10.0-alt2
+- Fixed FTBFS.
+
 * Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - Initial build for sisyphus.
 
