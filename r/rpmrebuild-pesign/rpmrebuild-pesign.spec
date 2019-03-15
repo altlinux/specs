@@ -1,9 +1,9 @@
 Name: rpmrebuild-pesign
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Signer for packages containing PE format files
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 BuildArch: noarch
 
@@ -29,6 +29,9 @@ install -pm755 pesign-change-{files,spec}.sh \
 %_libexecdir/rpmrebuild/plugins/pesign*
 
 %changelog
+* Fri Mar 15 2019 Dmitry V. Levin <ldv@altlinux.org> 0.2.2-alt1
+- Sign files in pei-i386 format as well.
+
 * Thu Dec 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.2.1-alt1
 - Fixed a typo in the latest fix.
 
