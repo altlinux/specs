@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libbpg
-Version:	0.9.7
+Version:	0.9.8
 Release:	alt1_1
 Summary:	A library of functions for manipulating BPG image format files
 License:	LGPLv2+ and BSD
@@ -14,7 +14,7 @@ Source0:	http://bellard.org/bpg/%{name}-%{version}.tar.gz
 Patch0:		libbpg-0.9.6-Makefile.patch
 BuildRequires:	ccmake cmake ctest
 BuildRequires:	yasm
-BuildRequires:	libjpeg-devel libturbojpeg-devel
+BuildRequires:	pkgconfig(libjpeg)
 BuildRequires:	libnuma-devel
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(SDL_image)
@@ -55,6 +55,9 @@ main advantages are:
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_1
 - new version
 
