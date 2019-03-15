@@ -1,3 +1,4 @@
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           zzuf
 Version:        0.15
-Release:        alt1_4
+Release:        alt1_10
 Summary:        Transparent application input fuzzer
 
-Group:          Development/Tools
 License:        WTFPL
 URL:            http://sam.zoy.org/zzuf/
 Source0:        http://github.com/zzuf/%{name}/archive/zzuf-%{version}.tar.gz
@@ -17,8 +17,10 @@ Patch0:         %{name}-0.13-optflags.patch
 # AC_TRY_CFLAGS doesn't honor CFLAGS
 # Causes package to produce broken configure results
 Patch1:         %{name}-0.13-Remove-AC_TRY_CFLAGS.patch
-Source44: import.info
+Patch2:		zzuf-0.15-glibc.patch
 
+BuildRequires:  gcc autoconf automake libtool
+Source44: import.info
 %description
 zzuf is a transparent application input fuzzer.  It works by
 intercepting file operations and changing random bits in the program's
@@ -30,10 +32,12 @@ bugs.
 %setup -q
 %patch0 -p0
 %patch1 -p1
+%patch2 -p0
 touch -r aclocal.m4 configure.*
 
 
 %build
+autoreconf -if
 %configure --disable-dependency-tracking --disable-static
 %make_build
 
@@ -46,7 +50,7 @@ rm $RPM_BUILD_ROOT%{_libdir}/zzuf/libzzuf.la
 
 %files
 %doc AUTHORS TODO doc/
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/zzuf
 %{_bindir}/zzat
 %dir %{_libdir}/zzuf/
@@ -57,6 +61,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/zzuf/libzzuf.la
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_10
+- update to new release by fcimport
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_4
 - NMU (for oddity@): new version by fcimport
 
