@@ -1,20 +1,21 @@
+Group: Toys
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl gcc-c++
+BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:	Render a planetary image into an X window
 Name:		xplanet
 Version:	1.3.1
-Release:	alt1_5
+Release:	alt1_10
 
 License:	GPLv2+
-Group:		Toys
 Source:		http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		https://gitweb.gentoo.org/repo/gentoo.git/plain/x11-misc/xplanet/files/xplanet-1.3.1-giflib.patch
 URL:		http://%{name}.sourceforge.net
 
+BuildRequires:	gcc-c++
 BuildRequires:	libexpat-devel
 BuildRequires:	glib2-devel libgio libgio-devel
 BuildRequires:	libXScrnSaver-devel
@@ -59,12 +60,15 @@ ln -sf ../fonts/ttf/gnu-free/FreeMonoBold.ttf \
 
 %files
 %doc AUTHORS ChangeLog NEWS README TODO
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/xplanet
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_10
+- update to new release by fcimport
+
 * Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_5
 - new version by request of oddity@
 
