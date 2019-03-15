@@ -2,14 +2,16 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Cache-Ref
 %define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt4_8
+Release:    alt4_10
 
-Summary:    No summary found
+Summary:    Memory only cache of live references
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
@@ -41,7 +43,7 @@ This collection of classes implements a number of semi related algorithms.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -55,7 +57,11 @@ This collection of classes implements a number of semi related algorithms.
 %doc Changes META.yml LICENSE README META.json
 %perl_vendor_privlib/*
 
+
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4_10
+- update by mgaimport
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4_8
 - update by mgaimport
 
