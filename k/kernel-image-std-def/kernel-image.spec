@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .29
@@ -613,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Mar 15 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.29-alt2
+- added PTRACE_GET_SYSCALL_INFO
+
 * Thu Mar 14 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.29-alt1
 - v4.19.29
 
