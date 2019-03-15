@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.38
-Release: alt1
+Release: alt2
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d
 
@@ -114,6 +114,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Mar 15 2019 Andrey Cherepanov <cas@altlinux.org> 0.38-alt2
+- Do not hide user in lightdm-gtk-greeter because it hides they at all.
+
 * Wed Mar 13 2019 Andrey Cherepanov <cas@altlinux.org> 0.38-alt1
 - Make ldap/krb5 authentication by SSSD instead on nss-ldapd.
 - Use own parser to set values in /etc/krb5.conf.
