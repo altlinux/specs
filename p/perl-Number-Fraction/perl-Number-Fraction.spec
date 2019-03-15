@@ -11,9 +11,9 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_3
 
-Summary:    No summary found
+Summary:    Perl extension to model fractions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
@@ -54,7 +54,11 @@ If you use the module in your program in the usual way
 %doc Changes META.json META.yml  README
 %perl_vendor_privlib/*
 
+
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_3
+- update by mgaimport
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_1
 - update by mgaimport
 
