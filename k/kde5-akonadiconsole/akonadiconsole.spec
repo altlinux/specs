@@ -4,7 +4,7 @@
 %define libakonadiconsole libakonadiconsole%sover
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -76,6 +76,9 @@ desktop-file-install \
 %_K5lib/libakonadiconsole.so.*
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
