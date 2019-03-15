@@ -1,18 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: Communications
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           aldo
-Version:        0.7.6
-Release:        alt1_17
+Version:        0.7.7
+Release:        alt1_1
 Summary:        A morse tutor
 
-Group:          Communications
 License:        GPLv2+
 URL:            http://aldo.nongnu.org/
+
 Source0:        http://savannah.nongnu.org/download/aldo/%{name}-%{version}.tar.bz2
 
+BuildRequires:  gcc-c++
 BuildRequires:  libao-devel
 Source44: import.info
 
@@ -32,22 +31,27 @@ four type of training methods:
 %setup -q
 
 
+
 %build
 %configure
 %make_build
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 
 %files
-%doc AUTHORS ChangeLog COPYING README THANKS
+%doc AUTHORS ChangeLog README THANKS
+%doc --no-dereference COPYING
 %{_bindir}/*
 %{_mandir}/man?/*
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.7-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_17
 - update to new release by fcimport
 
