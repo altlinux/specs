@@ -9,12 +9,12 @@ BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.7.3
-Release:	alt1_7
+Version:	1.8.1
+Release:	alt1_1
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
-BuildRequires:	intltool gettext gettext-tools
+BuildRequires:	gettext gettext-tools
 BuildRequires:	libtool automake autoconf
 BuildRequires:	libgio >= 2.32.0, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	libnotify-devel libnotify-gir-devel
@@ -31,8 +31,6 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
-## https://bugzilla.redhat.com/show_bug.cgi?id=1533079
-Patch4:		%{name}-fix-unbound-var.patch
 
 Summary:	Delivery framework for general Input Method configuration
 Requires:	xinit >= 1.0.2
@@ -205,7 +203,6 @@ This package contains a module to get this working on Cinnamon.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 autoreconf -f
@@ -251,6 +248,17 @@ EOF
 ## Disable it because it requires DBus session
 # make check
 
+%post
+systemctl reload dbus.service 2>&1 || :
+
+%postun
+if [ "$1" = 0 ]; then
+	:
+	systemctl reload dbus.service 2>&1 || :
+fi
+
+
+
 %files	-f %{name}.lang
 %_altdir/xinputrc_imsettings
 %_altdir/xinputrc_imsettings
@@ -277,7 +285,7 @@ EOF
 %files	libs
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
-%{_libdir}/libimsettings.so.*
+%{_libdir}/libimsettings.so.5*
 
 %files	devel
 %doc --no-dereference COPYING
@@ -333,6 +341,9 @@ EOF
 
 %endif
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_7
 - merged git fixes to hook, sync with fc
 
