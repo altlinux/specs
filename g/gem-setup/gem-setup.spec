@@ -1,7 +1,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.1
+Version:       5.999.2
 Release:       alt1
 
 Summary:       Ruby's Classic Site Installer
@@ -43,30 +43,30 @@ Documentation files for %name.
 %prep
 %setup
 %patch -p1
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
-mv .gemspec %pkgname.gemspec
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
 
 %check
-%ruby_test
+%gem_test
 
 %files
-%doc README.rdoc HISTORY.rdoc MANIFEST
+%doc README* HISTORY* MANIFEST
 %_bindir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Mar 14 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.2-alt1
+- Bump to 5.999.2
+- Use Ruby Policy 2.0
+
 * Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.1-alt1
 - Bump to 5.999.1
 
