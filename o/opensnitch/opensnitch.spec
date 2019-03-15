@@ -3,7 +3,7 @@
 
 Name: opensnitch
 Version: 1.0.0
-Release: alt1.b.gitf71d8ce%ubt
+Release: alt2.b.git5c8f710
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
 License: GPLv3
 Group: Networking/Other
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 
 ExclusiveArch: %go_arches
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3
@@ -28,15 +27,6 @@ BuildRequires: python3(pyinotify)
 BuildRequires: python3(unicode_slugify)
 BuildRequires: python3(PyQt5)
 BuildRequires: python3(configparser)
-BuildRequires: golang(github.com/golang/protobuf)
-BuildRequires: golang(github.com/fsnotify/fsnotify)
-BuildRequires: golang(github.com/google/gopacket)
-BuildRequires: golang(google.golang.org/grpc)
-BuildRequires: golang(github.com/evilsocket/ftrace)
-BuildRequires: golang(golang.org/x/net)
-BuildRequires: golang(golang.org/x/sys)
-BuildRequires: golang(golang.org/x/text)
-BuildRequires: golang(google.golang.org/genproto)
 BuildRequires: libnetfilter_queue-devel
 
 %description
@@ -123,5 +113,8 @@ mkdir -p %buildroot%_pseudouser_home
 %python3_sitelibdir_noarch/*
 
 %changelog
-* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1.b.gitf71d8ce%ubt
+* Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2.b.git5c8f710
+- Updated to current upstream version (Closes: #36208)
+
+* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1.b.gitf71d8ce
 - Initial build for ALT.

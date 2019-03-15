@@ -5,18 +5,17 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.12.0
-Release: alt1%ubt
+Version: 1.19.0
+Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache 2.0
 Group: Development/Python
 Url: https://pypi.org/project/grpcio
 
 Source: %oname-%version.tar
-Patch1: %oname-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ zlib-devel libcares-devel
+BuildRequires: libssl-devel
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(Cython) python2.7(six)
 BuildRequires: python2.7(enum34) python-module-futures
@@ -40,16 +39,11 @@ HTTP/2-based RPC framework.
 
 %prep
 %setup -n %oname-%version
-%patch1 -p1
 
 # remove some bundled libraries. TODO: try unbundling all libraries.
 rm -rf third_party/zlib
 rm -rf third_party/cares
-
-sed -i \
-	-e '/third_party\/cares/d' \
-	-e '/third_party\/zlib/d' \
-	src/python/grpcio/grpc_core_dependencies.py
+rm -rf third_party/boringssl
 
 %if_with python3
 cp -a . ../python3
@@ -57,6 +51,9 @@ cp -a . ../python3
 
 %build
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 
 %python_build_debug
 
@@ -68,6 +65,9 @@ popd
 
 %install
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 
 %if_with python3
 pushd ../python3
@@ -78,6 +78,11 @@ popd
 %python_install
 
 %check
+export GRPC_PYTHON_BUILD_WITH_CYTHON=1
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
+
 python setup.py test
 
 %if_with python3
@@ -97,5 +102,8 @@ popd
 %endif
 
 %changelog
-* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt1%ubt
+* Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19.0-alt1
+- Updated to upstream version 1.19.0.
+
+* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt1
 - Initial build for ALT.
