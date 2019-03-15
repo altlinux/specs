@@ -1,27 +1,35 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ballz
-Version:        1.0.3
-Release:        alt1_5
-Summary:        Platform game with some puzzle elements
-Group:          Games/Other
+Version:        1.0.4
+Release:        alt1_1
+Summary:        B.A.L.L.Z. - platform/puzzle game where you control a rolling ball
 License:        BSD
 URL:            https://gitlab.com/groups/ballz
 Source0:        %{name}-%{version}.tar.gz
-BuildRequires:  liballegro-devel dumb-devel libguichan-devel desktop-file-utils
+BuildRequires:  gcc-c++
+BuildRequires:  gcc
+BuildRequires:  liballegro-devel dumb-devel libguichan-devel intltool
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/#_desktop_files
+BuildRequires:  desktop-file-utils
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/AppData/
+BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
-Ballz is a platformer with some puzzle elements. You take control of a ball
-which is genetically modified by the British secret service. Your mission is
-to rescue captured British soldiers from a prison in Iran.
+The game is a platformer with some puzzle elements. You take control
+of a ball which is genetically modified by the British secret
+service. Your mission is to rescue captured British soldiers from a
+prison in Iran.
 
-The game was written in 72 hours for the TINS competition, a competition
-similar to Speedhack. The name TINS is an recursive acronym for 'TINS is
-not Speedhack'.
+The game was written in 72 hours for the TINS competition, a
+competition similar to Speedhack. The name TINS is an recursive
+acronym for 'TINS is not Speedhack'.
 
 
 %prep
@@ -36,19 +44,24 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 
 %install
 %makeinstall_std
+%find_lang %{name}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
-%files
+%files -f %{name}.lang
 %doc AUTHORS README BSD-license ChangeLog
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/appdata/*.appdata.xml
+%{_datadir}/metainfo/*.appdata.xml
 %{_datadir}/applications/*
-%{_datadir}/pixmaps/*
+%{_datadir}/icons/hicolor/256x256/apps/*
 %{_mandir}/man6/*
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_5
 - update to new release by fcimport
 
