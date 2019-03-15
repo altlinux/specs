@@ -1,15 +1,17 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(Shell.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+#remove once using %%configure again
+%global debug_package %{nil}
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_23
+Release:  alt2_25
 Summary: 2D air combat game
 
-Group: Games/Other
 License: GPLv2
 URL: http://www.fishies.org.uk/apricots.html
 Source0: http://www.fishies.org.uk/apricots-%{version}.tar.gz
@@ -26,8 +28,9 @@ BuildRequires: gcc gcc-c++
 BuildRequires: libSDL-devel
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libopenal-devel libopenal1
+BuildRequires: libopenal-devel
 BuildRequires: autoconf automake
+ExcludeArch: ppc64le aarch64
 Source44: import.info
 
 %description
@@ -53,7 +56,8 @@ chmod -x TODO
 #%patch4 -p0
 
 %build
-%configure
+#Use %%configure once --as-needed is fixed, and fix debug at top of spec.
+./configure
 make
 
 
@@ -88,6 +92,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_25
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_23
 - update to new release by fcimport
 
