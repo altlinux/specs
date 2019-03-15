@@ -5,17 +5,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.12.0
-Release: alt1%ubt
+Version: 1.19.0
+Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache 2.0
 Group: Development/Python
-Url: https://pypi.org/project/grpcio
+Url: https://pypi.org/project/grpcio-tools
 
 Source: %oname-%version.tar
 Patch1: %oname-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libprotobuf-devel
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(Cython) python-module-protobuf
@@ -71,6 +70,8 @@ popd
 %python_install
 
 %check
+export GRPC_PYTHON_BUILD_WITH_CYTHON=1
+
 python setup.py test
 
 %if_with python3
@@ -90,5 +91,8 @@ popd
 %endif
 
 %changelog
-* Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt1%ubt
+* Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19.0-alt1
+- Updated to upstream version 1.19.0.
+
+* Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt1
 - Initial build for ALT.
