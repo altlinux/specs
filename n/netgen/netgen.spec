@@ -11,8 +11,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.1808
-Release: alt2
+Version: 6.2.1810
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -375,6 +375,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Fri Mar 15 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1810-alt1
+- New version
+
 * Mon Feb 11 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt2
 - Fix build with gcc8 [-Werror=return-type]
 
