@@ -1,6 +1,6 @@
 Name:     integrity-notifier
 Version:  0.5
-Release:  alt1
+Release:  alt2
 
 Summary:  Integrity event notifier
 License:  GPL v2+
@@ -31,10 +31,14 @@ cp unit/*  %buildroot/%_unitdir/
 
 %files
 %_sysconfdir/integrity/notifier.sh
-%_sysconfdir/integrity/real_notify.sh
+%config(noreplace) %_sysconfdir/integrity/real_notify.sh
 %_sysconfdir/integrity/message
+%_unitdir/integrity-notifier.service
 %doc README
 
 %changelog
+* Fri Mar 15 2019 Denis Medvedev <nbr@altlinux.org> 0.5-alt2
+- fixed service and real_notifier is a configurable thing now.
+
 * Tue Mar 12 2019 Denis Medvedev <nbr@altlinux.org> 0.5-alt1
 Initial release.
