@@ -10,7 +10,7 @@ Name: kde4multimedia
 %define minor 08
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -49,12 +49,12 @@ BuildRequires: libalsa-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavdevice-devel libswscale-devel libpostproc-devel
 #BuildRequires: libgstreamer-plugins-base-devel
-BuildRequires: libkcompactdisc4-devel desktop-file-utils
+BuildRequires: desktop-file-utils
 %if_enabled build_audiocd
 BuildRequires: libkcddb4-devel
 %endif
 %if_enabled build_kscd
-BuildRequires: libmusicbrainz3-devel
+BuildRequires: libmusicbrainz3-devel libkcompactdisc4-devel
 %endif
 
 
@@ -153,7 +153,12 @@ KDE 4 library
 Group: Development/KDE and QT
 Summary: Devel stuff for %name
 Requires: kde4libs-devel
-Requires: libkcompactdisc4-devel libkcddb4-devel
+%if_enabled build_kscd
+Requires: libkcompactdisc4-devel
+%endif
+%if_enabled build_audiocd
+Requires: libkcddb4-devel
+%endif
 Requires: %name-common = %version-%release
 %description devel
 This package contains header files needed if you wish to build applications
@@ -316,6 +321,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt4
+- fix requires
+
 * Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
 - don't build kio-audiocd, kscd
 
