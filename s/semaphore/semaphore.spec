@@ -1,5 +1,6 @@
+%global import_path github.com/ansible-semaphore/semaphore
 Name:     semaphore
-Version:  2.4.1
+Version:  2.5.1
 Release:  alt1
 
 Summary:  Open Source alternative to Ansible Tower
@@ -9,10 +10,10 @@ Url:      https://github.com/ansible-semaphore/semaphore
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
-Source0:  %name-%version.tar
-Source1:  semaphore-bin-alt
+Source:   %name-%version.tar
 
-ExclusiveArch: x86_64
+BuildRequires(pre): rpm-build-golang
+BuildRequires: golang
 
 %description
 %summary
@@ -20,8 +21,31 @@ ExclusiveArch: x86_64
 %prep
 %setup
 
+# next commands need to prepare sources
+# apt-get install go-task packr
+# go mod vendor
+# task deps:fe
+# rm web/package-lock.json
+# task compile
+
+# this command is need to build source
+# task build:local
+%build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+
+%golang_prepare
+
+cd .build/src/%import_path
+%golang_build cli
+
 %install
-install -D %SOURCE1 -T %buildroot%_bindir/%name
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
+
+%golang_install
+mv %buildroot%_bindir/{cli,%name}
 
 %files
 %_bindir/%name
@@ -29,5 +53,8 @@ install -D %SOURCE1 -T %buildroot%_bindir/%name
 %doc *.md
 
 %changelog
+* Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.5.1-alt1
+- Update to 2.5.1
+
 * Thu May 10 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.1-alt1
 - Initial build for Sisyphus
