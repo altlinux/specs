@@ -1,6 +1,6 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(IO/Handle.pm)
+BuildRequires: perl(IO/Handle.pm)
 # END SourceDeps(oneline)
 %define oldname zfs-fuse
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.2.2
-Release:          alt1_6.1
+Release:          alt1_11
 Summary:          ZFS ported to Linux FUSE
 License:          CDDL
 URL:              https://github.com/gordan-bobic/zfs-fuse
@@ -18,12 +18,16 @@ Source02:         zfs-fuse.scrub
 Source03:         zfs-fuse.sysconfig
 Source04:         zfs-fuse-helper
 Patch0:           zfs-fuse-0.7.2.2-stack.patch
-BuildRequires:    libfuse-devel libaio-devel rpm-build-perl scons
+Patch1:           zfs-fuse-0.7.2.2-python3.patch
+Patch2:           tirpc.patch
+BuildRequires:  gcc
+BuildRequires:    libfuse-devel libaio-devel rpm-build-perl scons gcc-c++
 BuildRequires:    zlib-devel libssl-devel libattr-devel liblzo2-devel bzlib-devel liblzma-devel
+BuildRequires:    libtirpc-devel
 %ifnarch aarch64 ppc64le
 BuildRequires:    /usr/bin/execstack
 %endif
-BuildRequires:    journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires:    libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Requires:         fuse >= 2.7.4
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
 ExcludeArch:      s390 s390x aarch64
@@ -48,6 +52,8 @@ operating system.
 %setup -n %{oldname}-%{version} -q
 
 %patch0 -p0
+%patch1 -p1
+%patch2 -p1
 
 f=LICENSE
 mv $f $f.iso88591
@@ -109,7 +115,8 @@ rm -rf /var/run/zfs
 rm -rf /var/lock/zfs
 
 %files
-%doc BUGS CHANGES contrib HACKING LICENSE README 
+%doc --no-dereference LICENSE
+%doc BUGS CHANGES contrib HACKING README
 %doc README.NFS STATUS TESTING TODO
 %{_sbindir}/zdb
 %{_sbindir}/zfs
@@ -131,6 +138,9 @@ rm -rf /var/lock/zfs
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2.2-alt1_11
+- update to new release by fcimport
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.2.2-alt1_6.1
 - NMU: Rebuild with new openssl 1.1.0.
 
