@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  0.12.1.2
+Version:  1.1.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -66,5 +66,8 @@ install -Dm 644 libpod.conf %buildroot%_datadir/containers/libpod.conf
 %doc *.md
 
 %changelog
+* Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
+- new version 1.1.2
+
 * Mon Jan 07 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.1.2-alt1
 - Initial build for Sisyphus
