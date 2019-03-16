@@ -1,7 +1,8 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{!?_with_xfce:1} && 0%{!?_without_xfce:1}
@@ -13,23 +14,23 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate glib
 %endif
 
 Name:		im-chooser
-Version:	1.7.1
-Release:	alt1_5
+Version:	1.7.3
+Release:	alt1_1
 License:	GPLv2+ and LGPLv2+
 URL:		http://pagure.io/im-chooser/
 %{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel}
 %{!?_with_gtk2:BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel}
-BuildRequires:	libSM-devel imsettings-devel >= 1.3.0
+BuildRequires:	libSM-devel imsettings-devel >= 1.8.0
 %if 0%{?_with_xfce}
 BuildRequires:	libxfce4util-devel
 %endif
-BuildRequires:	desktop-file-utils intltool gettext gettext-tools
+BuildRequires:	desktop-file-utils gettext gettext-tools
 BuildRequires:	gcc
 
 Source0:	http://releases.pagure.org/%{name}/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-hide-desktop-in-gnome.patch
 
 Summary:	Desktop Input Method configuration tool
-Group:		System/Base
 Obsoletes:	im-chooser-gnome3 < 1.4.2-2
 Provides:	im-chooser-gnome3 = %{version}-%{release}
 Requires:	%{name}-common = %{version}-%{release}
@@ -40,9 +41,9 @@ im-chooser is a GUI configuration tool to choose the Input Method
 to be used or disable Input Method usage on the desktop.
 
 %package	common
+Group: System/Base
 Summary:	Common files for im-chooser subpackages
-Group:		System/Base
-Requires:	imsettings >= 1.3.0
+Requires:	imsettings >= 1.8.0
 Obsoletes:	im-chooser < 1.5.0.1
 ## https://fedorahosted.org/fpc/ticket/174
 Provides:	bundled(egglib)
@@ -56,8 +57,8 @@ im-chooser subpackages.
 
 %if 0%{?_with_xfce}
 %package	xfce
+Group: System/Base
 Summary:	XFCE settings panel for im-chooser
-Group:		System/Base
 Requires:	%{name}-common = %{version}-%{release}
 Obsoletes:	im-chooser < 1.5.0.1
 
@@ -71,7 +72,7 @@ This package contains the XFCE settings panel for im-chooser.
 
 %prep
 %setup -q
-
+%patch0 -p1
 
 %build
 %configure
@@ -80,14 +81,7 @@ This package contains the XFCE settings panel for im-chooser.
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="/usr/bin/install -p"
 
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-	--vendor=fedora				\
-%endif
-	--add-category=X-GNOME-PersonalSettings			\
-	--delete-original					\
-	--dir=$RPM_BUILD_ROOT%{_datadir}/applications		\
-	$RPM_BUILD_ROOT%{_datadir}/applications/im-chooser.desktop
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser.desktop
 %if 0%{?_with_xfce}
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/xfce4-im-chooser.desktop
 %endif
@@ -129,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_1
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_5
 - update to new release by fcimport
 
