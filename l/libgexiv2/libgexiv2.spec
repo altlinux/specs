@@ -1,10 +1,13 @@
 %define _name gexiv2
-%define ver_major 0.10
+%define ver_major 0.12
 %define api_ver 0.10
+
 %def_enable gtk_doc
+%def_enable vala
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -14,9 +17,11 @@ Url: https://wiki.gnome.org/Projects/gexiv2
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel vala-tools
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel
 BuildRequires: python-module-pygobject3-devel rpm-build-python3 python3-module-pygobject3-devel
 BuildRequires: gtk-doc
+%{?_enable_vala:BuildRequires: vala-tools}
 
 %description
 gexiv2 is a GObject-based wrapper around the Exiv2 library. It makes the
@@ -79,20 +84,21 @@ This package provides Python3 bindings for the gexiv2 library.
 
 %prep
 %setup -n %_name-%version
-# decrease required pkg-config version
-subst 's/0\.26/0.25/' configure*
-# fix typelibdir
-subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)/' Makefile.am
 
 %build
-%autoreconf
-%configure --disable-static \
-	--enable-introspection \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-%make_build
+
+%meson \
+	-Dintrospection=true \
+	%{?_enable_vala:-Dvapi=true} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%name.so.*
@@ -102,7 +108,7 @@ subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)
 %_includedir/%_name/
 %_libdir/%name.so
 %_pkgconfigdir/%_name.pc
-%_vapidir/%_name.vapi
+%{?_enable_vala:%_vapidir/%_name.*}
 
 %files gir
 %_typelibdir/GExiv2-%api_ver.typelib
@@ -119,10 +125,13 @@ subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%_name/
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.10-alt1
 - 0.10.10
 

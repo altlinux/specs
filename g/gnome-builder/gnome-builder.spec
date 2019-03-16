@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
@@ -11,11 +11,9 @@
 %def_with help
 %def_with autotools
 %def_with jedi
-# can't be enabled now
-%def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -39,14 +37,14 @@ Source: %name-%version.tar
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
-%define sysprof_ver 3.30.2
+%define sysprof_ver 3.32.0
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.30.2
-%define template_glib_ver 3.30.0
+%define dazzle_ver 3.32.0
+%define template_glib_ver 3.32.0
 
 # use python3
 AutoReqProv: nopython
@@ -54,7 +52,7 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
-PreReq: %name-data = %version-%release
+Requires(pre): %name-data = %version-%release
 
 %{?_with_autotools:Requires: automake autoconf libtool}
 Requires: meson git indent xmllint
@@ -80,10 +78,11 @@ BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
 BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver libjsonrpc-glib-devel
 BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
+BuildRequires: libgtkmm3-devel >= %gtkmm_ver
+BuildRequires: libgladeui2.0-devel
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 %{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel}
 %{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
-%{?_with_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -104,12 +103,10 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %build
 %meson \
-	%{?_with_sysprof:-Dwith_sysprof=true} \
-	%{?_with_docs:-Dwith_docs=true} \
-	%{?_with_help:-Dwith_help=true} \
-	%{?_without_flatpak:-Dwith_flatpak=false} \
-	%{?_with_autotools:-Dwith_autotools=true} \
-	%{?_with_autotools_templates:-Dwith_autotools_templates=true}
+	%{?_with_docs:-Ddocs=true} \
+	%{?_with_help:-Dhelp=true} \
+	%{?_without_flatpak:-Dplugin_flatpak=false} \
+	%{?_with_autotools:-Dplugin_autotools=true}
 %meson_build
 
 %install
@@ -120,20 +117,12 @@ This package provides noarch data needed for Gnome Builder to work.
 %_bindir/%name
 %_libexecdir/%name-clang
 %dir %_libdir/%name
-%_libdir/%name/libide-%api_ver.so
-%{?_enable_idemm:%_libdir/%name/libidemm-%api_ver.so.*}
-%_libdir/%name/libgstyle-private.so.*
-%_libdir/%name/libgnome-builder-plugins.so
-
-%exclude %_libdir/%name/libgstyle-private.so
-
-%{?_enable_idemm:%exclude %_libdir/%name/libidemm-%api_ver.so}
 
 %dir %_libdir/%name/girepository-1.0
-%_libdir/%name/girepository-1.0/Gstyle-%api_ver.typelib
-%_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
+%_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
 
 %dir %_libdir/%name/plugins
+%_libdir/%name/plugins/Ide-%ver_major.metadata
 %_libdir/%name/plugins/__pycache__
 %_libdir/%name/plugins/cargo.plugin
 %_libdir/%name/plugins/cargo_plugin.py
@@ -154,7 +143,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild.plugin
 %_libdir/%name/plugins/jhbuild_plugin.py
-%_libdir/%name/plugins/libvala-pack-plugin.so
+%_libdir/%name/plugins/libplugin-vala-pack.so
 %_libdir/%name/plugins/make.plugin
 %_libdir/%name/plugins/make_plugin.gresource
 %_libdir/%name/plugins/make_plugin.py
@@ -171,8 +160,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/phpize_plugin.py
 %_libdir/%name/plugins/python-gi-imports-completion.plugin
 %_libdir/%name/plugins/python_gi_imports_completion.py
-%_libdir/%name/plugins/rust-langserv.plugin
-%_libdir/%name/plugins/rust_langserv_plugin.py
+%_libdir/%name/plugins/rls.plugin
+%_libdir/%name/plugins/rls_plugin.py
 %_libdir/%name/plugins/rustup.plugin
 %_libdir/%name/plugins/rustup_plugin.gresource
 %_libdir/%name/plugins/rustup_plugin.py
@@ -180,12 +169,15 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/valgrind.plugin
 %_libdir/%name/plugins/valgrind_plugin.gresource
 %_libdir/%name/plugins/valgrind_plugin.py
+%_libdir/%name/plugins/waf.plugin
+%_libdir/%name/plugins/waf_plugin.py
 #%{?_with_autotools_templates:%_libdir/%name/plugins/autotools_templates/}
 #%{?_with_sysprof:%_libdir/%name/plugins/libsysprof-plugin.so}
 
 %_includedir/%name/
+%_includedir/%name-%ver_major/
 %dir %_libdir/%name/pkgconfig
-%_libdir/%name/pkgconfig/libide-%api_ver.pc
+%_libdir/%name/pkgconfig/%name-%ver_major.pc
 %python3_sitelibdir/gi/overrides/Ide.py
 %python3_sitelibdir/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
@@ -217,10 +209,12 @@ This package provides noarch data needed for Gnome Builder to work.
 %if_with docs
 %_datadir/gtk-doc/html/libide/
 %{?_with_help:%_datadir/doc/%name/}
-#%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Jan 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

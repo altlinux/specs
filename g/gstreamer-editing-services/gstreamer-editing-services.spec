@@ -1,12 +1,12 @@
 %define _name ges
-%define ver_major 1.14
+%define ver_major 1.15
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_enable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -108,6 +108,7 @@ library.
 %files
 %_bindir/%_name-launch-%api_ver
 %_datadir/gstreamer-%gst_api_ver/validate/scenarios/*.scenario
+%_libdir/gstreamer-%gst_api_ver/libgstges.so
 %_libdir/gstreamer-%gst_api_ver/libgstnle.so
 %_datadir/bash-completion/completions/%_name-launch-%api_ver
 %_man1dir/%_name-launch-*
@@ -117,7 +118,7 @@ library.
 
 # for tests only?
 %exclude %_libdir/gst-validate-launcher/python/*
-%exclude %_libdir/gstreamer-%gst_api_ver/libgstnle.la
+%exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 %files -n lib%_name
 %_libdir/lib%_name-%api_ver.so.*
@@ -137,6 +138,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Sat Mar 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 

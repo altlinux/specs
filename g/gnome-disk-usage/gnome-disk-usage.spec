@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 3.30
+%define ver_major 3.32
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
@@ -50,15 +50,17 @@ popd
 %_bindir/%_name
 %_bindir/gnome-disk-usage
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%_name.*
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_man1dir/%_name.1.*
 %_datadir/dbus-1/services/%xdg_name.service
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README NEWS
+%doc README* NEWS
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

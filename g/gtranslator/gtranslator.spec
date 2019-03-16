@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
 Name: gtranslator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
@@ -27,6 +27,7 @@ Requires: libgda5-sqlite gettext-tools
 %define xml_ver 2.4.12
 
 BuildRequires(pre): meson rpm-build-gir
+BuildRequires: git
 BuildRequires: yelp-tools gtk-doc libgtk+3-devel >= %gtk_ver
 BuildRequires: libgda5-devel libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
@@ -74,8 +75,7 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/*.xml
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%xdg_name.*
-%_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_pixmapsdir/*.png
 %_man1dir/%name.1*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -86,6 +86,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Fri Nov 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

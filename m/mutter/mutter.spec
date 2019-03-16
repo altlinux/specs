@@ -1,19 +1,20 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.30
-%define api_ver 3
+%define ver_major 3.32
+%define api_ver 4
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
+%def_enable installed_tests
 # https://github.com/NVIDIA/egl-wayland required
 %def_disable egl_device
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -28,8 +29,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%set_typelibdir %_libdir/%name
-%set_girdir %_libdir/%name
+%define pkglibdir %_libdir/%name-%api_ver
+%define pkgdatadir %_datadir/%name-%api_ver
+
+%add_findprov_lib_path %pkglibdir
+%set_typelibdir %pkglibdir
+%set_girdir %pkglibdir
 
 # since 3.22 mutter forks Cogl and Clutter libraries into own private libraries
 #%%filter_from_provides /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
@@ -47,7 +52,7 @@ Source: %name-%version.tar
 %define wayland_protocols_ver 1.7
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
-%define gsds_ver 3.21.4
+%define gsds_ver 3.31.0
 %define gudev_ver 232
 %define pipewire_ver 0.2.2
 
@@ -55,7 +60,7 @@ Requires: lib%name = %EVR
 Requires: zenity
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
-BuildRequires(pre): rpm-build-gnome rpm-build-gir gnome-common
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -73,10 +78,11 @@ BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsetti
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
 BuildRequires: libwacom-devel
+BuildRequires: gnome-settings-daemon-devel
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
-BuildRequires: libGL-devel libGLES-devel
+BuildRequires: libGL-devel libGLES-devel xorg-xwayland
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -128,60 +134,63 @@ Requires: %name = %EVR
 This package contains everything necessary to use Mutter in GNOME desktop
 environment.
 
+%package tests
+Summary: Tests for the Mutter WM
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Mutter.
+
+
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-export ac_cv_path_CVT=%_bindir/cvt
-%autoreconf
-DATADIRNAME=share %configure \
-	--enable-introspection \
-	--disable-static \
-	--disable-schemas-compile \
-	--enable-compile-warnings=maximum \
-	%{?_enable_remote_desktop:--enable-remote-desktop} \
-	%{?_enable_egl_device:--enable-egl-device}
-%make_build
+%meson \
+	-Dintrospection=true \
+	%{?_enable_remote_desktop:-Dremote_desktop=true} \
+	%{?_enable_egl_device:-Degl_device=true} \
+	%{?_disable_installed_tests:-Dinstalled_tests=false}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name creating-%name-themes
 
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/%name-restart-helper
-%dir %_libdir/%name
-%_libdir/%name/lib%name-clutter-%api_ver.so
-%_libdir/%name/lib%name-cogl-pango-%api_ver.so
-%_libdir/%name/lib%name-cogl-path-%api_ver.so
-%_libdir/%name/lib%name-cogl-%api_ver.so
-%exclude %_libdir/%name/*.la
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/*.so
+%dir %pkglibdir/plugins
+%pkglibdir/plugins/*.so
+%{?_enable_installed_tests:%dir %pkgdatadir}
 %_desktopdir/%name.desktop
 %_man1dir/*
-%doc NEWS
-#%doc README AUTHORS
+%doc NEWS README.md
 
 %if_enabled privatelib
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/lib%name-%api_ver.so.*
+%dir %pkglibdir
+%pkglibdir/lib%name-clutter-%api_ver.so.*
+%pkglibdir/lib%name-cogl-pango-%api_ver.so.*
+%pkglibdir/lib%name-cogl-path-%api_ver.so.*
+%pkglibdir/lib%name-cogl-%api_ver.so.*
+%pkglibdir/lib%name-cogl-gles2-%api_ver.so.*
 
 %files -n lib%name-devel
-#%doc doc/*.txt HACKING
-%_includedir/%name/
-%_libdir/*.so
+%_includedir/%name-%api_ver/
+%_libdir/lib%name-%api_ver.so
+%pkglibdir/*.so
 %_pkgconfigdir/*.pc
 %endif
 
 %files -n lib%name-gir
-%_libdir/%name/*.typelib
+%pkglibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_libdir/%name/*.gir
+%pkglibdir/*.gir
 
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -189,7 +198,18 @@ DATADIRNAME=share %configure \
 %_datadir/GConf/gsettings/%name-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%name-%api_ver/
+%_datadir/installed-tests/%name-%api_ver/
+%pkgdatadir/tests/
+%endif
+
+
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.32.0-alt1
+- updated to 3.32.0-13-g2ac7f7f1e
+
 * Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.2-alt1
 - 3.30.2
 

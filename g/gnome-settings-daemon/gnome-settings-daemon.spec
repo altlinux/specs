@@ -3,7 +3,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -17,7 +17,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -31,7 +31,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.53.0
+%define glib_ver 2.54.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.29.90.1
 %define notify_ver 0.7.3
@@ -58,13 +58,13 @@ Requires: xkeyboard-config
 Requires: iio-sensor-proxy
 
 BuildRequires(pre): meson
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
-BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildPreReq: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
+BuildRequires: libnotify-devel >= %notify_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildRequires: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
 BuildRequires: libdbus-devel libpolkit1-devel
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
@@ -76,7 +76,7 @@ BuildRequires: gcc-c++ libcups-devel libgudev-devel libX11-devel libXi-devel lib
 BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
-BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
+BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver
 
@@ -147,7 +147,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-sharing
 %_libexecdir/gsd-smartcard
 %_libexecdir/gsd-sound
-%_libexecdir/gsd-test-input-helper
 %_libexecdir/gsd-wacom
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
@@ -188,6 +187,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

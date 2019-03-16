@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.30
+%define ver_major 2.32
 %def_disable static
 %def_disable docs
 %def_enable introspection
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Accessibility
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: atk-compat.map
 Source2: atk-compat.lds
-Patch: atk-2.29.2-alt-compat-version-script.patch
+Patch: atk-2.31.90-alt-compat-version-script.patch
 
 Requires: %name-locales = %version
 
@@ -107,7 +107,7 @@ GObject introspection devel data for the Atk library
 
 %prep
 %setup -n %_name-%version
-%patch -p1 -b .alt
+%patch -b .alt
 install -p -m644 %_sourcedir/atk-compat.map atk/compat.map
 install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 
@@ -121,6 +121,7 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %find_lang --output=%_name.lang %_name %{_name}10
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -153,6 +154,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Sat Sep 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
 - 2.30.0
 

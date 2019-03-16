@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable ladspa
 %def_enable libdc1394
@@ -10,19 +10,24 @@
 %def_enable wayland
 %def_enable zbar
 %def_disable rtmp
+%def_disable debug
+%def_enable tests
+# required network
+%def_disable gst_player_tests
+%def_disable check
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.14
+%define ver_major 1.15
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
-Release: alt6
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -35,14 +40,12 @@ Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.
 Source: %_name-bad-%version.tar
 %endif
 
-Patch1: %name-alt-libopencv-compat.patch
-
 Provides: %_name-bad = %version-%release
 
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ gtk-doc libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
@@ -66,6 +69,7 @@ BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
+BuildRequires: liborc-test-devel
 #BuildRequires: libopenh264 >= 1.3.0
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
@@ -106,22 +110,18 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %prep
 %setup -n %_name-bad-%version
-%patch1 -p2
 
 %build
-%autoreconf
-%autoreconf
-%configure \
-    --disable-examples \
-    --enable-experimental \
-    %{subst_enable gtk_doc} \
-    --disable-static \
-    --with-html-dir=%_gtk_docdir
-%make_build
+%meson \
+	-Dexamples=disabled \
+	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_debug:-Dgst_debug=true}
+
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name-bad-%api_ver
 
 %files -f %_name-bad-%api_ver.lang
@@ -129,7 +129,6 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_libdir/*.so.*
 %dir %_gst_libdir
 %_gst_libdir/*.so
-%exclude %_gst_libdir/*.la
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_typelibdir/GstPlayer-%api_ver.typelib
@@ -137,8 +136,8 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %if_enabled opencv
-%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
-%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
+#%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
+#%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
 %endif
 
 %files devel
@@ -157,6 +156,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Sun Jan 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt6
 - updated to 1.14.4-22-ge87fb02c1
 

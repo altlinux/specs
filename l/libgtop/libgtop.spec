@@ -1,5 +1,5 @@
 %define oldname libgtop2
-%define ver_major 2.38
+%define ver_major 2.40
 %define api_ver 2.0
 
 %def_disable static
@@ -67,7 +67,7 @@ information on system statistics such as CPU and memory usage.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/GNOME and GTK+
+Group: Development/Documentation
 Conflicts: %name-devel < %version-%release
 BuildArch: noarch
 
@@ -128,6 +128,8 @@ rm -rf doc/*.info
 %find_lang %name
 
 %files -f %name.lang
+%_bindir/%{name}_daemon2
+%attr(4711,root,root) %_bindir/%{name}_server2
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -153,13 +155,16 @@ rm -rf doc/*.info
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/GTop-%api_ver.typelib
+%_typelibdir/GTop-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/GTop-%api_ver.gir
+%_girdir/GTop-%api_ver.gir
 %endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
 - 2.38.0
 

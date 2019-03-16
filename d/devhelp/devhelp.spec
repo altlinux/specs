@@ -1,9 +1,9 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -109,8 +109,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %dir %_devhelpdir
 %_devhelpdir/*
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%xdg_name.png
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
@@ -139,6 +138,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

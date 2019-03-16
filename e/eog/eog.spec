@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.28
+%define ver_major 3.32
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
@@ -10,7 +10,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -23,6 +23,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.14.2-alt1
 
+%add_findprov_lib_path %_libdir/%name
 %set_typelibdir %_libdir/%name/girepository-1.0
 %set_girdir %_datadir/%name/gir-1.0
 
@@ -120,7 +121,6 @@ the functionality of the EOG GUI.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -133,7 +133,7 @@ the functionality of the EOG GUI.
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
 %_libdir/%name/plugins/*.plugin
-%_iconsdir/hicolor/*/apps/%{name}*.*
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/GConf/gsettings/eog.convert
@@ -167,6 +167,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
 - 3.28.4
 

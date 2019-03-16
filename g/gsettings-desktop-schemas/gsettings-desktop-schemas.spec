@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.28
+%define ver_major 3.32
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GSettings schemas
@@ -17,8 +17,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Requires: %name-data = %version-%release
 
 %define gio_ver 2.31.0
-PreReq: libgio >= %gio_ver
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+Requires(pre): libgio >= %gio_ver
+
+BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
 BuildRequires: libgio-devel >= %gio_ver intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
@@ -64,18 +65,14 @@ GObject introspection devel data for %name.
 
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure --disable-schemas-compile \
-	%{?_enable_introspection:--enable-introspection=yes}
-
-%make_build
+%meson \
+	%{?_enable_introspection:-Dintrospection=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files
@@ -128,6 +125,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

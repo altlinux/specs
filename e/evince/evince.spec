@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3
 %define so_ver 4
 
@@ -14,7 +14,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -38,10 +38,9 @@ Requires: dconf
 %define gtk_ver 3.16.0
 %define spectre_ver 0.2.0
 
-BuildPreReq: libpoppler-glib-devel >= %poppler_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: gcc-c++ gnome-common gtk-doc
-BuildRequires: intltool yelp-tools itstool
+BuildRequires: libpoppler-glib-devel >= %poppler_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: gcc-c++ gnome-common gtk-doc libappstream-glib-devel yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
@@ -51,7 +50,7 @@ BuildRequires: libgnome-desktop3-devel
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 BuildRequires: libXi-devel
-BuildRequires: systemd-devel
+BuildRequires: pkgconfig(systemd)
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -215,6 +214,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Thu Mar 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

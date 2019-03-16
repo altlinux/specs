@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Music playing application for GNOME3
 Group: Sound
@@ -18,9 +18,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-# https://gitlab.gnome.org/GNOME/gnome-music/merge_requests/323
-# https://gitlab.gnome.org/GNOME/gnome-music/issues/244
-Patch: gnome-music-3.30.2-up-716dcaa4.patch
 
 # use python3
 AutoReqProv: nopython
@@ -69,7 +66,6 @@ Music playing application for GNOME3.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -85,8 +81,7 @@ Music playing application for GNOME3.
 %_datadir/%xdg_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
-%_iconsdir/hicolor/*/apps/*.png
-%_iconsdir/hicolor/symbolic/*/*.svg
+%_iconsdir/hicolor/*/*/*.svg
 %_libdir/%xdg_name/
 %python3_sitelibdir_noarch/gnomemusic/
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -94,6 +89,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Feb 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt2
 - updated to 3.30.2-6-g611d313b
 - fixed https://gitlab.gnome.org/GNOME/gnome-music/issues/244

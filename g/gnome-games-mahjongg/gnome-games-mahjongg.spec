@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name mahjongg
+%define xdg_name org.gnome.Mahjongg
 %define __name gnome-%_name
-%define ver_major 3.22
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -21,8 +22,10 @@ Provides:  %__name = %version-%release
 %define glib_ver 2.40.0
 %define gtk_ver 3.12.0
 
-BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
 %description
@@ -33,26 +36,26 @@ version of the classic Eastern tile game, Mahjongg.
 %setup -n %__name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
-%_desktopdir/%__name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%__name
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/scalable/apps/%{__name}*.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%__name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

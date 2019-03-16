@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -8,7 +8,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -37,7 +37,7 @@ Patch11: gnome-session-3.3.92-nv30.patch
 %define upower_ver 0.9
 %define systemd_ver 209
 
-PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
+Requires(pre): xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
@@ -47,13 +47,11 @@ Requires: xdg-user-dirs
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
 BuildRequires(pre): meson rpm-build-gnome
-
-
-BuildPreReq: intltool >= 0.35.0 libGConf-devel
-BuildPreReq: libgio-devel glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires: libGConf2-devel
+BuildRequires: libgio-devel glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 # https://bugzilla.gnome.org/show_bug.cgi?id=710383
-# BuildPreReq: libupower-devel >= %upower_ver
+# BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel
@@ -152,6 +150,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

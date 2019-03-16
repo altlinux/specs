@@ -1,10 +1,10 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
-%def_disable packagekit
+%def_enable packagekit
 %def_enable tracker
 %def_enable introspection
 %def_enable selinux
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -46,6 +46,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
+%{?_enable_tracker:Requires: tracker}
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
@@ -65,6 +66,7 @@ BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel
 BuildRequires: libseccomp-devel
+BuildRequires: pkgconfig(gstreamer-tag-1.0)
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -154,7 +156,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -168,6 +170,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %dir %_libdir/%name/extensions-%api_ver
 %_libdir/%name/extensions-%api_ver/libnautilus-sendto.so
 %_libdir/%name/extensions-%api_ver/libnautilus-image-properties.so
+%_libdir/%name/extensions-%api_ver/libtotem-properties-page.so
 
 %files -n lib%name-devel
 %_includedir/*
@@ -187,6 +190,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.5-alt1
 - 3.30.5
 

@@ -5,11 +5,11 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
-%define ver_base 3.28
+%define ver_major 3.32
+%define ver_base 3.32
 %define gst_api_ver 1.0
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_with openldap
 %def_disable static_ldap
 %def_enable map
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -45,7 +45,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.30.5
+%define eds_ver 3.31.91
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -236,6 +236,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_datadir/glib-2.0/schemas/org.gnome.evolution.text-highlight.gschema.xml
 %_datadir/GConf/gsettings/evolution.convert
 %_iconsdir/hicolor/*/*/*
+%_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name-pst.metainfo.xml
 
@@ -243,8 +244,10 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_includedir/*
 %_pkgconfigdir/*
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files bogofilter
 %evo_module_dir/module-bogofilter.so
@@ -264,6 +267,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Feb 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.5-alt1
 - 3.30.5
 

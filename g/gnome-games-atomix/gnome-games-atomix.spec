@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name atomix
-%define ver_major 3.30
+%define xdg_name org.gnome.Atomix
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Build molecules out of single atoms
@@ -18,10 +19,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Provides:  %_name = %version-%release
 
 %define glib_ver 2.36.0
-%define gtk_ver 3.14.0
+%define gtk_ver 3.22.0
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libxml2-devel libgnome-games-support-devel
 
@@ -47,13 +48,15 @@ other obstacles on the playfield.
 %_bindir/%_name
 %_desktopdir/%_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{_name}*.*
 %_datadir/metainfo/%_name.appdata.xml
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0.1-alt1
 - 3.30.0.1
 

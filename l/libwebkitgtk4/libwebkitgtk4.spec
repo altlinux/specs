@@ -3,6 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
+%define ver_major 2.24
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -22,7 +23,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: 2.22.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -40,7 +41,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-gir
 BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
-BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
+BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
 BuildRequires: libgtk+3-devel >= 3.4.0 libepoxy-devel
@@ -260,7 +261,6 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %pkglibexecdir/WebKitPluginProcess
 %pkglibexecdir/WebKitPluginProcess2
 %pkglibexecdir/WebKitWebProcess
-%pkglibexecdir/WebKitStorageProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
@@ -311,6 +311,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt1
+- 2.24.0
+
 * Fri Mar 01 2019 Yuri N. Sedunov <aris@altlinux.org> 2.22.7-alt1
 - 2.22.7
 

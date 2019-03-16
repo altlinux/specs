@@ -1,8 +1,8 @@
-%define ver_major 3.30
-%def_disable packagekit
+%define ver_major 3.32
+%def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -13,6 +13,7 @@ Url: http://launchpad.net/%name
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: sane xdg-utils gnome-icon-theme colord
+%{?_enable_packagekit:Requires: packagekit}
 
 %define gtk_ver 3.22
 %define gusb_ver 0.2.7
@@ -22,7 +23,8 @@ BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libgusb-devel >= %gusb_ver
 BuildRequires: libsane-devel zlib-devel
 BuildRequires: vala-tools libcolord-vala
-BuildRequires: libcolord-devel libwebp-devel 
+BuildRequires: libcolord-devel libwebp-devel
+%{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel}
 
 %description
 Simple Scan is an easy-to-use application, designed to let users connect their
@@ -33,7 +35,7 @@ scanner and quickly have the image/document in an appropriate format.
 find ./ -name "*.stamp" -delete
 
 %build
-%meson %{?_disable_packagekit:-Denable-packagekit=false}
+%meson %{?_disable_packagekit:-Dpackagekit=false}
 %meson_build
 
 %install
@@ -43,13 +45,15 @@ find ./ -name "*.stamp" -delete
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/%name/
 %_desktopdir/*
 %_datadir/glib-2.0/schemas/org.gnome.SimpleScan.gschema.xml
 %_datadir/metainfo/%name.appdata.xml
 %_man1dir/*
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.31
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -109,7 +109,7 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_sysconfdir/xdg/autostart/*.desktop
 %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
-#%_datadir/p11-kit/modules/gnome-keyring.module
+%_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring/
 %_libdir/pkcs11
 %_man1dir/*
@@ -127,6 +127,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Sat Mar 02 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.91-alt1
+- 3.31.91
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

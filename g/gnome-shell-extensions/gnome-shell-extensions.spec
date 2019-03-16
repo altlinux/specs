@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 Requires: gnome-shell >= %ver_major
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgjs-devel libmozjs52-tools sassc
+BuildRequires: libgjs-devel libmozjs60-tools sassc
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -69,27 +69,17 @@ See %_docdir/%name-%version/README for more information.
 
 ## Extensions
 %dir %_datadir/gnome-shell/extensions
-# alternate-tab
-%dir %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/convenience.js
-%_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/prefs.js
-
 # windowsNavigator
 %dir %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/convenience.js
 
 # auto-move-windows
 %dir %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/prefs.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.auto-move-windows.gschema.xml
 
@@ -98,7 +88,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/convenience.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.user-theme.gschema.xml
 
 # removable drives menu
@@ -106,21 +95,18 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/convenience.js
 
 # apps-menu
 %dir %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/convenience.js
 
 # native-window-placement
 %dir %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/convenience.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.native-window-placement.gschema.xml
 
 # places-menu
@@ -128,7 +114,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/placeDisplay.js
 
 # workspace indicator
@@ -136,12 +121,10 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/prefs.js
 
 # launch-new-instance
 %dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/stylesheet.css
@@ -149,7 +132,6 @@ See %_docdir/%name-%version/README for more information.
 # window-list
 %dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/classic.css
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
@@ -159,18 +141,16 @@ See %_docdir/%name-%version/README for more information.
 # screenshot-window-sizer
 %dir %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.screenshot-window-sizer.gschema.xml
-%_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
 %doc NEWS README.md
 
-# example
-%exclude %_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/
-%exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
-
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

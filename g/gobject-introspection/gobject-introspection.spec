@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 1.58
+%define ver_major 1.60
 %def_enable doctool
 %def_disable check
 
 Name: gobject-introspection
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: gobject-introspection-1.58.0-alt-shebang.patch
 
 # use python3
 AutoReqProv: nopython
@@ -29,7 +28,7 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.58.0
+%define glib_ver 2.60.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: autoconf-archive libgio-devel >= %glib_ver
@@ -81,9 +80,9 @@ gobject-introspection.
 
 %prep
 %setup
-%patch -p1 -b .shebang
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--disable-static \
@@ -137,6 +136,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 1.60.0-alt1
+- 1.60.0
+
 * Sun Dec 30 2018 Yuri N. Sedunov <aris@altlinux.org> 1.58.3-alt1
 - 1.58.3
 

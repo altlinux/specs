@@ -13,7 +13,7 @@
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt4
+Release: alt5
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -180,6 +180,10 @@ the functionality of the Folks library.
 
 
 %changelog
+* Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt5
+- updated to 0.11.4-55-gc8c3b4c9
+- built against new eds-3.31.x libraries
+
 * Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt4
 - updated to 0.11.4-43-gd73a03d2
 

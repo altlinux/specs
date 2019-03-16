@@ -3,13 +3,13 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -25,10 +25,10 @@ Source: %name-%version.tar
 %endif
 
 %define govirt_ver 0.3.4
-%define glib_ver 2.38.0
-%define gtk_ver 3.19.8
+%define glib_ver 2.50.0
+%define gtk_ver 3.22.20
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 0.2.2
+%define libvirt_glib_ver 2.0.0
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
 %define spice_gtk_ver 0.32
@@ -64,6 +64,7 @@ BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: libfreerdp-devel
+BuildRequires: libvte3-devel
 
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt-daemon
@@ -109,7 +110,7 @@ the functionality of the Boxes.
 %find_lang %name --with-gnome
 
 %files -f %name.lang
-%doc AUTHORS README NEWS TODO
+%doc AUTHORS README* NEWS TODO
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name
@@ -130,6 +131,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

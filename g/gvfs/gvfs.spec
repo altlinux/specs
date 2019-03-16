@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.38
+%define ver_major 1.40
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -525,6 +525,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
+- 1.40.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.38.2-alt1
 - 1.38.2 (fixed CVE-2019-3827)
 

@@ -1,10 +1,10 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
 
 Name: gnome-latex
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
@@ -73,7 +73,7 @@ This package contains documentation for %name.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/icons/hicolor/scalable/apps/%name.svg
+%_datadir/icons/hicolor/*/apps/%{name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS README NEWS HACKING
@@ -85,6 +85,9 @@ This package contains documentation for %name.
 
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Aug 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

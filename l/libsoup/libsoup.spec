@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.64
+%define ver_major 2.66
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -9,9 +9,11 @@
 %def_enable vala
 %def_with gssapi
 %def_disable debug
+# fails server-test in hasher
+%def_disable check
 
 Name: libsoup
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -29,27 +31,27 @@ Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
-Patch1: %name-2.53.2-alt-compat-map.patch
+Patch1: %name-2.65.2-alt-compat-map.patch
 
-Requires: glib-networking >= 2.50.0
-#Requires: glib-openssl >= 2.50.0
+Requires: glib-networking >= 2.59.90
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
 
 %define glib_ver 2.42.0
 %define gi_ver 1.33.3
+%define psl_ver 0.20.0
 
-# from configure.ac
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: python3-base
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 
-BuildRequires: docbook-dtds docbook-style-xsl common-licenses
-BuildRequires: gtk-doc xml-common xsltproc intltool
-BuildRequires: glib-networking libpsl-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
+BuildRequires: docbook-dtds docbook-style-xsl
+BuildRequires: gtk-doc xml-common xsltproc
+BuildRequires: glib-networking libpsl-devel >= %psl_ver
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
 # for check
@@ -166,29 +168,26 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
 %ifarch %e2k
 %add_optflags -Wno-error=pointer-arith
 %endif
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{subst_with gnome} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{?_enable_snapshot:--enable-gtk-doc} \
-    %{subst_enable introspection} \
-    %{subst_with gssapi} \
-    %{?_enable_debug:--enable-debug=yes}
-%make_build
-
-%check
-# fails server-test in hasher
-#%%make check
+%meson \
+    %{?_enable_debug:--buildtype=debug} \
+    %{?_enable_static:--default-library=both} \
+    %{?_enable_gnome:-Dgnome=true} \
+    %{?_enable_gtk_doc:-Ddoc=true} \
+    %{?_enable_snapshot:-Ddoc=true} \
+    %{?_enable_introspection:-Dintrospection=true} \
+    %{?_enable_gssapi:-Dgssapi=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -200,14 +199,14 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %files devel
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-%_libdir/pkgconfig/%name-%api_ver.pc
+%_pkgconfigdir/%name-%api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 %{?_enable_vala:%_vapidir/%name-%api_ver.deps}
 
 %files gnome-devel
 %_includedir/%name-gnome-%api_ver/
 %_libdir/%name-gnome-%api_ver.so
-%_libdir/pkgconfig/%name-gnome-%api_ver.pc
+%_pkgconfigdir/%name-gnome-%api_ver.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -232,6 +231,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
+- 2.66.0
+
 * Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.64.2-alt1
 - 2.64.2
 

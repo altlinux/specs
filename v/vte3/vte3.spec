@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _name vte
-%define ver_major 0.54
+%define ver_major 0.56
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -13,8 +13,7 @@ Release: alt1
 %def_enable gtk_doc
 %def_enable glade
 %def_enable pcre2
-# bash4 required for vte.sh
-%def_disable check
+%def_enable check
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -39,8 +38,6 @@ Patch: vte-0.54.0-dreamcat4-vte.sh_preserve_custom_user_prompts.patch
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
 
-BuildPreReq: rpm-build-python
-
 BuildRequires: gcc-c++ gperf
 BuildRequires: libncurses-devel libcairo-devel
 BuildRequires: intltool >= 0.35.0
@@ -52,7 +49,7 @@ BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: vala-tools libvala-devel
 %{?_enable_pcre2:BuildRequires: libpcre2-devel}
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
 %description
 VTE is a terminal emulator widget for use with GTK+
@@ -172,7 +169,7 @@ find %buildroot -type f -name '*.la' -delete
 %pkgdocdir/*.txt
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/%_name-%api_ver.pc
+%_pkgconfigdir/%_name-%api_ver.pc
 %_vapidir/vte-%api_ver.vapi
 %if_enabled glade
 %_datadir/glade/catalogs/vte-%api_ver.xml
@@ -196,6 +193,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.3-alt1
 - 0.54.3
 

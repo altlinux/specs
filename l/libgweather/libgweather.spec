@@ -1,4 +1,4 @@
-%define ver_major 3.28
+%define ver_major 3.32
 %define api_ver 3.0
 %def_enable introspection
 %def_enable vala
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libgweather
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for weather information
@@ -23,18 +23,19 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define soup_ver 2.44
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
+%define geocode_ver 3.26.1
 
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-build-gnome meson
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libsoup-devel >= %soup_ver
-BuildPreReq: xsltproc
-BuildRequires: libgeocode-glib-devel libxml2-devel perl-XML-Parser xml-utils gzip
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
-%{?_enable_vala:BuildPreReq: vala-tools >= %vala_ver}
-%{?_enable_gtk_doc:BuildPreReq: gtk-doc}
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: libgeocode-glib-devel >= %geocode_ver libxml2-devel
+BuildRequires: xsltproc perl-XML-Parser xml-utils gzip
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 
 %description
@@ -110,8 +111,8 @@ This package provides Vala language bindings for the %name library.
 %add_optflags -D_GNU_SOURCE
 %meson \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_vala:-Denable-vala=true} \
-    %{?_enable_glade:-Dglade_catalog=true}
+    %{?_disable_vala:-Denable_vala=false} \
+    %{?_disable_glade:-Dglade_catalog=false}
 %meson_build
 
 %install
@@ -161,6 +162,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
+- 3.28.4
+
 * Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

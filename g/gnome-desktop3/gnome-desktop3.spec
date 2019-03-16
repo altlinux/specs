@@ -2,18 +2,19 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
-%def_disable static
+
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
 %def_enable udev
+%def_disable check
 
 Name: %{_name}3
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -30,17 +31,16 @@ Source: %_name-%version.tar
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
+BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome rpm-build-gir
 
-# From configure.ac
-BuildRequires: gnome-common >= 2.8.0
 BuildRequires: yelp-tools gtk-doc
 BuildRequires: libgdk-pixbuf-devel >= 2.36.5
 BuildRequires: libgtk+3-devel >= 3.3.6
-BuildRequires: libgio-devel >= 2.53.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.27.90
+BuildRequires: libgio-devel >= 2.54.0
+BuildRequires: gsettings-desktop-schemas-devel >= 3.28.0
 BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
+BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel
 # seccomp isn't currently supported on all the Linux architectures
 BuildRequires: libseccomp-devel
@@ -125,23 +125,22 @@ the functionality of the Gnome 3 desktop library.
 
 %prep
 %setup -n %_name-%version
-[ ! -d m4 ] && mkdir m4
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    --with-gnome-distributor=%gnome_distributor \
-    %{?_enable_installed_tests:--enable-installed-tests} \
-    %{subst_enable udev}
-%make_build
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    -Dgnome_distributor='%gnome_distributor' \
+    %{?_enable_installed_tests:-Dinstalled_tests=true} \
+    %{?_enable_udev:-Dudev=enabled}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome --output=%_name.lang %_name-%api_ver gpl lgpl fdl
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 
@@ -180,6 +179,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Wed Feb 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2.1-alt1
 - 3.30.2.1
 

@@ -1,15 +1,18 @@
 %define _name gst-plugins
-%define ver_major 1.14
+%define ver_major 1.15
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_enable gtk_doc
+%def_disable gtk_doc
+%def_disable debug
+%def_disable examples
+%def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -27,11 +30,12 @@ Provides: %_name%api_ver-mad = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
 
-BuildRequires: gcc-c++ liborc-devel orc gst-plugins%api_ver-devel >= %version
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: gtk-doc liba52-devel libcdio-devel libid3tag-devel
 BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
 BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
-BuildRequires:  libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
+BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
 
 %description
 GStreamer Ugly Plug-ins is a set of plug-ins that have good quality
@@ -54,31 +58,36 @@ collection.
 %setup -n %_name-ugly-%version
 
 %build
-%autoreconf
-%configure \
-	--disable-examples \
-	--enable-experimental \
-	--enable-gtk-doc \
-	--disable-static \
-	--with-html-dir=%_gtk_docdir
+%meson \
+	-Dexamples=disabled \
+	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_debug:-Dgst_debug=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %_name-ugly-%api_ver
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %_name-ugly-%api_ver.lang
 %doc AUTHORS NEWS README RELEASE
 %_gst_libdir/*.so
-%exclude %_gst_libdir/*.la
 %_datadir/gstreamer-%api_ver/*
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
+%endif
 
 %changelog
+* Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 

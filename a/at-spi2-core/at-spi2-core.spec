@@ -1,4 +1,4 @@
-%define ver_major 2.30
+%define ver_major 2.32
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -90,7 +90,7 @@ This package contains documentation for developing applications that use
     -Ddbus_daemon=/bin/dbus-daemon \
     %{?_disable_x11:-Denable-x11=false} \
     %{?_disable_introspection:-Denable-introspection=false} \
-    %{?_enable_docs:-Denable_docs=true}
+    %{?_enable_docs:-Ddocs=true}
 
 %meson_build
 
@@ -99,6 +99,7 @@ This package contains documentation for developing applications that use
 %find_lang %name
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files -f %name.lang
@@ -131,6 +132,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.30.1-alt1
 - 2.30.1
 

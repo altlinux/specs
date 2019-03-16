@@ -1,12 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 2.30
+%define ver_major 2.32
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
+%def_disable gtk_doc
+%def_disable check
 
 Name: at-spi2-atk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -21,15 +23,15 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.32
-%define core_ver 2.30.1
-%define atk_ver 2.29.2
+%define core_ver 2.32.0
+%define atk_ver 2.32.0
 
 Requires: at-spi2-core >= %core_ver
 
 BuildRequires(pre): meson
 BuildRequires: libdbus-devel libgio-devel >= %glib_ver libatk-devel >= %atk_ver
 BuildRequires: libat-spi2-core-devel >= %core_ver libxml2-devel libX11-devel libICE-devel libSM-devel
-BuildRequires: intltool
+BuildRequires: gtk-doc
 
 %description
 at-spi allows assistive technologies to access GTK-based applications.
@@ -56,7 +58,7 @@ This package provides development files for atk-bridge library.
 %setup
 
 %build
-%meson
+%meson %{?_enable_gtk_doc:-Ddocs=true}
 %meson_build
 
 %install
@@ -64,7 +66,8 @@ This package provides development files for atk-bridge library.
 %find_lang %name
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_libdir/libatk-bridge-%api_ver.so.*
@@ -81,6 +84,9 @@ This package provides development files for atk-bridge library.
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.30.1-alt1
 - updated to AT_SPI2_ATK_2_30_1-1-g036eccf
 

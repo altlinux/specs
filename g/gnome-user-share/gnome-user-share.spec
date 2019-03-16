@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.32
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
 Name: gnome-user-share
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -14,15 +14,16 @@ Url: https://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define glib_ver 2.58
 %define nautilus_ver 3.27.90
 
 Requires: apache2 >= 2.2
 Requires: apache2-mod_dnssd >= 0.6
 
-BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
-BuildRequires: libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
+BuildRequires: gnome-common yelp-tools desktop-file-utils
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
 BuildRequires: libnautilus-devel >= %nautilus_ver libselinux-devel libgudev-devel
-BuildRequires: apache2 apache2-mod_dnssd systemd-devel
+BuildRequires: apache2 apache2-mod_dnssd pkgconfig(systemd)
 
 %description
 gnome-user-share is a small package that binds together various free
@@ -66,6 +67,9 @@ mDNSResolver running.
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0.1-alt1
+- 3.32.0.1
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

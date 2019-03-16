@@ -3,15 +3,16 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.30
+%define ver_major 3.32
 %define gst_api_ver 1.0
-# broken with meson-0.47.x
 %def_enable gtk_doc
 %def_disable check
+# removed in 3.31.x
+%def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -33,7 +34,7 @@ AutoReqProv: nopython
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.53.90
+%define gjs_ver 1.56.0
 %define mutter_ver %version
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
@@ -99,7 +100,6 @@ Requires: typelib(Polkit)
 Requires: typelib(PolkitAgent)
 Requires: typelib(Rsvg)
 Requires: typelib(Shell)
-Requires: typelib(ShellMenu)
 Requires: typelib(Soup)
 Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
@@ -145,8 +145,7 @@ BuildRequires: gnome-control-center-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gcr-libs-gir-devel libpolkit-gir-devel
-# for browser plugin
-BuildRequires: browser-plugins-npapi-devel
+%{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
 %description
 GNOME Shell provides core user interface functions for the GNOME 3 desktop,
@@ -181,7 +180,7 @@ GNOME Shell.
 # fix rpath
 subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 # browser plugin dir
-subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
+%{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true}
@@ -209,8 +208,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %_libdir/%name/libgvc.so
 %_libdir/%name/libst-1.0.so
 %_libdir/%name/*.typelib
-# browser plugin
-%browser_plugins_path/libgnome-shell-browser-plugin.so
+%{?_enable_browser_plugin:%browser_plugins_path/libgnome-shell-browser-plugin.so}
 
 %files data -f %name.lang
 %_xdgconfigdir/autostart/%name-overrides-migration.desktop
@@ -221,12 +219,13 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
 %_datadir/dbus-1/services/%xdg_name.HotplugSniffer.service
-%_datadir/dbus-1/interfaces/org.gnome.Shell.PadOsd.xml
-%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Introspect.xml
+%_datadir/dbus-1/interfaces/%xdg_name.PadOsd.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
-%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider2.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
-%_datadir/dbus-1/interfaces/org.gnome.Shell.Extensions.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Extensions.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
@@ -246,6 +245,13 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- updated to 3.32.0-14-g62233a4db
+
+* Sat Jan 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt4
+- updated to 3.30.2-9-gee97f7352
+  (fixed https://gitlab.gnome.org/GNOME/gnome-shell/issues/391)
+
 * Mon Jan 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt3
 - updated to 3.30.2-7-g999cc1214
 

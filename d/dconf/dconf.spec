@@ -1,13 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 0.30
+%define ver_major 0.32
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
-%def_disable bash_completion
+%def_enable bash_completion
+%def_enable vala
 
 Name: dconf
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple configuration system
@@ -27,9 +28,9 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: lib%name = %version-%release dbus
 
 BuildRequires(pre): meson
-BuildRequires: libgio-devel >= 2.44.0 vala-tools >= 0.18.0
-BuildRequires: libdbus-devel
+BuildRequires: libgio-devel >= 2.44.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools >= 0.18.0}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: xsltproc}
 %{?_enable_bash_completion:BuildRequires: pkgconfig(bash-completion)}
@@ -112,6 +113,7 @@ This package provides Vala language bindings  for the dconf library
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	-Dman=true \
+	%{?_enable_vala:-Dvapi=true} \
 	%{?_disable_bash_completion:-Dbash_completion=false}
 %meson_build
 
@@ -165,12 +167,16 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_girdir/*
 %endif
 
+%if_enabled vala
 %files -n lib%name-vala
 %_vapidir/dconf.deps
 %_vapidir/dconf.vapi
-
+%endif
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.1-alt1
 - 0.30.1
 

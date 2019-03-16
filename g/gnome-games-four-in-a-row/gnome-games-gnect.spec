@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name four-in-a-row
-%define ver_major 3.28
+%define xdg_name org.gnome.Four-in-a-row
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -22,9 +23,10 @@ Provides:  gnome-games-gnect = %version-%release
 %define glib_ver 2.32.0
 %define gtk_ver 3.14.0
 
-BuildRequires: gnome-common vala-tools desktop-file-utils libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel zlib-devel gsettings-desktop-schemas-devel
+BuildRequires: libcanberra-gtk3-devel libcanberra-vala zlib-devel gsettings-desktop-schemas-devel
 
 %description
 Gnect is a four-in-a-row game for the GNOME Project. The object of the
@@ -36,26 +38,26 @@ line can be horizontal, vertical or diagonal.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
 %attr(-,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%_name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

@@ -2,7 +2,8 @@
 
 %define _name org.gnome.taquin
 %define __name gnome-taquin
-%define ver_major 3.30
+%define xdg_name org.gnome.Taquin
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-taquin
@@ -21,9 +22,11 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.40.0
 %define gtk_ver 3.15.0
 
-BuildRequires: gnome-common intltool yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel
+BuildRequires: libcanberra-gtk3-devel libcanberra-vala
 
 %description
 Move tiles so that they reach their places.
@@ -32,28 +35,28 @@ Move tiles so that they reach their places.
 %setup -n %__name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f %__name.lang
 %_bindir/%__name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%__name/
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/scalable/apps/%__name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_man6dir/%__name.*
-%_datadir/dbus-1/services/%_name.service
-%config %_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
-%doc AUTHORS NEWS
+#%_datadir/dbus-1/services/%_name.service
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%doc AUTHORS NEWS COPYING*
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

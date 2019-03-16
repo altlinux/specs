@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
-%define ver_major 3.30
+%define xdg_name org.gnome.%_name
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -20,10 +21,12 @@ Obsoletes: gnome-games-glines
 Provides:  gnome-games-glines = %version-%release
 
 %define glib_ver 2.32
-%define gtk_ver 3.12.0
+%define gtk_ver 3.22.0
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libgnome-games-support-devel
 
@@ -42,20 +45,21 @@ possible, and be #1 in the High Scores.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_man6dir/%_name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

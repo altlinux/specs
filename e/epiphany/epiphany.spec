@@ -1,20 +1,22 @@
 %def_disable snapshot
+%set_verify_elf_method unresolved=relaxed
+
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
 Group: Networking/WWW
-License: GPL
-URL: http://www.gnome.org/projects/%name
+License: GPLv3+
+Url: http://www.gnome.org/projects/%name
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -25,14 +27,17 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.22.2
-%define gtk_ver 3.22.13
+%add_findprov_lib_path %_libdir/%name
+
+%define webkit_ver 2.23.90
+%define gtk_ver 3.24.0
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
 %define soup_ver 2.48.0
 %define secret_ver 0.14
 %define gcr_ver 3.5.5
-%define dazzle_ver 3.28.0
+%define dazzle_ver 3.31.90
+%define handy_ver 0.0.9
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
@@ -51,7 +56,7 @@ BuildRequires: libnettle-devel
 BuildRequires: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 BuildRequires: libicu-devel libjson-glib-devel
-
+BuildRequires: libhandy-devel >= %handy_ver
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
 
@@ -99,11 +104,13 @@ This package contains common noarch files needed for Epiphany.
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
 %_man1dir/*
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

@@ -1,10 +1,10 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define tracker_ver 2.0
 %define geocode_ver 3.20.0
 %define geoclue_ver 2.4.0
-%define champlain_ver 0.12.14
+%define champlain_ver 0.12.19
 
 Requires: geoclue2 >= %geoclue_ver
 Requires: libgeocode-glib-gir >= %geocode_ver
@@ -52,10 +52,10 @@ Requires: typelib(Soup)
 Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gir
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
-BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: geoclue2-devel >= %geoclue_ver
+BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
 BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
 BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel librest-gir-devel
 BuildRequires: libclutter-gir-devel libcogl-gir-devel
@@ -72,7 +72,6 @@ Maps is a map application for GNOME.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -80,7 +79,7 @@ Maps is a map application for GNOME.
 %_libdir/%name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/*x*/*/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -91,6 +90,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 

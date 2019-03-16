@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name tali
-%define ver_major 3.22
+%define xdg_name org.gnome.Tali
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -22,7 +23,8 @@ Provides:  gnome-games-gtali = %version-%release
 %define glib_ver 2.32.0
 %define gtk_ver 3.4.0
 
-BuildRequires: gnome-common intltool yelp-tools
+BuildRequires(pre): meson
+BuildRequires: vala-tools yelp-tools desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
@@ -35,28 +37,26 @@ include any or all of your dice.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome --output=%_name.lang %_name gtali
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_man6dir/%_name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

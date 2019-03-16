@@ -2,7 +2,7 @@
 %define api_ver 0.14
 
 Name: retro-gtk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
@@ -100,6 +100,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 

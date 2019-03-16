@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
+%define xdg_name org.gnome.Yelp
 
-%define ver_major 3.30
+%define ver_major 3.32
 %def_disable debug
 %def_enable lzma
 
@@ -20,19 +21,19 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gtk_ver 3.14
 %define xslt_ver 1.1.4
 %define webkit_ver 2.19.2
-%define yelpxsl_ver 3.20.0
-%define intltool_ver 0.5.0
+%define yelpxsl_ver 3.32.0
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common intltool >= %intltool_ver itstool gtk-doc
-BuildPreReq: libgio-devel >= %gio_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libxslt-devel >= %xslt_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: yelp-xsl >= %yelpxsl_ver
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome
+BuildRequires: gnome-common itstool gtk-doc
+BuildRequires: libgio-devel >= %gio_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libxslt-devel >= %xslt_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: yelp-xsl >= %yelpxsl_ver
 BuildRequires: zlib-devel bzlib-devel libsqlite3-devel
 %{?_enable_lzma:BuildRequires: liblzma-devel}
 
@@ -105,6 +106,7 @@ Yelp.
 %_datadir/%name/
 %_datadir/yelp-xsl/xslt/common/domains/yelp.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.yelp.gschema.xml
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS README NEWS TODO
 
@@ -121,6 +123,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

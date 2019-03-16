@@ -1,11 +1,11 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
@@ -26,18 +26,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
 
+Provides: gnome-disks = %EVR
 Requires: udisks2 >= %udisks_ver
 
-BuildRequires: meson xsltproc libappstream-glib-devel
-BuildPreReq: libudisks2-devel >= %udisks_ver
-BuildPreReq: libgio-devel  >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libsecret-devel >= %secret_ver
-BuildPreReq: libpwquality-devel >= %pwquality_ver
-BuildPreReq: libdvdread-devel >= %dvdread_ver
-BuildPreReq: liblzma-devel >= %lzma_ver
+BuildRequires(pre): meson rpm-build-xdg
+BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: libudisks2-devel >= %udisks_ver
+BuildRequires: libgio-devel  >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libsecret-devel >= %secret_ver
+BuildRequires: libpwquality-devel >= %pwquality_ver
+BuildRequires: libdvdread-devel >= %dvdread_ver
+BuildRequires: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
-%{?_enable_libsystemd:BuildRequires: systemd-devel libsystemd-devel}
+%{?_enable_libsystemd:BuildRequires: pkgconfig(systemd)}
 BuildRequires: xsltproc docbook-style-xsl
 
 %description
@@ -56,7 +58,6 @@ RAID, SMART monitoring, etc
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=global.lang %name palimpsest
 
 %files -f global.lang
@@ -65,7 +66,7 @@ RAID, SMART monitoring, etc
 
 %if_enabled gsd_plugin
 %_libexecdir/gsd-disk-utility-notify
-%_sysconfdir/xdg/autostart/org.gnome.SettingsDaemon.DiskUtilityNotify.desktop
+%_xdgconfigdir/autostart/org.gnome.SettingsDaemon.DiskUtilityNotify.desktop
 %endif
 
 %_desktopdir/gnome-disk-image-mounter.desktop
@@ -79,6 +80,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 

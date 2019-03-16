@@ -1,11 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 2.1
+%define ver_major 2.2
 %define ver_api 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -15,7 +16,9 @@ Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%def_enable libxml2
+%add_findprov_lib_path %_libdir/%name-%ver_api/
+
+%def_enable xml
 %def_enable rss
 %def_enable poppler
 %def_enable libgxps
@@ -25,6 +28,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %def_enable libjpeg
 %def_enable libtiff
 %def_enable libpng
+%def_enable raw
 %def_enable libvorbis
 %def_enable libflac
 %def_enable exempi
@@ -39,6 +43,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %def_enable icon
 %def_enable libosinfo
 %def_enable playlist
+%def_enable docs
 
 %define libxml2_ver 2.6
 %define poppler_ver 0.16.0
@@ -62,11 +67,13 @@ BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: intltool
 BuildRequires: tracker-devel >= %ver_major
-BuildRequires: libupower-devel libstemmer-devel libicu-devel libenca-devel libseccomp-devel
+BuildRequires: libupower-devel libstemmer-devel libicu-devel
+BuildRequires: libenca-devel libseccomp-devel libdbus-devel pkgconfig(systemd)
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
-%{?_enable_libxml2:BuildRequires: libxml2-devel >= %libxml2_ver}
+%{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
 %{?_enable_rss:BuildRequires: libgrss-devel >= %libgrss_ver}
 %{?_enable_libpng:BuildRequires: libpng-devel >= %libpng_ver}
+%{?_enable_raw:BuildRequires: libgexiv2-devel}
 %{?_enable_poppler:BuildRequires: libpoppler-glib-devel >= %poppler_ver}
 %{?_enable_libgxps:BuildRequires: libgxps-devel}
 %{?_enable_libexif:BuildRequires: libexif-devel >= %libexif_ver}
@@ -78,7 +85,7 @@ BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
 %{?_enable_libvorbis:BuildRequires: libflac-devel >= %flac_ver}
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
 %{?_enable_taglib:BuildRequires: libtag-devel >= %taglib_ver}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc docbook-utils graphviz}
+%{?_enable_docs:BuildRequires: gtk-doc docbook-utils graphviz}
 %{?_enable_libgif:BuildRequires: libgif-devel}
 %{?_enable_libcue:BuildRequires: libcue-devel}
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
@@ -94,65 +101,65 @@ This package provides miners for TRacker.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-	--enable-generic-media-extractor=%generic_media_extractor \
-	--disable-static \
-	%{subst_enable libxml2} \
-	%{?_enable_rss:--enable-miner-rss} \
-	%{subst_enable taglib} \
-	%{subst_enable poppler} \
-	%{subst_enable libgxps} \
-	%{subst_enable libexif} \
-	%{subst_enable libiptcdata} \
-	%{subst_enable libgsf} \
-	%{subst_enable libjpeg} \
-	%{subst_enable libtiff} \
-	%{subst_enable libgif} \
-	%{subst_enable libpng} \
-	%{subst_enable libvorbis} \
-	%{subst_enable libflac} \
-	%{subst_enable exempi} \
-	%{subst_enable libcue} \
-	%{subst_enable abiword} \
-	%{subst_enable dvi} \
-	%{subst_enable mp3} \
-	%{subst_enable ps} \
-	%{subst_enable text} \
-	%{subst_enable icon} \
-	%{subst_enable libosinfo} \
-	%{subst_enable playlist}
-%make_build
+%meson \
+	-Dgeneric_media_extractor='%generic_media_extractor' \
+	%{?_enable_xml:-Dxml=enabled} \
+	%{?_enable_rss:-Dminer-rss=true} \
+	%{?_enable_taglib:-Dtaglib=enabled} \
+	%{?_enable_poppler:-Dpdf=enabled} \
+	%{?_enable_libgxps:-Dxps=enabled} \
+	%{?_enable_libexif:-Dexif=enabled} \
+	%{?_enable_libiptcdata:-Diptc=enabled} \
+	%{?_enable_libgsf:-Dgsf=enabled} \
+	%{?_enable_libjpeg:-Djpeg=enabled} \
+	%{?_enable_libtiff:-Dtiff=enabled} \
+	%{?_enable_libgif:-Dgif=enabled} \
+	%{?_enable_libpng:-Dpng=enabled} \
+	%{?_enable_raw:-Draw=enabled} \
+	%{?_enable_libvorbis:-Dvorbis=enabled} \
+	%{?_enable_libflac:-Dflac=enabled} \
+	%{?_enable_exempi:-Dxmp=enabled} \
+	%{?_enable_libcue:-Dcue=enabled} \
+	%{?_enable_abiword:-Dabiword=true} \
+	%{?_enable_dvi:-Ddvi=true} \
+	%{?_enable_mp3:-Dmp3=true} \
+	%{?_enable_ps:-Dps=true} \
+	%{?_enable_text:-Dtext=true} \
+	%{?_enable_icon:-Dicon=true} \
+	%{?_enable_libosinfo:-Diso=enabled} \
+	%{?_enable_playlist:-Dplaylist=enabled} \
+	%{?_enable_docs:-Ddocs=true} \
+	-Dsystemd_user_services='%_userunitdir'
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %_xdgconfigdir/autostart/tracker-extract.desktop
-%_xdgconfigdir/autostart/tracker-miner-apps.desktop
+#%_xdgconfigdir/autostart/tracker-miner-apps.desktop
 %_xdgconfigdir/autostart/tracker-miner-fs.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss.desktop
 %_libdir/%name-%ver_api/
 %_libexecdir/tracker-extract
 %_libexecdir/tracker-miner-fs
 %_libexecdir/tracker-writeback
-%_libexecdir/tracker-miner-apps
+#%_libexecdir/tracker-miner-apps
 %{?_enable_rss:%_libexecdir/tracker-miner-rss}
 %_man1dir/tracker-miner-fs.*
 %{?_enable_rss:%_man1dir/tracker-miner-rss.1.*}
 %_datadir/tracker/miners/
 %_datadir/%name/extract-rules/
 %_prefix/lib/systemd/user/tracker-extract.service
-%_prefix/lib/systemd/user/tracker-miner-apps.service
+#%_prefix/lib/systemd/user/tracker-miner-apps.service
 %_prefix/lib/systemd/user/tracker-miner-fs.service
 %_prefix/lib/systemd/user/tracker-miner-rss.service
 %_prefix/lib/systemd/user/tracker-writeback.service
 %_man1dir/tracker-extract.*
 %_man1dir/tracker-writeback.*
 
-%_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Applications.service
+#%_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Applications.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Extract.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Files.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.RSS.service
@@ -162,10 +169,13 @@ This package provides miners for TRacker.
 %_datadir/glib-2.0/schemas/org.freedesktop.Tracker.Writeback.gschema.xml
 %_datadir/glib-2.0/schemas/org.freedesktop.TrackerMiners.enums.xml
 
-%exclude %_datadir/tracker-tests/01-writeback.py
+#%exclude %_datadir/tracker-tests/01-writeback.py
 
 
 %changelog
+* Thu Mar 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Sat Feb 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
 - 2.1.6
 

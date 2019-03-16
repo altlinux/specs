@@ -1,23 +1,25 @@
 %def_disable snapshot
-%define ver_major 2.1
+%define ver_major 2.2
 %define api_ver 2.0
+%define gst_api_ver 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_without bootstrap
+%def_with bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable network_manager
-%def_enable gtk_doc
+%def_enable stemmer
+%def_disable docs
 
-# Unicode support library? (libunistring|libicu)
-%define unicode_support libicu
+# Unicode support library? (unistring|icu)
+%define unicode_support icu
 
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.8
+Version: %ver_major.1
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -52,25 +54,20 @@ Requires: libsqlite3 >= %sqlite_ver
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: gcc-c++ gnome-common
-BuildRequires: intltool gtk-doc docbook-utils python3
-BuildRequires: libxml2-devel
+BuildRequires: gtk-doc docbook-utils python3
+BuildRequires: libxml2-devel libicu-devel libuuid-devel
 BuildRequires: libdbus-devel >= %dbus_ver
-BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libicu-devel libunistring-devel
-BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5}
+BuildRequires: gobject-introspection-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
 %{?_enable_network_manager:BuildRequires: libnm-devel}
-BuildRequires: libstemmer-devel
-
-BuildRequires: libuuid-devel
-BuildRequires: vala >= 0.18.0
+%{?_enable_stemmer:BuildRequires: libstemmer-devel}
+BuildRequires: vala-tools
 BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
-BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
+BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
-BuildRequires: libsystemd-devel libseccomp-devel
+BuildRequires: pkgconfig(systemd) libseccomp-devel
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -152,28 +149,19 @@ Included utilities for Tracker:
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-	--disable-static \
-	%{subst_enable introspection} \
-	%{subst_enable upower} \
-	--with-unicode-support=%unicode_support \
-	%{?_enable_network_manager:--enable-network-manager} \
-	%{subst_enable unac} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+	-Dunicode_support=%unicode_support \
+	%{?_enable_network_manager:-Dnetwork_manager=enabled} \
+	%{?_enable_stemmer:-Dstemmer=enabled} \
+	%{?_enable_docs:-Ddocs=true} \
+	-Dsystemd_user_services='%_prefix/lib/systemd/user'
 
-#	--enable-guarantee-metadata \
-
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
-find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
-
+%meson_install
 %find_lang %name
-rm -rf %buildroot%_datadir/tracker-tests
+
 
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README
@@ -195,7 +183,7 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 %files -n lib%name
 %_libdir/*.so.*
-%_libdir/%name-%api_ver/*.so.*
+%_libdir/%name-%api_ver/*.so
 
 %files utils
 %_bindir/%name
@@ -210,13 +198,12 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_man1dir/tracker-status.*
 
 %files devel
-%_libdir/%name-%api_ver/*.so
 %_includedir/%name-%api_ver/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
-%_datadir/vala/vapi/*
+%_vapidir/*
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
@@ -235,8 +222,14 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Wed Mar 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Thu Feb 21 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
 - 2.1.8
+
+* Wed Feb 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
+- 2.1.7
 
 * Thu Jan 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2.2
 - disabled bootstrap again after rebuild tracker-miners against libexempi.so.8
@@ -247,8 +240,8 @@ rm -rf %buildroot%_datadir/tracker-tests
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt2
 - fixed buildreqs for network-manager support
 
-* Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
-- updated to 2.1.6-5-g92a5a24c4
+* Fri Nov 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
+- updated to 2.1.6-3-gb44919518
 
 * Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
 - 2.1.5

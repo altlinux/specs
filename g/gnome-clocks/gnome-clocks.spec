@@ -1,8 +1,8 @@
 %define xdg_name org.gnome.clocks
-%define ver_major 3.30
+%define ver_major 3.32
 
 Name: gnome-clocks
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clock application designed for GNOME 3
@@ -15,15 +15,16 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.x
 %define gweather_ver 3.27.2
 %define geocode_ver 3.18.0
 %define geoclue_ver 2.4
-%define gtk_ver 3.20.0
+%define gtk_ver 3.22.0
 
 Requires: geoclue2
 
 BuildRequires(pre): meson yelp-tools
-BuildRequires: libappstream-glib-devel
-BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libnotify-devel
+BuildRequires: vala-tools
+BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: libgtk+3-devel >= %gtk_ver libnotify-devel
 BuildRequires: libgsound-devel libgnome-desktop3-devel
-BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel libgweather-vala
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgweather-vala
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
 
@@ -48,12 +49,14 @@ Clock application designed for GNOME 3
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
-%_datadir/icons/*/*/apps/%xdg_name.png
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README NEWS
 
 %changelog
+* Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Oct 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name robots
+%define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 3.22
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -15,17 +16,18 @@ License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Robots
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
-Patch: %__name-3.7.92-alt-lfs.patch
 
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-gnobots
 Provides:  gnome-games-gnobots = %version-%release
 
 %define glib_ver 2.32.0
-%define gtk_ver 3.4.0
+%define gtk_ver 3.22.0
 
-BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libcanberra-gtk3-devel libgnome-games-support-devel
 
@@ -37,30 +39,28 @@ systems.
 
 %prep
 %setup -n %__name-%version
-%patch -p1 -b .lfs
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %attr(2711,root,games) %_bindir/%__name
-%_desktopdir/%__name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%__name
-%_iconsdir/hicolor/*x*/*/*.png
-%_iconsdir/hicolor/scalable/*/*.svg
+%_iconsdir/hicolor/*/*/*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%__name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

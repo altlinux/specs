@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 %define _name 2048
 %define __name gnome-%_name
-%define ver_major 3.30
-%define _libexecdir %_prefix/libexec
+%define ver_major 3.32
+%define xdg_name org.gnome.TwentyFortyEight
 
 Name: gnome-games-%_name
 Version: %ver_major.0
@@ -18,45 +19,44 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 
 Provides:  %__name = %version-%release
 
-%define gtk_ver 3.12.0
+%define gtk_ver 3.22.3
 %define clutter_gtk_ver 1.6
 %define gee_ver 0.14
 %define libgames_ver 1.2.0
 %define vala_ver 0.24
 
-BuildRequires: intltool yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: libgee0.8-devel >= %gee_ver libgnome-games-support-devel >= %libgames_ver
-BuildRequires: vala-tools >= %vala_ver
 
 %description
 Move the tiles until you obtain the 2048 tile.
 
 %prep
 %setup -n %__name-%version
-[ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
-%_desktopdir/org.gnome.%__name.desktop
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/symbolic/apps/%{__name}*.svg
-%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/org.gnome.%__name.appdata.xml
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

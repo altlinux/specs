@@ -1,7 +1,7 @@
-%define ver_major 3.30
+%define ver_major 3.32
 
 Name: gnome3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -15,31 +15,31 @@ BuildPreReq: rpm-build-licenses
 # The following are required versions of those packages that
 # do not follow GNOME version numbers.
 ## Core components
-%define session_ver %ver_major
+%define session_ver 3.30.1
 %define keyring_ver 3.28.2
 
 ## Applications
-%define seahorse_ver 3.30
+%define nautilus_ver 3.31.90
+%define seahorse_ver 3.31.91
 %define utils_ver 3.20
 %define games_ver 3.28.0
 %define weather_ver 3.26
 %define pm_ver 3.26
 %define yelp_ver %ver_major
-%define dconf_editor_ver %ver_major
-%define contacts_ver %ver_major
+%define dconf_editor_ver 3.31.91
+%define contacts_ver 3.31.90
 %define roller_ver %ver_major
 %define eog_ver 3.28.4
 %define network_manager_ver 1.8
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define evince_ver %ver_major
+%define evince_ver 3.31.91
 %define applets_ver %ver_major
 %define gedit_ver %ver_major
 %define gedit_plugins_ver %ver_major
-%define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
-%define gdm_ver %ver_major
+%define gdm_ver 3.31.91
 %define gdu_ver %ver_major
 %define evo_ver %ver_major
 %define emp_ver 3.12.11
@@ -47,6 +47,9 @@ BuildPreReq: rpm-build-licenses
 %define accerciser_ver 3.22
 %define recorder_ver 3.28.0
 %define todo_ver 3.28.1
+%define characters_ver 3.30.0
+%define music_ver 3.31.92
+%define photos_ver 3.31.91
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -54,7 +57,7 @@ BuildPreReq: rpm-build-licenses
 %define gtk_theme_prefix gtk3-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
-%define orca_ver %ver_major
+%define orca_ver 3.31.92
 
 %description
 A set of virtual packages for GNOME Desktop version 3 installation.
@@ -94,12 +97,12 @@ Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
-Requires: gnome-todo >= %todo_ver
-Requires: gnome-characters >= %ver_major
+#Requires: gnome-todo >= %todo_ver
+Requires: gnome-characters >= %characters_ver
 
 # Applications
 ## Default file manager
-Requires: nautilus >= %ver_major
+Requires: nautilus >= %nautilus_ver
 ## Default terminal emulator
 Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
@@ -155,8 +158,8 @@ Requires: fuse-gvfs
 # see ALT #31129
 Requires: xdg-utils
 Requires: gnome-disk-utility >= %gdu_ver
-## Display manager (gdm or gdm2.20)
-Requires: gdm-gnome >= %ver_major
+## Display manager
+Requires: gdm-gnome >= %gdm_ver
 ## Default web-browser
 Requires: epiphany >=  %epiphany_ver
 #Requires: mozilla-plugin-adobe-flash
@@ -191,7 +194,7 @@ Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
 Requires: gnome-sound-recorder >= %recorder_ver
 ## Default music player
-Requires: gnome-music >= %ver_major
+Requires: gnome-music >= %music_ver
 ## Extneded music player
 Requires: rhythmbox
 ## All Rhythmbox plugins
@@ -203,7 +206,7 @@ Requires: totem-plugins
 ## Stock GNOME games
 Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
-Requires: gnome-photos >= %ver_major
+Requires: gnome-photos >= %photos_ver
 ## Default image viewer
 Requires: eog >= %eog_ver
 Requires: eog-plugins
@@ -213,10 +216,9 @@ Requires: brasero >= %brasero_ver
 Requires: gnome-shell-extension-gpaste
 # Documents manager
 Requires: gnome-documents
+Requires: gnome-books
 # A quick previewer for Nautilus
 Requires: sushi
-# Video propeties viewer and thumbnailer for Nautilus
-Requires: totem-nautilus
 # mypaint, krita thumbnailer for Nautilus
 Requires: gnome-kra-ora-thumbnailer
 #  Epub thumbnailer for Nautilus
@@ -236,8 +238,6 @@ Requires: gnome-power-manager >= %pm_ver
 Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
 Requires: gnome-bluetooth
-## frontend for various networking tools
-Requires: gnome-nettool >= %gnome_nettool_ver
 ## VNC server for the GNOME Desktop
 Requires: vino
 ## VNC client for the GNOME Desktop
@@ -374,7 +374,7 @@ Group: Graphical desktop/GNOME
 Provides: sisyphus-accessibility
 Obsoletes: %name-sisyphus-accessibility
 Provides: %name-sisyphus-accessibility = %version-%release
-Requires: gnome-default = %version-%release
+Requires: %name-default = %version-%release
 
 Requires: orca >= %orca_ver
 Requires: accerciser >= %accerciser_ver
@@ -407,7 +407,7 @@ Requires: gparted
 ## Default RSS-reader
 Requires: liferea
 ## Video editor
-Requires: pitivi
+#Requires: pitivi
 # Other
 Requires: gnome-battery-bench
 Requires: gnome-multi-writer
@@ -432,6 +432,11 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Wed Feb 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- default: added gnome-books; removed gnome-nettool (obsolete),
+  totem-nautilus (removed by upstream), gnome-todo (not ready for eds-3.32)
+- regular: removed pitivi
+
 * Thu Nov 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - added gnome-software
 
