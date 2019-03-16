@@ -12,7 +12,7 @@ BuildRequires: waf
 
 Name:           lv2
 Version:        1.14.0
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
@@ -52,6 +52,7 @@ Group: Development/C
 Summary:        API for the LV2 Audio Plugin Standard
 
 Requires:       %{name} = %{version}-%{release}
+Requires:       python-module-rdflib
 Provides:       lv2core-devel = 6.0-4
 Obsoletes:      lv2core-devel < 6.0-4
 Provides:       lv2-ui-devel = 2.4-5
@@ -131,6 +132,9 @@ done
 %{_docdir}/%{name}/
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_9
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_7
 - update to new release by fcimport
 
