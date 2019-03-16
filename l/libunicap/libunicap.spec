@@ -1,7 +1,7 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libunicap
-Version: 0.9.8
-Release: alt4
+Version: 0.9.12
+Release: alt1
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
@@ -9,7 +9,16 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: libunicap-%version.tar.gz
 Source1: unicap-filter.sh
-Patch: libunicap-0.9.8-alt-v4l.patch
+Patch0: libunicap-0.9.8-alt-v4l.patch
+# mga patches
+Patch1:	libunicap-0.9.12-link.patch
+Patch2:	libunicap-0.9.12-includes.patch
+Patch3:	libunicap-0.9.12-memerrs.patch
+Patch4:	libunicap-0.9.12-arraycmp.patch
+Patch5:	libunicap-0.9.12-warnings.patch
+Patch6:	libunicap-bz641623.patch
+Patch7:	libunicap-bz642118.patch
+Patch8:	libunicap-0.9.12-udevrules-dir.patch
 
 BuildRequires: gtk-doc intltool libraw1394-devel libv4l-devel
 
@@ -32,6 +41,16 @@ contains the API documentation of the library, too.
 %prep
 %setup -q
 %patch -p2
+%patch1 -p0
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p0
+
+sed -i -e 's/\(SYSFS\|ATTRS\)/ATTRS/g' data/50-euvccam.rules
 
 %build
 %autoreconf
@@ -40,6 +59,9 @@ contains the API documentation of the library, too.
 
 %install
 %makeinstall_std
+
+mkdir -p %buildroot%_udevrulesdir
+mv %buildroot{/usr/lib/udev/rules.d,%_udevrulesdir}/50-euvccam.rules
 
 # Don't install any static .a and libtool .la files
 rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
@@ -50,6 +72,7 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %doc AUTHORS ChangeLog COPYING README
 %_libdir/*.so.*
 %_libdir/unicap2
+%_udevrulesdir/50-euvccam.rules
 
 %files devel
 %_libdir/*.so
@@ -58,6 +81,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.12-alt1
+- new version
+
 * Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 0.9.8-alt4
 - spec cleanup
 
