@@ -5,7 +5,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.1808
+Version: 6.2.1810
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
@@ -13,6 +13,7 @@ Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/ngsolve/
 #Git: https://github.com/NGSolve/ngsolve.git
 Source: %name-%version.tar
+Patch1: %name-6.2.1810-alt-fix-gcc8-explicit-non-void-return.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -154,6 +155,7 @@ This package contains Python module of NGSolve.
 
 %prep
 %setup
+%patch1 -p0
 
 %build
 
@@ -294,6 +296,10 @@ popd
 
 
 %changelog
+* Fri Mar 15 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1810-alt1
+- New version
+  + Fix build with gcc8 [-Werror=return-type]
+
 * Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt1
 - New version
 - Remove %%ubt
