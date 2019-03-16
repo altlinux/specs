@@ -1,6 +1,6 @@
 Name: suricata
 Version: 4.0.3
-Release: alt1%ubt
+Release: alt2
 
 Summary: Intrusion Detection System
 
@@ -122,6 +122,9 @@ getent passwd _suricata > /dev/null \
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt2
+- NMU: rebuild with preludedb
+
 * Thu Feb 08 2018 Maxim Voronov <mvoronov@altlinux.org> 4.0.3-alt1%ubt
 - initial build for ALT
 
