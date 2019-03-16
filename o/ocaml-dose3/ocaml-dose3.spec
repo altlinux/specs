@@ -3,7 +3,7 @@
 
 Name: ocaml-dose3
 Version: 5.0.1
-Release: alt5.5.2git2c1b8df
+Release: alt6.5.2git2c1b8df
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -26,10 +26,13 @@ BuildRequires: ocaml-ocamlgraph-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-expat-devel
+BuildRequires: ocaml-xml-light-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-cudf-devel
 BuildRequires: ocaml-cppo
+BuildRequires: ocaml-curl
 BuildRequires: ocaml-zip-devel
+BuildRequires: ocaml-camlbz2-devel
 BuildRequires: ocaml-ounit-devel
 
 BuildRequires: rpm-devel
@@ -81,7 +84,7 @@ for manipulating packages of various formats.
 %patch0 -p1
 
 %build
-%configure --with-zip --with-oUnit --with-rpm4 --with-xml
+%configure --with-zip --with-bz2 --with-oUnit --with-rpm4 --with-xml --with-curl
 make
 make man
 
@@ -137,6 +140,9 @@ ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
 %_mandir/man8/*.8*
 
 %changelog
+* Sat Mar 16 2019 Anton Farygin <rider@altlinux.ru> 5.0.1-alt6.5.2git2c1b8df
+- build with curl, bz2 and xml-light support  
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt5.5.2git2c1b8df
 - rebuild with ocaml-re
 
