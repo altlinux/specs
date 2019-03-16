@@ -1,14 +1,13 @@
-Name: liblzo2
-Version: 2.08
+Name: lzo
+Version: 2.10
 Release: alt1
 
 Summary: Data compression library with very fast (de)compression
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
-URL: http://www.oberhumer.com/opensource/lzo/
-# http://www.oberhumer.com/opensource/lzo/download/lzo-%version.tar.gz
-# SHA1: 64c3e44843a44ffc4533aa89e41516f42bfefa76
-Source: lzo-%version.tar.gz
+Url: https://www.oberhumer.com/opensource/lzo/
+# https://www.oberhumer.com/opensource/lzo/download/lzo-%version.tar.gz
+Source: %name-%version.tar
 
 %description
 LZO is a portable lossless data compression library written in ANSI C.
@@ -19,12 +18,24 @@ In addition there are slower compression levels achieving a quite
 competitive compression ratio while still decompressing at
 this very high speed.
 
-%package devel
+%package -n liblzo2
+Summary: Data compression library with very fast (de)compression
+Group: System/Libraries
+
+%description -n liblzo2
+LZO is a portable lossless data compression library written in ANSI C.
+It offers pretty fast compression and very fast decompression.
+Decompression requires no memory.
+
+In addition there are slower compression levels achieving a quite
+competitive compression ratio while still decompressing at
+this very high speed.
+
+%package -n liblzo2-devel
 Summary: Development files for the LZO library
 Group: Development/C
-Requires: %name = %version-%release
 
-%description devel
+%description -n liblzo2-devel
 LZO is a portable lossless data compression library written in ANSI C.
 It offers pretty fast compression and very fast decompression.
 Decompression requires no memory.
@@ -36,12 +47,12 @@ this very high speed.
 This package contains files needed to develop programs that use
 the LZO library.
 
-%package devel-static
+%package -n liblzo2-devel-static
 Summary: Static %name library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: liblzo2-devel
 
-%description devel-static
+%description -n liblzo2-devel-static
 LZO is a portable lossless data compression library written in ANSI C.
 It offers pretty fast compression and very fast decompression.
 Decompression requires no memory.
@@ -54,33 +65,56 @@ This package contains the static LZO library needed to develop
 statically linked programs that use the LZO library.
 
 %prep
-%setup -n lzo-%version
+%setup
 find asm -name '*.o' -delete
-sed -i 's/\$host_cpu-\$ac_cv_sizeof_void_p/$target_cpu-$ac_cv_sizeof_void_p/' configure*
+sed -i 's/\$host_cpu-\$ac_cv_sizeof_void_p/$target_cpu-$ac_cv_sizeof_void_p/' \
+	configure{.ac,}
 
 %build
-%define docdir %_docdir/%name
+%add_optflags -fvisibility=hidden
+%define docdir %_docdir/liblzo2
 %configure --enable-shared --docdir=%docdir --disable-silent-rules
+printf '%s\n' \
+	'#undef __LZO_EXPORT1' \
+	'#define __LZO_EXPORT1 __attribute__((__visibility__("default")))' \
+	>> config.h
 %make_build
-
-%check
-%make_build -k check
 
 %install
 %makeinstall_std
 
-%files
-%_libdir/liblzo2.so.2*
+# Relocate shared library from %_libdir/ to /%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+        t=$(readlink -v "$f")
+        ln -rsnf %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+%check
+%make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
+%files -n liblzo2
+/%_lib/liblzo2.so.2*
 %docdir/
 
-%files devel
+%files -n liblzo2-devel
 %_includedir/lzo/
 %_libdir/liblzo2.so
+%_pkgconfigdir/lzo2.pc
 
-%files devel-static
+%files -n liblzo2-devel-static
 %_libdir/liblzo2.a
 
 %changelog
+* Sat Mar 16 2019 Dmitry V. Levin <ldv@altlinux.org> 2.10-alt1
+- 2.08 -> 2.10
+- Restricted the list of global symbols exported by the library.
+- Relocated shared library from %_libdir/ to /%_lib/ (closes: #36272).
+
 * Tue Jul 15 2014 Dmitry V. Levin <ldv@altlinux.org> 2.08-alt1
 - Updated to 2.08 (fixes CVE-2014-4607).
 - Cleaned up specfile.
