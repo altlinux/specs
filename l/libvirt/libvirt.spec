@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# like subst_with, but replacing '_' with '-'
+%define subst_with_dash() %{expand:%%(echo '%%{subst_with %1}' | sed 's/_/-/g')}
+
 %define _localstatedir /var
 %define _libexecdir %_prefix/libexec
 %define qemu_user  _libvirt
@@ -93,6 +96,43 @@
 %endif
 %def_with pm_utils
 
+%else  #server_drivers
+%def_without libvirtd
+%def_without avahi
+%def_without qemu
+%def_without openvz
+%def_without lxc
+%def_without login_shell
+%def_without vbox
+%def_without libxl
+%def_without vmware
+%def_without phyp
+%def_without esx
+%def_without hyperv
+%def_without xenapi
+%def_without network
+%def_without storage_fs
+%def_without storage_lvm
+%def_without storage_scsi
+%def_without storage_iscsi
+%def_without storage_iscsi_direct
+%def_without storage_disk
+%def_without storage_rbd
+%def_without storage_mpath
+%def_without storage_gluster
+%def_without storage_zfs
+%def_without storage_sheepdog
+%def_without storage_vstorage
+%def_without numactl
+%def_with selinux
+
+%def_without netcf
+%def_without udev
+%def_without hal
+%def_with yajl
+%def_without sanlock
+%def_without fuse
+%def_with pm_utils
 %endif #server_drivers
 
 %if_with  qemu
@@ -108,15 +148,21 @@
 %def_with polkit
 %def_with capng
 %def_with firewalld
+%def_without firewalld_zone
 
 %if_with qemu || lxc
 %def_with nwfilter
 %def_with libpcap
+%else
+%def_without nwfilter
+%def_without libpcap
 %endif
 
+%def_with libnl
 %if_with qemu
 %def_with macvtap
-%def_with libnl
+%else
+%def_without macvtap
 %endif
 
 %def_with audit
@@ -127,10 +173,17 @@
 %def_with libssh
 
 %def_without wireshark
-%def_without bash_completion 
+%def_without bash_completion
+
+# nss plugin depends on network
+%if_with network
+%def_with nss_plugin
+%else
+%def_without nss_plugin
+%endif
 
 Name: libvirt
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -159,7 +212,7 @@ Requires: %name-libs = %EVR
 %{?_with_libnl:BuildRequires: libnl-devel}
 %{?_with_avahi:BuildRequires: libavahi-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
-%{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 radvd}
+%{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 radvd openvswitch}
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
@@ -203,7 +256,6 @@ BuildRequires: dmidecode
 BuildRequires: libtirpc-devel
 BuildRequires: glibc-utils
 BuildRequires: /sbin/rmmod
-BuildRequires: openvswitch
 BuildRequires: radvd
 BuildRequires: dnsmasq
 BuildRequires: libxfs-devel
@@ -713,6 +765,7 @@ Requires: %name-libs = %EVR
 Includes the Sanlock lock manager plugin for the QEMU
 driver
 
+%if_with nss_plugin
 %package -n nss-%name
 Summary: Libvirt plugin for Name Service Switch
 Group: System/Libraries
@@ -720,6 +773,7 @@ Requires: %name-daemon-driver-network = %EVR
 
 %description -n nss-%name
 Libvirt plugin for NSS for translating domain names into IP addresses.
+%endif
 
 %prep
 %setup -a1
@@ -754,7 +808,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with qemu} \
 		%{subst_with openvz} \
 		%{subst_with lxc} \
-		%{?_with_login_shell:--with-login-shell} \
+		%{subst_with_dash login_shell} \
 		%{subst_with vbox} \
 		%{subst_with libxl} \
 		%{subst_with vmware} \
@@ -763,18 +817,18 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with hyperv} \
 		%{subst_with xenapi} \
 		%{subst_with network} \
-		%{?_with_storage_fs:--with-storage-fs} \
-		%{?_with_storage_lvm:--with-storage-lvm} \
-		%{?_with_storage_iscsi:--with-storage-iscsi} \
-		%{?_with_storage_iscsi_direct:--with-storage-iscsi-direct} \
-		%{?_with_storage_scsi:--with-storage-scsi} \
-		%{?_with_storage_disk:--with-storage-disk} \
-		%{?_with_storage_rbd:--with-storage-rbd} \
-		%{?_with_storage_mpath:--with-storage-mpath} \
-		%{?_with_storage_gluster:--with-storage-gluster} \
-		%{?_with_storage_zfs:--with-storage-zfs} \
-		%{?_with_storage_vstorage:--with-storage-vstorage} \
-		%{?_with_storage_sheepdog:--with-storage-sheepdog} \
+		%{subst_with_dash storage_fs} \
+		%{subst_with_dash storage_lvm} \
+		%{subst_with_dash storage_iscsi} \
+		%{subst_with_dash storage_iscsi_direct} \
+		%{subst_with_dash storage_scsi} \
+		%{subst_with_dash storage_disk} \
+		%{subst_with_dash storage_rbd} \
+		%{subst_with_dash storage_mpath} \
+		%{subst_with_dash storage_gluster} \
+		%{subst_with_dash storage_zfs} \
+		%{subst_with_dash storage_vstorage} \
+		%{subst_with_dash storage_sheepdog} \
 		%{subst_with numactl} \
 		%{subst_with selinux} \
 		%{subst_with netcf} \
@@ -784,17 +838,19 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with sanlock} \
 		%{subst_with fuse} \
 		%{subst_with dbus} \
-		%{?_with_pm_utils:--with-pm-utils} \
+		%{subst_with_dash pm_utils} \
 		%{subst_with polkit} \
 		%{subst_with firewalld} \
+		%{subst_with_dash firewalld_zone} \
 		%{subst_with capng} \
 		%{subst_with libpcap} \
 		%{subst_with macvtap} \
 		%{subst_with audit} \
-		%{?_with_driver_modules:--with-driver-modules} \
+		%{subst_with_dash driver_modules} \
 		%{subst_with dtrace} \
-		%{?_with_wireshark:--with-wireshark-dissector} \
-        %{?_with_bash_completion: --with-bash-completion} \
+		%{subst_with_dash wireshark} \
+		%{subst_with_dash bash_completion} \
+		%{subst_with_dash nss_plugin} \
 		--with-loader-nvram=%with_loader_nvram \
 		%{subst_with sasl}
 
@@ -847,15 +903,17 @@ rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 %if_without libxl
 rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
 %endif
-install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
+%if_with nss_plugin
 # Relocate nss library from %_libdir/libnss_libvirt.so.* to /%_lib/libnss_libvirt.so.* .
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/libnss_libvirt.so.* %buildroot/%_lib/
 ln -sf ../../%_lib/libnss_libvirt.so.2 %buildroot%_libdir/libnss_libvirt.so
 mv %buildroot%_libdir/libnss_libvirt_guest.so.2 %buildroot/%_lib/
 ln -sf ../../%_lib/libnss_libvirt_guest.so.2 %buildroot%_libdir/libnss_libvirt_guest.so
+%endif
 
+%if_with libvirtd
 # filetrigger that restart libvirtd after install any plugin
 cat <<EOF > filetrigger
 #!/bin/sh -e
@@ -863,13 +921,19 @@ cat <<EOF > filetrigger
 dir=%_libdir/libvirt/
 grep -qs '^'\$dir'' && /sbin/service libvirtd condrestart ||:
 EOF
-
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+
+install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
+%endif
 
 %find_lang %name
 
 # cleanup
 rm -f %buildroot/usr/share/libvirt/test-screenshot.png
+
+%if_without libvirtd
+rm -rf %buildroot%_man7dir
+%endif
 
 %check
 cd tests
@@ -886,9 +950,11 @@ done
 %pre login-shell
 %_sbindir/groupadd -r -f virtlogin
 
+%if_with qemu
 %pre daemon-driver-qemu
 %_sbindir/groupadd -r -f %qemu_group
 %_sbindir/useradd -M -r -d %_localstatedir/lib/%name -s /bin/false -c "libvirt user" -g %qemu_group %qemu_user >/dev/null 2>&1 || :
+%endif
 
 %post daemon
 %post_service virtlockd
@@ -1243,9 +1309,11 @@ fi
 %_datadir/bash-completion/completions/*
 %endif
 
+%if_with nss_plugin
 %files  -n nss-%name
 /%_lib/libnss_libvirt.so.*
 /%_lib/libnss_libvirt_guest.so.*
+%endif
 
 %if_with wireshark
 %files -n wireshark-plugin-%name
@@ -1268,6 +1336,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Mar 14 2019 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
+- 5.1.0
+- fix build without server_drivers (ALT#36248)
+
 * Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
 - 5.0.0
 
@@ -1281,50 +1353,50 @@ fi
 * Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
-* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.0-alt1%ubt
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.0-alt1
 - 4.7.0
 - add daemon-driver-storage-iscsi-direct package
   (instead of unsing iscsiadm, it uses libiscsi)
 
-* Sat Aug 11 2018 Alexey Shabalin <shaba@altlinux.org> 4.6.0-alt1%ubt
+* Sat Aug 11 2018 Alexey Shabalin <shaba@altlinux.org> 4.6.0-alt1
 - 4.6.0
 - build with ceph storage support only for x86_64 and aarch64
 
-* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.5.0-alt1%ubt
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.5.0-alt1
 - 4.5.0
 - not install zfs storage support by default
 
-* Tue Jun 05 2018 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1%ubt
+* Tue Jun 05 2018 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1
 - 4.4.0
 
-* Mon Jun 04 2018 Alexey Shabalin <shaba@altlinux.ru> 4.3.0-alt1%ubt
+* Mon Jun 04 2018 Alexey Shabalin <shaba@altlinux.ru> 4.3.0-alt1
 - 4.3.0
 
-* Sun Apr 01 2018 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1%ubt
+* Sun Apr 01 2018 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1
 - 4.2.0 (Fixes: CVE-2018-5748)
 - Use Python 3 for building
 - fix package login-shell
 
-* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 4.1.0-alt1%ubt
+* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 4.1.0-alt1
 - 4.1.0 (Fixes: CVE-2018-6764, CVE-2017-5715)
 
-* Fri Feb 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2%ubt
+* Fri Feb 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2
 - enabled server part on arm arches
 
-* Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1%ubt
+* Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1
 - 4.0.0 (Fixes: CVE-2018-5748)
 - add filetrigger that restart libvirtd after install any plugin
 
-* Fri Dec 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1%ubt
+* Fri Dec 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 
-* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1%ubt
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
 - 3.8.0 (Fixes: CVE-2017-1000256)
 
-* Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1%ubt
+* Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 
-* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1%ubt
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
 * Tue Jul 11 2017 Alexey Shabalin <shaba@altlinux.ru> 3.5.0-alt1
