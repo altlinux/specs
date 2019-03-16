@@ -1,14 +1,16 @@
+Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global	cvsDATE	20170102
-%global	cvsTIME	1100
+%global	cvsDATE	20181016
+%global	cvsTIME	1609
+
+%undefine        _changelog_trimtime
 
 Summary:	Dictionaries for SKK (Simple Kana-Kanji conversion program)
 Name:		skkdic
 Version:	%{cvsDATE}
-Release:	alt1_3.T1100
+Release:	alt1_2.T1609
 License:	GPLv2+
-Group:		System/Libraries
 # To create source tarball, use Source10
 Source0:	skkdic-%{cvsDATE}T%{cvsTIME}.tar.bz2
 Source1:	http://openlab.ring.gr.jp/skk/skk/tools/unannotation.awk
@@ -58,6 +60,9 @@ gzip -9 ChangeLog
 
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 20181016-alt1_2.T1609
+- update to new release by fcimport
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 20170102-alt1_3.T1100
 - NMU (for oddity@): new version by fcimport
 
