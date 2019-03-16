@@ -3,7 +3,7 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 5.0.1
+Version: 5.1.0
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -190,8 +190,8 @@ Chinese translation.
 %files ja
 %_datadir/doc/kicad/help/ja
 
-%files nl
-%_datadir/doc/kicad/help/nl
+#files nl
+#_datadir/doc/kicad/help/nl
 
 %files pl
 %_datadir/doc/kicad/help/pl
@@ -200,6 +200,12 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Fri Mar 15 2019 Anton Midyukov <antohami@altlinux.org> 1:5.1.0-alt1
+- new version 5.1.0
+
+* Thu Jan 03 2019 Anton Midyukov <antohami@altlinux.org> 1:5.0.2-alt1
+- new version 5.0.2
+
 * Sun Nov 18 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.1-alt1
 - new version 5.0.1
 

@@ -4,7 +4,7 @@
 Name: kicad-templates
 Summary: Templates projects for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Примеры проектов для kicad (разработка печатных плат)
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 Source: %name-%version.tar
 License: GPLv2+
@@ -27,7 +27,7 @@ schematic diagrams and printed circuit board artwork.
 Kicad - это программное обеспечение с открытым исходным кодом для
 проектирования электронных схем и получения на их основе печатных плат.
 
-Kicad-library содержит примеры проектов для kicad.
+Kicad-%name содержит примеры проектов для kicad.
 
 %prep
 %setup
@@ -44,6 +44,12 @@ Kicad-library содержит примеры проектов для kicad.
 %_datadir/kicad/template/
 
 %changelog
+* Sat Mar 16 2019 Anton Midyukov <antohami@altlinux.org> 5.1.0-alt1
+- new version 5.1.0
+
+* Thu Jan 03 2019 Anton Midyukov <antohami@altlinux.org> 5.0.2-alt1
+- new version 5.0.2
+
 * Sun Nov 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
 - new version 5.0.1
 
