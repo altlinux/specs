@@ -1,16 +1,14 @@
 Name: lzop
-Version: 1.03
-Release: alt3
+Version: 1.04
+Release: alt1
 
 Summary: LZO fast file compressor
-License: GPL
+License: GPL-2.0-or-later
 Group: Archiving/Compression
+Url: https://www.lzop.org/
+# https://www.lzop.org/download/%name-%version.tar.gz
+Source: %name-%version.tar
 
-URL: http://www.lzop.org
-Source: lzop-%version.tar.gz
-Patch0: lzop-1.03-gcc6.patch
-
-# Automatically added by buildreq on Wed Oct 05 2011
 BuildRequires: liblzo2-devel
 
 %description
@@ -19,22 +17,29 @@ gzip are much higher compression and decompression speed (at the cost
 of some compression ratio).
 
 %prep
-%setup -q -n lzop-%version
-%patch -p1
+%setup
 
 %build
-%configure
+%define docdir %_docdir/%name
+%configure --docdir=%docdir
 %make_build
 
 %install
 %makeinstall_std
+rm %buildroot%docdir/{%name.*,COPYING}
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
-%doc AUTHORS NEWS README THANKS
+%docdir/
 %_bindir/lzop
 %_man1dir/lzop.1*
 
 %changelog
+* Sat Mar 16 2019 Dmitry V. Levin <ldv@altlinux.org> 1.04-alt1
+- 1.03 -> 1.04.
+
 * Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.03-alt3
 - Fixed build with gcc 6.
 
