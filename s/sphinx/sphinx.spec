@@ -1,7 +1,7 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.2.11
-Release: alt6%ubt
+Release: alt7
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -11,7 +11,6 @@ Url: http://sphinxsearch.com
 Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
 Source2: %name.unit
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
 
 %description
@@ -176,24 +175,28 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
-* Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt6%ubt
+* Sat Mar 16 2019 Anton Farygin <rider@altlinux.ru> 2.2.11-alt7
+- removed ubt macros
+- rebuilt with libmysqlclient21
+
+* Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt6
 - added config for tmpfilesdir
 - send SIGUSR1 to searchd for rotate logs
 - systemd unit cleanup
 - fixed paths in default config
 
-* Thu Oct 26 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt5%ubt
+* Thu Oct 26 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt5
 - fixed localstatedir location
 - fixed typo in systemd unit (closes: #33177)
 - rotate logs under unprivileged user (closes: #33634)
 
-* Fri Jun 16 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt4%ubt
+* Fri Jun 16 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt4
 - pidfile location fixed (closes: #33551)
 
-* Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt3%ubt
+* Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt3
 - fix for searchd process uid (closes: #33551)
 
-* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 2.2.11-alt2%ubt
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 2.2.11-alt2
 - added %%ubt macros for easy backporting process to stable branches
 
 * Fri Oct 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.11-alt1
