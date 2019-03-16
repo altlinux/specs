@@ -4,7 +4,7 @@
 Name: kicad-packages3D
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): 3D модели для kicad (разработка печатных плат)
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 Source: %name-%version.tar.gz
 License: GPLv2+
@@ -28,7 +28,7 @@ schematic diagrams and printed circuit board artwork.
 Kicad - это программное обеспечение с открытым исходным кодом для
 проектирования электронных схем и получения на их основе печатных плат.
 
-Kicad-library содержит в себе 3D-модели для kicad.
+%name содержит в себе 3D-модели для kicad.
 
 %package part1
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
@@ -46,7 +46,7 @@ Part1
 Kicad - это программное обеспечение с открытым исходным кодом для
 проектирования электронных схем и получения на их основе печатных плат.
 
-Kicad-library содержит в себе 3D-модели для kicad.
+%name содержит в себе 3D-модели для kicad.
 Часть 1
 
 %package part2
@@ -65,7 +65,7 @@ Part2
 Kicad - это программное обеспечение с открытым исходным кодом для
 проектирования электронных схем и получения на их основе печатных плат.
 
-Kicad-library содержит в себе 3D-модели для kicad.
+%name содержит в себе 3D-модели для kicad.
 Часть 2
 
 %prep
@@ -87,6 +87,7 @@ Kicad-library содержит в себе 3D-модели для kicad.
 %_datadir/kicad/modules/packages3d/Battery.3dshapes
 %_datadir/kicad/modules/packages3d/Button_Switch_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Button_Switch_THT.3dshapes
+%_datadir/kicad/modules/packages3d/Buzzer_Beeper.3dshapes
 %_datadir/kicad/modules/packages3d/Capacitor_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Capacitor_Tantalum_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Capacitor_THT.3dshapes
@@ -103,13 +104,20 @@ Kicad-library содержит в себе 3D-модели для kicad.
 %_datadir/kicad/modules/packages3d/Diode_THT.3dshapes
 %_datadir/kicad/modules/packages3d/Display.3dshapes
 %_datadir/kicad/modules/packages3d/Display_7Segment.3dshapes
+%_datadir/kicad/modules/packages3d/Ferrite*.3dshapes
+%_datadir/kicad/modules/packages3d/Filter.3dshapes
 %_datadir/kicad/modules/packages3d/Fuse.3dshapes
+%_datadir/kicad/modules/packages3d/Heatsink.3dshapes
 %_datadir/kicad/modules/packages3d/Inductor_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Inductor_THT.3dshapes
+%_datadir/kicad/modules/packages3d/Package_LGA.3dshapes
+%_datadir/kicad/modules/packages3d/Potentiometer_THT.3dshapes
 %_datadir/kicad/modules/packages3d/LED_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/LED_THT.3dshapes
 %_datadir/kicad/modules/packages3d/OptoDevice.3dshapes
 %_datadir/kicad/modules/packages3d/Oscillator.3dshapes
+%_datadir/kicad/modules/packages3d/Module.3dshapes
+%_datadir/kicad/modules/packages3d/MountingEquipment.3dshapes
 %_datadir/kicad/modules/packages3d/Package_BGA.3dshapes
 %_datadir/kicad/modules/packages3d/Package_DFN_QFN.3dshapes
 %_datadir/kicad/modules/packages3d/Package_DIP.3dshapes
@@ -119,19 +127,27 @@ Kicad-library содержит в себе 3D-модели для kicad.
 %_datadir/kicad/modules/packages3d/Package_SON.3dshapes
 %_datadir/kicad/modules/packages3d/Package_TO_SOT_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Package_TO_SOT_THT.3dshapes
+%_datadir/kicad/modules/packages3d/Potentiometer*.3dshapes
 %_datadir/kicad/modules/packages3d/Relay_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Relay_THT.3dshapes
 %_datadir/kicad/modules/packages3d/Resistor_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Resistor_THT.3dshapes
 %_datadir/kicad/modules/packages3d/RF_Module.3dshapes
-%_datadir/kicad/modules/packages3d/Sensor_Audio.3dshapes
-%_datadir/kicad/modules/packages3d/Sensor_Current.3dshapes
-%_datadir/kicad/modules/packages3d/Sensors.3dshapes
+%_datadir/kicad/modules/packages3d/Sensor*.3dshapes
+%_datadir/kicad/modules/packages3d/TerminalBlock*.3dshapes
 %_datadir/kicad/modules/packages3d/TestPoint.3dshapes
 %_datadir/kicad/modules/packages3d/Transformer_SMD.3dshapes
+%_datadir/kicad/modules/packages3d/Transformer_THT.3dshapes
 %_datadir/kicad/modules/packages3d/Valve.3dshapes
+%_datadir/kicad/modules/packages3d/Varistor.3dshapes
 
 %changelog
+* Sat Mar 16 2019 Anton Midyukov <antohami@altlinux.org> 5.1.0-alt1
+- New version 5.1.0
+
+* Sat Jan 05 2019 Anton Midyukov <antohami@altlinux.org> 5.0.2-alt1
+- New version 5.0.2
+
 * Thu Nov 22 2018 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
 - New version 5.0.1
 
