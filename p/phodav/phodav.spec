@@ -1,7 +1,7 @@
 %def_with avahi
 
 Name: phodav
-Version: 2.2
+Version: 2.3
 Release: alt1
 Summary: A WebDAV server using libsoup
 
@@ -13,13 +13,13 @@ Source: %name-%version.tar
 Source2: spice-webdavd.init
 Source3: spice-webdavd.sysconfig
 
-Patch1: %name-%version-%release.patch
-
-BuildRequires: intltool gtk-doc
+BuildRequires(pre): meson
+BuildRequires: gtk-doc
 BuildRequires: libattr-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libsoup-2.4) >= 2.48.0 pkgconfig(libxml-2.0)
 %{?_with_avahi:BuildRequires: pkgconfig(avahi-gobject) pkgconfig(avahi-client)}
+BuildRequires: pkgconfig(systemd) pkgconfig(udev)
 BuildRequires: xmlto asciidoc
 
 %description
@@ -61,21 +61,14 @@ the Spice virtio channel.
 
 %prep
 %setup
-%patch1 -p1
 echo "%version" > .tarball-version
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{subst_with avahi} \
-	--with-systemdsystemunitdir=%_unitdir \
-	--with-udevdir=/lib/udev
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -pD -m755 %SOURCE2 %buildroot%_initdir/spice-webdavd
 install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 
@@ -109,6 +102,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Sat Mar 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.3-alt1
+- 2.3
+
 * Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 2.2-alt1
 - 2.2
 
