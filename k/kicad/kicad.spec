@@ -6,30 +6,31 @@
 Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: fix_python_sitepackages_path.patch
-Patch1: %name-5.0.0-nostrip.patch
-Patch2: %name-5.0.0-freerouting.patch
+Patch1: %name-5.1.0-nostrip.patch
 License: GPLv2+
 Group: Engineering
 Url: https://code.launchpad.net/kicad
 #Url: https://github.com/KiCad/kicad-source-mirror.git
 
 BuildRequires(pre): cmake rpm-macros-cmake
-BuildRequires(pre): rpm-build-python
+#BuildRequires(pre): rpm-build-python3
+#BuildRequires: python-module-wx4.0-devel
 BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
 BuildRequires: ccmake gcc-c++
-BuildRequires: compat-libwxGTK3.0-gtk2-devel python-module-wx3.0-gtk2-devel
+BuildRequires: libwxGTK3.1-devel
 BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
 BuildRequires: doxygen
 BuildRequires: dos2unix
 BuildRequires: python-devel
 BuildRequires: libglm-devel
+BuildRequires: libuuid-devel
 BuildRequires: ngspice-devel
 BuildRequires: OCE-devel
 BuildRequires: openmpi-devel
@@ -111,21 +112,20 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 %prep
 %setup -n %name-%version
-%patch -p1
+#patch -p1
 %patch1 -p1
-%patch2 -p1
 
-%build
+%build    
 %cmake \
-    -DUSE_WX_GRAPHICS_CONTEXT=OFF \
-    -DUSE_WX_OVERLAY=OFF \
-    -DDEFAULT_INSTALL_PATH=%prefix \
-    -DBUILD_GITHUB_PLUGIN=ON \
-    -DKICAD_SCRIPTING=ON \
-    -DKICAD_SCRIPTING_MODULES=ON \
-    -DKICAD_SCRIPTING_WXPYTHON=ON \
+    -DKICAD_SCRIPTING=OFF \
+    -DKICAD_SCRIPTING_MODULES=OFF \
+    -DKICAD_SCRIPTING_WXPYTHON=OFF \
+    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=OFF \
+    -DKICAD_SCRIPTING_PYTHON3=OFF \
     -DKICAD_SCRIPTING_ACTION_MENU=OFF \
-    -DKICAD_SKIP_BOOST=ON
+    -DKICAD_SPICE=ON \
+    -DKICAD_VERSION_EXTRA=%release \
+    -DCMAKE_BUILD_TYPE=Release \
 
 %cmake_build
 
@@ -149,7 +149,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 %_libdir/*.so*
 %_libdir/%name/
-%python_sitelibdir/*
+#python_sitelibdir/*
 
 %files data
 %doc %_docdir/%name
@@ -160,6 +160,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Mar 15 2019 Anton Midyukov <antohami@altlinux.org> 1:5.1.0-alt1
+- new version 5.1.0
+- disable srcipting support
+- build with wxGTK3.1
+
+* Thu Jan 03 2019 Anton Midyukov <antohami@altlinux.org> 1:5.0.2-alt1
+- new version 5.0.2
+
 * Fri Nov 23 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.1-alt1
 - new version 5.0.1
 
