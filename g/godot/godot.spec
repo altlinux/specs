@@ -19,8 +19,8 @@
 %def_without builtin_zstd
 
 Name: godot
-Version: 3.0.6
-Release: alt3
+Version: 3.1
+Release: alt1
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -39,7 +39,6 @@ Patch0: godot-3.0.2-workaround-gcc-ice-armv7hl.patch
 
 # optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel libcom_err-devel libgpg-error libjson-c libkrb5-devel libstdc++-devel pkg-config python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: python-module-Reportlab python-module-configobj python-module-enum34 python-module-olefile python-module-pygobject3 python-module-pyxdg python3-module-yieldfrom python-modules-json
 BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel libXi-devel libGL-devel libalsa-devel libpulseaudio-devel openssl-devel libudev-devel libGLU-devel libpng-devel gcc gcc-c++ libssl-devel ccache
@@ -101,7 +100,6 @@ by pointing to the location of the game's data package.
 %prep
 %setup
 %patch0 -p1
-%{!?_with_builtin_zstd:%patch2 -p2}
 %{!?_with_builtin_zstd:%patch1 -p2}
 cp %SOURCE1 .
 cp %SOURCE2 .
@@ -160,7 +158,7 @@ scons \
 install -Dm 0755 bin/godot.x11.opt.tools.* %buildroot%_bindir/%{name}
 install -m755 bin/%{name}.x11.opt.[0-9]* %buildroot%_bindir/%{name}-runner
 %if_with server
-install -m755 bin/%{name}_server.server.opt.tools.[0-9]* %buildroot%_bindir/%{name}-server
+install -m755 bin/%{name}_server.x11.opt.tools.[0-9]* %buildroot%_bindir/%{name}-server
 %endif
 
 install -m 644 -D %name-icon-48.png %buildroot%_liconsdir/%name.png
@@ -186,6 +184,9 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Mon Mar 16 2019 Sergey Bubnov <omg@altlinux.org> 3.1-alt1
+- 3.1-stable
+
 * Wed Jan 02 2019 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt3
 - fix for zstd-1.3.8
 
@@ -196,11 +197,11 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
   * added patch for armv7hl
 - removed ExclusiveArch:
 
-* Wed Sep 19 2018 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt1%ubt
+* Wed Sep 19 2018 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt1
 - 3.0.6-stable
 
-* Sun Jun 10 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt2%ubt
+* Sun Jun 10 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt2
 - restrict arch as x86 and x86_64
 
-* Sat Jun 9 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt1%ubt
+* Sat Jun 9 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt1
 - 3.0.2-stable
