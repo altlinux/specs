@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
@@ -16,15 +16,14 @@ Url: https://pypi.python.org/pypi/pytest-mock
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python-module-mock
-BuildRequires: python-module-tox
-BuildRequires: python-module-coverage
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-coverage
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(mock)
+BuildRequires: python3(coverage)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -78,30 +77,16 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/coverage \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+export PIP_NO_INDEX=YES
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-export PYTHONPATH=$(pwd)
-
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python} --notest
-cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
-py%{python_version_nodots python} -v
-
-pushd ../python3
-export PYTHONPATH=$(pwd)
-
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3} --notest
-cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
-py%{python_version_nodots python3} -v
-popd
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE *.rst
@@ -118,6 +103,9 @@ popd
 %python3_sitelibdir/__pycache__/pytest_mock.*
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.10.1-alt1
+- 1.10.0 -> 1.10.1.
+
 * Sun Oct 21 2018 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
 - 1.9.0 -> 1.10.0.
 
