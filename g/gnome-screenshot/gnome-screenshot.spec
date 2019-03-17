@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.30
+%define ver_major 3.32
 %define xdg_name org.gnome.Screenshot
 
 Name: gnome-screenshot
@@ -33,20 +33,23 @@ GNOME Screenshot Tool makes screenshots from desktop.
 
 %install
 %meson_install
-
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/applications/%xdg_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1.*
 %doc NEWS README*
 
 %changelog
+* Fri Mar 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

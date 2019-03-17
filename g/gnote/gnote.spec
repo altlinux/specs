@@ -1,4 +1,4 @@
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
@@ -79,7 +79,13 @@ desktop-file-install \
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 %doc README TODO NEWS AUTHORS
 
+%exclude %_libdir/libgnote.so
+%exclude %_libdir/%name/*/*/*.la
+
 %changelog
+* Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

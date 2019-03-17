@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define _name org.gnome.Characters
-%define ver_major 3.30
+%define xdg_name org.gnome.Characters
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%set_typelibdir %_libdir/%_name/girepository-1.0
+%set_typelibdir %_libdir/%xdg_name/girepository-1.0
 
 %define gjs_ver 1.44.0
 %define unistring_ver 0.9.5
@@ -59,26 +59,27 @@ characters.
 
 %install
 %meson_install
+%find_lang %xdg_name
 
-%find_lang %_name
-
-%files -f %_name.lang
+%files -f %xdg_name.lang
 %_bindir/%name
-%_libdir/%_name/
-%_datadir/%_name/
-%_desktopdir/%_name.desktop
-%_datadir/dbus-1/services/%_name.service
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/dbus-1/services/%_name.BackgroundService.service
-%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_libdir/%xdg_name/
+%_datadir/%xdg_name/
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.BackgroundService.service
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/*/*/*/*.svg
-%_iconsdir/*/*/*/*.png
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS COPYING
 #%doc README
 
 
 %changelog
+* Fri Mar 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

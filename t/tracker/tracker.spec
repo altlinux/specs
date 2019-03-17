@@ -6,7 +6,7 @@
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_with bootstrap
+%def_without bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable network_manager
@@ -20,7 +20,7 @@
 
 Name: tracker
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -222,6 +222,9 @@ Included utilities for Tracker:
 
 
 %changelog
+* Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1.1
+- rebuilt without bootstrap
+
 * Wed Mar 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 

@@ -6,10 +6,11 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gspell
+%def_disable check
 
 Name: lib%{_name}3
-Version: %ver_major.9
-Release: alt2
+Version: %ver_major.10
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -23,12 +24,12 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.2.0
 
-BuildPreReq: rpm-build-gnome
+BuildRequires: rpm-build-gnome
 
 # From configure.ac
 BuildRequires: gcc-c++ autoconf-archive gtk-doc itstool
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
@@ -94,7 +95,7 @@ GObject introspection devel data for the GtkSourceView library
 %make_build
 
 %check
-#%make check
+%make check
 
 %install
 %makeinstall_std
@@ -128,6 +129,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.10-alt1
+- 3.24.10
+
 * Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.9-alt2
 - rebuilt with atk-2.30.0
 
