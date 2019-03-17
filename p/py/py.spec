@@ -4,7 +4,7 @@
 
 Name: py
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -39,7 +39,6 @@ BuildArch: noarch
 Requires: python-module-%name = %EVR
 
 %define move_list %(echo `cat %SOURCE2`)
-%py_provides %move_list
 
 %description
 The py lib has several namespaces which help with testing, generating
@@ -52,6 +51,8 @@ Group: Development/Python3
 # The compiler package has been removed in Python 3
 %add_python3_req_skip compiler
 %py3_provides %move_list
+%py3_requires apipkg
+%py3_requires iniconfig
 
 %description -n python3-module-%name
 The %name lib has several namespaces which help with testing, generating
@@ -63,6 +64,9 @@ This package contains python module of %name lib.
 Summary: Python module of testing and distributed programming library
 Group: Development/Python
 Conflicts: %name
+%py_provides %move_list
+%py_requires apipkg
+%py_requires iniconfig
 
 %description -n python-module-%name
 The py lib has several namespaces which help with testing, generating
@@ -135,6 +139,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt2
+- Added lost requirements on unbundled modules.
+
 * Sat Mar 16 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
 - 1.7.0 -> 1.8.0.
 - Removed vendored modules.
