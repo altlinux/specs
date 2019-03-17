@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name GIS-Distance
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Class/Measure/Length.pm) perl(Const/Fast.pm) perl(Math/Trig.pm) perl(Module/Build/Tiny.pm) perl(Module/Find.pm) perl(Test2/V0.pm) perl(namespace/clean.pm) perl(strictures.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.14
-Release: alt2
+Version: 0.17
+Release: alt1
 Summary: Calculate geographic distances.
 Group: Development/Perl
 License: perl
 URL: https://github.com/bluefeet/GIS-Distance
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/B/BL/BLUEFEET/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BL/BLUEFEET/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/G*
 
 %changelog
+* Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Wed Mar 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
 - to Sisyphus as GEO-Distance dep
 
