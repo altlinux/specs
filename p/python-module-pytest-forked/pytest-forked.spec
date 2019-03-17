@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
@@ -90,6 +90,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_forked-*.egg-info/
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2.
+
 * Wed Jan 16 2019 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - 0.2 -> 1.0.1.
 
