@@ -3,7 +3,7 @@
 %def_with check
 
 Name: py
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Testing and distributed programming library
@@ -13,33 +13,33 @@ Group: Development/Tools
 Url: https://github.com/pytest-dev/py
 
 Source: %name-%version.tar
+Source2: move.list
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: subversion
 BuildRequires: subversion-server-common
-BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
-BuildRequires: python-module-attrs
-BuildRequires: python-module-pytest
-BuildRequires: python-module-decorator
-BuildRequires: python-module-jinja2
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-attrs
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-decorator
-BuildRequires: python3-module-jinja2
+BuildRequires: python2.7(apipkg)
+BuildRequires: python2.7(decorator)
+BuildRequires: python2.7(iniconfig)
+BuildRequires: python2.7(jinja2)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(apipkg)
+BuildRequires: python3(decorator)
+BuildRequires: python3(iniconfig)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
 Requires: python-module-%name = %EVR
 
-%py_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
+%define move_list %(echo `cat %SOURCE2`)
+%py_provides %move_list
 
 %description
 The py lib has several namespaces which help with testing, generating
@@ -48,8 +48,10 @@ and distributing code across machines.
 %package -n python3-module-%name
 Summary: Python 3 module of testing and distributed programming library
 Group: Development/Python3
+
+# The compiler package has been removed in Python 3
 %add_python3_req_skip compiler
-%py3_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
+%py3_provides %move_list
 
 %description -n python3-module-%name
 The %name lib has several namespaces which help with testing, generating
@@ -72,6 +74,9 @@ This package contains python module of %name lib.
 %setup
 %patch0 -p1
 
+# remove bundled packages
+rm -r py/_vendored_packages
+
 rm -rf ../python3
 cp -a . ../python3
 
@@ -92,32 +97,32 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 pushd ../python3
 %python3_install
-
 popd
+
+# check the actual provides against predefined ones
+set -o pipefail
+PYTHONPATH="$(pwd)" python3 -c "import py, apipkg;\
+assert py.__version__==\"%version\";\
+modules=[ 'py.' + mod for mod in dir(py) if isinstance(getattr(py, mod), apipkg.ApiModule) ];\
+print(*modules, sep='\n')" | sort > move.actual.list
+set +o pipefail
+cat %SOURCE2 | sort > move.expected.list
+diff -y move.expected.list move.actual.list
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export LC_ALL=en_US.UTF-8
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=`pwd`
+export PIP_NO_INDEX=YES
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
-# copy necessary exec deps
-TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox \
---sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
-
-TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox \
---sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-export PYTHONPATH=`pwd`
-TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox.py3\
- --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
-
-TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox.py3\
- --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+tox.py3 --sitepackages -p auto -o -v -r
 
 %files -n python-module-%name
 %doc AUTHORS CHANGELOG LICENSE *.rst
@@ -130,6 +135,10 @@ popd
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Sat Mar 16 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
+- 1.7.0 -> 1.8.0.
+- Removed vendored modules.
+
 * Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.0 -> 1.7.0.
 
