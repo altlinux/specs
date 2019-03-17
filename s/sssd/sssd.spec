@@ -21,7 +21,7 @@
 
 Name: sssd
 Version: 2.0.0
-Release: alt4.gitf0603645f
+Release: alt5.gitf0603645f
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -35,6 +35,7 @@ Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
+%define ldb_modversion %(pkg-config --modversion ldb)
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -54,13 +55,15 @@ Patch: %name-%version-alt.patch
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
+Requires: libldb = %ldb_modversion
 
 %if_branch_ge M80C
 Requires: libkrb5 >= 1.14.4-alt2
 %endif
 
-BuildRequires(pre):rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): libldb-devel
 
 ### Build Dependencies ###
 BuildRequires: libpopt-devel
@@ -476,6 +479,7 @@ Provides python3 module for calculating the murmur hash version 3
     --enable-nfsidmaplibdir=%nfsidmapdir \
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
+    --enable-ldb-version-check \
     --enable-krb5-locator-plugin \
     --enable-pac-responder \
     --enable-sss-default-nss-plugin \
@@ -845,6 +849,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Sun Mar 17 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.0.0-alt5.gitf0603645f
+- Rebuild with latest version libldb
+- Revert strict requirement to version of libldb
+
 * Thu Feb 21 2019 Stanislav Levin <slev@altlinux.org> 2.0.0-alt4.gitf0603645f
 - Fixed FleetCommander integration.
 - Stopped build Python2 bindings.

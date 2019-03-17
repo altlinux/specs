@@ -9,8 +9,8 @@
 %endif
 
 Name: libldb
-Version: 1.4.3
-Release: alt4
+Version: 1.4.6
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -211,6 +211,14 @@ make test
 %endif
 
 %changelog
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
+- Update to the 1.4.6 security release for samba-4.9.5
+- Security fixes:
+  + CVE-2019-3824 ldb: Out of bound read in ldb_wildcard_compare
+
+* Thu Jan 24 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.4-alt1
+- Update to the 1.4.4 release for samba-4.9 (Samba#13616, Samba#13686)
+
 * Wed Dec 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.3-alt4
 - Disable lmdb support on armh
 

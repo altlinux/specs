@@ -54,8 +54,8 @@
 %endif
 
 Name:    samba
-Version: 4.9.4
-Release: alt4
+Version: 4.9.5
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -160,7 +160,8 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.4.3
+%define ldb_version 1.4.6
+BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -275,6 +276,9 @@ Provides: %dcname-common-libs = %version-%release
 Obsoletes: %dcname-common-libs <= 4.9.4-alt2
 Provides: %rname-client-libs = %version-%release
 Obsoletes: %rname-client-libs <= 4.9.4-alt2
+%if_without ldb
+Requires: libldb = %ldb_version
+%endif
 
 %description common-libs
 The %rname-common-libs package contains the common libraries needed by modules that
@@ -669,11 +673,12 @@ libsamba_util private headers.
 %define _samba_mod_libdir  %_libdir/samba
 %define _wbclient_libdir %_samba_mod_libdir/wbclient
 %define _samba_piddir /var/run
+%define _samba_sockets_dir /var/run/samba
 
 %configure \
 	--enable-fhs \
 	--with-piddir=%_samba_piddir \
-	--with-sockets-dir=/var/run/samba \
+	--with-sockets-dir=%_samba_sockets_dir \
 	--libdir=%_samba_libdir \
 	--with-modulesdir=%_samba_mod_libdir \
 	--with-privatelibdir=%_samba_mod_libdir \
@@ -752,7 +757,8 @@ mkdir -p %buildroot%_localstatedir/cache/samba
 mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol}
 mkdir -p %buildroot/var/log/samba/old
 mkdir -p %buildroot/var/spool/samba
-mkdir -p %buildroot/var/run/{samba,winbindd}
+mkdir -p %buildroot%_samba_piddir/winbindd
+mkdir -p %buildroot%_samba_sockets_dir
 mkdir -p %buildroot%_samba_mod_libdir
 mkdir -p %buildroot%_pkgconfigdir
 mkdir -p %buildroot%_initdir
@@ -815,7 +821,7 @@ subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
-echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
+echo "d %_samba_piddir/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
 touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
 
@@ -1085,8 +1091,8 @@ TDB_NO_FSYNC=1 %make_build test
 %config(noreplace) %_sysconfdir/security/limits.d/90-samba.conf
 %attr(0700,root,root) %dir /var/log/samba
 %attr(0700,root,root) %dir /var/log/samba/old
-%dir /var/run/samba
-%dir /var/run/winbindd
+%dir %_samba_piddir/winbindd
+%dir %_samba_sockets_dir
 %attr(755,root,root) %dir %_localstatedir/cache/samba
 %attr(710,root,root) %dir /var/lib/samba/private
 %attr(755,root,root) %dir %_sysconfdir/samba
@@ -1585,6 +1591,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Mar 15 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.5-alt1
+- Update to latest release with security ldb fixes (CVE-2019-3824)
+- Prepare to replace runtime files from /var/run to /run directory
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 4.9.4-alt4
 - disable support ceph on 32-bit arch
 
