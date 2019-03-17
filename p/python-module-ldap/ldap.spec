@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 3.1.0
-Release: alt1%ubt
+Version: 3.2.0
+Release: alt1
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
 License: Python-style
@@ -15,12 +15,7 @@ Url: https://www.python-ldap.org
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
@@ -28,16 +23,11 @@ BuildRequires: libssl-devel
 %if_with check
 BuildRequires: openldap-servers
 BuildRequires: openldap-clients
-BuildRequires: python-module-tox
-BuildRequires: python-module-pyasn1
-BuildRequires: python-module-pyasn1-modules
-BuildRequires: python-module-coverage
-BuildRequires: python-module-virtualenv
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-pyasn1
-BuildRequires: python3-module-pyasn1-modules
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-virtualenv
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(pyasn1_modules)
+BuildRequires: python3(coverage)
+BuildRequires: python3(pyasn1_modules)
+BuildRequires: python3(tox)
 %endif
 
 Provides: python-module-pyldap = %EVR
@@ -85,13 +75,9 @@ pushd ../python3
 popd
 
 %check
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
-export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %install
 %python_install
@@ -120,16 +106,19 @@ popd
 %python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
-* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1%ubt
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.0 -> 3.2.0.
+
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.0 -> 3.1.0
 
-* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt3%ubt
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt3
 - (NMU) Rebuilt with python-3.6.4.
 
-* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2%ubt
+* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2
 - 3.0.0b4 -> 3.0.0
 
-* Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1.b4%ubt
+* Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1.b4
 - v2.3 -> v3.0.0b4
 
 * Thu Jan 24 2008 Grigory Batalov <bga@altlinux.ru> 2.3-alt1.1
