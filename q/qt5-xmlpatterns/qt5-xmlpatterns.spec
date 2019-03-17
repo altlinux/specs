@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: LGPLv2 / GPLv3
 Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -48,7 +48,6 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -84,6 +83,7 @@ export QT_HASH_SEED=0
 %files -n libqt5-xmlpatterns
 %doc LICENSE*EXCEPT*
 %_qt5_libdir/libQt?XmlPatterns.so.*
+%_qt5_qmldir/QtQuick/XmlListModel/
 
 %files devel
 %_qt5_bindir/xmlpatterns*
@@ -101,8 +101,12 @@ export QT_HASH_SEED=0
 %if_disabled bootstrap
 %_qt5_docdir/*
 %endif
+%_qt5_examplesdir/*
 
 %changelog
+* Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

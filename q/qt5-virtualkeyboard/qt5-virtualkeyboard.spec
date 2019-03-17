@@ -2,7 +2,7 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt5-virtualkeyboard
-Version: 5.11.3
+Version: 5.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -52,11 +52,9 @@ Requires: %name-devel
 %summary.
 
 %package doc
-#BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
-BuildArch: noarch
 %description doc
 This package contains documentation for Qt5 %qt_module
 
@@ -65,6 +63,13 @@ Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 %description -n libqt5-virtualkeyboard
+%summary
+
+%package -n libqt5-hunspellinputmethod
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-hunspellinputmethod
 %summary
 
 %prep
@@ -87,15 +92,33 @@ export QT_HASH_SEED=0
 
 %files
 %_qt5_plugindir/platforminputcontexts/*virtualkeyboard*.so
+%_qt5_plugindir/virtualkeyboard/
 %_qt5_qmldir/QtQuick/VirtualKeyboard/
 
 %files devel
+%_qt5_libdatadir/libQt*.so
+%_qt5_libdatadir/libQt*.prl
+%_qt5_libdir/libQt*.so
+%_qt5_libdir/libQt*.prl
+%_libdir/cmake/Qt5VirtualKeyboard/
 %_qt5_libdir/cmake/Qt*Gui/*VirtualKeyboard*
+%_qt5_headerdir/Qt*/
+%_qt5_libdir/pkgconfig/Qt*.pc
+%_qt5_archdatadir/mkspecs/modules/qt_lib_*.pri
 
 %files doc
 %_qt5_docdir/*
+%_qt5_examplesdir/*
+
+%files -n libqt5-virtualkeyboard
+%_qt5_libdir/libQt?VirtualKeyboard.so.*
+%files -n libqt5-hunspellinputmethod
+%_qt5_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 

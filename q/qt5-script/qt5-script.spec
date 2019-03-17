@@ -2,8 +2,8 @@
 %global qt_module qtscript
 
 Name: qt5-script
-Version: 5.11.3
-Release: alt2
+Version: 5.12.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtScript component
@@ -43,7 +43,6 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -63,7 +62,7 @@ syncqt.pl-qt5 -version %version
 
 # workaround against gcc8
 %if "%__gcc_version_major" == "8"
-sed -i 's|^asm volatile ($|asm (|' src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.cpp
+#sed -i 's|^asm volatile ($|asm (|' src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.cpp
 %endif
 
 %build
@@ -93,8 +92,12 @@ export QT_HASH_SEED=0
 
 %files doc
 %_qt5_docdir/*
+%_qt5_examplesdir/*
 
 %changelog
+* Thu Mar 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
+- new version
+
 * Thu Jan 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2
 - add workaround against rejecting 'asm volatile' statements by gcc-8 (ALT#35928)
 
