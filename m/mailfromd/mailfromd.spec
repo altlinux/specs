@@ -1,6 +1,8 @@
 #%%define %_libexecdir %_sbindir
 %define snapshot 0
 
+%define _unpackaged_files_terminate_build 1
+
 Name: mailfromd
 
 %define baseversion 8.7
@@ -12,7 +14,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt3
 %define srcdir %name-%version
 %endif
 
@@ -61,9 +63,9 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Mon Oct 07 2013
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
-BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
+BuildRequires: emacs-X11 flex libdb4-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
-BuildRequires: libmailutils-devel >= 3.4-alt0
+BuildRequires: libmailutils-devel >= 3.6
 BuildRequires: mailutils
 BuildRequires: makeinfo
 BuildRequires: libadns-devel >= 1.5
@@ -307,6 +309,14 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Sun Mar 17 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.7-alt3
+- changes in mailfromd.mf:
+  + implemented delayed check (action in "data" callback)
+  + implemented exceptions by "rcpt to" value (for messages with one
+    recipient only); available when action in "data" callback
+  + reordered some checks
+- built without libdspam-devel (disabled dspam support)
+
 * Mon Mar 04 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.7-alt2
 - Moved %%doc macro to mailfromd subpackage
 - Renamed README-config.status to README-build-config
@@ -333,7 +343,7 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 * Mon Nov 20 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt2
 - BuildRequires: libadns-devel >= 1.5
 - changes in mailfromd.mf:
-  - don't compare mx and host's name for mail from:<>
+  + don't compare mx and host's name for mail from:<>
 
 * Mon Nov 13 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt1
 - new version
@@ -344,44 +354,44 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - updated userfunctions.mf:
    added sa_format_report_header2 function
 - changes in mailfromd.mf:
-  - used sa_format_report_header2 instead of sa_format_report_header
+  + used sa_format_report_header2 instead of sa_format_report_header
 
 * Thu Feb 16 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt2
 - BuildRequires: libmailutils-devel >= 3.1.1
 - changes in mailfromd.mf:
-  - fixed: global variables initialized with "precious" modificator
-  - variable's type is used for initializing variables
-  - implemented Broken_SPF_reject switch for selecting SPF error handling
+  + fixed: global variables initialized with "precious" modificator
+  + variable's type is used for initializing variables
+  + implemented Broken_SPF_reject switch for selecting SPF error handling
 
 * Wed Feb 15 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt1
 - new version
 - removed "--remove" option from daemon's command line
 - changes in mailfromd.mf:
-  - handled TempError for SPF checking
-  - added #include </etc/mailfromd/localtests.mf> to prog envfrom
-  - improved messages in log and smtp reply
+  + handled TempError for SPF checking
+  + added #include </etc/mailfromd/localtests.mf> to prog envfrom
+  + improved messages in log and smtp reply
 
 * Sun Feb 05 2017 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.2
 - fixed handling of last dot in domain-spec (patch from gray@gnu)
 - changes in mailfromd.mf:
-  - spamreject variable replaced by SpamScoreRejectLimit
-  - added Broken_SPF_Excludes variable
+  + spamreject variable replaced by SpamScoreRejectLimit
+  + added Broken_SPF_Excludes variable
 
 * Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.1
 - new snapshot
 - changes in mailfromd.mf:
-  - handled PermError for SPF checking
+  + handled PermError for SPF checking
 
 * Thu Jun 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160426.1
 - new snapshot
 - changes in mailfromd.mf:
-  - reject connections with local hostname in helo
-  - graylist and content filter are enabled if level 2 domain of sender's
+  + reject connections with local hostname in helo
+  + graylist and content filter are enabled if level 2 domain of sender's
     PTR is not correspond with level 2 part of sender's helo
-  - graylist and content filter are enabled if SPF check passed with +all
-  - expanded good CIDR to /23 for SPF check
-  - graylist and content filter are enabled if ${client_resolve} is not "OK"
-  - some changes in the order of checks
+  + graylist and content filter are enabled if SPF check passed with +all
+  + expanded good CIDR to /23 for SPF check
+  + graylist and content filter are enabled if ${client_resolve} is not "OK"
+  + some changes in the order of checks
 
 * Tue Dec 01 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20151112.2
 - added makeinfo to BuildRequires
@@ -396,25 +406,25 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - disabled cacheing result "mf_timeout"
   (mailfromd-savsrv.c-not_cache_mf_timeout.diff)
 - changes in mailfromd.mf:
-  - removed temporary workaround for cache behavior with "not_found" value
+  + removed temporary workaround for cache behavior with "not_found" value
 
 * Wed Jun 13 2012 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20120321.3
 - fixed compacting of databases
 - changes in mailfromd.mf:
-  - temporary workaround for cache behavior with "not_found" value
+  + temporary workaround for cache behavior with "not_found" value
     (see description in mailfromd.mf)
-  - graylist and content filter are disabled if level 2 domain part of MX
+  + graylist and content filter are disabled if level 2 domain part of MX
     correspond with sender's PTR
-  - ignored mechanisms in SPF check:
+  + ignored mechanisms in SPF check:
      +all
      ip4 then CIDR less /24
-  - some changes in the order of checks
+  + some changes in the order of checks
 
 * Tue Apr 03 2012 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20120321.2
 - changes in mailfromd.mf:
-  - added SPF check
-  - graylist and content filter are disabled if SPF passed
-  - reject untidy E-Mail from relays w/o reverse name
+  + added SPF check
+  + graylist and content filter are disabled if SPF passed
+  + reject untidy E-Mail from relays w/o reverse name
 
 * Sat Mar 31 2012 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20120321.1
 - new snapshot
@@ -433,17 +443,17 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - regenerated BuildRequires by buildreq
 - enabled dspam support
 - changes in mailfromd.mf:
-  - new syntax for clamav()
+  + new syntax for clamav()
 
 * Thu Aug 25 2011 Sergey Y. Afonin <asy@altlinux.ru> 7.99.90-alt0.20110718.2
 - changes in mailfromd.conf
-  - changed back default socket (to unix, randomly changed since 7.99.90-alt0)
+  + changed back default socket (to unix, randomly changed since 7.99.90-alt0)
 
 * Wed Jul 27 2011 Sergey Y. Afonin <asy@altlinux.ru> 7.99.90-alt0.20110718.1
 - new snapshot
 - changes in *.mf:
-  - reject a mail if PTR is "localhost"
-  - reject a mail if MX is "localhost"
+  + reject a mail if PTR is "localhost"
+  + reject a mail if MX is "localhost"
 
 * Sun Jul 03 2011 Sergey Y. Afonin <asy@altlinux.ru> 7.99.90-alt0.20110630.1
 - new version (with IPv6 support)
@@ -453,8 +463,8 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
   (mailfromd-7.0-context-percent.diff)
 - added smtp timeouts in mailfromd.conf
 - changes in *.mf:
-  - renamed "good_mx" to "good_relay"
-  - excluded "good_relay" from mass allocated checking
+  + renamed "good_mx" to "good_relay"
+  + excluded "good_relay" from mass allocated checking
 
 * Mon Dec 06 2010 Sergey Y. Afonin <asy@altlinux.ru> 7.0-alt2
 - added mailfromd-7.0-rateok.patch
@@ -464,8 +474,8 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
   5.9.91-alt0.20091119.7, some pragmas unsupported now)
 - renamed *.rc to *.mf
 - changes in *.mf:
-  - removed unsupported pragmas
-  - fixed deprecated syntax
+  + removed unsupported pragmas
+  + fixed deprecated syntax
 
 * Wed Oct 20 2010 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.7
 - added checking "auth_authen" macro (messages from authenticated senders
@@ -476,12 +486,12 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 
 * Fri May 07 2010 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.5
 - changes in mailfromd.rc:
-  - added %%ClamdStreamMaxLength (resolved problem with access to clamd)
-  - added %%SpamAssassinStreamMaxLength
-  - updated %%good_mx
-  - changed global while list checking (used whitelist_chk_global)
+  + added %%ClamdStreamMaxLength (resolved problem with access to clamd)
+  + added %%SpamAssassinStreamMaxLength
+  + updated %%good_mx
+  + changed global while list checking (used whitelist_chk_global)
 - changes in userfunctions.rc:
-  - new function: whitelist_chk_global
+  + new function: whitelist_chk_global
 
 * Fri Dec 25 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.4
 - removed runlevels list from start/stop sections of lsb init header
@@ -489,20 +499,20 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 
 * Sat Dec 19 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.3
 - changes in mailfromd.rc:
-  - rewrote error messages for smtp reply
+  + rewrote error messages for smtp reply
 
 * Mon Dec 14 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.2
 - changes in mailfromd.rc:
-  - disabled graylist by default in all cases (%%usegraylist variable)
-  - optimized checking for enabling graylist in "prog envrcpt"
+  + disabled graylist by default in all cases (%%usegraylist variable)
+  + optimized checking for enabling graylist in "prog envrcpt"
 
 * Sun Nov 22 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.91-alt0.20091119.1
 - new snapshot
 
 * Fri Nov 06 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.90-alt0.20091105.1
 - new snapshot
-  - changes in mailfromd.rc:
-  - corrected syntax mailfromd.rc in accordance with the current changes
+  + changes in mailfromd.rc:
+  + corrected syntax mailfromd.rc in accordance with the current changes
     in language
 
 * Tue Oct 20 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.9.90-alt0.20091009.1
@@ -532,10 +542,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 
 * Mon Apr 06 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.0.90-alt0.20090320.3
 - changes in mailfromd.rc and localconf.rc
-  - renamed spamcheckactive to spam_verification_needed
-  - updated massallocated_regexps
-  - updated good_mx
-  - better logging graylisted reason
+  + renamed spamcheckactive to spam_verification_needed
+  + updated massallocated_regexps
+  + updated good_mx
+  + better logging graylisted reason
 
 * Fri Apr 03 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.0.90-alt0.20090320.2
 - fixed: remove last dot in `hostname' output if it there
@@ -544,18 +554,18 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 * Fri Mar 20 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.0.90-alt0.20090320.1
 - new snapshot
 - changes in mailfromd.rc
-  - ignoring smtp callback if mx matches %%not_verifiable_mx and message graylisted.
+  + ignoring smtp callback if mx matches %%not_verifiable_mx and message graylisted.
 
 * Thu Mar 12 2009 Sergey Y. Afonin <asy@altlinux.ru> 5.0.90-alt0.20090311.1
 - new snapshot
 - changes in mailfromd.rc
-  - fixed: added variables for SA support to mailfromd.rc
+  + fixed: added variables for SA support to mailfromd.rc
 
 * Wed Nov 12 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.96-alt0.20081111.1
 - new svn
 - changes in mailfromd.rc
-  - added "tolower" call for *.db lookup
-  - added partial lookup access.db of sendmail (see %%mta in rc)
+  + added "tolower" call for *.db lookup
+  + added partial lookup access.db of sendmail (see %%mta in rc)
     configuration for spamd (Spamassassin)
 
 * Thu Oct 16 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.95-alt0.20081016.1
@@ -570,18 +580,18 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 * Wed Jul 16 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.92-alt1.20080704.1
 - new svn
 - changes in mailfromd.rc
-  - added check for bad "mail from" (%%bad_mail_from = ".*\\|.*" by default)
+  + added check for bad "mail from" (%%bad_mail_from = ".*\\|.*" by default)
 
 * Sat May 31 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.92-alt1.20080516.2
 - changes in mailfromd.rc
-  - added callback_chk_exclude list
-  - added graylist_exclude list
-  - changed gltime interval to 25 minutes
+  + added callback_chk_exclude list
+  + added graylist_exclude list
+  + changed gltime interval to 25 minutes
 
 * Thu May 22 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.92-alt1.20080516.1
 - fixed: removal *.db is restored in mailfromd's localstatedir in %%post of cfg_*
 - changes in mailfromd.rc
-  - rewrote log_header_line: behavior of substring() was changed in mainstream
+  + rewrote log_header_line: behavior of substring() was changed in mainstream
 
 * Sat May 17 2008 Sergey Y. Afonin <asy@altlinux.ru> 4.9.92-alt1.20080516
 - new svn
@@ -615,7 +625,7 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 * Sat May 12 2007 Sergey Y. Afonin <asy@altlinux.ru> 4.0-alt1
 - new version
 - changes in mailfromd.rc
-  - default value for graylist_exclude set to "\n"
+  + default value for graylist_exclude set to "\n"
 
 * Thu May 10 2007 Sergey Y. Afonin <asy@altlinux.ru> 3.1.92-alt0.20070510
 - new svn
@@ -626,10 +636,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - created some different configurations (%name-cfg_clamav, %name-cfg_full)
 - fixed: removing %_localstatedir/*.db instead of compacting in %%post (#11666)
 - changes in mailfromd.rc 
-  - reply changed for "when not_found"
-  - some functions moved to userfunctions.rc
-  - common witelist
-  - fixed: ${client_addr} -> ${client_ptr} in massallocated_hit call
+  + reply changed for "when not_found"
+  + some functions moved to userfunctions.rc
+  + common witelist
+  + fixed: ${client_addr} -> ${client_ptr} in massallocated_hit call
 
 * Mon Apr 02 2007 Sergey Y. Afonin <asy@altlinux.ru> 3.1.91-alt0.20070403
 - new svn, uncompatible changes since alt0.20070322:
@@ -638,16 +648,16 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - changes in %_sysconfdir/sysconfig/mailfromd:
   moved definitions of variable to /etc/mailfromd/localconf.rc
 - changes in localconf.rc
-  - added \#pragma option port
-  - added clamd_port
-  - added massallocated_regexps
-  - renamed "trusted_networks" to "massallocated_chk_exclude"
-  - changed value of \#pragma stacksize to 16383 (resizable stack now)
-  - changed format of massallocated_chk_exclude
+  + added \#pragma option port
+  + added clamd_port
+  + added massallocated_regexps
+  + renamed "trusted_networks" to "massallocated_chk_exclude"
+  + changed value of \#pragma stacksize to 16383 (resizable stack now)
+  + changed format of massallocated_chk_exclude
 - changes in mailfromd.rc 
-  - all which correspond to localconf.rc
-  - common white list (changes is not compatible with previous white lists)
-  - ${client_addr} used in prog helo, you must update Milter.macros.helo in sendmail.cf
+  + all which correspond to localconf.rc
+  + common white list (changes is not compatible with previous white lists)
+  + ${client_addr} used in prog helo, you must update Milter.macros.helo in sendmail.cf
 
 * Thu Mar 22 2007 Sergey Y. Afonin <asy@altlinux.ru> 3.1.91-alt0.20070322
 - new svn
@@ -655,22 +665,21 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
   "Upgrading from 3.1.x to 3.2" section)
 - updated Summary
 - changes in mailfromd.rc:
-  - converted to 3.2 format
-  - moved all host specific definitions to %_sysconfdir/sysconfig/mailfromd
-  - added "catch failure" for message_header_decode in "prog header"
+  + converted to 3.2 format
+  + moved all host specific definitions to %_sysconfdir/sysconfig/mailfromd
+  + added "catch failure" for message_header_decode in "prog header"
 - changes in %_sysconfdir/sysconfig/mailfromd:
-  - added
-   -v ehlo_domain=`hostname`
-   -v virusmaster="admvirus@localhost"
-   -v explain_msg=''
-   -v trusted_networks="127.0.0.0/8,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8"
+  + added -v ehlo_domain=`hostname`
+  + added -v virusmaster="admvirus@localhost"
+  + added -v explain_msg=''
+  + added -v trusted_networks="127.0.0.0/8,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8"
 
 * Thu Mar 15 2007 Sergey Y. Afonin <asy@altlinux.ru> 3.1.4-alt1
 - new version
 - changed Summary
 - changes in mailfromd.rc:
-  - \#pragma stacksize 65535 (for "prog header")
-  - connect to clamd via local socket
+  + \#pragma stacksize 65535 (for "prog header")
+  + connect to clamd via local socket
 
 * Thu Jan 11 2007 Sergey Y. Afonin <asy@altlinux.ru> 3.1.2-alt2
 - fixed: Makefile missed in %%files
@@ -695,15 +704,15 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 - changed: replaced orgiginal mailfromd.rc
 - changed: version is not necessary now in --with-berkeley-db=4
 - changes in mailfromd.rc:
-  - added variables for using in templates:
+  + added variables for using in templates:
     msg_header
     msg_header_last_received
     infected_received_from
     mail_from
     rcpt_to
     queue_id
-  - modified regular expressions for detection mass allocated networks
-  - added ClamAV section (mailutils-1.0-alt4 or latest required)
+  + modified regular expressions for detection mass allocated networks
+  + added ClamAV section (mailutils-1.0-alt4 or latest required)
 
 * Tue Nov 07 2006 Sergey Y. Afonin <asy@altlinux.ru> 3.0-alt1
 - new version
