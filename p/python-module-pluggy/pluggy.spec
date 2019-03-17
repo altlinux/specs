@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -16,14 +16,12 @@ Url: https://pypi.python.org/pypi/pluggy
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python-module-pytest
-BuildRequires: python-module-tox
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -71,27 +69,16 @@ popd
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_INDEX_URL=http://host.invalid./
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+tox.py3 --sitepackages -p auto -o -v -r
 
-# copy nessecary exec deps
-export PYTHONPATH="$(pwd)"
-export TOX_TESTENV_PASSENV='PYTHONPATH'
-%_bindir/tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -T %_bindir/py.test .tox/py%{python_version_nodots python}/bin/pytest
-sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python}/bin/python" \
-.tox/py%{python_version_nodots python}/bin/pytest
-
-%_bindir/tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-export PYTHONPATH="$(pwd)"
-%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/pytest
-sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python3}/bin/python3" \
-.tox/py%{python_version_nodots python3}/bin/pytest
-
-%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
 
 %files
 %doc LICENSE CHANGELOG.rst README.rst
@@ -104,6 +91,9 @@ popd
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.1 -> 0.9.0.
+
 * Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
 - 0.8.0 -> 0.8.1.
 
