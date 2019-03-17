@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.22.1
-Release: alt2
+Version: 1.22.2
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -189,6 +189,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Sun Mar 17 2019 Anton Farygin <rider@altlinux.ru> 1.22.2-alt1
+- new version 1.22.2
+
 * Fri Mar 08 2019 Anton Farygin <rider@altlinux.ru> 1.22.1-alt2
 - clenup spec (removed php5 support)
 
