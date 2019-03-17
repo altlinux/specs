@@ -1,7 +1,8 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # API version for libpreludedb
@@ -10,8 +11,8 @@ BuildRequires(pre): rpm-build-python3
 %global cppmajor                2
 
 Name:           libpreludedb
-Version:        4.1.0
-Release:        alt1_6
+Version:        5.0.0
+Release:        alt1_1
 Summary:        Framework for easy access to the IDMEF database
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -19,9 +20,9 @@ License:        GPLv2+
 URL:            https://www.prelude-siem.org/
 Source0:        https://www.prelude-siem.org/pkg/src/%{version}/%{name}-%{version}.tar.gz
 # https://www.prelude-siem.org/issues/866
-Patch0:         libpreludedb-4.1.0-manpages.patch
+Patch0:         libpreludedb-5.0.0-manpages.patch
 # https://www.prelude-siem.org/issues/867
-Patch1:         libpreludedb-4.1.0-undefined_non_weak_symbol.patch
+Patch1:         libpreludedb-5.0.0-undefined_non_weak_symbol.patch
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  bison
@@ -51,9 +52,9 @@ Requires: preludedb-pgsql
 Requires: preludedb-sqlite3
 
 # Upstream do not use explicit version of gnulib, just checkout
-# and update files. In libprelude 4.1.0, the checkout has been done
-# on 2017-07-10
-Provides:       bundled(gnulib) = 20170710
+# and update files. In libprelude 5.0.0, the checkout has been done
+# on 2018-09-03
+Provides:       bundled(gnulib) = 20180903
 Source44: import.info
 
 %description
@@ -93,7 +94,6 @@ Provides a convenient interface for accessing Prelude alerts.
 Group: System/Libraries
 Summary:        Python 3 bindings for preludedb
 Requires:       %{name} = %{version}-%{release}
-Requires:       python3-module-prelude
 %{?python_provide:%python_provide python%{python3_pkgversion}-preludedb}
 
 %description -n python3-module-preludedb
@@ -225,6 +225,9 @@ chmod +x %{buildroot}%{_datadir}/%{name}/classic/mysql2sqlite.sh
 %doc ChangeLog README NEWS
 
 %changelog
+* Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_6
 - new version
 
