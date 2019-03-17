@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.2.5
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -56,10 +56,12 @@ partial trees by inspecting living objects.
 grep -qs '[[:space:]]*attr[[:space:]]*$' tox.ini || exit 1
 grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
 grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
+grep -qsF 'py36: typed_ast<1.3.0' tox.ini || exit 1
 
 sed -i '/[[:space:]]*attr[[:space:]]*$/d' tox.ini
 sed -i '/[[:space:]]*coverage[[:space:]]*$/d' tox.ini
 sed -i 's/ {envsitepackagesdir}\/coverage run / /' tox.ini
+sed -i 's/py36: typed_ast<1\.3\.0/py36: typed_ast>=1.3.0/' tox.ini
 
 export PIP_NO_INDEX=YES
 export PIP_NO_DEPS=YES
@@ -72,6 +74,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 2.2.5-alt1
+- 2.1.0 -> 2.2.5.
+
 * Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.4 -> 2.1.0.
 

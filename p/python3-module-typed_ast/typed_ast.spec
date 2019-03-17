@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname typed_ast
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A fork of the ast module with type annotations
@@ -14,6 +16,10 @@ Url: https://pypi.org/project/typed-ast/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
 %description
 This package is based on the ast modules from Python 2 and 3,
@@ -31,14 +37,21 @@ as supported in Python 3.6.
 %python3_install
 
 %check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%_bindir/py.test3 -v
 
 %files
-%python3_sitelibdir/_ast27.cpython-*.so
-%python3_sitelibdir/_ast3.cpython-*.so
-%python3_sitelibdir/typed_ast/
+%dir %python3_sitelibdir/typed_ast
+%python3_sitelibdir/typed_ast/_ast27.cpython-*.so
+%python3_sitelibdir/typed_ast/_ast3.cpython-*.so
+%python3_sitelibdir/typed_ast/*.py
+%python3_sitelibdir/typed_ast/__pycache__/
 %python3_sitelibdir/typed_ast-*.egg-info/
 
 %changelog
+* Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.2.0 -> 1.3.1.
+
 * Tue Jan 15 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
