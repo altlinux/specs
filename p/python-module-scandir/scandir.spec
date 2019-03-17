@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: A better directory iterator and faster os.walk() for Python
@@ -51,6 +51,9 @@ tox --sitepackages -e py%{python_version_nodots python} -v
 %python_sitelibdir/scandir-*.egg-info/
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0.
+
 * Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - Initial build.
 
