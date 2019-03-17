@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.3.2
-Release: alt2
+Version: 1.3.3
+Release: alt1
 Summary: Python package for talking to YubiKeys
 
 Group: Development/Python
@@ -99,6 +99,9 @@ popd
 %python3_sitelibdir/python_yubico-*.egg-info
 
 %changelog
+* Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1
+- 1.3.2 -> 1.3.3.
+
 * Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 1.3.2-alt2
 - Build package for Python3
 
