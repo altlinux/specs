@@ -1,6 +1,6 @@
 Name: davfs2
-Version: 1.5.4
-Release: alt1%ubt
+Version: 1.5.5
+Release: alt1
 
 Summary: Linux file system driver that allows you to mount a WebDAV server as a local file system.
 License: GPLv3+
@@ -11,8 +11,6 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon May 25 2009
 BuildRequires: libexpat-devel libneon-devel libssl-devel zlib-devel libkeyutils-devel
-
-BuildRequires(pre):rpm-build-ubt
 
 %description
 WebDAV is an extension to HTTP that allows remote collaborative
@@ -60,7 +58,10 @@ ln -sf %_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %exclude %_mandir/es
 
 %changelog
-* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1%ubt
+* Sun Mar 17 2019 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1
+- 1.5.5
+
+* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
 - new version with security fixes:
 	+ CVE-2013-4362 Unsecure use of system()
 
