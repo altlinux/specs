@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init altplace
 
@@ -167,6 +167,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
