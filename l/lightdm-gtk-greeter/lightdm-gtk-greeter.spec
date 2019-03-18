@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt11
+Release: alt13
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -72,6 +72,15 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Mon Mar 18 2019 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt13
+- Fix/improve: Restart the authentication session with empty username
+  when the user selector is set to "Other...".
+
+* Mon Mar 18 2019 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt12
+- Fix: Restart the authentication session with empty username and
+  don't use the last authenticated user name when the greeter-hide-users
+  hint is set to true (closes: #36293).
+
 * Mon Jan 21 2019 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt11
 - A prompt-driven greeter.
 - Workaround: Use the theme\'s default foreground color for the
