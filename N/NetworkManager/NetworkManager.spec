@@ -65,7 +65,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.15.91
+Version: 1.16.0
 Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -777,6 +777,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Mar 18 2019 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
+- Updated to 1.16.0.
+
 * Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.15.91-alt1
 - Added iwd support knob.
 - Updated to 1.15.90 (1.16-rc2).
