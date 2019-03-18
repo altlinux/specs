@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Taskflow structured state management library
 
@@ -60,7 +60,7 @@ BuildRequires: python-module-eventlet >= 0.18.2
 
 Requires: python-module-six
 Requires: python-module-jsonschema
-Requires: python-module-networkx-core
+Requires: python-module-networkx-drawing
 Requires: python-module-stevedore
 Requires: python-module-futures
 Requires: python-module-oslo.serialization
@@ -111,6 +111,7 @@ This package contains the associated documentation.
 %package -n python3-module-%oname
 Summary: Taskflow structured state management library
 Group: Development/Python3
+Requires: python3-module-networkx-drawing
 
 %description -n python3-module-%oname
 A library to do [jobs, tasks, flows] in a HA manner using
@@ -184,6 +185,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 14 2019 Lenar Shakirov <snejok@altlinux.ru> 1:3.2.0-alt2
+- Requires: s/networkx-core/networkx-drawing/
+- needed by taskflow/types/graph.py
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1:3.2.0-alt1
 - 3.2.0
 
