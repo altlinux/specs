@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define cvs 0
 
 %define	quagga_user	quagga
@@ -11,7 +12,7 @@
 Name: quagga
 
 %define baseversion 1.2.4
-Release: alt3
+Release: alt4
 
 %if %cvs
 %define cvsdate 20060505
@@ -303,6 +304,11 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Mon Mar 18 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt4
+- changed "chkconfig: - 56 56" to "chkconfig: - 12 88" in init
+  scripts of route daemons for immediately start after network
+  and stop immediately before (11 89 for zebra daemon)
+
 * Wed Feb 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt3
 - added nocreate option to the quagga's logrotate config:
   the quagga doesn't change permissions for existent files
