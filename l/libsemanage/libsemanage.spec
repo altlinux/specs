@@ -3,30 +3,23 @@
 %define _libexecdir %prefix/libexec
 
 %def_disable check
-%def_with python
-%def_with python3
 
 Name: libsemanage
 Epoch: 1
-Version: 2.8
-Release: alt2
+Version: 2.9
+Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
-Url: http://userspace.selinuxproject.org
+Url: https://github.com/SELinuxProject/selinux
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-%{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.8 libselinux-devel >= 2.8 libaudit-devel
-%{?_with_python:BuildRequires: swig python-dev}
-%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.8 libselinux-devel-static >= 2.8}
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.9 libselinux-devel >= 2.9 libaudit-devel
 BuildRequires: swig python3-devel
-%endif
+%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.9 libselinux-devel-static >= 2.9}
 
 %description
 This package provides the shared libraries for the manipulation of
@@ -39,7 +32,7 @@ libraries needed by such tools.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel
 Header files and libraries for SELinux policy manipulation tools
@@ -50,67 +43,47 @@ transformations on binary policies such as customizing policy boolean
 settings. It contains the static libraries and header files needed
 for developing applications that manipulate SELinux binary policies.
 
-
 %package devel-static
 Summary: Development files for %name
 Group: Development/C
-Requires: %name-devel = %version
+Requires: %name-devel = %EVR
 
 %description devel-static
 Static libraries for SELinux policy manipulation tools.
 
-%if_with python
-%package -n python-module-semanage
-Summary: Python module for %name
-Group: System/Configuration/Other
-Requires: %name = %version
-
-%description -n python-module-semanage
-Python bindings  for SELinux policy manipulation tools
-This package provides python bindings for the manipulation of SELinux
-binary policies.
-
 %package utils
 Summary: Utils for checking and mainplating policy binaries Security-enhanced Linux
 Group: System/Configuration/Other
-Provides: semanage_migrate_store = %version-%release
-Requires: %name = %version-%release
-Requires: python-module-selinux python-module-semanage
+Provides: semanage_migrate_store = %EVR
+Requires: %name = %EVR
+Requires: python3-module-selinux python3-module-semanage
 
 %description utils
 libsepol provides an API for the manipulation of SELinux binary policies.
 It is used by checkpolicy (the policy compiler) and similar tools, as well
 as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
-%endif
-
-%if_with python3
 
 %package -n python3-module-semanage
 Summary: Python module for %name
 Group: System/Configuration/Other
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description -n python3-module-semanage
 Python bindings  for SELinux policy manipulation tools
 This package provides python bindings for the manipulation of SELinux
 binary policies.
-%endif
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
 %build
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
-%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir pywrap}
-
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir pywrap PYTHON=python3
 
 %install
-%if_with python3
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib %{?_with_python:install-pywrap} PYTHON=python3
-%endif
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib %{?_with_python:install-pywrap}
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib install-pywrap PYTHON=python3
 ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_libdir/libsemanage.so
 
 # TODO: currently only man5dir is translated. If other man pages are translated, %%find_lang use should be improved
@@ -134,20 +107,16 @@ ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_
 %files devel-static
 %_libdir/*.a
 
-%if_with python
-%files -n python-module-semanage
-%python_sitelibdir/*
-
 %files utils
 %_libexecdir/selinux/*
-%endif
 
-%if_with python3
 %files -n python3-module-semanage
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
+- Updated to upstream version 2.9.
+
 * Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
 - Added man pages translation by Olesya Gerasimenko.
 

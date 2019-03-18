@@ -1,48 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 
-%define libsepol_ver 2.7
-
-%def_with python3
+%define libsepol_ver 2.8
 
 Name: setools
-Version: 4.1.1
-Release: alt4
+Version: 4.2.1
+Release: alt1
 License: %gpl2plus
-URL: http://oss.tresys.com/projects/setools
+URL: https://github.com/SELinuxProject/setools/wiki
 Summary: Policy analysis tools for SELinux
 Group: System/Base
 
+# https://github.com/SELinuxProject/setools.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-Requires: %name-gui = %EVR
-Requires: %name-console = %EVR
-Requires: %name-console-analyses = %EVR
-Conflicts: libsepol < %libsepol_ver
-
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 #libsetools
-BuildRequires: flex bison pkgconfig
-BuildRequires: glibc-devel libstdc++-devel gcc gcc-c++
 BuildRequires: libselinux-devel
 
 # In libsepol defined version: POLICYDB_VERSION_MAX, so rebuild libsepol first if available.
 BuildRequires: libsepol-devel >= %libsepol_ver
 BuildRequires: libsepol-devel-static >= %libsepol_ver
-BuildRequires: libsqlite3-devel libxml2-devel
-#libsetools-python,libsetools-tcl
-BuildRequires: swig
-#python-module-setools
-BuildRequires: python-devel bzlib-devel python-module-setuptools
-#gui
-BuildRequires: libgtk+2-devel libglade-devel tk-devel
-BuildRequires: desktop-file-utils
 
-%if_with python3
-BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-%endif
+BuildRequires: python3(Cython)
 
 %description
 SETools is a collection of graphical tools, command-line tools, and
@@ -51,17 +34,6 @@ libraries designed to facilitate SELinux policy analysis.
 This meta-package depends upon the main packages necessary to run
 SETools.
 
-%package -n python-module-%name
-License: %lgpl2plus
-Summary: Python bindings for SELinux policy analysis
-Group: Development/Python
-%setup_python_module %name
-
-%description -n python-module-%name
-SETools is a collection of graphical tools, command-line tools, and
-libraries designed to facilitate SELinux policy analysis.
-
-%if_with python3
 %package -n python3-module-%name
 License: %lgpl2plus
 Summary: Python bindings for SELinux policy analysis
@@ -70,7 +42,6 @@ Group: Development/Python3
 %description -n python3-module-%name
 SETools is a collection of graphical tools, command-line tools, and
 libraries designed to facilitate SELinux policy analysis.
-%endif
 
 %package console
 Summary: Policy analysis command-line tools for SELinux
@@ -104,29 +75,12 @@ libraries designed to facilitate SELinux policy analysis.
 %setup
 %patch -p1
 
-%if_with python3
-cp -a . ../python3
-%endif
-
 %build
-CFLAGS="%{optflags}" python setup.py build_ext
-CFLAGS="%{optflags}" %python_build_debug
-
-%if_with python3
-pushd ../python3
 CFLAGS="%{optflags}" python3 setup.py build_ext
 CFLAGS="%{optflags}" %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %find_lang --with-man --all-name %name
 
@@ -134,18 +88,10 @@ egrep 'sediff\.1|seinfo\.1|sesearch\.1' %name.lang > %name-console.lang
 egrep 'sedta\.1|seinfoflow\.1' %name.lang > %name-console-analyses.lang
 egrep 'apol\.1' %name.lang > %name-gui.lang
 
-
-%files -n python-module-%name
-%doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
-%python_sitelibdir/setools
-%python_sitelibdir/setools-*-py*.egg-info
-
-%if_with python3
 %files -n python3-module-%name
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %python3_sitelibdir/setools
 %python3_sitelibdir/setools-*-py*.egg-info
-%endif
 
 %files console -f %name-console.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
@@ -167,12 +113,13 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %_bindir/apol
 %_man1dir/apol.1*
-%python_sitelibdir/setoolsgui
-%if_with python3
 %python3_sitelibdir/setoolsgui
-%endif
 
 %changelog
+* Wed Feb 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
+- Updated to upstream version 4.2.1.
+- New version builds with python-3 only.
+
 * Fri Jan 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt4
 - Updated email addresses, project name and URLs in translated files.
 

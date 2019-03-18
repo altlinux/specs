@@ -4,15 +4,14 @@
 
 Name: libsepol
 Epoch: 1
-Version: 2.8
-Release: alt2
+Version: 2.9
+Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
 Group: System/Libraries
-Url: http://userspace.selinuxproject.org/trac/
+Url: https://github.com/SELinuxProject/selinux
 
 Source: %name-%version.tar
-Patch1: %name-%version-libsepol-alt.patch
 
 Conflicts: libsetools < 3.3.8-alt6
 
@@ -28,7 +27,7 @@ on binary policies such as customizing policy boolean settings.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 libsepol provides an API for the manipulation of SELinux binary policies.
@@ -41,7 +40,7 @@ This package contains development library and header files for %name.
 %package devel-static
 Summary: Static development files for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 libsepol provides an API for the manipulation of SELinux binary policies.
@@ -54,8 +53,8 @@ This package contains static library.
 %package utils
 Summary: Utils for checking and mainplating policy binaries Security-enhanced Linux
 Group: System/Configuration/Other
-Provides: chkcon = %version-%release
-Requires: %name = %version-%release
+Provides: chkcon = %EVR
+Requires: %name = %EVR
 
 %description utils
 libsepol provides an API for the manipulation of SELinux binary policies.
@@ -65,7 +64,6 @@ on binary policies such as customizing policy boolean settings.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=/%_lib all
@@ -97,6 +95,9 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
+- Updated to upstream version 2.9.
+
 * Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
 - Added man pages translation by Olesya Gerasimenko.
 

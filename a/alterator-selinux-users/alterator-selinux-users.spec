@@ -2,9 +2,7 @@
 
 Name: alterator-selinux-users
 Version: 0.2.5
-Release: alt1
-
-Packager: Andrey Kolotov <qwest@altlinux.org>
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -12,6 +10,7 @@ Summary: alterator module for administration users in SE Linux
 License: GPL
 Group: System/Configuration/Other
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: alterator >= 4.10-alt5
 BuildRequires: gcc-c++ libselinux-devel
 
@@ -19,7 +18,7 @@ BuildRequires: gcc-c++ libselinux-devel
 alterator module for administration users in SE Linux
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build libdir=%_libdir
@@ -35,6 +34,9 @@ rm -f %buildroot/%_altdata_dir/applications/selinux-seusers.desktop
 %_bindir/*
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.5-alt2
+- Ported to python3 using 2to3 tool.
+
 * Tue Feb 14 2017 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1
 - Use common Makefile include module.mk to support localization
 - Fix case of labels, fix unlocalized label

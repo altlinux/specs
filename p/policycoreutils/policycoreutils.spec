@@ -2,16 +2,14 @@
 
 %define _libexecdir %prefix/libexec
 
-%def_with python3
-
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 2.8
-Release: alt2
+Version: 2.9
+Release: alt1
 License: GPLv2
 Group: System/Base
-Url: http://userspace.selinuxproject.org
+Url: https://github.com/SELinuxProject/selinux
 
 Source0: %name-%version.tar
 
@@ -32,28 +30,22 @@ Source19: mcstrans-%version.tar
 
 Patch1: %name-%version-policycoreutils-alt.patch
 Patch2: %name-%version-python-alt.patch
-Patch3: %name-%version-gui-alt.patch
-Patch4: selinux-sandbox-%version-alt.patch
-Patch5: semodule-utils-%version-alt.patch
 Patch6: %name-%version-restorecond-alt.patch
 Patch7: %name-%version-mcstrans-alt.patch
 
 %define mcstrans_ver 0.3.3
-Requires: python-module-semanage python-module-audit
+Requires: python3-module-semanage python3-module-audit
 
-BuildPreReq: rpm-build-xdg
+BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libaudit-devel libcap-devel libpam-devel
 BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
-BuildRequires: python-devel
-BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel libdbus-glib-devel
 BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
+
+%add_python3_path %_datadir/system-config-selinux
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -61,7 +53,6 @@ for basic operation of a SELinux system.  These utilities include
 load_policy to load policies, setfiles to label filesystems, newrole
 to switch roles, and run_init to run /etc/init.d scripts in the proper
 context.
-
 
 %package newrole
 Summary: The newrole application for RBAC/MLS
@@ -72,7 +63,6 @@ Requires: %name = %EVR
 RBAC/MLS policy machines require newrole as a way of changing the role
 or level of a logged in user.
 
-
 %package sandbox
 Summary: SELinux sandbox utilities
 Group: System/Base
@@ -81,7 +71,6 @@ Requires: %name = %EVR
 %description sandbox
 This package contains the sandbox which allow you to run an applications
 within a tightly confined SELinux domain.
-
 
 %package sandbox-x
 Summary: SELinux sandbox utilities for X applications
@@ -95,7 +84,6 @@ BuildArch: noarch
 %description sandbox-x
 This package contains the scripts to create graphical sandboxes.
 
-
 %package restorecond
 Summary: SELinux restorecond utilities
 Group:   System/Base
@@ -105,7 +93,6 @@ Provides: mcstrans = %mcstrans_ver
 %description restorecond
 This package contains the restorecond service.
 
-
 %package mcstransd
 Summary: SELinux Translation Daemon
 Group: System/Base
@@ -113,7 +100,6 @@ Group: System/Base
 %description mcstransd
 mcstrans provides an translation daemon to translate SELinux categories
 from internal representations to user defined representation.
-
 
 %package devel
 Requires: %name = %EVR
@@ -124,37 +110,23 @@ Group: System/Base
 The policycoreutils-devel package contains the management tools use to
 develop policy in an SELinux environment.
 
-
 %package gui
 Summary: SELinux configuration GUI
 Group: System/Base
 Requires: policycoreutils = %EVR
-#Requires: setools-console
 Requires: selinux-policy
 
 %description gui
 system-config-selinux is a utility for managing the SELinux environment.
 
-%package -n python-module-policycoreutils
-Summary: SELinux policy core python utilities
-Group:   Development/Python
-Requires: %name = %EVR
-Obsoletes: python-module-sepolgen
-
-%description -n python-module-policycoreutils
-The policycoreutils-python package contains the management tools use to manage
-an SELinux environment.
-
-%if_with python3
 %package -n python3-module-policycoreutils
 Summary: SELinux policy core python utilities
-Group:   Development/Python
+Group:   Development/Python3
 Requires: %name = %EVR
 
 %description -n python3-module-policycoreutils
 The policycoreutils-python package contains the management tools use to manage
 an SELinux environment.
-%endif
 
 %prep
 %setup -c -n selinux
@@ -172,18 +144,6 @@ popd
 
 pushd selinux-python-%version
 %patch2 -p1
-popd
-
-pushd selinux-gui-%version
-%patch3 -p1
-popd
-
-pushd selinux-sandbox-%version
-%patch4 -p1
-popd
-
-pushd semodule-utils-%version
-%patch5 -p1
 popd
 
 pushd restorecond-%version
@@ -206,9 +166,6 @@ popd
 
 %install
 %makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%if_with python3
-%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" PYTHON=python3
-%endif
 %makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
 %makeinstall_std -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
 %makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
@@ -217,21 +174,13 @@ popd
 %makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" SYSTEMDDIR="/lib/systemd"
 %makeinstall_std -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="/lib/systemd"
 
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-mkdir -pv %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
-rm -rf %buildroot%_prefix/lib/python2*
-%if_with python3
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mkdir -pv %buildroot%python3_sitelibdir
 mv  %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 rm -rf %buildroot%_prefix/lib/python3*
 %endif
-%endif
 
-chmod -x %buildroot%python_sitelibdir/seobject.py
-%if_with python3
 chmod -x %buildroot%python3_sitelibdir/seobject.py
-%endif
 
 install -d -m 0755 %buildroot%_localstatedir/selinux
 install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/system-config-selinux
@@ -281,9 +230,6 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 
 %preun mcstransd
 %preun_service mcstrans
-
-%add_python_req_skip yum
-# May also add: gnome, gi, gtk
 
 #
 # stanv@ note:
@@ -395,15 +341,6 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/setrans.conf.*
 %_datadir/mcstrans
 
-# stanv@
-# generate.py does:
-# --> from templates import executable
-# But, 'templates' is a part of 'sepolicy' python module, as a generate.py
-# So /usr/lib/rpm/python.req.py generates wrong dependency:
-# python2.7(templates)
-# Easiest way do next and add explicit requires.
-%add_python_req_skip templates
-
 %files devel -f %name-devel.lang
 %_bindir/sepolgen
 %_bindir/sepolgen-ifgen
@@ -442,6 +379,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 
 %dir %_datadir/system-config-selinux
 %_datadir/system-config-selinux/*.py*
+%_datadir/system-config-selinux/__pycache__
 %_datadir/system-config-selinux/*png
 %_datadir/system-config-selinux/*.ui
 
@@ -464,22 +402,18 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/selinux-polgengui.*
 %_man8dir/sepolicy-gui.*
 
-%files -n python-module-policycoreutils
-%python_sitelibdir/sepolicy
-%python_sitelibdir/sepolgen
-%python_sitelibdir/sepolicy-*.egg-info
-%python_sitelibdir/seobject.py*
-
-%if_with python3
 %files -n python3-module-policycoreutils
 %python3_sitelibdir/sepolicy
 %python3_sitelibdir/sepolgen
 %python3_sitelibdir/sepolicy-*.egg-info
 %python3_sitelibdir/seobject.py
 %python3_sitelibdir/__pycache__/*
-%endif
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
+- Updated to upstream version 2.9.
+- Disabled support for python-2.
+
 * Tue Dec 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
 - Added man pages translation by Olesya Gerasimenko.
 
