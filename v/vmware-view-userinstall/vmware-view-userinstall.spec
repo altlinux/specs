@@ -1,6 +1,6 @@
 Name: vmware-view-userinstall
 Version: 4.10.0
-Release: alt3
+Release: alt4
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -14,6 +14,8 @@ ExclusiveArch: %ix86 x86_64
 Requires: vmware-view-preinstall >= 4.10.0-alt3
 Requires: userinstall-helper >= 0.2
 Requires: python-modules-sqlite3
+
+BuildArch: noarch
 
 %define uinstdir %_cachedir/userinstall
 
@@ -43,6 +45,9 @@ cp -a checksums %buildroot%uinstdir/goodsums
 %uinstdir/goodsums/*
 
 %changelog
+* Mon Mar 18 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt4
+- Make package noarch.
+
 * Thu Mar 14 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt3
 - Fix URL for Zenity dialog.
 - Use latest desktop file and icon from VMware Horizon Client 4.10.0.

@@ -1,6 +1,6 @@
 Name: vmware-view-preinstall
 Version: 4.10.0
-Release: alt3
+Release: alt4
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -18,6 +18,8 @@ Requires: libpng12
 Requires: libudev0
 Requires: libusb
 
+BuildArch: noarch
+
 %description
 Install this package if you plan to deploy
 VMware-Horizon-Client-%version bundle on this system.
@@ -25,6 +27,9 @@ VMware-Horizon-Client-%version bundle on this system.
 %files
 
 %changelog
+* Mon Mar 18 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt4
+- Make package noarch.
+
 * Thu Mar 14 2019 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt3
 - Update requirements from VMware Horizon Client 4.10.0.
 
