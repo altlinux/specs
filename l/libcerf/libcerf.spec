@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pod2man
+BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires: /usr/bin/pod2man /usr/bin/pod2html gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -7,15 +8,20 @@ BuildRequires: /usr/bin/pod2man
 %define libname	libcerf%{major}
 %define devname	libcerf-devel
 
+%global _cmake_skip_rpath %nil
+
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
-Version:	1.5
-Release:	alt1_1
+Version:	1.13
+Release:	alt1_2
 Group:		System/Libraries
 License:	MIT
 Url:		http://apps.jcns.fz-juelich.de/libcerf
 Source0:	http://apps.jcns.fz-juelich.de/src/libcerf/libcerf-%{version}.tgz
-Patch0:		libcerf-1.5-fix-version.patch
+Patch1:		0001-Fix-64bit-library-location.patch
+Patch2:		0001-Fix-64bit-pkgconfig-.pc-file-location.patch
+BuildRequires:	ccmake cmake ctest
+BuildRequires:	clang7.0 llvm7.0
 Source44: import.info
 
 %description
@@ -47,24 +53,27 @@ This package contains the development files for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-autoreconf -vfi
-%configure
-%make_build
+%remove_optflags -frecord-gcc-switches
+# for some reason %ix86 tests fails with gcc
+export CC=clang
+%{mageia_cmake}
+%make_build V=1
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 
-#we don't want these
-find %{buildroot} -name "*.la" -delete
+%check
+%{mageia_ctest}
 
 %files -n %{libname}
 %doc CHANGELOG README
 %doc --no-dereference COPYING
 %{_libdir}/%{name}.so.%{major}
-%{_libdir}/%{name}.so.%{major}.*
+%{_libdir}/%{name}.so.%{version}
 
 %files -n %{devname}
 %doc %{_docdir}/libcerf/
@@ -75,6 +84,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Mon Mar 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
+- new version
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1
 - new version
 
