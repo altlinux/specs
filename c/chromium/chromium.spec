@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        72.0.3626.81
+Version:        73.0.3683.75
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -65,16 +65,17 @@ Patch012: 0012-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
 Patch013: 0013-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
 Patch014: 0014-ALT-Fix-last-commit-position-issue.patch
 Patch015: 0015-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch016: 0016-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch017: 0017-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch018: 0018-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch019: 0019-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
-Patch020: 0020-FEDORA-Fix-gcc-round.patch
-Patch021: 0021-FEDORA-Fix-memcpy.patch
-Patch022: 0022-ALT-openh264-always-pic-on-x86.patch
-Patch023: 0023-ALT-allow-to-override-clang-through-env-variables.patch
-Patch024: 0024-ALT-Remove-hardcoded-icf-option.patch
-Patch025: 0025-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch016: 0016-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch017: 0017-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch018: 0018-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
+Patch019: 0019-FEDORA-Fix-gcc-round.patch
+Patch020: 0020-FEDORA-Fix-memcpy.patch
+Patch021: 0021-ALT-openh264-always-pic-on-x86.patch
+Patch022: 0022-ALT-allow-to-override-clang-through-env-variables.patch
+Patch023: 0023-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch024: 0024-color_utils-Use-std-sqrt-instead-of-std-sqrtf.patch
+Patch025: 0025-Fix-build-with-libstdc.patch
+Patch026: 0026-ALT-Add-missing-header-on-aarch64.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -223,6 +224,7 @@ tar -xf %SOURCE1
 %patch023 -p1
 %patch024 -p1
 %patch025 -p1
+%patch026 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -236,9 +238,11 @@ touch third_party/blink/tools/blinkpy/__init__.py
 
 # unknown warning option '-Wno-ignored-pragma-optimize'
 # unknown warning option '-Wno-defaulted-function-deleted'
+# clang7: error: unknown argument: '-fsplit-lto-unit'
 sed -i \
 	-e '/"-Wno-ignored-pragma-optimize"/d' \
 	-e '/"-Wno-defaulted-function-deleted"/d' \
+	-e '/"-fsplit-lto-unit"/d' \
 	build/config/compiler/BUILD.gn
 
 sed -i \
@@ -327,6 +331,10 @@ gn_arg is_cfi=false
 gn_arg use_cfi_icall=false
 %else
 gn_arg is_clang=false
+%endif
+
+%ifnarch %{ix86} x86_64
+gn_arg icu_use_data_file=false
 %endif
 
 %if_enabled google_api_keys
@@ -481,6 +489,31 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Mar 18 2019 Alexey Gladkov <legion@altlinux.ru> 73.0.3683.75-alt1
+- New version (73.0.3683.75).
+- Security fixes:
+  - CVE-2019-5787: Use after free in Canvas.
+  - CVE-2019-5788: Use after free in FileAPI.
+  - CVE-2019-5789: Use after free in WebMIDI.
+  - CVE-2019-5790: Heap buffer overflow in V8.
+  - CVE-2019-5791: Type confusion in V8.
+  - CVE-2019-5792: Integer overflow in PDFium.
+  - CVE-2019-5793: Excessive permissions for private API in Extensions.
+  - CVE-2019-5794: Security UI spoofing.
+  - CVE-2019-5795: Integer overflow in PDFium.
+  - CVE-2019-5796: Race condition in Extensions.
+  - CVE-2019-5797: Race condition in DOMStorage.
+  - CVE-2019-5798: Out of bounds read in Skia.
+  - CVE-2019-5799: CSP bypass with blob URL.
+  - CVE-2019-5800: CSP bypass with blob URL.
+  - CVE-2019-5801: Incorrect Omnibox display on iOS.
+  - CVE-2019-5802: Security UI spoofing.
+  - CVE-2019-5803: CSP bypass with Javascript URLs'.
+  - CVE-2019-5804: Command line command injection on Windows.
+
+* Sun Mar 03 2019 Alexey Gladkov <legion@altlinux.ru> 72.0.3626.121-alt1
+- New version (72.0.3626.121).
+
 * Mon Feb 04 2019 Alexey Gladkov <legion@altlinux.ru> 72.0.3626.81-alt1
 - New version (72.0.3626.81).
 - Security fixes:
