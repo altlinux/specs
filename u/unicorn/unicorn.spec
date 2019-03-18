@@ -1,18 +1,21 @@
 %define pkgname unicorn
 
-Name: %pkgname
-Version: 5.4.1
-Release: alt1
-Summary: Unicorn: Rack HTTP server for fast clients and Unix
-License: GPL2
-Group: System/Servers
-Url: http://unicorn.bogomips.org/
+Name:          %pkgname
+Version:       5.5.0
+Release:       alt2
+Summary:       Unicorn: Rack HTTP server for fast clients and Unix
+License:       GPL2
+Group:         System/Servers
+Url:           https://unicorn.bogomips.org/
+# VCS:         https://bogomips.org/unicorn.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Source: %pkgname-%version.tar.gz
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ragel
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
-BuildRequires: libruby-devel ragel rubygems ruby-tool-setup
-
-ExclusiveArch: %ix86 x86_64
+#ExclusiveArch: %ix86 x86_64
 
 %description
 Unicorn is an HTTP server for Rack applications designed to only serve
@@ -21,43 +24,52 @@ advantage of features in Unix/Unix-like kernels. Slow clients should
 only be served by placing a reverse proxy capable of fully buffering
 both the the request and response in between Unicorn and slow clients.
 
-%package doc
-Summary: Documentation files for %pkgname
-Group: Documentation
-BuildArch: noarch
+%package       devel
+Summary:       Development files for %pkgname
+Group:         Development/Ruby
+BuildArch:     noarch
 
-%description doc
-Documentation files for %pkgname
+%description   devel
+Development files for %pkgname.
+
+%package       doc
+Summary:       Documentation files for %pkgname
+Group:         Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %pkgname.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%make_build ext/unicorn_http/unicorn_http.c
-%ruby_config
-%ruby_build
-#for t in test/*_test.rb; do
-#ruby_test_unit -Ilib:test "$t"
-#done
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install -s auto
 
 %files
-%doc ISSUES README TUNING KNOWN_ISSUES FAQ DESIGN examples*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_sitearchdir/*
+%doc README*
 %_bindir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/Unicorn*
+%files         devel
+%ruby_includedir/*
+
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Mar 18 2019 Pavel Skrylev <majioa@altlinux.org> 5.5.0-alt2
+- Fix shebang line
+
+* Mon Mar 18 2019 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1
+- New version.
+- Rewrite spec according Ruby Policy 2.0.
+
 * Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
 - New version.
 
