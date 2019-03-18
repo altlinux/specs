@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.13
+%define ver_major 3.32
 %define xdg_name org.gnome.Geary
 # Elementary OS-specific
 %def_disable contractor
@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Email client
@@ -41,6 +41,7 @@ BuildRequires: libenchant-devel libsecret-devel libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
+BuildRequires: libfolks-devel  libfolks-vala libenchant2-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
 
@@ -79,6 +80,9 @@ subst "/\--thread/d" src/meson.build
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt1
 - 0.13.3
 

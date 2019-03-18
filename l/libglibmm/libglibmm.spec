@@ -6,7 +6,7 @@
 %define api_ver 2.4
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.56.0
+%define glib_ver 2.58.1
 %define sigc_ver 2.9.1
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
@@ -97,6 +97,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
+- 2.58.1
+
 * Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
 - 2.58.0
 

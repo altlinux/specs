@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.30
-%define _name org.gnome.font-viewer
+%define ver_major 3.32
+%define xdg_name org.gnome.font-viewer
 
 Name: gnome-font-viewer
 Version: %ver_major.0
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 %define glib_ver 2.38.0
 %define gtk_ver 3.12.0
 
-BuildRequires(Pre): meson rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libfreetype-devel libharfbuzz-devel libgnome-desktop3-devel
 
@@ -38,19 +38,22 @@ GNOME Font Viewer is a simple application to preview fonts.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
 %_bindir/gnome-thumbnail-font
-%_datadir/applications/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/thumbnailers/%name.thumbnailer
-%_datadir/dbus-1/services/%_name.service
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/dbus-1/services/%xdg_name.service
+%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
 %changelog
+* Fri Mar 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

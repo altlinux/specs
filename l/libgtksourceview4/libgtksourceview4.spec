@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 4.0
+%define ver_major 4.2
 %define api_ver 4
 
 %def_disable static
@@ -8,9 +8,10 @@
 %def_enable vala
 %def_enable installed_tests
 %def_enable gspell
+%def_enable check
 
 Name: lib%{_name}4
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -25,12 +26,12 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.8.0
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome
 
 # From configure.ac
 BuildRequires: gcc-c++ autoconf-archive gtk-doc itstool
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
@@ -149,6 +150,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.3-alt1
 - 4.0.3
 
