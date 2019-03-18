@@ -1,5 +1,5 @@
 Name: libxkbfile
-Version: 1.0.9
+Version: 1.1.0
 Release: alt1
 Summary: The xkbfile Library
 License: MIT/X11
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt1
 - 1.0.9
 

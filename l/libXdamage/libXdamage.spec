@@ -1,6 +1,6 @@
 Name: libXdamage
-Version: 1.1.3
-Release: alt4
+Version: 1.1.5
+Release: alt1
 Summary: X Damage Library
 License: MIT/X11
 Group: System/Libraries
@@ -46,6 +46,9 @@ develop programs which make use of %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+
 * Tue Feb 08 2011 Alexey Tourbin <at@altlinux.ru> 1.1.3-alt4
 - rebuilt for debuginfo
 

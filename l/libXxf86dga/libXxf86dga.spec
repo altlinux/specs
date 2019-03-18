@@ -1,6 +1,6 @@
 Name: libXxf86dga
-Version: 1.1.4
-Release: alt3
+Version: 1.1.5
+Release: alt1
 Summary: XFree86 Direct Graphics Access Extension Library
 License: MIT/X11
 Group: System/Libraries
@@ -47,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+
 * Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt3
 - devel: remove conflict to xorg-xf86dgaproto-devel
 

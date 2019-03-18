@@ -1,6 +1,6 @@
 Name: libXcursor
-Version: 1.1.15
-Release: alt1%ubt
+Version: 1.2.0
+Release: alt1
 Summary: X Cursor Library
 License: MIT/X11
 Group: System/Libraries
@@ -48,7 +48,10 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
-* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.1.15-alt1%ubt
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
+* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.1.15-alt1.S1
 - fixes:
  + CVE-2017-16612 Fix heap overflows when parsing malicious files
 
