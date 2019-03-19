@@ -1,6 +1,6 @@
 Name: pkg-config
 Version: 0.29.2
-Release: alt2
+Release: alt3
 
 Summary: Pkgconfig helps make building packages easier
 License: GPLv2+
@@ -38,7 +38,7 @@ mkdir glib
 
 %build
 %autoreconf
-%configure --docdir=%docdir --without-internal-glib
+%configure --docdir=%docdir --without-internal-glib --disable-silent-rules
 %make_build
 
 %install
@@ -63,10 +63,14 @@ EOF
 %check
 %make_build -k check
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
 %files
 %config %_sysconfdir/buildreqs/files/ignore.d/*
 %config %_rpmlibdir/*
 %_bindir/pkg-config
+%_bindir/*-pkg-config
 %dir %_libdir/pkgconfig
 %dir %_datadir/pkgconfig
 %_datadir/aclocal/*
@@ -74,6 +78,9 @@ EOF
 %docdir/
 
 %changelog
+* Tue Mar 19 2019 Dmitry V. Levin <ldv@altlinux.org> 0.29.2-alt3
+- Made the output of "pkg-config --list-all" sorted.
+
 * Tue Jun 19 2018 Alexey Tourbin <at@altlinux.ru> 0.29.2-alt2
 - Re-added --enable-recursion to complement --disable-recursion, for cpp.req.
 
