@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %def_enable face_detection
@@ -10,7 +10,7 @@
 
 Name: shotwell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: shotwell-0.30.2-up-a9190d5194.patch
 
 %define gtk_ver 3.22
 %define gexiv_ver 0.10.4
@@ -55,6 +56,7 @@ mode, and export them to share with others.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
@@ -95,6 +97,10 @@ mode, and export them to share with others.
 
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.30.2-alt2
+- updated to 0.30.2-9-gd03b4777
+- backported "publishing: Fix references to GLib.BindingFlags"
+
 * Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.30.2-alt1
 - 0.30.2
 
