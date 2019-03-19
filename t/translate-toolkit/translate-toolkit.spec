@@ -1,7 +1,7 @@
 %define modname translate
 
 Name: translate-toolkit
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Tools and API for translation and localization engineering.
@@ -85,6 +85,9 @@ rm -fr %buildroot%python_sitelibdir/%modname/docs/
 %doc docs/_build/html
 
 %changelog
+* Tue Mar 19 2019 Vladimir Didenko <cow@altlinux.ru> 2.3.1-alt1
+- New version
+
 * Tue Jul 17 2018 Vladimir Didenko <cow@altlinux.ru> 2.3.0-alt1
 - New version
 
