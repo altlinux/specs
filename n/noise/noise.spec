@@ -7,7 +7,7 @@
 Name: noise
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.music
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The official elementary music player
@@ -121,6 +121,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
+- updated to 5.0.3-12-g80bcdfda
+
 * Thu Jan 03 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
 - updated to 5.0.2-5-gc49dd991
 
