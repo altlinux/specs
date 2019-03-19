@@ -1,6 +1,6 @@
 Name: xfce4-notes-plugin
 Version: 1.8.1
-Release: alt2
+Release: alt3
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
@@ -32,6 +32,8 @@ BuildRequires: libunique-devel
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_notes_plugin_version_tag configure.ac.in
 %xfce4reconf
 # GTK+3 build seems broken for now
 %configure \
@@ -57,6 +59,10 @@ BuildRequires: libunique-devel
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Tue Mar 19 2019 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt3
+- Don't use git tag in version.
+- Fix build with vala-0.44.
+
 * Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt2
 - Update url.
 - Enable debug (minimum level).
