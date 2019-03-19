@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.24
+Version: 0.2.25
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,11 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Mar 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.2.25-alt1
+- mki-copy-efiboot: add support for signed shimia32 by default if available
+  + clean up code
+- fix a copy-pasted typo in an error message
+
 * Wed Oct 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.2.24-alt1
 - mki-copy-efiboot: extract refind_ia32.efi config options into separate file
 
