@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.26
+Version: 5.0
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -48,7 +48,7 @@ complex commands do.
 %prep
 %setup -n %name-%version-%release
 echo -n %version-%release > .tarball-version
-echo -n 2018 > .year
+echo -n 2019 > .year
 date +%%Y-%%m-%%d > .strace.1.in.date
 
 %build
@@ -96,6 +96,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Tue Mar 19 2019 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt1
+- v4.26 -> v5.0.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt1
 - v4.25 -> v4.26.
 
