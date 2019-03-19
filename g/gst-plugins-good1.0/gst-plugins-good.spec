@@ -8,6 +8,7 @@
 
 %def_enable jack
 %def_enable pulse
+%def_enable qt5
 
 %def_disable gtk_doc
 %def_disable debug
@@ -16,7 +17,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -31,7 +32,7 @@ BuildRequires(pre): meson
 BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %version
 BuildRequires: gtk-doc libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
-BuildRequires: liboil-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
+BuildRequires: libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
 BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
@@ -40,6 +41,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: liborc-test-devel valgrind-tool-devel
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
 
 %description
@@ -47,6 +49,15 @@ GStreamer Good Plug-ins is is a set of plug-ins that the developers consider
 to have good quality code, correct functionality, and their preferred license
 (LGPL for the plug-in code, LGPL or LGPL-compatible for the supporting
 library).
+
+%package qt5
+Summary: Qt5 plugin for GStreamer
+Group: System/Libraries
+Requires: gst-plugins-base%api_ver >= %version
+
+%description qt5
+This package contains Qt5 GL plugin for Gstreamer.
+
 
 %package devel-doc
 Summary: Development documentation for GStreamer Good plugins
@@ -79,8 +90,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files -f %_name-good-%api_ver.lang
 %_gst_libdir/*.so
+%{?_enable_qt5:%exclude %_gst_libdir/libgstqmlgl.so}
 %_gst_datadir/*
 %doc AUTHORS NEWS README RELEASE
+
+%if_enabled qt5
+%files qt5
+%_gst_libdir/libgstqmlgl.so
+%endif
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -88,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt2
+- new -qt5 subpackage (ALT #36313)
+
 * Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 
