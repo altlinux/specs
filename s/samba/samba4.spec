@@ -41,13 +41,16 @@
 %def_with systemd
 %def_enable avahi
 
-%ifarch %ix86 %arm %mips32 ppc %e2k
+# https://bugzilla.altlinux.org/show_bug.cgi?id=36315
+# Not all macroses exists on stable branches:
+# ifarch %ix86 %arm %mips32 ppc %e2k
+%ifarch %ix86 %arm mipsel ppc e2k e2kv4
 %def_without libcephfs
 %else
 %def_with libcephfs
 %endif
 
-%ifarch %e2k
+%ifarch e2k e2kv4
 %def_disable glusterfs
 %else
 %def_enable glusterfs
@@ -55,7 +58,7 @@
 
 Name:    samba
 Version: 4.9.5
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1591,6 +1594,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Mar 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.5-alt2
+- Fix build compatibility for newest architectures with not exists
+  macroses on stable branches
+
 * Fri Mar 15 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.5-alt1
 - Update to latest release with security ldb fixes (CVE-2019-3824)
 - Prepare to replace runtime files from /var/run to /run directory
