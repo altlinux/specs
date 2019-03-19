@@ -1,14 +1,16 @@
 %define oname caffeine
 Name: %oname-ng
 Version: 3.4.2
-Release: alt1
+Release: alt2
 Summary: Prevent screensaving and powersaving
 Group: Graphical desktop/Other
 License: GPLv3 and LGPLv3
-Url: https://gitlab.com/hobarrera/caffeine-ng
+Url: https://github.com/caffeine-ng/caffeine-ng
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix-freezing.patch
+
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-setuptools python3-module-setuptools_scm git
 BuildArch: noarch
@@ -53,11 +55,12 @@ Caffeine - маленькая служба, которая блокирует а
 реализация недостающих функций, когда это уместно.
 
 Caffeine-ng ранее был известен как Taurine, является его преемником, так как
-Taurine является известным стимулятором, обычно встречаются в энергетических
-напитков.
+Taurine является известным стимулятором, обычно встречающимся в энергетических
+напитках.
 
 %prep
 %setup
+%patch -p1
 
 %build
 git config --global user.email "antohami at altlinux.org"
@@ -73,6 +76,9 @@ git tag -m "%version" %version
 %python3_install
 %find_lang %oname
 
+# remove unused icons
+rm -fr %buildroot%_iconsdir/ubuntu-mono-dark
+
 %files -f %oname.lang
 %doc *.rst
 %_sysconfdir/xdg/autostart/%oname.desktop
@@ -80,13 +86,16 @@ git tag -m "%version" %version
 %_man1dir/*.1.*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
-%exclude %_iconsdir/ubuntu-mono-dark
 %_pixmapsdir/*
 %python3_sitelibdir/*
 %_datadir/%oname
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Tue Mar 19 2019 Anton Midyukov <antohami@altlinux.org> 3.4.2-alt2
+- fix freezing on exit (Closes: 36003)
+- Update Url
+
 * Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 3.4.2-alt1
 - new version 3.4.2
 
