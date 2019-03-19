@@ -2,6 +2,8 @@
 # chroot support
 # improve modules packaging (add config examples)
 
+%define _unpackaged_files_terminate_build 1
+
 %def_enable	geoip
 %def_enable	smtp
 %def_enable	json
@@ -9,20 +11,21 @@
 %def_enable	mongodb
 %def_enable	curl
 %def_enable	systemd
-%def_disable	unit_tests
 
-%define _unpackaged_files_terminate_build 1
+# https://lists.altlinux.org/pipermail/devel/2019-March/207208.html
+%def_disable	unit_tests
 
 Name: syslog-ng
 Version: 3.20.1
-Release: alt2
+Release: alt3
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
 License: %gpllgpl2only
 URL: https://www.syslog-ng.com
+
 Provides: syslogd-daemon
-Prereq:	syslog-common
+Requires(pre): syslog-common
 Conflicts: klogd < 1.4.1-alt7
 
 Provides: libeventlog = %EVR
@@ -56,8 +59,7 @@ BuildRequires: xsltproc docbook-style-xsl python-devel
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 
 %if_enabled unit_tests
-# The "criterion" does not exist in the repository at 02/03/2019
-BuildRequires: criterion
+BuildRequires: libcriterion-devel
 BuildRequires: CUnit-devel
 BuildRequires: valgrind-devel
 %endif
@@ -70,6 +72,15 @@ adds the possibility to filter based on message contents using regular
 expressions. The new configuration scheme is intuitive and powerful.
 Forwarding logs over TCP and remembering all forwarding hops makes it
 ideal for firewalled environments.
+
+%package scl
+Summary: syslog-ng's SCL plugins
+Group: System/Kernel and hardware
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description scl
+Source Configuration Library plugins for syslog-ng configuration files
 
 %package libdbi
 Summary: libdbi support for %{name}
@@ -250,6 +261,9 @@ VER=`echo %version | sed "s/^\([0-9]\+\.[0-9]\+\).*/\1/"`
 sed "s/@ver@/$VER/" < altlinux/%name.conf > %buildroot%_sysconfdir/%name/%name.conf
 sed "s/@ver@/$VER/" -i altlinux/conf.d.example/*.conf
 
+# exit with 1 if "scl/*/*.conf" not found
+sed '/scl\/\*\/\*.conf/{s||%_datadir/%name/include/scl/*/*.conf|;h};${x;/./{x;q0};x;q1}' -i %buildroot%_sysconfdir/%name/scl.conf
+
 install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 install -m644 -D -p altlinux/%name.service %buildroot%_unitdir/%name.service
 rm -f %buildroot%_unitdir/%{name}@.service
@@ -257,7 +271,7 @@ rm -f %buildroot%_unitdir/%{name}@.service
 install -m644 -p config.h %buildroot%_includedir/%name
 
 mkdir -p %buildroot%_localstatedir/%name
-mkdir -p %buildroot%_sysconfdir/%name/conf.d 
+mkdir -p %buildroot%_sysconfdir/%name/conf.d
 
 # installation of xsd  broken in 3.6.3
 install -c -m 644 doc/xsd/patterndb-1.xsd doc/xsd/patterndb-2.xsd doc/xsd/patterndb-3.xsd doc/xsd/patterndb-4.xsd \
@@ -295,7 +309,6 @@ fi
 %dir %_sysconfdir/%name/patterndb.d
 %dir %_sysconfdir/%name/conf.d
 %config(noreplace) %_sysconfdir/%name/%name.conf
-%config(noreplace) %_sysconfdir/%name/scl.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_initdir/%name
 %_unitdir/%name.service
@@ -358,7 +371,6 @@ fi
 %dir %_datadir/%name
 %dir %_datadir/%name/include
 %dir %_datadir/%name/xsd
-%_datadir/%name/include/*
 %_datadir/%name/xsd/*
 
 %_man1dir/*
@@ -366,6 +378,10 @@ fi
 %_man8dir/*
 
 %dir %_localstatedir/%name
+
+%files scl
+%config(noreplace) %_sysconfdir/%name/scl.conf
+%_datadir/%name/include/scl
 
 %files libdbi
 %_libdir/%name/libafsql.so
@@ -435,6 +451,11 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Tue Mar 19 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt3
+- updated examples for syslog-ng/conf.d
+- syslog-ng.conf: included scl.conf, added comments
+- packaged SCL as separated package, updated path in scl.conf
+
 * Fri Mar 08 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt2
 - syslog-ng.conf: placed @include "/etc/syslog-ng/conf.d/*.conf"
   before all standard log statements
