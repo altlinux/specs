@@ -1,6 +1,6 @@
 Name: nmap
-Version: 5.51
-Release: alt1.2
+Version: 7.70
+Release: alt1
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -8,27 +8,11 @@ License: GPLv2
 Group: Monitoring
 Url: http://nmap.org/
 
-%define srcname nmap-%version
-# http://nmap.org/dist/%srcname.tar.bz2
+%define srcname nmap-%version-%release
+# http://git.altlinux.org/gears/n/nmap.git
 Source: %srcname.tar
 Source1: zenmap.pamd
 Source2: zenmap.security
-
-Patch0: nmap-5.51-owl-nse_ldflags.patch
-Patch1: nmap-5.51-alt-owl-autoheader.patch
-Patch2: nmap-5.51-alt-nsock-autoheader.patch
-Patch3: nmap-5.51-alt-owl-drop-priv.patch
-Patch4: nmap-5.51-alt-owl-dot-dir.patch
-Patch5: nmap-5.51-alt-owl-fileexistsandisreadable.patch
-Patch6: nmap-5.51-owl-warnings.patch
-Patch7: nmap-5.51-owl-build.patch
-Patch8: nmap-5.51-owl-nping-drop-priv.patch
-Patch9: nmap-5.51-owl-nping-autoheader.patch
-Patch10: nmap-5.51-alt-sctp_chunkhdr.patch
-Patch11: nmap-5.51-alt-ncat-certs.patch
-Patch12: nmap-5.51-alt-libdnet.patch
-Patch13: nmap-5.51-alt-zenmap-desktop.patch
-Patch14: nmap-5.51-rh-zenmap-locale.patch
 
 %def_with liblua
 %def_with ncat
@@ -36,10 +20,10 @@ Patch14: nmap-5.51-rh-zenmap-locale.patch
 %def_with nping
 %def_with zenmap
 
-Requires: chrooted-resolv, libdnet >= 0:1.12-alt1
-BuildRequires: gcc-c++, libcap-devel, libdnet-devel >= 0:1.12-alt1
+Requires: chrooted-resolv
+BuildRequires: gcc-c++, libcap-devel
 BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel
-%{?_with_liblua:BuildRequires: liblua5.1-devel}
+%{?_with_liblua:BuildRequires: liblua5.3-devel}
 %{?_with_ndiff:BuildRequires: python-devel}
 %{?_with_zenmap:BuildRequires: libpam-devel python-devel}
 
@@ -57,29 +41,14 @@ Summary: The GTK+ frontend for Nmap
 Group: Monitoring
 BuildArch: noarch
 %_python_set_noarch
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description -n zenmap
 This package includes zenmap, a GTK+ frontend for Nmap.
 
 %prep
 %setup -n %srcname
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-rm -r libdnet-stripped liblua libpcap libpcre
+rm -r liblua libpcap libpcre
 bzip2 -9 CHANGELOG
 
 %build
@@ -92,13 +61,13 @@ for d in . nping; do
 done
 
 export ac_cv_header_libiberty_h=no
+export ac_cv_dnet_linux_procfs=yes
 %configure \
 	%{subst_with liblua} \
 	%{subst_with ncat} \
 	%{subst_with ndiff} \
 	%{subst_with nping} \
 	%{subst_with zenmap} \
-	--with-libdnet=/usr \
 	--with-user=nmapuser \
 	--with-chroot-empty=/var/empty \
 	--with-chroot-resolv=/var/resolv \
@@ -108,6 +77,7 @@ export ac_cv_header_libiberty_h=no
 %install
 %makeinstall_std STRIP=:
 
+rm %buildroot%_bindir/uninstall_ndiff
 rm %buildroot%_mandir/*/man1/nmap.*
 
 %if_with zenmap
@@ -159,6 +129,11 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Tue Mar 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.70-alt1
+- Updated to v7.70.
+- Built with internal libdnet.
+- Rebuilt with openssl 1.1.
+
 * Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20020501:5.51-alt1.2
 - Updated dependencies to explicitly require lua-5.1
 
