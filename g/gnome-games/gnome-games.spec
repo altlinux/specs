@@ -1,8 +1,9 @@
-%define ver_major 3.30
+%def_enable snapshot
+%define ver_major 3.32
 %define xdg_name org.gnome.Games
 
 Name: gnome-games
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -10,21 +11,26 @@ License: GPLv3
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Games
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildRequires(pre): meson
+BuildRequires: vala-tools
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(grilo-0.3)
 BuildRequires: pkgconfig(libarchive)
-BuildRequires: pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(librsvg-2.0) >= 2.44
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(manette-0.2) >= 0.2.0
 BuildRequires: pkgconfig(retro-gtk-0.14) >= 0.15.3
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tracker-sparql-2.0)
-BuildRequires: vala-tools
+BuildRequires: libhandy-devel >= 0.0.8
 
 %description
 Games is a GNOME3 application to browse your video games library and to
@@ -55,7 +61,6 @@ This package provides files needed to develop plugins for GNOME Games.
 %_libdir/%name/plugins/
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/HighContrast/*/apps/%{xdg_name}*
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -66,6 +71,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- updated to 3.32.0-7-g03815ac3
+
 * Sun Oct 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
