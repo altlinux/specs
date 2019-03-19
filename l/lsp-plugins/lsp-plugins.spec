@@ -1,5 +1,5 @@
 Name: lsp-plugins
-Version: 1.1.5
+Version: 1.1.7
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -96,6 +96,9 @@ cp %SOURCE1 Makefile
 
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
+- 1.1.7
+
 * Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
 - first build for Sisyphus
 
