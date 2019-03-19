@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Dancer
 Name: perl-%module_name
-Version: 1.3500
+Version: 1.3510
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -11,7 +11,7 @@ Url: %CPAN Dancer
 
 BuildArch: noarch
 # Cloned from https://github.com/PerlDancer/Dancer.git
-Source: %module_name-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BIGPRESH/%{module_name}-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm) perl(Test/NoWarnings.pm) perl(HTTP/CookieJar.pm)
 Requires: perl-Clone
@@ -32,6 +32,7 @@ to scale to much more complex applications.
 %perl_vendor_install
 
 %files
+%doc AUTHORS LICENSE CONTRIBUTORS README Changes examples
 %_bindir/dancer
 %_man1dir/dancer.1*
 %perl_vendor_privlib/Dancer*
@@ -41,6 +42,9 @@ to scale to much more complex applications.
 %doc LICENSE Changes README*
 
 %changelog
+* Tue Mar 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.3510-alt1
+- automated CPAN update
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.3500-alt1
 - updated as official srpm;
 - abandoned git due to git merge conflicts
