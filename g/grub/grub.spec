@@ -2,7 +2,7 @@
 
 Name: grub
 Version: 2.02
-Release: alt15
+Release: alt16
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -508,6 +508,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Mar 19 2019 Leonid Krivoshein <klark@altlinux.org> 2.02-alt16
+- grub-entries script: variables initialization added
+
 * Tue Feb 12 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt15
 - add rhboot/grub2 SB patch set to prevent unauthorized code execution at boot time when SB is enabled
 - add grub-entries script by klark@ for list grub menu (closes: #36048)
