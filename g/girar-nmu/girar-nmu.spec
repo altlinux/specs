@@ -4,7 +4,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 2.004
+Version: 2.005
 Release: alt1
 
 Summary: girar client utilities for NMU automation
@@ -109,6 +109,9 @@ EOF
 %_man1dir/girar-*
 
 %changelog
+* Tue Mar 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.005-alt1
+- support for -m, set -e in sh scripts
+
 * Mon Mar 18 2019 Igor Vlasenko <viy@altlinux.ru> 2.004-alt1
 - support for --commit and --fail-early/late
 
