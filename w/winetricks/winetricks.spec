@@ -1,6 +1,6 @@
 Name: winetricks
-Version: 20181203
-Release: alt2
+Version: 20190310
+Release: alt1
 
 Summary: Work around common problems in Wine
 
@@ -67,6 +67,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 20190310-alt1
+- new version 20190310 (with rpmrb script)
+
 * Wed Dec 19 2018 Vitaly Lipatov <lav@altlinux.ru> 20181203-alt2
 - fix zenity/kdialog requires (ALT bug 35750)
 
