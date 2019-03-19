@@ -1,6 +1,6 @@
 Name:    installer-distro-junior
 Version: 8.1
-Release: alt1
+Release: alt2
 
 Summary: Installer common files
 License: GPL
@@ -26,7 +26,7 @@ Requires: installer-stage2
 Requires: alterator-sysconfig
 Requires: alterator-license
 #Requires: alterator-auth
-Requires: alterator-datetime openntpd
+Requires: alterator-datetime
 Requires: alterator-vm
 Requires: alterator-pkg
 Requires: alterator-luks
@@ -103,6 +103,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Tue Mar 19 2019 Andrey Cherepanov <cas@altlinux.org> 8.1-alt2
+- Remove strict dependency to openntpd.
+
 * Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 8.1-alt1
 - Remove auth, sslkey, xkb from expert modules
 
