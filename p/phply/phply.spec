@@ -1,5 +1,5 @@
 Name: phply
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Lexer and parser for PHP source implemented using PLY
@@ -79,5 +79,8 @@ popd
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Tue Mar 19 2019 Vladimir Didenko <cow@altlinux.ru> 1.2.5-alt1
+- new version
+
 * Tue Jul 17 2018 Vladimir Didenko <cow@altlinux.ru> 1.2.4-alt1
 - initial build for Sisyphus
