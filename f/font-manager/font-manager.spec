@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.4.2
+Version: 0.7.4.3
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -27,10 +27,10 @@ Source: %name-%version.tar
 Requires: file-roller
 
 BuildRequires(pre): rpm-build-gir
+BuildRequires: vala-tools
 BuildRequires: libgtk+3-devel libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools libappstream-glib-devel
-BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel
 %{?_with_nautilus:BuildRequires: nautilus-python python-modules-distutils}
 
@@ -82,6 +82,9 @@ Enlightenment, and even KDE.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.3-alt1
+- updated to 0.7.4.3-13-g96b3261
+
 * Thu Jan 31 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.2-alt1
 - 0.7.4.2
 
