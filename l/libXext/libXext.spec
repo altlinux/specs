@@ -1,5 +1,5 @@
 Name: libXext
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 Summary: Misc X Extension Library
 License: MIT/X11
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+
 * Fri Sep 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 

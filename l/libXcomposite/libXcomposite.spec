@@ -1,6 +1,6 @@
 Name: libXcomposite
-Version: 0.4.3
-Release: alt3
+Version: 0.4.5
+Release: alt1
 Summary: X Composite Library
 License: MIT/X11
 Group: System/Libraries
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.4.5-alt1
+- 0.4.5
+
 * Thu Feb 10 2011 Alexey Tourbin <at@altlinux.ru> 0.4.3-alt3
 - rebuilt for debuginfo
 
