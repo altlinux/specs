@@ -10,7 +10,7 @@
 
 Name: libldb
 Version: 1.4.6
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -211,6 +211,9 @@ make test
 %endif
 
 %changelog
+* Tue Mar 19 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt2
+- Merge with stable branches for common build
+
 * Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
 - Update to the 1.4.6 security release for samba-4.9.5
 - Security fixes:
