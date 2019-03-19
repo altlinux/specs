@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %def_disable static
@@ -8,14 +9,18 @@
 
 Name: telepathy-glib
 Version: 0.24.1
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL
 Group: System/Libraries
 Url: http://telepathy.freedesktop.org/wiki/TelepathyGLib
 
+%if_disabled snapshot
 Source: http://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 Patch: telepathy-glib-0.24.1-fc-duplicate_testcase_path.patch
 
 %define glib_ver 2.36.0
@@ -163,6 +168,9 @@ the functionality of the installed %name library package.
 %endif
 
 %changelog
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3
+- rebuild with glib-2.60.0
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt2
 - fixed tests for glib >= 2.46
 
