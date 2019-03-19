@@ -1,6 +1,6 @@
 Name: 	 xrdp
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -228,6 +228,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon Mar 18 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt2
+- Remove autorequirement of xterm.
+
 * Tue Dec 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt1
 - New version.
 
