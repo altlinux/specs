@@ -1,5 +1,5 @@
 Name: nano
-Version: 2.7.0
+Version: 3.2
 Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
@@ -8,14 +8,14 @@ Group: Editors
 Url: https://nano-editor.org/
 Packager: Artem Zolochevskiy <azol@altlinux.org>
 
-# git clone --branch v2.7.0 git://git.savannah.gnu.org/nano.git
+# https://www.nano-editor.org/dist/v3/nano-3.2.tar.xz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sun Oct 09 2016
-# optimized out: groff-base libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base xz
-BuildRequires: groff-extra groff-ps libmagic-devel libncursesw-devel makeinfo
-# explicitly added
+# Automatically added by buildreq on Tue Mar 19 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libncurses-devel libtinfo-devel pkg-config python-base sh4 xz
+BuildRequires: groff-extra libmagic-devel libncursesw-devel
+# Manually added
 BuildRequires: desktop-file-utils
 
 %description
@@ -26,21 +26,20 @@ Pico text editor while also offering several enhancements.
 %setup
 
 %build
-./autogen.sh
 %configure
 %make_build
 
 %install
 %makeinstall_std
 
-# install config file
+# install config file, include all existing syntax definitions
 install -d %buildroot%_sysconfdir
-sed 's/^# include "/include "/' doc/nanorc.sample > %buildroot%_sysconfdir/nanorc
+sed 's/^# include "/include "/' doc/sample.nanorc > %buildroot%_sysconfdir/nanorc
 
-#install doc files to package
+# install doc files
 install -pm644 AUTHORS IMPROVEMENTS NEWS README THANKS TODO %buildroot%_docdir/%name
 xz %buildroot%_docdir/%name/NEWS
-install -Dpm644 doc/nanorc.sample %buildroot%_docdir/%name/examples/nanorc.sample
+install -pm644 doc/sample.nanorc %buildroot%_docdir/%name/sample.nanorc
 mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 
 # install icons
@@ -52,7 +51,7 @@ install -Dpm644 %name-48x48.png %buildroot%_liconsdir/%name.png
 desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 
 # list of language specific files
-%find_lang --with-man --all-name %name
+%find_lang --all-name %name
 
 %files -f %name.lang
 %doc %_docdir/%name-%version
@@ -68,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Tue Mar 19 2019 Artem Zolochevskiy <azol@altlinux.org> 3.2-alt1
+- update to 3.2 (closes: 36301)
+
 * Sun Oct 09 2016 Artem Zolochevskiy <azol@altlinux.ru> 2.7.0-alt1
 - New upstream release.
 - Removed third-party syntax highlighting (xorg).
