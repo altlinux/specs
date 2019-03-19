@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 2.8.5
-Release: alt1
+Release: alt2
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -19,7 +19,9 @@ Requires: service >= 0.5.26-alt1
 
 %if_without bootstrap
 # Automatically added by buildreq on Wed Mar 04 2009
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libkrb5-devel perl-XML-Parser python-devel swig intltool
+BuildRequires: python3-devel
 %endif
 
 %{?_enable_static:BuildRequires: glibc-devel-static}
@@ -73,6 +75,16 @@ Requires: lib%{name}1 = %version-%release
 
 %description -n python-module-%name
 The python-module-%name package contains the bindings so that libaudit
+and libauparse can be used by python.
+
+%package -n python3-module-%name
+Summary: Python3 bindings for libaudit
+License: LGPL
+Group: Development/Python3
+Requires: lib%{name}1 = %version-%release
+
+%description -n python3-module-%name
+The python3-module-%name package contains the bindings so that libaudit
 and libauparse can be used by python.
 
 %prep
@@ -208,9 +220,15 @@ fi
 %if_without bootstrap
 %files -n python-module-%name
 %python_sitelibdir/*
+
+%files -n python3-module-%name
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.5-alt2
+- Built python-3 bindings.
+
 * Tue Mar 12 2019 Anton Farygin <rider@altlinux.ru> 2.8.5-alt1
 - 2.8.5
 

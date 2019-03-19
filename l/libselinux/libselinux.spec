@@ -1,24 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with python
-%def_with python3
-
 Name: libselinux
 Epoch: 1
-Version: 2.8
-Release: alt2
+Version: 2.9
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
-Url: http://userspace.selinuxproject.org/
+Url: https://github.com/SELinuxProject/selinux/wiki
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-%{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: libpcre-devel libsepol-devel >= 2.8
-%{?_with_python:BuildRequires: python-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.8}
-%{?_with_python3:BuildRequires: python3-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.8}
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libpcre-devel libsepol-devel >= 2.9
+BuildRequires: python3-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.9
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -28,7 +24,7 @@ decisions.
 %package devel
 Summary: SELinux development library and header files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development library and header files needed
@@ -37,7 +33,7 @@ for developing SELinux applications.
 %package devel-static
 Summary: Static SELinux library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains static SELinux library needed for developing
@@ -46,58 +42,34 @@ statically linked SELinux applications.
 %package utils
 Summary: SELinux utilities
 Group: System/Configuration/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 This package provides utility programs to get and set process and
 file security contexts and to obtain security policy decisions.
 
-%if_with python
-%package -n python-module-selinux
-%setup_python_module selinux
-Summary: Python module for %name
-Group: System/Configuration/Other
-Requires: %name = %version-%release
-
-%description -n python-module-selinux
-This package contains SELinux python bindings.
-%endif
-
-%if_with python3
 %package -n python3-module-selinux
 Summary: Python 3.x module for %name
 Group: System/Configuration/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-selinux
 This package contains SELinux python 3.x bindings.
-%endif
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=/usr/bin/python pywrap}
-%if_with python3
-pushd ../python3
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=/usr/bin/python3 pywrap
-popd
-%endif
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=%_bindir/python3 pywrap
 
 %install
-%if_with python3
-pushd ../python3
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib LIBSEPOLA=%_libdir/libsepol.a PYTHON=/usr/bin/python3 install-pywrap
-popd
-%endif
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib LIBSEPOLA=%_libdir/libsepol.a %{?_with_python:install-pywrap}
-install -d -m 0755 %buildroot/var/run/setrans
+install -d -m 0755 %buildroot%_runtimedir/setrans
+
+mv %buildroot%_sbindir/getdefaultcon %buildroot%_sbindir/selinuxdefcon
+mv %buildroot%_sbindir/getconlist %buildroot%_sbindir/selinuxconlist
 
 %find_lang --with-man --all-name %name
 
@@ -116,7 +88,7 @@ fi
 /%_lib/*.so.*
 %_man8dir/booleans.*
 %_man8dir/selinux.*
-%dir /var/run/setrans
+%dir %_runtimedir/setrans
 
 %files devel
 %_libdir/*.so
@@ -134,17 +106,14 @@ fi
 %exclude %_man8dir/booleans.*
 %exclude %_man8dir/selinux.*
 
-%if_with python
-%files -n python-module-selinux
-%python_sitelibdir/*
-%endif
-
-%if_with python3
 %files -n python3-module-selinux
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
+- Updated to upstream version 2.9.
+- Disabled support for python-2.
+
 * Mon Dec 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt2
 - Added man pages translation by Olesya Gerasimenko.
 

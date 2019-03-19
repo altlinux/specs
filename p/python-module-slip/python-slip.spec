@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_without python
 %def_with python3
 %define mname slip
 
 Name: python-module-slip
 Version: 0.6.5
-Release: alt1
+Release: alt2
 Summary: Miscellaneous convenience, extension and workaround code for Python
 
 Group: Development/Python
@@ -19,8 +20,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
+%if_with python
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -95,7 +98,10 @@ find ../python3 -name '*.py' -o -name '*.py.in' | xargs sed -i '1s|^#!/usr/bin/p
 %endif
 
 %build
+%if_with python
 %make_build PYTHON=/usr/bin/python
+%endif
+
 %if_with python3
 pushd ../python3
 %make_build PYTHON=/usr/bin/python3
@@ -103,13 +109,17 @@ popd
 %endif
 
 %install
+%if_with python
 %makeinstall_std PYTHON=/usr/bin/python
+%endif
+
 %if_with python3
 pushd ../python3
 %makeinstall_std PYTHON=/usr/bin/python3
 popd
 %endif
 
+%if_with python
 %files
 %dir %python_sitelibdir/slip/
 %python_sitelibdir/slip/__init__.py*
@@ -125,6 +135,7 @@ popd
 %files gtk
 %python_sitelibdir/slip/gtk
 %python_sitelibdir/slip.gtk-%version-py%_python_version.egg-info
+%endif
 
 %if_with python3
 %files -n python3-module-%mname
@@ -142,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.5-alt2
+- Disabled building modules for python-2.
+
 * Fri Sep 08 2017 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
 - Build Python 3.x module.
 - Updated to 0.6.5.
