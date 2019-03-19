@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.9.1
-Release: alt1%ubt
+Version: 2.10.0
+Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -20,8 +20,8 @@ Source3: ftconfig.h
 
 Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.6.2-alt-snprintf.patch
-Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
-Patch12: freetype-2.7-rh-enable-valid.patch
+Patch11: freetype-2.10.0-enable-subpixel-rendering.patch
+Patch12: freetype-2.10.0-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
 
 BuildRequires(pre): rpm-build-ubt
@@ -151,10 +151,13 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
-* Thu May 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt1%ubt
+* Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
+- 2.10.0 (closes: #36288)
+
+* Thu May 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt1.S1
 - 2.9.1
 
-* Mon Jan 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9-alt1%ubt
+* Mon Jan 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9-alt1.S1
 - 2.9
 
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8-alt4
