@@ -25,7 +25,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.8
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace
 
@@ -44,6 +44,7 @@ Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-ki
 Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
 
 Source: %rname-%version.tar
+Source1: freememorynotifier.po
 Patch100: alt-startkde.patch
 #
 Patch102: alt-def-wallpaper-image.patch
@@ -214,6 +215,8 @@ popd
 %patch123 -p2
 %patch124 -p2
 
+cat %SOURCE1 >> po/ru/freememorynotifier.po
+
 %build
 %K5build \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
@@ -368,6 +371,9 @@ done
 
 
 %changelog
+* Tue Mar 19 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt3
+- added freememorynotifier translation template
+
 * Mon Mar 11 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt2
 - free space checking: restore notification
 
