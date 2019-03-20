@@ -1,19 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-# TODO
-# warning: Macro %_dotnet_corerelease not found
-# lav 05.12.2018: changed to %version
-# error: line 26: Dependency tokens must not contain '%<=>' symbols: BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
-# hsh-rebuild: pkg.tar: failed to fetch build dependencies.
-#define _dotnet_corerelease 2.1.5
-
 # FIXME: build from sources
 %def_with bootstrap
 %define pre %nil
 
 Name: dotnet-corefx
 Version: 2.1.9
-Release: alt1
+Release: alt2
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -32,7 +25,6 @@ AutoProv: no
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires(pre): rpm-macros-dotnet
-#= %version
 
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap-runtime
@@ -46,9 +38,7 @@ BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
-#Requires: dotnet-common = %version
-Requires: dotnet-common = 2.1.6
-Provides: dotnet-corefx = 2.1.6
+Requires: dotnet-common = %version
 
 %remove_optflags -frecord-gcc-switches
 BuildRequires: clang llvm cmake libstdc++-devel
@@ -145,6 +135,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Tue Mar 19 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt2
+- rebuild with dotnet-common 2.1.9
+
 * Tue Mar 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
 - new version (2.1.9) with rpmgs script
 - build native, linking with openssl
