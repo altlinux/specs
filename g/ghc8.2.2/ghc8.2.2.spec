@@ -1,6 +1,6 @@
-Name: ghc7.10.3
-Version: 7.10.3
-Release: alt3
+Name: ghc8.2.2
+Version: 8.2.2
+Release: alt1
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -20,16 +20,15 @@ Requires: libffi-devel libgmp-devel
 Requires: glibc-gconv-modules
 
 # The installed Haskell libs will be processed:
-Requires(pre,postun): haskell-filetrigger >= 0.0.5-alt3
+PreReq: haskell-filetrigger
 # <https://www.altlinux.org/RPM_Macros_Packaging_Policy>:
-Requires: rpm-build-haskell >= 1.4.4-alt1
+Requires: rpm-build-haskell >= 1.4-alt1
 # (rpm-build-haskell-1-alt26 has been adapted to allow builds
 # of Haskell modules without ghcN.N.N-common.)
 
 # For ghc-pkg with rpath running during install, see:
 # https://www.altlinux.org/Hasher/FAQ
 # https://lists.altlinux.org/pipermail/devel/2018-April/204171.html
-# Not needed after rebuild with separate single directory for shared libraries
 BuildRequires: /proc
 
 # Build with the same version, previous release.
@@ -52,12 +51,16 @@ BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi
 # Can't build when installed
 #BuildRequires: dblatex
 
+# Needs for build man
+BuildRequires: python-module-sphinx
+
 %def_without hscolour
 %if_with hscolour
 BuildRequires: ghc(hscolour)
 %endif
 
-Provides: haskell(abi) = %version
+# Needs for bootstrap on aarch64
+BuildRequires: llvm7.0
 
 %description
 Haskell is a standard lazy functional programming language; the
@@ -150,14 +153,13 @@ http://haskell.org/ghc/documentation.html
 mv %buildroot%docdir/html/* %buildroot%docdir/
 rmdir %buildroot%docdir/html
 
-# ghc-7.10.3 has name_hashtag core package directories
-## generate fake .pkg configs for core packages.
-## haskell.prov will convert them to package provides.
-#for lib in %buildroot%_libdir/ghc-%version/*-[0-9]*; do
-#       namever="$(basename "$lib")"
-#       name="${namever%%-*}"
-#       echo -e "name: $name\nversion: ${namever##*-}" >"$lib/$name.pkg"
-#done
+# generate fake .pkg configs for core packages.
+# haskell.prov will convert them to package provides.
+for lib in %buildroot%_libdir/ghc-%version/*-[0-9]*; do
+       namever="$(basename "$lib")"
+       name="${namever%%-*}"
+       echo -e "name: $name\nversion: ${namever##*-}" >"$lib/$name.pkg"
+done
 cp -a ANNOUNCE LICENSE README.md %buildroot%docdir/
 
 # generate the file list for lib/ _excluding_ all files needed for profiling
@@ -183,15 +185,7 @@ touch %buildroot%_libdir/ghc-%version/package.conf.old
 # package-provided *.confs go in this directory:
 mkdir -p %buildroot%_libdir/ghc-%version/package.conf.d
 
-# generate separate single directory for core dynamic libraries
 mkdir -p %buildroot%_libdir/ghc-%version/lib
-for so in %buildroot%_libdir/ghc-%version/*/*-ghc%version.so; do
-       relpath="$(relative "$so" "%buildroot%_libdir/ghc-%version/lib/")"
-       ln -s "$relpath" %buildroot%_libdir/ghc-%version/lib/
-done
-
-mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
-echo "%_libdir/ghc-%version/lib" >%buildroot%_sysconfdir/ld.so.conf.d/ghc-%version.conf
 
 # need for multiple ghc versions installed
 for s in hp2ps hpc hsc2hs; do
@@ -227,9 +221,6 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %_man1dir/%name.1*
 %ghost %_libdir/ghc-%version/package.conf.old
 %dir %_libdir/ghc-%version/package.conf.d
-%dir %_libdir/ghc-%version/lib
-%_libdir/ghc-%version/lib/*.so
-%config %_sysconfdir/ld.so.conf.d/ghc-%version.conf
 
 %files common
 %exclude %_bindir/*-%version
@@ -243,9 +234,8 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
-* Sat Mar 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 7.10.3-alt3
-- Provides haskell(abi) with ld preload for dynamic libraries
-- Add separate single directory for shared libraries and ld.so.conf file for it
+* Tue Feb 19 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.2.2-alt1
+- bootstrap to version 8.2.2
 
 * Mon Feb 18 2019 Evgeny Sinelnikov <sin@altlinux.org> 7.10.3-alt2
 - rebuild with ghc 7.10.3

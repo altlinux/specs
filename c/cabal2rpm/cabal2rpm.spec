@@ -1,6 +1,6 @@
 Name: cabal2rpm
-Version: 0.20.08
-Release: alt12
+Version: 0.20.10
+Release: alt1
 License: GPL2+
 Group: Development/Haskell
 Source: %name-%version.tar
@@ -29,6 +29,15 @@ install -D -m755 cabal2gear %buildroot%_bindir/cabal2gear
 %_bindir/cabal2gear
 
 %changelog
+* Thu Feb 28 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.20.10-alt1
+- Update spec template to newest rpm-build-haskel supports haskell(abi)
+
+* Fri Feb 22 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.20.09-alt1
+- Remove version of compiler from spec filename
+- Rename pkg_libdir to compiler directory as it prefer in newest ghc versions
+- Update spec with build require to rpm-build-haskell supported new ghc versions
+- Fix gear2rpm with trim white spaces from the right side of rpm_version
+
 * Thu Nov 26 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.20.08-alt12
 - cabal2gear conceptual enhancements:
   + separated maintainer's tweaks and automatic results in the Git repo

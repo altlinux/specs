@@ -10,7 +10,7 @@
 %endif
 
 Name: rpm-build-haskell
-Version: 1.3.1
+Version: 1.4.5
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -20,6 +20,7 @@ Group: Development/Haskell
 Source: scripts-%version.tar
 Source1: macros
 Source2: buildreq-ignore
+Source3: haskell.env
 
 # Uses the modular reqprov subsystem
 Conflicts: rpm-build < 4.0.4-alt78
@@ -43,15 +44,36 @@ sed \
 	%SOURCE1 > %buildroot%_rpmmacrosdir/haskell
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
+install -D -m0755 %SOURCE3 \
+	%buildroot%_rpmmacrosdir/haskell.env
 install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
 
 %files
 %_rpmlibdir/haskell.*
-%_rpmmacrosdir/haskell
+%_rpmmacrosdir/haskell*
 %_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 %_libexecdir/%name
 
 %changelog
+* Fri Mar 15 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.5-alt1
+- Add modules dynamic directory libraries option and fixed haskell modules
+  subdirectory option for 8.x.x or newest ghc versions only
+
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.4-alt1
+- Add ld preload for dynamic libraries
+
+* Mon Feb 25 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
+- Replace modules dynamic libraries separate single directory %%_libdir/$compiler/lib
+
+* Fri Feb 22 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt1
+- Replace subdirectory for libraries to compiler directory as it prefer in newest ghc
+
+* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.1-alt1
+- Set modules dynamic directory libraries to %%_libdir/$compiler/lib/$pkgid
+
+* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4-alt1
+- Fixed build requires like "base-4.10.1.0" or "ghc-boot-8.2.2" (Closes: 36137)
+
 * Wed Feb 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.1-alt1
 - Removed BuildArch: noarch to fix regression in %%hs_configure2 macro
   definition on x86_64 and %%ix86 architectures.

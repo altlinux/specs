@@ -1,6 +1,6 @@
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt7
+Release: alt8
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -50,6 +50,8 @@ BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi
 %if_with hscolour
 BuildRequires: ghc(hscolour)
 %endif
+
+Provides: haskell(abi) = %version
 
 %description
 Haskell is a standard lazy functional programming language; the
@@ -218,6 +220,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Sat Mar 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 7.6.1-alt8
+- Provides haskell(abi) for compatibility
+
 * Fri Feb 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.6.1-alt7
 - Applied patches to add support of aarch64 and ppc64le architectures.
 - Removed BuilArch: noarch from doc subpackage (ghc generates different
