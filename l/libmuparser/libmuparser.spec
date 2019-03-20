@@ -1,11 +1,6 @@
 Name: libmuparser
-Version: 2.2.5
+Version: 2.2.6
 Release: alt1
-
-%define oname muparser
-# 1.32 -> 1_3_2
-%define oversion %(echo %version | sed -e "s|\\.|_|g")
-%define tarname %{oname}_v%oversion
 
 Summary: a fast math parser library
 
@@ -15,8 +10,7 @@ Url: http://muparser.beltoforion.de/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# It is new feature in etersoft-build-utils since 1.7.6: support commented real url (for rpmgs command)
-# Source-url: http://prdownloads.sf.net/%oname/%oname/Version%%20%{version}/%tarname.zip
+# Source-url: https://github.com/beltoforion/muparser/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Mar 03 2010
@@ -68,6 +62,9 @@ sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 %_pkgconfigdir/*
 
 %changelog
+* Wed Mar 20 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
+- new version (2.2.6) with rpmgs script
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.5-alt1
 - New version
 
