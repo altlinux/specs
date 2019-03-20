@@ -1,5 +1,5 @@
 Name: xcalc
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: Scientific calculator for X
 Group: System/X11
@@ -30,12 +30,15 @@ or an HP-10C.
 %make DESTDIR=%buildroot install
 
 %files
-%doc README
+%doc README*
 %_bindir/xcalc
 %_x11appconfdir/*
 %_mandir/man1/xcalc.*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
