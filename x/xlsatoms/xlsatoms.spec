@@ -1,5 +1,5 @@
 Name: xlsatoms
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: List interned atoms defined on server
 Group: System/X11
@@ -13,7 +13,11 @@ BuildRequires: libxcb-devel
 BuildRequires: xorg-util-macros
 
 %description
-Xlsatoms lists the interned atoms.  By default, all atoms starting from 1 (the lowest atom value defined by  the  protocol)  are  listed  until unknown  atom  is  found.  If an explicit range is given, xlsatoms will try all atoms in the range, regardless of whether or not any are  undefined.
+Xlsatoms lists the interned atoms.  By default, all atoms starting from
+1 (the lowest atom value defined by  the  protocol)  are  listed  until
+unknown  atom  is  found.  If an explicit range is given, xlsatoms will
+try all atoms in the range, regardless of whether or not any are
+undefined.
 
 %prep
 %setup -n %name-%version
@@ -27,10 +31,14 @@ Xlsatoms lists the interned atoms.  By default, all atoms starting from 1 (the l
 %makeinstall
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
