@@ -1,7 +1,7 @@
 %define rname libkdcraw
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init altplace
 
@@ -57,6 +57,8 @@ KF5 library
 %K5install
 %find_lang %name --with-kde --all-name
 
+%files
+
 %files common -f %name.lang
 %doc COPYING*
 
@@ -71,6 +73,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
