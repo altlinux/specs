@@ -1,5 +1,5 @@
 Name: xclock
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Summary: analog / digital clock for X
 Group: System/X11
@@ -31,12 +31,15 @@ continuously updated at a frequency which may be specified by the user.
 %make install DESTDIR=%buildroot
 
 %files
-%doc README
+%doc README*
 %_bindir/xclock
 %_x11appconfdir/*
 %_mandir/man1/xclock.*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.8-alt1
+- Autobuild version bump to 1.0.8
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
 - Autobuild version bump to 1.0.7
 
