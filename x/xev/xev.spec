@@ -1,5 +1,5 @@
 Name: xev
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: print contents of X events
 License: MIT/X11
@@ -31,10 +31,14 @@ ging and development tool, and should not be needed in normal usage.
 %make DESTDIR=%buildroot install
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.2.3-alt1
+- Autobuild version bump to 1.2.3
+
 * Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
 - Autobuild version bump to 1.2.2
 
