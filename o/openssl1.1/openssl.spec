@@ -1,11 +1,11 @@
 %def_enable tsget
 
 Name: openssl1.1
-Version: 1.1.0j
-Release: alt2
+Version: 1.1.1b
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
-License: BSD-style
+License: Apache-2.0
 Group: System/Base
 Url: http://www.openssl.org
 
@@ -16,38 +16,35 @@ Source2: Makefile.certificate
 Source3: make-dummy-cert
 Source4: cc.sh
 
-Patch01: openssl-owl-alt-issetugid.patch
-# To match lib{crypto,ssl}10 1.0.2o-alt1
-# XXX: Do not forget to add conflicts if you change this.
 Patch03: openssl-alt-config.patch
 Patch04: openssl-alt-engines-path.patch
-# Current /etc/openssl/cipher-list.conf (from libssl10) breaks IDEA tests
-Patch05: openssl-alt-disable-idea-test.patch
-Patch06: openssl-add-gost-ids.patch
 
 # Patches from Fedora
 # Build changes
 Patch101: openssl-rh-build.patch
 # Patch102: openssl-rh-defaults.patch (different config)
 Patch103: openssl-rh-no-html.patch
+# Patch104: openssl-rh-man-rename.patch (not needed)
 # Bug fixes
 Patch121: openssl-rh-issuer-hash.patch
-Patch122: openssl-rh-algo-doc.patch
-Patch123: openssl-rh-manfix.patch
 # Functionality changes
-# Patch131: openssl-rh-ca-dir.patch (breaks tests; we do not have /etc/pki/CA/private/cakey.pem)
+# Patch131: openssl-rh-conf-paths.patch (changes config)
 Patch132: openssl-rh-version-add-engines.patch
 Patch133: openssl-rh-apps-dgst.patch
-Patch135: openssl-rh-chil-fixes.patch
+# Patch136: openssl-rh-no-brainpool.patch (why disable it?)
 # Patch137: openssl-rh-ec-curves.patch (breaks tests; we have no reason to disable this curves, right?)
 Patch138: openssl-rh-no-weak-verify.patch
-Patch139: openssl-rh-cc-reqs.patch
 Patch140: openssl-rh-disable-ssl3.patch
 Patch141: openssl-rh-system-cipherlist.patch
 # Patch142: openssl-rh-fips.patch (not needed)
-Patch144: openssl-rh-bio-fd-preserve-nl.patch
+# Patch143: openssl-rh-ignore-bound.patch (not sure)
+# Patch144: openssl-rh-version-override.patch (not needed; FIPS)
 Patch145: openssl-rh-weak-ciphers.patch
-Patch146: openssl-rh-silent-rnd-write.patch
+# Patch146: openssl-rh-seclevel.patch (not needed; FIPS)
+# Patch148: openssl-rh-fips-post-rand.patch (not needed)
+# Patch149: openssl-rh-evp-kdf.patch (new functionality; not sure)
+# Patch150: openssl-rh-ssh-kdf.patch (new functionality; not sure)
+# Backported fixes including security fixes
 
 %define shlib_soversion 1.1
 %define openssldir /var/lib/ssl
@@ -65,7 +62,7 @@ Summary: OpenSSL libcrypto shared library
 Group: System/Libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2q-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -219,42 +216,35 @@ on the command line.
 
 %prep
 %setup -n openssl-%version
-%patch01 -p1
 %patch03 -p1
 %patch04 -p1
-%patch05 -p1
-%patch06 -p1
 
 %patch101 -p1
-# %%patch102 -p1 (different config)
+#%%patch102 -p1 (different config)
 %patch103 -p1
+#%%patch104 -p1 (not needed)
 %patch121 -p1
-%patch122 -p1
-%patch123 -p1
-# %%patch131 -p1 (breaks tests; we do not have /etc/pki/CA/private/cakey.pem)
+#%%patch131 -p1 (changes config)
 %patch132 -p1
 %patch133 -p1
-%patch135 -p1
-# %%patch137 -p1 (breaks tests; we have no reason to disable this curves, right?)
+#%%patch136 -p1 (why disable it?)
+#%%patch137 -p1 (breaks tests; we have no reason to disable this curves, right?)
 %patch138 -p1
-%patch139 -p1
 %patch140 -p1
 %patch141 -p1
-# %%patch142 -p1 (not needed)
-%patch144 -p1
+#%%patch142 -p1 (not needed)
+#%%patch143 -p1 (not sure)
+#%%patch144 -p1 (not needed; FIPS)
 %patch145 -p1
-%patch146 -p1
+#%%patch146 -p1 (not needed; FIPS)
+#%%patch148 -p1 (not needed)
+#%%patch149 -p1 (new functionality; not sure)
+#%%patch150 -p1 (new functionality; not sure)
 
 find -type f -name \*.orig -delete
 
 # Correct shared library name.
-sed -i 's/@SHLIB_SOVERSION@/%shlib_soversion/g' Configure Makefile.*
 sed -i 's/\\\$(SHLIB_MAJOR)\.\\\$(SHLIB_MINOR)/\\$(VERSION)/g' Configure
-#sed -i 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
-#sed -i 's/\(^#define[[:space:]]\+SHLIB_VERSION_NUMBER[[:space:]]\+\).*/\1"%version"/' crypto/opensslv.h
-
-# Be more verbose.
-sed -i 's/^\([[:space:]]\+\)@[[:space:]]*/\1/' Makefile*
 
 %build
 ADD_ARGS=%_os-%_arch
@@ -386,12 +376,16 @@ ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
 	%buildroot%openssldir/cert.pem
 
 %if_enabled tsget
-mv %buildroot%openssldir/misc/tsget %buildroot%_sbindir/
+mv %buildroot%openssldir/misc/tsget.pl %buildroot%_sbindir/
+rm %buildroot%openssldir/misc/tsget
+ln -s tsget.pl %buildroot%_sbindir/tsget
 %else
+rm %buildroot%openssldir/misc/tsget.pl
 rm %buildroot%openssldir/misc/tsget
 %endif
 
 rm %buildroot%openssldir/openssl.cnf.dist
+rm %buildroot%openssldir/ct_log_list.cnf.dist
 
 %define docdir %_docdir/openssl-%version
 mkdir -p %buildroot%docdir
@@ -402,17 +396,16 @@ cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
-#sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
-#	include/openssl/ssl.h
-
-# To match lib{crypto,ssl}10 1.0.2o-alt1
-# XXX: Do not forget to add conflicts if you change this.
-echo "ALL:!EXPORT:!LOW:!aNULL:!eNULL:!SSLv2" > \
-	%buildroot%_sysconfdir/openssl/cipher-list.conf
+sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
+	include/openssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
 
 %check
-LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
-	make test
+LD_LIBRARY_PATH=%buildroot/%_lib \
+	OPENSSL_ENABLE_MD5_VERIFY= \
+	OPENSSL_SYSTEM_CIPHERS_OVERRIDE=%buildroot%_sysconfdir/openssl/cipher-list.conf \
+	make test V=1
+
+%define _unpackaged_files_terminate_build 1
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
@@ -440,6 +433,7 @@ LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
 
 %files -n openssl
 %_bindir/*
+%exclude %_bindir/openssl-config
 %dir %openssldir
 %openssldir/misc
 %openssldir/certs
@@ -461,11 +455,16 @@ LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
 %if_enabled tsget
 %files -n tsget
 %_sbindir/tsget
+%_sbindir/tsget.pl
 %_man1dir/tsget.*
 %_man1dir/openssl-tsget.*
 %endif
 
 %changelog
+* Wed Mar 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1b-alt1
+- Updated to v1.1.1b.
+- libcrypto1.1: add C: libcrypto10 <= 1.0.2q-alt1.
+
 * Mon Mar 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0j-alt2
 - Backport new gost algorithm identificators from upstream.
 
