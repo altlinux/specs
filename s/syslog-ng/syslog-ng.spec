@@ -17,7 +17,7 @@
 
 Name: syslog-ng
 Version: 3.20.1
-Release: alt3
+Release: alt4
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -74,13 +74,26 @@ Forwarding logs over TCP and remembering all forwarding hops makes it
 ideal for firewalled environments.
 
 %package scl
-Summary: syslog-ng's SCL plugins
-Group: System/Kernel and hardware
+Summary: SCL plugins for syslog-ng
+Group: System/Libraries
 BuildArch: noarch
 Requires: %name = %version-%release
 
 %description scl
 Source Configuration Library plugins for syslog-ng configuration files
+
+%package debun
+Summary: DEBUg buNdle generator for syslog-ng
+Group: System/Kernel and hardware
+BuildArch: noarch
+
+%description debun
+The syslog-ng-debun tool collects and saves information about your
+installation, making troubleshooting easier, especially if you ask
+help about your related problem.
+
+It packaged separately because it have many requirements but used
+not often
 
 %package libdbi
 Summary: libdbi support for %{name}
@@ -302,7 +315,7 @@ fi
 %files
 %doc AUTHORS COPYING NEWS.md README.md README-build-config
 %doc doc/security/*.txt
-%doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc}
+%doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc,README.syslog-ng-debun}
 %doc altlinux/conf.d.example
 
 %dir %_sysconfdir/%name
@@ -315,8 +328,7 @@ fi
 
 /sbin/%name
 /sbin/%name-ctl
-# Exclude package debug bundle generator for avoid many requirements
-%exclude /sbin/%name-debun
+
 %_bindir/loggen
 %_bindir/pdbtool
 %_bindir/update-patterndb
@@ -373,6 +385,7 @@ fi
 %dir %_datadir/%name/xsd
 %_datadir/%name/xsd/*
 
+%exclude %_man1dir/%name-debun*
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
@@ -382,6 +395,10 @@ fi
 %files scl
 %config(noreplace) %_sysconfdir/%name/scl.conf
 %_datadir/%name/include/scl
+
+%files debun
+%_man1dir/%name-debun*
+/sbin/%name-debun
 
 %files libdbi
 %_libdir/%name/libafsql.so
@@ -451,6 +468,10 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Wed Mar 20 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt4
+- 00-redefine-consoleall.conf: use file("/dev/null") by default
+- packaged syslog-ng-debun (as separated package)
+
 * Tue Mar 19 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.20.1-alt3
 - updated examples for syslog-ng/conf.d
 - syslog-ng.conf: included scl.conf, added comments
