@@ -1,5 +1,5 @@
 Name:         gfxboot
-Version:      4.5.47
+Version:      4.5.49
 Release:      alt1
 
 Group:        Development/Other
@@ -24,6 +24,9 @@ Here you find the graphical boot logo. Suitable for both lilo, grub and syslinux
 %setup -q
 %patch0 -p1
 
+# fix path to syslinux data
+sed -i 's|/usr/share/syslinux|/usr/lib/syslinux|' gfxboot
+
 %build
 %make CFLAGS="%optflags -Wno-pointer-sign -fomit-frame-pointer -fno-stack-protector"
 %make -C doc
@@ -39,6 +42,10 @@ Here you find the graphical boot logo. Suitable for both lilo, grub and syslinux
 %_datadir/gfxboot/
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 4.5.49-alt1
+- new version
+- fix path to syslinux data
+
 * Tue Oct 16 2018 Sergey V Turchin <zerg@altlinux.org> 4.5.47-alt1
 - new version
 
