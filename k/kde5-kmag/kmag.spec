@@ -1,7 +1,7 @@
 %define rname kmag
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt rpm-build-licenses
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel
 BuildRequires: kf5-kio-devel kf5-kauth-devel
-#BuildRequires: libqaccessibilityclient-qt5-devel
+BuildRequires: libqaccessibilityclient-qt5-devel
 
 %description
 %summary. %rname is very useful for people with visual disabilities and for
@@ -40,6 +40,9 @@ those working in the fields of image analysis, web development etc.
 %_K5data/%rname/
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Mon Feb 25 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
