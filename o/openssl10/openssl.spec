@@ -3,7 +3,7 @@
 %def_disable devel
 
 Name: openssl10
-Version: 1.0.2q
+Version: 1.0.2r
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -416,8 +416,12 @@ cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
-sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
-	ssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
+#sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
+#	ssl/ssl.h > %%buildroot%%_sysconfdir/openssl/cipher-list.conf
+
+# To match libcrypto1.1 1.1.1b-alt1
+echo "ALL:!COMPLEMENTOFDEFAULT:!eNULL" > \
+	%buildroot%_sysconfdir/openssl/cipher-list.conf
 
 %check
 LD_LIBRARY_PATH=%buildroot/%_lib make test
@@ -490,8 +494,12 @@ fi
 %endif
 
 %changelog
+* Wed Mar 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2r-alt1
+- Updated to 1.0.2r (fixes CVE-2019-1559).
+- Synced cipher-list.conf with libcrypto1.1 1.1.1b-alt1.
+
 * Wed Dec 19 2018 Dmitry V. Levin <ldv@altlinux.org> 1.0.2q-alt1
-- 1.0.2p -> 1.0.2q.
+- 1.0.2p -> 1.0.2q (fixes CVE-2018-5407 and CVE-2018-0734).
 - Disabled krb5 support.
 
 * Tue Aug 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2p-alt2
