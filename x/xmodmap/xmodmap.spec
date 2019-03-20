@@ -1,5 +1,5 @@
 Name: xmodmap
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: utility for modifying keymaps and pointer button mappings in X
 License: MIT/X11
@@ -32,10 +32,14 @@ startup  script to configure the keyboard according to personal tastes.
 %make DESTDIR=%buildroot install
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.10-alt1
+- Autobuild version bump to 1.0.10
+
 * Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.0.9-alt1
 - Autobuild version bump to 1.0.9
 
