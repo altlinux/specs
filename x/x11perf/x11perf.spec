@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: x11perf
-Version: 1.6.0
-Release: alt1.git5e8ed9b
+Version: 1.6.1
+Release: alt1
 
 Summary: x11perf application - X11 server performance test program
 License: MIT
@@ -10,7 +10,7 @@ Group: System/X11
 
 Url: https://gitlab.freedesktop.org/xorg/test/x11perf.git
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildRequires: libXext-devel
 BuildRequires: libXft-devel
@@ -38,6 +38,9 @@ fast an X server can execute the tests.
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.6.1-alt1
+- Autobuild version bump to 1.6.1
+
 * Fri Feb 15 2019 Egor Zotov <egorz@altlinux.org> 1.6.0-alt1.git5e8ed9b
 - Update to current upstream version.
 
