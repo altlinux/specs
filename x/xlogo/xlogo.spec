@@ -1,5 +1,5 @@
 Name: xlogo
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: display the X Window System logo
@@ -31,12 +31,15 @@ The xlogo program displays the X Window System logo. That's all.
 %make DESTDIR=%buildroot install
 
 %files
-%doc README
+%doc README*
 %_bindir/*
 %_man1dir/*
 %_x11appconfdir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
