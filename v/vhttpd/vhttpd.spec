@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.9
+Version: 0.7.10
 Release: alt1
 
 Summary: simple embedded web server
@@ -14,7 +14,8 @@ Buildrequires: guile20-devel libguile20-devel /proc
 BuildRequires: guile-devel >= 2.0
 BuildRequires: /proc
 %endif
-BuildPreReq: glib2-devel libssl-devel libgnutls-devel cgreen
+BuildRequires: glib2-devel libssl-devel cgreen
+#BuildRequires: libgnutls-devel
 
 Conflicts: alterator < 4.17-alt1
 Conflicts: alterator-fbi < 5.26-alt1
@@ -93,6 +94,10 @@ guile bindings for %name
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Wed Mar 20 2019 Mikhail Efremov <sem@altlinux.org> 0.7.10-alt1
+- Drop libgnutls-devel from BR for now.
+- tests: Make test_message_write independent from lines order.
+
 * Mon Feb 11 2019 Mikhail Efremov <sem@altlinux.org> 0.7.9-alt1
 - Use _unpackaged_files_terminate_build.
 - Set connection socket non-block immediately if needed.
