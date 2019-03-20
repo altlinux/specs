@@ -1,12 +1,12 @@
 %define svnrev 28002
 Name: openttd
 Version: 1.8.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
 License: GPL
 Group: Games/Strategy
-URL: http://www.openttd.com/
+URL: https://www.openttd.org/
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
 Requires: %name-data = %version-%release
@@ -18,7 +18,6 @@ Source1: %name.watch
 Patch0: %name-%version-alt.patch
 
 BuildRequires: libSDL-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel liblzma-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -90,16 +89,19 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
-* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt2%ubt
+* Wed Mar 20 2019 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
+- rebuilt with libicu 6.3.1-alt1
+
+* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt2
 - NMU: fixed build with new ICU.
 
-* Mon Apr 09 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1%ubt
+* Mon Apr 09 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
-* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
+* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1
 - new version
 
-* Fri May 05 2017 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1%ubt
+* Fri May 05 2017 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
 - new version
 
 * Mon Jul 04 2016 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
