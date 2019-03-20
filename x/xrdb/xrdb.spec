@@ -1,5 +1,5 @@
 Name: xrdb
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: X server resource database utility
@@ -45,10 +45,14 @@ You would normally run this program from your X startup file.
 %makeinstall_std
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
