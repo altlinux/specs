@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.3.4
+Version:  2.4.0
 Release:  alt1
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 Group: File tools
@@ -14,11 +14,13 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest gcc-c++
-BuildRequires: qt5-base-devel >= 5.2.0 qt5-tools-devel >= 5.2.0
+BuildRequires: qt5-base-devel >= 5.2.0 qt5-tools-devel >= 5.2.0 qt5-svg-devel
 BuildRequires: libgcrypt-devel >= 1.7.0
 BuildRequires: libargon2-devel
 BuildRequires: libsodium-devel >= 1.0.12
 BuildRequires: zlib-devel >= 1.2.0
+BuildRequires: libqrencode4-devel
+BuildRequires: libquazip-qt5-devel
 # Optional for Auto-Type on X11/Linux:
 BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
 # Optional for YubiKey support
@@ -42,6 +44,8 @@ open-source password manager.
   -DWITH_XC_NETWORKING=ON \
   -DWITH_XC_AUTOTYPE=ON \
   -DWITH_XC_SSHAGENT=ON \
+  -DWITH_XC_KEESHARE=ON \
+  -DWITH_XC_KEESHARE_SECURE=ON \
 %if_with yubikey
   -DWITH_XC_YUBIKEY=ON
 %endif
@@ -62,6 +66,11 @@ open-source password manager.
 %_mandir/man?/*
 
 %changelog
+* Wed Mar 20 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.4.0-alt1
+- Updated to v2.4.0.
+- KeeShare support enabled
+- new dependencies: libqrencode, qt5svg, libquazip-qt5
+
 * Thu Aug 23 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.3.4-alt1
 - Updated to v2.3.4.
 
