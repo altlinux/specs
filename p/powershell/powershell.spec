@@ -3,7 +3,7 @@
 
 Name: powershell
 Version: 6.0.0
-Release: alt5
+Release: alt6
 
 Summary: PowerShell for every system!
 
@@ -24,7 +24,11 @@ ExclusiveArch: x86_64
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nomonolib,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
+BuildRequires(pre): rpm-macros-dotnet
+
 Requires: dotnet >= 2.0.0
+# uses strict version in runtime config
+Requires: dotnet-coreclr = %_dotnet_corerelease
 
 BuildRequires: cmake gcc-c++ dotnet >= 2.0.0 dotnet-sdk >= 2.0.0
 # for libpsl-native build
@@ -100,7 +104,7 @@ dotnet build --configuration Linux
 mkdir -p %buildroot%_libdir/%name/
 cp -a %name-prebuild/* %buildroot%_libdir/%name/
 # hack to use latest runtime
-%__subst "s|2.0.0-preview1-002111-00|2.1.6|g" %buildroot%_libdir/%name/powershell.runtimeconfig.json
+%__subst "s|2.0.0-preview1-002111-00|%_dotnet_corerelease|g" %buildroot%_libdir/%name/powershell.runtimeconfig.json
 cp -f src/powershell-unix/libpsl-native.so %buildroot%_libdir/%name/
 %else
 #dotnet publish --configuration Linux src/powershell-unix/ --output %buildroot%_libdir/%name/ --runtime linux-x64
@@ -130,6 +134,9 @@ cp %SOURCE2 %buildroot%_man1dir/
 %doc docs/*
 
 %changelog
+* Wed Mar 20 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt6
+- add require to the version from runtime config
+
 * Thu Mar 07 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt5
 - drop obsoleted libicu56 require (ALT bug 36210)
 - add hack to use latest runtime (ALT bug 36198)
