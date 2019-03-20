@@ -1,5 +1,5 @@
 Name: xfd
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: Display all the characters in an X font
 Group: System/X11
@@ -8,9 +8,9 @@ Source: %name-%version.tar.bz2
 Packager: Fr. Br. George <george@altlinux.ru>
 License: MIT
 
-# Automatically added by buildreq on Thu Apr 14 2011
-# optimized out: fontconfig fontconfig-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel pkg-config xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: libXaw-devel libXft-devel
+# Automatically added by buildreq on Wed Mar 20 2019
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic libICE-devel libSM-devel libX11-devel libXft-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel perl pkg-config python-base python-modules sh4 xorg-proto-devel
+BuildRequires: libXaw-devel libgtk+3-devel libxkbfile-devel
 
 BuildRequires: xorg-util-macros
 
@@ -21,7 +21,6 @@ character metrics, and a grid containing one glyph per cell. The characters are
 shown in increasing order from left to right, top to bottom.
 
 %prep
-#%setup -q -n %name-%version
 %setup
 
 %build
@@ -39,6 +38,9 @@ shown in increasing order from left to right, top to bottom.
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
