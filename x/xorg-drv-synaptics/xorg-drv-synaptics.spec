@@ -1,5 +1,5 @@
 Name: xorg-drv-synaptics
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Epoch: 1
 Summary: Synaptics touchpad input driver
@@ -14,8 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libX11-devel libXi-devel libXtst-devel xorg-randrproto-devel libevdev-devel libmtdev-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: libX11-devel libXi-devel libXtst-devel xorg-proto-devel libevdev-devel libmtdev-devel
 
 %description
 synaptics  is  an  Xorg  input driver for the touchpads from
@@ -59,6 +58,9 @@ Synaptics touchpad input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.9.1-alt1
+- 1.9.1
+
 * Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:1.9.0-alt1
 - 1.9.0
 

@@ -1,5 +1,5 @@
 Name: xorg-drv-ati
-Version: 19.0.0
+Version: 19.0.1
 Release: alt1
 Epoch: 4
 Summary: ATI video driver
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 Requires: xorg-drv-radeon
-%ifnarch %e2k
+%ifnarch %e2k aarch64
 Requires: xorg-drv-r128 xorg-drv-mach64
 %endif
 
@@ -63,6 +63,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Wed Mar 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.0.1-alt1
+- 19.0.1
+
 * Thu Mar 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.0.0-alt1
 - 19.0.0
 
