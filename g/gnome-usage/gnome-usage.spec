@@ -1,7 +1,8 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
-%define ver_major 3.30
+%define ver_major 3.32
 
 Name: gnome-usage
 Version: %ver_major.0
@@ -12,19 +13,25 @@ License: GPLv3+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Usage
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 3.20.10
+%define dazzle_ver 3.30.0
 %define gtop_ver 2.34.0
 %define accountsservice_ver 0.6.40
 
 Requires: accountsservice >= %accountsservice_ver
 
 BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libdazzle-devel >= %dazzle_ver
 BuildRequires: libgtop-devel >= %gtop_ver
-BuildRequires: vala-tools
 
 %description
 Gnome Usage is a graphical tool to view system resources, like memory and
@@ -45,12 +52,15 @@ disk space.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%xdg_name.png
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* NEWS
 
 %changelog
+* Wed Mar 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Sep 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
