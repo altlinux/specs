@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: upower
-Version: 0.99.9
+Version: 0.99.10
 Release: alt1
 
 Summary: Power Management Service
@@ -17,14 +17,17 @@ Obsoletes: DeviceKit-power < 016
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 %define glib_ver 2.34
+%define dbus_ver 1.9.18
+
+Requires: dbus >= %dbus_ver
 
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: gtk-doc intltool libusb-devel libgudev-devel
-BuildRequires: libpolkit1-devel libudev-devel gobject-introspection-devel
-BuildRequires: libimobiledevice-devel libsystemd-devel
+BuildRequires: gtk-doc intltool libusb-devel libgudev-devel libdbus-devel >= %dbus_ver
+BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
+BuildRequires: libimobiledevice-devel pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir python3-module-dbus}
 
 %description
@@ -73,7 +76,7 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-#%%patch -p1
+%patch -p1
 
 rm -f acinclude.m4
 
@@ -100,11 +103,11 @@ PYTHON=%__python3 %make check
 %doc AUTHORS NEWS README
 %dir %_sysconfdir/UPower
 %_sysconfdir/UPower/*.conf
-%_sysconfdir/dbus-1/system.d/*.conf
 %_unitdir/*
 /lib/udev/rules.d/*.rules
 %_bindir/*
-%_libexecdir
+%_libexecdir/*
+%_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
 %_mandir/man?/*
 %dir %_var/lib/%name
@@ -126,6 +129,9 @@ PYTHON=%__python3 %make check
 %_girdir/*.gir
 
 %changelog
+* Thu Mar 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.99.10-alt1
+- updated to UPOWER_0_99_10-5-ge06bfc6
+
 * Tue Nov 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.99.9-alt1
 - 0.99.9
 
