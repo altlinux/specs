@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190308
+Version: 20190314
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,13 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Mar 20 2019 Cronbuild Service <cronbuild@altlinux.org> 20190314-alt1
+- upstream changes (GIT 7bc2464):
+  + cxgb4: update firmware to revision 1.23.3.0 (thx Vishal Kulkarni)
+  + Update firmware file for Intel Bluetooth 8265 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+
 * Tue Mar 12 2019 Cronbuild Service <cronbuild@altlinux.org> 20190308-alt1
 - upstream changes (GIT b0d9583):
   + drm/amdgpu: update picasso to latest from 18.50 branch (thx Alex Deucher)
