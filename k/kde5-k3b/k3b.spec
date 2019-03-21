@@ -27,8 +27,8 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 18.12.2
-Release: alt2
+Version: 18.12.3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -185,6 +185,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt2
 - build without musicbrainz
 

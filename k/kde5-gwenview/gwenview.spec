@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -101,6 +101,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 

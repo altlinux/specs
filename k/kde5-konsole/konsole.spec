@@ -4,7 +4,7 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -82,7 +82,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data konsole
+%K5install_move data konsole khotkeys
 %find_lang %name --with-kde --all-name
 
 # install alternatives
@@ -107,6 +107,7 @@ __EOF__
 %_K5plug/konsole*.so
 %_K5xdgapp/org.kde.konsole.desktop
 %_K5data/konsole/
+%_K5data/khotkeys/konsole.khotkeys
 %_K5srv/*.desktop
 %_K5srv/ServiceMenus/konsole*.desktop
 %_K5srvtyp/*.desktop
@@ -118,6 +119,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
