@@ -1,6 +1,6 @@
 Name: mcelog
-Version: 159
-Release: alt1%ubt
+Version: 162
+Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
@@ -56,6 +56,7 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %doc README.md
 %_sbindir/mcelog
 %dir %_sysconfdir/mcelog
+%_sysconfdir/logrotate.d/mcelog
 %config(noreplace) %_sysconfdir/mcelog/mcelog.conf
 %trigdir
 %_initdir/mcelog
@@ -64,9 +65,14 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 
 %files cron
 %_sysconfdir/cron.hourly/mcelog.cron
-%_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Thu Mar 21 2019 Anton Farygin <rider@altlinux.ru> 162-alt1
+- 159 -> 162
+- fixed condreload target in initscript (closes: #36328)
+- logrotate setting has been moved from cron to main package (closes: #36329)
+- updated logrotate settings from ALT bug #36329
+
 * Wed Aug 08 2018 Anton Farygin <rider@altlinux.ru> 159-alt1%ubt
 - version up to 159
 - built from upstream git
