@@ -4,7 +4,7 @@
 
 Name: openssl10
 Version: 1.0.2r
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -494,6 +494,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 21 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2r-alt2
+- Synced openssl.cnf with libcrypto1.1 1.1.1b-alt1.
+
 * Wed Mar 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2r-alt1
 - Updated to 1.0.2r (fixes CVE-2019-1559).
 - Synced cipher-list.conf with libcrypto1.1 1.1.1b-alt1.
