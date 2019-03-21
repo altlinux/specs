@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: A library to support the Internationalised Domain Names in Applications (IDNA)
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 21 2019 Vladimir Didenko <cow@altlinux.org> 2.8-alt1
+- New version
+
 * Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 2.7-alt1
 - New version
 
