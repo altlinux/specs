@@ -18,7 +18,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.6
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
@@ -27,7 +27,7 @@ Group: System/Libraries
 Url: https://ebassi.github.io/%_name
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://github.com/ebassi/%_name/releases/download/%version/%_name-%version.tar.xz
 %else
 # VCS: https://github.com/ebassi/graphene.git
 Source: %_name-%version.tar
@@ -141,6 +141,9 @@ the functionality of the installed Graphene library.
 
 
 %changelog
+* Thu Mar 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
+- 1.8.6
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
