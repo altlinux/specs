@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt10
+Release: alt11
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -32,7 +32,7 @@ BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
 BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libdrm-devel
 # libGL-devel
 BuildRequires: python-module-distribute python-module-simplejson python-module-json rpm-build-python
-BuildRequires: rpm-build-ruby
+BuildRequires: ruby
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
 BuildRequires: zlib-devel libxml2-devel
 #BuildRequires: libleveldb-devel
@@ -195,6 +195,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Mar 21 2019 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt11
+- fix build requires
+
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt10
 - rebuild with new Qt
 
