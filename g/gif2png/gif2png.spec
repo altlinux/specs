@@ -1,5 +1,5 @@
 Name: gif2png
-Version: 2.5.11
+Version: 2.5.13
 Release: alt1
 
 Summary: A GIF to PNG converter
@@ -46,13 +46,17 @@ convert entire web hierarchies (images and HTML or PHP pages).
 %patch2 -p1
 
 %build
-%make_build CFLAGS='%optflags -DVERSION=\"$(VERSION)\"' LDFLAGS=
+export CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
+%make_build
 
 %install
-make install prefix=%buildroot%_prefix
+%makeinstall_std
 
 %check
 %make_build -k -C test
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_bindir/gif2png
@@ -64,6 +68,9 @@ make install prefix=%buildroot%_prefix
 %_mandir/man?/web2png.*
 
 %changelog
+* Thu Mar 21 2019 Dmitry V. Levin <ldv@altlinux.org> 2.5.13-alt1
+- 2.5.11 -> 2.5.13.
+
 * Wed Jul 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.5.11-alt1
 - 2.5.8 -> 2.5.11.
 
