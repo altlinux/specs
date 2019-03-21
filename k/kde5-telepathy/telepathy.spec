@@ -1,6 +1,6 @@
 Name: kde5-telepathy
-Version: 16.12.0
-Release: alt1%ubt
+Version: 18.12.0
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Telepathy handler
@@ -29,7 +29,7 @@ Requires: kde5-ktp-filetransfer-handler
 Requires: kde5-ktp-kded-module
 Requires: kde5-ktp-send-file
 Requires: kde5-ktp-text-ui
-Requires: kde5-ktp-call-ui
+#Requires: kde5-ktp-call-ui
 #
 Requires: kde5-signon-kwallet-extension
 Requires: kde5-kaccounts-providers
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-ubt
 %files
 
 %changelog
+* Thu Mar 21 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.0-alt1
+- don't require kde5-ktp-call-ui
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.0-alt1%ubt
 - update requires
 
