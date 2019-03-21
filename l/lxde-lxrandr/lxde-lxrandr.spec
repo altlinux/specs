@@ -1,9 +1,7 @@
-%set_automake_version 1.11
-
 %define upstreamname lxrandr
 %define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Easy-to-use XRandR GUI frontend for LXDE project
@@ -11,7 +9,6 @@ License: GPL
 Group: Graphical desktop/Other
 Url: http://lxde.sf.net
 #Url: git://git.lxde.org/lxde/lxrandr.git
-Packager: Radik Usupov <radik@altlinux.org>
 
 Source: %upstreamname-%version.tar
 
@@ -44,6 +41,9 @@ BuildRequires: docbook-dtds docbook-style-xsl intltool libgtk+%gtkver-devel xslt
 %_man1dir/*
 
 %changelog
+* Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
+- New version.
+
 * Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
 - New version.
 
