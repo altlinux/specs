@@ -1,8 +1,8 @@
 Name: kernel-image-std-debug
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.14
-%define kernel_sublevel .104
+%define kernel_base_version	4.19
+%define kernel_sublevel .30
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -22,7 +22,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kgcc_version	%__gcc_version_base
 
 # Enable/disable SGML docs formatting
-%if "%sub_flavour" == "def"
+%if "%sub_flavour" == "def" && %kgcc_version > 5
 %def_enable docs
 %else
 %def_disable docs
@@ -410,7 +410,7 @@ install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/{{scsi,scsi_typedefs}.h,scsi_module.c} \
+cp -a drivers/scsi/scsi.h \
 	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
@@ -461,8 +461,12 @@ KbuildFiles="
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
 	scripts/recordmcount.pl
+	scripts/recordmcount.h
+	scripts/recordmcount.c
+	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
+	scripts/subarch.include
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
 	tools/objtool/objtool
@@ -604,192 +608,233 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
 %dir %modules_dir/kernel/drivers/staging/media
-%modules_dir/kernel/drivers/staging/media/lirc/
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
-%exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Mar 19 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.30-alt1
+- v4.19.30
+
+* Fri Mar 15 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.29-alt2
+- added PTRACE_GET_SYSCALL_INFO
+
+* Thu Mar 14 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.29-alt1
+- v4.19.29
+
+* Wed Mar 06 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.27-alt1
+- 4.19.27
+
+* Thu Feb 28 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.26-alt1
+- v4.19.26
+
 * Thu Feb 28 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.104-alt1
 - v4.14.104
 
-* Mon Feb 25 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.103-alt1
-- v4.14.103
+* Tue Feb 26 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.25-alt2
+- SCSI_SMARTPQI set to m
 
-* Thu Feb 21 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.102-alt1
-- v4.14.102  (Fixes: CVE-2018-1000026)
+* Mon Feb 25 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.25-alt1
+- v4.19.25
 
-* Fri Feb 15 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.101-alt1
-- v4.14.101  (Fixes: CVE-2019-3819, CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)
+* Thu Feb 21 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.24-alt1
+- v4.19.24
 
-* Fri Feb 08 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.98-alt1
-- v4.14.98
+* Fri Feb 15 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.23-alt1
+- v4.19.23  (Fixes: CVE-2019-3819, CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)
 
-* Thu Jan 31 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.97-alt1
-- v4.14.97
+* Fri Feb 08 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.20-alt1
+- v4.19.20  (Fixes: CVE-2018-16880)
 
-* Sun Jan 27 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.96-alt1
-- v4.14.96
+* Thu Jan 31 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.19-alt1
+- v4.19.19
 
-* Thu Jan 24 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.95-alt1
-- v4.14.95  (Fixes: CVE-2019-3701)
+* Sun Jan 27 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.18-alt1
+- v4.19.18
 
-* Thu Jan 17 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.94-alt1
-- v4.14.94
+* Thu Jan 24 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.17-alt1
+- v4.19.17  (Fixes: CVE-2019-3701)
 
-* Sun Jan 13 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.93-alt1
-- v4.14.93
+* Thu Jan 17 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.16-alt1
+- v4.19.16
 
-* Thu Jan 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.14.92-alt1
-- v4.14.92  (Fixes: CVE-2018-19985)
+* Sun Jan 13 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.15-alt1
+- v4.19.15
+- obsolete requires(postun) removed
 
-* Sat Dec 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.90-alt1
-- v4.14.90
+* Thu Jan 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.14-alt1
+- v4.19.14  (Fixes: CVE-2018-19985)
 
-* Mon Dec 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.89-alt1
-- v4.14.89
+* Sat Dec 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.12-alt1
+- v4.19.12
 
-* Thu Dec 13 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.88-alt1
-- v4.14.88  (Fixes: CVE-2018-14625)
+* Mon Dec 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.10-alt1
+- v4.19.10
 
-* Tue Dec 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.87-alt1
-- v4.14.87
+* Thu Dec 13 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.9-alt1
+- v4.19.9  (Fixes: CVE-2018-14625)
 
-* Thu Dec 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.86-alt1
-- v4.14.86  (Fixes: CVE-2018-1128, CVE-2018-1129)
+* Tue Dec 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.8-alt1
+- v4.19.8
 
-* Sun Dec 02 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.85-alt1
-- v4.14.85  (Fixes: CVE-2000-1134, CVE-2007-3852, CVE-2008-0525, CVE-2009-0416,
-  CVE-2011-4834, CVE-2015-1838, CVE-2015-7442, CVE-2016-7489)
+* Thu Dec 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.7-alt1
+- v4.19.7
 
-* Tue Nov 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.84-alt1
-- v4.14.84
+* Sun Dec 02 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.6-alt1
+- v4.19.6
 
-* Fri Nov 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.83-alt1
-- v4.14.83
+* Fri Nov 30 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.5-alt2
+- build iin old branches fixed
 
-* Thu Nov 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.82-alt1
-- v4.14.82  (Fixes: CVE-2018-10940, CVE-2018-16658)
+* Tue Nov 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.5-alt1
+- v4.19.5
 
-* Wed Nov 14 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.81-alt1
-- v4.14.81
+* Fri Nov 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.4-alt1
+- v4.19.4
 
-* Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.163-alt1
-- v4.4.163
+* Thu Nov 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.3-alt1
+- v4.19.3  (Fixes: CVE-2018-10940, CVE-2018-16658)
 
-* Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.80-alt1
-- v4.14.80
+* Wed Nov 14 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.2-alt1
+- v4.19.2  (Fixes: CVE-2018-18955)
 
-* Mon Nov 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.79-alt1
-- v4.14.79
+* Fri Nov 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.1-alt1
+- v4.19.1
 
-* Sat Oct 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.78-alt1
-- v4.14.78
+* Mon Nov 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.17-alt1
+- v4.18.17
 
-* Thu Oct 18 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.77-alt1
-- v4.14.77
+* Mon Oct 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.0-alt1
+- v4.19
 
-* Mon Oct 15 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.76-alt1
-- v4.14.76  (Fixes: CVE-2018-15471)
+* Sat Oct 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.16-alt1
+- v4.18.16
 
-* Thu Oct 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.74-alt1
-- v4.14.74  (Fixes: CVE-2018-7755)
+* Thu Oct 18 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.15-alt1
+- v4.18.15
 
-* Mon Oct 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.73-alt1
-- v4.14.73  (Fixes: CVE-2018-14633)
+* Mon Oct 15 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.14-alt1
+- v4.18.14  (Fixes: CVE-2018-15471)
 
-* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.72-alt1
-- v4.14.72
+* Thu Oct 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.12-alt1
+- v4.18.12  (Fixes: CVE-2018-7755)
 
-* Thu Sep 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.71-alt1
-- v4.14.71
+* Mon Oct 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.11-alt1
+- v4.18.11  (Fixes: CVE-2018-14633)
 
-* Mon Sep 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.70-alt1
-- v4.14.70  (Fixes: CVE-2018-6554, CVE-2018-6555)
+* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.10-alt0.M80C.1
+- v4.18.10
 
-* Mon Sep 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.69-alt1
-- v4.14.69
+* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.10-alt1
+- v4.18.10
 
-* Wed Sep 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.68-alt1
-- v4.14.68
+* Thu Sep 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.9-alt1
+- v4.18.9
 
-* Wed Aug 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.67-alt1
-- v4.14.67
+* Mon Sep 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.8-alt1
+- v4.18.8
 
-* Wed Aug 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.66-alt1
-- v4.14.66
+* Mon Sep 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.7-alt1
+- v4.18.7
 
-* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.65-alt1.1
-- modules building fixed
+* Wed Sep 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.6-alt1
+- v4.18.6
 
-* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.65-alt1
-- v4.14.65  (Fixes: CVE-2018-9363)
+* Wed Aug 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.5-alt1
+- v4.18.5
 
-* Thu Aug 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.63-alt1
-- v4.14.63  (Fixes: CVE-2018-3620)
+* Wed Aug 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.4-alt1
+- v4.18.4
 
-* Thu Aug 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.62-alt1
-- v4.14.62
+* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.3-alt1
+- v4.18.3  (Fixes: CVE-2018-9363)
 
-* Tue Aug 07 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.61-alt1
-- v4.14.61
+* Fri Aug 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.1-alt1
+- 4.18.1
 
-* Sat Aug 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.60-alt1
-- v4.14.60
+* Thu Aug 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.15-alt1
+- v4.17.15  (Fixes: CVE-2018-3620)
 
-* Sun Jul 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.57-alt1
-- v4.14.57
+* Thu Aug 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.14-alt1
+- v4.17.14
 
-* Tue Jul 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.56-alt1
-- v4.14.56
+* Tue Aug 07 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.13-alt1
+- v4.17.13
 
-* Wed Jul 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.55-alt1
-- v4.14.55  (Fixes: CVE-2018-10876, CVE-2018-10877, CVE-2018-10879, CVE-2018-10880,
+* Sat Aug 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.12-alt1
+- v4.17.12
+
+* Sun Jul 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.9-alt1
+- v4.17.9
+
+* Wed Jul 18 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.8-alt1
+- v4.17.8
+
+* Tue Jul 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.7-alt1
+- v4.17.7
+
+* Wed Jul 11 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.6-alt1
+- v4.17.6  (Fixes: CVE-2018-10876, CVE-2018-10877, CVE-2018-10879, CVE-2018-10880,
   CVE-2018-10881, CVE-2018-10882, CVE-2018-10883)
 
-* Mon Jul 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.54-alt1
-- v4.14.54
+* Mon Jul 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.5-alt1
+- v4.17.5
 
-* Thu Jul 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.53-alt1
-- v4.14.53
+* Tue Jul 03 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.4-alt1
+- v4.17.4
 
-* Wed Jul 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.9.111-alt1
-- v4.9.111
+* Tue Jun 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.18-alt1
+- v4.16.18  (Fixes: CVE-2018-10840, CVE-2018-1118, CVE-2018-11412)
+
+* Mon Jun 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.17.0-alt1
+- v4.17
+
+* Wed May 30 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.13-alt1
+- v4.16.13
+
+* Mon May 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.12-alt1
+- v4.16.12
+- external modules build fixed
+- experimantal AltHa LSM added
+
+* Wed May 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.11-alt1
+- v4.16.11
+
+* Mon May 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.10-alt1
+- v4.16.10  (Fixes: CVE-2018-1120)
+
+* Wed May 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.9-alt1
+- v4.16.9  (Fixes: CVE-2018-1000200)
+
+* Wed May 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.8-alt1
+- v4.16.8
+
+* Sun May 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.7-alt1
+- v4.16.7  (Fixes: CVE-2018-1093, CVE-2018-1108)
+
+* Thu Apr 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.5-alt1
+- v4.16.5
+
+* Tue Apr 24 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.4-alt1
+- v4.16.4  (Fixes: CVE-2018-1092, CVE-2018-1094, CVE-2018-1095, CVE-2018-1108)
+
+* Thu Apr 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.3-alt1
+- v4.16.3
+
+* Thu Apr 12 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.2-alt1
+- v4.16.2
+
+* Mon Apr 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.1-alt1
+- v4.16.1
+
+* Tue Apr 03 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.0-alt1
+- v4.16.0
 
 * Sun Apr 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.32-alt1
 - v4.14.32  (Fixes: CVE-2017-8824)
 
-* Thu Mar 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.31-alt1
-- v4.14.31
-
-* Sun Mar 25 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.30-alt1
-- v4.14.30
-
-* Thu Mar 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.29-alt1
-- v4.14.29
-
-* Mon Mar 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.28-alt1
-- v4.14.28  (Fixes: CVE-2018-1000004)
-
-* Mon Mar 12 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.26-alt1
-- v4.14.26
-
-* Tue Mar 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.24-alt1
-- v4.14.24
-
-* Wed Feb 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.23-alt1
-- v4.14.23
-
-* Tue Feb 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.22-alt1
-- v4.14.22
-
-* Mon Feb 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.21-alt1
-- v4.14.21
-
-* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.20-alt1
-- v4.14.20  (Fixes: CVE-2017-16995, CVE-2017-16996, CVE-2017-5715, CVE-2017-5754,
-  CVE-2017-8824)
+* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.15.4-alt1
+- v4.15.4
 
 * Mon Feb 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.17-alt1
 - v4.14.17
@@ -805,6 +850,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Wed Jan 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.13-alt1
 - v4.14.13
+
+* Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.9.75-alt0.M80C.1
+- v4.9.75
 
 * Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.12-alt1
 - v4.14.12
