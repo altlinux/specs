@@ -4,7 +4,7 @@
 %define libkeduvocdocument libkeduvocdocument%keduvocdocument_sover
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -76,6 +76,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libKEduVocDocument.so.*
 
 %changelog
+* Thu Mar 21 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
