@@ -1,9 +1,9 @@
 %define api_version 1.6
 %define rname atkmm
-%define major 2.24
+%define major 2.28
 
 Name: libatkmm
-Version: %major.3
+Version: %major.0
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -73,6 +73,9 @@ mm-common-prepare -f
 %_docdir/%rname-%api_version
 
 %changelog
+* Thu Mar 21 2019 Yuri N. Sedunov <aris@altlinux.org> 2.28.0-alt1
+- 2.28.0
+
 * Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.3-alt1
 - 2.24.3
 
