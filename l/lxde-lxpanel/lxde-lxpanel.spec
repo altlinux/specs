@@ -3,8 +3,8 @@
 %define gtkver 2
 
 Name: lxde-%origname
-Version: 0.9.3
-Release: alt2.20180413.S1
+Version: 0.10.0
+Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
@@ -23,6 +23,7 @@ Requires: menu-cache
 BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc 
 
 BuildRequires: libfm-devel libxml2-devel libkeybinder-devel
+BuildRequires: libcurl-devel
 BuildPreReq: rpm-build-xdg libgtk+%gtkver-devel
 
 %description
@@ -71,6 +72,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- new version 0.10.0
+
 * Fri Sep 21 2018 Anton Midyukov <antohami@altlinux.org> 0.9.3-alt2.20180413.S1
 - new snapshot
 
