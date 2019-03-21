@@ -1,7 +1,7 @@
 %define upstreamname lxtask
 %define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Task manager for LXDE
@@ -43,6 +43,9 @@ and some improvement of the user interface.
 %_man1dir/*
 
 %changelog
+* Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.1.9-alt1
+- new version 0.1.9
+
 * Wed Feb 15 2017 Anton Midyukov <antohami@altlinux.org> 0.1.8-alt1
 - new version 0.1.8
 
