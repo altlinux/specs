@@ -1,8 +1,8 @@
 %define upstreamname lxterminal
 %define gtkver 3
 Name: lxde-lxterminal
-Version: 0.3.1
-Release: alt4.20180916
+Version: 0.3.2
+Release: alt1
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
 License: GPLv2+
@@ -62,6 +62,9 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
+- new version 0.3.2
+
 * Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt4.20180916
 - new snapshot
 
