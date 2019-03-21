@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt2
+Release: alt3
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -17,9 +17,7 @@ Conflicts: flow-tools
 
 BuildPreReq: flex zlib-devel %{?_with_mysql: libMySQL-devel} %{?_with_pgsql: postgresql-devel}
 
-# Automatically added by buildreq on Tue Jul 02 2013
-# optimized out: OpenSP docbook-dtds docbook-style-dsssl libpq-devel openjade perl-SGMLSpm sgml-common zlib-devel
-BuildRequires: checkstyle docbook-utils flex postgresql-devel w3c-markup-validator-libs
+BuildRequires: checkstyle docbook-utils flex postgresql-devel
 
 Requires: lib%name = %version-%release
 
@@ -117,6 +115,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Thu Mar 21 2019 Anton Farygin <rider@altlinux.ru> 0.68.5-alt3
+- rebuild without w3c-markup-validator-libs
+
 * Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.68.5-alt2
 - rebuild without libwrap-devel
 
