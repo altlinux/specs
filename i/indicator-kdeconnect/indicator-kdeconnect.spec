@@ -4,9 +4,9 @@
 
 Name:     indicator-kdeconnect
 Version:  0.9.4
-Release:  alt1
+Release:  alt2
 
-Summary:  KDE Connect for non-KDE destops
+Summary:  KDE Connect for non-KDE desktops
 License:  LGPL-2.1
 Group:    Communications
 Url:      https://github.com/Bajoja/indicator-kdeconnect
@@ -36,6 +36,7 @@ sendvia-kdeconnect.
 %package nemo
 Summary:  AppIndicator for KDE Connect - Nemo integration
 Group: Graphical desktop/Other
+BuildArch: noarch
 Requires: %name
 
 %description nemo
@@ -50,6 +51,7 @@ with Nemo (file manager for Cinnamon).
 %package nautilus
 Summary:  AppIndicator for KDE Connect - Nautilus integration
 Group: Graphical desktop/GNOME
+BuildArch: noarch
 Requires: %name
 
 %description nautilus
@@ -64,6 +66,7 @@ with Nautilus (GNOME Desktop).
 %package caja
 Summary:  AppIndicator for KDE Connect - Caja integration
 Group: Graphical desktop/MATE
+BuildArch: noarch
 Requires: %name
 
 %description caja
@@ -79,7 +82,7 @@ with Caja (Mate file manager).
 
 %build
 %cmake
-%cmake_build
+NPROCS=1 %cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -110,5 +113,9 @@ rm -rf %buildroot%_datadir/locale/zh_{Hans,Hant}
 
 
 %changelog
+* Thu Mar 21 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.4-alt2
+- mark subpackages as noarch where appropriate;
+- disable racy parallel build.
+
 * Wed Mar 20 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.4-alt1
 - Initial build for Sisyphus
