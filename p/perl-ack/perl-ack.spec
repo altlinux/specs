@@ -18,8 +18,8 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 2.24
-Release: alt2
+Version: 2.28
+Release: alt1
 
 Summary: A grep-like program specifically for large source trees
 
@@ -67,6 +67,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
+- automated CPAN update
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 2.24-alt2
 - added perl-Term-ANSIColor (closes: #31247)
 
