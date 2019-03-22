@@ -1,6 +1,6 @@
 Name: mcelog
 Version: 162
-Release: alt1
+Release: alt2
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
@@ -13,7 +13,6 @@ Source2: mcelog.init
 Source3: mcelog.service
 Source4: mcelog.cron
 Source5: mcelog.logrotate
-BuildRequires(pre): rpm-build-ubt
 
 ExclusiveArch: x86_64 %ix86
 
@@ -38,6 +37,9 @@ a service.
 %build
 mkdir -p %buildroot{%_sysconfdir,%_sbindir,%_mandir}
 make CFLAGS="%optflags -fpie -pie"
+
+%post
+%post_service mcelog
 
 %install
 install -pDm755 mcelog %buildroot%_sbindir/mcelog
@@ -67,6 +69,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/cron.hourly/mcelog.cron
 
 %changelog
+* Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 162-alt2
+- added post script for service mcelog (closes: #36342)
+
 * Thu Mar 21 2019 Anton Farygin <rider@altlinux.ru> 162-alt1
 - 159 -> 162
 - fixed condreload target in initscript (closes: #36328)
