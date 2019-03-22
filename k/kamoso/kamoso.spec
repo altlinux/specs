@@ -1,6 +1,6 @@
 Name:           kamoso
 Version:        18.12.3
-Release:        alt1
+Release:        alt2
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
@@ -14,6 +14,7 @@ Source1:	%name.watch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-graphicaleffects
 BuildRequires: kf5-kauth-devel
 BuildRequires: kf5-kbookmarks-devel
 BuildRequires: kf5-kcodecs-devel
@@ -25,6 +26,7 @@ BuildRequires: kf5-kdeclarative-devel
 BuildRequires: kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel
 BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kirigami-devel
 BuildRequires: kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel
 BuildRequires: kf5-kpackage-devel
@@ -34,12 +36,11 @@ BuildRequires: kf5-kxmlgui-devel
 BuildRequires: kf5-purpose-devel
 BuildRequires: kf5-solid-devel
 BuildRequires: libkf5quickaddons
-
 BuildRequires: kf5-kdoctools-devel-static
 BuildRequires: kf5-kdoctools
-
-BuildRequires: qt5-gstreamer1-devel
 BuildRequires: libudev-devel
+BuildRequires: gstreamer1.0-devel
+BuildRequires: gst-plugins1.0-devel
 
 Requires: libkf5quickaddons
 Requires: kf5-purpose
@@ -70,6 +71,10 @@ install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.k
 %doc %_K5doc/*/%name
 
 %changelog
+* Fri Mar 22 2019 Andrey Cherepanov <cas@altlinux.org> 18.12.3-alt2
+- Build from actial tag.
+- Build without qt5-gstreamer1 (ALT #36345).
+
 * Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 18.12.3-alt1
 - New version.
 
