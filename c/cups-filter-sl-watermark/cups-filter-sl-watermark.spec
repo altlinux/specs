@@ -1,5 +1,5 @@
 Name: cups-filter-sl-watermark
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: SeLinux watermarking of printed documents
@@ -33,6 +33,9 @@ install -pm644 cups-filter-sl-watermark.cfg %buildroot%_sysconfdir/
 %_sysconfdir/*
 
 %changelog
+* Fri Mar 22 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.3-alt1
+- handling spaces in index fixed
+
 * Thu Nov 01 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.2-alt1
 - support fpr form-less watermarks added (but have no sense)
 
