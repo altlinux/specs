@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-shutil
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 1.2.11
-Release: alt1.qa1%ubt
+Version: 1.6.0
+Release: alt1
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -13,25 +14,43 @@ BuildArch: noarch
 
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-devel python-module-pytest python2.7(mock) python2.7(execnet) python2.7(contextlib2) python2.7(path)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-pytest python3(mock) python3(execnet) python3(contextlib2) python3(path)
+
+%if_with check
+BuildRequires: python2.7(contextlib2)
+BuildRequires: python2.7(execnet)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(path.py)
+BuildRequires: python2.7(pytest)
+BuildRequires: python2.7(termcolor)
+BuildRequires: python3(contextlib2)
+BuildRequires: python3(execnet)
+BuildRequires: python3(mock)
+BuildRequires: python3(path.py)
+BuildRequires: python3(termcolor)
+BuildRequires: python3(tox)
 %endif
 
+%py_requires contextlib2
+%py_requires path.py
+%py_requires termcolor
+
 %description
-This library is a goodie-bag of Unix shell and environment management tools for automated tests.
-A summary of the available functions is below, look at the source for the full listing.
+This library is a goodie-bag of Unix shell and environment management tools for
+automated tests. A summary of the available functions is below, look at the
+source for the full listing.
 
 %package -n python3-module-%oname
 Summary: A goodie-bag of unix shell and environment tools for py.test
 Group: Development/Python3
-%py3_provides %oname
+%py3_requires contextlib2
+%py3_requires path.py
+%py3_requires termcolor
 
 %description -n python3-module-%oname
-This library is a goodie-bag of Unix shell and environment management tools for automated tests.
-A summary of the available functions is below, look at the source for the full listing.
+This library is a goodie-bag of Unix shell and environment management tools for
+automated tests. A summary of the available functions is below, look at the
+source for the full listing.
 
 %prep
 %setup -n %oname-%version
@@ -40,49 +59,52 @@ A summary of the available functions is below, look at the source for the full l
 sed -i -e 's:setuptools-git:setuptools:g' \
 	common_setup.py
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %python_install
 
 %check
+cat > tox.ini <<EOF
+[tox]
+envlist = py27,py36,py37
+
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
 PYTHONPATH=$(pwd) py.test -v
-%if_with python3
-pushd ../python3
-PYTHONPATH=$(pwd) py.test3 -v
-popd
-%endif
+EOF
+# HOME env variable is used for testing
+export TOX_TESTENV_PASSENV='HOME'
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc CHANGES.md README.md
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc CHANGES.md README.md
 %python3_sitelibdir/*
-%endif
 
 %changelog
-* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.11-alt1.qa1%ubt
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.2.11 -> 1.6.0.
+
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.11-alt1.qa1
 - NMU: applied repocop patch
 
-* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1%ubt
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1
 - Initial build for ALT.
