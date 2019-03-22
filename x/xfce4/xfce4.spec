@@ -2,7 +2,7 @@
 
 Name: xfce4
 Version: 4.14
-Release: alt2
+Release: alt3
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -146,6 +146,7 @@ Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-default = %version-%release
 Requires: gnome-icon-theme
+Requires: gnome-themes-extra
 %commonreqs
 
 %description regular
@@ -169,6 +170,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Fri Mar 22 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt3
+- regular: Add gnome-themes-extra (closes: #36273).
+
 * Thu Jan 31 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt2
 - full,regular: Drop xfce4-mpc-plugin again.
 
