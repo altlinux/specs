@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.6.1
+Version: 0.20
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -10,6 +10,8 @@ Group: Development/Other
 URL: http://www.altlinux.org/Node.JS_Policy
 
 Source: %name-%version.tar
+Source1: macros.nodejs-tap
+Source2: %pkg.prov.files
 Patch: macros.nodejs-alt.patch
 Patch1: nodejs.req-alt.patch
 
@@ -47,14 +49,15 @@ EOF
 sed -e s,_rpmconfigdir,_rpm_build_nodejsdir,g macros.nodejs >> %buildroot/%_rpmmacrosdir/%pkg
 
 # TMP:
-cat macros.nodejs-tap >> %buildroot/%_rpmmacrosdir/%pkg
+cat %{SOURCE1} >> %buildroot/%_rpmmacrosdir/%pkg
 
 install -D -m755 %pkg.prov %buildroot/usr/lib/rpm/%pkg.prov
-install -D -m755 %pkg.prov.files %buildroot/usr/lib/rpm/%pkg.prov.files
+install -D -m755 %{SOURCE2} %buildroot/usr/lib/rpm/%pkg.prov.files
 install -D -m755 %pkg.req %buildroot/usr/lib/rpm/%pkg.req
 ln -s %pkg.prov.files %buildroot/usr/lib/rpm/%pkg.req.files
 install -D -m755 nodejs-fixdep  %buildroot%_datadir/%name/%pkg-fixdep
 install -D -m755 nodejs-symlink-deps  %buildroot%_datadir/%name/%pkg-symlink-deps
+install -D -m755 nodejs-setversion %{buildroot}%_datadir/%name/%pkg-setversion
 install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 
 %files
@@ -69,6 +72,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Fri Mar 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- sync with nodejs-packaging 20-2
+
 * Mon Aug 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1
 - fixed warning in nodejs.req
 
