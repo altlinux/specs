@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.12.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Patch1: alt-libraw-ver.patch
 
 # Automatically added by buildreq on Tue Jan 12 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
-BuildRequires: extra-cmake-modules libraw-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
+BuildRequires: extra-cmake-modules libraw-devel python-module-google qt5-base-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: libraw-devel
@@ -57,8 +57,6 @@ KF5 library
 %K5install
 %find_lang %name --with-kde --all-name
 
-%files
-
 %files common -f %name.lang
 %doc COPYING*
 
@@ -73,6 +71,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt2
+- fix build requires
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
