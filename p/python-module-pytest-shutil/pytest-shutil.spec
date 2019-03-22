@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -83,7 +83,6 @@ envlist = py27,py36,py37
 [testenv]
 commands =
     {envpython} -m pytest {posargs:-vra}
-PYTHONPATH=$(pwd) py.test -v
 EOF
 # HOME env variable is used for testing
 export TOX_TESTENV_PASSENV='HOME'
@@ -93,13 +92,18 @@ tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc CHANGES.md README.md
-%python_sitelibdir/*
+%python_sitelibdir/pytest_shutil/
+%python_sitelibdir/pytest_shutil-%version-py%_python_version.egg-info/
 
 %files -n python3-module-%oname
 %doc CHANGES.md README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_shutil/
+%python3_sitelibdir/pytest_shutil-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- Fixed minor typo in tox.ini.
+
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.2.11 -> 1.6.0.
 
