@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Virtualenv fixture for py.test
 License: MIT
@@ -72,7 +72,6 @@ envlist = py27,py36,py37
 [testenv]
 commands =
     {envpython} -m pytest {posargs:-vra}
-PYTHONPATH=$(pwd) py.test -v
 EOF
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -80,13 +79,19 @@ tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE *.md
-%python_sitelibdir/*
+%python_sitelibdir/pytest_virtualenv.py*
+%python_sitelibdir/pytest_virtualenv-%version-py%_python_version.egg-info/
 
 %files -n python3-module-%oname
 %doc LICENSE *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_virtualenv.py
+%python3_sitelibdir/__pycache__/pytest_virtualenv.cpython-*
+%python3_sitelibdir/pytest_virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- Fixed minor typo in tox.ini.
+
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.3.0 -> 1.6.0.
 
