@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.7
+Version: 3.0.0
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -38,7 +38,13 @@ BuildRequires: libcares-devel
 BuildRequires: libsmi-devel
 BuildRequires: libGeoIP-devel
 BuildRequires: libglib2-devel
-BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-tools-devel qt5-svg-devel
+BuildRequires: cmake
+BuildRequires: libsystemd-devel
+BuildRequires: libmaxminddb-devel
+BuildRequires: asciidoctor
+BuildRequires: libbcg729-devel >= 1.0.4-alt1
+BuildRequires: libsbc-devel
 BuildRequires(pre):rpm-build-xdg
 
 %package base
@@ -61,15 +67,6 @@ Summary: Console GUI for Wireshark package
 Group: Monitoring
 Requires: %name-base = %EVR
 Obsoletes: tethereal
-
-%package doc
-Summary: Wireshark User's Guide
-Group: Documentation
-License: FDL
-BuildArch: noarch
-Conflicts: %name-base < %EVR
-Conflicts: %name-base > %EVR
-Obsoletes: ethereal-doc
 
 %package devel
 Summary: Development environment for wireshark extensions 
@@ -102,15 +99,6 @@ This package contains QT5 GUI ie. the wireshark -- application.
 %description -n tshark
 This package contains console wireshark application.
 
-%description doc
-Wireshark is one of those programs that many network managers
-would love to be able to use, but they are often prevented from
-getting what they would like from Wireshark because of the lack
-of documentation.
-
-This document is part of an effort by the Wireshark team to
-improve the usability of Wireshark. 
-
 %description devel
 This package contains development files needed to develop wireshark
 extensions.
@@ -120,58 +108,16 @@ extensions.
 %patch -p1
 
 %build
-%add_optflags -I%_includedir/pcre
-./autogen.sh
-
-export ac_cv_path_HTML_VIEWER=url_handler.sh
-# Workaround for Lua 5.1 detection
-export ac_cv_lib_lualib_luaL_openlib=no
-
 # Some plugins use C++ and need lcxa. It can't be loaded
 # dynamically, so all binaries should be linked with it.
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %endif
-
-chmod ugo+rx configure
-%configure \
-   --sysconfdir=%_sysconfdir/%name \
-   --disable-static \
-   --enable-shared \
-   --disable-warnings-as-errors \
-   --with-qt=5 \
-   --with-gtk=no \
-   --enable-wireshark \
-   --enable-tshark \
-   --enable-editcap \
-   --enable-capinfos \
-   --enable-mergecap \
-   --enable-text2pcap \
-   --enable-dftest \
-   --enable-randpkt \
-   --enable-dumpcap \
-   --enable-rawshark \
-   --disable-androiddump \
-   --disable-setuid-install \
-   --with-gnu-ld \
-   --with-pic \
-   --with-gnutls \
-   --without-libsmi \
-   --with-pcap \
-   --with-pcap-remote \
-   --with-zlib \
-   --with-lua \
-   --with-portaudio \
-   --with-libcap \
-   --with-ssl \
-   --with-krb5 \
-   --with-plugins=%_libdir/%name/plugins/%version \
-   \
-   CPPFLAGS="$CPPFLAGS -I%_includedir/pcre"
-%make_build
+%cmake
+%cmake_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%cmakeinstall_std
 rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
 mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
@@ -205,7 +151,6 @@ _EOF_
 %config %_controldir/%name-capture
 %_bindir/capinfos
 %_bindir/captype
-%_bindir/dftest
 %attr(700,root,root) %verify(not mode,group) %_bindir/dumpcap
 %_bindir/editcap
 %_bindir/mergecap
@@ -213,13 +158,18 @@ _EOF_
 %_bindir/rawshark
 %_bindir/text2pcap
 %_bindir/reordercap
+%_bindir/mmdbresolve
+%_man1dir/androiddump.*
 %_man1dir/capinfos.*
 %_man1dir/captype.*
 %_man1dir/ciscodump.*
+%_man1dir/dpauxmon.*
 %_man1dir/udpdump.*
 %_man1dir/sshdump.*
+%_man1dir/mmdbresolve.*
 %_man1dir/randpkt.*
 %_man1dir/randpktdump.*
+%_man1dir/sdjournal.*
 %_man1dir/dftest.*
 %_man1dir/dumpcap.*
 %_man1dir/editcap.*
@@ -232,10 +182,10 @@ _EOF_
 %_datadir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
-%dir %_libdir/%name/plugins/2.6/
+%dir %_libdir/%name/plugins/3.0
 %dir %_libdir/%name/extcap
 %_libdir/%name/extcap/*
-%_libdir/%name/plugins/2.6/*
+%_libdir/%name/plugins/3.0/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
 %_libdir/libwscodecs.so.*
@@ -256,10 +206,8 @@ _EOF_
 %_bindir/tshark
 %_man1dir/tshark.*
 
-%files doc
-%doc wsug_html_chunked/*
-
 %files devel
+%_bindir/idl2wrs
 %_includedir/wiretap
 %_libdir/libwiretap.so
 %_includedir/wireshark
@@ -270,6 +218,10 @@ _EOF_
 
 
 %changelog
+* Tue Mar 19 2019 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+- removed package with documentation
+
 * Mon Mar 04 2019 Anton Farygin <rider@altlinux.ru> 2.6.7-alt1
 - 2.6.7
 - fixes:
