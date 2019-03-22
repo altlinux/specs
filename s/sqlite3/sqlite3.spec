@@ -1,6 +1,8 @@
+%def_disable static
+
 Name: sqlite3
-Version: 3.26.0
-Release: alt2
+Version: 3.27.2
+Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -125,12 +127,14 @@ export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
 export CFLAGS="%optflags \
 	-DSQLITE_CORE=1 \
+	-DSQLITE_ENABLE_API_ARMOR=1 \
 	-DSQLITE_ENABLE_COLUMN_METADATA=1 \
 	-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+	-DSQLITE_ENABLE_DESERIALIZE=1 \
 	-DSQLITE_ENABLE_FTS3=1 \
+	-DSQLITE_ENABLE_JSON1=1 \
 	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
 	-DSQLITE_SECURE_DELETE=1 \
-	-DSQLITE_ENABLE_JSON1=1 \
 	-fno-strict-aliasing "
 %ifarch %e2k
 # FIXME: lcc-1.23 lacks some gcc5 builtins
@@ -138,10 +142,13 @@ cc --version | grep -q '^lcc:1.21' || export CFLAGS+="-D__INTEL_COMPILER=1"
 %endif
 autoreconf -i
 %configure \
-	--enable-threadsafe \
+	%{subst_enable static} \
 	--disable-amalgamation \
+	--enable-fts5 \
 	--enable-load-extension \
-	--enable-fts5
+	--enable-readline \
+	--enable-threadsafe \
+	#
 
 %make_build all
 
@@ -180,8 +187,10 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/lib%name.a
+%endif # static
 
 %files tcl
 %_tcllibdir/libtcl%name.so*
@@ -198,6 +207,12 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Fri Mar 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.27.2-alt1
+- 3.27.2 (closes: #36341)
+- enabled API armor and deserialize interface
+- explicitly enabled readline
+- disabled static library build
+
 * Fri Feb 01 2019 Alexandr Antonov <aas@altlinux.org> 3.26.0-alt2
 - Enable JSON1
 
