@@ -11,12 +11,12 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      4d60db472b2bde6931072ca6467f2667c2590dff
+%global commit      774a1f4eee66e29a71ca12e88ac2220670990f7e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.09.1
-Release: alt2
+Version:    18.09.3
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -38,7 +38,7 @@ Source5: daemon.json
 Patch1: %name-18.09.1-bash-completion.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
+BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
 BuildRequires: go-md2man
 Requires: tar xz
 Provides: docker-io = %version-%release
@@ -83,7 +83,7 @@ DISABLE_WARN_OUTSIDE_CONTAINER=1 make -C %{build_dir_cli} manpages
 
 # build daemon
 export DOCKER_GITCOMMIT="%{shortcommit}/%{version}"
-export DOCKER_BUILDTAGS='selinux journald'
+export DOCKER_BUILDTAGS='selinux journald pkcs11 seccomp'
 mkdir -p %{build_dir_engine}
 cp -alv -- components/engine/* %{build_dir_engine}
 pushd %{build_dir_engine}
@@ -177,6 +177,10 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Fri Mar 22 2019 Alexey Shabalin <shaba@altlinux.org> 18.09.3-alt1
+- 18.09.3
+- build with seccomp support
+
 * Fri Mar 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 18.09.1-alt2
 - Change golang-github-cpuguy83-go-md2man to go-md2man in BuildRequires
 
