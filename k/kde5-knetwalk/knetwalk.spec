@@ -1,7 +1,7 @@
 %define rname knetwalk
 
 Name: kde5-%rname
-Version: 18.12.2
+Version: 18.12.3
 Release: alt1
 %K5init
 
@@ -47,6 +47,9 @@ BuildRequires: kf5-kcrash-devel
 #%_K5xmlgui/knetwalk/
 
 %changelog
+* Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
+- new version
+
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
