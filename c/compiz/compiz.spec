@@ -1,8 +1,8 @@
-%define ver_major 0.9.13
+%define ver_major 0.9.14
 
 Name: compiz
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
@@ -17,17 +17,17 @@ Provides: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
 Obsoletes: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 
-Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.bz2
+Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.xz
 
-Patch0: compiz-0.9.13.0-alt-python_sitelibdir.patch
-Patch1: compiz-0.9.13.0-alt-mate-window-settings.patch
-Patch2: compiz-0.9.13.0-alt-po.patch
+Patch0: compiz-0.9.14.0-alt-python_sitelibdir.patch
+Patch1: compiz-0.9.13.0-alt-po.patch
+Patch2: compiz-0.9.14.0-alt-ascii-to-utf8.patch
 
 BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-devel libXcomposite-devel
 BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel libXrandr-devel libdbus-devel
 BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
-BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler python-module-Pyrex xsltproc
-BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0) python-devel
+BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler xsltproc
+BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0) python3-devel python3-module-Cython
 BuildRequires: libpcre-devel libXdmcp-devel libdrm-devel libfribidi-devel libpixman-devel libpng-devel
 
 %description
@@ -67,7 +67,7 @@ find -name flags.make | while read l; do sed -i 's|\ -Werror\ | |g' $l; done
 %make -C %_target_platform DESTDIR=%buildroot install
 
 mkdir -p %buildroot%_sysconfdir/compizconfig
-cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/config
+cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/config.conf
 [general]
 backend = gsettings
 profile = mate
@@ -76,11 +76,11 @@ plugin_list_autosort = true
 __EOF__
 cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/mate.ini
 [core]
-s0_active_plugins = core;composite;opengl;decor;matecompat;move;resize;imgpng;wall;session;copytex;compiztoolbox;wobbly;switcher;scale;
+s0_active_plugins = core;composite;opengl;decor;matecompat;move;resize;imgpng;wall;session;copytex;compiztoolbox;wobbly;switcher;scale;place;
 __EOF__
 
 %if "%_lib" == "lib64"
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 rm -fr %buildroot%_datadir/compiz/cmake
@@ -100,7 +100,7 @@ rm -fr %buildroot%_datadir/cmake*
 %_libdir/compizconfig
 %_libdir/lib*.so.*
 %_libdir/libcompizconfig_gsettings_backend.so
-%python_sitelibdir/c*
+%python3_sitelibdir/*
 %_desktopdir/*.desktop
 %_datadir/ccsm
 %_datadir/%name
@@ -110,6 +110,9 @@ rm -fr %buildroot%_datadir/cmake*
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Mar 22 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.0-alt1
+- 0.9.14.0
+
 * Wed Nov 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.1-alt3
 - updated build dependencies
 
@@ -117,7 +120,7 @@ rm -fr %buildroot%_datadir/cmake*
 - updated build dependencies
 
 * Sun Nov 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.1-alt1
-- 0.9.13.1
+- 0.9.13.1 (closes: #36338)
 
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.0-alt2
 - updated to rev.4097
