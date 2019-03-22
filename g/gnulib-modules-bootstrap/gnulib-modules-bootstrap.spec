@@ -1,13 +1,14 @@
 Name: gnulib-modules-bootstrap
 Version: 0.0.70.037f
-Release: alt1
+Release: alt2
 
 Summary: gnulib modules bootstrap
 License: GPL-2.0-or-later or MIT
 Group: Development/C
 BuildArch: noarch
 Url: https://github.com/gnulib-modules/bootstrap/
-Source: %name-%version.tar
+# git://git.altlinux.org/gears/g/gnulib-modules-bootstrap.git
+Source: %name-%version-%release.tar
 AutoReqProv: no
 
 %description
@@ -19,7 +20,7 @@ little more portable than the GNU version.  It's also quite a lot larger than
 the GNU implementation.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %install
 mkdir -p %buildroot%_datadir
@@ -29,5 +30,8 @@ cp -a . %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Fri Mar 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.0.70.037f-alt2
+- func_mktempdir: use mktemp unconditionally.
+
 * Fri Mar 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.0.70.037f-alt1
 - gnulib modules bootstrap snapshot 037f8376.
