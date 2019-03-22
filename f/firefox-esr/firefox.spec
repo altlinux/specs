@@ -15,8 +15,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.5.2
-Release:        alt1.1
+Version:        60.6.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -345,6 +345,20 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Thu Mar 21 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.0-alt1
+- New ESR version (60.6.0).
+- Fixed:
+  + CVE-2019-9790 Use-after-free when removing in-use DOM elements
+  + CVE-2019-9791 Type inference is incorrect for constructors entered through on-stack replacement with IonMonkey
+  + CVE-2019-9792 IonMonkey leaks JS_OPTIMIZED_OUT magic value to script
+  + CVE-2019-9793 Improper bounds checks when Spectre mitigations are disabled
+  + CVE-2019-9794 Command line arguments not discarded during execution
+  + CVE-2019-9795 Type-confusion in IonMonkey JIT compiler
+  + CVE-2019-9796 Use-after-free with SMIL animation controller
+  + CVE-2019-9801 Windows programs that are not 'URL Handlers' are exposed to web content
+  + CVE-2018-18506 Proxy Auto-Configuration file can define localhost access to be proxied
+  + CVE-2019-9788 Memory safety bugs fixed in Firefox 66 and Firefox ESR 60.6
+
 * Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1.1
 - Rebuild vith libvpx5.
 
