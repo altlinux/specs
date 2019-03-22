@@ -1,10 +1,10 @@
 %def_disable static
-%def_with doc
+%def_without doc
 %define abiversion 11
 
 Name: libraw1394
-Version: 2.1.0
-Release: alt1.1
+Version: 2.1.2
+Release: alt1
 
 Summary: FireWire interface library
 
@@ -23,7 +23,7 @@ BuildPreReq: glibc-devel-static
 %if_with doc
 # manually removed: gcc-g77 libg2c-devel
 # Automatically added by buildreq on Mon Jul 06 2009
-BuildRequires: docbook-utils w3c-markup-validator-libs
+BuildRequires: docbook-utils
 %endif
 
 %description
@@ -145,6 +145,11 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
+- cleanup buildrequires
+- 2.1.0 -> 2.1.2
+- disabled documentation
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1.1
 - BOOTSTRAP: introduce doc knob (on by default)
 
