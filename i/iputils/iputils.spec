@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20180629
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: %bsd, %gpl2plus, AS-IS (SUN MICROSYSTEMS license)
@@ -11,9 +11,13 @@ Url: https://github.com/iputils/iputils
 Source0: %name-%version.tar
 Source1: ping.control
 Patch: %name-%version-%release.patch
-# Patch from upstream git.
+# Patches from upstream git.
 # Drop it when new version will be released.
 Patch1: 0001-tracepath-Fix-copying-input-IPv6-address.patch
+Patch2: ping-check-getifaddrs-3-ifa_name-data-before-use.patch
+Patch3: ping-do-not-bind-to-device-when-destination-IP-is-on.patch
+Patch4: fix-ping-duration-time-error.patch
+Patch5: Fix-Rounding-Issue-123.patch
 
 Conflicts: netkit-base
 
@@ -55,6 +59,10 @@ Queries.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 CFLAGS="%optflags -D_GNU_SOURCE -fno-strict-aliasing -Wstrict-prototypes"
@@ -143,6 +151,16 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Fri Mar 22 2019 Mikhail Efremov <sem@altlinux.org> 20180629-alt2
+- Ptaches from upstream:
+  + Fix Rounding Issue #123.
+  + fix ping duration time error.
+  + ping: do not bind to device when destination IP is on device.
+  + ping: check getifaddrs(3) ifa_name data before use.
+- ping: Fix interface names comparison.
+- modcap: Drop useless getgid().
+- modcap: Don't use GID 0 if started as root.
+
 * Thu Aug 30 2018 Mikhail Efremov <sem@altlinux.org> 20180629-alt1
 - Update licenses.
 - Update url.
