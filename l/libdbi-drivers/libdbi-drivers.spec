@@ -6,7 +6,7 @@ Summary: Database drivers for libdbi
 Name: libdbi-drivers
 Epoch: 1
 Version: 0.9.0
-Release: alt3
+Release: alt4
 License: LGPL
 Group: System/Libraries
 Url: http://libdbi-drivers.sourceforge.net/
@@ -18,7 +18,7 @@ Patch1: 0001-freetds-resolve-compile-error-with-1.0.patch
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: docbook-style-dsssl gcc-c++ libMySQL-devel libdbi-devel zlib-devel
 BuildRequires: libfreetds-devel libsqlite-devel libsqlite3-devel openjade
-BuildRequires: postgresql-devel w3c-markup-validator-libs jadetex firebird-devel
+BuildRequires: postgresql-devel jadetex firebird-devel
 
 %description
 libdbi implements a database-independent abstraction layer in C, similar to the
@@ -239,6 +239,9 @@ rm -f %buildroot%_libdir/dbd/*.la
 %endif
 
 %changelog
+* Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 1:0.9.0-alt4
+- removed w3c-markup-validator-libs build dependency 
+
 * Fri Sep 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt3
 - Fixed build with new freetds.
 
