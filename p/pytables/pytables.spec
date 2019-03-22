@@ -6,7 +6,7 @@
 
 Name: py%oname
 Version: 3.4.2
-Release: alt1.1
+Release: alt2
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -31,7 +31,7 @@ BuildPreReq: python-devel python-module-Pyrex libnumpy-devel
 BuildPreReq: libhdf5-devel liblzo2-devel bzlib-devel
 BuildPreReq: xsltproc inkscape fop
 BuildPreReq: java-devel-default docbook-tldp-xsl docbook-dtds
-BuildPreReq: w3c-markup-validator-libs python-module-Cython
+BuildPreReq: python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
 #BuildPreReq: texlive-latex-recommended libblosc-devel
 BuildPreReq: libblosc-devel
@@ -348,6 +348,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt2
+- removed w3c-markup-validator-libs build dependency
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
