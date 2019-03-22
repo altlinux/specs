@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.6.0
-Release: alt2
+Version: 3.7.7
+Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python
@@ -17,27 +17,27 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-pytest-runner
-BuildRequires: python3-module-pytest-runner
 
 %if_with check
-BuildRequires: python-module-pytest
-BuildRequires: python-module-tox
-BuildRequires: python-module-coverage
-BuildRequires: python-module-pyflakes
-BuildRequires: python-module-mock
-BuildRequires: python-module-mccabe
-BuildRequires: python-module-configparser
-BuildRequires: python-module-pycodestyle
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pyflakes
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-mccabe
-BuildRequires: python3-module-pycodestyle
+BuildRequires: python2.7(configparser)
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(entrypoints)
+BuildRequires: python2.7(functools32)
+BuildRequires: python2.7(mccabe)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pycodestyle)
+BuildRequires: python2.7(pyflakes)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(entrypoints)
+BuildRequires: python3(coverage)
+BuildRequires: python3(mccabe)
+BuildRequires: python3(mock)
+BuildRequires: python3(pycodestyle)
+BuildRequires: python3(pyflakes)
+BuildRequires: python3(tox)
 %endif
 
+%py_requires functools32
 %py_requires mccabe
 %py_requires pyflakes
 %py_requires pycodestyle
@@ -103,27 +103,15 @@ ln -sf build3 build
 %python3_install
 
 %check
-ln -sf build2 build
-export PIP_INDEX_URL=http://host.invalid./
-
-export PYTHONPATH="$(pwd)"/src
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
---sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
-
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
---sitepackages -e py%{python_version_nodots python} -v -- -v
-
-ln -sf build3 build
-export PYTHONPATH="$(pwd)"/src
-# copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
-
-TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} -v -- -v
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/coverage \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc README.rst LICENSE
@@ -138,6 +126,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
 %python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 3.7.7-alt1
+- 3.6.0 -> 3.7.7.
+
 * Mon Jan 28 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.6.0-alt2
 - Use executable on python3
 

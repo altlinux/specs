@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 License: ISC
@@ -35,7 +35,6 @@ BuildRequires: python-module-enum34
 BuildRequires: python-module-decorator
 BuildRequires: python-module-k5test
 BuildRequires: python-module-flake8
-BuildRequires: python-module-tox
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-future
 BuildRequires: python3-module-nose
@@ -95,12 +94,9 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc LICENSE.txt README.rst
@@ -117,6 +113,9 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Sat Mar 23 2019 Stanislav Levin <slev@altlinux.org> 1.5.1-alt3
+- Fixed errors found by a new flake8 3.7.7.
+
 * Sun Oct 28 2018 Stanislav Levin <slev@altlinux.org> 1.5.1-alt2
 - Fixed errors found by a new pycodestyle 2.4.
 
