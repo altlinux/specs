@@ -4,7 +4,7 @@
 
 Name: accountsservice
 Version: 0.6.54
-Release: alt1
+Release: alt2
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -94,8 +94,8 @@ GObject introspection devel data for the accountsservice library
 %_datadir/dbus-1/system-services/org.freedesktop.Accounts.service
 %_datadir/polkit-1/actions/org.freedesktop.accounts.policy
 %dir %_localstatedir/lib/AccountsService/
-%dir %_localstatedir/lib/AccountsService/users
-%dir %_localstatedir/lib/AccountsService/icons
+%attr(700,root,root) %dir %_localstatedir/lib/AccountsService/users
+%attr(775,root,root) %dir %_localstatedir/lib/AccountsService/icons
 %_unitdir/accounts-daemon.service
 
 %files -n lib%name
@@ -114,6 +114,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Fri Mar 22 2019 Alexey Shabalin <shaba@altlinux.org> 0.6.54-alt2
+- upstream snapshot 3179baffbb6b521c97b470156d7deb364890bad6
+
 * Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 0.6.54-alt1
 - 0.6.54
 
