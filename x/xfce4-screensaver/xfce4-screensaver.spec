@@ -1,5 +1,5 @@
 Name: xfce4-screensaver
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Screen saver and locker for Xfce
@@ -76,6 +76,9 @@ and the Xfconf configuration backend.
 %exclude %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Mar 22 2019 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1
+- 0.1.3 -> 0.1.4.
+
 * Wed Jan 30 2019 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1
 - Add pam_deny.so to PAM stack.
 - It's OK if pam_gnome_keyring.so is absent.
