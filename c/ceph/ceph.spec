@@ -1,9 +1,10 @@
-%define git_version 9162f18d60aaf58b36c3971808b9e943b4e94758
+%define git_version 3a54b2b6d167d4a2a19e003a705696d4fe619afc
 
 %def_with ocf
 %def_without tcmalloc
 %def_without libzfs
 %def_without selinux
+%def_with libradosstriper
 %ifarch x86_64 aarch64
 %def_with lttng
 %else
@@ -14,24 +15,24 @@
 %def_without ceph_test_package
 %def_with python3
 %def_without python2
+%def_with system_boost
 %def_without system_lua
-%def_with system_rocksdb
+%def_without system_rocksdb
 %def_without mgr_dashboard
 %def_with blustore
+%def_without seastar
+%def_with cephfs_shell
+%def_without amqp_endpoint
+%def_with grafana
 
 %if_with python3
-%add_python3_path %_libdir/ceph/mgr
+%add_python3_path %_datadir/ceph/mgr
+%allow_python3_import_path %_datadir/ceph/mgr
 %endif
 
-%ifarch mips mipsel ppc %arm %ix86
 %def_without spdk
 %def_without pmem
 %def_without dpdk
-%else
-%def_with spdk
-%def_with pmem
-%def_with dpdk
-%endif
 %def_without system_dpdk
 
 %ifndef build_parallel_jobs
@@ -39,7 +40,7 @@
 %endif
 
 Name: ceph
-Version: 13.2.4
+Version: 14.2.0
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -52,7 +53,9 @@ ExcludeArch: %ix86 %arm %mips32 ppc
 Source0: %name-%version.tar
 Source1: ceph-radosgw.init
 Source2: rbdmap.init
-
+%if_without system_boost
+Source10: https://downloads.sourceforge.net/project/boost/boost/1.67.0/boost_1_67_0.tar.bz2
+%endif
 # git submodules
 Source11: ceph-erasure-code-corpus.tar
 Source12: ceph-object-corpus.tar
@@ -70,25 +73,33 @@ Source24: rocksdb.tar
 Source25: spdk.tar
 Source26: xxHash.tar
 Source27: zstd.tar
+Source28: c-ares.tar
+Source29: dmclock.tar
+Source30: seastar.tar
 
 Patch: %name-%version.patch
 BuildRequires(pre): rpm-build-python3
 # in cmake-3.10.2-alt add support find boost-1.66
 BuildRequires: cmake >= 3.10.2-alt1
 BuildRequires: rpm-macros-cmake
+%if_with system_boost
 BuildRequires: boost-asio-devel boost-devel-headers >= 1.67.0 boost-program_options-devel boost-intrusive-devel
-BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel
+BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel
+%endif
 BuildRequires: gcc-c++ libaio-devel libblkid-devel libcurl-devel libexpat-devel
 BuildRequires: libfuse-devel libkeyutils-devel
 BuildRequires: libldap-devel libleveldb-devel libnss-devel libsnappy-devel
+#BuildRequires: libkrb5-devel
 BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel
 %{?_with_libzfs:BuildRequires: libzfs-devel}
 BuildRequires: yasm
+%{?_with_amqp_endpoint:BuildRequires: librabbitmq-c-devel}
 BuildRequires: zlib-devel bzlib-devel liblz4-devel
-BuildRequires: libssl-devel libudev-devel
+BuildRequires: libxml2-devel
 BuildRequires: libuuid-devel
+BuildRequires: libncurses-devel
 BuildRequires: liboath-devel
-BuildRequires: jq bc gperf
+BuildRequires: jq gperf
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel >= 2.4}
 %{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel libbabeltrace-ctf-devel}
 %{?_with_cephfs_java:BuildRequires: java-devel}
@@ -104,27 +115,46 @@ BuildRequires: libsystemd-devel
 BuildRequires: rdma-core-devel
 %endif
 
+%if_with seastar
+BuildRequires: libc-ares-devel
+BuildRequires: libcryptopp-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libhwloc-devel
+BuildRequires: libpciaccess-devel
+BuildRequires: liblksctp-tools-devel
+BuildRequires: libnumactl-devel
+BuildRequires: protobuf-compiler
+BuildRequires: libprotobuf-devel
+BuildRequires: ragel
+BuildRequires: systemtap-sdt-devel
+BuildRequires: yaml-cpp-devel
+%endif
+
 %if_with python2
 BuildRequires(pre): rpm-build-python
+%if_with system_boost
 BuildRequires: boost-python-devel
+%endif
 BuildRequires: python-module-Cython python-module-OpenSSL python-devel python-module-setuptools
 BuildRequires: python-module-backports.ssl_match_hostname python-module-enum34
-BuildRequires: python-module-prettytable python-module-routes
+BuildRequires: python-module-prettytable python-module-routes python-module-bcrypt
 BuildRequires: python-module-html5lib python-module-pyasn1 python-module-virtualenv
 BuildRequires: python-sphinx-objects.inv python-module-sphinx
-%{?_with_check:BuildRequires: python-module-cherrypy python-module-werkzeug python-module-pecan python-module-six python-module-tox}
+BuildRequires: libxmlsec1-devel
+%{?_with_check:BuildRequires: python-module-cherrypy python-module-jwt python-module-werkzeug python-module-pecan python-module-six python-module-tox}
 %endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-Cython
+BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
+%if_with system_boost
 BuildRequires: boost-python3-devel
-BuildRequires: python3-module-prettytable python3-module-routes
+%endif
+BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt
 BuildRequires: python3-module-html5lib python3-module-pyasn1 python3-module-virtualenv
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-%{?_with_check:BuildRequires: python3-module-cherrypy python3-module-werkzeug python3-module-pecan python3-module-six python3-module-tox}
+BuildRequires: libxmlsec1-devel
+%{?_with_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-six python3-module-tox}
 %endif
 
 
@@ -142,8 +172,7 @@ Summary: Ceph Base Package
 Group: System/Base
 Requires: ceph-common = %EVR
 Requires: ntp-server
-Requires: python3-module-ceph_detect_init = %EVR
-%filter_from_requires /^\/usr\/sbin\/ceph-disk/d
+
 %description base
 Base is the package that includes all the files shared amongst ceph servers
 
@@ -159,34 +188,6 @@ Requires: python3-module-ceph-argparse = %EVR
 Common utilities to mount and interact with a ceph storage cluster.
 Comprised of files that are common to Ceph clients and servers.
 
-
-%package -n python-module-ceph_detect_init
-Summary: Python utility libraries for Ceph CLI
-Group: Development/Python
-BuildArch: noarch
-%description -n python-module-ceph_detect_init
-%summary
-
-%package -n python3-module-ceph_detect_init
-Summary: Python3 utility libraries for Ceph CLI
-Group: Development/Python3
-BuildArch: noarch
-%description -n python3-module-ceph_detect_init
-%summary
-
-%package -n python-module-ceph_disk
-Summary: Python utility libraries for Ceph CLI
-Group: Development/Python
-BuildArch: noarch
-%description -n python-module-ceph_disk
-%summary
-
-%package -n python3-module-ceph_disk
-Summary: Python3 utility libraries for Ceph CLI
-Group: Development/Python3
-BuildArch: noarch
-%description -n python3-module-ceph_disk
-%summary
 
 %package -n python-module-ceph_volume
 Summary: Python utility libraries for Ceph CLI
@@ -245,16 +246,20 @@ of cluster membership, configuration, and state.
 Summary: Ceph Manager Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
-AutoProv: nopython,nopython3
+AutoProv: no
 
 %if_with python3
 %py3_provides ceph_module
 %py3_provides mgr_module
+%py3_provides mgr_util
+%py3_provides orchestrator
 %endif
 
 %if_with python2
 %py_provides ceph_module
 %py_provides mgr_module
+%py_provides mgr_util
+%py_provides orchestrator
 %endif
 
 %description mgr
@@ -263,21 +268,49 @@ module derived from Calamari) and expose CLI hooks.  ceph-mgr gathers
 the cluster maps, the daemon metadata, and performance counters, and
 exposes all these to the python modules.
 
+%package mgr-ansible
+Summary: Ansible module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-ansible
+%summary.
+
 %package mgr-dashboard
 Summary: Dashboard module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-AutoProv: nopython,nopython3
-
+AutoProv: no
 %description mgr-dashboard
+%summary.
+
+%package mgr-deepsea
+Summary: Deepsea module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-deepsea
+%summary.
+
+%package mgr-insights
+Summary: Insights module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-insights
 %summary.
 
 %package mgr-influx
 Summary: InfluxDB module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-AutoProv: nopython,nopython3
-
+%if_with python3
+Requires: python3-module-influxdb
+%endif
+%if_with python2
+Requires: python-module-influxdb
+%endif
+AutoProv: no
 %description mgr-influx
 %summary.
 
@@ -285,32 +318,75 @@ AutoProv: nopython,nopython3
 Summary: Prometheus module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-AutoProv: nopython,nopython3
-
+AutoProv: no
 %description mgr-prometheus
+%summary.
+
+%package mgr-restful
+Summary: Restful module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-restful
 %summary.
 
 %package mgr-telegraf
 Summary: Telegraf module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-AutoProv: nopython,nopython3
-
+AutoProv: no
 %description mgr-telegraf
 %summary.
+
+%package mgr-diskprediction-local
+Summary: diskprediction_local module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-diskprediction-local
+ceph-mgr-diskprediction-local is a ceph-mgr plugin that tries to predict
+disk failures using local algorithms and machine-learning databases.
+
+%package mgr-diskprediction-cloud
+Summary: diskprediction_cloud module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-diskprediction-cloud
+ceph-mgr-diskprediction-cloud is a ceph-mgr plugin that tries to predict
+disk failures using services in the Google cloud.
+
+%package mgr-rook
+Summary: Rook module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-rook
+ceph-mgr-rook is a ceph-mgr plugin for orchestration functions using
+a Rook backend.
+
+%package mgr-ssh
+Summary: Ssh module for Ceph Manager Daemon
+Group: Monitoring
+Requires: ceph-mgr = %EVR
+AutoProv: no
+%description mgr-ssh
+ceph-mgr-ssh is a ceph-mgr module for orchestration functions using
+direct SSH connections for management operations.
 
 %package mgr-zabbix
 Summary: Zabbix module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-AutoProv: nopython,nopython3
-
+AutoProv: no
 %description mgr-zabbix
 %summary.
 
 %package fuse
 Summary: Ceph fuse-based client
 Group: System/Kernel and hardware
+Requires: fuse
+Requires: python3
 %description fuse
 FUSE based client for Ceph distributed network file system
 
@@ -325,7 +401,7 @@ FUSE based client to map Ceph rbd images to files
 %package -n rbd-mirror
 Summary: Ceph daemon for mirroring RBD images
 Group: System/Base
-Requires: ceph-common = %EVR
+Requires: ceph-base = %EVR
 Requires: librados2 = %EVR
 %description -n rbd-mirror
 Daemon for mirroring RBD images between Ceph clusters, streaming
@@ -342,7 +418,7 @@ NBD based client to map Ceph rbd images to local device
 %package radosgw
 Summary: Rados REST gateway
 Group: System/Libraries
-Requires: ceph-common = %EVR
+Requires: ceph-base = %EVR
 Requires: librados2 = %EVR
 Requires: librgw2 = %EVR
 %description radosgw
@@ -365,10 +441,7 @@ managers such as Pacemaker.
 Summary: Ceph Object Storage Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
-# for sgdisk, used by ceph-disk
-Requires: gdisk
-Requires: parted
-Requires: python3-module-ceph_disk = %EVR
+Requires: sudo
 Requires: python3-module-ceph_volume = %EVR
 %description osd
 ceph-osd is the object storage daemon for the Ceph distributed file
@@ -385,11 +458,13 @@ developed as part of the Ceph distributed storage system. This is a
 shared library allowing applications to access the distributed object
 store using a simple file-like interface.
 
-%package -n librados2-devel
+%package -n librados-devel
 Summary: RADOS headers
 Group: Development/C
 Requires: librados2 = %EVR
-%description -n librados2-devel
+Provides: librados2-devel = %EVR
+Obsoletes: librados2-devel < %EVR
+%description -n librados-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS object store.
 
@@ -419,12 +494,14 @@ Requires: librados2 = %EVR
 This package provides a library implementation of the RADOS gateway
 (distributed object store with S3 and Swift personalities).
 
-%package -n librgw2-devel
+%package -n librgw-devel
 Summary: RADOS gateway client library
 Group: Development/C
 License: LGPLv2
-Requires: librados2 = %EVR
-%description -n librgw2-devel
+Requires: librados-devel = %EVR
+Provides: librgw2-devel = %EVR
+Obsoletes: librgw2-devel < %EVR
+%description -n librgw-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS gateway client library.
 
@@ -458,13 +535,13 @@ Striping interface built on top of the rados library, allowing
 to stripe bigger objects onto several standard rados objects using
 an interface very similar to the rados one.
 
-%package -n libradosstriper1-devel
+%package -n libradosstriper-devel
 Summary: RADOS striping interface headers
 Group: Development/C
 Requires: libradosstriper1 = %EVR
-Requires: librados2-devel = %EVR
+Requires: librados-devel = %EVR
 Conflicts: ceph-devel < %EVR
-%description -n libradosstriper1-devel
+%description -n libradosstriper-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS striping interface.
 
@@ -479,13 +556,15 @@ RADOS, a reliable, autonomic distributed object storage cluster
 developed as part of the Ceph distributed storage system. This is a
 shared library allowing applications to manage these block devices.
 
-%package -n librbd1-devel
+%package -n librbd-devel
 Summary: RADOS block device headers
 Group: Development/C
 Requires: librbd1 = %EVR
-Requires: librados2-devel = %EVR
+Requires: librados-devel = %EVR
 Conflicts: ceph-devel < %EVR
-%description -n librbd1-devel
+Provides: librbd1-devel = %EVR
+Obsoletes: librbd1-devel < %EVR
+%description -n librbd-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS block device.
 
@@ -519,13 +598,15 @@ performance, reliability, and scalability. This is a shared library
 allowing applications to access a Ceph distributed file system via a
 POSIX-like interface.
 
-%package -n libcephfs2-devel
+%package -n libcephfs-devel
 Summary: Ceph distributed file system headers
 Group: Development/C
 Requires: libcephfs2 = %EVR
-Requires: librados2-devel = %EVR
+Requires: librados-devel = %EVR
 Conflicts: ceph-devel < %EVR
-%description -n libcephfs2-devel
+Provides: libcephfs2-devel = %EVR
+Obsoletes: libcephfs2-devel < %EVR
+%description -n libcephfs-devel
 This package contains libraries and headers needed to develop programs
 that use Cephs distributed file system.
 
@@ -557,26 +638,28 @@ This package contains Ceph benchmarks and test tools.
 
 %package -n libcephfs_jni1
 Summary: Java Native Interface library for CephFS Java bindings
-Group: System/Libraries
+Group: Development/Java
 Requires: java
 Requires: libcephfs2 = %EVR
 %description -n libcephfs_jni1
 This package contains the Java Native Interface library for CephFS Java
 bindings.
 
-%package -n libcephfs_jni1-devel
+%package -n libcephfs_jni-devel
 Summary: Development files for CephFS Java Native Interface library
-Group: System Environment/Libraries
+Group: Development/Java
 Requires: java
 Requires: libcephfs_jni1 = %EVR
 Conflicts: ceph-devel < %EVR
-%description -n libcephfs_jni1-devel
+Provides: libcephfs_jni1-devel = %EVR
+Obsoletes: libcephfs_jni1-devel < %EVR
+%description -n libcephfs_jni-devel
 This package contains the development files for CephFS Java Native Interface
 library.
 
 %package -n cephfs-java
 Summary: Java libraries for the Ceph File System
-Group: System/Libraries
+Group: Development/Java
 Requires: java
 Requires: libcephfs_jni1 = %EVR
 Requires:       junit
@@ -584,18 +667,26 @@ BuildRequires:  junit
 %description -n cephfs-java
 This package contains the Java libraries for the Ceph File System.
 
+%package -n cephfs-shell
+Summary: Interactive shell for Ceph file system
+Group: Shells
+Requires: python3-module-cmd2
+Requires: python3-module-colorama
+Requires: python3-module-cephfs
+%description -n cephfs-shell
+This package contains an interactive tool that allows accessing a Ceph
+file system without mounting it  by providing a nice pseudo-shell which
+works like an FTP client.
 
 %package devel
 Summary: Ceph headers
 Group: Development/C
 License: LGPLv2
-Requires: librados2-devel = %EVR
-Requires: libradosstriper1-devel = %EVR
-Requires: librbd1-devel = %EVR
-Requires: libcephfs2-devel = %EVR
-%if_with cephfs_java
-Requires: libcephfs_jni1-devel = %EVR
-%endif
+Requires: librados-devel = %EVR
+%{?_with_libradosstriper:Requires: libradosstriper-devel = %EVR}
+Requires: librbd-devel = %EVR
+Requires: libcephfs-devel = %EVR
+%{?_with_cephfs_java:Requires: libcephfs_jni-devel = %EVR}
 
 %description devel
 This package contains libraries and headers needed to develop programs
@@ -625,8 +716,28 @@ Requires: python3-module-rgw = %EVR
 This package contains Python3 libraries for interacting with Cephs RADOS
 object storage.
 
+%package -n grafana-dashboards-ceph
+Summary: The set of Grafana dashboards for monitoring purposes
+Group: Monitoring
+Provides: ceph-grafana-dashboards = %EVR
+
+%description -n grafana-dashboards-ceph
+This package provides a set of Grafana dashboards for monitoring of
+Ceph clusters. The dashboards require a Prometheus server setup
+collecting data from Ceph Manager "prometheus" module and Prometheus
+project "node_exporter" module. The dashboards are designed to be
+integrated with the Ceph Manager Dashboard web UI.
+
 %prep
 %setup
+
+# really? for build need "build" dir? not "BUILD"
+mkdir -p build
+
+%if_without system_boost
+mkdir -p build/boost/src
+install -m644 %SOURCE10 build/boost/src/
+%endif
 
 tar -xf %SOURCE11 -C ceph-erasure-code-corpus
 tar -xf %SOURCE12 -C ceph-object-corpus
@@ -648,14 +759,20 @@ tar -xf %SOURCE17 -C src/spdk/dpdk
 %endif
 tar -xf %SOURCE26 -C src/xxHash
 tar -xf %SOURCE27 -C src/zstd
+tar -xf %SOURCE28 -C src/c-ares
+tar -xf %SOURCE29 -C src/dmclock
+tar -xf %SOURCE30 -C src/seastar
 
 %patch -p1
 
-%build
 cat << __EOF__ > src/.git_version
 %git_version
 v%version
 __EOF__
+
+
+%build
+export NPROCS=%build_parallel_jobs
 
 %if_with cephfs_java
 # Find jni.h
@@ -665,8 +782,6 @@ done
 export CPPFLAGS="$java_inc"
 %endif
 
-# really? for build need "build" dir? not "BUILD"
-mkdir build
 cd build
 cmake .. \
     -DCMAKE_INSTALL_PREFIX=%prefix \
@@ -679,8 +794,11 @@ cmake .. \
     -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
     -DCMAKE_C_FLAGS:STRING='%optflags' \
     -DCMAKE_CXX_FLAGS:STRING='%optflags' \
+%if_with system_boost
     -DWITH_SYSTEM_BOOST=ON \
-    -DBOOST_PYTHON_VERSION=%{python_version_nodots python} \
+%else
+    -DBOOST_J=$NPROCS \
+%endif
 %if_with system_rocksdb
     -DWITH_SYSTEM_ROCKSDB=ON \
 %endif
@@ -688,11 +806,13 @@ cmake .. \
     -DWITH_LZ4=ON \
 %if_with python3
     -DWITH_PYTHON3=ON \
-    -DMGR_PYTHON_VERSION=3 \
-    -DBOOST_PYTHON_VERSION=3 \
 %endif
-%if_without python2
+%if_with python2
+    -DWITH_PYTHON2=ON \
+    -DMGR_PYTHON_VERSION=2 \
+%else
     -DWITH_PYTHON2=OFF \
+    -DMGR_PYTHON_VERSION=3 \
 %endif
 %if_without mgr_dashboard
     -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
@@ -724,6 +844,19 @@ cmake .. \
 %else
     -DWITH_BOOST_CONTEXT=OFF \
 %endif
+%if_with cephfs_shell
+    -DWITH_CEPHFS_SHELL=ON \
+%endif
+%if_with libradosstriper
+    -DWITH_LIBRADOSSTRIPER=ON \
+%else
+    -DWITH_LIBRADOSSTRIPER=OFF \
+%endif
+%if_with amqp_endpoint
+    -DWITH_RADOSGW_AMQP_ENDPOINT=ON \
+%else
+    -DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
+%endif
 %if_with blustore
     -DWITH_BLUESTORE=ON \
 %else
@@ -740,16 +873,20 @@ cmake .. \
     -DWITH_SPDK=OFF \
 %endif
 %ifarch %arm
-   -DWITH_RDMA=OFF \
+    -DWITH_RDMA=OFF \
 %endif
-   -DWITH_MANPAGE=ON
+%if_with grafana
+    -DWITH_GRAFANA=ON \
+%endif
+    -DWITH_MANPAGE=ON
 
 #%if_with system_lua
 #    -DWITH_SYSTEM_LUA=ON \
 #%endif
 
-export NPROCS=%build_parallel_jobs
-%make_build VERBOSE=1
+export VERBOSE=1
+export V=1
+%make_build
 
 %install
 pushd build
@@ -779,8 +916,9 @@ mv %buildroot%_sbindir/mount.ceph %buildroot/sbin/mount.ceph
 
 # udev rules
 install -m 0644 -D udev/50-rbd.rules %buildroot%_udevrulesdir/50-rbd.rules
-install -m 0644 -D udev/60-ceph-by-parttypeuuid.rules %buildroot%_udevrulesdir/60-ceph-by-parttypeuuid.rules
-install -m 0644 -D udev/95-ceph-osd.rules %buildroot%_udevrulesdir/95-ceph-osd.rules
+
+# sudoers.d
+install -m 0600 -D sudoers.d/ceph-osd-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-osd-smartctl
 
 #set up placeholder directories
 mkdir -p %buildroot%_sysconfdir/ceph
@@ -792,15 +930,34 @@ mkdir -p %buildroot%_localstatedir/ceph/mon
 mkdir -p %buildroot%_localstatedir/ceph/osd
 mkdir -p %buildroot%_localstatedir/ceph/mds
 mkdir -p %buildroot%_localstatedir/ceph/mgr
+mkdir -p %buildroot%_localstatedir/ceph/crash
+mkdir -p %buildroot%_localstatedir/ceph/crash/posted
 mkdir -p %buildroot%_localstatedir/ceph/radosgw
 mkdir -p %buildroot%_localstatedir/ceph/bootstrap-osd
 mkdir -p %buildroot%_localstatedir/ceph/bootstrap-mds
 mkdir -p %buildroot%_localstatedir/ceph/bootstrap-mgr
 mkdir -p %buildroot%_localstatedir/ceph/bootstrap-rgw
 mkdir -p %buildroot%_localstatedir/ceph/bootstrap-rbd
+mkdir -p %buildroot%_localstatedir/ceph/bootstrap-rbd-mirror
+
 
 # cleanup
 rm -rf %buildroot%_docdir/ceph
+
+rm -rf %buildroot%_datadir/ceph/mgr/hello
+rm -rf %buildroot%_datadir/ceph/mgr/osd_perf_query
+rm -f %buildroot%_datadir/ceph/mgr/orchestrator_cli/{run-tox.sh,tox.ini}
+rm -f %buildroot%_datadir/ceph/mgr/orchestrator_cli/test_orchestrator.py
+rm -rf %buildroot%_datadir/ceph/mgr/test_orchestrator
+rm -f %buildroot%_datadir/ceph/mgr/ansible/{run-tox.sh,tox.ini}
+rm -rf %buildroot%_datadir/ceph/mgr/ansible/tests
+rm -rf %buildroot%_datadir/ceph/mgr/dashboard/tests
+rm -f %buildroot%_datadir/ceph/mgr/dashboard/tox.ini
+rm -f %buildroot%_datadir/ceph/mgr/dashboard/*.sh
+rm -f %buildroot%_datadir/ceph/mgr/insights/{run-tox.sh,tox.ini}
+rm -rf %buildroot%_datadir/ceph/mgr/insights/tests
+rm -f %buildroot%_datadir/ceph/mgr/ssh/{Vagrantfile,ceph.repo}
+rm -rf %buildroot%python3_sitelibdir_noarch/cephfs_shell-*.egg-info
 
 %if_with check
 %check
@@ -826,9 +983,9 @@ SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
         "$SYSTEMCTL" daemon-reload ||:
         if [ "$1" -eq 1 ]; then
-                "$SYSTEMCTL" -q preset ceph.target ||:
+                "$SYSTEMCTL" -q preset ceph.target ceph-crash.service ||:
         else
-                "$SYSTEMCTL" try-restart ceph.target ||:
+                "$SYSTEMCTL" try-restart ceph.target ceph-crash.service ||:
         fi
 else
         if [ "$1" -eq 1 ]; then
@@ -844,8 +1001,8 @@ fi
 if [ "$1" -eq 0 ]; then
         SYSTEMCTL=systemctl
         if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-                "$SYSTEMCTL" --no-reload -q disable ceph.target ||:
-                "$SYSTEMCTL" stop ceph.target ||:
+                "$SYSTEMCTL" --no-reload -q disable ceph.target ceph-crash.service ||:
+                "$SYSTEMCTL" stop ceph.target ceph-crash.service ||:
         else
                 chkconfig --del ceph ||:
                 service ceph condstop ||:
@@ -913,7 +1070,7 @@ SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
         "$SYSTEMCTL" daemon-reload ||:
         if [ "$1" -eq 1 ]; then
-                "$SYSTEMCTL" -q preset ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" -q preset ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target ||:
         else
                 "$SYSTEMCTL" try-restart ceph-osd.target ||:
         fi
@@ -926,8 +1083,8 @@ fi
 if [ "$1" -eq 0 ]; then
         SYSTEMCTL=systemctl
         if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-                "$SYSTEMCTL" --no-reload -q disable ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
-                "$SYSTEMCTL" stop ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" --no-reload -q disable ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" stop ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target ||:
         else
                 %preun_service ceph
         fi
@@ -1019,12 +1176,12 @@ fi
 %files
 
 %files base
+%_bindir/ceph-crash
 %_bindir/crushtool
 %_bindir/monmaptool
 %_bindir/osdmaptool
 %_bindir/ceph-kvstore-tool
 %_bindir/ceph-run
-%_bindir/ceph-detect-init
 /lib/systemd/system-preset/50-ceph.preset
 %_sbindir/ceph-create-keys
 %dir %_libexecdir/ceph
@@ -1036,10 +1193,9 @@ fi
 %_libdir/ceph/erasure-code/libec_*.so*
 %dir %_libdir/ceph/compressor
 %_libdir/ceph/compressor/libceph_*.so*
-%ifarch x86_64
+%_unitdir/ceph-crash.service
 %dir %_libdir/ceph/crypto
 %_libdir/ceph/crypto/libceph_*.so*
-%endif
 %if_with lttng
 %_libdir/libos_tp.so*
 %_libdir/libosd_tp.so*
@@ -1049,19 +1205,21 @@ fi
 %_unitdir/ceph.target
 %_initdir/ceph
 %_mandir/man8/ceph-deploy.8*
-%_mandir/man8/ceph-detect-init.8*
 %_mandir/man8/ceph-create-keys.8*
 %_mandir/man8/ceph-run.8*
 %_mandir/man8/crushtool.8*
 %_mandir/man8/osdmaptool.8*
 %_mandir/man8/monmaptool.8*
 %_mandir/man8/ceph-kvstore-tool.8*
+%attr(750,ceph,ceph) %dir %_localstatedir/ceph/crash
+%attr(750,ceph,ceph) %dir %_localstatedir/ceph/crash/posted
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/tmp
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-osd
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-mds
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-rgw
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-mgr
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-rbd
+%attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-rbd-mirror
 
 %files common
 %doc AUTHORS COPYING README.md doc src/doc src/sample.ceph.conf
@@ -1135,38 +1293,66 @@ fi
 
 %files mgr
 %_bindir/ceph-mgr
-%dir %_libdir/ceph/mgr
-%_libdir/ceph/mgr/__pycache__
-%_libdir/ceph/mgr/balancer
-%_libdir/ceph/mgr/hello
-%_libdir/ceph/mgr/iostat
-%_libdir/ceph/mgr/localpool
-%_libdir/ceph/mgr/restful
-%_libdir/ceph/mgr/selftest
-%_libdir/ceph/mgr/smart
-%_libdir/ceph/mgr/status
-%_libdir/ceph/mgr/telemetry
-%_libdir/ceph/mgr/mgr_module.py*
-%exclude %_libdir/ceph/mgr/CMakeLists.txt
+%dir %_datadir/ceph/mgr
+%_datadir/ceph/mgr/__pycache__
+%_datadir/ceph/mgr/balancer
+%_datadir/ceph/mgr/crash
+%_datadir/ceph/mgr/devicehealth
+%_datadir/ceph/mgr/iostat
+%_datadir/ceph/mgr/localpool
+%_datadir/ceph/mgr/mgr_module.*
+%_datadir/ceph/mgr/mgr_util.*
+%_datadir/ceph/mgr/orchestrator_cli
+%_datadir/ceph/mgr/orchestrator.*
+%_datadir/ceph/mgr/pg_autoscaler
+%_datadir/ceph/mgr/progress
+%_datadir/ceph/mgr/rbd_support
+%_datadir/ceph/mgr/selftest
+%_datadir/ceph/mgr/status
+%_datadir/ceph/mgr/telemetry
+%_datadir/ceph/mgr/volumes
 %_unitdir/ceph-mgr@.service
 %_unitdir/ceph-mgr.target
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/mgr
 
+%files mgr-ansible
+%_datadir/ceph/mgr/ansible
+
 %files mgr-dashboard
-%_libdir/ceph/mgr/dashboard
-%exclude %_libdir/ceph/mgr/dashboard/*.sh
+%_datadir/ceph/mgr/dashboard
+
+%files mgr-deepsea
+%_datadir/ceph/mgr/deepsea
+
+%files mgr-diskprediction-local
+%_datadir/ceph/mgr/diskprediction_local
+
+#files mgr-diskprediction-cloud
+#_datadir/ceph/mgr/diskprediction_cloud
 
 %files mgr-influx
-%_libdir/ceph/mgr/influx
+%_datadir/ceph/mgr/influx
+
+%files mgr-insights
+%_datadir/ceph/mgr/insights
 
 %files mgr-prometheus
-%_libdir/ceph/mgr/prometheus
+%_datadir/ceph/mgr/prometheus
+
+%files mgr-restful
+%_datadir/ceph/mgr/restful
+
+%files mgr-rook
+%_datadir/ceph/mgr/rook
+
+%files mgr-ssh
+%_datadir/ceph/mgr/ssh
 
 %files mgr-telegraf
-%_libdir/ceph/mgr/telegraf
+%_datadir/ceph/mgr/telegraf
 
 %files mgr-zabbix
-%_libdir/ceph/mgr/zabbix
+%_datadir/ceph/mgr/zabbix
 
 %files fuse
 %_bindir/ceph-fuse
@@ -1207,24 +1393,20 @@ fi
 %_bindir/ceph-objectstore-tool
 %_bindir/ceph-osdomap-tool
 %_bindir/ceph-osd
-%_sbindir/ceph-disk
 %_sbindir/ceph-volume
 %_sbindir/ceph-volume-systemd
 %_libexecdir/ceph/ceph-osd-prestart.sh
-%_udevrulesdir/60-ceph-by-parttypeuuid.rules
-%_udevrulesdir/95-ceph-osd.rules
 %_mandir/man8/ceph-clsinfo.8*
-%_mandir/man8/ceph-disk.8*
 %_mandir/man8/ceph-osd.8*
 %_mandir/man8/ceph-bluestore-tool.8*
 %_mandir/man8/ceph-volume.8*
 %_mandir/man8/ceph-volume-systemd.8*
 %_unitdir/ceph-osd@.service
 %_unitdir/ceph-osd.target
-%_unitdir/ceph-disk@.service
 %_unitdir/ceph-volume@.service
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/osd
 %_sysctldir/90-ceph-osd.conf
+%_sysconfdir/sudoers.d/ceph-osd-smartctl
 
 %if_with ocf
 %files resource-agents
@@ -1234,15 +1416,16 @@ fi
 %files -n librados2
 %_libdir/librados.so.*
 %dir %_libdir/ceph
-%_libdir/ceph/libceph-common.so*
+%_libdir/ceph/libceph-common.so.*
 %if_with lttng
 %_libdir/librados_tp.so.*
 %endif
 
-%files -n librados2-devel
+%files -n librados-devel
 %dir %_includedir/rados
 %_includedir/rados/librados.h
 %_includedir/rados/librados.hpp
+%_includedir/rados/librados_fwd.hpp
 %_includedir/rados/buffer.h
 %_includedir/rados/buffer_fwd.h
 %_includedir/rados/inline_memory.h
@@ -1251,7 +1434,6 @@ fi
 %_includedir/rados/crc32c.h
 %_includedir/rados/rados_types.h
 %_includedir/rados/rados_types.hpp
-%_includedir/rados/memory.h
 %_libdir/librados.so
 %if_with lttng
 %_libdir/librados_tp.so
@@ -1259,13 +1441,15 @@ fi
 %_bindir/librados-config
 %_mandir/man8/librados-config.8*
 
+%if_with libradosstriper
 %files -n libradosstriper1
 %_libdir/libradosstriper.so.*
 
-%files -n libradosstriper1-devel
+%files -n libradosstriper-devel
 %dir %_includedir/radosstriper
 %_includedir/radosstriper/*
 %_libdir/libradosstriper.so
+%endif
 
 %files -n librbd1
 %_libdir/librbd.so.*
@@ -1273,7 +1457,7 @@ fi
 %_libdir/librbd_tp.so.*
 %endif
 
-%files -n librbd1-devel
+%files -n librbd-devel
 %dir %_includedir/rbd
 %_includedir/rbd/*
 %_libdir/librbd.so
@@ -1283,15 +1467,18 @@ fi
 
 %files -n librgw2
 %_libdir/librgw.so.*
+%_libdir/librgw_admin_user.so.*
 %if_with lttng
 %_libdir/librgw_op_tp.so.*
 %_libdir/librgw_rados_tp.so.*
 %endif
 
-%files -n librgw2-devel
+%files -n librgw-devel
 %_includedir/rados/librgw.h
 %_includedir/rados/rgw_file.h
+%_includedir/rados/librgw_admin_user.h
 %_libdir/librgw.so
+%_libdir/librgw_admin_user.so
 %if_with lttng
 %_libdir/librgw_op_tp.so
 %_libdir/librgw_rados_tp.so
@@ -1300,7 +1487,7 @@ fi
 %files -n libcephfs2
 %_libdir/libcephfs.so.*
 
-%files -n libcephfs2-devel
+%files -n libcephfs-devel
 %dir %_includedir/cephfs
 %_includedir/cephfs/*
 %_libdir/libcephfs.so
@@ -1334,6 +1521,7 @@ fi
 %_bindir/ceph_xattr_bench
 %_bindir/ceph-coverage
 %_bindir/ceph-debugpack
+%_bindir/cephdeduptool
 #_bindir/dmclock-tests
 #_bindir/dmclock-data-struct-tests
 %_mandir/man8/ceph-debugpack.8*
@@ -1345,7 +1533,7 @@ fi
 %files -n libcephfs_jni1
 %_libdir/libcephfs_jni.so.*
 
-%files -n libcephfs_jni1-devel
+%files -n libcephfs_jni-devel
 %_libdir/libcephfs_jni.so
 
 %files -n cephfs-java
@@ -1353,16 +1541,18 @@ fi
 %_javadir/libcephfs-test.jar
 %endif
 
+%if_with grafana
+%files -n grafana-dashboards-ceph
+%dir %_sysconfdir/grafana/dashboards/ceph-dashboard
+%config %_sysconfdir/grafana/dashboards/ceph-dashboard/*
+%doc monitoring/grafana/dashboards/README
+%doc monitoring/grafana/README.md
+%endif
+
 %files devel
 
 %if_with python2
 %files -n python-module-ceph
-
-%files -n python-module-ceph_detect_init
-%python_sitelibdir_noarch/ceph_detect_init*
-
-%files -n python-module-ceph_disk
-%python_sitelibdir_noarch/ceph_disk*
 
 %files -n python-module-ceph_volume
 %dir %python_sitelibdir_noarch/ceph_volume
@@ -1396,14 +1586,6 @@ fi
 
 %files -n python3-module-ceph
 
-%files -n python3-module-ceph_detect_init
-%python3_sitelibdir_noarch/ceph_detect_init
-%python3_sitelibdir_noarch/ceph_detect_init-*.egg-info
-
-%files -n python3-module-ceph_disk
-%python3_sitelibdir_noarch/ceph_disk
-%python3_sitelibdir_noarch/ceph_disk-*.egg-info
-
 %files -n python3-module-ceph_volume
 %python3_sitelibdir_noarch/ceph_volume
 %python3_sitelibdir_noarch/ceph_volume-*.egg-info
@@ -1432,9 +1614,20 @@ fi
 %python3_sitelibdir_noarch/ceph_volume_client.py*
 %python3_sitelibdir_noarch/__pycache__/ceph_volume_client.cpython*.py*
 
+%if_with cephfs_shell
+%files -n cephfs-shell
+%_bindir/cephfs-shell
+%endif
+
 %endif
 
 %changelog
+* Wed Mar 20 2019 Alexey Shabalin <shaba@altlinux.org> 14.2.0-alt1
+- 14.2.0
+
+* Sun Mar 17 2019 Alexey Shabalin <shaba@altlinux.org> 14.1.1-alt1
+- 14.1.1
+
 * Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 13.2.4-alt1
 - 13.2.4
 - disable build for 32-bit arch
