@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.6.0
+Version:        60.6.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -345,6 +345,12 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Sat Mar 23 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.1-alt1
+- New ESR version (60.6.1).
+- Fixed:
+  + CVE-2019-9810 IonMonkey MArraySlice has incorrect alias information
+  + CVE-2019-9813 Ionmonkey type confusion with __proto__ mutations
+
 * Thu Mar 21 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.0-alt1
 - New ESR version (60.6.0).
 - Fixed:
