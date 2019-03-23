@@ -1,12 +1,14 @@
+%def_with python3
+
 Name: upmpdcli
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: UPnP front-end to the Music Player Daemon
 License: GPL
 Group: Sound
-Url: http://www.lesbonscomptes.com/upmpdcli
 
+Url: http://www.lesbonscomptes.com/upmpdcli
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.14.1
@@ -88,13 +90,18 @@ rm -rf %buildroot%_datadir/%name/web
 
 %dir %attr(0770,root,_upmpd) %_cachedir/%name
 
+%if_without python3
 %files plugins
 %_datadir/%name/Analog-Input
 %_datadir/%name/cdplugins
 %_datadir/%name/rdpl2stream
 %_datadir/%name/src_scripts
+%endif
 
 %changelog
+* Sat Mar 23 2019 Michael Shigorin <mike@altlinux.org> 1.3.3-alt2
+- introduced python3 knob disabling python2 plugins (on by default)
+
 * Thu Sep 20 2018 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
 - 1.3.3 released
 

@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.24.5
+Version: 1.25.9
 Release: alt1
 
 Summary: A personal full text search package
@@ -30,9 +30,12 @@ BuildRequires: gcc-c++ libaspell-devel ImageMagick
 BuildRequires: libxapian-devel >= 0.9
 BuildRequires: rpm-build-licenses
 BuildRequires: perl-Image-ExifTool
-BuildRequires: python-devel
 BuildRequires: zlib-devel
 BuildRequires: libaspell-devel
+BuildRequires: libchm-devel
+BuildRequires: libxslt-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
@@ -80,11 +83,12 @@ Requires: xpdf-utils ghostscript-utils
 This package contains just the requirements for additional packages
 that might be of use with Recoll.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for Recoll
 Group: Development/Python
+Obsoletes: python-module-%name
 
-%description -n python-module-%name
+%description -n python3-module-%name
 This package contains Python bindings for Recoll.
 
 %prep
@@ -145,11 +149,25 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 
 %files full
 
-%files -n python-module-%name
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info
+%files -n python3-module-%name
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/recollchm/
 
 %changelog
+* Sat Mar 23 2019 Michael Shigorin <mike@altlinux.org> 1.25.9-alt1
+- new version (watch file uupdate)
+
+* Fri Mar 22 2019 Michael Shigorin <mike@altlinux.org> 1.25.8-alt1
+- new version (watch file uupdate)
+
+* Thu Mar 07 2019 Michael Shigorin <mike@altlinux.org> 1.25.5-alt1
+- new version (watch file uupdate)
+
+* Sun Feb 24 2019 Michael Shigorin <mike@altlinux.org> 1.25.4-alt1
+- new version (watch file uupdate)
+- built with libchm
+
 * Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 1.24.5-alt1
 - new version (watch file uupdate)
 
