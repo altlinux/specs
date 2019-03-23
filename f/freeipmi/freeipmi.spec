@@ -3,8 +3,8 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.6.2
-Release: alt1%ubt
+Version: 1.6.3
+Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -18,7 +18,6 @@ Source1: %name.watch
 Patch: %name-%version-alt.patch
 
 BuildRequires: libgcrypt-devel texinfo
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This project provides "Remote-Console" (out-of-band) and
@@ -177,19 +176,22 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
-* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1%ubt
+* Sat Mar 23 2019 Anton Farygin <rider@altlinux.ru> 1.6.3-alt1
+- new version 1.6.3
+
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1
 - new version 1.6.2
 
 * Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1
 
-* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.5.7-alt1%ubt
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.5.7-alt1
 - new version 1.5.7
 
-* Tue Aug 08 2017 Anton Farygin <rider@altlinux.ru> 1.5.6-alt1%ubt
+* Tue Aug 08 2017 Anton Farygin <rider@altlinux.ru> 1.5.6-alt1
 - new version 1.5.6
 
-* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1%ubt
+* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1
 - new version 1.5.5
 
 * Sun Oct 02 2016 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
