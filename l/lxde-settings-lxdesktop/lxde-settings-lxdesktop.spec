@@ -3,7 +3,7 @@
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
 Version: 0.3
-Release: alt6
+Release: alt7
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
 
@@ -15,7 +15,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Provides: lxde-settings
-Requires: icon-theme-faenza-blue gtk3-theme-clearlooks-phenix
+Requires: icon-theme-faenza-blue
+Requires: gnome-themes-extra libgtk2-engine-adwaita
 Requires: fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif
 Requires: qasmixer
 Requires: screengrab
@@ -52,6 +53,9 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Sat Mar 23 2019 Anton Midyukov <antohami@altlinux.org> 0.3-alt7
+- Replaced gtk2/3 theme on Adwaita
+
 * Mon May 07 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt6
 - Enabled quick execution in the file manager
 
