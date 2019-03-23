@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 3.5.0
-Release: alt5%ubt
+Release: alt6%ubt
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 
 Group: Development/Python
@@ -42,6 +42,7 @@ rm -rfv *.egg-info
 
 %install
 %python_install
+rm %buildroot%python_sitelibdir_noarch/configparser-%version-py%_python_version-nspkg.pth
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -56,6 +57,9 @@ tox --sitepackages -e py%{python_version_nodots python} -v
 %python_sitelibdir/*
 
 %changelog
+* Sat Mar 23 2019 Stanislav Levin <slev@altlinux.org> 3.5.0-alt6
+- Fixed namespace package mangling.
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt5%ubt
 - Rebuilt without python-3.
 
