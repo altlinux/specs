@@ -11,7 +11,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.5.2
+Version:	60.6.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -80,6 +80,7 @@ BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
+BuildRequires: libdbus-glib-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -247,7 +248,8 @@ export MOZ_BUILD_APP=mail
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
 MOZ_OPT_FLAGS=$(echo "%optflags -fpermissive" | \
-                      sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+                      sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g' \
+                      -e 's/-frecord-gcc-switches/-grecord-gcc-switches/')
 # Disable null pointer gcc6 optimization - workaround for
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1278795
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-schedule-insns2"
@@ -258,6 +260,8 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 %endif
 
+export CC="clang"
+export CXX="clang++"
 export PREFIX='%_prefix'
 export LIBDIR='%_libdir'
 export INCLUDEDIR='%_includedir'
@@ -469,6 +473,10 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Thu Mar 21 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.0-alt1
+- New version (60.6.0).
+- Build with Clang.
+
 * Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1
 - New version (60.5.2).
 
