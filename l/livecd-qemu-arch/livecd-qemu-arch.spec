@@ -1,8 +1,8 @@
 Name: livecd-qemu-arch
-Version: 0.4
+Version: 0.5
 Release: alt1
 
-Summary: prepare live-builder.iso for ARM/PPC/aarch64/mipsel QEMU
+Summary: prepare live-builder.iso for ARM/PPC/aarch64/armh/mipsel/riscv64 QEMU
 License: Public domain
 Group: System/Configuration/Other
 
@@ -20,6 +20,16 @@ AutoReqProv: no
 
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir/apt}
+
+cat > %buildroot%_bindir/register-qemu-riscv64 << EOF
+#!/bin/sh
+# https://www.altlinux.org/Ports/riscv64/BuildHowto
+modprobe binfmt_misc
+sleep 0.1
+[ -d /proc/sys/fs/binfmt_misc ] || exit 1
+echo ':riscv64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/.host/qemu-riscv64:' > /proc/sys/fs/binfmt_misc/register
+echo 32768 > /proc/sys/vm/mmap_min_addr
+EOF
 
 cat > %buildroot%_bindir/register-qemu-mipsel << EOF
 #!/bin/sh
@@ -59,6 +69,22 @@ sleep 0.1
 [ -d /proc/sys/fs/binfmt_misc ] || exit 1
 echo ':ppc:M::\x7fELF\x01\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x14:\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/.host/qemu-ppc:' > /proc/sys/fs/binfmt_misc/register
 echo 32768 > /proc/sys/vm/mmap_min_addr
+EOF
+
+cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.riscv64 << EOF
+Dir::Etc::main "/dev/null";
+Dir::Etc::parts "/var/empty";
+Dir::Etc::SourceParts "/var/empty";
+Dir::Etc::sourcelist "/etc/apt/sources.list.sisyphus.riscv64";
+EOF
+
+cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.riscv64 << EOF
+# https://www.altlinux.org/Ports/riscv64
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/riscv64 classic
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/noarch classic
+#Yandex mirror
+#rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/riscv64 classic
+#rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.mipsel << EOF
@@ -122,6 +148,9 @@ EOF
 %attr(755,root,root) %_bindir/register-qemu-*
 
 %changelog
+* Sat Mar 23 2019 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
+- added riscv64 support
+
 * Wed Jul 11 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.4-alt1
 - added mipsel support
 
