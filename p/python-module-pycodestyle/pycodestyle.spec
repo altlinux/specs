@@ -1,58 +1,52 @@
 %define _unpackaged_files_terminate_build 1
-
-%def_with python3
-
 %define oname pycodestyle
 
+%def_with check
+
 Name: python-module-%oname
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 Summary: Python style guide checker
 Group: Development/Python
 License: Expat
 BuildArch: noarch
-URL: https://pypi.python.org/pypi/pycodestyle
+Url: https://pypi.org/project/pycodestyle/
 
 # https://github.com/PyCQA/pycodestyle.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pytest-runner
-%if_with python3
-BuildRequires: python3-module-setuptools rpm-build-python3
-BuildRequires: python3-module-pytest-runner
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python2.7(json)
+BuildRequires: python3(tox)
 %endif
 
 %description
-pycodestyle is a tool to check your Python code against some of the style conventions in PEP 8.
+pycodestyle is a tool to check your Python code against some of the style
+conventions in PEP 8.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python style guide checker
 Group: Development/Python3
 
 %description -n python3-module-%oname
-pycodestyle is a tool to check your Python code against some of the style conventions in PEP 8.
-%endif
+pycodestyle is a tool to check your Python code against some of the style
+conventions in PEP 8.
 
 %prep
 %setup
 
-%if_with python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -61,26 +55,31 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
+
 %files
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
+%_bindir/pycodestyle
+%python_sitelibdir/pycodestyle.py*
+%python_sitelibdir/pycodestyle-%version-py%_python_version.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
+%_bindir/pycodestyle.py3
+%python3_sitelibdir/pycodestyle.py
+%python3_sitelibdir/__pycache__/pycodestyle.cpython-*
+%python3_sitelibdir/pycodestyle-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Fri Oct 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 

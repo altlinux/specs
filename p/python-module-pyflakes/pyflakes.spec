@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pyflakes
 
+%def_with check
+
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -16,6 +18,11 @@ Source1: pyflakes.1
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python2.7(json)
+BuildRequires: python3(tox)
+%endif
 
 Provides: pyflakes = %EVR
 Obsoletes: pyflakes < %EVR
@@ -60,19 +67,23 @@ install -Dpm 644 %SOURCE1 %buildroot%_man1dir/python3-pyflakes.1
 
 mv %buildroot%_bindir/{pyflakes,python3-pyflakes}
 # don't package tests
-rm -rf %buildroot%python3_sitelibdir/pyflakes/test
+rm -r %buildroot%python3_sitelibdir/pyflakes/test
 popd
 
 install -Dpm 644 %SOURCE1 %buildroot%_man1dir/pyflakes.1
 %python_install
-rm -rf %buildroot%python_sitelibdir/pyflakes/test
+rm -r %buildroot%python_sitelibdir/pyflakes/test
 
 %check
-python setup.py test
+# we don't want flake8, because pyflakes is its dep
+sed -i \
+-e "/deps = flake8/d" \
+-e "/flake8 pyflakes setup.py/d" \
+tox.ini
 
-pushd ../python3
-python3 setup.py test
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc AUTHORS LICENSE README.rst
@@ -89,6 +100,9 @@ popd
 %python3_sitelibdir/pyflakes-*.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 2.0.0 -> 2.1.1.
+
 * Sat Oct 27 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.6.0 -> 2.0.0.
 

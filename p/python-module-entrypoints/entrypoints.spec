@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname entrypoints
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.2.3
-Release: alt2
+Version: 0.3
+Release: alt1
 Summary: Discover and load entry points from installed packages
 License: MIT
 Group: Development/Python
@@ -15,42 +15,36 @@ Url: https://pypi.python.org/pypi/entrypoints
 # https://github.com/takluyver/entrypoints.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
+%if_with check
+BuildRequires: python2.7(configparser)
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(tox)
+%endif
 %py_requires configparser
 
 %description
 Discover and load entry points from installed packages.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Discover and load entry points from installed packages
 Group: Development/Python3
-%py3_requires configparser
 
 %description -n python3-module-%oname
 Discover and load entry points from installed packages.
-%endif
 
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
-
 
 %build
 %python_build_debug
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 pushd ../python3
@@ -59,15 +53,32 @@ popd
 
 %python_install
 
-%files
-%python_sitelibdir/*
+%check
+cat > tox.ini <<EOF
+[tox]
+envlist = py27,py36,py37
 
-%if_with python3
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
+
+%files
+%python_sitelibdir/entrypoints.py*
+%python_sitelibdir/entrypoints-%version-py%_python_version.egg-info/
+
 %files -n python3-module-%oname
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/entrypoints.py
+%python3_sitelibdir/__pycache__/entrypoints.cpython-*
+%python3_sitelibdir/entrypoints-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 0.3-alt1
+- 0.2.3 -> 0.3.
+
 * Wed Dec 19 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2.3-alt2
 - Added egg-info
 
