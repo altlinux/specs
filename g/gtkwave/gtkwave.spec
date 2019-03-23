@@ -1,5 +1,5 @@
 Name: gtkwave
-Version: 3.3.99
+Version: 3.3.100
 Release: alt1
 Summary: %name
 License: GPL
@@ -43,6 +43,9 @@ BuildRequires: bzlib-devel desktop-file-utils flex gcc-c++ gperf libgtk+2-devel 
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sat Mar 23 2019 Cronbuild Service <cronbuild@altlinux.org> 3.3.100-alt1
+- new version 3.3.100
+
 * Tue Feb 12 2019 Cronbuild Service <cronbuild@altlinux.org> 3.3.99-alt1
 - new version 3.3.99
 
