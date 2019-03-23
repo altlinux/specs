@@ -1,6 +1,6 @@
 %define        pkgname concurrent-ruby
-%define        core_version   1.1.4
-%define        edge_version   0.4.1
+%define        core_version   1.1.5
+%define        edge_version   0.5.0
 
 Name:          ruby-%pkgname
 Version:       %core_version
@@ -121,6 +121,9 @@ Development files for %pkgname-ext gem.
 %ruby_includedir/concurrent-ruby-ext
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.5-alt1
+- Bump to 1.1.5
+
 * Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
 - Bump to 1.1.4;
 - Use Ruby Policy 2.0.

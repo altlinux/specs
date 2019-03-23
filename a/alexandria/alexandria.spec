@@ -1,6 +1,6 @@
 Name:          alexandria
 Version:       0.7.3
-Release:       alt1
+Release:       alt2
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
 Group:         Development/Ruby
@@ -9,8 +9,6 @@ Url:           https://github.com/mvz/alexandria-book-collection-manager
 BuildArch:     noarch
 Packager:      Vitaly Lipatov <lav@altlinux.ru>
 Source:        %name-%version.tar
-
-Requires:      alexandria-book-collection-manager
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: GConf intltool libGConf2-devel
@@ -30,30 +28,31 @@ Alexandria:
  * shows books in different views (standard list or icons list).
 
 
-%package       -n alexandria-book-collection-manager
+%package       -n gem-alexandria-book-collection-manager
 Summary:       HTML, XML, SAX, and Reader parser
 Group:         Development/Other
 BuildArch:     noarch
 
-%description   -n alexandria-book-collection-manager
+%description   -n gem-alexandria-book-collection-manager
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
 
-%package       -n alexandria-book-collection-manager-doc
+%package       -n gem-alexandria-book-collection-manager-doc
 Summary:       Documentation for Alexandria
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n alexandria-book-collection-manager-doc
+%description   -n gem-alexandria-book-collection-manager-doc
 Documentation for Alexandria.
+
 
 %prep
 %setup
 
 %build
-%gem_build --pre=pre_install --mode=lust
+%gem_build --pre=pre_install --mode=lust --use=alexandria-book-collection-manager --alias=alexandria
 
 %install
 %gem_install
@@ -87,15 +86,18 @@ fi
 %_datadir/sounds/%name/
 
 
-%files      -n alexandria-book-collection-manager
+%files      -n gem-alexandria-book-collection-manager
 %ruby_gemspecdir/alexandria-book-collection-manager-%version.gemspec
 %ruby_gemslibdir/alexandria-book-collection-manager-%version/
 
-%files      -n alexandria-book-collection-manager-doc
+%files      -n gem-alexandria-book-collection-manager-doc
 %ruby_gemsdocdir/alexandria-book-collection-manager-%version/
 
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
+- Use setup's dependency detection
+
 * Thu Feb 28 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt1
 - Bump to 0.7.3;
 - Use Ruby Policy 2.0.

@@ -1,7 +1,7 @@
 %define        pkgname ruby-parser
 
 Name:          ruby-parser
-Version:       3.12.0
+Version:       3.13.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby
 License:       MIT
@@ -38,7 +38,7 @@ Documentation files for %{name}.
 %setup
 
 %build
-%gem_build ́--pre=repackage
+%gem_build ́--pre=repackage --use=ruby_parser --alias=parser --join=bin:lib
 
 %install
 %gem_install
@@ -55,6 +55,10 @@ Documentation files for %{name}.
 %ruby_gemsdocdir/ruby_parser-%version
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 3.13.0-alt1
+- Bump to 3.13.0
+- Use setup gem's dependency detection
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 3.12.0-alt1
 - Bump to 3.12.0;
 - Use Ruby Policy 2.0.

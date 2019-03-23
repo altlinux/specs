@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt4
+Release:       alt5
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -56,6 +56,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt5
+- Use setup gem's dependencies detection
+
 * Thu Mar 21 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.0-alt4
 - NMU.
 - Removed injection of parasite dependencies (closes: #36325).

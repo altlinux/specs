@@ -2,7 +2,7 @@
 
 Name:          ruby-dbus
 Version:       0.15.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby D-BUS library
 Group:         Development/Ruby
 License:       LGPLv2.1
@@ -29,7 +29,7 @@ Documentation files for %name.
 %setup -q -n %pkgname-%version
 
 %build
-%gem_build
+%gem_build --use=ruby-dbus --alias=dbus
 
 %install
 %gem_install
@@ -43,6 +43,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt2
+- Use setup gem's dependency detection
+
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
 - Bump to 0.15.0;
 - Use Ruby Policy 2.0.

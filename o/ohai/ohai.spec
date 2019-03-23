@@ -1,19 +1,18 @@
-%define  pkgname ohai
- 
-Name: 	 %pkgname
-Version: 15.0.25
-Release: alt1
- 
-Summary: Ohai profiles your system and emits JSON
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/chef/ohai
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
- 
+%define        pkgname ohai
+
+Name:          %pkgname
+Version:       15.0.30
+Release:       alt1
+Summary:       Ohai profiles your system and emits JSON
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/chef/ohai
+# VCS:         https://github.com/chef/ohai.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
+
 BuildRequires(pre): rpm-build-ruby
 
 %filter_from_requires /wmi-lite/d
@@ -24,42 +23,40 @@ provide these attributes to the chef-client at the start of every
 chef-client run. Ohai is required by the chef-client and must be present
 on a node.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build --join=lib:bin
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
 %doc README*
 %_bindir/%pkgname
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
-%files doc
-%ruby_ri_sitedir/*
- 
+%ruby_gemlibdir
+%ruby_gemspec
+
+%files         doc
+%ruby_gemdocdir
+
 %changelog
+* Mon Mar 25 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.30-alt1
+- Bump to 15.0.30
+- Use Ruby Policy 2.0
+
 * Mon Dec 10 2018 Andrey Cherepanov <cas@altlinux.org> 15.0.25-alt1
 - New version.
 

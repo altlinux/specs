@@ -2,14 +2,15 @@
 
 Name:          %pkgname
 Version:       0.9.20
-Release:       alt2
+Release:       alt4
 Summary:       Ruby LDAP library
 Group:         Development/Ruby
 License:       BSD
 Url:           https://github.com/bearded/ruby-ldap
 # VCS:         https://github.com/bearded/ruby-ldap.git
-Source:        %pkgname-%version.tar
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libldap-devel libssl-devel libsasl2-devel
 
@@ -19,32 +20,52 @@ to some LDAP libraries (e.g. OpenLDAP, UMich LDAP, Netscape SDK,
 ActiveDirectory). The common API for application development is
 described in RFC1823 and is supported by Ruby/LDAP.
 
-%package       doc
-Summary:       Documentation files for %name
-Group:         Documentation
-BuildArch:     noarch
 
-%description doc
+%package       devel
+Summary:       Development files for %gemname gem
+Group:         Development/Ruby
+
+%description   devel
 %summary
 
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+%summary
+
+
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-%gem_build
+%gem_build --use=ruby-ldap --alias=ldap
 
 %install
 %gem_install
 
 %files
+%doc README*
 %ruby_gemspec
-%ruby_gemextdir/*
-%ruby_gemlibdir/*
+%ruby_gemextdir
+%ruby_gemlibdir
+
+%files         devel
+%ruby_includedir/*
 
 %files         doc
-%ruby_gemdocdir/*
+%ruby_gemdocdir
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.20-alt4
+- Use setup gem's dependency detection
+
+* Tue Mar 12 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.20-alt3
+- Added devel subpackage.
+
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.20-alt2
 - Use Ruby Policy 2.0.
 
