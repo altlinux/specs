@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20
+Version: 0.20.1
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -12,8 +12,9 @@ URL: http://www.altlinux.org/Node.JS_Policy
 Source: %name-%version.tar
 Source1: macros.nodejs-tap
 Source2: %pkg.prov.files
-Patch: macros.nodejs-alt.patch
+Patch0: macros.nodejs-alt.patch
 Patch1: nodejs.req-alt.patch
+Patch2: nodejs.req-alt-rpmbuild404.patch
 
 BuildArch: noarch
 Provides: nodejs-packaging = %version
@@ -39,6 +40,7 @@ See %url for detailed %pkg packaging policy.
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p2
 
 %install
 mkdir -p %buildroot/%_rpmmacrosdir/
@@ -72,6 +74,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Sat Mar 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.20.1-alt1
+- bugfix for rpmbuild 4.04
+
 * Fri Mar 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - sync with nodejs-packaging 20-2
 
