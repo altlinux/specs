@@ -1,13 +1,14 @@
 Name: privoxy
-Version: 3.0.26
+Version: 3.0.28
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
+
 License: GPLv2+
 Group: Networking/WWW
 Url: http://www.privoxy.org/
-Packager: Sviatoslav Sviridov <svd@altlinux.ru>
 
+# Source0-url: http://www.privoxy.org/sf-download-mirror/Sources/%version%20%28stable%29/privoxy-%version-stable-src.tar.gz
 Source0: %name-%version.tar
 Source1: %name.chroot.lib
 Source2: %name.chroot.conf
@@ -26,7 +27,7 @@ PreReq: chkconfig, shadow-utils, chrooted, coreutils
 %define ROOT /var/lib/%name
 
 # Automatically added by buildreq on Thu Sep 19 2002
-BuildRequires: docbook-style-dsssl libpcre-devel
+BuildRequires: docbook-style-dsssl libpcre-devel zlib-devel
 
 %description
 Privoxy is a web proxy with advanced filtering capabilities for protecting
@@ -142,6 +143,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Sat Mar 23 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.28-alt1
+- new version 3.0.28 (with rpmrb script) (ALT bug 36353)
+
 * Tue Apr 04 2017 Denis Smirnov <mithraen@altlinux.ru> 3.0.26-alt1
 - 3.0.26
 
