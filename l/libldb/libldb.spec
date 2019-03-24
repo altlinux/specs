@@ -10,7 +10,7 @@
 
 Name: libldb
 Version: 1.4.6
-Release: alt2
+Release: alt3
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -118,7 +118,7 @@ Development files for the Python3 bindings for the LDB library
 		--bundled-libraries=NONE \
 		--builtin-libraries=replace \
 		--with-modulesdir=%_libdir/ldb/modules \
-		--with-samba-modulesdir=%_libdir/samba-dc \
+		--with-samba-modulesdir=%_libdir/samba \
 %if_with python3
                 --extra-python=python3 \
 %endif
@@ -211,6 +211,9 @@ make test
 %endif
 
 %changelog
+* Sun Mar 24 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt3
+- Fix samba-modulesdir from samba-dc to samba libdir
+
 * Tue Mar 19 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt2
 - Merge with stable branches for common build
 
