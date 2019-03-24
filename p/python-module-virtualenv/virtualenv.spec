@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 16.1.0
+Version: 16.4.3
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -14,27 +14,24 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/virtualenv
 
 Source: %name-%version.tar.gz
-
-Patch1: python3-system-sys.path.patch
-Patch2: allow_internal_symlinks.patch
-Patch3: python3-installation-within-the-bare-virtualenv.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-modules-json
-BuildRequires: python-module-mock
-BuildRequires: python-module-tox
-BuildRequires: python-module-coverage
-BuildRequires: python-module-nose
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-timeout
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-timeout
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(nose)
+BuildRequires: python2.7(pip)
+BuildRequires: python2.7(pytest_timeout)
+BuildRequires: python2.7(pytest-xdist)
+BuildRequires: python3(coverage)
+BuildRequires: python3(nose)
+BuildRequires: python3(pip)
+BuildRequires: python3(pytest_timeout)
+BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -81,14 +78,12 @@ in newly created environment by invoking /your/dir/bin/python
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
-%patch3 -p2
+%patch -p1
 
 # to reflect virtualenv_embedded/ updates on virtualenv.py
 # if any file was changed under this directory then it's
 # hash is updated in virtualenv.py and returns 1 otherwise 0
-python bin/rebuild-script.py ||:
+python3 tasks/update_embedded.py || python3 tasks/update_embedded.py
 
 rm -rf ../python3
 cp -a . ../python3
@@ -109,23 +104,26 @@ popd
 %python_install
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-# copy nessecary exec deps
-export PYTHONPATH="$(pwd)"/src
-export TOX_TESTENV_PASSENV='PYTHONPATH'
+# we don't package pytest 4.x yet
+grep -qsF 'pytest >= 4.0.0, <5' setup.cfg || exit 1
+sed -i 's/pytest >= 4.0.0, <5/pytest/g' setup.cfg
 
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
+# another one workaround for pytest 3.x
+grep -rlF 'monkeypatch.chdir(tmp_path)' | \
+xargs sed -i 's/monkeypatch.chdir(tmp_path)/monkeypatch.chdir(str(tmp_path))/g'
 
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/coverage \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 
-pushd ../python3
-export PYTHONPATH="$(pwd)"/src
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+export PIP_NO_INDEX=YES
+export PIP_FIND_LINKS=`pwd`/build/lib/virtualenv_support
+export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc docs/* *.txt *.rst
@@ -144,6 +142,9 @@ popd
 %python3_sitelibdir/__pycache__/virtualenv.*
 
 %changelog
+* Sun Mar 24 2019 Stanislav Levin <slev@altlinux.org> 16.4.3-alt1
+- 16.1.0 -> 16.4.3.
+
 * Thu Nov 01 2018 Stanislav Levin <slev@altlinux.org> 16.1.0-alt1
 - 16.0.0 -> 16.1.0.
 
