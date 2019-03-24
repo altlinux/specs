@@ -23,8 +23,8 @@
 %endif
 
 %global majorversion    10.3
-%global minorversion    5
-%global toolsbuild      10430147
+%global minorversion    10
+%global toolsbuild      12406962
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -291,6 +291,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.10-alt1
+- 10.3.10
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.5-alt1
 - 10.3.5
 
