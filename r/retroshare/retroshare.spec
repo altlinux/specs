@@ -1,6 +1,6 @@
 Name: retroshare
-Version: 0.6.4
-Release: alt5
+Version: 0.6.5
+Release: alt1
 
 Summary: Secure communication with friends
 
@@ -13,8 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/RetroShare/RetroShare/archive/v%version.tar.gz
 Source: %name-%version.tar
 # backported upstream patch from master
-Patch100:retroshare-0.6.4-qt-5.11.patch
-patch101:retroshare-0.6.4-gcc8.patch
+#Patch100:retroshare-0.6.4-qt-5.11.patch
+#patch101:retroshare-0.6.4-gcc8.patch
 
 # manually removed: ruby ruby-stdlibs selinux-policy i586-libxcb  python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
 # Automatically added by buildreq on Tue Jan 03 2017
@@ -78,15 +78,15 @@ This package provides a plugin for RetroShare, a secured Friend-to-Friend commun
 
 %prep
 %setup
-%patch100 -p1
-%patch101 -p1
 
 # https://svnweb.freebsd.org/ports?view=revision&revision=468858
 # fix build with ffmpeg 4.0 (replace CODEC_, skip CODEC_ID)
 %__subst "s| \(CODEC_[^I]\)| AV_\1|g" plugins/VOIP/gui/VideoProcessor.cpp
 
 %build
-qmake-qt5 "CONFIG-=debug" "CONFIG+=release" "CONFIG+=retroshare_plugins" PREFIX=%prefix LIB_DIR=%_libdir RetroShare.pro
+qmake-qt5 "CONFIG-=debug" "CONFIG+=release" "CONFIG+=no_direct_chat" "CONFIG+=retroshare_plugins" PREFIX=%prefix LIB_DIR=%_libdir RetroShare.pro
+%make_build || :
+%__subst "s|	AudioStats.h|	gui/AudioStats.h|" plugins/VOIP/Makefile
 %make_build
 
 %install
@@ -107,13 +107,18 @@ desktop-file-validate %buildroot%_desktopdir/retroshare.desktop
 %_bindir/%name-cli
 %_bindir/%name-nogui
 
+%if_with plugins
 %files voip-plugin
 %_libdir/retroshare/extensions6/libVOIP.so*
 
 %files feedreader-plugin
 %_libdir/retroshare/extensions6/libFeedReader.so*
+%endif
 
 %changelog
+* Mon Mar 04 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6.5-alt1
+- new version 0.6.5 (with rpmrb script)
+
 * Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt5
 - fix build with gcc8
 
