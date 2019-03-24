@@ -15,7 +15,6 @@
 %def_with ssl
 %def_with ssl_zlib
 %def_with java
-%def_disable gcj
 %def_enable sctp
 %def_disable tsp
 %def_disable elib_malloc
@@ -52,9 +51,9 @@
 %define ver 21
 Name: erlang
 Epoch: 1
-%define subver 2.4
+%define subver 3.2
 Version: %ver.%subver
-Release: alt3
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -97,8 +96,6 @@ Provides: erlang_mod(hipe_tagscheme)
 Provides: erlang_mod(hipe_x86_main)
 %endif
 
-%set_autoconf_version 2.5
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-erlang
 BuildRequires(pre): rpm-build-erlang
@@ -111,12 +108,7 @@ BuildRequires: libsystemd-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
 %{?_enable_docs:BuildRequires: xsltproc %_bindir/fop %{?_enable_pdf_opt:%_bindir/pdfopt}}
 %if_with java
-%if_enabled gcj
-BuildRequires: jdkgcj
-%else
-BuildRequires: java-openjdk
 BuildRequires: java-devel-default
-%endif
 %endif
 %{?_with_ssl:BuildRequires: libssl-devel openssl libkrb5-devel}
 %{?_with_gmp:BuildRequires: libgmp-devel}
@@ -1247,6 +1239,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.3.2-alt1
+- new version
+
 * Tue Feb 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:21.2.4-alt3
 - Fixed build on other architectures without hipe support.
 
@@ -1260,16 +1255,16 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 * Thu Oct 11 2018 Denis Medvedev <nbr@altlinux.org> 1:21.0.9-alt1
 - new version
 
-* Sat Sep 22 2018 Anton Midyukov <antohami@altlinux.org> 1:20.1.3-alt4%ubt
+* Sat Sep 22 2018 Anton Midyukov <antohami@altlinux.org> 1:20.1.3-alt4
 - Rebuilt with libwxGTK3.0
 
-* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1:20.1.3-alt3%ubt.1
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1:20.1.3-alt3.1
 - NMU: rebuild with new openssl.
 
-* Mon Aug 13 2018 Denis Medvedev <nbr@altlinux.org>  1:20.1.3-alt4%ubt
+* Mon Aug 13 2018 Denis Medvedev <nbr@altlinux.org>  1:20.1.3-alt4
 - rebuilding with wxGTK rebuild task.
 
-* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:20.1.3-alt3%ubt
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:20.1.3-alt3
 - Rebuilt with %%ubt macro support, disabled parallel docs build.
 
 * Fri May 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:20.1.3-alt2

@@ -8,7 +8,7 @@
 %add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
 
 Name: rabbitmq-server
-Version: 3.7.10
+Version: 3.7.13
 Release: alt1
 Summary: The RabbitMQ server
 License: MPLv1.1
@@ -19,7 +19,6 @@ Source1: rabbitmq-server.init
 Source2: rabbitmq-script-wrapper
 Source3: rabbitmq-server.logrotate
 Source4: rabbitmq-env.conf
-Source5: include.mk
 Source6: rabbitmq-server.service
 Source7: rabbitmq-server.tmpfiles
 
@@ -28,12 +27,16 @@ Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
 Patch3: rabbitmq-server-0003-Allow-guest-login-from-non-loopback-connections.patch
 Patch4: rabbitmq-server-0004-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
+Patch102: rabbitmq-common-0002-force-python3.patch
+Patch201: rabbitmq-server-release-0001-Don-t-use-templates.patch
+Patch301: rabbitmq-amqp1.0-common-0001-force-python3.patch
+Patch401: rabbitmq-aws-0001-Rename-some-types-to-make-it-build-on-21.3.patch
 
 URL: http://www.rabbitmq.com/
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel elixir
-BuildRequires: python-module-simplejson python-modules-xml
+BuildRequires: python3-module-simplejson
 BuildRequires: xmlto zip unzip netcat rsync
 Requires: erlang  >= 1:20.3.0
 Requires: tsung   >= 1.7.0
@@ -64,6 +67,16 @@ popd
 
 pushd deps/rabbit_common
 %patch101 -p1
+%patch102 -p1
+popd
+
+%patch201 -p1
+pushd deps/amqp10_common
+%patch301 -p1
+popd
+
+pushd deps/rabbitmq_aws
+%patch401 -p1
 popd
 
 # We have to remove it until common_test subpackage lands RHOS
@@ -75,7 +88,6 @@ rm -f \
 %build
 sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
 sed -i 's|@localstatedir@|%_localstatedir|g' %SOURCE2
-#sed -i 's|@RABBITMQ_DIR@|%_erlanglibdir/rabbitmq_server-%version|g' %SOURCE5
 
 export LANG=en_US.UTF-8
 export VERSION=%version
@@ -103,7 +115,6 @@ install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-plugins
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
 install -p -D -m 0644 deps/rabbit/docs/rabbitmq.config.example %buildroot%_sysconfdir/%oname/rabbitmq.config
-#install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
 install -p -D -m 0644 %SOURCE6 %buildroot%_unitdir/%oname.service
 install -p -D -m 0644 %SOURCE7 %buildroot%_tmpfilesdir/%oname.conf
 install -d %buildroot%_runtimedir/%oname
@@ -167,10 +178,13 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 #%_datadir/%name
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 3.7.13-alt1
+- 3.7.13
+
 * Fri Jan 25 2019 Alexey Shabalin <shaba@altlinux.org> 3.7.10-alt1
 - 3.7.10
 
-* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.16-alt1%ubt
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.16-alt1
 - Updated to upstream version 3.6.16.
 
 * Mon Nov 27 2017 Denis Medvedev <nbr@altlinux.org> 3.6.14-alt4
