@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 3.7.4
-Release: alt1
+Release: alt2
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 
 Group: Development/Python
@@ -24,6 +24,8 @@ BuildRequires: python-test
 BuildRequires: python2.7(pytest_flake8)
 BuildRequires: python3(tox)
 %endif
+
+%py_requires backports
 
 %description
 The ancient ConfigParser module available in the standard library 2.x has seen
@@ -45,6 +47,9 @@ rm -f pyproject.toml
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# backports/__init__.py* are packaged in backports
+rm %buildroot%python_sitelibdir/backports/__init__.py*
+
 %check
 sed -i '/\[testenv\]/a whitelist_externals =\
     \/bin\/cp\
@@ -61,12 +66,15 @@ export TOXENV=py%{python_version_nodots python}
 tox.py3 --sitepackages -p auto -o -vr
 
 %files
-%python_sitelibdir/backports/
+%python_sitelibdir/backports/configparser/
 %python_sitelibdir/configparser-%version-py%_python_version.egg-info/
 %python_sitelibdir/configparser.py
 %python_sitelibdir/configparser.py[co]
 
 %changelog
+* Sun Mar 24 2019 Stanislav Levin <slev@altlinux.org> 3.7.4-alt2
+- Fixed intersections with backports (closes: #36365).
+
 * Sat Mar 23 2019 Stanislav Levin <slev@altlinux.org> 3.7.4-alt1
 - 3.7.3 -> 3.7.4.
 
