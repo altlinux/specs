@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define oversion 1.0
+
 Name:		sway
-Version:	0.15.2
+Version:	1.0
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -10,15 +13,30 @@ Group:		Graphical desktop/Other
 
 # https://github.com/swaywm/sway
 # git://git.altlinux.org/gears/s/sway.git
-Source:		%name-%version-%release.tar
+Source0:	%name-%version-%release.tar
+Source2:	startsway
 
-PreReq:		/etc/tcb
-BuildRequires(pre): rpm-macros-cmake
+Patch00:	sway-config.patch
+
 BuildPreReq: libwlc-devel >= 0.0.10
 BuildPreReq: libdbus-devel
-# Automatically added by buildreq on Tue Feb 28 2017
-# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl fontconfig glib2-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libinput-devel libjson-c libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcbutil-image libxkbcommon-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml wayland-devel xml-common xsltproc
-BuildRequires: asciidoc-a2x cmake libcap-devel libgdk-pixbuf-devel libjson-c-devel libpam-devel libpango-devel libpcre-devel libwayland-cursor-devel libwayland-egl-devel libwlc0-devel time
+
+BuildRequires: asciidoc-a2x
+BuildRequires: libcap-devel
+BuildRequires: libevdev-devel
+BuildRequires: libgdk-pixbuf-devel
+BuildRequires: libjson-c-devel
+BuildRequires: libpam-devel
+BuildRequires: libpango-devel
+BuildRequires: libpcre-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libwlc0-devel
+BuildRequires: libwlroots-devel
+BuildRequires: meson
+BuildRequires: time
+
+Requires:	/etc/tcb
 Requires:	%name-data
 Requires(post):	/sbin/setcap
 
@@ -35,25 +53,33 @@ supports most of i3's features, and a few extras.
 %description
 %common_descr
 
-%description	data
+%description data
 %common_descr
 
 This package contains data files.
 
 %prep
 %setup -n %name-%version-%release
+%patch00 -p1
+
+sed -i -e "s/'json-c', version: '>=0.13'/'json-c', version: '>=0.12'/" meson.build
 
 %build
-%cmake \
-	-DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-	-DPCRE_INCLUDE_DIR=%_includedir/pcre \
+%meson \
+	-Dsway-version="%oversion" \
+	-Dwerror=false \
 	#
-%cmake_build VERBOSE=1
+%meson_build
 
 %install
-%cmakeinstall_std
-install -pm2640 -D alt/pam %buildroot%_sysconfdir/pam.d/swaylock
-install -pm0755 -D alt/startsway %buildroot%_bindir/
+%meson_install
+install -pm0755 -D %SOURCE2 %buildroot%_bindir/
+
+rm -rf -- \
+	%buildroot/%_datadir/bash-completion \
+	%buildroot/%_datadir/fish \
+	%buildroot/%_datadir/zsh \
+	#
 
 %post
 /sbin/setcap cap_sys_ptrace,cap_sys_tty_config=eip %_bindir/%name
@@ -61,22 +87,19 @@ install -pm0755 -D alt/startsway %buildroot%_bindir/
 %files
 %doc LICENSE
 %doc README.md
-%doc alt/README.ALT
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/security.d
-%attr(0640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/swaylock
 %config(noreplace) %_sysconfdir/%name/config
 %config(noreplace) %_sysconfdir/%name/security.d/00-defaults
 %_bindir/sway
-%attr(2711,root,chkpwd) %_bindir/swaylock
 %_bindir/startsway
 %_bindir/swaybar
 %_bindir/swaybg
-%_bindir/swaygrab
 %_bindir/swaymsg
-%_man1dir/*
-%_man5dir/*
-%_man7dir/*
+%_bindir/swaynag
+#%%_man1dir/*
+#%%_man5dir/*
+#%%_man7dir/*
 %_datadir/wayland-sessions/sway.desktop
 
 %files data
@@ -84,6 +107,12 @@ install -pm0755 -D alt/startsway %buildroot%_bindir/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sun Mar 24 2019 Alexey Gladkov <legion@altlinux.ru> 1.0-alt1
+- New version (1.0)
+
+* Thu Jan 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt0.beta.2.0.75.g4a3ada30.1
+- Updated to 1.0-beta.2-75-g4a3ada30.
+
 * Mon Apr 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.15.2-alt1
 - 0.15.2
 - added startsway script
@@ -120,4 +149,3 @@ install -pm0755 -D alt/startsway %buildroot%_bindir/
 
 * Thu Sep 22 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9-alt1
 - Initial build
-
