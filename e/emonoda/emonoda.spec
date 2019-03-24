@@ -1,7 +1,7 @@
 %define modulename emonoda
 
 Name: emonoda
-Version: 2.1.23
+Version: 2.1.25
 Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
@@ -60,6 +60,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sun Mar 24 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt1
+- new version 2.1.25 (with rpmrb script)
+
 * Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.23-alt1
 - new version 2.1.23 (with rpmrb script)
 
