@@ -1,7 +1,5 @@
-# TODO: generate conflicts list for boost
-
 Name: remove-obsoleted-packages
-Version: 0.9.1
+Version: 1.0
 Release: alt1
 
 Summary: Remove obsoleted packages
@@ -15,13 +13,22 @@ BuildArch: noarch
 
 Conflicts: libzip
 
+Conflicts: gcc4.3 gcc4.4 cpp4.3 cpp4.4 gcc4.8 cpp4.8 gcc6 cpp6 cpp7 gcc7-fortran gcc7
+Conflicts: clang6.0
+
+Conflicts: libqt3 qt4-common
+
 # Note: Obsoletes using does effect Provides too.
 Conflicts: hald libhal hal-info hal-laptop hal-cups-utils DeviceKit
 Conflicts: arts libarts libarts-qtmcop libarts-devel
 Conflicts: xpdf xpdf-common xpdf-reader
+
+Conflicts: libwpd libwpd9
+
 Conflicts: libmysqlclient12 libmysqlclient15 libmysqlclient16 libmysqlclient17
 
-Conflicts: libicu42 libicu44 libicu46 libicu4.8 libicu50
+Conflicts: libicu42 libicu44 libicu46 libicu4.8 libicu50 libicu56
+Conflicts: libicu60 libicu61 libicu62
 
 Conflicts: libpoppler2 libpoppler3 libpoppler4 libpoppler5 libpoppler6 libpoppler7
 Conflicts: libpoppler08 libpoppler8 libpoppler12 libpoppler13 libpoppler19
@@ -31,8 +38,13 @@ Conflicts: libpoppler36 libpoppler37 libpoppler38 libpoppler39 libpoppler40
 Conflicts: libpoppler41 libpoppler42 libpoppler43 libpoppler44 libpoppler45
 Conflicts: libpoppler46 libpoppler47 libpoppler48 libpoppler50 libpoppler51
 Conflicts: libpoppler52 libpoppler53 libpoppler54 libpoppler56 libpoppler57
-Conflicts: libpoppler58
-# libpoppler59 is latest at 19.04.2016
+Conflicts: libpoppler58 libpoppler59 libpoppler60 libpoppler61 libpoppler62
+Conflicts: libpoppler63 libpoppler64 libpoppler65 libpoppler66 libpoppler67
+Conflicts: libpoppler68 libpoppler69 libpoppler70 libpoppler71 libpoppler72
+Conflicts: libpoppler73 libpoppler74 libpoppler75 libpoppler76 libpoppler77
+Conflicts: libpoppler78 libpoppler79 libpoppler80 libpoppler81 libpoppler82
+Conflicts: libpoppler83 libpoppler84
+# libpoppler85 is latest at 24.03.2019
 
 Conflicts: libv8-3.15 libv8-3.18 libv8-3.19 libv8-3.21 libv8-3.22 libv8-3.23 libv8-3.24
 Conflicts: libv8-4.1 libv8-4.2 libv8-4.3 libv8-4.4
@@ -43,9 +55,13 @@ Conflicts: libboost_python%{1} \
 Conflicts: libboost_python3-%{1} \
 Conflicts: libboost_system%{1} \
 Conflicts: libboost_serialization%{1} \
+Conflicts: boost_serialization%{1} \
 Conflicts: libboost_thread%{1} \
 Conflicts: libboost_test%{1} \
 Conflicts: libboost_signals%{1} \
+Conflicts: libboost_container%{1} \
+Conflicts: libboost_context%{1} \
+Conflicts: libboost_stacktrace%{1} \
 Conflicts: libboost_random%{1} \
 Conflicts: libboost_iostreams%{1} \
 Conflicts: libboost_program_options%{1} \
@@ -53,6 +69,7 @@ Conflicts: libboost_date_time%{1} \
 Conflicts: libboost_graph1%{1} \
 %nil
 
+%ConflictBoost 1.34.1
 %ConflictBoost 1.36.0
 %ConflictBoost 1.39.0
 %ConflictBoost 1.40.0
@@ -70,19 +87,20 @@ Conflicts: libboost_graph1%{1} \
 %ConflictBoost 1.52.0
 %ConflictBoost 1.53.0
 %ConflictBoost 1.57.0
+%ConflictBoost 1.58.0
+%ConflictBoost 1.63.0
+%ConflictBoost 1.65.0
+%ConflictBoost 1.66.0
 
-# needs by lilo
-# Conflicts: mkinitrd
-
-# In deep future:
-# libpng12
+Conflicts: libpng12
+Conflicts: libpng15
 
 # there are 7colors, soundtracker, fvwm-gtk, xtetty using imlib
 Conflicts: imlib
 
 Conflicts: glib gtk+
 
-Conflicts:  gnome-libs
+Conflicts: gnome-libs
 
 %description
 This package will remove obsoleted packages from your system
@@ -91,6 +109,9 @@ during install.
 %files
 
 %changelog
+* Sun Mar 24 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- major update (qt3, qt4, old gcc, old boost)
+
 * Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - update conflicts
 - conflicts gtk+, glib
