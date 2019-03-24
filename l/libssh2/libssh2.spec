@@ -1,5 +1,5 @@
 Name: libssh2
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: A library implementing the SSH2 protocol
@@ -8,6 +8,8 @@ License: BSD
 Url: http://www.libssh2.org/
 # Git-VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
+Patch100: Fixed-misapplied.patch
+
 BuildRequires: openssl-devel zlib-devel man
 
 %description
@@ -37,8 +39,11 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch100 -p1
 
 %build
+# set version
+./maketgz %version only
 #autoreconf
 ./buildconf
 %configure --disable-static --enable-shared
@@ -64,6 +69,28 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
+- 1.8.1
+- Fixes for the following security vulnerabilities:
+  + Fixed possible integer overflow when reading a specially crafted packet
+    (CVE-2019-3855)
+  + Fixed possible integer overflow in userauth_keyboard_interactive with a
+    number of extremely long prompt strings (CVE-2019-3863)
+  + Fixed possible integer overflow if the server sent an extremely large
+    number of keyboard prompts (CVE-2019-3856)
+  + Fixed possible out of bounds read when processing a specially crafted
+    packet (CVE-2019-3861)
+  + Fixed possible integer overflow when receiving a specially crafted exit
+    signal message channel packet (CVE-2019-3857)
+  + Fixed possible out of bounds read when receiving a specially crafted exit
+    status message channel packet (CVE-2019-3862)
+  + Fixed possible zero byte allocation when reading a specially crafted SFTP
+    packet (CVE-2019-3858)
+  + Fixed possible out of bounds reads when processing specially crafted SFTP
+    packets (CVE-2019-3860)
+  + Fixed possible out of bounds reads in _libssh2_packet_require(v)
+    (CVE-2019-3859)
+
 * Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - 1.8.0
 - build with openssl-1.1
