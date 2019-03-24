@@ -1,7 +1,6 @@
 
-
 %global import_path github.com/kubernetes/kubernetes
-%global commit 721bfa751924da8d1680787490c54b9179b1fed0
+%global commit c27b913fddd1a6c480c229191a087698aa92f0b1
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name: kubernetes
-Version: 1.13.3
+Version: 1.13.4
 Release: alt1
 Summary: Container cluster management
 
@@ -306,6 +305,9 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_datadir/bash-completion/completions/kubectl
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.4-alt1
+- 1.13.4
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.3-alt1
 - 1.13.3
 
