@@ -3,7 +3,7 @@
 
 Name: tcl
 Version: 8.6.8
-Release: alt1
+Release: alt2
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -15,6 +15,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
+BuildRequires: zlib-devel
 
 Requires: lib%name = %version-%release
 
@@ -126,6 +127,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Mon Mar 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt2
+- built with system zlib (ALT#36379)
+
 * Tue Feb 13 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt1
 - 8.6.8 released
 - applied patch from Debian to package additional manpages

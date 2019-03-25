@@ -3,7 +3,7 @@
 
 Name: sK1
 Version: 0.9.3
-Release: alt1.qa1
+Release: alt2
 
 Summary: Vector graphics editor
 
@@ -40,10 +40,7 @@ First of all sK1 is oriented for PostScript processing.
 %setup -n %name-%version
 #%patch
 
-%ifarch x86_64
-LIBSUFF=64
-%endif
-sed -i "s|@64@|$LIBSUFF|" src/script/sk1 setup.py
+sed -i "s|@64@|%_libsuff|" src/script/sk1 setup.py
 
 %build
 %python_build
@@ -62,15 +59,19 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # which is normally a Windows image thumbnail database. 
 # Such databases are generally useless in packages and were usually 
 # accidentally included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
 %files
 %_bindir/sk1
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_libdir/sk1*
 %_pixmapsdir/*
 
 %changelog
+* Mon Mar 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3-alt2
+- spec: generalized libsuff substitution
+- Packaged all desktop files
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3-alt1.qa1
 - Rebuilt against Tcl/Tk 8.6
 
