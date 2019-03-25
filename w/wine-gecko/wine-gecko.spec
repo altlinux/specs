@@ -1,13 +1,10 @@
+# TODO: build for sources like in Fedora
+
 %define geckodir %_datadir/wine/gecko
-#ifarch x86_64
-#define curarch x86_64
-#else
-%define curarch x86
-#endif
 
 Name: wine-gecko
 Version: 2.47
-Release: alt1
+Release: alt2
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
 
@@ -18,8 +15,9 @@ Url: http://wiki.winehq.org/Gecko
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source0: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86.msi
-#Source1: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86_64.msi
+Source1: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86_64.msi
 
+# TODO: it is impossible build arch packages with files in noarch
 BuildArch: noarch
 #ExclusiveArch: %{ix86} x86_64
 
@@ -27,23 +25,24 @@ BuildArch: noarch
 Wine implements its own version of Internet Explorer. The implementation
 is based on a custom version of Mozilla's Gecko Layout Engine.
 When your application tries to display a web page, it loads Wine's
-custom Gecko from the file wine_gecko-%version-%curarch.msi
+custom Gecko from the file wine_gecko-%version-x86*.msi
 Wine looks for this file first in /usr/share/wine/gecko/
 
 %install
 mkdir -p %buildroot%geckodir/
-#ifarch x86_64
-#install -m 644 %SOURCE1 %buildroot%geckodir
-#else
+install -m 644 %SOURCE1 %buildroot%geckodir
 install -m 644 %SOURCE0 %buildroot%geckodir
-#endif
 
 %files
 %dir %_datadir/wine/
 %dir %geckodir/
-%geckodir/wine_gecko-%version-%curarch.msi
+%geckodir/wine_gecko-%version-x86.msi
+%geckodir/wine_gecko-%version-x86_64.msi
 
 %changelog
+* Sun Mar 24 2019 Vitaly Lipatov <lav@altlinux.ru> 2.47-alt2
+- pack wine_gecko x86_64 too
+
 * Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 2.47-alt1
 - new version 2.47 (use with wine since 1.9.13)
 
