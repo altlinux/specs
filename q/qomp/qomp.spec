@@ -2,7 +2,7 @@
 
 Name: qomp
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Quick(Qt) Online Music Player 
 License: GPLv2
@@ -24,8 +24,6 @@ BuildRequires: qt5-base-devel
 BuildRequires: libcue-devel
 BuildRequires: libtag-devel 
 BuildRequires: cmake
-
-Requires: gstreamer
 
 %description
 Qomp's main features:
@@ -60,6 +58,9 @@ Qomp's main features:
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Mon Mar 25 2019 Alexander Makeenkov <amakeenk@altlinux.org> 1.4-alt2
+- Fixed requires (ALT #36347)
+
 * Fri Nov 16 2018 Alexander Makeenkov <amakeenk@altlinux.org> 1.4-alt1
 - Initial build for ALT
 
