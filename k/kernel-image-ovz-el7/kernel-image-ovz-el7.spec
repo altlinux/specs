@@ -5,11 +5,13 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-%define orelease 957.vz7.82.3
+#     rh7-3.10.0-957.5.1.vz7.84.2
+%define orelease 957.5.1.vz7.84.2
 
 Name: kernel-image-%flavour
 Version: 3.10.0
 Release: alt1.%orelease
+Epoch: 1
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -296,11 +298,7 @@ cd rh7-%version-%orelease
 export ARCH=%base_arch
 
 cp -vf \
-%ifarch %ix86
-	%flavour.i686.config \
-%else
-	%flavour.%_target_cpu.config \
-%endif
+	.gear/%flavour.%_target_cpu.config \
 	.config
 
 scripts/config \
@@ -576,6 +574,9 @@ fgrep -q ' Power down.' boot.log || ( cat boot.log && false )
 
 
 %changelog
+* Mon Mar 25 2019 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt1.957.5.1.vz7.84.2
+- Build 3.10.0-alt1.957.5.1.vz7.84.2
+
 * Tue Mar 19 2019 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1.957.vz7.82.3
 - Build 3.10.0-alt1.957.vz7.82.3
 
