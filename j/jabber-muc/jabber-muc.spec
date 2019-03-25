@@ -1,11 +1,11 @@
 %define _libexecdir /usr/libexec
 %define realname mu-conference
 %define username _muc
-%define revision r51
+%define revision %nil
 
 Name: jabber-muc
-Version: 0.8
-Release: alt0.3.%revision.qa2
+Version: 0.8.81
+Release: alt0.1
 
 Summary: MU-Conference service for Jabber (using JCR)
 Group: System/Servers
@@ -20,6 +20,8 @@ Source3: %name.adapter
 Patch1: mu-conference-0.7.0-alt-config_room_defaults.patch
 Patch2: mu-conference-0.7.0-alt-opt_max_num.patch
 Patch3: mu-conference-0.7-ru-hack.patch
+Patch4: mu-conference-0.8.81-sha1_64bit.patch
+Patch5: mu-conference-0.8-cflags-hardering.patch
 
 BuildPreReq: jabber-common
 # Automatically added by buildreq on Thu May 10 2007
@@ -36,11 +38,16 @@ Jabber MultiUser Conference service (MUC).
 %setup -q -n %realname
 %patch1 -p1
 %patch2 -p1
+%ifarch x86_64
+%patch4 -p1
+%endif
+%patch5 -p1
 
 #enable this for russian transcription of room's config dialog
 #patch3 -p1
 
 %build
+CFLAGS="$RPM_OPT_FLAGS" \
 %make
 
 %install 
@@ -82,6 +89,13 @@ install -pD -m0755 %SOURCE3 %buildroot%_jabber_component_dir/%name
 %_jabber_component_dir/*
 
 %changelog
+* Mon Mar 25 2019 L.A. Kostis <lakostis@altlinux.ru> 0.8.81-alt0.1
+- Updated to 0.8.81 (as latest source avilable).
+- Added patch from Gentoo:
+  + mu-conference-0.8.81-sha1_64bit.patch (fix sha1 on x86_64).
+- Added patch from Debian:
+  + mu-conference-0.8-cflags-hardering.patch (fix CFLAGS).
+
 * Fri Mar 22 2019 L.A. Kostis <lakostis@altlinux.ru> 0.8-alt0.3.r51.qa2
 - Rebuild with libidn1.
 
