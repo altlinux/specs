@@ -1,6 +1,6 @@
 Name: Kvantum
-Version: 0.10.9
-Release: alt3
+Version: 0.11.0
+Release: alt1
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
 
 License: GPLv3
@@ -44,13 +44,10 @@ This package contains the data needed Kvantum.
 %setup
 
 %build
-mkdir build && cd build
-cmake ..
-%make -j1
+%cmake
 
 %install
-cd build
-%makeinstall_std
+%cmakeinstall_std
 
 # desktop-file-validate doesn't recognize LXQt
 %__subst "s|LXQt|X-LXQt|" %buildroot%_desktopdir/kvantummanager.desktop
@@ -65,7 +62,7 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_bindir/kvantumpreview
 %_qt5_plugindir/styles/libkvantum.so
 
-%files data -f build/%name.lang
+%files data -f %name.lang
 %_datadir/Kvantum
 %_desktopdir/kvantummanager.desktop
 %dir %_datadir/color-schemes
@@ -86,6 +83,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/kvantummanager/translations
 
 %changelog
+* Mon Mar 25 2019 Leontiy Volodin <lvol@altlinux.org> 0.11.0-alt1
+- New release 0.11.0
+
 * Wed Feb 06 2019 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt3
 - 0.10.9 (final release)
 
