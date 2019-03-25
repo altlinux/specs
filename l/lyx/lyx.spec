@@ -1,6 +1,6 @@
 Name: lyx
-Version: 2.2.3
-Release: alt1.1.1
+Version: 2.3.1
+Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 License: GPL
@@ -17,14 +17,13 @@ Source5: lyxcat
 
 Patch2: lyx-2.1.2-xdg_open.patch
 
-BuildPreReq: desktop-file-utils
+BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python-devel bc
 BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel
-BuildRequires: libqt4-devel >= 4.3
-BuildRequires: libenchant-devel libhunspell-devel
+BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-svg-devel
+BuildRequires: zlib-devel libenchant-devel libhunspell-devel libmythes-devel
 
 Requires: python >= 2.4 
-Requires: texlive-latex-recommended
 
 Provides: lyx-common lyx-qt lyx-latex-beamer
 Obsoletes: lyx-common lyx-qt lyx-latex-beamer
@@ -60,18 +59,22 @@ Virtual package that install required set of tex packages for LyX.
 
 %prep
 %setup
+find 3rdparty -not -type d -not -name Makefile.in -delete
 %patch2 -p1
 
 %build
+%autoreconf
 %configure \
 	--without-included-boost \
 	--with-enchant \
 	--with-hunspell \
+	--enable-qt5 \
 	#
+
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %name
 
 install -d -m 755 %buildroot%_desktopdir
@@ -99,6 +102,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Qt \
 	%buildroot%_desktopdir/lyx.desktop
 
+rm %buildroot%_datadir/icons/hicolor/scalable/apps/lyx.svg
+rm %buildroot%_datadir/%name/scripts/prefTest.pl.in
+
+%define _unpackaged_files_terminate_build 1
+
 %post
 # configure Lyx in new way
 cd %_datadir/%name
@@ -118,6 +126,12 @@ python configure.py
 %files -n lyx-tex
 
 %changelog
+* Mon Mar 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.3.1-alt1
+- Updated to 2.3.1 (ALT#36303).
+- Rebuilt with qt5 instead of qt4.
+- Built with system libmythes.
+- Removed R: texlive-latex-recommended from the main package (ALT#34631).
+
 * Wed Oct 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:2.2.3-alt1.1.1
 - rebuilt with hunspell-1.6.2
 
