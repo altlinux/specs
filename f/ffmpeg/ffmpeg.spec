@@ -89,8 +89,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.1.1
-Release:	alt2
+Version:	4.1.2
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -743,6 +743,9 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Mar 25 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.2-alt1
+- 4.1.2
+
 * Tue Feb 26 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.1-alt2
 - added provides and obsoletes for avplay and avprobe packages (closes: #36109)
 
