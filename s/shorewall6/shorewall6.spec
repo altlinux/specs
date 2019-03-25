@@ -2,7 +2,7 @@
 %set_compress_method skip
 
 Name: shorewall6
-Version: 5.2.2
+Version: 5.2.3.2
 Release: alt1
 Summary: Shoreline Firewall 6 is an ip6tables-based firewall for Linux systems.
 License: GPLv2
@@ -67,6 +67,9 @@ touch %buildroot%_sysconfdir/%name/notrack
 %_man8dir/*
 
 %changelog
+* Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.3.2-alt1
+- 5.2.3.2
+
 * Thu Feb 07 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
 - 5.2.2
 
