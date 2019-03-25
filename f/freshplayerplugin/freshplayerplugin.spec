@@ -1,8 +1,8 @@
 %define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.9
-Release: alt4
+Version: 0.3.10
+Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -55,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Mon Mar 25 2019 Sergey V Turchin <zerg@altlinux.org> 0.3.10-alt1
+- new version
+
 * Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt4
 - rebuild with new icu
 
@@ -67,12 +70,18 @@ make -C BUILD check
 * Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt2
 - Add upstream fix against new ffmpeg.
 
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt0.M80P.1
+- Build for M80P.
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt1
 - Updated to 0.3.9 (ALT#34740).
 
 * Wed Jun 28 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.7-alt1
 - Updated to 0.3.7.
 - Rebuilt with ffmpeg.
+
+* Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 0.3.6-alt0.M80P.1
+- build for M80P
 
 * Wed Oct 26 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1
 - Updated to 0.3.6 (ALT #32668).
