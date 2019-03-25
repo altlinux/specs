@@ -1,6 +1,6 @@
 Name: findsym
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Search through all your shared libraries for a specific symbol
 Group: Development/Other
@@ -32,6 +32,7 @@ what library you should be linking with.
 
 %install
 install -pD -m755 %name %buildroot%_bindir/%name
+install -pD -m755 %name-remote %buildroot%_bindir/%name-remote
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
@@ -39,6 +40,9 @@ install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Mon Mar 25 2019 Vitaly Chikunov <vt@altlinux.org> 1.2-alt2
+- Add experimental findsym-remote tool.
+
 * Sun Aug 13 2006 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1
 - Cleaned up new shell implementation.
 - Implemented -C/--demangle option.
