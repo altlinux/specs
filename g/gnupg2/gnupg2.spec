@@ -3,8 +3,8 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.10
-Release: alt4
+Version: 2.2.14
+Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -143,6 +143,8 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %check
 %make_build -k check
 
+%define _unpackaged_files_terminate_build 1
+
 %files -f %name.lang
 %config %_sysconfdir/profile.d/gnupg-agent.sh
 %_bindir/*
@@ -160,6 +162,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.14-alt1
+- Freshed up to version 2.2.14.
+
 * Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt4
 - Now supports S/MIME encryption/decryption with GOST-2001.
 - Conflicts with gnupg-pkcs11-scd <= 0.9.2-alt5 because that

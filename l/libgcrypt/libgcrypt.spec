@@ -6,8 +6,8 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.8.3
-Release: alt4
+Version: 1.8.4
+Release: alt1
 
 %define soname %{name}%{soversion}
 
@@ -133,6 +133,8 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %make check
 %endif
 
+%define _unpackaged_files_terminate_build 1
+
 %files -n gcrypt-utils
 %_bindir/dumpsexp
 %_bindir/hmac256
@@ -162,6 +164,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.4-alt1
+- Freshed up to version 1.8.4.
+
 * Tue Dec 18 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt4
 - Flip the UKM buffer relatively to its MPI value.
 - Set "1.2.643.2.2.31.1" S-Box for KEK (CEK wrapping/unwrapping).
