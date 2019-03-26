@@ -17,8 +17,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.10.0
-Release: alt1%ubt
+Version: 6.12.0
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -30,7 +30,7 @@ Packager: Maxim Ivanov <redbaron@altlinux.org>
 Source: %name-%version.tar.gz
 Source1: mlt++-config.h
 # FC
-Patch1: Revert-Prefer-qimage-over-pixbuf.patch
+Patch1: mlt-null-pointer-crash.patch
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
 # Debian
@@ -38,22 +38,25 @@ Patch20: 01-changed-preset-path.diff
 # ALT
 Patch101: alt-configure-mmx.patch
 Patch102: alt-no-version-script.patch
+Patch103: alt-libav.patch
 
 # Automatically added by buildreq on Sun Mar 18 2018 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
 #BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL2_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libavformat-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: frei0r-devel libSDL2_image-devel libalsa-devel libexif-devel
-BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
+BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
+%if %is_ffmpeg
+BuildRequires: libswresample-devel
+%endif
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
 BuildRequires: libvidstab-devel
 BuildRequires: libxml2-devel swig python-devel ladspa_sdk
 %if_enabled vdpau
 BuildRequires: libvdpau-devel
 %endif
-#BuildRequires: libswfdec-devel
 
 %description
 %Name is a multimedia framework designed for television broadcasting.
@@ -107,7 +110,7 @@ This module allows to work with %Name using python..
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p0
 %patch10 -p0
 %if %is_ffmpeg
 %else
@@ -115,6 +118,10 @@ This module allows to work with %Name using python..
 %endif
 %patch101 -p1
 %patch102 -p1
+%if %is_ffmpeg
+%else
+%patch103 -p1
+%endif
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
@@ -151,6 +158,8 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 	--kde-includedir=%_K5inc \
         --kde-libdir=%_K5link \
         --swig-languages=python \
+        --disable-swfdec \
+        --disable-opencv \
         #
 #	--luma-compress \
 
@@ -192,6 +201,12 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
+* Wed Jul 11 2018 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1%ubt.1
+- fix build requires
+
 * Fri Jul 06 2018 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1%ubt
 - new version
 
