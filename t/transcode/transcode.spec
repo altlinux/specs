@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt11%ubt
+Release: alt12
 
 Summary: A linux video stream processing utility
 
@@ -92,7 +92,6 @@ BuildRequires: libquicktime-devel
 BuildRequires: libvorbis-devel
 %endif
 BuildPreReq: libpng-devel
-BuildRequires(pre):rpm-build-ubt
 
 %description
 transcode  is a linux text-console utility for video stream
@@ -215,7 +214,7 @@ export LDFLAGS=-pie
 %make_build
 
 pushd contrib/subrip/subtitleripper
-%make 
+%make INCLUDES=-I/usr/include/netpbm
 popd
 
 %install
@@ -266,25 +265,29 @@ export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
-* Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.7-alt11%ubt
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt12
+- NMU: rebuild with libnetpbm.so.11
+- drop out ubt
+
+* Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.7-alt11
 - Rebuilt with ffmpeg-4.0 and without quicktime.
 
-* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.7-alt10%ubt
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.7-alt10
 - rebuilt for ImageMagick
 
-* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt9%ubt
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt9
 - rebuilt with ImageMagick
 
-* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt8%ubt
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt8
 - rebuild with debuginfo-enabled ffmpeg
 
-* Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt7%ubt
+* Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt7
 - rebuild with new ffmpeg
 
-* Mon May 15 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.7-alt6%ubt
+* Mon May 15 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.7-alt6
 - Fixed import_ac3 plugin linking.
 
-* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt5%ubt
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt5
 - rebuild in new environment
 
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt4
