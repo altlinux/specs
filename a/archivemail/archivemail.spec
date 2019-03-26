@@ -2,7 +2,7 @@
 
 Name: archivemail
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Archive and compress old email
 License: GPLv2+
@@ -45,12 +45,17 @@ with gzip(1).
 #install -p -m644 %name.1 %buildroot%_man1dir
 %python_build_install
 
+rm %buildroot%python_sitelibdir/archivemail-*.egg-info
+
 %files
 %_bindir/*
 %_man1dir/*
 %doc CHANGELOG FAQ NEWS README TODO test_archivemail examples/
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt2
+- fix build: apply patch from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=724043
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
 - Version 0.9.0
 
