@@ -60,7 +60,7 @@
 
 Name: virtualbox
 Version: 5.2.26
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -109,7 +109,6 @@ BuildRequires: makeself
 BuildRequires: qt5-tools
 BuildRequires: qt5-connectivity-devel
 BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-gstreamer1-devel
 BuildRequires: qt5-location-devel 
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
@@ -798,6 +797,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Tue Mar 26 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.26-alt3
+- Rebuild without obsolete qt5-gstreamer1 (Closes: 36428)
+
 * Wed Mar 06 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.26-alt2
 - Fix drv preload in check if 3D acceleration is supported (Closes: 36235)
 
