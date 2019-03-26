@@ -6,12 +6,11 @@
 %def_enable sha1
 %def_enable routes
 %def_enable libiptc
-%def_enable libipset
 %def_enable libnl
 %def_enable regex
 
 Name: keepalived
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -28,7 +27,6 @@ BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_libipset:BuildRequires: libipset-devel}
 %{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
-BuildRequires: libnfnetlink-devel
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
 BuildRequires: systemd-devel
@@ -107,6 +105,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Tue Mar 26 2019 Anton Farygin <rider@altlinux.ru> 2.0.14-alt1
+- 2.0.14
+
 * Thu Feb 21 2019 Anton Farygin <rider@altlinux.ru> 2.0.13-alt1
 - 2.0.13
 
