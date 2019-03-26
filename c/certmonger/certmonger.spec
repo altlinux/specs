@@ -5,8 +5,8 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.6
-Release: alt3.gitba4c5049
+Version: 0.79.7
+Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -119,6 +119,9 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Mar 26 2019 Stanislav Levin <slev@altlinux.org> 0.79.7-alt1
+- 0.79.6 -> 0.79.7.
+
 * Wed Jan 16 2019 Stanislav Levin <slev@altlinux.org> 0.79.6-alt3.gitba4c5049
 - Applied upstream fixes.
 
