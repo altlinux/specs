@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.8.6
+Version: 2.8.7
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 2.8.7-alt1
+- update pkgrepls
+- rpmgs: fix using Source-git: git://
+- rpmgs: allow predownloaded-postinstall-hook out of npm install
+- gitask: add run --commit support
+- gitask: add commit command
+- rpmgs: some rewrite
+
 * Sun Sep 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
 - update pkgrepl.alt.c8
 - rpmbs: fix TAG var conflict
