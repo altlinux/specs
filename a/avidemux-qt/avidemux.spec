@@ -5,8 +5,8 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.7.1
-Release: alt2
+Version: 2.7.3
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -77,7 +77,7 @@ Avidemux -- это редактор AVI-файлов с графическим �
 %package gui-qt
 Group: Video
 Summary: Qt GUI for %name
-PreReq(post,preun): alternatives >= 0.2
+Requires(post,preun): alternatives >= 0.2
 Requires: %name-common = %version-%release
 Provides: %name-qui = %version-%release
 Conflicts: %name <= 2.4.4-alt1
@@ -87,7 +87,7 @@ Qt GUI for %name
 %package gui-gtk
 Group: Video
 Summary: GTK GUI for %name
-PreReq(post,preun): alternatives >= 0.2
+Requires(post,preun): alternatives >= 0.2
 Requires: %name-common = %version-%release
 Provides: %name-qui = %version-%release
 Conflicts: %name <= 2.4.4-alt1
@@ -97,7 +97,7 @@ GTK GUI for %name
 %package common
 Group: Video
 Summary: Common files for %name
-PreReq(post,preun): alternatives >= 0.2
+Requires(post,preun): alternatives >= 0.2
 Provides: %name-qui = %version-%release
 Conflicts: %name <= 2.4.4-alt1
 %description common
@@ -156,7 +156,7 @@ do
 done
 
 install -pD -m644 avidemux_icon.png %buildroot/%_pixmapsdir/%rname.png
-install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%rname.desktop
+install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/org.avidemux.Avidemux.desktop
 install -pD -m644 %SOURCE3 %buildroot/%_libdir/ADM_plugins6/autoScripts/lib/
 ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 
@@ -181,7 +181,7 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 
 
 %files -f avidemux.lang
-%_desktopdir/*.desktop
+%_desktopdir/org.avidemux.Avidemux.desktop
 %_bindir/avidemux
 %_bindir/avidemux3_cli
 %_bindir/avidemux3_jobs*
@@ -189,17 +189,20 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %_libdir/libADM6*.so.*
 %_libdir/libADM_*.so
 %_libdir/ADM_plugins?/
-%_pixmapsdir/*
 #%_datadir/ADM_scripts
 %dir %_datadir/avidemux6
 %dir %_datadir/avidemux6/*/
 %dir %_datadir/avidemux6/*/*
 #%_datadir/avidemux6/help
+%_iconsdir/hicolor/*/apps/org.avidemux.Avidemux.*
 
 # devel
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 2.7.3-alt1
+- new version (ALT#36355)
+
 * Fri Feb 22 2019 Sergey V Turchin <zerg@altlinux.org> 2.7.1-alt2
 - fix compile with gcc-8
 
