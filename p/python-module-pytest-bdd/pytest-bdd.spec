@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -20,18 +20,18 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-execnet
-BuildRequires: python-module-glob2
-BuildRequires: python-module-mako
-BuildRequires: python-module-parse
-BuildRequires: python-module-parse_type
-BuildRequires: python-module-pytest
-BuildRequires: python3-module-execnet
-BuildRequires: python3-module-glob2
-BuildRequires: python3-module-mako
-BuildRequires: python3-module-parse
-BuildRequires: python3-module-parse_type
-BuildRequires: python3-module-pytest
+BuildRequires: python2.7(execnet)
+BuildRequires: python2.7(glob2)
+BuildRequires: python2.7(mako)
+BuildRequires: python2.7(parse)
+BuildRequires: python2.7(parse_type)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(execnet)
+BuildRequires: python3(glob2)
+BuildRequires: python3(mako)
+BuildRequires: python3(parse)
+BuildRequires: python3(parse_type)
+BuildRequires: python3(tox)
 %endif
 
 %description
@@ -100,10 +100,22 @@ popd
 %python_install
 
 %check
-PYTHONPATH=$(pwd) py.test -vv
-pushd ../python3
-PYTHONPATH=$(pwd) py.test3 -vv
-popd
+# no used deps
+sed -i -e '/mock/d' \
+-e '/pytest-pep8/d' \
+-e '/coverage/d' \
+-e '/pytest-cache/d' requirements-testing.txt
+
+sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc CHANGES.rst README.rst
@@ -118,6 +130,9 @@ popd
 %python3_sitelibdir/pytest_bdd-*.egg-info/
 
 %changelog
+* Tue Mar 26 2019 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 3.0.0 -> 3.1.0.
+
 * Mon Dec 24 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 2.19.0 -> 3.0.0.
 
