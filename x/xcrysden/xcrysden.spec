@@ -13,29 +13,28 @@
 #
 
 Name: xcrysden
-Version: 1.5.21
-Release: alt6
+Version: 1.5.60
+Release: alt1
 
 Summary: X-window CRYstalline Structure and DENsities
+
 License: GPLv2+
 Group: Sciences/Chemistry
-
 Url: http://www.xcrysden.org
-Source: %url/download/%name-%version-src.tar.bz2
-Patch1: xcrysden-1.5.21-opensuse-prototype.patch
-Patch2: xcrysden-1.5.21-opensuse-getline.patch
-Patch3: xcrysden-1.5.21-opensuse-readlink.patch
-Patch4: xcrysden-1.5.21-opensuse-bwidget.patch
-Patch5: xcrysden-1.5.21-opensuse-gdb.patch
-Patch6: xcrysden-1.5.21-alt-autoreq.patch
-Patch7: xcrysden-1.5.21-alt-tcltk8.6.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
+
+# Source-url: %url/download/%name-%version.tar.gz
+Source: %name-%version.tar
+
+Patch6: xcrysden-1.5.21-alt-autoreq.patch
+
 
 Requires: bwidget gawk ImageMagick-tools netpbm
 Requires: openbabel gifsicle
 
 # Automatically added by buildreq on Sun Dec 19 2010++
-BuildRequires: gcc-fortran libGL-devel libGLU-devel libXext-devel libXmu-devel tk-devel
+BuildRequires: gcc-fortran libGL-devel libGLU-devel libXext-devel libXmu-devel tk-devel libfftw3-devel
 
 # shell wrapped tcl scripts
 %add_findreq_skiplist %_libdir/%name/util/*
@@ -55,18 +54,19 @@ BuildArch: noarch
 This package contains various %name example data files.
 
 %prep
-%setup -n XCrySDen-%version-src
-%patch1
-%patch2
-%patch3
-%patch4
-%patch5
-%patch6 -p1
-%patch7
+%setup
+# disable libs download
+rm -rfv external/src
+# fix tcl/tk version
+%__subst "s|8\.5|8.6|" system/Make*
+
+# do not require these binaries
+%__subst "s| gdb | a= gdb |" xcrysden
+%__subst "s| valgrind | a= valgrind |" xcrysden
 
 %build
-cp system/Make.linux Make.sys
-make all CFLAGS="$CFLAGS -fPIC -DUSE_FONTS" FFLAGS="-O2 $FFLAGS" X_LIB="-L%_libdir -lXmu -lX11 -lXext"
+cp system/Make.sys-shared Make.sys
+make xcrysden CFLAGS="$CFLAGS -fPIC -DUSE_FONTS -DUSE_INTERP_RESULT" FFLAGS="-O2 -std=legacy -fdefault-double-8 -fdefault-real-8 $FFLAGS" X_LIB="-L%_libdir -lXmu -lX11 -lXext"
 
 %install
 mkdir -p %buildroot%_libdir/%name/{images,bin,Awk,util,Tcl,Tcl/fs,scripts}
@@ -81,8 +81,8 @@ install -p util/* %buildroot%_libdir/%name/util/
 mkdir -p %buildroot%_bindir
 ln -s %_libdir/%name/xcrysden %buildroot%_bindir/xcrysden
 mkdir -p %buildroot%_sysconfdir/%name
-install -p Tcl/{Xcrysden_defaults,custom-definitions} %buildroot%_sysconfdir/%name/
-ln -s %_sysconfdir/%name/Xcrysden_defaults %buildroot%_libdir/%name/Tcl/Xcrysden_defaults
+install -p Tcl/{Xcrysden_resources,custom-definitions} %buildroot%_sysconfdir/%name/
+ln -s %_sysconfdir/%name/Xcrysden_resources %buildroot%_libdir/%name/Tcl/Xcrysden_resources
 ln -s %_sysconfdir/%name/custom-definitions %buildroot%_libdir/%name/Tcl/custom-definitions
 
 mkdir -p %buildroot%_datadir/%name/
@@ -93,7 +93,7 @@ ln -s %_datadir/%name/examples %buildroot%_libdir/%name/examples
 %_bindir/%name
 %_libdir/%name/
 %dir %_sysconfdir/%name/
-%config(noreplace) %_sysconfdir/%name/Xcrysden_defaults
+%config(noreplace) %_sysconfdir/%name/Xcrysden_resources
 %config(noreplace) %_sysconfdir/%name/custom-definitions
 %doc AUTHORS COPYRIGHT ChangeLog NEWS README THANKS
 
@@ -101,6 +101,10 @@ ln -s %_datadir/%name/examples %buildroot%_libdir/%name/examples
 %_datadir/%name/examples
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.60-alt1
+- new version 1.5.60 (with rpmrb script)
+- put changed things in the spec
+
 * Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.21-alt6
 - Remove dependency on ImageMagick.
 
