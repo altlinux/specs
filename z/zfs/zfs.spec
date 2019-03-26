@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.7.13
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -14,6 +14,7 @@ Requires: spl-utils = %version
 Source0: %name-%version.tar
 Patch1: zfs-0.7.13-import-by-disk-id.patch
 Patch2: zfs-0.7.12-alt-fix-replication-overflow.patch
+Patch3: zfs-0.7.13-alt-remove-own-strlcan-strlcpy-strnlen.patch
 
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
@@ -64,6 +65,7 @@ This package contains ZFS modules sources for Linux kernel.
 %setup -q
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
 %build
@@ -183,6 +185,10 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Mar 26 2019 Anton Farygin <rider@altlinux.ru> 0.7.13-alt2
+- removed ALT glibc functions from libuutil, since  ALT build glibc has its own
+  implementation of the strlcat, strlcpy and strnlen functions (closes: #36412)
+
 * Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 0.7.13-alt1
 - 0.7.13
 
