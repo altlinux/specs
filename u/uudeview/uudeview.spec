@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt9
+Release: alt10
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -19,6 +19,7 @@ Patch4: uudeview-alt-latex.patch
 
 BuildRequires: sendmail-common tcl-devel tk-devel transfig
 BuildRequires: texlive texlive-collection-basic texlive-dist
+BuildRequires: zlib-devel
 
 Summary(ru_RU.UTF-8): быстрый кодер/декодер uuenc/xxenc/base64
 
@@ -118,6 +119,9 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.20-alt10
+- Fixed FTBFS: built with system zlib.
+
 * Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.20-alt9
 - NMU: fixed build.
 
