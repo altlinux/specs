@@ -3,7 +3,7 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.14
+Version: 2.2.15
 Release: alt1
 
 Group: Text tools
@@ -162,6 +162,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Mar 26 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.15-alt1
+- Freshed up to version 2.2.15.
+
 * Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.14-alt1
 - Freshed up to version 2.2.14.
 
