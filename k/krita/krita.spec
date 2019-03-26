@@ -1,5 +1,4 @@
-
-# obsileted koffice version
+# obsoleted koffice version
 %define koffice_ver 4:2.3.70
 
 %define sover 17
@@ -31,8 +30,8 @@
 %define libkritatext libkritatext%sover
 
 Name: krita
-Version: 4.1.1
-Release: alt2%ubt
+Version: 4.1.8
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -40,7 +39,13 @@ Summary: A creative sketching and painting application
 Url: http://krita.org/
 License: GPLv3
 
-Requires: kde5-kross-python create-resources
+AutoReq: yes, nopython
+AutoProv: yes, nopython nopython3
+%add_python3_path %_libdir/krita-python-libs
+%add_python3_path %_datadir/krita/pykrita
+%add_python3_req_skip PyKrita pykrita
+#Requires: kde5-kross-python
+Requires: create-resources
 
 Provides: calligra-krita = %EVR
 Obsoletes: calligra-krita < %EVR
@@ -48,19 +53,20 @@ Provides: koffice-krita = %koffice_ver
 Obsoletes: koffice-krita < %koffice_ver
 
 Source: krita-%version.tar
-# upstream
-Patch1: libraw-0.19.patch
+Patch1: alt-find-pyqt.patch
+Patch2: alt-py3-syntax-error.patch
 
 # Automatically added by buildreq on Thu Nov 16 2017 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils fontconfig gcc-c++ glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache ilmbase-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgpg-error liblcms2-devel libpoppler-devel libpoppler1-qt5 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: appstream boost-devel eigen3 extra-cmake-modules git-core kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel libXres-devel libexiv2-devel libfftw3-devel libgomp-devel libgsl-devel libjpeg-devel libpng-devel libpoppler-qt5-devel libquadmath-devel libraw-devel libssl-devel libtiff-devel libxcbutil-devel openexr-devel python-module-google python3-dev python3-module-zope qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-ubt rpm-build-kf5
+BuildRequires(pre): rpm-build-python3 rpm-build-kf5
 BuildRequires: zlib-devel libssl-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
-BuildRequires: python-module-PyQt5-devel
+BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip-devel
 BuildRequires: boost-devel eigen3 libfftw3-devel libgomp-devel libgsl-devel
 #BuildRequires: libquadmath-devel
+BuildRequires: libopencolorio-devel
 BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel libheif-devel
@@ -271,6 +277,7 @@ Requires: %name-common = %EVR
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -295,8 +302,9 @@ done
 
 %files
 %config(noreplace) %_K5xdgconf/kritarc
-%_K5bin/krita
+%_K5bin/krita*
 %_libdir/kritaplugins/
+%_libdir/krita-python-libs/
 %_K5qml/org/krita/
 %_datadir/krita/
 %_datadir/kritaplugins/
@@ -305,6 +313,7 @@ done
 %_K5xdgapp/*krita*.desktop
 %_K5icon/*/*/apps/calligrakrita.*
 %_K5data/color-schemes/*
+%_datadir/metainfo/*krita*.xml
 
 #%files devel
 #%_K5link/lib*.so
@@ -412,14 +421,17 @@ done
 %_libdir/libkritawidgetutils.so.*
 
 %changelog
-* Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2%ubt
+* Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 4.1.8-alt1
+- new version (ALT#36336)
+
+* Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2
 - fix to build witn new libraw
 
-* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1%ubt
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1
 - new version
 
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.2-alt2%ubt
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.2-alt2
 - NMU: rebuilt with boost-1.67.0
 
-* Wed Nov 15 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.2-alt1%ubt
+* Wed Nov 15 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.2-alt1
 - initial build
