@@ -1,5 +1,5 @@
 Name: remove-obsoleted-packages
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Remove obsoleted packages
@@ -11,7 +11,7 @@ License: GPL
 
 BuildArch: noarch
 
-Conflicts: libzip
+Conflicts: libzip libzip4
 
 Conflicts: gcc4.3 gcc4.4 cpp4.3 cpp4.4 gcc4.8 cpp4.8 gcc6 cpp6 cpp7 gcc7-fortran gcc7
 Conflicts: clang6.0
@@ -26,6 +26,23 @@ Conflicts: xpdf xpdf-common xpdf-reader
 Conflicts: libwpd libwpd9
 
 Conflicts: libmysqlclient12 libmysqlclient15 libmysqlclient16 libmysqlclient17
+
+# obsoleted ffmpeg
+Conflicts: libavdevice55 libswscale libavresample2
+Conflicts: libavfilter5 libavfilter6
+Conflicts: libavcodec53 libavcodec56
+Conflicts: libavutil51 libavutil53 libavutil54
+Conflicts: libavformat53 libavformat56
+
+Conflicts: libx265 libx264.142 
+Conflicts: libwebp < 0.5
+Conflicts: libwebp6
+Conflicts: libwrap libevent2 libprotobuf7 libprotobuf9
+Conflicts: libGLEW2.0 libGLEW1.13
+
+Conflicts: libmozjs17 
+Conflicts: libreadline6
+Conflicts: libpq5.3
 
 Conflicts: libicu42 libicu44 libicu46 libicu4.8 libicu50 libicu56
 Conflicts: libicu60 libicu61 libicu62
@@ -92,6 +109,7 @@ Conflicts: libboost_graph1%{1} \
 %ConflictBoost 1.65.0
 %ConflictBoost 1.66.0
 
+Conflicts: libjasper1
 Conflicts: libpng12
 Conflicts: libpng15
 
@@ -109,6 +127,9 @@ during install.
 %files
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- add ffmpeg libs and some others
+
 * Sun Mar 24 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - major update (qt3, qt4, old gcc, old boost)
 
