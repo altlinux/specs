@@ -2,7 +2,7 @@
 
 Name: blosc
 Version: 1.15.1
-Release: alt1
+Release: alt2
 Summary: Blosc: A blocking, shuffling and lossless compression library
 License: MIT
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://www.blosc.org/
 Source: %name-%version.tar
 Patch1: %name-%version-alt-pkgconfigdir.patch
 
-BuildPreReq: cmake gcc-c++ libsnappy-devel zlib-devel liblz4-devel
+BuildRequires: cmake gcc-c++ libsnappy-devel zlib-devel liblz4-devel libzstd-devel
 
 %description
 Blosc is a high performance compressor optimized for binary data. It has
@@ -52,10 +52,20 @@ This package contains development files of Blosc library.
 %setup
 %patch1 -p1
 
+# remove bundled libraries
+rm -rf internal-complibs
+
 %build
-%cmake -DBUILD_BENCHMARKS:BOOL=OFF \
-       -DBUILD_TESTS:BOOL=OFF \
-       -DBUILD_STATIC:BOOL=OFF
+%cmake \
+	-DBUILD_BENCHMARKS:BOOL=OFF \
+	-DBUILD_TESTS:BOOL=OFF \
+	-DBUILD_STATIC:BOOL=OFF \
+	-DPREFER_EXTERNAL_LZ4:BOOL=ON \
+	-DPREFER_EXTERNAL_SNAPPY:BOOL=ON \
+	-DPREFER_EXTERNAL_ZLIB:BOOL=ON \
+	-DPREFER_EXTERNAL_ZSTD:BOOL=ON \
+	%nil
+
 %cmake_build
 
 %install
@@ -72,6 +82,9 @@ This package contains development files of Blosc library.
 %_pkgconfigdir/blosc.pc
 
 %changelog
+* Tue Mar 26 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.1-alt2
+- Rebuilt with system libraries (Closes: #36400)
+
 * Sat Dec 29 2018 Alexey Melyashinsky <bip@altlinux.org> 1.15.1-alt1
 - Updated to upstream release version 1.15.1.
 
