@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt37
+Release: alt38
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -168,6 +168,10 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 18 2019 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt38
+- Remove build warnings
+- Add some security fixes
+
 * Mon Jul 02 2018 Michael Shigorin <mike@altlinux.org> 2.5.5-alt37
 - fix FAT fsck check (thx sbolshakov@)
 
