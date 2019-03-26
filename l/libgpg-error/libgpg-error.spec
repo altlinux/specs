@@ -1,8 +1,8 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.31
-Release: alt1%ubt
+Version: 1.36
+Release: alt1
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -13,7 +13,6 @@ Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Source: %name-%version.tar.bz2
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -64,6 +63,8 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %check
 %make check
 
+%define _unpackaged_files_terminate_build 1
+
 %files -f %name.lang
 /%_lib/lib*.so.*
 %_bindir/gpg-error
@@ -72,11 +73,14 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 
 %files devel
 %_bindir/*-config
+%_bindir/yat2m
 %_libdir/*.so
 %_includedir/*
 %_datadir/aclocal/*
-%_man1dir/gpg-error-config.*
+%_man1dir/gpgrt-config.1.*
 %_infodir/gpgrt.*
+%_pkgconfigdir/*.pc
+%_datadir/common-lisp/source/gpg-error
 
 %if_enabled static
 %files devel-static
@@ -84,13 +88,18 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
-* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.31-alt1%ubt
+* Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 1.36-alt1
+- Freshed up to version 1.36.
+- Get rid of %%ubt.
+- Added gpg-error.pc for pkgconfig.
+
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.31-alt1
 - new version
 
-* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.29-alt1%ubt
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.29-alt1
 - new version
 
-* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.27-alt1%ubt
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.27-alt1
 - new version
 
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
