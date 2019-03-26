@@ -1,7 +1,7 @@
 
 Name: kde5-virtual
-Version: 5.6.0
-Release: alt1%ubt
+Version: 5.6.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -136,7 +136,7 @@ Summary: Thunderbird email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-thunderbird = %EVR
 Requires: kf5-filesystem
-Requires: thunderbird thunderbird-ru thunderbird-lightning-ru
+Requires: thunderbird thunderbird-enigmail thunderbird-ru thunderbird-lightning-ru
 %description -n kde5-email-client-4-thunderbird
 %summary
 
@@ -180,6 +180,9 @@ Requires: qmmp1
 %files -n kde5-audio-player-4-qmmp
 
 %changelog
+* Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- add enigmail to thunderbird
+
 * Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1%ubt
 - update Plasma requires
 
