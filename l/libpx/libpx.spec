@@ -1,7 +1,7 @@
 %define oname pxlib
 Name: libpx
 Version: 0.6.8
-Release: alt1
+Release: alt2
 
 Summary: A library to read Paradox DB files
 
@@ -15,7 +15,7 @@ Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar
 Source1: %name.watch
 
 # Automatically added by buildreq on Sat Jul 18 2009
-BuildRequires: docbook-utils intltool libgsf-devel w3c-markup-validator-libs
+BuildRequires: docbook-utils intltool libgsf-devel
 
 %description
 pxlib is a simply and still small C library to read Paradox DB files.
@@ -67,6 +67,9 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6.8-alt2
+- rebuild without w3c-markup-validator-libs
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.8-alt1
 - new version 0.6.8 (with rpmrb script)
 
