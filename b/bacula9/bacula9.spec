@@ -13,7 +13,7 @@
 
 Name: bacula9
 Version: 9.4.2
-Release: alt2
+Release: alt3
 
 License: AGPLv3
 Summary: Network based backup program
@@ -44,6 +44,7 @@ Patch3: %name-9.0.6-alt-mysql8-transition.patch
 Patch4: bacula-9.4.0-fedora-seg-fault.patch
 
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
+BuildRequires: liblz4-devel
 
 %if_enabled bat
 BuildRequires: qt5-base-devel
@@ -431,6 +432,9 @@ popd
 %patch4 -p1
 
 mv ../%name-icons-%version icons
+
+# remove bundled copy of lz4
+rm -f src/lib/lz4.{c,h}
 
 %build
 export MTX=%_sbindir/mtx
@@ -890,6 +894,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 26 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt3
+- Use system lz4 library (Closes: #36398)
+
 * Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt2
 - Updated runtime dependencies.
 
