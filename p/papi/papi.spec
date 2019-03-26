@@ -1,18 +1,22 @@
 Name: papi
+Version: 5.7.0
+Release: alt1
+
+Summary: Performance Application Programming Interface
+
 License: BSD-like
 Group: Development/Tools
-Summary: Performance Application Programming Interface
-Version: 5.3.0
-Release: alt1
 Url: http://icl.cs.utk.edu/papi/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
-Patch: papi-5.0.1-alt-i586.patch
+%define tagversion %(echo "%version" | sed -e "s|\\.|-|g")
+# Source-url: https://bitbucket.org/icl/papi/get/papi-%tagversion-t.tar.bz2
+Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
-BuildPreReq: libncurses-devel gcc-fortran /proc libsensors3-devel
+BuildPreReq: libncurses-devel gcc-fortran /proc libsensors3-devel libgomp-devel
 BuildPreReq: libltdl-devel doxygen graphviz
 
 %description
@@ -61,13 +65,12 @@ This package contains documentation for PAPI.
 
 %prep
 %setup
-#ifarch %ix86
-#patch -p1
-#endif
 
 rm -fR src/perfctr-*
 cp -f src/Rules.pfm src/Rules.perfctr
 cp -f src/Rules.pfm src/Rules.perfctr-pfm
+
+%__subst 's|-Xlinker "-rpath" -Xlinker "\$(LIBDIR)"||' src/configure.in
 
 %build
 cd src
@@ -84,20 +87,17 @@ popd
 %add_optflags %optflags_shared
 %autoreconf
 %configure \
-%ifarch x86_64
-	--with-bitmode=64 \
-%else
-	--with-bitmode=32 \
-%endif
 	--with-ffsll \
 	--with-static-lib=no \
+        --with-shlib \
+        --with-shlib-tools=yes \
 	--with-virtualtimer=clock_thread_cputime_id \
 	--with-perf-events \
-	--with-libpfm3 \
+	--with-libpfm4 \
 	--with-components="appio coretemp lmsensors mx net rapl stealtime"
 #cp -f Makefile.inc.bak Makefile.inc
 #make libpapi.a
-%make_build
+LD_LIBRARY_PATH=$(pwd)/libpfm4/lib %make_build
 
 %make -C ../doc html man
 
@@ -112,6 +112,8 @@ cp -fR ../doc/html/* %buildroot%_docdir/%name/
 ln -s libpapi.so %buildroot%_libdir/libpapi64.so
 ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 
+rm -f %buildroot%_libdir/*.a
+
 %files
 %doc *.txt README
 %_bindir/*
@@ -125,11 +127,16 @@ ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 %_libdir/*.so
 %_includedir/*
 %_man3dir/*
+%_pkgconfigdir/*.pc
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 5.7.0-alt1
+- new version (5.7.0) with rpmgs script
+- cleanup spec, change upstream source url
+
 * Wed May 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.0-alt1
 - Version 5.3.0
 
