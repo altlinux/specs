@@ -1,21 +1,23 @@
+
+%define _unpackaged_files_terminate_build 1
+
 Name: qgit
-Version: 2.5
+Version: 2.8
 Release: alt1
+Epoch: 1
 
 Summary: Git GUI viewer built on Qt4/C++
 Group: Development/Tools
 License: GPLv2
-Url: http://libre.tibirna.org/projects/qgit/
-
-Packager: Ivan A. Melnikov <iv@altlinux.org>
+Url: https://github.com/tibirna/qgit
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Provides: qgit4 = %name-%version
-Obsoletes: qgit4 < %name-%version
+Provides: qgit4 = %EVR
+Obsoletes: qgit4 < %EVR
 
-BuildPreReq: gcc-c++ libqt4-devel >= 4.3
+BuildPreReq: gcc-c++ qt5-base-devel libXext-devel
 
 %description
 With qgit you will be able to browse revisions history, view
@@ -42,12 +44,11 @@ Features:
 %patch -p1
 sed -i 's,debug_and_release,release,' qgit.pro
 sed -i 's,debug_and_release,release,' src/src.pro
-sed -i 's,VERSION "2.3",VERSION "%version",' src/config.h
 sed -i '/QMAKE_CXXFLAGS_RELEASE/s,-O2 ,%optflags ,g' src/src.pro
 
 %build
-qmake-qt4 qgit.pro
-%make_build
+qmake-qt5 qgit.pro
+%make_build 
 
 %install
 install -pD -m755 bin/qgit %buildroot%_bindir/%name
@@ -57,6 +58,11 @@ install -pD -m755 bin/qgit %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Mar 26 2019 Ivan A. Melnikov <iv@altlinux.org> 1:2.8-alt1
+- new version
+- build with qt5
+- fix provides/obsoletes
+
 * Thu Oct 04 2012 Ivan A. Melnikov <iv@altlinux.org> 2.5-alt1
 - new version
 
