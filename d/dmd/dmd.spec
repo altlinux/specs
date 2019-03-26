@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 ExclusiveArch: %ix86 x86_64
 
 %ifarch x86_64
@@ -8,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name: dmd
 Version: 2.082.0
-Release: alt1%ubt
+Release: alt2
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -21,15 +23,18 @@ Source4: tools-%version.tar
 
 Patch1: druntime-%version-alt-build.patch
 Patch2: posix-in-druntime.patch
-Patch3: dmd-2.082.0-alt-build-removed.patch
+Patch3: dmd-%version-alt-build-removed.patch
+Patch4: phobos-%version-alt-build.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ curl-devel
+BuildRequires: zlib-devel
 # DMD now requires D compiler to build
 BuildRequires: dmd
 
-Provides: libdruntime = %version libdruntime-devel = %version
-Provides: libphobos = %version libphobos-devel = %version
+Provides: libdruntime = %EVR
+Provides: libdruntime-devel = %EVR
+Provides: libphobos = %EVR
+Provides: libphobos-devel = %EVR
 Conflicts: ldc
 
 %description
@@ -70,6 +75,10 @@ pushd ../druntime
 popd
 
 %patch3 -p2
+
+pushd ../phobos
+%patch4 -p2
+popd
 
 %build
 pushd src
@@ -154,10 +163,13 @@ cp -r docs/man/man5/* %buildroot%_man5dir/
 %_libdir/libphobos2.a
 
 %changelog
-* Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 2.082.0-alt1%ubt
+* Tue Mar 26 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.082.0-alt2
+- Linked dynamic libraries to system zlib (Closes: #36380)
+
+* Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 2.082.0-alt1
 - Updated to upstream version 2.082.0.
 
-* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.076.0-alt1%ubt
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.076.0-alt1
 - Updated to upstream version 2.076.0.
 - Added %%ubt macro to release.
 
