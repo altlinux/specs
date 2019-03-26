@@ -17,7 +17,7 @@
 %def_without python2
 %def_with system_boost
 %def_without system_lua
-%def_without system_rocksdb
+%def_with system_rocksdb
 %def_without mgr_dashboard
 %def_with blustore
 %def_without seastar
@@ -41,7 +41,7 @@
 
 Name: ceph
 Version: 14.2.0
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -88,13 +88,13 @@ BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel 
 %endif
 BuildRequires: gcc-c++ libaio-devel libblkid-devel libcurl-devel libexpat-devel
 BuildRequires: libfuse-devel libkeyutils-devel
-BuildRequires: libldap-devel libleveldb-devel libnss-devel libsnappy-devel
+BuildRequires: libldap-devel libleveldb-devel libnss-devel
 #BuildRequires: libkrb5-devel
 BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel
 %{?_with_libzfs:BuildRequires: libzfs-devel}
 BuildRequires: yasm
 %{?_with_amqp_endpoint:BuildRequires: librabbitmq-c-devel}
-BuildRequires: zlib-devel bzlib-devel liblz4-devel
+BuildRequires: zlib-devel bzlib-devel liblz4-devel libzstd-devel libsnappy-devel
 BuildRequires: libxml2-devel
 BuildRequires: libuuid-devel
 BuildRequires: libncurses-devel
@@ -132,9 +132,7 @@ BuildRequires: yaml-cpp-devel
 
 %if_with python2
 BuildRequires(pre): rpm-build-python
-%if_with system_boost
-BuildRequires: boost-python-devel
-%endif
+%{?_with_system_boost:BuildRequires: boost-python-devel}
 BuildRequires: python-module-Cython python-module-OpenSSL python-devel python-module-setuptools
 BuildRequires: python-module-backports.ssl_match_hostname python-module-enum34
 BuildRequires: python-module-prettytable python-module-routes python-module-bcrypt
@@ -147,9 +145,7 @@ BuildRequires: libxmlsec1-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
-%if_with system_boost
-BuildRequires: boost-python3-devel
-%endif
+%{?_with_system_boost:BuildRequires: boost-python3-devel}
 BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt
 BuildRequires: python3-module-html5lib python3-module-pyasn1 python3-module-virtualenv
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
@@ -1622,6 +1618,10 @@ fi
 %endif
 
 %changelog
+* Tue Mar 26 2019 Alexey Shabalin <shaba@altlinux.org> 14.2.0-alt2
+- build with system zstd (fixed ALT#36406)
+- build with system rocksdb
+
 * Wed Mar 20 2019 Alexey Shabalin <shaba@altlinux.org> 14.2.0-alt1
 - 14.2.0
 
