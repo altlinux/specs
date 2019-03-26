@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q1.7
+Version: 2019.Q1.9
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -71,10 +71,8 @@ popd
 mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
 touch %buildroot%_sysconfdir/amd/amdPalSettings.cfg
 
-install -p -m644 %_builddir/xgl/BUILD/icd/%_vklib%bits.so %buildroot%_libdir/
-install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd%{bits}.json
-subst 's,@LIBDIR@,%_libdir,' %buildroot%_vkdir/amd_icd%{bits}.json
-subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
+install -p -m644 %_builddir/xgl/BUILD/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
+install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
 
 %files
 %_libdir/*.so
@@ -83,6 +81,15 @@ subst 's,@BITS@,%bits,' %buildroot%_vkdir/amd_icd%{bits}.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Tue Mar 26 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.9-alt1
+- 2019-3-26 update:
+    + llvm: 97cc33415120ae3ed472b6dd5cb234b74a80bd80
+    + spvgen: 1560d287f779b342e0019499dda85890cb07affc
+    + llpc: 32c0c28b1b7fd36b2f9cb17411af2963f6cfc48a
+    + pal: e17272e1581ae6e222293880db08e0df7b1f1f75
+    + xgl: a082b41ad4a8aed476cb39e6b63cddd25ab9e0b4
+- .json: make biarch friendly.
+
 * Wed Mar 06 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.7-alt1
 - 2019-3-1 update:
   + llvm: c7a5a5c3bac75699d45824523b4fcf045913413f
