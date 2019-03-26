@@ -4,7 +4,7 @@
 
 Name: tk
 Version: 8.6.8
-Release: alt1
+Release: alt2
 
 Summary: A Tk toolkit fot Tcl scripting language
 License: BSD
@@ -15,7 +15,7 @@ Url: http://www.tcl.tk/
 Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
-BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
+BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel zlib-devel
 Requires: tcl = %version lib%name = %version-%release
 
 Provides: tcl(Ttk) = %version
@@ -123,6 +123,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt2
+- fixed FTBFS: built with system zlib
+
 * Tue Feb 13 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt1
 - 8.6.8 released
 - applied patch from Debian to package additional manpages
