@@ -20,8 +20,8 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.0.5
-Release: alt2
+Version: 4.0.7
+Release: alt1
 
 Summary: mongo client shell and tools
 License: ASL 2.0
@@ -73,6 +73,9 @@ install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/*
 
 %changelog
+* Tue Mar 26 2019 Vladimir Didenko <cow@altlinux.org> 4.0.7-alt1
+- 4.0.7
+
 * Fri Jan 25 2019 Vladimir Didenko <cow@altlinux.org> 4.0.5-alt2
 - Remove golang-tools-devel from build reqs
 
