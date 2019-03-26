@@ -1,6 +1,6 @@
 Name: gts
 Version: 0.7.6
-Release: alt2.drc20130205
+Release: alt2.drc20130205.1
 Summary: GNU Triangulated Surface Library
 License: LGPL v2
 Group: Development/Tools
@@ -107,6 +107,9 @@ install -m644 examples/*.c %buildroot%_docdir/%name/examples
 %_man1dir/*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7.6-alt2.drc20130205.1
+- NMU: autorebuild with libnetpbm.so.11
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt2.drc20130205
 - New snapshot
 

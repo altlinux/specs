@@ -1,6 +1,6 @@
 Name: gocr
 Version: 0.52
-Release: alt1
+Release: alt2
 
 Summary: GOCR/JOCR is an optical character recognition program
 Summary(ru_RU.UTF-8): GOCR/JOCR - программа распознавания символов (OCR)
@@ -12,9 +12,12 @@ Url: http://jocr.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www-e.uni-magdeburg.de/jschulen/ocr/%name-%version.tar
-Patch: %name.as-needed.patch
+Patch: %name-netpbm.patch
 
-BuildRequires: hostinfo, libnetpbm-devel, transfig, 
+BuildRequires: hostinfo libnetpbm-devel
+# Needed for conversion programs
+Requires: gzip bzip2 /usr/bin/djpeg netpbm transfig
+
 
 %description
 GOCR/JOCR is an optical character recognition program, released under the GNU
@@ -39,11 +42,12 @@ pnm.gz, pnm.bz2, png, jpg, tiff, gif, bmp и другие.
 оболочки для GOCR.
 
 %prep
-%setup -q
-#patch
+%setup
+%patch -p2
 
 %build
-%configure
+autoconf
+%configure --with-netpbm=%_includedir/netpbm
 %make_build
 
 %install
@@ -58,6 +62,10 @@ rm -f %buildroot%_bindir/%name.tcl
 %_man1dir/gocr.1*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.52-alt2
+- rebuild with libnetpbm.so.11
+- add extra requires
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.52-alt1
 - new version 0.52 (with rpmrb script)
 

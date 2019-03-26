@@ -1,174 +1,196 @@
-Name: netpbm
-Version: 10.85.04
-Release: alt1
+# NB: we track "superstable" upstream releases, see Url:
+
+Name: netpbm10
+Version: 10.35.97
+Release: alt2
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
 License: BSD-like
 Group: Graphics
 
+Packager: Vladimir Lettiev <crux@altlinux.ru>
+
 Url: http://netpbm.sourceforge.net
 
-# Source-url: https://github.com/t6/netpbm/archive/v10.85.04.tar.gz
-Source: %name-%version.tar
+# https://netpbm.svn.sourceforge.net/svnroot/netpbm/stable
+Source0: %name-%version.tar
 
-Requires: lib%{name}11 = %EVR
+# fix various build and install issues
+Patch0: netpbm-10.34-alt-libpm-tmp.patch
+Patch1: netpbm-10.34-alt-no-nstring.patch
+Patch2: netpbm-10.35-alt-cameratopam-memmem.patch
+Patch3: netpbm-10.35-alt-fix-overflow-destination-buffer.patch
+Patch4: netpbm-10.35-alt-fix-userguide-name.patch
 
-BuildRequires: flex libjasper-devel libjbig-devel >= 2.0
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel libX11-devel
+# security patches
+Patch5: netpbm-10.34-rh-security-overflows.patch
+Patch6: netpbm-10.29-rh-CAN-2005-2471.patch
 
-%package -n lib%{name}11
+# libjbig >= 2.0
+Patch10: netpbm-10.35-alt-libjbig2.patch
+
+# use mktemp(1) in shell scripts
+Patch20: netpbm-10.29-alt-anytopnm-tmp.patch
+Patch21: netpbm-10.29-alt-ppmquantall-tmp.patch
+Patch22: netpbm-10.29-alt-pnmmargin-tmp.patch
+Patch23: netpbm-10.29-alt-pamstretchgen-tmp.patch
+Patch24: netpbm-10.29-alt-pnmindex-tmp.patch
+
+# use File::Temp in perl scripts
+Patch30: netpbm-10.29-alt-pnmquant-tmp.patch
+Patch31: netpbm-10.29-alt-ppmshadow-tmp.patch
+Patch32: netpbm-10.33-alt-ppmrainbow-tmp.patch
+Patch33: netpbm-10.27-alt-ppmfade-tmp.patch
+
+# more RedHat patches
+Patch50: netpbm-10.32-rh-giftopnm-verbose-message.patch
+Patch51: netpbm-10.35-rh-alt-bmptopnm.patch
+Patch52: netpbm-10.30-rh-gcc4.patch
+Patch53: netpbm-10.35-rh-ppmtompeg.patch
+Patch54: netpbm-10.35-rh-xwdtopnm-x86_64.patch
+Patch55: netpbm-10.34-rh-pamscale.patch
+Patch56: netpbm-10.35-rh-pnmtofiascoleaks.patch
+Patch57: netpbm-10.35-rh-docfix.patch
+Patch58: netpbm-10.35-rh-glibc.patch
+Patch59: netpbm-10.17-rh-time.patch
+Patch60: netpbm-10.35-rh-ximtoppmsegfault.patch
+Patch61: netpbm-10.35-rh-rgbtxt.patch
+Patch62: netpbm-10.35-rh-pnmmontagefix.patch
+Patch63: netpbm-10.35-rh-64bitfix.patch
+Patch64: netpbm-9.24-rh-strip.patch
+Patch65: netpbm-10.35-rh-svgtopam.patch
+Patch66: netpbm-10.33-rh-multilib.patch
+
+# Automatically added by buildreq on Sat Nov 10 2007
+BuildRequires: flex libjasper-devel libjbig-devel >= 2.0 libjpeg-devel libpng12-devel libtiff-devel libxml2-devel
+
+%package -n lib%name
 Summary: A library for handling different graphics file formats
-Group: System/Libraries
+Group: System/Legacy libraries
 Requires: xorg-x11-rgb
-Provides: libnetpbm = %version-%release
+Obsoletes: libnetpbm < %version-%release
 
-%package -n lib%name-devel
-Summary: A library for handling different graphics file formats
-Group: Development/C
-Requires: lib%{name}11 = %EVR
-
-%package -n lib%name-devel-static
-Summary: A library for handling different graphics file formats
-Group: Development/C
-Requires: lib%name-devel = %EVR
 
 %description
 The netpbm package contains programs for handling various graphics file
 formats, including .pbm (portable bitmaps), .pgm (portable graymaps),
 .pnm (portable anymaps), .ppm (portable pixmaps) and others.
 
-%description -n lib%{name}11
+%description -n lib%name
 This package contains a library of functions which support programs for
 handling various graphics file formats, including .pbm (portable bitmaps),
 .pgm (portable graymaps), .pnm (portable anymaps), .ppm (portable pixmaps)
 and others.
 
-%description -n lib%name-devel
-This package contains the header files and programmer's documentation
-for developing programs which can handle the various graphics file
-formats supported by the netpbm library.
-
-%description -n lib%name-devel-static
-This package contains the static library for developing statically linked
-programs which can handle the various graphics file formats supported by
-the netpbm library.
-
 %prep
 %setup
-# use system jasper library
-rm -rf converter/other/jpeg2000/libjasper/
-# use system jbig library
-rm -rf converter/other/jbig/libjbig/
 
-# hide nss-utils require (ALT bug 29475)
-subst "s| atob| a= atob|" converter/other/anytopnm
+# build
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p2
+#patch4 -p1
+
+# security
+%patch5 -p1
+%patch6 -p1
+
+# libjbig >= 2.0
+%patch10 -p2
+
+# mktemp
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+
+# File::Temp
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+
+# RedHat
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+#patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+%patch66 -p1
+
+# rename shhopt.h to pbmshhopt.h to avoid namespace conflicts
+mv lib/util/{,pbm}shhopt.h
+find -type f \( -name '*.[chl]' -o -iname '*makefile*' \) -print0 |
+	xargs -r0 grep -FZl shhopt.h -- |
+	xargs -r0 subst -p 's/\<shhopt\.h/pbm&/g' --
 
 # rename conflicting functions and variables
-#sed -i 's/\<getline\>/ppm_&/g' converter/ppm/xpmtoppm.c
+sed -i 's/\<getline\>/ppm_&/g' converter/ppm/xpmtoppm.c
+
+# use system jbig library
+rm -v converter/other/jbig/{jbig.c,jbig_tab.c,jbig.h}
+
+# use system jasper library
+rm -rv converter/other/jpeg2000/libjasper/
+sed -i '/^SUBDIRS = libjasper$/d' converter/other/jpeg2000/Makefile
+
 
 %build
 cat <<__EOF__ >lib/compile.h
-#define COMPILE_TIME "The same time"
+#define COMPILE_TIME "$(LC_ALL=C date '+%%a %%b %%d %%Y')"
 #define COMPILED_BY "%packager, %vendor"
 __EOF__
 
-cp -av config.mk.in config.mk
-cat <<__EOF__ >>config.mk
+cp -av Makefile.config{.in,}
+cat <<__EOF__ >>Makefile.config
 #
 # ALT
 #
-DEFAULT_TARGET = nonmerge
-NETPBMLIBTYPE=unixshared
-NETPBMLIBSUFFIX=so
-#STATICLIB_TOO=N
+CC = gcc
 CFLAGS = %optflags -D_GNU_SOURCE
 CFLAGS_SHLIB = %optflags_shared
-
-LDRELOC = ld --reloc
-LINKER_CAN_DO_EXPLICIT_LIBRARY=Y
-LINKERISCOMPILER = Y
-
-CC = gcc
 SHLIB_CLIB = -lm
 TIFFLIB = libtiff.so
 JPEGLIB = libjpeg.so
+PNGLIB = libpng.so
 ZLIB = libz.so
-
-JBIGHDR_DIR = %_includedir
 JBIGLIB = %_libdir/libjbig.so
-
 JASPERHDR_DIR = %_includedir/jasper
 JASPERLIB = %_libdir/libjasper.so
-
 STRIPFLAG =
 pkgdir = %buildroot%prefix
-
-PNGHDR_DIR = USE_PKG_CONFIG.a
-PNGLIB = USE_PKG_CONFIG.a
-X11HDR_DIR = USE_PKGCONFIG.a
-X11LIB = USE_PKGCONFIG.a
-NETPBM_DOCURL = http://netpbm.sourceforge.net/doc/
-#WANT_SSE = Y
-
 __EOF__
 
-%make_build
+# SMP incompatible
+make
 
 %install
 %make_install install.bin install.data install.hdr
-mkdir -p %buildroot%_libdir %buildroot%_datadir
-%if_enabled static
-cp -av lib/lib%name.a %buildroot%_libdir
-%endif
-cp -av lib/lib%name.so* %buildroot%_libdir
+mkdir -p %buildroot%_libdir
+cp -av lib/libnetpbm.so.10.* %buildroot%_libdir
+rm -rf %buildroot%_bindir %buildroot%_includedir
+rm -rf %buildroot/usr/misc
 
-mv %buildroot%prefix/misc %buildroot%_datadir/%name
-rm -fv %buildroot%_bindir/manweb
-
-# install netpbm-config
-sed	-e '/^@/d'				\
-	-e 's|@VERSION@|%version|'		\
-	-e 's|@DATADIR@|%_datadir/%name|'	\
-	-e 's|@LINKDIR@|%_libdir|'		\
-	-e 's|@INCLUDEDIR@|%_includedir/netpbm|'	\
-	-e 's|@BINDIR@|%_bindir|'		\
-		buildtools/config_template >%buildroot%_bindir/netpbm-config
-egrep '@[A-Z]+@' %buildroot%_bindir/netpbm-config && exit 1
-chmod +x %buildroot%_bindir/netpbm-config
-test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
-
-mkdir -p %buildroot%_man1dir
-install -p -m644 man/*.1 %buildroot%_man1dir
-
-%files -n lib%{name}11
-%_libdir/lib%name.so.11
-%_libdir/lib%name.so.11.*
-%doc doc/copyright_summary doc/COPYRIGHT.PATENT README
-
-%files -n lib%name-devel
-%_libdir/lib%name.so
-%dir %_includedir/netpbm/
-%_includedir/netpbm/*.h
-#_man3dir/*.*
-%doc doc/Netpbm.programming
-
-%files
-%_bindir/*
-%_man1dir/*.*
-#_man5dir/*.*
-%_datadir/%name/
-%doc doc/HISTORY
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%endif
+%files -n lib%name
+%_libdir/libnetpbm.so.10
+%_libdir/libnetpbm.so.10.*
 
 %changelog
-* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.85.04-alt1
-- NMU: build new version 10.85.04 (ALT bug 33079)
-- drop doc subpackage and generated from it man3, man5
-- hide nss-utils require (ALT bug 29475)
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.35.97-alt2
+- build libnetpbm10 only
 
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 10.35.97-alt1.qa1
 - NMU: applied repocop patch
