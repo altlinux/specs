@@ -6,12 +6,12 @@
 %define build_parallel_jobs 32
 %endif
 
-%define enigmail_version  2.0.9
+%define enigmail_version  2.0.10
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.6.0
+Version:	60.6.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -473,8 +473,25 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Tue Mar 26 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.1-alt1
+- New version (60.6.1).
+- Fixes:
+  + CVE-2019-9810 IonMonkey MArraySlice has incorrect alias information
+  + CVE-2019-9813 Ionmonkey type confusion with __proto__ mutations
+
 * Thu Mar 21 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.0-alt1
 - New version (60.6.0).
+- Fixes:
+  + CVE-2019-9790 Use-after-free when removing in-use DOM elements
+  + CVE-2019-9791 Type inference is incorrect for constructors entered through on-stack replacement with IonMonkey
+  + CVE-2019-9792 IonMonkey leaks JS_OPTIMIZED_OUT magic value to script
+  + CVE-2019-9793 Improper bounds checks when Spectre mitigations are disabled
+  + CVE-2019-9794 Command line arguments not discarded during execution
+  + CVE-2019-9795 Type-confusion in IonMonkey JIT compiler
+  + CVE-2019-9796 Use-after-free with SMIL animation controller
+  + CVE-2019-9801 Windows programs that are not 'URL Handlers' are exposed to web content
+  + CVE-2018-18506 Proxy Auto-Configuration file can define localhost access to be proxied
+  + CVE-2019-9788 Memory safety bugs fixed in Firefox 66, Firefox ESR 60.6, and Thunderbird 60.6
 - Build with Clang.
 
 * Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 60.5.2-alt1
