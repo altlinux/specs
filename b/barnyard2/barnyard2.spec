@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt6
+Release: alt7
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -20,6 +20,7 @@ Patch5: barnyard2-1.13-alt-fix-libpcap-typedef-collision.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: tcl-devel
+BuildRequires: zlib-devel
 
 %description
 Barnyard2 has 3 modes of operation:
@@ -87,6 +88,9 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.13-alt7
+- Fix FTBFS: built with system zlib
+
 * Fri Mar 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.1.13-alt6
 - Fix FTBFS against libmysqlclient21
 - Fix FTBFS against libpcap
