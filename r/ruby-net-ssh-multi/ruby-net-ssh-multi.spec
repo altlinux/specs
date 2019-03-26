@@ -1,21 +1,19 @@
-%define  pkgname net-ssh-multi
+%define        pkgname net-ssh-multi
  
-Name: 	 ruby-%pkgname
-Version: 1.2.0 
-Release: alt1.4
+Name: 	       ruby-%pkgname
+Version:       1.2.1
+Release:       alt1
+Summary:       SSH connection multiplexing: execute commands simultaneously on multiple hosts via SSH
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/net-ssh/net-ssh-multi
+# VCS:         https://github.com/net-ssh/net-ssh-multi.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
  
-Summary: SSH connection multiplexing: execute commands simultaneously on multiple hosts via SSH
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/net-ssh/net-ssh-multi
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
+Source:        %name-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 BuildRequires: ruby-mocha
 BuildRequires: ruby-net-ssh
 BuildRequires: ruby-net-ssh-gateway
@@ -32,41 +30,41 @@ must be performed on multiple machines. It executes the commands in
 parallel, and allows commands to be executed on subsets of servers
 (defined by groups).
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
  
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
  
 %build
-%ruby_config
-%ruby_build
+%gem_build
  
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
  
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
  
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
  
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt1
+- Bump to 1.2.1
+- Use Ruby Policy 2.0
+
 * Wed Sep 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1.4
 - Rebuild for new Ruby autorequirements.
 - Disable tests.

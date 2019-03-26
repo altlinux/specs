@@ -1,20 +1,17 @@
-Name:    ruby2ruby
-Version: 2.4.1
-Release: alt1.1
+Name:          ruby2ruby
+Version:       2.4.2
+Release:       alt2
+Summary:       ruby2ruby provides a means of generating pure ruby code easily from RubyParser compatible Sexps
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/seattlerb/ruby2ruby
+# VCS:         https://github.com/seattlerb/ruby2ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: ruby2ruby provides a means of generating pure ruby code easily from RubyParser compatible Sexps
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/seattlerb/ruby2ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-# For tests
 BuildRequires: ruby-sexp-processor
 BuildRequires: ruby-parser
 BuildRequires: ruby-hoe
@@ -24,43 +21,40 @@ ruby2ruby provides a means of generating pure ruby code easily from
 RubyParser compatible Sexps. This makes making dynamic language
 processors in ruby easier than ever!
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-rake debug_gem > ruby2ruby.gemspec
+%gem_build --use ruby2ruby --join=lib:bin
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
 %_bindir/r2r_show
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Sat Mar 23 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.2-alt2
+- Use Ruby Policy 2.0
+- Bump to 2.4.2
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 

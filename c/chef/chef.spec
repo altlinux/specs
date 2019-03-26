@@ -1,6 +1,6 @@
 Name:          chef
 Version:       15.0.167
-Release:       alt1
+Release:       alt2
 Summary:       Clients for the chef systems integration framework
 Group:         Networking/Other
 License:       Apache-2.0
@@ -62,7 +62,7 @@ BuildArch:     noarch
 %setup
 
 %build
-%gem_build
+%gem_build --use=chef --join=lib:bin --use=chef-config --join=lib:bin
 
 %install
 %gem_install
@@ -109,9 +109,13 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.167-alt2
+- Use setup gem's dependency detection
+
 * Wed Feb 20 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.167-alt1
 - Bump to 15.0.167;
 - Use Ruby Policy 2.0.
+
 * Fri Jan 04 2019 Andrey Cherepanov <cas@altlinux.org> 15.0.120-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name:          ruby-r%pkgname
 Version:       1.16.2
-Release:       alt2
+Release:       alt3
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
@@ -19,7 +19,10 @@ BuildRequires: libcairo-devel
 BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel
 BuildRequires: xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel
 BuildRequires: libXdamage-devel libXxf86vm-devel libpcre-devel libuuid-devel
-BuildRequires: libossp-uuid-dce-devel libdrm-devel
+BuildRequires: libffi-devel
+BuildRequires: bzlib-devel
+BuildRequires: libossp-uuid-dce-devel
+BuildRequires: libdrm-devel
 BuildRequires: pkgconfig(expat) pkgconfig(harfbuzz) pkgconfig(xshmfence)
 BuildRequires: gem(native-package-installer) >= 1.0.3
 BuildRequires: gem(pkg-config) >= 1.2.2
@@ -57,7 +60,7 @@ Documentation for Nokogiri.
 %setup
 
 %build
-%gem_build
+%gem_build --use=cairo --alias=rcairo
 
 %install
 %gem_install
@@ -74,6 +77,9 @@ Documentation for Nokogiri.
 %ruby_gemdocdir
 
 %changelog
+* Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt3
+- Fixed require devel lib on build
+
 * Tue Mar 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt2
 - Use Ruby Policy 2.0
 

@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt1
+Release:       alt2
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -63,6 +63,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt2
+- Added novel approach to detect the dependencies of packages
+
 * Sun Mar 17 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt1
 - Bump to 5.999.3
 

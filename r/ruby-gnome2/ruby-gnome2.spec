@@ -1,14 +1,14 @@
 Name: 	       ruby-gnome2
 Version:       3.3.2
-Release:       alt1
+Release:       alt2
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ruby-gnome2.osdn.jp/
 # VCS:         https://github.com/ruby-gnome2/ruby-gnome2.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
@@ -44,43 +44,49 @@ BuildRequires: libwayland-egl-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: at-spi2-atk-devel
+BuildRequires: libselinux-devel
+BuildRequires: libXtst-devel
+BuildRequires: bzlib-devel
 BuildRequires: ruby-rcairo-devel
 
-BuildRequires: ruby-pkg-config ruby-native-package-installer ruby-rcairo ruby-rake
+BuildRequires: ruby-pkg-config
+BuildRequires: ruby-native-package-installer
+BuildRequires: ruby-rcairo
+BuildRequires: ruby-rake
 BuildRequires: ruby-mechanize
 
-Requires:      gem-atk
-Requires:      gem-cairo-gobject
-Requires:      gem-clutter
-Requires:      gem-clutter-gdk
-Requires:      gem-clutter-gstreamer
-Requires:      gem-clutter-gtk
-Requires:      gem-gdk3
-Requires:      gem-gdk4
-Requires:      gem-gdk-pixbuf2
-Requires:      gem-gegl
-Requires:      gem-gio2
-Requires:      gem-glib2
-Requires:      gem-gnumeric
-Requires:      gem-gobject-introspection
-Requires:      gem-goffice
-Requires:      gem-gsf
-Requires:      gem-gstreamer
-Requires:      gem-gtk2
-Requires:      gem-gtk3
-Requires:      gem-gtk4
-Requires:      gem-gtksourceview2
-Requires:      gem-gtksourceview3
-Requires:      gem-gtksourceview4
-Requires:      gem-gvlc
-Requires:      gem-pango
-Requires:      gem-poppler
-Requires:      gem-rsvg2
-Requires:      gem-vte
-Requires:      gem-vte3
-Requires:      gem-webkit-gtk
-Requires:      gem-webkit-gtk2
-Requires:      gem-webkit2-gtk
+Requires:      gem(atk)
+Requires:      gem(cairo-gobject)
+Requires:      gem(clutter)
+Requires:      gem(clutter-gdk)
+Requires:      gem(clutter-gstreamer)
+Requires:      gem(clutter-gtk)
+Requires:      gem(gdk3)
+Requires:      gem(gdk4)
+Requires:      gem(gdk_pixbuf2)
+Requires:      gem(gegl)
+Requires:      gem(gio2)
+Requires:      gem(glib2)
+Requires:      gem(gnumeric)
+Requires:      gem(gobject-introspection)
+Requires:      gem(goffice)
+Requires:      gem(gsf)
+Requires:      gem(gstreamer)
+Requires:      gem(gtk2)
+Requires:      gem(gtk3)
+Requires:      gem(gtk4)
+Requires:      gem(gtksourceview2)
+Requires:      gem(gtksourceview3)
+Requires:      gem(gtksourceview4)
+Requires:      gem(gvlc)
+Requires:      gem(pango)
+Requires:      gem(poppler)
+Requires:      gem(rsvg2)
+Requires:      gem(vte)
+Requires:      gem(vte3)
+Requires:      gem(webkit-gtk)
+Requires:      gem(webkit-gtk2)
+Requires:      gem(webkit2-gtk)
 
 %description
 This is a set of bindings for the GNOME 2.x and 3.x libraries to use
@@ -1055,6 +1061,9 @@ Documentation files for %{name}.
 
 
 %changelog
+* Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.2-alt2
+- Fix build for new gnome
+
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.2-alt1
 - Bump to 3.3.2 gem;
 - Use Ruby Policy 2.0;

@@ -2,7 +2,7 @@
 
 Name:          %pkgname
 Version:       1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       YAJL C Bindings for Ruby
 Group:         Development/Ruby
 License:       MIT/Ruby
@@ -42,7 +42,7 @@ Documentation files for %name.
 %setup
 
 %build
-%gem_build
+%gem_build --use=yajl-ruby --join=lib:bin
 
 %install
 %gem_install -m lust
@@ -62,6 +62,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt2
+- Use setup gem's dependency detection
+
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
 - Bump to 1.4.1;
 - Use Ruby Policy 2.0.

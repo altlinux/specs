@@ -1,7 +1,7 @@
 %define pkgname pkg-config
  
 Name: 	       ruby-%pkgname
-Version:       1.3.3
+Version:       1.3.7
 Release:       alt1
 Summary:       pkg-config implemented by pure Ruby
 License:       MIT
@@ -11,24 +11,22 @@ Url:           https://github.com/ruby-gnome2/pkg-config
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
  
-Source:        %pkgname-%version.tar
- 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
  
 %description
 A pkg-config implementation by Ruby.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
  
-BuildArch: noarch
- 
-%description doc
+%description   doc
 Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
+%setup
  
 %build
 %gem_build
@@ -41,13 +39,16 @@ Documentation files for %{name}.
  
 %files
 %doc README*
-%ruby_gemlibdir/*
-%ruby_gemspecdir/*
+%ruby_gemspec
+%ruby_gemlibdir
  
-%files doc
-%ruby_gemdocdir/*
+%files         doc
+%ruby_gemdocdir
  
 %changelog
+* Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.7-alt1
+- Bump to 1.3.7
+
 * Fri Feb 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.3-alt1
 - Bump to 1.3.3;
 - Use Ruby Policy 2.0 macros.

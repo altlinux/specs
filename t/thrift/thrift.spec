@@ -3,8 +3,8 @@
 %filter_from_requires /^python3.SCons.Builder/d
 %filter_from_requires /^python-base/d
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/ruby /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) python-devel rpm-build-java
+BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-fedora-compat rpm-macros-java rpm-build-ruby
+BuildRequires: /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) python-devel rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: mono-web javapackages-local
 BuildRequires: chrpath
@@ -22,16 +22,8 @@ BuildRequires: jpackage-generic-compat
 # We should be able to enable this in the future
 %global want_d 0
 
-# Thrift's Ruby support depends on Mongrel.  Since Mongrel is
-# deprecated in Fedora, we can't support Ruby bindings for Thrift
-# unless and until Thrift is patched to use a different HTTP server.
-%if 0%{?have_mongrel} == 0
-%global ruby_configure --without-ruby
-%global with_ruby 0
-%else
 %global ruby_configure --with-ruby
 %global want_ruby 1
-%endif
 
 # Thrift's Erlang support depends on the JSX library, which is not
 # currently available in Fedora.
@@ -61,7 +53,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt4_15jpp8
+Release: alt5_15jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -258,21 +250,29 @@ BuildArch: noarch
 %description -n lib%{name}-java
 The lib%{name}-java package contains Java bindings for %{name}.
 
-%if 0%{?want_ruby} > 0
-%package -n ruby-%{name}
-Group: Development/Java
-Summary: Ruby support for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: ruby(release)
-BuildRequires: libruby-devel
 
-%description -n ruby-%{name}
-The ruby-%{name} package contains Ruby bindings for %{name}.
-%endif
+%package       -n gem-%{name}
+Group:         Development/Ruby
+Summary:       Ruby support for %{name}
+Requires:      %{name} = %{version}-%{release}
+BuildArch:     noarch
+
+%description -n gem-%{name}
+The gem-%{name} package contains Ruby bindings for %{name}.
+
+
+%package       -n gem-%{name}-doc
+Summary:       Documentation files for %gemname gem
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-%{name}-doc
+Documentation files for %gemname gem.
+
 
 %if 0%{?want_erlang} > 0
 %package -n erlang-%{name}
-Group: Development/Java
+Group: Development/Erlang
 Summary: Erlang support for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: erlang
@@ -363,6 +363,8 @@ sed -i 's|ANT_VALID=.*|ANT_VALID=1|' aclocal/ax_javac_and_java.m4
 sed -i 's|ANT_VALID=.*|ANT_VALID=1|' contrib/fb303/aclocal/ax_javac_and_java.m4
 
 %build
+%gem_build
+
 export PY_PREFIX=%{_prefix}
 export PERL_PREFIX=%{_prefix}
 export PHP_PREFIX=%{php7_extdir}
@@ -407,7 +409,7 @@ sh ./bootstrap.sh
 
 # use unversioned doc dirs where appropriate (via _pkgdocdir macro)
 export PYTHON=%{_bindir}/python3
-%configure --disable-dependency-tracking --disable-static --with-boost=/usr %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} --with-py3 --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
+%configure --disable-dependency-tracking --disable-static --with-boost=/usr --without-ruby %{erlang_configure} %{golang_configure} %{php_configure} --with-py3 --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
 	--without-haskell \
 	--without-nodejs
 
@@ -430,6 +432,7 @@ sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
 )
 
 %install
+%gem_install
 %makeinstall_std
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name fastbinary.so | xargs -r chmod 755
@@ -488,6 +491,10 @@ done
 
 # last second hack; remove me if qt5 subpackage
 rm -f %buildroot%{_libdir}/libthriftqt5.so
+
+
+%check
+%gem_test
 
 
 %files
@@ -573,7 +580,17 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files -n fb303-java -f .mfiles-fb303
 %doc LICENSE NOTICE
 
+%files -n gem-%{name}
+%ruby_gemspecdir/*
+%ruby_gemslibdir/*
+
+%files -n gem-%{name}-doc
+%ruby_gemsdocdir/*
+
 %changelog
+* Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt5_15jpp8
+- Use Ruby Policy 2.0
+
 * Sat Mar 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt4_15jpp8
 - fixed build (closes: #36255)
 

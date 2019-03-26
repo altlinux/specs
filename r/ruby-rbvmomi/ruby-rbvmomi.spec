@@ -1,22 +1,19 @@
-%define  pkgname rbvmomi
+%define        pkgname rbvmomi
 
-Name:    ruby-%pkgname
-Version: 1.13.0
-Release: alt1
-
-Summary: Ruby interface to the VMware vSphere API.
+Name:          ruby-%pkgname
+Version:       1.13.0
+Release:       alt2
+Summary:       Ruby interface to the VMware vSphere API.
 Summary(ru_RU.UTF8): Ruby интерфейс к API VMware vSphere.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/vmware/rbvmomi
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/vmware/rbvmomi
+# VCS:         https://github.com/vmware/rbvmomi.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 RbVmomi is a Ruby interface to the vSphere API. Like the Perl and Java SDKs,
@@ -24,49 +21,64 @@ you can use it to manage ESX and vCenter servers. The current release supports
 the vSphere 6.5 API. RbVmomi specific documentation is online and is meant
 to be used alongside the official documentation.
 
-%description -l ru_RU.UTF8
+%description   -l ru_RU.UTF8
 RbVmomi есть руби-интерфейс к API vSphere, подобный перловому или Явы,
 вы можете использовать его для управления серверами ESX и vCenter.
-Текущий выпуск поддерживает API vSphere 6.5. Описания специфики RbVmomi естьв пучине,
-и может оспользоваться наряду с официальным описанием.
+Текущий выпуск поддерживает API vSphere 6.5. Описания специфики RbVmomi есть в
+пучине, и может оспользоваться наряду с официальным описанием.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
-%description doc -l ru_RU.UTF8
-Файлы сведений для %name
+%description   doc -l ru_RU.UTF8
+Файлы сведений для %gemname самоцвета
+
+
+%package       -n rbvmomish
+Summary:       Executable file for %gemname gem
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n rbvmomish
+Executable file for %gemname gem.
+
+%description   -n rbvmomish -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --use=rbvmomi --alias=rbvmomish
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
-#%check
-#%ruby_test_unit -Ilib:test test
+%check
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
+%files         -n rbvmomish
+%_bindir/*
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt2
+- Use Ruby Policy 2.0
+- Fix #36334
+
 * Thu Aug 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt1
 - Initial build for Sisyphus

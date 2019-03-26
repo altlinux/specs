@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       5.2.2.1
-Release:       alt1
+Release:       alt2
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -219,7 +219,7 @@ BuildArch:     noarch
 %setup
 
 %build
-%gem_build
+%gem_build --use=railties --join=lib:bin
 
 %install
 %gem_install
@@ -295,15 +295,18 @@ BuildArch:     noarch
 %ruby_gemsdocdir/activesupport-%version
 
 %files         -n ruby-railties
-%_bindir/*
 %ruby_gemspecdir/railties-%version.gemspec
 %ruby_gemslibdir/railties-%version
+%doc README*
+%_bindir/*
 
 %files         -n ruby-railties-doc
 %ruby_gemsdocdir/railties-%version
 
-
 %changelog
+* Mon Mar 25 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2.1-alt2
+- Added join lib and bin for railties gem
+
 * Thu Mar 14 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2.1-alt1
 - Bump to 5.2.2.1;
 - fix CVE-2019-5418, CVE-2019-5420.
