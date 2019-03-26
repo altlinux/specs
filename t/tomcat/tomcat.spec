@@ -1,5 +1,6 @@
+Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 # fc script use systemctl calls -- gives dependency on systemctl :(
@@ -9,12 +10,12 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.7
+%define version 9.0.13
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -48,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 7
+%global micro_version 13
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -68,7 +69,6 @@ BuildRequires: jpackage-generic-compat
 %global cachedir %{_var}/cache/%{name}
 %global tempdir %{cachedir}/temp
 %global workdir %{cachedir}/work
-%global _initrddir %{_sysconfdir}/init.d
 %global _systemddir /lib/systemd/system
 
 # Fedora doesn't seem to have this macro, so we define it if it doesn't exist
@@ -80,10 +80,9 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
-Group:         System/Servers
 License:       ASL 2.0
 URL:           http://tomcat.apache.org/
 Source0:       http://www.apache.org/dist/tomcat/tomcat-%{major_version}/v%{version}/src/%{packdname}.tar.gz
@@ -109,8 +108,9 @@ Source32:      tomcat-named.service
 
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
-Patch2:        %{name}-8.0.36-CompilerOptionsV9.patch
+Patch2:        %{name}-9.0.10-RemoveCompilerOptions.patch
 Patch3:        disableJavadocFailOnWarning.patch
+Patch4:        %{name}-build.patch
 
 BuildArch:     noarch
 
@@ -131,7 +131,11 @@ BuildRequires: javapackages-local
 %endif
 BuildRequires: junit
 BuildRequires: geronimo-jaxrpc
+BuildRequires: geronimo-saaj
+BuildRequires: aqute-bnd
+BuildRequires: aqute-bndlib
 BuildRequires: wsdl4j
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 Requires:      apache-commons-daemon
 Requires:      apache-commons-collections
@@ -261,6 +265,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%patch4 -p0
 
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-impl) webapps/examples/WEB-INF/lib/jstl.jar
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-compat) webapps/examples/WEB-INF/lib/standard.jar
@@ -286,6 +291,12 @@ export OPT_JAR_LIST="xalan-j2-serializer"
       -Dnsis.exe="HACK" \
       -Djaxrpc-lib.jar="$(build-classpath jaxrpc)" \
       -Dwsdl4j-lib.jar="$(build-classpath wsdl4j)" \
+      -Dsaaj-api.jar="$(build-classpath geronimo-saaj)" \
+      -Dbnd.jar="$(build-classpath aqute-bnd/biz.aQute.bnd)" \
+      -Dbndlib.jar="$(build-classpath aqute-bnd/biz.aQute.bndlib)" \
+      -Dbndlibg.jar="$(build-classpath aqute-bnd/aQute.libg)" \
+      -Dbndannotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
+      -Dslf4j-api.jar="$(build-classpath slf4j/slf4j-api)" \
       -Dno.build.dbcp=true \
       -Dversion="%{version}" \
       -Dversion.build="%{micro_version}" \
@@ -332,7 +343,6 @@ zip output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_bindir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_sbindir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
-install -d -m 0755 ${RPM_BUILD_ROOT}%{_initrddir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_systemddir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig
@@ -682,6 +692,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Mon Mar 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:9.0.13-alt1_2jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:9.0.7-alt1_1jpp8
 - new version
 
