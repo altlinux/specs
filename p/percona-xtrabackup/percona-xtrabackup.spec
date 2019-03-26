@@ -9,7 +9,7 @@
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
 Version: 2.4.12
-Release: alt2
+Release: alt3
 Group: Databases
 License: GPLv2
 Packager: Evgenii Terechkov <evg@altlinux.org>
@@ -18,7 +18,7 @@ Url: https://github.com/percona/percona-xtrabackup.git
 Source: %name-%version.tar
 Source1: boost.tar
 
-BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended latexmk
+BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended latexmk liblz4-devel
 
 BuildRequires: /proc
 
@@ -51,6 +51,7 @@ cmake \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
       -DWITH_PDF_DOCS=ON \
       -DFEATURE_SET="community" \
+      -DWITH_LZ4=system \
       -DWITH_BOOST=boost/boost/boost_1_59_0
 
 %make_build
@@ -83,6 +84,9 @@ install -m 644 storage/innobase/xtrabackup/doc/source/build/man/innobackupex.1 %
 %_datadir/xtrabackup-test
 
 %changelog
+* Tue Mar 26 2019 Terechkov Evgenii <evg@altlinux.org> 2.4.12-alt3
+- Build with system-wide liblz4 (ALT#36403)
+
 * Fri Sep  7 2018 Terechkov Evgenii <evg@altlinux.org> 2.4.12-alt2
 - 2.4.12
 - Debundle pdf documentation (generate it during build)
