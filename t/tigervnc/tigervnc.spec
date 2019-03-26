@@ -2,8 +2,8 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.8.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -41,7 +41,7 @@ Patch11: FC-xorg118-QueueKeyboardEvents.patch
 ## Ubuntu patches
 
 ## ALT patches
-Patch501: tigervnc-1.3.1-stdinpasswd.patch
+Patch501: tigervnc-stdinpasswd.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016
 # optimized out: cmake-modules fontconfig libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libgpg-error libgpg-error-devel libp11-kit libstdc++-devel perl pkg-config python-base xorg-fixesproto-devel xorg-fontsproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-recordproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -253,6 +253,10 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Mon Mar 25 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.0-alt1
+- New version (ALT #36339)
+- Update FC-getmaster.patch and tigervnc-stdinpasswd.patch
+
 * Wed Aug 02 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.0-alt2
 - Rebuild with new xorg-server (1.19.3) - fix discrepancy of ABI vnc-module and server
 - Update FC-xserver116-rebased.patch
