@@ -1,6 +1,6 @@
 Name: xtables-addons
 Version: 2.14
-Release: alt4
+Release: alt5
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -72,6 +72,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt5
+- support for 5.0 kernel added
+
 * Wed Sep 05 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt4
 - autoreconf moved to build section
 
