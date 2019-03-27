@@ -1,3 +1,4 @@
+BuildRequires: unzip
 %add_findreq_skiplist %perl_vendor_privlib/MP3/Tag/ID3v2.pm
 
 # vim: set ft=spec: -*- rpm-spec -*-
@@ -16,7 +17,7 @@
 %def_enable test
 
 Name: perl-MP3-Tag
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: Module for reading tags of MP3 audio files
@@ -26,7 +27,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/MP3-Tag-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/%{module}-%{version}.zip
 
 # Automatically added by buildreq on Thu Jan 04 2007
 BuildRequires: perl-devel perl-MP3-Info
@@ -42,7 +43,7 @@ MP3::Tag::LastResort are supported for read access (the information
 obtained by parsing CDDB files, .inf file and the filename).
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build -n
@@ -51,12 +52,16 @@ obtained by parsing CDDB files, .inf file and the filename).
 %perl_vendor_install
 
 %files
+%doc README.shrink Changes README.txt TODO examples
 %perl_vendor_privlib/MP3*
 %perl_vendor_privlib/Normalize
 %perl_vendor_privlib/Encode/transliterate_win1251.pm
 
 
 %changelog
+* Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
