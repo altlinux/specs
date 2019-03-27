@@ -34,7 +34,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.11.5
+Version: 1.12.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -46,6 +46,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
+Patch100: 0001-Don-t-use-the-bundled-tzdata-at-runtime-except-for-t.patch
 
 ExclusiveArch: %go_arches
 
@@ -112,6 +113,7 @@ Go sources and documentation.
 %setup -q
 
 %patch2 -p1
+%patch100 -p1
 
 %build
 # go1.5 bootstrapping. The compiler is written in golang.
@@ -285,6 +287,10 @@ mkdir -p -- \
 
 
 %changelog
+* Wed Mar 27 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- New version (1.12.1).
+- Apply timezone patch, avoid using bundled data
+
 * Thu Jan 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.5-alt1
 - 1.11.5
 - fixed CPU DoS vulnerability affecting P-521 and P-384 (Fixes: CVE-2019-6486)
