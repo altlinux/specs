@@ -1,5 +1,5 @@
 Name: libcrl
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 %define soname %version
@@ -78,6 +78,9 @@ done
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- merge commit '84072fb'
+
 * Fri Jan 04 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - merge commit '9b7c6b5d9f1b59d2160bf6e9c4e74510f955efe1'
 
