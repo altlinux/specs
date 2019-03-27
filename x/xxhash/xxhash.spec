@@ -1,5 +1,5 @@
 Name: xxhash
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 
 Summary: Extremely fast hash algorithm
@@ -73,6 +73,9 @@ make test-xxhsum-c
 %_libdir/libxxhash.so
 
 %changelog
+* Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.5-alt1
 - initial build for ALT Sisyphus
 
