@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.55.0
+Version: 5.56.0
 Release: alt1
 %K5init altplace
 
@@ -25,7 +25,7 @@ BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libattr-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
-BuildRequires: kf5-karchive-devel kf5-ki18n-devel
+BuildRequires: kf5-karchive-devel kf5-ki18n-devel kf5-kconfig-devel kf5-kcoreaddons-devel
 
 %description
 KFileMetaData provides a simple library for extracting the text and metadata
@@ -81,6 +81,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
+- new version
+
 * Mon Feb 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.55.0-alt1
 - new version
 
