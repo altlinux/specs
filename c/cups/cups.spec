@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.2.10
-Release: alt2
+Version: 2.2.11
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -47,7 +47,8 @@ Patch19: FC-ipp-multifile.patch
 Patch20: FC-web-devices-timeout.patch
 Patch21: FC-synconclose.patch
 Patch22: FC-ypbind.patch
-Patch23: FC-lspp.patch
+Patch23: FC-failover-backend.patch
+Patch24: FC-lspp.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-pwg-raster-attributes.patch
@@ -193,7 +194,8 @@ services using the main CUPS library "libcups".
 %patch20 -p1 -b .web-devices-timeout
 %patch21 -p1 -b .synconclose
 %patch22 -p1 -b .ypbind
-%patch23 -p1 -b .lspp
+%patch23 -p1 -b .failover
+%patch24 -p1 -b .lspp
 
 ## Ubuntu apply patches
 #patch101 -p1
@@ -232,12 +234,12 @@ services using the main CUPS library "libcups".
 %patch134 -p1
 %patch135 -p1
 %patch136 -p1
-%patch137 -p1
-%patch138 -p1
-%patch139 -p1
-%patch140 -p1
-%patch141 -p1
-%patch142 -p1
+#patch137 -p1
+##patch138 -p1
+#patch139 -p1
+#patch140 -p1
+#patch141 -p1
+#patch142 -p1
 ##patch143 -p1
 
 ## ALT apply patches
@@ -398,6 +400,10 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2.2.11-alt1
+- Autobuild version bump to 2.2.11
+- Update patches
+
 * Mon Mar 11 2019 Fr. Br. George <george@altlinux.ru> 2.2.10-alt2
 - Fix UTF8->ASCII task header conversion (thanks klark@)
 
