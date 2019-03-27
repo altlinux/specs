@@ -7,7 +7,7 @@
 
 Name: mumble
 Version: 1.2.19
-Release: alt4
+Release: alt5
 
 Summary: Low latency encrypted VoIP client
 
@@ -102,7 +102,7 @@ primarily intended for gaming. It provides a KIO protocol description.
 
 %build
 %add_optflags -fpermissive
-qmake-qt4 -recursive "CONFIG+=no-oss no-ice speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update" \
+qmake-qt4 -recursive "CONFIG+=no-oss no-ice speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update c++11" \
 QMAKE_CFLAGS+='%optflags' \
 QMAKE_CXXFLAGS+='%optflags' \
 DEFINES+=PLUGIN_PATH=%_libdir/%name \
@@ -219,6 +219,9 @@ mkdir -p %buildroot%_logdir/murmur/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.19-alt5
+- build in c++-11 mode
+
 * Sun Jan 20 2019 Arseny Maslennikov <arseny@altlinux.org> 1.2.19-alt4
 - murmur.service: Fixed wrong path to executable in ExecStart=.
 - mumble: Added a dependency on libqt4-sql-sqlite since the client

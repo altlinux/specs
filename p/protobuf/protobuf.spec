@@ -1,5 +1,5 @@
 %define oname protobuf
-%define soversion 15
+%define soversion 17
 
 # set 'enable' to build legacy package
 %def_disable legacy
@@ -26,8 +26,8 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.5.2
-Release: alt2
+Version: 3.6.1.3
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 %if_disabled legacy
@@ -35,9 +35,9 @@ Group: System/Libraries
 %else
 Group: System/Legacy libraries
 %endif
-Url: https://github.com/google/protobuf
+Url: https://github.com/protocolbuffers/protobuf
 
-# https://github.com/google/protobuf.git
+# https://github.com/protocolbuffers/protobuf.git
 Source: %oname-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -166,6 +166,7 @@ BuildRequires:  rpm-build-java java-devel-default
 BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
+Obsoletes: %name-javanano < 3.6.0
 # remove when xmvn will be patched to not insert this dep automatically
 %filter_from_requires /^java-headless/d
 
@@ -189,16 +190,6 @@ BuildArch:      noarch
 %description java-util
 Utilities to work with protos. It contains JSON support
 as well as utilities to work with proto3 well-known types.
-
-%package javanano
-Group: System/Libraries
-Summary:        Protocol Buffer JavaNano API
-BuildArch:      noarch
-
-%description javanano
-JavaNano is a special code generator and runtime
-library designed specially for resource-restricted
-systems, like Android.
 
 %package parent
 Group: System/Libraries
@@ -229,11 +220,6 @@ cp -fR python python3
 %pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/*/pom.xml
 # These use easymockclassextension
 rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
-
-# used by https://github.com/googlei18n/libphonenumber
-%pom_xpath_inject "pom:project/pom:modules" "<module>../javanano</module>" java
-%pom_remove_parent javanano
-%pom_remove_dep org.easymock:easymockclassextension javanano
 
 # Make OSGi dependency on sun.misc package optional
 %pom_xpath_inject "pom:configuration/pom:instructions" "<Import-Package>sun.misc;resolution:=optional,*</Import-Package>" java/core
@@ -342,16 +328,16 @@ popd
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
-%files javanano -f .mfiles-protobuf-javanano
-%doc javanano/README.md
-%doc LICENSE
-
 %files parent -f .mfiles-protobuf-parent
 %doc LICENSE
 %endif
 %endif
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 3.6.1.3-alt1
+- 3.6.1.3
+- obsolete javanano subpackage; discontinued upstream
+
 * Mon Dec 24 2018 Michael Shigorin <mike@altlinux.org> 3.5.2-alt2
 - Skip *slow* IsValidUtf8Test on non-x86 platforms
   (very slow on arm/e2k, should be worse on mipsel,
