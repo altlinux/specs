@@ -1,7 +1,7 @@
 Name: iputils
-%define timestamp 20180629
+%define timestamp 20190324
 Version: %timestamp
-Release: alt2
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
 License: %bsd, %gpl2plus, AS-IS (SUN MICROSYSTEMS license)
@@ -10,22 +10,16 @@ Url: https://github.com/iputils/iputils
 
 Source0: %name-%version.tar
 Source1: ping.control
+Source2: ninfod.init
 Patch: %name-%version-%release.patch
-# Patches from upstream git.
-# Drop it when new version will be released.
-Patch1: 0001-tracepath-Fix-copying-input-IPv6-address.patch
-Patch2: ping-check-getifaddrs-3-ifa_name-data-before-use.patch
-Patch3: ping-do-not-bind-to-device-when-destination-IP-is-on.patch
-Patch4: fix-ping-duration-time-error.patch
-Patch5: Fix-Rounding-Issue-123.patch
 
 Conflicts: netkit-base
 
-PreReq: shadow-utils
-PreReq: control >= 0.8.0-alt1
+Requires(pre): shadow-utils
+Requires(pre): control >= 0.8.0-alt1
 Requires: /var/resolv
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses meson
 
 BuildRequires: libcap-devel
 BuildRequires: libsysfs-devel libssl-devel
@@ -58,54 +52,40 @@ Queries.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
-CFLAGS="%optflags -D_GNU_SOURCE -fno-strict-aliasing -Wstrict-prototypes"
+%add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror
 %ifarch s390 s390x
-  CFLAGS="$CFLAGS -fPIE"
+	%add_optflags -fPIE
 %else
-  CFLAGS="$CFLAGS -fpie"
+	%add_optflags -fpie
 %endif
 
-%make_build \
-	CFLAGS="$CFLAGS" \
-	CCOPT="$CFLAGS" \
-	arping clockdiff ping rdisc tracepath ninfod
-%make_build man -C doc
+export LDFLAGS='-pie'
+%meson \
+	-Dsystemdunitdir=%_unitdir \
+	-DUSE_CAP=true \
+	-DUSE_IDN=true \
+	-DUSE_CRYPTO=openssl \
+	-DUSE_GETTEXT=false
+
+%meson_build -v
 
 %install
-mkdir -p %buildroot{%_bindir,%_sbindir,%_man8dir}
-mkdir -p %buildroot%ping_real_dir
-install -p arping clockdiff %buildroot%_sbindir/
-
-install -p -m755 tracepath %buildroot%_bindir/
-ln -s tracepath %buildroot%_bindir/tracepath6
-
-install -p -m700 ping %buildroot%ping_real_dir/ping
+%meson_install
+mkdir -p %buildroot%ping_real_dir/
+mv %buildroot%_bindir/ping %buildroot%ping_real_dir/
 ln -s %ping_real_dir/ping %buildroot%_bindir/ping
 ln -s %ping_real_dir/ping %buildroot%_bindir/ping6
-
-install -p rdisc %buildroot%_sbindir/rdisc
-install -p ninfod/ninfod %buildroot%_sbindir/
-pushd doc
-	install -pm644 arping.8 clockdiff.8 rdisc.8 ninfod.8 \
-		%buildroot%_man8dir/
-	install -pD -m644 ping.1 %buildroot%_man1dir/ping.1
-	install -pD -m644 tracepath.1 %buildroot%_man1dir/tracepath.1
-	ln -s ping.1 %buildroot%_man1dir/ping6.1
-	ln -s tracepath.1 %buildroot%_man1dir/tracepath6.1
-popd
 
 install -pD -m755 %SOURCE1 %buildroot%_controldir/ping
 
 mkdir -p %buildroot%_sysctldir/
 touch %buildroot%sysctl_conf_file
 
+install -pD -m755 %SOURCE2 %buildroot%_initdir/ninfod
+
+ln -s tracepath %buildroot%_bindir/tracepath6
 # for backward compatibility
 mkdir -p %buildroot/bin/
 for p in ping ping6 tracepath tracepath6; do
@@ -120,6 +100,7 @@ groupadd -r -f netadmin ||:
 %pre_control ping
 
 %post
+# net.ipv4.ping_group_range controls both IPv4 and IPv6 sockets
 if [ ! -e %sysctl_conf_file ]; then
 	ALLOW_GID="$(getent group iputils | cut -f3 -d:)" ||:
 	if [ -n "$ALLOW_GID" ]; then
@@ -133,6 +114,22 @@ fi
 
 %post_control ping
 
+# There is no rdisk init script
+if sd_booted; then
+	%post_service rdisc
+fi
+
+%preun
+if sd_booted; then
+	%preun_service rdisc
+fi
+
+%post -n ninfod
+%post_service ninfod
+
+%preun -n ninfod
+%preun_service ninfod
+
 %files
 %config %_controldir/ping
 %attr(700,root,netadmin) %verify(not mode) %dir %ping_real_dir/
@@ -140,6 +137,7 @@ fi
 %ghost %config %sysctl_conf_file
 /bin/*
 %_bindir/*
+%_unitdir/rdisc.service
 %_sbindir/*
 %_mandir/man?/*
 %exclude %_sbindir/ninfod
@@ -147,10 +145,32 @@ fi
 
 %files -n ninfod
 %doc ninfod/COPYING
+%_unitdir/ninfod.service
+%_initdir/ninfod
 %_sbindir/ninfod
 %_man8dir/ninfod.*
 
 %changelog
+* Wed Mar 27 2019 Mikhail Efremov <sem@altlinux.org> 20190324-alt1
+- ping: Fix use-after-free.
+- ninfod: Drop modcap.c usage.
+- Add ninfod init script.
+- Don't use deprecated PreReq.
+- arping: Fix packets count.
+- Add note about net.ipv4.ping_group_range.
+- Package rdisc.service and ninfod.service.
+- meson: Fix rdisc unit file.
+- meson: Install clockdiff and arping to sbindir.
+- meson: Fix systemd detection.
+- ping6_common.c: Fix include.
+- arping: Drop unused variable.
+- Build with -Werror.
+- Update spec for meson build.
+- Drop patches from upstream git.
+- meson: Fix build with meson.
+- all: Fix checks for libcap.
+- 20180629 -> 20190324.
+
 * Fri Mar 22 2019 Mikhail Efremov <sem@altlinux.org> 20180629-alt2
 - Ptaches from upstream:
   + Fix Rounding Issue #123.
