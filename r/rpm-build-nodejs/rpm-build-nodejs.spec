@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -12,9 +12,11 @@ URL: http://www.altlinux.org/Node.JS_Policy
 Source: %name-%version.tar
 Source1: macros.nodejs-tap
 Source2: %pkg.prov.files
+Source3: %pkg.env
 Patch0: macros.nodejs-alt.patch
 Patch1: nodejs.req-alt.patch
 Patch2: nodejs.req-alt-rpmbuild404.patch
+Patch3: nodejs.req-alt-utf8.patch
 
 BuildArch: noarch
 Provides: nodejs-packaging = %version
@@ -41,6 +43,7 @@ See %url for detailed %pkg packaging policy.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %install
 mkdir -p %buildroot/%_rpmmacrosdir/
@@ -51,10 +54,11 @@ EOF
 sed -e s,_rpmconfigdir,_rpm_build_nodejsdir,g macros.nodejs >> %buildroot/%_rpmmacrosdir/%pkg
 
 # TMP:
-cat %{SOURCE1} >> %buildroot/%_rpmmacrosdir/%pkg
+cat %{SOURCE1} >> %buildroot%_rpmmacrosdir/%pkg
 
 install -D -m755 %pkg.prov %buildroot/usr/lib/rpm/%pkg.prov
 install -D -m755 %{SOURCE2} %buildroot/usr/lib/rpm/%pkg.prov.files
+install -D -m644 %{SOURCE3} %buildroot%_rpmmacrosdir/%pkg.env
 install -D -m755 %pkg.req %buildroot/usr/lib/rpm/%pkg.req
 ln -s %pkg.prov.files %buildroot/usr/lib/rpm/%pkg.req.files
 install -D -m755 nodejs-fixdep  %buildroot%_datadir/%name/%pkg-fixdep
@@ -69,11 +73,16 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 /usr/lib/rpm/%pkg.prov.files
 /usr/lib/rpm/%pkg.req
 /usr/lib/rpm/%pkg.req.files
+# unused now
+%exclude %_rpmmacrosdir/%pkg.env
 
 %files -n rpm-macros-%pkg
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.20.2-alt1
+- utf-8 patch (closes: #36427)
+
 * Sat Mar 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.20.1-alt1
 - bugfix for rpmbuild 4.04
 
