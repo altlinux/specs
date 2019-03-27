@@ -1,5 +1,5 @@
 Name: xprop
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: property displayer for X
 License: MIT/X11
@@ -35,6 +35,9 @@ information.
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.2.4-alt1
+- Autobuild version bump to 1.2.4
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.2.3-alt1
 - Autobuild version bump to 1.2.3
 
