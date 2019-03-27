@@ -1,6 +1,6 @@
 Name: librdkafka
 Version: 0.11.6
-Release: alt1
+Release: alt2
 
 Summary: the Apache Kafka C/C++ client library
 
@@ -13,11 +13,12 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Source-url: https://github.com/edenhill/librdkafka/archive/v%{version}.tar.gz
 Source: %name-%version.tar
 Source1: rdkafka.pc
-Patch0: lz4-alt.patch
+Patch0: 01-lz4-alt.patch
+Patch1: 02-xxhash-alt.patch
 
 # Automatically added by buildreq on Fri Nov 09 2018
 # optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel
+BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel libxxhash-devel
 
 %description
 librdkafka is a C library implementation of the Apache Kafka protocol, containing 
@@ -39,6 +40,7 @@ msgs/second for the producer and 3 million msgs/second for the consumer.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 
 %build
 #%cmake_insource
@@ -73,6 +75,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Mar 27 2019 Pavel Vainerman <pv@altlinux.ru> 0.11.6-alt2
+- added patch for use system libxxhash (altbug #36399)
+
 * Tue Mar 26 2019 Pavel Vainerman <pv@altlinux.ru> 0.11.6-alt1
 - added patch for use external(system) lz4 (closed altbug #36399)
 
