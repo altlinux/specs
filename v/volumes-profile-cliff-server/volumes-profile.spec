@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-server
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -28,6 +28,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.17-alt1
+- no swap in profile (security reasons)
+
 * Thu Feb 07 2019 Oleg Solovyov <mcpain@altlinux.org> 0.16-alt1
 - fix root size when there is no separate /var
 
