@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt2
+Release:       alt3
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -63,6 +63,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Wed Mar 27 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt3
+- fix requires deps detection over executable's shebang line
+
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt2
 - Added novel approach to detect the dependencies of packages
 
