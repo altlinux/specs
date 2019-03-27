@@ -1,5 +1,5 @@
 Name: volumes-profile-centaurus
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -29,6 +29,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.13-alt1
+- no swap (security reasons)
+
 * Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 0.12-alt1
 - e2k support (/boot)
 
