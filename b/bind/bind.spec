@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.6
 %define src_version 9.11.6
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPLv2.0
@@ -46,6 +46,7 @@ Patch0007: 0007-alt-nofile.patch
 Patch0008: 0008-alt-ads-remove.patch
 Patch0009: 0009-Minimize-linux-capabilities.patch
 Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
+Patch0011: 0011-Make-build-configured-against-with-gssapi-fail-on-mi.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -80,6 +81,7 @@ BuildPreReq: libcap-devel
 
 %{?_with_openssl:BuildPreReq: libssl-devel}
 %{?_with_libjson:BuildPreReq: libjson-c-devel}
+BuildPreReq: libkrb5-devel
 
 %package utils
 Summary: Utilities provided by ISC BIND
@@ -176,6 +178,7 @@ rather than the DNS protocol.
 %patch0008 -p2
 %patch0009 -p2
 %patch0010 -p2
+%patch0011 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -436,6 +439,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Mar 27 2019 Stanislav Levin <slev@altlinux.org> 9.11.6-alt2
+- Fixed support for GSSAPI (closes: #36429).
+
 * Fri Mar 01 2019 Stanislav Levin <slev@altlinux.org> 9.11.6-alt1
 - 9.11.5.P4 -> 9.11.6.
 
