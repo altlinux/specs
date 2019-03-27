@@ -14,7 +14,7 @@
 
 Name: libuna
 Version: 20130728
-Release: alt1
+Release: alt1.1
 
 Summary: Library to support Unicode and ASCII (byte string) conversions
 License: LGPLv3+
@@ -59,6 +59,7 @@ applications that want to make use of libuna.
 
 %prep
 %setup
+subst "s| inline\$| /* inline */|" libuna/libuna_inline.h
 
 %build
 %configure \
@@ -85,6 +86,9 @@ applications that want to make use of libuna.
 %_man3dir/*
 
 %changelog
+* Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 20130728-alt1.1
+- fix build
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130728-alt1
 - initial build for ALT Linux Sisyphus
 
