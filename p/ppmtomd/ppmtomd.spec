@@ -2,7 +2,7 @@ Summary: Driver for the Alps Micro-Dry printers and similars
 
 Name: ppmtomd
 Version: 1.6
-Release: alt1
+Release: alt1.1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -14,6 +14,7 @@ Source: http://www.stevens-bradfield.com/ppmtomd/%name-%version.tar
 
 # Automatically added by buildreq on Wed Nov 07 2007
 BuildRequires: libnetpbm-devel
+%add_optflags -I%_includedir/netpbm
 
 %description
 A program to convert images from PPM format into the control language for the
@@ -36,7 +37,7 @@ colours.
 chmod a+r *
 
 %build
-%make CFLAGS="%optflags"
+%make CFLAGS="%optflags" CDEBUGFLAGS="%optflags"
 
 %install
 install -d %buildroot%_bindir
@@ -51,6 +52,9 @@ install -d %buildroot%_man1dir
 
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt1.1
+- NMU: rebuild with libnetpbm.so.11
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 1.6-alt1
 - Build version 1.6
 

@@ -1,6 +1,6 @@
 Name: dvdstyler
 Version: 3.0.4
-Release: alt3%ubt
+Release: alt4
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -14,7 +14,7 @@ Source5: %name-32x32.png
 Patch0: %name-ffmpeg-4.patch
 
 BuildRequires: gcc-c++ compat-libwxGTK3.0-gtk2-devel libmjpegtools-devel netpbm
-BuildRequires: libnetpbm-devel libwxsvg-devel libexif-devel
+BuildRequires: libwxsvg-devel libexif-devel
 BuildRequires: libjpeg-devel libudev-devel libgnomeui-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libavfilter-devel libswscale-devel ffmpeg
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-ubt
 
 Requires: mjpegtools dvdauthor dvd+rw-tools genisoimage dvdisaster ffmpeg
 
-%description 
+%description
 %name is a crossplatform DVD Authoring System.
 The main %name features are:
     * you can drag and drop MPEG files directly
@@ -95,6 +95,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt4
+- NMU: libnetpbm-devel no more needed as dependency
+
 * Thu Aug 16 2018 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt3%ubt
 - Rebuilt with compat-libwxGTK3.0-gtk2
 

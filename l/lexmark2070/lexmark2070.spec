@@ -1,6 +1,6 @@
 Name: lexmark2070
 Version: 0.6
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: System/Configuration/Printing
 
@@ -9,7 +9,6 @@ URL: http://www.kornblum.i-p.com/2070/Lexmark2070.old.html
 Source: %name-%version.tar.gz
 Patch:	Lexmark2070-LDFLAGS.patch
 
-BuildRequires: libnetpbm-devel
 Requires: c2070
 
 Summary: Lexmark 2070 Printer B/W driver
@@ -33,6 +32,9 @@ install -m0755 Lexmark2070 %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1.1
+- NMU: the build does not need libnetpbm-devel
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 0.6-alt1
 - Initial build for ALT
 

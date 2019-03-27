@@ -1,6 +1,6 @@
 Name: photopnmtools
 Version: 1.3
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Toolset for postprocessing photographic images, based on PPM
 License: Artistic
@@ -14,6 +14,8 @@ Patch1: photopnmtools-1.3-pnmdft.patch
 # Automatically added by buildreq on Fri Jul 20 2007
 BuildRequires: libnetpbm-devel
 
+%add_optflags -I%_includedir/netpbm
+
 %description
 PhotoPnMTools is a simple toolkit for processing photographic images using
 improved algorithms. It is based on Poskanzer's PPM toolkit. It contains
@@ -24,7 +26,7 @@ resizing, sharpening, and contrast/saturation/color balance filters.
 %patch0 -p1
 %patch1 -p1
 
-%__subst 's/-lpnm/-Wl,--no-as-needed -lnetpbm/; s/-O2/%optflags/' Makefile
+%__subst 's/-lpnm/-Wl,--no-as-needed -lnetpbm/; s@-O2@%optflags@' Makefile
 
 %build
 %make_build
@@ -39,6 +41,9 @@ install -p -m755 {hsy,pnm,ppm}*[^c] %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1.qa1.1
+- NMU: rebuild with libnetpbm.so.11
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

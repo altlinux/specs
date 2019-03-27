@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/perl
 Summary:	Render a planetary image into an X window
 Name:		xplanet
 Version:	1.3.1
-Release:	alt1_10
+Release:	alt1_10.1
 
 License:	GPLv2+
 Source:		http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -49,7 +49,8 @@ LANG=C grep -rl "inFile\.getline" . | \
 %endif
 
 %build
-%configure
+%add_optflags -I%_includedir/netpbm
+%configure --with-pnm
 %make_build -k
 
 %install
@@ -66,6 +67,9 @@ ln -sf ../fonts/ttf/gnu-free/FreeMonoBold.ttf \
 %{_datadir}/xplanet
 
 %changelog
+* Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1_10.1
+- NMU: rebuild with libnetpbm.so.11
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_10
 - update to new release by fcimport
 
