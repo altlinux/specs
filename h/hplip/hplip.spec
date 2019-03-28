@@ -29,8 +29,8 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.19.1
-Release: alt2
+Version: 3.19.3
+Release: alt1
 %if_without ernie
 License: GPLv2+ and MIT and BSD
 %else
@@ -1179,6 +1179,37 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.3-alt1
+- New version.
+- Added support for new printers:
+  + HP OfficeJet Pro All-in-One 9010 
+  + HP OfficeJet Pro All-in-One 9020
+  + HP OfficeJet All-in-One 9010
+  + HP PageWide XL 4100 Printer
+  + HP PageWide XL 4100 MFP
+  + HP PageWide XL 4600 Printer
+  + HP PageWide XL 4600PS MFP
+  + HP Color LaserJet Managed MFP E77422a
+  + HP Color LaserJet Managed MFP E77422dv
+  + HP Color LaserJet Managed MFP E77422dn
+  + HP Color LaserJet Managed MFP E77428dn
+  + HP LaserJet MFP E72425a
+  + HP LaserJet MFP E72425dv
+  + HP LaserJet MFP E72425dn
+  + HP LaserJet MFP E72430dn
+  + HP LaserJet Managed MFP E62655dn
+  + HP LaserJet Managed MFP E62665hs
+  + HP LaserJet Managed Flow MFP E62665h
+  + HP LaserJet Managed Flow MFP E62675z
+  + HP LaserJet Managed Flow MFP E62665z
+  + HP LaserJet Managed E60155dn
+  + HP LaserJet Managed E60165dn
+  + HP LaserJet Managed E60175dn
+  + HP Color LaserJet Managed E65150dn
+  + HP Color LaserJet Managed E65160dn
+  + HP Color LaserJet Managed MFP E67650dh
+  + HP Color LaserJet Managed Flow MFP E67660z
+
 * Thu Feb 07 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.1-alt2
 - Autodetect auth type for modern ALT distro (ALT #36053).
 
