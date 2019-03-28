@@ -1,8 +1,8 @@
 %define rname plasma-workspace-wallpapers
 
 Name: plasma5-workspace-wallpapers
-Version: 5.12.3
-Release: alt1%ubt
+Version: 5.15.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Oct 06 2015 (-bi)
 # optimized out: cmake cmake-modules libqt5-core libstdc++-devel python-base python3 python3-base
 #BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 
 %description
@@ -40,7 +40,10 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 %_datadir/wallpapers/*
 
 %changelog
-* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+* Thu Mar 28 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.3-alt1
+- new version
+
+* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
 - new version
 - rename package
 
