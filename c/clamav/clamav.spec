@@ -13,8 +13,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.101.1
-Release: alt2
+Version: 0.101.2
+Release: alt1
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -70,7 +70,7 @@ BuildRequires: sed
 # is needed since 0.101 even without llvm
 BuildRequires: gcc-c++
 
-BuildRequires: bzlib-devel libcheck-devel libncurses-devel zlib-devel libssl-devel libxml2-devel libpcre-devel
+BuildRequires: bzlib-devel libcheck-devel libncurses-devel zlib-devel libssl-devel libxml2-devel libpcre2-devel
 BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
 
 # for clamsubmit
@@ -351,6 +351,12 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Mar 28 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.2-alt1
+- 0.101.2
+  + CVE-2019-1787, CVE-2019-1789, CVE-2019-1788 - 0.101.1 and prior
+  + CVE-2019-1786, CVE-2019-1785, CVE-2019-1798 - 0.101.1 and 0.101.0 only
+- switched to libpcre2
+
 * Sat Jan 12 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.1-alt2
 - added "Conflicts: libclamav7 < 0.100.2-alt3" to libclamav9 subpackage
 
