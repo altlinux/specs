@@ -1,10 +1,10 @@
 %global import_path github.com/grafana/grafana
-%global commit 34a9a621b6b6f14d9ad15690d0a38047905b5423
+%global commit 3f4c2e7957c58dda0471ca1a71c2703153d10976
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%define %_runtimedir /run
+%define _runtimedir /run
 
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %go_root %_bindir
@@ -12,8 +12,8 @@
 
 
 Name:		grafana
-Version:	6.0.0
-Release:	alt2
+Version:	6.0.2
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -49,6 +49,7 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ npm install yarn
 # $ ./node_modules/.bin/yarn install --pure-lockfile
 # $ npm run build
+# $ rm -rf node_modules/node-sass/vendor
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
@@ -161,6 +162,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Thu Mar 28 2019 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
 * Fri Mar 01 2019 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
 - fix show version in webui
 - change runtimedir from /var/run/grafana to /run/grafana
