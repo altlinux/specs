@@ -2,7 +2,7 @@
 
 Name: ding-libs
 Version: 0.6.1
-Release: alt5%ubt
+Release: alt6
 
 Summary: "Ding is not GLib" assorted utility libraries
 License: %lgpl3plus
@@ -22,7 +22,6 @@ Patch: %name-%version.patch
 BuildRequires: pkgconfig
 BuildRequires: doxygen
 
-BuildRequires(pre):rpm-build-ubt
 BuildRequires(pre):rpm-build-licenses
 
 %package -n libpath_utils
@@ -242,10 +241,13 @@ rm -f \
 %doc ini/doc/html/
 
 %changelog
-* Wed Nov 01 2017 Stanislav Levin <slev@altlinux.org> 0.6.1-alt5%ubt
+* Thu Mar 28 2019 Stanislav Levin <slev@altlinux.org> 0.6.1-alt6
+- Applied upstream fixes.
+
+* Wed Nov 01 2017 Stanislav Levin <slev@altlinux.org> 0.6.1-alt5
 - 0.6.1
 
-* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.6.0-alt4%ubt
+* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.6.0-alt4
 - Build package with unified build tag aka ubt macros
 
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt4
