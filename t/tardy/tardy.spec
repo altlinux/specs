@@ -1,19 +1,24 @@
-Summary:	a tar post-processor
 Name:		tardy
-Version:	1.17
-Release:	alt2.qa1
+Version:	1.28.D001
+Release:	alt1
+
+Summary:	a tar post-processor
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
 License:	%gpl3plus
 Group:		Archiving/Backup
-Source:		%name-%version.tar
 URL:		http://tardy.sourceforge.net/
 
-BuildPreReq: rpm-build-licenses
+# Source-url: http://prdownloads.sf.net/%name/%name-%version.tar.gz
+Source:		%name-%version.tar
 
-# Automatically added by buildreq on Thu May 08 2008
-BuildRequires: gcc-c++ groff-base zlib-devel
+BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: gcc-c++ boost-devel-headers
+BuildRequires: groff-base groff-ps ghostscript-utils
+BuildRequires: zlib-devel bzlib-devel liblzma-devel
+BuildRequires: libexplain-devel
 
 %description
 The tardy program is a tar(1) post-processor.  It may be used to
@@ -34,21 +39,26 @@ of files after they have been included in the tar file.  Among them are:
 Note that all of these affect ALL files in the archive.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
-%make_build
+# TODO: SMP build
+%make
 
 %install
-%make_install RPM_BUILD_ROOT=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 %files
 %_bindir/tardy
 %_man1dir/tardy.1*
 %_man1dir/tardy_license.1*
+%_docdir/%name/
 
 %changelog
+* Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 1.28.D001-alt1
+- new version 1.28.D001 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.17-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
