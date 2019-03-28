@@ -1,36 +1,39 @@
-%def_disable static
-%define _name libevent
-
-Name: %{_name}2.1
+Name: libevent
 Version: 2.1.8
-Release: alt1
+Release: alt2
 
-Summary: An asynchronous event notification library
+Summary: Abstract asynchronous event notification library
+# arc4random.c is ISC, the rest is BSD-3-Clause.
+License: BSD-3-Clause and ISC
 Group: System/Libraries
-License: BSD-style
-Url: http://www.monkey.org/~provos/libevent/
+Url: https://libevent.org/
 
-# http://www.monkey.org/~provos/libevent-%version-stable.tar.gz
+%define libname %{name}2.1
+%def_disable static
+
+# https://github.com/libevent/libevent/releases/download/release-%version-stable/libevent-%version-stable.tar.gz
 Source: %name-%version.tar
-Source1: Makefile.sample
-Source2: README.libevent
+Source1: libevent.so
+Source2: Makefile.sample
 # git://git.altlinux.org/gears/l/%name.git
 Patch: %name-%version-%release.patch
 
 BuildRequires: libssl-devel zlib-devel
-# Need for test
-BuildRequires:  python-modules
+%{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
 
-%package -n %_name-devel
+%package -n %libname
+Summary: Abstract asynchronous event notification library
+Group: System/Libraries
+Provides: %name = %EVR
+
+%package devel
 Summary: Development libevent library, its header files and documentation
 Group: Development/C
-Requires: %name = %version-%release
-Provides: libevent1.4-devel = %version-%release
 
-%package -n %_name-devel-static
+%package devel-static
 Summary: Static libevent library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel
 
 %description
 The libevent API provides a mechanism to execute a callback function
@@ -38,33 +41,24 @@ when a specific event occurs on a file descriptor or after a timeout
 has been reached.
 
 libevent is meant to replace the asynchronous event loop found in
-event driven network servers.  Currently, libevent supports kqueue(2),
-select(2) and epoll(4).
+event driven network servers.
 
-%description -n %_name-devel
+%description -n %libname
 The libevent API provides a mechanism to execute a callback function
 when a specific event occurs on a file descriptor or after a timeout
 has been reached.
 
 libevent is meant to replace the asynchronous event loop found in
-event driven network servers.  Currently, libevent supports kqueue(2),
-select(2) and epoll(4).
+event driven network servers.
 
+%description devel
 This package contains the header files, documentation, examples and
 development library for use in developing applications that use the
 libevent library.
 
-%description -n %_name-devel-static
-The libevent API provides a mechanism to execute a callback function
-when a specific event occurs on a file descriptor or after a timeout
-has been reached.
-
-libevent is meant to replace the asynchronous event loop found in
-event driven network servers.  Currently, libevent supports kqueue(2),
-select(2) and epoll(4).
-
+%description devel-static
 This package contains the static libevent library necessary to build
-statically-linkeed libevent-based applications.
+statically-linked libevent-based applications.
 
 %prep
 %setup
@@ -74,7 +68,7 @@ statically-linkeed libevent-based applications.
 %autoreconf
 # force epoll and /dev/epoll support
 export haveepoll=yes
-%configure %{subst_enable static} --disable-libevent-regress
+%configure %{subst_enable static} --disable-libevent-regress --disable-silent-rules
 %make_build
 
 %install
@@ -88,26 +82,30 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
+# Replace libevent.so symlink with the linker script.
+rm %buildroot%_libdir/libevent.so
+install -pm644 %_sourcedir/libevent.so %buildroot%_libdir/
+
 %define docdir %_docdir/%name-%version
 install -pD -m644 %_sourcedir/Makefile.sample \
 	%buildroot%docdir/examples/Makefile
 install -p -m644 sample/*.c %buildroot%docdir/examples/
-install -pm644 %_sourcedir/README.libevent \
-	%buildroot%docdir/README
+install -pm644 LICENSE whatsnew-2.1.txt %buildroot%docdir/
 
 #Install man
 mkdir -p %buildroot%_man3dir
 install -p -m644 *.3 %buildroot%_man3dir/
 
 %check
-make verify
+%make_build -k check
 
-%files
+%files -n %libname
 /%_lib/*.so.*
 %dir %docdir
-%docdir/README
+%docdir/LICENSE
+%docdir/whatsnew-2.1.txt
 
-%files -n %_name-devel
+%files devel
 %_bindir/event_rpcgen.py
 %_libdir/*.so
 %_includedir/*
@@ -117,11 +115,16 @@ make verify
 %docdir/examples
 
 %if_enabled static
-%files -n %_name-devel-static
+%files devel-static
 %_libdir/*.a
 %endif
 
 %changelog
+* Thu Mar 28 2019 Dmitry V. Levin <ldv@altlinux.org> 2.1.8-alt2
+- Replaced libevent.so symlink with a linker script that results
+  to -levent being substituted with -levent_core -levent_extra
+  (closes: #36436).
+
 * Thu Aug 30 2018 Alexei Takaseev <taf@altlinux.org> 2.1.8-alt1
 - 2.1.8
 - Disable regress in make check
