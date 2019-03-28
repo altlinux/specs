@@ -1,8 +1,8 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.64.0
-Release: alt2
+Version: 7.64.1
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -124,7 +124,7 @@ applications that utilize lib%name.
 %makeinstall_std -C docs/libcurl
 
 %check
-%make_build -k test-full
+%make -k test-full
 
 %files
 %_bindir/curl
@@ -149,6 +149,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Thu Mar 28 2019 Anton Farygin <rider@altlinux.ru> 7.64.1-alt1
+- 7.64.1
+
 * Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 7.64.0-alt2
 - increased level of verbosity in make check stage
 
