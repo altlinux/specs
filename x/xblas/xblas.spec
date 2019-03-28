@@ -2,7 +2,7 @@
 
 Name: xblas
 Version: 1.0.248
-Release: alt1.1
+Release: alt1.2
 
 Summary: Extended and Mixed Precision version of BLAS
 License: MIT
@@ -79,7 +79,9 @@ This package contains development documentation for XBLAS.
 %autoreconf
 %configure --enable-fortran --disable-plain-blas
 %make_build makefiles
-%make_build sources test-sources
+%make_build sources
+# non SMP build
+%make test-sources
 %make_build all
 
 %install
@@ -116,6 +118,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Thu Mar 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.248-alt1.2
+- fix build
+
 * Tue May 30 2017 Michael Shigorin <mike@altlinux.org> 1.0.248-alt1.1
 - E2K: link lib%name.so against libm explicitly
 - minor spec cleanup in memoriam
