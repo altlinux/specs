@@ -1,21 +1,20 @@
+%def_with doc
+
 Name: cifs-utils
 Version: 6.8
-Release: alt2%ubt
+Release: alt3
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
-Group: System/Kernel and hardware
 License: GPLv3+
-Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
+Group: System/Kernel and hardware
 
+Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
 
-BuildRequires(pre):rpm-build-ubt
-
-Requires: keyutils
-
+BuildRequires(pre): rpm-build-ubt rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
 BuildRequires: python-module-docutils
-
+Requires: keyutils
 Conflicts: samba-client < 3.6.0-alt1
 
 %description
@@ -23,7 +22,6 @@ This is the release version of cifs-utils, a package of utilities for
 doing and managing mounts of the Linux CIFS filesystem. These programs
 were originally part of Samba, but have now been split off into a
 separate package.
-
 
 %package devel
 Summary: Files needed for building plugins for cifs-utils
@@ -61,14 +59,11 @@ provide these credentials to the kernel automatically at login.
 %install
 %makeinstall_std
 mkdir -p %buildroot%_sysconfdir/request-key.d
-install -m 644 contrib/request-key.d/cifs.idmap.conf %buildroot%_sysconfdir/request-key.d
-install -m 644 contrib/request-key.d/cifs.spnego.conf %buildroot%_sysconfdir/request-key.d
-
+install -pm644 contrib/request-key.d/cifs.{idmap,spnego}.conf %buildroot%_sysconfdir/request-key.d/
 
 # Add alternatives for idmap-plugin
 mkdir -p %buildroot/%_altdir
 printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildroot/%_altdir/cifs-idmap-plugin-idmapwb
-
 
 %files
 /sbin/mount.cifs
@@ -80,6 +75,7 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %dir %_libdir/%name
 %_libdir/%name/idmapwb.so
 %_altdir/cifs-idmap-plugin-idmapwb
+%if_with doc
 %_man8dir/cifs.idmap.8*
 %_man8dir/cifs.upcall.8*
 %_man8dir/mount.cifs.8*
@@ -87,6 +83,7 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man1dir/getcifsacl.1*
 %_man1dir/setcifsacl.1*
 %_man1dir/cifscreds.1*
+%endif
 %doc AUTHORS ChangeLog README
 %config(noreplace) %_sysconfdir/request-key.d/cifs.idmap.conf
 %config(noreplace) %_sysconfdir/request-key.d/cifs.spnego.conf
@@ -96,9 +93,17 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 
 %files -n pam_cifscreds
 %_pam_modules_dir/pam_cifscreds.so
+%if_with doc
 %_man8dir/pam_cifscreds.*
+%endif
 
 %changelog
+* Thu Mar 28 2019 Michael Shigorin <mike@altlinux.org> 6.8-alt3
+- introduced doc knob (on by default) to work around ftbfs on e2k
+- added explicit BR(pre): rpm-macros-pam0
+- dropped %%ubt macro
+- minor spec cleanup
+
 * Mon Sep 24 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.8-alt2%ubt
 - build fixed
 
