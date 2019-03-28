@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit dda8079947be70b9cde4625ea2fcca7f5148a604
+%global commit 72270ef19e491dcf10e2f57e04d9aa6da81b6187
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.9.5
+Version:	1.10.1
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -47,11 +47,11 @@ or Google Analytics).
 # This is necessary because the gdm cannot work with the vendor directory and always tries to update
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
-# $ go get github.com/influxdata/telegraf
-# $ cd $HOME/go/src/github.com/influxdata/telegraf
+# $ go get -d github.com/influxdata/telegraf
+# $ pushd $HOME/go/src/github.com/influxdata/telegraf
 # $ git checkout %version
 # $ dep ensure -vendor-only
-# $ cd to_this_git_dir
+# $ popd
 # $ git rm -rf vendor
 # $ cp -r $HOME/go/src/github.com/influxdata/telegraf/vendor ./
 # $ git add -f vendor
@@ -69,7 +69,11 @@ export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
 
-go install -ldflags "-X main.version=$VERSION -X main.commit=$COMMIT -X main.branch=$BRANCH" ./...
+CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
+    -X main.version=$VERSION \
+    -X main.commit=$COMMIT \
+    -X main.branch=$BRANCH \
+    " -a -installsuffix nocgo ./...
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -101,6 +105,7 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
 %_sbindir/useradd -r -g %name -G %name  -c 'Telegraf Agent Daemon' \
         -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
+%_sbindir/usermod -a -G proc telegraf ||:
 %post
 %post_service %name
 
@@ -122,6 +127,10 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Mar 28 2019 Alexey Shabalin <shaba@altlinux.org> 1.10.1-alt1
+- 1.10.1
+- add user telegraf to proc group (fixed ALT#35130)
+
 * Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.5-alt1
 - 1.9.5
 

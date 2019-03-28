@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 4d5dda70165a34321f967f2b448114731e46b4d5
+%global commit 2f49e00f7f3801a506304c3b6d8165b2f4039f3d
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.7.4
+Version:	1.7.5
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -43,15 +43,15 @@ events, and performing analytics.
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
 # $ go get -d github.com/influxdata/influxdb
-# pushd src/github.com/influxdata/influxdb
+# pushd ~/go/src/github.com/influxdata/influxdb
 # $ git checkout to %version
 # $ dep ensure -vendor-only
 # popd
 # $ git rm -rf vendor
-# $ cp -r src/github.com/influxdata/telegraf/vendor ./
+# $ cp -r ~go/src/github.com/influxdata/influxdb/vendor ./
 # $ git add --force vendor
 # $ git commit -m "update go pkgs by dep ensure -vendor-only"
-# $ rm -rf $GOPATH/src/github.com/influxdata/influxdb
+# $ rm -rf ~/go/src/github.com/influxdata/influxdb
 
 
 export BUILDDIR="$PWD/.gopath"
@@ -123,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Mar 28 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.4-alt1
 - 1.7.4
 
