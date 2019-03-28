@@ -1,6 +1,6 @@
 Name: wordnet
 Version: 3.0
-Release: alt8
+Release: alt9
 
 Summary: WordNet English lexical reference system
 License: MIT
@@ -25,7 +25,7 @@ Patch13: wordnet-3.0-alt-warnings.patch
 
 Requires: lib%name = %version-%release
 Requires: %name-dict = %version-%release
-BuildRequires: tk-devel
+BuildRequires: tk-devel zlib-devel
 
 %define _libexecdir /usr/libexec
 %def_disable static
@@ -171,6 +171,9 @@ EOF
 %_man3dir/*
 
 %changelog
+* Thu Mar 28 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt9
+- add missed zlib-devel buildreq
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0-alt8
 - NMU: rebuilt against Tcl/Tk 8.6.
 
