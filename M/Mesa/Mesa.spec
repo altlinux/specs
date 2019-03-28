@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 19.0.0
+Version: 19.0.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -375,6 +375,9 @@ d=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Mar 28 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.0.1-alt1
+- 19.0.1
+
 * Thu Mar 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.0.0-alt1
 - 19.0.0
 
@@ -856,7 +859,7 @@ d=%buildroot%_libdir
 * Thu Apr 07 2011 Valery Inozemtsev <shrek@altlinux.ru> 4:7.10.2-alt1
 - 7.10.2
 
-* Fri Apr 04 2011 Valery Inozemtsev <shrek@altlinux.ru> 4:7.10.1-alt3
+* Mon Apr 04 2011 Valery Inozemtsev <shrek@altlinux.ru> 4:7.10.1-alt3
 - updated to 7.10 git.ed5c9ae
 
 * Fri Apr 01 2011 Valery Inozemtsev <shrek@altlinux.ru> 4:7.10.1-alt2
@@ -1638,7 +1641,7 @@ d=%buildroot%_libdir
 - build with gcc 2.96
 - Fixed rpath
 
-* Mon Apr 16 2002 Konstantin Volckov <goldhead@altlinux.ru> 4.0.2-alt1
+* Tue Apr 16 2002 Konstantin Volckov <goldhead@altlinux.ru> 4.0.2-alt1
 - 4.0.2
 
 * Mon Mar 18 2002 Konstantin Volckov <goldhead@altlinux.ru> 4.0.1-alt1
