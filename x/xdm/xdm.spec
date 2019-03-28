@@ -2,22 +2,30 @@
 %define xf86 XFree86
 
 Name: xdm
-Version: 1.1.10
-Release: alt2
-Serial: 2
+Version: 1.1.12
+Release: alt1
+Epoch: 2
 Summary: X Display Manager with support for XDMCP, host chooser
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
+Source1: %name.logrotate
+Source2: %name.pamd
+Source3: Xlogin
 
-Obsoletes: %xf86-%name %xorg-%name < %serial:%version-%release
-Provides: %xf86-%name = 4.4 %xorg-%name = %serial:%version-%release
+Patch0: xdm-1.1.12-inpColor.patch
+Patch1: 0003-Fix-defaults-path.patch
+Patch2: 0029-hackaround-for-23108.patch
 
-# Automatically added by buildreq on Wed Jun 23 2010
-BuildRequires: libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libpam-devel xorg-util-macros xorg-xtrans-devel
+Obsoletes: %xf86-%name %xorg-%name < %epoch:%version-%release
+Provides: %xf86-%name = 4.4 %xorg-%name = %epoch:%version-%release
+
+# Automatically added by buildreq on Thu Mar 28 2019
+# optimized out: fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXmu-devel libXrender-devel libXt-devel libcrypt-devel libfreetype-devel perl pkg-config python-base sh4 xorg-proto-devel
+BuildRequires: libXaw-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libpam-devel
+BuildRequires: xorg-util-macros
 
 %description
 Xdm  manages a collection of X displays, which may be on the local host
@@ -29,7 +37,9 @@ and password, authenticating the user, and running a ``session.''
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -43,20 +53,21 @@ and password, authenticating the user, and running a ``session.''
 	--enable-xdmshell \
 	--disable-static
 
-%make_build
+%make_build CFLAGS+="-Wno-discarded-qualifiers"
 
 %install
 %makeinstall_std
-find %buildroot -type f -name 'lib*.la' -delete
 
-install -pD -m644 xdm.pamd %buildroot%_sysconfdir/pam.d/xdm
-install -pD -m640 xdm.logrotate %buildroot%_sysconfdir/logrotate.d/xdm
+install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/xdm
+install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/pam.d/xdm
+install -pD -m640 %SOURCE3 %buildroot%_x11appconfdir/Xlogin
 
 # explicitly create X authdir
 mkdir -p %buildroot%_localstatedir/xdm
 ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 
 %files
+%doc README* config/Xresources
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
 %dir %_sysconfdir/X11/xdm/
 %_sysconfdir/X11/xdm/authdir
@@ -66,9 +77,19 @@ ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 %_libdir/X11/xdm
 %_datadir/X11/xdm
 %dir %attr(700,root,root) %_localstatedir/xdm/
-%_man1dir/*
+%_man8dir/*
 
 %changelog
+* Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2:1.1.12-alt1
+- Autobuild version bump to 1.1.12
+- Intruduce app-defaults file
+
+* Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2:1.1.11-alt1
+- Version up
+
+* Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2:1.1.10-alt3
+- Change packaging scheme
+
 * Mon Feb 12 2018 Andrey Cherepanov <cas@altlinux.org> 2:1.1.10-alt2
 - Remove requirements of pam-ck-connector2 (ALT #34523)
 
