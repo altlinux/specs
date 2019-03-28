@@ -1,9 +1,9 @@
-%def_enable qt4
+%def_disable qt4
 %def_enable qt5
 
 Name:    qtcurve
 Version: 1.9.1
-Release: alt1
+Release: alt2
 Epoch:  1
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -18,8 +18,11 @@ Source: %name-%version.tar
 Patch1: qtcurve-1.8.18-no_env.patch
 
 BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 rpm-macros-cmake
-BuildPreReq: gcc-c++ libgtk+2-devel kde4libs-devel
-BuildPreReq: kde4base-workspace-devel
+BuildPreReq: gcc-c++ libgtk+2-devel
+%if_enabled qt4
+BuildRequires: kde4libs-devel
+BuildRequires: kde4base-workspace-devel
+%endif
 BuildRequires: git-core
 BuildRequires: pkgconfig(x11-xcb)
 %if_enabled qt5
@@ -41,7 +44,9 @@ BuildRequires: kf5-frameworkintegration-devel
 %endif
 
 Requires: %name-gtk2 = %version-%release
+%if_enabled qt4
 Requires: %name-qt4 = %version-%release
+%endif
 %if_enabled qt5
 Requires: %name-qt5 = %version-%release
 Requires: %name-kf5 = %version-%release
@@ -145,6 +150,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 %endif
 
 %changelog
+* Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 1:1.9.1-alt2
+- Drop qt4 support due to kde4libs missing.
+
 * Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.9.1-alt1
 - New version.
 
