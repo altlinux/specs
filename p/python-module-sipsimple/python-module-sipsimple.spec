@@ -2,7 +2,7 @@
 %def_enable bundled_pjsip
 
 Name:    python-module-%modulename
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
@@ -55,6 +55,9 @@ chmod +x deps/pjsip/*configure
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- New version.
+
 * Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
 - New version.
 
