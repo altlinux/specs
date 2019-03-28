@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.6.6
+Version: 3.6.7
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -265,7 +265,7 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 if openssl s_server --help 2>&1 | grep -Ewe '^[[:blank:]]*-4'; then
    patch -p2 < %PATCH4
 fi
-%make_build -k check
+make -k check
 
 %files -n lib%name -f gnutls%libgnutls_soname.lang
 %dir %docdir
@@ -321,6 +321,10 @@ fi
 %endif
 
 %changelog
+* Thu Mar 28 2019 Mikhail Efremov <sem@altlinux.org> 3.6.7-alt1
+- Updated to 3.6.7 (fixes: CVE-2019-3836, CVE-2019-3829).
+- Don't make check in parallel mode.
+
 * Fri Jan 25 2019 Mikhail Efremov <sem@altlinux.org> 3.6.6-alt1
 - Updated to 3.6.6.
 
