@@ -1,16 +1,20 @@
-Name: arm-rootfs-installer
-Version: 0.1
-Release: alt1
+Name: alt-rootfs-installer
+Version: 0.2
+Release: alt0.1
 Summary: Installer rootfs archive to any specified block device
 License: GPLv2+
 Group: System/Configuration/Other
-Url:  https://git.altlinux.org/people/antohami/packages/arm-rootfs-installer.git
+Url:  https://git.altlinux.org/people/antohami/packages/alt-rootfs-installer.git
 BuildArch: noarch
 Source0: %name-%version.tar
+
+Provides: arm-rootfs-installer = %EVR
+Obsoletes: arm-rootfs-installer < 0.2
 
 %description
 Allows one to first select a source rootfs archive installer. The rootfs must be
 containing File Systems with u-boot for target board.
+This fork arm-image-installer.
 
 %prep
 %setup
@@ -18,12 +22,13 @@ containing File Systems with u-boot for target board.
 %install
 install -d %buildroot%_datadir/%name
 install -d %buildroot%_datadir/%name/socs.d
-install -pm 644 socs.d/* %buildroot%_datadir/%name/socs.d/
+cp -a socs.d/* %buildroot%_datadir/%name/socs.d/
 install -d %buildroot%_datadir/%name/boards.d
-install -pm 644 boards.d/* %buildroot%_datadir/%name/boards.d/
+cp -a boards.d/* %buildroot%_datadir/%name/boards.d/
 
 install -d %buildroot%_bindir
 install -pm 0755 %name %buildroot%_bindir/
+ln -s %name %buildroot%_bindir/arm-rootfs-installer
 
 install -d %buildroot%_docdir/%name
 install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
@@ -31,10 +36,16 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 
 %files
 %doc %_docdir/%name
-%_bindir/%name
+%_bindir/*
 %_datadir/%name/
 
 %changelog
+* Fri Mar 29 2019 Anton Midyukov <antohami@altlinux.org> 0.2-alt0.1
+- 0.2-beta
+- Renamed package arm-rootfs-installer to alt-rootfs-installer
+- Add support riscv64 (thanks arei@)
+- Update URL
+
 * Sun Feb 24 2019 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build
 
