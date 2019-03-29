@@ -1,18 +1,18 @@
-Name: prescanic
-Version: 0.8
-Release: alt2.qa2
+Name:          prescanic
+Version:       0.8.1
+Release:       alt1
 
-Summary: IP Scanner that catalogs all information
+Summary:       IP Scanner that catalogs all information
 Summary(ru_RU.UTF-8): Сканер IP адресов, упорядочивающий все сведения
-License: GPL
-Group: Monitoring
-Url: http://www.presonico.com/prescanic/
-Packager: Malo Skryleve <malo@altlinux.org>
+License:       GPL
+Group:         Monitoring
+Url:           http://www.presonico.com/prescanic/
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 
-Source: %name-%version.tar.bz2
-Patch: %name-0.8-alt-makefile.patch
+Source:        %name-%version.tar.bz2
+Patch:         %name-0.8-alt-makefile.patch
 
-BuildRequires: libmysqlclient-devel libpcap-devel
+BuildRequires: libmysqlclient-devel libpcap-devel libmysqlclient21-devel
 
 %description
 Prescanic's goal was to an attempt to obtain as much information about
@@ -27,20 +27,24 @@ anonymous ftp detection, telnet banner parsing, and more.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %build
 %make_build
 
 %install
 mkdir -p %buildroot%_bindir
-%make_install DESTDIR=%buildroot%_bindir install
+%make_install DESTDIR=%buildroot%_bindir/ install
 
 %files
 %doc PROJECT README TODO
 %_bindir/*
 
 %changelog
+* Wed Mar 06 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.1-alt1
+- Bump to 0.8.1
+- NMU: Add to enable build with novel libmysqlclient21-devel (Closes: #36282)
+
 * Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8-alt2.qa2
 - NMU: removed invalid manual package requirements.
 
@@ -52,4 +56,3 @@ Fixed require dependency libmysqlclient16
 
 * Sat Feb 19 2011 Malo Skryleve <malo@altlinux.org> 0.8-alt1
 - initial build for ALT Linux Sisyphus
-
