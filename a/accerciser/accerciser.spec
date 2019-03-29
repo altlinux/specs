@@ -1,15 +1,16 @@
+%define ver_major 3.32
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: 3.22.0
+Version: %ver_major.0
 Release: alt1
 
-Summary: An interactive Python tool for querying accessibility information
+Summary: Interactive Python accessibility explorer
 Group: Accessibility
 License: %bsd
-Url: https://wiki.gnome.org/action/show/Apps/Accerciser
+Url: https://wiki.gnome.org/Apps/Accerciser
 
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
 
@@ -19,16 +20,15 @@ Requires: python3-module-%name = %version-%release
 AutoReqProv: nopython
 %define __python %nil
 
-BuildRequires(pre): rpm-build-python3
-
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: rpm-build-licenses rpm-build-gnome libappstream-glib-devel
-BuildRequires: intltool yelp-tools libgtk+3-devel python3-module-pygobject3-devel
+BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
 
 %description
 An interactive Python accessibility explorer.
 
-#%add_python3_req_skip gtksourceview
+%add_python3_req_skip gi.repository.Gio
 
 %package -n python3-module-%name
 Summary: Python module for accerciser
@@ -64,18 +64,18 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 %_man1dir/*
 %_datadir/glib-2.0/schemas/*
-%_datadir/icons/hicolor/16x16/apps/%name.png
-%_datadir/icons/hicolor/22x22/apps/%name.png
-%_datadir/icons/hicolor/32x32/apps/%name.png
-%_datadir/icons/hicolor/48x48/apps/accerciser.png
+%_datadir/icons/hicolor/*/*/%name.png
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
 %_datadir/icons/hicolor/symbolic/apps/accerciser-symbolic.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/accerciser.appdata.xml
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
 %changelog
+* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Fri Sep 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
