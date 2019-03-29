@@ -6,7 +6,7 @@
 
 Name: icu
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -16,6 +16,7 @@ Url: http://www.icu-project.org/
 
 #VCS: https://github.com/unicode-org/icu.git
 Source: http://download.icu-project.org/files/icu4c/%real_ver/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
+Patch: icu-6.3.1-alt-e2k.patch
 
 BuildRequires: gcc-c++ libstdc++-devel
 %{?_with_doc:BuildRequires: doxygen}
@@ -71,6 +72,10 @@ support. This package contains sample code for ICU
 %prep
 %setup -c
 %setup -DT -n %name-%version/icu
+%ifarch %e2k
+%patch -p2
+%add_optflags -finput-charset=utf8
+%endif
 
 %build
 cd source
@@ -112,6 +117,9 @@ cp -a samples %buildroot%_datadir/icu
 %_datadir/icu/samples
 
 %changelog
+* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt2
+- mike@: fixed build on e2k
+
 * Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt1
 - 6.3.1
 
