@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.5.5
+Version: 0.6.3
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg python3-devel
 BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel libgio-devel
 
-Requires: iptables ebtables iptables-ipv6
+Requires: iptables ebtables iptables-ipv6 nftables
 
 %allow_python3_import_path %_datadir/firewalld
 %add_python3_path %_datadir/firewalld
@@ -61,8 +61,6 @@ Python3 bindings for firewalld.
 %setup
 %patch -p1
 
-sed -i -e 's|/usr/bin/python -Es|/usr/bin/python3 -Es|' fix_python_shebang.sh
-sed -i 's|/usr/bin/python|/usr/bin/python3|' config/lockdown-whitelist.xml
 # create po/POTFILES.in
 #for i in $(cat po/POTFILES.in.in); do echo $i>>po/POTFILES.in; done
 
@@ -82,7 +80,8 @@ export PYTHON=/usr/bin/python3
 	--with-ip6tables-restore=/sbin/ip6tables-restore \
 	--with-ebtables=/sbin/ebtables \
 	--with-ebtables-restore=/sbin/ebtables-restore \
-	--with-ipset=/sbin/ipset
+	--with-ipset=/sbin/ipset \
+	--with-nft=/usr/sbin/nft
 %make
 make update-po
 
@@ -108,7 +107,6 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_sbindir/*
 %_bindir/firewall-cmd
 %_bindir/firewall-offline-cmd
-%_bindir/firewallctl
 %attr(0750,root,root) %config(noreplace) %_sysconfdir/firewalld
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/firewalld/firewalld.conf
 %config(noreplace) %_sysconfdir/sysconfig/firewalld
@@ -129,7 +127,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_bindir/firewall-config
 %_datadir/firewalld/
 %_datadir/applications/firewall-config.desktop
-%_datadir/appdata/firewall-config.appdata.xml
+%_datadir/metainfo/firewall-config.appdata.xml
 %_iconsdir/hicolor/*/apps/firewall-config*
 %_datadir/glib-2.0/schemas/org.fedoraproject.FirewallConfig.gschema.xml
 %_man1dir/firewall-config*.1*
@@ -145,6 +143,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %python3_sitelibdir_noarch/firewall
 
 %changelog
+* Fri Mar 29 2019 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt1
+- Use python3 in more scripts.
+- Updated to 0.6.3.
+
 * Thu Sep 20 2018 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
 - Updated to 0.5.5.
 
