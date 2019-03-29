@@ -1,24 +1,24 @@
 Name: shim-signed
-Version: 0.4
-Release: alt6
+Version: 15
+Release: alt1
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
 Group: System/Kernel and hardware
 
-Url: http://www.codon.org.uk/~mjg59/shim-signed/
-Source: %url/%name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
+Url: https://github.com/rhboot/shim
+Source: %name-%version.tar
 
 BuildRequires: rpm-macros-uefi
 ExclusiveArch: x86_64
 
 %description
-This package contains shim and MokManager binaries
-signed by "Microsoft Windows UEFI Driver Publisher" key
-and provided by Matthew Garrett.
+This package contains shim binaries signed by "Microsoft
+Windows UEFI Driver Publisher" key for both EFI x64 and EFI ia32
+architectures. MokManager (as mm*.efi) and fallback (as fb*.efi)
+utilities signed by "ALT UEFI SB Signer 2013" are provided as well.
 
-See http://mjg59.dreamwidth.org/20303.html for details.
+See https://github.com/rhboot/shim-review/issues/47 for details.
 
 %prep
 %setup
@@ -27,18 +27,24 @@ See http://mjg59.dreamwidth.org/20303.html for details.
 mkdir -p %buildroot%_efi_bindir %buildroot%_libexecdir/shim
 install -p *.efi %buildroot%_efi_bindir/
 # both should end up within /usr
-ln %buildroot%_efi_bindir/shim.efi \
-	%buildroot%_libexecdir/shim/shimx64.efi.signed
-ln %buildroot%_efi_bindir/MokManager.efi \
-	%buildroot%_libexecdir/shim/mmx64.efi.signed
-ln %buildroot%_efi_bindir/fallback.efi \
-	%buildroot%_libexecdir/shim/fbx64.efi.signed
+for pefile in $(ls %buildroot%_efi_bindir/*.efi | rev | cut -d/ -f1 | rev);
+  do
+	ln %buildroot%_efi_bindir/$pefile \
+		%buildroot%_libexecdir/shim/$pefile.signed
+  done
 
 %files
 %attr(0644,root,root) %_efi_bindir/*.efi
-%attr(0644,root,root) %_libexecdir/shim/*x64.efi.signed
+%attr(0644,root,root) %_libexecdir/shim/*.efi.signed
 
 %changelog
+* Mon Mar 18 2019 Nikolai Kostrigin <nickel@altlinux.org> 15-alt1
+- new shim version
+  + add EFI ia32 binaries as well
+  + MokManager and fallback are now renamed to mm<efi_arch>.efi and
+    fb<efi_arch>.efi respectively
+- adjust spec accordingly to new upstream
+
 * Fri Jun 09 2017 Michael Shigorin <mike@altlinux.org> 0.4-alt6
 - built for sisyphus
 
