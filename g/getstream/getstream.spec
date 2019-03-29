@@ -1,13 +1,13 @@
 Name: getstream
 Summary: DVB to multicast streamer
 Version: 20120411
-Release: alt3
+Release: alt4
 License: GPL
 Group: Networking/Other
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 # Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: glib2-devel libevent1.4-devel
+BuildRequires: glib2-devel libevent-devel
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -50,6 +50,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 20120411-alt4
+- Change BR to libevent-devel
+
 * Tue Feb 26 2019 Alexei Takaseev <taf@altlinux.org> 20120411-alt3
 - rebuilt with libevent2.1
 
