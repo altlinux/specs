@@ -9,8 +9,8 @@
 %brp_strip_none %_bindir/*
 
 Name: traefik
-Version: 1.7.9
-Release: alt2
+Version: 1.7.10
+Release: alt1
 Summary: The Cloud Native Edge Router
 
 License: MIT
@@ -42,6 +42,14 @@ step you need.
 Documentation: http://docs.traefik.io/
 
 %prep
+# Build the Front-end Assets
+# $ cd webui
+# $ git rm -r node_modules
+# $ yarn install --pure-lockfile
+# $ npm run build
+# $ git add -f node_modules
+# $ git commit -n --no-post-rewrite -m "add node js modules"
+
 %setup
 %patch -p1
 
@@ -115,12 +123,15 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(750, root, %name) %_sysconfdir/%name
 %dir %attr(750, root, %name) %_sysconfdir/%name/%name.d
 %config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/traefik.toml
-%ghost %config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/acme.json
+%config(noreplace) %attr(660, root, %name) %_sysconfdir/%name/acme.json
 %_unitdir/%name.service
 %dir %attr(0770, root, %name) %_logdir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Mar 29 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.10-alt1
+- 1.7.10
+
 * Thu Feb 28 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.9-alt2
 - build webui
 - update sample config
