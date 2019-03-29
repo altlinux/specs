@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: merkaartor
 Version: 0.18.3
-Release: alt2
+Release: alt3
 
 Summary: an OpenStreetMap editor
 License: LGPL
@@ -9,10 +11,12 @@ Url: https://github.com/openstreetmap/merkaartor
 
 Source: %name-%version.tar
 Patch1: %name-%version-fedora-no-git-version.patch
+Patch2: %name-%version-alt-qtwebkit-support.patch
 
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
 BuildRequires: qt5-base-devel qt5-webkit-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: libqtsingleapplication-qt5-devel
 
 %description
 Merkaartor is an openstreetmap mapping program.
@@ -22,19 +26,25 @@ editing environment for free geographical data.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+
+# remove bundled libraries
+rm -rf 3rdparty
 
 %build
-# TODO: use packaged version of singleapplication-qt5 instead of bundled one
-%add_optflags -fpermissive
+%add_optflags -I%_includedir/qt5/QtSolutions
+
 #lupdate-qt5 Merkaartor.pro
 lrelease-qt5 Merkaartor.pro
 qmake-qt5 \
+	CONFIG+=release CONFIG+=force_debug_info \
 	PREFIX=%_prefix \
-	NODEBUG=1 \
+	SYSTEM_QTSA=1 \
 	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
 	-after QMAKE_CFLAGS+='%optflags' \
 	-after QMAKE_CXXFLAGS+='%optflags' \
 	Merkaartor.pro
+
 %make_build
 
 %install
@@ -48,6 +58,11 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Mar 29 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.3-alt3
+- Fixed build with new version of qt5-webkit.
+- Rebuilt with system libraries instead of bundled ones.
+- Rebuilt with debug info.
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.18.3-alt2
 - Rebuild with libproj 5.2.0
 - Fix build on aarch64
