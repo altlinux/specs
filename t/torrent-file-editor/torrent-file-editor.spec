@@ -1,5 +1,5 @@
 Name:		torrent-file-editor
-Version:	0.3.0
+Version:	0.3.13
 Release:	alt1
 License:	GPLv3+
 Summary:	Torrent File Editor
@@ -77,6 +77,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt5.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Tue Mar 26 2019 Motsyo Gennadi <drool@altlinux.ru> 0.3.13-alt1
+- 0.3.13
+
 * Mon Nov 07 2016 Motsyo Gennadi <drool@altlinux.ru> 0.3.0-alt1
 - 0.3.0
 
