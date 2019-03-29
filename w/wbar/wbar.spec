@@ -1,6 +1,6 @@
 Name: wbar
 Version: 2.3.4
-Release: alt2
+Release: alt2.1
 License: GPLv2+
 Group: Accessibility
 Summary: A quick launch bar
@@ -28,6 +28,7 @@ wbar is a quick launch bar.
 %prep
 %setup -n %name
 %patch1 -p2
+subst "s|-Werror||" src/Makefile.am
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -54,6 +55,9 @@ install -D -m 0644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %buildroot%_datadir/pixma
 %_pixmapsdir/wbar
 
 %changelog
+* Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt2.1
+- disable -Werror
+
 * Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.4-alt2
 - Fixed build with gcc-6
 
