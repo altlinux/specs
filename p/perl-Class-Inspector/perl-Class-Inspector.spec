@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-Inspector
 Name: perl-%dist
-Version: 1.32
+Version: 1.34
 Release: alt1
 
 Summary: Get information about a class and its structure
@@ -38,6 +38,9 @@ information.
 %perl_vendor_privlib/Class
 
 %changelog
+* Fri Mar 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
+- automated CPAN update
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 
