@@ -2,19 +2,24 @@
 
 Name: gnustep-opal
 Version: r37181
-Release: alt3.svn20131001
+Release: alt4.svn20131001
+
 Summary: Vector drawing library with an API similar to Quartz 2D
+
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/opal/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-base-devel gnustep-corebase-devel libcairo-devel
-BuildPreReq: liblcms-devel libjpeg-devel libtiff-devel
+ExcludeArch: aarch64
+
+BuildRequires: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildRequires: gnustep-base-devel gnustep-corebase-devel libcairo-devel
+BuildRequires: liblcms-devel libjpeg-devel libtiff-devel libpng-devel
 
 Requires: lib%name = %version-%release
 Requires: gnustep-back
@@ -60,6 +65,7 @@ This package contains development files of Opal.
 
 %prep
 %setup
+subst "s|png_sizeof|sizeof|" Source/OpalGraphics/image/OPImageCodecPNG.m
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -88,6 +94,9 @@ This package contains development files of Opal.
 %_libdir/*.so
 
 %changelog
+* Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> r37181-alt4.svn20131001
+- fix build with libpng (aarch64 skipped)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r37181-alt3.svn20131001
 - Built with clang
 
