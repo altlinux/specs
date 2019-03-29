@@ -4,7 +4,7 @@
 
 Name: tcl-snack
 Version: 2.2.10
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: Snack - a sound toolkit for scripting languages
 License: GPL
@@ -15,7 +15,7 @@ Source: %name-%version-%release.tar
 
 Requires: tcl >= 8.4.0-alt1 tcl-sound = %version-%release
 
-BuildRequires: libogg-devel libvorbis-devel tcl-devel >= 8.4.16-alt1 tk-devel >= 8.4.16-alt1
+BuildRequires: zlib-devel libogg-devel libvorbis-devel tcl-devel >= 8.4.16-alt1 tk-devel >= 8.4.16-alt1
 %if_with alsa
 BuildRequires: libalsa-devel
 %endif
@@ -104,6 +104,9 @@ chmod 0644 doc/*
 %_tcldatadir/%teaname%version/demos
 
 %changelog
+* Thu Mar 28 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.10-alt4.qa2
+- NMU: add missed zlib-devel
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.10-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
