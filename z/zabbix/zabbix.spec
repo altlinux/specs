@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		90164
+%define svnrev		91685
 
 %def_with pgsql
 %def_enable java
@@ -15,11 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 4.0.5
-Release: alt2
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
+Version: 4.0.6
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -641,6 +638,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.6-alt1
+- 4.0.6
+
 * Tue Mar 05 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.5-alt2
 - Remove support PHP5
 
