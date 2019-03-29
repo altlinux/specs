@@ -7,7 +7,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.12.6
+Version: 1.13.0
 Release: alt1
 
 Summary: Input devices library
@@ -82,7 +82,7 @@ This package contains visual debug helper for %name.
 %meson %{?_enable_libwacom:-Dlibwacom=true} \
        %{?_enable_debug_gui:-Ddebug-gui=true} \
        %{?_disable_documentation:-Ddocumentation=false} \
-       %{?_enable_tests:-Dtests=true} \
+       %{?_disable_tests:-Dtests=false} \
        -Dudev-dir=/lib/udev
 %meson_build
 
@@ -124,6 +124,7 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-quirks-validate.1.*
 %_man1dir/%name-record.1.*
 %_man1dir/%name-replay.1.*
+%_man1dir/%name-test-suite.1.*
 
 %if_enabled debug_gui
 %files tools-gui
@@ -133,6 +134,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Mon Jan 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.6-alt1
 - 1.12.6
 
