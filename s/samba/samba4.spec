@@ -5,7 +5,7 @@
 %define rname samba
 %define dcname samba-DC
 %define _localstatedir /var
-%define libwbc_alternatives_version 0.14
+%define libwbc_alternatives_version 0.15
 
 # internal libs
 %def_without talloc
@@ -21,7 +21,6 @@
 %def_with libwbclient
 %def_with libnetapi
 %def_with doc
-%def_with python3
 
 %def_with dc
 %def_without ntvfs
@@ -57,8 +56,8 @@
 %endif
 
 Name:    samba
-Version: 4.9.5
-Release: alt2
+Version: 4.10.0
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -113,10 +112,8 @@ BuildRequires: perl-devel
 BuildRequires: perl-Parse-Yapp
 BuildRequires: libpopt-devel
 BuildRequires: python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
 BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
 BuildRequires: zlib-devel
@@ -139,36 +136,28 @@ BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.1.14
+BuildRequires: libtalloc-devel >= 2.1.16
 BuildRequires: python-module-talloc-devel
-    %if_with python3
 BuildRequires: python3-module-talloc-devel
-    %endif
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.9.37
+BuildRequires: libtevent-devel >= 0.9.39
 BuildRequires: python-module-tevent
-    %if_with python3
 BuildRequires: python3-module-tevent
-    %endif
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.3.16
+BuildRequires: libtdb-devel >= 1.3.18
 BuildRequires: python-module-tdb
-    %if_with python3
 BuildRequires: python3-module-tdb
-    %endif
 %endif
 
 %if_without ldb
-%define ldb_version 1.4.6
+%define ldb_version 1.5.4
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python-module-pyldb-devel
-    %if_with python3
 BuildRequires: python3-module-pyldb-devel
-    %endif
 %endif
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -380,7 +369,6 @@ Obsoletes: python-module-%dcname <= 4.9.4-alt2
 The %rname-python package contains the Python libraries needed by programs
 that use SMB, RPC and other Samba provided protocols in Python programs.
 
-%if_with python3
 %package -n python3-module-%name
 Summary: Samba Python3 libraries
 Group: Networking/Other
@@ -409,7 +397,6 @@ Requires: python3-module-%name = %version-%release
 
 %description -n python3-module-%name-devel
 The python3-module-%name package contains the Python3 libraries development files.
-%endif
 
 %package devel
 Summary: Developer tools for Samba libraries
@@ -727,9 +714,7 @@ libsamba_util private headers.
 %if_with profiling_data
 	--with-profiling-data \
 %endif
-%if_with python3
-	--extra-python=python3 \
-%endif
+	--extra-python=python2.7 \
 %if_with ntvfs
 	--with-ntvfs-fileserver \
 %endif
@@ -865,9 +850,7 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 # remove tests form python modules
 rm -rf %buildroot%python_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
 rm -f %buildroot%python_sitelibdir/samba/third_party/iso8601/test_*.py
-%if_with python3
 rm -rf %buildroot%python3_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
-%endif
 
 # remove cmocka library
 rm -f %buildroot%_samba_mod_libdir/libcmocka-samba4.so
@@ -942,7 +925,7 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %files
-%doc COPYING README WHATSNEW.txt
+%doc COPYING README.md WHATSNEW.txt
 %doc examples/autofs examples/LDAP examples/misc
 %doc examples/printer-accounting examples/printing
 %doc README.downgrade
@@ -1324,6 +1307,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/bind9/dlz_bind9_9.so
 %_samba_mod_libdir/bind9/dlz_bind9_10.so
 %_samba_mod_libdir/bind9/dlz_bind9_11.so
+%_samba_mod_libdir/bind9/dlz_bind9_12.so
 %if_without mitkrb5
 %_samba_mod_libdir/libheimntlm-samba4.so.1
 %_samba_mod_libdir/libheimntlm-samba4.so.1.0.1
@@ -1356,6 +1340,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libpac-samba4.so
 %_samba_libdir/krb5/plugins/kdb/samba.so
 %endif #!mitkrb5
+%_samba_mod_libdir/libclidns-samba4.so
 %_samba_mod_libdir/libprocess-model-samba4.so
 %_samba_mod_libdir/libservice-samba4.so
 %_samba_mod_libdir/process_model
@@ -1425,7 +1410,6 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n python-module-%name
 %python_sitelibdir/samba/
 
-%if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/samba/
 %_libdir/libsamba*.cpython-*.so.*
@@ -1434,7 +1418,6 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n python3-module-%name-devel
 %_pkgconfigdir/samba*.cpython-*.pc
 %_libdir/libsamba*.cpython-*.so
-%endif
 
 %if_with doc
 %files doc
@@ -1549,6 +1532,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/ctdbd_wrapper
 %_bindir/ctdb
 %_bindir/ctdb_diagnostics
+%_bindir/ctdb_local_daemons
 %_bindir/ltdbtool
 %_bindir/onnode
 %_bindir/ping_pong
@@ -1594,6 +1578,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Mar 20 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.0-alt1
+- Update to first release of Samba 4.10
+
 * Tue Mar 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.9.5-alt2
 - Fix build compatibility for newest architectures with not exists
   macroses on stable branches

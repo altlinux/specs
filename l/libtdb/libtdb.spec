@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with check
-%def_with python3
 
 Name: libtdb
-Version: 1.3.16
-Release: alt2
+Version: 1.3.18
+Release: alt1
 
 Summary: A trivial database system
 License: GPL
@@ -17,10 +16,9 @@ Patch: tdb-alt-fix-python-ldflags.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 BuildRequires: rpm-build-python python-devel
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
 
 %description
 This is a simple database API. It was inspired by the realisation that
@@ -82,7 +80,6 @@ Requires: %name = %version-%release
 %description -n python-module-tdb
 Python bindings for libtdb
 
-%if_with python3
 %package -n python3-module-tdb
 Group: Development/Python3
 Summary: Python3 bindings for the Tdb library
@@ -90,7 +87,6 @@ Requires: %name = %EVR
 
 %description -n python3-module-tdb
 Python3 bindings for libtdb
-%endif
 
 %prep
 %setup -n tdb-%version
@@ -100,9 +96,7 @@ Python3 bindings for libtdb
 %undefine _configure_gettext
 %configure \
            --disable-rpath \
-%if_with python3
-	   --extra-python=python3 \
-%endif
+           --extra-python=python2.7 \
            --bundled-libraries=NONE \
 	   --builtin-libraries=replace
 
@@ -133,25 +127,26 @@ make test
 %python_sitelibdir/tdb.so
 %python_sitelibdir/_tdb_text.py*
 
-%if_with python3
 %files -n python3-module-tdb
 %python3_sitelibdir/tdb.cpython-*.so
 %python3_sitelibdir/_tdb_text.py*
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
-%endif
 
 %changelog
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.3.18-alt1
+- Update to latest release with python3 by default
+
 * Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.16-alt2
 - Disable ubt macros due binary package identity changes
 
-* Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1%ubt
+* Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1
 - 1.3.15 -> 1.3.16
 - Build package for Python3
 
-* Tue Sep 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.15-alt1%ubt
+* Tue Sep 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.15-alt1
 - Update to latest release for samba-4.7 and samba-4.8
 
-* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.14-alt1%ubt
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.14-alt1
 - Update to release for samba-4.7.0
 
 * Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.12-alt2%ubt

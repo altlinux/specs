@@ -20,8 +20,8 @@
 %endif
 
 Name: sssd
-Version: 2.0.0
-Release: alt5.gitf0603645f
+Version: 2.1.0
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -849,6 +849,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Tue Mar 26 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.1.0-alt1
+- Update to 2.1.0 for samba-4.10.0
+
 * Sun Mar 17 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.0.0-alt5.gitf0603645f
 - Rebuild with latest version libldb
 - Revert strict requirement to version of libldb

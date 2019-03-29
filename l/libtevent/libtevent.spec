@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-%def_with python3
 
 Name: libtevent
-Version: 0.9.37
-Release: alt2
+Version: 0.9.39
+Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -13,17 +12,15 @@ Url: http://tevent.samba.org/
 Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
 Patch: tevent-alt-fix-python-ldflags.patch
 
-BuildRequires: libtalloc-devel >= 2.1.14
-BuildRequires: python-module-talloc-devel >= 2.1.14
+BuildRequires: libtalloc-devel >= 2.1.16
+BuildRequires: python-module-talloc-devel >= 2.1.16
 BuildRequires: python-devel zlib-devel
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-talloc-devel
-%endif
 
-Requires: libtalloc >= 2.1.14
+Requires: libtalloc >= 2.1.16
 
 %description
 Tevent is an event system based on the talloc memory management library.
@@ -48,7 +45,6 @@ Requires: %name = %version-%release
 %description -n python-module-tevent
 Python bindings for libtevent
 
-%if_with python3
 %package -n python3-module-tevent
 Group: Development/Python3
 Summary: Python3 bindings for the Tevent library
@@ -56,7 +52,6 @@ Requires: %name = %EVR
 
 %description -n python3-module-tevent
 Python3 bindings for libtevent
-%endif
 
 %prep
 %setup -n tevent-%version
@@ -67,9 +62,7 @@ Python3 bindings for libtevent
 %configure \
 	--disable-rpath \
 	--bundled-libraries=NONE \
-%if_with python3
-        --extra-python=python3 \
-%endif
+	--extra-python=python2.7 \
 	--builtin-libraries=replace
 
 %make_build
@@ -94,14 +87,15 @@ make test
 %python_sitelibdir/_tevent.so
 %python_sitelibdir/tevent.py*
 
-%if_with python3
 %files -n python3-module-tevent
 %python3_sitelibdir/_tevent.cpython*.so
 %python3_sitelibdir/tevent.py
 %python3_sitelibdir/__pycache__/tevent.*
-%endif
 
 %changelog
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.9.39-alt1
+- Update to latest release with python3 by default
+
 * Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.37-alt2
 - Disable ubt macros due binary package identity changes
 

@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: cmocka
-Version: 1.1.1
-Release: alt2
+Version: 1.1.3
+Release: alt1
 
 License: ASL 2.0
 Group: Development/Tools
@@ -92,7 +92,7 @@ Development headers for the cmocka unit testing library.
 
 
 %cmake_build VERBOSE=1
-%cmake_build doc
+%cmake_build docs
 
 %install
 %cmakeinstall_std
@@ -102,7 +102,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %cmake_build  test
 
 %files -n libcmocka
-%doc AUTHORS README ChangeLog COPYING
+%doc AUTHORS README.md ChangeLog COPYING
 %_libdir/*.so.*
 
 %files -n libcmocka-devel
@@ -118,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Mar 21 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.1-alt2
 - Disable ubt macros due binary package identity changes
 

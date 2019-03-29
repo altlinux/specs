@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-%def_with python3
 
 %ifarch %arm %ix86 mips mipsel
 %def_without mdb
@@ -9,8 +8,8 @@
 %endif
 
 Name: libldb
-Version: 1.4.6
-Release: alt3
+Version: 1.5.4
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -22,21 +21,20 @@ Patch1: ldb-alt-fix-python-ldflags.patch
 Patch2: ldb-lmdb-disable-tests.patch
 
 BuildRequires: python-devel python-module-tdb python-module-talloc-devel python-module-tevent
-BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-style-xsl docbook-dtds
-BuildRequires: libtdb-devel >= 1.3.16
-BuildRequires: libtalloc-devel >= 2.1.14
-BuildRequires: libtevent-devel >= 0.9.37
+BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: libcmocka-devel >= 1.1.3
+BuildRequires: libtdb-devel >= 1.3.18
+BuildRequires: libtalloc-devel >= 2.1.16
+BuildRequires: libtevent-devel >= 0.9.39
 %if_with mdb
 BuildRequires: liblmdb-devel >= 0.9.16
 %endif
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-tdb
 BuildRequires: python3-module-talloc-devel
 BuildRequires: python3-module-tevent
-%endif
 
 Requires: libtdb >= 1.3.16
 Requires: libtalloc >= 2.1.14
@@ -82,7 +80,6 @@ Requires: %name-devel = %version-%release
 %description -n python-module-pyldb-devel
 Development files for the Python bindings for the LDB library
 
-%if_with python3
 %package -n python3-module-pyldb
 Group: Development/Python3
 Summary: Python3 bindings for the LDB library
@@ -99,7 +96,6 @@ Requires: %name-devel = %EVR
 
 %description -n python3-module-pyldb-devel
 Development files for the Python3 bindings for the LDB library
-%endif
 
 %prep
 %setup -n ldb-%version
@@ -119,9 +115,7 @@ Development files for the Python3 bindings for the LDB library
 		--builtin-libraries=replace \
 		--with-modulesdir=%_libdir/ldb/modules \
 		--with-samba-modulesdir=%_libdir/samba \
-%if_with python3
-                --extra-python=python3 \
-%endif
+                --extra-python=python2.7 \
 %if_without mdb
                 --without-ldb-lmdb \
 %endif
@@ -147,10 +141,11 @@ make test
 %if_with mdb
 %_libdir/ldb/libldb-mdb-int.so
 %endif
+%_libdir/ldb/libldb-tdb-int.so
+%_libdir/ldb/libldb-tdb-err-map.so
 
 %_libdir/ldb/modules/ldb/asq.so
 %_libdir/ldb/modules/ldb/ldap.so
-%_libdir/ldb/modules/ldb/paged_results.so
 %_libdir/ldb/modules/ldb/paged_searches.so
 %_libdir/ldb/modules/ldb/rdn_name.so
 %_libdir/ldb/modules/ldb/sample.so
@@ -197,7 +192,6 @@ make test
 %_libdir/libpyldb-util.so
 %_pkgconfigdir/pyldb-util.pc
 
-%if_with python3
 %files -n python3-module-pyldb
 %python3_sitelibdir/ldb.cpython-*.so
 %python3_sitelibdir/_ldb_text.py
@@ -208,9 +202,12 @@ make test
 %_includedir/pyldb.h
 %_libdir/libpyldb-util.cpython-*.so
 %_pkgconfigdir/pyldb-util.cpython-*.pc
-%endif
 
 %changelog
+* Tue Mar 24 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.5.4-alt1
+- Update to the 1.5.4 release for samba-4.10
+- Adjust lmdb disable tests patch for 32-bit platforms
+
 * Sun Mar 24 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt3
 - Fix samba-modulesdir from samba-dc to samba libdir
 
