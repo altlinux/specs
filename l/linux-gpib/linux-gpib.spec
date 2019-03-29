@@ -1,6 +1,6 @@
 Name:          linux-gpib
 Version:       4.2.0
-Release:       alt2
+Release:       alt3
 
 Summary:       Support package for GPIB (IEEE 488) hardware.
 Group:         System/Kernel and hardware
@@ -111,6 +111,9 @@ sed -i -e 's|%buildroot||'\
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Mar 28 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 4.2.0-alt3
+- fixed to build with 5.0 kernel
+
 * Mon Feb 18 2019 Vladislav Zavjalov <slazav@altlinux.org> 4.2.0-alt2
 - fix Repocop warnings: docdir-is-not-owned, buildroot
 
