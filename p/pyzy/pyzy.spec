@@ -1,7 +1,7 @@
 
 Name:       pyzy
 Version:    0.1.0
-Release:    alt3
+Release:    alt4
 Summary:    The Chinese PinYin and Bopomofo conversion library
 License:    LGPLv2+
 Group:      System/Libraries
@@ -19,6 +19,7 @@ BuildRequires:  libuuid-devel
 BuildRequires:  opencc-devel
 BuildRequires:  sqlite3
 BuildRequires:  doxygen
+BuildRequires:  python-modules-encodings
 
 # both android db and open phrase db are data files for pyzy, either one can be installed to provide pyzy-db.
 Requires:   pyzy-db
@@ -57,9 +58,10 @@ The phrase database for pyzy from android project.
 cp -p %SOURCE1 data/db/open-phrase
 
 %build
+%add_optflags -Wno-error=narrowing
 %configure --disable-static --enable-db-open-phrase
 # make -C po update-gmo
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -85,6 +87,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/pyzy/db/android.db
 
 %changelog
+* Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.0-alt4
+- NMU: add BR: python-modules-encodings, add -Wno-error=narrowing for aarch64
+
 * Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt3
 - Rebuild with new gcc
 - Fix packager name
