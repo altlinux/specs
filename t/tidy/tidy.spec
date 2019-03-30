@@ -6,7 +6,7 @@
 
 Name: tidy
 Version: 5.4
-Release: alt2.20%ver
+Release: alt3.20%ver
 Epoch: 20171110
 
 Summary: HTML Tidy helps keep webpages clean
@@ -109,6 +109,8 @@ Static libraries for %name development
 %prep
 %setup -n %name
 %setup -n %name -T -D -b1
+# strip UTF8 BOM (lcc chokes otherwise)
+find -name '*.c' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %build
 %cmake \
@@ -146,6 +148,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Mar 30 2019 Michael Shigorin <mike@altlinux.org> 20171110:5.4-alt3.20170301
+- fix build on e2k (strip UTF8 BOM)
+
 * Wed Nov 15 2017 Oleg Solovyov <mcpain@altlinux.org> 20171110:5.4-alt2.20170301
 - include compatibility headers
 
