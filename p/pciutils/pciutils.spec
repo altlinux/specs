@@ -2,7 +2,7 @@
 
 Name: pciutils
 Version: 3.6.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: Linux PCI utilities
 License: GPL
@@ -59,7 +59,7 @@ This package contains PCI library headers.
 %setup
 
 %build
-make \
+%make_build \
 	SHARED=yes \
 	OPT="%optflags" \
 	PREFIX=%_prefix \
@@ -94,6 +94,10 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Sat Mar 30 2019 Michael Shigorin <mike@altlinux.org> 3.6.2-alt2
+- enable parallel build
+- drop %%ubt
+
 * Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 3.6.2-alt1%ubt
 - 3.6.2
 
