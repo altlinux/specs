@@ -1,8 +1,3 @@
-%define pIF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
-%define pIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
-%define pIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
-%define pIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
-
 %def_disable libcap
 %def_enable qt5
 %def_disable tqt
@@ -10,24 +5,22 @@
 
 Name: pinentry
 Version: 1.1.0
-Release: alt1%ubt
+Release: alt2
 
-Group: File tools
 Summary: Simple PIN or passphrase entry dialog
-Url: http://gnupg.org/related_software/pinentry/
 License: GPLv2+
+Group: File tools
 
-Requires: %name-common = %version-%release
-
-Requires: %name-qt4 = %version-%release
-Requires: %name-gtk2 = %version-%release
-
+Url: http://gnupg.org/related_software/pinentry/
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: pinentry-wrapper
 # ALT
 Patch10: alt-mask-xprop.patch
 
+Requires: %name-common = %version-%release
+Requires: %name-qt4 = %version-%release
+Requires: %name-gtk2 = %version-%release
 
 BuildRequires(pre): rpm-build-ubt
 %if_enabled qt5
@@ -48,8 +41,8 @@ BuildRequires: libsecret-devel gcr-libs-devel libassuan-devel
 BuildRequires: texinfo
 
 %description
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
+This is simple PIN or passphrase entry dialog which utilize
+the Assuan protocol as described by the aegypten project.
 
 %package common
 Group: %group
@@ -100,17 +93,17 @@ Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 
 %description gtk2
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
+This is simple PIN or passphrase entry dialog which utilize
+the Assuan protocol as described by the aegypten project.
 %description gnome3
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
+This is simple PIN or passphrase entry dialog which utilize
+the Assuan protocol as described by the aegypten project.
 %description qt5
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
+This is simple PIN or passphrase entry dialog which utilize
+the Assuan protocol as described by the aegypten project.
 %description qt4
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
+This is simple PIN or passphrase entry dialog which utilize
+the Assuan protocol as described by the aegypten project.
 %description common
 This package contains common files and documentation for %name.
 
@@ -119,11 +112,11 @@ This package contains common files and documentation for %name.
 tar xf %SOURCE0
 mv %name-%version gui
 
-cp -ar gui gui-qt5
-cp -ar gui tui
+cp -a gui gui-qt5
+cp -a gui tui
 mv gui gui-qt4
 
-install -m0644 %SOURCE1 pinentry-wrapper
+install -pm644 %SOURCE1 pinentry-wrapper
 %patch10 -p0
 
 for d in gui-qt5 gui-qt4 tui ; do
@@ -204,7 +197,7 @@ rm %buildroot%_bindir/%name
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
 ln -s %name-qt5 %buildroot/%_bindir/%name-qt
 
-install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
+install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 
 %files gtk2
 %_bindir/%name-gtk
@@ -228,6 +221,11 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Sat Mar 30 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt2
+- minor spec cleanup
+  + dropped unused macros
+  + dropped %%ubt
+
 * Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1%ubt
 - new version
 
