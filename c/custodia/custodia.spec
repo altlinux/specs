@@ -3,7 +3,7 @@
 
 Name: custodia
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: A tool for managing secrets
 License: %gpl3plus
@@ -16,17 +16,9 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-configparser
-BuildRequires: python-module-coverage
-BuildRequires: python-module-cryptography
-BuildRequires: python-module-jwcrypto
-BuildRequires: python-module-mock
-BuildRequires: python-module-requests-gssapi
-BuildRequires: python-module-tox
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-ipaclient
@@ -51,22 +43,12 @@ authorization, storage and API plugins are combined and exposed.
 %description
 %overview
 
-%package -n python-module-%name
-Summary: Subpackage with python custodia modules
-Group: Development/Python
-%add_python_req_skip ipalib
-%py_provides %name
-
-%description -n python-module-%name
-%overview
-
 %package -n python3-module-%name
 Summary: Subpackage with python3 custodia modules
 Group: Development/Python
 # module 'requests' doesn't contain 'urllib3', but imports within
 %add_python3_req_skip requests.packages.urllib3.connection
 %add_python3_req_skip requests.packages.urllib3.connectionpool
-%py3_requires requests.packages
 %py3_requires urllib3.connection
 %py3_requires urllib3.connectionpool
 %py3_provides %name
@@ -78,19 +60,8 @@ Group: Development/Python
 %setup
 %patch -p1
 
-# set the shebang to Python3
-sed -i \
-'s@ExecStart=/usr/sbin/custodia\($\|[[:space:]]\+\)@ExecStart=/usr/sbin/custodia.py3 @' \
-contrib/config/systemd/system/custodia@.service
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
 mkdir -p %buildroot%_sbindir
@@ -104,18 +75,9 @@ mkdir -p %buildroot%_sharedstatedir/custodia
 mkdir -p %buildroot%_logdir/custodia
 mkdir -p %buildroot%_runtimedir/custodia
 
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-        mv -v $i $i.py3
-done
-popd
 
-%python_install
 mv -v %buildroot%_bindir/custodia %buildroot%_sbindir/custodia
-mv -v %buildroot%_bindir/custodia.py3 %buildroot%_sbindir/custodia.py3
 install -m 644 -t "%buildroot%_man7dir" man/custodia.7
 install -m 644 -t "%buildroot%_defaultdocdir/custodia" README API.md
 install -m 644 -t "%buildroot%_defaultdocdir/custodia/examples" custodia.conf
@@ -125,31 +87,32 @@ install -m 644 %_builddir/%name-%version/contrib/config/systemd/system/custodia@
 install -m 644 %_builddir/%name-%version/contrib/config/tmpfiles.d/custodia.conf  %buildroot%_tmpfilesdir/custodia.conf
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %pre
 getent group custodia >/dev/null || groupadd -r custodia
 getent passwd custodia >/dev/null || \
     useradd -r -g custodia -d / -s /sbin/nologin \
     -c "User for custodia" custodia
-exit 0
 
 %post
-%systemd_post custodia@\*.socket
-%systemd_post custodia@\*.service
+if sd_booted && systemctl --version &>/dev/null; then
+  systemctl daemon-reload
+  if [ $1 -eq 1 ]; then
+    systemctl -q preset custodia@*.{socket,service} --all
+  else
+    systemctl try-restart custodia@*.{socket,service} --all
+  fi
+fi
 
 %preun
-%systemd_preun custodia@\*.socket
-%systemd_preun custodia@\*.service
-
-%postun
-%systemd_postun custodia@\*.socket
-%systemd_postun custodia@\*.service
+if sd_booted && systemctl --version &>/dev/null; then
+  if [ $1 -eq 0 ]; then
+    systemctl --no-reload -q disable --now custodia@*.{socket,service} --all
+  fi
+fi
 
 %files
 %doc %_defaultdocdir/custodia
@@ -164,21 +127,18 @@ exit 0
 %dir %attr(0755,custodia,custodia) %_runtimedir/custodia
 %_tmpfilesdir/custodia.conf
 
-%files -n python-module-%name
-%python_sitelibdir/%name
-%python_sitelibdir/%name-%version-py%_python_version.egg-info
-%python_sitelibdir/%name-%version-py%_python_version-nspkg.pth
-%_sbindir/custodia
-%_bindir/custodia-cli
-
 %files -n python3-module-%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info
 %python3_sitelibdir/%name-%version-py%_python3_version-nspkg.pth
-%_sbindir/custodia.py3
-%_bindir/custodia-cli.py3
+%_sbindir/custodia
+%_bindir/custodia-cli
 
 %changelog
+* Sat Mar 30 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (closes: #36426).
+- Removed Python2 subpackage.
+
 * Wed Sep 26 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.0 -> 0.6.0.
 - Set Python3 as default within systemd service.
