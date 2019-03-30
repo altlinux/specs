@@ -3,8 +3,8 @@
 %def_without desklaunch
 %def_without kde3kdesktop
 Name: icewm-startup
-Version: 0.19
-Release: alt2
+Version: 0.20
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -282,6 +282,16 @@ AutoReq: no
 %description tray_mixer_plus
 tray_mixer_plus plug-in for simple sound volume control.
 
+%package pnmixer
+Group: Graphical desktop/Icewm
+Summary: pnmixer autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск pnmixer при старте IceWM
+Requires: %name pnmixer
+AutoReq: no
+
+%description pnmixer
+pnmixer plug-in for simple sound volume control.
+
 %package grun
 Group: Graphical desktop/Icewm
 Summary: setup Run dialog
@@ -422,6 +432,7 @@ echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
+echo "pnmixer&" > %buildroot/%icewmconfdir/startup.d/pnmixer
 %if_with kde3kdesktop
 echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
 %endif
@@ -582,6 +593,9 @@ fi
 %files spacefm
 %config %icewmconfdir/startup.d/spacefm
 
+%files pnmixer
+%config %icewmconfdir/startup.d/pnmixer
+
 %if_with kde3kdesktop
 %files kdesktop
 %config %icewmconfdir/startup.d/kdesktop
@@ -621,6 +635,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Sat Mar 30 2019 Anton Midyukov <antohami@altlinux.org> 0.20-alt1
+- added pnmixer
+
 * Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
 - fixed unpackaged files
 
