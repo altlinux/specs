@@ -6,7 +6,7 @@ Name:         sogo
 # Use the same version as in the "nightly" packages at
 # http://v2.sogo.nu/downloads/backend_v3_nightly.html:
 Version:      4.0.7
-Release:      alt1
+Release:      alt2
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -53,7 +53,9 @@ BuildRequires: libnanomsg-devel
 BuildRequires: libobjc-devel
 BuildRequires: libssl-devel
 BuildRequires: libwbxml-devel
+%if_with openchange
 BuildRequires: openchange-devel
+%endif
 BuildRequires: zlib-devel
 BuildRequires: python-module-samba-DC
 
@@ -424,6 +426,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 4.0.7-alt2
+- Do not require openchange-devel if build without openchange (ALT #36464).
+
 * Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 4.0.7-alt1
 - New version.
 
