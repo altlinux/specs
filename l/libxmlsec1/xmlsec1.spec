@@ -1,13 +1,12 @@
 Name: libxmlsec1
-Version: 1.2.26
-Release: alt1%ubt
+Version: 1.2.27
+Release: alt1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
 Source0: http://www.aleksey.com/xmlsec/download/xmlsec1-%version.tar.gz
 Url: http://www.aleksey.com/xmlsec/
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: help2man libltdl7-devel man
 BuildRequires: libxml2-devel >= 2.8.0 libxslt-devel >= 1.0.20
 BuildRequires: libssl-devel >= 1.0.0
@@ -102,7 +101,7 @@ Libraries, includes, etc. for developing XML Security applications with NSS.
 
 %build
 %autoreconf
-%configure --disable-static --enable-gost
+%configure --disable-static --enable-gost2012
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %make_build
@@ -178,14 +177,17 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
-* Mon Sep 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.26-alt1%ubt
+* Sat Mar 30 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.27-alt1
+- 1.2.27
+
+* Mon Sep 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.26-alt1
 - 1.2.26
 - build with openssl-1.1
 
-* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.25-alt1%ubt
+* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.25-alt1
 - 1.2.25
 
-* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt3%ubt
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt3
 - rebuild with Universal Branch Tag
 
 * Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt2
