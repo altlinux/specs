@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 5.0.0
+Version: 7.0.0
 Release: alt1
 
 Summary: More routines for operating on iterables, beyond itertools
@@ -23,6 +23,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+Patch1:  %modulename-alt-broken-syntax-in-python2.patch
 
 %description
 Python's itertools library is a gem - you can compose elegant solutions
@@ -48,6 +49,8 @@ routines for working with Python iterables.
 rm -rf ../python3
 cp -a . ../python3
 %endif
+# Revert broken syntax for python2
+%patch1 -p1
 
 %build
 %python_build
@@ -74,6 +77,12 @@ popd
 %endif
 
 %changelog
+* Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
+- New version.
+
+* Fri Feb 15 2019 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Fri Dec 28 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version.
 
