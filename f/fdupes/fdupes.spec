@@ -1,5 +1,6 @@
 Name: fdupes
-Version: 1.51
+Version: 1.6.1
+Epoch: 1
 Release: alt1
 
 Summary: Identifies duplicate files within given directories
@@ -10,7 +11,7 @@ Url: http://netdial.caribe.net/~adrian2/fdupes.html
 
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
-# Source-url: https://github.com/adrianlopezroche/fdupes/archive/fdupes-%version.tar.gz
+# Source-url: https://github.com/adrianlopezroche/fdupes/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -38,6 +39,9 @@ residing within specified directories.
 %_man1dir/*
 
 %changelog
+* Sat Mar 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+
 * Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 1.51-alt1
 - new version 1.51 (with rpmrb script)
 - add check section, do not pack tests
