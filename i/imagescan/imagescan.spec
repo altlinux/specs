@@ -1,7 +1,7 @@
 %define utsushi_version 0.48.0
 
 Name:     imagescan
-Version:  3.48.0
+Version:  3.54.0
 Release:  alt1
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
@@ -14,7 +14,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # Download manually from http://support.epson.net/linux/src/scanner/imagescanv3/common/
 Source:   %{name}_%version.orig.tar.gz
 Source1:  utsushi.desktop
-Patch1:   %name-alt-libusb-fix-deprecated.patch
+
+Patch1:   %name-alt-fix-name-in-version-file.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -28,6 +29,10 @@ BuildRequires: libsane-devel
 BuildRequires: libtiff-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
+BuildRequires: libImageMagick-devel
+BuildRequires: autoconf-archive
+BuildRequires: xsltproc
+BuildRequires: libltdl7-devel
 
 %description
 Image Scan v3 is Linux software for Epson scanners.
@@ -47,25 +52,30 @@ line option.
 
 %build
 %undefine _configure_gettext
+%autoreconf
 %configure \
-    --enable-code-coverage \
+    --enable-shared \
+    --disable-test-reports \
+    --without-boost-unit-test-framework \
     --enable-sane-config \
-    --enable-test-reports \
     --enable-udev-config \
-    --with-gtkmm \
     --with-boost-libdir=%_libdir \
+    --without-included-ltdl \
+    --with-gtkmm \
     --with-jpeg \
     --with-magick \
+    --with-magick-pp \
     --with-sane \
     --with-tiff
  
-%make_build CXXFLAGS="-Wno-error=parentheses" LDFLAGS="-lpthread"
+%make_build CXXFLAGS="-Wno-error=parentheses -I../.." LDFLAGS="-lpthread"
 
 %install
 %makeinstall_std
 rm -rf %buildroot%_includedir
 find %buildroot%_libdir -name *.la -delete
 find %buildroot%_libdir -name *.a -delete
+install -Dm0644 lib/devices.conf %buildroot%_sysconfdir/utsushi/utsushi.conf
 install -Dm0644 %SOURCE1 %buildroot%_desktopdir/utsushi.desktop
 
 %find_lang utsushi
@@ -75,15 +85,26 @@ install -Dm0644 %SOURCE1 %buildroot%_desktopdir/utsushi.desktop
 
 %files -f utsushi.lang
 %doc AUTHORS NEWS README
+%config(noreplace) %_sysconfdir/utsushi/utsushi.conf
+%config(noreplace) %_sysconfdir/utsushi/combo.conf
 %_bindir/*
 %_sysconfdir/sane.d/dll.d/utsushi
 %_sysconfdir/udev/rules.d/utsushi-esci.rules
-%config(noreplace) %_sysconfdir/utsushi/combo.conf
+%_libdir/utsushi/lib*.so*
+%_libdir/utsushi/sane
+%_libdir/sane/libsane-utsushi.so*
 %_libexecdir/utsushi
 %_datadir/utsushi
 %_desktopdir/utsushi.desktop
 
 %changelog
+* Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 3.54.0-alt1
+- New version.
+- Package all shared libraries (ALT #36456).
+
+* Wed Jan 09 2019 Andrey Cherepanov <cas@altlinux.org> 3.50.0-alt1
+- New version.
+
 * Mon Oct 29 2018 Andrey Cherepanov <cas@altlinux.org> 3.48.0-alt1
 - Initial build for Sisyphus.
 - Disable check.
