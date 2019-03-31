@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20190324
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: %bsd, %gpl2plus, AS-IS (SUN MICROSYSTEMS license)
@@ -63,6 +63,7 @@ Queries.
 
 export LDFLAGS='-pie'
 %meson \
+	-DBUILD_TFTPD=false \
 	-Dsystemdunitdir=%_unitdir \
 	-DUSE_CAP=true \
 	-DUSE_IDN=true \
@@ -151,6 +152,9 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Sun Mar 31 2019 Mikhail Efremov <sem@altlinux.org> 20190324-alt2
+- Don't package tftpd (closes: #36477).
+
 * Wed Mar 27 2019 Mikhail Efremov <sem@altlinux.org> 20190324-alt1
 - ping: Fix use-after-free.
 - ninfod: Drop modcap.c usage.
