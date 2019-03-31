@@ -1,20 +1,20 @@
 Name: rpminstall-tests
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Summary: Tests for rpm: how it interprets packages when installing
 
+BuildRequires(pre): rpm-build-licenses
 License: %gpl2plus
 Group: Development/Tools
 Url: http://git.altlinux.org/people/imz/packages/rpminstall-tests.git
 
 BuildArch: noarch
 
-Requires: make rpm-build
+Requires: make rpm-build tmpdir.sh
+%{?!_without_check:%{?!_disable_check:BuildRequires: make rpm-build tmpdir.sh}}
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 Tests for rpm: how it interprets packages when installing.
@@ -56,20 +56,17 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 
 %files checkinstall
 
-%pre checkinstall
-# --pidfile doesn't exist and makes it always start.
-/sbin/start-stop-daemon --start --pidfile /var/empty/no.pid \
---chuid nobody:nobody \
---startas /bin/sh -- -ec \
-'export TMPDIR=/tmp; \
-. /usr/lib/rpm/tmpdir.sh; \
-cd  "$tmpdir"; \
-%_datadir/%name/makeme.sh %{?opts}; \
-%_datadir/%name/makeme.sh %{?opts} clean; \
-%_datadir/%name/makeme.sh %{?opts} minimal_epoch=0; \
-'
+%pre checkinstall -p %_sbindir/sh-safely
+%_datadir/%name/makeme.sh %{?opts}
+%_datadir/%name/makeme.sh %{?opts} clean
+%_datadir/%name/makeme.sh %{?opts} minimal_epoch=0
 
 %changelog
+* Wed Mar 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt2
+- (.spec) Factored out /usr/sbin/sh-safely (checkinstall-helper-sh-safely pkg)
+  from %%pre of the checkinstall subpkg.
+- In the tests, used the common /bin/tmpdir.sh (from tmpdir.sh pkg).
+
 * Wed Mar 13 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt1
 - New tests for disttag comparison with the obsolete (.) and current format (+)
   (Correct comparison would rely on a fix or a new feature in rpm:

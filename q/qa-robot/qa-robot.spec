@@ -1,6 +1,6 @@
 Name: qa-robot
 Version: 0.3.9
-Release: alt1
+Release: alt2
 
 Summary: Simple notification system
 License: GPL
@@ -22,6 +22,26 @@ BuildRequires: perl-Lingua-EN-Inflect perl-Text-CSV_XS perl-devel perl-podlators
 qa-robot reports various state changes, in terms of new, old,
 and (possibly) updated entries.  See qa-robot(1) for details.
 
+%package -n tmpdir.sh
+Summary: tmpdir.sh and trap.sh helpers for shell programming
+Group: Development/Other
+# qa-robot included {tmpdir,trap}.sh before
+Conflicts: qa-robot < 0.3.9-alt2
+
+%description -n tmpdir.sh
+%summary.
+
+Usage example:
+
+    . tmpdir.sh
+
+%package -n rpmpeek
+Summary: Peek inside an rpm file by running a command in the unpacked tree
+Group: File tools
+
+%description -n rpmpeek
+%summary.
+
 %prep
 %setup
 
@@ -30,12 +50,35 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 
 %install
 %perl_vendor_install
+pushd %buildroot
+mkdir ./bin
+mv .%_bindir/{tmpdir,trap}.sh -t ./bin/
+popd
 
 %files
 %_bindir/*
 %_man1dir/*.*
+%exclude /bin/tmpdir.sh
+%exclude /bin/trap.sh
+%exclude %_man1dir/tmpdir.sh*
+%exclude %_man1dir/trap.sh*
+%exclude %_bindir/rpmpeek
+%exclude %_man1dir/rpmpeek*
+
+%files -n tmpdir.sh
+/bin/tmpdir.sh
+/bin/trap.sh
+%_man1dir/tmpdir.sh*
+%_man1dir/trap.sh*
+
+%files -n rpmpeek
+%_bindir/rpmpeek
+%_man1dir/rpmpeek*
 
 %changelog
+* Wed Mar 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.3.9-alt2
+- Splitted subpkgs off: tmpdir.sh, rpmpeek.
+
 * Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1
 - fix for mutt 1.5 (thanks to glebfm@)
 
