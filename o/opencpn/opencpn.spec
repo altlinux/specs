@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: opencpn
-Version: 4.4.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -8,7 +10,8 @@ License: %gpl2only
 Url: http://opencpn.org
 Source0: OpenCPN-%version.tar.gz
 Source1: %name.desktop
-Patch: opencpn-4.4.0-fix_library_path.patch
+
+Patch1: opencpn-4.4.0-fix_library_path.patch
 
 Requires: %name-data
 
@@ -19,9 +22,17 @@ BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Mon Mar 25 2013
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
-BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgtk+2-devel libwxGTK-devel libxkbfile-devel zlib-devel
+BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel zlib-devel
+
+BuildRequires: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
+Requires: libgtk2-engine-adwaita
 
 BuildRequires: tinyxml-devel libgps-devel libportaudio2-devel libcurl-devel libexpat-devel
+BuildRequires: liblz4-devel liblzma-devel libsndfile-devel libarchive-devel libelf-devel
+BuildRequires: libexif-devel libwxsvg-devel libsqlite3-devel
+
+# use bundled wxcurl: none in Sisyphus 20190327
+# use bundled unarr : none in Sisyphus 20190327
 
 %description
 OpenCPN is a free software (GPLv2) project to create a concise chart plotter
@@ -39,13 +50,16 @@ Architecture independent files for OpenCPN.
 
 %prep
 %setup -n OpenCPN-%version
-%patch -p2
+#patch1 -p2
 
 #patch100 -p1
 
 #rm -f src/tinyxml*.cpp include/tinyxml.h
 #rm -rf plugins/grib_pi/src/zlib-1.2.3
 #rm -rf plugins/grib_pi/src/bzip2
+
+# https://lists.altlinux.org/pipermail/devel/2019-March/207515.html
+sed -i 's/\(SET .LIB_INSTALL_DIR "lib64".\)/# \1/' CMakeLists.txt
 
 %build
 %cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1
@@ -58,9 +72,9 @@ make install DESTDIR=%buildroot
 cp -f %SOURCE1 %buildroot%_datadir/applications
 
 # It is copied from %%_builddir by %%doc macro, so removed from %%buildroot
+# /usr/share/doc/opencpn/changelog
+# /usr/share/doc/opencpn/copyright
 rm -rf %buildroot/%_datadir/doc
-rm -rf %buildroot/%_datadir/%name/doc
-rm -f  %buildroot/%_datadir/%name/license.txt
 
 %find_lang %name
 %find_lang --append --output=%name.lang %name-dashboard_pi
@@ -69,14 +83,21 @@ rm -f  %buildroot/%_datadir/%name/license.txt
 %find_lang --append --output=%name.lang %name-chartdldr_pi
 
 %files
-%dir %_libdir/%name
+%doc data/license.txt
+%doc data/copyright
+%doc data/changelog
 
 %_bindir/opencpn
-%_libdir/opencpn/*_pi.so
+
+# https://lists.altlinux.org/pipermail/devel/2019-March/207515.html
+%dir %_usr/lib/%name
+%_usr/lib/opencpn/*_pi.so
 
 %files data -f BUILD/%name.lang
 %doc data/doc/*
-%doc data/license.txt
+%_man1dir/opencpn.*
+
+%_datadir/appdata/opencpn.appdata.xml
 
 %dir %_datadir/%name
 %dir %_datadir/%name/sounds
@@ -93,11 +114,33 @@ rm -f  %buildroot/%_datadir/%name/license.txt
 %_datadir/%name/uidata/*
 %_datadir/%name/plugins/*
 
+%dir %_datadir/%name/doc
+%_datadir/%name/doc/help_web.html
+
+%_datadir/%name/opencpn.png
+
+%_iconsdir/hicolor/64x64/apps/*
 %_iconsdir/hicolor/48x48/apps/*
 %_iconsdir/hicolor/scalable/apps/*
 %_datadir/applications/%name.desktop
 
+%_datadir/%name/COPYING.gplv2
+%_datadir/%name/COPYING.gplv3
+%_datadir/%name/COPYING.lgplv2
+%_datadir/%name/COPYING.lgplv3
+%_datadir/%name/CoC-909_2013-InlandECDIS_20170308s.pdf
+%_datadir/%name/LICENSING
+%_datadir/%name/LINUX_DEVICES.md
+%_datadir/%name/authors.html
+%_datadir/%name/license.html
+
 %changelog
+* Thu Mar 28 2019 Sergey Y. Afonin <asy@altlinux.ru> 5.0.0-alt1
+- New version (thanx to TEAM)
+- Built with wxGTK3.1
+- Added some system libraries for building (ALT #36402)
+- Disabled opencpn-4.4.0-fix_library_path.patch
+
 * Wed Aug 22 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
 - Fix library path.
 - Little cleanup spec.
