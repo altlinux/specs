@@ -1,8 +1,10 @@
 %def_disable snapshot
-%define ver_major 1.3
+%define ver_major 1.4
+
+%def_enable check
 
 Name: terminology
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -11,8 +13,8 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 %if_disabled snapshot
-#Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
-Source: https://fau.re/terminology/%name-%version.tar.xz
+Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
+#Source: https://fau.re/terminology/%name-%version.tar.xz
 %else
 #VCS: https://git.enlightenment.org/apps/terminology.git
 Source: %name-%version.tar
@@ -38,7 +40,7 @@ considering it's young age, it does a lot.
 %patch -b .def_font
 
 %build
-%meson
+%meson %{?_enable_check:-Dtests=true}
 %meson_build
 
 %install
@@ -52,6 +54,9 @@ EOF
 
 %find_lang %name
 
+%check
+%meson_test
+
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
@@ -62,6 +67,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sun Mar 31 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
