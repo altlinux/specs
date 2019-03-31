@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-CBuilder
 Name: perl-%dist
-Version: 0.280230
+Version: 0.280231
 Release: alt1
 
 Summary: Compile and link C code for Perl modules
@@ -39,7 +39,7 @@ been a much more ambitious goal!
 %perl_vendor_install
 
 %files
-%doc	Changes README README.mkdn README.patching README.release
+%doc	Changes README README.mkdn README.patching README.release CONTRIBUTING
 %dir	%perl_vendor_privlib/ExtUtils
 	%perl_vendor_privlib/ExtUtils/CBuilder.pm
 %dir	%perl_vendor_privlib/ExtUtils/CBuilder
@@ -59,6 +59,9 @@ been a much more ambitious goal!
 %exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/os2.pm
 
 %changelog
+* Sun Mar 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.280231-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.280230-alt1
 - automated CPAN update
 
