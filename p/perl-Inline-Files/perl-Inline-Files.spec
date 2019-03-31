@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Inline-Files
 Name: perl-%dist
-Version: 0.69
+Version: 0.71
 Release: alt1
 
 Summary: Multiple virtual files at the end of your code
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AM/AMBS/Inline-Files-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AM/AMBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ and the associated DATA filehandle, to an arbitrary number
 of markers and associated filehandles.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ of markers and associated filehandles.
 %perl_vendor_privlib/Inline
 
 %changelog
+* Sun Mar 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
 - automated CPAN update
 
