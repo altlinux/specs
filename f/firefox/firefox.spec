@@ -5,8 +5,8 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.20
-%define nss_version 3.40.0
+%define nspr_version 4.21
+%define nss_version 3.43.0
 %define rust_version  1.31.1
 %define cargo_version 1.31.1
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        65.0.2
+Version:        66.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -32,18 +32,21 @@ Source6:        firefox.desktop
 Source7:        firefox.c
 Source8:        firefox-prefs.js
 
-Patch6:         firefox-alt-disable-werror.patch
-Patch7:         firefox-alt-werror-return-type.patch
-Patch14:        firefox-fix-install.patch
-Patch16:        firefox-cross-desktop.patch
-Patch17:        firefox-mediasource-crash.patch
-Patch18:        firefox-alt-nspr-for-rust.patch
-Patch19:        build-aarch64-skia.patch
-
-# Upstream
-Patch200:       mozilla-bug-256180.patch
-Patch201:       mozilla-bug-1196777.patch
-Patch202:       mozilla-bug-1430274.patch
+### Start Patches
+Patch001: 0001-ALT-fix-werror-return-type.patch
+Patch002: 0002-SUSE-NonGnome-KDE-integration.patch
+Patch003: 0003-ALT-Use-system-nspr-headers.patch
+Patch004: 0004-MOZILLA-1423598-wayland-popup-tooltip-windows-can-be.patch
+Patch005: 0005-MOZILLA-1532643-wayland-CreateWidgetForPopup-needs-w.patch
+Patch006: 0006-MOZILLA-1535567-wayland-Fails-to-render-popup-window.patch
+Patch007: 0007-MOZILLA-1431399-wayland-with-WebRTC-playback-device-.patch
+Patch008: 0008-MOZILLA-1468911-wayland-Visible-artifacts-during-win.patch
+Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch010: 0010-MOZILLA-1515641-Addon.patch
+Patch011: 0011-MOZILLA-1353817-skia-build-error-on-aarch64.patch
+Patch012: 0012-FEDORA-build-arm-libopus.patch
+Patch013: 0013-FEDORA-build-arm.patch
+### End Patches
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -89,6 +92,7 @@ BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
+BuildRequires: nasm
 
 # Python requires
 BuildRequires: /dev/shm
@@ -147,19 +151,27 @@ firefox packages by some Alt Linux Team Policy compatible way.
 
 %prep
 %setup -q -n firefox-%version -c
+
+### Begin to apply patches
+%patch001 -p1
+%patch002 -p1
+%patch003 -p1
+%patch004 -p1
+%patch005 -p1
+%patch006 -p1
+%patch007 -p1
+%patch008 -p1
+%patch009 -p1
+%patch010 -p1
+%patch011 -p1
+%patch012 -p1
+%patch013 -p1
+### Finish apply patches
+
 cd mozilla
 
 tar -xf %SOURCE1
 tar -xf %SOURCE2
-
-%patch7 -p2
-%patch16 -p2
-%patch17 -p2
-%patch18 -p2
-#patch19 -p1 -b .aarch64-skia
-
-%patch200 -p1
-#patch201 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -218,13 +230,13 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-%ifnarch %{ix86}
+#ifnarch %{ix86}
 export CC="clang"
 export CXX="clang++"
-%else
-export CC="gcc"
-export CXX="g++"
-%endif
+#else
+#export CC="gcc"
+#export CXX="g++"
+#endif
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
@@ -358,6 +370,33 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Mar 27 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.1-alt1
+- New release (66.0.1).
+- Fixed:
+  + CVE-2019-9790: Use-after-free when removing in-use DOM elements
+  + CVE-2019-9791: Type inference is incorrect for constructors entered through on-stack replacement with IonMonkey
+  + CVE-2019-9792: IonMonkey leaks JS_OPTIMIZED_OUT magic value to script
+  + CVE-2019-9793: Improper bounds checks when Spectre mitigations are disabled
+  + CVE-2019-9794: Command line arguments not discarded during execution
+  + CVE-2019-9795: Type-confusion in IonMonkey JIT compiler
+  + CVE-2019-9796: Use-after-free with SMIL animation controller
+  + CVE-2019-9797: Cross-origin theft of images with createImageBitmap
+  + CVE-2019-9798: Library is loaded from world writable APITRACE_LIB location
+  + CVE-2019-9799: Information disclosure via IPC channel messages
+  + CVE-2019-9801: Windows programs that are not 'URL Handlers' are exposed to web content
+  + CVE-2019-9802: Chrome process information leak
+  + CVE-2019-9803: Upgrade-Insecure-Requests incorrectly enforced for same-origin navigation
+  + CVE-2019-9804: Code execution through 'Copy as cURL' in Firefox Developer Tools on macOS
+  + CVE-2019-9805: Potential use of uninitialized memory in Prio
+  + CVE-2019-9806: Denial of service through successive FTP authorization prompts
+  + CVE-2019-9807: Text sent through FTP connection can be incorporated into alert messages
+  + CVE-2019-9809: Denial of service through FTP modal alert error messages
+  + CVE-2019-9808: WebRTC permissions can display incorrect origin with data: and blob: URLs
+  + CVE-2019-9789: Memory safety bugs fixed in Firefox 66
+  + CVE-2019-9788: Memory safety bugs fixed in Firefox 66 and Firefox ESR 60.6
+  + CVE-2019-9810: IonMonkey MArraySlice has incorrect alias information
+  + CVE-2019-9813: Ionmonkey type confusion with __proto__ mutations
+
 * Sat Mar 02 2019 Alexey Gladkov <legion@altlinux.ru> 65.0.2-alt1
 - New release (65.0.2).
 - Use libvpx5.

@@ -1,8 +1,8 @@
-%define nspr_version 4.20-alt1
+%define nspr_version 4.21-alt1
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.42.1
+Version:	3.43.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -22,6 +22,7 @@ Patch2:		nss-no-rpath.patch
 Patch3:		nss-use-sqlite.patch
 Patch4:		nss-use-mozsqlite.patch
 Patch5:		nss-fix-objdir.patch
+Patch6:		nss-no-tests.patch
 
 # Fedora patches
 Patch10:	nss-enable-pem.patch
@@ -115,11 +116,9 @@ Netscape Network Security Services Utilities
 %prep
 %setup -q
 %setup -q -T -D -a7
-#patch0 -p0
 %patch2 -p0
-#patch3 -p0
-#patch4 -p0
 %patch5 -p2
+%patch6 -p2
 
 %patch10 -p0
 
@@ -274,6 +273,9 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Sun Mar 31 2019 Alexey Gladkov <legion@altlinux.ru> 3.43.0-alt1
+- New version (3.43).
+
 * Fri Feb 01 2019 Alexey Gladkov <legion@altlinux.ru> 3.42.1-alt1
 - New version (3.42.1).
 
