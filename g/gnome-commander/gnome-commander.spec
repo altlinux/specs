@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 1.10
 %def_with exiv2
 %def_with chm
 %def_with taglib
@@ -8,8 +8,10 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
+
+%define xdg_name org.gnome.%name
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
 License: GPL
@@ -61,9 +63,9 @@ and some extra features like FTP support.
 %_bindir/*
 %_libdir/%name/
 %_datadir/applications/%name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.gnome-commander.enums.xml
-%_datadir/glib-2.0/schemas/org.gnome.gnome-commander.gschema.xml
-%_datadir/pixmaps/%name.png
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/pixmaps/%name.svg
 %_datadir/pixmaps/%name/
 %_datadir/appdata/%name.appdata.xml
 %_datadir/%name
@@ -75,6 +77,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sun Mar 31 2019 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
