@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.10.1
-Release: alt4
+Release: alt5
 
 Summary: Python test framework
 License: MIT
@@ -164,6 +164,9 @@ tox.py3 --sitepackages -p auto -o -v -- --cache-clear
 %_bindir/pytest3
 
 %changelog
+* Sun Mar 31 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt5
+- Fixed testing against py 1.8.0.
+
 * Thu Feb 07 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt4
 - Fixed "test_pdb_unittest_postmortem" test.
 
