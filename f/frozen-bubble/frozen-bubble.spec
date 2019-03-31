@@ -4,7 +4,7 @@ BuildRequires: perl(File/ShareDir.pm) perl(File/Slurp.pm) perl(File/Which.pm) pe
 # END SourceDeps(oneline)
 Name: frozen-bubble
 Version: 2.212
-Release: alt1
+Release: alt2
 
 Summary(ru_RU.UTF-8): игра Frozen Bubble
 Summary: Frozen Bubble arcade game
@@ -73,7 +73,7 @@ transition effects, 8 unique logo eye-candies.
 %package server
 Group: Games/Arcade
 Summary: Frozen Bubble network game dedicated server
-BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: libsystemd-devel libudev-devel
 
 %description server
 Frozen Bubble network game dedicated server. The server is already included
@@ -214,6 +214,9 @@ EOF
 # - package server
 
 %changelog
+* Sun Mar 31 2019 Michael Shigorin <mike@altlinux.org> 2.212-alt2
+- pruned excessive BRs of server subpackage
+
 * Sat Mar 02 2019 Igor Vlasenko <viy@altlinux.ru> 2.212-alt1
 - new version (2.2.1-beta1, CPAN version is 2.212)
 
