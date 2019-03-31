@@ -1,7 +1,8 @@
-%define ver_major 0.8
+%def_disable snapshot
+%define ver_major 0.10
 
 Name: gupnp-tools
-Version: %ver_major.15
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of developer tools utilising GUPnP and GTK+3
@@ -9,15 +10,22 @@ Group: Development/Other
 License: GPLv2+
 Url: http://www.gupnp.org/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-%define gupnp_ver 0.20.14
-%define gssdp_ver 0.13.3
+%define gupnp_api_ver 1.2
+%define gssdp_api_ver 1.2
+%define gupnp_ver 1.2
+%define gssdp_ver 1.2
 %define soup_ver 2.42
 
 BuildRequires(pre): meson
 BuildRequires: desktop-file-utils
-BuildRequires: libgupnp-devel >= %gupnp_ver libgupnp-av-devel libgssdp-devel >= %gssdp_ver
+BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver libgssdp%gssdp_api_ver-devel >= %gssdp_ver
+BuildRequires: libgupnp-av-devel
 BuildRequires: libgtk+3-devel libsoup-devel >= %soup_ver libxml2-devel libuuid-devel
 BuildRequires: libgtksourceview4-devel
 
@@ -54,11 +62,14 @@ test and debug one's UPnP devices and control points.
 %_desktopdir/gupnp-av-cp.desktop
 %_desktopdir/gupnp-network-light.desktop
 %_desktopdir/gupnp-universal-cp.desktop
-%_iconsdir/hicolor/*x*/*.png
+%_iconsdir/hicolor/*x*/*/*.png
 %_datadir/%name/
 %doc AUTHORS README* NEWS
 
 %changelog
+* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0 (ported to gssdp/gupnp-1.2)
+
 * Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.15-alt1
 - 0.8.15
 

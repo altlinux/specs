@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.36
+%define ver_major 0.38
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable tracker_plugin
@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -31,24 +31,24 @@ Url: https://wiki.gnome.org/Projects/Rygel
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define libxml_ver 2.7
-%define vala_ver 0.24.0
+%define vala_ver 0.36.0
 %define gi_ver 1.33.4
-%define gssdp_ver 1.0.0
-%define gupnp_ver 1.0.0
+%define gssdp_ver 1.2.0
+%define gupnp_ver 1.2.0
 %define gupnp_av_ver 0.12.8
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
 %define gst_api_ver 1.0
-%define gst_ver 1.6
-%define gst_pbu_ver 1.6
-%define gst_tag_ver 1.6
-%define gst_app_ver 1.6
-%define gst_audio_ver 1.6
-%define gio_ver 2.34
+%define gst_ver 1.12
+%define gst_pbu_ver 1.12
+%define gst_tag_ver 1.12
+%define gst_app_ver 1.12
+%define gst_audio_ver 1.12
+%define gio_ver 2.44
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.44.0
-%define gtk_ver 3.0
+%define gtk_ver 3.22
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
 %define tracker_ver 1.99.0
@@ -62,10 +62,10 @@ Requires: gst-libav
 Requires: tracker
 Requires: lsdvd
 
-BuildRequires: autoconf-archive gtk-doc
+BuildRequires: autoconf-archive gtk-doc valadoc
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: pkgconfig(gssdp-1.0) >= %gssdp_ver
-BuildRequires: pkgconfig(gupnp-1.0) >= %gupnp_ver
+BuildRequires: pkgconfig(gssdp-1.2) >= %gssdp_ver
+BuildRequires: pkgconfig(gupnp-1.2) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: pkgconfig(gmodule-2.0)
@@ -87,12 +87,12 @@ BuildRequires: gir(Gst) = 1.0
 BuildRequires: tracker-devel >= %tracker_ver
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
-BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
-BuildRequires: gir(GUPnP) = 1.0 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
+BuildRequires: vapi(gupnp-1.2) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
+BuildRequires: gir(GUPnP) = 1.2 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 %{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
-BuildRequires: systemd-devel
+BuildRequires: pkgconfig(systemd)
 
 %description
 Rygel is an implementation of the UPnP MediaServer V 2.0 specification that is
@@ -162,7 +162,7 @@ echo %version > .tarball-version
 
 %build
 # gettext 0.19.7 required
-gettextize -q -f
+#gettextize -q -f
 %autoreconf
 %configure \
 	%{subst_enable vala} \
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Mon Mar 18 2019 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.36.2-alt1
 - 0.36.2
 
