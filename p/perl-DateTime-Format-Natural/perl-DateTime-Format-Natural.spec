@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Term/ReadLine.pm) perl-podlators
@@ -5,13 +6,13 @@ BuildRequires: perl(Term/ReadLine.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
-Version:        1.06
-Release:        alt1_1
+Version:        1.07
+Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/DateTime-Format-Natural
-Source0:        https://cpan.metacpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  glibc-locales glibc-timezones glibc-utils iconv
@@ -87,6 +88,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Sun Mar 31 2019 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_1
 - update to new release by fcimport
 
