@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -13,11 +13,17 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 # use system libs as dependencies
-Patch0: %name-no_Third-Party.patch
+Patch0: openboard-1.5.2-no_Third-Party.patch
 # use poppler instead of xpdf to handle pdf
-Patch1: %name-XPDFRenderer_with_poppler.patch
-# PATCH-FEATURE-UPSTREAM OpenBoard-1.3.6-add-openssl-1.1-compat.patch -- Add compatibility with OpenSSL 1.1 API
-Patch2: OpenBoard-1.3.6-add-openssl-1.1-compat.patch
+Patch1: openboard-1.3.4-XPDFRenderer_with_poppler.patch
+# add compatibility with OpenSSL 1.1 (https://github.com/OpenBoard-org/OpenBoard/pull/113)
+Patch2: openboard-1.3.6-add-compatibility-with-OpenSSL-1.1.patch
+# fix build with poppler >= 0.70.1 and gcc8
+Patch3: openboard-gcc8.patch
+Patch4: openboard-poppler-0.71.patch
+Patch5: openboard-poppler-0.72.patch
+# fix build with Qt5 >= 5.12
+Patch6: openboard-1.4.1-fix-build-with-qt-5.12.patch
 
 Buildrequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libgomp-devel
@@ -62,6 +68,10 @@ Interactive whiteboard for schools and universities.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -148,6 +158,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Sun Mar 31 2019 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt2
+- Update patchs (Fix FTBFS) (Thanks Mageia Team)
+
 * Thu Feb 14 2019 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
 - new version 1.5.2
 
