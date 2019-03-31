@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,7 +7,7 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-CppGuess
-Version:        0.14
+Version:        0.17
 Release:        alt1
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Sun Mar 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
