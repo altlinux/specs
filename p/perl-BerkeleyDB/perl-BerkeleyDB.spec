@@ -1,16 +1,16 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.55
-Release: alt1.4
+Version: 0.61
+Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PM/PMQS/BerkeleyDB-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 Patch: perl-BerkeleyDB-0.49-alt-DB_VERSION.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -28,7 +28,7 @@ to all four of the database types (hash, btree, queue and recno)
 currently supported by Berkeley DB.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 rm -rv t/Test/
 
@@ -42,13 +42,16 @@ rm %buildroot%perl_vendor_archlib/mkconsts.pl
 rm %buildroot%perl_vendor_archlib/scan.pl
 
 %files
-%doc	Changes README
+%doc	Changes README Todo
 	%perl_vendor_archlib/BerkeleyDB.pm
 %doc	%perl_vendor_archlib/BerkeleyDB.pod
 	%perl_vendor_archlib/BerkeleyDB
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Sun Mar 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1.4
 - rebuild with new perl 5.28.1
 
