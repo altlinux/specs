@@ -4,7 +4,7 @@
 
 Name: exiv2
 Version: 0.26
-Release: alt2
+Release: alt3
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
@@ -122,6 +122,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 
 %changelog
+* Mon Apr 01 2019 Michael Shigorin <mike@altlinux.org> 0.26-alt3
+- E2K: tweaked CVE-2017-17725 patch to fix ftbfs with lcc-1.23
+
 * Tue Aug 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt2
 - applied set of fc/upstream patches (fixed CVE-2017-11683,
   CVE-2017-14859, CVE-2017-14860, CVE-2017-14862,
