@@ -5,11 +5,12 @@
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_enable check
 %def_disable installed_tests
 
 Name: telepathy-glib
 Version: 0.24.1
-Release: alt3
+Release: alt3.1
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL
@@ -34,9 +35,7 @@ BuildPreReq: libdbus-glib-devel >= %dbus_ver
 BuildRequires: gtk-doc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
 %{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
-
-# for check
-BuildRequires: /proc dbus dbus-tools-gui python-module-PyXML
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui python-module-PyXML}
 
 %description
 This package contains telepathy-glib, a GLib-based library for Telepathy
@@ -113,6 +112,7 @@ the functionality of the installed %name library package.
 %patch -p1
 
 %build
+export TP_TESTS_NO_TIMEOUT=1
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -127,7 +127,7 @@ the functionality of the installed %name library package.
 %makeinstall_std
 
 %check
-%make check
+%make check CHECK_VERBOSE=1
 
 %files -n lib%name
 %doc AUTHORS ChangeLog
@@ -168,6 +168,9 @@ the functionality of the installed %name library package.
 %endif
 
 %changelog
+* Mon Apr 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3.1
+- set TP_TESTS_NO_TIMEOUT=1 (ALT #36485)
+
 * Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3
 - rebuild with glib-2.60.0
 
