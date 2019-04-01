@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 241
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -679,6 +679,7 @@ Static library for libudev.
 	-Dcertificate-root=/etc/pki/tls \
 	-Ddocdir=%_defaultdocdir/%name-%version
 
+%meson_build version.h
 %meson_build
 
 %install
@@ -1844,6 +1845,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt4
+- merge with v241-stable branch
+- fixed error 'too many arguments' in rpm filetrigger (ALT #36461)
+
 * Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt3
 - backport patches from master:
   + backlight: handle loading truncated file
