@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	25
+Version:	26
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -12,8 +12,14 @@ Requires:	lib%name = %version-%release
 Source0:	%name-%version.tar
 Patch0:		%name-manpage.patch
 
-BuildRequires:	docbook-dtds docbook-style-xsl glibc-devel-static liblzma-devel xsltproc zlib-devel
-BuildRequires:	bash4
+BuildRequires: bash4
+BuildRequires: docbook-dtds
+BuildRequires: docbook-style-xsl
+BuildRequires: glibc-devel-static
+BuildRequires: liblzma-devel
+BuildRequires: libssl-devel
+BuildRequires: xsltproc
+BuildRequires: zlib-devel
 
 Provides:	module-init-tools = 3.17-alt1
 Obsoletes:	module-init-tools
@@ -62,6 +68,7 @@ touch libkmod/docs/gtk-doc.make
 	--disable-test-modules \
 	--bindir=/bin \
 	--with-rootlibdir=/%_lib \
+	--with-openssl \
 	--with-zlib \
 	--with-xz
 %make_build
@@ -125,6 +132,10 @@ make check
 %_libdir/libkmod.so
 
 %changelog
+* Mon Apr 01 2019 Alexey Gladkov <legion@altlinux.ru> 26-alt1
+- Version (26).
+- Add PKCS7 signatures support.
+
 * Thu Mar 29 2018 Alexey Gladkov <legion@altlinux.ru> 25-alt1
 - Version (25).
 
