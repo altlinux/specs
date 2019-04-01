@@ -1,6 +1,6 @@
 Name: pnmixer
 Version: 0.7.2
-Release: alt2
+Release: alt3
 
 %def_without	gtk3
 
@@ -10,6 +10,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/nicklan/pnmixer
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: add-qasmixer.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 BuildRequires: cmake gettext libalsa-devel libnotify-devel
@@ -39,6 +40,7 @@ Feel free to try and to give some feedback.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 
 %build
 %cmake \
@@ -73,6 +75,9 @@ mv %buildroot%_desktopdir/%name.desktop %buildroot%_sysconfdir/xdg/autostart/
 %_man1dir/*
 
 %changelog
+* Sat Mar 30 2019 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt3
+- Add qasmixer in default mixer list
+
 * Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt2
 - Patch from upstream:
   + Clip volume between 0 and 100.
