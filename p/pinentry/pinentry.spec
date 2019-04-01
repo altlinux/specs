@@ -5,22 +5,22 @@
 
 Name: pinentry
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
 Group: File tools
-
 Url: http://gnupg.org/related_software/pinentry/
+
+Requires: %name-common = %version-%release
+Requires: %name-qt4 = %version-%release
+Requires: %name-gtk2 = %version-%release
+
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: pinentry-wrapper
 # ALT
 Patch10: alt-mask-xprop.patch
-
-Requires: %name-common = %version-%release
-Requires: %name-qt4 = %version-%release
-Requires: %name-gtk2 = %version-%release
 
 BuildRequires(pre): rpm-build-ubt
 %if_enabled qt5
@@ -221,6 +221,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon Apr 01 2019 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt3
+- fix spec cleanup
+
 * Sat Mar 30 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt2
 - minor spec cleanup
   + dropped unused macros
