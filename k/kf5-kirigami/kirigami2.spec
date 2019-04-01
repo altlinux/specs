@@ -1,7 +1,7 @@
 %define rname kirigami2
 
 Name: kf5-kirigami
-Version: 5.56.0
+Version: 5.56.1
 Release: alt1
 %K5init
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Mon Apr 01 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.1-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
 - new version
 
