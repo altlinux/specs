@@ -25,7 +25,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.8
-Release: alt5
+Release: alt6
 Epoch: 1
 %K5init altplace
 
@@ -132,6 +132,8 @@ developing applications that use %name.
 %package -n %name-qml
 Group: Graphical desktop/KDE
 Summary: Base qml-components for plasma workspace
+Requires: %name-common = %EVR
+Requires: qml(org.kde.plasma.core)
 %description -n %name-qml
 Base qml-components for plasma workspace
 
@@ -377,6 +379,9 @@ done
 
 
 %changelog
+* Mon Apr 01 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt6
+- fix requires
+
 * Thu Mar 28 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt5
 - freememorynotifier: add translations
 
