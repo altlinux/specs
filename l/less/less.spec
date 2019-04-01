@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 481
-Release: alt2
+Version: 530
+Release: alt1
 
 Summary: A text file browser similar to more, but better
 License: GPLv3+
@@ -28,15 +28,12 @@ Source12: less.sh
 Source13: less.csh
 Source14: lesspipe-color.sh
 
-Patch1:  less-394-alt-configure.patch
-Patch3:  less-444-Foption.v2.patch
-Patch4:  less-394-rh-search.patch
-Patch6:  less-394-suse-strict-aliasing.patch
-Patch7:  less-alt-old-bot-at-start.patch
-Patch8:  less-alt-pcre_include_path.patch
-Patch9:  less-alt-colorenv.patch
-Patch10: less-436-manpage-add-old-bot-option.patch
-Patch11: less-458-old-bot-in-help.patch
+Patch001: 0001-ALT-Add-AC_GNU_SOURCE.patch
+Patch002: 0002-Add-old-bot-option-to-manpage.patch
+Patch003: 0003-Add-old-bot-option-to-help.patch
+Patch004: 0004-Process-old-bot-at-start.patch
+Patch005: 0005-Fix-pcre.h-include-path.patch
+Patch006: 0006-Set-LESSCOLOR-env-variable-if-R-was-specified.patch
 
 Requires: file >= 4.26-alt3, mktemp >= 1:1.3.1
 
@@ -58,15 +55,13 @@ example, vi).
 
 %prep
 %setup
-%patch1 -p1
-%patch3 -p2
-%patch4 -p1
-%patch6 -p1
-%patch7 -p2
-%patch8 -p1
-%patch9 -p2
-%patch10 -p1
-%patch11 -p1
+
+%patch001 -p2
+%patch002 -p2
+%patch003 -p2
+%patch004 -p2
+%patch005 -p2
+%patch006 -p2
 
 install -pm644 %_sourcedir/faq.html .
 bzip2 -9k NEWS
@@ -109,6 +104,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Mon Apr 01 2019 Alexey Gladkov <legion@altlinux.ru> 530-alt1
+- New version 530.
+
 * Thu Oct 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 481-alt2
 - correctly detect and handle .xz files.
 
