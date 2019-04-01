@@ -7,7 +7,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.1
-Release: alt2.2
+Release: alt3
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -123,6 +123,30 @@ GUI library, offering classes for all common GUI controls as well as a
 comprehensive set of helper classes for most common application tasks,
 ranging from networking to HTML display and image manipulation.
 
+%package -n lib%name-webview
+Summary: WebView add-on for the wxWidgets library
+Group: System/Libraries
+Requires: lib%name = %EVR
+
+%description -n lib%name-webview
+WebView add-on for the wxWidgets library.
+wxWidgets is the GTK port of the C++ cross-platform wxWidgets
+GUI library, offering classes for all common GUI controls as well as a
+comprehensive set of helper classes for most common application tasks,
+ranging from networking to HTML display and image manipulation.
+
+%package -n lib%name-sound_sdlu
+Summary: sound_sdlu add-on for the wxWidgets library
+Group: System/Libraries
+Requires: libwxBase%wxbranch = %EVR
+
+%description -n lib%name-sound_sdlu
+sound_sdlu add-on for the wxWidgets library.
+wxWidgets is the GTK port of the C++ cross-platform wxWidgets
+GUI library, offering classes for all common GUI controls as well as a
+comprehensive set of helper classes for most common application tasks,
+ranging from networking to HTML display and image manipulation.
+
 %package -n lib%name-media
 Summary: Multimedia add-on for the wxWidgets library
 Group: System/Libraries
@@ -155,6 +179,8 @@ Requires: lib%name = %EVR
 Requires: lib%name-gl = %EVR
 Requires: lib%name-media = %EVR
 Requires: libwxBase%wxbranch-devel = %EVR
+Requires: lib%name-webview = %EVR
+Requires: lib%name-sound_sdlu = %EVR
 %add_python_req_skip utils
 
 %description -n lib%name-devel
@@ -229,7 +255,6 @@ CONF_FLAG="--enable-shared \
 	--enable-compat28 \
 	--enable-mediactrl \
 	--enable-sound \
-	--enable-webview \
 	--enable-stc \
 	--enable-gui \
 	--enable-graphics_ctx \
@@ -252,7 +277,8 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 mkdir bld_gtk2
 pushd bld_gtk2
 %configure $CONF_FLAG \
-	--with-gtk=2
+	--with-gtk=2 \
+	--disable-webview
 
 %make_build
 popd
@@ -261,7 +287,8 @@ popd
 mkdir bld_gtk3
 pushd bld_gtk3
 %configure $CONF_FLAG \
-	--with-gtk=3
+	--with-gtk=3 \
+	--enable-webview
 
 %make_build
 popd
@@ -269,9 +296,11 @@ popd
 %make -C locale allmo
 
 %install
+%if_with compat
 pushd bld_gtk2
 %makeinstall_std
 popd
+%endif
 
 pushd bld_gtk3
 %makeinstall_std
@@ -298,12 +327,11 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %find_lang wxstd31 wxmsw31 --output=wxstd.lang
 
 %files -n libwxBase%wxbranch
-%_libdir/libwx_baseu*.so.*
+%_libdir/libwx_baseu-*.so.*
+%_libdir/libwx_baseu_net-*.so.*
+%_libdir/libwx_baseu_xml-*.so.*
 %dir %_libdir/wx
 %dir %_libdir/wx/%version
-%_libdir/wx/%version/sound_sdlu-*.so
-%dir %_libdir/wx/%version/web-extensions
-%_libdir/wx/%version/web-extensions/webkit2_extu-*.so
 
 %files -n libwxBase%wxbranch-devel
 %_bindir/wx-config
@@ -319,6 +347,13 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/bakefile/presets-%wxbranch
 %_libexecdir/%name
 
+%files -n lib%name-sound_sdlu
+%_libdir/wx/%version/sound_sdlu-*.so
+
+%files -n lib%name-webview
+%_libdir/libwx_gtk3u_webview-*.so.*
+%_libdir/wx/%version/web-extensions
+
 %files -n lib%name
 %doc docs/changes.txt docs/gpl.txt docs/lgpl.txt docs/licence.txt
 %doc docs/licendoc.txt docs/preamble.txt docs/readme.txt
@@ -332,7 +367,7 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_libdir/libwx_gtk3u_richtext-*.so.*
 %_libdir/libwx_gtk3u_stc-*.so.*
 %_libdir/libwx_gtk3u_xrc-*.so.*
-%_libdir/libwx_gtk3u_webview-*.so.*
+%exclude %_libdir/libwx_gtk3u_webview-*.so.*
 
 %files -n lib%name-gl
 %_libdir/libwx_gtk3u_gl-*.so.*
@@ -378,6 +413,11 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Apr 01 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt3
+- New subpackage libwxGTK3.1-webview
+- New subpackage libwxGTK3.1-sound_sdlu
+- Fix build without compat
+
 * Wed Jan 02 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2.2
 - Fix /usr/bin/wx-config (create symlink)
 
