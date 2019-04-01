@@ -1,13 +1,22 @@
-%define shortver 74
+%define shortver 76
+%define libver 7.6
 
 Name:    grass
-Version: 7.4.4
-Release: alt2
+Version: 7.6.1
+Release: alt1
 
 %def_with mysql
 %def_with postgres
 %def_with sqlite
 %def_without python3
+# liblas-config
+%def_without liblas
+# Missing
+%def_without opendwg
+# Old version
+%def_without opencl
+# pdal-config
+%def_without pdal
 
 Summary: Geographic Resources Analysis Support System
 License: %gpl2plus
@@ -23,9 +32,11 @@ Source1: %name.watch
 Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
+Patch3: %name-alt-build-with-external-lz4.patch
+Patch4: %name-alt-build-with-gdal.patch
 
-#define grassdir grass%shortver
-%define grassdir grass-%version
+%define grassdir grass%shortver
+#define grassdir grass-%version
 %define grassdatadir /var/lib/grass%shortver/data
 
 BuildRequires(pre): rpm-build-licenses
@@ -67,6 +78,13 @@ BuildRequires: libmariadbd-devel
 BuildRequires: python-module-simplejson
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
+BuildRequires: bzlib-devel
+BuildRequires: libzstd-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: opencl-headers
+BuildRequires: libgomp-devel
+BuildRequires: liblz4-devel
+BuildRequires: python-modules-distutils
 
 # internal modules
 %if_with python3
@@ -101,12 +119,19 @@ This package contains development headers for GRASS.
 
 %prep
 %setup
+# Remove bundled lz4
+rm lib/gis/lz4{.h,.c}
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-subst 's/\t/        /g' scripts/v.db.dropcolumn/v.db.dropcolumn.py
+%patch3 -p2
+%patch4 -p2
+subst 's/\t/        /g' \
+      scripts/v.db.dropcolumn/v.db.dropcolumn.py \
+      scripts/v.db.addtable/v.db.addtable.py
 
 %build
+export LDCONFIG=-llz4
 %configure \
 	--prefix=%_libdir \
 	--with-nls \
@@ -114,30 +139,40 @@ subst 's/\t/        /g' scripts/v.db.dropcolumn/v.db.dropcolumn.py
 	--enable-largefile \
 	--enable-shared \
 	--with-blas \
+	--with-bzlib \
 	--with-cairo \
 	--with-cxx \
+        %{subst_with opendwg} \
 	--with-fftw \
 	--with-freetype-includes=%{_includedir}/freetype2 \
 	--with-freetype=yes \
 	--with-gdal \
 	--with-geos \
 	--with-glw \
+	--with-gomp \
 	--with-lapack \
+        %{subst_with liblas} \
 	--with-motif \
 	%{subst_with mysql} \
 	--with-mysql-includes=%{_includedir}/mysql \
+        --with-netcdf=%_libdir/hdf5-seq/bin/nc-config \
 	--with-nls \
 	--with-odbc \
+        %{subst_with opencl} \
 	--with-opengl \
+	--with-openmp \
+	%{subst_with pdal} \
 	%{subst_with postgres} \
 	--with-postgres-includes=/usr/include/pgsql \
 	--with-proj \
 	--with-proj-share=%{_datadir}/proj \
+        --with-pthread \
 	--with-python \
 	--with-readline \
 	%{subst_with sqlite} \
 	--with-wxwidgets=wx-config \
-	--with-x
+	--with-x \
+        --with-zstd
 
 %make
 
@@ -148,29 +183,6 @@ subst 's/\t/        /g' scripts/v.db.dropcolumn/v.db.dropcolumn.py
 sed -i -e 's|%buildroot%_prefix|%_libdir|g' \
         %buildroot%_bindir/%name%shortver
 
-# Sadly, parts of the following can't be done safely in prep,
-# hence they're done here
-# Replace GISBASE environment variable with paths that match our documentation file layout
-#sed -i -e 's|$env(GISBASE)/docs/|%_docdir/%grassdir/docs/|' \
-#    %buildroot%_prefix/%grassdir/etc/gis_set.tcl \
-#    %buildroot%_prefix/%grassdir/etc/gui.tcl \
-#    %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/nviz2.2_script
-sed -i -e 's|C_BASE="$GISBASE"|C_BASE=\"%_docdir/%grassdir/docs"|g' \
-    %buildroot%_prefix/%grassdir/scripts/g.manual
-sed -i -e 's|%grassdir/docs|%grassdir|g' \
-    %buildroot%_prefix/%grassdir/scripts/g.manual
-#sed -i -e 's|(\"GISBASE\"), \"docs\", \"html\", \"icons\", \"silk\")|(\"GISBASE\"), \"icons\", \"silk\")|g' \
-#    %buildroot%_prefix/%grassdir/etc/wxpython/icons/icon.py
-#sed -i -e 's|self.fspath = os.path.join(gisbase|self.fspath = os.path.join("%_docdir/%grassdir\"|' \
-#    %buildroot%_prefix/%grassdir/etc/wxpython/gui_core/ghelp.py
-#sed -i 's|file://$env(GISBASE)|file://%_docdir/%grassdir|' %buildroot%_prefix/%grassdir/etc/r.li.setup/r.li.setup.main
-sed -i 's|GRASS_DOC_BASE=`check_docbase "$GISBASE"`|GRASS_DOC_BASE=%_docdir/%grassdir|' %buildroot%_prefix/%grassdir/scripts/g.manual
-
-# Exceptional path for files used in the GUI as well
-#TODO: Could include them in the main package too
-#sed -i -e 's|os\.getenv("GISBASE")|\"%_docdir/%name-libs-%version\"|' \
-#    %buildroot%_prefix/%grassdir/etc/wxpython/gui_core/ghelp.py
-
 #TODO: Quotes and linebreaks in sed calls
 # Replace GISBASE environment variable with paths that match our locale file layout
 sed -i -e 's|os.path.join(os.getenv("GISBASE"), '\''locale'\''|os.path.join('\''%_datadir'\'', '\''locale'\''|' -e 's|os.path.join(os.getenv("GISBASE"), "etc"|os.path.join(\"%_libdir/%grassdir\", "etc"|' -e 's|self.gisbase  = os.getenv("GISBASE")|self.gisbase = "%_docdir/%grassdir"|' %buildroot%_prefix/%grassdir/etc/python/grass/script/*.py
@@ -179,19 +191,6 @@ sed -i -e 's|os.path.join(os.getenv("GISBASE"), '\''locale'\''|os.path.join('\''
 mv %buildroot%_prefix/%grassdir/lib/ %buildroot%_libdir
 mv %buildroot%_prefix/%grassdir/include %buildroot%_prefix/
 rm -rf %buildroot%_includedir/Make
-
-# Create universal multilib header bz#341391
-#install -p -m 644 %%buildroot%%_includedir/%%name/config.h \
-#           %%buildroot%%_includedir/%%name/config-%%cpuarch.h
-#install -p -m 644 %%SOURCE2 %%buildroot%%_includedir/%%name/config.h
-
-#TODO: Do we still need this?
-# Fix prelink issue bz#458427
-#mkdir -p %%buildroot%%_sysconfdir/prelink.conf.d
-#cat > %%buildroot%%_sysconfdir/prelink.conf.d/%%name-%%cpuarch.conf <<EOF
-#-b %%_libdir/libgrass_gproj.so.6.4.0
-#-b %%_libdir/libgrass_sim.so.6.4
-#EOF
 
 # Make man pages available on system, convert to utf8 and avoid name conflict with "parallel" manpage
 mkdir -p %buildroot%_man1dir
@@ -234,27 +233,6 @@ install -Dm 0644 \
 mkdir -p %{buildroot}%{_datadir}/appdata
 install -p -m 644 gui/icons/%{name}.appdata.xml %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
-# Correct permissions
-#TODO: Still necessary; create a ticket and/or change in prep
-#TODO: Why are the permissions right in Ubuntu?
-#find %buildroot -name "*.tcl" -exec chmod +r-x '{}' \;
-#chmod -x %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/configIndex
-#chmod -x %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/nviz_params
-#chmod -x %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/tclIndex
-#chmod -x %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/panelIndex
-#chmod +x %buildroot%_prefix/%grassdir/etc/g.mapsets.tcl
-#chmod +x %buildroot%_prefix/%grassdir/etc/dm/tksys.tcl
-#chmod +x %buildroot%_prefix/%grassdir/etc/gm/tksys.tcl
-#chmod +x %buildroot%_prefix/%grassdir/etc/gm/animate.tcl
-#
-## fixup few nviz script header, it will anyway always be executed by nviz
-#for nviz in {script_play,nviz2.2_script,script_tools,script_file_tools,script_get_line}; do
-# cat %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/$nviz \
-#  | grep -v '#!nviz' > %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/$nviz.tmp 
-# mv  %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/$nviz.tmp \
-#     %buildroot%_prefix/%grassdir/etc/nviz2.2/scripts/$nviz
-#done
-
 # Move icon folder in GISBASE and set its path to be FHS compliant
 mv %buildroot%_prefix/%grassdir/docs/html/icons %buildroot%_prefix/%grassdir/
 
@@ -285,8 +263,12 @@ rm -rf %buildroot%_libdir/%grassdir/share %buildroot%_libdir/*.a
 
 # Prepare python files for Python 3
 %if_with python3
-2to3 -w -n --no-diffs %buildroot%python3_sitelibdir/grass/lib/vector.py %buildroot%_libdir/grass-*/scripts/*
+2to3 -w -n --no-diffs %buildroot%python3_sitelibdir/grass/lib/vector.py %buildroot%_libdir/grass%shortver/scripts/*
 find %buildroot -type f | xargs -l1 subst 's,^#!/usr/bin/env python,#!%_bindir/python3,'
+%ifarch %ix86
+subst 's/\<\([0-9]\+\)L\>/\1/' %buildroot%python3_sitelibdir/grass/lib/ogsf.py \
+                               %buildroot%python3_sitelibdir/grass/lib/raster.py
+%endif
 %endif
 
 # Mark localization files
@@ -319,17 +301,22 @@ rm -f %_libdir/%grassdir/locks
 %_man1dir/*.1grass*
 
 %files -n lib%name
-%doc AUTHORS COPYING GPL.TXT CHANGES ChangeLog_%version.gz translators.csv contributors.csv contributors_extra.csv doc
-%_libdir/lib%{name}_*.%version.so
+%doc AUTHORS COPYING GPL.TXT CHANGES translators.csv contributors.csv contributors_extra.csv doc
+%_libdir/lib%{name}_*.%libver.so
 
 %files devel
 %doc TODO doc SUBMITTING*
 %_pkgconfigdir/%name.pc
 %_includedir/%name
-%exclude %_libdir/lib%{name}_*.%version.so
+%exclude %_libdir/lib%{name}_*.%libver.so
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 7.6.1-alt1
+- New version.
+- Remove bundled copy of liblz4 (ALT #36396).
+- Spec cleanup.
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 7.4.4-alt2
 - Rebuild with libproj 5.2.0
 
