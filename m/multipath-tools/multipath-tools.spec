@@ -1,4 +1,3 @@
-%def_disable rados
 %def_enable libdmmp
 
 %define syslibdir /%_lib
@@ -9,8 +8,8 @@
 %add_verify_elf_skiplist /%_lib/libmultipath.so.*
 
 Name: multipath-tools
-Version: 0.7.4
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -33,7 +32,6 @@ Requires: dmsetup
 
 BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
 BuildRequires: libuserspace-rcu-devel
-%{?_enable_rados:BuildRequires: ceph-devel}
 %{?_enable_libdmmp:BuildRequires: libjson-c-devel}
 
 %description
@@ -98,7 +96,6 @@ unset RPM_OPT_FLAGS
 %make_build \
 	LIB=%_lib \
 	RUN=run \
-	%{?_disable_rados: ENABLE_RADOS=0} \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
 	SYSTEMD=%systemd_ver \
 	SYSTEMDPATH=lib
@@ -109,7 +106,6 @@ mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,
 	DESTDIR=%buildroot \
 	SYSTEMD=%systemd_ver \
 	SYSTEMDPATH=lib \
-	%{?_disable_rados: ENABLE_RADOS=0} \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
 	LIB=%_lib \
 	RUN=run \
@@ -182,6 +178,11 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
+- 0.8.0
+- removed ALT glibc functions from util, since  ALT build glibc has its own
+  implementation of the strlcat, strlcpy and strnlen functions (closes: #36411)
+
 * Mon Sep 03 2018 Michael Shigorin <mike@altlinux.org> 0.7.4-alt2
 - applied patches suggested by Alex Moskalenko
   (closes: #35286, #35287)
