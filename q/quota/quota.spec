@@ -1,5 +1,5 @@
 Name: quota
-Version: 4.04.0.13.d769
+Version: 4.05.0.3.f2eb
 Release: alt1
 Epoch: 2
 
@@ -9,9 +9,7 @@ Epoch: 2
 # quota_nld.c, quotaio_xfs.h:       GPLv2
 # bylabel.c copied from util-linux: GPLv2+
 # svc_socket.c copied from glibc:   LGPLv2+
-# doc/quotas.ms, quotaops.c, quot.c, quotaon.c, edquota.c, quot.h, quota.c,
-# quotaio_v1.c:                     BSD
-License: BSD and LGPLv2+ and GPLv2+
+License: LGPLv2+ and GPLv2+
 Summary: System administration tools for monitoring users' disk usage
 Group: System/Configuration/Other
 Url: http://sourceforge.net/projects/linuxquota/
@@ -115,6 +113,9 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %endif # rpc
 
 %changelog
+* Mon Apr 01 2019 Dmitry V. Levin <ldv@altlinux.org> 2:4.05.0.3.f2eb-alt1
+- v4.04-13-gd7694c9 -> v4.05-3-gf2eb78c.
+
 * Mon May 28 2018 Dmitry V. Levin <ldv@altlinux.org> 2:4.04.0.13.d769-alt1
 - v4.03-39-g251c393 -> v4.04-13-gd7694c9.
 
