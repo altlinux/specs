@@ -2,8 +2,8 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.9.4
-Release: alt2%git_date
+Version: 1.9.5
+Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -79,12 +79,15 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Apr 01 2019 Mikhail Efremov <sem@altlinux.org> 1.9.5-alt1
+- Updated to 1.9.5.
+
 * Tue Mar 12 2019 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt2
 - Fix man page.
 
 * Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt1
 - Added help2man to BR.
-- Updated to 1.9.3.
+- Updated to 1.9.4.
 
 * Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.9.3-alt1
 - Update url.
