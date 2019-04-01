@@ -1,6 +1,6 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.3.0
+%define        core_version   6.4.0
 %define        dm_version     1.0.1
 
 Name:          %pkgname
@@ -185,6 +185,9 @@ END.
 
 
 %changelog
+* Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
+- New version.
+
 * Sat Mar 09 2019 Pavel Skrylev <majioa@altlinux.org> 6.3.0-alt1
 - Bump to 6.3.0;
 - Use Ruby Policy 2.0.
