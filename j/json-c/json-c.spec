@@ -1,6 +1,8 @@
+%define soversion 4
+
 Name: json-c
-Version: 0.12.1
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: JSON implementation in C
 License: MIT
@@ -16,11 +18,11 @@ easily construct JSON objects in C, output them as JSON formatted
 strings and parse JSON formatted strings back into the C representation
 of JSON objects.
 
-%package -n lib%name
+%package -n lib%name%soversion
 Summary: JSON shared library
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soversion
 JSON-C implements a reference counting object model that allows you to
 easily construct JSON objects in C, output them as JSON formatted
 strings and parse JSON formatted strings back into the C representation
@@ -31,7 +33,7 @@ This package contains shared JSON-C library
 %package -n lib%name-devel
 Summary: header files for libjson
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soversion = %version-%release
 
 %description -n lib%name-devel
 JSON-C implements a reference counting object model that allows you to
@@ -63,8 +65,8 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %check
 %make check
 
-%files -n lib%name
-/%_lib/*.so.*
+%files -n lib%name%soversion
+/%_lib/*.so.%{soversion}*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -72,6 +74,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 31 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.1-alt1
+- Updated to 0.13.1.
+
 * Fri Jan 26 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt2
 - move library /usr/lib -> /lib
 
