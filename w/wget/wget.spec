@@ -2,7 +2,7 @@
 
 Name: wget
 Version: 1.20.1
-Release: alt1
+Release: alt2
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -117,6 +117,10 @@ find doc -type f -print0 |
 %patch10 -p1
 
 %build
+%ifarch %e2k
+# lcc-1.23.12: work around the lack of some builtins
+%add_optflags -D__ICC -D__STRICT_ANSI__
+%endif
 %configure --with-ssl=openssl
 # https://bugzilla.altlinux.org/show_bug.cgi?id=14239
 (cd po; make update-po)
@@ -135,6 +139,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Mon Apr 01 2019 Michael Shigorin <mike@altlinux.org> 1.20.1-alt2
+- E2K: fixed build with lcc-1.23
+
 * Thu Dec 27 2018 Michael Shigorin <mike@altlinux.org> 1.20.1-alt1
 - 1.20.1
 
