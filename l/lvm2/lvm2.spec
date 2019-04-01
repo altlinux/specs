@@ -1,5 +1,5 @@
-%define lvm2version 2.02.182
-%define dmversion 1.02.152
+%define lvm2version 2.02.184
+%define dmversion 1.02.156
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -9,10 +9,10 @@
 %def_enable cluster
 %def_enable selinux
 %def_enable lvmetad
-%def_disable use_lvmetad
-%def_disable udev_systemd_background_jobs
+%def_enable use_lvmetad
+%def_enable udev_systemd_background_jobs
 %def_enable lvmpolld
-%def_disable lvmlockd
+%def_enable lvmlockd
 %def_enable blkid_wiping
 %def_disable lvmdbusd
 %def_enable dmfilemapd
@@ -44,7 +44,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt1
 License: GPL
 
 Group: System/Base
@@ -194,7 +194,7 @@ Requires: libdevmapper-devel = %dmversion-%release
 %package lockd
 Summary: LVM locking daemon
 Group: System/Base
-Requires: %name = %version-%release
+Requires: %name = %lvm2version-%release
 Requires: sanlock
 Requires: dlm
 
@@ -288,12 +288,13 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--with-default-pid-dir=%_runtimedir \
 	--with-default-dm-run-dir=%_runtimedir \
 	--with-default-run-dir=%_runtimedir/lvm \
-	--with-default-locking-dir=%_lockdir/lvm
+	--with-default-locking-dir=%_lockdir/lvm \
+	--disable-silent-rules
 
 	#
-%make libdm
-%make lib
-%make -C tools lvm.static
+%make_build libdm
+%make_build lib
+%make_build -C tools lvm.static
 mv tools/lvm.static .
 mv libdm/ioctl/libdevmapper.a .
 %make clean
@@ -332,6 +333,8 @@ mv libdm/ioctl/libdevmapper.a .
 	%{?_enable_lvmlockd_dlm:--enable-lvmlockd-dlm} \
 	%{?_enable_lvmlockd_sanlock:--enable-lvmlockd-sanlock} \
 	%{?_enable_lvmdbusd:--enable-dbus-service} \
+	%{subst_enable python2-bindings} \
+	%{subst_enable python3-bindings} \
 	--with-dmeventd-path="%_sbindir/dmeventd" \
 	%{?_enable_systemd:--with-systemdsystemunitdir=%_unitdir} \
 	--with-tmpfilesdir=%_tmpfilesdir \
@@ -340,10 +343,9 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-default-run-dir=%_runtimedir/lvm \
 	--with-default-locking-dir=%_lockdir/lvm \
 	--with-cluster=internal \
-	%{subst_enable python2-bindings} \
-	%{subst_enable python3-bindings}
+	--disable-silent-rules
 
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -487,6 +489,11 @@ __EOF__
 %_unitdir/lvm2-lvmpolld*
 %endif
 %endif
+%if_enabled lvmlockd
+%exclude %_sbindir/lvmlockd
+%exclude %_sbindir/lvmlockctl
+%exclude %_man8dir/lvmlockd*
+%endif
 %if_enabled systemd
 %if_enabled applib
 /lib/systemd/system-generators/lvm2-activation-generator
@@ -585,10 +592,11 @@ __EOF__
 %if_enabled systemd
 %_unitdir/lvm2-lvmlock*
 %endif
-%_initdir/lvm2-lvmlock*
+#%_initdir/lvm2-lvmlock*
 %endif
 
 %if_enabled lvmdbusd
+%files dbusd
 %_sbindir/lvmdbusd
 %_sysconfdir/dbus-1/system.d/com.redhat.lvmdbus1.conf
 %_datadir/dbus-1/system-services/com.redhat.lvmdbus1.service
@@ -610,6 +618,12 @@ __EOF__
 %endif
 
 %changelog
+* Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 2.02.184-alt1
+- 2.02.184
+- enable use lvmetad by default
+- enable udev_systemd_background_jobs
+- enable lvmlockd
+
 * Mon Nov 26 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.182-alt2
 - shutdown lvmetad automatically after one hour of inactivity
 - disable use lvmetad by default
