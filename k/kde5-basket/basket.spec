@@ -5,7 +5,7 @@
 
 Name: 	 kde5-%rname
 Version: 2.49
-Release: alt3.git%rev
+Release: alt4.git%rev
 %K5init no_altplace
 
 Summary: multi-purpose note-taking application
@@ -19,6 +19,7 @@ Provides: kde4-basket = %version-%release
 Obsoletes: kde4-basket < %version-%release
 
 Source:  %rname-%version.tar
+Source1: ru.po
 Patch0:  kde5-basket-2.49-fix-locale.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
@@ -59,6 +60,7 @@ Library for %name
 %prep
 %setup -q -n %rname-%version
 %patch0 -p1
+cp -f %SOURCE1 po/
 
 %build
 %K5build
@@ -90,6 +92,9 @@ Library for %name
 %_K5lib/libbasketcommon.so.%libbasket_soname.*.*
 
 %changelog
+* Mon Apr 01 2019 Pavel Moseev <mars@altlinux.org> 2.49-alt4.git60e38c6
+- update translation
+
 * Wed Mar 13 2019 Pavel Moseev <mars@altlinux.org> 2.49-alt3.git60e38c6
 - fixed detection of current locale encoding
 
