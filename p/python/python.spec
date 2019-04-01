@@ -3,7 +3,7 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.15
+Version: 2.7.16
 Release: alt1
 
 %define package_name		%real_name
@@ -160,7 +160,6 @@ This is a python with strict conflicts: using other pythons are prohibited.
 %package relaxed
 Summary: Python with relaxed conflicts: using with python24 are allowed
 Group: Development/Python
-PreReq: alternatives >= 0:0.4
 Requires: %name = %version-%release
 Provides: %real_name = %require_ver
 Provides: %name-relaxed = %version-%release
@@ -613,7 +612,6 @@ Summary: A graphical user interface for the Python scripting language
 Group: Development/Python
 Requires: %name-modules = %version-%release
 Requires: tk
-PreReq: alternatives >= 0:0.4
 Provides: tkinter = %require_ver
 
 Obsoletes: %python_name-modules-tkinter <= %noversion_from
@@ -792,7 +790,7 @@ build all --enable-shared
 # -l (to find memory leaks) is not compatible with -j...
 # Therefore, we reset TESTOPTS (which includes -l by default)
 # instead of adding EXTRATESTOPTS.
-LC_ALL=C.UTF-8 make test TESTOPTS=%_smp_mflags
+LC_ALL=C.UTF-8 make test TESTOPTS="-v %_smp_mflags"
 
 %install
 rln()
@@ -1177,6 +1175,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Mon Apr 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.16-alt1
+- Updated to 2.7.16 (fixes FTBFS with openssl 1.1.1).
+- Removed redundant R: alternatives.
+
 * Tue Dec 04 2018 Fr. Br. George <george@altlinux.ru> 2.7.15-alt1
 - Version up (now builds with gcc8);
 - fix check section LOCALE.
