@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Server-Mail
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Class to easily create a mail server
@@ -53,6 +53,9 @@ to your programs.
 %doc Changes README*
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
