@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.85
-Release: alt1.2
+Version: 0.86
+Release: alt1
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -25,8 +25,6 @@ dealing with BibTeX data.
 %setup -q -n %{dist}-%{version}
 %patch0 -p1 
 %patch1 -p1 
-# Sub::Util 
-[ %version = 0.77 ] && sed -i -e s,1.42,0.00, META.json Build.PL META.yml
 
 
 %build
@@ -45,8 +43,12 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %_libdir/libbtparse.so
 %perl_vendor_autolib/Text
 %perl_vendor_archlib/Text
+%exclude %_includedir/btparse.h
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.85-alt1.2
 - rebuild with new perl 5.28.1
 
