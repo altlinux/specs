@@ -6,14 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Const/Fast.pm) perl(Exporter.pm) perl(ExtUtils
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.17
+Version: 0.18
 Release: alt1
 Summary: A complete GitLab API v4 client.
 Group: Development/Perl
 License: perl
 URL: https://github.com/bluefeet/GitLab-API-v4
 
-Source0: http://www.cpan.org/authors/id/B/BL/BLUEFEET/GitLab-API-v4-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BL/BLUEFEET/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,7 +33,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 scripts for %module_name
 
 %prep
-%setup -q -n GitLab-API-v4-%{version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -50,6 +50,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
