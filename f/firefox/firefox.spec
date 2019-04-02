@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        66.0.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -29,8 +29,9 @@ Source3:        cbindgen-vendor.tar
 Source4:        firefox-mozconfig
 Source5:        distribution.ini
 Source6:        firefox.desktop
-Source7:        firefox.c
-Source8:        firefox-prefs.js
+Source7:        firefox-wayland.desktop
+Source8:        firefox.c
+Source9:        firefox-prefs.js
 
 ### Start Patches
 Patch001: 0001-ALT-fix-werror-return-type.patch
@@ -93,6 +94,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm
+BuildRequires: libxkbcommon-devel
 
 # Python requires
 BuildRequires: /dev/shm
@@ -125,8 +127,8 @@ Requires:	mozilla-common
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
 
-# Protection against fraudulent DigiNotar certificates
-Requires: libnss >= 3.12.11-alt3
+Requires: libnspr >= %nspr_version
+Requires: libnss >= %nss_version
 
 %description
 The Mozilla Firefox project is a redesign of Mozilla's browser component,
@@ -136,6 +138,16 @@ cross-platform.
 %description -l ru_RU.UTF8
 Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
 созданная с использованием языка XUL для описания интерфейса пользователя.
+
+%package wayland
+Summary:    Firefox Wayland launcher.
+Group:      Networking/WWW
+BuildArch:  noarch
+Requires:   %name
+
+%description wayland
+The firefox-wayland package contains launcher and desktop file
+to run Firefox natively on Wayland.
 
 %package -n rpm-build-firefox
 Summary:	RPM helper macros to rebuild firefox packages
@@ -259,7 +271,7 @@ $CC $CFLAGS \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
-	%SOURCE7 -o firefox
+	%SOURCE8 -o firefox
 
 
 %install
@@ -280,7 +292,7 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE9 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
@@ -313,12 +325,28 @@ install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
 
+# Wrapper for wayland
+cat > ./%_bindir/firefox-wayland <<'EOF'
+#!/bin/sh
+export GDK_BACKEND=wayland
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_GTK_TITLEBAR_DECORATION=client
+export XDG_SESSION_TYPE=wayland
+
+unset DISPLAY
+
+exec %_bindir/firefox "$@"
+EOF
+
+chmod +x ./%_bindir/firefox-wayland
+
 # Add distribution.ini
 mkdir -p -- ./%firefox_prefix/distribution
 cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
 
 # install menu file
 %__install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
+%__install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
 
 # Add alternatives
 mkdir -p ./%_altdir
@@ -366,12 +394,22 @@ done
 %_iconsdir/hicolor/48x48/apps/firefox.png
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
+%files wayland
+%_bindir/firefox-wayland
+%_datadir/applications/firefox-wayland.desktop
+
 %files -n rpm-build-firefox
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Apr 02 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.1-alt2
+- Incease minimum version of nspr, nss.
+- Improve firefox-wayland startup script.
+
 * Wed Mar 27 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.1-alt1
 - New release (66.0.1).
+- Use cairo-gtk3-wayland toolkit.
+- Add firefox-wayland sub-package.
 - Fixed:
   + CVE-2019-9790: Use-after-free when removing in-use DOM elements
   + CVE-2019-9791: Type inference is incorrect for constructors entered through on-stack replacement with IonMonkey
