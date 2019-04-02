@@ -15,7 +15,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -46,7 +46,7 @@ BuildRequires: libgudev-devel libGL-devel libGLES-devel libdrm-devel libgbm-deve
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
-BuildRequires: libcdio-paranoia-devel liboil-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
+BuildRequires: libcdparanoia-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
 BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
 BuildRequires: gobject-introspection-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
@@ -190,6 +190,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Apr 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt2
+- built lost cdparanoia plugin (ALT #36488)
+
 * Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 
