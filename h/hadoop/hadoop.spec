@@ -1,5 +1,4 @@
-# alt have openssl10
-%def_disable openssl11
+%def_enable openssl11
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
@@ -28,7 +27,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt5_7jpp8
+Release: alt6_7jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -463,7 +462,7 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch32 -p1
 %patch33 -p1
 
-%pom_xpath_set "pom:properties/pom:protobuf.version" 3.5.1 hadoop-project
+%pom_xpath_set "pom:properties/pom:protobuf.version" 3.6.1 hadoop-project
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions/pom:execution[pom:phase='test-compile']" "<id>default-jar</id>"  hadoop-yarn-project/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-applications-distributedshell
 
 # Remove the maven-site-plugin.  It's not needed
@@ -1142,6 +1141,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt6_7jpp8
+- fixed build (closes: #36462)
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt5_7jpp8
 - rebuild with tomcat9
 
