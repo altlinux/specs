@@ -1,6 +1,6 @@
-Name: ghc8.2.2
-Version: 8.2.2
-Release: alt2
+Name: ghc8.6.4
+Version: 8.6.4
+Release: alt1
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -20,7 +20,7 @@ Requires: libffi-devel libgmp-devel
 Requires: glibc-gconv-modules
 
 # The installed Haskell libs will be processed:
-PreReq: haskell-filetrigger >= 0.0.5-alt3
+Requires(pre,postun): haskell-filetrigger >= 0.0.5-alt3
 # <https://www.altlinux.org/RPM_Macros_Packaging_Policy>:
 Requires: rpm-build-haskell >= 1.4.4-alt1
 # (rpm-build-haskell-1-alt26 has been adapted to allow builds
@@ -53,17 +53,17 @@ BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi
 #BuildRequires: dblatex
 
 # Needs for build man
-BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %def_without hscolour
 %if_with hscolour
 BuildRequires: ghc(hscolour)
 %endif
 
+Provides: haskell(abi) = %version
+
 # Needs for bootstrap on aarch64
 BuildRequires: llvm7.0
-
-Provides: haskell(abi) = %version
 
 %description
 Haskell is a standard lazy functional programming language; the
@@ -248,10 +248,23 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
-* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.2.2-alt2
-- Rebuild with ghc 8.2.2
+* Fri Mar 22 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt1
+- Bootstrap to version 8.6.4
+
+* Wed Feb 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.3-alt4
 - Provides haskell(abi) with ld preload for dynamic libraries
+
+* Mon Feb 25 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.3-alt3
 - Add separate single directory for shared libraries and ld.so.conf file for it
+
+* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.3-alt2
+- rebuild with ghc 8.6.3
+
+* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.3-alt1
+- bootstrap to version 8.6.3
+
+* Wed Feb 20 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.2.2-alt2
+- rebuild with ghc 8.2.2
 
 * Tue Feb 19 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.2.2-alt1
 - bootstrap to version 8.2.2
