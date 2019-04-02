@@ -9,8 +9,8 @@
 %def_disable systemd
 
 Name: p11-kit
-Version: 0.23.9
-Release: alt5
+Version: 0.23.15
+Release: alt1
 
 Summary: Utilities for PKCS#11 modules
 Group: Security/Networking
@@ -26,8 +26,8 @@ Source: https://github.com/p11-glue/%name/releases/download/%version/%name-%vers
 %endif
 
 Source1: p11-kit-extract-trust
-Patch: lib%name-0.23.8-alt-lfs.patch
-Patch1: lib%name-0.23.8-proxy-refresh-slots.patch
+Patch: %name-%version-%release.patch
+Patch1: lib%name-0.23.8-alt-lfs.patch
 
 Requires: %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 Requires: %name-trust = %version-%release
@@ -118,9 +118,9 @@ system only and should not be installed in the real systems.
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
+%patch -p1
 %{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
-%patch
+%patch1
 
 %build
 %autoreconf
@@ -147,7 +147,7 @@ cat >%buildroot%_altdir/libnssckbi-%name <<EOF
 EOF
 
 %check
-%make check
+make check
 
 %post checkinstall
 TEST_DIR="$(mktemp -dt %name-installcheckXXXXXXXX)"
@@ -227,8 +227,17 @@ rm -r -- "$TEST_DIR"
 %_libexecdir/%name/%name-server
 
 %files checkinstall
-
 %changelog
+* Tue Apr 02 2019 Mikhail Efremov <sem@altlinux.org> 0.23.15-alt1
+- Changes from upstream:
+  + modules: Fix index used in call to p11_dict_remove().
+  + Fix Win32 p11_dl_error crash.
+  + modules: check gl.modules before iterates on it when freeing.
+  + trust: Ignore unreadable content in anchors.
+  + extract-jks: Prefer _p11_extract_jks_timestamp to SOURCE_DATE_EPOCH.
+- Drop proxy-refresh-slots.patch.
+- 0.23.15.
+
 * Tue May 08 2018 Mikhail Efremov <sem@altlinux.org> 0.23.9-alt5
 - Fix alternatives file.
 
