@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.8
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -220,6 +220,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Apr 02 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt2
+- fix menu settings russian translation
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 
