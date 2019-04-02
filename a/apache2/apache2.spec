@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.38
+Version: 2.4.39
 Release: alt1
 Epoch: 1
 
@@ -1514,6 +1514,14 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Apr 02 2019 Anton Farygin <rider@altlinux.ru> 1:2.4.39-alt1
+- 2.4.39
+- fixes:
+   * Apache HTTP Server privilege escalation from modules scripts. CVE-2019-0211
+   * mod_auth_digest access control bypass. CVE-2019-0217
+   * mod_ssl access control bypass. CVE-2019-0215
+   * Apache httpd URL normalization inconsistincy. CVE-2019-0220
+
 * Fri Jan 25 2019 Anton Farygin <rider@altlinux.ru> 1:2.4.38-alt1
 - 2.4.38
 - fixes:
