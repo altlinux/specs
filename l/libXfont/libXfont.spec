@@ -1,6 +1,6 @@
 Name: libXfont
 Version: 1.5.4
-Release: alt1%ubt
+Release: alt2
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -11,8 +11,8 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-fontsproto-devel xmlto
-BuildRequires: xorg-xproto-devel xorg-xtrans-devel xorg-util-macros zlib-devel xorg-sgml-doctools
+BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-proto-devel xmlto
+BuildRequires: xorg-xtrans-devel xorg-util-macros zlib-devel xorg-sgml-doctools
 
 %description
 libXfont provides the core of the legacy X11 font system, handling the
@@ -60,7 +60,10 @@ mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
 %_pkgconfigdir/*.pc
 
 %changelog
-* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.4-alt1%ubt
+* Tue Apr 02 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.5.4-alt2
+- removed ubt
+
+* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.4-alt1.S1
 - fixes:
  + CVE-2017-16611 Open files with O_NOFOLLOW
 

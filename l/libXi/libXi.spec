@@ -1,6 +1,6 @@
 Name: libXi
 Version: 1.7.9
-Release: alt1%ubt
+Release: alt2
 Summary: X Input Extension Library
 License: MIT/X11
 Group: System/Libraries
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: asciidoc libX11-devel libXext-devel libXfixes-devel xmlto xorg-inputproto-devel
+BuildRequires: asciidoc libX11-devel libXext-devel libXfixes-devel xmlto xorg-proto-devel
 BuildRequires: xorg-sgml-doctools xorg-util-macros
 
 %description
@@ -51,7 +51,10 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
-* Fri Jan 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.7.9-alt1%ubt
+* Tue Apr 02 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.7.9-alt2
+- removed ubt
+
+* Fri Jan 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.7.9-alt1.S1
 - 1.7.9 (closes: #34447)
 
 * Fri Sep 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.7.4-alt1
