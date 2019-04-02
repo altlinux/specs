@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.85
-Release: alt2
+Version: 1.86_09
+Release: alt1
 
 Summary: Perl extension for using OpenSSL
 License: BSD-style
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{dist}-%{version}.tar
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libssl-devel openssl perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn perl-threads
@@ -36,6 +36,10 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.86_09-alt1
+- new version
+- CPAN is outdated, switched to git
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.85-alt2
 - fixed build (closes: #26433)
 
