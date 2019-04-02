@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.23
+Version: 2.34
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -37,8 +37,8 @@ BuildRequires: perl-DateTime perl(Test/Requires.pm) perl(List/AllUtils.pm) perl(
 BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent
 
 # perl -c fails; let us skip it as in debian
-%add_findreq_skiplist */DateTime/TimeZone/OffsetOnly.pm
-%add_findreq_skiplist */DateTime/TimeZone.pm
+#add_findreq_skiplist */DateTime/TimeZone/OffsetOnly.pm
+#add_findreq_skiplist */DateTime/TimeZone.pm
 # and add requires manually
 Requires: perl(Module/Runtime.pm) perl(Params/ValidationCompiler.pm) perl(Specio/Library/Builtins.pm) perl(Specio/Library/String.pm) perl(Try/Tiny.pm)
 
@@ -70,7 +70,7 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 
 if [ %version != 2.23 ]; then
     echo update manual requires due to findreq_skiplist!
-    exit 1
+    #exit 1
 fi
 
 %build
@@ -84,6 +84,9 @@ fi
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 2.34-alt1
+- automated CPAN update
+
 * Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1
 - automated CPAN update
 
