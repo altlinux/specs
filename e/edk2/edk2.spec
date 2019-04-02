@@ -1,5 +1,5 @@
 %define TOOL_CHAIN_TAG GCC49
-%define openssl_ver 1.1.0e
+%define openssl_ver 1.1.0j
 
 %def_disable cross
 
@@ -27,7 +27,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20181113
+Version: 20190308
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -44,7 +44,7 @@ Group: Emulators
 Url: http://www.tianocore.org
 
 %if_enabled cross
-ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64
+ExclusiveArch:  %ix86 x86_64 %arm aarch64
 %else
 ExclusiveArch:  x86_64 aarch64
 %endif
@@ -56,8 +56,9 @@ BuildRequires: gcc-c++-x86_64-linux-gnu
 %endif
 
 BuildRequires: iasl nasm gcc-c++
-BuildRequires: python-devel python-modules-sqlite3
+BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
+BuildRequires: bc
 
 %description
 This package provides tools that are needed to build EFI executables
@@ -176,7 +177,7 @@ rm -rf ShellBinPkg
 
 # add openssl
 mkdir -p CryptoPkg/Library/OpensslLib/openssl
-tar -xf %SOURCE2 -C CryptoPkg/Library/OpensslLib/openssl --strip-components 1
+tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/openssl
 
 %build
 
@@ -217,7 +218,7 @@ unset MAKEFLAGS
 # prepare
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
 #cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
-%make \
+%make_build \
 	 -C BaseTools
 
 
@@ -293,9 +294,6 @@ install --strip \
 	Source/C/bin/* \
 	%buildroot%_bindir
 
-ln -f %buildroot%_bindir/GnuGenBootSector \
-	%buildroot%_bindir/GenBootSector
-
 install \
 	BinWrappers/PosixLike/LzmaF86Compress \
 	%buildroot%_bindir
@@ -318,9 +316,8 @@ find %buildroot%_datadir/%name/Python -name "*.pyd" | xargs rm -f
 
 for i in BPDG Ecc GenDepex GenFds GenPatchPcdTable PatchPcdValue TargetTool Trim UPT; do
   echo '#!/bin/sh
-PYTHONPATH=%_datadir/%name/Python
-export PYTHONPATH
-exec python '%_datadir/%name/Python/$i/$i.py' "$@"' > %buildroot%_bindir/$i
+export PYTHONPATH=%_datadir/%name/Python
+exec python3 '%_datadir/%name/Python/$i/$i.py' "$@"' > %buildroot%_bindir/$i
   chmod +x %buildroot%_bindir/$i
 done
 
@@ -351,18 +348,14 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %files tools
-%_bindir/BootSectImage
-%_bindir/EfiLdrImage
+%_bindir/Brotli
+%_bindir/DevicePath
 %_bindir/EfiRom
-%_bindir/GenBootSector
 %_bindir/GenCrc32
 %_bindir/GenFfs
 %_bindir/GenFv
 %_bindir/GenFw
-%_bindir/GenPage
 %_bindir/GenSec
-%_bindir/GenVtf
-%_bindir/GnuGenBootSector
 %_bindir/LzmaCompress
 %_bindir/LzmaF86Compress
 %_bindir/Split
@@ -421,6 +414,9 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %changelog
+* Tue Apr 02 2019 Alexey Shabalin <shaba@altlinux.org> 20190308-alt1
+- edk2-stable201903 (Fixes: CVE-2018-12178, CVE-2018-12180, CVE-2018-12181, CVE-2018-3630)
+
 * Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 20181113-alt1
 - edk2-stable201811
 

@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -114,6 +114,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Tue Apr 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
