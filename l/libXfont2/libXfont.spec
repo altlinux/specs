@@ -1,6 +1,6 @@
 Name: libXfont2
 Version: 2.0.3
-Release: alt1%ubt
+Release: alt2
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -11,8 +11,8 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-fontsproto-devel
-BuildRequires: xorg-xproto-devel xorg-xtrans-devel xorg-util-macros zlib-devel
+BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-proto-devel
+BuildRequires: xorg-xtrans-devel xorg-util-macros zlib-devel
 #BuildRequires: fop xorg-sgml-doctools xmlto
 
 %description
@@ -58,7 +58,10 @@ This package contains the libXfont development library and header files
 %_pkgconfigdir/*.pc
 
 %changelog
-* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.3-alt1%ubt
+* Tue Apr 02 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.0.3-alt2
+- removed ubt
+
+* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.3-alt1.S1
 - fixes:
  + CVE-2017-16611 Open files with O_NOFOLLOW
 
