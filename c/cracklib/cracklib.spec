@@ -1,15 +1,15 @@
 %def_enable python3
 
 Name: cracklib
-Version: 2.9.6
-Release: alt1.1.1
+Version: 2.9.7
+Release: alt1
 
 Summary: A password-checking library.
 License: %lgpl2plus
 Group: System/Libraries
 Url: https://github.com/%name/%name
 
-Source: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.tar.gz
+Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.gz
 
 Requires: %name-utils = %version-%release
 
@@ -153,6 +153,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %changelog
+* Tue Apr 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt1
+- 2.9.7 (fixed CVE-2016-6318)
+
 * Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.6-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
@@ -226,14 +229,14 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 - Strip binaries.
 - Add %%defattr
 
-* Sun May  2 1999 Bernhard Rosenkr�nzer <bero@mandrakesoft.com>
+* Sun May  2 1999 Bernhard Rosenkränzer <bero@mandrakesoft.com>
 - s/V'erification/Verification in french translation - I know it's a
   spelling mistake, but rpm 3.0 doesn't like accents in Summary: lines. :/
 
 * Thu Apr 10 1999 Alexandre Dussart <adussart@mandrakesoft.com>
 - French Translation
 
-* Fri Apr  9 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
+* Fri Apr  9 1999 Bernhard Rosenkränzer <bero@linux-mandrake.com>
 - Mandrake adaptions
 - handle RPM_OPT_FLAGS
 - add de locale

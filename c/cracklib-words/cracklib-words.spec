@@ -1,8 +1,8 @@
 %define _name cracklib
 
 Name: %_name-words
-Version: 2.9.6
-Release: alt1.1
+Version: 2.9.7
+Release: alt1
 Epoch: 1
 
 Summary: Well-known words for cracklib
@@ -10,7 +10,7 @@ License: Freely distributable
 Group: System/Libraries
 Url: https://github.com/%_name/%_name
 
-Source: https://github.com/%_name/%_name/releases/download/%_name-%version/%name-%version.gz
+Source: https://github.com/%_name/%_name/releases/download/v%version/%name-%version.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ sort | uniq >%buildroot%_datadir/%_name/%name
 %_datadir/%_name/%name
 
 %changelog
+* Tue Apr 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.7-alt1
+- 2.9.7
+
 * Fri Nov 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.6-alt1.1
 - words cleanup (ALT #31446)
 
