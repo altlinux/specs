@@ -1,14 +1,14 @@
 Summary: Terminal multiplexer
 Name: tmux
 Version: 2.8
-Release: alt1
+Release: alt2
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
 Group: Terminals
 Url: http://tmux.sourceforge.net/
 
 # Automatically added by buildreq on Tue Mar 16 2010
-BuildRequires: libevent1.4-devel libncurses-devel
+BuildRequires: libevent-devel libncurses-devel
 
 %description
 tmux is a "terminal multiplexer". It allows a number of terminals (or
@@ -33,6 +33,9 @@ install -D -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Wed Apr 03 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8-alt2
+- fixed FTBFS: fixed build dependency
+
 * Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 2.8-alt1
 - Autobuild version bump to 2.8
 
