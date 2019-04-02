@@ -1,6 +1,6 @@
 Name: wvdial
 Version: 1.61
-Release: alt3.git20090513.qa2
+Release: alt3.git20090513.qa3
 
 Summary: A heuristic autodialer for PPP connections
 License: LGPL
@@ -12,7 +12,6 @@ URL: http://alumnit.ca/wiki/index.php?page=WvDial
 Source: %name-%version.tar.gz
 Patch: wvdial-1.61-LIBS_ATDP.patch
 
-# Added by buildreq2 on Sun May 01 2005
 BuildRequires: gcc-c++
 BuildRequires: libwvstreams-devel-static libuniconf-devel
 
@@ -28,6 +27,7 @@ negotiate the PPP connection using any mechanism needed.
 
 %build
 %configure
+%make_build VERBOSE=1 CFLAGS="%optflags" CC CXX
 %make_build VERBOSE=1 CFLAGS="%optflags"
 
 %install
@@ -49,6 +49,9 @@ negotiate the PPP connection using any mechanism needed.
 %doc CHANGES FAQ MENUS README TODO
 
 %changelog
+* Tue Apr 02 2019 Andrey Cherepanov <cas@altlinux.org> 1.61-alt3.git20090513.qa3
+- First generate wrappers CC and CXX before build from sources.
+
 * Tue Dec 03 2013 Andrey Cherepanov <cas@altlinux.org> 1.61-alt3.git20090513.qa2
 - Rebuild with new version of wvstreams
 
