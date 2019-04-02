@@ -1,6 +1,6 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt6
+Release:  alt7
 
 Summary:  Environment for official CryptoPro CSP packages (with Rutoken S and ECP support)
 License:  GPL
@@ -10,11 +10,11 @@ Url:      http://www.altlinux.org/CryptoPro
 Source:   cryptopro-paths.sh
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 
 Requires: %name-base = %version-%release
 
-# CryptoPro packages requires lsb
+# CryptoPro packages require lsb
 Requires: lsb >= 3.0
 
 %description
@@ -35,12 +35,22 @@ Requires: libgtk+2
 # for own CryptoPro install program
 Requires: newt52
 
+# for curl
+Requires: libidn
+Requires: libssh2
+%ifarch %e2k
+# rtmpdump dropped from sisyphus/x86 on 20181219
+Requires: librtmp
+%endif
+
 # for Rutoken S and ECP support
 Requires: opensc
 Requires: pcsc-lite
 Requires: pcsc-lite-rutokens
 Requires: pcsc-lite-ccid
+%ifarch %ix86 x86_64
 Requires: librtpkcs11ecp
+%endif
 
 # Hacks to provide requirements of cprocsp-pki-cades and cprocsp-pki-plugin
 %if "%_lib" == "lib64"
@@ -71,7 +81,19 @@ install -pDm755 %SOURCE0 %buildroot%_sysconfdir/bashrc.d/cryptopro-paths.sh
 %files base
 %_sysconfdir/bashrc.d/cryptopro-paths.sh
 
+%ifarch %e2k
+%post base
+cd /usr/lib64 && if [ -s librtmp.so.0 -a ! -s librtmp.so.1 ]; then
+	ln -s librtmp.so.0 librtmp.so.1
+fi ||:
+%endif
+
 %changelog
+* Tue Apr 02 2019 Michael Shigorin <mike@altlinux.org> 4.0.0-alt7
+- Restrict binary Rutoken PKCS11 library to x86.
+- Add libidn and libssh2 for cpro's curl.
+- E2K: add librtmp and symlink it with desired soname *if* missing.
+
 * Thu Oct 18 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt6
 - Add Rutoken PKCS11 library.
 - Update requirement for cprocsp-rdr-gui-gtk.
