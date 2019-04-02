@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.94
-Release: alt4
+Release: alt5
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -274,6 +274,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Sun Mar 10 2019 Michael Shigorin <mike@altlinux.org> 2.94-alt5
+- fix build on e2k with lcc
+
 * Sat Mar 02 2019 Anton Farygin <rider@altlinux.ru> 2.94-alt4
 - rebuilt with libevent-2.1
 
