@@ -3,7 +3,7 @@
 
 Name:    python-module-%modulename
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: More routines for operating on iterables, beyond itertools
 License: MIT
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 02 2019 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt2
+- Completely fix run from Python 2.
+
 * Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
 - New version.
 
