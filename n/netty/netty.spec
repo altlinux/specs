@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -57,8 +57,6 @@ BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.fasterxml:aalto-xml)
 BuildRequires:  mvn(com.github.jponge:lzma-java)
-BuildRequires:  mvn(com.google.protobuf.nano:protobuf-javanano)
-BuildRequires:  mvn(com.google.protobuf:protobuf-java)
 BuildRequires:  mvn(com.ning:compress-lzf)
 BuildRequires:  mvn(net.jpountz.lz4:lz4)
 BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
@@ -158,11 +156,14 @@ cp %{SOURCE1} common/codegen.bash
 '
 %pom_remove_plugin :groovy-maven-plugin common
 
-%if %{with jp_minimal}
+# The protobuf-javanano API was discontinued upstream and obsoleted in Fedora
+# so disable support for protobuf in the codecs module
 %pom_remove_dep -r "com.google.protobuf:protobuf-java"
 %pom_remove_dep -r "com.google.protobuf.nano:protobuf-javanano"
 rm codec/src/main/java/io/netty/handler/codec/protobuf/*
 sed -i '/import.*protobuf/d' codec/src/main/java/io/netty/handler/codec/DatagramPacket*.java
+
+%if %{with jp_minimal}
 %pom_remove_dep -r "org.jboss.marshalling:jboss-marshalling"
 rm codec/src/main/java/io/netty/handler/codec/marshalling/*
 %pom_remove_dep -r org.bouncycastle
@@ -181,6 +182,11 @@ rm codec/src/*/java/io/netty/handler/codec/compression/Lz4*.java
 %pom_remove_dep -r org.apache.logging.log4j:
 rm common/*/main/java/io/netty/util/internal/logging/Log4J2*.java
 
+# Disable rarely needed native artifacts
+%pom_disable_module transport-native-epoll
+%pom_disable_module transport-native-kqueue
+%pom_remove_dep :netty-transport-native-epoll all
+%pom_remove_dep :netty-transport-native-kqueue all
 %endif # jp_minimal
 
 sed -i 's|taskdef|taskdef classpathref="maven.plugin.classpath"|' all/pom.xml
@@ -206,12 +212,15 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_9jpp8
+- fixed build (closes: #36463)
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_6jpp8
 - java update
 
