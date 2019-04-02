@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Dancer
 Name: perl-%module_name
-Version: 1.3510
+Version: 1.3512
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -42,6 +42,9 @@ to scale to much more complex applications.
 %doc LICENSE Changes README*
 
 %changelog
+* Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 1.3512-alt1
+- automated CPAN update
+
 * Tue Mar 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.3510-alt1
 - automated CPAN update
 
