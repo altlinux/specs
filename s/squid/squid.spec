@@ -8,8 +8,8 @@
 %def_with gnutls
 
 Name: squid
-Version: 4.5
-Release: alt2
+Version: 4.6
+Release: alt1
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -27,7 +27,7 @@ Source8: %name.tmpfiles
 
 Patch: %name-%version-%release.patch
 Obsoletes: %name-novm %name-pinger
-PreReq: net-snmp-mibs
+Requires: net-snmp-mibs
 Provides: %name-common = %version-%release
 Obsoletes: %name-common
 Provides: %name-server = %version-%release
@@ -289,6 +289,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Apr 02 2019 Alexey Shabalin <shaba@altlinux.org> 4.6-alt1
+- Updated to 4.6
+
 * Mon Feb 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.5-alt2
 - Fixed build with default -Werror=return-type flag.
 
