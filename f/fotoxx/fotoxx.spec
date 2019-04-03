@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 19.6
+Version: 19.7
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -7,7 +7,8 @@ License: GPLv3+
 Group: Graphics
 Url: http://www.kornelix.com/%name/%name.html
 
-Source: http://www.kornelix.com/downloads/tarballs/%name-%version.tar.gz
+# VCS: https://gitlab.com/fotoxx/fotoxx.git
+Source: http://www.kornelix.com/downloads/downloads/%name-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
@@ -81,6 +82,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Apr 03 2019 Yuri N. Sedunov <aris@altlinux.org> 19.7-alt1
+- 19.7
+
 * Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 19.6-alt1
 - 19.6
 
