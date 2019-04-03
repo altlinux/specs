@@ -8,7 +8,7 @@
 %add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
 
 Name: rabbitmq-server
-Version: 3.7.13
+Version: 3.7.14
 Release: alt1
 Summary: The RabbitMQ server
 License: MPLv1.1
@@ -30,7 +30,6 @@ Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
 Patch102: rabbitmq-common-0002-force-python3.patch
 Patch201: rabbitmq-server-release-0001-Don-t-use-templates.patch
 Patch301: rabbitmq-amqp1.0-common-0001-force-python3.patch
-Patch401: rabbitmq-aws-0001-Rename-some-types-to-make-it-build-on-21.3.patch
 
 URL: http://www.rabbitmq.com/
 
@@ -73,10 +72,6 @@ popd
 %patch201 -p1
 pushd deps/amqp10_common
 %patch301 -p1
-popd
-
-pushd deps/rabbitmq_aws
-%patch401 -p1
 popd
 
 # We have to remove it until common_test subpackage lands RHOS
@@ -178,6 +173,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 #%_datadir/%name
 
 %changelog
+* Wed Apr 03 2019 Alexey Shabalin <shaba@altlinux.org> 3.7.14-alt1
+- 3.7.14
+
 * Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 3.7.13-alt1
 - 3.7.13
 
