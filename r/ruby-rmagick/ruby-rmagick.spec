@@ -2,13 +2,13 @@
 
 Name:          ruby-%pkgname
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       ImageMagick for Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://rmagick.github.io/
 # VCS:         https://github.com/rmagick/rmagick.git
-Source:        %pkgname-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1
@@ -25,8 +25,17 @@ BuildArch:     noarch
 %description   doc
 %summary.
 
+
+%package       devel
+Summary:       ImageMagick for Ruby development files
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+%summary.
+
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
 %gem_build
@@ -38,12 +47,17 @@ BuildArch:     noarch
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
-%ruby_includedir/*
 
 %files         doc
 %ruby_gemdocdir
 
+%files         devel
+%ruby_includedir/*
+
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt2
+- cleanup spec
+
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
 - Bump to 3.0.0;
 - Use Ruby Policy 2.0.

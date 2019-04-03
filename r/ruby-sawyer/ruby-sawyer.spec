@@ -1,60 +1,59 @@
-%define  pkgname sawyer
+%define        pkgname sawyer
 
-Name: 	 ruby-%pkgname
-Version: 0.8.1 
-Release: alt1.1
+Name: 	       ruby-%pkgname
+Version:       0.8.1
+Release:       alt2
+Summary:       Secret User Agent of HTTP
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/lostisland/sawyer
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Secret User Agent of HTTP
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/lostisland/sawyer
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+BuildRequires: gem(minitest)
+BuildRequires: ruby-faraday
+BuildRequires: ruby-addressable
+%gem_replace_version addressable ~> 2.3
 
 %description
 Sawyer is an experimental hypermedia agent for Ruby built on top of Faraday.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemlibdir
+%ruby_gemspec
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.1-alt2
+- Use Ruby Policy 2.0
+- Increase gem addressable dep to ~> 2.6
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 

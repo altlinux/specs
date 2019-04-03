@@ -1,61 +1,61 @@
-%define  pkgname dalli
+%define        pkgname dalli
 
-%filter_from_requires /^ruby(inline)/d
-%filter_from_requires /^ruby(action_dispatch\/middleware\/session\/abstract_store)/d
-
-Name: ruby-%pkgname
-Version: 2.7.6
-Release: alt1.2
-
-Summary: High performance memcached client for Ruby
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/petergoldstein/dalli
-BuildArch: noarch
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:  %name-%version.tar
+Name:          ruby-%pkgname
+Version:       2.7.10
+Release:       alt1
+Summary:       High performance memcached client for Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/petergoldstein/dalli
+# VCS:         https://github.com/petergoldstein/dalli.git
+BuildArch:     noarch
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: memcached
 
 %description
-High performance memcached client for Ruby.
+Dalli is a high performance pure Ruby client for accessing memcached servers.
+It works with memcached 1.4+ only as it uses the newer binary protocol. It
+should be considered a replacement for the memcache-client gem.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+The name is a variant of Salvador Dali for his famous painting The Persistence
+of Memory.
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem
 
 %prep
 %setup
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.7.10-alt1
+- Use Ruby Policy 2.0
+- Bump to 2.7.10
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.6-alt1.2
 - Rebuild with new Ruby autorequirements.
 

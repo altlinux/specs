@@ -1,7 +1,7 @@
 %define        pkgname rake-compiler-dock
 
 Name:          gem-%pkgname
-Version:       0.7.1
+Version:       0.7.2
 Release:       alt1
 Summary:       Easy to use and reliable cross compiler environment for building Windows, Linux and JRuby binary gems.
 License:       MIT
@@ -72,5 +72,8 @@ Executable for %{pkgname} gem.
 %_bindir/*
 
 %changelog
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.2-alt1
+- Bump to 0.7.2
+
 * Thu Feb 28 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

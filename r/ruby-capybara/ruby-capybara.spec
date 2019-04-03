@@ -1,62 +1,54 @@
-%define  pkgname capybara
+%define        pkgname capybara
 
-Name:    ruby-%pkgname
-Version: 3.12.0
-Release: alt1
+Name:          ruby-%pkgname
+Version:       3.16.1
+Release:       alt1
+Summary:       Acceptance test framework for web applications
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/teamcapybara/capybara
+# VCS:         https://github.com/teamcapybara/capybara.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Acceptance test framework for web applications
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/teamcapybara/capybara
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
-* Mon Dec 10 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
-- New version.
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.16.1-alt1
+- Bump to 3.16.1
+- Use Ruby Policy 2.0
 
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.10.0-alt1
 - new version 3.10.0

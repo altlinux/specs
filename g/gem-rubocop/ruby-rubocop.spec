@@ -1,7 +1,7 @@
 %define        pkgname rubocop
 
 Name:          gem-%pkgname
-Version:       0.65.0
+Version:       0.66.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter.
 License:       MIT
@@ -64,5 +64,8 @@ Executable file for rubocop.
 %_bindir/*
 
 %changelog
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 0.66.0-alt1
+- Bump to 0.66.0
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 0.65.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

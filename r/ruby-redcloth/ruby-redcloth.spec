@@ -1,59 +1,69 @@
 # vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname redcloth
+%define        gemname RedCloth
 
-Name: ruby-redcloth
-Version: 4.3.2
-Release: alt1
+Name:          ruby-%pkgname
+Version:       4.3.2
+Release:       alt2
+Summary:       Textile parser for Ruby
+Group:         Development/Ruby
+License:       MIT
+Url:           https://redcloth.org/
+# VCS:         https://github.com/jgarber/redcloth.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
+BuildArch:     noarch
 
-Summary: Textile parser for Ruby
-Group: Development/Ruby
-License: BSD
-Url: http://redcloth.org/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source: redcloth-%version.tar
-
-BuildRequires: libruby-devel ruby-tool-setup
-
-BuildArch: noarch
+BuildRequires(pre): rpm-build-ruby
 
 %description
 RedCloth is a module for using Textile in Ruby. Textile is a text format.
 A very simple text format. Another stab at making readable text that can
 be converted to HTML.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem
+
+
+%package       -n %pkgname
+Summary:       RedCloth executables for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n %pkgname
+%summary.
+
 
 %prep
-%setup -n redcloth-%version
-%update_setup_rb
-
-rm -rf lib/tasks
-find . -name '._*' -print0 |
-	xargs -r0 rm -rvf --
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --use=RedCloth --alias=redcloth
 
 %install
-%ruby_install
-%rdoc ext/redcloth_scan/*.c lib/
+%gem_install
 
 %files
-%_bindir/*
-%ruby_sitelibdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/RedCloth*
+%files         doc
+%ruby_gemdocdir
+
+%files         -n %pkgname
+%_bindir/%pkgname
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.2-alt2
+- Use Ruby Policy 2.0
+- Fix 4.3.2 gem version
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1
 - New version 4.3.2
 - Build as noarch

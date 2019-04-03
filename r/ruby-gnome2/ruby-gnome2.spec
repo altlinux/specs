@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
-Version:       3.3.2
-Release:       alt2
+Version:       3.3.6
+Release:       alt1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -1061,6 +1061,9 @@ Documentation files for %{name}.
 
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.6-alt1
+- Bump to 3.3.6
+
 * Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.2-alt2
 - Fix build for new gnome
 

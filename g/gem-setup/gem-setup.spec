@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt3
+Release:       alt4
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -63,6 +63,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 02 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt4
+- load Gemfile by temporary changing the root when creating the bundler's DSL
+
 * Wed Mar 27 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt3
 - fix requires deps detection over executable's shebang line
 

@@ -1,73 +1,70 @@
-Name:    ruby-addressable
-Version: 2.5.2
-Release: alt3
+%define        pkgname addressable
 
-Summary: Addressable is a replacement for the URI implementation that is part of Ruby's standard library
+Name:          ruby-%pkgname
+Version:       2.6.0
+Release:       alt1
+Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library
 Summary(ru_RU.UTF-8): "Адресуемый" есть заменою воплощения URI, который является частью стандартной библиотеки рубина
-Group:   Development/Ruby
-License: MIT/Ruby
-URL:     http://addressable.rubyforge.org/
-# VCS:   https://github.com/sporkmonger/addressable.git
+Group:         Development/Ruby
+License:       Apache-2.0
+URL:           http://addressable.rubyforge.org/
+# VCS:         https://github.com/sporkmonger/addressable.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-BuildArch: noarch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-Source: %name-%version.tar
 
 %description
 Addressable is a replacement for the URI implementation that is part of
 Ruby's standard library. It more closely conforms to RFC 3986, RFC 3987,
 and RFC 6570 (level 4), providing support for IRIs and URI templates.
 
-%description -l ru_RU.UTF-8
+%description   -l ru_RU.UTF-8
 "Адресуемый" есть замена воплощения URI, который является частью стандартной
 библиотеки рубина. Бн более точно удовлетворяет стандартам RFC 3986, RFC 3987,
 и RFC 6570 (уровня 4), поддержиивая IRI и URI шаблоны.
 
-%package doc
-Summary:   Documentation for %name
-Group:     Development/Documentation
-Requires:  %name = %version-%release
-BuildArch: noarch
 
-%description doc
+%package       doc
+Summary:       Documentation for %name
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
 Documentation for %{name}.
 
-%description -l ru_RU.UTF-8 doc
+%description   -l ru_RU.UTF-8 doc
 Документация для %{name}.
 
+
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 sed "s|File.join(File.dirname(__FILE__), '../../..', 'data/unicode.data')|'%_datadir/%name/unicode.data'|" -i lib/addressable/idna/pure.rb
 
 %build
-%ruby_config
-%ruby_build
-
-%check
-#rspec
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-mkdir -p %buildroot%_datadir/%name
-mv %buildroot%_datadir/unicode.data %buildroot%_datadir/%name/unicode.data
+%gem_install
+install -D data/unicode.data %buildroot%_datadir/%name/unicode.data
+
+%check
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemlibdir
+%ruby_gemspec
 %_datadir/%name
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
+- Bump to 2.6.0
+
 * Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt3
 - Enable replace hardcoded path to "unicode.data" to ALT system's one.
 
