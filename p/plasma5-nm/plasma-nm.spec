@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.12.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -282,6 +282,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Wed Apr 03 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt2
+- password dialog: explain why password is requested
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 
