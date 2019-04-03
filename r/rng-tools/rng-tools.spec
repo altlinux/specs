@@ -1,35 +1,55 @@
+%define _unpackaged_files_terminate_build 1
 Name: rng-tools
-Version: 5
+Version: 6.7
 Release: alt1
 
 Summary: Random number generator related utilities
 License: GPLv2+
 Group: System/Kernel and hardware
 
-URL: http://sourceforge.net/projects/gkernel/
-Source0: http://download.sourceforge.net/project/gkernel/rng-tools/%version/rng-tools-%version.tar.gz
+URL: https://github.com/nhorman/rng-tools
+#Git: https://github.com/nhorman/rng-tools.git
+Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.default
-Source3: %name.modprobe
+Source3: %name.service
+
+# latest upstream fixes, remove after version > 6.7
+# get rid of compiler warning on unused variables
+Patch100: 0002-Remove-superfluous-variables.patch
+
+# Automatically added by buildreq on Wed Apr 03 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config
+# libsasl2-3 libssl-devel perl pkg-config python-base sh4
+BuildRequires: libcurl-devel
+BuildRequires: libxml2-devel
+BuildRequires: libp11-devel
+BuildRequires: libsysfs-devel
+BuildRequires: jitterentropy-devel
 
 Obsoletes: kernel-utils
 
 %description
-Hardware random number generation tools.
+Hardware random number generation tool.
+It monitors a set of entropy sources, and supplies entropy from them
+to the system kernel's /dev/random machinery.
 
 %prep
 %setup
 
+%patch100 -p1
+
 %build
+./autogen.sh
 %configure
 %make_build
 
 %install
 %makeinstall_std
-mkdir -p %buildroot{%_initdir,%_sysconfdir/sysconfig,%_sysconfdir/modutils.d}
+mkdir -p %buildroot{%_initdir,%_sysconfdir/sysconfig,%_unitdir}
 install -m755 %SOURCE1 %buildroot%_initdir/rngd
 install -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/rngd
-#install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
+install -m644 %SOURCE3 %buildroot%_unitdir/rngd.service
 
 %post
 %post_service rngd
@@ -39,14 +59,18 @@ install -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/rngd
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/rngd
-#_sysconfdir/modutils.d/%name
 %_initdir/rngd
+%_unitdir/rngd.service
 %_bindir/rngtest
 %_sbindir/rngd
 %_man1dir/rngtest.1*
 %_man8dir/rngd.8*
 
 %changelog
+* Wed Apr 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.7-alt1
+- Version 6.7
+- rearrange package git repo
+
 * Sat Sep 01 2018 Sergey Y. Afonin <asy@altlinux.ru> 5-alt1
 - Version 5
 - added LSB init header to init script
