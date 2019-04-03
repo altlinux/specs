@@ -35,7 +35,7 @@
 
 Name: freeipa
 Version: 4.7.1
-Release: alt7
+Release: alt8
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -956,6 +956,9 @@ fi
 %python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Wed Apr 03 2019 Evgeny Sinelnikov <sin@altlinux.org> 4.7.1-alt8
+- Backport patch for samba-4.10.0 complatibility from upstream
+
 * Tue Mar 26 2019 Evgeny Sinelnikov <sin@altlinux.org> 4.7.1-alt7
 - Rebuild with samba-4.10.0 (freeipa-server-trust-ad depens on libsmbconf.so.0)
 
