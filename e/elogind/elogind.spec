@@ -1,9 +1,9 @@
 Name:     elogind
-Version:  239.3
-Release:  alt4
+Version:  241.2
+Release:  alt1
 Summary:  The systemd project's "logind", extracted to a standalone package
 Group:    System/Configuration/Boot and Init
-License:  GPL2, LGPL2.1
+License:  GPL-2.0 and LGPL-2.1
 URL:      https://github.com/elogind/elogind
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -14,9 +14,8 @@ Source3: elogind.sysconfig
 Source4: pam_elogind.control
 Source5: libelogind-preload.control
 
-Patch0: elogind-fix-stale-pidfile.patch
-Patch1: elogind-dbus-activation-helper.patch
-Patch2: elogind-create-run-systemd-system.patch
+Patch0: elogind-dbus-activation-helper.patch
+Patch1: elogind-dbus-socket-detection.patch
 
 Conflicts: ConsoleKit2
 Conflicts: ConsoleKit2-x11
@@ -96,13 +95,10 @@ Requires: %name = %version-%release
 %description -n bash-completion-%name
 Bash completion for %name.
 
-
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
-#patch2 -p1
-
 
 %build
 %meson \
@@ -176,16 +172,19 @@ complete -F _loginctl eloginctl' \
 	%buildroot/%_datadir/bash-completion/completions/loginctl
 ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 
-
 %pre
 %pre_control pam_elogind
 %pre_control libelogind-preload
-
 
 %post
 %post_control -s enabled pam_elogind
 %post_control -s enabled libelogind-preload
 
+%preun
+if [ "$1" = 0 ]; then
+%post_control -s disabled pam_elogind
+%post_control -s disabled libelogind-preload
+fi
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/%name/logind.conf
@@ -228,6 +227,9 @@ ln -s loginctl %buildroot/%_datadir/bash-completion/completions/eloginctl
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Apr 03 2019 Alexey Gladkov <legion@altlinux.ru> 241.2-alt1
+- New version (241.2).
+
 * Sat Feb 23 2019 Alexey Gladkov <legion@altlinux.ru> 239.3-alt4
 - elogind requires libelogind.
 
