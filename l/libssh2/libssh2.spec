@@ -1,5 +1,5 @@
 Name: libssh2
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: A library implementing the SSH2 protocol
@@ -8,7 +8,6 @@ License: BSD
 Url: http://www.libssh2.org/
 # Git-VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
-Patch100: Fixed-misapplied.patch
 
 BuildRequires: openssl-devel zlib-devel man
 
@@ -39,7 +38,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch100 -p1
 
 %build
 # set version
@@ -69,6 +67,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 03 2019 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
 - 1.8.1
 - Fixes for the following security vulnerabilities:
