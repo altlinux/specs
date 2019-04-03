@@ -1,69 +1,86 @@
-Name:    rdiscount
-Version: 2.2.0.1
-Release: alt1.2
+%define        pkgname rdiscount
+Name:          %pkgname
+Version:       2.2.0.1
+Release:       alt2
+Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
+License:       BSD-3-Clause
+Group:         Development/Ruby
+Url:           http://dafoster.net/projects/rdiscount/
+# VCS:         https://github.com/davidfstr/rdiscount.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Discount (For Ruby) Implementation of John Gruber's Markdown
-License: BSD-3-Clause
-Group:   Development/Ruby
-Url:     https://github.com/davidfstr/rdiscount
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
 Discount is an implementation of John Gruber's Markdown markup language
 in C. It implements all of the language described in the markdown syntax
 document and passes the Markdown 1.0 test suite.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname
+Summary:       Code for the %gemname gem
+Group:         Development/Ruby
+Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname
+%summary.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      %pkgname-doc
+Obsoletes:     %pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development headers files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development headers for %gemname gem
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-
-mkdir -p %buildroot%_man7dir
-mv %buildroot%_mandir/*.7 %buildroot%_man7dir
-mkdir -p %buildroot%_man1dir
-mv %buildroot%_mandir/*.1 %buildroot%_man1dir
-rm -f %buildroot%_mandir/*.*
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:ext:test test/*.rb
+%gem_test
 
 %files
-%doc README*
-%_bindir/%name
-%ruby_sitelibdir/*
-%_man1dir/*.1*
-%_man7dir/*.7*
-%rubygem_specdir/*
+%_bindir/%pkgname
+%_mandir/*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname
+%doc README*
+%ruby_gemspec
+%ruby_gemextdir
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt2
+- Use Ruby Policy 2.0
+- Fix spec
+
 * Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.0.1-alt1.2
 - Rebuild for new Ruby autorequirements.
 
