@@ -1,5 +1,5 @@
 Name: kodi
-Version: 18.0
+Version: 18.1
 Release: alt1
 
 Summary: Kodi Media Center
@@ -110,6 +110,7 @@ This package contains development part of Kodi.
 
 %define __nprocs 8
 %define docdir %_defaultdocdir/%name
+%define cdefs -DGIT_VERSION=%release
 %ifarch armh aarch64
 %define platdefs -DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles
 %else
@@ -120,7 +121,7 @@ This package contains development part of Kodi.
 %setup
 
 %build
-%cmake %platdefs
+%cmake %cdefs %platdefs
 %cmake_build
 
 %install
@@ -164,6 +165,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Wed Apr 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.1-alt1
+- 18.1 Leia released
+
 * Wed Jan 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt1
 - 18.0 Leia released
 
