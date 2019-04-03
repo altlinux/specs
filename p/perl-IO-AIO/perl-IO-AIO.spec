@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.71
+Version: 4.72
 Release: alt1
 
 Summary: Asynchronous Input/Output
@@ -11,7 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/IO-AIO-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
@@ -40,7 +40,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n IO-AIO-%{version}
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -59,6 +59,9 @@ scripts for %name
 
 
 %changelog
+* Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt1
+- automated CPAN update
+
 * Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 2:4.71-alt1
 - automated CPAN update
 
