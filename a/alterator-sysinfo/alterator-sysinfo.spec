@@ -2,7 +2,7 @@
 
 Name: alterator-sysinfo
 Version: 0.8
-Release: alt6
+Release: alt7
 
 Summary: alterator module to view general system information
 License: GPL
@@ -38,6 +38,9 @@ alterator module to view general system information
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Apr 03 2019 Michael Shigorin <mike@altlinux.org> 0.8-alt7
+- fix backend for c8.1 as well (free doesn't do -o there)
+
 * Thu Sep 06 2018 Michael Shigorin <mike@altlinux.org> 0.8-alt6
 - ignore /run as well
 - minor spec cleanup
