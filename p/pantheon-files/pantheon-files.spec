@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 4.1
 %define _name files
@@ -6,7 +6,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -18,7 +18,7 @@ Url: https://launchpad.net/pantheon-files
 Source: %_name-%version.tar.gz
 %else
 #VCS: https://github.com/elementary/files.git
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 Provides: %rdn_name = %version-%release
@@ -59,7 +59,7 @@ Requires: %name-devel = %version-%release
 This package provides Vala language bindings for the pantheon-files.
 
 %prep
-%setup %{?_disable_snapshot:-n %_name-%version}
+%setup -n %_name-%version
 
 %build
 %meson -Dwith-unity=false
@@ -99,6 +99,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Wed Apr 03 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.6-alt1
+- updated to 4.1.6-11-g7629b75d
+
 * Fri Feb 15 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.5-alt1
 - 4.1.5
 
