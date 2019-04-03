@@ -1,20 +1,18 @@
 %define  modulename more-itertools
 
-Name:    python-module-%modulename
-Version: 5.0.0
-Release: alt2
-Epoch: 1
+Name:    python3-module-%modulename
+Version: 7.0.0
+Release: alt3
 
 Summary: More routines for operating on iterables, beyond itertools
 License: MIT
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://github.com/erikrose/more-itertools
 Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 # git://git.altlinux.org/gears/p/python3-module-more-itertools.git
 Source:  %modulename-%version.tar
@@ -29,19 +27,17 @@ routines for working with Python iterables.
 %setup -n %modulename-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/more_itertools*
+%python3_sitelibdir/more_itertools*
 
 %changelog
-* Wed Apr 03 2019 Dmitry V. Levin <ldv@altlinux.org> 1:5.0.0-alt2
-- Removed python3-module-more-itertools subpackage.
-- Starting with version 6.0.0 python 2.7 is no longer supported, so
-  reverted to 5.0.0 which is the last version targeting Python 2.7.
+* Wed Apr 03 2019 Dmitry V. Levin <ldv@altlinux.org> 7.0.0-alt3
+- Removed python-module-more-itertools subpackage.
 
 * Tue Apr 02 2019 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt2
 - Completely fix run from Python 2.
