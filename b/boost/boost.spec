@@ -19,7 +19,7 @@
 %def_with python_compat_symlinks
 
 # mpi
-%ifarch e2k
+%ifarch %e2k
 %def_without mpi
 %else
 %def_with mpi
@@ -33,7 +33,7 @@
 %endif
 
 # context
-%ifarch e2k
+%ifarch %e2k
 %def_without context
 %else
 %def_with context
@@ -55,7 +55,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt5
+Release: alt6
 
 Summary: Boost libraries
 License: Boost Software License
@@ -1343,7 +1343,7 @@ applications. This package contains python module.
 
 %prep
 
-%setup -q -n boost-%version
+%setup -n boost-%version
 %patch4 -p2
 %patch5 -p2
 %patch15 -p1
@@ -1362,7 +1362,7 @@ popd
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
-%ifarch e2k
+%ifarch %e2k
 COMPILER_FLAGS="$COMPILER_FLAGS -fno-error-always-inline"
 %endif
 
@@ -1968,6 +1968,9 @@ done
 
 
 %changelog
+* Thu Apr 04 2019 Michael Shigorin <mike@altlinux.org> 1:1.67.0-alt6
+- Support build on e2kv4 through %%e2k macro.
+
 * Mon Dec 10 2018 Ivan A. Melnikov <iv@altlinux.org> 1:1.67.0-alt5
 - Make boost-devel replace boost-process-devel.
 
