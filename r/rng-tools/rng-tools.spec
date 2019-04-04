@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: rng-tools
 Version: 6.7
-Release: alt1
+Release: alt2
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -26,6 +26,9 @@ BuildRequires: libxml2-devel
 BuildRequires: libp11-devel
 BuildRequires: libsysfs-devel
 BuildRequires: jitterentropy-devel
+# Systems that support RDRAND but not AES-NI will require libgcrypt
+# in order to use RDRAND as an entropy source.
+BuildRequires: libgcrypt-devel
 
 Obsoletes: kernel-utils
 
@@ -51,6 +54,9 @@ install -m755 %SOURCE1 %buildroot%_initdir/rngd
 install -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/rngd
 install -m644 %SOURCE3 %buildroot%_unitdir/rngd.service
 
+%check
+make check
+
 %post
 %post_service rngd
 
@@ -67,6 +73,10 @@ install -m644 %SOURCE3 %buildroot%_unitdir/rngd.service
 %_man8dir/rngd.8*
 
 %changelog
+* Thu Apr 04 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.7-alt2
+- add libgcrypt-devel to BR
+- switch auto tests on
+
 * Wed Apr 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.7-alt1
 - Version 6.7
 - rearrange package git repo
