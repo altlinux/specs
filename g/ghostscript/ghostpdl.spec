@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.26
-Release: alt2
+Release: alt3
 
 %define ijsver	0.35
 %global origver %version
@@ -89,7 +89,7 @@ Obsoletes: %gnu_name-classic, %esp_name-classic, %name-minimal
 %package gtk
 Summary: %name with gtk
 Group: Publishing
-Requires: %name-lib = %version-%release, %name-common = %version-%release
+Requires: %name-lib = %version, %name-common = %version-%release
 Provides: %esp_name-gtk = %version, %gnu_name-gtk = %version
 Obsoletes: %gnu_name-gtk, %esp_name-gtk
 
@@ -311,6 +311,11 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Thu Apr  4 2019 Ivan Zakharyaschev <imz@altlinux.org> 9.26-alt3
+- (.spec) make Provides and Requires match (on %%name-lib = %%version)
+  (Otherwise, there would be an unmet dep when rebuilt and interpreted
+  by rpm-4.13.0.1-alt6 and rpm-build with the corresponding fix.)
+
 * Mon Jan 28 2019 Fr. Br. George <george@altlinux.ru> 9.26-alt2
 - Update patchset (CVE-2019-6116)
 
