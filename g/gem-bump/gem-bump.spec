@@ -2,8 +2,8 @@
 
 Name:          gem-%pkgname
 Version:       0.8.0
-Release:       alt1
-Summary:       Bump is a gem that will simplify the way you build gems.
+Release:       alt2
+Summary:       Bump is a gem that will simplify the way you build gems
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/gregorym/bump
@@ -47,8 +47,9 @@ the way you build gems and chef-cookbooks.
 Исполняемый файл для бисера bump, который позволяет упростить путь в построении
 бисеров и поваренных книг.
 
+
 %prep
-%setup -n %name-%version
+%setup
 
 %build
 %gem_build
@@ -62,11 +63,16 @@ the way you build gems and chef-cookbooks.
 %files
 %ruby_gemspec
 %ruby_gemlibdir
-%_bindir/*
 
 %files         doc
 %ruby_gemdocdir
 
+%files         -n bump
+%_bindir/*
+
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt2
+- fix spec
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

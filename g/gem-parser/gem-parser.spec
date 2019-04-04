@@ -1,7 +1,7 @@
 %define        pkgname parser
 
 Name:          gem-%pkgname
-Version:       2.6.0.0
+Version:       2.6.2.0
 Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
@@ -46,7 +46,7 @@ Executable file for %pkgname.
 %setup
 
 %build
-%gem_build
+%gem_build --use=parser --alias=parse
 
 %install
 %gem_install
@@ -65,5 +65,8 @@ Executable file for %pkgname.
 %_bindir/*
 
 %changelog
+* Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.2.0-alt1
+- Bump to 2.6.2.0
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

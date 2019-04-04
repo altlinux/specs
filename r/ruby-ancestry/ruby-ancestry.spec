@@ -1,21 +1,18 @@
-%define  pkgname ancestry
+%define        pkgname ancestry
 
-Name:    ruby-%pkgname
-Version: 3.0.3
-Release: alt1
+Name:          ruby-%pkgname
+Version:       3.0.5
+Release:       alt1
+Summary:       Organise ActiveRecord model into a tree structure
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/stefankroes/ancestry
+# VCS:         https://github.com/stefankroes/ancestry.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Organise ActiveRecord model into a tree structure
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/stefankroes/ancestry
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
@@ -23,44 +20,42 @@ BuildRequires: ruby-tool-setup
 %description -l ru_RU.UTF8
 Упорядочивание модели ActiveRecord в виде древовидной структуры
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
+%description   doc
+Documentation files for %gemname gem.
 
-%description doc
-Documentation files for %{name}.
-
-%description doc -l ru_RU.UTF8
-Файлы сведений для %name
+%description   doc -l ru_RU.UTF8
+Файлы сведений для буси %gemname
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemlibdir
+%ruby_gemspec
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.5-alt1
+- Bump to 3.0.5
+- Use Ruby Policy 2.0
+
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.3-alt1
 - Bimp to 3.0.3
 

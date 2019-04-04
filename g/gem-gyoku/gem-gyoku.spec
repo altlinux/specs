@@ -1,14 +1,13 @@
-%define        pkgname power-assert
-%define        gemname power_assert
+%define        pkgname gyoku
 
 Name:          gem-%pkgname
-Version:       1.1.4
+Version:       1.3.1
 Release:       alt1
-Summary:       Power Assert for Ruby
-License:       BSD 2-clause Simplified License/Custom
+Summary:       Translates Ruby Hashes to XML
+License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/k-tsj/power_assert
-# VCS:         https://github.com/k-tsj/power_assert.git
+Url:           https://github.com/savonrb/gyoku
+# VCS:         https://github.com/savonrb/gyoku.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,7 +15,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
-%summary
+%summary.
 
 
 %package       doc
@@ -45,13 +44,9 @@ Documentation files for %gemname gem.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files doc
+%files         doc
 %ruby_gemdocdir
 
 %changelog
-* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
-- Bump to 1.1.4
-- Use Ruby Policy 2.0
-
-* Tue Jan 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1
-- Initial build for Sisyphus, packaged as a gem
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
+- Initial build for Sisyphus, packaged as a gem, using Ruby Policy 2.0

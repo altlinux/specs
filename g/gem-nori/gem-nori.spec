@@ -1,14 +1,13 @@
-%define        pkgname power-assert
-%define        gemname power_assert
+%define        pkgname nori
 
 Name:          gem-%pkgname
-Version:       1.1.4
+Version:       2.6.0
 Release:       alt1
-Summary:       Power Assert for Ruby
-License:       BSD 2-clause Simplified License/Custom
+Summary:       XML to Hash translator
+License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/k-tsj/power_assert
-# VCS:         https://github.com/k-tsj/power_assert.git
+Url:           https://github.com/savonrb/nori
+# VCS:         https://github.com/savonrb/nori.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,8 +15,11 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
-%summary
+%summary.
 
+Really simple XML parsing ripped from Crack which ripped it from Merb.
+Nori was created to bypass the stale development of Crack, improve its XML parse
+and fix certain issues.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -49,9 +51,5 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
-* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
-- Bump to 1.1.4
-- Use Ruby Policy 2.0
-
-* Tue Jan 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1
-- Initial build for Sisyphus, packaged as a gem
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
+- Initial build for Sisyphus, packaged as a gem, using Ruby Policy 2.0

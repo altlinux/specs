@@ -1,60 +1,75 @@
-%define  pkgname chef-vault
+%define        pkgname chef-vault
 
-Name:    ruby-%pkgname
-Version: 3.4.3
-Release: alt1
+Name:          ruby-%pkgname
+Version:       3.4.5
+Release:       alt1
+Summary:       Securely manage passwords, certs, and other secrets in Chef
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://github.com/chef/chef-vault
+# VCS:         https://github.com/chef/chef-vault.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Securely manage passwords, certs, and other secrets in Chef
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     https://github.com/chef/chef-vault
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
-%summary
+Gem that allows you to encrypt a Chef Data Bag Item using the public keys of
+a list of chef nodes. This allows only those chef nodes to decrypt the encrypted
+values.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+For a more detailed explanation of how chef-vault works, please refer to this
+blog post Chef Vault - what is it and what can it do for you? by
+Nell Shamrell-Harrington.
 
-BuildArch: noarch
 
-%description doc
-Documentation files for %{name}.
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%_bindir/%pkgname
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
+%files         -n %pkgname
+%_bindir/%pkgname
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.4.5-alt1
+- Bump to 3.4.5
+- Use Ruby Policy 2.0
+
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
 - Bump to 3.4.3.
 

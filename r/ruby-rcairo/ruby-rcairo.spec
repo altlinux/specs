@@ -1,8 +1,8 @@
 %define        pkgname cairo
 
 Name:          ruby-r%pkgname
-Version:       1.16.2
-Release:       alt3
+Version:       1.16.4
+Release:       alt1
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
@@ -77,6 +77,9 @@ Documentation for Nokogiri.
 %ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.4-alt1
+- Bump to 1.16.4
+
 * Tue Mar 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt3
 - Fixed require devel lib on build
 

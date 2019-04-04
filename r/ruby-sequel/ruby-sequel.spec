@@ -1,40 +1,18 @@
 %define  pkgname sequel
 
-# not in ALTLinux repo
-%filter_from_requires /^ruby(amalgalite)/d
-%filter_from_requires /^ruby(cubrid)/d
-%filter_from_requires /^ruby(data_objects)/d
-%filter_from_requires /^ruby(fastercsv)/d
-%filter_from_requires /^ruby(ibm_db)/d
-%filter_from_requires /^ruby(java)/d
-%filter_from_requires /^ruby(mysql)/d
-%filter_from_requires /^ruby(mysqlplus)/d
-%filter_from_requires /^ruby(oci8)/d
-%filter_from_requires /^ruby(postgres-pr\/postgres-compat)/d
-%filter_from_requires /^ruby(sequel_pg)/d
-%filter_from_requires /^ruby(sqlanywhere)/d
-%filter_from_requires /^ruby(swift\/db\/mysql)/d
-%filter_from_requires /^ruby(swift\/db\/postgres)/d
-%filter_from_requires /^ruby(swift\/db\/sqlite3)/d
-%filter_from_requires /^ruby(tiny_tds)/d
-%filter_from_requires /^ruby(win32ole)/d
-
-Name: ruby-%pkgname
-Version: 5.5.0
-Release: alt1.1
-
-Summary: Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
-License: MIT
-Group:   Development/Ruby
-Url:     http://sequel.jeremyevans.net
-BuildArch: noarch
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:  %name-%version.tar
+Name:          ruby-%pkgname
+Version:       5.19.0
+Release:       alt1
+Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           http://sequel.jeremyevans.net
+# VCS:         https://github.com/jeremyevans/sequel.git
+BuildArch:     noarch
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-BuildRequires: memcached
 
 %description
 Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby.
@@ -49,40 +27,40 @@ Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby.
 - Sequel currently has adapters for ADO, Amalgalite, IBM_DB, JDBC, MySQL,
   Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, SQLite3, and TinyTDS.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
+%description   doc
 Documentation files for %name
 
 %prep
 %setup
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --join=lib:bin
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
 %_bindir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 5.19.0-alt1
+- Use Ruby Policy 2.0
+- Bump to 5.19.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

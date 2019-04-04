@@ -1,6 +1,6 @@
 Name:          alexandria
 Version:       0.7.3
-Release:       alt2
+Release:       alt3
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
 Group:         Development/Ruby
@@ -62,8 +62,6 @@ install -D -m 0644 schemas/%name.schemas %buildroot/%_sysconfdir/gconf/schemas/%
 install -D -m 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 install -D -m 0644 misc/sounds/* %buildroot%_datadir/sounds/%name/
 
-#rm -rf %buildroot%_datadir/menu
-
 %find_lang %name --with-gnome
 
 %check
@@ -79,7 +77,6 @@ fi
 
 %files
 %_bindir/%name
-#%_datadir/%name/
 %_mandir/*
 %_desktopdir/%name.desktop
 %config %_sysconfdir/gconf/schemas/*
@@ -95,6 +92,9 @@ fi
 
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
+- cleanup spec
+
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
 - Use setup's dependency detection
 

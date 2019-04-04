@@ -1,7 +1,7 @@
 %define        pkgname parallel
 
 Name:          gem-%pkgname
-Version:       1.14.0
+Version:       1.17.0
 Release:       alt1
 Summary:       Run any kind of code in parallel processes
 License:       MIT
@@ -21,12 +21,12 @@ Best suited for map-reduce or e.g. parallel downloads/uploads.
 
 
 %package       doc
-Summary:       Documentation files for %pkgname
+Summary:       Documentation files for %pkgname gem
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{pkgname}.
+Documentation files for %pkgname gem.
 
 %prep
 %setup
@@ -48,5 +48,8 @@ Documentation files for %{pkgname}.
 %ruby_gemdocdir
 
 %changelog
+* Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.17.0-alt1
+- Bump to 1.17.0
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 1.14.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

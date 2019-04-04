@@ -1,8 +1,8 @@
 %define        pkgname rails
 
 Name:          ruby-%pkgname
-Version:       5.2.2.1
-Release:       alt2
+Version:       5.2.3
+Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -31,187 +31,227 @@ Obsoletes:     activesupport-gems-doc < %EVR
 Documentation files for %{name}.
 
 
-%package       -n ruby-actioncable
+%package       -n gem-actioncable
 Summary:       WebSocket framework for Rails
 Group:         Development/Ruby
+Provides:      ruby-actioncable
+Obsoletes:     ruby-actioncable
 
-%description   -n ruby-actioncable
+%description   -n gem-actioncable
 Structure many real-time application concerns into channels over a
 single WebSocket connection.
 
 
-%package       -n ruby-actioncable-doc
-Summary:       Documentation files for "ruby-actioncable" gem
+%package       -n gem-actioncable-doc
+Summary:       Documentation files for "gem-actioncable" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-actioncable-doc
+Obsoletes:     ruby-actioncable-doc
 
-%description   -n ruby-actioncable-doc
+%description   -n gem-actioncable-doc
 %summary
 
 
-%package       -n ruby-actionmailer
+%package       -n gem-actionmailer
 Summary:       Email composition, delivery, and receiving framework (part of Rails)
 Group:         Development/Ruby
+Provides:      ruby-actionmailer
+Obsoletes:     ruby-actionmailer
 
-%description   -n ruby-actionmailer
+%description   -n gem-actionmailer
 Email on Rails. Compose, deliver, receive, and test emails using the
 familiar controller/view pattern. First-class support for multipart
 email and attachments.
 
 
-%package       -n ruby-actionmailer-doc
-Summary:       Documentation files for "ruby-actionmailer" gem
+%package       -n gem-actionmailer-doc
+Summary:       Documentation files for "gem-actionmailer" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-actionmailer-doc
+Obsoletes:     ruby-actionmailer-doc
 
-%description   -n ruby-actionmailer-doc
+%description   -n gem-actionmailer-doc
 %summary
 
 
-%package       -n ruby-actionpack
+%package       -n gem-actionpack
 Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails)
 Group:         Development/Ruby
+Provides:      ruby-actionpack
+Obsoletes:     ruby-actionpack
 
-%description   -n ruby-actionpack
+%description   -n gem-actionpack
 Web apps on Rails. Simple, battle-tested conventions for building and
 testing MVC web applications. Works with any Rack-compatible server.
 
 
-%package       -n ruby-actionpack-doc
-Summary:       Documentation files for "ruby-actionpack" gem
+%package       -n gem-actionpack-doc
+Summary:       Documentation files for "gem-actionpack" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-actionpack-doc
+Obsoletes:     ruby-actionpack-doc
 
-%description   -n ruby-actionpack-doc
+%description   -n gem-actionpack-doc
 %summary
 
 
-%package       -n ruby-actionview
+%package       -n gem-actionview
 Summary:       Rendering framework putting the V in MVC (part of Rails)
 Group:         Development/Ruby
+Provides:      ruby-actionview
+Obsoletes:     ruby-actionview
 
-%description   -n ruby-actionview
+%description   -n gem-actionview
 Simple, battle-tested conventions and helpers for building web pages.
 
 
-%package       -n ruby-actionview-doc
-Summary:       Documentation files for "ruby-actionview" gem
+%package       -n gem-actionview-doc
+Summary:       Documentation files for "gem-actionview" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-actionview-doc
+Obsoletes:     ruby-actionview-doc
 
-%description   -n ruby-actionview-doc
+%description   -n gem-actionview-doc
 %summary
 
 
-%package       -n ruby-activejob
+%package       -n gem-activejob
 Summary:       Job framework with pluggable queues
 Group:         Development/Ruby
+Provides:      ruby-activejob
+Obsoletes:     ruby-activejob
 
-%description   -n ruby-activejob
+%description   -n gem-activejob
 Declare job classes that can be run by a variety of queueing backends.
 
 
-%package       -n ruby-activejob-doc
-Summary:       Documentation files for "ruby-activejob" gem
+%package       -n gem-activejob-doc
+Summary:       Documentation files for "gem-activejob" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-activejob-doc
+Obsoletes:     ruby-activejob-doc
 
-%description   -n ruby-activejob-doc
+%description   -n gem-activejob-doc
 %summary
 
 
-%package       -n ruby-activemodel
+%package       -n gem-activemodel
 Summary:       A toolkit for building modeling frameworks (part of Rails)
 Group:         Development/Ruby
+Provides:      ruby-activemodel
+Obsoletes:     ruby-activemodel
 
-%description   -n ruby-activemodel
+%description   -n gem-activemodel
 A toolkit for building modeling frameworks like Active Record. Rich
 support for attributes, callbacks, validations, serialization,
 internationalization, and testing.
 
 
-%package       -n ruby-activemodel-doc
-Summary:       Documentation files for "ruby-activemodel" gem
+%package       -n gem-activemodel-doc
+Summary:       Documentation files for "gem-activemodel" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-activemodel-doc
+Obsoletes:     ruby-activemodel-doc
 
-%description   -n ruby-activemodel-doc
+%description   -n gem-activemodel-doc
 %summary
 
 
-%package       -n ruby-activerecord
+%package       -n gem-activerecord
 Summary:       Object-relational mapper framework (part of Rails)
 Group:         Development/Ruby
 Provides:      activerecord-gems = %EVR
 Obsoletes:     activerecord-gems < %EVR
+Provides:      ruby-activerecord
+Obsoletes:     ruby-activerecord
 
-%description   -n ruby-activerecord
+%description   -n gem-activerecord
 Databases on Rails. Build a persistent domain model by mapping database
 tables to Ruby classes. Strong conventions for associations,
 validations, aggregations, migrations, and testing come baked-in.
 
 
-%package       -n ruby-activerecord-doc
-Summary:       Documentation files for "ruby-activerecord" gem
+%package       -n gem-activerecord-doc
+Summary:       Documentation files for "activerecord" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-activerecord-doc
+Obsoletes:     ruby-activerecord-doc
 
-%description   -n ruby-activerecord-doc
+%description   -n gem-activerecord-doc
 %summary
 
 
-%package       -n ruby-activestorage
+%package       -n gem-activestorage
 Summary:       Local and cloud file storage framework
 Group:         Development/Ruby
+Provides:      ruby-activestorage
+Obsoletes:     ruby-activestorage
 
-%description   -n ruby-activestorage
+%description   -n gem-activestorage
 Attach cloud and local files in Rails applications.
 
 
-%package       -n ruby-activestorage-doc
-Summary:       Documentation files for "ruby-activestorage" gem
+%package       -n gem-activestorage-doc
+Summary:       Documentation files for "gem-activestorage" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-activestorage-doc
+Obsoletes:     ruby-activestorage-doc
 
-%description   -n ruby-activestorage-doc
+%description   -n gem-activestorage-doc
 %summary
 
 
-%package       -n ruby-activesupport
+%package       -n gem-activesupport
 Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
 Group:         Development/Ruby
 Provides:      activesupport-gems = %EVR
 Obsoletes:     activesupport-gems < %EVR
+Provides:      ruby-activesupport
+Obsoletes:     ruby-activesupport
 
-%description   -n ruby-activesupport
+%description   -n gem-activesupport
 A toolkit of support libraries and Ruby core extensions extracted from
 the Rails framework. Rich support for multibyte strings,
 internationalization, time zones, and testing.
 
 
-%package       -n ruby-activesupport-doc
-Summary:       Documentation files for "ruby-activesupport" gem
+%package       -n gem-activesupport-doc
+Summary:       Documentation files for "gem-activesupport" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-activesupport-doc
+Obsoletes:     ruby-activesupport-doc
 
-%description   -n ruby-activesupport-doc
+%description   -n gem-activesupport-doc
 %summary
 
 
-%package       -n ruby-railties
+%package       -n gem-railties
 Summary:       Tools for creating, working with, and running Rails applications
 Group:         Development/Ruby
+Provides:      ruby-railties
+Obsoletes:     ruby-railties
 
-%description   -n ruby-railties
+%description   -n gem-railties
 Rails internals: application bootup, plugins, generators, and rake tasks.
 
 
-%package       -n ruby-railties-doc
-Summary:       Documentation files for "ruby-railties" gem
+%package       -n gem-railties-doc
+Summary:       Documentation files for "gem-railties" gem
 Group:         Development/Documentation
 BuildArch:     noarch
+Provides:      ruby-railties-doc
+Obsoletes:     ruby-railties-doc
 
-%description   -n ruby-railties-doc
+%description   -n gem-railties-doc
 %summary
 
 
@@ -219,7 +259,7 @@ BuildArch:     noarch
 %setup
 
 %build
-%gem_build --use=railties --join=lib:bin
+%gem_build --use=railties --join=lib:bin --use=
 
 %install
 %gem_install
@@ -231,79 +271,82 @@ BuildArch:     noarch
 %ruby_gemspecdir/rails-%version.gemspec
 %ruby_gemslibdir/rails-%version
 
-%files         -n ruby-actioncable
+%files         -n gem-actioncable
 %ruby_gemspecdir/actioncable-%version.gemspec
 %ruby_gemslibdir/actioncable-%version
 
-%files         -n ruby-actioncable-doc
+%files         -n gem-actioncable-doc
 %ruby_gemsdocdir/actioncable-%version
 
-%files         -n ruby-actionmailer
+%files         -n gem-actionmailer
 %ruby_gemspecdir/actionmailer-%version.gemspec
 %ruby_gemslibdir/actionmailer-%version
 
-%files         -n ruby-actionmailer-doc
+%files         -n gem-actionmailer-doc
 %ruby_gemsdocdir/actionmailer-%version
 
-%files         -n ruby-actionpack
+%files         -n gem-actionpack
 %ruby_gemspecdir/actionpack-%version.gemspec
 %ruby_gemslibdir/actionpack-%version
 
-%files         -n ruby-actionpack-doc
+%files         -n gem-actionpack-doc
 %ruby_gemsdocdir/actionpack-%version
 
-%files         -n ruby-actionview
+%files         -n gem-actionview
 %ruby_gemspecdir/actionview-%version.gemspec
 %ruby_gemslibdir/actionview-%version
 
-%files         -n ruby-actionview-doc
+%files         -n gem-actionview-doc
 %ruby_gemsdocdir/actionview-%version
 
-%files         -n ruby-activejob
+%files         -n gem-activejob
 %ruby_gemspecdir/activejob-%version.gemspec
 %ruby_gemslibdir/activejob-%version
 
-%files         -n ruby-activejob-doc
+%files         -n gem-activejob-doc
 %ruby_gemsdocdir/activejob-%version
 
-%files         -n ruby-activemodel
+%files         -n gem-activemodel
 %ruby_gemspecdir/activemodel-%version.gemspec
 %ruby_gemslibdir/activemodel-%version
 
-%files         -n ruby-activemodel-doc
+%files         -n gem-activemodel-doc
 %ruby_gemsdocdir/activemodel-%version
 
-%files         -n ruby-activerecord
+%files         -n gem-activerecord
 %ruby_gemspecdir/activerecord-%version.gemspec
 %ruby_gemslibdir/activerecord-%version
 
-%files         -n ruby-activerecord-doc
+%files         -n gem-activerecord-doc
 %ruby_gemsdocdir/activerecord-%version
 
-%files         -n ruby-activestorage
+%files         -n gem-activestorage
 %ruby_gemspecdir/activestorage-%version.gemspec
 %ruby_gemslibdir/activestorage-%version
 
-%files         -n ruby-activestorage-doc
+%files         -n gem-activestorage-doc
 %ruby_gemsdocdir/activestorage-%version
 
-%files         -n ruby-activesupport
+%files         -n gem-activesupport
 %ruby_gemspecdir/activesupport-%version.gemspec
 %ruby_gemslibdir/activesupport-%version
 
-%files         -n ruby-activesupport-doc
+%files         -n gem-activesupport-doc
 %ruby_gemsdocdir/activesupport-%version
 
-%files         -n ruby-railties
+%files         -n gem-railties
 %ruby_gemspecdir/railties-%version.gemspec
 %ruby_gemslibdir/railties-%version
 %doc README*
 %_bindir/*
 
-%files         -n ruby-railties-doc
+%files         -n gem-railties-doc
 %ruby_gemsdocdir/railties-%version
 
 %changelog
+* Tue Apr 02 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1
+- Bump to 5.2.3
+
 * Mon Mar 25 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.2.1-alt2
 - Added join lib and bin for railties gem
 

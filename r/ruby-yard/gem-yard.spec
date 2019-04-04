@@ -1,72 +1,67 @@
-%define  pkgname yard
+%define        pkgname yard
 
-Name:    ruby-%pkgname
-Version: 0.9.16
-Release: alt1
+Name:          ruby-%pkgname
+Version:       0.9.19
+Release:       alt1
+Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!"
+License:       MIT
+Group:         Development/Ruby
+Url:           https://yardoc.org/
+# VCS:         https://github.com/lsegal/yard.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: YARD is a Ruby Documentation tool. The Y stands for "Yay!"
-License: MIT
-Group:   Development/Ruby
-Url:     https://yardoc.org/
-# VCS:   https://github.com/lsegal/yard.git
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
+%description   doc
+Documentation files for %gemname gem
 
-%description doc
-Documentation files for %{name}.
 
-%package -n yard
-Summary: Yard, Yardoc, and Yri executables for yard gem
-Group: Documentation
+%package       -n yard
+Summary:       Yard, Yardoc, and Yri executables for yard gem
+Group:         Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n yard
+%description   -n %pkgname
 %summary.
 
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%rake_spec
+%gem_test
 
 %files
-%doc *.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemlibdir
+%ruby_gemspec
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
-%files -n yard
+%files         -n %pkgname
 %_bindir/*
 
 %changelog
+* Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.19-alt1
+- Bump to 0.9.19
+- Use Ruby Policy 2.0
+
 * Sat Dec 29 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.16-alt1
 - Initial build for Sisyphus, packaged as a gem
