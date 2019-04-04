@@ -89,7 +89,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.1.2
+Version:	4.1.3
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -743,8 +743,11 @@ xz Changelog
 %endif
 
 %changelog
+* Thu Apr 04 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.3-alt1
+- 4.1.3
+
 * Mon Mar 25 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.2-alt1
-- 4.1.2
+- 4.1.2 (fixes: CVE-2019-9718, CVE-2019-9721)
 
 * Tue Feb 26 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.1-alt2
 - added provides and obsoletes for avplay and avprobe packages (closes: #36109)
