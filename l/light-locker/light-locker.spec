@@ -1,5 +1,5 @@
 Name:    light-locker
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: A simple session-locker for lightdm 
 
@@ -31,6 +31,8 @@ It relies on lightdm for locking and unlocking your session.
 
 %build
 sed -e "/XDT_I18N/d" configure.ac.in > configure.ac
+rm README
+cp README.md README
 %autoreconf
 %configure --enable-lock-on-suspend=on --disable-silent-rules --with-gtk3 
 %make_build V=1
@@ -40,13 +42,16 @@ sed -e "/XDT_I18N/d" configure.ac.in > configure.ac
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README COPYING COPYING.LIB
+%doc AUTHORS NEWS README README.md COPYING
 %_bindir/*
 %_sysconfdir/xdg/autostart/*.desktop
 %_datadir/glib-2.0/schemas/apps.*.xml
 %_man1dir/*.1*
 
 %changelog
+* Thu Apr 04 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
+- New version.
+
 * Mon Jul 31 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
 - New version
 
