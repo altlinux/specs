@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190314
+Version: 20190326
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Apr 04 2019 Cronbuild Service <cronbuild@altlinux.org> 20190326-alt1
+- upstream changes (GIT 67b7579):
+  + add firmware for MT7615E (thx Ryder Lee)
+  + mediatek: update MT8173 VPU firmware to v1.1.2 [decoder] Enlarge
+    struct vdec_pic_info to support more capture buffer plane and
+    capture buffer format change. (thx Yunfei Dong)
+  + update Marvell 8797/8997 firmware images (thx Ganapathi Bhat)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.10.A.23 (thx Louis Peens)
+
 * Wed Mar 20 2019 Cronbuild Service <cronbuild@altlinux.org> 20190314-alt1
 - upstream changes (GIT 7bc2464):
   + cxgb4: update firmware to revision 1.23.3.0 (thx Vishal Kulkarni)
