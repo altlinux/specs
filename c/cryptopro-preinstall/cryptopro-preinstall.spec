@@ -1,6 +1,6 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt7
+Release:  alt8
 
 Summary:  Environment for official CryptoPro CSP packages (with Rutoken S and ECP support)
 License:  GPL
@@ -10,7 +10,7 @@ Url:      http://www.altlinux.org/CryptoPro
 Source:   cryptopro-paths.sh
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64 %e2k
+ExclusiveArch: %ix86 x86_64 %e2k mipsel
 
 Requires: %name-base = %version-%release
 
@@ -89,6 +89,9 @@ fi ||:
 %endif
 
 %changelog
+* Thu Apr 04 2019 Ivan A. Melnikov <iv@altlinux.org> 4.0.0-alt8
+- Build on mipsel.
+
 * Tue Apr 02 2019 Michael Shigorin <mike@altlinux.org> 4.0.0-alt7
 - Restrict binary Rutoken PKCS11 library to x86.
 - Add libidn and libssh2 for cpro's curl.
