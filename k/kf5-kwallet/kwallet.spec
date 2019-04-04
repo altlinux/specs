@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.56.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source1: kwalletd5.po
 Patch1: alt-kwalletd4.patch
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
@@ -69,6 +70,8 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 
+cat %SOURCE1 >> po/ru/kwalletd5.po
+
 %build
 %K5build
 
@@ -104,6 +107,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Apr 04 2019 Oleg Solovyov <mcpain@altlinux.org> 5.56.0-alt3
+- fix package
+
 * Wed Apr 03 2019 Oleg Solovyov <mcpain@altlinux.org> 5.56.0-alt2
 - creating wallet: translate new strings, set icon to warning
 
