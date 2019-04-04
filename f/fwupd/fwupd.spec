@@ -13,12 +13,13 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
+Source1: fwupd.watch
 Patch0: %name-%version-alt.patch
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -158,8 +159,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %doc README.md AUTHORS COPYING
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %dir %_libexecdir/fwupd
+%dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
 %_libexecdir/fwupd/fwupdtool
+%_libexecdir/fwupd/fwupdagent
+%_libexecdir/fwupd/fwupdoffline
+%_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 %if_enabled uefi
 %_libexecdir/fwupd/fwupdate
 %_libdir/efi/fwupd*.efi
@@ -190,6 +195,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
 %_unitdir/system-update.target.wants/
+/lib/systemd/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
 %dir %_localstatedir/fwupd/builder
@@ -263,6 +269,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Apr 01 2019 Anton Farygin <rider@altlinux.ru> 1.2.6-alt1
+- 1.2.6
+
 * Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
