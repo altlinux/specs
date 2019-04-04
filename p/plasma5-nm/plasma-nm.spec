@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.12.8
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace
 
@@ -21,6 +21,7 @@ Provides: kf5-plasma-nm = %EVR
 Obsoletes: kf5-plasma-nm < %EVR
 
 Source: %rname-%version.tar
+Source1: plasmanetworkmanagement-kded.po
 Source10: 01-plasma-nm.js
 # FC
 Patch1: 0007-Require-NM-1.0.0-and-newer.patch
@@ -206,6 +207,8 @@ Obsoletes: kf5-plasma-nm-connect-ssh < %EVR
 %patch12 -p1
 %patch13 -p2
 
+cat $SOURCE1 >> po/ru/plasmanetworkmanagement-kded.po
+
 %build
 %K5build
 
@@ -282,6 +285,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Apr 04 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt3
+- fix package
+
 * Wed Apr 03 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt2
 - password dialog: explain why password is requested
 
