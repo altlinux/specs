@@ -1,6 +1,6 @@
 Name: awesome
 Version: 4.3
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -28,6 +28,7 @@ Requires: libstartup-notification >= 0.10-alt1
 Requires: lgi >= 0.9.1
 Requires: libpango-gir
 Requires: libcairo-gobject
+Requires: libgdk-pixbuf-gir
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
@@ -91,6 +92,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE build/docs/*.md
 
 %changelog
+* Thu Apr  4 2019 Terechkov Evgenii <evg@altlinux.org> 4.3-alt2
+- Add libgdk-pixbuf-gir to Requires (ALT#36499)
+
 * Fri Feb 22 2019 Terechkov Evgenii <evg@altlinux.org> 4.3-alt1
 - 4.3 (Too Long)
 
