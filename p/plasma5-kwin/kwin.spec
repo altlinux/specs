@@ -15,7 +15,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.8
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -189,6 +189,9 @@ KF5 library
 
 
 %changelog
+* Thu Apr 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt2
+- add upstream fix to force glXSwapBuffers to block with NVIDIA driver
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 
