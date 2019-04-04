@@ -1,7 +1,7 @@
 %define svnrev 28002
 Name: openttd
-Version: 1.8.0
-Release: alt3
+Version: 1.9.0
+Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
 License: GPL
@@ -47,7 +47,7 @@ echo "%version	%svnrev	0	%version" >.ottdrev
     --with-fontconfig \
     --without-libtimidity
     
-%make_build WITH_SDL=1 UNIX=1 RELEASE=%version INSTALL=1 WITH_NETWORK=1 \
+%make_build WITH_SDL=1 UNIX=1 RELEASE=%version INSTALL=1 WITH_NETWORK=1 ISTAG=1 ISSTABLETAG=1 \
     USE_HOMEDIR=1 VERBOSE=1 PERSONAL_DIR=.%name \
     PREFIX=%_prefix DATA_DIR=share/games/%name \
 	
@@ -80,7 +80,7 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_prefix/games/%name
 
 %files data
-%doc docs/* bin/scripts readme.txt known-bugs.txt changelog.txt COPYING
+%doc docs/* bin/scripts README.md known-bugs.txt changelog.txt COPYING
 %_datadir/games/%name
 %_datadir/applications/%name.desktop
 %_niconsdir/%name.png
@@ -89,6 +89,9 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
+* Wed Apr 03 2019 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Wed Mar 20 2019 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
 - rebuilt with libicu 6.3.1-alt1
 
