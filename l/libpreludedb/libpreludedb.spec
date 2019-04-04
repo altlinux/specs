@@ -12,7 +12,7 @@ Group: System/Libraries
 
 Name:           libpreludedb
 Version:        5.0.0
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        Framework for easy access to the IDMEF database
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -34,7 +34,7 @@ BuildRequires:  swig
 BuildRequires:  pkgconfig(gnutls)
 BuildRequires:  libgpg-error-devel
 BuildRequires:  libmariadb-devel
-BuildRequires:  libpq5.11-devel postgresql11-devel
+BuildRequires:  postgresql-devel
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(libprelude) >= %{version}
 BuildRequires:  pkgconfig(openssl)
@@ -225,6 +225,9 @@ chmod +x %{buildroot}%{_datadir}/%{name}/classic/mysql2sqlite.sh
 %doc ChangeLog README NEWS
 
 %changelog
+* Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 5.0.0-alt1_1.1
+- Change BR libpq5.11-devel postgresql11-devel to postgresql-devel
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_1
 - update to new release by fcimport
 
