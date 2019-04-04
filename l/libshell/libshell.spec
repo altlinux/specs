@@ -1,5 +1,7 @@
+%def_enable man
+
 Name: libshell
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: A library of shell functions
@@ -12,7 +14,10 @@ Url: https://github.com/legionus/libshell.git
 
 Source: %name-%version.tar
 
-BuildRequires: help2man md2man
+BuildRequires: help2man
+%if_enabled man
+BuildRequires: md2man
+%endif
 
 %description
 This package contains common functions for shell projects to increase code reuse.
@@ -40,11 +45,18 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 	utils/cgrep.in
 
 %build
-%make
+%make \
+	%{?_disable_man:MD2MAN=}
 
 %install
-%make_install DESTDIR=%buildroot install
-%make_install DESTDIR=%buildroot install-single
+%make_install \
+	%{?_disable_man:MD2MAN=} \
+	DESTDIR=%buildroot \
+	install
+%make_install \
+	%{?_disable_man:MD2MAN=} \
+	DESTDIR=%buildroot \
+	install-single
 
 %check
 %make check
@@ -52,18 +64,29 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %files
 /bin/*
 %exclude /bin/shell-lib
-%_man3dir/*
 %_datadir/%name
 %doc COPYING
+%if_enabled man
+%_man3dir/*
+%endif
 
 %files single
 /bin/shell-lib
 
 %files -n cgrep
 %_bindir/*
+%if_enabled man
 %_man1dir/*
+%endif
 
 %changelog
+* Thu Apr 04 2019 Alexey Gladkov <legion@altlinux.ru> 0.4.6-alt1
+- New utilities:
+  + shell-temp: New library to simplify creation of temporary
+    directories
+- shell-signal changes:
+  + Restore $? for every signal handler
+
 * Fri Dec 21 2018 Alexey Gladkov <legion@altlinux.ru> 0.4.5-alt1
 - New version (0.4.5).
 - Make tests bash4 compatible.
