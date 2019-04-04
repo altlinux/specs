@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.106
+Version: 0.107
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -20,7 +20,7 @@ BuildRequires: asciidoc help2man python-modules-encodings
 %package -n rpm-build-kernel
 Summary: RPM macros to build kernel packages
 Group: Development/Kernel
-PreReq: rpm >= 4.0.4-alt1
+Conflicts: rpm-build < 4.0.4-alt1
 
 %ifnarch %ix86
 Provides: kernel-headers-modules-std-pae
@@ -64,6 +64,8 @@ asciidoc README.ru.koi8
 %makeinstall_std
 install -Dpm644 kernel-macros \
 	%buildroot%_rpmmacrosdir/kernel
+install -Dpm0755 query-kEVR.sh \
+	-t %buildroot%_rpmlibdir/
 
 %files
 %_bindir/*
@@ -72,8 +74,19 @@ install -Dpm644 kernel-macros \
 
 %files -n rpm-build-kernel
 %_rpmmacrosdir/kernel
+%_rpmlibdir/query-kEVR.sh
 
 %changelog
+* Thu Apr 04 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.107-alt1
+- kernel-macros: made %%setup_kernel_module automatically add
+  the usual {,Build}Requires for kernel-modules-*.
+- kernel-macros: added for possible use in modules:
+  + %%kimage & %%requires_kimage;
+  + %%update_kernel_modules_checkinstall
+    (to produce a specific kind of checkinstall subpkg);
+  + %%setup_kernel_module_from_globals (split from %%setup_kernel_module) for
+    those who want to set %%kversion and %%krelease manually, without rpmquery).
+
 * Wed Jul 04 2018 Michael Shigorin <mike@altlinux.org> 0.106-alt1
 - added %%e2k support
 
