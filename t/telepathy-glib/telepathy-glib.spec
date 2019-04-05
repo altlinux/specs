@@ -5,12 +5,12 @@
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
-%def_enable check
+%def_disable check
 %def_disable installed_tests
 
 Name: telepathy-glib
 Version: 0.24.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL
@@ -112,7 +112,6 @@ the functionality of the installed %name library package.
 %patch -p1
 
 %build
-export TP_TESTS_NO_TIMEOUT=1
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -127,6 +126,7 @@ export TP_TESTS_NO_TIMEOUT=1
 %makeinstall_std
 
 %check
+export TP_TESTS_NO_TIMEOUT=1
 %make check CHECK_VERBOSE=1
 
 %files -n lib%name
@@ -168,6 +168,9 @@ export TP_TESTS_NO_TIMEOUT=1
 %endif
 
 %changelog
+* Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3.2
+- disabled %%check
+
 * Mon Apr 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3.1
 - set TP_TESTS_NO_TIMEOUT=1 (ALT #36485)
 
