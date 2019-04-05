@@ -183,7 +183,7 @@
 %endif
 
 Name: libvirt
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -192,6 +192,12 @@ Url: https://libvirt.org/
 Source0: %name-%version.tar
 Source1: gnulib-%name-%version.tar
 Source2: keycodemapdb-%name-%version.tar
+
+Source11: libvirtd.init
+Source12: virtlockd.init
+Source13: virtlogd.init
+Source14: libvirt-guests.init
+
 Patch1: %name-%version.patch
 
 
@@ -756,7 +762,7 @@ the virtualization capabilities of recent versions of Linux (and other OSes).
 %package lock-sanlock
 Summary: Sanlock lock manager plugin for QEMU driver
 Group: System/Libraries
-PreReq: sanlock >= 2.4
+Requires: sanlock >= 2.4
 #for virt-sanlock-cleanup require augeas
 Requires: augeas
 Requires: %name-libs = %EVR
@@ -799,7 +805,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		--disable-static \
 		--disable-rpath \
 		--with-packager-version="%release" \
-		--with-init-script=systemd+redhat \
+		--with-init-script=systemd \
 		--with-qemu-user=%qemu_user \
 		--with-qemu-group=%qemu_group \
 		--with-sysctl=check \
@@ -860,6 +866,12 @@ gzip -9 ChangeLog
 
 %install
 %makeinstall_std
+
+# Install sysv init scripts
+install -pD -m 755 %SOURCE11  %buildroot%_initdir/libvirtd
+install -pD -m 755 %SOURCE12  %buildroot%_initdir/virtlockd
+install -pD -m 755 %SOURCE13  %buildroot%_initdir/virtlogd
+install -pD -m 755 %SOURCE14  %buildroot%_initdir/libvirt-guests
 
 make -C examples distclean
 install -d -m 0755 %buildroot%_runtimedir/%name
@@ -1336,6 +1348,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Thu Mar 14 2019 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
 - 5.1.0
 - fix build without server_drivers (ALT#36248)
