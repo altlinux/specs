@@ -1,24 +1,29 @@
 %define ver_major 0.7
 %def_enable introspection
+%def_enable gtk_doc
+%def_enable docbook_docs
 %def_enable check
 
 Name: libnotify
-Version: %ver_major.7
-Release: alt1.2
+Version: %ver_major.8
+Release: alt1
 
 Summary: Desktop notification library
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://www.gnome.org
 
-# git://git.gnome.org/libnotify
+# https://gitlab.gnome.org/GNOME/libnotify.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Provides: %{name}4 = %version-%release
 Obsoletes: %{name}4
 
-BuildRequires: gtk-doc libgio-devel xmlto
+BuildRequires(pre): meson
+BuildRequires: libgio-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_docbook_docs:BuildRequires: xmlto}
 %{?_enable_check:BuildRequires: libgtk+3-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 
@@ -83,28 +88,23 @@ the command line.
 %setup
 %patch -p1
 
-[ ! -d m4 ] && mkdir m4
-
 %build
-%autoreconf
-%configure \
-	--enable-gtk-doc \
-	--disable-static \
-	%{subst_enable introspection} \
-	%{?!_enable_check:--disable-tests} \
-	#
-
-%make_build
-
-%check
-%make check
+%meson \
+	%{?_disable_gtk_doc:-Dgtk_doc=false} \
+	%{?_disable_docbook_docs:-Ddocbook_docs=false} \
+	%{?_disable_introspection:-Dintrospection=disabled} \
+	%{?_disable_check:-Dtests=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+%meson_test
 
 %files
 %_libdir/*.so.*
-%doc NEWS
+%doc NEWS README
 
 %files -n notify-send
 %_bindir/notify-send
@@ -113,9 +113,12 @@ the command line.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+%doc NEWS %{?_enable_docbook_docs:%__builddir/docs/notification-spec.html}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -125,10 +128,12 @@ the command line.
 %_girdir/Notify-%ver_major.gir
 %endif
 
-# TODO:
-# - upstream git has some patches upon 0.7.7
+%{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
+- 0.7.8 (ported to Meson build system)
+
 * Sun May 06 2018 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1.2
 - rebuilt for e2kv4
 - updated Url:
