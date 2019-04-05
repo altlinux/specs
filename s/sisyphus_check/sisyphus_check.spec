@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.47
+Version: 0.8.48
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.48-alt1
+- 130-check-fhs: allow /run as defined in FHS-3.0
+
 * Tue Jan 15 2019 Dmitry V. Levin <ldv@altlinux.org> 0.8.47-alt1
 - 090-check-nvr: check disttag.
 - 210-check-kernel (check_kmodule): strip disttag from kernel_release.
