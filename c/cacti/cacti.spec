@@ -1,6 +1,6 @@
 
 Name: cacti
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -164,6 +164,9 @@ fi
 %cactidir/install
 
 %changelog
+* Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
 - 1.2.2
 - drop php5 package, php7 package merge with main
