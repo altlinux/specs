@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -58,7 +58,7 @@ access updated forecasts provided by various internet services.
 
 %install
 %meson_install
-%find_lang --with-gnome --output=%name.lang %name
+%find_lang --with-gnome --output=%name.lang %name %xdg_name
 
 %files -f %name.lang
 %_bindir/%name
@@ -74,6 +74,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
