@@ -16,7 +16,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -29,6 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: %_name-2.37.92-alt-compat-version-script.patch
+Patch1: %_name-2.38.1-alt-tests_timeouts.patch
 
 Source1: %_name.map
 Source2: %_name.lds
@@ -133,6 +134,7 @@ the functionality of the installed GdkPixBuf library.
 %prep
 %setup -n %_name-%version
 %patch -p1 -b .alt
+%patch1 -b .timeout
 
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
@@ -247,6 +249,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1.1
+- tests/meson.build: x10 timeouts for overloaded girar
+
 * Thu Feb 28 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
 - 2.38.1
 - enabled %check again
