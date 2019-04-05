@@ -1,7 +1,7 @@
 %define libcontrolppver 0.20
 
 Name: control++
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 
 Summary: System configuration tool
@@ -59,6 +59,9 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Fri Apr 05 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.1-alt1
+- Bug fixes.
+
 * Mon Mar 11 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.0-alt1
 - Verbose output option;
 - Bug fixes.
