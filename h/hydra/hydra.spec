@@ -1,14 +1,16 @@
 Name: hydra
-Version: 8.6
-Release: alt1.1
+Version: 8.9.1
+Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
 Summary(ru_RU.KOI8-R): Очень быстрый сетевой взломщик с поддержкой множства сервисов
 Group: Networking/Other
 License: AGPLv3
-Url: http://thc.org/thc-hydra/
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+#Url: http://thc.org/thc-hydra/
+URL:            https://github.com/vanhauser-thc/thc-hydra
+#Source0:        https://github.com/vanhauser-thc/thc-hydra/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: %name-%version.tar.gz
 Source1: x%name.desktop
 Source2: xhydra.png
@@ -20,7 +22,8 @@ Provides: hydra = %version-%release
 Requires: hydra-common hydra-gtk hydra-pwinspector 
 
 # Automatically added by buildreq on Wed Jun 08 2005
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libpq-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils
+BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils
+#libpq-devel
 
 %description
 A very fast network logon cracker which support many different services
@@ -144,9 +147,13 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Fri Apr 05 2019 Ilya Mashkin <oddity@altlinux.ru> 8.9.1-alt1
+- 8.9.1
+- update url
+- remove BR libpq-devel
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 8.6-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
-
 
 * Fri Jul 28 2017 Ilya Mashkin <oddity@altlinux.ru> 8.6-alt1
 - 8.6
