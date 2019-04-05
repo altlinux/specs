@@ -1,7 +1,7 @@
 # -*- mode: rpm-spec; mode: folding -*-
 Name: asterisk
 Version: 15.6.1
-Release: alt1
+Release: alt2
 
 Summary: Open source PBX
 License: GPL
@@ -17,7 +17,7 @@ BuildRequires: libsqlite3-devel libxml2-devel liburiparser-devel libxslt-devel
 BuildRequires: libpopt-devel libspandsp-devel libfftw3-devel
 BuildRequires: libcurl-devel libsrtp2-devel
 BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
-BuildRequires: libpq-devel libunixODBC-devel postgresql-devel zlib-devel
+BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
 
 Source0: %name-%version-%release.tar
@@ -281,5 +281,8 @@ cp -av alt/config/* %buildroot%_sysconfdir/asterisk
 #}}}
 
 %changelog
+* Fri Apr 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.6.1-alt2
+- drop redundant libpq-devel BR
+
 * Thu Sep 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.6.1-alt1
 - 15.6.1 released
