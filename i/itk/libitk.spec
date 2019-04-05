@@ -3,7 +3,7 @@
 
 Name: itk
 Version: 5.0
-Release: alt1.rc1
+Release: alt2.rc1
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -36,8 +36,7 @@ Registration is the task of aligning or developing correspondences between \
 data. For example, in the medical environment, a CT scan may be aligned with  \
 a MRI scan in order to combine the information contained in both.
 
-%description 
-%_description
+%description %_description
 
 %package -n lib%name%soname
 Summary: Shared libraries files for ITK
@@ -103,7 +102,7 @@ rm -rf Modules/ThirdParty/VNL/src/
        -DCMAKE_CXX_FLAGS:STRING="-std=gnu++11 %{optflags}" \
        -DBUILD_SHARED_LIBS:BOOL=ON \
        -DBUILD_TESTING=OFF \
-       -DBUILD_EXAMPLES:BOOL=OFF \
+       -DBUILD_EXAMPLES:BOOL=ON \
        -DBUILD_DOCUMENTATION:BOOL=OFF \
        -DITK_BUILD_DEFAULT_MODULES:BOOL=ON \
        -DITK_WRAP_PYTHON:BOOL=OFF \
@@ -130,29 +129,36 @@ rm -rf Modules/ThirdParty/VNL/src/
        -DITK_USE_SYSTEM_TIFF=ON \
        -DITK_USE_SYSTEM_ZLIB=ON \
        -DITK_USE_SYSTEM_VXL=ON \
+       -DDO_NOT_INSTALL_ITK_TEST_DRIVER=ON \
     %nil
 %cmake_build
 
 %install
 %cmakeinstall_std
 # Delete unused test driver
-rm -f %buildroot%_bindir/itkTestDriver
+rm -f BUILD/bin/itkTestDriver
+
+install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 
 %files -n lib%name%soname
 %_libdir/lib*.so.%soname
-%_libdir/cmake/
 
 %files -n lib%name-devel
 %_libdir/lib*.so
 %_includedir/%name/
+%_libdir/cmake/
 
 %files examples
 %doc itk-examples/Examples/
+%_libdir/%name-examples/
 
 %files doc
 %doc %_docdir/%name/
 
 %changelog
+* Wed Mar 27 2019 Slava Aseev <ptrnine@altlinux.org> 5.0-alt2.rc1
+- Switch on build examples
+
 * Thu Feb 14 2019 Slava Aseev <ptrnine@altlinux.org> 5.0-alt1.rc1
 - Initial build for ALT
 
