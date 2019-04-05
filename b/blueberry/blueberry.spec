@@ -1,6 +1,6 @@
 Name: blueberry
 Version: 1.2.5
-Release: alt1
+Release: alt2
 Summary: A Bluetooth configuration tool
 License: GPLv3
 Group: System/Configuration/Hardware
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl gnome-bluetooth bluez-tools
+Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl gnome-bluetooth bluez-tools libnotify-gir
 
 %description
 Utility for Bluetooth devices graphical configuration
@@ -41,6 +41,7 @@ Blueberry applet for Cinnamon
 
 %files -f %name.lang
 %_sysconfdir/xdg/autostart/%name-tray.desktop
+%_sysconfdir/xdg/autostart/%name-obex-agent.desktop
 %_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
@@ -51,6 +52,11 @@ Blueberry applet for Cinnamon
 %_datadir/cinnamon/applets/blueberry@cinnamon.org
 
 %changelog
+* Fri Apr 5 2019 Vladimir Didenko <cow@altlinux.org> 1.2.5-alt2
+- add libnotify-gir to requires and fix Makefile to install
+  obex-agent desktop file (fixes: #36451)
+- fix path in /usr/lib/blueberry/* files (fixes: #36487)
+
 * Wed Dec 26 2018 Vladimir Didenko <cow@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
