@@ -34,7 +34,7 @@
 
 Name: %{_name}5
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -47,7 +47,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-# fix build against libmysqlclient21
+# fix build against libmysqlclient21 by nikel@
 Patch: libgda-5.2.4-mysql8-transition.patch
 
 Obsoletes: libgda2 < %version
@@ -57,7 +57,7 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.42
+%define vala_ver 0.44
 
 BuildRequires(pre): rpm-build-gir rpm-build-vala
 BuildRequires: gcc-c++
@@ -80,7 +80,6 @@ BuildRequires: yelp-tools
 %{?_with_gtksourceview:BuildRequires: libgtksourceview3-devel}
 
 %if_with postgres
-BuildPreReq: libpq-devel
 BuildPreReq: postgresql-devel
 %endif
 
@@ -649,6 +648,9 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 5.2.8-alt2
+- updated buildreqs for pgsql
+
 * Wed Dec 26 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.8-alt1
 - updated to LIBGDA_5_2_8-7-ga5355eb42
 
