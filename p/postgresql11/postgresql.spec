@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     11
 %define postgresql_minor     2
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -106,8 +106,8 @@ Group: Development/Databases
 Requires: %libpq_name = %EVR
 Requires: %libecpg_name = %EVR
 # TODO remove
-Provides: libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
-Obsoletes: libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
+Provides: libpq-devel, libecpg-devel, libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
+Obsoletes: libpq-devel, libecpg-devel, libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
 #
 
 %description -n postgresql-devel
@@ -121,8 +121,8 @@ Summary:  Development static library for postgresql-devel
 Group: Development/Databases
 Requires: postgresql-devel = %EVR
 # TODO remove
-Provides: libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
-Obsoletes: libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
+Provides: libpq-devel-static, libecpg-devel-static, libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
+Obsoletes: libpq-devel-static, libecpg-devel-static, libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
 #
 
 %description -n postgresql-devel-static
@@ -811,6 +811,10 @@ fi
 %endif
 
 %changelog
+* Fri Apr 05 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt3
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel
+
 * Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt2
 - Move *.control and *.sql files from -server to -contrib subpackage
   (Fixes ALT#36271)

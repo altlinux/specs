@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     7
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -59,6 +59,7 @@ Patch108: 00008-planner_timing.patch
 Patch109: 00009-opt_group_by_and_cost_sort.patch
 Patch110: 00010-joinsel.patch
 Patch111: 00011-max_files_per_process.patch
+Patch112: 00012-index_getattr_optimization.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -229,6 +230,7 @@ database.
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
+%patch112 -p1
 
 %build
 %autoreconf
@@ -815,6 +817,17 @@ fi
 %endif
 
 %changelog
+* Fri Apr 05 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt3
+- Re-applay patches from 1C:
+    * 00003-plantuner.patch
+    * 00004-postgresql-1c-10.patch
+    * 00006-pg_receivewal.patch
+    * 00007-remove_selfjoin.patch
+    * 00009-opt_group_by_and_cost_sort.patch
+    * 00010-joinsel.patch
+- Add patch rom 1C:
+    * 00012-index_getattr_optimization.patch
+
 * Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt2
 - Move *.control and *.sql files from -server to -contrib subpackage
   (Fixes ALT#36271)
