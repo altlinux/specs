@@ -1,7 +1,7 @@
 %define beta %nil
 
 Name: wget
-Version: 1.20.2
+Version: 1.20.3
 Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
@@ -139,6 +139,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Fri Apr 05 2019 Michael Shigorin <mike@altlinux.org> 1.20.3-alt1
+- 1.20.3: security update, thx ldv@ for heads-up
+
 * Fri Apr 05 2019 Michael Shigorin <mike@altlinux.org> 1.20.2-alt1
 - 1.20.2 (closes: #36519)
 
