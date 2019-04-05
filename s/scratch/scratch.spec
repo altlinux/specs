@@ -7,16 +7,17 @@ Summary(ru.UTF-8): Программирование для детей на ос�
 
 Group: Education
 Version: 1.4.0.7
-Release: alt4
+Release: alt5
 
 License: Artistic License
 Url: http://scratch.mit.edu/
 
 Source: %name.tar.gz
 Source1: %name.png
+Source2: ru.po
 
 Patch: scratch-1.4.0.7-use-fedora-squeak.patch
-Patch1: 002-locale-fix.patch
+# Patch1: 002-locale-fix.patch
 Patch2: scratch-1.4.0.7-open-from-commandline.patch
 Patch4: 005-fix-desktop-file.patch
 # deprecated patches, as plugins moved to squeak-vm.
@@ -109,11 +110,13 @@ Projects files for %name
 %setup -q -n %name
 
 %patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 %patch2 -p2
 %patch4 -p2
 %patch5 -p1
 %patch6 -p1
+
+cp -f %SOURCE2 locale/ru.po
 
 %build
 # since the Squeak VM version 4.10.2.2593 and greater includes all the
@@ -181,6 +184,10 @@ mv Projects %buildroot%installdir/
 %installdir/Projects
 
 %changelog
+* Fri Apr 05 2019 Ivan Razzhivin <underwit@altlinux.org> 1.4.0.7-alt5
+- Update Russian translation
+- Add Russian Comment in desktop file
+
 * Wed Feb 13 2019 Andrey Cherepanov <cas@altlinux.org> 1.4.0.7-alt4
 - Fix open Scratch file from command line and file manager.
 
