@@ -16,8 +16,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.38.6
-Release: alt3.1
+Version: 1.40.2
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -45,6 +45,7 @@ BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfi
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
 BuildRequires: libyajl-devel >= 2.0.4
+BuildRequires: libjansson-devel
 BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: liblzma-devel
 BuildRequires: libdbus-devel
@@ -75,7 +76,7 @@ BuildRequires: java-devel-default jpackage-utils
 BuildRequires: ghc
 %endif
 %if_enabled php
-BuildRequires: php5-devel
+BuildRequires: php7-devel
 %endif
 %if_enabled erlang
 BuildRequires: erlang-devel
@@ -279,12 +280,12 @@ BuildArch: noarch
 %description javadoc
 %name-javadoc contains the Java documentation for %name.
 
-%package -n php5-%name
+%package -n php7-%name
 Summary: PHP bindings for %name
 Group: Development/Other
 Requires: %name = %version-%release
 
-%description -n php5-%name
+%description -n php7-%name
 php-%name contains PHP bindings for %name.
 
 %package -n erlang-%name
@@ -667,7 +668,7 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_datadir/javadoc/%name
 
 %if_enabled php
-%files -n php5-%name
+%files -n php7-%name
 %doc php/README-PHP
 %dir %_sysconfdir/php.d
 %_sysconfdir/php.d/guestfs_php.ini
@@ -690,6 +691,9 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %endif
 
 %changelog
+* Wed Apr 03 2019 Alexey Shabalin <shaba@altlinux.org> 1.40.2-alt1
+- 1.40.2
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.38.6-alt3.1
 - rebuild with new perl 5.28.1
 
