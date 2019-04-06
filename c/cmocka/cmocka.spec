@@ -1,14 +1,15 @@
 %def_disable static
+%def_with doc
 
 Name: cmocka
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
+Summary: Lightweight library to simplify and generalize unit tests for C
 License: ASL 2.0
 Group: Development/Tools
-Summary: Lightweight library to simplify and generalize unit tests for C
-Url: http://cmocka.org
 
+Url: http://cmocka.org
 Source: %name-%version.tar
 
 BuildRequires: cmake ctest
@@ -92,7 +93,10 @@ Development headers for the cmocka unit testing library.
 
 
 %cmake_build VERBOSE=1
+%if_with doc
+# BR: cmake >= 3.9
 %cmake_build docs
+%endif
 
 %install
 %cmakeinstall_std
@@ -106,7 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.so.*
 
 %files -n libcmocka-devel
+%if_with doc
 %doc BUILD/doc/html
+%endif
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -118,6 +124,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Apr 06 2019 Michael Shigorin <mike@altlinux.org> 1.1.3-alt2
+- introduce doc knob (on by default)
+
 * Thu Mar 21 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
