@@ -14,7 +14,7 @@
 
 Name: ibus
 Version: 1.5.20
-Release: alt1
+Release: alt2
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
@@ -40,7 +40,11 @@ Requires: lib%name-gir = %version-%release
 %{?_enable_gconf:Requires(post,preun):GConf}
 %{?_enable_dconf:Requires(pre): dconf}
 
-%{?_enable_python:BuildRequires(pre): rpm-build-python3}
+%if_enabled python
+BuildRequires(pre): rpm-build-python3
+%add_python3_path %_datadir/%name/setup
+%endif
+
 %{?_enable_python2:BuildRequires(pre): rpm-build-python}
 BuildRequires: vala-tools >= 0.18
 BuildRequires: libgtk+2-devel
@@ -134,6 +138,14 @@ Requires: %name = %version-%release
 %description -n lib%name-devel-docs
 This package contains developer documentation for IBus.
 
+%package -n python3-module-ibus-overrides
+Summary: IBus Python override library
+Group: Development/Python3
+
+%description -n python3-module-ibus-overrides
+This package provides Python override library for IBus. The Python files
+override some functions in GObject-Introspection.
+
 %if_enabled python2
 %package -n python-module-ibus
 Summary: IBus im module for python
@@ -165,8 +177,11 @@ override some functions in GObject-Introspection.
     --enable-gtk3 \
     --enable-xim \
     %{?_enable_snapshot:--enable-gtk-doc} \
-    %{?_enable_python:--enable-python-library} \
+    %if_enabled python
     %{?_disable_python2:--disable-python2} \
+    --with-python=%__python3 \
+    %{?_enable_python2:--enable-python-library} \
+    %endif
     %{subst_enable dconf} \
     %{?_enable_dconf:--disable-schemas-compile} \
     %{subst_enable gconf} \
@@ -176,8 +191,8 @@ override some functions in GObject-Introspection.
     --enable-introspection \
     %{?_disable_emoji_dict:--disable-emoji-dict} \
     %{?_disable_unicode_dict:--disable-unicode-dict} \
-    %{subst_enable appindicator} \
-    %{?_disable_python2:--with-python=PATH=%__python3}
+    %{subst_enable appindicator}
+    
 %make_build
 
 %install
@@ -260,14 +275,20 @@ fi
 %_libdir/lib*.so
 %_pkgconfigdir/*
 %_includedir/*
-%_datadir/vala/vapi/ibus-1.0.vapi
-%_datadir/vala/vapi/ibus-1.0.deps
+%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.deps
 
 %files -n lib%name-gir-devel
 %_girdir/IBus-%api_ver.gir
 
 %files -n lib%name-devel-docs
 %_datadir/gtk-doc/html/*
+
+%if_enabled python
+%files -n python3-module-ibus-overrides
+%python3_sitelibdir/gi/overrides/IBus*
+%python3_sitelibdir/gi/overrides/__pycache__/IBus*
+%endif
 
 %if_enabled python2
 %files -n python-module-ibus
@@ -279,6 +300,9 @@ fi
 %endif
 
 %changelog
+* Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.20-alt2
+- rebuilt with python3 as default python
+
 * Fri Mar 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.20-alt1
 - 1.5.20
 
