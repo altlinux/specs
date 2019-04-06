@@ -3,7 +3,7 @@
 
 Name: GLEW
 Version: 2.1.0
-Release: alt3
+Release: alt4
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD and MIT
@@ -13,6 +13,7 @@ Url: http://glew.sourceforge.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://downloads.sourceforge.net/project/glew/glew/%version/glew-%version.tgz
+Patch: glew-2.1.0-alt-e2k.patch
 
 BuildRequires: gcc
 BuildRequires: libGLU-devel
@@ -68,6 +69,7 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 
 %prep
 %setup -n glew-%version
+%patch -p1
 sed -i s/wglew/eglew/ Makefile
 %if_disabled static
 sed -i '/LIB.STATIC.*DESTDIR/d' Makefile
@@ -104,6 +106,9 @@ install -pm755 -- %_datadir/gnu-config/config.guess config/
 %endif
 
 %changelog
+* Sat Apr 06 2019 Michael Shigorin <mike@altlinux.org> 2.1.0-alt4
+- add e2k arch support
+
 * Tue Jan 15 2019 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt3
 - Fixed build.
 
