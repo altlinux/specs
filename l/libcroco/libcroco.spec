@@ -1,7 +1,7 @@
 %define ver_major 0.6
 
 Name: libcroco
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: A CSS2 parsing library
@@ -64,6 +64,7 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 
 %make_build
@@ -97,6 +98,9 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %_bindir/csslint-%ver_major
 
 %changelog
+* Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1
+- 0.6.13
+
 * Thu Apr 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.12-alt1
 - 0.6.12
 
