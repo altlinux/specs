@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
@@ -89,11 +89,6 @@ GObject introspection devel data for the HarfBuzz library
 %setup -n %_name-%version
 
 %build
-%ifarch e2k
-# until apx. lcc-1.23
-export LIBS=-lcxa
-export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
-%endif
 %autoreconf
 %configure --disable-static \
 	--with-glib \
@@ -153,6 +148,9 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 
 %changelog
+* Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt2
+- mike@: drop e2k specifics, just build with lcc 1.23
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
