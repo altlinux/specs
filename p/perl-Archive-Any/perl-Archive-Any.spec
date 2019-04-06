@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Archive-Any
-Version: 0.0945
+Version: 0.0946
 Release: alt1
 
 Summary: Single interface to deal with file archives.
@@ -25,7 +25,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/Archive-Any/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/O/OA/OALDERS/Archive-Any-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-Archive-Tar
 # Automatically added by buildreq on Wed Sep 03 2008 (-bi)
@@ -37,7 +37,7 @@ Tarballs, zip files, etc.
 
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,9 +46,13 @@ Tarballs, zip files, etc.
 %perl_vendor_install
 
 %files
+%doc README.md LICENSE CONTRIBUTORS Changes
 %perl_vendor_privlib/Archive*
 
 %changelog
+* Sat Apr 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.0946-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.0945-alt1
 - automated CPAN update
 
