@@ -5,7 +5,7 @@
 
 Name: lib%_name
 Version: 1.3.13
-Release: alt1
+Release: alt2
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -24,6 +24,8 @@ Provides: %_name = %version-%release
 
 # fc patch
 Patch1: graphite2-1.2.0-cmakepath.patch
+# lcc/e2k fixup
+Patch2: graphite2-1.3.13-alt-e2k-lcc123.patch
 
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
 %{?_enable_docs:BuildRequires: doxygen asciidoc-a2x dblatex %_bindir/pdflatex}
@@ -49,17 +51,25 @@ Includes and definitions for developing with Graphite2.
 %prep
 %setup -n %_name-%version
 %patch1 -p1 -b .cmake
+%patch2 -p1 -b .e2k-lcc123
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+
 %ifarch %e2k
-# Some plugins use C++ and need lcxa. It can't be loaded
-# dynamically, so all binaries should be linked with it.
-cc --version | grep -q '^lcc:1.21' && export LIBS='-lcxa'
+sed -i 's,LINKER_LANGUAGE C,&XX,' `find -name CMakeLists.txt\*`
 %endif
+
 %cmake -DGRAPHITE2_COMPARE_RENDERER=OFF \
 	-DCMAKE_SHARED_LINKER_FLAGS=$LIBS \
 	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3
+
+%ifarch %e2k
+# looks like libgraphite2.so.3 must be linked with -lstdc++ but even g++
+# used as the linker doesn't do that exactly due to -nodefaultlibs
+sed -i 's,-nodefaultlibs ,,' BUILD/src/CMakeFiles/graphite2.dir/link.txt
+%endif
+
 %cmake_build
 
 %if_enabled docs
@@ -88,6 +98,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Sat Apr 06 2019 Michael Shigorin <mike@altlinux.org> 1.3.13-alt2
+- E2K: fix build with lcc 1.23 (builtins, c/c++ linking); drop 1.21 hacks
+
 * Sun Dec 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.13-alt1
 - 1.3.13
 
