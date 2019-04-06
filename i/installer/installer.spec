@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.46
+Version: 1.8.47
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,12 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Apr  6 2019 Leonid Krivoshein <klark@altlinux.org> 1.8.47-alt1
+- postinstall: wait MD-resync, mdsync_nowait turn OFF this feature.
+- install2-init.c: execute swapoff and post-umount hook added.
+- install2-post-umount: new script (installer hook) added.
+- install2-action-functions: return codes fixup.
+
 * Mon Feb 25 2019 Leonid Krivoshein <klark@altlinux.org> 1.8.46-alt1
 - Xorg configuration fallback mechanism repaired and improved.
 
