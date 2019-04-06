@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt4
+Release:       alt5
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -45,7 +45,7 @@ Documentation files for %name.
 %patch -p1
 
 %build
-%gem_build
+%gem_build --join=lib:bin
 
 %install
 %gem_install
@@ -63,6 +63,11 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Sat Apr 06 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt5
+- fix req deps on executables when they are already installed only
+- set autoalias on binaries only for its source not others, and when no
+  other source names match the binary
+
 * Tue Apr 02 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt4
 - load Gemfile by temporary changing the root when creating the bundler's DSL
 

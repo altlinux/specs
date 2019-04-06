@@ -9,10 +9,10 @@
 %define lname lib%name
 
 Name:     ruby
-Version:  2.5.4
-Release:  alt3
+Version:  2.5.5
+Release:  alt1
 Summary:  An Interpreted Object-Oriented Scripting Language
-License:  BSD (revised) or Ruby
+License:  BSD 2-clause Simplified License/Ruby
 Group:    Development/Ruby
 URL:      http://www.%name-lang.org/
 Source0:  %name-%version.tar
@@ -31,17 +31,19 @@ echo "Provides: %name-module-$m = %version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
+BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: zlib-devel libyaml-devel gcc-c++
 BuildRequires: valgrind-devel
-%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:0.1.3}
+%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %ruby_version}
 
 %description
 Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing system
-management tasks (as in Perl). It is simple, straight-forward, and extensible.
+programming. It has many features for processing text files and performing
+system management tasks (as in Perl). It is simple, straight-forward, and
+extensible.
 
 This package contains interpreter of object-oriented scripting language Ruby.
 
@@ -63,7 +65,7 @@ This package contains Ruby shared libraries.
 Summary: Files for compiling extension modules for Ruby
 Group: Development/C
 %{?_enable_shared:Requires: %lname = %version-%release}
-Requires: rpm-build-%name >= 0.1.2
+Requires: rpm-build-%name >= 1.0.0
 
 %description -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -94,7 +96,7 @@ Requires: gem(rubygems-update) >= 3.0.1
 Requires: gem(did_you_mean) >= 1.3.0
 Requires: gem(minitest) >= 5.11.3
 Requires: gem(net-telnet) >= 0.2
-Requires: gem(power_assert) >= 1.1.3
+Requires: gem(power_assert) >= 1.1.4
 Requires: gem(rake) >= 12.3.2
 Requires: gem(test-unit) >= 3.2.9
 Requires: gem(xmlrpc) >= 0.3.0
@@ -110,8 +112,9 @@ Provides: ruby(thread)
 
 %description -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing system
-management tasks (as in Perl). It is simple, straight-forward, and extensible.
+programming. It has many features for processing text files and performing
+system management tasks (as in Perl). It is simple, straight-forward, and
+extensible.
 
 This package contains standard Ruby runtime libraries.
 
@@ -122,7 +125,7 @@ Group:     Development/Ruby
 BuildArch: noarch
 Requires:  %name-stdlibs = %version
 Provides:  %_bindir/gem
-Provides:  %{name}gems = 2.7.6
+Provides:  %{name}gems = 3.0.1
 Provides:  %name-tools
 Obsoletes: %name-tools
 
@@ -206,6 +209,7 @@ cp -a /usr/share/gnu-config/config.* tool
 %build
 %define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
 %autoreconf
+%__setup_rb config --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib
 
 my_configure() {
     %configure \
@@ -269,6 +273,8 @@ ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{*,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
 install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
+# install compiled header config.h
+install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby/config.h
 
 %define ruby_libdir %libdir
 %define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch %buildroot%_bindir/%name
@@ -289,6 +295,7 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 
 %check
 %make_build test
+%gem_test
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -341,6 +348,10 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Sat Apr 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt1
+- Bump to 2.5.5
+- Added config.h to installation
+
 * Fri Feb 01 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt3
 - Allow provide ruby version.
 

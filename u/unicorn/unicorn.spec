@@ -1,10 +1,10 @@
-%define pkgname unicorn
+%define        pkgname unicorn
 
 Name:          %pkgname
 Version:       5.5.0
-Release:       alt2
+Release:       alt3
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix
-License:       GPL2
+License:       GPLv2/Ruby
 Group:         System/Servers
 Url:           https://unicorn.bogomips.org/
 # VCS:         https://bogomips.org/unicorn.git
@@ -24,21 +24,36 @@ advantage of features in Unix/Unix-like kernels. Slow clients should
 only be served by placing a reverse proxy capable of fully buffering
 both the the request and response in between Unicorn and slow clients.
 
-%package       devel
-Summary:       Development files for %pkgname
+
+%package       -n gem-%pkgname
+Summary:       Library code for %gemname gem
+Group:         Development/Ruby
+
+%description   -n gem-%pkgname
+Library code for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
 Group:         Development/Ruby
 BuildArch:     noarch
+Provides:      %pkgname-devel
+Obsoletes:     %pkgname-devel
 
-%description   devel
-Development files for %pkgname.
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
 
-%package       doc
-Summary:       Documentation files for %pkgname
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
 Group:         Documentation
 BuildArch:     noarch
+Provides:      %pkgname-doc
+Obsoletes:     %pkgname-doc
 
-%description   doc
-Documentation files for %pkgname.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
 %setup
@@ -52,17 +67,23 @@ Documentation files for %pkgname.
 %files
 %doc README*
 %_bindir/*
+
+%files         -n gem-%pkgname
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         devel
-%ruby_includedir/*
-
-%files         doc
+%files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 %changelog
+* Sat Apr 06 2019 Pavel Skrylev <majioa@altlinux.org> 5.5.0-alt3
+- Fix lost gem dependencies
+- Fix spec
+
 * Mon Mar 18 2019 Pavel Skrylev <majioa@altlinux.org> 5.5.0-alt2
 - Fix shebang line
 
