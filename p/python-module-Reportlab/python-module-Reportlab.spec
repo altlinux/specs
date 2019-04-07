@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt2.1
+Release: alt3
 
 Summary: The Reportlab Toolkit
 
@@ -20,6 +20,8 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
+
+BuildRequires: python-dev
 
 #BuildRequires: rpm-build-python >= 0.8
 #BuildRequires: python-devel python-module-sphinx-devel
@@ -137,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 3.4.0-alt3
+- added explicit BR: python-dev to ease e2k python upgrade
+
 * Thu Apr 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.0-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
