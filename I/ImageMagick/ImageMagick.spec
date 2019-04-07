@@ -8,7 +8,7 @@
 
 %def_enable rsvg
 %def_enable x
-%ifarch e2k
+%ifarch %e2k
 # lcc's openmp implementation is way too old
 %def_disable openmp
 %else
@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -252,6 +252,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 6.9.10.34-alt2
+- fix build on e2kv4 through use of %%e2k macro
+
 * Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.34-alt1
 - new version 6.9.10.34
 
