@@ -5,7 +5,7 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -24,10 +24,10 @@ Provides: %rdn_name = %version-%release
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= 3.10
+BuildRequires: vala-tools gcc-c++ libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= 3.24
 BuildRequires: libgranite-devel libclutter-gtk3-devel
-BuildRequires: libgranite-vala vala-tools
+BuildRequires: libgranite-vala
 
 %description
 This project is about the container app only and its library. For plugins
@@ -77,6 +77,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.6-alt1
+- 2.3.6
+
 * Fri Oct 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
 - 2.3.4
 
