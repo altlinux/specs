@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname pysendfile
 
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1
-Summary: Python interface to the sendfile(2) system call
+Release: alt2
 
+Summary: Python interface to the sendfile(2) system call
 License: MIT
 Group: Development/Python
+
 Url: https://pypi.org/project/pysendfile/
 # Source-git: https://github.com/giampaolo/pysendfile
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python-dev python3-dev
 
 %description
 sendfile(2) is a system call which provides a "zero-copy" way of copying
@@ -72,6 +73,9 @@ popd
 %python3_sitelibdir/pysendfile-*.egg-info/
 
 %changelog
+* Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.0.1-alt2
+- added explicit BR: python{,3}-dev to ease e2k python upgrade
+
 * Sat Jan 12 2019 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 2.0.0 -> 2.0.1.
 - Enabled build of Python3 module.
