@@ -7,16 +7,16 @@
 
 Name: gd3
 Version: 2.2.5
-Release: alt2%ubt
+Release: alt3
+
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
-Url: https://libgd.github.io/
 
+Url: https://libgd.github.io/
 # https://github.com/libgd/libgd.git
 Source: %name-%version.tar
-
-Patch1: gd-2.2.5-upstream.patch
+Patch: gd-2.2.5-upstream.patch
 
 BuildRequires(pre): rpm-build-ubt
 
@@ -137,7 +137,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -148,7 +148,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 %makeinstall_std
 
 %check
-%ifarch %ix86
+%ifarch %ix86 aarch64
 # Tests are known to be buggy on x86 32bit due to rounding issues. See:
 # https://github.com/libgd/libgd/issues/359
 # https://github.com/libgd/libgd/issues/242
@@ -178,6 +178,11 @@ resampling (smooth resizing of truecolor images) and so forth.
 %exclude %_bindir/gdlib-config
 
 %changelog
+* Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.2.5-alt3
+- Fix build on aarch64 (gdimagegrayscale/basic test fails alike to i586).
+- Drop %%ubt macro.
+- Minor spec cleanup.
+
 * Fri May 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt2%ubt
 - Updated provides/conflicts/obsoletes.
 
