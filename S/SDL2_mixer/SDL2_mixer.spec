@@ -2,7 +2,7 @@
 
 Name: SDL2_mixer
 Version: 2.0.4
-Release: alt1%ubt
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -12,8 +12,6 @@ Url: http://www.libsdl.org/projects/SDL_mixer/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
@@ -70,6 +68,9 @@ libraries.
 %_libdir/lib%name.so
 
 %changelog
+* Sun Apr 07 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt2
+- Remove %ubt macro
+
 * Fri Nov 02 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1%ubt
 - Version 2.0.4
 
