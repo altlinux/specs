@@ -3,8 +3,8 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.15
-Release: alt1.1
+Version: 2.19
+Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
 License: GPL
@@ -39,6 +39,10 @@ Obsoletes: links
 # optimized out: alternatives libX11-devel libcom_err-devel libkrb5-devel libsysfs-devel pkg-config xorg-xproto-devel zlib-devel
 BuildRequires: bzlib-devel libXt-devel libdirectfb-devel libgpm-devel libjpeg-devel liblzma-devel libpng-devel libssl-devel libtiff-devel
 
+BuildRequires: libSDL-devel
+BuildRequires: libevent-devel
+BuildRequires: libbrotli-devel
+
 Summary(ru_RU.UTF-8): Текстовый и графический веб-браузер, похожий на Lynx
 
 %description
@@ -68,12 +72,12 @@ Links умеет цвета в терминале.
 %build
 %add_optflags -Wno-pointer-sign -fno-strict-aliasing
 %configure \
-	--enable-javascript \
 	--enable-graphics \
 	%{subst_with x} \
 	%{subst_with directfb} \
 	%{subst_with svgalib} \
 	--enable-debuglevel=0
+	#--enable-javascript
 %make_build
 
 %install
@@ -125,9 +129,26 @@ chmod +x %buildroot%_bindir/x%name
 #doc PATCH-gpm-1.20.0-smooth-cursor PATCH-libpng-1.2.18 
 %doc README SITES mailcap.pl
 
+# TODO:
+# - consider system publicsuffix like debian
+
 %changelog
+* Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.19-alt1
+- new version (watch file uupdate) (closes: #36495)
+- don't enable javascript explicitly (ftbfs)
+- added a few BRs spotted in debian/opensuse packages
+
+* Thu Jan 17 2019 Michael Shigorin <mike@altlinux.org> 2.18-alt1
+- new version (watch file uupdate)
+
+* Tue Sep 11 2018 Michael Shigorin <mike@altlinux.org> 2.17-alt1
+- new version (watch file uupdate)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.15-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
+
+* Fri May 11 2018 Michael Shigorin <mike@altlinux.org> 2.16-alt1
+- new version (watch file uupdate)
 
 * Sun Mar 25 2018 Michael Shigorin <mike@altlinux.org> 2.15-alt1
 - new version (watch file uupdate)
