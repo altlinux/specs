@@ -23,11 +23,11 @@
 %def_without libwrap
 %def_with pcre
 %def_with systemd
-%def_with krb5
 %def_without libarchive
 
 %ifarch x86_64
-%def_with tokudb
+%def_without tokudb
+#%def_with tokudb
 %def_without mroonga
 #def_with mroonga
 %def_with rocksdb
@@ -38,13 +38,16 @@
 %endif
 
 %def_with galera
-%def_with cassandra
+%def_without cassandra
 %def_with oqgraph
-
+%def_with sphinx
+%def_with connect
+%def_with gssapi
+%def_with cracklib
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.3.13
+Version: 10.3.14
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -121,53 +124,32 @@ BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI
 BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
 BuildRequires: chrooted control
-BuildRequires: libxml2-devel
+BuildRequires: libxml2-devel xml-utils
 BuildRequires: libcurl-devel
+BuildRequires: python3
+BuildRequires: checkpolicy policycoreutils
 %{?_with_libwrap:BuildRequires: libwrap-devel}
 %{?_with_cassandra:BuildRequires: boost-devel}
-%{?_with_oqgraph:BuildRequires: boost-devel}
+%{?_with_oqgraph:BuildRequires: boost-devel libjudy-devel}
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-%{?_with_krb5:BuildRequires: libkrb5-devel}
-%{?_with_libarchive: BuildRequires: libarchive-devel}
+%{?_with_gssapi:BuildRequires: libkrb5-devel}
+%{?_with_libarchive:BuildRequires: libarchive-devel}
+%{?_with_cracklib:BuildRequires: cracklib-devel cracklib-words}
+%{?_with_sphinx:BuildRequires: sphinx libsphinxclient-devel}
+%{?_with_cassandra:BuildRequires: cassandra thrift-devel}
+
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
 
 %description
-The MariaDB software delivers a very fast, multi-threaded, multi-user,
-and robust SQL (Structured Query Language) database server.
-
-MariaDB Server is intended for mission-critical, heavy-load production
-systems as well as for embedding into mass-deployed software.
-
-The mariadb server is compiled with the following storage engines:
-
- - Aria Storage Engine
- - Archive Storage Engine
- - Blackhole Storage Engine
- - CSV Storage Engine
- - FederatedX Storage Engine (Federated replacement)
- - Heap Storage Engine
- - MyISAM Storage Engine
- - MyISAMMRG Storage Engine
- - Partition Storage Engine
- - Perfschema Storage Engine
- - XtraDB Storage Engine (InnoDB replacement)
-
-The following extra storage engines are provided by the
-mariadb-extra package:
-
-%if_with oqgraph
- - OQGraph Storage Engine
-%endif
- - Sphinx Storage Engine
-
-The following storage engines are provided in the
-mariadb-obsolete package:
-
- - InnoDB Storage Engine
+MariaDB is a community developed branch of MySQL - a multi-user, multi-threaded
+SQL database server. It is a client/server implementation consisting of
+a server daemon (mysqld) and many different client programs and libraries.
+The base package contains the standard MariaDB/MySQL client programs and
+generic MySQL files.
 
 %package server
 Summary: A very fast and reliable MariaDB database server
@@ -180,12 +162,8 @@ Provides: %name-engine-extra = %EVR
 Obsoletes: %name-engine-extra < %EVR
 Provides: %name-engine-obsolete = %EVR
 Obsoletes: %name-engine-obsolete < %EVR
-%if_with tokudb
-Provides: %name-engine-tokudb = %EVR
-Obsoletes: %name-engine-tokudb < %EVR
-%endif
 Conflicts: MySQL-server
-PreReq: chrooted %name-server-control
+Requires: chrooted %name-server-control
 
 %description server
 MariaDB is a multi-user, multi-threaded SQL database server. It is a
@@ -246,6 +224,85 @@ Language) database server. MySQL is a client/server implementation
 that consists of a server daemon (mysqld) and many different client
 programs/libraries.
 This package contents perl utils for MySQL-server.
+
+%package oqgraph-engine
+Summary: The Open Query GRAPH engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description oqgraph-engine
+The package provides Open Query GRAPH engine (OQGRAPH) as plugin for MariaDB
+database server. OQGRAPH is a computation engine allowing hierarchies and more
+complex graph structures to be handled in a relational fashion. In a nutshell,
+tree structures and friend-of-a-friend style searches can now be done using
+standard SQL syntax, and results joined onto other tables.
+
+%package connect-engine
+Summary: The CONNECT storage engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description connect-engine
+The CONNECT storage engine enables MariaDB to access external local or
+remote data (MED). This is done by defining tables based on different data
+types, in particular files in various formats, data extracted from other DBMS
+or products (such as Excel), or data retrieved from the environment
+(for example DIR, WMI, and MAC tables).
+
+%package rocksdb-engine
+Summary: The RocksDB storage engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description rocksdb-engine
+The RocksDB storage engine is used for high performance servers on SSD drives.
+
+%package tokudb-engine
+Summary: The TokuDB storage engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description tokudb-engine
+The TokuDB storage engine from Percona.
+
+%package cracklib-password-check
+Summary: The password strength checking plugin
+Group: Databases
+Requires: %name-server = %EVR
+Requires: cracklib-words
+
+%description cracklib-password-check
+CrackLib is a password strength checking library. It is installed by default
+in many Linux distributions and is invoked automatically (by pam_cracklib.so)
+whenever the user login password is modified.
+Now, with the cracklib_password_check password validation plugin, one can
+also use it to check MariaDB account passwords.
+
+%package gssapi-server
+Summary: GSSAPI authentication plugin for server
+Group: Databases
+Requires: %name-server = %EVR
+
+%description gssapi-server
+GSSAPI authentication server-side plugin for MariaDB for passwordless login.
+This plugin includes support for Kerberos on Unix.
+
+%package sphinx-engine
+Summary: The Sphinx storage engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+Requires: sphinx libsphinxclient
+
+%description sphinx-engine
+The Sphinx storage engine for MariaDB.
+
+%package cassandra-engine
+Summary: The Cassandra storage engine for MariaDB - EXPERIMENTAL VERSION
+Group: Databases
+Requires: %name-server = %EVR
+
+%description cassandra-engine
+The Cassandra storage engine for MariaDB. EXPERIMENTAL VERSION!
 
 %package client
 Summary: Client
@@ -374,8 +431,8 @@ chmod -R a-s,go-w sql-bench
 #fix shebang.req: ERROR: /usr/src/tmp/mariadb-buildroot/usr/share/mysql/sql-bench/innotest1: trailing <CR> in interpreter: #!/usr/bin/perl<CR>
 find sql-bench -type f -name 'innotest*' | xargs dos2unix
 
-%ifarch e2k
-# just like libzio
+%ifarch %e2k
+# FIXME: just like libzio
 sed -i 's,makecontext,makecontext_e2k,' mysys/my_context.c
 # FIXME: fails
 :> cmake/do_abi_check.cmake
@@ -392,28 +449,38 @@ export CFLAGS CXXFLAGS
 LDFLAGS="$LDFLAGS -pie -Wl,-z,relro,-z,now"
 export LDFLAGS
 
-%cmake \
+%cmake_insource \
 	-DBUILD_CONFIG=mysql_release \
 	-DFEATURE_SET="community" \
 	-DINSTALL_LAYOUT=RPM \
+	-DRPM="fedora29" \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
 	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_INSTALL_PREFIX="%prefix" \
+	-DINSTALL_SYSCONFDIR="%_sysconfdir" \
+	-DINSTALL_SYSCONF2DIR="%_sysconfdir/my.cnf.d" \
+	-DINSTALL_SYSTEMD_SYSUSERSDIR:STRING="/lib/sysusers.d" \
+	-DINSTALL_SYSTEMD_TMPFILESDIR:STRING="%_tmpfilesdir" \
+	-DINSTALL_SYSTEMD_UNITDIR:STRING="%_unitdir" \
 	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
 	-DMYSQL_DATADIR="%ROOT" \
 	-DMYSQL_USER=mysql \
 	-DWITH_READLINE=ON \
-	-DWITH_LIBWRAP=ON \
-	%{?_with_jemalloc:-DWITH_JEMALLOC=system} \
-	%{?_without_jemalloc:-DWITH_JEMALLOC=no} \
+	-DPYTHON_SHEBANG=%__python \
+	-DWITH_JEMALLOC=%{?_with_jemalloc:system}%{?_without_jemalloc:NO} \
 	-DWITH_SSL=system \
 	-DWITH_ZLIB=system \
 	%{?_with_pcre:-DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
-	%{?_without_tokudb:-DWITHOUT_TOKUDB=ON} \
-	%{?_without_mroonga:-DWITHOUT_MROONGA=ON} \
+	-DPLUGIN_MROONGA=%{?_with_mroonga:DYNAMIC}%{?_without_mroonga:NO} \
+	-DPLUGIN_OQGRAPH=%{?_with_oqgraph:DYNAMIC}%{?_without_oqgraph:NO} \
+	-DPLUGIN_ROCKSDB=%{?_with_rocksdb:DYNAMIC}%{?_without_rocksdb:NO} \
+	-DPLUGIN_SPHINX=%{?_with_sphinx:DYNAMIC}%{?_without_sphinx:NO} \
+	-DPLUGIN_TOKUDB=%{?_with_tokudb:DYNAMIC}%{?_without_tokudb:NO} \
+	-DPLUGIN_CONNECT=%{?_with_connect:DYNAMIC}%{?_without_connect:NO} \
+	-DWITH_CASSANDRA=%{?_with_cassandra:TRUE}%{?_without_cassandra:FALSE} \
 	-DWITH_PIC=ON \
 	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
@@ -422,11 +489,11 @@ export LDFLAGS
 	-DWITH_WSREP=ON \
 	-DWITH_INNODB_DISALLOW_WRITES=1 \
 	-DENABLED_LOCAL_INFILE=ON \
+	-DPLUGIN_AWS_KEY_MANAGEMENT=NO \
+	-DCONNECT_WITH_MONGO=OFF \
+	-DCONNECT_WITH_JDBC=OFF \
 	-DWITH_EMBEDDED_SERVER=ON \
-	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
-	-DWITH_FAST_MUTEXES=ON \
-	-DWITHOUT_DAEMON_EXAMPLE=ON \
-	%{?_with_libwrap:-DWITH_LIBWRAP=ON} \
+	-DWITH_LIBWRAP=%{?_with_libwrap:ON}%{?_without_libwrap:FALSE} \
 	%{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
 	%{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
 	%{?_without_server:-DWITHOUT_SERVER=ON} \
@@ -437,7 +504,7 @@ export LDFLAGS
 #	-DWITH_EMBEDDED_SERVER=ON \
 #	-DWITH_PLUGIN_FEEDBACK=ON \
 
-%cmake_build
+%make_build
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
@@ -447,12 +514,13 @@ touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
 
-%cmakeinstall_std
+%makeinstall_std
 
 # RPM install style leftovers
 rm -f %buildroot%_sysconfdir/init.d/mysql
 rm -f %buildroot%_sbindir/rcmysql
 rm -rf %buildroot{%_libdir/libmysqld.a,%_defaultdocdir/*}
+rm -rf %buildroot%_unitdir/*
 
 mkdir -p %buildroot%_var/run/mysqld
 mkdir -p %buildroot/var/lib/mysql/db/{mysql,test}
@@ -488,14 +556,14 @@ install -pD -m644 %SOURCE23 %buildroot%_sysconfdir/systemd/system/mysqld.service
 install -pD -m644 %SOURCE24 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify-chroot.conf
 
 %if_with tokudb
-install -pD -m644 BUILD/storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
+install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 mv %buildroot/etc/systemd/system/mariadb.service.d/tokudb.conf %buildroot%_sysconfdir/systemd/system/mysqld.service.d/tokudb.conf
 %endif
 
 %if_with galera
 # install galera config file
-sed -i -r 's|^wsrep_provider=none|wsrep_provider=%_libdir/galera/libgalera_smm.so|' BUILD/support-files/wsrep.cnf
-install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
+sed -i -r 's|^wsrep_provider=none|wsrep_provider=%_libdir/galera/libgalera_smm.so|' support-files/wsrep.cnf
+install -p -m 0644 support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
 # rm upstream script
 rm -f %buildroot%_bindir/galera_new_cluster
 install -pD -m755 %SOURCE19 %buildroot%_bindir/galera_new_cluster
@@ -569,7 +637,7 @@ grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
 
 
 mkdir -p %buildroot%_docdir/%name-%version
-install -p -m644 README.md %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%name-%version
+install -p -m644 README.md %SOURCE14 support-files/*.cnf %buildroot%_docdir/%name-%version
 
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
@@ -619,11 +687,8 @@ rm -f %buildroot%_bindir/galera_recovery
 rm -f %buildroot%_bindir/mariadb-service-convert
 rm -f %buildroot%_bindir/mysqld_safe_helper
 rm -f %buildroot%_bindir/test-connect-t
-rm -f %buildroot/usr/lib/systemd/system/mariadb.service
-rm -f %buildroot/usr/lib/systemd/system/mariadb@.service
-rm -f %buildroot/usr/lib/systemd/system/mariadb@bootstrap.service.d/use_galera_new_cluster.conf
-rm -f %buildroot/usr/lib/sysusers.d/sysusers.conf
-rm -f %buildroot/usr/lib/tmpfiles.d/tmpfiles.conf
+rm -f %buildroot/lib/sysusers.d/sysusers.conf
+rm -f %buildroot/lib/tmpfiles.d/tmpfiles.conf
 rm -f %buildroot%_libdir/libmariadbd.a
 rm -f %buildroot%_libdir/libmysqlclient.a
 rm -f %buildroot%_libdir/libmysqlclient_r.a
@@ -633,9 +698,7 @@ rm -f %buildroot%_libdir/libmariadbclient.a
 # run the tests
 %if_enabled build_test
 %check
-pushd BUILD
-    make test-force
-popd
+make test-force
 %endif
 
 %pre server
@@ -673,10 +736,6 @@ fi
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
-%if_with tokudb
-%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
-%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/tokudb.conf
-%endif
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
 %_unitdir/mariadb.service
@@ -693,24 +752,22 @@ fi
 
 %_bindir/mysql_install_db
 
-%if_with tokudb
-%_bindir/tokuftdump
-%_bindir/tokuft_logprint
-%endif
-
 %if_with mroonga
 %_datadir/mysql/mroonga
 %endif
 
-%if_with rocksdb
-%_bindir/myrocks_hotbackup
-%_bindir/mysql_ldb
-%_bindir/sst_dump
-%endif
-
 %_sbindir/*
 %prefix/%plugindir/*
-%exclude %prefix/%plugindir/auth_gssapi_client.so
+%{?_with_oqgraph:%exclude %prefix/%plugindir/ha_oqgraph.so}
+%{?_with_connect:%exclude %prefix/%plugindir/ha_connect.so}
+%{?_with_cracklib:%exclude %prefix/%plugindir/cracklib_password_check.so}
+%{?_with_rocksdb:%exclude %prefix/%plugindir/ha_rocksdb.so}
+%{?_with_tokudb:%exclude %prefix/%plugindir/ha_tokudb.so}
+%{?_with_gssapi:%exclude %prefix/%plugindir/auth_gssapi.so}
+%{?_with_sphinx:%exclude %prefix/%plugindir/ha_sphinx.so}
+%{?_with_cassandra:%exclude %prefix/%plugindir/ha_cassandra.so}
+
+%{?_with_gssapi:%exclude %prefix/%plugindir/auth_gssapi_client.so}
 %exclude %prefix/%plugindir/client_ed25519.so
 %exclude %prefix/%plugindir/dialog.so
 %exclude %prefix/%plugindir/mysql_clear_password.so
@@ -759,6 +816,61 @@ fi
 %_unitdir/mariadbcheck@.service
 %config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 %config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
+%endif
+
+%if_with cracklib
+%files cracklib-password-check
+%config(noreplace) %_sysconfdir/my.cnf.d/cracklib_password_check.cnf
+%prefix/%plugindir/cracklib_password_check.so
+%endif
+
+%if_with rocksdb
+%files rocksdb-engine
+%config(noreplace) %_sysconfdir/my.cnf.d/rocksdb.cnf
+%_bindir/myrocks_hotbackup
+%_bindir/mysql_ldb
+%_bindir/sst_dump
+%prefix/%plugindir/ha_rocksdb.so
+%_man1dir/mysql_ldb.1*
+%endif
+
+%if_with tokudb
+%files tokudb-engine
+%_bindir/tokuftdump
+%_bindir/tokuft_logprint
+%_man1dir/tokuftdump.1*
+%_man1dir/tokuft_logprint.1*
+%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
+%prefix/%plugindir/ha_tokudb.so
+%endif
+
+%if_with gssapi
+%files gssapi-server
+%prefix/%plugindir/auth_gssapi.so
+%config(noreplace) %_sysconfdir/my.cnf.d/auth_gssapi.cnf
+%endif
+
+%if_with sphinx
+%files sphinx-engine
+%prefix/%plugindir/ha_sphinx.so
+%endif
+
+%if_with oqgraph
+%files oqgraph-engine
+%config(noreplace) %_sysconfdir/my.cnf.d/oqgraph.cnf
+%prefix/%plugindir/ha_oqgraph.so
+%endif
+
+%if_with connect
+%files connect-engine
+%config(noreplace) %_sysconfdir/my.cnf.d/connect.cnf
+%prefix/%plugindir/ha_connect.so
+%endif
+
+%if_with cassandra
+%files cassandra-engine
+%config(noreplace) %_sysconfdir/my.cnf.d/cassandra.cnf
+%prefix/%plugindir/ha_cassandra.so
 %endif
 
 %if_with common
@@ -812,6 +924,7 @@ fi
 %exclude %_man1dir/mysql_config.1*
 %exclude %_man1dir/mysql_client_test_embedded.1*
 %exclude %_man1dir/mysqltest_embedded.1*
+%{?_with_rocksdb:%exclude %_man1dir/mysql_ldb.1*}
 %endif
 
 %if_with bench
@@ -830,13 +943,12 @@ fi
 %_libdir/lib%name.so.%soname
 # Clients plugin
 %dir %prefix/%plugindir
-%prefix/%plugindir/auth_gssapi_client.so
+%{?with_gssapi:%prefix/%plugindir/auth_gssapi_client.so}
 %prefix/%plugindir/client_ed25519.so
 %prefix/%plugindir/dialog.so
 %prefix/%plugindir/mysql_clear_password.so
 
 %if_with server
-
 %files -n lib%{name}d%embedded_soname
 %_libdir/lib%{name}d.so.%embedded_soname
 %endif
@@ -872,6 +984,19 @@ fi
 %endif
 
 %changelog
+* Sun Apr 07 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.14-alt1
+- 10.3.14
+- Fix build on e2kv4 through %%e2k macro use (mike@)
+- split packages:
+  + oqgraph-engine
+  + connect-engine
+  + rocksdb-engine
+  + tokudb-engine (disabled)
+  + cracklib-password-check
+  + gssapi-server
+  + sphinx-engine
+  + cassandra-engine (disabled)
+
 * Sat Mar 02 2019 Alexey Shabalin <shaba@altlinux.org> 10.3.13-alt1
 - 10.3.13
 - Fixes for the following security vulnerabilities:
