@@ -1,11 +1,13 @@
 %define oname aiohttp
 
 %def_with python3
+# def_with docs needed package python3-modile-sphinxcontrib-blockdiag (missing in Sisyphus)
 %def_without docs
+%def_without check
 
 Name: python-module-%oname
-Version: 2.2.5
-Release: alt2
+Version: 3.5.4
+Release: alt1
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -20,13 +22,15 @@ Summary: http client/server for asyncio
 Group: Development/Python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
-BuildRequires: python3-module-setuptools python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
+%if_with check
+BuildRequires: python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
+BuildRequires: python3-module-pytest-runner
+%endif
 %if_with docs
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
 %endif
-%py3_provides %oname
-%py3_requires chardet
+%py3_requires chardet idna_ssl
 
 %description -n python3-module-%oname
 http client/server for asyncio (PEP-3156).
@@ -54,32 +58,25 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3-module-%oname-%version
-cp -R . ../python3-module-%oname-%version
-%endif
-
 %if_with docs
-pushd ../python3-module-%oname-%version
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
-popd
 %endif
 
 %build
 %python3_build_debug
 
 %if_with docs
-pushd ../python3-module-%oname-%version
 %make_build -C docs html SPHINXBUILD=py3_sphinx-build
-popd
 %endif
 
 %install
 %python3_install
 
+%if_with check
 %check
 python3 setup.py test
+%endif
 
 %if_with docs
 %files docs
@@ -89,14 +86,19 @@ python3 setup.py test
 %files -n python3-module-%oname
 %doc *.txt *.rst examples
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*test*
+%exclude %python3_sitelibdir/*/*/*test*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*test*
+%python3_sitelibdir/*/*/*test*
 
 %changelog
+* Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 3.5.4-alt1
+- New version 3.5.4
+- Disable check
+- Cleanup spec
+
 * Thu Mar 14 2019 Anton Midyukov <antohami@altlinux.org> 2.2.5-alt2
 - Added py3_requires chardet (Closes: 36270)
 - Cleanup spec
