@@ -1,8 +1,10 @@
 %define ver_major 3.32
+%define xdg_name org.gnome.SimpleScan
+
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Simple scanning utility
@@ -46,11 +48,15 @@ find ./ -name "*.stamp" -delete
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
-%_datadir/glib-2.0/schemas/org.gnome.SimpleScan.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%name.appdata.xml
 %_man1dir/*
 
 %changelog
+* Wed Apr 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
+- 3.32.2
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

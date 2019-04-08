@@ -4,7 +4,7 @@
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
 Name: python-module-gst%gst_api_ver
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject
@@ -20,7 +20,7 @@ Patch: %name-1.5.2-python-libs.patch
 
 BuildRequires(pre): rpm-build-gir rpm-build-python rpm-build-python3
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %version
-BuildRequires: python-devel python-module-pygobject3-devel python-modules-compiler python-module-pytest
+BuildRequires: python-devel python-modules-distutils python-module-pygobject3-devel python-modules-compiler python-module-pytest
 # for python3
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
 BuildRequires: liborc-test-devel valgrind-tool-devel
@@ -78,6 +78,9 @@ popd
 
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Wed Mar 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 

@@ -23,13 +23,13 @@
 # Ubuntu online accounts support
 %def_disable uoa
 %{?_enable_snapshot:%def_enable gtk_doc}
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Evolution Data Server
@@ -162,6 +162,7 @@ the functionality of the installed EDS libraries.
 %endif
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 # reenable RPATH* to link against private libraries
 %cmake \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
@@ -264,6 +265,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

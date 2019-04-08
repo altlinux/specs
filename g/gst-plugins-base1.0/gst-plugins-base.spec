@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -190,6 +190,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Tue Apr 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt2
 - built lost cdparanoia plugin (ALT #36488)
 

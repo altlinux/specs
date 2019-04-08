@@ -6,7 +6,7 @@
 %def_enable python3
 
 Name: gst-validate
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: GStreamer Validate Tools and Library
@@ -150,6 +150,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Sat Mar 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 

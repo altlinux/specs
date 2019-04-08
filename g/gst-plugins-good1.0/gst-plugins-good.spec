@@ -16,8 +16,8 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -105,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt2
 - new -qt5 subpackage (ALT #36313)
 

@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -179,6 +179,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/bash-completion/helpers/gst
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Wed Feb 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 

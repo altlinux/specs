@@ -23,7 +23,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -210,6 +210,8 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
 %ifarch %ix86
 %add_optflags -D_FILE_OFFSET_BITS=64
+# since 2.24.1 sse2 required for %%ix86
+%add_optflags -msse2 -mfpmath=sse
 %endif
 
 %ifarch x86_64
@@ -311,6 +313,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.1-alt1
+- 2.24.1 (fixed CVE-2019-6251)
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt1
 - 2.24.0
 

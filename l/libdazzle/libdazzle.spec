@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: libdazzle
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library to delight your users with fancy features
@@ -114,6 +114,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Apr 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
