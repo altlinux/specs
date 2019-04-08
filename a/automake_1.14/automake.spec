@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.14.1
-Release: alt3
+Release: alt4
 
 %define mydatadir %_datadir/%apiname
 %set_compress_method xz
@@ -17,7 +17,7 @@ Release: alt3
 Summary: A GNU tool for automatically creating Makefiles
 License: GPLv2+ and GFDLv1.3+
 Group: Development/Other
-Url: http://www.gnu.org/software/automake/
+Url: https://www.gnu.org/software/automake/
 BuildArch: noarch
 
 %define srcname %realname-%version-%release
@@ -25,8 +25,7 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/%name.git
 Source: %srcname.tar
 
-PreReq: automake-common
-Requires: autoconf >= 2:2.65
+Requires: automake-common, autoconf >= 2:2.65
 
 BuildPreReq: autoconf >= 2:2.65, gnu-config, help2man, makeinfo, perl-threads
 BuildPreReq: perl(TAP/Parser.pm)
@@ -40,7 +39,7 @@ files compliant with the GNU Coding Standards.
 %setup -n %srcname
 xz -k9 NEWS
 
-# patch texinfo file
+# Patch texinfo file.
 sed -i \
 	-e '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].-]\+\)\(:[[:space:]]\+\)(%realname)/\1\2(%apiname)/' \
 	-e '/^@\(setfilename\|settitle\)[[:space:]]\+%realname/ s//&%suff/' \
@@ -49,16 +48,20 @@ sed -i \
 %build
 %define docdir %_docdir/%realname-%version
 ./bootstrap.sh
-%configure --docdir=%docdir
+%configure --docdir=%docdir --disable-silent-rules
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std MAKEINFOFLAGS=--no-split
 
-# provided by automake-common
+# Provided by automake-common package.
 rm %buildroot%_aclocaldir/README
 
-# replace config.* copies with symlinks to original files
+# Provided by automake package.
+rm %buildroot%_bindir/{aclocal,automake}
+rm %buildroot%_man1dir/{aclocal,automake}.1*
+
+# Replace config.* copies with symlinks to original files.
 for f in %_datadir/gnu-config/config.*; do
 	[ -f "$f" ] || continue
 	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
@@ -75,11 +78,15 @@ echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
 
-# reenable perl-threads dependencies
+# Reenable perl-threads dependencies.
 %define __spec_autodep_custom_pre export AUTOMAKE_JOBS=1
 
+%define _unpackaged_files_terminate_build 1
+# This has no effect on this noarch package, but let it be.
+%set_verify_elf_method strict
+
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -92,6 +99,9 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Mon Apr 08 2019 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt4
+- Backported upstream patch to fix FTBFS with new dejagnu.
+
 * Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt3
 - Dropped alternatives in favour of automake-defaults setup.
 
