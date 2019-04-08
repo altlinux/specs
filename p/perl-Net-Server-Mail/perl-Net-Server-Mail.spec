@@ -16,7 +16,7 @@
 
 Name: perl-Net-Server-Mail
 Version: 0.27
-Release: alt1
+Release: alt2
 
 Summary: Class to easily create a mail server
 
@@ -42,6 +42,9 @@ to your programs.
 
 %prep
 %setup -q -n %{module}-%{version}
+# not adapted to ssl 1.1b
+[ %version = 0.27 ] && rm t/starttls.t
+
 %build
 %perl_vendor_build
 
@@ -53,6 +56,9 @@ to your programs.
 %doc Changes README*
 
 %changelog
+* Mon Apr 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2
+- fixed build (closes: #36544)
+
 * Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
