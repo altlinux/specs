@@ -1,8 +1,8 @@
 %define        pkgname chef-zero
 
 Name: 	       %pkgname
-Version:       14.0.11
-Release:       alt2
+Version:       14.0.12
+Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License:       Apache 2.0
 Group:         Development/Ruby
@@ -18,8 +18,6 @@ BuildRequires: ruby-mixlib-log
 BuildRequires: ruby-hashie
 BuildRequires: ruby-uuidtools
 
-Requires:      ruby-stdlibs
-
 %description
 Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
 for Chef Client testing and chef-solo-like tasks that require a full Chef
@@ -34,13 +32,24 @@ perfect for testing against a "real" Chef Server without mocking the entire
 Internet.
 
 
-%package       doc
-Summary:       Documentation files for %name
+%package       -n gem-%pkgname
+Summary:       Library files for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname
+Library files for %gemname gem.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Obsoletes:     %pkgname-doc
+Provides:      %pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
 
 
 %prep
@@ -55,15 +64,21 @@ Documentation files for %{name}.
 %check
 %gem_test
 
-%files
-%_bindir/chef-zero
+%files         -n gem-%pkgname
 %ruby_gemlibdir
 %ruby_gemspec
 
-%files         doc
+%files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
+%files
+%_bindir/chef-zero
+
 %changelog
+* Mon Apr 08 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.12-alt1
+- Bump to 14.0.12
+- Fix spec
+
 * Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.11-alt2
 - Use Ruby Policy 2.0.
 

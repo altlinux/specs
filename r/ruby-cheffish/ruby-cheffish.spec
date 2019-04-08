@@ -1,62 +1,60 @@
 %define  pkgname cheffish
 
-Name:    ruby-%pkgname
-Version: 14.0.1
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       14.0.9
+Release:       alt1
+Summary:       Resources and tools for testing and interacting with Chef and Chef Server.
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://github.com/chef/cheffish
+# VCS          https://github.com/chef/cheffish.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Resources and tools for testing and interacting with Chef and Chef Server.
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     https://github.com/chef/cheffish
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-%filter_from_requires /^ruby(openssl_pkcs8)/d
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+This library provides a variety of convergent resources for interacting with
+the Chef Server; along the way, it happens to provide some very useful and
+sophisticated ways of running Chef resources as recipes in RSpec examples.
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Apr 08 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.9-alt1
+- Bump to 14.0.9
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 
