@@ -1,6 +1,6 @@
 Name: slang2
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Summary: The shared library for the S-Lang extension language
 License: GPLv2+
@@ -16,6 +16,7 @@ Patch3: slang-2.2.4-alt-doc.patch
 
 Patch11: slang-2.2.4-deb-demos-make.patch
 Patch12: slang-2.2.4-deb-hostent-haddr.patch
+Patch13: slang-2.3.2-i586.patch
 
 # Automatically added by buildreq on Tue Sep 25 2012
 # optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
@@ -90,6 +91,7 @@ applications.
 
 %patch11 -p1
 %patch12 -p1
+%patch13 -p0
 
 %build
 export ac_cv_func_snprintf=yes ac_cv_func_vsnprintf=yes
@@ -143,8 +145,11 @@ export TERM="xterm"
 %_libdir/*.a
 
 %changelog
+* Mon Apr 08 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt2
+- fixed gcc8 optimization on i586 (ALT #36424)
+
 * Fri Aug 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt1
-- Updated to 2.3.2 (closes: #33982)
+- Updated to 2.3.2 (ALT #33982)
 - Adapted alt-makefile.patch for slang 2.3.2
 - Used %%make check instead %%make_build in %%check section
 
@@ -152,8 +157,8 @@ export TERM="xterm"
 - Changed libslang2-devel dependencies to replace libslang-devel.
 
 * Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.4-alt1
-- Updated to 2.2.4 (closes: #24882).
-- Fixed packaging (closes: #15151).
+- Updated to 2.2.4 (ALT #24882).
+- Fixed packaging (ALT #15151).
 
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt2.1
 - Removed bad RPATH
