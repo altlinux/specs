@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt15
+%define rlz alt16
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -56,10 +56,10 @@ Summary: Shared library for the Qt%major GUI toolkit
 Url: http://qt-project.org/
 License: GPLv3 / LGPLv2.1
 
-Requires: lib%name = %version-%release
-Requires: %name-sql = %version-%release
-Requires: %name-assistant = %version-%release
-Requires: %name-dbus = %version-%release
+Requires: lib%name
+Requires: %name-sql
+Requires: %name-assistant
+Requires: %name-dbus
 
 Source0: qt-everywhere-opensource-src-%version%beta.tar
 Source1: qt4-compat-map
@@ -204,23 +204,23 @@ Common package for Qt%major
 BuildArch: noarch
 Summary: Shared library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: lib%name-core = %version-%release
-Requires: lib%name-gui = %version-%release
-Requires: lib%name-network = %version-%release
-Requires: lib%name-opengl = %version-%release
-Requires: lib%name-sql = %version-%release
-Requires: lib%name-xml = %version-%release
-Requires: lib%name-qt3support = %version-%release
-Requires: lib%name-svg = %version-%release
-Requires: lib%name-script = %version-%release
-Requires: lib%name-designer = %version-%release
-Requires: lib%name-uitools = %version-%release
-Requires: lib%name-xmlpatterns = %version-%release
-Requires: lib%name-multimedia = %version-%release
-Requires: lib%name-help = %version-%release
-Requires: lib%name-declarative = %version-%release
-Requires: lib%name-clucene = %version-%release
-Requires: lib%name-dbus = %version-%release
+Requires: lib%name-core
+Requires: lib%name-gui
+Requires: lib%name-network
+Requires: lib%name-opengl
+Requires: lib%name-sql
+Requires: lib%name-xml
+Requires: lib%name-qt3support
+Requires: lib%name-svg
+Requires: lib%name-script
+Requires: lib%name-designer
+Requires: lib%name-uitools
+Requires: lib%name-xmlpatterns
+Requires: lib%name-multimedia
+Requires: lib%name-help
+Requires: lib%name-declarative
+Requires: lib%name-clucene
+Requires: lib%name-dbus
 Provides: lib%name-x11 = %version-%release
 Provides: %name-x11 = %version-%release
 Provides: qt-x11 = %version-%release
@@ -245,7 +245,7 @@ well as the README files for Qt.
 %package -n lib%{name}-qt3support
 Summary: Qt3 support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-qt3support
 Qt3 support library for the Qt%major GUI toolkit
 
@@ -253,7 +253,7 @@ Qt3 support library for the Qt%major GUI toolkit
 %package -n lib%{name}-core
 Summary: Core library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: glibc-gconv-modules
 %description -n lib%{name}-core
 Core library for the Qt%major GUI toolkit
@@ -262,7 +262,7 @@ Core library for the Qt%major GUI toolkit
 %package -n lib%{name}-gui
 Summary: GUI support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 Provides: libqtgui%major = %version-%release
 Conflicts: yachat < 3.1.0 yapsi < 3.1.0
 %description -n lib%{name}-gui
@@ -272,7 +272,7 @@ GUI support library for the Qt%major GUI toolkit
 %package -n lib%{name}-dbus
 Summary: DBus support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-dbus
 DBus support library for the Qt%major GUI toolkit
 
@@ -280,7 +280,7 @@ DBus support library for the Qt%major GUI toolkit
 %package -n lib%{name}-network
 Summary: Network support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-network
 Network support library for the Qt%major GUI toolkit
 
@@ -288,7 +288,7 @@ Network support library for the Qt%major GUI toolkit
 %package -n lib%{name}-uitools
 Summary: Designer UI tools library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-uitools
 Designer UI tools library for the Qt%major GUI toolkit
 
@@ -296,7 +296,6 @@ Designer UI tools library for the Qt%major GUI toolkit
 %package -n lib%{name}-svg
 Summary: SVG support for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: lib%name-gui = %version-%release
 %description -n lib%{name}-svg
 Support for rendering Scalable Vector Graphics (SVG)
 drawings and animations for the Qt%major GUI toolkit
@@ -305,7 +304,7 @@ drawings and animations for the Qt%major GUI toolkit
 %package -n lib%{name}-opengl
 Summary: OpenGL support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-opengl
 OpenGL support library for the Qt%major GUI toolkit
 
@@ -313,7 +312,7 @@ OpenGL support library for the Qt%major GUI toolkit
 %package -n lib%{name}-sql
 Summary: SQL support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-sql
 SQL support library for the Qt%major GUI toolkit
 
@@ -321,7 +320,7 @@ SQL support library for the Qt%major GUI toolkit
 %package -n lib%{name}-test
 Summary: Unit Testing Library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-test
 Unit Testing Library for the Qt%major GUI toolkit
 
@@ -329,7 +328,7 @@ Unit Testing Library for the Qt%major GUI toolkit
 %package -n lib%{name}-designer
 Summary: Libraries for the Qt%major Designer
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-designer
 Libraries for the Qt%major Designer
 
@@ -337,7 +336,7 @@ Libraries for the Qt%major Designer
 %package -n lib%{name}-xml
 Summary: XML support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-xml
 XML support library for the Qt%major GUI toolkit
 
@@ -345,7 +344,7 @@ XML support library for the Qt%major GUI toolkit
 %package -n lib%{name}-script
 Summary: Scripting support library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-script
 Qt Script is based on the ECMAScript scripting language, as defined in
 standard ECMA-262. Microsoft's JScript, and Netscape's JavaScript are
@@ -355,7 +354,7 @@ also based on the ECMAScript standard.
 %package -n lib%{name}-xmlpatterns
 Summary: XmlPatterns library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-xmlpatterns
 XmlPatterns library for the Qt%major GUI toolkit
 
@@ -363,7 +362,7 @@ XmlPatterns library for the Qt%major GUI toolkit
 %package -n lib%{name}-scripttools
 Summary: ScriptTools library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-scripttools
 ScriptTools library for the Qt%major GUI toolkit
 
@@ -371,7 +370,7 @@ ScriptTools library for the Qt%major GUI toolkit
 %package -n lib%{name}-help
 Summary: Help library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-help
 Help library for the Qt%major GUI toolkit
 
@@ -379,7 +378,7 @@ Help library for the Qt%major GUI toolkit
 %package -n lib%{name}-clucene
 Summary: CLucene library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-clucene
 CLucene library for the Qt%major GUI toolkit
 
@@ -387,7 +386,7 @@ CLucene library for the Qt%major GUI toolkit
 %package -n lib%{name}-multimedia
 Summary: Multimedia framework library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-multimedia
 Multimedia framework library for the Qt%major GUI toolkit
 
@@ -395,7 +394,7 @@ Multimedia framework library for the Qt%major GUI toolkit
 %package -n lib%{name}-declarative
 Summary: Ddeclarative framework library for the Qt%major GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%{name}-declarative
 Declarative framework library for the Qt%major GUI toolkit
 Declarative module provides a declarative framework
@@ -406,12 +405,12 @@ for building highly dynamic, custom user interfaces
 BuildArch: noarch
 Group: System/Libraries
 Summary: Meta-package for development with Qt%major GUI toolkit
-Requires: lib%name-devel = %version-%release
-Requires: %name-designer = %version-%release
-Requires: %name-assistant = %version-%release
-Requires: %name-qvfb = %version-%release
+Requires: lib%name-devel
+Requires: %name-designer
+Requires: %name-assistant
+Requires: %name-qvfb
 %if_enabled docs
-Requires: %name-doc = %version-%release
+Requires: %name-doc
 %endif
 %description devel
 Meta-package for development with Qt%major GUI toolkit
@@ -420,9 +419,6 @@ Meta-package for development with Qt%major GUI toolkit
 %package -n lib%name-devel
 Summary: Header files and libraries for developing apps which will use Qt%major
 Group: Development/KDE and QT
-Requires: lib%name = %version-%release
-Requires: lib%name-test = %version-%release
-Requires: lib%name-scripttools = %version-%release
 Requires: libssl-devel freetype2-devel fontconfig-devel libpng-devel zlib-devel
 Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
@@ -454,7 +450,7 @@ This package contains the files necessary to develop applications
 %package -n lib%name-devel-static
 Summary: Version of the Qt GUI toolkit for static linking
 Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel
 Obsoletes: %name-devel-static
 %description -n lib%name-devel-static
 This package package contains the files necessary to link applications
@@ -466,7 +462,7 @@ on the system running the application.
 %package qml
 Summary: QML modules Qt%major
 Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel
 %description qml
 The package contains a QML modules and viewer for the Qt%major toolkit.
 
@@ -474,7 +470,7 @@ The package contains a QML modules and viewer for the Qt%major toolkit.
 %package designer
 Summary: Designer for the Qt%major
 Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel
 %description designer
 The package contains an User Interface designer
 tool for the Qt%major toolkit.
@@ -483,7 +479,7 @@ tool for the Qt%major toolkit.
 %package -n lib%name-styles
 Summary: Extra styles for the Qt GUI toolkit
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n lib%name-styles
 Extra styles (themes) for the Qt GUI toolkit.
 
@@ -492,28 +488,28 @@ Extra styles (themes) for the Qt GUI toolkit.
 BuildArch: noarch
 Group: System/Libraries
 Summary: Meta-package for SQL support of Qt%major GUI toolkit
-Requires: lib%name-sql-mysql = %version-%release
-Requires: lib%name-sql-sqlite = %version-%release
+Requires: lib%name-sql-mysql
+Requires: lib%name-sql-sqlite
 %if_enabled sql_tds
-Requires: lib%name-sql-tds = %version-%release
+Requires: lib%name-sql-tds
 %endif
 %if_enabled sql_ibase
-Requires: lib%name-sql-interbase = %version-%release
+Requires: lib%name-sql-interbase
 %endif
 %if_enabled sql_pgsql
-Requires: lib%name-sql-postgresql = %version-%release
+Requires: lib%name-sql-postgresql
 %endif
 %if_enabled sql_ibase
-Requires: lib%name-sql-interbase = %version-%release
+Requires: lib%name-sql-interbase
 %endif
 %if_enabled sql_sqlite2
-Requires: lib%name-sql-sqlite2 = %version-%release
+Requires: lib%name-sql-sqlite2
 %endif
 %if_enabled sql_odbc
-Requires: lib%name-sql-odbc = %version-%release
+Requires: lib%name-sql-odbc
 %endif
 %if_enabled sql_tds
-Requires: lib%name-sql-tds = %version-%release
+Requires: lib%name-sql-tds
 %endif
 %description sql
 Meta-package for SQL support of Qt%major GUI toolkit
@@ -522,7 +518,6 @@ Meta-package for SQL support of Qt%major GUI toolkit
 %package -n lib%name-sql-odbc
 Summary: ODBC drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-odbc
 ODBC driver for Qt's SQL classes (QODBC)
@@ -531,7 +526,6 @@ ODBC driver for Qt's SQL classes (QODBC)
 %package -n lib%name-sql-tds
 Summary: FreeTDS(Sybase) driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-tds
 FreeTDS(Sybase) driver for Qt's SQL classes (QTDS)
@@ -540,7 +534,6 @@ FreeTDS(Sybase) driver for Qt's SQL classes (QTDS)
 %package -n lib%name-sql-mysql
 Summary: MySQL driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-mysql
 MySQL driver for Qt's SQL classes (QMYSQL)
@@ -549,7 +542,6 @@ MySQL driver for Qt's SQL classes (QMYSQL)
 %package -n lib%name-sql-postgresql
 Summary: PostgreSQL drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-postgresql
 PostgreSQL driver for Qt's SQL classes (QPSQL)
@@ -558,7 +550,6 @@ PostgreSQL driver for Qt's SQL classes (QPSQL)
 %package -n lib%name-sql-interbase
 Summary: InterBase drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-interbase
 InterBase driver for Qt's SQL classes (QIBASE)
@@ -567,7 +558,6 @@ InterBase driver for Qt's SQL classes (QIBASE)
 %package -n lib%name-sql-sqlite
 Summary: SQLite driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-sqlite
 SQLite driver for Qt's SQL classes (QSQLITE)
@@ -576,7 +566,6 @@ SQLite driver for Qt's SQL classes (QSQLITE)
 %package -n lib%name-sql-sqlite2
 Summary: SQLite2 driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: lib%name-sql = %version-%release
 Provides: lib%name-plugin-sql = %version-%release
 %description -n lib%name-sql-sqlite2
 SQLite2 driver for Qt's SQL classes (QSQLITE2)
@@ -617,9 +606,9 @@ This package contains documentation in man format.
 BuildArch: noarch
 Summary: Examples for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
-Requires: %name-common = %version-%release
-Requires: %name-doc-examples-src = %version-%release
-Requires: %name-doc-examples-bin = %version-%release
+Requires: %name-common
+Requires: %name-doc-examples-src
+Requires: %name-doc-examples-bin
 %description doc-examples
 This package contains example programs.
 
@@ -628,7 +617,7 @@ This package contains example programs.
 BuildArch: noarch
 Summary: Examples sources for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description doc-examples-src
 This package contains sources of example programs.
 
@@ -636,7 +625,8 @@ This package contains sources of example programs.
 %package doc-examples-bin
 Summary: Examples binaries for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
-Requires: %name-common = %version-%release
+Requires: %name-common
+Requires: %name-doc-examples-src
 %description doc-examples-bin
 This package contains binaries of example programs.
 
@@ -644,8 +634,8 @@ This package contains binaries of example programs.
 %package assistant
 Summary: Assistant for the Qt%major
 Group: Text tools
-Requires: %name-common = %version-%release
-Requires: lib%name-sql-sqlite = %version-%release
+Requires: %name-common
+Requires: lib%name-sql-sqlite
 %description assistant
 This package contains an documentation browser
 for the Qt%major toolkit and Qt-based programs.
@@ -654,7 +644,7 @@ for the Qt%major toolkit and Qt-based programs.
 %package qvfb
 Summary: Virtual frame buffer for Qt for Embedded Linux
 Group: Emulators
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description qvfb
 Virtual frame buffer for Qt for Embedded Linux
 
@@ -662,7 +652,7 @@ Virtual frame buffer for Qt for Embedded Linux
 %package dbus
 Summary: D-Bus utilities for the Qt%major
 Group: System/Configuration/Other
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: dbus-tools-gui
 %description dbus
 This package contains D-Bus utilities
@@ -674,7 +664,7 @@ Version: %major.%minor.%bugfix
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/KDE and QT
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n rpm-macros-%{name}
 Set of RPM macros for packaging %name-based applications for %distribution
 Install this package if you want to create RPM packages that use %name
@@ -684,7 +674,7 @@ Install this package if you want to create RPM packages that use %name
 Version: %major.%minor.%bugfix
 Summary: Set of RPM-related scripts for packaging %name-based applications
 Group: Development/KDE and QT
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n rpm-build-%{name}
 Set of RPM-related scripts for packaging %name-based applications for %distribution
 Install this package if you want to create RPM packages that use %name
@@ -1470,6 +1460,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt16
+- fix requires
+
 * Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt15
 - update build requires (ALT#36530)
 
