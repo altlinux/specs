@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.1.12
-Release: alt1
+Version: 2.2.0
+Release: alt1.a4
 
 Summary: GNS3 Graphical User Interface
 License: GPLv3
@@ -50,6 +50,9 @@ Full installation gns3-server, gns3-gui and optional Requires.
 
 %prep
 %setup
+# fix requirements
+sed -i 's/==/>=/g' requirements.txt
+sed -i '/<=/d' requirements.txt
 
 %build
 %python3_build
@@ -78,6 +81,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1.a4
+- New alpha release 2.2.0a4
+
 * Mon Feb 25 2019 Anton Midyukov <antohami@altlinux.org> 2.1.12-alt1
 - new version 2.1.12
 

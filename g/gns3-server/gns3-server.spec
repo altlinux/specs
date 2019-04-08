@@ -3,11 +3,10 @@
 
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
-%def_without requirements
 
 Name: gns3-server
-Version: 2.1.12
-Release: alt1
+Version: 2.2.0
+Release: alt1.a4
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -24,18 +23,14 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-#if_with requirements
-Requires: python3-module-yarl >= 0.11
-Requires: python3-module-aiohttp-cors >= 0.5.3
-Requires: python3-module-aiohttp-cors < 0.6.0
+Requires: python3-module-yarl >= 1.3
+Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-jinja2 >= 2.7.3 
-Requires: python3-module-aiohttp >= 2.2.0
-Requires: python3-module-aiohttp <= 2.3.0
-Requires: python3-module-jsonschema >= 2.4.0
+Requires: python3-module-aiohttp >= 3.5.4
+Requires: python3-module-aiofiles >= 0.4.0
+Requires: python3-module-jsonschema >= 2.6.0
 Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 3.0.0
-Requires: python3-module-zipstream >= 1.1.4
-#endif
 #Requires: qemu
 #Requires: wireshark
 Requires: iouyap
@@ -49,9 +44,7 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 
 %prep
 %setup
-%if_without requirements
 echo '' > requirements.txt
-%endif
 
 %build
 %python3_build
@@ -67,6 +60,12 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1.a4
+- New alpha release 2.2.0a4
+
+* Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 2.1.12-alt1.1
+- Update Requires
+
 * Mon Feb 25 2019 Anton Midyukov <antohami@altlinux.org> 2.1.12-alt1
 - new version 2.1.12
 
