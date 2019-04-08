@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt14
+%define rlz alt15
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -174,7 +174,7 @@ BuildRequires: libGLES-devel
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: xorg-proto-devel libXtst-devel
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
-%{?_enable_sql_pgsql:BuildRequires: postgresql-devel > 8.0.4 libpq-devel > 8.0.4 libecpg-devel-static}
+%{?_enable_sql_pgsql:BuildRequires: postgresql-devel postgresql-devel-static}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
 %{?_enable_gtkstyle:BuildRequires: libgtk+2-devel}
 %{?_enable_glib:BuildRequires: glib2-devel}
@@ -1470,6 +1470,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt15
+- update build requires (ALT#36530)
+
 * Thu Feb 07 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt14
 - fix to build with new libmysqlclient
 
