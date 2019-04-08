@@ -3,13 +3,13 @@
 # numbers change, otherwise the NEVR of the library may cause a package not to
 # be updated even if it should be.
 %global srcname tqsl
-%global tqslver 2.4.4
+%global tqslver 2.4.5
 %global libtqslver 2.5
 
 Name:           trustedqsl
-Version:        2.4.4
+Version:        2.4.5
 # Warning: because libtqslver has different version, always increase release number
-Release:        alt10
+Release:        alt11
 Summary:        TrustedQSL ham-radio applications
 
 Group:		Communications
@@ -109,6 +109,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Mon Apr 08 2019 Andrey Cherepanov <cas@altlinux.org> 2.4.5-alt11
+- New version.
+
 * Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt10
 - New version.
 
