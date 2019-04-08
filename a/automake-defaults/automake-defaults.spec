@@ -1,9 +1,9 @@
 %set_compress_method none
-%define automake_version 1.14
+%define automake_version 1.16
 
 Name: automake-defaults
-Version: 1.14.1
-Release: alt3
+Version: 1.16
+Release: alt1
 Epoch: 1
 
 Summary: %vendor setup for the GNU Automake
@@ -63,5 +63,8 @@ done
 %_man1dir/aclocal.1.xz
 
 %changelog
+* Mon Apr 08 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.16-alt1
+- 1.14 -> 1.16.
+
 * Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.14.1-alt3
 - Initial revision (replaces automake alternatives).
