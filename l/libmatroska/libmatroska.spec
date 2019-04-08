@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmatroska
-Version: 1.4.9
-Release: alt1%ubt
+Version: 1.5.0
+Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
 License: LGPL
 Group: System/Libraries
-Url: http://www.matroska.org
 
+Url: http://www.matroska.org
 # https://github.com/Matroska-Org/libmatroska.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ cmake libebml-devel >= 1.3.6
+BuildRequires: gcc-c++ cmake
+BuildRequires: libebml-devel >= 1.3.7
 
 %description
 Matroska is aiming to become the standard of Multimedia Container
@@ -39,7 +40,7 @@ Language), a kind of binary version of XML. This way the significant
 advantages in terms of future format extensability are gained without
 breaking file support in old parsers.
 
-This package contains files needed to build programs using libebml
+This package contains files needed to build programs using libebml.
 
 %description doc
 Matroska is aiming to become the standard of Multimedia Container
@@ -48,16 +49,14 @@ Language), a kind of binary version of XML. This way the significant
 advantages in terms of future format extensability are gained without
 breaking file support in old parsers.
 
-This package contains Matroska Development Documenation (doxygenized
-HTML)
+This package contains Matroska Development Documenation
+(doxygenized HTML).
 
 %prep
 %setup
 
 %build
-%cmake \
-	-DBUILD_SHARED_LIBS=YES
-
+%cmake -DBUILD_SHARED_LIBS=YES
 %cmake_build
 
 %install
@@ -73,6 +72,10 @@ HTML)
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 09 2019 Michael Shigorin <mike@altlinux.org> 1.5.0-alt1
+- 1.5.0
+- minor spec cleanup
+
 * Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.9-alt1%ubt
 - Updated to upstream version 1.4.9.
 
