@@ -1,9 +1,10 @@
+%def_with emacs
 %define emacs_mode desktop-entry
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
 Version: 0.23
-Release: alt1
+Release: alt2
 
 Summary: Utilities for manipulating .desktop files
 Group: Graphical desktop/Other
@@ -14,7 +15,8 @@ Source: %name-%version.tar
 Patch0: desktop-file-utils-0.23-altlinux-add-de-to-main-categories.patch
 Patch1: desktop-file-utils-0.23-altlinux-fix-TextTools.patch
 
-BuildRequires: gcc glibc-devel emacs-cedet emacs-common emacs-leim glib2-devel libpopt-devel pkg-config automake
+BuildRequires: gcc glibc-devel glib2-devel libpopt-devel pkg-config automake
+%{?_with_emacs:BuildRequires: emacs-cedet emacs-common emacs-leim}
 
 %description
 .desktop files are used to describe an application for inclusion in
@@ -60,7 +62,7 @@ emacs-mode-%emacs_mode code or see some Lisp examples.
 %build
 #autoreconf
 sh autogen.sh
-%configure --disable-static --with-lispdir=%_emacslispdir
+%configure --disable-static %{?_with_emacs:--with-lispdir=%_emacslispdir}
 %make_build
 
 %install
@@ -74,6 +76,7 @@ grep -qs -e '^/usr/share/applications/' && update-desktop-database -q ||:
 __TRIGGER__
 chmod 0755 %buildroot/%_rpmlibdir/update-desktop-database.filetrigger
 
+%if_with emacs
 # Create %emacs_mode-init.el
 cat <<__INIT__ >%emacs_mode-init.el
 ;;; %emacs_mode-init.el --- Startup code for desktop-entry mode
@@ -88,6 +91,7 @@ cat <<__INIT__ >%emacs_mode-init.el
 __INIT__
 
 install -pD -m644 %emacs_mode-init.el %buildroot%_emacs_startscriptsdir/%emacs_mode-init.el
+%endif
 
 mkdir -p %buildroot/%_desktopdir/
 touch %buildroot/%_desktopdir/mimeinfo.cache
@@ -101,14 +105,19 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %ghost %_desktopdir/mimeinfo.cache
 %_man1dir/*
 
+%if_with emacs
 %files -n emacs-mode-%emacs_mode
 %config(noreplace) %_emacs_startscriptsdir/%emacs_mode-init.el
 %_emacslispdir/%emacs_mode-mode.elc
 
 %files -n emacs-mode-%emacs_mode-el
 %_emacslispdir/%emacs_mode-mode.el
+%endif
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 0.23-alt2
+- introduce emacs knob (on by default)
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - sync with 23.0
 
