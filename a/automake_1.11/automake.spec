@@ -5,7 +5,7 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt8
+Release: alt9
 
 %define mydatadir %_datadir/%realname%suff
 %set_compress_method xz
@@ -16,7 +16,7 @@ Release: alt8
 Summary: A GNU tool for automatically creating Makefiles
 License: GPLv2+ and GFDLv1.3+
 Group: Development/Other
-Url: http://www.gnu.org/software/automake/
+Url: https://www.gnu.org/software/automake/
 BuildArch: noarch
 
 %define srcname %realname-%version-%release
@@ -24,8 +24,7 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/%name.git
 Source: %srcname.tar
 
-PreReq: automake-common
-Requires: autoconf >= 2:2.62
+Requires: automake-common, autoconf >= 2:2.62
 
 BuildPreReq: autoconf >= 2:2.68, gnu-config, help2man, makeinfo, perl-threads
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: dejagnu expect flex gcc-c++ gcc-fortran makedepend}}}
@@ -48,13 +47,17 @@ chmod a+x tests/*.test
 %build
 %define docdir %_docdir/%realname-%version
 ./bootstrap
-%configure --docdir=%docdir
+%configure --docdir=%docdir --disable-silent-rules
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std MAKEINFOFLAGS=--no-split
 
-# replace config.* copies with symlinks to original files
+# Provided by automake package.
+rm %buildroot%_bindir/{aclocal,automake}
+rm %buildroot%_man1dir/{aclocal,automake}.1*
+
+# Replace config.* copies with symlinks to original files.
 for f in %_datadir/gnu-config/config.*; do
 	[ -f "$f" ] || continue
 	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
@@ -73,11 +76,15 @@ echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 install -pm644 AUTHORS README THANKS NEWS.* TODO.* \
 	%buildroot%docdir/
 
-# reenable perl-threads dependencies
+# Reenable perl-threads dependencies.
 %define __spec_autodep_custom_pre export AUTOMAKE_JOBS=1
 
+%define _unpackaged_files_terminate_build 1
+# This has no effect on this noarch package, but let it be.
+%set_verify_elf_method strict
+
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -85,11 +92,14 @@ install -pm644 AUTHORS README THANKS NEWS.* TODO.* \
 %_bindir/*%suff
 %_man1dir/*%suff.1*
 %_datadir/aclocal%suff
-%mydatadir
+%mydatadir/
 %_infodir/*.info*
-%docdir
+%docdir/
 
 %changelog
+* Mon Apr 08 2019 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt9
+- Backported upstream patch to fix FTBFS with new dejagnu.
+
 * Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt8
 - Dropped alternatives in favour of automake-defaults setup.
 - Changed the compression method applied to documentation files
