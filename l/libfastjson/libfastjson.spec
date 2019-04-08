@@ -2,19 +2,19 @@
 
 Name: libfastjson
 Version: 0.99.8
-Release: alt1%ubt
+Release: alt2
 
 Summary: A JSON implementation in C
 License: MIT
 Group: System/Libraries
-URL: https://github.com/rsyslog/libfastjson
 
+Url: https://github.com/rsyslog/libfastjson
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 
 %description
-LIBFASTJSON implements a reference counting object
+libfastjson implements a reference counting object
 model that allows you to easily construct JSON
 objects in C, output them as JSON formatted strings
 and parse JSON formatted strings back into the
@@ -65,6 +65,10 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 0.99.8-alt2
+- drop %%ubt macro
+- minor spec cleanup
+
 * Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.99.8-alt1%ubt
 - 0.99.8
 
