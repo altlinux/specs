@@ -1,23 +1,20 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%define pkgname hpricot
+%define        pkgname hpricot
 
-Name: ruby-%pkgname
-Version: 0.8.6
-Release: alt2.1
+Name:          ruby-%pkgname
+Version:       0.8.6
+Release:       alt3
+Summary:       A Fast, Enjoyable HTML Parser for Ruby
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/hpricot/hpricot
+# VCS:         https://github.com/hpricot/hpricot.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: A Fast, Enjoyable HTML Parser for Ruby
-Group: Development/Ruby
-License: MIT/Ruby
-Url: https://github.com/hpricot/hpricot
-
-Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel ragel ruby-tool-setup
-
-%filter_from_requires \,^ruby(encoding/character/utf-8)$,d
+BuildRequires: ragel
 
 %description
 Hpricot is a fast, flexible HTML parser written in C.  It's designed to
@@ -25,48 +22,39 @@ be very accommodating (like Tanaka Akira's HTree) and to have a very
 helpful library (like some JavaScript libs -- JQuery, Prototype -- give
 you.)  The XPath and CSS parser, in fact, is based on John Resig's JQuery.
 
-%package doc
-Summary: Documentation files for %name
-Group: Development/Documentation
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %name.
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %pkgname-%version
-%patch -p1
-sed -i -r -e '/ruby_digitmap\[\]/s/^([[:blank:]]*).*$/\1static const char digitmap[] = "0123456789";/' \
-	-e '/=[[:blank:]]*ruby_digitmap\[/s/ruby_(digitmap)/\1/' \
-	ext/fast_xs/fast_xs.c
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-pushd ext/hpricot_scan
-  ragel hpricot_scan.rl -G2 -o hpricot_scan.c
-  ragel hpricot_css.rl -G2 -o hpricot_css.c
-popd
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-LANG=en_US.UTF-8 %ruby_test_unit -Iext/hpricot_scan:ext/fast_xs:lib test/test_*
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Mon Apr 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt3
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.6-alt2.1
 - Rebuild with new Ruby autorequirements.
 
