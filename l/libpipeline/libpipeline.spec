@@ -7,10 +7,11 @@ Group: Development/Other
 Summary: A pipeline manipulation library
 Name: libpipeline
 Version: 1.5.1
-Release: alt1_1
+Release: alt2_1
 License: GPLv3+
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
+Patch: libpipeline-alt-e2k-lcc123.patch
 
 BuildRequires: gcc
 BuildRequires: libtool, libcheck-devel
@@ -38,6 +39,9 @@ to develop programs that use libpipeline library.
 
 %prep
 %setup -q
+%ifarch %e2k
+%patch -p1
+%endif
 
 %build
 %{configure}
@@ -63,6 +67,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2_1
+- fix build on e2k with lcc-1.23
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - update to new release by fcimport
 
