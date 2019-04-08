@@ -2,7 +2,7 @@
 
 Name: alterator-x11
 Version: 1.98.14
-Release: alt1
+Release: alt2
 
 Url: http://www.altlinux.com
 Source:%name-%version.tar
@@ -37,9 +37,11 @@ alterator module for Xorg setup and configuration
 %package -n alterator-backend-x11
 Summary:  alterator backend for x11 setup and configuration
 Group:    System/Configuration/Other
-Requires: ddcprobe
 Requires: make-initrd
 Requires: xsetup = %version-%release
+%ifarch %ix86 x86_64 aarch64
+Requires: ddcprobe
+%endif
 
 %description -n alterator-backend-x11
 simple alterator backend for x11 setup and configuration
@@ -94,6 +96,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout/
 %_bindir/xsetup*
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 1.98.14-alt2
+- Don't require "ddcprobe" on non-x86 arches (manowar@).
+
 * Thu Dec 27 2018 Mikhail Efremov <sem@altlinux.org> 1.98.14-alt1
 - video_scan: Initialize local variable.
 
