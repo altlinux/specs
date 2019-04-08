@@ -1,6 +1,6 @@
 Name: SDL2_image
 Version: 2.0.4
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer - Image library
 License: zlib
@@ -14,7 +14,6 @@ Source: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
 BuildRequires: libSDL2-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
-BuildRequires: libpng15
 BuildRequires: libtiff-devel
 BuildRequires: libwebp-devel
 
@@ -66,6 +65,9 @@ to develop SDL applications.
 %_libdir/lib%name.so
 
 %changelog
+* Mon Apr 08 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt3
+- Remove libpng15 from build requires (ALT #36560)
+
 * Sun Apr 07 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt2
 - Remove %ubt macro
 
