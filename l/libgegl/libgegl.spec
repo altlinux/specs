@@ -2,7 +2,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.12
+Version: %api_ver.14
 Release: alt1
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -16,7 +16,7 @@ BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavform
 BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
 BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
-BuildRequires: python-modules-distutils
+BuildRequires: python-modules-distutils libpoppler-glib-devel
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -60,6 +60,7 @@ GObject introspection devel data for the GEGL library.
 %autoreconf
 %configure \
 	--with-libavformat \
+	--without-lua \
 	--disable-static \
 	--disable-docs \
 	--disable-gtk-doc
@@ -96,6 +97,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Mon Apr 08 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.4.14-alt1
+- 0.4.14
+
 * Mon Nov 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.12-alt1
 - 0.4.12
 
