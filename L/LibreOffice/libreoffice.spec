@@ -1,6 +1,6 @@
 # 6.2.2.2
 %def_without forky
-%def_without python
+%def_with python
 %def_with parallelism
 %def_without fetch
 %def_without lto
@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt1.1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -561,6 +561,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Apr 08 2019 Fr. Br. George <george@altlinux.ru> 6.2.2.2-alt1.1
+- Build with internal python
+
 * Mon Mar 25 2019 Fr. Br. George <george@altlinux.ru> 6.2.2.2-alt1
 - Update to 6.2.2.2
 
