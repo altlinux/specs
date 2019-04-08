@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt2
+Release: alt3
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -69,6 +69,8 @@ BuildRequires: perl(SQL/SplitStatement.pm)
 BuildRequires: perl(IPC/Cmd.pm)
 BuildRequires: perl(Module/Load/Conditional.pm)
 BuildRequires: perl(CPAN/Meta/YAML.pm)
+BuildRequires: perl(JSON/Validator.pm)
+BuildRequires: perl(Test/Exception.pm)
 
 Requires: openqa-common = %EVR
 Requires: openqa-client = %EVR
@@ -275,7 +277,6 @@ fi
 %_unitdir/openqa-webui.service
 %_unitdir/openqa-gru.service
 %_unitdir/openqa-scheduler.service
-%_unitdir/openqa-resource-allocator.service
 %_unitdir/openqa-websockets.service
 %_unitdir/openqa-livehandler.service
 %_unitdir/openqa-worker-cacheservice-minion.service
@@ -293,7 +294,6 @@ fi
 %_datadir/openqa/script/initdb
 %_datadir/openqa/script/openqa
 %_datadir/openqa/script/openqa-scheduler
-%_datadir/openqa/script/openqa-resource-allocator
 %_datadir/openqa/script/openqa-websockets
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
@@ -363,6 +363,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Fri Apr 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt3
+- update to current version
+
 * Tue Feb 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt2
 - update to current version
 
