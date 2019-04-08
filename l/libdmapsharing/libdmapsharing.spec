@@ -1,21 +1,30 @@
+%def_disable snapshot
 %define api_ver 3.0
+
+%def_disable vala
 
 Name: libdmapsharing
 Version: 2.9.39
-Release: alt1
+Release: alt2
 
 Summary: A DMAP client and server library
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://www.flyn.org/projects/libdmapsharing/
 
+%if_disabled snapshot
 Source: http://www.flyn.org/projects/libdmapsharing/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gtk-doc libgdk-pixbuf-devel libsoup-devel >= 2.48
 BuildRequires: gst-plugins1.0-devel libavahi-glib-devel zlib-devel
-BuildRequires: gobject-introspection-devel vala-tools libsoup-gir-devel
+BuildRequires: gobject-introspection-devel libsoup-gir-devel
 BuildRequires: libgtk+2-devel libgee0.8-devel
-#BuildRequires: libcheck-devel
+BuildRequires: libcheck-devel
+%{?_enable_vala:BuildRequires: vala-tools}
 
 %description
 libdmapsharing implements the DMAP protocols. This includes support for
@@ -62,8 +71,11 @@ GObject introspection devel data for the %name.
 
 %prep
 %setup
+%{?_enable_snapshot:touch ChangeLog}
 
 %build
+%{?_disable_vala:export ac_cv_path_VALAC=""}
+%{?_enable_snapshot:%autoreconf}
 %add_optflags %optflags_shared
 %configure --disable-static
 
@@ -80,10 +92,10 @@ GObject introspection devel data for the %name.
 %doc AUTHORS ChangeLog README
 
 %files devel
-%_libdir/pkgconfig/%name-%api_ver.pc
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-%_vapidir/%name-%api_ver.vapi
+%_pkgconfigdir/%name-%api_ver.pc
+%{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
@@ -95,6 +107,9 @@ GObject introspection devel data for the %name.
 %_girdir/DMAP-%api_ver.gir
 
 %changelog
+* Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.9.39-alt2
+- disabled vapi rebuild
+
 * Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9.39-alt1
 - 2.9.39
 
