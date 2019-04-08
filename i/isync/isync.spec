@@ -1,6 +1,6 @@
 Name: isync
 Version: 1.3.0
-Release: alt1.1
+Release: alt2
 
 Summary: Utility to synchronize IMAP mailboxes with local maildir folders
 License: GPLv2+
@@ -9,6 +9,7 @@ Url: http://isync.sourceforge.net/
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: 0001-use-SNI-when-connecting-with-SSL.patch
 
 BuildPreReq: libdb6.1-devel libssl-devel libsocket-devel
 
@@ -23,6 +24,7 @@ non-permanent internet collection (dIMAP).
 
 %prep
 %setup
+%patch0 -p1
 touch ChangeLog
 %autoreconf
 
@@ -39,6 +41,9 @@ touch ChangeLog
 %doc AUTHORS NEWS README TODO src/mbsyncrc.sample src/compat/isyncrc.sample
 
 %changelog
+* Mon Apr 08 2019 Alexey Gladkov <legion@altlinux.ru> 1.3.0-alt2
+- Use SNI when connecting with SSL.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
