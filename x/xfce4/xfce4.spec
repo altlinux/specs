@@ -2,7 +2,7 @@
 
 Name: xfce4
 Version: 4.14
-Release: alt3
+Release: alt4
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -102,7 +102,6 @@ Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
 Requires: xfce4-notes-plugin \
 Requires: xfce4-places-plugin \
-Requires: xfce4-quicklauncher-plugin \
 Requires: xfce4-sensors-plugin \
 Requires: xfce4-smartbookmark-plugin \
 Requires: xfce4-systemload-plugin \
@@ -111,7 +110,6 @@ Requires: xfce4-timer-plugin \
 Requires: xfce4-verve-plugin \
 Requires: xfce4-weather-plugin \
 Requires: xfce4-whiskermenu-plugin \
-Requires: xfce4-wmdock-plugin \
 Requires: xfce4-xkb-plugin
 
 %package full
@@ -125,9 +123,6 @@ Requires: xfce4-screensaver
 Requires: xfce4-pulseaudio-plugin
 # For xfce4-pulseaudio-plugin
 Requires: pavucontrol
-
-# Not needed for most users.
-#Requires: xfce4-radio-plugin
 
 # No xfce4-mpc-plugin on aarch64
 #Requires: xfce4-mpc-plugin
@@ -170,6 +165,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Mon Apr 08 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt4
+- cleanup: Remove commented out xfce4-radio-plugin.
+- full,regular: Drop xfce4-wmdock-plugin.
+- full,regular: Drop xfce4-quicklauncher-plugin.
+
 * Fri Mar 22 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt3
 - regular: Add gnome-themes-extra (closes: #36273).
 
