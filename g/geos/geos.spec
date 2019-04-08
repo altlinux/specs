@@ -5,7 +5,7 @@
 
 Name: geos
 Version: 3.7.1
-Release: alt1
+Release: alt2
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -103,8 +103,12 @@ Ruby bindings for the lib%name library.
 %setup
 %patch1 -p1
 
-# E2K: strip unicode BOM
+%ifarch %e2k
+# strip UTF-8 BOM
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+# lcc 1.23.12 doesn't support this option yet
+sed -i 's, -fno-implicit-inline-templates,,' CMakeLists.txt
+%endif
 
 %if_with python3
 cp -fR . ../python3
@@ -215,11 +219,14 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 3.7.1-alt2
+- E2K: avoid lcc-unsupported option
+
 * Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version.
 
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 3.7.0-alt2
-- Replace e2k arch name with %e2k macro (grenka@)
+- Replace e2k arch name with %%e2k macro (grenka@)
 
 * Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
