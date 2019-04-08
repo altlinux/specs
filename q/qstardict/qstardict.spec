@@ -2,7 +2,7 @@
 
 Name: qstardict
 Version: 1.2
-Release: alt3
+Release: alt4
 
 Summary: QStarDict Qt clone of StarDict
 License: GPLv2
@@ -10,6 +10,7 @@ Group: System/Internationalization
 Url: http://qstardict.ylsoftware.com
 
 Source: %name-%version.tar
+Source10: qstardict-ru_RU.ts
 Patch1: alt-l10n.patch
 
 # Automatically added by buildreq on Mon Dec 18 2017 (-bi)
@@ -35,6 +36,7 @@ QStarDict KDE Plasma integration
 %prep
 %setup
 %patch1 -p1
+cat %SOURCE10 > qstardict/translations/qstardict-ru_RU.ts
 %if_enabled plasma
 sed -i 's|INCLUDE_DIRECTORIES(|INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} |' kdeplasma/dataengine/CMakeLists.txt
 %endif
@@ -80,6 +82,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/%name/plugins/libkdeintegration.so
 
 %changelog
+* Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 1.2-alt4
+- update russian translation
+
 * Fri Apr 05 2019 Sergey V Turchin <zerg@altlinux.org> 1.2-alt3
 - fix desktop-file translation
 
