@@ -1,7 +1,7 @@
 %define oname nvr
 
 Name: neovim-remote
-Version: 2.1.5
+Version: 2.1.7
 Release: alt1
 
 Summary: Remote controle for Neovim
@@ -39,6 +39,9 @@ This package provides an executable called nvr which solves these cases:
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Apr 8 2019 Vladimir Didenko <cow@altlinux.org> 2.1.7-alt1
+- new version
+
 * Tue Mar 19 2019 Vladimir Didenko <cow@altlinux.org> 2.1.5-alt1
 - new version
 
