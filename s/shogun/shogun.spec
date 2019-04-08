@@ -2,7 +2,7 @@
 
 Name: shogun
 Version: 6.1.3
-Release: alt1
+Release: alt2
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
@@ -18,6 +18,7 @@ Source1: %name-data-%version.tar
 Source2: %name-gpl-%version.tar
 
 Patch1: %name-%version-alt-build.patch
+Patch2: %name-%version-upstream-fix-build-with-json-c-0.13.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: python-devel gcc-c++ liblapack-devel /proc cmake
@@ -237,6 +238,7 @@ mv ../%name-data-%version/* data/
 mv ../%name-gpl-%version/* src/gpl/
 
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch x86_64
@@ -291,6 +293,9 @@ chmod +x %buildroot%_libdir/%name/examples/libshogun/*
 %doc tests
 
 %changelog
+* Fri Apr 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.3-alt2
+- Rebuilt with libjson-c 0.13.1.
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.3-alt1
 - Updated to upstream version 6.1.3.
 
