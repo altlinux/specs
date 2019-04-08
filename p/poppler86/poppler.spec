@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 85
+%define somajor 86
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 74
+%define minor 75
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -63,6 +63,7 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
+Patch1: alt-e2k.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -275,7 +276,7 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-
+%patch1 -p2
 
 %build
 %if_enabled qt4
@@ -398,8 +399,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.74.0-alt2
-- build only compat library
+* Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.75.0-alt1
+- new version
+- fix build on E2K (thanks mike@alt) (ALT#36538)
 
 * Fri Feb 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.74.0-alt1
 - new version
