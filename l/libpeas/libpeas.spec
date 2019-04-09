@@ -14,7 +14,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt3
+Release: alt3.1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -29,9 +29,6 @@ Source: %name-%version.tar
 # our python3 --ldflags break build
 Patch: libpeas-1.8.0-alt-python3_build.patch
 Patch1: libpeas-1.22.0-alt-automake.patch
-
-%set_automake_version 1.14
-BuildRequires: automake_1.14
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
@@ -212,6 +209,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt3.1
+- rebuilt with improved automake-1.16.1
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt3
 - updated to 1.22.0-9-g4eea771
 - built with automake-1.14 (ALT #36568)
