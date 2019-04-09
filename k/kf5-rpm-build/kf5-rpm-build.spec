@@ -1,31 +1,27 @@
 
 Name: kf5-rpm-build
 Version: 5.12.0
-Release: alt1%ubt
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
-Url: http://www.altlinux.org
+Url: http://altlinux.org/KDE
 License: GPL
 
-Requires: cmake
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-ubt
 
 Source1: macrosd
 Source2: rpm-build-kf5-find-qtlang
 
 %description
-Set of KF5 RPM macroses.
+Set of KF5 RPM macros.
 
 %package -n rpm-build-kf5
 Summary: Set of RPM macros for packaging KF5-based applications
 Group: Development/Other
 Requires: rpm-build-xdg rpm-macros-qt5 rpm-build-qml /usr/bin/rpmvercmp
 %description -n rpm-build-kf5
-Set of RPM macroses for packaging KF5-based applications for ALT Linux.
+Set of RPM macros for packaging KF5-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use KF5.
 
 %prep
@@ -40,10 +36,14 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
-* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
+* Tue Apr 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
+- fix requires, description
+- drop %%ubt macro
+
+* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - don't remove appdata by default
 
-* Thu Nov 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1%ubt
+* Thu Nov 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1
 - add new macros:
   _K5if_ver_eq _K5if_ver_not_gt _K5if_ver_not_gteq _K5if_ver_not_lt _K5if_ver_not_lteq _K5if_ver_not_eq
 
@@ -83,16 +83,16 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 - update macros
 
 * Thu Mar 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.7
-- update macroses
+- update macros
 
 * Thu Mar 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.5
-- update macroses
+- update macros
 
 * Wed Feb 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.4
-- update macroses
+- update macros
 
 * Wed Feb 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.3
-- update macroses
+- update macros
 
 * Tue Feb 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.2
 - update paths
