@@ -1,6 +1,6 @@
 Name: slang2
 Version: 2.3.2
-Release: alt2
+Release: alt3
 
 Summary: The shared library for the S-Lang extension language
 License: GPLv2+
@@ -16,7 +16,7 @@ Patch3: slang-2.2.4-alt-doc.patch
 
 Patch11: slang-2.2.4-deb-demos-make.patch
 Patch12: slang-2.2.4-deb-hostent-haddr.patch
-Patch13: slang-2.3.2-i586.patch
+Patch13: slang-2.3.2-slarray-ub.patch
 
 # Automatically added by buildreq on Tue Sep 25 2012
 # optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
@@ -91,9 +91,12 @@ applications.
 
 %patch11 -p1
 %patch12 -p1
-%patch13 -p0
+%patch13 -p1
 
 %build
+#https://bugzilla.altlinux.org/36424#c17
+%add_optflags -fno-strict-overflow
+
 export ac_cv_func_snprintf=yes ac_cv_func_vsnprintf=yes
 %configure \
 	--includedir=%_includedir/slang \
@@ -145,6 +148,10 @@ export TERM="xterm"
 %_libdir/*.a
 
 %changelog
+* Tue Apr 09 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt3
+- added slang-2.3.2-slarray-ub.patch (fixed UB in slarray, ALT #36424#c25)
+- added -fno-strict-overflow to %optflags (ALT #36424#c17)
+
 * Mon Apr 08 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt2
 - fixed gcc8 optimization on i586 (ALT #36424)
 
