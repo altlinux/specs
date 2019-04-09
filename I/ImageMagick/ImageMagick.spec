@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	34
+%define drelease	39
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -252,6 +252,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue Apr 09 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.39-alt1
+- new version 6.9.10.39
+
 * Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 6.9.10.34-alt2
 - fix build on e2kv4 through use of %%e2k macro
 
