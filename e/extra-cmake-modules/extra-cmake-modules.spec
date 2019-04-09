@@ -1,21 +1,26 @@
 %define rname extra-cmake-modules
 
-%ifarch e2k
+%def_enable doc
+%ifarch %e2k
 %add_python_req_skip clang
 %endif
 
 Name: extra-cmake-modules
 Version: 5.56.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
 License: BSD
 Url: http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
 
+# unable to do noarch for e2k
 BuildArch: noarch
 
-Requires: cmake clang-devel
+Requires: cmake
+%ifnarch %e2k
+Requires: clang-devel
+%endif
 
 Source: %name-%version.tar
 Patch1: alt-find-qcollectiongenerator.patch
@@ -27,7 +32,10 @@ Patch3: alt-find-clang-library.patch
 #BuildRequires: cmake ctags dblatex gyp libicu56 openbabel python-module-BeautifulSoup python-module-Pillow python-module-Reportlab python-module-alabaster python-module-bzr-fastimport python-module-cups python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-pyExcelerator python-module-pycrypto python-module-pygraphviz python-module-pyparsing python-module-sphinx_rtd_theme python-modules-tkinter python3-dev rpm-build-gir ruby-stdlibs time
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake qt5-tools qt5-tools-devel
-BuildRequires: /usr/bin/sphinx-build rpm-build-python
+BuildRequires: rpm-build-python
+%if_enabled doc
+BuildRequires: /usr/bin/sphinx-build
+%endif
 
 
 %description
@@ -39,9 +47,12 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %patch2 -p1
 #%patch3 -p1
 
-%ifarch e2k
-# lcc doesn't support these as of 1.21.20
-sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cmake
+%ifarch %e2k
+# unsupported as of lcc 1.23.12 (should be in 1.23.16)
+sed -i 's|-fno-operator-names||' kde-modules/KDECompilerSettings.cmake
+# lcc-1.23.12/binutils-2.29.0-alt2.E2K.23.018:
+# kf5-kcoreaddons linking warning gets fatal otherwise
+sed -i 's|-Wl,--fatal-warnings||' kde-modules/KDECompilerSettings.cmake
 %endif
 
 %build
@@ -57,10 +68,16 @@ sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cma
 %files
 %_datadir/ECM
 %doc README.rst COPYING-CMAKE-SCRIPTS
+%if_enabled doc
 %doc %_docdir/ECM
 %doc %_man7dir/*
+%endif
 
 %changelog
+* Tue Apr 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt2
+- adapt for lcc 1.23.12 and e2kv4 (thus not noarch now) (thanks mike@alt)
+- allow to disable building docs
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt1
 - new version
 
