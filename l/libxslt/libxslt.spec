@@ -1,6 +1,6 @@
 Name: libxslt
-Version: 1.1.32
-Release: alt2
+Version: 1.1.33
+Release: alt1
 
 Summary: Library providing XSLT support
 License: MIT
@@ -175,6 +175,9 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Tue Apr 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.33-alt1
+- Update to 1.1.33 (ALT#36574).
+
 * Wed Jan 31 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.32-alt2
 - Actually updated source to 1.1.32.
 - Upstream support for SOURCE_DATE_EPOCH (ALT#32814).
