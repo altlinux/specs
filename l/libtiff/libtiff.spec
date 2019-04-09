@@ -1,5 +1,5 @@
 Name: libtiff
-Version: 4.0.3
+Version: 4.0.10.0.57.f9fc01c3
 Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
@@ -13,8 +13,7 @@ Source: %name-%version-%release.tar
 %def_disable static
 %def_enable cxx
 
-BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel liblzma-devel zlib-devel
-
+BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjbig-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
 %description
 This package contains a library of functions for manipulating
 TIFF (Tagged Image File Format) image format files.  TIFF is a widely
@@ -167,6 +166,29 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Tue Apr 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10.0.57.f9fc01c3-alt1
+- Updated to v4.0.10-57-gf9fc01c3 (ALT #36575, #34677).
+- Applied SUSE patches:
+  + tiff-4.0.3-seek.patch;
+  + tiff-4.0.3-compress-warning.patch;
+  + tiff-CVE-2018-12900.patch.
+- Built with support of:
+  + libjbig;
+  + libwebp;
+  + libzstd.
+- Fixes:
+  + CVE-2012-4564 Zero size buffer exploit in ppm2tiff;
+  + CVE-2013-1960 Heap-based buffer overflow in the t2p_process_jpeg_strip();
+  + CVE-2013-4232 Use-after-free vulnerability in the t2p_readwrite_pdf_image();
+  + CVE-2013-4243 Heap-based buffer overflow in the readgifimage();
+  + CVE-2013-4244 DoS or possible RCE via crafted GIF image;
+  + CVE-2014-8127 Out-of-bounds read with malformed TIFF image in multiple tool;
+  + CVE-2014-8129 Out-of-bounds read/write with malformed TIFF image in tiff2pdf;
+  + CVE-2014-8130 Divide-by-zero error in _TIFFmalloc();
+  + CVE-2014-9330 Integer overflow in tif_packbits.c in bmp2tif;
+  + CVE-2015-8870 Integer overflow in tools/bmp2tiff.c (DoS or information leak);
+  + CVE-2018-5360 Heap-based buffer overflow in the ReadTIFFImage().
+
 * Sun Sep 23 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.3-alt1
 - Updated to Release-v4-0-3.
 
