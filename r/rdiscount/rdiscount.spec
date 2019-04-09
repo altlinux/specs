@@ -1,7 +1,7 @@
 %define        pkgname rdiscount
 Name:          %pkgname
 Version:       2.2.0.1
-Release:       alt2
+Release:       alt2.1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -56,6 +56,9 @@ Development headers for %gemname gem
 
 %install
 %gem_install
+# TODO remove when fix on i586
+mkdir -p %buildroot%ruby_sitearchdir
+ln -s %ruby_gemextdir/rdiscount.so %buildroot%ruby_sitearchdir
 
 %check
 %gem_test
@@ -69,6 +72,7 @@ Development headers for %gemname gem
 %ruby_gemspec
 %ruby_gemextdir
 %ruby_gemlibdir
+%ruby_sitearchdir/*
 
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
@@ -77,6 +81,9 @@ Development headers for %gemname gem
 %ruby_includedir/*
 
 %changelog
+* Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt2.1
+- Fix build on i586 with a workaround dog-nail
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt2
 - Use Ruby Policy 2.0
 - Fix spec

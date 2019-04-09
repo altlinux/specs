@@ -1,19 +1,19 @@
-Name:    ronn
-Version: 0.7.3
-Release: alt1.1
+%define	       pkgname ronn
 
-Summary: Ronn builds manuals from Markdown to roff format
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/rtomayko/ronn/
+Name:          %pkgname
+Version:       0.7.3
+Release:       alt2
+Summary:       Ronn builds manuals from Markdown to roff format
+License:       MIT
+Group:         Development/Documentation
+Url:           https://github.com/rtomayko/ronn/
+# VCS:         https://github.com/rtomayko/ronn.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 BuildRequires: ruby-hpricot
 BuildRequires: rdiscount
 BuildRequires: mustache
@@ -26,53 +26,54 @@ syntax extensions for features commonly found in manpages (definition
 lists, link notation, etc.). The ronn-format(7) manual page defines the
 format in detail.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname
+Summary:       Ruby library files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-
-# Clean source files amd put man page to appropriate directories
-rm -f %buildroot%_mandir/index.*
-rm -f %buildroot%_mandir/*.ronn
-mkdir -p %buildroot%_man1dir
-mv %buildroot%_mandir/*.1* %buildroot%_man1dir
-mkdir -p %buildroot%_man7dir
-mv %buildroot%_mandir/*.7* %buildroot%_man7dir
+%gem_install
 
 %check
-chmod +x bin/ronn
-%ruby_test_unit -Ilib:test test/test*.rb
+%gem_test
 
 %files
 %doc README*
 %_bindir/%name
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%_man1dir/*.1*
-%_man7dir/*.7*
+%_mandir/*.1*
+%_mandir/*.7*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
 - Rebuild with new Ruby autorequirements.
 
