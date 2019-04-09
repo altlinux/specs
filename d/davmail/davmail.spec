@@ -11,7 +11,7 @@
 %endif
 
 Name:     davmail
-Version:  5.1.0
+Version:  5.2.0
 Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
@@ -20,7 +20,7 @@ License:  GPLv2+
 
 BuildArch: noarch
 
-Source0:  https://sourceforge.net/projects/%name/files/%name/%version/%name-src-%version-%_davsvn.tgz
+Source0:  %name-%version.tar
 Source1:  %name.desktop
 
 Requires: java
@@ -41,7 +41,7 @@ personal contacts to allow recipient address completion in mail compose
 window and full calendar support with attendees free/busy display.
 
 %prep
-%setup -q -n %name-src-%version-%_davsvn
+%setup
 
 %build
 sed -i '/class-path/I d' build.xml
@@ -74,6 +74,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Apr 08 2019 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+
 * Mon Jan 28 2019 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version.
 
