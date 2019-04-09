@@ -8,7 +8,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.3.2
-Release: alt2
+Release: alt3
 
 Summary: The Zope publisher publishes Python objects on the web
 License: ZPLv2.1
@@ -69,6 +69,10 @@ BuildRequires: python3-module-zope.event
 %py_requires zope.location
 %py_requires zope.proxy
 %py_requires zope.security
+%py_requires zope.deferredimport
+%py_requires zope.hookable
+%py_requires zope.deprecation
+
 
 %description
 zope.publisher allows you to publish Python objects on the web. It has
@@ -80,6 +84,20 @@ The behaviour of the publisher is geared towards WSGI compatibility.
 %package -n python3-module-%oname
 Summary: The Zope publisher publishes Python objects on the web
 Group: Development/Python3
+%py3_requires zope.browser
+%py3_requires zope.component
+%py3_requires zope.configuration
+%py3_requires zope.contenttype
+%py3_requires zope.event
+%py3_requires zope.exceptions
+%py3_requires zope.i18n
+%py3_requires zope.interface
+%py3_requires zope.location
+%py3_requires zope.proxy
+%py3_requires zope.security
+%py3_requires zope.deferredimport
+%py3_requires zope.hookable
+%py3_requires zope.deprecation
 
 %description -n python3-module-%oname
 zope.publisher allows you to publish Python objects on the web. It has
@@ -92,6 +110,11 @@ The behaviour of the publisher is geared towards WSGI compatibility.
 Summary: Tests for zope.publisher
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+%py3_requires zope.testrunner
+%py3_requires zope.testing
+Requires: python3-module-zope.security-tests
+Requires: python3-module-zope.component-tests
+Requires: python3-module-zope.interface-tests
 
 %description -n python3-module-%oname-tests
 This package contains tests for %oname.
@@ -100,7 +123,11 @@ This package contains tests for %oname.
 Summary: Tests for zope.publisher
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires zope.testrunner
 %py_requires zope.testing
+Requires: python-module-zope.security-tests
+Requires: python-module-zope.component-tests
+Requires: python-module-zope.interface-tests
 
 %description tests
 This package contains tests for %oname.
@@ -166,6 +193,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Apr 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.3.2-alt3
+- requires for tests fixed
+
 * Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.3.2-alt2
 - Tests fixed
 
