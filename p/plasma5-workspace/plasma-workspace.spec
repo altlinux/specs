@@ -25,7 +25,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.8
-Release: alt6
+Release: alt7
 Epoch: 1
 %K5init altplace
 
@@ -379,6 +379,9 @@ done
 
 
 %changelog
+* Tue Apr 09 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt7
+- freememorynotifier: add tooltips, disable help button
+
 * Mon Apr 01 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt6
 - fix requires
 
