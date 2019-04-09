@@ -1,3 +1,4 @@
+# See https://wiki.qt.io/Qt_for_Python for progress
 %def_with qt4
 %def_with bundled_libs
 %def_with glvnd
@@ -13,7 +14,7 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.18
+Version: 0.18.1
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -25,7 +26,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source2: freecad.desktop
-Source3: freecad.appdata.xml
 Source4: freecad.1
 Source5: freecad.sharedmimeinfo
 
@@ -191,9 +191,6 @@ done
 install -Dm0644 %buildroot%ldir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 install -Dm0644 %buildroot%ldir/%name.xpm %buildroot%_pixmapsdir/%name.xpm
 
-# appdata
-install -Dm0644 %SOURCE3 %buildroot%_datadir/appdata/%name.appdata.xml
-
 # manpage
 install -Dm0644 %SOURCE4 %buildroot%_man1dir/%name.1
 
@@ -227,16 +224,19 @@ rm -rf %buildroot%_prefix/Ext
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*
 %_xdgdatadir/mime/packages/*
-%_datadir/appdata/*.appdata.xml
 %_pixmapsdir/%name.xpm
+%_iconsdir/hicolor/scalable/apps/*.svg
+%_datadir/metainfo/*.appdata.xml
 
 %files docs
 %ldir/doc
 
 %changelog
+* Fri Apr 05 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.1-alt1
+- New version (ALT #36524).
+
 * Fri Mar 22 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18-alt1
 - New version (ALT #36332).
-- 
 
 * Thu Nov 22 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17.13543-alt1
 - Version 0.17 with changes from releases/FreeCAD-0-17.
