@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libebml
-Version: 1.3.6
-Release: alt2
+Version: 1.3.7
+Release: alt1
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
 Group: System/Libraries
-Url: http://www.matroska.org
 
+Url: http://www.matroska.org
 # https://github.com/Matroska-Org/libebml.git
 Source: %name-%version.tar
 
@@ -31,13 +31,7 @@ Files needed to build programs using libebml
 %setup
 
 %build
-# try to remove with lcc 1.23
-%ifarch %e2k
-%add_optflags -std=gnu++11
-%endif
-%cmake \
-	-DBUILD_SHARED_LIBS=YES
-
+%cmake -DBUILD_SHARED_LIBS=YES
 %cmake_build
 
 %install
@@ -53,6 +47,10 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 09 2019 Michael Shigorin <mike@altlinux.org> 1.3.7-alt1
+- 1.3.7
+- drop e2k workarounds for good
+
 * Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
 - Rebuild for e2k.
 
