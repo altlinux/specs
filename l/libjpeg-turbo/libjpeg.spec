@@ -1,5 +1,5 @@
 Name: libjpeg-turbo
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 Epoch: 2
 
@@ -178,6 +178,9 @@ install -pm644 README* change.log example.c \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Tue Apr 09 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:1.5.3-alt1
+- 1.5.3 released
+
 * Wed Jun 21 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:1.5.1-alt1
 - 1.5.1 released
 
