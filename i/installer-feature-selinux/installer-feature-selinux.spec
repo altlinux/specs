@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
-Version: 0.9
-Release: alt3
+Version: 0.10
+Release: alt1
 
 Summary: Installer selinux hooks
 License: GPL
@@ -27,6 +27,16 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Tue Apr 09 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.10-alt1
+- merge c8.1 and sisyphus versions
+- disable pam_mktemp
+
+* Mon Jan 21 2019 Denis Medvedev <nbr@altlinux.org> 0.9-alt1.M80C.3
+- e2k support
+
+* Fri Oct 05 2018 Denis Medvedev <nbr@altlinux.org> 0.9-alt1.M80C.2
+- added officer to users that are being allowed login to console
+
 * Tue May 22 2018 Michael Shigorin <mike@altlinux.org> 0.9-alt3
 - e2k support
 - missing grub is not a problem (at least not this package's problem)
