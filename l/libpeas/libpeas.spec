@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 1.22
 %define api_ver 1.0
 %define gtk_api_ver 3.0
@@ -12,17 +14,24 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
-License: LGPLv2+
-Url: ftp://ftp.gnome.org/pub/gnome/sources/%name/
+License: LGPLv2.1+
+Url: https://wiki.gnome.org/Projects/Libpeas
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 # our python3 --ldflags break build
 Patch: libpeas-1.8.0-alt-python3_build.patch
+Patch1: libpeas-1.22.0-alt-automake.patch
+
+%set_automake_version 1.14
+BuildRequires: automake_1.14
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
@@ -135,7 +144,10 @@ This package contains %name demonstration programs
 
 %prep
 %setup
-%patch
+%patch -b .python3
+%patch1 -b .sh
+
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -200,6 +212,10 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt3
+- updated to 1.22.0-9-g4eea771
+- built with automake-1.14 (ALT #36568)
+
 * Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt2
 - updated buildreqs
 
