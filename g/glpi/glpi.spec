@@ -1,8 +1,8 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.4.0
-Release: alt2
+Version: 9.4.1
+Release: alt1
 
 Summary: IT and asset management software
 License: GPLv2
@@ -39,7 +39,7 @@ Apache 2.x web-server configuration for %name
 %package php7
 Summary: PHP7 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php7-mysqli, php7-ldap, php7-imap, php7-curl, php7-gd2, php7-fileinfo, php7-mbstring, php7-apcu, php7-opcache, php7-xmlrpc
+Requires: %name = %version-%release, php7-mysqli, php7-ldap, php7-imap, php7-curl, php7-gd2, php7-fileinfo, php7-mbstring, php7-apcu, php7-opcache, php7-xmlrpc, php7-exif
 %description php7
 PHP7 dependencies for %name
 
@@ -94,6 +94,7 @@ fi
 %dir %attr(2770,root,%webserver_group) %installdir/files
 %attr(2770,root,%webserver_group) %installdir/files/*
 %installdir/ajax
+%installdir/bin
 %installdir/config
 %installdir/css
 %installdir/files
@@ -125,6 +126,9 @@ fi
 %files php7
 
 %changelog
+* Tue Apr 09 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.1-alt1
+- New version 9.4.1
+
 * Tue Mar 05 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.0-alt2
 - Deleted glpi-php5
 
