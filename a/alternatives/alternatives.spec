@@ -1,5 +1,5 @@
 Name: alternatives
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: alternatives support
@@ -26,8 +26,11 @@ Conflicts: gcc-common <= 1.4.3-alt1, gnupg2 <= 1.9.7-alt2
 # due to PackagedFiles()
 BuildPreReq: rpm >= 4.0.4-alt87
 
-# due to verioned paths
+# due to versioned paths
 Conflicts: rpm-build < 4.0.4-alt93
+
+# due to %_sbindir/update-alternatives
+Conflicts: update-alternatives
 
 BuildPreReq: libshell help2man
 Requires: rpm-macros-%name = %version-%release
@@ -71,6 +74,9 @@ install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.fi
 mkdir -p %buildroot%_sbindir
 ln -rs %buildroot%_bindir/alternatives-update %buildroot%_sbindir/
 
+# https://bugzilla.altlinux.org/36073
+ln -s /bin/true %buildroot%_sbindir/update-alternatives
+
 %files
 %doc README TODO
 %dir %_sysconfdir/%name
@@ -80,6 +86,7 @@ ln -rs %buildroot%_bindir/alternatives-update %buildroot%_sbindir/
 %ghost %config(noreplace,missingok) %_sysconfdir/%name/manual
 %_bindir/*
 %_sbindir/alternatives-update
+%_sbindir/update-alternatives
 %_datadir/%name
 %_man1dir/*
 %_rpmlibdir/alternatives.prov
@@ -91,6 +98,9 @@ ln -rs %buildroot%_bindir/alternatives-update %buildroot%_sbindir/
 %_rpmmacrosdir/*
 
 %changelog
+* Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.1-alt1
+- Packaged %_sbindir/update-alternatives -> /bin/true (closes: #36073).
+
 * Sun Jan 06 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.0-alt1
 - Removed obsolete stuff: alternatives-upgrade, alternatives-helper,
   and all references to them.
