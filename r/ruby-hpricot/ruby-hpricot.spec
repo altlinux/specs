@@ -4,7 +4,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.8.6
-Release:       alt3
+Release:       alt3.1
 Summary:       A Fast, Enjoyable HTML Parser for Ruby
 Group:         Development/Ruby
 License:       MIT
@@ -38,6 +38,10 @@ Documentation files for %gemname gem.
 
 %install
 %gem_install
+# TODO remove when fix on i586
+mkdir -p %buildroot%ruby_sitearchdir
+ln -s %ruby_gemextdir/fast_xs.so %buildroot%ruby_sitearchdir
+ln -s %ruby_gemextdir/hpricot_scan.so %buildroot%ruby_sitearchdir
 
 %check
 %gem_test
@@ -47,11 +51,15 @@ Documentation files for %gemname gem.
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
+%ruby_sitearchdir/*
 
 %files doc
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt3.1
+- Fix build on i586 with a workaround dog-nail
+
 * Mon Apr 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt3
 - Use Ruby Policy 2.0
 

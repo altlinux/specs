@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       1.4.15
-Release:       alt1
+Release:       alt2
 Epoch:         1
 Summary:       Ruby LALR(1) parser generator
 Group:         Development/Ruby
@@ -42,11 +42,9 @@ Documentation files for %name.
 
 %prep
 %setup
-sed "s'local/'/'" -i bin/racc2y
-sed "s'local/'/'" -i bin/y2racc
 
 %build
-%gem_build
+%gem_build --shebang=auto
 
 %install
 %gem_install
@@ -68,6 +66,9 @@ sed "s'local/'/'" -i bin/y2racc
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.4.15-alt2
+- Fix shebang line autoreplacement for excutables
+
 * Wed Feb 28 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.4.15-alt1
 - Use Ruby Policy 2.0;
 - Bump to 1.4.15.
