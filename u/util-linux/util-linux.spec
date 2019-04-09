@@ -4,9 +4,9 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.32
-Release: alt2
-License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
+Version: 2.33.1
+Release: alt1
+License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and Public-Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -47,8 +47,10 @@ BuildRequires: libcap-ng-devel
 %{?_enable_login:BuildRequires: libpam-devel}
 %{?_enable_runuser:BuildRequires: libpam-devel}
 
+BuildRequires: automake_1.14
+%set_automake_version 1.14
+
 ### Sources
-# ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/v2.13/util-linux-ng-2.14.tar.bz2
 Source0: util-linux-%version.tar
 Source1: util-linux-login.pamd
 Source2: util-linux-runuser.pamd
@@ -79,7 +81,7 @@ Conflicts: kernel < 2.2.12-7
 Conflicts: e2fsprogs < 0:1.41.9-alt3
 %endif
 
-PreReq: %name-control = %version-%release
+Requires(pre,postun): %name-control = %version-%release
 Requires: coreutils > 6.10-alt2
 Requires: libsmartcols = %version-%release
 
@@ -98,7 +100,8 @@ Patch52: util-linux-2.11a-gecossize.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
 Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
 Patch59: util-linux-tests.patch
-Patch60: util-linux-2.20-alt-agetty-release.patch
+Patch60: util-linux-2.33.1-alt-agetty-release.patch
+Patch61: util-linux-2.33.1-add-new-e2k-subarches.patch
 
 # 33152 - logger without systemd support
 Patch70: util-linux-2.29.2-alt-logger_man.patch
@@ -128,7 +131,7 @@ lsblk lists information about all or the specified block devices.
 %package -n mount
 Summary: Programs for mounting and unmounting filesystems
 Group: System/Base
-PreReq: %name-control = %version-%release
+Requires(pre,postun): %name-control = %version-%release
 Requires: libblkid = %version-%release
 Requires: libmount = %version-%release
 Requires: libsmartcols = %version-%release
@@ -464,6 +467,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch54 -p1
 %patch59 -p2
 %patch60 -p1
+%patch61 -p1
 
 %if_without systemd
 %patch70 -p1
@@ -561,7 +565,8 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},misc/{setarch,ionice},more/regexp}
+# lsblk: 'failed to access sysfs directory: /sys/dev/block: No such file or directory' in hasher.
+rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},lsblk,misc/{setarch,ionice},more/regexp}
 LANG=C %make check-local-tests
 
 %install
@@ -833,6 +838,7 @@ fi
 /sbin/*clock
 %_sbindir/hwclock
 %dir %_localstatedir/hwclock
+%_man5dir/adjtime_config.5*
 %_man8dir/*clock.*
 %doc Documentation/hwclock.txt
 
@@ -977,6 +983,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Apr 09 2019 Alexey Gladkov <legion@altlinux.ru> 2.33.1-alt1
+- New version (2.33.1).
+
 * Wed Jun 06 2018 Alexey Gladkov <legion@altlinux.ru> 2.32-alt2
 - Add runuser.
 
