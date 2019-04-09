@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.47
+Version: 1.8.48
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Apr  9 2019 Leonid Krivoshein <klark@altlinux.org> 1.8.48-alt1
+- postinstall: fix for configurations without mdraid.
+
 * Sat Apr  6 2019 Leonid Krivoshein <klark@altlinux.org> 1.8.47-alt1
 - postinstall: wait MD-resync, mdsync_nowait turn OFF this feature.
 - install2-init.c: execute swapoff and post-umount hook added.
