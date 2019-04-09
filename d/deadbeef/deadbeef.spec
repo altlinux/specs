@@ -3,8 +3,8 @@
 
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
-Version: 0.8.0
-Release: alt0.1.beta4
+Version: 1.8.0
+Release: alt1
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 Source: %name-%version.tar
@@ -678,6 +678,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Tue Apr 09 2019 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- New version 1.8.0
+
 * Wed Jan 02 2019 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt0.1.beta4
 - 0.8.0 beta 4
 - remove plugin statusnotifier
