@@ -5,7 +5,7 @@
 %define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.16
+Version: 1.16.1
 Release: alt1
 
 %define mydatadir %_datadir/%apiname
@@ -26,6 +26,9 @@ BuildArch: noarch
 Source: %srcname.tar
 
 Requires: automake-common, autoconf >= 2:2.69
+
+# Due to Automake History.
+Conflicts: automake_1.14 < 1.14.1-alt5
 
 BuildPreReq: autoconf >= 2:2.69, gnu-config, help2man, makeinfo, perl-threads
 BuildPreReq: perl(TAP/Parser.pm)
@@ -100,6 +103,9 @@ chmod -R u+rwX t
 %docdir/
 
 %changelog
+* Tue Apr 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.16.1-alt1
+- v1.16 -> v1.16.1.
+
 * Mon Apr 08 2019 Dmitry V. Levin <ldv@altlinux.org> 1.16-alt1
 - v1.14.1 -> v1.16.
 - Dropped our homebrew AM_PROG_OBJC in favour of AC_PROG_OBJC
