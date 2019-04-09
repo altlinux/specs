@@ -1,6 +1,6 @@
 Name: libdvbcsa
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: DVB Common Scrambling Algorithm with encryption and decryption capabilities
 License: GPLv2
@@ -69,6 +69,9 @@ developing applications that use %name.
 %_libdir/libdvbcsa.so
 
 %changelog
+* Tue Apr 09 2019 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt6
+- Fix build with automake 1.16
+
 * Mon Sep 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt5
 - fix build on non-x86 arches
 
