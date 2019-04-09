@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6.2
-Release: alt2
+Release: alt3
 
 Summary: Zope Internationalization Support
 License: ZPLv2.1
@@ -14,6 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.i18n
 
 Source: %name-%version.tar
+Patch0: %oname-fix-tests.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -83,7 +84,9 @@ localization.
 Summary: Tests for zope.i18n (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+Requires: python3-module-zope.component-tests
 %py3_requires zope.publisher
+%py3_requires zope.testrunner
 
 %description -n python3-module-%oname-tests
 This package contains tests for %oname.
@@ -92,14 +95,18 @@ This package contains tests for %oname.
 Summary: Tests for zope.i18n
 Group: Development/Python
 Requires: %name = %EVR
+Requires: python-module-zope.component-tests
 %py_requires zope.testing
 %py_requires zope.publisher
+%py_requires zope.testrunner
 
 %description tests
 This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p2
+
 rm -rf ../python3
 cp -a . ../python3
 
@@ -164,6 +171,9 @@ popd
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Mon Apr 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt3
+- requires for tests fixed
+
 * Fri Mar 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt2
 - py3 requires fixed
 
