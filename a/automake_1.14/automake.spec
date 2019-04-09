@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.14.1
-Release: alt4
+Release: alt5
 
 %define mydatadir %_datadir/%apiname
 %set_compress_method xz
@@ -61,6 +61,9 @@ rm %buildroot%_aclocaldir/README
 rm %buildroot%_bindir/{aclocal,automake}
 rm %buildroot%_man1dir/{aclocal,automake}.1*
 
+# Provided by the latest automake.
+rm %buildroot%_infodir/automake-history.info
+
 # Replace config.* copies with symlinks to original files.
 for f in %_datadir/gnu-config/config.*; do
 	[ -f "$f" ] || continue
@@ -99,6 +102,10 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Tue Apr 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt5
+- Removed Automake History,
+  it's already packaged in the latest Automake (closes: #36564).
+
 * Mon Apr 08 2019 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt4
 - Backported upstream patch to fix FTBFS with new dejagnu.
 
