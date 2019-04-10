@@ -1,10 +1,11 @@
+%define _runtimedir /run
 %define _localstatedir /var
 #Use GTK+ instead of Xlib
 %def_with gtk
 
 Name: spice-vdagent
 Version: 0.18.0
-Release: alt1%ubt
+Release: alt2
 Summary: Agent for Spice guests
 Group: Networking/Remote access
 License: GPLv3+
@@ -55,6 +56,7 @@ Features:
 %install
 %makeinstall_std
 install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
+mkdir -p %buildroot%_runtimedir/spice-vdagentd
 
 %post
 %post_service spice-vdagentd
@@ -70,13 +72,17 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_unitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
-%_var/run/spice-vdagentd
+%dir %_runtimedir/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent.desktop
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
 %_datadir/gdm/greeter/autostart/spice-vdagent.desktop
 %_man1dir/*
 
 %changelog
+* Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 0.18.0-alt2
+- backport some patches from upstream
+- Update all paths /var/run -> /run
+
 * Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1%ubt
 - 0.18.0
 - Use GTK+ instead of Xlib
