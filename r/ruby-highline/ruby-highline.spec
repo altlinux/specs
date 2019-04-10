@@ -1,8 +1,8 @@
 %define  pkgname highline
  
 Name: 	 ruby-%pkgname
-Version: 1.6.21
-Release: alt2
+Version: 1.7.9
+Release: alt1
 Epoch:   1
  
 Summary: HighLine is a high-level command-line IO Ruby library
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Apr 10 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1:1.7.9-alt1
+- update to 1.7.9 for opennebula
+
 * Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.21-alt2
 - Reset to old version for ruby-commander and ruby-hiera-eyaml.
 
