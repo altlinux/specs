@@ -4,24 +4,25 @@
 %define libltdl libltdl%ltsoname
 
 Name: libtool_%ltversion
-Version: 2.4.2
-Release: alt8
+Version: 2.4.6
+Release: alt1
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
 Group: Development/Other
-Url: http://www.gnu.org/software/libtool/libtool.html
+Url: https://www.gnu.org/software/libtool/
 
-%add_findreq_skiplist %_datadir/%libtool/config.guess
 %set_compress_method xz
 
-Requires(pre): libtool-common >= 0.2
+Requires: libtool-common >= 0.2
 Requires: autoconf
 Requires: automake
 
 # git://git.altlinux.org/gears/l/%name.git
 Source: libtool-%version-%release.tar
 
+BuildRequires: gnulib >= 0.1.2433.3043e
+BuildRequires: gnulib-modules-bootstrap >= 0.0.70.037f
 BuildRequires: gcc-c++ gcc-g77 help2man makeinfo
 # for tests/search-path.at
 BuildRequires: zlib-devel
@@ -45,15 +46,8 @@ Summary: Static %libltdl library
 License: LGPLv2+
 Group: Development/C
 Requires: %libltdl-devel = %EVR
-Provides: libltdl-devel-static = 3:%version-%release
-Conflicts: libltdl-devel-static < 3:%version
-
-%package demos
-Summary: Samples for Libtool
-License: GPLv2+
-Group: Development/Other
-BuildArch: noarch
-Requires: %name = %EVR
+Provides: libltdl-devel-static = 3:%version
+Obsoletes: libltdl-devel-static < 3:%version
 
 %description
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -76,35 +70,30 @@ dlopen wrapper for GNU libtool.
 %description -n %libltdl-devel-static
 Static libltdl library, a system independent dlopen wrapper for GNU libtool.
 
-%description demos
-Sample programs and libraries to build with libtool.
-
 %prep
 %setup -n libtool-%version
+cp -a %_datadir/gnulib-modules-bootstrap/* gl-mod/bootstrap/
 
-# Eliminate gnutar dependencies.
-find -type f -name missing -print0|
-	xargs -r0 sed -i 's/gnutar /gnutar=gnutar \&\& \$&/' --
+# Build scripts expect to find these files.
+echo -n %version > .tarball-version
+echo -n 4223 > .serial
 
 # Rename due to alternative editions.
 sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:space:]]\+\)(libtool)/\1-%ltversion\2(%libtool)/' \
 	doc/libtool.texi
 
 %build
-./bootstrap
-%configure --program-suffix=-%ltversion
+./bootstrap --skip-po --skip-git --gnulib-srcdir=%_datadir/gnulib
+%configure --program-suffix=-%ltversion --disable-silent-rules
 
-# SMP-incompatible build?
-make MAKEINFOFLAGS=--no-split
+%make_build MAKEINFOFLAGS=--no-split
 # Do not hardcode gcc path information, and do not use -nostdlib.
 sed -i -e 's/^\(predep_objects\|postdep_objects\|compiler_lib_search_path\)=.*/\1=""/' \
        -e 's/^\(archive\(_expsym\)\?_cmds=\".*\) -nostdlib /\1 /' libtool
 
 %check
 # Remove -frecord-gcc-switches because it confuses demo-hardcode.test.
-%make_build -k check CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
-find tests -maxdepth 1 -type d -name '*demo*' |
-	xargs -rn1 make distclean -C
+%make_build -k check VERBOSE=1 CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
 
 %install
 %makeinstall_std
@@ -116,13 +105,13 @@ sed -i 's#^\(compiler_lib_search_dirs="\)/.*#\1'"$out"'"#' %buildroot%_bindir/%l
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo libtool >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
-echo '^/usr/share/libtool(-2\.2)?/aclocal/.+\.m4$' >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
+echo '^/usr/share/libtool(-2\.4)?/aclocal/.+\.m4$' >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
 
 %define ltdocdir %_docdir/libtool-%version
 %define ltdldocdir %_docdir/libltdl-%version
 
 mkdir -p %buildroot%ltdocdir
-install -p -m644 AUTHORS NEWS README THANKS TODO %buildroot%ltdocdir/
+install -p -m644 AUTHORS NEWS README TODO %buildroot%ltdocdir/
 ln -rsnf %buildroot%_licensedir/GPL-2 \
 	%buildroot%ltdocdir/COPYING
 mkdir -p %buildroot%ltdldocdir
@@ -133,16 +122,8 @@ ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 	%buildroot%ltdldocdir/COPYING.LIB
 
-for d in `find tests -maxdepth 1 -type d -name '*demo*'`; do
-	cp -a "$d" %buildroot%ltdocdir/
-	rm -rf %buildroot%ltdocdir/"${d##*/}"/autom4te.cache
-	find %buildroot%ltdocdir/"${d##*/}"/ -type f -print0 |
-		xargs -r0 fgrep -lZ ../../libltdl/m4/ |
-		xargs -r0 sed -i 's|libltdl/m4/|../libtool-%ltversion/aclocal/|' --
-done
-
 # This config.guess file usually emits tons of unwanted deps.
-%add_findreq_skiplist %_datadir/%libtool/config/config.guess
+%add_findreq_skiplist %_datadir/%libtool/build-aux/config.guess
 
 %define _unpackaged_files_terminate_build 1
 
@@ -170,11 +151,10 @@ done
 %files -n %libltdl-devel-static
 %_libdir/*.a
 
-%files demos
-%dir %ltdocdir
-%ltdocdir/*demo*
-
 %changelog
+* Tue Apr 09 2019 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt1
+- 2.4.2 -> v2.4.6-44-gb9b44533 (closes: #31849, #32972).
+
 * Wed Feb 06 2019 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt8
 - libtool.m4: fixed -export-symbols option for C++ code (closes: #36054).
 
