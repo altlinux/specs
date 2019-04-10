@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt7.git%shortcommit
+Release:        alt8.rc7
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Wed Apr 10 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt8.rc7
+- New version
+
 * Wed Feb 13 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt7.git0a012df
 - snapshot of master branch.
 - Fixes CVE-2019-5736.
