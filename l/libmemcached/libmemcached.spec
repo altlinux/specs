@@ -1,6 +1,6 @@
 Name: libmemcached
 Version: 1.0.18
-Release: alt2
+Release: alt3
 
 Summary: Client library to the memcached
 License: BSD
@@ -10,6 +10,7 @@ Url: http://libmemcached.org/
 Source: %name-%version.tar
 Patch1: libmemcached-1.0.5-alt-disable-network-tests.patch
 Patch2: libmemcached-fix-gcc7-build.patch
+Patch3: libmemcached-fix-automake-build.patch
 
 BuildRequires: gcc-c++ memcached-devel perl-podlators libevent-devel
 
@@ -43,6 +44,7 @@ for %name.
 %setup
 %patch1 -p2
 %patch2 -p0
+%patch3 -p1
 
 %build
 %autoreconf
@@ -76,6 +78,9 @@ for %name.
 %_man3dir/*
 
 %changelog
+* Wed Apr 10 2019 Alexei Takaseev <taf@altlinux.org> 1.0.18-alt3
+- Fix build with automake 1.16
+
 * Sat Jun 02 2018 Alexei Takaseev <taf@altlinux.org> 1.0.18-alt2
 - Fix build with gcc7
 
