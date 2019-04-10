@@ -1,5 +1,5 @@
 Name: libjpeg-turbo
-Version: 1.5.3
+Version: 2.0.2
 Release: alt1
 Epoch: 2
 
@@ -14,15 +14,13 @@ Source2: http://jpegclub.org/jpegexiforient.c
 Source3: exifautotran
 Source4: jpeginfo.c
 
+Patch0: libjpeg-turbo-alt-rdjpgcom-i18n.patch
+Patch1: libjpeg-turbo-alt-versioning.patch
 Patch2: libjpeg-turbo-fedora-noinst.patch
-Patch3: libjpeg-turbo-alt-rdjpgcom-i18n.patch
-Patch4: libjpeg-turbo-alt-versioning.patch
-Patch5: libjpeg-turbo-alt-libturbojpeg.patch
 
 %def_enable static
 
-# for jpgtest.cxx
-BuildRequires: gcc-c++
+BuildRequires: cmake ctest
 
 %ifarch %ix86 x86_64
 BuildRequires: nasm
@@ -99,44 +97,41 @@ This package contains development files for the turbojpeg library.
 
 %prep
 %setup -n %name-%version-%release
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 install -pm644 %_sourcedir/{jpegexiforient,jpeginfo}.c .
 install -pm755 %_sourcedir/exifautotran .
 
 # restrict list of global symbols exported by the library.
-sed -n 's/^EXTERN([^()]*)[[:space:]]*\([^[:space:]]\+\).*/\1/p' jpeglib.h \
-	> libjpeg.sym
-sed -n 's/^EXTERN([^()]*)[[:space:]]*\([^[:space:]]\+\).*/\1/p' jpegint.h \
+echo -e '{\nglobal:' > libjpeg.sym
+sed -En '/^EXTERN/ s,^.+\)\s+([^(]+).+$,\1;,p' jpeglib.h jpegint.h \
 	| egrep -v '^(jinit_|jzero_far)' >> libjpeg.sym
 # extra symbols required by packages
 cat >> libjpeg.sym <<'EOF'
-jinit_c_master_control
-jinit_color_converter
-jinit_master_decompress
-jinit_downsampler
-jpeg_std_message_table
+jinit_c_master_control;
+jinit_color_converter;
+jinit_master_decompress;
+jinit_downsampler;
+jpeg_std_message_table;
+local: *;
+};
 EOF
-sort -u -o libjpeg.sym{,}
 
 %build
-%autoreconf
-%configure --enable-shared %{subst_enable static}
-%make_build
+%cmake
+%cmake_build
 make jpegexiforient
-%__cc $CPPFLAGS -D_GNU_SOURCE jpeginfo.c -L.libs -ljpeg -o jpeginfo
 bzip2 -9fk libjpeg.txt structure.txt usage.txt
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir make -k test
-LD_LIBRARY_PATH=%buildroot%_libdir ./jpeginfo *.jpg >/dev/null
+LD_LIBRARY_PATH=%buildroot%_libdir make -k -CBUILD test
+LD_LIBRARY_PATH=%buildroot%_libdir ./jpeginfo BUILD/*.jpg >/dev/null
 
 %install
-mkdir -p %buildroot{%_bindir,%_libdir,%_includedir,%_man1dir}
-%makeinstall_std
+%cmakeinstall_std
+%__cc %optflags -D_GNU_SOURCE -I%buildroot%_includedir jpeginfo.c -L%buildroot%_libdir -ljpeg -o jpeginfo
 install -pm755 exifautotran jpegexiforient jpeginfo %buildroot%_bindir/
 # do not package unwanted libturbojpeg files
 find %buildroot -name 'libturbojpeg.*a' -delete
@@ -144,7 +139,7 @@ find %buildroot -name 'libturbojpeg.*a' -delete
 %define docdir %_docdir/%name
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
-install -pm644 README* change.log example.c \
+install -pm644 README* change.log \
 	coderules.txt libjpeg.txt.bz2 structure.txt.bz2 usage.txt.bz2 wizard.txt \
 	%buildroot%docdir/
 
@@ -178,6 +173,9 @@ install -pm644 README* change.log example.c \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Wed Apr 10 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.2-alt1
+- 2.0.2 released
+
 * Tue Apr 09 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:1.5.3-alt1
 - 1.5.3 released
 
