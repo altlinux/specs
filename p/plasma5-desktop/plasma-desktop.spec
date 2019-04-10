@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.8
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -133,6 +133,10 @@ KF5 library
 %patch17 -p1
 %patch18 -p2
 
+#Fix translate in Input Method Panel (kimpanel) widget.
+#If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
+find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec rename plasma_applet_org.kde.kimpanel.po plasma_applet_org.kde.plasma.kimpanel.po '{}' \;
+
 %build
 %K5cmake \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
@@ -220,6 +224,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Apr 10 2019 Pavel Moseev <mars@altlinux.org> 5.12.8-alt3
+- fix translate in Input Method Panel (kimpanel) widget
+
 * Tue Apr 02 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt2
 - fix menu settings russian translation
 
