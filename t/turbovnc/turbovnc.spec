@@ -1,6 +1,8 @@
 Name: turbovnc
 Version: 1.2.1
-Release: alt3
+Release: alt4
+
+ExclusiveArch: armh %ix86 x86_64
 
 %define vnc_name turbovnc
 
@@ -147,6 +149,9 @@ popd
 %preun_service tvncserver
 
 %changelog
+* Wed Apr 10 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt4
+- build on selected arches only
+
 * Wed Mar 19 2014 Dmitry Derjavin <dd@altlinux.org> 1.2.1-alt3
 - post and preun were assigned to the wrong package (closes: 29893).
 
