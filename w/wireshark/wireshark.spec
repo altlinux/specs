@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -218,6 +218,20 @@ _EOF_
 
 
 %changelog
+* Wed Apr 10 2019 Anton Farygin <rider@altlinux.ru> 3.0.1-alt1
+- 3.0.1
+- fixes:
+    * NetScaler file parser crash. CVE-2019-10895
+    * SRVLOC dissector crash. CVE-2019-10899
+    * IEEE 802.11 dissector infinite loop. CVE-2019-10897
+    * GSUP dissector infinite loop. CVE-2019-10898
+    * Rbm dissector infinite loop. CVE-2019-10900
+    * GSS-API dissector crash. CVE-2019-10894
+    * DOF dissector crash. CVE-2019-10896
+    * TSDNS dissector crash. CVE-2019-10902
+    * LDSS dissector crash. CVE-2019-10901
+    * DCERPC SPOOLSS dissector crash. CVE-2019-10903
+
 * Tue Mar 19 2019 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 - removed package with documentation
