@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20121119
+Version: 20181111
 Release: alt1
 
 Summary: Python diff, match and patch libraries
@@ -75,5 +75,8 @@ popd
 %endif
 
 %changelog
+* Wed Apr 10 2019 Vladimir Didenko <cow@altlinux.ru> 20181111-alt1
+- new version
+
 * Thu Mar 16 2017 Vladimir Didenko <cow@altlinux.ru> 20121119-alt1
 - Initial build for Sisyphus
