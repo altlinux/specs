@@ -65,7 +65,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_10
+Release:	alt2_12
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -156,8 +156,9 @@ BuildRequires:	libpaper-devel
 Patch1: texlive-20160523-mageia-format.patch
 Patch2: texlive-20160523-mageia-asymptote.patch
 Patch4: texlive-20160523-texmf-mageia-kpfix.patch
-Patch5:	includePatch.patch
+Patch5: includePatch.patch
 Patch6: CVE-2018-17407.patch
+Patch7: texlive-20180414-synctex-version.patch
 Patch107: 0001-try-to-adapt-to-poppler-0.58.patch
 Patch108: poppler-compat-fixes-up-to-0.70.patch
 Patch109: luatex-poppler-0.70-const-fixes.patch
@@ -197,6 +198,8 @@ Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
 Patch34: texlive-2018-alt-gcc8.patch
 Provides: texlive-collection-binextra = %{tl_version}
+Patch35: luatex-poppler-0.75.patch
+Patch36: texlive-poppler-0.75.patch
 
 #mga22386, fix from https://bugs.gentoo.org/621252
 #Patch200: texlive-luatex-gcc7align.patch
@@ -444,6 +447,7 @@ This package includes the static ptexenc library.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p0
+%patch7 -p2
 %if_without backport_p8
 %patch107 -p2
 %endif
@@ -454,10 +458,12 @@ This package includes the static ptexenc library.
 %patch112 -p0
 %patch113 -p1
 %patch114 -p1
+%patch35 -p0
+%patch36 -p0
 
-#%patch200 -p1 -b .gcc7align
+#%%patch200 -p1 -b .gcc7align
 
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.72.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.75.0,}.cc
 cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.72.0,}.cc
 
 # setup default builtin values, added to paths.h from texmf.cnf
@@ -697,6 +703,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Apr 09 2019 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_12
+- fixed build with poppler 75 (closes: #35567)
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_10
 - fixed build
 
