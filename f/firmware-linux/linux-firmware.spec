@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190326
+Version: 20190409
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Apr 10 2019 Cronbuild Service <cronbuild@altlinux.org> 20190409-alt1
+- upstream changes (GIT 260cb35):
+  + Add firmware file for Intel Bluetooth 22161 (thx Amit K Bag)
+  + cxgb4: update firmware to revision 1.23.4.0 (thx Vishal Kulkarni)
+  + Update NXP Management Complex firmware to version 10.14.3 (thx Cristian Sovaiala)
+
 * Thu Apr 04 2019 Cronbuild Service <cronbuild@altlinux.org> 20190326-alt1
 - upstream changes (GIT 67b7579):
   + add firmware for MT7615E (thx Ryder Lee)
