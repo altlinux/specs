@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 2.0.2
-Release: alt2
+Version: 2.3
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3 (compatible with icu-64.1)
+
 * Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
 - Rebuilt with new icu.
 
