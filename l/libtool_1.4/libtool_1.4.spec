@@ -4,15 +4,14 @@
 
 Name: libtool_%ltversion
 Version: 1.4.3
-Release: alt13
+Release: alt14
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
 Group: Development/Other
-Url: http://www.gnu.org/software/libtool/libtool.html
+Url: https://www.gnu.org/software/libtool/
 
-%add_findreq_skiplist %_datadir/%libtool/config.guess-%ltversion
 %set_compress_method xz
 %set_libtool_version 1.5
 %set_automake_version 1.4
@@ -85,11 +84,7 @@ should install libtool.
 # Hack in the version-specific package data dir and aclocal dir variables.
 perl -pi -e 's|^(pkgdatadir=.*?)\s*$|$1-%ltversion\n|;' configure.in
 
-cp -p /usr/share/libtool/config/config.* .
-
 rm doc/*.info*
-
-bzip2 -9k ChangeLog*
 
 find -type f -print0 |
 	xargs -r0 grep -Zl '^# Libtool was configured' -- |
@@ -124,9 +119,6 @@ perl -pi -e '/^\@direntry/../^\@end direntry/ and s/^\*\s*(libtool(ize)?):\s*\(l
 # SMP-incompatible build.
 %make MAKEINFOFLAGS=--no-split
 
-%check
-make -k check ||:
-
 %install
 %makeinstall
 
@@ -138,8 +130,7 @@ mv %buildroot%_datadir/aclocal/libtool.m4 \
     %buildroot%_datadir/%libtool/aclocal/
 
 for f in ltmain.sh config.{guess,sub}; do
-    rm -f %buildroot%_datadir/%libtool/$f
-    ln -s $f-%ltversion %buildroot%_datadir/%libtool/$f
+    mv %buildroot%_datadir/%libtool/$f{-%ltversion,}
 done
 #for f in install-sh missing mkinstalldirs; do
 #    mv %buildroot%_datadir/%libtool/$f{,-%ltversion}
@@ -160,8 +151,7 @@ install -p -m644 %SOURCE1 \
 %define ltdldocdir %_docdir/libltdl-%version
 
 mkdir -p %buildroot%ltdocdir
-install -p -m644 AUTHORS NEWS README THANKS TODO ChangeLog*.bz2 \
-    %buildroot%ltdocdir/
+install -p -m644 AUTHORS NEWS README THANKS TODO %buildroot%ltdocdir/
 ln -rsnf %buildroot%_licensedir/GPL-2 \
 	%buildroot%ltdocdir/COPYING
 mkdir -p %buildroot%ltdldocdir
@@ -171,6 +161,11 @@ ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 	%buildroot%_datadir/%libtool/libltdl/COPYING.LIB
 ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 	%buildroot%ltdldocdir/COPYING.LIB
+
+%add_findreq_skiplist %_datadir/%libtool/config.guess
+
+%check
+make -k check ||:
 
 %files
 %_bindir/*
@@ -182,6 +177,9 @@ ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 %ltdocdir/[A-Z]*
 
 %changelog
+* Thu Apr 11 2019 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt14
+- Fixed build.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt13
 - Dropped alternatives in favour of libtool-defaults setup.
 
