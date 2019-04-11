@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.949
+Version: 1.0.955
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -42,6 +42,9 @@ rm -rf %buildroot%_pixmapsdir
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Apr 12 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.955-alt1
+- new version
+
 * Sun Jan 20 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.949-alt1
 - new version
 
