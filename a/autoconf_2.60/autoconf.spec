@@ -4,13 +4,13 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt4
+Release: alt5
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
 Group: Development/Other
-Url: http://www.gnu.org/software/%realname/
+Url: https://www.gnu.org/software/%realname/
 BuildArch: noarch
 
 %set_compress_method xz
@@ -20,7 +20,7 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/autoconf_2.60.git
 Source: %srcname.tar
 
-PreReq: autoconf-common
+Requires: autoconf-common
 # GNU m4 version 1.4.6 or later is required; 1.4.14 or later is recommended.
 Requires: m4 >= 1.4.14
 # portable mktemp, later obsoleted by coreutils.
@@ -91,7 +91,7 @@ done
 %define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -102,6 +102,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu Apr 11 2019 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt5
+- %%check: fixed build with libtool 2.4.6.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt4
 - Dropped alternatives in favour of autoconf-defaults setup.
 
