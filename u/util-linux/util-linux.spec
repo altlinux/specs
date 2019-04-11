@@ -4,7 +4,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.33.1
+Version: 2.33.2
 Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and Public-Domain
 Group: System/Base
@@ -35,7 +35,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 ### Dependences
 BuildRequires: /proc,/dev/pts
 BuildRequires: bash4
-BuildRequires: glibc-devel-static klibc-devel
+BuildRequires: glibc-devel-static
 BuildRequires: zlib-devel
 BuildRequires: libncursesw-devel
 BuildRequires: libpopt-devel
@@ -47,8 +47,9 @@ BuildRequires: libcap-ng-devel
 %{?_enable_login:BuildRequires: libpam-devel}
 %{?_enable_runuser:BuildRequires: libpam-devel}
 
-BuildRequires: automake_1.14
-%set_automake_version 1.14
+%ifnarch %e2k
+BuildRequires: klibc-devel
+%endif
 
 ### Sources
 Source0: util-linux-%version.tar
@@ -68,6 +69,7 @@ Source12: clock_unsynced.c
 ### Obsoletes & Conflicts & Provides
 Obsoletes: tunelp
 Obsoletes: util-linux-ng
+Obsoletes: util-linux-initramfs
 
 Conflicts: initscripts <= 4.58, timeconfig <= 3.0.1
 Provides: util-linux-ng = %version-%release
@@ -81,7 +83,7 @@ Conflicts: kernel < 2.2.12-7
 Conflicts: e2fsprogs < 0:1.41.9-alt3
 %endif
 
-Requires(pre,postun): %name-control = %version-%release
+Requires(pre,post): %name-control = %version-%release
 Requires: coreutils > 6.10-alt2
 Requires: libsmartcols = %version-%release
 
@@ -131,7 +133,7 @@ lsblk lists information about all or the specified block devices.
 %package -n mount
 Summary: Programs for mounting and unmounting filesystems
 Group: System/Base
-Requires(pre,postun): %name-control = %version-%release
+Requires(pre,post): %name-control = %version-%release
 Requires: libblkid = %version-%release
 Requires: libmount = %version-%release
 Requires: libsmartcols = %version-%release
@@ -436,13 +438,6 @@ Requires: pkgconfig
 This is development static library for fdisk-like programs,
 part of util-linux.
 
-%package initramfs
-Summary: Utilities for use in initramfs
-Group: System/Base
-
-%description initramfs
-Utilities for use in initramfs.
-
 %package -n bash-completion-%name
 Summary: Bash completion for %name utils
 Group: Shells
@@ -494,23 +489,6 @@ autoheader --force
 automake --add-missing --force-missing
 
 %configure \
-	--enable-libblkid \
-	--enable-libuuid \
-	--enable-static-programs=blkid \
-	--disable-pylibmount \
-	--without-python \
-	--without-ncurses \
-	--disable-shared \
-	--disable-login \
-	--disable-sulogin \
-	--disable-su \
-	--enable-static
-%make_build blkid.static
-mv blkid.static rpm/blkid.initramfs
-
-%make clean
-
-%configure \
 	--bindir=/bin \
 	--sbindir=/sbin \
 	--disable-kill \
@@ -554,8 +532,15 @@ mv blkid.static rpm/blkid.initramfs
 %ifarch %ix86 x86_64
 %__cc %optflags stacktest.c -o stacktest
 %endif
+
 # build nologin
-klcc -Wall -Wextra -Werror nologin.c -o nologin
+%ifarch %e2k
+%__cc -static \
+	-Wall -Wextra -Werror nologin.c -o nologin
+%else
+klcc \
+	-Wall -Wextra -Werror nologin.c -o nologin
+%endif
 
 %__cc %optflags clock_unsynced.c -o clock_unsynced
 %__cc %optflags pause.c -o pause
@@ -773,9 +758,6 @@ rm -f -- %buildroot/%_infodir/dir
 # remove getopt docs
 rm -rf -- %buildroot/%_defaultdocdir/%name/getopt
 
-install -pD -m755 rpm/blkid.initramfs %buildroot/lib/mkinitrd/udev/sbin/blkid
-install -pD -m755 rpm/vol_id %buildroot/lib/mkinitrd/udev/lib/udev/vol_id
-
 mkdir -p %buildroot/lib/tmpfiles.d
 cat > %buildroot/lib/tmpfiles.d/losetup-loop.conf <<EOF
 b /dev/loop0 0660 root disk - 7:0
@@ -967,10 +949,6 @@ fi
 %files -n libfdisk-devel-static
 %_libdir/libfdisk.a
 
-%files initramfs
-/lib/mkinitrd/udev/sbin/blkid
-/lib/mkinitrd/udev/lib/udev/vol_id
-
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
@@ -983,6 +961,11 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu Apr 11 2019 Alexey Gladkov <legion@altlinux.ru> 2.33.2-alt1
+- New version (2.33.2).
+- Obsolete util-linux-initramfs.
+- Fix build on %%e2k.
+
 * Tue Apr 09 2019 Alexey Gladkov <legion@altlinux.ru> 2.33.1-alt1
 - New version (2.33.1).
 
