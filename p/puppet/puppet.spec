@@ -1,6 +1,6 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.4.0
+%define        core_version   6.4.1
 %define        dm_version     1.0.1
 
 Name:          %pkgname
@@ -185,6 +185,9 @@ END.
 
 
 %changelog
+* Thu Apr 11 2019 Andrey Cherepanov <cas@altlinux.org> 6.4.1-alt1
+- New version.
+
 * Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
 - New version.
 
