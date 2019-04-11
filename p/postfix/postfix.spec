@@ -1,6 +1,6 @@
 Name: postfix
 Version: 2.11.11
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -64,7 +64,7 @@ Provides: MTA, MailTransportAgent
 Provides: smtpd, smtpdaemon, %name-smtpd
 Conflicts: sendmail, masqmail, exim
 Obsoletes: %name-beta, %name-smtpd
-PreReq: sendmail-common >= 1.3, chrooted >= 0.3, %name-control >= 1.6
+Requires(pre): sendmail-common >= 1.3, chrooted >= 0.3, %name-control >= 1.6
 
 # This is used to be MDA, but default postfix main.cf uses procmail.
 Requires: procmail
@@ -709,6 +709,11 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Thu Apr 11 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt2
+- chroot.conf: do not apply alias_maps update rules to alias_database files.
+- dict_mysql: backported MySQL 8.x support.
+- tls: backported assorted upstream (by vt@).
+
 * Sun Jan 28 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt1
 - 2.11.7 -> 2.11.11.
 - Disabled NIS/NIS+ support as it was disabled in glibc-2.26.0.124.98f244e-alt1.
