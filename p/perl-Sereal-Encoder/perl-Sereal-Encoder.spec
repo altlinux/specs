@@ -6,8 +6,8 @@ BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Pa
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 4.005
-Release: alt1.1
+Version: 4.007
+Release: alt1
 Summary: Fast, compact, powerful binary serialization
 Group: Development/Perl
 License: perl
@@ -49,6 +49,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 11 2019 Igor Vlasenko <viy@altlinux.ru> 4.007-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.005-alt1.1
 - rebuild with new perl 5.28.1
 
