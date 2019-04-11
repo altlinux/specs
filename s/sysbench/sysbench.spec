@@ -1,5 +1,5 @@
 Name:     sysbench
-Version:  1.0.16
+Version:  1.0.17
 Release:  alt1
 
 Summary:  Scriptable database and system performance benchmark
@@ -65,6 +65,9 @@ mv %buildroot%_docdir/sysbench/manual.html .
 %_datadir/%name
 
 %changelog
+* Tue Apr 09 2019 Anton Midyukov <antohami@altlinux.org> 1.0.17-alt1
+- new version 1.0.17
+
 * Mon Mar 04 2019 Anton Midyukov <antohami@altlinux.org> 1.0.16-alt1
 - 1.0.16
 
