@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt2
+Release: alt3
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -75,6 +75,9 @@ sh ./genfipsrclist.sh
 %_libdir/libfreeimage.so
 
 %changelog
+* Thu Apr 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt3
+- updated unbundle patch for turbojpeg-2.0.2
+
 * Tue Feb 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
 - fixed build with -Werror=return-type enabled in g++
 
