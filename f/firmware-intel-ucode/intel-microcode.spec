@@ -1,10 +1,10 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20180807
-%define orig_rev a
+%define orig_timestamp 20190312
+%define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 7
-Release: alt1.%{orig_timestamp}%{?orig_rev:.%orig_rev}
+Version: 8
+Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -15,8 +15,8 @@ Group: System/Kernel and hardware
 Provides: microcode-data-intel = %version-%release
 Obsoletes: microcode-data-intel <= 20130222-alt2
 
-URL: https://anonscm.debian.org/cgit/users/hmh/intel-microcode.git/
-Source0: %{orig_name}-%{orig_timestamp}%{orig_rev}.tar
+URL: https://salsa.debian.org/hmh/intel-microcode.git
+Source0: %{orig_name}-%{orig_timestamp}%{?orig_rev}.tar
 
 BuildRequires: iucode_tool
 
@@ -30,7 +30,7 @@ The microcode data file for Linux contains the latest microcode
 definitions for all Intel processors.
 
 %prep
-%setup -q -n %orig_name-%{orig_timestamp}%{orig_rev}
+%setup -q -n %orig_name-%{orig_timestamp}%{?orig_rev}
 
 %build
 %make_build
@@ -50,6 +50,36 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Apr 11 2019 L.A. Kostis <lakostis@altlinux.ru> 2:8-alt1.20190312
+- Sync with Debian 3.20190312.1:
+  + Removed Microcodes:
+    sig 0x00050653, pf_mask 0x97, 2018-01-29, rev 0x1000140, size 30720
+  + New Microcodes:
+    sig 0x000806e9, pf_mask 0x10, 2018-10-18, rev 0x009e, size 98304
+    sig 0x000806eb, pf_mask 0xd0, 2018-10-25, rev 0x00a4, size 99328
+    sig 0x000806ec, pf_mask 0x94, 2019-02-12, rev 0x00b2, size 98304
+    sig 0x000906ec, pf_mask 0x22, 2018-09-29, rev 0x00a2, size 98304
+    sig 0x000906ed, pf_mask 0x22, 2019-02-04, rev 0x00b0, size 97280
+  + Updated Microcodes:
+    sig 0x000306f2, pf_mask 0x6f, 2018-11-20, rev 0x0041, size 34816
+    sig 0x000306f4, pf_mask 0x80, 2018-11-06, rev 0x0013, size 17408
+    sig 0x00050654, pf_mask 0xb7, 2019-01-28, rev 0x200005a, size 33792
+    sig 0x00050662, pf_mask 0x10, 2018-12-06, rev 0x0019, size 32768
+    sig 0x00050663, pf_mask 0x10, 2018-12-06, rev 0x7000016, size 23552
+    sig 0x00050664, pf_mask 0x10, 2018-11-17, rev 0xf000014, size 23552
+    sig 0x00050665, pf_mask 0x10, 2018-11-17, rev 0xe00000c, size 19456
+    sig 0x000506c9, pf_mask 0x03, 2018-09-14, rev 0x0036, size 17408
+    sig 0x000506ca, pf_mask 0x03, 2018-09-20, rev 0x0010, size 15360
+    sig 0x000706a1, pf_mask 0x01, 2018-09-21, rev 0x002c, size 73728
+    sig 0x000806e9, pf_mask 0xc0, 2018-07-16, rev 0x009a, size 98304
+    sig 0x000806ea, pf_mask 0xc0, 2018-10-18, rev 0x009e, size 98304
+    sig 0x000906e9, pf_mask 0x2a, 2018-07-16, rev 0x009a, size 98304
+    sig 0x000906ea, pf_mask 0x22, 2018-12-12, rev 0x00aa, size 98304
+    sig 0x000906eb, pf_mask 0x02, 2018-12-12, rev 0x00aa, size 99328
+
+* Thu Aug 30 2018 L.A. Kostis <lakostis@altlinux.ru> 2:7-alt2.20180807.a
+- Update url.
+
 * Thu Aug 30 2018 L.A. Kostis <lakostis@altlinux.ru> 2:7-alt1.20180807.a
 - Sync with Debian 3.20180807a1:
   + New Microcodes:
