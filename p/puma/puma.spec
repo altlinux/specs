@@ -1,5 +1,5 @@
 Name:    puma
-Version: 3.12.0
+Version: 3.12.1
 Release: alt1
 
 Summary: A Ruby/Rack web server built for concurrency
@@ -13,12 +13,31 @@ Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel
+BuildRequires: rake-compiler
 # For tests
-#BuildRequires: ruby-rack
+#BuildRequires: gem(rack)
 
 %description
 Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
 for Ruby/Rack applications in development and production.
+
+%package -n gem-puma
+Summary: A Ruby/Rack web server built for concurrency (gem)
+Group:   Development/Ruby
+
+%description -n gem-puma
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
+for Ruby/Rack applications in development and production.
+
+This is the gem for puma executable.
+
+%package devel
+Summary: Development files for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel
+Development files for %name.
 
 %package doc
 Summary: Documentation files for %name
@@ -31,33 +50,38 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %name-%version
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%%ruby_test_unit -Ilib:ext:test test
+#gem_test
 
 %files
 %doc README*
 %_bindir/%{name}*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+
+%files -n gem-puma
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files devel
+%ruby_includedir/*
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
+- New version.
+
 * Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
 - New version.
+- Package according to Ruby Policy 2.0
 
 * Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt2
 - Package as gem.
