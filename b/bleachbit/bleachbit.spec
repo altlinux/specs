@@ -1,18 +1,17 @@
-Name:           bleachbit
-Version:        2.0
-Release:        alt1
+Name:     bleachbit
+Version:  2.2
+Release:  alt1
 
-Summary:        Remove unnecessary files, free space, and maintain privacy
-License:        GPLv3+
-Group:          Archiving/Other
-URL:            http://www.bleachbit.org/
+Summary:  Remove unnecessary files, free space, and maintain privacy
+License:  GPLv3+
+Group:    Archiving/Other
+URL:      http://www.bleachbit.org/
 
-Packager:       Andrey Cherepanov <cas@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0:        %name-%version.tar
-Source1:	%name.watch
-
-Patch1:		%name-apt-rpm-specific.patch
+Source0:  %name-%version.tar
+Patch1:   %name-apt-rpm-specific.patch
+Patch2:   %name-regression-fix.patch
 
 BuildArch:      noarch
 
@@ -30,6 +29,7 @@ and history list of many common programs.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 make -C po local 
@@ -54,6 +54,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu Apr 11 2019 Andrey Cherepanov <cas@altlinux.org> 2.2-alt1
+- New version.
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
 - New version.
 
