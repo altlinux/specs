@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-JSON-Validator
-Version: 3.06
+Version: 3.08
 Release: alt1
 Summary: Validate data against a JSON schema
 License: Artistic 2.0
 Group: Development/Perl
 Url: https://github.com/mojolicious/json-validator.git
-Source: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/J/JH/JHTHORSEN/JSON-Validator-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -50,7 +50,7 @@ the elegant DSL schema-builder JSON::Validator::joi to define the schema
 programmatically.
 
 %prep
-%setup
+%setup -q -n JSON-Validator-%{version}
 rm -f t/invalid-ref.t
 %build
 %perl_vendor_build
@@ -64,5 +64,8 @@ rm -f t/invalid-ref.t
 %doc Changes README.md
 
 %changelog
+* Thu Apr 11 2019 Igor Vlasenko <viy@altlinux.ru> 3.08-alt1
+- automated CPAN update
+
 * Tue Apr 02 2019 Alexandr Antonov <aas@altlinux.org> 3.06-alt1
 - initial build for ALT
