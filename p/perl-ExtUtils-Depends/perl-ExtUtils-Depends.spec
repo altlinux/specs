@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-Depends
 Name: perl-%dist
-Version: 0.405
+Version: 0.8000
 Release: alt1
 
 Summary: Perl module for building XS extensions easily
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/ExtUtils-Depends-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ that a perl extension is treated like a shared library that provides
 also a C and an XS interface besides the perl one.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ also a C and an XS interface besides the perl one.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Thu Apr 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.8000-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.405-alt1
 - automated CPAN update
 
