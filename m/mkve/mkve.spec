@@ -1,13 +1,12 @@
 Name: mkve
 Version: 0.21
-Release: alt2
+Release: alt3
 Source: %name-%version.tar
 Packager: Anton Protopopov <aspsk@altlinux.org>
 
 Summary: Package for initial managing of virtual environments
 License: GPL
 Group: System/Configuration/Other
-ExclusiveArch: x86_64
 
 Requires: su
 Requires: mkve-cache
@@ -43,6 +42,9 @@ A tool to create caches for virtual environments
 %_man1dir/mkve-cache*
 
 %changelog
+* Wed Apr 10 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.21-alt3
+- Removed ExclusiveArch tag.
+
 * Sun Nov 04 2018 Alexey Shabalin <shaba@altlinux.org> 0.21-alt2
 - build for x86_64 only
 
