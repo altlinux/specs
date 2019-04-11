@@ -2,14 +2,14 @@
 
 Name: gcc%gcc_branch
 Version: 8.3.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
 License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
 Group: Development/C
-Url: http://gcc.gnu.org/
+Url: https://gcc.gnu.org/
 
 %ifarch ppc
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
@@ -1094,6 +1094,13 @@ for f in */aclocal.m4; do
 	sh -n "$d"/configure
 done
 
+# Libtoolize now removes those of its build-aux files
+# that haven't been installed during its invocation.
+# Invoke libtoolize once more to install missing files.
+# gotools is just one of those directories that could
+# be used to install all necessary build-aux files.
+%autoreconf gotools
+
 ./contrib/gcc_update --touch
 
 rm -rf %buildtarget
@@ -2057,6 +2064,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu Apr 11 2019 Dmitry V. Levin <ldv@altlinux.org> 8.3.1-alt3
+- Upgraded default -fstack-protector to -fstack-protector-strong.
+- Fixed build with libtool 2.4.6.
+
 * Mon Mar 11 2019 Dmitry V. Levin <ldv@altlinux.org> 8.3.1-alt2
 - Updated to redhat/gcc-8-branch r269592 (Fedora gcc-8.3.1-3).
 
