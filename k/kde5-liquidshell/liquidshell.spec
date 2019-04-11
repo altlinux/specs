@@ -1,13 +1,13 @@
 %define rname liquidshell
 
-%def_enable packagekit
+%def_disable packagekit
 
 %define liquidshell_sover 5
 %define libliquidshell liquidshell%liquidshell_sover
 
 Name: kde5-liquidshell
 Version: 1.4
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -125,6 +125,9 @@ install -Dm 0644 liquidshell-session.desktop %buildroot/%_datadir/xsessions/liqu
 %_datadir/xsessions/liquidshell-session.desktop
 
 %changelog
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt4
+- build without packagekit
+
 * Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt3
 - update from master branch
 
