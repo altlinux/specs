@@ -51,7 +51,7 @@
 %define ver 21
 Name: erlang
 Epoch: 1
-%define subver 3.2
+%define subver 3.3
 Version: %ver.%subver
 Release: alt1
 Summary: A programming language developed by Ericsson
@@ -810,7 +810,7 @@ install -D -p -m 0644 %{SOURCE8} %{buildroot}%{_unitdir}/epmd@.socket
 # make tests || exit 0
 
 
-%pre 
+%pre
 getent group epmd >/dev/null || groupadd -r epmd
 getent passwd epmd >/dev/null || \
 useradd -r -g epmd -d /tmp -s /sbin/nologin \
@@ -1239,6 +1239,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Fri Apr 12 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.3.3-alt1
+- new version
+
 * Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.3.2-alt1
 - new version
 
@@ -1370,7 +1373,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
   You can find the README file for the release at
   http://www.erlang.org/download/otp_src_R14B02.readme
 
- 
+
 * Sun Mar 13 2011 Sergey Shilov <hsv@altlinux.org> R14B.1-alt2
 - fix packager (#25219);
 - fix Repocops rpm-filesystem-conflict-symlink-file warning.
