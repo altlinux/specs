@@ -1,6 +1,6 @@
 Name: installer-feature-kdesktop-services
-Version: 0.8.2
-Release: alt1%ubt
+Version: 0.8.3
+Release: alt1
 
 Summary: Setup services for start/not start on boot
 License: GPL
@@ -10,7 +10,6 @@ Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 
 Source: %name-%version.tar
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Setup services for start/not start on boot
@@ -29,7 +28,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
-* Thu Aug 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt1%ubt
+* Fri Apr 12 2019 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt1
+- enable rngd service
+
+* Thu Aug 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt1
 - update services list
 
 * Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
