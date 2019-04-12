@@ -1,7 +1,7 @@
 %define module Logoved-Stream
 
 Name: perl-%module
-Version: 0.018
+Version: 0.019
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ Repocop listener for Logoved-Stream beehive log parser.
 %perl_vendor_privlib/Logoved/Stream/Out/Listener/Repocop*
 
 %changelog
+* Fri Apr 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1
+- new version
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.018-alt1
 - new version
 
