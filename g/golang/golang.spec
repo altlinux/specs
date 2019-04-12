@@ -34,7 +34,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.12.1
+Version: 1.12.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -287,6 +287,9 @@ mkdir -p -- \
 
 
 %changelog
+* Fri Apr 12 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.4-alt1
+- 1.12.4
+
 * Wed Mar 27 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
 - New version (1.12.1).
 - Apply timezone patch, avoid using bundled data
