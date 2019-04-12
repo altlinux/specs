@@ -1,6 +1,6 @@
 Name: pulsejoin
 Summary: PulseJoin
-Version: 2.2
+Version: 2.3
 Release: alt1
 License: GPLv3
 Group: Sound
@@ -35,6 +35,15 @@ sed -i ./pulsejoin.sh -e 's,#!/usr/bin/env bash,#!/bin/bash,g'
 %_datadir/applications/*
 
 %changelog
+* Fri Apr 12 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3-alt1
+- Version 2.3:
+  + Added Spanish translation
+  + Remove empty temp directory on exit
+  + Fallback to universal mktemp -d if needed
+  + Don't remove temp file if unloading PulseAudio modules failed
+  + Handle errors while creating/removing devices
+  + Better handle errors on restarting PulseAudio
+  + Fixed compatibility with both GNU and BSD sed
 * Thu Apr 05 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.2-alt1
 - Version 2.2
 * Thu Apr 05 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.1-alt1
