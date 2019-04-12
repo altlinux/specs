@@ -1,6 +1,6 @@
 Name: update-kernel
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
 Summary: Update kernel and modules
 License: GPL
@@ -10,6 +10,7 @@ Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 Source: %name-%version.tar
 BuildArch: noarch
 
+Requires: apt
 Requires: /usr/bin/rpmevrcmp
 
 %description
@@ -38,6 +39,10 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 %_sbindir/remove-old-kernels
 
 %changelog
+* Mon Apr 01 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.9.11-alt2
+- Rewritten with another bashism that doesn't require /proc/.
+- Requires: apt (important not for real systems, but for testing in hasher).
+
 * Wed Aug 22 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
 - add -y option as alias for -f (force operation) (ALT bug 35283)
 
