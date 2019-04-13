@@ -14,7 +14,7 @@
 
 Name: clamav
 Version: 0.101.2
-Release: alt1
+Release: alt2
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -51,6 +51,7 @@ Patch2: freshclam-config.patch
 
 Patch20: clamav-0.99-pkgconfig.patch
 Patch21: clamav-AC_SYS_LARGEFILE.patch
+Patch22: clamav-automake-1.16.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -100,7 +101,7 @@ Summary: Shared libraries for clamav
 Group: System/Libraries
 Provides: lib%name = %version-%release
 
-# http://lists.clamav.net/pipermail/clamav-devel/2019-January/000437.html
+# http://lists.clamav.net/pipermail/clamav-devel/2019-January/000443.html
 Conflicts: libclamav7 < 0.100.2-alt3
 
 %description -n lib%{name}%{abiversion}
@@ -148,6 +149,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 %patch2 -p1
 
 %patch20 -p1
+%patch22 -p2
 %patch21 -p0
 
 %build
@@ -351,6 +353,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Sat Apr 13 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.2-alt2
+- added clamav-automake-1.16.patch: fixed FTBFS.
+
 * Thu Mar 28 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.101.2-alt1
 - 0.101.2
   + CVE-2019-1787, CVE-2019-1789, CVE-2019-1788 - 0.101.1 and prior
