@@ -1,19 +1,23 @@
+%def_enable snapshot
 %define ver_base 1.0
 
 Name: mypaint-brushes
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: MyPaint brush collection
 Group: Graphics
 License: GPLv2+
 Url: https://github.com/Jehan/mypaint-brushes
 
-# VCS: https://github.com/Jehan/mypaint-brushes.git
+%if_disabled snapshot
 Source: %name-%version.tar.gz
+%else
+# VCS: https://github.com/Jehan/mypaint-brushes.git
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
-
 
 %description
 MyPaint is a simple drawing and painting program that works well with
@@ -54,6 +58,9 @@ This package contains pc-file for %name.
 %_datadir/pkgconfig/%name-%ver_base.pc
 
 %changelog
+* Sat Apr 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
+- updated to v1.3.0-5-g2c567a1 (fixed build with automake-1.16)
+
 * Mon May 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus
 
