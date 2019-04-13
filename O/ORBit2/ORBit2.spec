@@ -1,10 +1,11 @@
+%def_enable snapshot
 %define ver_major 2.14
 %def_disable static
 %def_enable gtk_doc
 
 Name: ORBit2
 Version: %ver_major.20
-Release: alt0.2
+Release: alt0.3
 
 Summary: A high-performance CORBA Object Request Broker
 Group: System/Libraries
@@ -13,8 +14,12 @@ Url: http://www.gnome.org/projects/%name
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_disabled snapshot
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+%else
+#VCS: https://gitlab.gnome.org/Archive/orbit2.git
 Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+%endif
 Patch: %name-2.7.3-alt-test_makefile.patch
 Patch1: %name-2.14.20-alt-shared_name-server.patch
 Patch2: %name-2.13.3-fix-link-as-needed.patch
@@ -178,6 +183,9 @@ EOF
 %exclude %_libdir/*/*.la
 
 %changelog
+* Sat Apr 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.3
+- fixed build with automake-1.16
+
 * Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.2
 - updated to ORBIT2_2_14_19-18-g144be2e
 - grenka@: ORBIT2-2.14.20-alt-fix-include-in-makefile.patch
