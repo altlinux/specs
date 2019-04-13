@@ -1,5 +1,5 @@
 Name: projectdb
-Version: 0.0.20190204
+Version: 0.0.20190413
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -30,6 +30,9 @@ done
 %_datadir/projectdb
 
 %changelog
+* Sat Apr 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.20190413-alt1
+- db update
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.20190204-alt1
 - db update
 
