@@ -1,11 +1,11 @@
-%define ver_major 3.5
+%define ver_major 3.6
 %define xdg_name org.gnome.Goobox
 %define gst_api_ver 1.0
 
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: CD player and ripper for GNOME
@@ -18,6 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 3.22.0
 
 Requires: dconf gnome-icon-theme
+Requires: gst-plugins-base%gst_api_ver
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ yelp-tools
@@ -52,6 +53,9 @@ Goobox is a CD player and ripper well integrated with the GNOME environment.
 
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Feb 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1
 - 3.5.2
 

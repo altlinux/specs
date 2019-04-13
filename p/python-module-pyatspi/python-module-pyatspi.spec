@@ -2,7 +2,7 @@
 %define ver_major 2.32
 
 Name: python-module-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -81,6 +81,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
+- 2.32.1
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 

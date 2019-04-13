@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: libsoup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -31,7 +31,7 @@ Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
-Patch1: %name-2.65.2-alt-compat-map.patch
+Patch1: %name-2.66.1-alt-compat-map.patch
 
 Requires: glib-networking >= 2.59.90
 
@@ -165,7 +165,7 @@ part of Soup library.
 %prep
 %setup
 install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
-%patch1 -p1
+%patch1 -p1 -b .map
 
 %build
 %ifarch %e2k
@@ -231,6 +231,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.66.1-alt1
+- 2.66.1
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
 - 2.66.0
 

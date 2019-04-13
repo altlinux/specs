@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 3.32
 %define xdg_name org.gnome.Games
 
 Name: gnome-games
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -71,6 +71,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Wed Apr 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - updated to 3.32.0-7-g03815ac3
 

@@ -1,7 +1,7 @@
 %define modname mallard-ducktype
 
 Name: python3-module-%modname
-Version: 0.4
+Version: 1.0
 Release: alt1
 
 Summary: Parse Ducktype files and convert them to Mallard
@@ -38,6 +38,9 @@ Parse Ducktype files and convert them to Mallard.
 
 
 %changelog
+* Wed Apr 10 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - first build for Sisyphus
 

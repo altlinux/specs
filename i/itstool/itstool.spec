@@ -1,8 +1,9 @@
 %def_disable snapshot
 %def_with python3
+%def_enable check
 
 Name: itstool
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: ITS-based XML translation tool
@@ -50,6 +51,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Wed Dec 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
 - 2.0.5 with python3
 

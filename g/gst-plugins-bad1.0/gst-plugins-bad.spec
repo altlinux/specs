@@ -26,7 +26,7 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -156,6 +156,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
+- 1.15.90
+
 * Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 
