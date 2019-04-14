@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.4.0
+Version:  2.4.1
 Release:  alt1
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 Group: File tools
@@ -46,6 +46,7 @@ open-source password manager.
   -DWITH_XC_SSHAGENT=ON \
   -DWITH_XC_KEESHARE=ON \
   -DWITH_XC_KEESHARE_SECURE=ON \
+  -DWITH_XC_UPDATECHECK=OFF \
 %if_with yubikey
   -DWITH_XC_YUBIKEY=ON
 %endif
@@ -66,6 +67,10 @@ open-source password manager.
 %_mandir/man?/*
 
 %changelog
+* Sun Apr 14 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.4.1-alt1
+- Updated to v2.4.1.
+- Check for updates disabled.
+
 * Wed Mar 20 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.4.0-alt1
 - Updated to v2.4.0.
 - KeeShare support enabled
