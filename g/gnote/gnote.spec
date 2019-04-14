@@ -1,9 +1,9 @@
 %define ver_major 3.32
-%define _libexecdir /usr/libexec
+%define _libexecdir %_prefix/libexec
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Note-taking application
@@ -83,6 +83,9 @@ desktop-file-install \
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Sun Apr 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
