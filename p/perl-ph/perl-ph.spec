@@ -1,7 +1,7 @@
 %define dist ph
 Name: perl-%dist
 Version: 0.11.1
-Release: alt1
+Release: alt2
 
 Summary: Perl *.ph files
 License: GPL or Artistic
@@ -23,7 +23,11 @@ This package provides the following Perl header files.
 	sys/resource.ph
 
 %prep
-%setup -q -n %dist-%version
+%setup -n %dist-%version
+%ifarch %e2k
+# lcc's preprocessor has no -dD but -dM is fine
+sed -i 's,-dD,-dM,' h2ph.pl
+%endif
 
 %build
 %perl_vendor_build
@@ -37,6 +41,9 @@ This package provides the following Perl header files.
 %perl_vendor_archlib/sys/*.ph
 
 %changelog
+* Sun Apr 14 2019 Michael Shigorin <mike@altlinux.org> 0.11.1-alt2
+- E2K: avoid -dD (lcc's cpp lacks that one)
+
 * Wed Dec 26 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.1-alt1
 - Fixed build of ioctl.ph:
   + on ppc* architectures;
