@@ -1,5 +1,5 @@
 Name: QtBitcoinTrader
-Version: 1.40.40
+Version: 1.40.41
 Release: alt1
 Summary: Bitcoin Secure Trading Client for most popular Bitcoin exchanges
 Url: http://sourceforge.net/projects/bitcointrader/
@@ -43,6 +43,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Sun Apr 14 2019 Motsyo Gennadi <drool@altlinux.ru> 1.40.41-alt1
+- 1.40.41
+
 * Sat Jan 26 2019 Motsyo Gennadi <drool@altlinux.ru> 1.40.40-alt1
 - 1.40.40
 
