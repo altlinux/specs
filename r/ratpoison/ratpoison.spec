@@ -1,18 +1,24 @@
-Name: ratpoison
-Version: 1.4.8
-Release: alt1.git20140917.1
+%define        pkg_name ratpoison
 
-Group: Graphical desktop/Other
-Summary: ratpoison - Simple window manager with no fat library dependencies
-License: GPL2
-Url: http://www.nongnu.org/ratpoison
+Name:          %pkg_name
+Version:       1.4.9
+Release:       alt1
 
-Source: %name-%version.tar
-Source1: RATPOISON.xpm
+Group:         Graphical desktop/Other
+Summary:       ratpoison - Simple window manager with no fat library dependencies
+License:       GPL2
+Url:           http://www.nongnu.org/ratpoison
+# VCS:         https://git.savannah.nongnu.org/git/ratpoison.git
+
+Source:        %name-%version.tar
+Source1:       RATPOISON.xpm
 
 # Automatically added by buildreq on Thu Apr 08 2010 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glibc-pthread libX11-devel libXrender-devel libfreetype-devel pkg-config xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: imake libICE-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXtst-devel libreadline-devel xorg-cf-files
+BuildRequires: libXrandr-devel
+BuildRequires(pre): emacs-devel
+BuildRequires(pre): emacs-common
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -27,8 +33,37 @@ keystrokes. ratpoison has a prefix map to minimize the
 key clobbering that cripples EMACS and other quality
 pieces of software.
 
+
+%package       -n emacs-%name
+Summary:       The Emacs Lisp bytecode included in %name
+Group:         Development/Other
+Requires:      %name = %EVR
+Requires:      emacs-common
+
+%description   -n emacs-%name
+%name-el contains the Emacs Lisp bytecode
+included in the %name package, that extends the Emacs editor.
+
+You need to install %name-el only if you intend to modify any of the
+%name code or see some Lisp examples.
+
+
+%package       -n emacs-%name-el
+Summary:       The Emacs Lisp sources for bytecode included in %name
+Group:         Development/Other
+Requires:      emacs-%name = %EVR
+
+%description   -n emacs-%name-el
+%name-el contains the Emacs Lisp sources for the bytecode
+included in the %name package, that extends the Emacs editor.
+
+You need to install %name-el only if you intend to modify any of the
+%name code or see some Lisp examples.
+
+
 %prep
 %setup
+
 %build
 %autoreconf
 %configure \
@@ -38,6 +73,7 @@ pieces of software.
 		--with-x
 
 %make_build
+%byte_compile_file contrib/%pkg_name.el
 
 %install
 %makeinstall_std
@@ -63,9 +99,11 @@ SCRIPT:
 exec %_bindir/start%name
 EOF
 
+install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
+
 %files
 %config(noreplace) %_sysconfdir/X11/wmsession.d/16%name
-
+%_defaultdocdir/*
 %_bindir/*
 %_datadir/%name
 %_man1dir/%name.1*
@@ -73,7 +111,18 @@ EOF
 %_niconsdir/RATPOISON.xpm
 %doc README TODO AUTHORS NEWS ChangeLog doc/sample.ratpoisonrc doc/ipaq.ratpoisonrc
 
+%files       -n emacs-%name-el
+%_emacslispdir/%name.el
+
+%files       -n emacs-%name
+%_emacslispdir/%name.elc
+
 %changelog
+* Thu Apr 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.9-alt1
+- Bump to version 1.4.9
+- Use git repo sources to build
+- New subpackages: -n emacs-ratpoison-el, emacs-ratpoison
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt1.git20140917.1
 - NMU: added BR: texinfo
 
@@ -97,7 +146,7 @@ EOF
 - remove INSTALL and add COPYING to %%doc.
 - menu added
 
-* Sun Jan 15 2006 Ù≈“≈€Àœ◊ Â◊«≈Œ…  <evg@krastel.ru> 1.3.0-alt1
+* Sun Jan 15 2006 –¢–µ—Ä–µ—à–∫–æ–≤ –ï–≤–≥–µ–Ω–∏–π <evg@krastel.ru> 1.3.0-alt1
 - 1.3.0
 
 * Tue Oct 07 2003 Sergey V Turchin <zerg at altlinux dot org> 1.2.2-alt2
@@ -118,7 +167,7 @@ EOF
 * Sat Jun 21 2003 Sergey V Turchin <zerg at altlinux dot org> 1.2.2-alt1
 - build for ALT
 
-* Sun Jun 15 2003 Per ÿyvind Karlsen <peroyvind@sintrax.net> 1.2.2-1mdk
+* Sun Jun 15 2003 Per √òyvind Karlsen <peroyvind@sintrax.net> 1.2.2-1mdk
 - 1.2.2
 - rm -rf $RPM_BUILD_ROOT in correct stage
 - cleanups
