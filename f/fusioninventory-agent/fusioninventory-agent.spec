@@ -1,5 +1,5 @@
 Name:     fusioninventory-agent
-Version:  2.4.3
+Version:  2.5
 Release:  alt1
 
 Summary:  FusionInventory Agent
@@ -117,6 +117,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Sun Apr 14 2019 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1
+- New version.
+
 * Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
 - New version.
 
