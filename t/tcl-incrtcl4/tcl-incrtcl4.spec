@@ -2,7 +2,7 @@
 %define oname itcl
 
 Name: tcl-incrtcl4
-Version: 4.0.5
+Version: 4.1.1
 Release: alt1
 
 Summary: [Incr Tcl] is an object-oriented extension of the Tcl language
@@ -89,5 +89,8 @@ make test
 %_tcllibdir/libitclstub%version.a
 
 %changelog
+* Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Wed Apr 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.5-alt1
 - 4.0.5

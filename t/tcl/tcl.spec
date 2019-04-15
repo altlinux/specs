@@ -1,9 +1,9 @@
-%def_without test
+%def_with test
 %define major 8.6
 
 Name: tcl
-Version: 8.6.8
-Release: alt3
+Version: 8.6.9
+Release: alt1
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -17,8 +17,6 @@ BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
 BuildRequires: zlib-devel
 
-Requires: lib%name = %version-%release
-
 Conflicts: tcl-readline < 2.1.1-alt8
 
 %package -n lib%name
@@ -30,9 +28,8 @@ Provides: %_tcldatadir
 %package devel
 Summary: Header files and C programming manual for TCL
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name
 Requires: rpm-build-tcl >= 0.5-alt1
-Requires: zlib-devel
 
 %description
 The Tcl (Tool Command Language) provides a powerful platform for
@@ -72,7 +69,7 @@ This package includes header files and C programming manuals for Tcl.
 pushd unix
 %autoreconf
 %configure --disable-rpath --enable-threads
-make all %{?_with_test:test}
+make all
 popd
 
 %install
@@ -95,6 +92,13 @@ chmod +x %__tclsh
 bzip -9f ChangeLog changes
 install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 
+%check
+# skip clock.test due lack of /etc/localtime in the build environment (ALT#35848)
+rm -f tests/clock.test
+pushd unix
+make test
+popd
+
 %files
 %dir %docdir
 %docdir/README
@@ -106,6 +110,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/tcl8
 %_tcldatadir/%name%major
 %exclude %_tcldatadir/%name%major/%{name}AppInit.c
+%exclude %_tcldatadir/%name%major/auto.tcl
+%exclude %_tcldatadir/%name%major/init.tcl
+%exclude %_tcldatadir/%name%major/package.tcl
 
 %_man1dir/*
 %_mandir/mann/*
@@ -113,7 +120,12 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %files -n lib%name
 %dir %_tcllibdir
 %dir %_tcldatadir
+%dir %_tcldatadir/%name%major
 %_libdir/lib%name%major.so
+
+%_tcldatadir/%name%major/auto.tcl
+%_tcldatadir/%name%major/init.tcl
+%_tcldatadir/%name%major/package.tcl
 
 %files devel
 %docdir/ChangeLog.*
@@ -128,6 +140,13 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.9-alt1
+- 8.6.9 released
+- moved auto.tcl, init.tcl and package.tcl to libtcl subpackage
+- removed bundled zlib
+- tcl-devel: fixed provided linkage flags, dropped dependency to zlib-devel
+- enabled check
+
 * Thu Mar 28 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt3
 - tcl-devel: added dependency on zlib-devel
 
