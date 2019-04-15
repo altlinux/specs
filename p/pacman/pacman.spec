@@ -1,8 +1,8 @@
 #%%def_enable Werror
 
 Name:     pacman
-Version:  0.9.0.19.git7cf259d
-Release:  alt4
+Version:  0.9.4
+Release:  alt1
 
 Summary:  Yet another pacman clone in C/C++ and SDL
 License:  GPLv2, fonts of unknown license
@@ -41,6 +41,9 @@ rm -r %buildroot/%_defaultdocdir/%name
 %_datadir/applications/pacman.desktop
 
 %changelog
+* Mon Apr 15 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
+- Build new version.
+
 * Thu Oct 11 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt4
 - Fix menu icon.
 
