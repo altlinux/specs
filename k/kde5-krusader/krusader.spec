@@ -3,9 +3,10 @@
 
 Name: kde5-%origname
 Version: 2.7.1
-Release: alt2
+Release: alt3
 
 Source: %origname.tar.gz
+Source1: krusader.po
 Patch1: not_show_hidden_files.patch
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
@@ -56,6 +57,7 @@ published under the GNU General Public Licence
 %prep
 %setup -qn %origname
 %patch1 -p2
+cp -f %SOURCE1 po/ru/
 
 %build
 %add_optflags -fpermissive
@@ -79,6 +81,9 @@ published under the GNU General Public Licence
 %_K5doc/*/%origname
 
 %changelog
+* Mon Apr 15 2019 Pavel Moseev <mars@altlinux.org> 2.7.1-alt3
+- update translation
+
 * Wed Jan 23 2019 Konstantin Artyushkin <akv@altlinux.org> 2.7.1-alt2
 - new 2.7.1 version
 
