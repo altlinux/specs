@@ -1,6 +1,6 @@
 Name: alterator-officer
 Version: 1.0
-Release: alt8
+Release: alt9
 
 Source:%name-%version.tar
 
@@ -37,6 +37,9 @@ alterator module for edit system  security officer properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/officer.d
 
 %changelog
+* Mon Apr 15 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt9
+- fixes for officer user creation.
+
 * Sat Apr 13 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt8
 - fixes for homedir, also an icon is made the same as for root.
 
