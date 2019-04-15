@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2019.01
+Version: 2019.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -43,6 +43,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Mon Apr 15 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.04-alt1
+- 2019.04 released
+
 * Thu Jan 17 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
 - 2019.01 released
 
