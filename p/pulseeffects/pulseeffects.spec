@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.5.7
+Version: 4.5.9
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -72,6 +72,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Mon Apr 15 2019 Yuri N. Sedunov <aris@altlinux.org> 4.5.9-alt1
+- 4.5.9
+
 * Wed Mar 20 2019 Yuri N. Sedunov <aris@altlinux.org> 4.5.7-alt1
 - 4.5.7
 
