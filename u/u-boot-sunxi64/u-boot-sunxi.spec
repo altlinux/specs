@@ -1,5 +1,5 @@
 Name: u-boot-sunxi64
-Version: 2019.01
+Version: 2019.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -14,7 +14,7 @@ Source: %name-%version-%release.tar
 BuildRequires: bc ccache dtc >= 1.4 flex
 BuildRequires: python-devel swig
 BuildRequires: python2.7(multiprocessing)
-BuildRequires: atf-sunxi
+BuildRequires: atf-sunxi >= 2.0
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -26,7 +26,7 @@ This package supports various Allwinner A64/H5 based boards.
 %setup
 
 %build
-export BL31=%_datadir/atf/sun50iw1p1/bl31.bin
+export BL31=%_datadir/atf/sun50i_a64/bl31.bin
 boards=$(grep -lr MACH_SUN50I configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do
 	mkdir build
@@ -46,6 +46,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Mon Apr 15 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.04-alt1
+- 2019.04 released
+
 * Tue Jan 22 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
 - 2019.01 released
 
