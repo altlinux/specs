@@ -6,15 +6,15 @@
 %endif
 
 Name: extra-cmake-modules
-Version: 5.56.0
-Release: alt2
+Version: 5.57.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
 License: BSD
 Url: http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
 
-# unable to do noarch for e2k
+# unable to remove noarch for e2k
 BuildArch: noarch
 
 Requires: cmake
@@ -74,6 +74,9 @@ sed -i 's|-Wl,--fatal-warnings||' kde-modules/KDECompilerSettings.cmake
 %endif
 
 %changelog
+* Mon Apr 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.57.0-alt1
+- new version
+
 * Tue Apr 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.56.0-alt2
 - adapt for lcc 1.23.12 and e2kv4 (thus not noarch now) (thanks mike@alt)
 - allow to disable building docs
