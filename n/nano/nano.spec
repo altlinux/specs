@@ -1,6 +1,6 @@
 Name: nano
 Version: 4.0
-Release: alt1
+Release: alt2
 
 Summary: a user-friendly editor, a Pico clone with enhancements
 License: %gpl3plus/%fdl v1.2+
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Mon Apr 15 2019 Artem Zolochevskiy <azol@altlinux.org> 4.0-alt2
+- RU Tooltip
+
 * Mon Apr 01 2019 Artem Zolochevskiy <azol@altlinux.org> 4.0-alt1
 - update to 4.0 (closes: 36465)
 
