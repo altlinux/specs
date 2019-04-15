@@ -1,5 +1,5 @@
 Name: installer-feature-selinux
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Installer selinux hooks
@@ -27,6 +27,10 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Mon Apr 15 2019 Denis Medvedev <nbr@altlinux.org> 0.11-alt1
+- added officer group wheel for him personally and setup
+smem and disable ipv6.
+
 * Tue Apr 09 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.10-alt1
 - merge c8.1 and sisyphus versions
 - disable pam_mktemp
