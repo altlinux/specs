@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2019.01
+Version: 2019.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -36,7 +36,6 @@ buildit()
   install -pD %_datadir/atf/rk3399/bl31.elf build/bl31.elf
   %make_build O=build ${board}_defconfig all u-boot.itb
   install -pm0644 -D build/u-boot.itb out/${board}/u-boot.itb
-  install -pm0644 build/spl/u-boot-spl.bin out/${board}/u-boot-spl.bin
   build/tools/mkimage -n rk3399 -T rksd -d build/spl/u-boot-spl.bin out/${board}/idbspl.img
   rm -rf build
 }
@@ -55,6 +54,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Mon Apr 15 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.04-alt1
+- 2019.04 released
+
 * Wed Mar 06 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
 - 2019.01 released
 
