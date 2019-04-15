@@ -1,7 +1,7 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install pkgconfig(blkid) pkgconfig(cairo-xlib) pkgconfig(expat) pkgconfig(fontconfig) pkgconfig(fribidi) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(libdrm) pkgconfig(libpcre) pkgconfig(libtiff-4) pkgconfig(mount) pkgconfig(pixman-1) pkgconfig(uuid) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-protocols) pkgconfig(xcomposite) pkgconfig(xdamage) pkgconfig(xdmcp) pkgconfig(xkbcommon) pkgconfig(xxf86vm)
+BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(uuid) pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(blkid) pkgconfig(cairo-xl
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.6
-Release:		alt1_4
+Release:		alt2_4
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -21,7 +21,7 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu63
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu
 BuildRequires:		xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -303,6 +303,9 @@ EOF
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Mon Apr 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.9.6-alt2_4
+- rebuild (closes: #36598)
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.9.6-alt1_4
 - update to new release by fcimport
 
