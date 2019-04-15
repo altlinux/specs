@@ -8,7 +8,7 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 5.18.0.240
+Version: 5.20.1.19
 Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
@@ -57,18 +57,16 @@ Patch4: %name-alt-mcs-no-parallel-build.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): gcc-c++
-BuildRequires(pre): cmake
-BuildRequires(pre): gettext-devel
-BuildRequires(pre): libicu-devel
-BuildRequires(pre): libgdiplus-devel >= 2.10
-BuildRequires(pre): pkg-config
-BuildRequires(pre): valgrind-devel
-BuildRequires(pre): zlib-devel
-BuildRequires(pre): python-modules-json
-BuildRequires(pre): perl-Pod-Usage
-
 BuildRequires: /proc
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: gettext-devel
+BuildRequires: libgdiplus-devel >= 2.10
+BuildRequires: pkg-config
+BuildRequires: valgrind-devel
+BuildRequires: zlib-devel
+BuildRequires: python-modules-json
+BuildRequires: perl-Pod-Usage
 
 # http://www.mono-project.com/docs/about-mono/releases/4.0.0/#npgsql
 #Obsoletes: mono-data-postgresql
@@ -89,19 +87,15 @@ BuildRequires: %name-devel-full >= 5.0
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
 %define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
 %define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | \
-	sed "s/mono\(System.IO.Compression\).*/mono\(System.IO.Compression\) = 4.0.0.0/" | \
+	sed "s/mono\(Mono.Cecil\).*/mono\(Mono.Cecil\) = 0.10.3.0/" | \
 	sed "s/mono\(System.Collections.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" | \
-	sed "s/mono\(System.Xml.ReaderWriter\).*/mono\(System.Xml.ReaderWriter\) = 4.0.0.0/" | \
+	sed "s/mono\(System.IO.Compression\).*/mono\(System.IO.Compression\) = 4.0.0.0/" | \
 	sed "s/mono\(System.Security.Cryptography.Algorithms\).*/mono\(System.Security.Cryptography.Algorithms\) = 4.3.1.0/" | \
 	sed "s/mono\(System.Text.Encoding.CodePages\).*/mono\(System.Text.Encoding.CodePages\) = 4.1.0.0/" | \
 	sed "s/mono\(System.ValueTuple\).*/mono\(System.ValueTuple\) = 4.0.3.0/" | \
 	sed "s/mono\(System.Xml.XPath.XDocument\).*/mono\(System.Xml.XPath.XDocument\) = 4.1.1.0/" | \
-	sed "s/mono\(System.Diagnostics.Process\).*/mono\(System.Diagnostics.Process\) = 4.1.0.0/" | \
 	sed "s/mono\(System.Diagnostics.StackTrace\).*/mono\(System.Diagnostics.StackTrace\) = 4.1.1.0/" | \
-	sed "/mono\(System.Runtime.Loader\).*/d" | \
-	sed "s/mono\(System.Security.AccessControl\).*/mono\(System.Security.AccessControl\) = 4.1.0.0/" | \
-	sed "/mono\(System.IO.Pipes.AccessControl\).*/d" | \
-	sed "s/mono\(System.Security.Principal.Windows\).*/mono\(System.Security.Principal.Windows\) = 4.1.0.0/"'
+	sed "/mono\(System.Runtime.Loader\).*/d"'
 
 %description
 The Mono runtime implements a JIT engine for the ECMA CLI
@@ -112,7 +106,6 @@ metadata access libraries.
 %package core
 Summary: The Mono CIL runtime, suitable for running .NET code
 Group: Development/Other
-Requires: libgdiplus
 Requires: /proc
 Requires: ca-certificates
 Conflicts: mono4-core < %EVR
@@ -694,7 +687,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %_libdir/libMonoPosixHelper.so*
 %_libdir/*profiler*.so.*
 %_libdir/libmono-btls-shared.so*
-%_libdir/libmono-system-native.so.*
+%_libdir/libmono-native.so.*
 %_monodir/4.0/Mono.Posix.dll
 %_monodir/4.0/mscorlib.dll
 
@@ -924,8 +917,8 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_libdir/*profiler*.so
 %_libdir/*profiler*.a
 %_libdir/libikvm-native.a
-%_libdir/libmono-system-native.so
-%_libdir/libmono-system-native.a
+%_libdir/libmono-native.so
+%_libdir/libmono-native.a
 %_pkgconfigdir/dotnet.pc
 %_pkgconfigdir/mono-cairo.pc
 %_pkgconfigdir/mono.pc
@@ -1144,32 +1137,35 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Apr 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt1
+- Updated to upstream version 5.20.1.19.
+
 * Thu Jan 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.18.0.240-alt1
 - Updated to upstream version 5.18.0.240.
 
 * Mon Oct 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.14.0.177-alt1
 - Updated to upstream version 5.14.0.177.
 
-* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt4%ubt
+* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt4
 - Updated interpackage dependencies.
 
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt3%ubt
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt3
 - Fixed build on some architectures.
 
-* Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt2%ubt
+* Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt2
 - Updated interpackage dependencies.
 
-* Fri Mar 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt1%ubt
+* Fri Mar 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt1
 - Updated to upstream version 5.10.0.157.
 
-* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt8%ubt
+* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt8
 - Updated provides.
 - Fixed monodoc directory.
 
-* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt7%ubt
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt7
 - Added file trigger to run cert-sync tool on certificates update.
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt6%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt6
 - Rebuilt with support of %%ubt macro.
 
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt5
