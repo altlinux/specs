@@ -1,6 +1,6 @@
 Name: sqlmap
 Version: 1.3.4
-Release: alt1
+Release: alt2
 
 Summary: Automatic SQL injection and database takeover tool
 
@@ -39,6 +39,7 @@ out-of-band connections.
 %setup
 %remove_repo_info
 # Drop shebang from non-executable python files
+find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/env python[[:digit:]]aa" {} \;
 find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/env pythonaa" {} \;
 
 %install
@@ -81,6 +82,9 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Mon Apr 15 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.4-alt2
+- fix shebang removal to support versioned python call
+
 * Sun Apr 14 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.4-alt1
 - new version 1.3.4
 
