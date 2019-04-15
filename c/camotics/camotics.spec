@@ -1,6 +1,6 @@
 Name: camotics
-Version: 1.1.1
-Release: alt1.4
+Version: 1.2.0
+Release: alt1
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -20,7 +20,9 @@ BuildRequires: boost-filesystem-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: libcairo-devel
-BuildRequires: qt4-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-websockets-devel
+BuildRequires: qt5-tools
 BuildRequires: bzlib-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libexpat-devel
@@ -31,6 +33,7 @@ BuildRequires: libssl-devel
 BuildRequires: libre2-devel
 BuildRequires: zlib-devel
 BuildRequires: ImageMagick-tools desktop-file-utils
+BuildRequires: chrpath
 Requires: %name-data = %EVR
 
 %description
@@ -66,8 +69,9 @@ Data files for %name
 %setup
 
 %build
-export QT4DIR=%_includedir/qt4
-%make_build
+export QT5DIR=%_includedir/qt5
+scons -C cbang %_smp_mflags
+scons %_smp_mflags
 
 %install
 scons install install_prefix=%buildroot%prefix
@@ -96,6 +100,9 @@ for x in 16 32 48; do
 	convert images/camotics.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/camotics.png
 done
 
+# fix RPATH
+chrpath -d %buildroot%_bindir/*
+
 %files
 %_bindir/*
 %_liconsdir/*
@@ -108,9 +115,12 @@ done
 %_datadir/%name
 
 %changelog
+* Mon Apr 15 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- New version 1.2.0
+- build with qt5
+
 * Thu Jan 03 2019 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.4
 - rebuild with libv8-3.14
-- first build for aarch64
 
 * Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.3
 - rebuilt with openssl-1.1
