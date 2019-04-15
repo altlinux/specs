@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sys-Virt
 Name: perl-%dist
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Represent and manage a libvirt hypervisor connection
@@ -36,6 +36,9 @@ export NPROCS=1
 %perl_vendor_autolib/Sys
 
 %changelog
+* Mon Apr 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.2.0-alt1
+- automated CPAN update
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1
 - automated CPAN update
 
