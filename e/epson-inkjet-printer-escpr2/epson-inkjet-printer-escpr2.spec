@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr2
-%define ver     1.0.30
+%define ver     1.0.32
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -79,5 +79,16 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Mon Apr 15 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.32-alt1
+- New version.
+- Supported new models:
+  + ET-3710 Series
+  + ET-3760 Series
+  + ET-4760 Series
+  + ET-M1170 Series
+  + ET-M2170 Series
+  + M1170 Series
+  + M2170 Series
+
 * Mon Mar 04 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.30-alt1
 - Initial build for Sisyphus.
