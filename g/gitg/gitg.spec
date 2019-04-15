@@ -1,13 +1,15 @@
 %def_enable snapshot
 %define ver_major 3.30
 %define api_ver 1.0
+%define xdg_name org.gnome.gitg
+
 %def_enable python
 %def_enable glade
 %def_enable docs
 
 Name: gitg
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -20,7 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 # gitg/gitg-plugins-engine.vala: repo.require("PeasGtk", "1.0", 0);
 Requires: typelib(PeasGtk)
 
@@ -41,13 +43,14 @@ AutoReqProv: nopython
 %define peas_ver 1.5.0
 
 BuildRequires(pre): meson rpm-build-gir
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgit2-glib-devel >= %git2_ver
-BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
-BuildPreReq: libpeas-devel >= %peas_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libdazzle-devel
+BuildRequires: libgit2-glib-devel >= %git2_ver
+BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libgtkspell3-devel >= %gtkspell_ver
+BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxml2-devel
@@ -80,7 +83,7 @@ This package provides shared Gitg library.
 %package -n lib%name-devel
 Summary: Development files for lib%name
 Group: Development/C
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Gitg is a graphical user interface for git. It aims at being a small,
@@ -113,7 +116,10 @@ library.
 
 %prep
 %setup
-subst 's/purelib/platlib/' libgitg-ext/meson.build
+# fix python install path
+subst "s/purelib/platlib/" libgitg-ext/meson.build
+# remove useless rpath
+subst "/install_rpath/d" %name/meson.build
 
 %build
 %meson %{?_disable_python:-Dpython=false} \
@@ -126,7 +132,7 @@ subst 's/purelib/platlib/' libgitg-ext/meson.build
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RevisionControl \
-	%buildroot%_desktopdir/gitg.desktop
+	%buildroot%_desktopdir/%xdg_name.desktop
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -135,13 +141,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files -f %name.lang
 %_bindir/%name
 %gitg_pluginsdir/
-%_datadir/glib-2.0/schemas/org.gnome.gitg.gschema.xml
-%_desktopdir/%name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
 %_man1dir/%{name}*
 %_iconsdir/hicolor/*x*/apps/*
-%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
-%_datadir/metainfo/%name.appdata.xml
+%_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
 %{?_enable_python:%python3_sitelibdir/gi/overrides/*}
 %doc AUTHORS NEWS README*
 
@@ -169,6 +175,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Apr 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt2
+- updated to v3.30.1-111-g83d3802b from master branch
+
 * Mon Nov 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - updated to v3.30.1-39-g685b4d39
 
