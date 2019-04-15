@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 License: %lgpl3plus
 Group: Development/Tools
@@ -8,7 +8,7 @@ Url: http://radare.org/
 Source: %name-%version.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash
+BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash liblz4-devel meson
 
 # bundled sdb ./shlr/sdb/README.md
 # bundled js0n ./shlr/sdb/src/json/README
@@ -34,13 +34,23 @@ Development files for %name package.
 %setup
 
 %build
-%configure --with-syscapstone --with-sysmagic --with-syszip --with-sysxxhash
-sed -i -- 's|-lm|-lm\ -L\.\./util -lr_util|g' libr/hash/Makefile
-LDFLAGS="-lutil -ldl -lpthread -lm" DESTDIR=%buildroot CFLAGS="%optflags -fPIC -I../include" LIBDIR=%_libdir PREFIX=%prefix DATADIR=%_datadir %make_build
+%meson                    \
+  -Duse_sys_magic=true    \
+  -Duse_sys_zip=true      \
+  -Duse_sys_zlib=true     \
+  -Duse_sys_lz4=true      \
+  -Duse_sys_xxhash=true   \
+  -Duse_sys_openssl=true  \
+  -Duse_libuv=true        \
+  -Duse_sys_capstone=true
 
 %install
-NOSUDO=1 LIBDIR=%_libdir PREFIX=%prefix make install DESTDIR=%buildroot
+%meson_install
+# Remove static library
 rm -f %buildroot/%_libdir/libr_shlr.a
+# Remove package manager
+rm %buildroot/%_bindir/r2pm
+# Copy r_jemalloc to the include directory
 cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 
 %files devel
@@ -50,15 +60,20 @@ cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 
 %files
 %doc AUTHORS.md DEVELOPERS.md COPYING COPYING.LESSER CONTRIBUTING.md README.md
-%_docdir/%name
+%doc %_docdir/%{name}
 %_bindir/*
 %_libdir/libr*.so*
 %_datadir/%name/
 %_mandir/man1/*
 %_mandir/man7/*
-%_libdir/%name/
+%_datadir/zsh
 
 %changelog
+* Mon Apr 15 2019 Nikita Ermakov <arei@altlinux.org> 3.4.1-alt1
+- Updated to 3.4.1.
+- Moved from "make" to "meson".
+- Use system wide lz4 library (ALT bug #36395).
+
 * Mon Feb 20 2019 Nikita Ermakov <arei@altlinux.org> 3.3.0-alt1
 - Updated to 3.3.0.
 
