@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q1.9
+Version: 2019.Q2.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -25,7 +25,7 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc5-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
+BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -53,7 +53,7 @@ AMD developer tools.
 %build
 # build amdvlk.so
 pushd %_builddir/xgl
-export GCC_VERSION=5 \
+export GCC_VERSION=7 \
 %cmake \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
@@ -81,13 +81,24 @@ install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Apr 15 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.1-alt1
+- 2019-4-10 update:
+  + xgl: 5b4058dc288a25f6554fcc61f80bf3f27eb35d8d
+  + pal: 99901922d67e502ff4233a8bfcbfa0347c0ffa1b
+  + llpc: 6c6de1dab3927bfb0f6659ba89c6fe80be8a4a04
+  + spvgen: 69311f7c1e220d190909298b9c7bd702ecc237ff
+- json: bump vulkan version.
+
+* Sat Apr 13 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.9-alt2
+- Rebuild w/ gcc7.
+
 * Tue Mar 26 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.9-alt1
 - 2019-3-26 update:
-    + llvm: 97cc33415120ae3ed472b6dd5cb234b74a80bd80
-    + spvgen: 1560d287f779b342e0019499dda85890cb07affc
-    + llpc: 32c0c28b1b7fd36b2f9cb17411af2963f6cfc48a
-    + pal: e17272e1581ae6e222293880db08e0df7b1f1f75
-    + xgl: a082b41ad4a8aed476cb39e6b63cddd25ab9e0b4
+  + llvm: 97cc33415120ae3ed472b6dd5cb234b74a80bd80
+  + spvgen: 1560d287f779b342e0019499dda85890cb07affc
+  + llpc: 32c0c28b1b7fd36b2f9cb17411af2963f6cfc48a
+  + pal: e17272e1581ae6e222293880db08e0df7b1f1f75
+  + xgl: a082b41ad4a8aed476cb39e6b63cddd25ab9e0b4
 - .json: make biarch friendly.
 
 * Wed Mar 06 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q1.7-alt1
