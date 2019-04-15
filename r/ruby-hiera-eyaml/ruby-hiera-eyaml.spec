@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.1.0 
-Release: alt1.1
+Release: alt2
  
 Summary: A backend for Hiera that provides per-value asymmetric encryption of sensitive data
 License: MIT/Ruby
@@ -16,6 +16,8 @@ Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+%gem_replace_version highline ~> 1.7
  
 %description
 hiera-eyaml is a backend for Hiera that provides per-value encryption of
@@ -32,31 +34,30 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%update_setup_rb
  
 %build
-%ruby_config
-%ruby_build
+%gem_build
  
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
  
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
  
 %files
 %doc README*
 %_bindir/eyaml
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
  
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
  
 %changelog
+* Wed Apr 10 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt2
+- Use new ruby packaging policy
+- Make appropriate require to highline
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
