@@ -1,6 +1,6 @@
 Name:       hedgewars
 Version:    0.9.25
-Release:    alt1
+Release:    alt2
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых воющих ёжиков
@@ -12,8 +12,7 @@ URL:        http://www.hedgewars.org/
 Packager:   Grigory Ustinov <grenka@altlinux.org>
 
 Source:     %name-%version.tar
-
-ExclusiveArch: x86_64
+Patch:      fix_non_inline_ShiftWorld.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -22,7 +21,10 @@ BuildRequires: cmake fpc-units-gtk2 fpc-units-misc fpc-units-net
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
 BuildRequires: libavformat-devel libffi-devel libfreeglut-devel libgmp-devel
 BuildRequires: liblua5.1-compat-devel libphysfs-devel phonon-devel qt5-tools-devel
-BuildRequires: desktop-file-utils chrpath
+BuildRequires: desktop-file-utils chrpath libswresample-devel
+BuildRequires: clang ghc7.6.1 libGLEW-devel ghc7.6.1-transformers ghc7.6.1-parsec
+
+ExclusiveArch: x86_64 %ix86
 
 %description
 Each player controls a team of several hedgehogs. During the course of the
@@ -81,11 +83,13 @@ This package contains all the data files for %name.
 
 %prep
 %setup
+%patch -p2
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
 
 %build
+%remove_optflags -frecord-gcc-switches
 %cmake_insource -DNOSERVER=1 -DPHYSFS_SYSTEM=1 \
 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
 -DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu"
@@ -95,16 +99,16 @@ rm -r misc/liblua
 %makeinstall_std
 
 # below is the desktop file and icon stuff.
-mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install                            \
-  --dir %{buildroot}%{_datadir}/applications \
-  %{buildroot}%{_datadir}/hedgewars/Data/misc/hedgewars.desktop
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
+mkdir -p %buildroot%_datadir/applications
+desktop-file-install \
+  --dir %buildroot%_datadir/applications \
+  %buildroot%_datadir/hedgewars/Data/misc/hedgewars.desktop
+mkdir -p %buildroot%_datadir/icons/hicolor/32x32/apps
 install -p -m 644 misc/hedgewars_ico.png \
-  %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/hedgewars.png
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/512x512/apps
+  %buildroot%_datadir/icons/hicolor/32x32/apps/hedgewars.png
+mkdir -p %buildroot%_datadir/icons/hicolor/512x512/apps
 install -p -m 644 misc/hedgewars.png \
-  %{buildroot}%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
+  %buildroot%_datadir/icons/hicolor/512x512/apps/%name.png
 
 # fix verify-elf's RPATH error
 chrpath --delete %buildroot%_bindir/hwengine
@@ -113,7 +117,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %doc README ChangeLog.txt CREDITS
 %_bindir/*
 %_libdir/*.so.*
+%ifarch x86_64
 %_libdir/libavwrapper.so
+%endif
 %_libdir/libphyslayer.so
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
@@ -125,6 +131,12 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Mon Apr 15 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt2
+- Reloaded upstream tarball (after several fixes they uploaded new one on
+  previous place)
+- Fixed building on %%ix86 (but without video recording).
+- Fixed FTBFS (Closes: #36222).
+
 * Wed Dec 12 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt1
 - Built new version (only for 64bit arch), because in this version
   upstream made hard dependency on ghc modules for 32bit arch.
