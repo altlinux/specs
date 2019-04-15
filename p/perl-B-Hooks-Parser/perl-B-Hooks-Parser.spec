@@ -6,8 +6,8 @@ BuildRequires: libsowing-devel perl(B/Hooks/EndOfScope.pm) perl(B/Hooks/OP/Check
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
-Release: alt1.2
+Version: 0.21
+Release: alt1
 Summary: Interface to perl's parser variables
 Group: Development/Perl
 License: perl
@@ -30,11 +30,14 @@ modify code while it's being parsed.
 %perl_vendor_install
 
 %files
-%doc Changes LICENCE README
+%doc Changes LICENCE README CONTRIBUTING
 %perl_vendor_archlib/B*
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Apr 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.2
 - rebuild with new perl 5.28.1
 
