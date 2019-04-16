@@ -1,5 +1,5 @@
 Name: screen
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1
 
 Summary: A screen manager that supports multiple sessions on one terminal
@@ -54,9 +54,6 @@ pushd src
 	--enable-colors256 \
 	--enable-rxvt_osc \
 	#
-
-# Does it work at all?
-#__perl -pi -e 's|.*#undef HAVE_BRAILLE.*|#define HAVE_BRAILLE 1|' config.h
 
 popd
 
@@ -120,6 +117,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Tue Apr 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6.2-alt1
+- Updated to v.4.6.2 (ALT#36357).
+
 * Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6.1-alt1
 - Updated to v.4.6.1.
 
