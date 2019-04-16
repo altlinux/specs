@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt129
+Release: alt130
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -542,6 +542,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Apr 16 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt130
+- %%configure: added --disable-silent-rules.
+- Disallowed Provides specifying version ranges.
+- Disallowed syntax errors in qualifiers of Requires and BuildRequires tags.
+
 * Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt129
 - Fixed deps optimization "due to repentancy": if subpkg A requires subpkg B,
   and B has a dependency on C, a weaker dependency on C is removed from A
