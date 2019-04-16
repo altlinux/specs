@@ -1,8 +1,8 @@
 %define rname mscore
-%define mversion 2.3
+%define mversion 3.0
 
 Name: musescore
-Version: 2.3.2
+Version: 3.0.5
 Release: alt1
 
 Summary: Music notation and composition software
@@ -11,8 +11,10 @@ License: GPL2
 Group: Sound
 Url: https://musescore.org
 
+# https://github.com/musescore/MuseScore
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+# Grabbed from https://github.com/OpenMandrivaAssociation/musescore
+Patch: musescore-3.0.2-dont-copy-qtwebengine.patch
 
 BuildPreReq: chrpath rpm-build-xdg
 
@@ -23,6 +25,7 @@ BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
 BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
 BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
 BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel libportmidi-devel
+BuildRequires: qt5-webengine-devel
 
 %description
 Music notation and composition software
@@ -42,9 +45,8 @@ Music notation and composition software
 %setup
 %patch -p1
 
-#for f in `grep -qrl ":/fonts" *`; do
-#	sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' "$f";
-#done
+# Remove -lporttime on RPM-based systems where PortTime is part of PortMidi
+sed -i 's/ -lporttime//' mscore/CMakeLists.txt
 
 %build
 export PATH=$PATH:%%_qt5dir/bin
@@ -55,6 +57,7 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
         -DBUILD_SCRIPTGEN=FALSE \
+    -DUSE_SYSTEM_FREETYPE=ON \
 	..
 
 make lrelease
@@ -74,7 +77,7 @@ done
 for f in ../fonts/gootville/*.otf ../fonts/gootville/*.json; do
      install -D $f %buildroot%_datadir/mscore-%mversion/fonts/gootville/$(basename $f)
 done
-for f in ../fonts/mscore/*.ttf ../fonts/mscore/*.otf ../fonts/mscore/*.json; do
+for f in ../fonts/mscore/*.ttf  ../fonts/mscore/*.json; do
      install -D $f %buildroot%_datadir/mscore-%mversion/fonts/mscore/$(basename $f)
 done
 
@@ -82,6 +85,7 @@ chrpath -d %buildroot%_bindir/mscore
 
 %files
 %_bindir/*
+%_datadir/appdata/mscore.appdata.xml
 %_desktopdir/mscore.desktop
 %_datadir/mscore-%mversion
 %_man1dir/*
@@ -90,6 +94,10 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Apr 16 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.5-alt1
+- Build new version (Closes: #36475).
+- Build with system libfreetype (Closes: #36386).
+
 * Wed Sep 12 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
 - 2.3.2
 
