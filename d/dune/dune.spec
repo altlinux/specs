@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 1.8.2
+Version: 1.9.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -55,6 +55,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_man1dir/dune-exec.1*
 %_man1dir/dune-external-lib-deps.1*
 %_man1dir/dune-install.1*
+%_man1dir/dune-init.1*
 %_man1dir/dune-installed-libraries.1*
 %_man1dir/dune-rules.1*
 %_man1dir/dune-runtest.1*
@@ -68,6 +69,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 
 
 %changelog
+* Tue Apr 16 2019 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
+- 1.9.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
