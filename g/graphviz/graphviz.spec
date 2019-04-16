@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt4.1
+Release: alt6
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -22,10 +22,21 @@ Group: Publishing
 # Git: http://www.graphviz.org/pub/scm/graphviz2/.git
 Url: http://www.graphviz.org
 Source0: %name-%version.tar
-Source1: graphviz-2.2-alt-libpath.patch
+Source2: graphviz-dot-x11-preview.desktop
+
 Patch0:  graphviz-2.24.0-alt-perl-5.12.patch
 Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
 Patch2:  graphviz-2.38.0-gs-9.18-fix.patch
+
+# From Fedora:
+Patch40:                 graphviz-2.40.1-visio.patch
+Patch41:                 graphviz-2.40.1-python3.patch
+# https://gitlab.com/graphviz/graphviz/issues/1367
+Patch42:                 graphviz-2.40.1-CVE-2018-10196.patch
+# rhbz#1505230
+Patch43:                 graphviz-2.40.1-dotty-menu-fix.patch
+Patch44:                 graphviz-2.40.1-coverity-scan-fixes.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -34,7 +45,7 @@ Obsoletes: libdotneato < %version
 
 # Automatically added by buildreq on Wed Apr 23 2014 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files
+BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
@@ -157,6 +168,12 @@ This package makes %name functionality accessible from Tcl
 #patch1
 %patch2 -p1
 
+%patch40 -p1 -b .visio
+#patch41 -p1 -b .python3
+%patch42 -p1 -b .CVE-2018-10196
+%patch43 -p1 -b .dotty-menu-fix
+%patch44 -p1 -b .coverity-scan-fixes
+
 %build
 %add_optflags -DNDEBUG
 # altbug #34101
@@ -167,6 +184,11 @@ sed -i 's,-Wall -ffast-math,-Wall,' configure*
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %endif
+
+# skip internal libltdl
+rm -rf libltdl/ m4/ltdl.m4
+subst 's|^LT|dnl LT|' configure.ac
+export LIBLTDL=-lltdl
 
 # http://lists.gnu.org/archive/html/libtool/2008-10/msg00010.html
 %autoreconf --no-recursive
@@ -223,6 +245,8 @@ if [ ! -d %buildroot%gvtcldir ]; then
 fi
 %endif
 
+install -m0644 -D %SOURCE2 %buildroot%_desktopdir/graphviz-dot-x11-preview.desktop
+
 # created by %%_bindir/dot -c
 touch %buildroot%gvlibdir/config
 
@@ -235,6 +259,7 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 
 %files
 %_bindir/*
+%_desktopdir/*.desktop
 %dir %gvdatadir/
 %gvdatadir/gvpr
 %gvdatadir/lefty
@@ -339,6 +364,15 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 # - enable/fix/test language bindings
 
 %changelog
+* Tue Apr 16 2019 Vitaly Lipatov <lav@altlinux.ru> 2.40.1-alt6
+- add desktop file for dot -Txlib (ALT bug 27583)
+- remove obsoleted linking patch
+
+* Tue Apr 16 2019 Vitaly Lipatov <lav@altlinux.ru> 2.40.1-alt5
+- build without internal libltdl (ALT bug 36596)
+- applied patches from Fedora
+- CVE-2018-10196
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.40.1-alt4.1
 - rebuild with new perl 5.28.1
 
