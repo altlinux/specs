@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Summary: Ruby Optimized XML Parser
 License: MIT/Ruby
@@ -14,8 +14,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
 A fast XML parser and object serializer that uses only standard C lib.
@@ -28,8 +26,6 @@ to Marshal for Object serialization.
 Summary: Documentation files for %name
 Group: Documentation
 
-BuildArch: noarch
-
 %description doc
 Documentation files for %{name}.
 
@@ -38,26 +34,27 @@ Documentation files for %{name}.
 %update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
-%ruby_sitelibdir/*
+%doc *.md
+%ruby_gemspec
+%ruby_gemlibdir
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
+%ruby_gemextdir
 
 %changelog
+* Tue Apr 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.10.0-alt2
+- Rebuild with new ruby scheme
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
 - New version.
 
