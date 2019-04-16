@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.32
 %define plugins_ver 13
 %define _libexecdir %_prefix/libexec
@@ -17,15 +19,16 @@
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
-%def_disable valgrind
-%def_disable tests
 # dropped since 3.27.90
 %def_disable rpm
 %def_disable rpm_ostree
 %def_disable external_appstream
+%def_enable valgrind
+%def_enable tests
+%def_disable check
 
 Name: gnome-software
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -33,7 +36,11 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Software
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.46
 %define gtk_ver 3.22.4
@@ -44,7 +51,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gnome_desktop_ver 3.18
 %define fwupd_ver 1.0.3
 %define flatpak_ver 0.99.3
-%define limba_ver 0.5.6
 %define ostree_ver 2018.4
 %define xmlb_ver 0.1.4
 
@@ -68,9 +74,8 @@ BuildRequires: valgrind-tool-devel
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
-%{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
 %{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel >= %packagekit_ver}
-%{?_enable_valgrind:BuildRequires: valgrind}
+%{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
 
@@ -109,7 +114,6 @@ GNOME Software.
 	%{?_disable_fwupd:-Dfwupd=false} \
 	%{?_enable_flatpak:-Dflatpak=true} \
 	%{?_enable_ostree:-Dostree=true} \
-	%{?_disable_limba:-Dlimba=false} \
 	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
 	%{?_disable_valgrind:-Dvalgrind=false} \
@@ -120,6 +124,10 @@ GNOME Software.
 %install
 %meson_install
 %find_lang --with-gnome %name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_xdgconfigdir/autostart/%name-service.desktop
@@ -157,6 +165,12 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Apr 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
+* Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt2
+- updated to 3.32.0-19-g6740a695
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
