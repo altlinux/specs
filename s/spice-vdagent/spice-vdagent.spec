@@ -4,8 +4,8 @@
 %def_with gtk
 
 Name: spice-vdagent
-Version: 0.18.0
-Release: alt2
+Version: 0.19.0
+Release: alt1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
 License: GPLv3+
@@ -16,13 +16,13 @@ Source: %name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(glib-2.0) >= 2.34
 %{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.10}
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
-BuildRequires: pkgconfig(spice-protocol) >= 0.12.13
+BuildRequires: pkgconfig(spice-protocol) >= 0.14.0
 BuildRequires: pkgconfig(alsa) >= 1.0.22
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd) >= 209
@@ -65,7 +65,7 @@ mkdir -p %buildroot%_runtimedir/spice-vdagentd
 %preun_service spice-vdagentd
 
 %files
-%doc COPYING ChangeLog README TODO NEWS
+%doc COPYING CHANGELOG.md README.md
 /lib/udev/rules.d/*.rules
 /lib/tmpfiles.d/spice-vdagentd.conf
 %_initddir/spice-vdagentd
@@ -79,11 +79,14 @@ mkdir -p %buildroot%_runtimedir/spice-vdagentd
 %_man1dir/*
 
 %changelog
+* Tue Apr 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 0.18.0-alt2
 - backport some patches from upstream
 - Update all paths /var/run -> /run
 
-* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1%ubt
+* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
 - 0.18.0
 - Use GTK+ instead of Xlib
 
