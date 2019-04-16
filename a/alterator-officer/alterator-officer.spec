@@ -1,6 +1,6 @@
 Name: alterator-officer
 Version: 1.0
-Release: alt9
+Release: alt10
 
 Source:%name-%version.tar
 
@@ -37,6 +37,9 @@ alterator module for edit system  security officer properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/officer.d
 
 %changelog
+* Tue Apr 16 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt10
+- officer user creation cleanup.
+
 * Mon Apr 15 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt9
 - fixes for officer user creation.
 
