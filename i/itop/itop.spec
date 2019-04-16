@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: IT Operations Portal
@@ -130,6 +130,9 @@ fi
 
 
 %changelog
+* Tue Apr 16 2019 Pavel Zilke <zidex at altlinux dot org> 2.6.1-alt1
+- New version 2.6.1
+
 * Wed Mar 06 2019 Pavel Zilke <zidex at altlinux dot org> 2.6.0-alt1
 - New version 2.6.0
 - Added PHP7 support
