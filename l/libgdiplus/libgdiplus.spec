@@ -1,25 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable static
 %def_without pango
 %define cairo system
 
 Name: libgdiplus
-Version: 2.10.9
-Release: alt2
+Version: 5.6.1
+Release: alt1
 
 Summary: An Open Source implementation of the GDI+ API.
 License: MPL
 Group: System/Libraries
-Packager: Mono Maintainers Team <mono@packages.altlinux.org>
-Url: http://www.mono-project.com/
+Url: https://www.mono-project.com
 
-Source0: %name-%version.tar
-Patch: %name-%version-%release.patch
+# https://github.com/mono/libgdiplus.git
+Source: %name-%version.tar
 
-BuildPreReq: glib2-devel >= 2.2.3
-BuildPreReq: libcairo-devel >= 1.4.0
-%{?_with_pango:BuildPreReq: libpango-devel >= 1.10.0}
-BuildPreReq: fontconfig-devel libfreetype-devel libXrender-devel libX11-devel
-BuildPreReq: libexif-devel libjpeg-devel libtiff-devel libungif-devel libpng-devel zlib-devel
+BuildRequires: glib2-devel >= 2.2.3
+BuildRequires: libcairo-devel >= 1.4.0
+%{?_with_pango:BuildRequires: libpango-devel >= 1.10.0}
+BuildRequires: fontconfig-devel libfreetype-devel libXrender-devel libX11-devel
+BuildRequires: libexif-devel libjpeg-devel libtiff-devel libungif-devel libpng-devel zlib-devel
 BuildRequires: gcc-c++
 
 %description
@@ -28,17 +29,15 @@ An Open Source implementation of the GDI+ API
 %package devel
 Summary: Development libraries and headers for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Libraries and header files for developing against libgdiplus.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
-#%%remove_optflags -Wall
 NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %configure  \
 %if %cairo == system
@@ -50,18 +49,20 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc COPYING NEWS README TODO MPL-1.1.html AUTHORS ChangeLog
+%doc LICENSE NEWS README TODO MPL-1.1.html AUTHORS ChangeLog
 %_libdir/*.so.*
-%_libdir/*.so
 
 %files devel
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %changelog
+* Mon Apr 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.6.1-alt1
+- Updated to upstream version 5.6.1.
+
 * Sun Jul 17 2016 Denis Medvedev <nbr@altlinux.org> 2.10.9-alt2
 - Added needed for mono4 so link. Library cannot have more than one
 soname and is excempt from soname policy.
