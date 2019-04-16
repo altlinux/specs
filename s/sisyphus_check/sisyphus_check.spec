@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.48
+Version: 0.8.49
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,12 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Apr 16 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.8.49-alt1
+- 210-check-kernel:
+  + fixed splitting of $kernel_require in the presence of disttag;
+  + for standalone kmodules, accept Requires on kernel-image with disttags;
+  + added warning to advise to use %%requires_kimage.
+
 * Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.48-alt1
 - 130-check-fhs: allow /run as defined in FHS-3.0
 
