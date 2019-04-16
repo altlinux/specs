@@ -1,58 +1,72 @@
-Name:    ruby-libvirt
-Version: 0.7.1
-Release: alt1.2
+%define        pkgname ruby-libvirt
+%define        gemname ruby-libvirt
 
-Summary: Ruby bindings for libvirt
-License: LGPLv2+
-Group:   Development/Ruby
-Url:     http://libvirt.org/ruby/
+Name:          %pkgname
+Version:       0.7.1
+Release:       alt2
+Summary:       Ruby bindings for libvirt
+License:       LGPLv2+
+Group:         Development/Ruby
+Url:           http://libvirt.org/ruby/
+# VCS:         git://libvirt.org/ruby-libvirt.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: libvirt-devel >= 0.4.0
 
 %description
-Ruby bindings for libvirt.
+The module Libvirt provides bindings to libvirt.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %{name}.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -q
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-ruby -e 'load "Rakefile";puts SPEC.to_ruby()' > %name.gemspec
+%gem_build --alias=ruby-libvirt:libvirt --join=lib:bin
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspecdir/%gemname-%version.gemspec
+%ruby_gemslibdir/%gemname-%version
+%ruby_gemsextdir/%gemname-%version
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemsdocdir/%gemname-%version
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt2
+- Use Ruby Policy 2.0
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1.2
 - Rebuild for new Ruby autorequirements.
 

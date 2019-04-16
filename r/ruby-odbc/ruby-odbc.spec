@@ -1,15 +1,18 @@
-Name: ruby-odbc
-Version: 0.99998
-Release: alt1.4
+%define        pkgname ruby-odbc
+%define        gemname ruby-odbc
 
-Summary: ODBC extension for Ruby
-License: GPL
-Group: Development/Ruby
-Url: http://www.ch-werner.de/rubyodbc
+Name:          %pkgname
+Version:       0.99999
+Release:       alt1
+Summary:       ODBC extension for Ruby
+License:       GPL
+Group:         Development/Ruby
+Url:           http://www.ch-werner.de/rubyodbc
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Source: %name-%version.tar
-
-BuildRequires: libruby-devel libunixODBC-devel ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libunixODBC-devel
 
 %description
 This is an ODBC binding for Ruby. So far it has been tested with
@@ -21,23 +24,44 @@ This is an ODBC binding for Ruby. So far it has been tested with
    on Windows NT4SP6 and 2000
  - Ruby 1.8.4, SQLite/ODBC 0.67, libiodbc 3.52.4 on Fedora Core 3 x86
 
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
 %prep
 %setup
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --use=ruby-odbc --alias=odbc --join=lib:bin
 
 %install
-%ruby_install
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README doc/
-%ruby_sitelibdir/*
-%ruby_sitearchdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.99999-alt1
+- Bump to 0.99999
+- Use Ruby Policy 2.0
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.99998-alt1.4
 - Rebuild with Ruby 2.5.1
 

@@ -1,61 +1,81 @@
-%define  pkgname escape_utils
+%define        pkgname escape-utils
+%define        gemname escape_utils
 
-Name: 	 ruby-%pkgname
-Version: 1.2.1 
-Release: alt1.5
+Name: 	       ruby-%gemname
+Version:       1.2.1 
+Release:       alt2
+Summary:       Faster string escaping routines for your ruby apps
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/brianmario/escape_utils
+# VCS:         https://github.com/brianmario/escape_utils.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Faster string escaping routines for your ruby apps
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/brianmario/escape_utils
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
-%summary
+Being as though we're all html escaping everything these days, why not make it
+faster?
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+For character encoding in 1.9, the output string's encoding is copied from
+the input string.
 
-BuildArch: noarch
+It has monkey-patches for Rack::Utils, CGI, URI, ERB::Util and Haml and
+ActionView so you can drop this in and have your app start escaping fast as
+balls in no time
 
-%description doc
-Documentation files for %{name}.
+It supports HTML, URL, URI and Javascript escaping/unescaping.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%gemname-doc
+Obsoletes:     ruby-%gemname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/%pkgname.rb
-%ruby_sitelibdir/%pkgname
-%ruby_sitearchdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt2
+- Use Ruby Policy 2.0
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1.5
 - Build for aarch64.
 

@@ -1,58 +1,57 @@
 %define  pkgname jsminc
 
-Name:    ruby-%pkgname
-Version: 2.0.0
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       2.0.0
+Release:       alt2
+Summary:       A fast JavaScript minifier written in C (by Douglas Crockford)
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/rf-/jsminc
+# VCS:         https://github.com/rf-/jsminc.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: A fast JavaScript minifier written in C (by Douglas Crockford)
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/rf-/jsminc
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
-%summary
+%summary. JSMinC is the original C version of JSMin, embedded in Ruby.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%ruby_sitelibdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt2
+- Use Ruby Policy 2.0
+
 * Sun Jun 10 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.1
 - Rebuild for aarch64.
 

@@ -1,19 +1,18 @@
-%global __find_debuginfo_files %nil
+%define        pkgname pg
 
-Name: ruby-pg
-Version: 0.19.0
-Release: alt2.5
+Name:          ruby-%pkgname
+Version:       1.1.4
+Release:       alt1
+Summary:       Ruby interface to PostgreSQL RDBMS
+Group:         Development/Ruby
+License:       MIT/GPL
+Url:           https://bitbucket.org/ged/ruby-pg/
+# VCS:         https://bitbucket.org/ged/ruby-pg.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby interface to PostgreSQL RDBMS
-Group: Development/Ruby
-License: MIT/Ruby or GPL
-Url: http://bitbucket.org/ged/ruby-pg/
-
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
-# Automatically added by buildreq on Sun Aug 31 2008 (-bi)
-BuildRequires: libruby-devel postgresql-devel ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: postgresql-devel
 BuildRequires: uni2ascii
 
 %description
@@ -22,41 +21,57 @@ from Ruby. This library works with PostgreSQL 6.4-8.x; it
 probably works with 6.3 or earlier with slight modification,
 but not tested at all.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-Conflicts: ruby-postgres-doc
-BuildArch: noarch
 
-%description doc
-Documentation files for %name
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
 %setup
-%patch -p1
-#sed -i -r 's/([[:blank:]]rb_enc)(_alias\()/\1db\2/g' ext/pg.c
-#mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --use=pg --version-replace=1.1.4
 
 %install
-%ruby_install
-%rdoc ext/pg.c
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc Contributors.rdoc README.rdoc LICENSE
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%doc sample
-%ruby_ri_sitedir/PG*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
+- Bump to 1.1.4
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt2.5
 - Rebuild with new Ruby autorequirements.
 - Disable debuginfo.

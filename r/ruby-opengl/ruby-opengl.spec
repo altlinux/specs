@@ -1,41 +1,79 @@
-Name:    ruby-opengl
-Version: 0.9.2
-Release: alt2.5
-Epoch:   1
-Summary: OpenGL Interface for Ruby
-License: MIT
-Group: Development/Ruby
-Url: https://github.com/larskanis/opengl
-Source: ruby-opengl-%{version}.tar
+%define        pkgname opengl
 
-BuildRequires: libGL-devel libX11-devel libfreeglut-devel libruby-devel
+Name:          ruby-%pkgname
+Version:       0.10.0
+Release:       alt1
+Epoch:         1
+Summary:       OpenGL Interface for Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/larskanis/opengl
+# VCS:         https://github.com/larskanis/opengl.git
+
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libGL-devel
+BuildRequires: libX11-devel
+BuildRequires: libfreeglut-devel
 BuildRequires: ruby-tool-setup
-BuildRequires: ruby-hoe rake-compiler
+BuildRequires: ruby-hoe
+BuildRequires: rake-compiler
 
-%filter_from_requires /^ruby(glu/d
 %description
 ruby-opengl consists of Ruby extension modules that are bindings for
 the OpenGL, GLU, and GLUT libraries. It is intended to be a replacement
 for -- and uses the code from -- Yoshi's ruby-opengl.
 
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
+
 %prep
 %setup
-%update_setup_rb
- 
+
 %build
-%ruby_config
-%ruby_build
-rake debug_gem > opengl.gemspec
- 
+%gem_build
+
 %install
-%ruby_install
+%gem_install
+
+%check
+%gem_test
 
 %files
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_sitearchdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1
+- Use Ruby Policy 2.0
+- Bump to 0.10.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.2-alt2.5
 - Rebuild with new Ruby autorequirements.
 

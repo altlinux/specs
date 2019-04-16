@@ -1,58 +1,62 @@
-Name: 	 ruby-unf_ext
-Version: 0.0.7.5
-Release: alt1.3
+%define        pkgname unf-ext
+%define        gemname unf_ext
 
-Summary: Unicode Normalization Form support library for CRuby
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/knu/ruby-unf_ext
+Name: 	       ruby-%gemname
+Version:       0.0.7.5
+Release:       alt2
+Summary:       Unicode Normalization Form support library for CRuby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/knu/ruby-unf_ext
+# VCS:         https://github.com/knu/ruby-unf_ext.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %name-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: gcc-c++
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %{name}.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
 %setup
-%update_setup_rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README* CHANGELOG*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.7.5-alt2
+- Use Ruby Policy 2.0
+
 * Wed Aug 22 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.7.5-alt1.3
 - Rebuild for new Ruby autorequirements.
 - Disable tests.

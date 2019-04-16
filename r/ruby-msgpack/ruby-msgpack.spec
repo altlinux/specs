@@ -1,22 +1,17 @@
-%define  pkgname msgpack
+%define        pkgname msgpack
 
-Name: 	 ruby-%pkgname
-Version: 1.1.0
-Release: alt1.5
+Name: 	       ruby-%pkgname
+Version:       1.2.9
+Release:       alt1
+Summary:       MessagePack implementation for Ruby
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://github.com/msgpack/msgpack-ruby
+# VCS          https://github.com/msgpack/msgpack-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: MessagePack implementation for Ruby
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     https://github.com/msgpack/msgpack-ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
-%filter_from_requires /^ruby(java)$/d; \!^ruby(msgpack/msgpack\.jar)$!d
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup libruby-devel
 
 %description
 MessagePack is an efficient binary serialization format. It lets you exchange
@@ -29,40 +24,56 @@ If you ever wished to use JSON for convenience (storing an image with metadata)
 but could not for technical reasons (binary data, size, speed ...), MessagePack
 is a perfect replacement.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
 
 
-%description doc
-Documentation files for %{name}.
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.9-alt1
+- Use Ruby Policy 2.0
+- Bump to 1.2.9
+
 * Sun Sep 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1.5
 - Add rubygem files
 

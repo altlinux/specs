@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt5
+Release:       alt6
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(olddoc)
 
 Requires:      ruby-pry
+Requires:      chrpath
 
 %description
 Every well practiced Rubyist is aware of Minero Aoki's ever setup.rb script.
@@ -63,6 +64,36 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 23 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt6
+- added default value for __dir__ variable, when loading Rakefile info a module,
+  this fixes unknown error when adding the var info "$:"
+- separated Hoe gemspec detector from the Rakefile one leading to
+  correct evaluation of Rakefile in main space
+- Now old shebang args in the ruby executables will be passed to new
+  shebang line
+- Fix sequence so Rakefile will be proceeded before Olddoc gemspecs.
+- Rakefile gemspec detector not will not fall when rakefile name is
+  nil
+! Redone gemspec procedure detection so sequence of gemspecs will be
+  affected rather than filelist as before
+- Parse olddoc gemspecs before rakefile ones
+- Disable adaptive configuration on .so compilation, so extconf.rb will
+  be run anytime
++ save aliases also for project and sources
++ add #has_name? to Source::Base to match alises also
++ hot on-source-load gem source version replacement
++ command line for source version replacement called as
+  --version-replace
++ added call to chrpath binary to remove RPATH from .so during
+  compile action
+- Merged detection of the gemfile in hoe or plain rakefile
+- Removed hoe/debug module
++ inferring gemfile from Rakefile, so when spec is defined in the
+  Rakefile it will be detected
+- Fix class name for target ruby from erroneous Site to Ruby
+- Fix install folder for i586 arch, so .so files will be installed by
+  using x86 arch
+
 * Sat Apr 06 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt5
 - fix req deps on executables when they are already installed only
 - set autoalias on binaries only for its source not others, and when no

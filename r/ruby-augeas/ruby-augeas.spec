@@ -1,52 +1,77 @@
-%define  pkgname augeas
- 
-Name: 	 ruby-%pkgname
-Version: 0.5.0
-Release: alt2.5
-Epoch:   1
- 
-Summary: Provides bindings for augeas
-License: LGPL 2.1
-Group:   Development/Ruby
-Url:     http://augeas.net
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:  %name-%version.tar
- 
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-BuildRequires: libaugeas-devel
+%define        pkgname ruby-augeas
+%define        gemname ruby-augeas
 
-Conflicts: ruby-augeas-new
+Name:          %pkgname
+Version:       0.5.0
+Release:       alt3
+Epoch:         1
+Summary:       Provides bindings for augeas
+License:       LGPLv2
+Group:         Development/Ruby
+Url:           http://augeas.net
+# VCS:         https://github.com/hercules-team/ruby-augeas.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
+
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake)
+BuildRequires: gem(rdoc)
+BuildRequires: libaugeas-devel
+BuildRequires: libxml2-devel
+BuildRequires: pkgconfig
+#Requires: augeas-libs >= 0.8.0
+Obsoletes:     ruby-augeas-new
 
 %description
-Provides bindings for augeas.
+The class Augeas provides bindings to Augeas library.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
 %setup
-%update_setup_rb
- 
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build --alias=augeas:ruby-augeas
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
-%doc AUTHORS README*
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*.rb
- 
+%doc README*
+%ruby_gemspecdir/%gemname-%version.gemspec
+%ruby_gemslibdir/%gemname-%version
+%ruby_gemsextdir/%gemname-%version
+
+%files         -n gem-%pkgname-doc
+%ruby_gemsdocdir/%gemname-%version
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 %changelog
+* Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.5.0-alt3
+- Use Ruby Policy 2.0
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.5.0-alt2.5
 - Rebuild for aarch64.
 

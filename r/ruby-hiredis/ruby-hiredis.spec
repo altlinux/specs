@@ -1,63 +1,75 @@
-%define  pkgname hiredis-rb
+%define        pkgname hiredis
 
-Name: 	 ruby-hiredis
-Version: 0.6.1 
-Release: alt1.3
+Name: 	       ruby-%pkgname
+Version:       0.6.3
+Release:       alt1
+Summary:       Ruby wrapper for hiredis
+License:       BSD-3-Clause
+Group:         Development/Ruby
+Url:           http://github.com/redis/hiredis-rb
+# VCS:         https://github.com/redis/hiredis-rb.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby wrapper for hiredis
-License: BSD-3-Clause
-Group:   Development/Ruby
-Url:     http://github.com/redis/hiredis-rb
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-Patch:   %name-%version-%release.patch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: libhiredis-devel
 
 %description
-%summary
+Ruby extension that wraps hiredis. Both the synchronous connection API and
+a separate protocol reader are supported. It is primarily intended to speed up
+parsing multi bulk replies.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.3-alt1
+- Move forward with sourcing from github
+- Bump to 0.6.3
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1.3
 - Rebuild with new Ruby autorequirements.
 

@@ -1,15 +1,18 @@
-Name: ruby-fcgi
-Version: 0.9.2.1
-Release: alt2.5
+%define        pkgname fcgi
 
-Summary: FastCGI for ruby
-Group: Development/Ruby
-License: Ruby
-Url: https://github.com/alphallc/ruby-fcgi-ng
+Name:          ruby-%pkgname
+Version:       0.9.2.1
+Release:       alt3
+Summary:       FastCGI for ruby
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/alphallc/ruby-fcgi-ng
+# VCS:         https://github.com/alphallc/ruby-fcgi-ng.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-BuildRequires: libfcgi-devel libruby-devel ruby-tool-setup
-
-Source: %name-%version.tar
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libfcgi-devel
 
 %description
 FastCGI is a language independent, scalable, open extension to CGI
@@ -19,24 +22,41 @@ specific APIs.
 MoonWolf developed a library for FastCGI in
 http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
 %prep
-%setup -q
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
+%gem_install
+
+%check
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_sitearchdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.2.1-alt3
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.2.1-alt2.5
 - Rebuild with new Ruby autorequirements.
 

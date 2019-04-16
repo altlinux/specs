@@ -1,55 +1,63 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%define pkgname ruby-gpgme
+%define        pkgname gpgme
 
-Name: %pkgname
-Version: 2.0.16
-Release: alt1.2
+Name:          ruby-%pkgname
+Version:       2.0.18
+Release:       alt1
+Summary:       Ruby interface to GnuPG Made Easy
+Group:         Development/Ruby
+License:       LGPLv2.1+
+Url:           http://github.com/ueno/ruby-gpgme
+# VCS:         http://github.com/ueno/ruby-gpgme.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby interface to GnuPG Made Easy
-Group: Development/Ruby
-License: LGPLv2.1+
-Url: http://github.com/ueno/ruby-gpgme
-
-Source: %pkgname-%version.tar
-
-BuildRequires: libgpgme-devel libruby-devel rpm-build-ruby ruby-tool-setup
-BuildRequires: ruby-mini_portile2
-# from https://github.com/flavorjones/mini_portile
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libgpgme-devel
+BuildRequires: gem(mini_portile2)
 
 %description
 Ruby interface to GnuPG Made Easy (GPGME).
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-ruby -rvendor-specific ext/gpgme/extconf.rb
-#ruby_configure
-%make_build
+%gem_build
 
 %install
-%makeinstall_std
-%rdoc *.c lib/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README* AUTHORS NEWS THANKS
-%ruby_sitelibdir/*
-%ruby_sitearchdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%doc examples
-%ruby_ri_sitedir/GPGME*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.18-alt1
+- Bump to 2.0.18
+- Use Ruby Policy 2.0
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.16-alt1.2
 - Rebuild with Ruby 2.5.1
 

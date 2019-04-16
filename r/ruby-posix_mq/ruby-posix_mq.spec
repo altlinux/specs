@@ -1,58 +1,74 @@
-%define pkgname ruby-posix_mq
+%define        pkgname posix-mq
+%define        gemname posix_mq
 
-Name: %pkgname
-Version: 2.4.1
-Release: alt1.3
+Name:          ruby-%gemname
+Version:       2.4.1
+Release:       alt2
+Summary:       POSIX Message Queues for Ruby
+Group:         Development/Ruby
+License:       LGPL
+Url:           http://bogomips.org/ruby_posix_mq/
+# VCS:         https://bogomips.org/ruby_posix_mq.git
 
-Summary: POSIX Message Queues for Ruby.
-Group: Development/Ruby
-License: LGPL
-Url: http://bogomips.org/ruby_posix_mq/
-
-Source: %pkgname-%version.tar
-
-BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
 POSIX message queues allow local processes to exchange data in the form
 of messages. This API is distinct from that provided by System V
 message queues, but provides similar functionality.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name.
+%package       -n posix-mq-rb
+Summary:       %summary
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n posix-mq-rb
+%summary.
+
+Executables files for %gemname gem.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -q -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-#for t in test/test_*.rb; do
-#ruby_test_unit -Ilib/:ext/posix_mq  test/test_posix_mq.rb
-#done
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README
-%_bindir/*
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%doc LICENSE
-%ruby_ri_sitedir/POSIX_MQ*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n posix-mq-rb
+%_bindir/posix-mq-rb
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.1-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.3
 - Rebuild with new Ruby autorequirements.
 
