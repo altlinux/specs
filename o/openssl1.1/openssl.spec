@@ -2,7 +2,7 @@
 
 Name: openssl1.1
 Version: 1.1.1b
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -18,6 +18,7 @@ Source4: cc.sh
 
 Patch03: openssl-alt-config.patch
 Patch04: openssl-alt-engines-path.patch
+Patch05: openssl-alt-e2k-makecontext.patch
 
 # Patches from Fedora
 # Build changes
@@ -218,6 +219,7 @@ on the command line.
 %setup -n openssl-%version
 %patch03 -p1
 %patch04 -p1
+%patch05 -p2
 
 %patch101 -p1
 #%%patch102 -p1 (different config)
@@ -269,7 +271,7 @@ ADD_ARGS=linux-mips32
 %ifarch mips64 mips64el
 ADD_ARGS=linux64-mips64
 %endif
-%ifarch riscv64
+%ifarch riscv64 %e2k
 ADD_ARGS=linux-generic64
 %endif
 
@@ -433,7 +435,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 
 %files -n openssl
 %_bindir/*
-%exclude %_bindir/openssl-config
 %dir %openssldir
 %openssldir/misc
 %openssldir/certs
@@ -461,6 +462,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Apr 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1b-alt2
+- Readded %%_bindir/openssl-config to openssl subpackage (removed in
+  1.1.1b-alt1 release by mistake).
+- Added %%e2k arch support (bircoph@).
+
 * Wed Mar 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1b-alt1
 - Updated to v1.1.1b.
 - libcrypto1.1: add C: libcrypto10 <= 1.0.2q-alt1.
