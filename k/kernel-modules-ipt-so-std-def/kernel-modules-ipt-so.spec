@@ -1,6 +1,6 @@
 %define module_name     ipt-so
 %define module_version  1.0
-%define module_release  alt3
+%define module_release  alt4
 %define flavour         std-def
 
 %setup_kernel_module %flavour
@@ -106,7 +106,7 @@ make-initrd --no-checks --config=/usr/src/config.mk --kernel=%kversion-%flavour-
 %ifarch x86_64
 %define qemu qemu-system-x86_64
 %endif
-%qemu -kernel /boot/vmlinuz* -initrd /usr/src/initramfs.*.img -append console=ttyS0 -nographic 2>&1 | tr -d \\f | tee boot.log
+%qemu -kernel /boot/vmlinuz* -initrd /usr/src/initramfs.*.img -m 256 -append console=ttyS0 -nographic 2>&1 | tr -d \\f | tee boot.log
 egrep -q ' BUG:|Call Trace:|Kernel panic|Oops' boot.log && exit 1
 grep -q TEST-MARKER-OF-SUCCESS boot.log || exit 1
 
