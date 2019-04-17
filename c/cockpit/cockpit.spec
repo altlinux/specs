@@ -28,7 +28,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 189
+Version: 191
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -463,10 +463,6 @@ grep -rl '/usr/bin/true' | xargs sed -i 's/\/usr\/bin\/true/\/bin\/true/g'
 grep -qr '/usr/bin/false' || exit 1
 grep -rl '/usr/bin/false' | xargs sed -i 's/\/usr\/bin\/false/\/bin\/false/g'
 
-# 5min is not enough on beehive
-grep -qs 'timeout 5m' Makefile.am || exit 1
-sed -i 's/timeout 5m/timeout 15m/' Makefile.am
-
 %build
 %autoreconf
 
@@ -565,7 +561,7 @@ rm -f %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-machines.metainfo
 rm -rf %buildroot%_usrsrc/debug
 
 # remove not default brandings, as they have broken symlinks
-for brand in centos debian fedora rhel ubuntu; do
+for brand in centos debian fedora rhel ubuntu scientific; do
     rm -r %buildroot%_datadir/cockpit/branding/$brand
 done
 ###############################################################################
@@ -741,6 +737,10 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Tue Apr 16 2019 Stanislav Levin <slev@altlinux.org> 191-alt1
+- 189 -> 191.
+- Fixed FTBFS.
+
 * Tue Mar 12 2019 Stanislav Levin <slev@altlinux.org> 189-alt1
 - 187 -> 189.
 
