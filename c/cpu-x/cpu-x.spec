@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cpu-x
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPLv3+
@@ -21,19 +21,17 @@ CPU-X is similar to CPU-Z (Windows), but CPU-X is a Free and Open Source
 software designed for GNU/Linux; also, it works on *BSD.
 This software is written in C and built with CMake tool.
 It can be used in graphical mode by using GTK or in text-based mode by using
-NCurses. A dump mode is present from command line. 
+NCurses. A dump mode is present from command line.
 
 %prep
 %setup
 
 %build
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-# fix run as root for sysvinit
-sed 's|Exec=/usr/bin/cpu-x_polkit|Exec=xdg-su -c /usr/bin/cpu-x|' -i %buildroot%_desktopdir/cpu-x-root.desktop
+%cmakeinstall_std
 %find_lang %name
 
 %files -f %name.lang
@@ -45,6 +43,10 @@ sed 's|Exec=/usr/bin/cpu-x_polkit|Exec=xdg-su -c /usr/bin/cpu-x|' -i %buildroot%
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Apr 17 2019 Anton Midyukov <antohami@altlinux.org> 3.2.4-alt1
+- new version 3.2.4
+- drop xdg-su support
+
 * Mon Oct 15 2018 Anton Midyukov <antohami@altlinux.org> 3.2.3-alt1
 - new version 3.2.3
 
