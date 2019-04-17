@@ -4,7 +4,7 @@
 
 Name: openssl10
 Version: 1.0.2r
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -291,7 +291,10 @@ ADD_ARGS=linux64-s390x
 ADD_ARGS=linux-mips32
 %endif
 %ifarch mips64 mips64el
-ADD_ARGS=linux-mips64
+ADD_ARGS=linux64-mips64
+%endif
+%ifarch riscv64 %e2k
+ADD_ARGS=linux-generic64
 %endif
 
 if echo 'extern __uint128_t i;' |
@@ -494,6 +497,10 @@ fi
 %endif
 
 %changelog
+* Wed Apr 17 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2r-alt3
+- Fixed build on mips64, mips64el architectures.
+- Added support of build on riscv64 and e2k architectures.
+
 * Thu Mar 21 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2r-alt2
 - Synced openssl.cnf with libcrypto1.1 1.1.1b-alt1.
 
