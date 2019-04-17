@@ -2,8 +2,8 @@
 %def_enable gui
 
 Name: calf
-Version: 0.90.1
-Release: alt3
+Version: 0.90.2
+Release: alt1
 
 Summary: Audio plugins pack
 Group: Sound
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 %endif
 
 Patch: calf-0.90.1-alt-link.patch
-Patch1: calf-0.90.1-up-fluidsynth_2.0.patch
 
 BuildRequires: gcc-c++ desktop-file-utils
 BuildRequires: glib2-devel libexpat-devel libfftw3-devel libfluidsynth-devel
@@ -69,7 +68,6 @@ extensions.
 %prep
 %setup
 %patch
-%patch1 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -111,6 +109,9 @@ extensions.
 
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.90.2-alt1
+- 0.90.2
+
 * Sun Feb 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.90.1-alt3
 - fixed build with libtool_2.4-2.4.2-alt8 (ALT #36162)
 
