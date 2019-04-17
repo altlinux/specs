@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: cert-sh-functions
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 BuildArch: noarch
@@ -28,6 +28,9 @@ install -Dpm644 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2019 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
+- Check for openssl-config existance (closes: #36602).
+
 * Fri Mar 01 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - Support hostname redifinition by HOSTNAME environment variable.
 
