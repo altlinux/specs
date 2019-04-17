@@ -1,6 +1,10 @@
+%ifarch %luajit_arches
+%def_enable lua
+%endif
+
 Name: mpv
 Version: 0.29.1
-Release: alt3
+Release: alt4
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -13,12 +17,15 @@ Patch0: %name-%version-alt.patch
 
 Packager: %packager
 
+# for %%luajit_arches macro
+BuildRequires(pre): rpm-macros-luajit
+
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
 BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel
 
-%ifnarch %e2k
+%if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
 %endif
 
@@ -68,18 +75,17 @@ chmod ugo+rx waf
 --enable-vaapi \
 --enable-alsa \
 --enable-gl-x11 \
-%ifnarch %e2k
---enable-lua \
-%endif
+%{subst_enable lua} \
 --enable-zsh-comp \
 --enable-libbluray \
 --enable-dvdnav \
 --enable-libsmbclient \
 --enable-libmpv-shared \
 --enable-tv \
+#
 
 %build
-./waf build
+./waf build %_smp_mflags
 
 %install
 ./waf install --destdir=%buildroot
@@ -107,6 +113,10 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri Apr 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.29.1-alt4
+- Use %%luajit_arches macro to disable lua support on architectures
+  unsupported by luajit.
+
 * Tue Feb 26 2019 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt3
 - Rebuild without libass5
 
