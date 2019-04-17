@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.44
+Version: 2.9.45
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Apr 12 2019 Paul Wolneykien <manowar@altlinux.org> 2.9.45-alt1
+- New translations for alterator-fbi v5.41-alt1.
+
 * Wed Mar 06 2019 Andrey Cherepanov <cas@altlinux.org> 2.9.44-alt1
 - Add kiosk profile fo alterator-users.
 
