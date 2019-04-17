@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.2.0.115.git67caf97
+Version: 0.6.3
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -18,7 +18,7 @@ Source0: %name-%version.tar
 Source1: texworks-alt-icons.tar
 Source2: TeXworks-manual-r1029.pdf
 
-Patch1: %name-0.4.3-desktop.patch
+Patch1: %name-0.6.3-desktop.patch
 
 %description
 TeXworks is an environment for authoring TeX (LaTeX, ConTeXt, etc)
@@ -52,7 +52,7 @@ User manual for TeXworks editor.
 
 %prep
 %setup -a1
-%patch1 -p1
+%patch1 -p2
 
 %build
 %cmake_insource -DDESIRED_QT_VERSION=5
@@ -72,7 +72,7 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_niconsdir/*
 %_liconsdir/*
 %_pixmapsdir/*
-%_datadir/appdata/*
+%_datadir/metainfo/*
 %_man1dir/*
 %_docdir/%name
 %exclude %_docdir/%name/TeXworks-manual-*.pdf
@@ -81,6 +81,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-*.pdf
 
 %changelog
+* Wed Apr 17 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
+- Build new version.
+
 * Fri Aug 03 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.2.0.115.git67caf97-alt1
 - Build from last commit.
 - Transfer package to qt5.
