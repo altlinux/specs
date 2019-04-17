@@ -27,7 +27,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.6.1.3
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 %if_disabled legacy
@@ -237,11 +237,12 @@ mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
 
 rm -f src/solaris/libstdc++.la
 
+%build
 %ifarch %e2k
-%add_optflags -fno-error-always-inline
+# lcc 1.23: be explicit with C++11
+%add_optflags -fno-error-always-inline -std=gnu++11
 %endif
 
-%build
 iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
 mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
 
@@ -334,6 +335,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 17 2019 Michael Shigorin <mike@altlinux.org> 3.6.1.3-alt2
+- Fix ftbfs on e2k with lcc 1.23.
+
 * Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 3.6.1.3-alt1
 - 3.6.1.3
 - obsolete javanano subpackage; discontinued upstream
