@@ -1,7 +1,8 @@
 %def_enable static
+%def_enable check
 
 Name: pcre2
-Version: 10.32
+Version: 10.33
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -134,6 +135,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 10.33-alt1
+- 10.33
+
 * Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 10.32-alt1
 - 10.32
 
