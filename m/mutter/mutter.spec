@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.32
 %define api_ver 4
@@ -14,7 +14,7 @@
 %def_disable egl_device
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -207,6 +207,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.32.1-alt1
+- 3.32.1
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.32.0-alt1
 - updated to 3.32.0-13-g2ac7f7f1e
 

@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -245,6 +245,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - updated to 3.32.0-14-g62233a4db
 
