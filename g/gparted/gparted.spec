@@ -2,10 +2,11 @@
 
 %def_with pic
 %def_disable usermode
+%def_enable xhost_root
 
 Name: gparted
 Version: 0.33.0
-Release: alt1
+Release: alt2
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -82,6 +83,7 @@ subst 's/pkexec --version/pkaction --version/' configure*
 #NOCONFIGURE=1 ./autogen.sh
 %configure %{subst_with pic} \
 	%{?_enable_usermode:--bindir=%_sbindir} \
+	%{?_enable_xhost_root:--enable-xhost-root} \
 	--enable-libparted-dmraid \
 	--enable-online-resize
 %make_build
@@ -117,6 +119,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt2
+- rebuilt with --enable-xhost-root (ALT #35409)
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
 - 0.33.0
 
