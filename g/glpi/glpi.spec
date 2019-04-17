@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.4.1
+Version: 9.4.2
 Release: alt1
 
 Summary: IT and asset management software
@@ -126,6 +126,10 @@ fi
 %files php7
 
 %changelog
+* Wed Apr 17 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.2-alt1
+- New version 9.4.2
+- This is a security release, upgrading is highly recommended
+
 * Tue Apr 09 2019 Pavel Zilke <zidex at altlinux dot org> 9.4.1-alt1
 - New version 9.4.1
 
