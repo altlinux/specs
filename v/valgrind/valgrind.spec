@@ -1,6 +1,6 @@
 Name: valgrind
-Version: 3.14.0
-Release: alt3
+Version: 3.15.0
+Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -14,43 +14,9 @@ Patch2: valgrind-alt-vki_siginfo.patch
 Patch3: valgrind-rh-cachegrind-improvements.patch
 Patch4: valgrind-rh-helgrind-race-supp.patch
 Patch5: valgrind-rh-ldso-supp.patch
-Patch104: valgrind-3.14.0-s390x-fix-reg-alloc-vr-vs-fpr.patch
-Patch105: valgrind-3.14.0-s390x-sign-extend-lochi.patch
-Patch106: valgrind-3.14.0-s390x-vec-reg-vgdb.patch
-Patch107: valgrind-3.14.0-s390x-vec-float-point-code.patch
-Patch108: valgrind-3.14.0-s390x-vec-float-point-tests.patch
-Patch109: valgrind-3.14.0-s390z-more-z13-fixes.patch
-Patch110: valgrind-3.14.0-get_otrack_shadow_offset_wrk-ppc.patch
-Patch111: valgrind-3.14.0-new-strlen-IROps.patch
-Patch112: valgrind-3.14.0-ppc-instr-new-IROps.patch
-Patch113: valgrind-3.14.0-memcheck-new-IROps.patch
-Patch114: valgrind-3.14.0-ppc-frontend-new-IROps.patch
-Patch115: valgrind-3.14.0-transform-popcount64-ctznat64.patch
-Patch116: valgrind-3.14.0-enable-ppc-Iop_Sar_Shr8.patch
-Patch117: valgrind-3.14.0-wcsncmp.patch
-Patch118: valgrind-3.14.0-final_tidyup.patch
-Patch119: valgrind-3.14.0-ppc64-ldbrx.patch
-Patch120: valgrind-3.14.0-ppc64-unaligned-words.patch
-Patch121: valgrind-3.14.0-ppc64-lxvd2x.patch
-Patch122: valgrind-3.14.0-ppc64-unaligned-vecs.patch
-Patch123: valgrind-3.14.0-ppc64-lxvb16x.patch
-Patch124: valgrind-3.14.0-set_AV_CR6.patch
-Patch125: valgrind-3.14.0-undef_malloc_args.patch
-Patch126: valgrind-3.14.0-jm-vmx-constraints.patch
-Patch127: valgrind-3.14.0-sigkill.patch
-Patch128: valgrind-3.14.0-ppc64-ptrace.patch
-Patch129: valgrind-3.14.0-arm64-ptrace-traceme.patch
-Patch130: valgrind-3.14.0-mc_translate-vecret.patch
-Patch131: valgrind-3.14.0-vbit-test-sec.patch
-Patch132: valgrind-3.14.0-x86-Iop_Sar64.patch
-Patch133: valgrind-3.14.0-power9-addex.patch
-Patch134: valgrind-3.14.0-rsp-clobber.patch
-Patch135: valgrind-3.14.0-subrange_type-count.patch
-Patch136: valgrind-3.14.0-s390x-vec-facility-bit.patch
-Patch137: valgrind-3.14.0-ppc-subfe.patch
-Patch138: valgrind-3.14.0-ppc64-quotactl.patch
-Patch139: valgrind-3.14.0-gettid.patch
-
+Patch6: valgrind-rh-alt-some-stack-protector.patch
+Patch104: valgrind-3.15.0-pkglibexecdir.patch
+Patch105: valgrind-3.15.0-disable-s390x-z13.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -106,42 +72,9 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
-%patch107 -p1
-%patch108 -p1
-%patch109 -p1
-%patch110 -p1
-%patch111 -p1
-%patch112 -p1
-%patch113 -p1
-%patch114 -p1
-%patch115 -p1
-%patch116 -p1
-%patch117 -p1
-%patch118 -p1
-%patch119 -p1
-%patch120 -p1
-%patch121 -p1
-%patch122 -p1
-%patch123 -p1
-%patch124 -p1
-%patch125 -p1
-%patch126 -p1
-%patch127 -p1
-%patch128 -p1
-%patch129 -p1
-%patch130 -p1
-%patch131 -p1
-%patch132 -p1
-%patch133 -p1
-%patch134 -p1
-%patch135 -p1
-%patch136 -p1
-%patch137 -p1
-%patch138 -p1
-%patch139 -p1
 
 %build
 autoreconf -vi
@@ -169,7 +102,7 @@ install -m644 -p AUTHORS FAQ.txt NEWS \
 	%buildroot%_docdir/%name-%version/
 
 # Most of ELF objects should not be stripped - see README_PACKAGERS
-%brp_strip_none %_libdir/%name/*
+%brp_strip_none %_libexecdir/%name/*
 
 %check
 if [ ! -r /proc/self/exe ]; then
@@ -182,32 +115,14 @@ fi
 
 %make_build CFLAGS= check ||:
 
-# Ensure there are no unexpected file descriptors open,
-# the testsuite otherwise fails.
-cat > close_fds.c <<EOF
-#include <stdlib.h>
-#include <unistd.h>
-int main(int argc, char **argv)
-{
-	int i, j = sysconf(_SC_OPEN_MAX);
-	if (j < 0)
-		exit(1);
-	for (i = 3; i < j; ++i)
-		close(i);
-	execvp(argv[1], argv + 1);
-	return 1;
-}
-EOF
-gcc %optflags -o close_fds close_fds.c
-
 echo "===============TESTING==================="
-./close_fds make nonexp-regtest ||:
+make nonexp-regtest ||:
 find -type f -name '*.diff' |sort
 echo "===============END TESTING==============="
 
 %files
 %_bindir/*
-%_libdir/%name/
+%_libexecdir/%name/
 %exclude %_libdir/%name/lib*.a
 %_docdir/%name-%version/
 %exclude %_docdir/%name-%version/valgrind_manual.ps
@@ -232,6 +147,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Tue Apr 16 2019 Dmitry V. Levin <ldv@altlinux.org> 3.15.0-alt1
+- 3.14.0 -> 3.15.0.
+- Synced with valgrind-3.15.0-1 from Fedora.
+
 * Fri Mar 08 2019 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt3
 - Synced with valgrind-3.14.0-16 from Fedora.
 - Fixed siginfo_t definition on 64-bit architectures.
