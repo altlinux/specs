@@ -21,7 +21,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -67,6 +67,7 @@ Obsoletes: %name-core < %version
 #AutoReqProv: nopython
 #%define __python %nil
 %add_python3_path %_datadir/glib-2.0/codegen
+%allow_python3_import_path %_datadir/glib-2.0/codegen
 
 %if_with sys_pcre
 BuildRequires: libpcre-devel >= %pcre_ver
@@ -115,7 +116,7 @@ Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
 
 # hack
-Provides: python3(codegen) < 0
+#Provides: python3(codegen) < 0
 
 %description devel
 GLib is the low-level core library that forms the basis for projects
@@ -417,6 +418,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Apr 15 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.1-alt1
+- 2.60.1
+
 * Mon Mar 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.0-alt1
 - 2.60.0
 
