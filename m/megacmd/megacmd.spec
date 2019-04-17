@@ -1,6 +1,6 @@
 Name: megacmd
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Command Line Interactive and Scriptable Application to access MEGA
 
@@ -62,6 +62,9 @@ cp -a %_datadir/libmegasdk/m4/ sdk/
 %doc README.md LICENSE
 
 %changelog
+* Wed Apr 17 2019 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2
+- Rebuild with new libmegasdk
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version (1.0.0) with rpmgs script
 - rebuild with libcryptopp.so.7
