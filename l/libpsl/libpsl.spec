@@ -2,8 +2,8 @@
 %def_disable builtin
 
 Name: libpsl
-Version: 0.20.2
-Release: alt2
+Version: 0.21.0
+Release: alt1
 
 Summary: C library for the Public Suffix List
 License: %mit
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 %if_disabled bootstrap
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: python
+BuildRequires: python3
 %{?_enable_builtin:BuildRequires: libicu-devel}
 BuildRequires: libidn2-devel
 BuildRequires: libunistring-devel
@@ -84,6 +84,7 @@ is acceptable for domains and so on.
 %package -n psl-make-dafsa
 Group: Networking/DNS
 Summary: Compiles the Public Suffix List into DAFSA form
+BuildArch: noarch
 
 %description -n psl-make-dafsa
 This script produces C/C++ code or an architecture-independent binary object
@@ -154,6 +155,14 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Wed Apr 17 2019 Mikhail Efremov <sem@altlinux.org> 0.21.0-alt1
+- BR: python -> python3.
+- psl-make-dafsa: Use python3.
+- Patch from upstream:
+  + Fix build when configured with --with-psl-file.
+- Make psl-make-dafsa noarch.
+- 0.20.2 -> 0.21.0.
+
 * Wed Nov 07 2018 Mikhail Efremov <sem@altlinux.org> 0.20.2-alt2
 - Disable builtin PSL.
 
