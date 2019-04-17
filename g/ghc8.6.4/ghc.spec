@@ -1,6 +1,11 @@
+# llvm needs for unregisterised architectures
+%define llvm_version 7.0
+
+%def_without bootstrap
+
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -32,8 +37,12 @@ Requires: rpm-build-haskell >= 1.4.4-alt1
 # Not needed after rebuild with separate single directory for shared libraries
 BuildRequires: /proc
 
-# Build with the same version, previous release.
+# Bootstrap with the previous version
+%if_with bootstrap
 BuildPreReq: ghc8.2.2-common
+%else
+BuildPreReq: ghc8.6.4-common
+%endif
 
 # Generally, this could work with APT, after the "ghc" pseudo-package
 # is brought back through Provides (allowing to rebuild this package in
@@ -62,8 +71,11 @@ BuildRequires: ghc(hscolour)
 
 Provides: haskell(abi) = %version
 
+%ifarch aarch64
 # Needs for bootstrap on aarch64
-BuildRequires: llvm7.0
+BuildRequires: llvm%llvm_version
+Requires: llvm%llvm_version
+%endif
 
 %description
 Haskell is a standard lazy functional programming language; the
@@ -147,7 +159,7 @@ http://haskell.org/ghc/documentation.html
 %define _configure_target %nil
 #autoreconf -fisv
 ./boot
-%configure --with-system-libffi
+%configure --with-system-libffi --disable-unregisterised
 %make_build V=1
 
 %install
@@ -248,6 +260,10 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Thu Apr 18 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt2
+- Rebuild with ghc 8.6.4
+- Add requires to llvm for aarch64
+
 * Fri Mar 22 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt1
 - Bootstrap to version 8.6.4
 
