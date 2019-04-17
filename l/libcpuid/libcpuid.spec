@@ -1,19 +1,24 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libcpuid
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
-Summary: Provides CPU identification for x86
+Summary: Provides CPU identification for x86 and x86_64
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
 
+ExclusiveArch: %ix86 x86_64
+
 %description
-Libcpuid provides CPU identification for the x86 (and x86_64).
+Libcpuid provides CPU identification for the x86 and x86_64.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -43,6 +48,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Apr 17 2019 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
+- new version 0.4.1
+
 * Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - new version 0.4.0
 
