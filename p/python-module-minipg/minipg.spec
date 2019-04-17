@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5.6
-Release: alt1.1
+Version: 0.7.6
+Release: alt1
 Summary: Yet another PostgreSQL database driver
 License: MIT
 Group: Development/Python
@@ -118,6 +118,9 @@ exit 1
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt1
+- Build new version for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

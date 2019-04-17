@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 4.5.0
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Zope interfaces package
 License: ZPLv2.1
@@ -151,6 +151,9 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Wed Apr 03 2019 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1.qa1.1
+- Bootstrap for python3.7.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1.qa1
 - NMU: applied repocop patch
 

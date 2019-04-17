@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 0.4.10
-Release: alt1.1
+Version: 0.4.17
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -76,6 +76,9 @@ popd
 #-------------------------------------------------------------------------------
 
 %changelog
+* Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.17-alt1
+- Build new version for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.10-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

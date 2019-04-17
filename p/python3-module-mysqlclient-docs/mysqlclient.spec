@@ -8,7 +8,7 @@ merges some pull requests.
 
 Name: %fname-docs
 Version: 1.4.2.post1
-Release: alt2
+Release: alt3
 
 %if "-docs"==""
 Summary: Python interface to MySQL
@@ -99,6 +99,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2.post1-alt3
+- Rebuild for python3.7.
+
 * Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2.post1-alt2
 - Added explicit BR: python-devel. (thx to mike@)
 

@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: picosat
-Version: 960
-Release: alt2.1.1
+Version: 965
+Release: alt1
 Summary: PicoSAT solver
 License: MIT
 Group: Sciences/Mathematics
@@ -19,6 +19,8 @@ BuildPreReq: python3-devel
 %endif
 
 Requires: lib%name = %EVR
+
+ExclusiveArch: x86_64 %ix86
 
 %description
 The SAT problem is the classical NP complete problem of searching for a
@@ -90,7 +92,7 @@ cp -fR . ../python3
 
 %build
 %add_optflags %optflags_shared
-./configure \
+./configure.sh \
 	--shared
 %make_build_ext libpicosat.so
 %make_build_ext all
@@ -151,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 965-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 960-alt2.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

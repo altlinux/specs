@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt3.git20140610.1.1
+Release: alt4.git20140610
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
 Group: Development/Python
@@ -22,6 +22,8 @@ BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildRequires: python3-dev
 %endif
+
+ExclusiveArch: x86_64 %ix86
 
 %py_provides %oname
 
@@ -100,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt4.git20140610
+- Rebuild for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt3.git20140610.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

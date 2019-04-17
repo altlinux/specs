@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Wavelet Transforms in Python
 License: BSD
 Group: Development/Python3
@@ -77,5 +77,8 @@ PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 --tests %name-%version/pywt/
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt2
+- Rebuild for python3.7.
+
 * Tue Apr 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
 - Initial build for ALT.

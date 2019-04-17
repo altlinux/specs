@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.1a1
-Release: alt2
+Version: 3.1.3b1
+Release: alt1
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python
@@ -69,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.3b1-alt1
+- Build new version for python3.7.
+
 * Fri Nov 23 2018 Leontiy Volodin <lvol@altlinux.org> 3.1.1a1-alt2
 - Build fixes (removed %%ubt)
 

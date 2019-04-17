@@ -1,7 +1,7 @@
 %add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -82,7 +82,7 @@ rm -f %buildroot%_bindir/pronto2lirc
 rm -rf %buildroot%_datadir/lirc/contrib
 mv %buildroot/%_libdir/pkgconfig/* %buildroot%_datadir/pkgconfig/
 sed -i -e '/^plugindir/s|%buildroot||' %buildroot%_sysconfdir/lirc/lirc_options.conf
-ln -sf `readlink %buildroot%_bindir/lirc-setup|sed 's,3.6,3,'` %buildroot%_bindir/lirc-setup
+ln -sf `readlink %buildroot%_bindir/lirc-setup|sed 's,3\..,3,'` %buildroot%_bindir/lirc-setup
 mkdir -p %buildroot%python3_sitelibdir/lirc
 cp %buildroot%_datadir/lirc/python-pkg/config.py %buildroot%python3_sitelibdir/lirc
 
@@ -159,6 +159,9 @@ fi
 %python3_sitelibdir/lirc-setup
 
 %changelog
+* Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt2
+- Adapted for python3.7.
+
 * Mon Nov 19 2018 Anton Farygin <rider@altlinux.ru> 0.10.1-alt1
 - 0.10.1
 - enabled systemd support

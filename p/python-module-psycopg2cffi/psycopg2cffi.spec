@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.7.6
-Release: alt1.1.1
+Version: 2.8.1
+Release: alt1
 Summary: An implementation of the psycopg2 module using cffi
 License: LGPLv3+
 Group: Development/Python
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/psycopg2cffi/
 
 # https://github.com/chtd/psycopg2cffi.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-pg10.patch
 
 BuildRequires: postgresql-devel libpq-devel
 BuildRequires: python-devel python-module-setuptools
@@ -66,7 +65,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -130,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1
+- Build new version for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.6-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

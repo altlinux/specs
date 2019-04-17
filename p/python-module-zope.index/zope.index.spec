@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.3.0
-Release: alt1%ubt.1
+Version: 4.4.0
+Release: alt1
 
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.index
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
@@ -148,10 +147,13 @@ popd
 %python3_sitelibdir/*/*/*/*/tests*
 
 %changelog
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt1%ubt.1
+* Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- new version 4.4.0
+
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt1i.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1%ubt
+* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1.S1
 - v4.1.1 -> v4.3.0
 
 * Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1.1

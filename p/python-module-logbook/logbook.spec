@@ -2,9 +2,11 @@
 
 %def_with python3
 
+%def_without check
+
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1.1.1
+Version: 1.4.3
+Release: alt1
 Summary: A logging replacement for Python
 License: BSD
 Group: Development/Python
@@ -15,11 +17,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-notebook python-module-objects.inv python-module-setuptools time
-BuildRequires: python-module-mock python-module-pip
+BuildRequires: python-module-mock python-module-pip python-module-brotlipy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook python3-module-setuptools
-BuildRequires: python3-module-mock python3-module-pip
+BuildRequires: python3-module-mock python3-module-pip python3-module-brotlipy
 %endif
 
 %description
@@ -62,15 +64,11 @@ cp -fR . ../python3
 ln -s ../objects.inv docs/
 
 %build
-%add_optflags -fno-strict-aliasing
-export USE_CYTHON=1
-CFLAGS="%optflags" python scripts/travis_build.py
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-CFLAGS="%optflags" python3 scripts/travis_build.py
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -114,6 +112,10 @@ popd
 %endif
 
 %changelog
+* Wed Mar 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
+- Build new version for python3.7.
+- Disable check.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

@@ -3,8 +3,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 1.1.6
-Release: alt1.1
+Version: 1.2.2
+Release: alt1
 Summary: Simplified object-oriented Python extension module for libpcap
 Url: https://github.com/hellais/pypcap
 License: BSD
@@ -12,6 +12,8 @@ Group: Development/Python
 
 # https://github.com/hellais/pypcap.git
 Source: %name-%version.tar.gz
+
+Patch: eed8796.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: python-devel python-module-setuptools
@@ -44,6 +46,7 @@ of the BSD operating systems
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 cp -a . ../python3
@@ -82,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.2.2-alt1
+- Build new version for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

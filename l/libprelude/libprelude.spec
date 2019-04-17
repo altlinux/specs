@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.0.0
-Release:        alt1_1
+Release:        alt2
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -291,6 +291,9 @@ find %{buildroot} -name '.packlist' -delete
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Wed Apr 10 2019 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
+- (NMU) Rebuild for python3.7.
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_1
 - update to new release by fcimport
 

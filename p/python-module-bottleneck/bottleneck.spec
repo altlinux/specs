@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt1.1.1.1
+Version: 1.2.1
+Release: alt1
 
 Summary: Fast NumPy array functions written in Cython
 License: BSD
@@ -45,27 +45,6 @@ Cython.
 
 This package contains tests for Bottleneck.
 
-%package pickles
-Summary: Pickles for Bottleneck
-Group: Development/Python
-
-%description pickles
-Bottleneck is a collection of fast NumPy array functions written in
-Cython.
-
-This package contains pickles for Bottleneck.
-
-%package docs
-Summary: Documentation for Bottleneck
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Bottleneck is a collection of fast NumPy array functions written in
-Cython.
-
-This package contains documentation for Bottleneck.
-
 %if_with python3
 %package -n python3-module-%oname
 Summary: Fast NumPy array functions written in Cython
@@ -101,7 +80,7 @@ cp -a . ../python3
 pushd ../python3
 #find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
 #find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx doc
@@ -118,9 +97,6 @@ pushd ../python3
 popd
 %endif
 
-%make -C doc pickle
-%make -C doc html
-
 %install
 %python_install
 
@@ -130,19 +106,10 @@ pushd ../python3
 popd
 %endif
 
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
-
 %files
 %doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc doc/build/html/*
 
 %files tests
 %python_sitelibdir/*/tests
@@ -158,6 +125,10 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Build new version for python3.7.
+- Removed docs and pickles.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

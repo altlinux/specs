@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define origname TwistedCore
-%define major 18.7
+%define major 18.9
 
 %def_with python3
 
@@ -969,6 +969,9 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %endif
 
 %changelog
+* Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 18.9.0-alt1
+- Build new version for python3.7.
+
 * Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 18.7.0-alt1
 - new version (18.7.0) with rpmgs script
 

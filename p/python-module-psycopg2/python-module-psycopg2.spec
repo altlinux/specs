@@ -1,8 +1,8 @@
 %define oname psycopg2
 %def_with python3
 
-Version: 2.7.3.1
-Release: alt1.1
+Version: 2.8.1
+Release: alt1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -42,23 +42,7 @@ language (just like pygresql and popy.) It was written from scratch with
 the aim of being very small and fast, and stable as a rock. The main
 advantages of psycopg are that it supports the full Python DBAPI-2.0 and
 being thread safe at level 2.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for psycopg2 python 3 PostgreSQL database adapter
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Tests for the psycopg2 python 3 PostgreSQL database adapter.
 %endif
-
-%package tests
-Summary: Tests for psycopg2 python PostgreSQL database adapter
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-Tests for the psycopg2 python PostgreSQL database adapter.
 
 %package doc
 Summary: Documentation for psycopg2 python PostgreSQL database adapter
@@ -91,24 +75,20 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 
 %files -f INSTALLED_FILES
 %dir %python_sitelibdir/psycopg2
-%exclude %python_sitelibdir/psycopg2/tests
-
-%files tests
-%python_sitelibdir/psycopg2/tests
 
 %files doc
-%doc AUTHORS INSTALL README* doc examples
+%doc AUTHORS INSTALL README* doc
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1
+- Build new version for python3.7.
+- Removed tests packages, because they doesn't supported now.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.3.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
