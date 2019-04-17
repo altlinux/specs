@@ -1,6 +1,6 @@
 Name: nmap
 Version: 7.70
-Release: alt1
+Release: alt2
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -22,7 +22,7 @@ Source2: zenmap.security
 
 Requires: chrooted-resolv
 BuildRequires: gcc-c++, libcap-devel
-BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel
+BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel, libssh2-devel, zlib-devel
 %{?_with_liblua:BuildRequires: liblua5.3-devel}
 %{?_with_ndiff:BuildRequires: python-devel}
 %{?_with_zenmap:BuildRequires: libpam-devel python-devel}
@@ -48,7 +48,7 @@ This package includes zenmap, a GTK+ frontend for Nmap.
 
 %prep
 %setup -n %srcname
-rm -r liblua libpcap libpcre
+rm -r liblua libpcap libpcre libssh2 libz
 bzip2 -9 CHANGELOG
 
 %build
@@ -129,6 +129,10 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Wed Apr 17 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.70-alt2
+- Rebuilt with system libssh2-devel and zlib-devel (found with help
+  of findsym-remote).
+
 * Tue Mar 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.70-alt1
 - Updated to v7.70.
 - Built with internal libdnet.
