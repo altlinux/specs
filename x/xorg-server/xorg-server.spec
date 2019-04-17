@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.20.4
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -308,6 +308,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Apr 12 2019 Sergey V Turchin <zerg@altlinux.org> 2:1.20.4-alt2
+- use smallest monitor size to compute DPI
+
 * Wed Feb 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.4-alt1
 - 1.20.4
 
