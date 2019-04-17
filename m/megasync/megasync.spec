@@ -1,5 +1,5 @@
 Name: megasync
-Version: 3.7.1.0
+Version: 4.0.2.0
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -11,8 +11,10 @@ Url: https://github.com/meganz/MEGAsync
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/meganz/MEGAsync/archive/v%{version}_Linux.tar.gz
-Source: %name-%version.tar
+Source: v%{version}_Linux.tar.gz
 Source1: qt5sdk.pri
+
+Patch: MEGASync-4.0.2.0-createForeignFileNode.patch
 
 # TODO: due google_breakpad
 ExclusiveArch: %ix86 x86_64
@@ -38,6 +40,7 @@ of the official sync client of MEGA: https://mega.nz/sync
 
 %prep
 %setup
+%patch -p0
 #__subst "s|.*-Werror.*||g" CMakeLists.txt
 mkdir -p src/MEGASync/mega/bindings/qt/
 cp -a %_datadir/libmegasdk/qt5/*.* src/MEGASync/mega/bindings/qt/
@@ -47,8 +50,8 @@ mkdir -p src/MEGASync/mega/include/mega/
 ln -s %_includedir/mega/config.h src/MEGASync/mega/include/mega/config.h
 
 # drop fonts
-%__subst 's|.*fonts/.*||' src/MEGASync/gui/Resources_linux.qrc
-%__subst 's|.*//fonts/.*||' src/MEGASync/MegaApplication.cpp
+sed -i 's|.*fonts/.*||' src/MEGASync/gui/Resources_linux.qrc
+sed -i 's|.*//fonts/.*||' src/MEGASync/MegaApplication.cpp
 rm -rfv src/MEGASync/gui/fonts/
 
 # TODO: use external one only
@@ -78,6 +81,9 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Apr 10 2019 Fr. Br. George <george@altlinux.ru> 4.0.2.0-alt1
+- Autobuild version bump to 4.0.2.0
+
 * Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.7.1.0-alt1
 - new version 3.7.1.0 (with rpmrb script)
 - use system fonts instead of compiled in ones

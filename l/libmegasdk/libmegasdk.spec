@@ -1,5 +1,5 @@
 Name: libmegasdk
-Version: 3.4.3
+Version: 3.4.9
 Release: alt1
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
@@ -11,18 +11,18 @@ Url: https://github.com/meganz/sdk
 # Source-url: https://github.com/meganz/sdk/archive/v%version.tar.gz
 Source: v%version.tar.gz
 
-#Source1: %name
-#Source2: %name.service
-#Source3: %name.conf
-#Source4: %name-serv
+#Source1: #name
+#Source2: #name.service
+#Source3: #name.conf
+#Source4: #name-serv
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # manually removed: cppcheck glibc-devel-static glibc-kernheaders-generic
 # manually removed: openssl-engines python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy sssd texlive-latex-base
-# Automatically added by buildreq on Sat Dec 23 2017
-# optimized out: glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libpcre-devel libstdc++-devel perl python-base python-module-google python-modules python3 python3-base sssd-client texlive-base-bin
-BuildRequires: doxygen gcc-c++ libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libuv-devel zlib-devel
+# Automatically added by buildreq on Wed Apr 10 2019
+# optimized out: glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libpcre-devel libsasl2-3 libstdc++-devel perl python-base sh4
+BuildRequires: doxygen gcc-c++ libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libstdc++-devel-static libuv-devel zlib-devel
 
 %description
 MEGA SDK - Client Access Engine Coverity Scan Build Status.
@@ -70,13 +70,14 @@ Example tools from MEGA SDK - Client Access Engine
 %prep
 %setup
 # hack against missed --tag=CXX during linking
-%__subst 's|ANDROID|TRUE|' Makefile.am
+sed -i 's|ANDROID|TRUE|' Makefile.am
 
-%__subst 's|with_pcre/include|with_pcre|' configure.ac
-%__subst 's|with_db/include|with_db|' configure.ac
+sed -i 's|with_pcre/include|with_pcre|' configure.ac
+sed -i 's|with_db/include|with_db|' configure.ac
 
 %build
 %autoreconf
+%add_optflags -std=gnu++17
 %configure --disable-static --without-termcap --enable-gcc-hardening \
            --disable-java \
            --disable-php \
@@ -100,10 +101,10 @@ mkdir -p %buildroot/%_datadir/%name/m4/
 cp -a m4/ax*.m4 %buildroot/%_datadir/%name/m4/
 
 #mkdir -p %buildroot%_initdir/ %buildroot/lib/systemd/system/ %buildroot/etc/
-#cp %SOURCE1 %buildroot%_initdir/
-#cp %SOURCE2 %buildroot/lib/systemd/system/
-#cp %SOURCE3 %buildroot/etc/
-#cp %SOURCE4 %buildroot%_bindir/
+#cp #SOURCE1 %buildroot%_initdir/
+#cp #SOURCE2 %buildroot/lib/systemd/system/
+#cp #SOURCE3 %buildroot/etc/
+#cp #SOURCE4 %buildroot%_bindir/
 
 # missed headers
 cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
@@ -129,6 +130,9 @@ cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 %_bindir/megasimplesync
 
 %changelog
+* Wed Apr 10 2019 Fr. Br. George <george@altlinux.ru> 3.4.9-alt1
+- Autobuild version bump to 3.4.9
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt1
 - new version 3.4.3 (with rpmrb script)
 
