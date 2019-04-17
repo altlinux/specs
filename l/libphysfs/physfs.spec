@@ -1,6 +1,6 @@
 %define uname physfs
 Name: libphysfs
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: PhysicsFS file abstraction layer for games
@@ -9,7 +9,6 @@ Group: System/Libraries
 Url: http://www.icculus.org/physfs/
 Provides: %uname = %version
 Source0: http://icculus.org/physfs/downloads/physfs-%version.tar.gz
-Patch: physfs-3.0.1-dirfix.patch
 
 # Automatically added by buildreq on Sat Oct 24 2009
 BuildRequires: doxygen gcc-c++ libncurses-devel libreadline-devel zlib-devel cmake
@@ -45,7 +44,6 @@ build programs using PhysicsFS.
 
 %prep
 %setup -n %uname-%version
-%patch -p1
 
 %build
 %cmake_insource \
@@ -70,6 +68,10 @@ doxygen
 %_includedir/physfs.h
 
 %changelog
+* Mon Apr 15 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
+- Build new version.
+- Cleaned changelog.
+
 * Wed Nov 07 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 
@@ -101,19 +103,3 @@ doxygen
 
 * Tue Sep 28 2004 Sergey Pinaev <dfo@altlinux.ru> 1.0.0-alt1
 - first build for ALT
-
-* Thu Dec 18 2002 Edward Rudd <eddie@omegaware.com>
-- added zlib_license_change.txt to documents
-
-* Wed Jul 10 2002 Edward Rudd <eddie@omegaware.com>
-- added doxygen to build requirements
-
-* Wed Jul 10 2002 Edward Rudd <eddie@omegaware.com>
-- updated to release 0.17
-
-* Tue May 15 2002 Edward Rudd <eddie@omegaware.com>
-- updated to latest CVS and modified spec file to use
-  the autoconf/automake support in the latest CVS
-
-* Tue Apr 30 2002 Edward Rudd <eddie@omegaware.com>
-- Initial spec file
