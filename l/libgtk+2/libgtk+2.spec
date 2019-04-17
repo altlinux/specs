@@ -15,10 +15,11 @@
 
 %def_enable man
 %def_enable introspection
+%def_disable debug
 
 Name: libgtk+2
 Version: %ver_major.32
-Release: alt2
+Release: alt3
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: %lgpl2plus
@@ -75,12 +76,18 @@ BuildRequires: libgio-devel libgdk-pixbuf-devel libcairo-gobject-devel libcups-d
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel
 %endif
-BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel
+BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
+BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
 Offering a complete set of widgets, GTK+ is suitable for projects
 ranging from small one-off projects to complete application suites.
+%if_enabled debug
+
+The library in this package has been built with --enable-debug;
+for debugging, set GTK_DEBUG environment variable to an appropriate value.
+%endif
 
 %package locales
 Summary: Internationalization for GTK+
@@ -227,13 +234,12 @@ NOCONFIGURE=1 ./autogen.sh
     %{subst_enable man} \
     --with-xinput=yes \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{subst_enable introspection}
-
-# SMP-incompatible build
-%make LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
+    %{subst_enable introspection} \
+    %{?_enable_debug:--enable-debug=yes}
+%make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
 touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
@@ -296,14 +302,14 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
 %ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %_bindir/gtk-query-immodules-%api_ver
-%_man1dir/gtk-query-immodules*
+%{?_enable_man:%_man1dir/gtk-query-immodules*}
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
 %files locales -f gtk20.lang
 
 %files -n gtk-builder-convert
 %_bindir/gtk-builder-convert
-%_man1dir/gtk-builder-convert*
+%{?_enable_man:%_man1dir/gtk-builder-convert*}
 
 %files devel
 %dir %_includedir/gtk-%api_ver
@@ -360,6 +366,11 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt3
+- enabled SMP build
+- introduced "debug" knob (ALT #34561)
+- mike@: fixed man knob (unbuilt manpages can't be packaged)
+
 * Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt2
 - moved gtk-update-icon-cache subpackage to gtk+3
 
