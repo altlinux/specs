@@ -1,14 +1,19 @@
 Name: libsnappy
-Version: 1.1.3
+Version: 1.1.7
 Release: alt1
 Summary: Google fast compression/decompression library
 Group: System/Libraries
 License: BSD
 Url: http://google.github.io/snappy/
 Source: snappy-%version.tar.gz
+Patch0: FC-gtest.patch
+Patch1: FC-version-macros.patch
 
-# Automatically added by buildreq on Wed Mar 30 2011
-BuildRequires: gcc-c++ libgflags-devel libgtest-devel liblzo2-devel zlib-devel
+# Automatically added by buildreq on Wed Apr 17 2019
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libsasl2-3 libstdc++-devel python-base sh4
+BuildRequires: cmake gcc-c++ libgflags-devel libgtest-devel liblzo2-devel zlib-devel
+
+BuildRequires: ctest
 
 %description
 Snappy is a compression/decompression library. It does not aim for
@@ -33,30 +38,50 @@ Static development environment for %name
 
 %prep
 %setup -n snappy-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
-%configure
+%cmake_insource -DBUILD_SHARED_LIBS:BOOL=ON
 %make_build CXXFLAGS="-DNDEBUG -O2"
 
+# create pkgconfig file
+cat << \EOF >snappy.pc
+prefix=%prefix
+exec_prefix=%_exec_prefix
+includedir=%_includedir
+libdir=%_libdir
+
+Name: %name
+Description: A fast compression/decompression library
+Version: %version
+Cflags: -I${includedir}
+Libs: -L${libdir} -lsnappy
+EOF
+
 %install
-%makeinstall
-rm -rf %buildroot/%_defaultdocdir/snappy
+%makeinstall DESTDIR=%buildroot
+install -D snappy.pc %buildroot%_libdir/pkgconfig/snappy.pc
 
 %check
-%make check
+LD_LIBRARY_PATH=`pwd` ctest -V %_smp_mflags
 
 %files
-%doc NEWS README ChangeLog INSTALL
+%doc NEWS AUTHORS CONTRIBUTING.md README.md
 %_libdir/*.so.*
 
 %files devel
+%doc format_description.txt framing_format.txt
 %_libdir/*.so
 %_includedir/*
-
-%files devel-static
-%_libdir/*.a
+%_libdir/pkgconfig/snappy.pc
+%_libdir/cmake/Snappy/
 
 %changelog
+* Wed Apr 17 2019 Fr. Br. George <george@altlinux.ru> 1.1.7-alt1
+- Autobuild version bump to 1.1.7
+- Fix build, apply Fedora patches
+
 * Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
