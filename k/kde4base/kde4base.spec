@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -46,7 +46,7 @@ Patch13: kdebase-15.4.3-alt-kfmclient-loop.patch
 Patch14: kdebase-15.08.0-alt-restore-dolphin.patch
 # upstream
 
-BuildRequires(pre): kde4libs-devel rpm-build-ubt
+BuildRequires(pre): kde4libs-devel
 BuildRequires: libalternatives-devel
 BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
 BuildRequires: libqimageblitz-devel libstrigi-devel
@@ -207,7 +207,7 @@ Tools used to utilize Netscape(R) browser plugins in KDE
 Group: Graphical desktop/KDE
 Summary: Plasma applets
 Requires: %name-common = %version-%release
-Provides: kde4base-plasma < %version-%release
+Provides: kde4base-plasma = %version-%release
 Obsoletes: kde4base-plasma < %version-%release
 %description plasma-applets
 Various Plasma applets
@@ -613,10 +613,13 @@ done
 
 
 %changelog
+* Wed Apr 17 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt4
+- fix provides (ALT#36612)
+
 * Fri Jan 11 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt3
 - fix build requires
 
-* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2%ubt
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - fix build requires
 
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
