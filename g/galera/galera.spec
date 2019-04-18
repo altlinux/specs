@@ -1,5 +1,5 @@
 Name: galera
-Version: 25.3.25
+Version: 25.3.26
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -98,6 +98,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Wed Apr 17 2019 Alexey Shabalin <shaba@altlinux.org> 25.3.26-alt1
+- 25.3.26
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 25.3.25-alt1
 - 25.3.25
 
