@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -173,16 +173,13 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd.conf
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/lvfs.conf
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/lvfs-testing.conf
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/vendor.conf
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/vendor-directory.conf
+%config(noreplace)%_sysconfdir/fwupd/remotes.d/*.conf
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
 %_sysconfdir/dbus-1/system.d/org.freedesktop.fwupd.conf
-%_datadir/fwupd/remotes.d/fwupd/metadata.xml
+%ifarch x86_64
+%_datadir/fwupd/remotes.d/dell-esrt/metadata.xml
+%endif
 %_datadir/fwupd/remotes.d/vendor/firmware
 %_datadir/dbus-1/interfaces/org.freedesktop.fwupd.xml
 %_datadir/polkit-1/actions/org.freedesktop.fwupd.policy
@@ -269,6 +266,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Tue Apr 16 2019 Anton Farygin <rider@altlinux.ru> 1.2.7-alt1
+- 1.2.7
+
 * Mon Apr 01 2019 Anton Farygin <rider@altlinux.ru> 1.2.6-alt1
 - 1.2.6
 
