@@ -1,13 +1,14 @@
 %def_disable snapshot
 
+%define ver_major 0.50
 %define libname mesonbuild
 # pkexec may be used to "gain elevated privileges" during install
 %def_without polkit
 %def_disable check
 
 Name: meson
-Version: 0.49.2
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -24,6 +25,7 @@ Source2: %name.env
 # do not duplicate external dependencies in list
 # cfe82db5ab0d35832da474014dff4b6dfe33f8b7
 Patch: meson-0.49.2-up-dedup.patch
+Patch1: meson-0.49.2-alt-e2k-lcc.patch
 
 BuildArch: noarch
 
@@ -66,7 +68,10 @@ reports, Valgrind, CCache and the like.
 
 %prep
 %setup
-%patch -p1 -b .dedup
+#%%patch -p1 -b .dedup
+#%%ifarch %e2k
+%patch1 -p1
+#%%endif
 
 %build
 %python3_build
@@ -83,7 +88,7 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %files
 %_bindir/%name
 %python3_sitelibdir/%libname/
-%python3_sitelibdir/%name-%version-*.egg-info/
+%python3_sitelibdir/%name-%ver_major.*-*.egg-info/
 %{?_without_polkit:%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
 %_man1dir/%name.1.*
 %_rpmmacrosdir/%name
@@ -92,6 +97,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
+- 0.50.1
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.49.2-alt3
 - backported fix for https://github.com/mesonbuild/meson/issues/2150
 
