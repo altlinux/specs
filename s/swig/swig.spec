@@ -1,13 +1,25 @@
+%def_with boost
+%def_with caml
+%def_with doc
+%def_with java
+%def_with lua
+%def_with perl5
+%def_with python
+%def_with python3
+%def_with R
+%def_with ruby
+%def_with scheme
+%def_with tcl
+
 # vim:set ft=spec:
 Name: swig
-Epoch: 1
 Version: 3.0.12
-Release: alt7
+Release: alt8
+Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
 Group: Development/C
-Url: http://www.swig.org/
 
 # http://download.sourceforge.net/swig/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -26,18 +38,25 @@ Patch8: upstream-issue-898.patch
 
 %def_disable testsuite
 
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-devel yodl chicken
-BuildPreReq: R-devel libpcre-devel boost-devel
-BuildPreReq: python3-devel python-tools-2to3 zlib-devel
+%{?_with_boost:BuildPreReq: boost-devel}
+%{?_with_caml:BuildPreReq: ocaml-findlib}
+%{?_with_doc:BuildPreReq: yodl tidy htmldoc}
+%{?_with_java:BuildPreReq: java-devel}
+%{?_with_lua:BuildPreReq: liblua5-devel lua5}
+%{?_with_perl5:BuildPreReq: perl-devel libpcre-devel}
+%{?_with_python:BuildPreReq: python-devel}
+%{?_with_python3:BuildPreReq: rpm-build-python3 python3-devel python-tools-2to3}
+%{?_with_R:BuildPreReq: R-devel}
+%{?_with_ruby:BuildPreReq: libruby-devel ruby ruby-module-etc}
+%{?_with_scheme:BuildPreReq: chicken guile22-devel}
 %ifarch %ix86 x86_64
-BuildRequires: libracket-devel racket
+%{?_with_scheme:BuildPreReq: libracket-devel racket}
 %endif
-# Automatically added by buildreq on Thu Sep 04 2008
-BuildRequires: ocaml-findlib gcc-c++ guile22-devel imake java-devel
-BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3
-BuildRequires: perl-devel python-devel ruby ruby-module-etc
-BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
+%{?_with_tcl:BuildPreReq: tcl-devel}
+
+BuildRequires: gcc-c++
+BuildRequires: libXt-devel imake xorg-cf-files
+BuildRequires: zlib-devel
 
 %if_enabled testsuite
 BuildRequires: perl(Math/BigInt.pm) ocaml-camlp4-devel
@@ -151,17 +170,21 @@ This package contains SWIG runtime tcl library.
 
 %build
 ./autogen.sh
-subst 's/PYLIBDIR="lib"/PYLIBDIR="%_lib"/' configure
-subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
+sed -i 's/PYLIBDIR="lib"/PYLIBDIR="%_lib"/' configure
+sed -i 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 %configure \
-	--with-python=python \
-	--with-python3=python3 \
-	--with-ocamlc=ocamlc \
-	--with-boost \
+	%{?_with_python:--with-python=python} \
+	%{?_with_python3:--with-python3=python3} \
+	%{?_with_caml:--with-ocamlc=ocamlc} \
+	%{subst_with boost} \
+	%{subst_with java} \
+	%{subst_with perl5} \
+	%{subst_with ruby} \
+	%{subst_with tcl} \
 	--with-pyinc=%_includedir/python%_python_version \
 	--with-pylib=%_libdir/python%_python_version \
-	--with-tclconfig=%_libdir \
-	--with-perl5
+	--with-tclconfig=%_libdir
+	#--with-tcl --with-python --with-perl5 --with-java --with-guile --with-ruby
 
 #%__subst -p 's,/usr/local/include/Py,%_includedir/python%__python_version,g' Runtime/Makefile
 # SMP incompatible
@@ -172,7 +195,7 @@ subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 #pushd Runtime
 #%make
 #popd
-bzip2 -9fk CHANGES TODO
+xz -9fk CHANGES TODO
 
 %install
 %makeinstall_std \
@@ -235,6 +258,10 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Apr 17 2019 Michael Shigorin <mike@altlinux.org> 1:3.0.12-alt8
+- introduced explicit knobs for languages
+- minor spec cleanup (needs much more attention)
+
 * Fri Mar 08 2019 Anton Farygin <rider@altlinux.ru> 1:3.0.12-alt7
 - cleanup spec (removed php5  buildrequires)
 
@@ -246,7 +273,7 @@ cp -a Examples Doc %buildroot%docdir/
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.0.12-alt4.1
 - (NMU) Rebuild with new Ruby autorequirements.
-- Build with racket only on %ix86 and x86_64.
+- Build with racket only on %%ix86 and x86_64.
 
 * Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:3.0.12-alt4
 - Fix import package (https://github.com/swig/swig/issues/769)
