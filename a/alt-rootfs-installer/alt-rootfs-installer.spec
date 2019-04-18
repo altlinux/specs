@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
-Version: 0.2
-Release: alt0.1
+Version: 0.2.1
+Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPLv2+
 Group: System/Configuration/Other
@@ -40,6 +40,10 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Apr 18 2019 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt1
+- 0.2.1
+- support u-boot-* 2019.04
+
 * Fri Mar 29 2019 Anton Midyukov <antohami@altlinux.org> 0.2-alt0.1
 - 0.2-beta
 - Renamed package arm-rootfs-installer to alt-rootfs-installer
