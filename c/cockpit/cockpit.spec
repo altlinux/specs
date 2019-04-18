@@ -28,7 +28,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 191
+Version: 192
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -737,6 +737,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Thu Apr 18 2019 Stanislav Levin <slev@altlinux.org> 192-alt1
+- 191 -> 192.
+
 * Tue Apr 16 2019 Stanislav Levin <slev@altlinux.org> 191-alt1
 - 189 -> 191.
 - Fixed FTBFS.
