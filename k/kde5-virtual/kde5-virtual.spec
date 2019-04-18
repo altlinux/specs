@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -136,7 +136,8 @@ Summary: Thunderbird email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-thunderbird = %EVR
 Requires: kf5-filesystem
-Requires: thunderbird thunderbird-enigmail thunderbird-ru thunderbird-lightning-ru
+Requires: thunderbird thunderbird-ru thunderbird-lightning-ru
+#Requires: thunderbird-enigmail http://bugs.altlinux.org/36447
 %description -n kde5-email-client-4-thunderbird
 %summary
 
@@ -180,6 +181,9 @@ Requires: qmmp1
 %files -n kde5-audio-player-4-qmmp
 
 %changelog
+* Thu Apr 18 2019 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- remove thunderbird-enigmail requires (http://bugs.altlinux.org/36447)
+
 * Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - add enigmail to thunderbird
 
