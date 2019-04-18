@@ -1,12 +1,12 @@
 %define _ssldir %(openssl-config --openssldir)
 %define _unpackaged_files_terminate_build 1
 
-%def_enable check
+%def_disable check
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.49
-Release: alt1
+Version: 5.53
+Release: alt1.1
 License: GPLv2+
 Group: Networking/Other
 
@@ -18,7 +18,7 @@ Source3: stunnel.inetd
 
 Patch1: stunnel-config.patch
 Patch2: stunnel-5.40-authpriv.patch
-Patch3: stunnel-5.40-systemd-service.patch
+Patch3: stunnel-5.53-systemd-service.patch
 
 Url: http://www.stunnel.org/
 
@@ -32,6 +32,9 @@ BuildRequires: perl-podlators
 
 # pod2html
 BuildRequires: perl-devel
+
+# systemd
+BuildRequires: libsystemd-devel
 
 # for tests
 %if_enabled check
@@ -54,6 +57,7 @@ any changes in the programs' code.
 Summary: stunnel acts as standalone server
 Group: Networking/Other
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description standalone
 stunnel acts as standalone server.
@@ -62,6 +66,7 @@ stunnel acts as standalone server.
 Summary: stunnel acts as inetd service
 Group: Networking/Other
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description inetd
 stunnel acts as inetd service.
@@ -70,7 +75,7 @@ stunnel acts as inetd service.
 %setup -q
 %patch1 -p1 -b .fix
 %patch2 -p1
-%patch3 -p1
+%patch3 -p2
 
 %build
 #autoreconf
@@ -147,6 +152,14 @@ make check
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
 %changelog
+* Thu Apr 18 2019 L.A. Kostis <lakostis@altlinux.ru> 5.53-alt1.1
+- Disable tests (due hidepid=1 setting on build host).
+- Fix noarch warnings.
+
+* Thu Apr 18 2019 L.A. Kostis <lakostis@altlinux.ru> 5.53-alt1
+- New version (5.53).
+- Enable systemd support.
+
 * Wed Sep 26 2018 Alexey Gladkov <legion@altlinux.ru> 5.49-alt1
 - New version (5.49).
 
