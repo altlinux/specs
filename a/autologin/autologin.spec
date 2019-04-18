@@ -1,6 +1,6 @@
 Name: autologin
 Version: 1.0.0
-Release: alt7.1
+Release: alt8
 Serial: 1
 
 Summary: Automatically log in
@@ -50,6 +50,9 @@ CONFIG="/etc/sysconfig/autologin"
 %doc README AUTHORS
 
 %changelog
+* Thu Apr 18 2019 Anton Midyukov <antohami@altlinux.org> 1:1.0.0-alt8
+- Add support session logind (elogind)
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt7.1
 - NMU: added URL
 
