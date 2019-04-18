@@ -57,8 +57,8 @@
 
 Name: systemd
 Epoch: 1
-Version: 241
-Release: alt4
+Version: 242
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -239,6 +239,7 @@ Group: System/Libraries
 Summary: nss-systemd providing UNIX user and group name resolution for dynamic users and groups
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
+Requires: systemd
 
 %description -n libnss-systemd
 nss-systemd is a plug-in module for the GNU Name Service Switch (NSS) functionality of the
@@ -254,7 +255,6 @@ passwd: and group: in /etc/nsswitch.conf.
 
 passwd: files systemd
 group: files systemd
-
 
 %package -n libnss-myhostname
 Group: System/Libraries
@@ -287,6 +287,7 @@ Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
 Requires: %name-services = %EVR
+Requires: systemd-container
 
 %description -n libnss-mymachines
 nss-mymachines for automatically resolves the names
@@ -917,8 +918,6 @@ install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE1
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 
 %post
-/bin/systemctl daemon-reexec >/dev/null 2>&1 || :
-
 # Move old stuff around in /var/lib
 [ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
 [ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
@@ -1595,8 +1594,6 @@ fi
 %dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/networkd.conf
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
-%config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
-%config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.network1.service
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -1845,6 +1842,20 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Sat Apr 13 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt1
+- 242
+- move execute systemctl daemon-reexec from post-script to filetrigger
+- add requires systemd to libnss-systemd package (ALT #36267)
+- move LOCKFILE to /run/lock in udev init script (ALT #35888)
+
+* Tue Apr 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:241-alt5
+- this change includes the following (closes: #32346):
+  + possibility to get the time zone from /etc/sysconfig/clock
+  + set-timezone call adds the time zone to /etc/sysconfig/clock as well
+  + user notification shown when two sources have different time zones
+  + rollback of the change that had the file copied in case of separate /usr;
+  now a symlink is created when calling set-timezone.
+
 * Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 1:241-alt4
 - merge with v241-stable branch
 - fixed error 'too many arguments' in rpm filetrigger (ALT #36461)
@@ -2264,7 +2275,7 @@ fi
 
 * Thu Jan  2 2014 Ivan Zakharyaschev <imz@altlinux.org> 1:208-alt4
 - declare the file conflicts with systemd pkgs before the split of journalctl
-  (Epoch 1 for the split pkg, so that the new split journalctl from Sisyphus 
+  (Epoch 1 for the split pkg, so that the new split journalctl from Sisyphus
   or any branches conflicts with Epoch 0 old pkgs)
 - declare shaba@ as the maintainer
 
