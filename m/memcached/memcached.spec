@@ -1,9 +1,10 @@
 %def_enable seccomp
 %def_disable extstore
 %def_enable sasl
+%def_enable tls
 
 Name: memcached
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -19,6 +20,7 @@ Source: %name-%version.tar
 BuildRequires: libevent-devel perl-devel perl-AnyEvent perl-YAML perl-Term-ReadKey
 %{?_enable_seccomp:BuildRequires: libseccomp-devel}
 %{?_enable_sasl:BuildRequires: libsasl2-devel}
+%{?_enable_tls:BuildRequires: libssl-devel >= 1.1.0}
 
 %description
 memcached is a flexible memory object caching daemon designed to  alle-
@@ -55,7 +57,8 @@ perl version.pl
 %configure \
 	%{subst_enable seccomp} \
 	%{subst_enable extstore} \
-	%{subst_enable sasl}
+	%{subst_enable sasl} \
+	%{subst_enable tls}
 
 %make_build
 
@@ -104,6 +107,10 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Thu Apr 18 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.13-alt1
+- 1.5.13
+- build with tls support
+
 * Thu Nov 29 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.12-alt1
 - 1.5.12
 
