@@ -3,8 +3,8 @@
 %define real_name Test-PerlTidy
 
 Name: perl-Test-PerlTidy
-Version: 20130104
-Release: alt2
+Version: 20190402
+Release: alt1
 
 Summary: Perl module to check that all project files are tidy
 
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Mon Jun 27 2016
-# optimized out: perl perl-Algorithm-Diff perl-Encode perl-parent python-base python-modules python3
-BuildRequires: perl-File-Finder perl-File-Slurp perl-Perl-Tidy perl-Text-Diff perl-devel
+# Automatically added by buildreq on Thu Apr 18 2019
+# optimized out: gem-power-assert perl perl-Algorithm-Diff perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-OSType perl-Perl-Tidy perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: perl-Module-Build perl-PerlIO-utf8_strict perl-Test-Perl-Critic perl-Text-Diff
 
 %description
 Perl module Test::PerlTidy provides a check during the tests that
@@ -40,9 +40,12 @@ If you make any changes please remember to tidy them.
 %perl_vendor_install
 
 %files
-%doc README CHANGES
+%doc README Changes
 %perl_vendor_privlib/Test/PerlTidy*
 
 %changelog
+* Thu Apr 18 2019 Nikolay A. Fetisov <naf@altlinux.org> 20190402-alt1
+- New version (Closes: #36225)
+
 * Mon Jun 27 2016 Nikolay A. Fetisov <naf@altlinux.ru> 20130104-alt2
 - Initial build for ALT Linux Sisyphus
