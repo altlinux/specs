@@ -1,20 +1,22 @@
+%def_enable snapshot
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: ufraw
-Version: 0.22
-Release: alt5
+Version: 0.23
+Release: alt0.1
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
 Group: Graphics
-
 Url: http://ufraw.sourceforge.net/
-Source: http://downloads.sourceforge.net/ufraw/ufraw-%version.tar.gz
-# fc
-Patch1: 05_fix_build_due_to_unsigned_char.patch
-Patch2: ufraw-0.22-multipliers.patch
-Patch3: ufraw-0.22-find_green.patch
-Patch4: ufraw-0.22-lf-destroy.patch
+
+%if_disabled snapshot
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+%else
+# none-official repo
+# VCS: https://github.com/sergiomb2/ufraw.git
+Source: %name-%version.tar
+%endif
 
 Requires(pre): GConf
 
@@ -48,10 +50,6 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %autoreconf
@@ -95,6 +93,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Apr 18 2019 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt0.1
+- updated to 0-22-71-gac8c746 from new none-official git repo
+
 * Fri Feb 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt5
 - mike@: E2K: avoid openmp for now (ftbfs)
 
