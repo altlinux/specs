@@ -1,11 +1,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.40
-Release: alt2
+Version: 5.42
+Release: alt1
 
 Source: %name-%version.tar
-Patch: alterator-fbi-5.39-call-cc-via-reset.patch
+Patch: alterator-fbi-5.42-call-cc-via-reset.patch
 
 Summary: alterator on rails
 License: GPL
@@ -152,6 +152,35 @@ fi ||:
 
 
 %changelog
+* Wed Apr 17 2019 Paul Wolneykien <manowar@altlinux.org> 5.42-alt1
+- Update the call-cc-via-reset patch (for E2K).
+- Fixed the accidentally overwritten URL query parsing regexp fix
+  (see v5.39-alt3).
+
+* Fri Apr 12 2019 Paul Wolneykien <manowar@altlinux.org> 5.41-alt1
+- Add missing ";" to the JS AJAX response.
+- Focus on the password input when the username is set and on the
+  username otherwise.
+- Added (form-focus name) and form_focus(name) AJAX binding to
+  focus HTML input element at will.
+- Suggest a username for each login. Use the different welcome
+  message for the second (and so on) login.
+- Also, misc-error's are formatted properly now.
+- Added enchanced proc continue-with-new-session! which carries on
+  some essintial ahttpd session values.
+- Fixed the long-lived bug in how the wrong-type-arg and
+  wrong-number-of-args errors are printed.
+- Added ahttpd-session-user proc: the ahttpd session equivalent of
+  (session-user id).
+- Added continue-with-new-session proc to make a call with modified
+  ahttpd session.
+- Added ahttpd-config-ref proc to easily access the ahttpd
+  configuration.
+- Introduce the "loginchain" configuration parameter and check
+  for the configured requirements before login.
+- Store the ahttpd configuration in the current session under
+  'ahttpd-config.
+
 * Mon Jan 21 2019 Michael Shigorin <mike@altlinux.org> 5.40-alt2
 - Replace e2k arch name with %%e2k macro (grenka@).
 
