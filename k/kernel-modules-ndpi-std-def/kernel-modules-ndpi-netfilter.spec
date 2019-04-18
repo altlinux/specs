@@ -1,7 +1,7 @@
 %define module_name	ndpi
 %define module_version	2.6
 
-%define module_release alt1
+%define module_release alt2
 
 %define flavour		std-def
 %define karch x86_64 i586
@@ -32,6 +32,7 @@ BuildRequires: kernel-source-%module_name = %module_version
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+Requires: ndpi-netfilter
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
