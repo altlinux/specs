@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20181117
+Version: 20190418
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Thu Apr 18 2019 Sergey V Turchin <zerg@altlinux.org> 20190418-alt1
+- compile with _FILE_OFFSET_BITS=64
+
 * Sat Nov 17 2018 Leonid Krivoshein <klark@altlinux.org> 20181117-alt1
 - probing.c: added support for SD-cards when boot in LiveCD-mode
 
