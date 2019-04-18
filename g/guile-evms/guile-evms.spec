@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.5
-Release: alt7
+Release: alt8
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Apr 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt8
+- Fixed build on ppc64le architecture.
+
 * Tue Jul 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt7
 - require guile >= 2.0 for build
 
