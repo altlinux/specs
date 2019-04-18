@@ -2,7 +2,7 @@
 
 Name: ftpproxy
 Version: 1.2.3
-Release: alt5
+Release: alt6
 
 Summary: FTP proxy with optional access and command control
 
@@ -100,6 +100,9 @@ subst 's#@logdir@#%{logdir}#g'	%buildroot/%confdir/%name.conf \
 %config %_sysconfdir/logrotate.d/%name
 
 %changelog
+* Thu Apr 18 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.2.3-alt6
+- Fix build with GCC 8.3.1 (Closes: #36165)
+
 * Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.3-alt5
 - Fix build with GCC 7.3.1
 - Using locale functions for string conversion
