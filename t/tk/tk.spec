@@ -3,8 +3,8 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.8
-Release: alt2
+Version: 8.6.9
+Release: alt1
 
 Summary: A Tk toolkit fot Tcl scripting language
 License: BSD
@@ -15,8 +15,8 @@ Url: http://www.tcl.tk/
 Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
-BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel zlib-devel
-Requires: tcl = %version lib%name = %version-%release
+BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
+Requires: tcl = %version lib%name
 
 Provides: tcl(Ttk) = %version
 
@@ -27,13 +27,13 @@ Group: System/Libraries
 %package devel
 Summary: Header files and C programming manual for Tk
 Group: Development/C
-Requires: %name = %version-%release  tcl-devel = %version
+Requires: %name  tcl-devel = %version
 
 %package demos
 Summary: A collection of programs to demonstrate the features of the Tk toolkit
 Group: Development/Tcl
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name
 
 %description
 Tk is a X Windows widget set designed to work closely with the tcl
@@ -76,7 +76,11 @@ the features of the Tk toolkit.
 %build
 pushd unix
 %autoreconf
-%configure --disable-rpath --enable-xft
+%configure \
+	--disable-rpath \
+	--enable-threads \
+	--enable-xft \
+	#
 %make_build
 popd
 
@@ -123,6 +127,11 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.9-alt1
+- 8.6.9 released
+- explicitly enabled build with threads support 
+- dropped zlib-devel build dependency
+
 * Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt2
 - fixed FTBFS: built with system zlib
 

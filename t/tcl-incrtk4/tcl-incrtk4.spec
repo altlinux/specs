@@ -2,7 +2,7 @@
 %define oname itk
 
 Name: tcl-incrtk4
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: [incr Tk] is a framework for building mega-widgets
@@ -61,5 +61,8 @@ make test
 %_includedir/*.h
 
 %changelog
+* Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Wed Apr 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.2-alt1
 - 4.0.2
