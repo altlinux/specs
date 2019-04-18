@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Simple framework for creating REST APIs
@@ -70,5 +70,8 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 0.3.7-alt1
+- Update to 0.3.7.
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 0.3.6-alt1
 - Initial build for Sisyphus.
