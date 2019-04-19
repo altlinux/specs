@@ -5,8 +5,8 @@ Group: System/Fonts/True type
 %global fontname source-serif-pro
 %global fontconf 63-%{fontname}.conf
 
-%global version_roman  2.007
-%global version_italic 1.007
+%global version_roman  2.010
+%global version_italic 1.010
 
 Name:           fonts-otf-adobe-source-serif-pro
 Version:        %{version_roman}.%{version_italic}
@@ -30,8 +30,7 @@ family.
 
 %prep
 %setup -q -n source-serif-pro-%{version_roman}R-ro-%{version_italic}R-it
-sed -i 's/\r//' LICENSE.txt
-chmod 644 LICENSE.txt
+sed -i 's/\r//' LICENSE.md
 
 %build
 
@@ -97,9 +96,12 @@ appstream-util --nonet validate-relax \
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %doc README.md
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE.md
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.010.1.010-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.007.1.007-alt1_1
 - update to new release by fcimport
 
