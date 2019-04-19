@@ -43,6 +43,12 @@
 %def_enable doc
 %def_without tremor
 %def_enable mpg123
+%def_enable nfs
+%def_enable webdav
+%def_enable upnp
+%def_enable mpdclient
+%def_enable smbclient
+%def_enable opus
 # auto|avahi|bonjour|no
 %define zeroconf avahi
 %define mpd_user _mpd
@@ -58,9 +64,9 @@
 %{!?zeroconf:%define zeroconf no}
 
 %define  Name MPD
-Name: 	 mpd
+Name:    mpd
 Version: 0.20.23
-Release: alt1
+Release: alt2
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
 License: %gpl2plus
@@ -107,6 +113,12 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_fluidsynth:BuildRequires: libfluidsynth-devel}
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
+%{?_enable_nfs:BuildRequires: libnfs-devel}
+%{?_enable_webdav:BuildRequires: libcurl-devel libexpat-devel}
+%{?_enable_upnp:BuildRequires: libupnp-devel}
+%{?_enable_mpdclient:BuildRequires: libmpdclient-devel}
+%{?_enable_smbclient:BuildRequires: libsmbclient-devel}
+%{?_enable_opus:BuildRequires: libopus-devel}
 %{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2 /usr/bin/dot}
 BuildRequires: systemd-devel
 %if %zeroconf == avahi
@@ -208,6 +220,12 @@ sed -i 's/\[mad\]/[libmad]/' configure.ac
     %{subst_enable fluidsynth} \
     %{subst_enable wildmidi} \
     %{subst_enable mpg123} \
+    %{subst_enable nfs} \
+    %{subst_enable webdav} \
+    %{subst_enable upnp} \
+    %{subst_enable mpdclient} \
+    %{subst_enable smbclient} \
+    %{subst_enable opus} \
     %{subst_enable_to doc documentation} \
     --with-systemdsystemunitdir=/lib/systemd/system \
     --with-zeroconf=%zeroconf \
@@ -281,6 +299,16 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Fri Apr 19 2019 Anton Midyukov <antohami@altlinux.org> 0.20.23-alt2
+- moved /var/run -> /run
+- moved /var/lock -> /run/lock
+- enable nfs
+- enable webdav
+- enable upnp
+- enable mpdclient
+- enable smbclient
+- enable opus decoder
+
 * Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 0.20.23-alt1
 - 0.20.23
 - built against libfluidsynth.so.2
