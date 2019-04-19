@@ -7,7 +7,7 @@
 
 
 # Enable/Disable stuff
-%def_enable docs
+%def_enable doc
 %def_disable nonfree
 %def_enable gpl
 %def_enable version3
@@ -90,7 +90,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.1.3
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -102,15 +102,12 @@ Source:		%name-%version.tar
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 BuildRequires:	libbluray-devel libass-devel
-BuildRequires:	perl-podlators texi2html
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
 
-%{?_enable_docs:BuildRequires: perl-podlators}
-%{?_enable_docs:BuildRequires: texi2html}
+%{?_enable_doc:BuildRequires: perl-podlators texi2html}
 %{?_enable_ffplay:BuildRequires: libSDL2-devel}
-
 %{?_enable_bzlib:BuildRequires: bzlib-devel}
 %{?_enable_frei0r:BuildRequires: frei0r-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
@@ -589,11 +586,11 @@ xz Changelog
 %doc Changelog*
 %doc LICENSE.md
 %_bindir/ffmpeg
-%{?_enable_docs:%_man1dir/ffmpeg*}
+%{?_enable_doc:%_man1dir/ffmpeg*}
 %_datadir/ffmpeg
 %exclude %_datadir/ffmpeg/examples
 
-%if_enabled docs
+%if_enabled doc
 %files doc
 %doc doc/ffmpeg*.html
 %doc doc/faq.html
@@ -609,9 +606,9 @@ xz Changelog
 %if_enabled ffplay
 %files -n ffplay
 %_bindir/ffplay
-%{?_enable_docs:%_man1dir/ffplay*}
+%{?_enable_doc:%_man1dir/ffplay*}
 
-%if_with docs
+%if_enabled doc
 %files -n ffplay-doc
 %doc doc/ffplay*.html
 %endif
@@ -620,9 +617,9 @@ xz Changelog
 %if_enabled ffprobe
 %files -n ffprobe
 %_bindir/ffprobe
-%{?_enable_docs:%_man1dir/ffprobe*}
+%{?_enable_doc:%_man1dir/ffprobe*}
 
-%if_enabled docs
+%if_enabled doc
 %files -n ffprobe-doc
 %doc doc/ffprobe*.html
 %endif
@@ -631,10 +628,10 @@ xz Changelog
 %if_enabled ffserver
 %files -n ffserver
 %_bindir/ffserver
-%{?_with_docs:%_man1dir/ffserver*}
+%{?_enable_doc:%_man1dir/ffserver*}
 %endif
 
-%if_enabled docs
+%if_enabled doc
 %files -n ffserver-doc
 %{?_enable_ffserver:%doc doc/ffserver*.html}
 %endif
@@ -743,6 +740,9 @@ xz Changelog
 %endif
 
 %changelog
+* Fri Apr 19 2019 Michael Shigorin <mike@altlinux.org> 2:4.1.3-alt2
+- fixed doc knob (former docs one, renamed for consistency)
+
 * Thu Apr 04 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.3-alt1
 - 4.1.3
 
