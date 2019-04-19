@@ -2,7 +2,7 @@
 
 Name: python-module-%modname
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: A Session and Caching library with WSGI Middleware
 License: BSD-3-Clause
@@ -10,7 +10,8 @@ Group: Development/Python
 
 Url: https://github.com/bbangert/beaker
 BuildArch: noarch
-Source: beaker-%version.tar
+Source: %name-%version.tar
+Patch0: fix-var-causing-build-error.patch
 
 BuildRequires: python-module-setuptools
 BuildRequires: fdupes
@@ -40,7 +41,8 @@ Beaker is a web session and general caching library that includes WSGI
 middleware for use in web applications. As a general caching library, Beaker can handle storing for various times any Python object that can be pickled with optional back-ends on a fine-grained basis. Beaker was built largely on the code from MyghtyUtils, then refactored and extended with database support.
 
 %prep
-%setup -n beaker-%version
+%setup
+%patch0 -p1
 
 cp -fR . ../python3
 
@@ -68,6 +70,9 @@ popd
 
 
 %changelog
+* Fri Apr 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.0-alt2
+- Variable causing build error fixed
+
 * Mon Mar 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9.0-alt1
 - Version 1.9.0.
 
