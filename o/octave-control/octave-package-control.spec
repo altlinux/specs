@@ -1,13 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: /usr/bin/octave-config makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 3.1.0
-%define octave_pkg_name control
-%define octave_descr_name control
+%define octpkg control
 Epoch: 1
-Name: octave-%octave_pkg_name
-Version: 3.1.0
+Name: octave-%octpkg
+Version: 3.2.0
 Release: alt1
 Summary: Computer-Aided Control System Design
 
@@ -15,8 +13,9 @@ Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://www.slicot.org
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
+Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
+BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -29,34 +28,28 @@ Requires: octave >= 4.0.0
 
 
 %description
-Octave-Forge - Extra packages for GNU Octave.
-This package contains the %octave_descr_name GNU Octave extension.
-
-Extension Description:
 Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT Library
 
 %prep
-%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
+%setup -q -n %{octpkg}-%{version}
 
 %build
-octave -q -H --no-window-system --no-site-file --eval "pkg build -verbose -nodeps . %SOURCE0"
+%octave_build
 
 %install
-mkdir -p %buildroot%_datadir/octave/packages
-mkdir -p %buildroot%_libdir/octave/packages
-%if_with _octave_arch
-octave -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%octave_pkg_version-$(octave -H --no-window-system --no-site-file --eval "printf([__octave_config_info__(\"canonical_host_type\"), \"-\",  __octave_config_info__(\"api_version\")])").tar.gz"
-%else
-octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%octave_pkg_version-any-none.tar.gz"
-%endif
+%octave_install
 
 %files
-%_datadir/octave/packages/%octave_pkg_name-%octave_pkg_version
+%doc DESCRIPTION COPYING NEWS doc
+%_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
-%_libdir/octave/packages/%octave_pkg_name-%octave_pkg_version
+%_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.2.0-alt1
+- regenerated from template by package builder
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.0-alt1
 - regenerated from template by package builder
 
