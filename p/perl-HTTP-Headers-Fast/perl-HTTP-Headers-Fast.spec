@@ -6,7 +6,7 @@ BuildRequires: perl(MIME/Base64.pm) perl(Storable.pm) perl(Test.pm) perl(URI.pm)
 %define upstream_name    HTTP-Headers-Fast
 
 Name:       perl-%{upstream_name}
-Version:    0.21
+Version:    0.22
 Release:    alt1
 
 Summary:    Faster implementation of HTTP::Headers
@@ -41,6 +41,9 @@ The interface is the same as HTTP::Headers.
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
