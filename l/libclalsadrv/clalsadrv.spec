@@ -1,3 +1,4 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname clalsadrv
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -6,30 +7,23 @@
 Summary:       ALSA driver C++ Library
 Name:          libclalsadrv
 Version:       2.0.0
-Release:       alt1_17
+Release:       alt1_19
 License:       GPLv2+
-Group:         System/Libraries
 URL:           http://kokkinizita.linuxaudio.org/
 Source0:       http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{oldname}-%{version}.tar.bz2
 
-Obsoletes:     alsadrv <= 0.0.2
-Provides:      alsadrv > 0.0.2
 BuildRequires: libalsa-devel
 BuildRequires: gcc-c++
 Source44: import.info
-Provides: clalsadrv = %{version}-%{release}
 
 %description
 ALSA driver C++ access library
 
 %package       devel
+Group: Development/Other
 Summary:       ALSA driver C++ access library
-Group:         Development/Other
 Requires:      %{name} = %{version}-%{release}
 
-Obsoletes:     alsadrv-devel <= 0.0.2
-Provides:      alsadrv-devel > 0.0.2
-Provides: clalsadrv-devel = %{version}-%{release}
 
 %description devel
 ALSA driver C++ access library. This package includes the development
@@ -62,6 +56,9 @@ ln -s lib%{oldname}.so.2.0.0 %{buildroot}%{_libdir}/lib%{oldname}.so.2
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_19
+- cleaned up provides (closes: #36613)
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_17
 - update to new release by fcimport
 
