@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gst-plugins
-%define ver_major 1.15
+%define ver_major 1.16
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -190,6 +190,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
 - 1.15.90
 

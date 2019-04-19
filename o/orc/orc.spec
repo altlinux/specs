@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: orc
-Version: %ver_major.28
+Version: %ver_major.29
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -98,6 +98,7 @@ This package contains documentation for Orc.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--enable-gtk-doc \
@@ -130,11 +131,15 @@ This package contains documentation for Orc.
 %files -n lib%name-test-devel
 %_includedir/orc-%ver_major/orc-test
 %_libdir/liborc-test-%ver_major.so
+%_pkgconfigdir/orc-test-%ver_major.pc
 
 %files doc
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Mon Apr 15 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.29-alt1
+- 0.4.29
+
 * Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.28-alt1
 - 0.4.28
 

@@ -1,4 +1,4 @@
-%define ver_major 1.15
+%define ver_major 1.16
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
@@ -55,7 +55,7 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -149,6 +149,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
 - 1.15.90
 

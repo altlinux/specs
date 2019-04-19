@@ -18,7 +18,7 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.15
+%define ver_major 1.16
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -26,7 +26,7 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -156,6 +156,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
 - 1.15.90
 

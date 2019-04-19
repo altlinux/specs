@@ -8,7 +8,7 @@
 
 Name: meson
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -25,7 +25,10 @@ Source2: %name.env
 # do not duplicate external dependencies in list
 # cfe82db5ab0d35832da474014dff4b6dfe33f8b7
 Patch: meson-0.49.2-up-dedup.patch
-Patch1: meson-0.49.2-alt-e2k-lcc.patch
+# https://github.com/mesonbuild/meson/pull/5284
+Patch1: meson-0.50.1-mcst-e2k.patch
+#Patch1: meson-0.49.2-alt-e2k-lcc.patch
+#Patch2: meson-0.50.1-alt-e2k-lcc.patch
 
 BuildArch: noarch
 
@@ -68,10 +71,8 @@ reports, Valgrind, CCache and the like.
 
 %prep
 %setup
-#%%patch -p1 -b .dedup
-#%%ifarch %e2k
+%patch -p1 -b .dedup
 %patch1 -p1
-#%%endif
 
 %build
 %python3_build
@@ -97,6 +98,10 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt2
+- applied again dedup.patch to fix gnome-builder build
+- updated e2k support by mcst (https://github.com/mesonbuild/meson/pull/5284)
+
 * Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
 - 0.50.1
 
