@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -197,6 +197,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Mon Feb 25 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
