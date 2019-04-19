@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 242
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1842,6 +1842,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Apr 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt2
+- update patch timezone detection(mrdrew@)
+
 * Sat Apr 13 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt1
 - 242
 - move execute systemctl daemon-reexec from post-script to filetrigger
