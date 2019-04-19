@@ -4,7 +4,7 @@
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 0.54
+Version: 0.55
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -19,7 +19,7 @@ Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module}-%{version}.tar.
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 16 2010
-BuildRequires: perl-Crypt-OpenSSL-RSA perl-MailTools perl-Net-DNS perl-devel perl(Digest/SHA.pm)
+BuildRequires: perl-Crypt-OpenSSL-RSA perl-MailTools perl-Net-DNS perl-devel perl(Digest/SHA.pm) perl(Mail/AuthenticationResults/Parser.pm)
 
 %description
 This module implements the various components of the DKIM message-signing and
@@ -40,6 +40,9 @@ verifying standard for Internet mail.
 #exclude %perl_vendor_privlib/Mail/sample*
 
 %changelog
+* Mon Apr 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - automated CPAN update
 
