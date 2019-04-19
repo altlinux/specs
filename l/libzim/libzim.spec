@@ -1,18 +1,27 @@
-Name:          libzim
-Version:       1.0
-Release:       alt2
-Summary:       Library for reading/writing ZIM files
+Name:    libzim
+Version: 4.0.7
+Release: alt1
+Summary: Library for reading/writing ZIM files
 
-License:       GPLv2+
-Group:         System/Libraries
-URL:           http://openzim.org/wiki/Main_Page
+License: GPLv2+
+Group:   System/Libraries
+URL:     http://openzim.org/wiki/Main_Page
+# VCS:   https://github.com/openzim/libzim
 
-Source0:       http://www.openzim.org/download/zimlib-%version.tar.gz
+Source0: %name-%version.tar
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel
+BuildRequires: libgtest-devel
+BuildRequires: zlib-devel
+BuildRequires: cmake
+BuildRequires: libxapian-devel
+BuildRequires: libicu-devel
+BuildRequires: python3-dev
+BuildRequires: python3-module-Cython
 
-Provides:      zimlib = %version-%release
+Provides: zimlib = %version-%release
 
 %description
 The zimlib is the standard implementation of the ZIM specification. It
@@ -34,26 +43,29 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n zimlib-%version
+%setup
 
 %build
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
-%doc AUTHORS COPYING 
-%_bindir/zimdump
-%_bindir/zimsearch
+%doc AUTHORS README.md
 %_libdir/*.so.*
 
 %files devel
+%doc examples
 %_includedir/zim/
 %_libdir/*.so
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 18 2019 Andrey Cherepanov <cas@altlinux.org> 4.0.7-alt1
+- New version.
+
 * Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
 - Provide zimlib and zimlib-devel for compatibity with Fedora
 
