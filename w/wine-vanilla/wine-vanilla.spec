@@ -1,9 +1,9 @@
 %define gecko_version 2.47
-%define mono_version 4.7.3
+%define mono_version 4.8.1
 
 Name: wine-vanilla
-Version: 4.4
-Release: alt1
+Version: 4.6
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -125,7 +125,7 @@ Requires: %name = %version-%release
 Requires: %name-programs = %version-%release
 Requires: lib%name-gl = %version-%release
 
-Requires: wine-mono >= %mono_version
+Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
 Requires: winetricks
 
@@ -421,6 +421,12 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt2
+- strict require wine-mono-4.8.1
+
+* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt1
+- new version 4.6
+
 * Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 4.4-alt1
 - new version 4.4
 
