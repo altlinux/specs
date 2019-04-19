@@ -1,15 +1,15 @@
 Summary: Library for full screen [S]VGA graphics
-Summary(de):	Library fЭr Vollbildschirm-[S]VGA-Grafiken
-Summary(es):	Biblioteca para grАficos en pantalla llena [S]VGA
+Summary(de):	Library fц╪r Vollbildschirm-[S]VGA-Grafiken
+Summary(es):	Biblioteca para grц║ficos en pantalla llena [S]VGA
 Summary(fr):	Une librairie graphique SVGA plein ecran de bas niveau
-Summary(pl):	Biblioteki dla peЁnoekranowej grafiki [S]VGA
-Summary(pt_BR):	Biblioteca para grАficos em tela cheia [S]VGA
-Summary(ru_RU.KOI8-R):	Низкоуровневая библиотека полноэкранной SVGA графики
-Summary(tr):	Tam-ekran [S]VGA Гizimleri kitaplЩПЩ
-Summary(uk_UA.KOI8-U):	Низькор╕внева б╕бл╕отека повноекранно╖ SVGA граф╕ки
+Summary(pl):	Biblioteki dla peе┌noekranowej grafiki [S]VGA
+Summary(pt_BR):	Biblioteca para grц║ficos em tela cheia [S]VGA
+Summary(ru_RU):	п²п╦п╥п╨п╬я┐я─п╬п╡п╫п╣п╡п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫п╬п╧ SVGA пЁя─п╟я└п╦п╨п╦
+Summary(tr):	Tam-ekran [S]VGA ц╖izimleri kitaplц╫д▒ц╫
+Summary(uk_UA):	п²п╦п╥я▄п╨п╬я─я√п╡п╫п╣п╡п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╟ п©п╬п╡п╫п╬п╣п╨я─п╟п╫п╫п╬я≈ SVGA пЁя─п╟я└я√п╨п╦
 Name: svgalib
 Version: 1.9.25
-Release: alt2.4
+Release: alt2.5
 License: distributable
 Group: System/Libraries
 Source0: %name-%version.tar
@@ -20,7 +20,7 @@ Patch3: %name-1.9.23-unresolved.patch
 Patch4: %name-1.9.25-kernel-2.6.26.patch
 Patch5: %name-1.9.25-gtf-patch.patch
 Patch6: %name-threeDKit-glibc.patch
-Url: http://www.arava.co.il/matan/svgalib/
+Url: https://www.svgalib.org/
 ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-kernel
@@ -42,70 +42,70 @@ utilities use SVGAlib for their graphics.
 %description -l de
 SVGAlib ist eine Library, die es Applikationen gestattet, auf einer
 Reihe von Plattformen Vollbild-Grafiken zu benutzen. Viele Games und
-Utilities nutzen diese Library fЭr den Grafikzugriff, da sie fЭr
+Utilities nutzen diese Library fц╪r den Grafikzugriff, da sie fц╪r
 Maschinen mit wenig Speicher besser geeignet ist als X-Windows.
 
 %description -l es
-SVGAlib es una biblioteca que permite a las aplicaciones usar grАficos
+SVGAlib es una biblioteca que permite a las aplicaciones usar grц║ficos
 de pantalla llena en una variedad de plataformas de hardware. Muchos
-juegos y utilitarios son puestos a disposiciСn para usar la SVGAlib
-para acceso a grАficos, pues es mАs indicado en mАquinas con poca
+juegos y utilitarios son puestos a disposiciцЁn para usar la SVGAlib
+para acceso a grц║ficos, pues es mц║s indicado en mц║quinas con poca
 memoria para ejecutar un sistema X Window.
 
 %description -l fr
 Le package svgalib apporte la librairie graphique SVGAlib de bas
 niveau pour Linux. SVGAlib est une librairie qui permet aux
-applications d'utiliser des graphismes en plein Иcran sur diverses
-plateformes matИrielles. De nombreux jeux et utilitaires utilisent
+applications d'utiliser des graphismes en plein ц╘cran sur diverses
+plateformes matц╘rielles. De nombreux jeux et utilitaires utilisent
 SVGAlib pour leurs graphismes.
 
 %description -l pl
-Biblioteki dla peЁnoekranowej grafiki [S]VGA. Wiele gier i programСw
-u©ytkowych korzysta z tych bibliotek, gdy© wymagaj╠ mniej pamiЙci ni©
+Biblioteki dla peе┌noekranowej grafiki [S]VGA. Wiele gier i programцЁw
+uе╪ytkowych korzysta z tych bibliotek, gdyе╪ wymagajб╠ mniej pamiд≥ci niе╪
 X Window System.
 
 %description -l pt_BR
-SVGAlib И uma biblioteca que permite a aplicaГУes usar grАficos de
+SVGAlib ц╘ uma biblioteca que permite a aplicaц╖е▒es usar grц║ficos de
 tela cheia em uma variedade de plataformas de hardware. Muitos jogos e
-utilitАrios sЦo disponibilizados para usar a SVGAlib para acesso a
-grАficos, pois ele И mais indicado em mАquinas com pouca memСria para
+utilitц║rios sд┐o disponibilizados para usar a SVGAlib para acesso a
+grц║ficos, pois ele ц╘ mais indicado em mц║quinas com pouca memцЁria para
 rodar um sistema X Window.
 
-%description -l ru_RU.KOI8-R
-Низкоуровневая графическая библиотека SVGAlib обеспечивает работу с
-графическими режимами VGA и SVGA в консоли. SVGAlib позволяет
-приложениям использовать полноэкранную графику на разнообразных
-аппаратных платформах.
+%description -l ru_RU
+п²п╦п╥п╨п╬я┐я─п╬п╡п╫п╣п╡п╟я▐ пЁя─п╟я└п╦я┤п╣я│п╨п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ SVGAlib п╬п╠п╣я│п©п╣я┤п╦п╡п╟п╣я┌ я─п╟п╠п╬я┌я┐ я│
+пЁя─п╟я└п╦я┤п╣я│п╨п╦п╪п╦ я─п╣п╤п╦п╪п╟п╪п╦ VGA п╦ SVGA п╡ п╨п╬п╫я│п╬п╩п╦. SVGAlib п©п╬п╥п╡п╬п╩я▐п╣я┌
+п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫я┐я▌ пЁя─п╟я└п╦п╨я┐ п╫п╟ я─п╟п╥п╫п╬п╬п╠я─п╟п╥п╫я▀я┘
+п╟п©п©п╟я─п╟я┌п╫я▀я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘.
 
-Существует множество игр и утилит, использующих SVGAlib для вывода
-графики. Вам необходимо будет установить svgalib, если вы используете
-такие программы.
+п║я┐я┴п╣я│я┌п╡я┐п╣я┌ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╦пЁя─ п╦ я┐я┌п╦п╩п╦я┌, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ SVGAlib п╢п╩я▐ п╡я▀п╡п╬п╢п╟
+пЁя─п╟я└п╦п╨п╦. п▓п╟п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ п╠я┐п╢п╣я┌ я┐я│я┌п╟п╫п╬п╡п╦я┌я▄ svgalib, п╣я│п╩п╦ п╡я▀ п╦я│п©п╬п╩я▄п╥я┐п╣я┌п╣
+я┌п╟п╨п╦п╣ п©я─п╬пЁя─п╟п╪п╪я▀.
 
 %description -l tr
-SVGAlib, deПiЧik donanЩm platformlarЩ Эzerinde, uygulamalarЩn tam
-ekran Гizim kullanmalarЩnЩ saПlayan bir kitaplЩktЩr. Az bellekli
-makinalar iГin X Windows'tan daha uygun olmasЩnЩn yanЩsЩra, pek Гok
-oyun ve yardЩmcЩ programlar Гizim eriЧimi iГin bu kitaplЩПЩ kullanЩr.
+SVGAlib, deд▒iеёik donanц╫m platformlarц╫ ц╪zerinde, uygulamalarц╫n tam
+ekran ц╖izim kullanmalarц╫nц╫ saд▒layan bir kitaplц╫ktц╫r. Az bellekli
+makinalar iц╖in X Windows'tan daha uygun olmasц╫nц╫n yanц╫sц╫ra, pek ц╖ok
+oyun ve yardц╫mcц╫ programlar ц╖izim eriеёimi iц╖in bu kitaplц╫д▒ц╫ kullanц╫r.
 
-%description -l uk_UA.KOI8-U
-Низькор╕внева граф╕чна б╕бл╕отека SVGAlib забезпечу╓ роботу з
-граф╕чними режимами VGA та SVGA з консол╕. SVGAlib п╕дтриму╓
-повноекранну граф╕ку на р╕зноман╕тних апаратних платформах.
+%description -l uk_UA
+п²п╦п╥я▄п╨п╬я─я√п╡п╫п╣п╡п╟ пЁя─п╟я└я√я┤п╫п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╟ SVGAlib п╥п╟п╠п╣п╥п©п╣я┤я┐я■ я─п╬п╠п╬я┌я┐ п╥
+пЁя─п╟я└я√я┤п╫п╦п╪п╦ я─п╣п╤п╦п╪п╟п╪п╦ VGA я┌п╟ SVGA п╥ п╨п╬п╫я│п╬п╩я√. SVGAlib п©я√п╢я┌я─п╦п╪я┐я■
+п©п╬п╡п╫п╬п╣п╨я─п╟п╫п╫я┐ пЁя─п╟я└я√п╨я┐ п╫п╟ я─я√п╥п╫п╬п╪п╟п╫я√я┌п╫п╦я┘ п╟п©п╟я─п╟я┌п╫п╦я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘.
 
-╤сну╓ чимало ╕гор та утил╕т, як╕ використовують SVGAlib для виводу
-граф╕ки. Вам необх╕дно буде встановити svgalib, якщо ви користу╓тесь
-такими програмами.
+п├я│п╫я┐я■ я┤п╦п╪п╟п╩п╬ я√пЁп╬я─ я┌п╟ я┐я┌п╦п╩я√я┌, я▐п╨я√ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ SVGAlib п╢п╩я▐ п╡п╦п╡п╬п╢я┐
+пЁя─п╟я└я√п╨п╦. п▓п╟п╪ п╫п╣п╬п╠я┘я√п╢п╫п╬ п╠я┐п╢п╣ п╡я│я┌п╟п╫п╬п╡п╦я┌п╦ svgalib, я▐п╨я┴п╬ п╡п╦ п╨п╬я─п╦я│я┌я┐я■я┌п╣я│я▄
+я┌п╟п╨п╦п╪п╦ п©я─п╬пЁя─п╟п╪п╟п╪п╦.
 
 %package devel
 Summary: Development libraries and include files for [S]VGA graphics
-Summary(de):	Entwicklungs-Libraries und INCLUDE-Dateien fЭr (S)VGA-Grafik
-Summary(es):	Bibliotecas de desarrollo y archivos de inclusiСn para grАficos [S]VGA
-Summary(fr):	Outils pour dИvelopper des programmes utilisant SVGAlib
-Summary(pl):	Pliki nagЁСwkowe i dokumentacja dla [S]VGA
-Summary(pt_BR):	Bibliotecas de desenvolvimento e arquivos de inclusЦo para grАficos [S]VGA
-Summary(ru_RU.KOI8-R):	Файлы для построения программ, использующих SVGAlib
-Summary(tr):	[S]VGA grafikleri iГin geliЧtirme kitaplЩklarЩ ve baЧlЩk dosyalarЩ
-Summary(uk_UA.KOI8-U):	Файли для побудови програм, що використовують SVGAlib
+Summary(de):	Entwicklungs-Libraries und INCLUDE-Dateien fц╪r (S)VGA-Grafik
+Summary(es):	Bibliotecas de desarrollo y archivos de inclusiцЁn para grц║ficos [S]VGA
+Summary(fr):	Outils pour dц╘velopper des programmes utilisant SVGAlib
+Summary(pl):	Pliki nagе┌цЁwkowe i dokumentacja dla [S]VGA
+Summary(pt_BR):	Bibliotecas de desenvolvimento e arquivos de inclusд┐o para grц║ficos [S]VGA
+Summary(ru_RU):	п╓п╟п╧п╩я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╬пЁя─п╟п╪п╪, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ SVGAlib
+Summary(tr):	[S]VGA grafikleri iц╖in geliеёtirme kitaplц╫klarц╫ ve baеёlц╫k dosyalarц╫
+Summary(uk_UA):	п╓п╟п╧п╩п╦ п╢п╩я▐ п©п╬п╠я┐п╢п╬п╡п╦ п©я─п╬пЁя─п╟п╪, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ SVGAlib
 Group: Development/C
 Requires: %name = %version
 
@@ -117,51 +117,51 @@ library.
 %description devel -l de
 Dies sind die Libraries und Header-Dateien, die zum Erstellen von
 Programmen erforderlich sind, die SVGAlib verwenden. Mit SVGAlib
-kЖnnen Programme Vollbildgrafiken auf einer Reihe von Plattformen
+kц╤nnen Programme Vollbildgrafiken auf einer Reihe von Plattformen
 verwenden, ohne den von X erforderlichen Overhead.
 
 %description devel -l es
-Estas son las bibliotecas y archivos de inclusiСn que son necesarios
+Estas son las bibliotecas y archivos de inclusiцЁn que son necesarios
 para construir programas que usan SVGAlib. Permite que los programas
-usen grАficos de pantalla llena en una variedad de plataformas de
+usen grц║ficos de pantalla llena en una variedad de plataformas de
 hardware sin el overhead del X.
 
 %description devel -l fr
 Le package svgalib-devel contient les librairies et les fichiers
-d'entЙtes nИcessaires pour construire des programmes qui utiliseront
-la librairie graphique plein Иcran de bas-niveau SVGAlib.
+d'entд≥tes nц╘cessaires pour construire des programmes qui utiliseront
+la librairie graphique plein ц╘cran de bas-niveau SVGAlib.
 
 %description devel -l pl
-Pliki nagЁСwkowe i dokumentacja dla [S]VGA.
+Pliki nagе┌цЁwkowe i dokumentacja dla [S]VGA.
 
 %description devel -l pt_BR
-Estas sЦo as bibliotecas e arquivos de inclusЦo que sЦo necessАrios
+Estas sд┐o as bibliotecas e arquivos de inclusд┐o que sд┐o necessц║rios
 para construir programas que usam SVGAlib. SVGAlib permite que
-programas usem grАficos de tela cheia em uma variedade de plataformas
+programas usem grц║ficos de tela cheia em uma variedade de plataformas
 de hardware sem o overhead do X.
 
-%description devel -l ru_RU.KOI8-R
-Это файлы, необходимые для компиляции программ, использующих
-библиотеку SVGAlib. SVGAlib позволяет программам использовать
-полноэкранную графику на разнообразных аппаратных платформах и без
-необходимости запускать для этого X Window.
+%description devel -l ru_RU
+п╜я┌п╬ я└п╟п╧п╩я▀, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ п©я─п╬пЁя─п╟п╪п╪, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘
+п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ SVGAlib. SVGAlib п©п╬п╥п╡п╬п╩я▐п╣я┌ п©я─п╬пЁя─п╟п╪п╪п╟п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
+п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫я┐я▌ пЁя─п╟я└п╦п╨я┐ п╫п╟ я─п╟п╥п╫п╬п╬п╠я─п╟п╥п╫я▀я┘ п╟п©п©п╟я─п╟я┌п╫я▀я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘ п╦ п╠п╣п╥
+п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬я│я┌п╦ п╥п╟п©я┐я│п╨п╟я┌я▄ п╢п╩я▐ я█я┌п╬пЁп╬ X Window.
 
 %description devel -l tr
-Bu paket, SVGAlib kitaplЩПЩnЩ kullanan programlar geliЧtirmek iГin
-gereken baЧlЩk dosyalarЩnЩ ve statik kitaplЩklarЩ iГerir.
+Bu paket, SVGAlib kitaplц╫д▒ц╫nц╫ kullanan programlar geliеёtirmek iц╖in
+gereken baеёlц╫k dosyalarц╫nц╫ ve statik kitaplц╫klarц╫ iц╖erir.
 
-%description devel -l uk_UA.KOI8-U
-Це файли, необх╕дн╕ для комп╕ляц╕╖ програм, що використовують
-б╕бл╕отеку SVGAlib. SVGAlib да╓ програмам можлив╕сть працювати з
-повноекранною граф╕кою на р╕зноман╕тних апаратних платформах та без
-необх╕дност╕ запускати для цього X Window.
+%description devel -l uk_UA
+п╕п╣ я└п╟п╧п╩п╦, п╫п╣п╬п╠я┘я√п╢п╫я√ п╢п╩я▐ п╨п╬п╪п©я√п╩я▐я├я√я≈ п©я─п╬пЁя─п╟п╪, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄
+п╠я√п╠п╩я√п╬я┌п╣п╨я┐ SVGAlib. SVGAlib п╢п╟я■ п©я─п╬пЁя─п╟п╪п╟п╪ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ п©я─п╟я├я▌п╡п╟я┌п╦ п╥
+п©п╬п╡п╫п╬п╣п╨я─п╟п╫п╫п╬я▌ пЁя─п╟я└я√п╨п╬я▌ п╫п╟ я─я√п╥п╫п╬п╪п╟п╫я√я┌п╫п╦я┘ п╟п©п╟я─п╟я┌п╫п╦я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘ я┌п╟ п╠п╣п╥
+п╫п╣п╬п╠я┘я√п╢п╫п╬я│я┌я√ п╥п╟п©я┐я│п╨п╟я┌п╦ п╢п╩я▐ я├я▄п╬пЁп╬ X Window.
 
 %package devel-static
 Summary: Static [S]VGA graphics librarires
 Summary(pl):	Biblioteki statyczne [S]VGA
-Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com SVGAlib
-Summary(ru_RU.KOI8-R):	Статические библиотеки для построения программ, использующих SVGAlib
-Summary(uk_UA.KOI8-U):	Статичн╕ б╕бл╕отеки для побудови програм, що використовують SVGAlib
+Summary(pt_BR):	Bibliotecas estц║ticas para desenvolvimento com SVGAlib
+Summary(ru_RU):	п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п©я─п╬пЁя─п╟п╪п╪, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ SVGAlib
+Summary(uk_UA):	п║я┌п╟я┌п╦я┤п╫я√ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п╢п╩я▐ п©п╬п╠я┐п╢п╬п╡п╦ п©я─п╬пЁя─п╟п╪, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ SVGAlib
 Group: Development/C
 Requires: %name-devel = %version
 
@@ -172,45 +172,44 @@ Static [S]VGA graphics librarires.
 Biblioteki statyczne [S]VGA.
 
 %description devel-static -l pt_BR
-Bibliotecas estАticas para desenvolvimento com SVGAlib.
+Bibliotecas estц║ticas para desenvolvimento com SVGAlib.
 
-%description devel-static -l ru_RU.KOI8-R
-Это файлы, необходимые для компиляции программ, использующих
-библиотеку SVGAlib. SVGAlib позволяет программам использовать
-полноэкранную графику на разнообразных аппаратных платформах и без
-необходимости запускать для этого X Window.
+%description devel-static -l ru_RU
+п╜я┌п╬ я└п╟п╧п╩я▀, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ п©я─п╬пЁя─п╟п╪п╪, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘
+п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ SVGAlib. SVGAlib п©п╬п╥п╡п╬п╩я▐п╣я┌ п©я─п╬пЁя─п╟п╪п╪п╟п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
+п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫я┐я▌ пЁя─п╟я└п╦п╨я┐ п╫п╟ я─п╟п╥п╫п╬п╬п╠я─п╟п╥п╫я▀я┘ п╟п©п©п╟я─п╟я┌п╫я▀я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘ п╦ п╠п╣п╥
+п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬я│я┌п╦ п╥п╟п©я┐я│п╨п╟я┌я▄ п╢п╩я▐ я█я┌п╬пЁп╬ X Window.
 
-%description devel-static -l uk_UA.KOI8-U
-Це файли, необх╕дн╕ для комп╕ляц╕╖ програм, що використовують
-б╕бл╕отеку SVGAlib. SVGAlib да╓ програмам можлив╕сть працювати з
-повноекранною граф╕кою на р╕зноман╕тних апаратних платформах та без
-необх╕дност╕ запускати для цього X Window.
+%description devel-static -l uk_UA
+п╕п╣ я└п╟п╧п╩п╦, п╫п╣п╬п╠я┘я√п╢п╫я√ п╢п╩я▐ п╨п╬п╪п©я√п╩я▐я├я√я≈ п©я─п╬пЁя─п╟п╪, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄
+п╠я√п╠п╩я√п╬я┌п╣п╨я┐ SVGAlib. SVGAlib п╢п╟я■ п©я─п╬пЁя─п╟п╪п╟п╪ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ п©я─п╟я├я▌п╡п╟я┌п╦ п╥
+п©п╬п╡п╫п╬п╣п╨я─п╟п╫п╫п╬я▌ пЁя─п╟я└я√п╨п╬я▌ п╫п╟ я─я√п╥п╫п╬п╪п╟п╫я√я┌п╫п╦я┘ п╟п©п╟я─п╟я┌п╫п╦я┘ п©п╩п╟я┌я└п╬я─п╪п╟я┘ я┌п╟ п╠п╣п╥
+п╫п╣п╬п╠я┘я√п╢п╫п╬я│я┌я√ п╥п╟п©я┐я│п╨п╟я┌п╦ п╢п╩я▐ я├я▄п╬пЁп╬ X Window.
 
 %package utils
 Summary: Various utils for using with %name.
-Summary(ru_RU.KOI8-R): Различные утилиты для %name
+Summary(ru_RU): п═п╟п╥п╩п╦я┤п╫я▀п╣ я┐я┌п╦п╩п╦я┌я▀ п╢п╩я▐ %name
 Group: System/Configuration/Hardware
 Requires: %name = %version-%release
 
 %description utils
 Various useful utils for %name.
 
-%description utils -l ru_RU.KOI8-R
-Различные утилиты для %name, позволяющие управлять видеоустройствами, не
-используя X Window.
+%description utils -l ru_RU
+п═п╟п╥п╩п╦я┤п╫я▀п╣ я┐я┌п╦п╩п╦я┌я▀ п╢п╩я▐ %name, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ я┐п©я─п╟п╡п╩я▐я┌я▄ п╡п╦п╢п╣п╬я┐я│я┌я─п╬п╧я│я┌п╡п╟п╪п╦, п╫п╣
+п╦я│п©п╬п╩я▄п╥я┐я▐ X Window.
 
 %package -n kernel-source-%module_name
 Summary: %name kernel helper module sources
-Summary(ru_RU.KOI8-R): kernel-space модуль для %name 
+Summary(ru_RU): kernel-space п╪п╬п╢я┐п╩я▄ п╢п╩я▐ %name 
 Group: Development/Kernel
-
 
 %description -n kernel-source-%module_name
 %name kernel helper module sources for Linux kernel.
 
-%description -n kernel-source-%module_name -l ru_RU.KOI8-R
-kernel-space модуль для %name, позволяющий получить низкоуровневый доступ к
-видеоустройству не повышая привилегий пользователя.
+%description -n kernel-source-%module_name -l ru_RU
+kernel-space п╪п╬п╢я┐п╩я▄ п╢п╩я▐ %name, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╧ п©п╬п╩я┐я┤п╦я┌я▄ п╫п╦п╥п╨п╬я┐я─п╬п╡п╫п╣п╡я▀п╧ п╢п╬я│я┌я┐п© п╨
+п╡п╦п╢п╣п╬я┐я│я┌я─п╬п╧я│я┌п╡я┐ п╫п╣ п©п╬п╡я▀я┬п╟я▐ п©я─п╦п╡п╦п╩п╣пЁп╦п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐.
 
 %prep
 %setup -q
@@ -299,6 +298,10 @@ for i in threeDKit/0-*; do %__cp $i $i.threeDKit; done
 %_usrsrc/kernel
 
 %changelog
+* Fri Apr 19 2019 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.5
+- .spec: convert to unicode.
+- Update URL.
+
 * Sun May 22 2016 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.4
 - Fix build with recent glibc.
 
