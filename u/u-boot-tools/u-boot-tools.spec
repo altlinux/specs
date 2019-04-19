@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2019.01
+Version: 2019.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -37,6 +37,9 @@ install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage} %{?_wi
 %_bindir/*
 
 %changelog
+* Fri Apr 19 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.04-alt1
+- 2019.04 released
+
 * Tue Jan 22 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
 - 2019.01 released
 
