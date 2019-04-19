@@ -12,19 +12,28 @@ AutoReq: yes, nopython
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global scm_tag            v2.7.1
 
-# Turn off the brp-python-bytecompile script
-# We generate JVM bytecode instead
-
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt2_5jpp8
+Release:                   alt2_8jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
+
+# Whether to use RPM build wheels from the python-{pip,setuptools}-wheel package
+# Those wheels are used for the ensurepip module and are bundled with upstream
+# source tarball. We remove them and depend on packages that bring wheels built
+# in Fedora. When turned off (set to "with"), bundled wheels are used.
+%bcond_with rpmwheels
 
 # Use the included fetch-jython.sh script to generate the source drop
 # Usage: sh fetch-jython.sh %%{scm_tag}
@@ -43,12 +52,16 @@ Patch3:                    jython-launcher.patch
 Patch4:                    jython-fix-multiprocessing.patch
 # Fix tty detection
 Patch5:                    jython-fix-tty-detection.patch
+# Instead of bundled wheels, use our RPM packaged wheels from
+# /usr/share/python-wheels
+# This patch chnages the location where Jython searches the wheels for enserepip
+Patch189:                  jython-use-rpm-wheels.patch
 
 Requires:                  antlr32-java
 Requires:                  apache-commons-compress
 Requires:                  bouncycastle
 Requires:                  bouncycastle-pkix
-Requires:                  guava20
+Requires:                  guava
 Requires:                  objectweb-asm
 Requires:                  jctools >= 2.0.2
 Requires:                  jnr-constants
@@ -71,7 +84,7 @@ BuildRequires:             antlr32-tool
 BuildRequires:             apache-commons-compress
 BuildRequires:             bouncycastle
 BuildRequires:             bouncycastle-pkix
-BuildRequires:             guava20
+BuildRequires:             guava
 BuildRequires:             objectweb-asm
 BuildRequires:             jctools >= 2.0.2
 BuildRequires:             jnr-constants
@@ -85,6 +98,17 @@ BuildRequires:             jansi
 BuildRequires:             icu4j
 BuildRequires:             netty >= 4.1.13
 BuildRequires:             xerces-j2
+
+%if %{with rpmwheels}
+BuildRequires: python-setuptools-wheel
+BuildRequires: python-pip-wheel
+Requires: python-setuptools-wheel
+Requires: python-pip-wheel
+%else
+#Provides: bundled(python2-pip) = 9.0.1
+#Provides: bundled(python2-setuptools) = 28.8.0
+AutoProv: yes,nopython
+%endif
 
 BuildArch:                 noarch
 Source44: import.info
@@ -111,8 +135,6 @@ mix the two languages both during development and in shipping products.
 Group: Development/Java
 Summary:           Javadoc for %{name}
 # Obsoletes/Provides added in F25
-Obsoletes:         %{name}-manual = %{version}-%{release}
-Provides:          %{name}-manual < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -137,6 +159,12 @@ Demonstrations and samples for %{name}.
 %patch4 -p1
 %patch5
 
+%if %{with rpmwheels}
+%patch189 -p1
+rm Lib/ensurepip/_bundled/*.whl
+rmdir Lib/ensurepip/_bundled
+%endif
+
 rm -rf extlibs/*
 
 # Disable doclint to fix javadoc generation
@@ -153,7 +181,7 @@ sed -i -e 's/CharMatcher\.ascii()/CharMatcher.ASCII/' \
 build-jar-repository -p -s extlibs \
   antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
   jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi icu4j/icu4j \
-  glassfish-servlet-api guava20 objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
+  glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
   commons-compress junit hamcrest/core
 
 ant \
@@ -172,7 +200,7 @@ popd
 # Symlink run-time libs
 rm dist/javalib/*.jar
 build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
-  objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava20 icu4j/icu4j \
+  objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
   jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
   netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
   jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
@@ -251,6 +279,11 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_8jpp8
+- cleaned up provides (closes: #36611)
+- build with guava
+- bcond_with rpmwheels
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_5jpp8
 - build with guava20
 
