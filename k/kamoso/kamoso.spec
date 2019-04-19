@@ -1,6 +1,6 @@
 Name:           kamoso
-Version:        18.12.3
-Release:        alt2
+Version:        19.04.0
+Release:        alt1
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
@@ -29,6 +29,7 @@ BuildRequires: kf5-kio-devel
 BuildRequires: kf5-kirigami-devel
 BuildRequires: kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-knotifications-devel
 BuildRequires: kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel
 BuildRequires: kf5-kwidgetsaddons-devel
@@ -58,8 +59,6 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %install
 %K5install
-install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.kamoso.appdata.xml
-
 %find_lang %name --all
 
 %files -f %name.lang
@@ -67,10 +66,19 @@ install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.k
 %_K5bin/%name
 %_K5icon/hicolor/*/*/*.*
 %_K5xdgapp/*%name.desktop
-%_datadir/appdata/org.kde.kamoso.appdata.xml
+%_datadir/metainfo/org.kde.kamoso.appdata.xml
 %doc %_K5doc/*/%name
+%_datadir/sounds/kamoso-shutter.wav
+%_libdir/gstreamer-1.0/gstkamosoqt5videosink.so
+%_K5notif/%name.notifyrc
 
 %changelog
+* Fri Apr 19 2019 Andrey Cherepanov <cas@altlinux.org> 19.04.0-alt1
+- New version.
+
+* Sat Mar 23 2019 Andrey Cherepanov <cas@altlinux.org> 19.03.80-alt1
+- New version.
+
 * Fri Mar 22 2019 Andrey Cherepanov <cas@altlinux.org> 18.12.3-alt2
 - Build from actial tag.
 - Build without qt5-gstreamer1 (ALT #36345).
