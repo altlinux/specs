@@ -1,7 +1,7 @@
 ## SPEC file for Perl module File::Find::Object::Rule
 
 Name: perl-File-Find-Object-Rule
-Version: 0.0309
+Version: 0.0310
 Release: alt1
 
 Summary: alternative interface to File::Find::Object
@@ -46,6 +46,9 @@ specify the desired files and directories.
 %_man1dir/findorule*
 
 %changelog
+* Fri Apr 19 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.0310-alt1
+- New version
+
 * Sat Jun 30 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.0309-alt1
 - New version
 
