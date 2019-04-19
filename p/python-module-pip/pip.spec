@@ -5,7 +5,7 @@
 Summary: The PyPA recommended tool for installing Python packages
 Name: python-module-pip
 Version: 19.0.3
-Release: alt1
+Release: alt2
 Source0: pip-%version.tar.gz
 License: MIT
 Group: Development/Python
@@ -106,11 +106,14 @@ PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
 %files -n python3-module-%modulename
 %doc *.txt *.rst
 %_bindir/pip3
-%_bindir/pip3.6
+%_bindir/pip%{__python3_version}
 %python3_sitelibdir/pip/
 %python3_sitelibdir/pip-*.egg-info/
 
 %changelog
+* Fri Apr 19 2019 Mikhail Gordeev <obirvalger@altlinux.org> 19.0.3-alt2
+- Change hardcoded python3 version to macros
+
 * Fri Mar 01 2019 Stanislav Levin <slev@altlinux.org> 19.0.3-alt1
 - 19.0.1 -> 19.0.3.
 
