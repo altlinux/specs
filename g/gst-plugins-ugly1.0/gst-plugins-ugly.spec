@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.15
+%define ver_major 1.16
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -85,6 +85,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
 - 1.15.90
 

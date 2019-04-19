@@ -1,5 +1,5 @@
 %define _name gst-rtsp-server
-%define ver_major 1.15
+%define ver_major 1.16
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
@@ -8,7 +8,7 @@
 %def_with tests_package
 
 Name: lib%_name
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Apr 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15.90-alt1
 - 1.15.90
 
