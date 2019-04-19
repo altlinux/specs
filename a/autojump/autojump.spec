@@ -1,35 +1,31 @@
+Group: Shells
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: /usr/bin/pathfix.py
 # END SourceDeps(oneline)
 Requires: bash-completion
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit 61af2bf4c5a1071f973e661f6145cf606bf30e80
 %global owner wting
 
 Name:           autojump
-Version:        22.3.2
-Release:        alt1_4
+Version:        22.5.1
+Release:        alt1_5
 
 Summary:        A fast way to navigate your filesystem from the command line
 
-Group:          Shells
 License:        GPLv3+
 URL:            http://wiki.github.com/%{owner}/%{name}
-Source:         https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
+Source:         https://github.com/%{owner}/%{name}/archive/release-v%{version}/%{name}-%{version}.tar.gz
 Patch0:         remove-homebrew-check.patch
 Patch1:         install-add-distribution-arg.patch
 
 BuildArch:      noarch
 
-# June 27th, pandoc is broken in rawhide, uncomment when working again
-# BuildRequires:  pandoc
-BuildRequires:  python-devel
-Requires:       python
-%if 0%{?rhel} && 0%{?rhel} <= 6
-Requires:       python-base
-%endif
-Requires(pre):  coreutils
+BuildRequires:  pandoc
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-mock
+BuildRequires:  python3-module-pytest
 Source44: import.info
 
 %description
@@ -38,8 +34,8 @@ a database of the directories you use the most from the command line.
 
 
 %package zsh
+Group: Shells
 Requires:       %{name} = %{version}-%{release}
-Group:          Shells
 Summary:        Autojump for zsh
 
 %description zsh
@@ -49,8 +45,8 @@ autojump-zsh is designed to work with zsh.
 
 
 %package fish
+Group: Office
 Requires:       %{name} = %{version}-%{release}
-Group:          Office
 Summary:        Autojump for fish shell
 
 %description fish
@@ -60,18 +56,18 @@ autojump-fish is designed to work with fish shell.
 
 
 %prep
-%setup -q -n %{name}-%{commit}
+%setup -q -n %{name}-release-v%{version}
 %patch0 -p1
 %patch1 -p1
+
 # Use system argparse
 sed -i 's|autojump_argparse|argparse|' bin/%{name}
-# Fix shebang
-sed -i 's|/usr/bin/env python|/usr/bin/python|' bin/%{name}
+# Fix shebangs, non .py files need to be specified manually, so we provide bin/* as well as .
+pathfix.py -i %{__python3} -pn . ./bin/*
 sed -i '1{/^#!/d}' bin/%{name}_*.py
 
 %build
-# June 27th, pandoc is broken in rawhide, uncomment when working again
-# make docs
+make docs
 
 %install
 export SHELL=bash
@@ -79,18 +75,20 @@ export SHELL=bash
 # Do not need bundled modules
 rm %{buildroot}%{_bindir}/%{name}_argparse.py
 # Move modules to proper directory
-mkdir -p %{buildroot}%{python_sitelibdir_noarch}
-mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python_sitelibdir_noarch}/
+mkdir -p %{buildroot}%{python3_sitelibdir_noarch}
+mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 
-%pre
-rm -f %{_bindir}/%{name}_*.pyc
+%check
+%{__python3} -m pytest tests -vv
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md AUTHORS
 %{_bindir}/%{name}
-%{python_sitelibdir_noarch}/%{name}_data.py*
-%{python_sitelibdir_noarch}/%{name}_utils.py*
+%{python3_sitelibdir_noarch}/%{name}_data.py
+%{python3_sitelibdir_noarch}/%{name}_match.py
+%{python3_sitelibdir_noarch}/%{name}_utils.py
+%{python3_sitelibdir_noarch}/__pycache__/%{name}*.pyc
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/icon.png
 %{_mandir}/man1/%{name}.1*
@@ -105,6 +103,9 @@ rm -f %{_bindir}/%{name}_*.pyc
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 22.5.1-alt1_5
+- update to new release by fcimport
+
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 22.3.2-alt1_4
 - update to new release by fcimport
 
