@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt130
+Release: alt131
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -542,6 +542,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Apr 19 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt131
+- Fixed syntax check regression introduced in the latest release.
+
 * Tue Apr 16 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt130
 - %%configure: added --disable-silent-rules.
 - Disallowed Provides specifying version ranges.
