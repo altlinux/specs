@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 3.6.0
-Release: alt1
+Release: alt1.1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -70,27 +70,8 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
        -DLIB_SUFFIX:STR=
 %cmake_build
 
-# rebuild locales
-pushd resources/i18n
-rm *.pot
-for DIR in *; do
-  pushd $DIR
-  for FILE in *.po; do
-    msgfmt $FILE.po -o LC_MESSAGES/${FILE}mo || :
-  done
-  popd
-done
-popd
-
 %install
 %cmakeinstall_std
-
-# Sanitize the location of locale files
-pushd %buildroot%_datadir
-mv cura/resources/i18n locale
-ln -s ../../locale cura/resources/i18n
-rm locale/*/*.po
-popd
 
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
@@ -118,6 +99,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Fri Apr 19 2019 Anton Midyukov <antohami@altlinux.org> 1:3.6.0-alt1.1
+- Not rebuild locales files
+
 * Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 1:3.6.0-alt1
 - New version 3.6.0
 
