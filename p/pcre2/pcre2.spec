@@ -3,7 +3,7 @@
 
 Name: pcre2
 Version: 10.33
-Release: alt1
+Release: alt1.1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
@@ -64,7 +64,7 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %build
 %autoreconf
 %configure \
-%ifnarch e2k
+%ifnarch %e2k
     --enable-jit \
     --enable-pcre2grep-jit \
 %endif
@@ -135,6 +135,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 10.33-alt1.1
+- mike@: support e2kv4 build through %%e2k macro
+
 * Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 10.33-alt1
 - 10.33
 
