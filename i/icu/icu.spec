@@ -1,5 +1,5 @@
 %define real_ver_major 64
-%define real_ver_minor 1
+%define real_ver_minor 2
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
@@ -120,6 +120,9 @@ cp -a samples %buildroot%_datadir/icu
 %_datadir/icu/samples
 
 %changelog
+* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.2-alt1
+- 6.4.2
+
 * Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.1-alt1
 - 6.4.1
 
