@@ -1,6 +1,6 @@
 Name: 	 xrdp
-Version: 0.9.9
-Release: alt2
+Version: 0.9.10
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -174,8 +174,6 @@ rm -f %buildroot%_sysconfdir/xrdp/{cert.pem,key.pem,rsakeys.ini}
 /usr/sbin/groupadd -r -f tsadmins 2>/dev/null ||:
 
 %post
-%post_service %{name}-sesman
-%post_service %name
 # Generate keys if they are missing
 if [ ! -s %_sysconfdir/xrdp/rsakeys.ini ]; then
   (umask 377; %_bindir/xrdp-keygen xrdp %_sysconfdir/xrdp/rsakeys.ini >/dev/null)
@@ -191,6 +189,8 @@ if [ ! -s %_sysconfdir/xrdp/cert.pem ]; then
   chmod 400 %_sysconfdir/xrdp/cert.pem
   chmod 400 %_sysconfdir/xrdp/key.pem
 fi
+%post_service %{name}-sesman
+%post_service %name
 
 %preun
 %preun_service %name
@@ -228,6 +228,12 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Fri Apr 19 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt1
+- New version.
+
+* Fri Apr 19 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt3
+- Run %%post_service after certificate generation.
+
 * Mon Mar 18 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt2
 - Remove autorequirement of xterm.
 
