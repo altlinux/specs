@@ -1,8 +1,9 @@
 %define v8abi 3.14
 
 Name: perl-JavaScript-V8
-Version: 0.070
-Release: alt8
+Version: 0.09
+Release: alt1
+Epoch: 1
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
 License: Perl
@@ -10,10 +11,10 @@ Group: Development/Perl
 
 Url: %CPAN JavaScript-V8
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-Patch1: %name-g++8.patch
+Patch: perl-JavaScript-V8-0.070-alt-test32.patch
 
-BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel = %{v8abi}
+BuildRequires: libv8-devel = %{v8abi}
+BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp perl(ExtUtils/CppGuess.pm) perl(Test/Number/Delta.pm)
 ExcludeArch: aarch64
 
 %description
@@ -22,7 +23,6 @@ ExcludeArch: aarch64
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
 # too long to wait
 rm t/interrupt.t
 
@@ -35,9 +35,13 @@ rm t/interrupt.t
 %files
 %perl_vendor_archlib/JavaScript/V8*
 %perl_vendor_autolib/JavaScript/V8*
-%doc Changes README
+%doc Changes README*
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt1
+- new version 0.09
+- rebased .gear over 0.09
+
 * Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.070-alt8
 - no return statement in the non-void function fixed (according g++8)
 
