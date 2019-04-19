@@ -1,6 +1,6 @@
 Name: winetricks
 Version: 20190310
-Release: alt1
+Release: alt2
 
 Summary: Work around common problems in Wine
 
@@ -27,7 +27,7 @@ Requires: cabextract gzip unzip wget which
 #Requires: hicolor-icon-theme
 Conflicts: wine-vanilla < 3.18
 Conflicts: wine < 3.18
-Conflicts: wine-etersoft
+Conflicts: wine-etersoft < 4.0
 
 %description
 Winetricks is an easy way to work around common problems in Wine.
@@ -67,6 +67,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 20190310-alt2
+- fix wine-etersoft conflicts
+
 * Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 20190310-alt1
 - new version 20190310 (with rpmrb script)
 
