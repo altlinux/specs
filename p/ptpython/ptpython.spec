@@ -1,28 +1,29 @@
-%define oname ptpython
+%define _unpackaged_files_terminate_build 1
 
-%def_with python3
+%define oname ptpython
 
 Name: %oname
 Version: 0.41
-Release: alt1.1
+Release: alt2
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/ptpython
+Url: https://pypi.org/project/ptpython/
 
 # https://github.com/jonathanslenders/ptpython.git
 Source: %name-%version.tar
 
+Patch1: %name-%version-alt.patch
+
 BuildRequires: python-devel python-module-setuptools ipython
 BuildRequires: python-module-prompt_toolkit python-module-jedi
 BuildRequires: python-module-docopt
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools ipython3
 BuildRequires: python3-module-prompt_toolkit python3-module-jedi
 BuildRequires: python3-module-docopt
-%endif
 
 %py_requires  IPython jedi
 %add_python_req_skip asyncio asyncssh
@@ -31,7 +32,6 @@ BuildRequires: python3-module-docopt
 ptpython is an advanced Python REPL built on top of the prompt_toolkit
 library.
 
-%if_with python3
 %package -n %{oname}3
 Summary: Python REPL build on top of prompt_toolkit
 Group: Development/Python3
@@ -40,63 +40,49 @@ Group: Development/Python3
 %description -n %{oname}3
 ptpython is an advanced Python REPL built on top of the prompt_toolkit
 library.
-%endif
 
 %prep
 %setup
+%patch1 -p1
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i ${i}3
-done
-popd
-%endif
 
 %python_install
 
 %check
 PYTHONPATH=%buildroot%python_sitelibdir python tests/run_tests.py -v
 
-%if_with python3
 pushd ../python3
 PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/run_tests.py -v
 popd
-%endif
 
 %files
 %doc CHANGELOG *.rst
 %_bindir/*
-%if_with python3
 %exclude %_bindir/*3
-%endif
 %python_sitelibdir/*
 
-%if_with python3
 %files -n %{oname}3
 %doc CHANGELOG *.rst
 %_bindir/*3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Apr 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.41-alt2
+- Fixed build with python-3.7.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.41-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
