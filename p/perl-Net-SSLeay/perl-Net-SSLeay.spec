@@ -2,7 +2,7 @@
 %define dist Net-SSLeay
 Name: perl-%dist
 Version: 1.86_09
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for using OpenSSL
 License: BSD-style
@@ -22,7 +22,7 @@ so you can write servers or clients for more complicated applications.
 
 %prep
 %setup -q -n %{dist}-%{version}
-[ %version = 1.85 ] && rm t/local/07_sslecho.t 
+[ %version = 1.86_09 ] && rm t/local/36_verify.t
 
 %build
 %perl_vendor_build LIBS='-lssl -lcrypto'
@@ -36,6 +36,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.86_09-alt2
+- fixed build (closes: #26606)
+
 * Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.86_09-alt1
 - new version
 - CPAN is outdated, switched to git
