@@ -4,10 +4,11 @@ BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Pa
 # END SourceDeps(oneline)
 %define module_name Sereal-Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
+BuildRequires: libzstd-devel
 
 Name: perl-%module_name
 Version: 4.007
-Release: alt1
+Release: alt2
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
@@ -38,6 +39,8 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 
 %prep
 %setup -q -n %{module_name}-%{version}
+# bundled
+rm -rf zstd
 
 %build
 export NPROCS=1
@@ -52,6 +55,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.007-alt2
+- build with system zstd (closes: #36407)
+
 * Thu Apr 11 2019 Igor Vlasenko <viy@altlinux.ru> 4.007-alt1
 - automated CPAN update
 
