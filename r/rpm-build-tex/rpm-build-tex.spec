@@ -1,5 +1,5 @@
 Name: rpm-build-tex
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: RPM helper macros to rebuild TeX packages
 License: %gpl3plus
@@ -14,8 +14,8 @@ BuildRequires(pre): rpm-build-licenses
 Requires: tex-common
 #Conflicts: tetex-core tetex tetex-latex tetex-dvips tetex-context tetex-afm
 
-Provides: rpm-build-texmf <= 0.4.0
-Obsoletes: rpm-build-texmf <= 0.4.0
+Provides: rpm-build-texmf = 0.4.0
+Obsoletes: rpm-build-texmf < 0.4.0
 
 %description
 These helper macros provide possibility to rebuild TeX packages by
@@ -37,6 +37,9 @@ install -m 0644 etc/* %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.3-alt1
+- cleaned up provides (closes: #36616)
+
 * Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
 - add .tex provides
 
