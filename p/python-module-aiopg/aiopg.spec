@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13.2
+Version: 0.16.0
 Release: alt1
 Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
 License: BSD
@@ -111,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
+- New version 0.16.0
+
 * Fri Mar 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.13.2-alt1
 - Updated to upstream version 0.13.2.
 
