@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.1a1
-Release: alt1%ubt
+Release: alt2
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой OpenGL
@@ -24,7 +24,6 @@ BuildArch: noarch
 #add_python_req_skip WGL__init__
 %py_requires OpenGL_accelerate
 
-BuildRequires(pre): rpm-build-ubt
 BuildPreReq: python-module-setuptools python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -102,11 +101,24 @@ Requires: python3-module-%oname = %EVR
 
 find tests/ -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python|' '{}' +
+
 %if_with python3
+rm -fR ../python3
 cp -fR . ../python3
-find ../python3/tests -type f -name '*.py' -exec \
+pushd ../python3
+find tests -type f -name '*.py' -exec \
 	sed -i 's|#!%_bindir/python|#!%_bindir/python3|' '{}' +
-find ../python3/tests -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find tests -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+# In Python 3.7 async is a keyword, and so we can't have a module named async
+# https://github.com/mcfletch/pyopengl/issues/14
+mv OpenGL/GL/SGIX/async.py OpenGL/GL/SGIX/async_.py
+
+mv OpenGL/raw/GL/SGIX/async.py OpenGL/raw/GL/SGIX/async_.py
+
+sed -i -e 's/from OpenGL.raw.GL.SGIX.async/from OpenGL.raw.GL.SGIX.async_/g' OpenGL/GL/SGIX/async_.py
+
+popd
 %endif
 
 %build
@@ -158,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt2
+- Fix build with python-3.7
+
 * Sat Jan 27 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt1%ubt
 - New version 3.1.1a1 (Closes: 34485)
 - New subpackages python-module-tk and python3-module-tk
