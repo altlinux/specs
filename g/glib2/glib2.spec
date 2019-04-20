@@ -22,7 +22,7 @@
 
 Name: glib2
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -51,6 +51,9 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.53.7-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
+
+# mike@: fix build with lcc 1.23 (lacks some gcc5 builtins)
+Patch10: glib-2.60.1-alt-e2k-lcc.patch
 
 %def_with locales
 %if_with locales
@@ -114,9 +117,6 @@ Requires: %name = %version-%release
 Requires: rpm-build-gir >= 0.5
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
-
-# hack
-#Provides: python3(codegen) < 0
 
 %description devel
 GLib is the low-level core library that forms the basis for projects
@@ -236,6 +236,11 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 # abicheck always ok
 subst '/exit 1/d' check-abis.sh
 
+%ifarch %e2k
+subst "/subdir('fuzzing')/d" meson.build
+%patch10 -p1
+%endif
+
 %build
 %meson \
     --default-library=both \
@@ -334,11 +339,14 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_datadir/gettext/its/gschema.its
 %_datadir/gettext/its/gschema.loc
 %_datadir/glib-%api_ver/codegen/
+
+%if_enabled man
 %_man1dir/glib-genmarshal.*
 %_man1dir/glib-gettextize.*
 %_man1dir/glib-mkenums.*
 %_man1dir/gobject*
 %_man1dir/gtester*
+%endif
 
 %files devel-static
 %_libdir/libglib-%api_ver.a
@@ -374,6 +382,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_rpmlibdir/gio.filetrigger
 %_rpmlibdir/gsettings.filetrigger
 %_datadir/glib-%api_ver/schemas/
+
+%if_enabled man
 %_man1dir/gapplication.1.*
 %_man1dir/gsettings.*
 %_man1dir/glib-compile-schemas.*
@@ -382,6 +392,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/gdbus.*
 %_man1dir/gio.1.*
 %_man1dir/gio-querymodules.*
+%endif
+
 %_datadir/bash-completion/completions/gapplication
 %_datadir/bash-completion/completions/gio
 %_datadir/bash-completion/completions/gresource
@@ -399,7 +411,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_libdir/libgio-%api_ver.so
 %_pkgconfigdir/gio-%api_ver.pc
 %_pkgconfigdir/gio-unix-%api_ver.pc
-%_man1dir/gdbus-codegen.*
+%{?_enable_man:%_man1dir/gdbus-codegen.*}
 
 %files -n libgio-doc
 %doc %_datadir/gtk-doc/html/gio
@@ -418,6 +430,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.1-alt2
+- fixed build on %%e2k
+
 * Mon Apr 15 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.1-alt1
 - 2.60.1
 
