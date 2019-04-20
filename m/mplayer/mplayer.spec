@@ -43,6 +43,7 @@
 %def_enable pvr
 %def_enable rtc
 %def_enable network
+%def_enable gnutls
 %def_disable winsock2
 %def_enable smb
 %def_enable live
@@ -89,7 +90,7 @@
 %def_enable x264
 %def_disable x264_lavc
 %def_enable ffmpeg
-%def_disable shared_ffmpeg
+%def_enable shared_ffmpeg
 %def_enable postproc
 %def_disable vf_lavfi
 %def_disable libavcodec_mpegaudio_hp
@@ -99,7 +100,6 @@
 %def_enable speex
 %def_enable theora
 %def_disable faac
-%def_disable faac_lavc
 %def_enable ladspa
 %def_enable bs2b
 %def_enable dca
@@ -113,13 +113,13 @@
 %def_enable libmpeg2
 %def_disable libmpeg2_int
 %def_enable musepack
-%def_disable dirac
 %def_disable nut
-%def_disable libschroedinger_lavc
 %def_enable libgsm
 %def_enable amrnb
 %def_enable amrwb
 %def_enable libvpx_lavc
+%def_enable libopus
+%def_enable libdca
 
 # Video output:
 %def_disable vidix
@@ -295,8 +295,8 @@
 
 
 Name: %lname
-Version: 1.3.0
-Release: alt5
+Version: 1.4
+Release: alt1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -321,13 +321,14 @@ Obsoletes: %Name-fonts
 %else
 Requires: %name-fonts
 %endif
+# repacked http://www.mplayerhq.hu/MPlayer/releases/MPlayer-%pkgver.tar.gz
 Source0: %Name-%pkgver.tar
 # register console mplayer as mime handler
 Source2: %lname.desktop
 Source4: standard-1.9.tar
 Source5: %lname.conf.in
+# git://git.altlinux.org/gears/m/mplayer.git
 Patch0: %name-%version-%release.patch
-Patch1: %name-%version-nls.patch
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -361,6 +362,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_fontconfig:BuildRequires: fontconfig-devel}
 %{?_enable_fribidi:BuildRequires: libfribidi-devel}
 %{?_enable_enca:BuildRequires: libenca-devel}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel}
 %endif
 
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
@@ -374,7 +376,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_xvid:BuildRequires: libxvid-devel}
 %{?_enable_x264:BuildRequires: libx264-devel}
-%{?_enable_shared_ffmpeg:BuildRequires: libffmpeg-devel >= 1:0.5-alt1}
+%{?_enable_shared_ffmpeg:BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libswscale-devel}
 %{?_enable_tremor:BuildRequires: libtremor-devel}
 %{?_enable_vorbis:BuildRequires: libvorbis-devel}
 %{?_enable_speex:BuildRequires: libspeex-devel >= 1.1}
@@ -393,10 +395,11 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_nut:BuildRequires: libnut-devel >= 0.0-alt0.272}
 %{?_enable_amrnb:BuildRequires: libopencore-amrnb-devel}
 %{?_enable_amrwb:BuildRequires: libopencore-amrwb-devel}
-%{?_enable_dirac:BuildRequires: libdirac-devel >= 0.10}
 %{?_enable_dca:BuildRequires: libdca-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
 %{?_enable_libvpx_lavc:BuildRequires: libvpx-devel}
+%{?_enable_libopus:BuildRequires: libopus-devel}
+%{?_enable_libdca:BuildRequires: libdca-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
 %{?_enable_nemesi:BuildRequires: libnemesi-devel}
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
@@ -616,7 +619,6 @@ Ukrainian language support for %Name.
 %prep
 %setup -q -n %Name-%pkgver
 %patch0 -p1
-%patch1 -p1
 
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
@@ -672,6 +674,7 @@ export CFLAGS="%optflags"
 	%{subst_enable pvr} \
 	%{subst_enable rtc} \
 	%{subst_enable_to network networking} \
+	%{subst_enable gnutls} \
 	%{subst_enable winsock2}_h \
 	%{subst_enable smb} \
 	%{subst_enable live} \
@@ -737,7 +740,6 @@ export CFLAGS="%optflags"
 	%{subst_enable theora} \
 	%{subst_enable faad} \
 	%{subst_enable faac} \
-	%{subst_enable_to faac_lavc faac-lavc} \
 	%{subst_enable ladspa} \
 	%{subst_enable_to bs2b libbs2b} \
 	%{subst_enable_to dca libdca} \
@@ -750,14 +752,14 @@ export CFLAGS="%optflags"
 	%{subst_enable liba52} \
 	%{subst_enable libmpeg2} \
 	%{subst_enable_to libmpeg2_int libmpeg2-internal} \
-	%{subst_enable_to dirac libdirac-lavc} \
 	%{subst_enable musepack} \
 	%{subst_enable_to nut libnut} \
-	%{subst_enable_to libschroedinger_lavc libschroedinger-lavc} \
 	%{subst_enable libgsm} \
 	%{subst_enable_to amrnb libopencore_amrnb} \
 	%{subst_enable_to amrwb libopencore_amrwb} \
 	%{subst_enable_to libvpx_lavc libvpx-lavc} \
+	%{subst_enable libopus} \
+	%{subst_enable libdca} \
 	%{subst_enable vidix} \
 	%{subst_enable gl} \
 	%{subst_enable dga1} \
@@ -1091,6 +1093,11 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sat Apr 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt1
+- 1.4 (ALT#36638).
+- built with system FFmpeg (ALT#35031).
+- built with gnutls, libopus and libdca support.
+
 * Thu Apr 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.0-alt5
 - Fixed build on ppc64le architecture.
 
