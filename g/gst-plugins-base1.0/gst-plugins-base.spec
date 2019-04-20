@@ -6,7 +6,13 @@
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
+%ifarch %e2k
+# https://gitlab.gnome.org/GNOME/gnome-build-meta/issues/38
+# https://gitlab.freedesktop.org/gstreamer/gst-plugins-base/issues/564
+%def_disable gtk_doc
+%else
 %def_enable gtk_doc
+%endif
 %def_disable debug
 %def_disable libunwind
 %def_disable libdw
@@ -15,7 +21,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -173,8 +179,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files -n %_name%api_ver-devel-doc
 %_gtk_docdir/%_name-base-*/
+%endif
 
 %files -n %_name%api_ver-gir-devel
 %_girdir/GstAllocators-1.0.gir
@@ -190,6 +198,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
+- mike@: E2K: disabled gtk_doc knob by default due to wayland-related ftbfs
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 

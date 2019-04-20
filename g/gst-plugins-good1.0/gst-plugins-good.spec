@@ -13,11 +13,14 @@
 %def_disable gtk_doc
 %def_disable debug
 %def_disable examples
+%ifarch %ix86 x86_64 aarch64
+%def_enable valgrind
+%endif
 %def_disable check
 
 Name: %_name-good%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -38,7 +41,8 @@ BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 BuildRequires: libmpg123-devel liblame-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: liborc-test-devel valgrind-tool-devel
+BuildRequires: liborc-test-devel
+%{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_qt5:BuildRequires: qt5-base-devel qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
@@ -105,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
+- mike@: disable BR: valgrind-tool-devel on non-primary arches (rather missing)
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 

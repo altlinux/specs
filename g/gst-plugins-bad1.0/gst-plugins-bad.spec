@@ -10,6 +10,9 @@
 %def_enable wayland
 %def_enable zbar
 %def_disable rtmp
+%ifnarch %e2k
+%def_enable liblilv
+%endif
 %def_disable debug
 %def_enable tests
 # required network
@@ -27,7 +30,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -78,7 +81,8 @@ BuildRequires: liborc-test-devel
 # webrtc-audio-processing for webrtcdsp
 BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
-BuildRequires: libnice-devel libva-devel liblcms2-devel liblilv-devel
+BuildRequires: libnice-devel libva-devel liblcms2-devel
+%{?_enable_liblilv:BuildRequires: liblilv-devel}
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -156,6 +160,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
+- disabled ext/lv2 on %%e2k
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
