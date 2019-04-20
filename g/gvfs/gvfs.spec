@@ -33,7 +33,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -362,10 +362,13 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
 
 %_datadir/%name/mounts
+
+%if_enabled man
 %_man1dir/gvfsd-fuse.1.*
 %_man1dir/gvfsd-metadata.1.*
 %_man1dir/gvfsd.1.*
 %_man7dir/gvfs.7.*
+%endif
 
 # in another packages
 %exclude %_libexecdir/gvfsd-recent
@@ -525,6 +528,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.40.1-alt1.1
+- fix man knob (unbuilt manpages can't be packaged)
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.40.1-alt1
 - 1.40.1
 
