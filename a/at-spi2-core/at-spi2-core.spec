@@ -4,12 +4,12 @@
 %def_enable introspection
 %def_enable x11
 %def_disable xevie
-%def_enable docs
+%def_enable doc
 %def_disable check
 
 Name: at-spi2-core
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -26,7 +26,7 @@ BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
-BuildRequires: intltool gtk-doc
+%{?_enable_doc:BuildRequires: gtk-doc}
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -90,7 +90,7 @@ This package contains documentation for developing applications that use
     -Ddbus_daemon=/bin/dbus-daemon \
     %{?_disable_x11:-Denable-x11=false} \
     %{?_disable_introspection:-Denable-introspection=false} \
-    %{?_enable_docs:-Ddocs=true}
+    %{?_enable_doc:-Ddocs=true}
 
 %meson_build
 
@@ -118,7 +118,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n lib%name-devel
 %_libdir/libatspi.so
 %_includedir/at-spi-%api_ver
-%_libdir/pkgconfig/atspi-2.pc
+%_pkgconfigdir/atspi-2.pc
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -128,10 +128,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/Atspi-%api_ver.gir
 %endif
 
+%if_enabled doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/libatspi
+%endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1.1
+- fixed build without docs
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
 - 2.32.1
 
