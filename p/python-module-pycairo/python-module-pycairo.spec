@@ -5,7 +5,7 @@
 %define ver_major 1.18
 
 Name: python-module-%oname
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
@@ -186,6 +186,9 @@ rm -fR %python_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
