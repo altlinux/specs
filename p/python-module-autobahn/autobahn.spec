@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 18.5.2
-Release: alt1.qa1
+Release: alt2
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -14,6 +14,9 @@ Url: https://github.com/tavendo/AutobahnPython
 
 # https://github.com/tavendo/AutobahnPython.git
 Source: %name-%version.tar
+
+# https://github.com/crossbario/autobahn-python/commit/9b6fb57e5c87a5e29cd880f752a30b9409d480c6
+Patch0: ensure-python37-compat.patch
 
 BuildRequires: inkscape
 BuildRequires: python-module-alabaster python-module-boto python-module-html5lib python-module-msgpack python-module-objects.inv
@@ -99,6 +102,7 @@ This package contains tests for Autobahn.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 rm -rf ../python3
@@ -175,6 +179,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 18.5.2-alt2
+- Fix build with python-3.7
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 18.5.2-alt1.qa1
 - NMU: applied repocop patch
 
