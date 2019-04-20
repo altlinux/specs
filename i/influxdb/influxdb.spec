@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 2f49e00f7f3801a506304c3b6d8165b2f4039f3d
+%global commit 01c8dd416270f424ab0c40f9291e269ac6921964
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.7.5
+Version:	1.7.6
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -19,6 +19,7 @@ URL:		https://github.com/influxdata/influxdb
 
 Source0:	%name-%version.tar
 
+Source100: influxdb.sysconfig
 Source101: influxdb.logrotate
 Source102: influxdb.init
 Source103: influxdb.service
@@ -91,6 +92,7 @@ install -d -m 775 %buildroot%_runtimedir/%name
 # Install logrotate
 install -p -D -m 644 %SOURCE101 %buildroot%_logrotatedir/%name
 # Install sysv init scripts
+install -p -D -m 644 %SOURCE100 %buildroot%_sysconfdir/sysconfig/%name
 install -p -D -m 755 %SOURCE102 %buildroot%_initdir/%name
 # Install systemd unit services
 install -p -D -m 644 %SOURCE103 %buildroot%_unitdir/%name.service
@@ -117,12 +119,17 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 %dir %attr(0750, root, %name) %_sysconfdir/%name
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_logrotatedir/%name
 %dir %attr(0770, root, %name) %_logdir/%name
 %dir %attr(0775, root, %name) %_runtimedir/%name
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Sat Apr 20 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.6-alt1
+- 1.7.6
+- update sysv  init script for logging to logfile
+
 * Thu Mar 28 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.5-alt1
 - 1.7.5
 
