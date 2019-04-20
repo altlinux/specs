@@ -1,15 +1,18 @@
 %def_disable freerdp
 %def_disable goom
+%def_enable firewire
+%def_enable visualization
+%def_enable wayland
 
 Name: vlc
 Version: 3.0.6
-Release: alt5
+Release: alt6
 
 Summary: VLC media player
 License: GPLv2
 Group: Video
-Url: http://www.videolan.org
 
+Url: http://www.videolan.org
 Source: vlc-%version.tar
 
 BuildRequires: gcc-c++
@@ -19,7 +22,7 @@ BuildRequires: libavutil-devel libpostproc-devel libavformat-devel
 BuildRequires: libswscale-devel libmpeg2-devel libebml-devel >= 1.3.5-alt1
 BuildRequires: libmatroska-devel libcddb-devel liblive-devel aalib-devel
 BuildRequires: libtwolame-devel libssh2-devel liba52-devel libalsa-devel
-BuildRequires: libcaca-devel libcdio-devel libdvbpsi-devel libdvdnav-devel
+BuildRequires: libcdio-devel libdvbpsi-devel libdvdnav-devel
 BuildRequires: libdvdread-devel libflac-devel libgcrypt-devel librsvg-devel
 BuildRequires: libgnutls-devel libgpg-error-devel libjpeg-devel liblirc-devel
 BuildRequires: libmad-devel libmodplug-devel libspeex-devel libspeexdsp-devel libmpcdec-devel
@@ -29,25 +32,28 @@ BuildRequires: libvcd-devel libvorbis-devel libxml2-devel
 BuildRequires: libpulseaudio-devel libx264-devel vim-devel
 BuildRequires: jackit-devel liblame-devel zlib-devel libavahi-devel dbus
 BuildRequires: libtag-devel libfluidsynth-devel libdbus-devel
-BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
+BuildRequires: libzvbi-devel libfribidi-devel
 BuildRequires: libass-devel libbluray-devel libpcre-devel libopus-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
 BuildRequires: libtar-devel libva-devel libvpx-devel libx265-devel
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libEGL-devel libGL-devel libGLES-devel
-BuildRequires: libdc1394-devel libschroedinger-devel libsmbclient-devel
+BuildRequires: libschroedinger-devel libsmbclient-devel
 BuildRequires: libupnp-devel liblua5-devel lua5
-BuildRequires: libtiger-devel libudev-devel libprojectM-devel libsqlite3-devel
+BuildRequires: libtiger-devel libudev-devel libsqlite3-devel
 BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
-BuildRequires: libchromaprint-devel libvncserver-devel libwayland-egl-devel wayland-protocols
+BuildRequires: libchromaprint-devel libvncserver-devel
 BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel qt5-svg-devel
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
 BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
 %{?_enable_goom:BuildRequires: libgoom-devel}
+%{?_enable_firewire:BuildRequires: libdc1394-devel libraw1394-devel libavc1394-devel}
+%{?_enable_visualization:BuildRequires: libcaca-devel libprojectM-devel}
+%{?_enable_wayland:BuildRequires: libwayland-egl-devel wayland-protocols}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
-%define allplugins aa ass audiocd bluray caca chromaprint dbus dv dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast projectm pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom}
+%define allplugins aa ass audiocd bluray chromaprint dbus dv dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:caca projectm}
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -638,6 +644,7 @@ echo %version-%release > src/revision.txt
 %build
 %add_optflags -I%_includedir/samba-4.0
 export BUILDCC=gcc
+
 ./bootstrap
 
 %configure \
@@ -649,10 +656,7 @@ export BUILDCC=gcc
 	--enable-alsa \
 	--enable-avcodec \
 	--enable-avformat \
-	--enable-caca \
-	--enable-dc1394 \
 	--enable-dca \
-	--enable-dv1394 \
 	--enable-dvbpsi \
 	--enable-dvdnav \
 	--enable-dvdread \
@@ -705,6 +709,14 @@ export BUILDCC=gcc
 	--enable-xcb \
 	--enable-wayland \
 	%{subst_enable freerdp} \
+%if_enabled firewire
+	--enable-dc1394 \
+	--enable-dv1394 \
+%endif
+%if_enabled visualization
+	--enable-caca \
+	--enable-projectm \
+%endif
 	--disable-oss \
 	--disable-quicktime \
 	--disable-sdl \
@@ -1228,9 +1240,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files plugin-aa
 %vlc_plugindir/video_output/libaa_plugin.so
 
-%files plugin-caca
-%vlc_plugindir/video_output/libcaca_plugin.so
-
 %files plugin-chromaprint
 %vlc_plugindir/stream_out/libstream_out_chromaprint_plugin.so
 
@@ -1303,9 +1312,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/services_discovery/libpulselist_plugin.so
 %vlc_plugindir/access/libpulsesrc_plugin.so
 
-%files plugin-projectm
-%vlc_plugindir/visualization/libprojectm_plugin.so
-
 %files plugin-upnp
 %vlc_plugindir/services_discovery/libupnp_plugin.so
 
@@ -1316,9 +1322,11 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/control/libdbus_plugin.so
 %vlc_plugindir/misc/libdbus_screensaver_plugin.so
 
+%if_enabled firewire
 %files plugin-dv
 %vlc_plugindir/access/libdc1394_plugin.so
 %vlc_plugindir/access/libdv1394_plugin.so
+%endif
 
 %files plugin-twolame
 %vlc_plugindir/codec/libtwolame_plugin.so
@@ -1352,6 +1360,14 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files plugin-ass
 %vlc_plugindir/codec/liblibass_plugin.so
 
+%if_enabled visualization
+%files plugin-caca
+%vlc_plugindir/video_output/libcaca_plugin.so
+
+%files plugin-projectm
+%vlc_plugindir/visualization/libprojectm_plugin.so
+%endif
+
 %files -n lib%name
 %_libdir/libvlccore.so.*
 %_libdir/libvlc.so.*
@@ -1382,6 +1398,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 3.0.6-alt6
+- introduced firewire, visualization, wayland knobs (on by default)
+
 * Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.6-alt5
 - fixed build with libssh2-1.8.1
 
