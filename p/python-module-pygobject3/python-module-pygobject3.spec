@@ -6,10 +6,11 @@
 %define gtk_api_ver 3.0
 %def_enable pycairo
 %def_disable devel_doc
+%def_enable tests
 %def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -144,7 +145,7 @@ Development documentation for %_name.
 mv %_name-%version py3build
 
 %build
-%define opts %{?_disable_pycairo:-Dpycairo=false}
+%define opts %{?_disable_pycairo:-Dpycairo=false} %{?_disable_tests:-Dtests=false}
 %meson %opts -Dpython=python
 %meson_build
 
@@ -201,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
