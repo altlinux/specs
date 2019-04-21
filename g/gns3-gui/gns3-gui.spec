@@ -3,7 +3,7 @@
 
 Name: gns3-gui
 Version: 2.2.0
-Release: alt1.a4
+Release: alt2.a4
 
 Summary: GNS3 Graphical User Interface
 License: GPLv3
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: python3-module-jsonschema >= 2.4.0
 Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 2.2.1
+Requires: python3-module-service_identity
 
 %description
 GNS3 is a excellent complementary tool to real labs for administrators
@@ -81,6 +82,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Sun Apr 21 2019 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2.a4
+- Add requires python3-module-service_identity
+
 * Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1.a4
 - New alpha release 2.2.0a4
 
