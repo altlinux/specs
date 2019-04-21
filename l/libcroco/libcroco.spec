@@ -2,7 +2,7 @@
 
 Name: libcroco
 Version: %ver_major.13
-Release: alt1
+Release: alt1.1
 
 Summary: A CSS2 parsing library
 License: LGPL
@@ -22,8 +22,8 @@ Requires: libxml2 >= %libxml2_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
 
-BuildRequires: zlib-devel
-%{?_with_apidocs:BuildRequires: gtk-doc doxygen}
+BuildRequires: zlib-devel gtk-doc
+%{?_with_apidocs:BuildRequires: doxygen}
 
 %description
 Libcroco is a standalone CSS2 parsing and manipulation library.
@@ -98,6 +98,9 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %_bindir/csslint-%ver_major
 
 %changelog
+* Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1.1
+- gtk-doc explicitly required for autoconf
+
 * Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1
 - 0.6.13
 
