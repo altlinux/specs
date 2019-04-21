@@ -2,7 +2,7 @@
 
 Name: mjpegtools
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -10,6 +10,7 @@ Group: Video
 Url: http://mjpeg.sourceforge.net
 
 Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
+Patch: mjpegtools-2.1.0-debian-disable-sse2.patch
 
 %define libdv_ver 0.9
 
@@ -34,7 +35,8 @@ encoded into mpeg1/2 or divx video.
 
 %ifarch %ix86
 NOTE:
-The resultant binaries will ***NOT*** run on a K6 or Pentium CPU
+This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
+(due to the lack of SSE instructions).
 %endif
 
 %package -n lib%name%shver
@@ -48,7 +50,8 @@ This package contains shared libraries needed to run mjpegtools.
 
 %ifarch %ix86
 NOTE:
-This binaries does ***NOT*** compatible with a K6 or Pentium CPU
+This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
+(due to the lack of SSE instructions).
 %endif
 
 %package -n lib%name-devel
@@ -62,8 +65,28 @@ Requires: lib%name%shver = %version-%release
 This package contains libraries and header files needed to compile
 applications that use part of the libraries of the mjpegtools package.
 
+%package -n lib%name-devel-static
+Summary: Static libraries for the mjpegtools
+Group: Development/C
+Obsoletes: %name-static-libs
+Provides: %name-static-libs = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-devel-static
+This package contains static libraries needed to compile applications
+that use part of the libraries of the mjpegtools package.
+
+%ifarch %ix86
+NOTE:
+This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
+(due to the lack of SSE instructions).
+%endif
+
 %prep
 %setup
+%ifnarch %ix86 x86_64
+%patch0 -p1
+%endif
 
 %build
 %autoreconf
@@ -71,8 +94,10 @@ applications that use part of the libraries of the mjpegtools package.
 	%{subst_enable static} \
 	--enable-large-file \
 	--with-x \
-%ifarch %ix86
+%ifarch %ix86 x86_64
 	--enable-simd-accel
+%else
+	--disable-simd-accel
 %endif
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -100,7 +125,19 @@ rm -f %buildroot%_infodir/dir
 %_libdir/pkgconfig/*
 %_man5dir/*
 
+%files -n lib%name-devel-static
+%_libdir/*.a
+
+# TODO:
+# - consider a few more debian patches
+
 %changelog
+* Sun Apr 21 2019 Michael Shigorin <mike@altlinux.org> 2.1.0-alt3
+- disable SSE on non-x86 (by conditionally applying debian patch)
+- enable SSE on x86_64
+- tweak descriptions
+- restore static subpackage silently lost in -alt2
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
 - disable quicktime support
 - rebuilt for ffmpeg
