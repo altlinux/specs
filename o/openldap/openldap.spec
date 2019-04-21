@@ -16,8 +16,8 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.46
-Release: alt1.1
+Version: %_sover.47
+Release: alt1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -98,20 +98,20 @@ Patch27: openldap-2.4.42-CVE-2015-3276.patch
 
 %if_enabled doc
 # For compile documentations need "sdf".
-BuildPreReq: sdf >= 2
+BuildRequires: sdf >= 2
 %endif
 %if_enabled sasl
 # due to SASL_AUXPROP_PLUG_VERSION
-BuildPreReq: libsasl2-devel >= 2.1.24-alt1.cvs.20090508
+BuildRequires: libsasl2-devel >= 2.1.24-alt1.cvs.20090508
 %endif
 %if_enabled sql
-BuildPreReq: libunixODBC-devel
+BuildRequires: libunixODBC-devel
 %endif
 %if_enabled perl
-BuildPreReq: perl-devel
+BuildRequires: perl-devel
 %endif
 %if_enabled slp
-BuildPreReq: libopenslp-devel
+BuildRequires: libopenslp-devel
 %endif
 
 # Automatically added by buildreq on Tue Oct 18 2011 (-bi)
@@ -141,7 +141,7 @@ Obsoletes: openldap-devel-static < %version-%release
 %package servers
 Summary: LDAP servers
 Group: System/Servers
-PreReq: libldap = %version-%release, %name = %version-%release
+Requires: libldap = %version-%release, %name = %version-%release
 
 Provides: openldap2.4-servers = %version-%release
 Obsoletes: openldap2.4-servers < %version-%release
@@ -149,7 +149,7 @@ Obsoletes: openldap2.4-servers < %version-%release
 %package clients
 Summary: LDAP utilities, tools and sample clients
 Group: Networking/Remote access
-PreReq: libldap = %version-%release, %name = %version-%release
+Requires: libldap = %version-%release, %name = %version-%release
 
 Provides: openldap2.4-clients = %version-%release
 Obsoletes: openldap2.4-clients < %version-%release
@@ -298,7 +298,7 @@ libtoolize --force --install
 	--enable-dnssrv=mod \
 	--enable-ldap=mod \
 	--enable-relay=mod \
-    	--enable-memberof=mod \
+	--enable-memberof=mod \
 	--enable-meta=mod \
 	--enable-monitor=mod \
 	--enable-null=mod \
@@ -690,6 +690,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Sun Apr 21 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.47-alt1
+- 2.4.47
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.46-alt1.1
 - rebuild with new perl 5.28.1
 
