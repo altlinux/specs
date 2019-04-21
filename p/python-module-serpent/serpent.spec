@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.23
-Release: alt1.1
+Version: 1.28
+Release: alt1
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
@@ -15,9 +15,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: python-module-flake8 python-module-pytz python-module-setuptools
+BuildRequires: python-module-attrs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flake8 python3-module-pytz python3-module-setuptools
+BuildRequires: python3-module-attrs
 %endif
 
 %py_provides %oname
@@ -88,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 21 2019 Anton Midyukov <antohami@altlinux.org> 1.28-alt1
+- Updated to upstream version 1.28
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.23-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
