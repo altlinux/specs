@@ -1,17 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.2
 
 %def_enable gtk_doc
 
 Name: nautilus-python
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Nautilus
-
+Group: Development/Python3
 License: GPLv2+
-Group: Development/Python
 Url: http://www.gnome.org/
+
 Provides: python-module-nautilus = %version-%release
 Obsoletes: python-module-nautilus
 
@@ -21,15 +21,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%setup_python_module nautilus
-%add_python_lib_path %nautilus_extdir
+%add_python3_path %nautilus_extdir
 
 %define nautilus_ver 3.0.0
 %define pygobject_ver 3.0
 
-BuildRequires(pre): rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome rpm-build-python3
 BuildRequires: libnautilus-devel >= %nautilus_ver libnautilus-gir-devel
-BuildRequires: python-module-pygobject3-devel >= %pygobject_ver
+BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -61,10 +60,11 @@ Development documentation for %name.
 
 %build
 %autoreconf
+export PYTHON=%__python3
 %configure \
 	--disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	LIBS="$(python-config --libs)"
+	LIBS="$(python3-config --libs)"
 %make_build
 
 %install
@@ -87,6 +87,10 @@ rm -f examples/{Makefile*,README.in}
 %exclude %_docdir/%name
 
 %changelog
+* Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
+- updated to NAUTILUS_PYTHON_1_2_2-11-g13d40c1
+- switched to python3
+
 * Mon Jan 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

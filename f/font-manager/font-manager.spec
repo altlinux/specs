@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.4.3
+Version: 0.7.5
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -26,13 +26,20 @@ Source: %name-%version.tar
 
 Requires: file-roller
 
-BuildRequires(pre): rpm-build-gir
-BuildRequires: vala-tools
+%define vala_ver 0.42
+%define nautilus_python_ver 1.2.2-alt2
+
+%if_with nautilus
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel nautilus-python >= %nautilus_python_ver
+%add_python3_path %_datadir/nautilus-python/extensions
+%endif
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
-BuildRequires: yelp-tools libappstream-glib-devel
-BuildRequires: gobject-introspection-devel
-%{?_with_nautilus:BuildRequires: nautilus-python python-modules-distutils}
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -51,14 +58,12 @@ Enlightenment, and even KDE.
 %setup
 
 %build
-%autoreconf
-%configure \
-	%{subst_with nautilus}
-%make_build
+%meson -Ddisable_pycompile=true \
+	%{?_with_nautilus:-Dnautilus=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -68,7 +73,6 @@ Enlightenment, and even KDE.
 %_libdir/%name/
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name1.desktop
-#%_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/%xdg_name1.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -76,12 +80,15 @@ Enlightenment, and even KDE.
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name1.appdata.xml
-%{?_with_nautilus:%_datadir/nautilus-python/extensions/font-manager.py*}
+%{?_with_nautilus:%_datadir/nautilus-python/extensions/*}
 %doc README CHANGELOG
 
-%exclude %_libdir/%name/*.la
 
 %changelog
+* Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
+- 0.7.5 (ported to Meson build system)
+- built nautilus extension with python3 (nautilus-python-1.2.2-alt2)
+
 * Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.3-alt1
 - updated to 0.7.4.3-13-g96b3261
 
