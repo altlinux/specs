@@ -1,3 +1,4 @@
+# NB: fails with e.g. --disable bat due to manpage
 %define _unpackaged_files_terminate_build 1
 
 %set_verify_elf_method relaxed
@@ -13,13 +14,13 @@
 
 Name: bacula9
 Version: 9.4.2
-Release: alt3
+Release: alt4
 
 License: AGPLv3
 Summary: Network based backup program
 Group: Archiving/Backup
-Url: http://www.bacula.org/
 
+Url: http://www.bacula.org/
 # http://git.bacula.org/bacula.git
 Source: %name-%version.tar
 Source1: bacula-dir.init
@@ -57,7 +58,6 @@ BuildRequires: /usr/bin/convert
 BuildRequires: libreadline-devel
 %endif
 %if_enabled bat
-# bat buildrequires
 BuildRequires: imake libICE-devel libX11-devel xorg-cf-files
 %endif
 
@@ -89,7 +89,6 @@ Conflicts: bacula-console
 Conflicts: bacula7-console
 Requires: %name-common = %EVR
 
-%if_enabled bat
 %package bat
 Summary: Network based backup program (Qt5 Bacula Administration Tool)
 Group: Archiving/Backup
@@ -99,7 +98,6 @@ Conflicts: bacula7-bat
 %package traymonitor
 Summary: Bacula system tray monitor
 Group: Archiving/Backup
-%endif
 
 %package director-common
 Summary: Network based backup program (director common)
@@ -157,7 +155,6 @@ Group: Archiving/Backup
 Conflicts: bacula-nagios
 Conflicts: bacula7-nagios
 
-%if_enabled webgui
 %package -n baculum9-common
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
@@ -210,7 +207,6 @@ Group: Archiving/Backup
 BuildArch: noarch
 Requires: baculum9 = %EVR
 Requires: apache2-mod_%{php_version}
-%endif
 
 %description
 Bacula is a set of computer programs that permits the system
@@ -286,13 +282,11 @@ Bacula Console is the program that allows the administrator or user to
 communicate with the Bacula Director.
 This package contains text based management console.
 
-%if_enabled bat
 %description bat
 Bacula Administration Tool package.
 
 %description traymonitor
 Tray monitor for your bacula server.
-%endif
 
 %description common
 Common files for bacula parts.
@@ -303,7 +297,6 @@ Debug files for bacula.
 %description nagios
 The check_bacula plugin for nagios.
 
-%if_enabled webgui
 %description -n baculum9-common
 Baculum is Bacula web based interface. It enables Bacula administration
 functions such as:
@@ -411,7 +404,6 @@ functions such as:
 - Easy to use configuration and restore wizards.
 - Multiple Director support.
 - Live AJAX based statuses.
-%endif
 
 %prep
 %setup -b 0
@@ -460,9 +452,7 @@ autoconf -B autoconf autoconf/configure.in >configure
 	--with-sd-group=bacula \
 	--with-postgresql \
 	--with-sqlite3 \
-%if_enabled bat
-	--enable-bat=yes \
-%endif
+	%{subst_enable bat } \
 	--with-mysql \
 	--with-logdir=%_logdir \
 	#
@@ -475,19 +465,18 @@ pushd examples/nagios/check_bacula
 popd
 
 %install
-
-%make_install DESTDIR="%buildroot" install
+%makeinstall_std
 
 mkdir -p %buildroot%_initdir %buildroot%_unitdir
-install -pm 755 %SOURCE1 %buildroot%_initdir/bacula-dir
-install -pm 644 %SOURCE14 %buildroot%_unitdir/bacula-dir.service
-install -pm 755 %SOURCE2 %buildroot%_initdir/bacula-fd
-install -pm 644 %SOURCE12 %buildroot%_unitdir/bacula-fd.service
-install -pm 755 %SOURCE3 %buildroot%_initdir/bacula-sd
-install -pm 644 %SOURCE13 %buildroot%_unitdir/bacula-sd.service
+install -p -m755 %SOURCE1 %buildroot%_initdir/bacula-dir
+install -p -m644 %SOURCE14 %buildroot%_unitdir/bacula-dir.service
+install -p -m755 %SOURCE2 %buildroot%_initdir/bacula-fd
+install -p -m644 %SOURCE12 %buildroot%_unitdir/bacula-fd.service
+install -p -m755 %SOURCE3 %buildroot%_initdir/bacula-sd
+install -p -m644 %SOURCE13 %buildroot%_unitdir/bacula-sd.service
 
 mkdir -p %buildroot%_tmpfilesdir/
-install -pm 0644 %SOURCE11 %buildroot%_tmpfilesdir/bacula.conf
+install -p -m644 %SOURCE11 %buildroot%_tmpfilesdir/bacula.conf
 
 install -pD -m644 %_sourcedir/bacula.sysconfig \
 	%buildroot%_sysconfdir/sysconfig/bacula
@@ -527,10 +516,10 @@ mv %buildroot%_defaultdocdir/bacula/*.{html,png} %buildroot%_defaultdocdir/bacul
 convert %SOURCE17 bacula-tray-monitor.png
 rm -f %buildroot%_sbindir/bacula-tray-monitor
 install -m755 src/qt-console/tray-monitor/.libs/bacula-tray-monitor %buildroot%_sbindir/bacula-tray-monitor
-install -p -m 644 -D src/qt-console/tray-monitor/tray-monitor.conf %buildroot%_sysconfdir/bacula/tray-monitor.conf
-install -p -m 644 -D manpages/bacula-tray-monitor.1 %buildroot%_man1dir/bacula-tray-monitor.1
-install -p -m 644 -D bacula-tray-monitor.png %buildroot%_pixmapsdir/bacula-tray-monitor.png
-install -p -m 644 -D scripts/bacula-tray-monitor.desktop %buildroot%_desktopdir/bacula-tray-monitor.desktop
+install -pD -m644 src/qt-console/tray-monitor/tray-monitor.conf %buildroot%_sysconfdir/bacula/tray-monitor.conf
+install -pD -m644 manpages/bacula-tray-monitor.1 %buildroot%_man1dir/bacula-tray-monitor.1
+install -pD -m644 bacula-tray-monitor.png %buildroot%_pixmapsdir/bacula-tray-monitor.png
+install -pD -m644 scripts/bacula-tray-monitor.desktop %buildroot%_desktopdir/bacula-tray-monitor.desktop
 rm -f %buildroot%_datadir/bacula/scripts/bacula-tray-monitor.desktop
 %endif
 
@@ -550,7 +539,7 @@ rm -f %buildroot%_datadir/bacula/scripts/disk-changer
 install -d %buildroot%_sysconfdir/nagios/commands
 install -d %buildroot%_libdir/nagios/plugins
 
-install -m0755 examples/nagios/check_bacula/check_bacula %buildroot%_libdir/nagios/plugins/
+install -m755 examples/nagios/check_bacula/check_bacula %buildroot%_libdir/nagios/plugins/
 
 cat > %buildroot%_sysconfdir/nagios/commands/check_bacula.cfg << EOF
 # 'check_bacula' command definition
@@ -581,16 +570,16 @@ mkdir -p %buildroot/%_cachedir/baculum/assets
 mkdir -p %buildroot/%_cachedir/baculum/runtime
 rmdir %buildroot%_datadir/baculum/htdocs/assets
 rmdir %buildroot%_datadir/baculum/htdocs/protected/runtime
-ln -s $(relative %_cachedir/baculum/assets %_datadir/baculum/htdocs/assets) %buildroot%_datadir/baculum/htdocs/assets
-ln -s $(relative %_cachedir/baculum/runtime %_datadir/baculum/htdocs/protected/runtime) %buildroot%_datadir/baculum/htdocs/protected/runtime
+ln -sr %buildroot%_cachedir/baculum/assets %buildroot%_datadir/baculum/htdocs/assets
+ln -sr %buildroot%_cachedir/baculum/runtime %buildroot%_datadir/baculum/htdocs/protected/runtime
 
 # initial user config support for apache2
 mkdir -p %buildroot%_cachedir/baculum/API-Config
 mkdir -p %buildroot%_cachedir/baculum/Web-Config
 rmdir %buildroot%_datadir/baculum/htdocs/protected/API/Config
 rmdir %buildroot%_datadir/baculum/htdocs/protected/Web/Config
-ln -s $(relative %_cachedir/baculum/API-Config %_datadir/baculum/htdocs/protected/API/Config) %buildroot%_datadir/baculum/htdocs/protected/API/Config
-ln -s $(relative %_cachedir/baculum/Web-Config %_datadir/baculum/htdocs/protected/Web/Config) %buildroot%_datadir/baculum/htdocs/protected/Web/Config
+ln -sr %buildroot%_cachedir/baculum/API-Config %buildroot%_datadir/baculum/htdocs/protected/API/Config
+ln -sr %buildroot%_cachedir/baculum/Web-Config %buildroot%_datadir/baculum/htdocs/protected/Web/Config
 mv %buildroot%_sysconfdir/baculum/Config-api-apache %buildroot%_sysconfdir/baculum/Config-api-apache2
 mv %buildroot%_sysconfdir/baculum/Config-web-apache %buildroot%_sysconfdir/baculum/Config-web-apache2
 # Not using relative sylinks here since final location of symlink file is both at /usr/share/baculum/htdocs/... and at /var/cache/baculum/... at the same time.
@@ -602,11 +591,11 @@ mkdir -p %buildroot%_logdir/httpd2/baculum-api
 mkdir -p %buildroot%_logdir/httpd2/baculum-web
 rmdir %buildroot%_datadir/baculum/htdocs/protected/API/Logs
 rmdir %buildroot%_datadir/baculum/htdocs/protected/Web/Logs
-ln -s $(relative %_logdir/httpd2/baculum-api %_datadir/baculum/htdocs/protected/API/Logs) %buildroot%_datadir/baculum/htdocs/protected/API/Logs
-ln -s $(relative %_logdir/httpd2/baculum-web %_datadir/baculum/htdocs/protected/Web/Logs) %buildroot%_datadir/baculum/htdocs/protected/Web/Logs
+ln -sr %buildroot%_logdir/httpd2/baculum-api %buildroot%_datadir/baculum/htdocs/protected/API/Logs
+ln -sr %buildroot%_logdir/httpd2/baculum-web %buildroot%_datadir/baculum/htdocs/protected/Web/Logs
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d
-install -pm 644 %SOURCE16 %buildroot%_sysconfdir/logrotate.d/baculum-apache2
+install -p -m644 %SOURCE16 %buildroot%_sysconfdir/logrotate.d/baculum-apache2
 
 %find_lang baculum-api baculum-web --output baculum.lang
 %endif
@@ -894,6 +883,9 @@ fi
 %endif
 
 %changelog
+* Sun Apr 21 2019 Michael Shigorin <mike@altlinux.org> 9.4.2-alt4
+- minor spec cleanup
+
 * Tue Mar 26 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.2-alt3
 - Use system lz4 library (Closes: #36398)
 
