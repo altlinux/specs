@@ -25,10 +25,11 @@
 %def_enable wayland_server
 %def_enable kms_egl
 %def_enable xlib_egl
+%def_enable apidocs
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt5
+Release: alt6
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -163,7 +164,7 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 	%{subst_enable glib} \
 	%{?_enable_cogl_pango:--enable-cogl-pango} \
 	%{?_enable_examples_install:--enable-examples-install} \
-	--enable-gtk-doc \
+	%{?_enable_apidocs:--enable-gtk-doc} \
 	--enable-introspection \
 	%{subst_enable gl} \
 	%{subst_enable gles2} \
@@ -201,12 +202,17 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %files gir-devel
 %_girdir/*.gir
 
+%if_enabled apidocs
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt6
+- mike@: introduced apidocs knob
+
 * Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt5
 - disabled gstreamer support
 - applied fc patchset
