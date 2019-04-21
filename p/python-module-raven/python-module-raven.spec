@@ -2,16 +2,16 @@
 %define oname raven
 
 Name: python-module-raven
-Version: 5.32.0
-Release: alt1.1
+Version: 6.9.0
+Release: alt1
 Summary: Python client for Sentry
 
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/%oname
-Packager: Python Development Team <python at packages.altlinux.org>
+Url: https://github.com/getsentry/raven-python
+Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: https://pypi.python.org/packages/5a/22/9e6485b46bf840166e8e79da40f74553dfeb044f4909ba9bbdedc9b24dff/%oname-%version.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python3
@@ -31,7 +31,7 @@ application.
 %if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 client for Sentry
-Group: Development/Python3
+Group: Development/Python
 %py3_provides %oname
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/zope/*
 
@@ -45,7 +45,7 @@ Python 3 version.
 
 %package -n %oname
 Summary: Python client for Sentry
-Group: Development/Python3
+Group: Development/Python
 %if_with python3
 Requires: python3-module-%oname = %version-%release
 %else
@@ -59,18 +59,18 @@ Flask. Raven also includes drop-in support for any WSGI-compatible web
 application.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with python3
-rm -fR ../python3-module-%oname
-cp -fR . ../python3-module-%oname
+rm -fR ../python3
+cp -fR . ../python3
 %endif
 
 %build
 %python_build
 
 %if_with python3
-pushd ../python3-module-%oname
+pushd ../python3
 %python3_build
 popd
 %endif
@@ -79,19 +79,21 @@ popd
 %python_install
 
 %if_with python3
-pushd ../python3-module-%oname
+pushd ../python3
 %python3_install
 popd
 %endif
 
 %files
-%doc LICENSE *.rst
+%doc LICENSE
+%doc README.*
 %python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE *.rst
+%doc LICENSE
+%doc README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %endif
@@ -100,11 +102,14 @@ popd
 %_bindir/%oname
 
 %changelog
+* Sun Apr 21 2019 Anton Midyukov <antohami@altlinux.org> 6.9.0-alt1
+- New version 6.9.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.32.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
-* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 5.32.0-alt1
-- New version 5.32.0
+ * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 5.32.0-alt1
+ - New version 5.32.0
 
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 5.24.1-alt1
 - Initial build for ALT Linux Sisyphus.
