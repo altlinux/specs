@@ -1,11 +1,14 @@
 %def_disable snapshot
+
 %define rev %nil
 %if_enabled snapshot
 %define git_distance 1175
 %endif
 
+%define xdg_name com.rawtherapee.RawTherapee
+
 Name: rawtherapee
-Version: 5.5%{?_enable_snapshot:.%git_distance}
+Version: 5.6%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -20,15 +23,16 @@ Source: rawtherapee-%version.tar
 Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
 
-%define gtk_ver 3.24.2
-%define tiff_ver 4.0.3
+%define gtk_ver 3.24.7
+%define tiff_ver 4.0.4
+%define rsvg_ver 2.40
 
 Requires: %name-data = %version-%release
 Requires: libgtk+3 >= %gtk_ver
 
 BuildRequires(pre): cmake >= 2.8.8
 %{?_enable_snapshot:BuildRequires: git}
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver librsvg-devel >= %rsvg_ver
 BuildRequires: libtiff-devel >= %tiff_ver
 BuildRequires: bzlib-devel gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libfftw3-devel
@@ -53,14 +57,9 @@ This package provides noarch data needed for Raw Therapee to work.
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
-# downgrade libtiff version (see below)
-subst "s|libtiff-4>=4.0.4|libtiff-4>=4.0.3|" CMakeLists.txt
-
 %build
 %define optflags -O3 -g
-# https://bugzilla.altlinux.org/34677
-# from tiff-0.4.9/libtiff/tiff.h
-%add_optflags -DPHOTOMETRIC_CFA=32803
+%add_optflags -D_FILE_OFFSET_BITS=64
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	%{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
 	%{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
@@ -81,9 +80,12 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt1
+- 5.6
+
 * Wed Dec 19 2018 Yuri N. Sedunov <aris@altlinux.org> 5.5-alt1
 - 5.5
 
