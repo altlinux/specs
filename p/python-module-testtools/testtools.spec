@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: extensions to the Python standard library's unit testing framework
 Group: Development/Python
 License: MIT
@@ -15,6 +15,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Patch1: %oname-1.8.0-fedora-py3.patch
+
+# https://github.com/testing-cabal/testtools/pull/271
+Patch2: %oname-2.3.0-py37.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils
@@ -78,6 +81,7 @@ cp -a . ../python3
 
 pushd ../python3
 %patch1 -p1
+%patch2 -p1
 popd
 
 %prepare_sphinx .
@@ -133,6 +137,9 @@ popd
 
 
 %changelog
+* Mon Apr 22 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
+- Fixed build for python3.7.
+
 * Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 
