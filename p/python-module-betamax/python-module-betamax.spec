@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%pypi_name
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: VCR imitation for python-requests
 
@@ -85,5 +85,8 @@ popd
 %endif
 
 %changelog
+* Mon Apr 22 2019 Ivan A. Melnikov <iv@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Wed Mar 01 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
 - 0.8.0
