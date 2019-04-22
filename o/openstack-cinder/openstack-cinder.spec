@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-%oname
-Version: 13.0.2
+Version: 13.0.4
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
@@ -446,6 +446,9 @@ rm -rf %buildroot/usr/etc
 %doc ../python3/build/sphinx/html
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:13.0.4-alt1
+- 13.0.4
+
 * Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 1:13.0.2-alt1
 - 13.0.2 Rocky release
 - switch to python3
