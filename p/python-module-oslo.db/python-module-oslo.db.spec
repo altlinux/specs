@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.40.0
+Version: 4.40.1
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 4.40.1-alt1
+- 4.40.1
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 4.40.0-alt1
 - 4.40.0
 
