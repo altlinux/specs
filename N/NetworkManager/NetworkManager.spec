@@ -65,7 +65,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.16.0
+Version: 1.18.0
 Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -112,7 +112,6 @@ BuildRequires: python-module-pygobject3
 # For create-exports-NetworkManager.sh
 BuildRequires: /proc
 
-Requires: nm-dhcp-client
 Requires: dnsmasq
 
 Requires: %name-adsl = %version-%release
@@ -432,6 +431,8 @@ GObject introspection devel data for the NetworkManager.
 %patch -p1
 
 %build
+%add_optflags -fpie
+export LDFLAGS=-pie
 %autoreconf
 %configure \
 	--libexecdir=%_libexecdir/NetworkManager \
@@ -441,6 +442,7 @@ GObject introspection devel data for the NetworkManager.
 	--with-crypto=nss \
 	--with-dhclient=/sbin/dhclient \
 	--with-dhcpcd=yes \
+	--with-config-dhcp-default=internal \
 	--with-dnsmasq=/usr/sbin/dnsmasq \
 	--enable-gtk-doc=yes \
 	--with-config-dns-rc-manager-default=resolvconf \
@@ -777,12 +779,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Apr 22 2019 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
+- etcnet-alt: Update nm-udev-utils.h location.
+- Build with -pie.
+- etcnet-alt: Don't print 'current profile' message.
+- etcnet-alt: Use nm_log_dbg in PLUGIN_DEBUG macro.
+- Use internal DHCP client by default.
+- Updated to 1.18.0.
+
 * Mon Mar 18 2019 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
 - Updated to 1.16.0.
 
 * Mon Mar 11 2019 Mikhail Efremov <sem@altlinux.org> 1.15.91-alt1
 - Added iwd support knob.
-- Updated to 1.15.90 (1.16-rc2).
+- Updated to 1.15.91 (1.16-rc2).
 
 * Mon Feb 25 2019 Mikhail Efremov <sem@altlinux.org> 1.15.90-alt1
 - Drop non-existent plugins from configure options.
