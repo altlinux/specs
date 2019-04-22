@@ -1,7 +1,7 @@
 %global oname oslo.service
 
 Name: python-module-%oname
-Version: 1.31.7
+Version: 1.31.8
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %doc html
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.31.8-alt1
+- 1.31.8
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.31.7-alt1
 - 1.31.7
 
