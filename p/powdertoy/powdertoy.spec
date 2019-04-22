@@ -1,6 +1,6 @@
 Name: powdertoy
-Version: 92.5
-Release: alt4
+Version: 94.1
+Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
@@ -10,9 +10,9 @@ Url: http://powdertoy.co.uk/
 Source: v%version.tar.gz
 Obsoletes: powder
 
-# Automatically added by buildreq on Wed Apr 03 2013
-# optimized out: fontconfig libX11-devel libstdc++-devel pkg-config python-base python-modules python-modules-compiler xorg-xproto-devel
-BuildRequires: ImageMagick-tools bzlib-devel flex gcc-c++ ghostscript-classic libSDL-devel libfftw3-devel lua5.1-devel python-modules-email scons zlib-devel
+# Automatically added by buildreq on Mon Apr 22 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel liblua5.1-devel libstdc++-devel pkg-config python-base python-module-pkg_resources python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json sh4
+BuildRequires: bzlib-devel flex gcc-c++ ghostscript-classic libSDL2-devel libfftw3-devel liblua5.1-compat-devel scons zlib-devel
 
 %description
 The Powder Toy is a desktop version of the classic 'falling sand'
@@ -51,7 +51,7 @@ Comment=%summary
 @@@
 
 %build
-convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:area].png'
+#convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:area].png'
 %ifarch x86_64
 scons -j %__nprocs --lin --64bit
 %else
@@ -70,8 +70,9 @@ scons -j %__nprocs --lin --no-sse
 install -D build/powder* %buildroot%_gamesbindir/%name.bin
 install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
-for N in powder-*.png; do
-	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*-} .png)/apps/%name.png
+#for N in powder-*.png; do
+for N in resources/icon/new-unused/icon_*.png ; do
+	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*_} .png)/apps/%name.png
 done
 
 %files
@@ -81,6 +82,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Apr 22 2019 Fr. Br. George <george@altlinux.ru> 1:94.1-alt1
+- Autobuild version bump to 94.1
+
 * Tue Jun 05 2018 Michael Shigorin <mike@altlinux.org> 1:92.5-alt4
 - support e2kv4 through %%e2k macro
 
