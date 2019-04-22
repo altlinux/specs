@@ -1,8 +1,8 @@
 %define oname keystone
 
 Name: openstack-%oname
-Version: 14.0.1
-Release: alt2
+Version: 14.1.0
+Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -57,7 +57,7 @@ BuildRequires: python-module-oslo.context >= 2.21.0
 BuildRequires: python-module-oslo.messaging >= 5.29.0
 BuildRequires: python-module-oslo.db >= 4.27.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
-BuildRequires: python-module-oslo.log >= 3.36.0
+BuildRequires: python-module-oslo.log >= 3.38.0
 BuildRequires: python-module-oslo.middleware >= 3.31.0
 BuildRequires: python-module-oslo.policy >= 1.30.0
 BuildRequires: python-module-oslo.serialization >= 2.18.0
@@ -65,7 +65,7 @@ BuildRequires: python-module-oslo.utils >= 3.33.0
 
 BuildRequires: python-module-oauthlib >= 0.6.2
 BuildRequires: python-module-pysaml2 >= 4.5.0
-BuildRequires: python-module-dogpile-cache >= 0.6.2
+BuildRequires: python-module-dogpile.cache >= 0.6.2
 BuildRequires: python-module-jsonschema >= 2.6.0
 BuildRequires: python-module-pycadf >= 1.1.0
 BuildRequires: python-module-msgpack >= 0.4.0
@@ -118,7 +118,7 @@ BuildRequires: python3-module-oslo.context >= 2.21.0
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
 BuildRequires: python3-module-oslo.db >= 4.27.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.log >= 3.38.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
 BuildRequires: python3-module-oslo.policy >= 1.30.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
@@ -126,7 +126,7 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 
 BuildRequires: python3-module-oauthlib >= 0.6.2
 BuildRequires: python3-module-pysaml2 >= 4.5.0
-BuildRequires: python3-module-dogpile-cache >= 0.6.2
+BuildRequires: python3-module-dogpile.cache >= 0.6.2
 BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-pycadf >= 1.1.0
 BuildRequires: python3-module-msgpack >= 0.4.0
@@ -170,13 +170,13 @@ Requires: python-module-oslo.context >= 2.21.0
 Requires: python-module-oslo.messaging >= 5.29.0
 Requires: python-module-oslo.db >= 4.27.0
 Requires: python-module-oslo.i18n >= 3.15.3
-Requires: python-module-oslo.log >= 3.36.0
+Requires: python-module-oslo.log >= 3.38.0
 Requires: python-module-oslo.middleware >= 3.31.0
 Requires: python-module-oslo.policy >= 1.30.0
 Requires: python-module-oslo.serialization >= 2.18.0
 Requires: python-module-oslo.utils >= 3.33.0
 # add not finded requires
-Requires: python-module-dogpile-cache >= 0.6.2
+Requires: python-module-dogpile.cache >= 0.6.2
 Requires: python-module-pysaml2 >= 4.5.0
 
 %description -n python-module-%oname
@@ -205,13 +205,13 @@ Requires: python3-module-oslo.context >= 2.21.0
 Requires: python3-module-oslo.messaging >= 5.29.0
 Requires: python3-module-oslo.db >= 4.27.0
 Requires: python3-module-oslo.i18n >= 3.15.3
-Requires: python3-module-oslo.log >= 3.36.0
+Requires: python3-module-oslo.log >= 3.38.0
 Requires: python3-module-oslo.middleware >= 3.31.0
 Requires: python3-module-oslo.policy >= 1.30.0
 Requires: python3-module-oslo.serialization >= 2.18.0
 Requires: python3-module-oslo.utils >= 3.33.0
 # add not finded requires
-Requires: python3-module-dogpile-cache >= 0.6.2
+Requires: python3-module-dogpile.cache >= 0.6.2
 Requires: python3-module-pysaml2 >= 4.5.0
 Requires: python3-module-bcrypt >= 3.1.3
 Requires: python3-module-scrypt >= 0.8.0
@@ -393,6 +393,9 @@ fi
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.1.0-alt1
+- 14.1.0
+
 * Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 1:14.0.1-alt2
 - update Requires
 - update apache config

@@ -3,7 +3,7 @@
 %def_disable doc
 
 Name: openstack-%oname
-Version: 18.1.0
+Version: 18.2.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
@@ -12,6 +12,8 @@ Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
+Patch100: 964832d37dd244f4f4ebc0dba46e4316241a2120.patch
 
 Source6: nova.logrotate
 
@@ -566,6 +568,7 @@ This package contains documentation files for nova.
 
 %prep
 %setup -n %oname-%version
+%patch100 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -907,6 +910,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %endif
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:18.2.0-alt1
+- 18.2.0
+
 * Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1:18.1.0-alt1
 - 18.1.0 Rocky release
 

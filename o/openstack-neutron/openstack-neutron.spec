@@ -1,7 +1,7 @@
 %define oname neutron
 
 Name: openstack-%oname
-Version: 13.0.2
+Version: 13.0.3
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -660,6 +660,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:13.0.3-alt1
+- 13.0.3
+
 * Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 1:13.0.2-alt1
 - 13.0.2 Rocky release
 
