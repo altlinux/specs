@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.24.1
-Release: alt2
+Version: 1.24.2
+Release: alt1
 
 Epoch: 2
 
@@ -164,6 +164,9 @@ popd
 #python3_sitelibdir/*/test*
 
 %changelog
+* Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 2:1.24.2-alt1
+- 1.24.1 -> 1.24.2 (fixes: CVE-2019-11324).
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:1.24.1-alt2
 - fixed import system six
 
