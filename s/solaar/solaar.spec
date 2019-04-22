@@ -1,8 +1,8 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        0.9.2
-Release:        alt1.2
+Version:        0.9.2.0.225.gitd021d87
+Release:        alt1
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -69,6 +69,9 @@ Logitech's Unifying Receiver peripherals.
 %doc docs
 
 %changelog
+* Mon Apr 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.2.0.225.gitd021d87-alt1
+- Build from recent commit for pyhon3.7 compatibility.
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt1.2
 - rebuild
 
