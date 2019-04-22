@@ -1,7 +1,7 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgEarth
-Version: 2.10
+Version: 2.10.1
 Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
@@ -120,6 +120,9 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Mon Apr 22 2019 Andrey Cherepanov <cas@altlinux.org> 2.10.1-alt1
+- New version.
+
 * Fri Nov 16 2018 Andrey Cherepanov <cas@altlinux.org> 2.10-alt1
 - New version.
 
