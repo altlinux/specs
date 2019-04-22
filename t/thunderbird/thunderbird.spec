@@ -12,7 +12,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	60.6.1
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -58,7 +58,7 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel
 BuildRequires: libXcursor-devel libXi-devel
 BuildRequires: libcurl-devel libgtk+3-devel libhunspell-devel libjpeg-devel
-BuildRequires: libgtk+2-devel libsqlite3-devel
+BuildRequires: libgtk+2-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
@@ -473,6 +473,9 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Apr 22 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.1-alt2
+- Fix global serch indexing by link with bundled sqlite3 (ALT #35761).
+
 * Tue Mar 26 2019 Andrey Cherepanov <cas@altlinux.org> 60.6.1-alt1
 - New version (60.6.1).
 - Fixes:
