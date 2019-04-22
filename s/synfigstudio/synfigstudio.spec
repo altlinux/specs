@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.3.11
-Release: alt1
+Release: alt2
 
 Summary: Synfig studio - animation program
 Group:   Office
@@ -122,6 +122,8 @@ popd
 pushd synfig-core
 %autoreconf
 %configure --with-dv --enable-profiling --enable-profile-arcs
+rm libltdl/config-h.in
+cp %_datadir/libtool/libltdl/config-h.in libltdl/config-h.in
 %make_build
 cp synfig.pc ../local-pkg-config
 subst 's,^libdir=.*,libdir=%rpm_synfig_dir,;s,^includedir=.*,includedir=%_builddir/%name-%version/synfig-core/src,' ../local-pkg-config/synfig.pc
@@ -196,6 +198,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 22 2019 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt2
+- Fix build (ALT #36651).
+
 * Sun Feb 17 2019 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt1
 - New version.
 
