@@ -1,7 +1,7 @@
-%define utsushi_version 0.48.0
+%define utsushi_version 0.55.0
 
 Name:     imagescan
-Version:  3.54.0
+Version:  3.55.0
 Release:  alt1
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # Download manually from http://support.epson.net/linux/src/scanner/imagescanv3/common/
 Source:   %{name}_%version.orig.tar.gz
 Source1:  utsushi.desktop
+Source2:  %name.watch
 
 Patch1:   %name-alt-fix-name-in-version-file.patch
 
@@ -34,12 +35,26 @@ BuildRequires: autoconf-archive
 BuildRequires: xsltproc
 BuildRequires: libltdl7-devel
 
+Requires: %name-sane
+
 %description
 Image Scan v3 is Linux software for Epson scanners.
 
 Image Scan v3 has own front-end, it allows to set various scanner
 settings with graphical user interface and save the scanned images to
 the various file type.
+
+It supports USB and network connection for the network capable scanners.
+
+Scanner can be controlled via not only own front-end but also command
+line option.
+
+%package sane
+Summary: EPSON Image Scan v3 SANE driver for scanners and all-in-ones
+Group: System/Configuration/Hardware
+
+%description sane
+SANE driver Image Scan v3 for Epson scanners.
 
 It supports USB and network connection for the network capable scanners.
 
@@ -54,6 +69,7 @@ line option.
 %undefine _configure_gettext
 %autoreconf
 %configure \
+    --libdir=%_libdir \
     --enable-shared \
     --disable-test-reports \
     --without-boost-unit-test-framework \
@@ -78,26 +94,46 @@ find %buildroot%_libdir -name *.a -delete
 install -Dm0644 lib/devices.conf %buildroot%_sysconfdir/utsushi/utsushi.conf
 install -Dm0644 %SOURCE1 %buildroot%_desktopdir/utsushi.desktop
 
-%find_lang utsushi
+rm %buildroot%_bindir/utsushi
+ln -s ../lib/utsushi/utsushi-main %buildroot%_bindir/utsushi
+ln -s utsushi %buildroot%_bindir/%name
 
-%check
-#%%make_build check
+%find_lang utsushi
 
 %files -f utsushi.lang
 %doc AUTHORS NEWS README
+%_libexecdir/utsushi/utsushi-scan-gtkmm
 %config(noreplace) %_sysconfdir/utsushi/utsushi.conf
 %config(noreplace) %_sysconfdir/utsushi/combo.conf
+%dir %_libdir/utsushi
+%_libdir/utsushi/lib*.so*
+%exclude %_libdir/utsushi/libutsushi.so*
+%exclude %_libdir/utsushi/libflt-all.so*
+%exclude %_libdir/utsushi/libcnx-usb.so*
+%exclude %_libdir/utsushi/libcnx-hexdump.so*
+%_datadir/utsushi
+%exclude %_datadir/utsushi/drivers
+%_desktopdir/utsushi.desktop
+
+%files sane
+%_libexecdir/utsushi
+%exclude %_libexecdir/utsushi/utsushi-scan-gtkmm
 %_bindir/*
 %_sysconfdir/sane.d/dll.d/utsushi
 %_sysconfdir/udev/rules.d/utsushi-esci.rules
-%_libdir/utsushi/lib*.so*
 %_libdir/utsushi/sane
+%_libdir/utsushi/libutsushi.so*
+%_libdir/utsushi/libflt-all.so*
+%_libdir/utsushi/libcnx-usb.so*
+%_libdir/utsushi/libcnx-hexdump.so*
 %_libdir/sane/libsane-utsushi.so*
-%_libexecdir/utsushi
-%_datadir/utsushi
-%_desktopdir/utsushi.desktop
+%_datadir/utsushi/drivers
 
 %changelog
+* Fri Apr 12 2019 Andrey Cherepanov <cas@altlinux.org> 3.55.0-alt1
+- New version
+- Exclude SANE driver in separate package imagescan-sane.
+
 * Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 3.54.0-alt1
 - New version.
 - Package all shared libraries (ALT #36456).
