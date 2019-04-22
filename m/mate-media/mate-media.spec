@@ -1,5 +1,7 @@
+%define _libexecdir %_prefix/libexec
+
 Name: mate-media
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 Summary: MATE media programs
@@ -11,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common libcanberra-gtk3-devel libmatemixer-devel libxml2-devel mate-desktop-devel
+BuildRequires: mate-common libcanberra-gtk3-devel libmatemixer-devel libxml2-devel mate-desktop-devel mate-panel-devel
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -24,6 +26,7 @@ including a volume control.
 %build
 %autoreconf
 %configure \
+	--libexecdir=%_libexecdir \
 	--disable-static \
 	--disable-schemas-compile
 
@@ -34,17 +37,22 @@ including a volume control.
 
 %find_lang %name --with-gnome --all-name
 
-%files -f %{name}.lang
+%files -f %name.lang
 %doc AUTHORS COPYING NEWS README
-%_sysconfdir/xdg/autostart/mate-volume-control-applet.desktop
-%_bindir/mate-volume-control
-%_bindir/mate-volume-control-applet
+%_sysconfdir/xdg/autostart/mate-volume-control-*.desktop
+%_bindir/mate-volume-control*
+%_libexecdir/mate-volume-control*
 %_datadir/%name
+%_datadir/mate-panel/applets/*.mate-panel-applet
 %_datadir/sounds/mate
+%_datadir/dbus-1/services/*.service
 %_desktopdir/mate-volume-control.desktop
 %_man1dir/*.1*
 
 %changelog
+* Mon Apr 22 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
+- 1.22.1
+
 * Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 
