@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.8
+Version: 0.9
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: ASL2.0
@@ -17,20 +17,19 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python-module-configparser
-BuildRequires: python-module-contextlib2
-BuildRequires: python-module-importlib_resources
-BuildRequires: python-modules-json
-BuildRequires: python-module-packaging
-BuildRequires: python-module-zipp
-BuildRequires: python3-module-importlib_resources
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-zipp
+BuildRequires: python2.7(configparser)
+BuildRequires: python2.7(contextlib2)
+BuildRequires: python2.7(importlib_resources)
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(packaging)
+BuildRequires: python2.7(zipp)
+BuildRequires: python3(packaging)
+BuildRequires: python3(tox)
+BuildRequires: python3(zipp)
 %endif
 
 # not autodetected
@@ -125,5 +124,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 0.9-alt1
+- 0.8 -> 0.9.
+- Fixed testing.
+
 * Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 0.8-alt1
 - Initial build.
