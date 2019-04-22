@@ -6,7 +6,7 @@ Name:         sogo
 # Use the same version as in the "nightly" packages at
 # http://v2.sogo.nu/downloads/backend_v3_nightly.html:
 Version:      4.0.7
-Release:      alt2
+Release:      alt3
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -203,7 +203,7 @@ Group:        Development/Objective-C
 Requires:     sope-gdl1
 Conflicts:    sope-gdl1-contentstore-devel
 Provides:     sope-gdl1-contentstore-sogo3-devel = %EVR
-Provides:     sope-gdl1-contentstore-sogo3-devel < %EVR
+Obsoletes:    sope-gdl1-contentstore-sogo3-devel < %EVR
 
 %description -n sope-gdl1-contentstore-devel
 This package contains the header files for SOPE's GDLContentStore
@@ -426,6 +426,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Apr 22 2019 Andrey Cherepanov <cas@altlinux.org> 4.0.7-alt3
+- Fix provides.
+
 * Sat Mar 30 2019 Andrey Cherepanov <cas@altlinux.org> 4.0.7-alt2
 - Do not require openchange-devel if build without openchange (ALT #36464).
 
