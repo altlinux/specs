@@ -8,7 +8,7 @@
 
 Name:    qt-creator
 Version: 4.9.0
-Release: alt1
+Release: alt2
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -35,7 +35,6 @@ BuildRequires: qt5-webkit-devel >= 5.9.0
 BuildRequires: qt5-x11extras-devel >= 5.9.0
 BuildRequires: qt5-xmlpatterns-devel >= 5.9.0
 BuildRequires: qt5-tools-devel >= 5.9.0
-BuildRequires: libbotan-devel
 %if_with ClangCodeModel
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
@@ -86,7 +85,7 @@ export LLVM_INSTALL_DIR="%_prefix"
 %remove_optflags -frecord-gcc-switches
 %endif
 
-%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib CONFIG+="disable_external_rpath use_system_botan" QMAKE_STRIP= \
+%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib CONFIG+="disable_external_rpath" QMAKE_STRIP= \
 %if_with ClangCodeModel
 	-spec linux-clang \
 	QMAKE_LFLAGS+="-fuse-ld=lld" \
@@ -121,6 +120,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Apr 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.9.0-alt2
+- Updated build dependencies: libbotan is no longer required.
+
 * Tue Apr 16 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
 - New version (ALT #36600).
 
