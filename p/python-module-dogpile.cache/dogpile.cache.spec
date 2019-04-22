@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.1
+Version: 0.7.1
+Release: alt1
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python
@@ -19,14 +19,16 @@ BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-coverage
 BuildRequires: python-module-nose python-module-mock
 BuildRequires: python-module-mako
+BuildRequires: python-module-decorator
 BuildRequires: python-module-sphinx-devel python-module-changelog
 BuildRequires: python-module-sphinx-paramlinks
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-module-nose python3-module-mock
-BuildPreReq: python3-module-mako
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-nose python3-module-mock
+BuildRequires: python3-module-mako
+BuildRequires: python3-module-decorator
 %endif
 
 Provides: python-module-dogpile-cache = %EVR
@@ -164,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
