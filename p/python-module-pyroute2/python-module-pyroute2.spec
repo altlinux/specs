@@ -2,7 +2,7 @@
 %define oname pyroute2
 
 Name: python-module-%oname
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: Python Netlink library
 Group: Development/Python
@@ -37,6 +37,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Python Netlink library
 Group: Development/Python3
+%add_python3_req_skip pyroute2.bsd.rtmsocket
 
 %description -n python3-module-%oname
 Pyroute2 is a pure Python netlink library.
@@ -110,6 +111,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %doc docs/html examples
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
