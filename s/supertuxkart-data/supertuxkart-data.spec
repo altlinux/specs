@@ -1,6 +1,6 @@
 Name: supertuxkart-data
-Version: 0.10
-Release: alt0.1.beta1
+Version: 1.0
+Release: alt1
 
 License: GPL
 Url: http://supertuxkart.sourceforge.net
@@ -49,6 +49,9 @@ rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 %_datadir/supertuxkart/data
 
 %changelog
+* Mon Apr 22 2019 Leontiy Volodin <lvol@altlinux.org> 1.0-alt1
+- Update to upstream version 1.0
+
 * Thu Feb 28 2019 Leontiy Volodin <lvol@altlinux.org> 0.10-alt0.1.beta1
 - Update to beta1
 - Added wayland support

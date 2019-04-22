@@ -1,6 +1,6 @@
 Name: supertuxkart
-Version: 0.10
-Release: alt0.1.beta1
+Version: 1.0
+Release: alt1
 
 License: GPL
 Url: http://supertuxkart.sourceforge.net
@@ -9,7 +9,7 @@ Group: Games/Arcade
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # https://github.com/supertuxkart/stk-code
-Source: %name-%version-src.tar.bz2
+Source: %name-%version-src.tar.gz
 #Patch: supertuxkart-0.9.3-debian-irrlicht.patch
 
 ## Automatically added by buildreq on Wed Jul 01 2009
@@ -23,7 +23,7 @@ BuildRequires: libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kb
 BuildRequires: ctest gcc-c++ libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs libbluez-devel glibc-devel
 #ccmake ctest gcc-c++ glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs
 BuildRequires: zlib-devel libpng-devel libjpeg-devel libfreetype-devel libXrandr-devel libharfbuzz-devel
-BuildRequires: libGLEW-devel libnettle-devel libenet-devel libGLES-devel
+BuildRequires: libGLEW-devel libnettle-devel libenet-devel libGLES-devel bzlib-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-x11-devel
 
 Requires: %name-data >= %version
@@ -56,12 +56,15 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_datadir/%name
 %_datadir/metainfo/*
 %_includedir/wiiuse.h
-%_libdir/libwiiuse.so
+%_libdir/libwiiuse.a
 %_pixmapsdir/*
 %_iconsdir/hicolor/48x48/apps/*
 %_iconsdir/hicolor/128x128/apps/*
 
 %changelog
+* Mon Apr 22 2019 Leontiy Volodin <lvol@altlinux.org> 1.0-alt1
+- Update to upstream version 1.0
+
 * Thu Feb 28 2019 Leontiy Volodin <lvol@altlinux.org> 0.10-alt0.1.beta1
 - Update to beta1
 - Added wayland support
