@@ -1,7 +1,7 @@
 %define oname oslo.cache
 
 Name: python-module-%oname
-Version: 1.30.2
+Version: 1.30.3
 Release: alt1
 Summary: Cache storage for Openstack projects
 
@@ -137,6 +137,9 @@ popd
 %doc README.rst LICENSE
 
 %changelog
+* Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.30.3-alt1
+- 1.30.3
+
 * Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.30.2-alt1
 - 1.30.2
 
