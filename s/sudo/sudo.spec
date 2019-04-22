@@ -1,5 +1,5 @@
 Name: sudo
-Version: 1.8.26
+Version: 1.8.27
 Release: alt1
 Epoch: 1
 
@@ -178,6 +178,9 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Thu Apr 11 2019 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.27-alt1
+- Update to last winter release
+
 * Fri Dec 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.26-alt1
 - Update to last autumn release
 - Fix post script for sudowheel control (closes: 35611)
