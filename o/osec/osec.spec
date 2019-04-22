@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: osec
-Version: 1.2.7
-Release: alt3
+Version: 1.2.8
+Release: alt2
 
 Summary: Lightweight file permission checker
 License: GPL3
 Group: System/Base
-Url: https://sourceforge.net/projects/o-security/
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Url: https://github.com/legionus/osec
 
-Source: osec-%version.tar
+Source: %name-%version.tar
 
 Requires(pre): shadow-utils
 
-Provides: mtree-sec = %version-%release
+Provides: mtree-sec = %EVR
 Obsoletes: mtree-sec
 
 %define osec_statedir /var/lib/osec
@@ -21,10 +22,12 @@ Obsoletes: mtree-sec
 
 # Automatically added by buildreq on Sat Apr 21 2007 (-bi)
 BuildRequires: flex bison help2man libcdb-devel libcap-devel libattr-devel perl-RPM2
+BuildRequires: libgcrypt-devel
 
 %package cronjob
 Summary: General cron framework for osec
-Requires: %name = %version-%release
+Provides: %name-cron
+Requires: %name = %EVR
 Requires: %name-reporter
 Group: System/Base
 
@@ -32,8 +35,8 @@ Group: System/Base
 Summary: Collection of reporters for osec
 Group: System/Base
 Provides: %name-reporter
-Requires: %name = %version-%release
-Requires: %name-cronjob
+Requires: %name = %EVR
+Requires: %name-cron
 Requires: /bin/mail
 Requires: perl-base
 Requires(pre): coreutils
@@ -107,6 +110,14 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Mon Apr 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.8-alt2
+- Update URL.
+
+* Fri Apr 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.8-alt1
+- Added support for hash type switching.
+- Added support for Stribog-512 hash.
+- osec2txt and txt2osec utilities now properly work with xattr fields.
+
 * Sat Dec 10 2016 Alexey Gladkov <legion@altlinux.ru> 1.2.7-alt3
 - Use _FILE_OFFSET_BITS=64 (ALT#32805).
 - Add default value to identify parser error (ALT#28770).
