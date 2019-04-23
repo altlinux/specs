@@ -3,9 +3,13 @@
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
+%ifarch %ix86 x86_64 aarch64
+%def_enable valgrind
+%endif
+
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
@@ -23,7 +27,10 @@ BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: python-devel python-modules-distutils python-module-pygobject3-devel python-modules-compiler python-module-pytest
 # for python3
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
-BuildRequires: liborc-test-devel valgrind-tool-devel
+BuildRequires: liborc-test-devel
+%if_enabled valgrind
+BuildRequires: valgrind-tool-devel
+%endif
 # for check
 BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver
 
@@ -78,6 +85,9 @@ popd
 
 
 %changelog
+* Tue Apr 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
+- mike@: introduce valgrind knob (on where present)
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
