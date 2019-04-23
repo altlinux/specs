@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.0.5
-Release:    alt1.qa2
+Release:    alt1.qa3
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    ASL 2.0
@@ -57,6 +57,8 @@ developing applications that use %{name}.
 %cmake -DBUILD_DOCUMENTATION=ON
 
 export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
+# Build in one thread to prevent race condition
+export NPROCS=1
 %cmake_build #VERBOSE=1
 
 %install
@@ -87,6 +89,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.qa3
+- Build in one thread to prevent race condition.
+
 * Mon Nov 19 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.5-alt1.qa2
 - spec: moved %%find_lang to %%install section.
 
