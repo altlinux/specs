@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -179,6 +179,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Apr 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1.1-alt1
+- 3.32.1.1 (fixed CVE-2019-11459)
+
 * Wed Apr 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
