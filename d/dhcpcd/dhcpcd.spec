@@ -6,7 +6,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 7.2.0
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsd
@@ -15,6 +15,14 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# Patches from upstream. must be dropped when
+# new version will be released.
+PAtch1: DHCPv6-Fix-a-potential-buffer-overflow-reading-NA-TA.patch
+Patch2: DHCP-Fix-a-potential-1-byte-read-overflow-with-DHO_O.patch
+PAtch3: auth-Use-consttime_memequal-3-to-compare-hashes.patch
+PAtch4: compat-Provide-consttime_memequal-if-not-in-libc.patch
+PAtch5: Really-add-consttime_memequal.patch
+PAtch6: DHCPv6-fix-warning-message-wording.patch
 
 AutoReq: yes, noshell
 
@@ -36,6 +44,12 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %add_optflags -fpie
@@ -91,6 +105,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Tue Apr 23 2019 Mikhail Efremov <sem@altlinux.org> 1:7.2.0-alt2
+- Patches from upstream git.
+
 * Thu Apr 18 2019 Mikhail Efremov <sem@altlinux.org> 1:7.2.0-alt1
 - Updated to 7.2.0.
 
