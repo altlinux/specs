@@ -1,21 +1,21 @@
 %define oname click
 
 %def_with python3
+%def_with doc
 
 Name: python-module-%oname
 Version: 6.7
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: A simple wrapper around optparse for powerful command line utilities
-
 License: BSD
 Group: Development/Python
+
 Url: https://pypi.python.org/pypi/click/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # Source-git: https://github.com/mitsuhiko/click.git
 Source: %name-%version.tar
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -30,7 +30,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-objects.inv python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+%if_with doc
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
+%endif
 
 %description
 Click is a Python package for creating beautiful command line interfaces
@@ -132,8 +136,10 @@ rm -fv click/_winconsole.py
 cp -fR . ../python3
 %endif
 
+%if_with doc
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build_debug
@@ -153,10 +159,11 @@ pushd ../python3
 popd
 %endif
 
+%if_with doc
 %make -C docs pickle
 %make -C docs html
-
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif doc
 
 %check
 python setup.py test
@@ -169,17 +176,21 @@ popd
 %files
 %doc CHANGES README
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
+%endif
 %exclude %python_sitelibdir/*/test*
 
 %files tests
 %python_sitelibdir/*/test*
 
+%if_with doc
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -194,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 23 2019 Michael Shigorin <mike@altlinux.org> 6.7-alt1.1.1
+- introduce doc knob (on by default)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.7-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
