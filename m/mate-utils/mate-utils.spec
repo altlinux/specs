@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 Summary: MATE utility programs
@@ -20,7 +20,7 @@ Obsoletes: mate-utils-libs
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gcc-c++ gtk-doc libSM-devel libcanberra-gtk3-devel libgtop-devel mate-panel-devel yelp-tools
+BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel mate-panel-devel librsvg-utils yelp-tools
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -174,6 +174,9 @@ rm -fr gsearchtool/help/pt
 %_man1dir/mate-disk-usage-analyzer.1*
 
 %changelog
+* Tue Apr 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
+- 1.22.1
+
 * Thu Mar 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 
