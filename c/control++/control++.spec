@@ -1,7 +1,7 @@
-%define libcontrolppver 0.20
+%define libcontrolppver 0.21
 
 Name: control++
-Version: 0.18.1
+Version: 0.19.0
 Release: alt1
 
 Summary: System configuration tool
@@ -59,6 +59,12 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Tue Apr 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt1
+- Ability to perform exclusive mode setting for a unit ('micro mode');
+- Ability to check compliance of micro modes;
+- Fix of flaw that was manifested during setting of empty permission mode;
+- More feedback with 'verbose' option.
+
 * Fri Apr 05 2019 Alexey Appolonov <alexey@altlinux.org> 0.18.1-alt1
 - Bug fixes.
 
