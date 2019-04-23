@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt11
+Release: alt12
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -13,7 +13,7 @@ Patch0: %name-%version-%release.patch
 Requires: snmp-mibs-std
 AutoProv: yes
 
-BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5.1-devel glibc-kernheaders
+BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
 
 %description
@@ -58,7 +58,7 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
       -DRADIUS=TRUE \
       -DNETSNMP=TRUE \
       -DLOG_PGSQL=FALSE \
-      -DLUA=TRUE \
+      -DLUA=5.3 \
       -DBUILD_INSTALL_PREFIX=%buildroot \
       -DCMAKE_BUILD_TYPE=Debug \
       -DMEMDEBUG=TRUE
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 23 2019 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt12
+- Rebuild with lua 5.3
+
 * Thu Sep 06 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt11
 - update upstream to git:20da79b5ee071e4eda75645d1f812f4137e81062
     * triton: fixed improper locking
