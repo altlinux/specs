@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.26.1
-Release: alt2
+Release: alt3
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
 License: ASL 2.0
@@ -147,11 +147,11 @@ popd
 %exclude %python_sitelibdir/*/tests/functional/
 %exclude %python_sitelibdir/*/tests/unit/
 %exclude %python_sitelibdir/*/tests/base.py*
-%exclude %python_sitelibdir/*/tests/__init__.py*
 %exclude %python_sitelibdir/*/tests/utils.py*
 
 %files tests
 %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/tests/__init__.py*
 %exclude %python_sitelibdir/*/tests/fakes.py*
 
 %files -n python3-module-%oname
@@ -161,18 +161,21 @@ popd
 %exclude %python3_sitelibdir/*/tests/functional/
 %exclude %python3_sitelibdir/*/tests/unit/
 %exclude %python3_sitelibdir/*/tests/base.py*
-%exclude %python3_sitelibdir/*/tests/__init__.py*
 %exclude %python3_sitelibdir/*/tests/utils.py*
 %exclude %python3_sitelibdir/*/tests/__pycache__/
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/tests/__init__.py*
 %exclude %python3_sitelibdir/*/tests/fakes.py*
 
 %files doc
 %doc build/sphinx/html
 
 %changelog
+* Mon Apr 22 2019 Lenar Shakirov <snejok@altlinux.ru> 0.26.1-alt3
+- Move tests/__init__.py* to main package
+
 * Fri Apr 19 2019 Lenar Shakirov <snejok@altlinux.ru> 0.26.1-alt2
 - Move tests.fakes to main package
 
