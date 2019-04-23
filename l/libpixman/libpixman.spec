@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.38.0
+Version: 0.38.4
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -13,6 +13,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %srcname-%version.tar
 Patch: %srcname-%version-%release.patch
+
+BuildRequires: libpng-devel
 
 %description
 Pixman is a pixel manipulation library for X and cairo
@@ -36,6 +38,9 @@ develop programs which make use of %name
 	--disable-static
 %make_build
 
+%check
+%make check
+
 %install
 %make DESTDIR=%buildroot install
 
@@ -48,6 +53,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 3:0.38.4-alt1
+- 0.38.4
+
 * Tue Feb 12 2019 Valery Inozemtsev <shrek@altlinux.ru> 3:0.38.0-alt1
 - 0.38.0
 
@@ -232,5 +240,5 @@ develop programs which make use of %name
 * Mon Oct 01 2007 Valery Inozemtsev <shrek@altlinux.ru> 0.9.5-alt2
 - GIT snapshot 2007-09-29 (39a67d35f05aa47cf50191e0837a2125593a7bbc)
 
-* Tue Sep 06 2007 Valery Inozemtsev <shrek@altlinux.ru> 0.9.5-alt1
+* Thu Sep 06 2007 Valery Inozemtsev <shrek@altlinux.ru> 0.9.5-alt1
 - initial release
