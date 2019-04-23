@@ -1,9 +1,10 @@
 %define abiversion 2
-%def_with qt
+# only included for backwards compatibility, gui now in its own project, see ChangeLog
+%def_without qt
 
 Name:    unixODBC
-Version: 2.3.4
-Release: alt2.1
+Version: 2.3.7
+Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -23,7 +24,6 @@ Source2: %name-DataManager.desktop
 Source3: %name-ODBCConfig.desktop
 
 Patch1: %name-depcomp.patch
-Patch3: %name-2.2.11-export-symbols.patch
 Patch4: %name-2.2.11-symbols.patch
 Patch5: %name-remove-rpath-to-libdir.patch
 # Patches from Fedora
@@ -98,8 +98,6 @@ unixODBC представляет из себя полную специфика�
 
 %prep
 %setup -q
-#patch1 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p2
 %patch11 -p1
@@ -114,12 +112,16 @@ chmod 0644 include/odbcinst.h
 
 # Blow away the embedded libtool and replace with build system's libtool.
 # (We will use the installed libtool anyway, but this makes sure they match.)
-rm -rf config.guess config.sub install-sh ltmain.sh libltdl
+rm -rf config.guess config.sub install-sh ltmain.sh libltdl compile depcomp missing
 # this hack is so we can build with either libtool 2.2 or 1.5
 libtoolize --install || libtoolize
+rm libltdl/config-h.in
+cp %_datadir/libtool/libltdl/config-h.in libltdl/config-h.in
 
 %build
+%if_with qt
 export QTDIR=%_qt4dir
+%endif
 aclocal
 automake --add-missing
 autoconf
@@ -185,8 +187,12 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcpsql.so
 %exclude %_libdir/libodbcpsqlS.so
 %exclude %_libdir/libodbcmyS.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 23 2019 Andrey Cherepanov <cas@altlinux.org> 2.3.7-alt1
+- New version (ALT #36597).
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt2.1
 - Rebuild with libreadline7.
 
