@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-applets
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop panel applets
@@ -63,6 +63,9 @@ rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 %_man1dir/*.1*
 
 %changelog
+* Tue Apr 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
+- 1.22.1
+
 * Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 
