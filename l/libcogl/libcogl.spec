@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define oname cogl
 %define ver_major 1.22
@@ -28,8 +28,8 @@
 %def_enable apidocs
 
 Name: libcogl
-Version: %ver_major.2
-Release: alt6
+Version: %ver_major.4
+Release: alt1
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -210,6 +210,9 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Tue Apr 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
+- 1.22.4
+
 * Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt6
 - mike@: introduced apidocs knob
 
