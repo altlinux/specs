@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.2
+Release: alt1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- new version 1.0.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
