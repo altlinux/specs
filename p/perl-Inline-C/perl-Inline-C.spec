@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.78
+Version: 0.80
 Release: alt1
 Summary: C Language Support for Inline
 Group: Development/Perl
@@ -29,11 +29,14 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE example
+%doc README Changes LICENSE example CONTRIBUTING
 %perl_vendor_privlib/I*
 %perl_vendor_privlib/auto/*
 
 %changelog
+* Tue Apr 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - automated CPAN update
 
