@@ -1,7 +1,7 @@
 Name: lz4
 Epoch: 1
-Version: 1.8.3
-Release: alt2
+Version: 1.9.1
+Release: alt1
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
 Group: Archiving/Compression
@@ -75,7 +75,7 @@ sed -i 's/\$(MAKE) -C \$(PRGDIR) /: SKIP: &/' tests/Makefile
 export CFLAGS='%optflags'
 %make_build all -C lib BUILD_STATIC=%BUILD_STATIC
 %make_build all -C programs
-%make_build all -C tests
+%make_build all lz4_all.o -C tests
 
 %install
 export CC=false CXX=false # nothing should be compiled or linked during install
@@ -118,6 +118,9 @@ make -k test -C tests BUILD_STATIC=%BUILD_STATIC
 %endif
 
 %changelog
+* Tue Apr 23 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.1-alt1
+- v1.8.3 -> v1.9.1.
+
 * Thu Jan 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.3-alt2
 - %%check: avoid obscure races by disabling parallelized tests.
 
