@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Metadata
 Name: perl-%dist
-Version: 1.000033
+Version: 1.000036
 Release: alt1
 
 Summary: Gather package and POD information from perl module files
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Module-Metadata-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ This module provides a standard way to gather metadata about a .pm file
 without executing unsafe code.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +30,13 @@ without executing unsafe code.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes CONTRIBUTING README
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Apr 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.000036-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.000033-alt1
 - automated CPAN update
 
