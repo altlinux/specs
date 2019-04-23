@@ -1,5 +1,5 @@
 Name:    kmymoney
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
@@ -273,6 +273,7 @@ Internationalization and documentation for KMyMoney
 %_K5lib/libkmm_plugin.so.*
 %_K5lib/libkmm_settings.so.*
 %_K5lib/libkmm_widgets.so.*
+%_K5lib/libkmm_printer.so.*
 %_desktopdir/kf5/*%name.desktop
 %doc %_K5doc/en/*
 %_K5cfg/*.kcfg
@@ -367,6 +368,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Tue Apr 23 2019 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt1
+- New version.
+
 * Fri Feb 01 2019 Andrey Cherepanov <cas@altlinux.org> 5.0.3-alt1
 - New version.
 
