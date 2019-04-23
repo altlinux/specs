@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.59
-Release: alt2
+Version: 1.0.0.61
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -78,6 +78,9 @@ savegame and screenshot functionality, and many social features.
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Tue Apr 23 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt1
+- Version 1.0.0.61
+
 * Tue Jan 15 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.59-alt2
 - Remove %ubt macro
 
