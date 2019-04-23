@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.0
-Release: alt1.1.1
+Version: 1.10.1
+Release: alt1
 Summary: Manuel lets you build tested documentation
 License: ZPL
 Group: Development/Python
@@ -109,9 +109,6 @@ popd
 %files tests
 %python_sitelibdir/%oname/test*
 
-%files docs
-%doc docs/*
-
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
@@ -123,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 23 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.1-alt1
+- update to 1.10.1 to fix build
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
