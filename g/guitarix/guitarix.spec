@@ -6,7 +6,7 @@
 
 Name: guitarix
 Version: 0.37.3
-Release: alt1
+Release: alt2
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPLv2+
@@ -14,6 +14,7 @@ Url: https://sourceforge.net/projects/guitarix
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # Source-url: http://sourceforge.net/projects/%name/files/%name/%altname2-%version.tar.xz
+Source1: ru.po
 
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
@@ -137,6 +138,7 @@ guitarix, but can also be used by any other ladspa host.
 
 %prep
 %setup
+cp %SOURCE1 po/
 
 #fix PATH include to Eigen
 for i in `grep -r '<Eigen' * | cut -d ':' -f1`; do
@@ -213,6 +215,9 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %_libdir/lv2/*
 
 %changelog
+* Tue Apr 23 2019 Anton Midyukov <antohami@altlinux.org> 0.37.3-alt2
+- Add russian translations (Thanks Valeriy Shtobbe, Olesya Gerasimenko)
+
 * Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 0.37.3-alt1
 - new version 0.37.3
 
