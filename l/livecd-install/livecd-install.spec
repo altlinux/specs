@@ -1,6 +1,6 @@
 Name: livecd-install
-Version: 0.9.10
-Release: alt5
+Version: 0.9.11
+Release: alt1
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -63,6 +63,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Apr 23 2019 Anton Midyukov <antohami@altlinux.org> 0.9.11-alt1
+- Not restart systemd-logind
+
 * Mon Oct 01 2018 Michael Shigorin <mike@altlinux.org> 0.9.10-alt5
 - avoid R: make-initrd-plymouth, should be added in the profile
   if needed (closes: #35461)
