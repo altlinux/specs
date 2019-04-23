@@ -14,7 +14,7 @@
 
 Name: libspice-gtk
 Version: 0.36
-Release: alt1
+Release: alt2
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -24,8 +24,10 @@ Url: http://spice-space.org/page/Spice-Gtk
 Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: keycodemapdb.tar
+Source4: ru.po
 # Patch: %name-%version-%release.patch
 # Patch2: %name-alt-fix.patch
+Patch: libspice-gtk-add-ru-string-to-linguas.patch
 
 %define vala_ver 0.14
 
@@ -155,9 +157,11 @@ screen-shots of a SPICE desktop
 tar -xf %SOURCE2 -C subprojects/spice-common
 tar -xf %SOURCE3 -C src/keycodemapdb
 
+%patch -p1
 # %patch -p1
 # %patch2 -p1
 echo "%version" > .tarball-version
+cp -f %SOURCE4 po/
 
 %build
 %meson \
@@ -231,6 +235,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Tue Apr 23 2019 Pavel Moseev <mars@altlinux.org> 0.36-alt2
+- update translation
+
 * Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.36-alt1
 - 0.36
 
