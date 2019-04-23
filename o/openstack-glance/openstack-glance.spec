@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 17.0.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -23,6 +23,10 @@ Source43: %name.tmpfiles
 Source46: %name-glare.init
 
 Patch1: glance-fix-recursion.patch
+Patch2: glance-fix-py37-compatibility-async-keyword.patch
+Patch3: glance-fix-import.patch
+Patch4: glance-remains-file.patch
+
 
 BuildArch: noarch
 
@@ -226,6 +230,9 @@ This package contains documentation files for glance.
 %prep
 %setup -n %oname-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # Remove bundled egg-info
 #rm -rf glance.egg-info
@@ -391,6 +398,9 @@ crudini --set %glance_conf paste_deploy flavor keystone
 #%doc doc/build/html
 
 %changelog
+* Tue Apr 23 2019 Alexey Shabalin <shaba@altlinux.org> 1:17.0.0-alt3
+- fixed build with python3.7
+
 * Wed Feb 06 2019 Alexey Shabalin <shaba@altlinux.org> 1:17.0.0-alt2
 - py3: fix recursion issue
 
