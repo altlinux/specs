@@ -2,7 +2,7 @@
 
 Name: wireguard
 
-Version: 0.0.20190227
+Version: 0.0.20190406
 Release: alt1
 
 Summary: Wireguard is a fast, modern, secure VPN tunnel module for Linux kernel
@@ -110,6 +110,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 23 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20190406-alt1
+- New version
+
 * Mon Mar 04 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20190227-alt1
 - New version
 
