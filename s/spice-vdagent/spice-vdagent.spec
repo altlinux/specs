@@ -4,8 +4,9 @@
 %def_with gtk
 
 Name: spice-vdagent
-Version: 0.19.0
-Release: alt1
+Version: 0.18.0
+Release: alt3
+Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
 License: GPLv3+
@@ -19,10 +20,9 @@ Patch: %name-%version.patch
 BuildRequires: pkgconfig(glib-2.0) >= 2.34
 %{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.10}
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
-BuildRequires: pkgconfig(spice-protocol) >= 0.14.0
+BuildRequires: pkgconfig(spice-protocol) >= 0.12.13
 BuildRequires: pkgconfig(alsa) >= 1.0.22
 BuildRequires: pkgconfig(dbus-1)
-BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd) >= 209
@@ -65,7 +65,7 @@ mkdir -p %buildroot%_runtimedir/spice-vdagentd
 %preun_service spice-vdagentd
 
 %files
-%doc COPYING CHANGELOG.md README.md
+%doc COPYING ChangeLog README TODO NEWS
 /lib/udev/rules.d/*.rules
 /lib/tmpfiles.d/spice-vdagentd.conf
 %_initddir/spice-vdagentd
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_runtimedir/spice-vdagentd
 %_man1dir/*
 
 %changelog
+* Tue Apr 23 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.18.0-alt3
+- downgrade to 0.18.0
+
 * Tue Apr 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
 - 0.19.0
 

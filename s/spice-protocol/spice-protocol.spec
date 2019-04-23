@@ -1,6 +1,7 @@
 Name: spice-protocol
-Version: 0.14.0
-Release: alt1
+Version: 0.12.15
+Release: alt2
+Epoch: 1
 Summary: Spice protocol header files
 Group: Development/C
 License: BSD
@@ -8,7 +9,7 @@ Url: http://www.spice-space.org/
 
 # VCS-git: https://gitlab.freedesktop.org/spice/spice-protocol.git
 Source: %name-%version.tar
-# Patch: %name-%version.patch
+Patch: %name-%version.patch
 
 BuildArch: noarch
 BuildRequires: meson
@@ -19,7 +20,7 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 
 %prep
 %setup
-#%%patch -p1
+%patch -p1
 
 %build
 %meson
@@ -29,11 +30,14 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %meson_install
 
 %files
-%doc COPYING README.md CHANGELOG.md
+%doc COPYING NEWS
 %_includedir/*
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 23 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.12.15-alt2
+- downgrade to 0.12.15
+
 * Tue Apr 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
