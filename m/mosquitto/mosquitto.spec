@@ -4,7 +4,7 @@
 
 Name: mosquitto
 Version: 1.5.6
-Release: alt1
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -49,9 +49,7 @@ Libraries needed to develop for mosquitto
 %prep
 %setup 
 
-%ifarch %ix86
-subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%d)|g' src/conf.c
-%endif
+subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%zd)|g' src/conf.c
 
 %build
 subst 's|prefix?=/usr/local|prefix=/usr|g' config.mk
@@ -59,10 +57,7 @@ subst 's|stylesheet/docbook-xsl/manpages/docbook.xsl|xsl-stylesheets/manpages/do
 %make_build
 
 %install
-%ifarch x86_64 aarch64
-export LIB_SUFFIX=64
-%endif
-
+export LIB_SUFFIX='%_libsuff'
 %makeinstall_std
 
 chmod a-x %buildroot%_includedir/*.h
@@ -108,6 +103,9 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.6-alt2
+- Fixed build on other architectures with %%_lib != lib.
+
 * Mon Feb 11 2019 Pavel Vainerman <pv@altlinux.ru> 1.5.6-alt1
 - new version (1.5.6) with rpmgs script
 - fix CVE-2018-12551, CVE-2018-12550, CVE-2018-12546
