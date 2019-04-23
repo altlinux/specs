@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Test2-Plugin-NoWarnings
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IPC/Run3.pm) perl(Test/More.pm) perl(Test2/API.pm) perl(Test2/Bundle/Extended.pm) perl(Test2/Event.pm) perl(Test2/Require/Module.pm) perl(Test2/Util/HashBase.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IPC/Run3.pm) perl(Test/More.pm) perl(Test2/API.pm) perl(Test2/Bundle/Extended.pm) perl(Test2/Event.pm) perl(Test2/Require/Module.pm) perl(Test2/Util/HashBase.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm) perl(Capture/Tiny.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Fail if tests warn
 Group: Development/Perl
@@ -37,6 +37,9 @@ then this module will stop working.
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Apr 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
