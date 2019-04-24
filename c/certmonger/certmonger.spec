@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.7
-Release: alt1
+Release: alt2
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -81,6 +81,45 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 
 %preun
 %preun_service %name
+
+%triggerpostun -- certmonger <= 0.79.7-alt1
+# update certmonger helper paths for existing installations
+# /usr/lib/certmonger/ => /usr/libexec/certmonger/
+set -o errexit
+set -o nounset
+set -o pipefail
+
+export LC_ALL=C
+
+help () {
+    printf -- 'Please, check and update certmonger CAs helpers manually\n' >&2
+    exit 0
+}
+
+getcert refresh-ca -a >/dev/null 2>&1 || help
+cas_list="$(getcert list-cas | grep -o "^CA '.*':" | cut -d\' -f2 | \
+              tr '\n' ' ')" || \
+         help
+
+old_path=" /usr/lib/certmonger/"
+new_path=" /usr/libexec/certmonger/"
+helper=
+modified_helper=
+for ca in $cas_list; do
+    # helper could be empty
+    helper="$(getcert list-cas -c "$ca" | grep 'helper-location:' | \
+                cut -d':' -f2)" || \
+           continue
+    if [ -z "$helper" -o -n "${helper##*$old_path*}" ]; then
+        continue
+    fi
+    modified_helper="${helper//$old_path/$new_path}"
+    # remove leading whitespace
+    modified_helper="$(sed 's/^[[:space:]]*//' <<<"$modified_helper")"
+    getcert modify-ca -c "$ca" -e "$modified_helper" || help
+done
+getcert refresh-ca -a >/dev/null 2>&1 || help
+
 %files -f %name.lang
 %doc README.md LICENSE STATUS doc/*.txt
 %config(noreplace) %_sysconfdir/dbus-1/system.d/certmonger.conf
@@ -119,6 +158,9 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Apr 23 2019 Stanislav Levin <slev@altlinux.org> 0.79.7-alt2
+- Fixed upgrade 0.78->0.79.
+
 * Tue Mar 26 2019 Stanislav Levin <slev@altlinux.org> 0.79.7-alt1
 - 0.79.6 -> 0.79.7.
 
