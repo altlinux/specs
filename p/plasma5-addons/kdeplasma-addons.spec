@@ -8,7 +8,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -26,11 +26,8 @@ Source: %rname-%version.tar
 Patch1: alt-sover.patch
 Patch2: alt-dictionary-runner.patch
 Patch3: alt-weather-usability.patch
-Patch4: alt-fifteenpuzzle-fix-error.patch
-Patch5: alt-color-picker.patch
-Patch6: alt-dictionary-fix.patch
-Patch7: alt-fixed-comic-widget-content-menu-crash.patch
-Patch8: alt-fixed-comic-widget-crash.patch
+Patch4: alt-color-picker.patch
+Patch5: alt-fixed-comic-widget-crash.patch
 
 # Automatically added by buildreq on Mon Mar 30 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs scim-libs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -48,6 +45,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmode
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kross-devel kf5-knewstuff-devel kf5-kactivities-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kholidays-devel
 BuildRequires: plasma5-workspace-devel plasma5-libksysguard-devel
 
 Provides: kf5-kdeplasma-addons = %EVR
@@ -69,6 +67,7 @@ Obsoletes: kf5-kdeplasma-addons-common < %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common = %EVR
 Provides: kf5-kdeplasma-addons-devel = %EVR
 Obsoletes: kf5-kdeplasma-addons-devel < %EVR
 %description devel
@@ -78,21 +77,21 @@ developing applications that use %name.
 %package -n %libplasmacomicprovidercore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libplasmacomicprovidercore
 KF5 library
 
 %package -n %libplasmaweatherprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libplasmaweatherprivate
 KF5 library
 
 %package -n %libplasmapotdprovidercore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libplasmapotdprovidercore
 KF5 library
 
@@ -100,21 +99,19 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
-%patch3 -p2
+#%patch3 -p2
 %patch4 -p2
 %patch5 -p2
-%patch6 -p1
-%patch7 -p2
-%patch8 -p2
 
 %build
 %K5build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
     #
 
 %install
 %K5install
-%K5install_move data kwin
+%K5install_move data kwin kdevappwizard locale 
 %K5install_move icon all
 %find_lang %name --all-name
 
@@ -127,8 +124,11 @@ KF5 library
 %_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/applets/*.so
 %_K5plug/kpackage/packagestructure/*.so
+%_K5plug/plasmacalendarplugins/*.so
+%_K5plug/plasmacalendarplugins/*/
 %_K5plug/potd/
 %_K5qml/org/kde/plasma/private/*/
+%_K5qml/org/kde/plasmacalendar/*/
 #%_K5exec/*
 %_K5data/plasma/*
 %_K5data/kwin/*
@@ -136,17 +136,28 @@ KF5 library
 %_K5srvtyp/*
 %_K5icon/*/*/*/*.*
 
+%files devel
+%_K5inc/plasma/potdprovider/
+%_K5link/lib*.so
+%_libdir/cmake/PlasmaPotdProvider/
+#%_K5archdata/mkspecs/modules/qt_plasma-desktop.pri
+#%_K5dbus_iface/*.xml
+%_K5data/kdevappwizard/templates/*.tar.bz2
+
 %files -n %libplasmacomicprovidercore
 %_K5lib/libplasmacomicprovidercore.so.*
 %_K5lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
-%files -n %libplasmaweatherprivate
-%_K5lib/libplasmaweatherprivate.so.*
-%_K5lib/libplasmaweatherprivate.so.%plasmaweatherprivate_sover
+#%files -n %libplasmaweatherprivate
+#%_K5lib/libplasmaweatherprivate.so.*
+#%_K5lib/libplasmaweatherprivate.so.%plasmaweatherprivate_sover
 %files -n %libplasmapotdprovidercore
 %_K5lib/libplasmapotdprovidercore.so.*
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

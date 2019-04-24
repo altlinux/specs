@@ -1,10 +1,11 @@
 %define rname kdecoration
 %define sover 5
+%define sover_private 6
 %define libkdecorations libkdecorations2%sover
-%define libkdecorationsprivate libkdecorations2private%sover
+%define libkdecorationsprivate libkdecorations2private%sover_private
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 %K5init altplace
 
@@ -67,7 +68,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch -p1
+#%patch -p1
 
 %build
 %K5build
@@ -88,12 +89,15 @@ KF5 library
 
 %files -n %libkdecorations
 %_K5lib/libkdecorations2.so.%sover
-%_K5lib/libkdecorations2.so.%sover.*
+%_K5lib/libkdecorations2.so.*
 %files -n %libkdecorationsprivate
-%_K5lib/libkdecorations2private.so.%sover
-%_K5lib/libkdecorations2private.so.%sover.*
+%_K5lib/libkdecorations2private.so.%sover_private
+%_K5lib/libkdecorations2private.so.*
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 

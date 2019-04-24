@@ -4,18 +4,20 @@
 
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
-%define kwineffects_sover 11
+%define kwineffects_sover 12
 %define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 11
+%define kwinglutils_sover 12
 %define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 11
+%define kwinxrenderutils_sover 12
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
+%define kcmkwincommon_sover 5
+%define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.12.8
-Release: alt2
+Version: 5.15.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -105,6 +107,13 @@ Requires: %name-common = %version-%release
 %description -n %libkwin
 KF5 library
 
+%package -n %libkcmkwincommon
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkcmkwincommon
+KF5 library
+
 %package -n %libkwinxrenderutils
 Group: System/Libraries
 Summary: KF5 library
@@ -128,6 +137,7 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kconf_update
 %find_lang %name --with-kde --all-name
 
 %post
@@ -147,13 +157,16 @@ KF5 library
 %_K5plug/kf5/org.kde.kidletime.platforms/KF5IdleTimeKWin*.so
 %_K5plug/kpackage/packagestructure/kwin_packagestructure_*.so
 %_K5plug/kwin/
+%_K5plug/kcms/*kwin*.so
 %_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.kwin.*/
 %_K5plug/*.so
 %_K5cf_bin/kwin5*
+%_K5conf_up/kwin*
 %_K5qml/org/kde/kwin/
 %_K5cfg/*.kcfg
+%_K5data/kpackage/kcms/kcm_kwin_virtualdesktops/
 %_K5data/kwin/
 %_K5data/kwincompositing/
 %_K5srv/*.desktop
@@ -170,25 +183,27 @@ KF5 library
 %files -n %libkwin4_effect_builtins
 %_K5lib/libkwin4_effect_builtins.so.%kwin4_effect_builtins_sover
 %_K5lib/libkwin4_effect_builtins.so.*
-
 %files -n %libkwineffects
 %_K5lib/libkwineffects.so.%kwineffects_sover
 %_K5lib/libkwineffects.so.*
-
 %files -n %libkwinglutils
 %_K5lib/libkwingl*utils.so.%kwinglutils_sover
 %_K5lib/libkwingl*utils.so.*
-
 %files -n %libkwin
 %_K5lib/libkwin.so.%kwin_sover
 %_K5lib/libkwin.so.*
-
 %files -n %libkwinxrenderutils
 %_K5lib/libkwinxrenderutils.so.%kwinxrenderutils_sover
 %_K5lib/libkwinxrenderutils.so.*
+%files -n %libkcmkwincommon
+%_K5lib/libkcmkwincommon.so.%kcmkwincommon_sover
+%_K5lib/libkcmkwincommon.so.*
 
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Thu Apr 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt2
 - add upstream fix to force glXSwapBuffers to block with NVIDIA driver
 

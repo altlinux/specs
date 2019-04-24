@@ -24,8 +24,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.12.8
-Release: alt7
+Version: 5.15.4
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -59,12 +59,12 @@ Patch110: alt-breeze-loginscreen-focus.patch
 Patch111: alt-breeze-one-screen.patch
 Patch112: alt-breeze-pw-renew.patch
 Patch113: alt-breeze-autoupdate-username.patch
-Patch114: alt-dbus-service.patch
+#
 Patch115: alt-dbus-sessionchange.patch
 #Patch116: alt-refresh-menu.patch
 Patch117: alt-disable-ctrl-alt-r.patch
 Patch118: alt-session-exclude.patch
-Patch119: alt-freespace-new-thread.patch
+Patch119: alt-freespace-thread-timer.patch
 #
 Patch121: alt-freememorynotifier.patch
 Patch122: alt-systemmonitor-ignoreconfig.patch
@@ -72,7 +72,6 @@ Patch123: alt-fix-general-configuration-widget-correctly-set-check.patch
 Patch124: alt-startplasma.patch
 Patch125: alt-the-last-checkbox-in-the-widget-settings.patch
 Patch126: alt-filtering-widget-settings-upon-first-launch.patch
-Patch127: alt-gpsd3.18.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -92,6 +91,7 @@ BuildRequires: libxapian-devel prison-devel libnm-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: kde5-kholidays-devel
+BuildRequires: plasma5-kscreenlocker-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -103,7 +103,8 @@ BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-de
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: plasma5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel plasma5-libkscreen-devel plasma5-libksysguard-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
-BuildRequires: kf5-networkmanager-qt-devel plasma5-kscreenlocker-devel
+BuildRequires: kf5-networkmanager-qt-devel
+BuildRequires: kf5-kded kf5-kded-devel
 
 Provides: kf5-plasma-workspace = %EVR
 Obsoletes: kf5-plasma-workspace < %EVR
@@ -209,19 +210,18 @@ pushd sddm-theme
 %patch112 -p1
 popd
 %patch113 -p1
-%patch114 -p1
+#
 %patch115 -p1
 #%patch116 -p1
 %patch117 -p1
 %patch118 -p1
 %patch119 -p2
 %patch121 -p2
-%patch122 -p2
+#%patch122 -p2
 %patch123 -p2
 %patch124 -p2
 %patch125 -p1
 %patch126 -p1
-%patch127 -p1
 
 cat %SOURCE1 >> po/ru/freememorynotifier.po
 
@@ -236,7 +236,7 @@ cat %SOURCE1 >> po/ru/freememorynotifier.po
 %install
 %K5install
 
-%K5install_move data ksplash kstyle solid kdevappwizard
+%K5install_move data ksplash kstyle solid kdevappwizard kpackage
 %K5install_move data desktop-directories doc kconf_update kio_desktop
 
 # fix dbus service
@@ -307,6 +307,7 @@ done
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
 %_K5plug/kpackage/
+%_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/desktop.so
 %_K5plug/plasmacalendarplugins/
@@ -319,6 +320,7 @@ done
 %_K5qml/org/kde/colorcorrect/
 %_K5data/plasma/
 %_K5data/kio_desktop/
+%_K5data/kpackage/kcms/kcm_translations/
 %_K5data/ksplash/
 %_K5data/kstyle/
 %_K5data/desktop-directories/*
@@ -379,6 +381,9 @@ done
 
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Apr 09 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt7
 - freememorynotifier: add tooltips, disable help button
 

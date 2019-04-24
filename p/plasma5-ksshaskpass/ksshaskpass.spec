@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -12,7 +12,7 @@ Summary: KDE Workspace 5 front-end for ssh-add
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-PreReq: alternatives >= 0:0.4, %openssh_askpass_dir
+Requires(pre,postun): alternatives >= 0:0.4, %openssh_askpass_dir
 Requires: openssh-askpass-common
 Provides: openssh-askpass-kf5 = %version-%release
 
@@ -88,6 +88,9 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

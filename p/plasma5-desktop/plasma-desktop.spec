@@ -7,8 +7,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.12.8
-Release: alt3
+Version: 5.15.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -135,7 +135,7 @@ KF5 library
 
 #Fix translate in Input Method Panel (kimpanel) widget.
 #If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
-find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec rename plasma_applet_org.kde.kimpanel.po plasma_applet_org.kde.plasma.kimpanel.po '{}' \;
+#find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec rename plasma_applet_org.kde.kimpanel.po plasma_applet_org.kde.plasma.kimpanel.po '{}' \;
 
 %build
 %K5cmake \
@@ -147,7 +147,7 @@ find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec renam
 %install
 %K5install
 
-%K5install_move data color-schemes doc
+%K5install_move data color-schemes doc kcmmouse
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
 %K5install_move data kconf_update kcontrol kdisplay kfontinst konqsidebartng ksmserver solid kpackage
 %K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
@@ -197,6 +197,7 @@ find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec renam
 %_K5data/plasma/services/*
 %_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kcontrol/
+%_K5data/kcmmouse/
 %_K5data/kdisplay/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
@@ -224,6 +225,9 @@ find po/ -maxdepth 2 -name plasma_applet_org.kde.kimpanel.po -type f -exec renam
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Wed Apr 10 2019 Pavel Moseev <mars@altlinux.org> 5.12.8-alt3
 - fix translate in Input Method Panel (kimpanel) widget
 

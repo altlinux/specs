@@ -7,7 +7,7 @@
 %define libprocessui libprocessui%sover
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -26,11 +26,12 @@ Patch: alt-killbtn.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ zlib-devel
 BuildRequires: qt5-script-devel qt5-x11extras-devel
-#BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kglobalaccel-devel kf5-kio-devel
 
 Provides: kf5-libksysguard = %EVR
 Obsoletes: kf5-libksysguard < %EVR
@@ -119,6 +120,7 @@ KF5 library
 %files common -f %name.lang
 %doc COPYING.LIB
 %dir %_K5data/ksysguard/
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files devel
 #%_K5inc/libksysguard_version.h
@@ -154,6 +156,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

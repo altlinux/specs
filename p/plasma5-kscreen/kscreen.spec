@@ -1,7 +1,7 @@
 %define rname kscreen
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -25,7 +25,7 @@ BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconf
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel plasma5-libkscreen-devel
-BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-sonnet-devel kf5-kdeclarative-devel kf5-plasma-framework-devel kf5-kpackage-devel
 
 Provides: kf5-kscreen = %EVR
 Obsoletes: kf5-kscreen < %EVR
@@ -55,17 +55,16 @@ developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 
 %build
-%K5build \
-    -DDATA_INSTALL_DIR=%_K5data \
-    #
+%K5build
 
 %install
 %K5install
+%K5install_move data kcm_kscreen kded_kscreen
 %find_lang %name --all-name
 
 %files -f %name.lang
@@ -74,7 +73,10 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 %_K5bin/*
 %_K5plug/*.so
 %_K5plug/kf5/kded/*.so
+%_K5plug/plasma/applets/*kscreen*.so
 %_K5data/kcm_kscreen/
+%_K5data/kded_kscreen/
+%_K5data/plasma/plasmoids/org.kde.kscreen/
 %_K5srv/*.desktop
 #%_K5srv/kded/*.desktop
 %_K5icon/*/*/actions/*.*
@@ -87,6 +89,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

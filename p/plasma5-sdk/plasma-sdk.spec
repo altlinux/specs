@@ -1,7 +1,7 @@
 %define rname plasma-sdk
 
 Name: plasma5-sdk
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 %K5init altplace
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 
