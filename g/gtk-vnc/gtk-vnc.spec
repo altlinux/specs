@@ -1,16 +1,18 @@
-%define ver_major 0.7
+%define ver_major 0.9
 %define api_ver 1.0
 
 %def_disable static
-%def_with python
+# removed in 0.8.0 in favour of GObject introspection
+%def_without python
 %def_with gtk
 %def_with gtk3
+%def_without libview
 %def_enable introspection
 %def_enable vala
 %def_disable vapi
 
 Name: gtk-vnc
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: VNC viewer widget
@@ -20,14 +22,21 @@ Url: https://wiki.gnome.org/Projects/gtk-vnc
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: libgtkvnc = %version-%release
+Requires: libgtk3vnc = %version-%release
+
+%define gnutls_ver 3.1.18
+%define gcrypt_ver 1.5.0
+%define glib_ver 2.42
+%define view_ver 0.6.0
 
 %{?_with_gtk:BuildRequires: libgtk+2-devel}
 %{?_with_gtk3:BuildRequires: libgtk+3-devel}
+%{?_with_libview:BuildRequires: libview-devel >= %view_ver}
 BuildRequires: intltool gnome-common
 # pod2man
 BuildRequires: perl-podlators
-BuildRequires: libgnutls-devel >= 2.2.0 libgcrypt-devel libcairo-gobject-devel libsasl2-devel
+BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel >= %gcrypt_ver
+BuildRequires: glib2-devel >= %glib_ver libcairo-gobject-devel libsasl2-devel
 BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_python:BuildRequires: python-module-pygobject-devel}
@@ -204,6 +213,7 @@ library.
 
 %prep
 %setup -q -c %name
+sed -i 's/GOBJECT_/GLIB_/' ./*/gvnc*.pc.in
 mkdir gtk3-build
 cp -R %name-%version/* gtk3-build/
 
@@ -214,10 +224,11 @@ pushd %name-%version
 	%{subst_enable static} \
 	--with-examples \
 	%{subst_with python} \
-	--with-libview \
+	%{subst_with libview} \
 	%{subst_enable introspection} \
 	--with-gtk=2.0 \
-	--disable-vala
+	--disable-vala \
+	--program-suffix=-2
 
 %make_build
 popd
@@ -228,10 +239,9 @@ pushd gtk3-build
 	%{subst_enable static} \
 	--with-examples \
 	%{subst_with python} \
-	--with-libview \
+	%{subst_with libview} \
 	%{subst_enable introspection} \
-	%{subst_enable vala} \
-	--program-suffix=-3
+	%{subst_enable vala}
 %make_build
 popd
 
@@ -247,9 +257,9 @@ popd
 
 %files -f %_builddir/%name.lang
 %_bindir/*
-%exclude  %_bindir/*-3
 %_man1dir/*
-%exclude %_man1dir/*-3.*
+%exclude %_bindir/*-2
+%exclude %_man1dir/*-2.*
 
 %files -n libgvnc
 %_libdir/libgvnc-%api_ver.so.*
@@ -271,6 +281,7 @@ popd
 %_vapidir/gvncpulse-%api_ver.deps
 %endif
 
+%if_with gtk
 %files -n libgtkvnc
 %_libdir/libgtk-vnc-%api_ver.so.*
 
@@ -278,6 +289,7 @@ popd
 %_libdir/libgtk-vnc-%api_ver.so
 %_includedir/gtk-vnc-%api_ver
 %_pkgconfigdir/gtk-vnc-%api_ver.pc
+%endif
 
 %if_with gtk3
 %files -n libgtk3vnc
@@ -309,11 +321,13 @@ popd
 %_girdir/GVnc-%api_ver.gir
 %_girdir/GVncPulse-%api_ver.gir
 
+%if_with gtk
 %files -n libgtkvnc-gir
 %_typelibdir/GtkVnc-%api_ver.typelib
 
 %files -n libgtkvnc-gir-devel
 %_girdir/GtkVnc-%api_ver.gir
+%endif
 
 %if_with gtk3
 %files -n libgtk3vnc-gir
@@ -325,6 +339,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 

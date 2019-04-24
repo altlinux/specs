@@ -12,7 +12,7 @@
 
 Name: vinagre
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Remote desktop viewer for the GNOME Desktop
 License: GPLv2
@@ -24,10 +24,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-
-#Patches from opensuse
-Patch1:         vinagre-freerdp2.patch
-Patch2:         vinagre-cert-validation-api.patch
 
 Requires: dconf gnome-icon-theme-symbolic
 %{?_enable_rdp:Requires: freerdp >= 2.0.0-alt0.git20160331}
@@ -51,8 +47,6 @@ protocols, such as RDP and SSH, are also supported.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -90,6 +84,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt4
+- updated to 3.22.0-110-g2e569bb
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt3
 - updated to latest snapshot (fixed BGO #783517)
 - fixed %%files section
