@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 %def_without cluster_glue
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.0.1
-Release: alt1%ubt
+Version: 4.2.0
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -14,12 +15,14 @@ Provides: heartbeat = %version
 Obsoletes: heartbeat < 2.1.4
 Conflicts: heartbeat < 2.1.4
 
-
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet2-devel 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet2-devel 
 %{?_with_cluster_glue:BuildRequires: libcluster-glue-devel}
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
 BuildRequires: systemd-devel
+BuildRequires: python3-module-jsonlib
+
+Requires: linux-ha-common
 
 %add_findreq_skiplist */ocf/lib/heartbeat/*
 %add_findreq_skiplist */ocf/resource.d/heartbeat/*
@@ -158,7 +161,7 @@ License: GPLv2+
 Summary: A Monitoring Daemon for Maintaining High Availability Resources
 Group: System/Base
 Provides: heartbeat-ldirectord = %version
-Requires: ipvsadm logrotate
+Requires: ipvsadm logrotate linux-ha-common resource-agents
 BuildArch: noarch
 
 %description -n ldirectord
@@ -179,6 +182,7 @@ cp .version .tarball-version
 mkdir -p m4
 
 %build
+export PYTHON=%__python3
 %autoreconf
 %configure	\
 		--with-version=%version \
@@ -205,6 +209,10 @@ mkdir -p %buildroot%_var/run/resource-agents
 %files
 %doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog doc/README.webapps
 %_datadir/%name/ra-api-1.dtd
+
+%_unitdir/*.target
+%_tmpfilesdir/*.conf
+%_datadir/%name/metadata.rng
 
 %_sbindir/*
 %dir %_datadir/%name
@@ -358,10 +366,13 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
-* Wed Aug 02 2017 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1%ubt
+* Tue Apr 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
+* Wed Aug 02 2017 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1
 - new version
 
-* Thu Apr 20 2017 Sergey Novikov <sotor@altlinux.org> 3.9.7-alt3%ubt
+* Thu Apr 20 2017 Sergey Novikov <sotor@altlinux.org> 3.9.7-alt3
 - fix CTDB start function, add ubt tag (closes: #33353)
 
 * Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.7-alt2
