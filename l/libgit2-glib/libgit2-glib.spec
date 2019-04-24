@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.27
+%define ver_major 0.28
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libgit2-glib
-Version: %ver_major.8
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Git library for GLib
@@ -103,7 +103,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files
 %_libdir/%name-%api_ver.so.*
-%{?_enable_python:%python3_sitelibdir_noarch/gi/overrides/*}
+%{?_enable_python:%python3_sitelibdir/gi/overrides/*}
 %doc AUTHORS COPYING NEWS
 
 %files devel
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.28.0.1-alt1
+- 0.28.0.1
+
 * Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.27.8-alt1
 - 0.27.8
 
