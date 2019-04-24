@@ -14,7 +14,7 @@
 %define cni_dir %_libexecdir/cni
 
 Name: cni-plugins
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -57,6 +57,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Wed Apr 24 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.5-alt1
+- 0.7.5
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.4-alt1
 - 0.7.4
 
