@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.40.1
+Version: 3.41.3
 Release: alt1
 
 Summary: A e-book library management application
@@ -45,6 +45,7 @@ Requires: python-module-sip >= 4.19.1
 
 # Checked 01.10.2017 with
 # https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
+# calibre/bypy/sources.json
 
 BuildRequires: qt5-base-devel-static >= 5.3.2
 BuildRequires: python-module-PyQt5-devel
@@ -82,6 +83,11 @@ BuildRequires: libdbus-devel >= 1.10.8
 # optipng 0.7.6
 # mozjpeg 3.1
 %py_use cssselect >= 0.7.1
+
+# no need really
+#py_use soupsieve >= 1.8
+# bs4 >= 4.7.1
+%py_use BeautifulSoup4 >= 4.6.3
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
@@ -137,6 +143,9 @@ TXT, PDF, LRS и FB2.
 #patch -p1
 #patch1 -p1
 
+# TODO: assure we will not use it. see calibre-use-system-hunspell.patch
+# rm -rf src/hunspell/
+
 %build
 %python_build
 
@@ -168,6 +177,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sun Apr 21 2019 Vitaly Lipatov <lav@altlinux.ru> 3.41.3-alt1
+- new version 3.41.3 (with rpmrb script) (ALT bug 36650)
+- add BeautifulSoup4 require (new dep)
+
 * Wed Mar 13 2019 Vitaly Lipatov <lav@altlinux.ru> 3.40.1-alt1
 - new version 3.40.1 with rpmgs script
 
