@@ -1,19 +1,19 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name folks
-%define ver_major 0.11
+%define ver_major 0.12
 %define api_ver 0.6
-%def_disable static
-%def_enable introspection
-%def_enable vala
+
 %def_disable libsocialweb
 %def_disable tracker
+%def_enable eds
 %def_enable bluez
 %def_enable zeitgeist
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.4
-Release: alt5
+Version: %ver_major.1
+Release: alt1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -26,7 +26,7 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.40.0
+%define glib_ver 2.44.0
 %define tp_glib_ver 0.19.9
 %define vala_ver 0.22.1
 %define eds_ver 3.13.90
@@ -34,20 +34,18 @@ Source: %_name-%version.tar
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.15
 
-BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
-BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
-BuildRequires: evolution-data-server-devel >= %eds_ver
-BuildRequires: vala-tools valadoc
+BuildRequires(pre): meson rpm-build-vala rpm-build-gir
+BuildRequires: vala-tools >= %vala_ver valadoc
+BuildRequires: libgio-devel >= %glib_ver libdbus-glib-devel
+BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libtelepathy-glib-vala libgee0.8-devel >= %gee_ver
+BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel libgee0.8-gir-devel
+%{?_enable_eds:BuildRequires: evolution-data-server-devel >= %eds_ver evolution-data-server-gir-devel evolution-data-server-vala}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
-%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel %{?_enable_tracker:libtracker-gir-devel}}
-%{?_enable_vala:BuildRequires:  libvala-devel >= %vala_ver vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
-%{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
-
+%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver libtracker-gir-devel}
+%{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel libsocialweb-vala}
 # for tools
 BuildRequires: libreadline-devel libncurses-devel libxml2-devel
-# for check
-BuildRequires: dbus-tools-gui
+%{?_enable_check:BuildRequires: dbus-tools-gui}
 
 %description
 %name is a library that aggregates people from multiple sources (e.g.
@@ -104,43 +102,36 @@ the functionality of the Folks library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{subst_enable vala} \
-	%{subst_enable zeitgeist} \
-	%{?_enable_eds:--enable-eds-backend} \
-	%{?_enable_tracker:--enable-tracker-backend} \
-	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes} \
-	%{?_enable_bluez:--enable-bluez-backend=yes} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	--disable-fatal-warnings
+%meson \
+	%{?_enable_zeitgeist:-Dzeitgeist=true} \
+	%{?_disable_eds:-Deds_backend=false} \
+	%{?_enable_tracker:-Dtracker_backend=true} \
+	%{?_enable_libsocialweb:-Dlibsocialweb_backend=true} \
+	%{?_disable_bluez:-Dbluez_backend=false} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
 
-%make_build V=1
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+%find_lang %_name
 
 %check
-#%%make check
-
-%find_lang %_name
+%meson_test
 
 %files -f %_name.lang
 %_libdir/*.so.*
 %_libdir/%_name/
-%_datadir/GConf/gsettings/%_name.convert
 %_datadir/glib-2.0/schemas/org.freedesktop.%_name.gschema.xml
-%doc AUTHORS README
+%doc AUTHORS README*
 
 %files devel
 %_bindir/%_name-import
-%{?_enable_vala:%_bindir/%_name-inspect}
+%_bindir/%_name-inspect
 %_includedir/%_name
 %_libdir/*.so
 %_libdir/pkgconfig/%{_name}*.pc
 
-%if_enabled introspection
 %files gir
 %_typelibdir/FolksDummy-%api_ver.typelib
 %_typelibdir/Folks-%api_ver.typelib
@@ -154,9 +145,7 @@ the functionality of the Folks library.
 %_girdir/FolksEds-%api_ver.gir
 %_girdir/FolksTelepathy-%api_ver.gir
 %{?_enable_tracker:%_girdir/FolksTracker-%api_ver.gir}
-%endif
 
-%if_enabled vala
 %files vala
 %_vapidir/%_name.deps
 %_vapidir/%_name-dummy.deps
@@ -170,7 +159,6 @@ the functionality of the Folks library.
 %{?_enable_tracker:%_vapidir/%_name-tracker.deps}
 %{?_enable_tracker:%_vapidir/%_name-tracker.vapi}
 %_vapidir/%_name.vapi
-%endif
 
 %if_enabled installed_tests
 %files tests
@@ -180,6 +168,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
+- 0.12.1 (ported to Meson build system)
+
 * Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt5
 - updated to 0.11.4-55-gc8c3b4c9
 - built against new eds-3.31.x libraries
