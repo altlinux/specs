@@ -18,7 +18,7 @@
 
 Name: empathy
 Version: %ver_major.90
-Release: alt2
+Release: alt3
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -192,6 +192,10 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt3
+- updated to 3.25.90-67-g93588c809
+- built against folks-0.12.1
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt2
 - updated to 3.25.90-55-gade0be18e
 
