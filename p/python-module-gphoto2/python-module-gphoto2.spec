@@ -1,7 +1,7 @@
 %define modname gphoto2
 
 Name: python-module-%modname
-Version: 1.9.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -67,6 +67,9 @@ popd
 
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Wed Dec 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
