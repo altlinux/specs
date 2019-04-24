@@ -10,7 +10,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.27
-Release: alt1
+Release: alt2
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -145,7 +145,7 @@ automake -a -c -f
 #add_optflags -Wl,--version-script=$version_script
 
 %configure	--enable-shared \
-		--sysconfdir=%_sysconfdir/sasl2 \
+		--with-configdir=%_sysconfdir/sasl2 \
 		--libdir=/%_lib \
 		--with-plugindir=%_libdir/sasl2-%abiversion \
 		--with-dbpath=%_sysconfdir/sasl2/sasldb2 \
@@ -300,6 +300,10 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Thu Apr 25 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt2
+- changed --sysconfdir to --with-configdir
+  (fixed client's configs location; was broken since 2.1.27-alt1)
+
 * Mon Dec 24 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt1
 - 2.1.27
 
