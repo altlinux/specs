@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 242
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -956,11 +956,6 @@ if [ $1 -eq 1 ] ; then
         /bin/systemctl preset-all >/dev/null 2>&1 || :
 fi
 
-%postun
-if [ $1 -ge 1 ] ; then
-	/bin/systemctl daemon-reload > /dev/null 2>&1 || :
-fi
-
 %preun
 if [ $1 -eq 0 ] ; then
         /bin/systemctl disable \
@@ -1842,6 +1837,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Apr 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt4
+- update rpm systemd.filetrigger
+
 * Sat Apr 20 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt3
 - fix path in systemd.pc (ALT #36634)
 
