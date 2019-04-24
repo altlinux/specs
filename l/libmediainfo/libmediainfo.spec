@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 18.12
+Version: 19.04
 Release: alt1
 
 Group: System/Libraries
@@ -11,7 +11,7 @@ Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.
 
 BuildRequires: gcc-c++
 BuildRequires: dos2unix
-BuildRequires: doxygen
+BuildRequires: doxygen graphviz
 BuildRequires: zlib-devel
 BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
@@ -84,6 +84,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 19.04-alt1
+- 19.04
+
 * Sun Dec 23 2018 Yuri N. Sedunov <aris@altlinux.org> 18.12-alt1
 - 18.12
 
