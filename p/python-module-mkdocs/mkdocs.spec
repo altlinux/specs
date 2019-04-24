@@ -3,17 +3,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.16.1
-Release: alt1.1
+Version: 1.0.4
+Release: alt1
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mkdocs/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source: mkdocs-%version.tar.gz
 #https://github.com/mkdocs/mkdocs/pull/687
-Source1:        mkdocs.1
+Source1: mkdocs.1
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -80,7 +79,7 @@ configuration file.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -n mkdocs-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -91,7 +90,6 @@ rm -rf mkdocs/themes/*/fonts/fontawesome-webfont.*
 rm -rf mkdocs/themes/*/js/highlight.pack.js
 
 sed -i 1d mkdocs/utils/ghp_import.py
-
 
 %build
 %python_build_debug
@@ -142,6 +140,9 @@ install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
 %endif
 
 %changelog
+* Wed Apr 24 2019 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.16.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
