@@ -7,7 +7,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.1
-Release: alt3
+Release: alt3.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -236,7 +236,9 @@ sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
 rm -fR src/{expat,jpeg,tiff,zlib,png}
 
 %build
-CONF_FLAG="--enable-shared \
+CONF_FLAG=" \
+	--enable-option-checking\
+	--enable-shared \
 	--with-zlib=sys \
 	--with-expat=sys \
 	--enable-display \
@@ -269,9 +271,6 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 %add_optflags -fno-strict-aliasing -std=gnu++11 $GST_CFLAGS $DEFS
 
 %define _configure_script ../configure
-
-# unrecognized options fix
-%define _configure_gettext ''
 
 %if_with compat
 mkdir bld_gtk2
@@ -413,6 +412,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Apr 24 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt3.1
+- enable_option_checking (only warnings) (Closes: 36662)
+
 * Mon Apr 01 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt3
 - New subpackage libwxGTK3.1-webview
 - New subpackage libwxGTK3.1-sound_sdlu
