@@ -5,8 +5,7 @@
 %define xdg_name org.gnome.seahorse
 
 %def_disable debug
-# ldap support broken (incomplete) now
-%def_disable ldap
+%def_enable ldap
 %def_enable hkp
 %def_enable gnome_keyring
 %def_enable pkcs11
@@ -18,7 +17,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -94,6 +93,10 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+- enabled ldap support
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32-alt1
 - 3.32
 
