@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.8.1
-Release: alt3%ubt
+Version: 5.0
+Release: alt1
 
 Summary: Zope testrunner script
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.testrunner
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-setuptools
@@ -33,6 +32,9 @@ BuildRequires: python3-module-six
 %endif
 
 %py_requires zope.exceptions zope.interface
+
+%add_findreq_skiplist /usr/lib*/python2.7/site-packages/zope/testrunner/tests/testrunner-ex/sample2/badsyntax.py
+%add_findreq_skiplist /usr/lib*/python3/site-packages/zope/testrunner/tests/testrunner-ex/sample2/badsyntax.py
 
 %description
 This package provides a flexible test runner with layer support.
@@ -129,13 +131,16 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
-* Sat Jun 09 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt3%ubt
+* Fri Apr 19 2019 Grigory Ustinov <grenka@altlinux.org> 5.0-alt1
+- Build new version.
+
+* Sat Jun 09 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt3.S1
 - Fix namespace package import ( python3 subpackage )
 
-* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2%ubt
+* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2.S1
 - Fix a wrong logic of packaging for non x86_64 arch
 
-* Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1%ubt
+* Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1.S1
 - v4.4.9 -> v4.8.1
 
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.4.9-alt1.1.1.1
