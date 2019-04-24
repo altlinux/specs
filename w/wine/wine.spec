@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
-%define mono_version 4.7.3
-%define major 4.3
+%define mono_version 4.8.1
+%define major 4.6
 
 Name: wine
 Version: %major.1
@@ -154,7 +154,7 @@ Requires: %name = %version-%release
 Requires: %name-programs = %version-%release
 Requires: lib%name-gl = %version-%release
 
-Requires: wine-mono >= %mono_version
+Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
 Requires: winetricks
 
@@ -278,8 +278,7 @@ export CC=clang
 	--without-oss \
 	--without-capi \
 	--without-hal \
-	--with-xattr \
-	--with-xcb
+	--with-xattr
 
 %__make depend
 %make_build
@@ -438,6 +437,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %doc LICENSE LICENSE.OLD
 %_bindir/function_grep.pl
 %_bindir/winebuild
+%_bindir/msidb
 %_bindir/wmc
 %_bindir/wrc
 %_bindir/widl
@@ -471,6 +471,14 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.6.1-alt1
+- new version 4.6.1 (with rpmrb script)
+- strict require wine-mono-4.8.1
+
+* Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.1-alt1
+- new version 4.4.1 (with rpmrb script)
+- fix segfault when run wine in a directory with nonlatin letters in their name (ALT bug 36268)
+
 * Tue Mar 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.3.1-alt1
 - new version (4.3.1) with rpmgs script
 
