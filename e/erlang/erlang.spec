@@ -51,7 +51,7 @@
 %define ver 21
 Name: erlang
 Epoch: 1
-%define subver 3.3
+%define subver 3.6
 Version: %ver.%subver
 Release: alt1
 Summary: A programming language developed by Ericsson
@@ -1239,6 +1239,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Apr 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.3.6-alt1
+- new version 21.3.6
+
 * Fri Apr 12 2019 Alexey Shabalin <shaba@altlinux.org> 1:21.3.3-alt1
 - new version
 
