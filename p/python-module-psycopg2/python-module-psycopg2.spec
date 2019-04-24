@@ -1,7 +1,7 @@
 %define oname psycopg2
 %def_with python3
 
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 %setup_python_module %oname
 
@@ -85,6 +85,10 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %endif
 
 %changelog
+* Wed Apr 24 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.2-alt1
+- Build new version.
+- Clean up changelog.
+
 * Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1
 - Build new version for python3.7.
 - Removed tests packages, because they doesn't supported now.
@@ -236,80 +240,3 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 
 * Tue Oct 29 2002 Andrey Orlov <cray@altlinux.ru> 1.0.12-alt1
 - Recompile with gcc 3.2.1
-
-* Fri Sep 13 2002 Federico Di Gregorio  <fog@debian.org>
-- Release 1.0.12.
-
-- Removed code to support COPY FROM/TO, will be added to new 1.1
-  branch to be released next week.
-
-- cursor.c (_mogrify_seq): Fixed memory leak reported by Menno
-  Smits (values obtained by calling PySequence_GetItem are *new*
-  references!)
-
-* Sun Sep  9 2002 Federico Di Gregorio  <fog@debian.org>
-
-- cursor.c (_psyco_curs_execute): Added skeleton to support COPY
-  FROM/TO.
-
-* Fri Sep  6 2002  Federico Di Gregorio  <fog@debian.org>
-
-- configure.in: if libcrypt can't be found we probably are on
-  MacOS X: check for libcrypto, as suggested by Aparajita Fishman.
-
-* Tue Sep 3 2002 Federico Di Gregorio  <fog@debian.org>
-
-- ZPsycopgDA/db.py (DB.columns): Applied patch from Dieter Maurer
-  to allow the DA-browser to work with mixed case table names.
-
-* Fri Aug 30 2002 Federico Di Gregorio  <fog@debian.org>
-
-- ZPsycopgDA/DA.py (cast_DateTime): Applied patch from Yury to fix
-  timestamps (before they were returned with time always set to 0.)
-
-* Mon Aug 26 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Release 1.0.11.1 (to fix a %%&£$"! bug in ZPsycopgDA not
-   accepting psycopg 1.0.11 as a valid version.
-
-- Release 1.0.11.
-
-* Thu Aug 22 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Release 1.0.11pre2.
-
-- cursor.c (_psyco_curs_execute): fixed IntegrityError as reported
-  by Andy Dustman. (psyco_curs_execute): converting TypeError to
-  ProgrammingError on wrong number of %% and/or aeguments.
-
-- doc/examples/integrity.py: added example and check for
-  IntegrityError.
-
-* Thu Aug  08 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Release 1.0.11pre1.
-
-* Tue Aug 06 2002  Federico Di Gregorio  <fog@debian.org>
-
-- ZPsycopgDA/DA.py (cast_DateTime): patched as suggested by Tom
-  Jenkins; now it shouldwork with time zones too.
-
-* Thu Aug 01 2002  Federico Di Gregorio  <fog@debian.org>
-
-- ZPsycopgDA/DA.py (cast_DateTime): fixed problem with missing
-  AM/PM, as reported by Tom Jenkins.
-
-* Tue Jul  23 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Fixed buglets reported by Mike Coleman.
-
-* Mon Jul  22 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Release 1.0.10.
-
-* Sat Jul  14 2002  Federico Di Gregorio  <fog@debian.org>
-
-- Release 1.0.10pre2.
-
-- typeobj.c (psyco_LONGINTEGER_cast): fixed bad segfault by
-  INCREFfing Py_None when it is the result of a NULL conversion.
