@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel pkgco
 %define _localstatedir %{_var}
 Name:		android-file-transfer
 Version:	3.7
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
@@ -72,6 +72,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt2_2
+- update by mgaimport
+
 * Thu Mar 14 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt2_1
 - fixed build
 
