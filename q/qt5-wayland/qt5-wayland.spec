@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1
 
 Group: System/Libraries
@@ -133,6 +133,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
+- new version
+
 * Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
 - new version
 

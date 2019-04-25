@@ -1,7 +1,7 @@
 %define qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1
 
 Group: System/Libraries
@@ -21,6 +21,7 @@ BuildRequires: qt5-base-devel qt5-webengine-devel qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: qt5-base-common
 %description common
 Common package for %name
@@ -82,6 +83,9 @@ syncqt.pl-qt5 -version %version
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
+- new version
+
 * Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
 - new version
 
