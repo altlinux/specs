@@ -10,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.2.3
-Release: alt3
+Release: alt3.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -28,14 +28,14 @@ Patch7: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
 
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-genshi python-module-xlwt python-modules-ctypes swig
 
 BuildRequires: chrpath libnetcdf-devel
 BuildRequires: perl-Encode
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
-BuildRequires: python3-module-BeautifulSoup python3-module-xlwt
+BuildRequires: python3-module-xlwt
 %endif
 
 Requires: libproj
@@ -259,6 +259,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt3.1
+- drop unneeded python3-module-BeautifulSoup req
+
 * Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt3
 - fix FTBFS against libmysqlclient21
 
