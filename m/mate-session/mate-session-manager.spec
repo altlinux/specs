@@ -1,7 +1,7 @@
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
@@ -65,6 +65,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Thu Apr 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
+- 1.22.1
+
 * Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 
