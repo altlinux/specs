@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: mate-system-monitor
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 Summary: Process and resource monitor
@@ -51,6 +51,9 @@ such as CPU and memory.
 %_man1dir/*.1*
 
 %changelog
+* Thu Apr 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
+- 1.22.1
+
 * Wed Mar 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 
