@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-Size
 Name: perl-%dist
-Version: 0.82
-Release: alt1.1
+Version: 0.83
+Release: alt1
 
 Summary: Perl extension for finding the memory usage of Perl variables
 License: GPL or Artistic
@@ -32,11 +32,14 @@ If the variable is a hash or an array, use a reference when calling.
 %perl_vendor_install
 
 %files
-%doc CHANGES README
+%doc CHANGES README CONTRIBUTING
 %perl_vendor_archlib/Devel
 %perl_vendor_autolib/Devel
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.82-alt1.1
 - rebuild with new perl 5.28.1
 
