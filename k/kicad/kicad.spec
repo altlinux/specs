@@ -6,7 +6,7 @@
 Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Version: 5.1.0
+Version: 5.1.2
 Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -160,6 +160,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Thu Apr 25 2019 Anton Midyukov <antohami@altlinux.org> 1:5.1.2-alt1
+- new version 5.1.2
+
 * Fri Mar 15 2019 Anton Midyukov <antohami@altlinux.org> 1:5.1.0-alt1
 - new version 5.1.0
 - disable srcipting support
