@@ -1,6 +1,8 @@
+%def_disable kde4
+
 Name: mediainfo
 Version: 19.04
-Release: alt1
+Release: alt1.1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -11,7 +13,7 @@ Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.
 
 Requires: lib%name >= %version
 
-BuildRequires(pre): rpm-macros-kde-common-devel
+%{?_enable_kde4:BuildRequires(pre): rpm-macros-kde-common-devel}
 BuildRequires(pre): rpm-build-kf5
 
 BuildRequires: gcc-c++
@@ -22,24 +24,6 @@ BuildRequires: libzen-devel >= 0.4.37
 BuildRequires: libmediainfo-devel >= %version
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
-
-%package gui
-Group: File tools
-Summary: MediaInfo supplies information about a video or audio file
-Requires: lib%name >= %version
-
-%package gui-KDE4
-Group: File tools
-Summary: KDE4 related MediaInfo files
-BuildArch: noarch
-Requires: %name-gui = %version-%release
-Requires: kde4libs
-
-%package gui-KDE5
-Group: File tools
-Summary: KDE5 related MediaInfo files
-BuildArch: noarch
-Requires: %name-gui = %version-%release
 
 %description
 MediaInfo supplies technical and tag information about a video or audio file
@@ -60,6 +44,11 @@ Subtitles: SRT, SSA, ASS, SAMI...
 
 This package includes the command line interface
 
+%package gui
+Group: File tools
+Summary: MediaInfo supplies information about a video or audio file
+Requires: lib%name >= %version
+
 %description gui
 MediaInfo supplies technical and tag information about a video or audio file
 
@@ -79,10 +68,23 @@ Subtitles: SRT, SSA, ASS, SAMI...
 
 This package contains the graphical user interface.
 
-To combine with KDE install KDE-related package
+%if_enabled kde4
+%package gui-KDE4
+Group: File tools
+Summary: KDE4 related MediaInfo files
+BuildArch: noarch
+Requires: %name-gui = %version-%release
+Requires: kde4libs
 
 %description gui-KDE4
 This package contains KDE4 related MediaInfo files for konqueror
+%endif
+
+%package gui-KDE5
+Group: File tools
+Summary: KDE5 related MediaInfo files
+BuildArch: noarch
+Requires: %name-gui = %version-%release
 
 %description gui-KDE5
 This package contains KDE5 related MediaInfo files
@@ -94,12 +96,12 @@ This package contains KDE5 related MediaInfo files
 pushd Project/GNU/CLI
 %autoreconf
 %configure --disable-staticlibs --with-dll
-%make
+%make_build
 popd
 pushd Project/GNU/GUI
 %autoreconf
 %configure --disable-staticlibs --with-dll
-%make
+%make_build
 popd
 
 %install
@@ -117,8 +119,12 @@ install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_pixmapsdir/mediai
 install -dm 755 %buildroot%_liconsdir
 install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_liconsdir/mediainfo.png
 
+%if_enabled kde4
 install -dm 755 %buildroot%_K4srv/ServiceMenus/
 grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4srv/ServiceMenus/mediainfo-gui.desktop
+%else
+rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
+%endif
 
 %files
 %doc ReadMe_CLI_Linux.txt
@@ -135,13 +141,19 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_pixmapsdir/%name.xpm
 %_pixmapsdir/%name.png
 
+%if_enabled kde4
 %files gui-KDE4
 %_K4srv/ServiceMenus/%name-gui.desktop
+%endif
 
 %files gui-KDE5
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Thu Apr 25 2019 Yuri N. Sedunov <aris@altlinux.org> 19.04-alt1.1
+- enabled SMP build
+- disabled gui-KDE4 subpackage by default
+
 * Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 19.04-alt1
 - 19.04
 
