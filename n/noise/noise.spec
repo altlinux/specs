@@ -5,9 +5,10 @@
 %define plugins [ 'audioplayer', 'cdrom', 'ipod' ]
 
 Name: noise
+%define _name music
 %define xdg_name org.pantheon.%name
-%define rdn_name io.elementary.music
-Version: %ver_major.3
+%define rdn_name io.elementary.%_name
+Version: %ver_major.4
 Release: alt1
 
 Summary: The official elementary music player
@@ -19,7 +20,7 @@ Url: https://launchpad.net/noise
 Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 %else
 #VCS: https://github.com/elementary/music.git
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 Provides: %rdn_name = %version-%release
@@ -90,7 +91,7 @@ for music, queue system, mass song editing and more...
 This package contains the development files.
 
 %prep
-%setup
+%setup -n %_name-%version
 
 %build
 %meson -Dplugins="%plugins"
@@ -121,6 +122,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Thu Apr 25 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.4-alt1
+- updated to 5.0.4-4-gb759f4ba
+
 * Tue Mar 19 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
 - updated to 5.0.3-12-g80bcdfda
 
