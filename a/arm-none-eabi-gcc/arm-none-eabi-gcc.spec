@@ -10,7 +10,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt1
+Release: alt2
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -113,9 +113,9 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector" \
 #  --enable-lto \
 
 %if_with bootstrap
-make all-gcc INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
+%make_build all-gcc INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
 %else
-make INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
+%make_build INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
 %endif
 popd
 
@@ -158,7 +158,7 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector " \
             --disable-tls \
             --enable-languages=c,c++ --with-newlib --with-gnu-as --with-gnu-ld --with-gmp --with-mpfr --with-mpc --with-headers=yes --with-system-zlib --with-sysroot=%_libexecdir/%target
 #  --enable-lto \
-make INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
+%make_build INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
 popd
 %endif
 
@@ -241,7 +241,7 @@ exit 0
 %endif
 pushd gcc-%target
 #BuildRequires: autoge may be needed
-make check
+%make_build -k check
 popd
 
 %files
@@ -275,6 +275,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 25 2019 Anton Midyukov <antohami@altlinux.org> 8.3.1-alt2
+- build with parallelization (Closes: 36680)
+
 * Sun Mar 03 2019 Anton Midyukov <antohami@altlinux.org> 8.3.1-alt1
 - new version 8.3.1
 
