@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.12.8
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init altplace
 
@@ -30,6 +30,8 @@ Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 Patch13: alt-password-dialog-sizepolicy.patch
 Patch14: alt-explain-password-request.patch
+# https://phabricator.kde.org/D20788
+Patch15: alt-reset-model.patch
 
 # Automatically added by buildreq on Tue Mar 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -208,6 +210,7 @@ Obsoletes: kf5-plasma-nm-connect-ssh < %EVR
 %patch12 -p1
 %patch13 -p2
 %patch14 -p2
+%patch15 -p1
 
 cat %SOURCE1 >> po/ru/plasmanetworkmanagement-kded.po
 
@@ -287,6 +290,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Apr 25 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt5
+- applet: fix disappearing wireless connections
+
 * Thu Apr 04 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.8-alt4
 - fix package
 
