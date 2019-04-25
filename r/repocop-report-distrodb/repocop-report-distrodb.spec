@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.428
+Version: 0.429
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.429-alt1
+- new version
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1
 - new version (unified subcomponent style in pkg-config)
 
