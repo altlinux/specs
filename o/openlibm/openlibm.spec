@@ -3,20 +3,19 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major 2
-%define libname libopenlibm%{major}
+%define major     2
+%define libname   libopenlibm%{major}
 %define develname libopenlibm-devel
 
 Summary:        High quality system independent, open source libm
 Name:           openlibm
-Version:        0.5.3
-Release:        alt1_2
+Version:        0.6.0
+Release:        alt1_1
 License:        BSD and MIT and ISC and Public Domain
 Group:          System/Libraries
-Source0:        https://github.com/JuliaLang/openlibm/archive/v%{version}/%{name}-%{version}.tar.gz
 URL:            https://github.com/JuliaLang/openlibm/
+Source0:        https://github.com/JuliaLang/openlibm/archive/v%{version}/%{name}-%{version}.tar.gz
 Source44: import.info
-
 
 %description
 OpenLIBM is an effort to have a high quality standalone LIBM library.
@@ -29,8 +28,8 @@ assembly versions of many functions.
 %package -n %{libname}
 Summary:        High quality system independent, open source libm
 Group:          System/Libraries
-Provides:	%{name} = %{version}-%{release}
-Obsoletes:	%{_lib}openlibm5 < 0.5.3-2
+Provides:       %{name} = %{version}-%{release}
+Obsoletes:      %{_lib}openlibm5 < 0.5.3-2
 
 %description -n %{libname}
 OpenLIBM is an effort to have a high quality standalone LIBM library.
@@ -41,10 +40,10 @@ and updates that have accumulated over the years in msun, and also optimized
 assembly versions of many functions.
 
 %package -n %{develname}
-Summary:    High quality system independent, open source libm
-Group:      System/Libraries
-Requires:   %{libname} = %{version}-%{release}
-Provides:   %{name}-devel = %{version}-%{release}
+Summary:        High quality system independent, open source libm
+Group:          System/Libraries
+Requires:       %{libname} = %{version}-%{release}
+Provides:       %{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
 Contains header files for developing applications that use the %{name}
@@ -59,9 +58,8 @@ rm -f test/ieeetestnew.c
 rm -f i387/osx_asm.h
 
 %build
-%make \
-      FFLAGS="%{optflags}" \
-      CFLAGS="%{optflags}"
+
+%make_build
 
 %check
 # Tests still fail on ARM because of floating-point exceptions
@@ -71,12 +69,11 @@ make test
 %endif
 
 %install
-make install prefix=%{_prefix} \
-             libdir=%{_libdir} \
-             includedir=%{_includedir} \
-             DESTDIR=%{buildroot}
+%makeinstall_std prefix=%{_prefix} \
+              libdir=%{_libdir} \
+              includedir=%{_includedir}
 
-rm %{buildroot}/%{_libdir}/libopenlibm.a
+rm %{buildroot}%{_libdir}/libopenlibm.a
 
 %files -n %{libname}
 %doc LICENSE.md README.md
@@ -89,6 +86,9 @@ rm %{buildroot}/%{_libdir}/libopenlibm.a
 
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
+- update by mgaimport
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_2
 - new version
 
