@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.49
+Version: 0.8.50
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri Apr 26 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.8.50-alt1
+- 210-check-kernel: more info in a message
+  (about multiple kernel-image Requires).
+
 * Tue Apr 16 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.8.49-alt1
 - 210-check-kernel:
   + fixed splitting of $kernel_require in the presence of disttag;
