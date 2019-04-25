@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190409
+Version: 20190424
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Apr 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20190424-alt1
+- upstream changes (GIT 4b6cf2b):
+  + drm/i915/firmware: Add ICL HuC v8.4.3238 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add ICL GuC v32.0.3 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add GLK HuC v03.01.2893 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add GLK GuC v32.0.3 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add KBL GuC v32.0.3 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add SKL GuC v32.0.3 (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add BXT GuC v32.0.3 (thx Anusha Srivatsa)
+
 * Wed Apr 10 2019 Cronbuild Service <cronbuild@altlinux.org> 20190409-alt1
 - upstream changes (GIT 260cb35):
   + Add firmware file for Intel Bluetooth 22161 (thx Amit K Bag)
