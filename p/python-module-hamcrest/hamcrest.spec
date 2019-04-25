@@ -1,27 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.a1.git20150729.1.1.1
 %define oname hamcrest
 
 %def_with python3
+%def_with doc
 
 Name: python-module-%oname
 Version: 2.0.0
-#Release: alt2.a1.git20150729.1
+Release: alt2.a1.git20150729.1.1.1.1
+
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python
+
 Url: https://pypi.python.org/pypi/PyHamcrest/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/hamcrest/PyHamcrest.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools
+BuildRequires: python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools
+%if_with doc
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
 BuildRequires: python-module-sphinx-devel
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-tox python3-module-unittest2
+BuildRequires: python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-tox python3-module-unittest2
+%if_with doc
+BuildRequires: python3-module-html5lib
+%endif
 %endif
 
 %py_provides %oname
@@ -82,8 +88,10 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
+%if_with doc
 %prepare_sphinx .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 %python_build_debug
@@ -103,13 +111,13 @@ pushd ../python3
 popd
 %endif
 
+%if_with doc
 export PYTHONPATH=$PWD/src
 %make -C doc pickle
 %make -C doc html
-
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
-
 rm -f *requirements.txt
+%endif
 
 %check
 python setup.py test
@@ -126,6 +134,7 @@ popd
 %files
 %doc *.txt *.rst examples
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -133,6 +142,7 @@ popd
 
 %files docs
 %doc doc/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -141,6 +151,10 @@ popd
 %endif
 
 %changelog
+* Tue Apr 23 2019 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1.1.1
+- introduce doc knob (on by default)
+- minor spec cleanup
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
