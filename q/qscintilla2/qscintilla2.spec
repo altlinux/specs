@@ -11,7 +11,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.8
-Release: alt3
+Release: alt4
 License: GPL
 Group: Development/KDE and QT
 
@@ -348,6 +348,10 @@ forDebug() {
 	sed -i 's|\(QTDIR)\)/|\1|g' Makefile
 }
 
+%ifarch %e2k
+# bits/c++0x_warning.h
+%add_optflags -std=gnu++11
+%endif
 # Qt3
 %if_with qt3
 pushd Qt3
@@ -714,6 +718,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Thu Apr 25 2019 Michael Shigorin <mike@altlinux.org> 2.10.8-alt4
+- fix build on %%e2k
+
 * Thu Jan 17 2019 Michael Shigorin <mike@altlinux.org> 2.10.8-alt3
 - Re-enabled qt4 knob by default: at least qgis version update results in FTBFS
   (full list: hgview juffed openscad qgis smokeqt sqliteman universalindentgui)
