@@ -1,8 +1,8 @@
-%define snapshot 681
+%define snapshot 726
 
 Name: libvterm
 Version: 0+bzr%snapshot
-Release: alt2
+Release: alt1
 
 Summary: an abstract C99 library which implements a VT220 or xterm-like terminal emulator
 
@@ -69,8 +69,11 @@ make test
 %_bindir/*
 
 %changelog
+* Thu Apr 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0+bzr726-alt1
+- Updated to 0+bzr726 snapshot.
+
 * Tue Jul 10 2018 Vladimir Didenko <cow@altlinux.org> 0+bzr681-alt2
-- rebuild for aarch architecture
+- rebuild for aarch architecture.
 
 * Wed May 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0+bzr681-alt1
 - Initial build for Sisyphus.
