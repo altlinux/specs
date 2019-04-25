@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -266,6 +266,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Thu Apr 25 2019 Anton Farygin <rider@altlinux.ru> 1.2.8-alt1
+- 1.2.8
+
 * Tue Apr 16 2019 Anton Farygin <rider@altlinux.ru> 1.2.7-alt1
 - 1.2.7
 
