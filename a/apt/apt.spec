@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt61
+Release: alt62
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -278,6 +278,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Mar 29 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt62
+- Implemented --autoremove option for apt-get and apt-shell (Closes: #36322).
+- Fixed autoremove in apt-shell to properly process packages with pending removal.
+
 * Fri Dec 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt61
 - Fixed marking packages with transformed names as autoinstalled.
 
