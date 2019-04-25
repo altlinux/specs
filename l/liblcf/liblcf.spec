@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires: /usr/bin/update-mime-database gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,14 +10,15 @@ BuildRequires: gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.5.4
-Release:        alt1_2
+Version:        0.6.0
+Release:        alt1_1
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
 URL:            https://easy-rpg.org
 Source0:        https://easy-rpg.org/downloads/player/%{name}-%{version}.tar.gz
 
+BuildRequires:  ccmake cmake ctest
 BuildRequires:  doxygen
 BuildRequires:  libicu-devel
 BuildRequires:  libtool
@@ -47,8 +49,9 @@ at the project website: easy-rpg.org
 
 %files -n       %{libname}
 %doc AUTHORS.md COPYING README.md
+%{_datadir}/mime/packages/%{name}.xml
 %{_libdir}/%{name}.so.%{major}
-%{_libdir}/%{name}.so.%{major}.*
+%{_libdir}/%{name}.so.%{version}
 
 #----------------------------------------------------------------------
 
@@ -72,19 +75,24 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 %prep
 %setup -q
 
-rm -f libtool
 
 %build
-%configure --disable-static
+%{mageia_cmake} \
+  -DDISABLE_UPDATE_MIMEDB=ON
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 
-find %{buildroot} -name "*.la" -delete
+# FIXME: CMake should do it itself
+pushd %{buildroot}%{_libdir}
+ln -s %{name}.so.%{major} %{name}.so.%{version}
 
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
+- update by mgaimport
+
 * Tue Jan 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1_2
 - update by mgaimport
 
