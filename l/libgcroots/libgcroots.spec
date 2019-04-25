@@ -1,19 +1,15 @@
-%add_optflags %optflags_shared
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:		libgcroots
-Version:	0.2.3
-Release:	alt2_14
-License:	MIT
-URL:		http://code.google.com/p/sigscheme/wiki/libgcroots
+Name: libgcroots
+Version: 0.3.1
+Release: alt1
 
-Source0:	http://sigscheme.googlecode.com/files/%{name}-%{version}.tar.bz2
-Patch0:		%{name}-aarch64.patch
+License: MIT
+Url: https://github.com/uim/libgcroots
 
+# git://git.altlinux.org/gears/l/libgcroots.git
+Source: %name-%version-%release.tar
 
-Summary:	Roots acquisition library for Garbage Collector
-Group:		Development/Other
-Source44: import.info
+Summary: Roots acquisition library for Garbage Collector
+Group: Development/Other
 
 %description
 libgcroots abstracts architecture-dependent part of garbage collector
@@ -24,10 +20,9 @@ some application-specific optimizations, just learning or to test
 experimental ideas.
 
 %package devel
-Summary:	Development files for libgcroots
-Group:		Development/Other
-Requires:	%{name} = %{version}-%{release}
-Requires:	pkg-config
+Summary: Development files for libgcroots
+Group: Development/Other
+Requires: %name
 
 %description devel
 libgcroots abstracts architecture-dependent part of garbage collector
@@ -38,31 +33,33 @@ This package contains a header file and development library to help you
 to develop any own GC.
 
 %prep
-%setup -q
-%patch0 -p1 -b .0-aarch64
+%setup -n %name-%version-%release
 
 %build
+%add_optflags %optflags_shared
+%autoreconf
 %configure --disable-static
 %make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-
-# Remove unnecessary files
-rmdir $RPM_BUILD_ROOT%{_includedir}/libgcroots
-rm $RPM_BUILD_ROOT%{_libdir}/*.la
+make install DESTDIR=%buildroot INSTALL="install -p"
 
 %files
-%doc COPYING ChangeLog README
-%{_libdir}/libgcroots.so.*
+%doc COPYING README
+%_libdir/libgcroots.so.*
 
 %files devel
-%doc COPYING ChangeLog README
-%{_includedir}/gcroots.h
-%{_libdir}/libgcroots.so
-%{_libdir}/pkgconfig/gcroots.pc
+%doc COPYING README
+%_includedir/gcroots.h
+%_libdir/libgcroots.so
+%_libdir/pkgconfig/gcroots.pc
 
 %changelog
+* Thu Apr 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.1-alt1
+- Updated to 0.3.1.
+- Updated upstream Url.
+- Based on Fedora import package, cleaned spec file up.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_14
 - update to new release by fcimport
 
