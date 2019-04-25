@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.39
+%define ver     1.6.40
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -85,6 +85,11 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.40-alt1
+- New version.
+- Supported new models:
+  + XP-2100 Series
+
 * Mon Apr 22 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.39-alt1
 - New version.
 - Supported new models:
