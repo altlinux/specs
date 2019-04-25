@@ -1,16 +1,19 @@
-# %%define _unpackaged_files_terminate_build 1
+# TODO: drop fonts like /usr/share/exe/tools/fMath/fonts/dejavu
 
 Name:       exe
 Version:    2.3.1
-Release:    alt1
-BuildArch:  noarch
+Release:    alt2
+
+Summary:    Tool to create and publish open educational resources.
 
 License:    %gpl2plus
 Group:      Education
-Summary:    Tool to create and publish open educational resources.
-
 Url:        http://exelearning.net
+
 Source:     %name-%version.tar
+Patch:      exe-use-BeautifulSoup4.patch
+
+BuildArch:  noarch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: desktop-file-utils
@@ -57,6 +60,7 @@ Package contains python modules for eXeLearning.
 
 %prep
 %setup -n %name
+%patch -p1
 
 %build
 %python_build
@@ -86,19 +90,27 @@ desktop-file-install --dir %buildroot%_desktopdir \
 mkdir -p %buildroot%_datadir/mime/packages/
 cp exe.xml %buildroot%_datadir/mime/packages/
 
-%files
-%dir %_datadir/%name
-%_datadir/%name/*
+rm -rf %buildroot%_datadir/doc/
+rm -f %buildroot%_datadir/pixmaps/exe.xpm
+
+%find_lang exe
+
+%files -f exe.lang
+%_datadir/%name/
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_bindir/%{name}*
-%_datadir/locale/*/LC_MESSAGES/exe.mo
+%_datadir/mime/packages/exe.xml
 
 %files -n python-module-%name
 %python_sitelibdir/%{name}*
 
 
 %changelog
+* Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt2
+- fix packing
+- apply patch to use BeautifulSoup version 4
+
 * Mon Feb 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.1-alt1
 - Version updated to 2.3.1
 

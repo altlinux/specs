@@ -1,6 +1,8 @@
+%def_without doc
+
 Name: keepass
 Version: 2.41
-Release: alt1
+Release: alt2
 
 Summary: Password manager
 
@@ -25,8 +27,10 @@ Patch2: keepass-2.35-fedora-doc.patch
 BuildPreReq: /proc
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: ImageMagick
-BuildRequires: archmage
+%if_with doc
 BuildRequires: python-module-pychm
+BuildRequires: archmage
+%endif
 BuildRequires: desktop-file-utils
 BuildRequires: libgdiplus-devel
 BuildRequires: msbuild
@@ -75,7 +79,9 @@ for subdir in Images_App_HighRes Images_Client_16 Images_Client_HighRes; do
     xvfb-run -a mono Build/KeePass/Release/KeePass.exe -d:`pwd`/Ext/$subdir --makexspfile `pwd`/KeePass/Resources/Data/$subdir.bin
 done
 msbuild /target:KeePass /property:Configuration=Release
+%if_with doc
 %__python -c 'import archmod.CHM; archmod.CHM.CHMDir("Docs").process_templates("Docs/Chm")'
+%endif
 
 %install
 install -d %buildroot/%prefix/lib/%name %buildroot/%_datadir/%name %buildroot/%_datadir/%name/XSL %buildroot/%_datadir/applications %buildroot/%_bindir %buildroot/%_datadir/mime/packages %buildroot/%_datadir/icons/hicolor/512x512/apps %buildroot/%_datadir/icons/hicolor/256x256/apps %buildroot/%_datadir/icons/hicolor/128x128/apps %buildroot/%_datadir/icons/hicolor/64x64/apps %buildroot/%_datadir/icons/hicolor/48x48/apps %buildroot/%_datadir/icons/hicolor/32x32/apps %buildroot/%_datadir/icons/hicolor/16x16/apps %buildroot/%_mandir/man1 %buildroot/%_docdir/%name %buildroot/%_datadir/metainfo
@@ -95,7 +101,9 @@ install -p -m 0644 %SOURCE1 %buildroot/%_datadir/metainfo
 install -p dist/%name %buildroot/%_bindir
 sed 's/\r$//' Docs/History.txt > %buildroot/%_docdir/%name/History.txt
 sed 's/\r$//' Docs/License.txt > %buildroot/%_docdir/%name/License.txt
+%if_with doc
 cp -pr Docs/Chm %buildroot/%_docdir/%name/
+%endif
 
 %files
 %dir %_docdir/%name
@@ -116,11 +124,16 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %_mandir/man1/%name.1*
 %_datadir/metainfo/%name.appdata.xml
 
+%if_with doc
 %files doc
 %dir %_docdir/%name
 %doc %_docdir/%name/Chm/
+%endif
 
 %changelog
+* Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.41-alt2
+- NMU: disable optional doc package build
+
 * Tue Jan 15 2019 Oleg Solovyov <mcpain@altlinux.org> 2.41-alt1
 - new version: 2.41
 

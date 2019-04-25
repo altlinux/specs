@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.2
-Release: alt1.qa1
+Release: alt2
 
 Summary: RDFLib is a Python library for working with RDF
 
@@ -21,7 +21,7 @@ BuildArch: noarch
 
 #add_python_req_skip FOPLRelationalModel RDF
 
-BuildRequires: python-devel python-module-setuptools python-module-BeautifulSoup python-module-PyXML python-module-Pyrex python-module-bibtex
+BuildRequires: python-devel python-module-setuptools python-module-PyXML python-module-Pyrex python-module-bibtex
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools python3-module-distribute
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt2
+- drop unneeded python-module-BeautifulSoup req
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1.qa1
 - NMU: applied repocop patch
 
