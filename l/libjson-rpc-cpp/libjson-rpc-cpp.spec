@@ -1,29 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/git gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define jsoncpp_major 1
-%define libname libjsonrpccpp%{jsoncpp_major}
+%define libname   libjsonrpccpp%{jsoncpp_major}
 %define develname libjsonrpccpp-devel
 
-Name:       libjson-rpc-cpp
-Version:    1.0.0
-Release:    alt1_5
-Summary:    C++ JSON Library
-License:    Public Domain
-Group:      System/Libraries
-#Url:        http://jsoncpp.sourceforge.net/
+Name:           libjson-rpc-cpp
+Version:        1.1.0
+Release:        alt1_1
+Summary:        C++ JSON Library
+License:        Public Domain
+Group:          System/Libraries
+#Url:           http://jsoncpp.sourceforge.net/
 URL:            https://github.com/cinemast/libjson-rpc-cpp
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 #To generate docs
-BuildRequires: 	ccmake cmake ctest
-BuildRequires: 	pkgconfig(libcurl)
-BuildRequires: 	pkgconfig(libmicrohttpd)
+BuildRequires:  ccmake cmake ctest
+BuildRequires:  doxygen
+BuildRequires:  pkgconfig(libcurl)
+BuildRequires:  pkgconfig(libmicrohttpd)
 BuildRequires:  libhiredis-devel
-BuildRequires:	pkgconfig(jsoncpp)
-BuildRequires:	pkgconfig(argtable2)
+BuildRequires:  pkgconfig(jsoncpp)
+BuildRequires:  pkgconfig(argtable2)
 Source44: import.info
 
 %description
@@ -61,7 +62,6 @@ Files for building applications with %{name} support.
 %{mageia_cmake} \
 	-DCOMPILE_TESTS=NO \
 	-DCOMPILE_STUBGEN=NO \
-	-DCATCH_INCLUDE_DIR=%{_includedir}/catch \
 	-DFULL_PATH_LIBDIR=%{_libdir} \
 	-DFULL_PATH_INCLUDEDIR=%{_includedir}
 %make_build
@@ -84,6 +84,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
+- update by mgaimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5
 - update by mgaimport
 
