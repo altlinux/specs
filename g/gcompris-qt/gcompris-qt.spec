@@ -1,6 +1,6 @@
 Name:    gcompris-qt
 Version: 0.96
-Release: alt1
+Release: alt2
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -26,8 +26,10 @@ BuildRequires: qt5-tools-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: libssl-devel
 BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-kdoctools-devel-static
 
 Requires: libqt5-multimedia
+Requires: libqt5-svg
 Requires: qt5-graphicaleffects
 Requires: qt5-quickcontrols
 Requires: libqt5-quickcontrols2
@@ -90,5 +92,9 @@ tar xf %SOURCE2
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 0.96-alt2
+- Add strict requirement of libqt5-svg.
+- Add static library for build with old kf5-kdoctools.
+
 * Fri Apr 05 2019 Andrey Cherepanov <cas@altlinux.org> 0.96-alt1
 - Full rewrite of GCompris using the QtQuick technology.
