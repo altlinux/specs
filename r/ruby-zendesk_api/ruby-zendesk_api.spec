@@ -1,8 +1,8 @@
 %define  pkgname zendesk_api
 
 Name: 	 ruby-%pkgname
-Version: 1.16.0
-Release: alt1.1
+Version: 1.17.0
+Release: alt1
 
 Summary: Official Ruby Zendesk API Client
 License: Apache-2.0
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
