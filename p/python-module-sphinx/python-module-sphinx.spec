@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.5
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -31,6 +31,8 @@ Source3: macro3
 Source4: refcounting.py
 Source5: sphinx-1.6.4-alt-disable-remote-tests.patch
 Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
+# deprecate formatargspec() and format_annotation()
+Patch1: 464f94c2380b4cb2600735c0c0085e771da2bce4.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-sphinx-objects.inv
@@ -224,6 +226,7 @@ This packages contains pickles for Sphinx.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 install -pm644 %_sourcedir/conf.py.template .
 
 ln -s %_datadir/python-sphinx/objects.inv doc/
@@ -389,6 +392,9 @@ PYTHONPATH=$(pwd) %make_build test
 
 
 %changelog
+* Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.6.5-alt4
+- Fixed FTBFS (Closes: #36648).
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.6.5-alt3
 - added sphinx-build-3 for compatibility with fedora
 
