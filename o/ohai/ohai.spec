@@ -1,7 +1,7 @@
 %define        pkgname ohai
 
 Name:          %pkgname
-Version:       15.0.30
+Version:       15.0.34
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       MIT
@@ -53,6 +53,9 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 15.0.34-alt1
+- New version.
+
 * Mon Mar 25 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.30-alt1
 - Bump to 15.0.30
 - Use Ruby Policy 2.0
