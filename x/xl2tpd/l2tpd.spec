@@ -1,6 +1,6 @@
 Name: xl2tpd
-Version: 1.3.10
-Release: alt1%ubt
+Version: 1.3.14
+Release: alt1
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 License: GPL
@@ -13,7 +13,6 @@ Source0: %name-%version.tar
 Provides: l2tpd = %version-%release
 Obsoletes: l2tpd =< 0.69-alt2
 BuildRequires: libpcap-devel
-BuildRequires(pre):rpm-build-ubt
 
 %description
 xl2tpd is an implementation of the Layer 2 Tunnelling Protocol (RFC 2661).
@@ -78,10 +77,13 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
-* Sat Oct 07 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.10-alt1%ubt
+* Fri Apr 26 2019 Anton Farygin <rider@altlinux.ru> 1.3.14-alt1
+- 1.3.14
+
+* Sat Oct 07 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.10-alt1
 - 1.3.10 released
 
-* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1%ubt
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1
 - new version
 
 * Fri Jan 30 2015 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1
