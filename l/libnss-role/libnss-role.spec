@@ -1,6 +1,6 @@
 Name: libnss-role
 Version: 0.2.9
-Release: alt1
+Release: alt2
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -71,6 +71,9 @@ update_chrooted all
 %_includedir/role
 
 %changelog
+* Fri Apr 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt2
+- fast hack: increase buffers up to 32000
+
 * Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt1
 - fix getgrnam_r and getgrgid_r using, increase buffer
 
