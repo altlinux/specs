@@ -1,7 +1,7 @@
 %define  pkgname specinfra
 
 Name:    ruby-%pkgname
-Version: 2.76.7
+Version: 2.77.0
 Release: alt1
 
 Summary: Command Execution Framework for serverspec, itamae and so on
@@ -64,6 +64,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 2.77.0-alt1
+- New version.
+
 * Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.76.7-alt1
 - Bump to 2.76.7
 - Disable hardlink to gem(net-telnet) v0.1.1.
