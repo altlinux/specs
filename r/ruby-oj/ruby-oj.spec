@@ -1,7 +1,7 @@
 %define        pkgname oj
 
 Name: 	       ruby-%pkgname
-Version:       3.7.9
+Version:       3.7.12
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
@@ -60,6 +60,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.12-alt1
+- New version.
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 3.7.9-alt1
 - Bump to 3.7.9.
 - Use Ruby Policy 2.0.
