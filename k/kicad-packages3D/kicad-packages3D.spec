@@ -4,7 +4,7 @@
 Name: kicad-packages3D
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): 3D модели для kicad (разработка печатных плат)
-Version: 5.1.0
+Version: 5.1.2
 Release: alt1
 Source: %name-%version.tar.gz
 License: GPLv2+
@@ -110,8 +110,6 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/modules/packages3d/Heatsink.3dshapes
 %_datadir/kicad/modules/packages3d/Inductor_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Inductor_THT.3dshapes
-%_datadir/kicad/modules/packages3d/Package_LGA.3dshapes
-%_datadir/kicad/modules/packages3d/Potentiometer_THT.3dshapes
 %_datadir/kicad/modules/packages3d/LED_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/LED_THT.3dshapes
 %_datadir/kicad/modules/packages3d/OptoDevice.3dshapes
@@ -122,6 +120,7 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/modules/packages3d/Package_DFN_QFN.3dshapes
 %_datadir/kicad/modules/packages3d/Package_DIP.3dshapes
 %_datadir/kicad/modules/packages3d/Package_DirectFET.3dshapes
+%_datadir/kicad/modules/packages3d/Package_LGA.3dshapes
 %_datadir/kicad/modules/packages3d/Package_QFP.3dshapes
 %_datadir/kicad/modules/packages3d/Package_SO.3dshapes
 %_datadir/kicad/modules/packages3d/Package_SON.3dshapes
@@ -142,6 +141,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/modules/packages3d/Varistor.3dshapes
 
 %changelog
+* Fri Apr 26 2019 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt1
+- New version 5.1.2
+
 * Sat Mar 16 2019 Anton Midyukov <antohami@altlinux.org> 5.1.0-alt1
 - New version 5.1.0
 
