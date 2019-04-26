@@ -1,8 +1,8 @@
-%define  snapshot  20180514
+%define  snapshot  20190424
 %define  addonsdir %python_sitelibdir/odoo/addons
 
 Name: 	 odoo
-Version: 11.0
+Version: 12.0
 Release: alt1.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
@@ -11,7 +11,7 @@ Summary: Odoo is a suite of web based open source business apps
 License: AGPLv3 and GPLv3 and BSD and Beerware
 Group:   System/Servers
 URL:     http://www.odoo.com/
-# Git: https://github.com/odoo/odoo (branch: 11.0)
+# Git: https://github.com/odoo/odoo (branch: 12.0)
 
 Source0: %name.tar
 Source1: odoo.service
@@ -19,7 +19,6 @@ Source2: odoo.init
 Source3: README.ALT
 
 Patch1: %name-alt-fix-openerp-import.patch
-Patch2: %name-alt-fix-default-css.patch
 
 BuildArch: noarch
 
@@ -40,6 +39,7 @@ Obsoletes: openerp < %version-%release
 Provides:  openerp-httpd-fonts-access = %version-%release
 Obsoletes: openerp-httpd-fonts-access < %version-%release
 
+%filter_from_requires /python3(xmlrpclib)/d
 %py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vatnumber vobject xlsxwriter xlwt num2words phonenumbers
 Requires: python3-module-suds-jurko
 Requires: wkhtmltopdf
@@ -71,7 +71,6 @@ http://www.openerp.com/ or  http://apps.openerp.com/
 %prep
 %setup -q -n %name
 %patch1 -p1
-%patch2 -p1
 cp %SOURCE3 .
 
 %build
@@ -139,6 +138,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 12.0-alt1.20190424
+- New version (ALT #36679).
+
 * Tue May 15 2018 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1.20180514
 - New version.
 - Require lessjs >= 3.0.0.
