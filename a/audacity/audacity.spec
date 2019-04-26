@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -104,7 +104,7 @@ For the most up to date manual content, use the on-line manual.
 %patch140 -p1
 %patch150 -p1
 %ifarch mips mipsel mips32 mips64
-%patch160 -p1
+%patch160 -p2
 %endif
 %patch170 -p1
 
@@ -186,6 +186,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Fri Apr 26 2019 Ivan A. Melnikov <iv@altlinux.org> 2.3.1-alt2
+- Fix build on mipsel.
+
 * Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
 - Build new version (no major changes, but (closes: #36354)).
 - Cleanup changelog.
