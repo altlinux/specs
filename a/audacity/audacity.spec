@@ -1,6 +1,6 @@
 Name: audacity
-Version: 2.3.0
-Release: alt2.git20190217.2345
+Version: 2.3.1
+Release: alt1
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -173,6 +173,7 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_niconsdir/*
 %_miconsdir/*
 %dir %_datadir/%name
+%exclude %_datadir/%name/help
 %_datadir/%name/*
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
@@ -185,7 +186,11 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
-* Sun Feb 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt2.git20190217.2345
+* Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
+- Build new version (no major changes, but (closes: #36354)).
+- Cleanup changelog.
+
+* Mon Feb 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt2.git20190217.2345
 - Git master from 17.02.2019 23:45 UTC+0300 (commit e609a9d)
 - Patch: remove warning that it's an alpha version from the welcome screen
   and don't recommend to install an "official" build
@@ -193,7 +198,7 @@ rm -rf %buildroot%_defaultdocdir/%name
 * Fri Jan 25 2019 Ivan A. Melnikov <iv@altlinux.org> 2.3.0-alt1.git20181205.2140.0.mips1
 - Link with latomic to fix build on mipsel
 
-* Mon Dec 05 2018 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt1.git20181205.2140
+* Wed Dec 05 2018 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt1.git20181205.2140
 - New version 2.3.0 + git master from 05.12.2018 21:40 UTC+0300 (release 2.3.0 is officially buggy on Linux, so took git master)
 - Now Russian translation is better than in previous versions
 - Switched to no-STL wxGTK3.1 and GTK+3
