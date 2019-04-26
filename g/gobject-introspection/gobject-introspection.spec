@@ -2,11 +2,11 @@
 
 %define ver_major 1.60
 %def_enable doctool
-%def_disable check
+%def_enable check
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -136,6 +136,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.60.1-alt1.1
+- enabled %%check
+
 * Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.60.1-alt1
 - 1.60.1
 

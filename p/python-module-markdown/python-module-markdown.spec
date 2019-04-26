@@ -1,43 +1,41 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable check
-
-%define version 2.6.7
-%define release alt2.git20150620
-%define modulename markdown
+%define modname markdown
 
 %def_with python3
+%def_disable check
 
-%setup_python_module %modulename
-
-Name: python-module-%modulename
-Version: 2.6.7
-Release: alt1.1
+Name: python-module-%modname
+Version: 3.1
+Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python
 License: %gpl2plus | %bsd
 Url: http://pypi.python.org/pypi/Markdown/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# git://github.com/waylan/Python-Markdown.git
-Source0: https://pypi.python.org/packages/d4/32/642bd580c577af37b00a1eb59b0eaa996f2d11dfe394f3dd0c7a8a2de81a/Markdown-%{version}.tar.gz
+#VCS: git://github.com/waylan/Python-Markdown.git
+Source: https://pypi.io/packages/source/M/Markdown/Markdown-%{version}.tar.gz
+
+%setup_python_module %modname
 
 BuildArch: noarch
-BuildPreReq: rpm-build-licenses
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-yaml python-modules-logging
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-modules-xml
+BuildRequires(pre): rpm-build-licenses
+
+BuildRequires(pre): python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-yaml python-modules-logging
+BuildRequires: python-module-nose python-module-coverage
+BuildRequires: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-yaml
-BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-nose python3-module-coverage
 %endif
 
 Conflicts: discount
-%py_provides %modulename
+%py_provides %modname
 %py_requires yaml logging xml
 
 %description
@@ -47,11 +45,11 @@ possible while being structured enough to allow conversion to other formats.
 This package contains Python implementation of markdown-to-HTML convertor.
 
 %if_with python3
-%package -n python3-module-%modulename
+%package -n python3-module-%modname
 Summary: Python 3 implementation of Markdown text-to-HTML convertor
-Group: Development/Python
+Group: Development/Python3
 
-%description -n python3-module-%modulename
+%description -n python3-module-%modname
 Markdown is a plain text formatting syntax designed to be as readable as
 possible while being structured enough to allow conversion to other formats.
 %endif
@@ -68,7 +66,7 @@ possible while being structured enough to allow conversion to other formats.
 This package contains documentation for Markdown.
 
 %prep
-%setup -q -n Markdown-%{version}
+%setup -q -n Markdown-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -87,13 +85,13 @@ popd
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/%{modulename}_py \
-	%buildroot%_bindir/%{modulename}_py3
+mv %buildroot%_bindir/%{modname}_py \
+	%buildroot%_bindir/%{modname}_py3
 %endif
 
 %python_install
 
-ln -s %{modulename}_py %buildroot%_bindir/%modulename
+ln -s %{modname}_py %buildroot%_bindir/%modname
 
 %check
 nosetests -v
@@ -104,23 +102,26 @@ popd
 %endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%buildroot%_bindir/%modulename README.md >README.html
+%buildroot%_bindir/%modname README.md >README.html
 
 %files
 %_bindir/*
 %if_with python3
-%exclude %_bindir/%{modulename}_py3
+%exclude %_bindir/%{modname}_py3
 %endif
 %python_sitelibdir/*
 
 
 %if_with python3
-%files -n python3-module-%modulename
-%_bindir/%{modulename}_py3
+%files -n python3-module-%modname
+%_bindir/%{modname}_py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Apr 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.7-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

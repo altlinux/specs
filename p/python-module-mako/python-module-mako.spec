@@ -1,18 +1,19 @@
-%define oname mako
+%define modname mako
 
 %def_with python3
 
-Name: python-module-%oname
-Version: 1.0.1
-Release: alt1.1.1.1
+Name: python-module-%modname
+Version: 1.0.9
+Release: alt1
 Summary: template library written in Python
 
 Group: Development/Python
 License: MIT
 Url: http://www.makotemplates.org
-
-Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
+
+# http://pypi.io/packages/source/M/Mako/Mako-%version.tar.gz
+Source: %name-%version.tar
 
 # Fix #23203
 Requires: python-module-beaker
@@ -42,12 +43,12 @@ models available, while also maintaining close ties to Python calling
 and scoping semantics.
 
 %if_with python3
-%package -n python3-module-%oname
+%package -n python3-module-%modname
 Summary: template library written in Python 3
 Group: Development/Python3
 Requires: python3-module-beaker
 
-%description -n python3-module-%oname
+%description -n python3-module-%modname
 Mako is a template library written in Python. It provides a familiar,
 non-XML syntax which compiles into Python modules for maximum
 performance. Mako's syntax and API borrows from the best ideas of many
@@ -80,7 +81,6 @@ pushd ../python3
 %python3_install
 popd
 mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
-2to3 -wn %buildroot%_bindir/mako-render3
 %endif
 %python_install
 
@@ -91,7 +91,7 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %doc CHANGES LICENSE README*
 
 %if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-%modname
 %doc CHANGES LICENSE README*
 %_bindir/mako-render3
 %python3_sitelibdir/mako
@@ -99,6 +99,9 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %endif
 
 %changelog
+* Fri Apr 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
