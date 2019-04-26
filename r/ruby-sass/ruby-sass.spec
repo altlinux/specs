@@ -1,7 +1,7 @@
 %define  pkgname sass
 
 Name:    ruby-%pkgname
-Version: 3.6.0
+Version: 3.7.4
 Release: alt1
 
 Summary: Sass makes CSS fun again.
@@ -70,6 +70,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.4-alt1
+- New version.
+
 * Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version.
 
