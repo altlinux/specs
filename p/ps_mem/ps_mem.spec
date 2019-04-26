@@ -1,19 +1,19 @@
-Name: ps_mem
-Version: 3.6
+Name:    ps_mem
+Version: 3.12
 Release: alt1
 
-Summary: Memory profiling tool
-License: LGPLv2
-Group: Monitoring
+Summary: A utility to accurately report the in core memory usage for a program
+License: LGPL-2.1
+Group:   Monitoring
+URL:     https://github.com/pixelb/ps_mem
+Packager: Michael Shigorin <mike at altlinux.org>
 
-Url: https://github.com/pixelb/ps_mem
-Source: https://raw.githubusercontent.com/pixelb/ps_mem/c80287d/ps_mem.py
-Source1: http://www.gnu.org/licenses/lgpl-2.1.txt
-Source2: https://raw.githubusercontent.com/pixelb/ps_mem/c80287d/ps_mem.1
-Packager: Michael Shigorin <mike@altlinux.org>
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
-BuildRequires: python3-devel
+
+Source:  %name-%version.tar
 
 %description
 The ps_mem tool reports how much core memory is used per program
@@ -26,26 +26,29 @@ The shared RAM is problematic to calculate, and the tool automatically
 selects the most accurate method available for the running kernel.
 
 %prep
-%setup -T -c %name-%version
-cp -a %SOURCE0 %name
-cp -a %SOURCE1 LICENSE
-cp -a %SOURCE2 %name.1
+%setup
 
-# use python3
-#subst "s|%_bindir/env python|%__python3|" %name
-#touch -r %SOURCE0 %name
+%build
+%python3_build
 
 %install
-install -Dpm755 %name   %buildroot%_bindir/%name
+%python3_install
+
 install -Dpm644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
-%doc LICENSE
+%doc LICENSE *.md
 %_bindir/%name
+%python3_sitelibdir/*.py*
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/*.egg-info
 %_man1dir/%name.1*
 
 %changelog
-* Sat Dec 03 2016 Michael Shigorin <mike@altlinux.org> 3.6-alt1
+* Fri Apr 26 2019 Anton Midyukov <antohami@altlinux.org> 3.12-alt1
+- New version 3.12
+
+* Sat Dec 03 2016 Michael Shigorin <mike at altlinux.org> 3.6-alt1
 - initial build for ALT Linux Sisyphus (based on fedora package)
 
 * Mon Jul 11 2016 Lumir Balhar <lbalhar@redhat.com> - 3.6-2
