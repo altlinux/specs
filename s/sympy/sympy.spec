@@ -1,28 +1,33 @@
 %def_with python3
+%def_with doc
 
 Name: sympy
 Version: 1.1.1
+Release: alt1.1.1
 Epoch: 1
-Release: alt1.1
+
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
-BuildArch: noarch
-Url: http://sympy.org/
 
+Url: http://sympy.org/
 # https://github.com/sympy/sympy.git
 Source: %name-%version.tar
-
 Patch1: %name-%version-alt-build.patch
+
+BuildArch: noarch
 
 Requires: python-module-%name = %EVR
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-py python-module-setuptools
-BuildRequires: dvipng python-module-sphinx-devel python-module-Pygments
-BuildRequires: python-module-docutils python-module-numpy librsvg-utils
-BuildRequires: python-module-mpmath
-BuildRequires: ImageMagick-tools graphviz
+BuildRequires: python-module-numpy python-module-mpmath
+BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
+%if_with doc
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-docutils
+BuildRequires: python-module-Pygments
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-py python-tools-2to3
@@ -144,7 +149,9 @@ for i in $(find ./ -name tests); do
 done
 
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
+%if_with doc
 %prepare_sphinx .
+%endif
 
 %if_with python3
 rm -rf ../python3
@@ -161,6 +168,7 @@ pushd ../python3
 popd
 %endif
 
+%if_with doc
 pushd doc
 %make html
 popd
@@ -171,6 +179,7 @@ export PYTHONPATH=$PYTHONPATH:$PWD
 cp -fR doc/_build/doctrees ./
 
 %generate_pickles $PWD $PWD/doc/_build/html %name
+%endif
 
 %install
 %if_with python3
@@ -196,18 +205,24 @@ popd
 rm -f %buildroot%python_sitelibdir/%name/mpmath/libmp/exec_py3.py
 rm -f %buildroot%python3_sitelibdir/%name/mpmath/libmp/exec_py2.py
 
+%if_with doc
 cp -fR pickle %buildroot%python_sitelibdir/%name/
+%endif
 
 %check
 #python setup.py test -v
 #python bin/test -v
+%if_with doc
 python bin/doctest -v ||:
+%endif
 
 %if_with python3
 pushd ../python3
 #python3 setup.py test -v
 #python3 bin/test -v
+%if_with doc
 python3 bin/doctest -v ||:
+%endif
 popd
 %endif
 
@@ -222,14 +237,16 @@ popd
 
 %files -n python-module-%name
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%name/pickle
 %exclude %python_sitelibdir/*/*test*
 %exclude %python_sitelibdir/*/*/*test*
 %exclude %python_sitelibdir/*/*/*/*test*
+%if_with doc
+%exclude %python_sitelibdir/%name/pickle
 
 %files -n python-module-%name-pickles
 %dir %python_sitelibdir/%name
 %python_sitelibdir/%name/pickle
+%endif
 
 %files -n python-module-%name-tests
 %python_sitelibdir/*/*test*
@@ -239,8 +256,10 @@ popd
 %files -n python-module-%name-examples
 %doc examples/*
 
+%if_with doc
 %files -n python-module-%name-doc
 %doc doc/_build/html/*
+%endif
 
 %if_with python3
 %files py3
@@ -263,6 +282,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 27 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1.1.1
+- introduce doc knob (on by default)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
