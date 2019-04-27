@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Manual
 Name: perl-%dist
-Version: 5.9009
+Version: 5.9010
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ License: Artistic and GPL
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Catalyst-Manual/
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Catalyst-Manual-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ a full example Catalyst application, please install
 Task::Catalyst::Tutorial.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.9010-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.9009-alt1
 - automated CPAN update
 
