@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 Name: python-module-bzr-git
 Version: 0.6.12
-Release: alt3.bzr20150806
+Release: alt4.bzr20150806
 
 %setup_python_module bzr-git
 
@@ -41,6 +41,7 @@ This module is built for python %_python_version
 %package -n bzr-git-remote
 Summary: Remote helper for git to work with bzr repositories
 Group: Development/Other
+Provides: git-remote-bzr
 Requires: %name = %version-%release
 
 %description -n bzr-git-remote
@@ -75,22 +76,23 @@ install -dm0755 %buildroot%_man1dir
 install -m0644 git-remote-bzr.1 %buildroot%_man1dir
 
 %files
-%_bindir/bzr-receive-pack
-%_bindir/bzr-upload-pack
 %python_sitelibdir/bzrlib/plugins/git
 %exclude %python_sitelibdir/bzrlib/plugins/git/tests
 %python_sitelibdir/*.egg-info
 %doc HACKING INSTALL NEWS README TODO notes/*
 
 %files -n bzr-git-remote
-%_bindir/git-remote-bzr
-%_man1dir/git-remote-bzr.1*
+%_bindir/*
+%_man1dir/*
 
 %files -n python-module-bzr-git-tests
 %dir %python_sitelibdir/bzrlib/plugins/git
 %python_sitelibdir/bzrlib/plugins/git/tests
 
 %changelog
+* Sat Apr 27 2019 Anatoly Kitaykin <cetus@altlinux.org> 0.6.12-alt4.bzr20150806
+- Re-package files
+
 * Wed Dec 06 2017 Anatoly Kitaykin <cetus@altlinux.org> 0.6.12-alt3.bzr20150806
 - Rename subpackage git-remote-bzr to bzr-git-remote
 
