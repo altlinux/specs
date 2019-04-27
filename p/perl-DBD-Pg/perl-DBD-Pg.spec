@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-Pg
 Name: perl-%dist
-Version: 3.7.4
-Release: alt3
+Version: 3.8.0
+Release: alt1
 
 Summary: PostgreSQL database driver for the DBI module
 License: GPL or Artistic
@@ -20,7 +20,8 @@ Perl-API DBI to the PostgreSQL DBMS.
 
 %prep
 %setup -q -n %{dist}-%{version}
-[ %version = 3.7.4 ] && rm t/02attribs.t
+# on aarch64
+[ %version = 3.8.0 ] && rm t/12placeholders.t
 
 %build
 POSTGRES_INCLUDE=`pg_config --includedir`
@@ -40,6 +41,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/Pg.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1
+- automated CPAN update
+
 * Wed Mar 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.7.4-alt3
 - fixed build
 
