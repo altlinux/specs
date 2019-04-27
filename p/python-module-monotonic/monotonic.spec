@@ -1,27 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define oname monotonic
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.1
+Version: 1.5
+Release: alt1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/monotonic/
+Url: https://pypi.org/project/monotonic/
 
 # https://github.com/atdt/monotonic.git
-Source0: https://pypi.python.org/packages/08/35/9e06c881c41962d7367e9466724beda2b1101439b149b7ff708d708890de/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
-%py_provides %oname
 
 %description
 This module provides a monotonic() function which returns the value (in
@@ -30,48 +22,46 @@ fractional seconds) of a clock which never goes backwards.
 %package -n python3-module-%oname
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 This module provides a monotonic() function which returns the value (in
 fractional seconds) of a clock which never goes backwards.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
-%doc LICENSE PKG-INFO
-%python_sitelibdir/*
+%doc README.md
+%python_sitelibdir/monotonic.py
+%python_sitelibdir/monotonic.py[oc]
+%python_sitelibdir/monotonic-%version-py%_python_version.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc LICENSE PKG-INFO
-%python3_sitelibdir/*
-%endif
+%doc README.md
+%python3_sitelibdir/monotonic.py
+%python3_sitelibdir/__pycache__/monotonic.cpython-*
+%python3_sitelibdir/monotonic-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Apr 27 2019 Stanislav Levin <slev@altlinux.org> 1.5-alt1
+- 1.2 -> 1.5.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
