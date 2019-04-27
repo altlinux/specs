@@ -5,19 +5,19 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    WebService-MusicBrainz
-%define upstream_version 1.0.4
+%define upstream_version 1.0.5
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.0.5
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Web service API to MusicBrainz database
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/B/BF/BFAIST/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/WebService/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Mojolicious.pm)
@@ -29,7 +29,7 @@ This module will act as a factory using static methods to return specific
 web service objects;
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -44,11 +44,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README.md
+%doc Changes META.json META.yml 
 %perl_vendor_privlib/*
 
-
 %changelog
+* Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
+- update by mgaimport
+
 * Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1
 - automated CPAN update
 
