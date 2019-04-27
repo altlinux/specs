@@ -1,4 +1,6 @@
 %define oname libressl
+%define libcrypto_sover 45
+%define libssl_sover 47
 %define libtls_sover 19
 
 # to avoid colission with OpenSSL pkgconfig provides
@@ -10,7 +12,7 @@
 
 Name: LibreSSL
 Version: 2.9.1
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -65,20 +67,26 @@ Conflicts: openssl-doc
 
 This package contains documantation pages for %name
 
+# change package name in the next major
 %package -n libcrypto-LibreSSL
+#package -n libcrypto%libcrypto_sover
 Summary: LibreSSL libcrypto shared library
 Group: Security/Networking
 
 %description -n libcrypto-LibreSSL
+#description -n libcrypto%libcrypto_sover
 %common_descr
 
 LibreSSL libcrypto shared library
 
+# change package name in the next major
 %package -n libssl-LibreSSL
+#package -n libssl%libssl_sover
 Summary: LibreSSL libssl shared library
 Group: Security/Networking
 
 %description -n libssl-LibreSSL
+#description -n libssl%libssl_sover
 %common_descr
 
 LibreSSL libssl shared library
@@ -214,17 +222,21 @@ gzip -9 %buildroot%docdir/ChangeLog
 %exclude %_man3dir/tls_*
 
 %files -n libcrypto-LibreSSL
+#files -n libcrypto%libcrypto_sover
 %dir %docdir
 %doc %docdir/*
 
 %dir %_sysconfdir/%oname/
 %config(noreplace) %_sysconfdir/%oname/openssl.cnf
 %_sysconfdir/%oname/*
-%_libdir/libcrypto.so.*
+%_libdir/libcrypto.so.%libcrypto_sover
+%_libdir/libcrypto.so.%libcrypto_sover.*
 
 %files -n libssl-LibreSSL
+#files -n libssl%libssl_sover
 %dir %docdir
-%_libdir/libssl.so.*
+%_libdir/libssl.so.%libssl_sover
+%_libdir/libssl.so.%libssl_sover.*
 
 %files -n ocspcheck
 %_bindir/ocspcheck
@@ -249,8 +261,12 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Sat Apr 27 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.1-alt2
+- Applied extra-symver.diff patch from openSUSE project that added symbol
+  versions into the library.
+
 * Mon Apr 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.1-alt1
-- 2.9.1
+- 2.9.1.
 
 * Wed Feb 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.3-alt1
 - 2.8.3
