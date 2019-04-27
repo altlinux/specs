@@ -1,39 +1,55 @@
+%define _unpackaged_files_terminate_build 1
 %define oname eventlet
 
-%def_with python3
-%def_disable check
+%def_with check
+%def_with docs
 
 Name: python-module-%oname
-Version: 0.18.4
-Release: alt1.1
+Version: 0.24.1
+Release: alt1
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
-Url: http://pypi.python.org/pypi/eventlet/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/eventlet/
 
 # https://github.com/eventlet/eventlet.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-greenlet >= 0.3
-BuildRequires: python-module-nose
-BuildRequires: python-module-OpenSSL python-module-six
-BuildRequires: python-module-mysqlclient
-BuildRequires: python-modules-json
-BuildRequires: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-greenlet python3-module-nose
-BuildRequires: python3-module-OpenSSL python3-module-six
-BuildRequires: python3-module-mysqlclient
-%endif
-%py_requires greenlet six json OpenSSL MySQLdb
-%add_python_req_skip stackless
 
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python2.7(dns)
+BuildRequires: python2.7(greenlet)
+BuildRequires: python2.7(monotonic)
+BuildRequires: python2.7(sphinx)
+BuildRequires: python2.7(zmq)
+%endif
+
+%if_with check
+BuildRequires: python2.7(dns)
+BuildRequires: python2.7(enum34)
+BuildRequires: python2.7(greenlet)
+BuildRequires: python2.7(nose)
+BuildRequires: python2.7(json)
+BuildRequires: python2.7(monotonic)
+BuildRequires: python2.7(zmq)
+BuildRequires: python2.7(six)
+BuildRequires: python2.7(subprocess32)
+BuildRequires: python3(dns)
+BuildRequires: python3(greenlet)
+BuildRequires: python3(nose)
+BuildRequires: python3(monotonic)
+BuildRequires: python3(zmq)
+BuildRequires: python3(tox)
+%endif
+
+%py_requires dns
+%py_requires enum34
+
+%add_python_req_skip stackless
 
 %description
 Eventlet is a concurrent networking library for Python that allows you
@@ -49,9 +65,9 @@ larger application.
 %package -n python3-module-%oname
 Summary: Highly concurrent networking library
 Group: Development/Python3
-%py3_requires greenlet six json OpenSSL MySQLdb
+
+%py3_requires dns
 %add_python3_req_skip stackless
-%add_python3_req_skip eventlet.support.six.moves
 
 %description -n python3-module-%oname
 Eventlet is a concurrent networking library for Python that allows you
@@ -64,6 +80,7 @@ non-blocking I/O. The event dispatch is implicit, which means you can
 easily use Eventlet from the Python interpreter, or as a small part of a
 larger application.
 
+%if_with docs
 %package pickles
 Summary: Pickles for Eventlet
 Group: Development/Python
@@ -98,53 +115,75 @@ easily use Eventlet from the Python interpreter, or as a small part of a
 larger application.
 
 This package contains documentation for Eventlet.
+%endif
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
+%if_with docs
 %make -C doc pickle
 %make -C doc html
+%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
+%if_with docs
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
-rm -fR build
-python setup.py test
-%if_with python3
-pushd ../python3
-rm -fR build
-python3 setup.py test
-popd
-%endif
+# raise timeouts
+grep -qsrF 'TEST_TIMEOUT =' || exit 1
+grep -srlF 'TEST_TIMEOUT =' | xargs \
+sed -i 's/TEST_TIMEOUT[[:space:]]*=[[:space:]]*[0-9]\+$/TEST_TIMEOUT = 20/g'
+# don't freeze versions
+sed -i \
+-e '/psycopg2-binary/d' \
+-e '/coverage xml -i/d' \
+-e '/coverage=/d' \
+-e 's/==/>=/g' \
+-e  '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/nosetests \{envbindir\}\/nosetests\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/nosetests\
+    \/bin\/sed -i \x27s/nosetests-[0-9]\.[0-9]/nosetests/g\x27 \{envbindir\}\/nosetests' tox.ini
+
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='RPM_BUILD_DIR'
+export TOXENV=py%{python_version_nodots python},\
+py%{python_version_nodots python3}-selects,\
+py%{python_version_nodots python3}-poll,\
+py%{python_version_nodots python3}-epolls
+
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
-%doc AUTHORS NEWS README*
-%python_sitelibdir/*
+%doc AUTHORS NEWS README.rst
+%python_sitelibdir/eventlet-%version-py%_python_version.egg-info/
+%python_sitelibdir/eventlet/
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
 
 %files docs
@@ -152,14 +191,18 @@ popd
 
 %files pickles
 %python_sitelibdir/*/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS NEWS README*
-%python3_sitelibdir/*
 %endif
 
+%files -n python3-module-%oname
+%doc AUTHORS NEWS README.rst
+%python3_sitelibdir/eventlet-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/eventlet/
+
 %changelog
+* Fri Apr 26 2019 Stanislav Levin <slev@altlinux.org> 0.24.1-alt1
+- 0.18.4 -> 0.24.1.
+- Enabled testing.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.18.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
