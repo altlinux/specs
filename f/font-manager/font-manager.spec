@@ -10,7 +10,7 @@
 
 Name: font-manager
 Version: 0.7.5
-Release: alt1
+Release: alt2
 
 Summary: A font management application for the GNOME desktop
 License: GPLv3
@@ -23,6 +23,7 @@ Source: https://github.com/FontManager/master/releases/download/%version/%name-%
 # VCS: https://github.com/FontManager/master.git
 Source: %name-%version.tar
 %endif
+Patch: font-manager-0.7.5-alt-build.patch
 
 Requires: file-roller
 
@@ -56,6 +57,7 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
+%patch
 
 %build
 %meson -Ddisable_pycompile=true \
@@ -85,6 +87,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Sat Apr 27 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt2
+- fixed build (ALT #36689)
+
 * Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
 - 0.7.5 (ported to Meson build system)
 - built nautilus extension with python3 (nautilus-python-1.2.2-alt2)
