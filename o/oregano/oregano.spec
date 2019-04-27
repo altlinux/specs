@@ -1,5 +1,5 @@
 Name: oregano
-Version: 0.84.22
+Version: 0.84.41
 Release: alt1
 
 Summary: A GUI to simulate electronic circuit
@@ -56,6 +56,9 @@ rm -f %buildroot%_bindir/microtests/
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.84.41-alt1
+- new version 0.84.41 (with rpmrb script)
+
 * Tue Jul 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.84.22-alt1
 - switch to https://github.com/drahnr/oregano
 - new version 0.84.22 (with rpmrb script)
