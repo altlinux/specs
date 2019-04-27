@@ -2,9 +2,10 @@
 %def_without xtdesktop
 %def_without desklaunch
 %def_without kde3kdesktop
+%def_without ivman
 Name: icewm-startup
 Version: 0.20
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -216,6 +217,7 @@ xtdesktop plug-in для менеджера автозапуска програ�
 Плагин запускает xtdesktop только при наличии ~/.xtdeskrc.
 %endif #xtdesktop
 
+%if_with ivman
 %package ivman
 Group: Graphical desktop/Icewm
 Summary: ivman autostart at IceWM startup
@@ -227,6 +229,7 @@ AutoReq: no
 ivman plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 ivman
 ivman plug-in для менеджера автозапуска программ IceWM.
+%endif
 
 %package spacefm
 Group: Graphical desktop/Icewm
@@ -428,7 +431,9 @@ EOF
 
 echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
 echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
+%if_with ivman
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
+%endif
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
@@ -587,8 +592,10 @@ fi
 %files idesk
 %config %icewmconfdir/startup.d/020-idesk
 
+%if_with ivman
 %files ivman
 %config %icewmconfdir/startup.d/ivman
+%endif
 
 %files spacefm
 %config %icewmconfdir/startup.d/spacefm
@@ -635,6 +642,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.20-alt2
+- build without ivman subpackage
+
 * Sat Mar 30 2019 Anton Midyukov <antohami@altlinux.org> 0.20-alt1
 - added pnmixer
 
