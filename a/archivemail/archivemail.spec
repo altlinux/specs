@@ -1,8 +1,8 @@
-#def_disable check
+%def_disable check
 
 Name: archivemail
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: Archive and compress old email
 License: GPLv2+
@@ -53,6 +53,9 @@ rm %buildroot%python_sitelibdir/archivemail-*.egg-info
 %doc CHANGELOG FAQ NEWS README TODO test_archivemail examples/
 
 %changelog
+* Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt3
+- disable check
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt2
 - fix build: apply patch from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=724043
 
