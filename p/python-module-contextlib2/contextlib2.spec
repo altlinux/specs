@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 Summary: Backports and enhancements for the contextlib module
 
@@ -47,6 +47,12 @@ future enhancements to the standard library version.
 
 %prep
 %setup
+sed -i '/\[testenv\]/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/coverage3 \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 
 rm -rf ../python3
 cp -a . ../python3
@@ -66,14 +72,12 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp %_bindir\/coverage3 \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python}
+tox.py3 --sitepackages -p auto -o -v
+
+pushd ../python3
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %files
@@ -86,6 +90,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/contextlib2-*.egg-info/
 
 %changelog
+* Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5.5-alt2
+- separate run tests for python2 and python3 (ALT bug 36666)
+
 * Mon Jan 28 2019 Stanislav Levin <slev@altlinux.org> 0.5.5-alt1
 - 0.4.0 -> 0.5.5.
 
