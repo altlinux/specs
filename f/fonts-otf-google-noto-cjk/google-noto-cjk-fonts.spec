@@ -1,9 +1,9 @@
 Group: System/Fonts/True type
 %define oldname google-noto-cjk-fonts
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 32a5844539f2e348ed36b44e990f9b06d7fb89fe
+%global commit0 be6c059ac1587e556e2412b27f5155c8eb3ddbe6
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-cjk
@@ -17,8 +17,8 @@ supported for compatibility with CJK standards. \
 %{nil}
 
 Name:           fonts-otf-google-noto-cjk
-Version:        20170602
-Release:        alt1_9
+Version:        20190416
+Release:        alt1_1
 Summary:        Google Noto Sans CJK Fonts
 
 License:        OFL
@@ -460,6 +460,9 @@ done
 
 
 %changelog
+* Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 11 2019 Igor Vlasenko <viy@altlinux.ru> 20170602-alt1_9
 - added font subpackages
 
