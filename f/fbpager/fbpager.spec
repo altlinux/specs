@@ -3,10 +3,10 @@
 
 Name: fbpager
 Version: 0.1.4
-Release: alt8.qa2
+Release: alt8.qa3
 
 Summary: Workspaces pager for Fluxbox
-Summary(ru_RU.CP1251): Пейджер рабочих столов для Fluxbox
+Summary(ru_RU.UTF-8): РџРµР№РґР¶РµСЂ СЂР°Р±РѕС‡РёС… СЃС‚РѕР»РѕРІ РґР»СЏ Fluxbox
 
 License: MIT
 Group: Graphical desktop/Other
@@ -20,7 +20,7 @@ Patch1: %name-0.1.4-alt-warnings-Wall_fix.patch
 Patch2: %name-%version-alt-gcc8.patch
 
 Requires: fluxbox >= 0.9.13-alt2
-Provides: fluxter >= 0.1.0-alt1
+Provides: fluxter = 0.1.0-alt1
 Obsoletes: fluxter >= 0.1.0-alt1
 
 BuildRequires: gcc-c++ libXt-devel libXrender-devel
@@ -30,10 +30,10 @@ Workspaces pager. Was developeed specifically for use in conjunction
 with Fluxbox window manager. It is highly configurable and moreover
 supports transparency.
 
-%description -l ru_RU.CP1251
-Пейджер рабочих столов. Предназначен специально для использования в
-менеджере окон Fluxbox. Поддерживает прозрачность и возможность гибкой
-настройки "под себя".
+%description -l ru_RU.UTF-8
+РџРµР№РґР¶РµСЂ СЂР°Р±РѕС‡РёС… СЃС‚РѕР»РѕРІ. РџСЂРµРґРЅР°Р·РЅР°С‡РµРЅ СЃРїРµС†РёР°Р»СЊРЅРѕ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ
+РјРµРЅРµРґР¶РµСЂРµ РѕРєРѕРЅ Fluxbox. РџРѕРґРґРµСЂР¶РёРІР°РµС‚ РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ Рё РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РіРёР±РєРѕР№
+РЅР°СЃС‚СЂРѕР№РєРё "РїРѕРґ СЃРµР±СЏ".
 
 %prep
 %setup
@@ -57,6 +57,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.4-alt8.qa3
+- NMU: fix provides
+
 * Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt8.qa2
 - NMU: fixed build with gcc-8.
 
