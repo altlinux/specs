@@ -1,85 +1,88 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name rfc3986
 
-%def_with python3
+%def_with check
 
 Name: python-module-%pypi_name
-Version: 0.4.1
+Version: 1.3.1
 Release: alt1
 Summary: Validating URI References per RFC 3986
 Group: Development/Python
 License: ASL 2.0
 Url: https://pypi.python.org/pypi/rfc3986
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
 BuildArch: noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python2.7(idna)
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python3(idna)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(tox)
 %endif
+
+%py_requires idna
 
 %description
 A Python implementation of RFC 3986 including validation and authority parsing.
 
-%if_with python3
 %package -n python3-module-%pypi_name
 Summary: Validating URI References per RFC 3986
 Group: Development/Python3
+%py3_requires idna
 
 %description -n python3-module-%pypi_name
 A Python implementation of RFC 3986 including validation and authority parsing.
-%endif
-
 
 %prep
 %setup
+%patch -p1
 
-# Remove bundled egg-info
-rm -rf %pypi_name.egg-info
-
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
-export LANG=en_US.UTF-8
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
 pushd ../python3
-export LANG=en_US.UTF-8
 %python3_install
 popd
-%endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
+%check
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/*
+%python_sitelibdir/rfc3986/
+%python_sitelibdir/rfc3986-%version-py%_python_version.egg-info/
 
-%if_with python3
 %files -n python3-module-%pypi_name
-%python3_sitelibdir/*
-%endif
-
+%python3_sitelibdir/rfc3986/
+%python3_sitelibdir/rfc3986-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Apr 27 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 0.4.1 -> 1.3.1.
+- Enabled testing.
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 
