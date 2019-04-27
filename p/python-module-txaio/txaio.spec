@@ -5,7 +5,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 18.7.1
+Version: 18.8.1
 Release: alt1
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/txaio/
 
 # https://github.com/tavendo/txaio.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-18.7.1-alt-docs.patch
 Patch2: python-txaio-skip-packaging-tests.patch
 
 BuildArch: noarch
@@ -186,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 28 2019 Anton Midyukov <antohami@altlinux.org> 18.8.1-alt1
+- Updated to upstream version 18.8.1.
+
 * Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.7.1-alt1
 - Updated to upstream version 18.7.1.
 
