@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.61
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -16,7 +16,6 @@ Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.
 Patch0: %name-apt-alt.patch
 Patch1: %name-bash4-alt.patch
 Patch2: %name-desktop-alt.patch
-Patch3: %name-udev-alt.patch
 
 Requires: curl
 Requires: glibc-pthread >= 2.15
@@ -38,7 +37,6 @@ savegame and screenshot functionality, and many social features.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %install
 %makeinstall_std
@@ -78,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Sun Apr 28 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt2
+- Remove patch udev rules
+
 * Tue Apr 23 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt1
 - Version 1.0.0.61
 
