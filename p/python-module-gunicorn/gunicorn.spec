@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 19.7.1
-Release: alt2.1
+Version: 19.9.0
+Release: alt1
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -12,11 +12,11 @@ Url: http://pypi.python.org/pypi/gunicorn
 
 # https://github.com/benoitc/gunicorn.git
 Source: %name-%version.tar
-Patch: deprecate-gaiohttp-worker.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools time
+BuildRequires: python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-sphinx python3-module-unittest2
@@ -72,7 +72,6 @@ This package contains pickles for gunicorn.
 
 %prep
 %setup
-%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -142,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 28 2019 Anton Midyukov <antohami@altlinux.org> 19.9.0-alt1
+- Updated to upstream version 19.9.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 19.7.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
