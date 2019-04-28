@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/valgrind gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      libgta
 Version:   1.0.9
-Release:   alt1_1
+Release:   alt1_1.1
 Summary:   Library that implements the Generic Tagged Arrays file format
 Group:     System/Libraries
 License:   LGPLv2+
@@ -18,6 +18,10 @@ BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzma-devel
 Source44: import.info
+
+%ifarch %ix86 x86_64 aarch64 armh mipsel
+BuildRequires: /usr/bin/valgrind
+%endif
 
 %description
 Libgta is a portable library that implements the GTA (Generic Tagged Arrays)
@@ -85,6 +89,9 @@ make check V=1
 
 
 %changelog
+* Sun Apr 28 2019 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1_1.1
+- BR: valgrind only where it's available
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1
 - update to new release by fcimport
 
