@@ -1,27 +1,25 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 0.22
-%define beta %nil
-%define efl_ver_major 1.20
-%define efl_ver %efl_ver_major.5
+%define ver_major 0.23
+%define beta -alpha
+%define efl_ver_major 1.22
+%define efl_ver %efl_ver_major.2
 
-%def_disable static
 # only bluez4 supported
-%def_disable bluetooth
-%def_enable wayland
+%def_enable bluetooth
+%def_disable wayland
 %def_enable xwayland
 %def_enable wl_drm
 %def_enable wl_x11
 %def_enable systemd
 %def_enable install_sysactions
-%def_without pam_helper
 %def_with suid_binaries
 # for silly lightdm
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.4
-Release: alt2.1
+Version: %ver_major.0
+Release: alt0.1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -72,14 +70,13 @@ Requires: udisks2
 Requires: pulseaudio-daemon
 Requires: geoclue2
 %{?_enable_xwayland:Requires: xorg-xwayland xorg-drv-libinput}
-%{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildRequires: rpm-build-xdg
+BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel libpulseaudio-devel
-BuildRequires: libxkbcommon-devel libdrm-devel libgbm-devel
+BuildRequires: xkeyboard-config-devel libxkbcommon-devel libdrm-devel libgbm-devel
 BuildRequires: doxygen
 # for sysv
 BuildRequires: pm-utils
@@ -103,36 +100,25 @@ Provides: e18-devel = %EVR
 Development headers for Enlightenment.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version
 #%patch -p1 -R -b .auth
 %patch1 -p1 -b .gsd
 %{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
 %patch3 -p2 -b .ptrace
-%{?_with_pam_helper:%patch4 -p1 -b .pam_helper}
 
 %build
-%autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` `pkg-config --cflags uuid` -g -ggdb3"
-%configure \
-	--with-profile=FAST_PC \
-	--enable-files \
-	%{subst_enable static} \
-	--enable-shared \
-	--enable-pam \
-	%{subst_enable wayland} \
-	%{?_enable_xwayland:--enable-xwayland --with-Xwayland=%_bindir/Xwayland} \
-	%{?_enable_wl_drm:--enable-wl-drm} \
-	%{?_enable_wl_x11:--enable-wl-x11} \
-	%{?_disable_install_sysactions:--disable-install-sysactions} \
-%if_with pam_helper
-	--with-pam-helper=%prefix/libexec/chkpwd-pam/chkpwd-pam \
-%endif
-
-%make_build
-%make doc
+%meson \
+	-Dfiles=true \
+	-Dpam=true \
+	%{?_enable wayland:-Dwayland=true} \
+	%{?_enable_xwayland:-Dxwayland=true -Dxwayland-bin=%_bindir/Xwayland} \
+	%{?_disable_wl_drm:-Dwl-drm=false} \
+	%{?_disable_wl_x11:-Dwl-x11=false} \
+	%{?_disable_install_sysactions:-Dinstall-sysactions=flase} \
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot%_rpmmacrosdir
 cat > %buildroot%_rpmmacrosdir/%name <<_EOF_
@@ -197,11 +183,7 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 # suid bit apps
 %_libdir/%name/utils/%{name}_backlight
 %_libdir/%name/utils/%{name}_sys
-%if_without pam_helper
 %_libdir/%name/utils/%{name}_ckpasswd
-%else
-%exclude %_libdir/%name/utils/%{name}_ckpasswd
-%endif
 %_liconsdir/*.png
 %_bindir/emixer
 %_bindir/%name
@@ -222,8 +204,6 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_xdgmenusdir/e-applications.menu
 %doc AUTHORS COPYING README
 
-%exclude %_libdir/%name/modules/*/*/*.la
-
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
@@ -231,6 +211,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Jun 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.23.0-alt0.1
+- 0.23.0-alpha (v0.22.0-394-g4d6a47374) with disabled wayland support
+
 * Wed Jun 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt2.1
 - renamed /usr/share/xsessions/enlightenment.desktop to enlightenment-xorg.desktop
 
