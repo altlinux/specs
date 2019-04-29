@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Inflect
 Name: perl-%dist
-Version: 1.903
+Version: 1.904
 Release: alt1
 
 Summary: Convert singular to plural, select "a" or "an"
@@ -35,6 +35,9 @@ of numbers as words.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Mon Apr 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.904-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.903-alt1
 - automated CPAN update
 
