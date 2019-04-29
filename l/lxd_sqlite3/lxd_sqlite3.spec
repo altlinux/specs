@@ -1,6 +1,6 @@
 Name: lxd_sqlite3
 Version: 3.26.0
-Release: alt1
+Release: alt2
 Summary: An Embeddable SQL Database Engine with WAL replication
 License: Public Domain
 Group: Development/Databases
@@ -25,9 +25,6 @@ access without running a separate RDBMS process.
 %package -n lib%name
 Summary: An Embeddable SQL Database Engine (shared library)
 Group: System/Libraries
-Provides: sqlite(SECURE_DELETE) sqlite(COLUMN_METADATA) sqlite(FTS3) sqlite(UNLOCK_NOTIFY)
-Provides: %name-fts3 = %version-%release
-Obsoletes: %name-fts3 < %version-%release
 
 %description -n lib%name
 SQLite is a C library that implements an SQL database engine.
@@ -83,6 +80,9 @@ rm -rf %buildroot/%_libdir/lxd/pkgconfig
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 29 2019 Denis Pynkin <dans@altlinux.org> 3.26.0-alt2
+- Removed unneeded provides
+
 * Thu Jan 10 2019 Denis Pynkin <dans@altlinux.org> 3.26.0-alt1
 - Version with enabled WAL replication needed for LXD.
 - Based on original sqlite3 spec file for ALTLinux
