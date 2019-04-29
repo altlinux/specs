@@ -1,17 +1,16 @@
-%define pkgname raindrops
+%define        pkgname raindrops
 
-Name: ruby-%pkgname 
-Version: 0.19.0
-Release: alt1.5
+Name:          ruby-%pkgname
+Version:       0.19.0
+Release:       alt2
+Summary:       real-time stats for preforking Rack servers
+Group:         Development/Ruby
+License:       LGPLv2
+Url:           http://raindrops.bogomips.org/
+# VCS:         git://bogomips.org/raindrops.git
 
-Summary: real-time stats for preforking Rack servers
-Group: Development/Ruby 
-License: LGPL
-Url: http://raindrops.bogomips.org/
-
-Source: %pkgname-%version.tar
-
-BuildRequires: libruby-devel ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description 
 Raindrops is a real time stats package to show statistics for Rack HTTP
@@ -23,41 +22,56 @@ Struct-like Raindrops::Struct class that may be used standalone to
 create atomic counters shared across any number of forked processes
 under SMP.
 
-%package doc 
-Summary: Documentation files for %name 
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -q -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-#for t in test/test_*.rb; do
-#ruby_test_unit -Iext/kgio:lib "$t"
-#done
-
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README TODO
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_sitearchdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%doc COPYING
-%ruby_ri_sitedir/Raindrops*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.19.0-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt1.5
 - Rebuild with new Ruby autorequirements.
 

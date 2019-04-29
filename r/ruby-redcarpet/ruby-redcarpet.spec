@@ -1,62 +1,86 @@
-%define  pkgname redcarpet
+%define        pkgname redcarpet
 
-Name:    ruby-%pkgname
-Version: 3.4.0
-Release: alt1
+Name:          ruby-%pkgname
+Version:       3.4.0
+Release:       alt2
+Summary:       The safe Markdown parser, reloaded
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/vmg/redcarpet
+# VCS:         https://github.com/vmg/redcarpet.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: The safe Markdown parser, reloaded.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/vmg/redcarpet
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
 Redcarpet is a Ruby library for Markdown processing that smells like
 butterflies and popcorn.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n %pkgname
+Summary:       %summary
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   -n %pkgname
+%summary.
+
+Executables files for %gemname gem.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%_bindir/%pkgname
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
+%files         -n %pkgname
+%_bindir/*
+
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.4.0-alt2
+- Use Ruby Policy 2.0
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version.
 

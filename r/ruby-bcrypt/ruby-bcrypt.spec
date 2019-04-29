@@ -1,64 +1,59 @@
-%define  pkgname bcrypt-ruby
+%define        pkgname bcrypt
 
-Name:    ruby-bcrypt
-Version: 3.1.12
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       3.1.12
+Release:       alt2
+Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/codahale/bcrypt-ruby
+# VCS:         https://github.com/codahale/bcrypt-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/codahale/bcrypt-ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-
-Provides: %pkgname = %EVR
+Provides:      %pkgname-ruby
+Obsoletes:     %pkgname-ruby
 
 %description
 bcrypt() is a sophisticated and secure hash algorithm designed by The
 OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a
 simple wrapper for safely handling passwords.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %name
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Apr 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.12-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.12-alt1.1
 - Rebuild with new Ruby autorequirements.
 

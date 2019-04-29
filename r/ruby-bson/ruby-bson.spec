@@ -1,60 +1,71 @@
-%define  pkgname bson-ruby
+%define        pkgname bson
 
-Name: 	 ruby-bson
-Version: 4.3.0
-Release: alt1.3
+Name: 	       ruby-%pkgname
+Version:       4.4.2
+Release:       alt1
+Summary:       Ruby Implementation of the BSON Specification (2.0.0+)
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           http://bsonspec.org
+# VCS:         https://github.com/mongodb/bson-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby Implementation of the BSON Specification (2.0.0+)
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     http://bsonspec.org
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 4.4.2-alt1
+- Bump to 4.4.2
+- Use Ruby Policy 2.0
+
 * Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1.3
 - Rebuild with new Ruby autorequirements.
 

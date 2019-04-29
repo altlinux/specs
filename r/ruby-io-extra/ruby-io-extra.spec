@@ -1,54 +1,64 @@
-%define pkgname io-extra
+%define        pkgname io-extra
 
-Name: ruby-%pkgname
-Version: 1.2.7
-Release: alt1.6
+Name:          ruby-%pkgname
+Version:       1.3.0
+Release:       alt1
+Summary:       Adds IO.fdwalk, IO.closefrom and IO.directio
+Group:         Development/Ruby
+License:       Apache-2.0
+Url:           https://github.com/djberg96/io-extra
+# VCS:         https://github.com/djberg96/io-extra.git
 
-Summary: Adds IO.fdwalk, IO.closefrom and IO.directio
-Group: Development/Ruby
-License: Ruby
-Url: http://rubyforge.org/projects/shards
-
-Source: %pkgname-%version.tar
-
-# Automatically added by buildreq on Thu Aug 11 2011
-# optimized out: ruby ruby-stdlibs ruby-tool-rdoc
-BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
 the io-extra library provides a few extra IO methods that you may find
 handy. They are IO.closefrom, IO.fdwalk, IO#directio and IO#directio.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
+Adds the IO.closefrom, IO.fdwalk, IO.pread, IO.pread_ptr, IO.pwrite, and
+IO.writev singleton methods as well as the IO#directio, IO#directio? and
+IO#ttyname instance methods (for those platforms that support them).
 
-%description doc 
-Documentation files for %name.
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -q -n  %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-
+%gem_build
 
 %install
-%ruby_install
-%rdoc ext/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README CHANGES
-#ruby_sitelibdir/*
-%ruby_sitearchdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/IO*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
+- Move forward with sourcing from github
+- Bump to 1.3.0
+- Use Ruby Policy 2.0
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1.6
 - Rebuild with Ruby 2.5.1
 

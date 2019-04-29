@@ -1,24 +1,19 @@
-%define  pkgname mysql2
- 
-Name: 	 ruby-%pkgname
-Version: 0.5.2
-Release: alt1.1
- 
-Summary: A modern, simple and very fast Mysql library for Ruby - binding to libmysql
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/brianmario/mysql2
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:  %pkgname-%version.tar
- 
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel ruby-test-unit ruby-tool-rdoc
-BuildRequires: libmysqlclient-devel
+%define        pkgname mysql2
 
-%filter_from_requires \,^ruby(Win32API),d
+Name: 	       ruby-%pkgname
+Version:       0.5.2
+Release:       alt2
+Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/brianmario/mysql2
+# VCS:         https://github.com/brianmario/mysql2.git
+
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
+
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libmysqlclient-devel
 
 %description
 The Mysql2 gem is meant to serve the extremely common use-case of
@@ -31,42 +26,57 @@ strings in 1.9, unless Encoding.default_internal is set then it will
 convert from UTF-8 to that encoding] and uses encoding-aware MySQL API
 calls where it can.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config -- --without-mysql-rpath
-%ruby_build
- 
+%gem_build
+#%ruby_config -- --without-mysql-rpath
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
 %doc README*
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
- 
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
+
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.2-alt2
+- Use Ruby Policy 2.0
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 

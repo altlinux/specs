@@ -1,21 +1,18 @@
-%define  pkgname curb
+%define        pkgname curb
 
-Name: 	 ruby-%pkgname
-Version: 0.9.7
-Release: alt1
+Name: 	       ruby-%pkgname
+Version:       0.9.9
+Release:       alt1
+Summary:       Ruby bindings for libcurl
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/taf2/curb
+# VCS:         https://github.com/taf2/curb.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby bindings for libcurl
-License: MIT/ruby
-Group:   Development/Ruby
-Url:     https://github.com/taf2/curb
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
+Patch:         version.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: libcurl-devel
 
 %description
@@ -26,42 +23,57 @@ libcurl live at http://curl.haxx.se/ .
 Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 'multi' modes.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
+%patch -p1
 
 %build
-%ruby_config -- --use-system-libraries
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-find %buildroot
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.9-alt1
+- Bump to 0.9.9
+- Use Ruby Policy 2.0
+
 * Wed Nov 07 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.7-alt1
 - Bump to 0.9.7
 

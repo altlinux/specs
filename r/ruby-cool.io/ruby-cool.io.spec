@@ -1,58 +1,80 @@
-%define  pkgname cool.io
+%define        pkgname cool-io
+%define        gemname cool.io
 
-Name:    ruby-%pkgname
-Version: 1.5.3
-Release: alt1
+Name:          ruby-%gemname
+Version:       1.5.4
+Release:       alt1
+Summary:       Simple evented I/O for Ruby (but please check out Celluloid::IO instead)
+License:       MIT
+Group:         Development/Ruby
+Url:           https://coolio.github.io/
+# VCS:         https://github.com/tarcieri/cool.io.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Simple evented I/O for Ruby (but please check out Celluloid::IO instead)
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/tarcieri/cool.io/
-
-Packager:  Mikhail Gordeev <obirvalger@altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel
 
 %description
-%summary
+%summary.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+Cool.io is an event library for Ruby, built on the libev event library, which
+provides a cross-platform interface to high performance system calls. This
+includes the epoll system call for Linux, the kqueue system call for BSDs and
+OS X, and the completion ports interface for Solaris.
 
-BuildArch: noarch
+Cool.io also binds asynchronous wrappers to Ruby's core socket classes so you
+can use them in conjunction with Cool.io to build asynchronous event-driven
+applications.
 
-%description doc
-Documentation files for %{name}.
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%gemname-doc
+Obsoletes:     ruby-%gemname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.4-alt1
+- Bump to 1.5.4
+- Use Ruby Policy 2.0
+
 * Sat Sep 29 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.3-alt1
 - Initial build for Sisyphus

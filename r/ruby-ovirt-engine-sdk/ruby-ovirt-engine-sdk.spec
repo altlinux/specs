@@ -1,61 +1,84 @@
-%define  pkgname ovirt-engine-sdk-ruby
+%define        pkgname ovirt-engine-sdk
 
-Name:    ruby-ovirt-engine-sdk
-Version: 4.2.5
-Release: alt1
+Name:          ruby-ovirt-engine-sdk
+Version:       4.3.0
+Release:       alt1
+Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://github.com/oVirt/ovirt-engine-sdk-ruby
+# VCS:         https://github.com/oVirt/ovirt-engine-sdk-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
-License: Apache 2.0
-Group:   Development/Ruby
-Url:     https://github.com/oVirt/ovirt-engine-sdk-ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-Patch:   alt-remove-absent-modules.patch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
+BuildRequires: xmllint
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
+BuildRequires: gem(rake)
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(rubocop)
+BuildRequires: gem(yard)
+BuildRequires: gem(rspec-core)
 
 %description
-%summary
+%summary.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
+This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
 
-%description doc
-Documentation files for %{name}.
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-ruby-doc
+Obsoletes:     ruby-%pkgname-ruby-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%patch -p2
-%update_setup_rb
-echo -e "module OvirtSDK4\nVERSION = \"%version\"\nend" > lib/ovirtsdk4/version.rb
+%setup
+# create version.rb
+echo "module OvirtSDK4;VERSION = '$(xmllint pom.xml --xpath "/*[name()='project']/*[name()='version']/text()")';end" > sdk/lib/ovirtsdk4/version.rb
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
+
+%check
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.0-alt1
+- Use Ruby Policy 2.0
+- Bump to 4.3.0
+
 * Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.5-alt1
 - New version.
 

@@ -1,61 +1,57 @@
-%define  pkgname hoe
+%define        pkgname hoe
 
-Name:    ruby-%pkgname
-Version: 3.17.1
-Release: alt1
-
-Summary: Hoe is a rake/rubygems helper for project Rakefiles
-License: MIT
-Group:   Development/Ruby
-Url:     git://github.com/seattlerb/hoe
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
+Name:          ruby-%pkgname
+Version:       3.17.2
+Release:       alt1
+Summary:       Hoe is a rake/rubygems helper for project Rakefiles
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/seattlerb/hoe
+# VCS:         https://github.com/seattlerb/hoe.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 
 %description
 %summary
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-rake debug_gem > %pkgname-%version.gemspec 
+%gem_build --shebang=auto
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
 %_bindir/sow
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Apr 25 2019 Pavel Skrylev <majioa@altlinux.org> 3.17.2-alt1
+- Bump to 3.17.2
+- Use Ruby Policy 2.0
+
 * Mon Oct 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.1-alt1
 - New version.
 

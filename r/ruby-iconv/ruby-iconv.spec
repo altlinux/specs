@@ -1,39 +1,59 @@
-%define bname iconv
-Name: ruby-%bname
-Version: 1.0.5
-Release: alt1.2
-Summary: Ruby iconv module
-License: Ruby
-Group:   Development/Ruby
-URL:     https://github.com/nurse/iconv
-Source:  %name-%version.tar
-Conflicts: rubu-stdlibs <= 1.9.3
-Requires: ruby-stdlibs
+%define        pkgname iconv
 
-BuildPreReq: rpm-build-ruby ruby-tool-setup
-BuildRequires: ruby libruby-devel ruby-tool-rdoc
+Name:          ruby-%pkgname
+Version:       1.0.8
+Release:       alt1
+Summary:       iconv wrapper, used to be ext/iconv
+License:       BSD 2-clause Simplified License/Ruby
+Group:         Development/Ruby
+URL:           https://github.com/nurse/iconv
+# VCS:         https://github.com/ruby/iconv.git
+
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
-This package contains deprecated Ruby iconv module.
+Iconv is a wrapper class for the UNIX 95 iconv() function family, which
+translates string between various encoding systems.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -q
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
+%gem_install
+
+%check
+%gem_test
 
 %files
-%ruby_sitelibdir/*
-%ruby_sitearchdir/*
-%ruby_ri_sitedir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.8-alt1
+- Bump to 1.0.8
+- Use Ruby Policy 2.0
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.2
 - Rebuild with Ruby 2.5.1
 

@@ -1,23 +1,17 @@
-%define  pkgname nio4r
+%define        pkgname nio4r
 
-Name:    ruby-%pkgname
-Version: 2.3.1
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       2.3.1
+Release:       alt2
+Summary:       New I/O for Ruby: Cross-platform asynchronous I/O primitives for scalable network clients and servers
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/socketry/nio4r
+# VCS:         https://github.com/socketry/nio4r.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: New I/O for Ruby: Cross-platform asynchronous I/O primitives for scalable network clients and servers
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/socketry/nio4r
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-
-%filter_from_requires /^ruby(jruby)/d
 
 %description
 New I/O for Ruby (nio4r): cross-platform asynchronous I/O primitives for
@@ -27,41 +21,55 @@ cross-platform stateful I/O selector API for Ruby. I/O selectors are the
 heart of "reactor"-based event loops, and monitor multiple I/O objects
 for various types of readiness, e.g. ready for reading or writing.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 

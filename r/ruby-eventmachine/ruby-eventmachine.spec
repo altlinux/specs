@@ -1,26 +1,21 @@
-%define pkgname eventmachine
+%define        pkgname eventmachine
 
-#	disable if you do not have direct connection to internet
-%def_without Internet
-#	enable if you build the package on OpenVZ kernel
-%def_without OpenVZ
+Name:          ruby-%pkgname
+Version:       1.2.7
+Release:       alt2
+Summary:       Fast, simple event-processing library for Ruby programs
+Group:         Development/Ruby
+License:       GPLv2/Ruby
+Url:           http://www.rubyeventmachine.com/
+# VCS:         https://github.com/eventmachine/eventmachine.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Name:    ruby-%pkgname
-Version: 1.2.7
-Release: alt1.2
-
-Summary: Fast, simple event-processing library for Ruby programs
-Group:   Development/Ruby
-License: MIT/Ruby
-Url:     http://www.rubyeventmachine.com/ 
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel ruby-tool-setup ruby-tool-rdoc
-BuildRequires: gcc-c++ libssl-devel net-tools /proc
+BuildRequires: gcc-c++
+BuildRequires: net-tools
+BuildRequires: /proc
+BuildRequires: libssl-devel
 
 %description
 EventMachine implements a fast, single-threaded engine for arbitrary network
@@ -34,55 +29,56 @@ are provided with the package, primarily to serve as examples. The real goal
 of EventMachine is to enable programs to easily interface with other programs
 using TCP/IP, especially if custom protocols are required.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-rm -f lib/jeventmachine.rb lib/em/protocols/postgres3.rb
-sed -i 's,\(.*postgres.*\),#&,' lib/em/protocols.rb
-%ruby_config
-%ruby_build
-
-%check
-%if_without Internet
-export SKIPTESTS="-x test_get_sock_opt.rb -x test_httpclient.rb -x test_httpclient2.rb"
-%endif
-
-%if_with OpenVZ
-export SKIPTESTS="$SKIPTESTS -x test_file_watch.rb"
-%endif
-
-# TODO %%ruby_test_unit -Ilib:ext:test $SKIPTESTS tests
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
+
+%check
+%gem_test
 
 %files
-%doc README.md docs examples
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/BufferedTokenizer*
-%ruby_ri_sitedir/EM/*
-%ruby_ri_sitedir/EventMachine*
-%ruby_ri_sitedir/IO/*
-%ruby_ri_sitedir/TestConnection/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.7-alt2
+- Use Ruby Policy 2.0
+
 * Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1.2
 - Rebuild with new Ruby autorequirements.
 

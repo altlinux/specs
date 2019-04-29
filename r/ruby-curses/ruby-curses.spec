@@ -1,51 +1,73 @@
-%define  pkgname curses
- 
-Name: 	 ruby-%pkgname
-Version: 1.2.5
-Release: alt1
- 
-Summary: Ruby binding for curses, ncurses, and PDCurses
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/ruby/curses
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
- 
-Source:  %pkgname-%version.tar
- 
+%define        pkgname curses
+
+Name: 	       ruby-%pkgname
+Version:       1.2.7
+Release:       alt1
+Summary:       Ruby binding for curses, ncurses, and PDCurses
+License:       MIT/Ruby
+Group:         Development/Ruby
+Url:           https://github.com/ruby/curses
+# VCS:         https://github.com/ruby/curses.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+
+Source:        %name-%version.tar
+
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 BuildRequires: libncursesw-devel
- 
+
 %description
 A Ruby binding for curses, ncurses, and PDCurses. curses is an extension
 library for text UI applications.  Formerly part of the Ruby standard
 library.
 
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
- 
+%setup
+
 %build
-%ruby_config
-%ruby_build
- 
+%gem_build
+
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
+%gem_install
+
 %check
-%ruby_test_unit -Ilib:test test
- 
+%gem_test
+
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
- 
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
 %changelog
+* Mon Apr 15 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.7-alt1
+- Bump to 1.2.7
+- Use Ruby Policy 2.0
+
 * Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
 - New version.
 

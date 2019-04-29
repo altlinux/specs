@@ -1,7 +1,7 @@
 %define        pkgname rdiscount
 Name:          %pkgname
 Version:       2.2.0.1
-Release:       alt2.1
+Release:       alt3
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -45,7 +45,7 @@ Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-%pkgname-devel
-Development headers for %gemname gem
+Development headers for %gemname gem.
 
 
 %prep
@@ -56,9 +56,6 @@ Development headers for %gemname gem
 
 %install
 %gem_install
-# TODO remove when fix on i586
-mkdir -p %buildroot%ruby_sitearchdir
-ln -s %ruby_gemextdir/rdiscount.so %buildroot%ruby_sitearchdir
 
 %check
 %gem_test
@@ -72,7 +69,6 @@ ln -s %ruby_gemextdir/rdiscount.so %buildroot%ruby_sitearchdir
 %ruby_gemspec
 %ruby_gemextdir
 %ruby_gemlibdir
-%ruby_sitearchdir/*
 
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
@@ -81,6 +77,9 @@ ln -s %ruby_gemextdir/rdiscount.so %buildroot%ruby_sitearchdir
 %ruby_includedir/*
 
 %changelog
+* Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt3
+- Clean up the spec from the dog-nail
+
 * Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt2.1
 - Fix build on i586 with a workaround dog-nail
 
