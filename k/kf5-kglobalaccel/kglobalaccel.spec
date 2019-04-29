@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.57.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Thu Apr 25 2019 Oleg Solovyov <mcpain@altlinux.org> 5.57.0-alt2
+- fix crash
+
 * Mon Apr 15 2019 Sergey V Turchin <zerg@altlinux.org> 5.57.0-alt1
 - new version
 
