@@ -2,7 +2,7 @@
 %define dist Parse-Method-Signatures
 Name: perl-%dist
 Version: 1.003019
-Release: alt1
+Release: alt2
 
 Summary: Perl6 like method signature parser
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/K/KE/KENTNL/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-MooseX-Traits perl-MooseX-Types-Structured perl-PPI perl-Pod-Escapes perl-Test-Differences perl-Test-Exception perl-aliased
+BuildRequires: perl-MooseX-Traits perl-MooseX-Types-Structured perl-PPI perl-Pod-Escapes perl-Test-Differences perl-Test-Exception perl-aliased perl(List/MoreUtils.pm)
 
 %description
 Inspired by Perl6::Signature but streamlined to just support the subset
@@ -34,6 +34,9 @@ deemed useful for TryCatch and MooseX::Method::Signatures.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Mon Apr 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.003019-alt2
+- fixed build
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.003019-alt1
 - automated CPAN update
 
