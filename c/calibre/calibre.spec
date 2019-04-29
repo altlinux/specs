@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.41.3
+Version: 3.42.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -177,6 +177,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Apr 29 2019 Vitaly Lipatov <lav@altlinux.ru> 3.42.0-alt1
+- new version 3.42.0 (with rpmrb script)
+
 * Sun Apr 21 2019 Vitaly Lipatov <lav@altlinux.ru> 3.41.3-alt1
 - new version 3.41.3 (with rpmrb script) (ALT bug 36650)
 - add BeautifulSoup4 require (new dep)
