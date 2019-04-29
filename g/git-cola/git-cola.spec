@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 2.4
+Version: 3.3
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -42,11 +42,16 @@ and caffeine-inspired features.
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/git-cola
+%_datadir/appdata/git-cola.appdata.xml
+%_datadir/appdata/git-dag.appdata.xml
 %_docdir/git-cola
 %_man1dir/*
 %python_sitelibdir/*
 
 %changelog
+* Mon Apr 29 2019 Leontiy Volodin <lvol@altlinux.org> 3.3-alt1
+- 3.3
+
 * Tue Oct 20 2015 Michael Shigorin <mike@altlinux.org> 2.4-alt1
 - 2.4
 
