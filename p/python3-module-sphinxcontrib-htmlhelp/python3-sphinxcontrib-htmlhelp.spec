@@ -1,7 +1,7 @@
 %define oname sphinxcontrib-htmlhelp
 
 Name:           python3-module-%oname
-Version:        1.0.1
+Version:        1.0.2
 Release:        alt1
 
 Summary:        No description=(
@@ -37,5 +37,8 @@ Really no description=(
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Apr 29 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- new version 1.0.2
+
 * Thu Apr 25 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
