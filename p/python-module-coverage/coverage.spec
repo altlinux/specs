@@ -2,31 +2,37 @@
 
 %define oname coverage
 
-%def_with python3
+%def_with check
 %def_with doc
 
 Name: python-module-%oname
-Version: 4.5.1
-Release: alt3
+Version: 4.5.3
+Release: alt1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
-Url: http://nedbatchelder.com/code/coverage/
+Url: https://pypi.org/project/coverage/
 
-# hg clone http://bitbucket.org/ned/coveragepy
 # https://github.com/nedbat/coveragepy.git
-Source: %oname-%version.tar
-Patch1: %oname-alt-build-docs.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildRequires: python-devel python-module-setuptools
 %if_with doc
 BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-spelling
 BuildRequires: python-module-sphinx_rtd_theme
 %endif
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+
+%if_with check
+BuildRequires: python3(eventlet)
+BuildRequires: python3(flaky)
+BuildRequires: python3(gevent)
+BuildRequires: python3(mock)
+BuildRequires: python3(PyContracts)
+BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(tox)
+BuildRequires: python3(unittest_mixins)
 %endif
 
 %add_findreq_skiplist /usr/lib*/python2.7/site-packages/%oname/lab/genpy.py
@@ -69,7 +75,6 @@ executed but was not.
 This package contains pickles for Coverage.py.
 %endif
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A tool for measuring code coverage of Python3 programs
 Group: Development/Python3
@@ -83,15 +88,12 @@ executed but was not.
 Coverage measurement is typically used to gauge the effectiveness of
 tests. It can show which parts of your product code are being exercised
 by tests, and which are not.
-%endif
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
-%if_with python3
 cp -a . ../python3
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -103,20 +105,16 @@ export PYTHONPATH=$PWD
 %make_build pickle
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 mv %buildroot%_bindir/coverage %buildroot%_bindir/coverage3
 ln -s coverage3 %buildroot%_bindir/python3-coverage
-%endif
 
 %python_install
 
@@ -129,6 +127,17 @@ cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+%check
+# don't freeze versions
+sed -i 's/==/>=/g' tox.ini requirements/pytest.pip
+export PIP_NO_INDEX=YES
+# don't measure coverage of ourselves
+export COVERAGE_COVERAGE=no
+# run tests for Python3, Python2 needs more work
+export TOXENV=py%{python_version_nodots python3}
+# don't run in parallel
+tox.py3 --sitepackages -v
+
 %files
 %doc CHANGES.rst README.rst TODO.txt
 %python_sitelibdir/%oname
@@ -136,12 +145,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
 %endif
-%_bindir/*
-%if_with python3
-%exclude %_bindir/python3-coverage
-%exclude %_bindir/coverage3
-%exclude %_bindir/coverage-%_python3_version
-%endif
+%_bindir/coverage
+%_bindir/coverage2
+%_bindir/coverage-%_python_version
 
 %if_with doc
 %files doc
@@ -151,16 +157,18 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 %_bindir/coverage3
 %_bindir/coverage-%_python3_version
 %_bindir/python3-coverage
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
-%endif
 
 %changelog
+* Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1
+- 4.5.1 -> 4.5.3.
+- Enabled testing for Python3 package.
+
 * Wed Mar 13 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt3
 - NMU: added _bindir/python3-coverage compat symlink
 
