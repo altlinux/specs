@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: APT Lua scripts for NVIDIA driver
@@ -42,6 +42,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Mon Apr 29 2019 Sergey V Turchin <zerg@altlinux.org> 0.4.8-alt1
+- remove workaround against alt disttags
+
 * Fri Mar 01 2019 Sergey V Turchin <zerg@altlinux.org> 0.4.7-alt1
 - add workaround against alt disttags
 
