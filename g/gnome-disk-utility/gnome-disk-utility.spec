@@ -6,7 +6,7 @@
 
 Name: gnome-disk-utility
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Disk management application
 License: LGPLv2+
@@ -17,6 +17,7 @@ Requires: udisks2 cryptsetup
 Requires: gnome-icon-theme-symbolic
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-3.32.1-alt-build.patch
 
 %define udisks_ver 2.7.6
 %define glib_ver 2.31.0
@@ -49,16 +50,17 @@ RAID, SMART monitoring, etc
 
 %prep
 %setup
+%patch
 
 %build
 %meson \
-	%{?_enable_gsd_plugin:-Dgsd_plugin=true} \
-	%{?_enable_libsystemd:-Dlibsystemd=true}
+	%{?_disable_gsd_plugin:-Dgsd_plugin=false} \
+	%{?_disable_libsystemd:-Dlibsystemd=false}
 %meson_build
 
 %install
 %meson_install
-%find_lang --with-gnome --output=global.lang %name palimpsest
+%find_lang --with-gnome --output=global.lang %name
 
 %files -f global.lang
 %_bindir/gnome-disk-image-mounter
@@ -80,6 +82,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sun Apr 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1.1
+- fixed build
+
 * Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
