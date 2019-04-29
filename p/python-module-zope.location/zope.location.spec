@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1%ubt
+Version: 4.2
+Release: alt1
 
 Summary: Zope Location
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.location/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -133,7 +132,10 @@ popd
 %python3_sitelibdir/zope/location/tests
 
 %changelog
-* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1%ubt
+* Mon Apr 29 2019 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1
+- Build new version.
+
+* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1.S1
 - 4.0.4 -> 4.1.0
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.4-alt2.dev0.git20150128.1.1.1.1
