@@ -1,7 +1,7 @@
 %define rname kactivitymanagerd
 
 Name: plasma5-kactivitymanagerd
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -13,7 +13,6 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-def-activity-name.patch
-Patch2: alt-bindir-usage.patch
 
 # Automatically added by buildreq on Thu Mar 17 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
@@ -24,6 +23,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompl
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kcrash-devel
 
 Provides: kf5-kactivitymanagerd = %EVR
 Obsoletes: kf5-kactivitymanagerd < %EVR
@@ -34,10 +34,11 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 %build
-%K5build
+%K5build \
+    -DKDE_INSTALL_LIBEXECDIR=%_K5exec \
+    #
 
 %install
 %K5install
@@ -45,7 +46,8 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 
 %files -f %name.lang
 %doc COPYING*
-%_K5bin/kactivitymanagerd
+%config(noreplace) %_K5xdgconf/*.*categories
+%_K5exec/kactivitymanagerd
 %_K5lib/libkactivitymanagerd_plugin.so
 %_K5plug/kactivitymanagerd/
 #%_K5plug/*.so
@@ -56,6 +58,9 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %_K5dbus_srv/*activitymanager*.service
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

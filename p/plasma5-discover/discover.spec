@@ -1,7 +1,7 @@
 %define rname discover
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 %K5init altplace
 
@@ -25,6 +25,7 @@ BuildRequires: appstream-qt-devel
 BuildRequires: libflatpak-devel
 BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
+BuildRequires: kf5-kdeclarative-devel
 BuildRequires: kf5-plasma-framework-devel
 
 %description
@@ -80,6 +81,7 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 #
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*.knsrc
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5bin/*
 %_K5exec/discover/runservice
 %dir %_K5plug/discover-notifier/
@@ -103,14 +105,19 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 %_datadir/metainfo/org.kde.discover.packagekit.appdata.xml
 %_datadir/metainfo/org.kde.discovernotifier.appdata.xml
 
+
 %files flatpak
 %_K5plug/discover/flatpak-backend.so
 %_datadir/metainfo/org.kde.discover.flatpak.appdata.xml
 %_K5plug/discover-notifier/FlatpakNotifier.so
 %_K5data/libdiscover/categories/flatpak-backend-categories.xml
 %_K5xdgapp/org.kde.discover-flatpak.desktop
+%_K5icon/*/*/apps/*flatpak*.*
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 

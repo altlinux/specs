@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 %K5init no_altplace
 
@@ -22,6 +22,7 @@ Patch2: alt-gtk2-progressbar.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: gtk-engines-pixmap libgtk+3-devel pkg-config
+BuildRequires: /usr/bin/sassc python3-module-pycairo plasma5-breeze plasma5-breeze-devel
 
 Provides: kde5-breeze-gtk = %EVR
 Obsoletes: kde5-breeze-gtk < %EVR
@@ -41,7 +42,7 @@ Provides: gtk3-theme-breeze = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 %K5build \
@@ -58,6 +59,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 

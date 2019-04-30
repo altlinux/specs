@@ -1,7 +1,10 @@
 %define rname breeze
 
+%define breezecommon_sover 5
+%define libbreezecommon libbreezecommon%breezecommon_sover
+
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -53,11 +56,11 @@ Obsoletes: kf5-breeze-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkf5breeze
+%package -n %libbreezecommon
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n libkf5breeze
+#Requires: %name-common = %EVR
+%description -n %libbreezecommon
 KF5 library
 
 
@@ -66,12 +69,13 @@ KF5 library
 %patch1 -p1
 
 %build
-%K5build
+%K5build \
+    -DKDE_INSTALL_DATADIR=%_K5data \
+    #
 
 %install
 %K5install
-
-%K5install_move data kstyle color-schemes kconf_update wallpapers plasma
+%K5install_move data kconf_update wallpapers
 
 %find_lang %name --all-name
 
@@ -96,7 +100,14 @@ KF5 library
 %files devel
 %_libdir/cmake/Breeze/
 
+%files -n %libbreezecommon
+%_K5lib/libbreezecommon5.so.%breezecommon_sover
+%_K5lib/libbreezecommon5.so.*
+
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

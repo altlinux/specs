@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 %K5init altplace
 
@@ -40,9 +40,13 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 %files  -f %name.lang
 %doc COPYING.LIB
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5plug/kf5/*/*Wayland*.so
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
 - new version
 

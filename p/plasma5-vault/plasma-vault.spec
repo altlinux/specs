@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma5-vault
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -25,6 +25,7 @@ BuildRequires: qt5-declarative-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kactivities-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kpackage-devel plasma5-libksysguard-devel kf5-plasma-framework-devel
+BuildRequires: kf5-networkmanager-qt-devel
 
 Provides: kf5-plasma-vault = %EVR
 Obsoletes: kf5-plasma-vault < %EVR
@@ -77,6 +78,9 @@ Requires: %name-common = %version-%release
 %_K5srv/*vault*.desktop
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 

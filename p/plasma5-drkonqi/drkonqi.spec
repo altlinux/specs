@@ -1,7 +1,7 @@
 %define rname drkonqi
 
 Name: plasma5-%rname
-Version: 5.12.8
+Version: 5.15.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -63,11 +63,15 @@ Requires: %name-common = %version-%release
 
 %files -f %name.lang
 %doc COPYING*
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5exec/drkonqi
 %_K5data/drkonqi/
 %_K5xdgapp/*drkonqi.desktop
 
 %changelog
+* Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
+- new version
+
 * Tue Mar 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.12.8-alt1
 - new version
 
