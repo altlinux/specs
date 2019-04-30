@@ -2,13 +2,14 @@
 
 Name: remmina
 Version: 1.3.4
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
 License: GPLv2+ and MIT
 Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
+Source1: ru.po
 Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
@@ -199,6 +200,7 @@ that shows up under the display manager session menu.
 
 #? Hack: https://github.com/FreeRDP/Remmina/issues/292
 sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
+cp -f %SOURCE1 po/
 
 %build
 %cmake \
@@ -292,6 +294,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Apr 30 2019 Pavel Moseev <mars@altlinux.org> 1.3.4-alt2
+- update translation
+
 * Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.4-alt1
 - 1.3.4
 
