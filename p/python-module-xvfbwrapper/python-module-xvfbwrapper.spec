@@ -5,7 +5,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        %{version}
-Release:        alt1.1.1.1
+Release:        alt1.2
 Group:          Development/Python
 Summary:        run headless display inside X virtual framebuffer (Xvfb)
 
@@ -74,6 +74,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt1.2
+- Rebuild with python3.7.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.4-alt1.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
