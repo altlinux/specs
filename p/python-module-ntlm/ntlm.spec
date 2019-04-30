@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.1.1.1
+Release: alt1.2
 
 Summary: NTLM support, including an authentication handler for urllib2
 License: Free
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1.2
+- Rebuild with python3.7.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
