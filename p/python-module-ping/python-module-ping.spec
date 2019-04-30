@@ -4,7 +4,7 @@
 
 Name: python-module-ping
 Version: 0.2
-Release: alt2.1.1
+Release: alt2.2
 Group: Development/Python
 License: GPLv2
 Summary: implementation of the standard ICMP ping in pure Python
@@ -73,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2-alt2.2
+- Rebuild with python3.7.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
