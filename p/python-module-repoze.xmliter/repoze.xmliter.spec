@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140921.1.1
+Release: alt1.git20140921.2
 %define oname repoze.xmliter
 
 %def_with python3
@@ -135,6 +135,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.6-alt1.git20140921.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt1.git20140921.1.1
 - (AUTO) subst_x86_64.
 
