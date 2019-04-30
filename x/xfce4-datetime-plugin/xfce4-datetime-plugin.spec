@@ -1,5 +1,5 @@
 Name: xfce4-datetime-plugin
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Datetime plugin for the Xfce panel
@@ -47,6 +47,9 @@ Requires: xfce4-panel >= 4.8
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue Apr 30 2019 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
+- Updated to 0.7.1.
+
 * Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
 - Update url.
 - Enable debug (minimum level).
