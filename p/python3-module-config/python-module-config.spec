@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python3
 Summary: a module for configuring Python programs which aims to offer more power and flexibility than the existing ConfigParser module.
 Name: python3-module-config
 Version: 0.3.9
-Release: alt2
+Release: alt2.1
 Source0: config-%version.tar.gz
 License: GPL
 Group: Development/Python
@@ -43,6 +43,9 @@ python3-2to3 -w -d .
 %python3_sitelibdir/config-*.egg-info
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt2.1
+- Rebuild with python3.7.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.9-alt2
 - Don't depend on the python3's minor version during build
   (2to3-3.3 -> python3-2to3).
