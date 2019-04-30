@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
+Release: alt3.2
 %define oname z3c.layer.trusted
 
 %def_with python3
@@ -138,6 +138,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt3.1.1
 - (AUTO) subst_x86_64.
 
