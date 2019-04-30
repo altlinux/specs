@@ -1,7 +1,7 @@
 
 Name: virt-viewer
 Version: 8.0
-Release: alt2
+Release: alt3
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -9,6 +9,8 @@ License: GPL
 Url: http://virt-manager.org/
 # Vcs https://pagure.io/virt-viewer.git
 Source: %name-%version.tar
+Source1: ru.po
+Patch1: virt-viewer-add-translatable-string.patch
 
 Obsoletes: spice-client < 0.12.5-alt3
 
@@ -32,6 +34,8 @@ using SSL/TLS encryption.
 
 %prep
 %setup
+%patch1 -p1
+cp -f %SOURCE1 po/
 
 %build
 mkdir -p m4
@@ -62,6 +66,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Tue Apr 23 2019 Pavel Moseev <mars@altlinux.org> 8.0-alt3
+- update translation
+
 * Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0-alt2
 - Allow toggling clipboard sharing between host and guest.
 
