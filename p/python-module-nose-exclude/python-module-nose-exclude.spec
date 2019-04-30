@@ -4,7 +4,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        0.2.0
-Release:        alt1.1.1
+Release:        alt1.2
 Summary:        Exclude specific directories from nosetests runs
 Group:          Development/Python
 
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt1.2
+- Rebuild with python3.7.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
