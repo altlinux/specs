@@ -28,8 +28,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.12.2
-Release: alt2
+Version: 5.12.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -344,6 +344,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
+- new version
+
 * Tue Mar 19 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt2
 - update chromium
 

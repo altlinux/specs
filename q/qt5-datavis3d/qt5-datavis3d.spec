@@ -2,7 +2,7 @@
 %global qt_module qtdatavis3d
 
 Name: qt5-datavis3d
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1
 
 Group: System/Libraries
@@ -28,6 +28,7 @@ both with C++ and Qt Quick 2.
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: qt5-base-common
 %description common
 Common package for %name
@@ -96,6 +97,9 @@ syncqt.pl-qt5 -version %version
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
+- new version
+
 * Thu Mar 14 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
 - new version
 
