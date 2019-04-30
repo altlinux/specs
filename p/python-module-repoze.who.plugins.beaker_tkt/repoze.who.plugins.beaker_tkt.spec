@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt6
+Release: alt6.1
 Summary: Identifier (auth_tkt) plugin with beaker.session cache implementation
 License: Free
 Group: Development/Python
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.1-alt6.1
+- Rebuild with python3.7.
+
 * Mon Oct 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt6
 - %%python3_req_hier for more precise deps.
 
