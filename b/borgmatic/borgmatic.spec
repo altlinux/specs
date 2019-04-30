@@ -1,5 +1,5 @@
 Name: borgmatic
-Version: 1.2.17
+Version: 1.3.1
 Release: alt1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
@@ -7,6 +7,7 @@ Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for t
 License: GPL3
 Group: File tools
 Url: https://github.com/witten/borgmatic
+
 BuildArch: noarch
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
@@ -16,13 +17,15 @@ Source: %name-%version.tar
 
 Requires: python-module-pykwalify >= 1:1.6.1-alt1
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
-# Automatically added by buildreq on Thu Aug 16 2018
-# optimized out: python-base python-modules python3 python3-base python3-dev python3-module-greenlet python3-module-pycparser python3-module-setuptools
-BuildRequires: python3-dev python3-module-zmq
+BuildRequires: python3-dev python3-module-setuptools
 
-BuildRequires: libssl-devel python3-dev python3-module-setuptools
+# according to setup.py
+%py3_use pykwalify < 14.06
+%py3_use pykwalify > 1.6.0
+%py3_use ruamel-yaml > 0.15.0
+%py3_use ruamel-yaml < 0.16.0
 
 
 %description
@@ -47,6 +50,12 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Apr 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
+* Tue Apr 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1.2.17-alt2
+- fix (build)requires
+
 * Sun Feb 24 2019 Pavel Vainerman <pv@altlinux.ru> 1.2.17-alt1
 - new version (1.2.17) with rpmgs script
 
