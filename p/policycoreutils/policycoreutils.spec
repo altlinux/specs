@@ -6,7 +6,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 2.9
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -410,6 +410,9 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Apr 30 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt2
+- Updated man pages translation by Olesya Gerasimenko.
+
 * Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
 - Updated to upstream version 2.9.
 - Disabled support for python-2.
