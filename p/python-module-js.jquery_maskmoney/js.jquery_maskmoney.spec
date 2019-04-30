@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20130509.1.1
+Release: alt1.git20130509.2
 %define oname js.jquery_maskmoney
 
 %def_with python3
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.git20130509.2
+- Rebuild with python3.7.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.1-alt1.git20130509.1.1
 - (AUTO) subst_x86_64.
 
