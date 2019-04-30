@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.7.7
+Version: 2.7.10
 Release: alt1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Url: http://www.ansible.com
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools asciidoc-a2x python-module-jinja2 python-module-yaml python-modules-json python-module-packaging
+BuildRequires: python-module-setuptools asciidoc-a2x python-module-jinja2 python-module-yaml python-modules-json python-module-packaging python-module-docutils
 
 Requires: ca-certificates >= 2015.10.29
 %py_requires yaml
@@ -57,6 +57,10 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Apr 30 2019 Terechkov Evgenii <evg@altlinux.org> 2.7.10-alt1
+- 2.7.10
+- Add python-module-docutils in BR: to build on e2k (patch by mike@)
+
 * Thu Feb 21 2019 Terechkov Evgenii <evg@altlinux.org> 2.7.7-alt1
 - 2.7.7
 
