@@ -4,7 +4,7 @@
 Summary:	PAM bindings for Python
 Name:		python-module-PAM
 Version:	1.8.3
-Release:	alt1
+Release:	alt2
 License:	%mit
 Group:		Development/Python
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.3-alt2
+- NMU: Rebuild with python3.7.
+
 * Fri May 04 2018 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
 - New version (switch to fork from David Ford)
 - Add Python 3 package
