@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
+Release: alt3.2
 %define oname hurry.resource
 
 %def_with python3
@@ -188,6 +188,9 @@ touch %buildroot%python3_sitelibdir/hurry/__init__.py
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.10-alt3.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10-alt3.1.1
 - (AUTO) subst_x86_64.
 
