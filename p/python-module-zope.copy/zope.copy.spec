@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1%ubt
+Version: 4.2
+Release: alt1
 
 Summary: Pluggable object copying mechanism
 License: ZPLv2.1
@@ -131,7 +131,10 @@ popd
 %python3_sitelibdir/zope/copy/tests
 
 %changelog
-* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1%ubt
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1
+- new version 4.2
+
+* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1.S1
 - 4.0.3 -> 4.1.0
 
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.3-alt1.1.1
