@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt4.1.1
+Release: alt4.2
 %define oname zope.app.form
 
 %def_with python3
@@ -146,6 +146,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt4.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.2-alt4.1.1
 - (AUTO) subst_x86_64.
 
