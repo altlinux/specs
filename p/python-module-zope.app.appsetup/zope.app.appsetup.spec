@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.a1.1.1.1
+Release: alt2.a1.2
 %define oname zope.app.appsetup
 
 %def_with python3
@@ -139,6 +139,9 @@ mv %buildroot%_bindir/debug %buildroot%_bindir/debug.app
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2.a1.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt2.a1.1.1.1
 - (AUTO) subst_x86_64.
 
