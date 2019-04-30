@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1.1
+Release: alt2.2
 %define oname ore.xapian
 
 %def_without python3
@@ -181,6 +181,9 @@ install -p -m644 src/ore/__init__.py \
 %python3_sitelibdir/ore/__pycache__/__init__.*
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt2.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt2.1.1.1
 - (AUTO) subst_x86_64.
 
