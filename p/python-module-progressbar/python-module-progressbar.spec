@@ -4,7 +4,7 @@
 
 Name: python-module-progressbar
 Version: 2.4
-Release: alt1.dev.1
+Release: alt1.dev.2
 
 Summary: Text progressbar library for python
 
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1.dev.2
+- Rebuild with python3.7.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4-alt1.dev.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
