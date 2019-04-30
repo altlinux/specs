@@ -1,6 +1,6 @@
 Name: snes9x
 Version: 1.55
-Release: alt1%ubt
+Release: alt2
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -10,8 +10,6 @@ Url: http://www.snes9x.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/snes9xgit/%name/archive/%version/%name-%version.tar.gz
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: gcc-c++
 BuildRequires: intltool
@@ -98,6 +96,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Apr 30 2019 Nazarov Denis <nenderus@altlinux.org> 1.55-alt2
+- Remove %ubt macro
+
 * Tue Jan 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.55-alt1%ubt
 - Version 1.55
 
