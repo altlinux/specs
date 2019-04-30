@@ -2,7 +2,7 @@
 
 Name: python-module-%py_name
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 
 Group: Development/Python
 %global short_desc Getting image size from png/jpeg/jpeg2000/gif file in pure Python
@@ -90,6 +90,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 test
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1.1
+- Rebuild with python3.7.
+
 * Sat Apr 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.1-alt1
 - upstream release 0.7.1 (no changes)
 
