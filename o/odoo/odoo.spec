@@ -3,12 +3,11 @@
 
 Name: 	 odoo
 Version: 12.0
-Release: alt1.%snapshot
+Release: alt2.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 
-	 # See LICENSING-BREAKDOWN
-License: AGPLv3 and GPLv3 and BSD and Beerware
+License: LGPLv3
 Group:   System/Servers
 URL:     http://www.odoo.com/
 # Git: https://github.com/odoo/odoo (branch: 12.0)
@@ -138,6 +137,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Tue Apr 30 2019 Andrey Cherepanov <cas@altlinux.org> 12.0-alt2.20190424
+- Fix license.
+
 * Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 12.0-alt1.20190424
 - New version (ALT #36679).
 
