@@ -66,7 +66,7 @@
 
 Name: NetworkManager
 Version: 1.18.0
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -779,6 +779,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Apr 30 2019 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt2
+- etcnet-alt: Fix memory leak.
+- etcnet-alt: Fix connections removal (closes: #35185).
+
 * Mon Apr 22 2019 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
 - etcnet-alt: Update nm-udev-utils.h location.
 - Build with -pie.
