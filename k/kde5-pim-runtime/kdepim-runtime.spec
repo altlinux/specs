@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -131,17 +131,14 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %files
 %_K5bin/gidmigrator
 %_K5bin/akonadi_*
-#%_libdir/sasl2*/*.so*
+%_K5plug/akonadi/config/*.so
 %_K5plug/kf5/kio/akonadi.so
-#%_K5plug/*akonadi*.so
 %_K5plug/kf5/kio/pop3.so
 %_datadir/akonadi5/accountwizard/*
 %_datadir/akonadi5/agents/*
 %_datadir/akonadi5/firstrun/*
-#%_datadir/akonadi5/plugins/*
 %_K5srv/akonadi.protocol
 %_K5srv/pop3*.protocol
-#%_K5srv/*.desktop
 %_K5srv/akonadi/davgroupware-providers/
 %_K5srvtyp/*provider.desktop
 %_K5notif/akonadi_*
@@ -167,6 +164,12 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

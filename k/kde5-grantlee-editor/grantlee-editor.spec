@@ -4,7 +4,7 @@
 %define libgrantleethemeeditor libgrantleethemeeditor%pim_sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -88,6 +88,12 @@ Requires: %name-common = %version-%release
 %_K5lib/libgrantleethemeeditor.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

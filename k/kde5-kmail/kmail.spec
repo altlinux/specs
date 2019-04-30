@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -83,6 +83,7 @@ Requires: %name-common = %version-%release
 %_K5bin/kmail
 %_K5bin/akonadi_*_agent
 %_K5plug/*.so
+%_K5plug/akonadi/config/*.so
 %_K5xdgapp/org.kde.*.desktop
 %_K5xdgapp/kmail_view.desktop
 %_K5data/kmail2/
@@ -126,6 +127,12 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

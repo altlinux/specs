@@ -1,8 +1,8 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 18.12.3
-Release: alt2
+Version: 19.04.0
+Release: alt1
 %K5init
 
 %define sover 5
@@ -108,6 +108,12 @@ Requires: %name-common = %version-%release
 %_K5lib/libkaddressbookprivate.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt2
 - fix build requires
 
