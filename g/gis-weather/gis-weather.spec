@@ -1,6 +1,6 @@
 Name:		gis-weather
 Version:	0.8.1
-Release:	alt1
+Release:	alt1.1
 License:	GPLv3
 Summary:	Customizable weather widget
 Url:		http://sourceforge.net/projects/gis-weather
@@ -68,6 +68,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1.1
+- Rebuild with python3.7.
+
 * Thu Oct 12 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1
 - 0.8.1 (thx Motsyo Gennadi <drool@>)
 
