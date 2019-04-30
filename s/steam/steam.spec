@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.61
-Release: alt2
+Release: alt3
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -14,17 +14,17 @@ ExclusiveArch: %ix86
 
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-apt-alt.patch
-Patch1: %name-bash4-alt.patch
-Patch2: %name-desktop-alt.patch
+Patch1: %name-desktop-alt.patch
 
+Requires: bash >= 4.4
 Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
 Requires: libGL
+Requires: libnsl1
 Requires: libnss
 Requires: xz
 
-BuildRequires: bash4
 BuildRequires: ca-certificates
 
 %description
@@ -36,17 +36,12 @@ savegame and screenshot functionality, and many social features.
 %setup -n %name
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %install
 %makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
 %__install -Dp -m0644 lib/udev/rules.d/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
 %__install -Dp -m0644 lib/udev/rules.d/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
-
-# Fix use bash4
-%__mkdir_p %buildroot%_libexecdir/%name/bin
-%__ln_s /bin/bash4 %buildroot%_libexecdir/%name/bin/bash
 
 # Fix connection via SSL
 %__mkdir_p %buildroot%_sysconfdir/ssl/certs
@@ -76,6 +71,10 @@ savegame and screenshot functionality, and many social features.
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Tue Apr 30 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt3
+- Add require on libnsl1 (ALT #36376)
+- Remove patch bash4
+
 * Sun Apr 28 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt2
 - Remove patch udev rules
 
