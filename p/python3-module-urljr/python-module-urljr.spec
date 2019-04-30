@@ -7,7 +7,7 @@ BuildRequires: python3-tools rpm-build-python3 time
 %define oldname python-module-urljr
 Name: python3-module-urljr
 Version: 1.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: URL-related utilites
 
@@ -44,6 +44,9 @@ python3-2to3 -w -d -n .
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt2.1
+- Rebuild with python3.7.
+
 * Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2
 - Don't depend on the python3's minor version during build
   (2to3-3.3 -> python3-2to3).
