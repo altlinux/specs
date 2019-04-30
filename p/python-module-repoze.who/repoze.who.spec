@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt3.git20140327
+Release:        alt4.git20140327
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
@@ -263,6 +263,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.2-alt4.git20140327
+- Rebuild with python3.7.
+
 * Mon Oct 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2-alt3.git20140327
 - %%python3_req_hier for more precise reqs.
 
