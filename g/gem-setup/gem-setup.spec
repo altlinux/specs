@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt6
+Release:       alt7
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -64,6 +64,9 @@ Documentation files for %name.
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 30 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt7
+- Set default external CP to UTF8
+
 * Tue Apr 23 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt6
 - added default value for __dir__ variable, when loading Rakefile info a module,
   this fixes unknown error when adding the var info "$:"

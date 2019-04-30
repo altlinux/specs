@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.5.2
-Release:       alt1
+Release:       alt2
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string
 License:       MIT
 Group:         Development/Ruby
@@ -28,7 +28,6 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 %package       devel
 Summary:       Development files for %name
 Group:         Development/Ruby
-BuildArch:     noarch
 
 %description   devel
 Development files for %{name}.
@@ -56,16 +55,20 @@ Documentation files for %{name}.
 %gem_test
 
 %files
-%ruby_gemspecdir/%gemname-%version.gemspec
-%ruby_gemslibdir/%gemname-%version
-%ruby_gemsextdir/%gemname-%version
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
 %files         devel
 %ruby_includedir/%gemname
 
 %files         doc
-%ruby_gemsdocdir/%gemname-%version
+%ruby_gemdocdir
 
 %changelog
+* Tue Apr 30 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.2-alt2
+- remove noarch from devel package
+- cleanup spec
+
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.2-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

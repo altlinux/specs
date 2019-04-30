@@ -1,58 +1,73 @@
-Name: libxml-ruby
-Version: 3.1.0
-Release: alt1.3
-Summary: Ruby language bindings for the GNOME Libxml2 XML toolkit
-Group: Development/Ruby
-License: MIT
-URL: http://xml4r.github.io/%name/
-Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+%define        pkgname libxml-ruby
+%define        gemname libxml-ruby
 
-BuildPreReq: rpm-build-ruby
-BuildRequires: libruby-devel libxml2-devel ruby-tool-setup zlib-devel
+Name:          %pkgname
+Version:       3.1.0
+Release:       alt2
+Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
+Group:         Development/Ruby
+License:       MIT
+URL:           http://xml4r.github.io/%name/
+# VCS:         https://github.com/xml4r/libxml-ruby.git
+Source:        %name-%version.tar
+
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libxml2-devel
+BuildRequires: zlib-devel
 
 %description
-The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2 XML
-toolkit.
+The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2
+XML toolkit.
 
-%package doc
-Summary: Documentation files for %name
-Group: Development/Documentation
-BuildArch: noarch
 
-%description doc
-Documentation files for %name.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Obsoletes:     %pkgname-doc
+Provides:      %pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -q
-#patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build --join=lib:bin
 
 %install
-%ruby_install
-rm -rf %buildroot%ruby_sitelibdir/libs
-%rdoc ext/libxml/*.c lib/
-ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/LibXML$' | xargs rm -rf
-install -d -m 0755 %buildroot%_docdir/%name-%version
-gzip -9c HISTORY > %buildroot%_docdir/%name-%version/HISTORY.gz
+%gem_install
 
 %check
-#ruby_test_unit -Ilib:ext/libxml:test test/test_suite.rb
+%gem_test
 
 %files
-%ruby_sitearchdir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%doc %_docdir/%name-%version
-%doc %ruby_ri_sitedir/*
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
 
 %changelog
+* Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2
+- Use Ruby Policy 2.0
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.3
 - Rebuild with new Ruby autorequirements.
 
