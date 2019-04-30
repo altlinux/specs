@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.a3.1.1
+Release: alt2.a3.2
 %define oname z3c.testing
 
 %def_with python3
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2.a3.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt2.a3.1.1
 - (AUTO) subst_x86_64.
 
