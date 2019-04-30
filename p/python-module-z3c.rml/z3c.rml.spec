@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150202.1.1.1
+Release: alt1.dev0.git20150202.2
 %define oname z3c.rml
 
 %def_with python3
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1.dev0.git20150202.2
+- Rebuild with python3.7.
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.1-alt1.dev0.git20150202.1.1.1
 - (AUTO) subst_x86_64.
 
