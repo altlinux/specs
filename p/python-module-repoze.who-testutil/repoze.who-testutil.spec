@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.svn20100816.1.1.1
+Release: alt2.svn20100816.2
 %define oname repoze.who-testutil
 
 %def_with python3
@@ -167,6 +167,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt2.svn20100816.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt2.svn20100816.1.1.1
 - (AUTO) subst_x86_64.
 
