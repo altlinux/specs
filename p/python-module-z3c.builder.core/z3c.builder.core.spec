@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt6.1.1
+Release: alt6.2
 %define ocore z3c.builder
 %define oname %ocore.core
 
@@ -166,6 +166,9 @@ cp %buildroot%python_sitelibdir/z3c/builder/__init__.py \
 %endif
 
 %changelog
+* Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.1.0-alt6.2
+- Rebuild with python3.7.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt6.1.1
 - (AUTO) subst_x86_64.
 
