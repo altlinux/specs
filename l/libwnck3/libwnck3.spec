@@ -1,5 +1,5 @@
 %define _name libwnck
-%define ver_major 3.31
+%define ver_major 3.32
 %define api_ver 3.0
 
 %def_enable introspection
@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -133,6 +133,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Wed May 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.4-alt1
 - 3.31.4
 
