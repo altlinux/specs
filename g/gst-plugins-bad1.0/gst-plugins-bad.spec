@@ -10,9 +10,15 @@
 %def_enable wayland
 %def_enable zbar
 %def_disable rtmp
+
+%ifarch x86_64
+%def_enable openh264
+%endif
+
 %ifnarch %e2k
 %def_enable liblilv
 %endif
+
 %def_disable debug
 %def_enable tests
 # required network
@@ -30,7 +36,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -73,7 +79,7 @@ BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
 BuildRequires: liborc-test-devel
-#BuildRequires: libopenh264 >= 1.3.0
+%{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -160,6 +166,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed May 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.2
+- enabled OpenH264 encoder/decoder plugin for x86_64
+
 * Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
 - disabled ext/lv2 on %%e2k
 
