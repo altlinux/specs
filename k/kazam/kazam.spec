@@ -1,7 +1,7 @@
 Name: kazam
 Summary: A screen-casting program created with design in mind
 Version: 1.4.5
-Release: alt3
+Release: alt4
 Group: Video
 License: GPLv3
 Url: https://launchpad.net/kazam
@@ -10,6 +10,7 @@ Source: https://launchpad.net/kazam/unstable/%version/+download/%name-%version.t
 Patch0:	kazam-1.4.5-force-gtk-csd.patch
 Patch1: kazam-1.4.5-configparser_api_changes.patch
 Patch2: kazam-1.4.5-setlocale.patch
+Patch3: kazam-1.4.5-configparser_defaults.patch
 
 BuildArch: noarch
 
@@ -29,6 +30,8 @@ that is supported and visible by PulseAudio.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
 sed -i s,"DISTRO='Ubuntu'","DISTRO='%vendor'",g kazam/version.py
 
 %build
@@ -54,6 +57,9 @@ cp -r build/mo/* %buildroot/%_datadir/locale
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Wed May  1 2019 Terechkov Evgenii <evg@altlinux.org> 1.4.5-alt4
+- Patch3 for https://bugs.launchpad.net/kazam/+bug/1797878
+
 * Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt3
 - Fix setup locale (Closes: 35419)
 
