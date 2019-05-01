@@ -1,6 +1,6 @@
 Name: snes9x
-Version: 1.55
-Release: alt2
+Version: 1.60
+Release: alt1
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -12,18 +12,17 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://github.com/snes9xgit/%name/archive/%version/%name-%version.tar.gz
 
 BuildRequires: gcc-c++
-BuildRequires: intltool
-BuildRequires: libSDL-devel
+BuildRequires: libSDL2-devel
 BuildRequires: libSM-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXv-devel
-BuildRequires: libalsa-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libepoxy-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libminizip-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libxml2-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: meson
 
 %description
 Snes9x is a portable, freeware Super Nintendo Entertainment System (SNES) emulator.
@@ -67,9 +66,8 @@ popd
 
 #build GTK version
 pushd gtk
-./autogen.sh
-%configure --with-netplay
-%make_build
+%meson
+%meson_build
 popd
 
 %install
@@ -78,7 +76,7 @@ popd
 
 # Install GTK version
 pushd gtk
-%makeinstall_std
+%meson_install
 %find_lang %name-gtk
 popd
 
@@ -87,15 +85,21 @@ popd
 %_bindir/%name
 
 %files gtk -f gtk/%name-gtk.lang
-%doc docs/*.txt gtk/doc/lgpl.txt gtk/doc/LICENSE gtk/doc/README
+%doc docs/*.txt gtk/AUTHORS
 %_bindir/%name-gtk
-%_desktopdir/%name.desktop
+%_datadir/%name/cheats.bml
+%_desktopdir/%name-gtk.desktop
 %_miconsdir/%name.png
-%_iconsdir/hicolor/24x24/apps/%name.png
 %_niconsdir/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/24x24/apps/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
+%_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Wed May 01 2019 Nazarov Denis <nenderus@altlinux.org> 1.60-alt1
+- Version 1.60
+
 * Tue Apr 30 2019 Nazarov Denis <nenderus@altlinux.org> 1.55-alt2
 - Remove %ubt macro
 
