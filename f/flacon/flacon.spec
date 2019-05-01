@@ -1,5 +1,5 @@
 Name: flacon
-Version: 5.2.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -75,6 +75,9 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Wed May 01 2019 Nazarov Denis <nenderus@altlinux.org> 5.4.0-alt1
+- Version 5.4.0
+
 * Sun Apr 07 2019 Nazarov Denis <nenderus@altlinux.org> 5.2.0-alt1
 - Version 5.2.0
 
