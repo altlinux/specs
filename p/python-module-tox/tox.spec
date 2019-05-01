@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.7.0
+Version: 3.9.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -22,32 +22,33 @@ BuildRequires: python-module-setuptools_scm
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: pytest
-BuildRequires: python-module-freezegun
-BuildRequires: python-module-pip
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-mock
-BuildRequires: python-module-pytest-cov
-BuildRequires: python-module-pytest-randomly
-BuildRequires: python-module-pytest-timeout
-BuildRequires: python-module-pytest-xdist
-BuildRequires: python-module-virtualenv
-BuildRequires: python-module-six
-BuildRequires: python-module-toml
-BuildRequires: python-module-filelock
-BuildRequires: pytest3
-BuildRequires: python3-module-freezegun
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-randomly
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-six
-BuildRequires: python3-module-toml
-BuildRequires: python3-module-filelock
+BuildRequires: /proc
+BuildRequires: python2.7(flaky)
+BuildRequires: python2.7(freezegun)
+BuildRequires: python2.7(pathlib2)
+BuildRequires: python2.7(pip)
+BuildRequires: python2.7(psutil)
+BuildRequires: python2.7(pytest_mock)
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python2.7(pytest_randomly)
+BuildRequires: python2.7(pytest-xdist)
+BuildRequires: python2.7(virtualenv)
+BuildRequires: python2.7(six)
+BuildRequires: python2.7(toml)
+BuildRequires: python2.7(filelock)
+BuildRequires: python3(flaky)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(pathlib2)
+BuildRequires: python3(pip)
+BuildRequires: python3(psutil)
+BuildRequires: python3(pytest_mock)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(pytest_randomly)
+BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(virtualenv)
+BuildRequires: python3(six)
+BuildRequires: python3(toml)
+BuildRequires: python3(filelock)
 %endif
 
 BuildArch: noarch
@@ -83,6 +84,9 @@ can use for:
 %prep
 %setup
 %patch -p1
+
+# our psutil is 5.4.7
+sed -i 's/psutil >= 5.6.1, < 6;/psutil;/g' setup.cfg
 cp -a . ../python3
 
 %build
@@ -110,32 +114,35 @@ popd
 %python_install
 
 %check
+# due to https://github.com/pypa/setuptools/issues/1702
+export LANG=C.UTF-8
+
+sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_INDEX_URL=http://host.invalid./
+export PIP_NO_INDEX=YES
+export PIP_FIND_LINKS=%python_sitelibdir_noarch/virtualenv_support
+export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
+PIP_FIND_LINKS'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch
-export TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR'
-# copy nessecary exec deps
-%buildroot%_bindir/tox \
---sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
-sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python}/bin/python" \
-.tox/py%{python_version_nodots python}/bin/pytest
-
-%buildroot%_bindir/tox \
---sitepackages -e py%{python_version_nodots python} -v -- -v
+%buildroot%_bindir/tox --sitepackages -p auto -o -rv -- -m "not internet"
 
 pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-# copy nessecary exec deps
-%buildroot%_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
-sed -i "1c #!$(pwd)/.tox/py%{python_version_nodots python3}/bin/python3" \
-.tox/py%{python_version_nodots python3}/bin/pytest
+sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
-%buildroot%_bindir/tox.py3 \
---sitepackages -e py%{python_version_nodots python3} -v -- -v
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+%buildroot%_bindir/tox.py3 --sitepackages -p auto -o -rv -- -m "not internet"
 popd
 
 %files
@@ -151,6 +158,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Wed May 01 2019 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.7.0 -> 3.9.0.
+
 * Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
 - 3.6.1 -> 3.7.0.
 
