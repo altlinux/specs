@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -12,7 +12,7 @@
 
 Name: gnome-shell
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -245,6 +245,10 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Wed May 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt2
+- updated to 3.32.1-10-g059c729da
+  (fixed https://gitlab.gnome.org/GNOME/gnome-shell/issues/1054)
+
 * Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
