@@ -1,7 +1,9 @@
 %define _name kpmcore
+%define xdg_name org.kde.%_name
+%define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 3.3.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Library for managing partitions
@@ -15,9 +17,12 @@ Provides: %_name = %version-%release
 
 %define blkid_ver 2.30
 
-BuildRequires: gcc-c++ extra-cmake-modules rpm-build-kf5
-BuildRequires: libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
-BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
+Requires: polkit
+
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: gcc-c++ extra-cmake-modules %_bindir/appstreamcli
+BuildRequires: libdbus-devel libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
+BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel libqca-qt5-devel
 
 %description
 %_name is a Library for managing partitions. Common code for KDE
@@ -46,11 +51,14 @@ using %_name.
 %K5install
 
 %files
+%_libexecdir/kauth/kpmcore_externalcommand
+%_K5conf_dbus_sysd/%xdg_name.applicationinterface.conf
+%_K5conf_dbus_sysd/%xdg_name.externalcommand.conf
+%_K5conf_dbus_sysd/%xdg_name.helperinterface.conf
 %_K5lib/*.so.*
-%_libdir/qt5/plugins/*.so
-%_K5srv/pmdummybackendplugin.desktop
-%_K5srv/pmlibpartedbackendplugin.desktop
-%_K5srvtyp/pmcorebackendplugin.desktop
+%_K5plug/*.so
+%_K5dbus_sys_srv/%xdg_name.externalcommand.service
+%_datadir/polkit-1/actions/%xdg_name.externalcommand.policy
 
 %files devel
 %_includedir/%_name/
@@ -59,6 +67,12 @@ using %_name.
 
 
 %changelog
+* Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
+* Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.80.0-alt1
+- 3.80.0
+
 * Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
