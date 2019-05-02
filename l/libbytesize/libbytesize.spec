@@ -1,23 +1,28 @@
+%def_disable snapshot
 %define _name bytesize
-# pocketlint required
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: 1.4
-Release: alt2
+Version: 2.0
+Release: alt1
 
 Summary: A library for working with sizes in bytes
 Group: System/Libraries
 License: LGPLv2+
 Url: https://github.com/storaged-project/%name
 
+%if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.gz
+%else
+#VCS: https://github.com/rhinstaller/libbytesize.git
+Source: %name-%version.tar
+%endif
 
-BuildRequires(pre): rpm-build-python rpm-build-python3
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 BuildRequires: gtk-doc
-BuildRequires: glib2-devel libgmp-devel libmpfr-devel libpcre-devel
-BuildRequires: python-devel python3-devel
+BuildRequires: glib2-devel libgmp-devel libmpfr-devel libpcre2-devel
+%{?_enable_check:BuildRequires: python3-module-polib python3-module-pocketlint}
 
 %description
 The %name is a C library that facilitates work with sizes in bytes.
@@ -34,19 +39,11 @@ Requires: %name = %version-%release
 This package contains header files and pkg-config files needed for
 development with the %name library.
 
-%package -n python-module-%_name
-Summary: Python 2 bindings for %name
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description -n python-module-%_name
-This package contains Python 2 bindings for %name making the use of
-the library from Python 2 easier and more convenient.
-
 %package -n python3-module-%_name
 Summary: Python 3 bindings for %name
 Group: Development/Python3
 Requires: %name = %version-%release
+Provides: %_bindir/bscalc
 
 %description -n python3-module-%_name
 This package contains Python 3 bindings for %name making the use of
@@ -57,7 +54,6 @@ the library from Python 3 easier and more convenient.
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %configure
 %make_build
 
@@ -79,14 +75,16 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %_pkgconfigdir/%_name.pc
 %_datadir/gtk-doc/html/%name/
 
-%files -n python-module-%_name
-%python_sitelibdir/%_name/*
-
 %files -n python3-module-%_name
+%_bindir/bscalc
 %python3_sitelibdir/%_name/*
+%_man1dir/bscalc.1*
 
 
 %changelog
+* Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0 (ported to pcre2, removed python2 support)
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt2
 - moved %%find_lang to proper section
 
