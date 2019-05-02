@@ -15,8 +15,8 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.6
-Release: alt2
+Version: 2.4.7
+Release: alt1
 
 Summary: a full-featured SSL VPN solution
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL
@@ -47,9 +47,9 @@ Source10: %name.tmpfiles
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sat Jun 25 2016
-# optimized out: libcom_err-devel libgpg-error libkrb5-devel libpkcs11-helper libssl-devel perl pkg-config python-base python-modules python3
-BuildRequires: cmake git-core glibc-devel-static iproute2 liblzo2-devel libpam-devel libpkcs11-helper-devel libsystemd-devel man net-tools
+# Automatically added by buildreq on Thu May 02 2019
+# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: cmake git-core glibc-devel-static iproute2 liblz4-devel liblzo2-devel libpam-devel libpkcs11-helper-devel libselinux-devel libssl10 libsystemd-devel net-tools
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_pkcs11:BuildRequires: pkcs11-helper-devel}
@@ -338,6 +338,10 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.4.7-alt1
+- New version
+- Use system liblz4 (thanks Mikhail Efremov, @sem) (Closes: 36389)
+
 * Thu Sep 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.6-alt2
 - Rebuild with openssl 1.1.0i
 
