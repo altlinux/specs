@@ -1,6 +1,6 @@
 %define git	 e7b0afc
 %define ver      1.9.7
-%define rel      alt1.%git
+%define rel      alt3.%git
 
 Summary: Graphics file browser utility
 Name: gliv
@@ -28,22 +28,18 @@ zooming  if  you have an OpenGL accelerated graphics board.
 %patch -p2
 
 %build
-libtoolize --install --force
-aclocal
-autoheader
-autoconf
-automake
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall MKINSTALLDIRS=../mkinstalldirs
 
-%__install -d %buildroot%_datadir/pixmaps
-%__install -d %buildroot%_datadir/applications
-%__install -m 644 %name.png %buildroot%_datadir/pixmaps/%name.png
-%__install -m 644 %name.svg %buildroot%_datadir/pixmaps/%name.svg
-%__install -m 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
+install -d %buildroot%_datadir/pixmaps
+install -d %buildroot%_datadir/applications
+install -m 644 %name.png %buildroot%_datadir/pixmaps/%name.png
+install -m 644 %name.svg %buildroot%_datadir/pixmaps/%name.svg
+install -m 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 
 %find_lang --with-man --output=%name.lang %name
 
@@ -52,11 +48,20 @@ automake
 %_bindir/%name
 %_datadir/pixmaps/*
 %_datadir/applications/*
+%_man1dir/%{name}.1*
 
 %changelog
+* Thu May 02 2019 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt3.e7b0afc
+- bump gettext version requires.
+- rebuild w/ recent autoconf (fixes #36667).
+- added man page.
+
+* Wed Dec 21 2016 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt2.e7b0afc
+- .spec: cleanup.
+
 * Sun May 22 2016 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt1.e7b0afc
 - Ressurect again.
-- .spec: 
+- .spec:
    + restructured sources
    + bump gettext version.
 
