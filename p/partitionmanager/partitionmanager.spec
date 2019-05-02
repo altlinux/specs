@@ -1,7 +1,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 3.3.1
+Version: 4.0.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -10,16 +10,18 @@ Group: Graphical desktop/KDE
 
 Url: https://www.kde.org/applications/system/kdepartitionmanager/
 
-# VCS: git://anongit.kde.org/partitionmanager
-Source: http://download.kde.org/stable/partitionmanager/%version/src/%name-%version.tar.xz
+# VCS: https://github.com/KDE/partitionmanager.git
+Source: http://download.kde.org/stable/partitionmanager/%version/src/%name-%version.tar.gz
 
 Requires: lvm2 cryptsetup
 
 %define qt_ver 5.7.0
-%define kpmcore_ver 3.3.0
+%define kpmcore_ver 4.0.0
 
-BuildRequires: gcc-c++ extra-cmake-modules rpm-build-kf5 qt5-base-devel >= %qt_ver
-BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel >= %qt_ver
+BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel
+BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kdbusaddons-devel
 BuildRequires: libkpmcore-devel >= %kpmcore_ver libatasmart-devel libblkid-devel
 BuildRequires: libappstream-glib-devel
 
@@ -44,17 +46,22 @@ file systems.
 %K5install
 %find_lang %name --all-name --with-kde
 
-
 %files -f %name.lang
 %_K5bin/%name
 %_kf5_xdgapp/%xdg_name.desktop
 %_kf5_icon/hicolor/scalable/apps/%name.svg
 %_K5cfg/%name.kcfg
 %_K5xmlgui/%name/
-#%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* TODO
 
 %changelog
+* Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
+* Sun Mar 17 2019 Yuri N. Sedunov <aris@altlinux.org> 3.80.0-alt1
+- 3.80.0
+
 * Wed Jan 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
