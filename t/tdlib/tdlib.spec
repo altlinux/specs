@@ -4,8 +4,8 @@
 %def_with clang
 
 Name: tdlib
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -96,6 +96,10 @@ export CXX=clang++
 # disable static
 rm -fv %buildroot%_libdir/*.a
 
+#check
+# inet only
+#./BUILD/test/run_all_tests --filter -client
+
 %files
 %doc LICENSE_1_0.txt
 %doc README.md CHANGELOG.md
@@ -110,6 +114,9 @@ rm -fv %buildroot%_libdir/*.a
 #%_libdir/libtd*.a
 
 %changelog
+* Thu May 02 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt2
 - build with clang
 - disable i586 build
