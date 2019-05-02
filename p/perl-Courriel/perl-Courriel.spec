@@ -3,7 +3,7 @@
 %define real_name Courriel
 
 Name: perl-Courriel
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: Perl module for high level email parsing and manipulation
@@ -24,9 +24,9 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 # Due to Moose internal errors
 %add_findreq_skiplist */Courriel/HeaderAttribute.pm
 
-# Automatically added by buildreq on Sun Jun 03 2018
-# optimized out: perl perl-Algorithm-Diff perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Inspector perl-Class-Load perl-Class-Method-Modifiers perl-Class-Singleton perl-Class-Tiny perl-Clone perl-Data-OptList perl-Date-Calc-XS perl-DateTime perl-DateTime-Format-Mail perl-DateTime-Format-Natural perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-PartialDump perl-Devel-StackTrace perl-Email-Abstract perl-Email-Address perl-Email-Address-XS perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-LibMagic perl-File-ShareDir perl-File-Slurp-Tiny perl-JSON-PP perl-List-AllUtils perl-List-MoreUtils perl-List-MoreUtils-XS perl-List-SomeUtils perl-List-UtilsBy perl-MIME-tools perl-MRO-Compat perl-MailTools perl-Module-Implementation perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-MooX-Types-MooseLike perl-Moose perl-MooseX-Role-Parameterized perl-MooseX-StrictConstructor perl-MooseX-Types perl-MooseX-Types-Common perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Test-Fatal perl-Text-Diff perl-Throwable perl-TimeDate perl-Try-Tiny perl-Variable-Magic perl-boolean perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3 python3-base python3-module-zope ruby
-BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Courriel perl-Date-Calc perl-Email-Sender perl-Path-Class perl-Ref-Util perl-Ref-Util-XS perl-Test-Differences perl-Test-Requires perl-Test-Warnings
+# Automatically added by buildreq on Thu May 02 2019
+# optimized out: gem-power-assert perl perl-Algorithm-Diff perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Inspector perl-Class-Load perl-Class-Method-Modifiers perl-Class-Singleton perl-Class-Tiny perl-Clone perl-Data-OptList perl-Date-Calc-XS perl-DateTime perl-DateTime-Format-Mail perl-DateTime-Format-Natural perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-PartialDump perl-Devel-StackTrace perl-Email-Abstract perl-Email-Address perl-Email-Address-XS perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-LibMagic perl-File-ShareDir perl-JSON-PP perl-List-AllUtils perl-List-MoreUtils perl-List-MoreUtils-XS perl-List-SomeUtils perl-List-UtilsBy perl-MIME-tools perl-MRO-Compat perl-MailTools perl-Module-Implementation perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-MooX-Types-MooseLike perl-Moose perl-MooseX-Role-Parameterized perl-MooseX-StrictConstructor perl-MooseX-Types perl-MooseX-Types-Common perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Test-Fatal perl-Text-Diff perl-Throwable perl-TimeDate perl-Try-Tiny perl-Variable-Magic perl-boolean perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Courriel perl-Date-Calc perl-Email-Sender perl-File-Slurper perl-Path-Class perl-PerlIO-utf8_strict perl-Ref-Util perl-Ref-Util-XS perl-Test-Differences perl-Test-Requires perl-Test-Warnings
 
 %description
 Perl module Courriel provides a high level API for email parsing
@@ -47,6 +47,9 @@ and manipulation, particular for processing incoming email.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.48-alt1
+- New version
+
 * Sun Jun 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.47-alt1
 - New version
 
