@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -118,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
