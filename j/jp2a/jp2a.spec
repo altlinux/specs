@@ -2,24 +2,29 @@
 #
 #
 
-%define version 1.0.6
+%define version 1.0.7
 %define release alt1
 
 Name: jp2a
 Version: %version
-Release: alt1.0.qa1
+Release: alt1
 
 Summary: an utility for converting JPEG images to ASCII
 Summary(ru_RU.UTF-8): утилита для конвертации изображений JPEG в ASCII art
 
 License: GPL v.2
 Group: Terminals
-URL: http://jp2a.sourceforge.net/
+URL: https://github.com/cslarsen/jp2a
+#URL: http://jp2a.sourceforge.net/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
-Source0: %name-%version.tar.bz2
-BuildPreReq: libjpeg-devel libcurl-devel
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
+# Automatically added by buildreq on Thu May 02 2019
+# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: libcurl-devel libjpeg-devel
 
 %description
 jp2a is a small command-line utility for converting JPEG images
@@ -31,11 +36,13 @@ jp2a - небольшая утилита командной строки для 
 
 %prep
 %setup
+%patch0 -p1
 
-%__mv -f COPYING COPYING.GPL.orig
-%__ln_s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING.GPL) COPYING.GPL
+mv -f COPYING COPYING.GPL.orig
+ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING.GPL) COPYING.GPL
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -43,12 +50,15 @@ jp2a - небольшая утилита командной строки для 
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog README man/jp2a.html LICENSES
+%doc AUTHORS ChangeLog README LICENSES
 %doc --no-dereference COPYING.GPL
 %_bindir/%name
 %_man1dir/%{name}*
 
 %changelog
+* Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.0.7-alt1
+- New version
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.6-alt1.0.qa1
 - NMU: rebuilt for debuginfo.
 
