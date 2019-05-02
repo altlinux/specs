@@ -10,7 +10,7 @@
 
 Name:     ruby
 Version:  2.5.5
-Release:  alt1
+Release:  alt2
 Summary:  An Interpreted Object-Oriented Scripting Language
 License:  BSD 2-clause Simplified License/Ruby
 Group:    Development/Ruby
@@ -159,25 +159,30 @@ irb is the REPL(read-eval&print loop) environment for Ruby programs.
 Summary: Ruby ri executable man page
 Group: Development/Documentation
 BuildArch: noarch
-Requires: %_bindir/ri
+Requires:   %_bindir/ri
+Requires:   %name = %version
 
 %description -n ri-doc
 Ruby ri executable man page
 
-%package doc-ri
-Summary: Ruby ri documentation
-Group: Development/Documentation
-BuildArch: noarch
-AutoReq: no
-AutoProv: no
-Requires: ri
+%package       doc
+Summary:       Ruby ri documentation
+Group:         Development/Documentation
+BuildArch:     noarch
+AutoReq:       no
+AutoProv:      no
+Provides:      %name-doc-ri
+Obsoletes:     %name-doc-ri
+Requires:      ri
+Requires:      ruby = %version-%release
 
-%description doc-ri
+%description   doc
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing system
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
 This package contains Ruby documentation in ri format.
+
 
 %if_without bootstrap
 %package miniruby-src
@@ -198,7 +203,6 @@ sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
 sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
 sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.ac
-sed -i -r "s/File.join[[:blank:]]+(RbConfig::CONFIG\['ridir'\]),[[:blank:]]*version/\1/" lib/rdoc/ri/paths.rb
 sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
 sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
 # capi-docs
@@ -210,7 +214,6 @@ cp -a /usr/share/gnu-config/config.* tool
 %define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
 %autoreconf
 %__setup_rb config --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib
-
 my_configure() {
     %configure \
         %{subst_enable shared} \
@@ -272,6 +275,9 @@ install -Dm 0755 %lname-static.a %buildroot%_libdir/%lname-static.a
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{*,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
+mkdir -p %buildroot%ridir/%ruby_version
+mv %buildroot%ridir/system %buildroot%ridir/%ruby_version/
+install -d -m 0755 %buildroot%ridir/%ruby_version/site
 install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
 # install compiled header config.h
 install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby/config.h
@@ -290,7 +296,7 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %endif
 
 # Make empty dir for ri documentation
-mkdir -p %buildroot%_datadir/ri/site
+mkdir -p %buildroot%_datadir/ri/site/%version
 rm -rf %buildroot%_bindir/{ri,rdoc}
 
 %check
@@ -307,7 +313,6 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %_bindir/%name
 %_man1dir/%name.*
 %dir %_datadir/ri
-%dir %_datadir/ri/site
 
 %files -n %lname
 %{?_enable_shared:%_libdir/*.so.*}
@@ -335,8 +340,8 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %_bindir/irb
 %_man1dir/irb.*
 
-%files doc-ri
-%dir %ridir
+%files         doc
+%dir %ridir/%ruby_version/site
 %ridir/*
 
 %files -n ri-doc
@@ -348,6 +353,9 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Thu May 02 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt2
+- Fixed ri documentation placement (closes: #36294)
+
 * Sat Apr 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt1
 - Bump to 2.5.5
 - Added config.h to installation
