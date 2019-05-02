@@ -2,7 +2,7 @@
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 1.010
+Version: 1.011
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -16,9 +16,9 @@ Source: Imager-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 10 2017
-# optimized out: perl perl-Class-Inspector perl-Class-Tiny perl-Devel-Symdump perl-Encode perl-File-ShareDir perl-Lingua-EN-Inflect perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Text-Balanced perl-devel perl-parent perl-threads pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs t1lib
-BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb perl(bignum.pm)
+# Automatically added by buildreq on Thu May 02 2019
+# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel perl perl-CPAN-Meta-Requirements perl-Class-Inspector perl-Class-Tiny perl-Devel-Symdump perl-Encode perl-Exporter-Tiny perl-File-ShareDir perl-JSON-PP perl-Lingua-EN-Inflect perl-List-MoreUtils-XS perl-Math-BigInt perl-Parse-CPAN-Meta perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Text-Balanced perl-devel perl-parent perl-threads pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 t1lib zlib-devel
+BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-CPAN-Meta perl-Image-Math-Constrain perl-List-MoreUtils perl-Params-Util perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage perl-bignum t1lib-devel xorg-rgb
 
 %description
 Imager is a module for creating and altering images. It can
@@ -49,6 +49,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.011-alt1
+- New version
+
 * Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.010-alt1
 - new version
 
