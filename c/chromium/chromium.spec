@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        73.0.3683.75
+Version:        74.0.3729.131
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -67,15 +67,12 @@ Patch014: 0014-ALT-Fix-last-commit-position-issue.patch
 Patch015: 0015-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch016: 0016-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch017: 0017-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch018: 0018-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
-Patch019: 0019-FEDORA-Fix-gcc-round.patch
-Patch020: 0020-FEDORA-Fix-memcpy.patch
-Patch021: 0021-ALT-openh264-always-pic-on-x86.patch
-Patch022: 0022-ALT-allow-to-override-clang-through-env-variables.patch
-Patch023: 0023-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch024: 0024-color_utils-Use-std-sqrt-instead-of-std-sqrtf.patch
-Patch025: 0025-Fix-build-with-libstdc.patch
-Patch026: 0026-ALT-Add-missing-header-on-aarch64.patch
+Patch018: 0018-FEDORA-Fix-gcc-round.patch
+Patch019: 0019-FEDORA-Fix-memcpy.patch
+Patch020: 0020-ALT-openh264-always-pic-on-x86.patch
+Patch021: 0021-ALT-allow-to-override-clang-through-env-variables.patch
+Patch022: 0022-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch023: 0023-ALT-Add-missing-header-on-aarch64.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -222,9 +219,6 @@ tar -xf %SOURCE1
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
-%patch024 -p1
-%patch025 -p1
-%patch026 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -306,6 +300,7 @@ gn_arg fatal_linker_warnings=false
 gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
+gn_arg closure_compile=false
 
 # Remove debug
 gn_arg is_debug=false
@@ -489,6 +484,33 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Fri May 03 2019 Alexey Gladkov <legion@altlinux.ru> 74.0.3729.131-alt1
+- New version (74.0.3729.131).
+- Security fixes:
+  - CVE-2019-5805: Use after free in PDFium.
+  - CVE-2019-5806: Integer overflow in Angle.
+  - CVE-2019-5807: Memory corruption in V8.
+  - CVE-2019-5808: Use after free in Blink.
+  - CVE-2019-5809: Use after free in Blink.
+  - CVE-2019-5810: User information disclosure in Autofill.
+  - CVE-2019-5811: CORS bypass in Blink.
+  - CVE-2019-5812: URL spoof in Omnibox on iOS.
+  - CVE-2019-5813: Out of bounds read in V8.
+  - CVE-2019-5814: CORS bypass in Blink.
+  - CVE-2019-5815: Heap buffer overflow in Blink.
+  - CVE-2019-5816: Exploit persistence extension on Android.
+  - CVE-2019-5817: Heap buffer overflow in Angle on Windows.
+  - CVE-2019-5818: Uninitialized value in media reader.
+  - CVE-2019-5819: Incorrect escaping in developer tools.
+  - CVE-2019-5820: Integer overflow in PDFium.
+  - CVE-2019-5821: Integer overflow in PDFium.
+  - CVE-2019-5822: CORS bypass in download manager.
+  - CVE-2019-5823: Forced navigation from service worker.
+  - CVE-2019-5824: Parameter passing error in media player.
+  - CVE-2019-5825: Out-of-bounds write in V8
+  - CVE-2019-5826: Use-after-free in IndexedDB
+  - CVE-2019-5827: Out-of-bounds access in SQLite.
+
 * Mon Mar 18 2019 Alexey Gladkov <legion@altlinux.ru> 73.0.3683.75-alt1
 - New version (73.0.3683.75).
 - Security fixes:
