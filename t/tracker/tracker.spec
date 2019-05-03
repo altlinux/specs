@@ -19,8 +19,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -164,7 +164,7 @@ Included utilities for Tracker:
 
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS COPYING NEWS README*
 %doc src/libtracker-common/COPYING.LIB
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %_datadir/glib-2.0/schemas/*
@@ -222,6 +222,9 @@ Included utilities for Tracker:
 
 
 %changelog
+* Fri May 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1.1
 - rebuilt without bootstrap
 

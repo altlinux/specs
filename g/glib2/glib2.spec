@@ -21,8 +21,8 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -430,6 +430,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri May 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.2-alt1
+- 2.60.2
+
 * Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.1-alt2
 - fixed build on %%e2k
 
