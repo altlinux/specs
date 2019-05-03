@@ -1,8 +1,14 @@
 %define oname os-client-config
 
+%ifarch %ix86 x86_64
+%def_with check
+%else
+%def_without check
+%endif
+
 Name: python-module-%oname
 Version: 1.31.2
-Release: alt1
+Release: alt2
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
@@ -20,6 +26,7 @@ BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-reno >= 2.5.0
 
 BuildRequires: python-module-pbr
+%if_with check
 BuildRequires: python-module-fixtures
 BuildRequires: python-module-oslotest
 BuildRequires: python-module-testtools python-module-testscenarios python-module-testrepository
@@ -32,11 +39,13 @@ BuildRequires: python-module-yaml >= 3.1.0
 BuildRequires: python-module-appdirs >= 1.3.0
 BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-requestsexceptions >= 1.1.1
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
+%if_with check
 BuildRequires: python3-module-yaml >= 3.1.0
 BuildRequires: python3-module-appdirs >= 1.3.0
 BuildRequires: python3-module-keystoneauth1 >= 2.1.0
@@ -44,6 +53,7 @@ BuildRequires: python3-module-requestsexceptions >= 1.1.1
 BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
 BuildRequires: python3-module-subunit python3-module-subunit-tests
 BuildRequires: python3-module-extras
+%endif
 
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
@@ -130,14 +140,14 @@ pushd ../python3
 %python3_install
 popd
 
-#%check
-#python setup.py test
+%check
+python setup.py test
 
-#%if_with python3
-#pushd ../python3
-#python3 setup.py test
-#popd
-#%endif
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
@@ -159,6 +169,10 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri May 03 2019 Ivan A. Melnikov <iv@altlinux.org> 1.31.2-alt2
+- enable tests on %%ix86 and x86_64
+- remove test packages from BR when tests are disabled
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 1.31.2-alt1
 - 1.31.2
 
