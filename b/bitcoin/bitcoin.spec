@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -8,6 +8,7 @@ Group: Networking/Other
 
 Url: http://www.bitcoin.org/
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Sep 14 2017
 # optimized out: boost-devel boost-devel-headers gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libdb4-devel libgpg-error libkrb5-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel llvm perl pkg-config python-base python-modules qt5-base-common
@@ -32,6 +33,7 @@ Before each transaction the coin's validity will be checked.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -55,6 +57,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Fri May 03 2019 Alexei Takaseev <taf@altlinux.org> 0.18.0-alt1
+- Version 0.18.0
+
 * Mon Dec 24 2018 Alexei Takaseev <taf@altlinux.org> 0.17.1-alt1
 - Version 0.17.1
 
