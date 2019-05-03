@@ -4,6 +4,7 @@
 %def_without forky
 %def_without python
 %def_with parallelism
+%define num_proc 8
 %def_without fetch
 %def_without lto
 
@@ -28,7 +29,7 @@
 
 Name: LibreOffice-still
 %define hversion 6.1
-%define urelease 5.2
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -81,7 +82,6 @@ Patch6: FC-0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-##Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
 
 %set_verify_elf_method unresolved=relaxed
@@ -199,8 +199,8 @@ Summary: KDE4 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-kde4
-Conflicts: LibreOffice-kde4
+Provides:  LibreOffice4-kde4 = %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
 %description kde4
 KDE4 extensions for %name
 %endif
@@ -211,7 +211,10 @@ Summary: KDE5 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Conflicts: LibreOffice-kde5
+Provides:  %name-kde4 = %EVR
+Obsoletes: %name-kde4 < %EVR
+Provides:  LibreOffice4-kde4 = %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
 %description kde5
 KDE5 extensions for %name
 %endif
@@ -318,7 +321,6 @@ echo Direct build
 
 ## ALT apply patches
 %patch401 -p0
-##patch402 -p1
 %patch403 -p1
 
 tar xf %SOURCE401
@@ -415,7 +417,7 @@ export CXX=%_target_platform-g++
   	--enable-lto \
 %endif
 %if_with parallelism
-	--with-parallelism=`nproc` \
+	--with-parallelism=%num_proc \
 %else   
         --without-parallelism \
 %endif
@@ -439,7 +441,7 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %make bootstrap
 
 %if_with parallelism
-export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
+export _JAVA_OPTIONS="-XX:ParallelGCThreads=2 $_JAVA_OPTIONS"
 %endif
 
 %if_with forky
@@ -613,6 +615,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Apr 29 2019 Andrey Cherepanov <cas@altlinux.org> 6.1.6.2-alt1
+- New version 6.1.6.2 (Still).
+
 * Sat Mar 09 2019 Andrey Cherepanov <cas@altlinux.org> 6.1.5.2-alt1
 - New version 6.1.5.2 (Still).
 
