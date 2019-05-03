@@ -1,8 +1,11 @@
 %define sover 0
+%define git 26c1b88
+%define build_type RelWithDebInfo
+%define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2018.2
-Release: alt1%ubt
+Version: 2019.3
+Release: alt2.g%{git}
 
 Summary: API and commands for processing SPIR-V modules
 Group: Development/C++
@@ -13,14 +16,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/KhronosGroup/SPIRV-Tools/archive/v%version/SPIRV-Tools-%version.tar.gz
 Patch0: %name-soname-alt.patch
+Patch1: %name-alt-use-python3.patch
 
-BuildRequires(pre): rpm-build-ubt
-
-BuildRequires: cmake
+BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
-BuildRequires: python-devel
-BuildRequires: python-modules-json
-BuildRequires: spirv-headers
+BuildRequires: python3-devel
+BuildRequires: spirv-headers = 1.3.7-alt0.1.g2434b89
 
 %description
 The package includes an assembler, binary module parser,
@@ -48,27 +49,26 @@ integration into other code bases directly.
 
 %prep
 %setup -n SPIRV-Tools-%version
-%patch0 -p1
+%patch0 -p2
+%patch1 -p2
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
+%_cmake \
+  -DSPIRV_BUILD_COMPRESSION:BOOL=OFF \
+  -DSPIRV-Headers_SOURCE_DIR=%_prefix \
+  -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+  -DBUILD_SHARED_LIBS:BOOL=TRUE
 
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DBUILD_SHARED_LIBS:BOOL=TRUE \
-	-DSPIRV-Headers_SOURCE_DIR=%prefix \
-	-DSPIRV_SKIP_TESTS:BOOL=TRUE
-
-popd
-
-%make_build -C %_target_platform
+ninja \
+  -vvv \
+  -j %__nprocs \
+  -C BUILD
 
 %install
-%makeinstall_std -C %_target_platform
+pushd BUILD
+cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix ../
+popd
+ninja -C BUILD install
 
 %files
 %doc CHANGES LICENSE README.md
@@ -76,21 +76,27 @@ popd
 
 %files -n lib%name%sover
 %_libdir/libSPIRV-Tools.so.*
-%_libdir/libSPIRV-Tools-link.so.*
-%_libdir/libSPIRV-Tools-opt.so.*
-%_libdir/libSPIRV-Tools-shared.so.*
+%_libdir/libSPIRV-Tools-*.so.*
 
 %files -n lib%name-devel
 %_libdir/libSPIRV-Tools.so
-%_libdir/libSPIRV-Tools-link.so
-%_libdir/libSPIRV-Tools-opt.so
-%_libdir/libSPIRV-Tools-shared.so
+%_libdir/libSPIRV-Tools-*.so
 %_pkgconfigdir/SPIRV-Tools.pc
 %_pkgconfigdir/SPIRV-Tools-shared.pc
 %_includedir/%name
 
 %changelog
-* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 2018.2-alt1%ubt
+* Thu May 02 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.3-alt2.g26c1b88
+- fix debuginfo build (disable compression).
+- use ninja build.
+
+* Thu May 02 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.3-alt1.g26c1b88
+- Updated to v2019.3-dev g26c1b88.
+- Build with python3.
+- Enable compression support.
+- Update -soname patch.
+
+* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 2018.2-alt1%%ubt
 - Version 2018.2
 
 * Tue Apr 18 2017 Nazarov Denis <nenderus@altlinux.org> 2016.6-alt0.M80P.1

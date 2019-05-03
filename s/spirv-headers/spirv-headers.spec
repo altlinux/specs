@@ -1,47 +1,46 @@
-%define commit 02ffc719aa9f9c1dce5ce05743fb1afe6cbf17ea
+%define build_type RelWithDebInfo
+%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%define git 2434b89
 
 Name: spirv-headers
-Version: 1.3
-Release: alt1%ubt
+Version: 1.3.7
+Release: alt0.1.g%{git}
 
-Summary: Machine-readable files from the SPIR-V registry
-License: MIT
+Summary: machine-readable files for the SPIR-V Registry
 Group: Development/C++
+License: BSD
 
-Url: https://www.khronos.org/registry/spir-v/
-Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
 
-Source: https://github.com/KhronosGroup/SPIRV-Headers/archive/%commit/SPIRV-Headers-%commit.tar.gz
+URL: https://github.com/KhronosGroup/SPIRV-Headers
+Packager: L.A. Kostis <lakostis@altlinux.org>
 
-BuildRequires(pre): rpm-build-ubt
+Source: %name-%version-%git.tar
+
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
 
 %description
-This package contains machine-readable files from the SPIR-V
-registry. This includes:
+This repository contains machine-readable files for the SPIR-V Registry. This includes:
 
 * Header files for various languages.
-* JSON files describing the grammar for the SPIR-V core instruction
-  set, and for the GLSL.std.450 extended instruction set.
+* JSON files describing the grammar for the SPIR-V core instruction set and the extended instruction sets.
 * The XML registry file.
+* A tool to build the headers from the JSON grammar.
 
 %prep
-%setup -n SPIRV-Headers-%commit
+%setup -n %name-%version-%git
 
-%install
-%__mkdir_p %buildroot%_includedir
-%__cp -a include/spirv %buildroot%_includedir/spirv
+%build
+%_cmake
+%cmake_build
+%cmakeinstall_std
 
 %files
-%doc LICENSE README.md
-%_includedir/spirv
+%doc *.md example
+%dir %_includedir/spirv
+%_includedir/spirv/*
 
 %changelog
-* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.3-alt1%ubt
-- Version 1.3
-
-* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.1-alt2.rc2%ubt
-- RC2
-
-* Sat Apr 15 2017 Nazarov Denis <nenderus@altlinux.org> 1.1-alt1
-- Initial release for ALT Linux
+* Thu May 02 2019 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.g2434b89
+- Initial build for Sisyphus.
