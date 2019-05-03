@@ -2,12 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with compat
+%def_with webkitgtk
+%def_with sdl
 
 %define wxbranch 3.0
 
 Name: wxGTK3.0
 Version: %wxbranch.4
-Release: alt4
+Release: alt5
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -24,7 +26,6 @@ Patch1: wxGTK3-3.0.2-abicheck.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
-BuildRequires: libSDL2-devel
 BuildRequires: libX11-devel libXinerama-devel libICE-devel libXmu-devel libXext-devel libXp-devel
 BuildRequires: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildRequires: libexpat-devel
@@ -35,10 +36,18 @@ BuildRequires: libXxf86vm-devel libbfd-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libGConf-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-BuildRequires: libnotify-devel libwebkit2gtk-devel
+BuildRequires: libnotify-devel
 
 %if_with compat
 BuildRequires: libgtk+2-devel
+%endif
+
+%if_with webkitgtk
+BuildRequires: libwebkit2gtk-devel
+%endif
+
+%if_with sdl
+BuildRequires: libSDL2-devel
 %endif
 
 %description
@@ -179,8 +188,12 @@ Requires: lib%name = %EVR
 Requires: lib%name-gl = %EVR
 Requires: lib%name-media = %EVR
 Requires: libwxBase%wxbranch-devel = %EVR
+%if_with webkitgtk
 Requires: lib%name-webview = %EVR
+%endif
+%if_with sdl
 Requires: lib%name-sound_sdlu = %EVR
+%endif
 %add_python_req_skip utils
 
 %description -n lib%name-devel
@@ -251,7 +264,9 @@ CONF_FLAG="--enable-shared \
 	--with-libpng=sys \
 	--with-libtiff=sys \
 	--with-opengl \
+%if_with sdl
 	--with-sdl \
+%endif
 	--enable-unicode \
 	--enable-optimise \
 	--with-regex=yes \
@@ -300,8 +315,10 @@ mkdir bld_gtk3
 pushd bld_gtk3
 %configure $CONF_FLAG \
 	--with-gtk=3 \
+%if_with webkitgtk
 	--enable-webview
-
+%endif
+	%nil
 %make_build
 popd
 
@@ -339,7 +356,6 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_libdir/libwx_baseu_net-*.so.*
 %_libdir/libwx_baseu_xml-*.so.*
 %dir %_libdir/wx
-%dir %_libdir/wx/%wxbranch
 
 %files -n libwxBase%wxbranch-devel
 %_bindir/wx-config
@@ -355,12 +371,18 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/bakefile/presets-%wxbranch
 %_libexecdir/%name
 
+%if_with sdl
 %files -n lib%name-sound_sdlu
+%dir %_libdir/wx/%wxbranch
 %_libdir/wx/%wxbranch/sound_sdlu-*.so
+%endif
 
+%if_with webkitgtk
 %files -n lib%name-webview
+%dir %_libdir/wx/%wxbranch
 %_libdir/libwx_gtk3u_webview-*.so.*
 %_libdir/wx/%wxbranch/web-extensions
+%endif
 
 %files -n lib%name
 %doc docs/changes.txt docs/gpl.txt docs/lgpl.txt docs/licence.txt
@@ -375,7 +397,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_libdir/libwx_gtk3u_richtext-*.so.*
 %_libdir/libwx_gtk3u_stc-*.so.*
 %_libdir/libwx_gtk3u_xrc-*.so.*
+%if_with webkitgtk
 %exclude %_libdir/libwx_gtk3u_webview-*.so.*
+%endif
 
 %files -n lib%name-gl
 %_libdir/libwx_gtk3u_gl-*.so.*
@@ -421,6 +445,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Apr 26 2019 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt5
+- switches for build with webkitgtk, SDL
+
 * Mon Apr 01 2019 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt4
 - New subpackage libwxGTK3.0-webview
 - New subpackage libwxGTK3.0-sound_sdlu
