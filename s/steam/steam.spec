@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.61
-Release: alt3
+Release: alt4
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -20,6 +20,7 @@ Requires: bash >= 4.4
 Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
+Requires: libdbusmenu-gtk2
 Requires: libGL
 Requires: libnsl1
 Requires: libnss
@@ -71,6 +72,9 @@ savegame and screenshot functionality, and many social features.
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Fri May 03 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt4
+- Fix system tray icon
+
 * Tue Apr 30 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt3
 - Add require on libnsl1 (ALT #36376)
 - Remove patch bash4
