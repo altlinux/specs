@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 Summary: Tools for testing processes
 License: BSD
@@ -13,7 +13,7 @@ Url: https://pypi.org/project/process-tests/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ionelmc/python-process-tests.git
-Source: https://files.pythonhosted.org/packages/43/6e/c4bd9605036e3c883c42e4f9ce79aede9101bd95f09055ae946a60b63b9e/%name-%version.tar.gz
+Source: https://files.pythonhosted.org/packages/5a/9b/c77450f9169597eef161963ae424e10813c398d603ccaf4d28f523f2bab4/%name-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Fri May 03 2019 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 2.0.1 -> 2.0.2.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 1.2.1 -> 2.0.1.
 
