@@ -1,6 +1,6 @@
 Name: snes9x
 Version: 1.60
-Release: alt1
+Release: alt2
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -91,12 +91,23 @@ popd
 %_desktopdir/%name-gtk.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
+%dir %_iconsdir/hicolor/24x24
+%dir %_iconsdir/hicolor/24x24/apps
 %_iconsdir/hicolor/24x24/apps/%name.png
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
 %_iconsdir/hicolor/64x64/apps/%name.png
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
 %_iconsdir/hicolor/128x128/apps/%name.png
+%dir %_iconsdir/hicolor/256x256
+%dir %_iconsdir/hicolor/256x256/apps
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Fri May 03 2019 Nazarov Denis <nenderus@altlinux.org> 1.60-alt2
+- Fix post-install unowned files
+
 * Wed May 01 2019 Nazarov Denis <nenderus@altlinux.org> 1.60-alt1
 - Version 1.60
 
