@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 Summary: A pathlib-compatible Zipfile object wrapper
 License: MIT
@@ -92,5 +92,8 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/zipp-*.egg-info/
 
 %changelog
+* Fri May 03 2019 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.3 -> 0.4.0.
+
 * Mon Jan 28 2019 Stanislav Levin <slev@altlinux.org> 0.3.3-alt1
 - Initial build.
