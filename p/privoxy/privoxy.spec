@@ -1,6 +1,6 @@
 Name: privoxy
 Version: 3.0.28
-Release: alt1
+Release: alt2
 
 Summary: Privoxy - privacy enhancing proxy
 
@@ -21,7 +21,7 @@ Source8: %name.service
 
 Patch1: %name-3.0.10-alt-config.patch
 
-PreReq: chkconfig, shadow-utils, chrooted, coreutils
+Requires: chkconfig, shadow-utils, chrooted, coreutils
 
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/%name
@@ -69,7 +69,7 @@ install -pD -m644 %name.1 %buildroot%_man8dir/%name.8
 install -pD -m640 %name.log %buildroot%_sysconfdir/logrotate.d/%name
 install -pD -m755 %name.init %buildroot%_initdir/%name
 
-mkdir -p %buildroot%ROOT{%_sbindir,/lib,/var/{nis,yp/binding,log},%_sysconfdir/%name/templates}
+mkdir -p %buildroot%ROOT{%_sbindir,/%_lib,/var/{nis,yp/binding,log},%_sysconfdir/%name/templates}
 install -p config trust {default,match-all,user}.action {default,user}.filter %buildroot%ROOT/%_sysconfdir/%name/
 install -p templates/[a-z]* %buildroot%ROOT/%_sysconfdir/%name/templates/
 
@@ -96,7 +96,7 @@ test -d %_sysconfdir/%name/ || ln -s %ROOT%_sysconfdir/%name %_sysconfdir/%name
 %preun
 %preun_service %name
 if [ $1 = 0 ]; then
-	rm -f %ROOT/lib/* %ROOT/var/yp/binding/*
+	rm -f %ROOT/lib*/* %ROOT/var/yp/binding/*
 	rm -f %_sysconfdir/%name
 fi
 
@@ -116,7 +116,7 @@ fi
 
 %defattr(640,root,%name,710)
 %dir %ROOT
-%dir %ROOT/lib
+%dir %ROOT/%_lib
 %dir %ROOT%_sysconfdir
 %dir %ROOT%_sysconfdir/%name
 %ROOT%_sysconfdir/%name/templates
@@ -143,6 +143,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Sat May 04 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.28-alt2
+- update chroot configs (ALT bug 36469)
+
 * Sat Mar 23 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.28-alt1
 - new version 3.0.28 (with rpmrb script) (ALT bug 36353)
 
