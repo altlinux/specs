@@ -37,7 +37,7 @@
 
 Name: uim
 Version: 1.8.8
-Release: alt1
+Release: alt2
 
 Summary: useful input method
 
@@ -60,6 +60,7 @@ BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-util
 %{?_with_qt:BuildRequires: libqt3-devel gcc-c++}
 %{?_with_qt4:BuildRequires: libqt4-devel gcc-c++}
 %{?_with_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel gcc-c++}
+%{?_with_x:BuildRequires: gcc-c++ libXext-devel libXft-devel}
 %{?_with_xft:BuildRequires: libXft-devel}
 %{?_enable_emacs:BuildRequires: emacs-common emacs-devel}
 
@@ -69,7 +70,7 @@ BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-util
 %{?_with_qt5:Requires: uim-qt5 = %EVR}
 %{?_with_x:Requires: uim-xim = %EVR}
 Requires: uim-plugins = %EVR
-Requires: uim-pref = %EVR
+%{?_with_gtk:Requires: uim-pref = %EVR}
 
 %define common_descr uim is a multilingual input method library and environment.\
 \
@@ -177,6 +178,17 @@ Obsoletes: uim-emacs
 %common_descr
 
 EMACS module for universal input method.
+
+%package -n emacs-uim-el
+Summary: EMACS Lisp sources for universal input method module
+Group: Text tools
+Requires: emacs-uim
+
+%description -n emacs-uim-el
+%common_descr
+
+EMACS module for universal input method. This package contains EMACS Lisp
+sources.
 %endif # emacs
 
 %package pref-gtk
@@ -364,7 +376,9 @@ XIM module for universal input method.
 	%{?_with_qt:--with-qt-immodule} \
 	%{?_with_qt4:--with-qt4-immodule} \
 	%{?_with_qt5:--with-qt5-immodule} \
+%if_with gtk
 	--enable-pref \
+%endif # gtk
 	--enable-nls \
 	--with-libgcroots=installed \
 	--enable-notify=stderr%{?_with_libnotify:,libnotify} \
@@ -381,8 +395,17 @@ export LC_ALL=en_US.UTF-8
 %makeinstall_std
 %find_lang %name
 
+%if_enabled emacs
 mkdir -p %buildroot%_emacs_sitestart_dir
 install -m0644 alt/uim.el -t %buildroot%_emacs_sitestart_dir
+
+# compile emacs lisp
+pushd %buildroot%_datadir/emacs/site-lisp/uim-el
+	for i in $(find . -name "*.el"); do
+		emacs -no-site-file -q -batch -eval '(setq load-path (cons "." load-path))' -f batch-byte-compile $i
+	done
+popd
+%endif # emacs
 
 %if_with m17nlib
 install -pD -m755 alt/uim-m17nlib-icons.filetrigger -t %buildroot%_rpmlibdir
@@ -393,12 +416,13 @@ install -pm644 alt/xinput %buildroot%_sysconfdir/X11/xinit/xinput.d/uim.conf
 
 # alternatives
 mkdir -p %buildroot%_altdir
-install -p -m644 alternatives/uim-pref-gtk %buildroot%_altdir/uim-pref-gtk
-install -p -m644 alternatives/uim-pref-gtk3 %buildroot%_altdir/uim-pref-gtk3
-install -p -m644 alternatives/uim-pref-qt %buildroot%_altdir/uim-pref-qt
-install -p -m644 alternatives/uim-pref-qt4 %buildroot%_altdir/uim-pref-qt4
-install -p -m644 alternatives/uim-pref-qt5 %buildroot%_altdir/uim-pref-qt5
+%{?_with_gtk:install -p -m644 alternatives/uim-pref-gtk %buildroot%_altdir/uim-pref-gtk}
+%{?_with_gtk3:install -p -m644 alternatives/uim-pref-gtk3 %buildroot%_altdir/uim-pref-gtk3}
+%{?_with_qt:install -p -m644 alternatives/uim-pref-qt %buildroot%_altdir/uim-pref-qt}
+%{?_with_qt4:install -p -m644 alternatives/uim-pref-qt4 %buildroot%_altdir/uim-pref-qt4}
+%{?_with_qt5:install -p -m644 alternatives/uim-pref-qt5 %buildroot%_altdir/uim-pref-qt5}
 
+# ghost files
 mkdir -p %buildroot%_localstatedir/uim
 touch %buildroot%_localstatedir/uim/installed-modules.scm
 touch %buildroot%_localstatedir/uim/loader.scm
@@ -436,10 +460,15 @@ fi
 %doc alt/UIMEl
 %_bindir/uim-el-agent
 %_bindir/uim-el-helper-agent
-%_datadir/emacs/*
+%_datadir/emacs/site-lisp/uim-el/*.elc
 %_emacs_sitestart_dir/uim.el
+%exclude %_datadir/emacs/site-lisp/uim-el/*.el
+
+%files -n emacs-uim-el
+%_datadir/emacs/site-lisp/uim-el/*.el
 %endif # emacs
 
+%if_with gtk
 %files pref
 %_datadir/applications/uim.desktop
 
@@ -448,27 +477,36 @@ fi
 %_bindir/uim-pref-gtk
 %_bindir/uim-toolbar-gtk
 %_bindir/uim-toolbar-gtk-systray
+%endif # gtk
 
+%if_with gtk3
 %files pref-gtk3
 %_altdir/uim-pref-gtk3
 %_bindir/uim-pref-gtk3
 %_bindir/uim-toolbar-gtk3
 %_bindir/uim-toolbar-gtk3-systray
+%endif # gtk3
 
+%if_with qt
 %files pref-qt
 %_altdir/uim-pref-qt
 %_bindir/uim-pref-qt
 %_bindir/uim-toolbar-qt
+%endif # qt
 
+%if_with qt4
 %files pref-qt4
 %_altdir/uim-pref-qt4
 %_bindir/uim-pref-qt4
 %_bindir/uim-toolbar-qt4
+%endif # qt4
 
+%if_with qt5
 %files pref-qt5
 %_altdir/uim-pref-qt5
 %_bindir/uim-pref-qt5
 %_bindir/uim-toolbar-qt5
+%endif # qt5
 
 %if_enabled fep
 %files fep
@@ -578,6 +616,11 @@ fi
 %endif
 
 %changelog
+* Sat May 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8-alt2
+- emacs-uim: packaged compiled EMACS lisp
+- separated emacs-uim-el subpackage with EMACS lisp sources
+- fixed build without gtk, gtk3, qt, qt4 and qt5 knobs
+
 * Sun May 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8-alt1
 - 1.8.8
 - uim-emacs -> emacs-uim (Emacs packaging policy)
