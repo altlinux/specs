@@ -1,6 +1,6 @@
 %define module_name	xtables-addons
 %define module_version	2.14
-%define module_release	alt1.k
+%define module_release	alt2
 
 %define flavour		std-pae
 %define karch i586
@@ -24,7 +24,7 @@ License: GPL
 
 ExclusiveOS:	Linux
 BuildRequires: kernel-build-tools >= 0.7
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: rpm-build-licenses
 ExclusiveArch: %karch
@@ -34,8 +34,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 Prereq:		coreutils
-Prereq:         kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
+Prereq:         kernel-image-%flavour = %kepoch%kversion-%krelease
 
 %description
 Xtables-addons is the proclaimed successor to patch-o-matic(-ng). It
