@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -138,28 +138,24 @@ This package provides miners for TRacker.
 
 %files -f %name.lang
 %_xdgconfigdir/autostart/tracker-extract.desktop
-#%_xdgconfigdir/autostart/tracker-miner-apps.desktop
 %_xdgconfigdir/autostart/tracker-miner-fs.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss.desktop
 %_libdir/%name-%ver_api/
 %_libexecdir/tracker-extract
 %_libexecdir/tracker-miner-fs
 %_libexecdir/tracker-writeback
-#%_libexecdir/tracker-miner-apps
 %{?_enable_rss:%_libexecdir/tracker-miner-rss}
 %_man1dir/tracker-miner-fs.*
 %{?_enable_rss:%_man1dir/tracker-miner-rss.1.*}
 %_datadir/tracker/miners/
 %_datadir/%name/extract-rules/
 %_prefix/lib/systemd/user/tracker-extract.service
-#%_prefix/lib/systemd/user/tracker-miner-apps.service
 %_prefix/lib/systemd/user/tracker-miner-fs.service
 %_prefix/lib/systemd/user/tracker-miner-rss.service
 %_prefix/lib/systemd/user/tracker-writeback.service
 %_man1dir/tracker-extract.*
 %_man1dir/tracker-writeback.*
 
-#%_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Applications.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Extract.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.Files.service
 %_datadir/dbus-1/services/org.freedesktop.Tracker1.Miner.RSS.service
@@ -169,10 +165,11 @@ This package provides miners for TRacker.
 %_datadir/glib-2.0/schemas/org.freedesktop.Tracker.Writeback.gschema.xml
 %_datadir/glib-2.0/schemas/org.freedesktop.TrackerMiners.enums.xml
 
-#%exclude %_datadir/tracker-tests/01-writeback.py
-
 
 %changelog
+* Fri May 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Thu Mar 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
