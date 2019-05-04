@@ -1,8 +1,8 @@
 %define module_name     linux-gpib
 %define module_version  4.2.0
-%define module_release  alt2
+%define module_release  alt3
 %define flavour std-def
-%define karch   %ix86 x86_64
+%define karch   x86_64 i586
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -19,7 +19,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 URL: http://linux-gpib.sourceforge.net/
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
@@ -27,8 +27,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 Requires(pre,postun): coreutils
-Requires(pre,postun): kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
+Requires(pre,postun): kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 %description
