@@ -1,9 +1,9 @@
 %define module_name	ipset
 %define module_version	7.1
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch %ix86 x86_64
+%define karch x86_64 i586
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -20,8 +20,8 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 URL: http://ipset.netfilter.org/
-BuildRequires(pre): rpm-build-kernel rpm-build-ubt
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: libmnl-devel
 
@@ -30,8 +30,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 %description
