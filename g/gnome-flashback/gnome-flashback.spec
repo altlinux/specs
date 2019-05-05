@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -25,9 +25,8 @@ Source: %name-%version.tar
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
 
-PreReq: xinitrc
+Requires(pre): xinitrc
 Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
-Requires: libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
@@ -119,7 +118,6 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop-background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.input-sources.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%name.workarounds.gschema.xml
 %_datadir/glib-2.0/schemas/00_gnome-flashback.gschema.override
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
@@ -134,6 +132,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metacity window manager
@@ -38,13 +38,13 @@ Requires: lib%name = %version-%release
 Requires: zenity
 
 # From configure.ac
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-BuildPreReq: intltool >= 0.34.90
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libstartup-notification-devel >= %startup_notification_ver
-BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildPreReq: libXcomposite-devel >= %xcomposite_ver
+BuildRequires: rpm-build-gnome rpm-build-licenses
+BuildRequires: intltool >= 0.34.90
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libstartup-notification-devel >= %startup_notification_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildRequires: libXcomposite-devel >= %xcomposite_ver
 BuildRequires: libXfixes-devel libXrender-devel libXdamage-devel libXtst-devel
 BuildRequires: libXrender-devel
 BuildRequires: libXcursor-devel libXt-devel libXinerama-devel libXext-devel
@@ -135,6 +135,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

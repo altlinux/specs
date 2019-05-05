@@ -1,19 +1,18 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
 %def_disable mini_commander
 %def_enable battstat
-%def_enable modemlights
 %def_enable command
 %def_enable timer
 
 Name: gnome-applets
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -27,13 +26,12 @@ Source: %name-%version.tar
 %endif
 
 Source1: 01-cpufreq.pkla
-Patch: %name-3.22.0-alt-modem-lights.patch
 Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.30.0
+%define gnome_panel_ver 3.32.0
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -59,7 +57,6 @@ Requires: %name-window-buttons = %version-%release
 Requires: %name-window-title = %version-%release
 %{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
 %{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
-%{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
 %{?_enable_battstat:Requires: %name-battstat = %version-%release}
 %{?_enable_command:Requires: %name-command = %version-%release}
 %{?_enable_timer:Requires: %name-timer = %version-%release}
@@ -231,19 +228,6 @@ built-in clock. Because of the changeable macros you can use it for many
 different tasks. You can simply start a program (or a short macro) or
 view a web page or search for a man/info page etc.
 
-%if_enabled modemlights
-%package modemlights
-Summary: Modem Lights applet for the GNOME panel
-Group: Monitoring
-Requires(pre): %name-common = %version-%release
-
-%description modemlights
-modemlights_applet can be used to tell if your modem is working, and to
-track its behavior and performance. It can also be configured to call a
-separate script or program to have your modem connect and disconnect
-when you click on the button with the single green light.
-%endif
-
 %package multiload
 Summary: Multiload (cpu, load average, memory, net, swap) applet for the GNOME panel
 Group: Monitoring
@@ -361,7 +345,6 @@ window title.
 
 %prep
 %setup
-%patch -p1
 %patch1
 
 %build
@@ -462,17 +445,6 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_liconsdir/gnome-mini-commander.png
 %endif
 
-%if_enabled modemlights
-%files modemlights
-%gnome_appletsdir/libmodem-lights-applet.so
-%_datadir/%name/builder/modemlights.ui
-%_datadir/%name/ui/modem-applet-menu.xml
-#%_datadir/dbus-1/services/org.gnome.panel.applet.ModemAppletFactory.service
-%_datadir/gnome-panel/applets/org.gnome.applets.ModemApplet.panel-applet
-%_iconsdir/hicolor/*x*/apps/gnome-modem-monitor-applet.png
-%_iconsdir/hicolor/scalable/apps/gnome-modem-monitor-applet.svg
-%endif
-
 %files multiload -f multiload.lang
 %gnome_appletsdir/libmultiload-applet.so
 %_datadir/%name/ui/multiload-applet-menu.xml
@@ -555,6 +527,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0 (removed modem-lights applet)
+
 * Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
 - rebuilt battstat against current libapm
 
