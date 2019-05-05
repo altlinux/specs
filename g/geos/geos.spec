@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: geos
-Version: 3.7.1
-Release: alt2
+Version: 3.7.2
+Release: alt1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -219,6 +219,9 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Sun May 05 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.2-alt1
+- New version.
+
 * Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 3.7.1-alt2
 - E2K: avoid lcc-unsupported option
 
