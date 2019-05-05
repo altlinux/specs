@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.30
+%define ver_major 3.32
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -10,7 +10,7 @@
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -48,28 +48,28 @@ Requires: fortune-mod
 # for clock
 Requires: tzdata
 
-BuildPreReq: rpm-build-gnome >= 0.4
+BuildRequires: rpm-build-gnome >= 0.4
 
 # From configure.ac
 BuildRequires: autoconf-archive yelp-tools gtk-doc
-%{?_enable_gtk_doc:BuildPreReq: gtk-doc >= %gtk_doc_ver}
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libpango-devel >= %libpango_ver
-BuildPreReq: libwnck3-devel >= %libwnck_ver
-BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
-BuildPreReq: libgweather-devel >= %gweather_ver
-BuildPreReq: librsvg-devel >= %rsvg_ver
+%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver}
+BuildRequires: libgnome-desktop3-devel >= %desktop_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libpango-devel >= %libpango_ver
+BuildRequires: libwnck3-devel >= %libwnck_ver
+BuildRequires: libgnome-menus-devel >= %gnome_menus_ver
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
+BuildRequires: libgweather-devel >= %gweather_ver
+BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
 BuildRequires: gdm-libs-devel
 BuildRequires: systemd-devel >= %systemd_ver
-%{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver} libicu-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_eds:BuildRequires: evolution-data-server-devel >= %eds_ver} libicu-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly
@@ -142,6 +142,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -157,7 +158,6 @@ GObject introspection devel data for the GNOME Panel shared library.
 %find_lang --with-gnome --output=%name.lang %name clock fish
 
 %files -f %name.lang
-%_bindir/gnome-desktop-item-edit
 %_bindir/gnome-panel
 %dir %gnome_appletsdir
 %gnome_appletsdir/clock.so
@@ -205,6 +205,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
+- 3.32.0
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
 - rebuilt against libedataserver-1.2.so.24
 
