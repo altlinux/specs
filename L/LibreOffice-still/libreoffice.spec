@@ -29,7 +29,7 @@
 
 Name: LibreOffice-still
 %define hversion 6.1
-%define urelease 6.2
+%define urelease 6.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -615,6 +615,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun May 05 2019 Andrey Cherepanov <cas@altlinux.org> 6.1.6.3-alt1
+- New version 6.1.6.3 (Still).
+
 * Mon Apr 29 2019 Andrey Cherepanov <cas@altlinux.org> 6.1.6.2-alt1
 - New version 6.1.6.2 (Still).
 
