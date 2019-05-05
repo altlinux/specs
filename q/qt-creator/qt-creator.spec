@@ -8,7 +8,7 @@
 
 Name:    qt-creator
 Version: 4.9.0
-Release: alt2
+Release: alt2.1
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -46,6 +46,11 @@ BuildRequires: lld
 
 Requires: qt5-quickcontrols
 
+%ifarch %e2k
+# error: cpio archive too big - 4446M
+%global __find_debuginfo_files %nil
+%endif
+
 %description
 Qt Creator (previously known as Project Greenhouse) is a new,
 lightweight, cross-platform integrated  development environment (IDE)
@@ -76,10 +81,18 @@ subst 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch -p1
 %patch1 -p1
+%ifarch %e2k
+# strip UTF-8 BOM
+find src -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 export QTDIR=%_qt5_prefix
 export PATH="%{_qt5_bindir}:$PATH"
+%ifarch %e2k
+# fool sqlite into building with lcc
+sed -i 's,^QMAKE_CFLAGS_WARN_ON.*$,& -D__INTEL_COMPILER,' src/libs/3rdparty/sqlite/sqlite.pri
+%endif
 %if_with ClangCodeModel
 export LLVM_INSTALL_DIR="%_prefix"
 %remove_optflags -frecord-gcc-switches
@@ -120,6 +133,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Sun May 05 2019 Michael Shigorin <mike@altlinux.org> 4.9.0-alt2.1
+- E2K: fix build (and disable overly large debuginfo subpackage)
+
 * Mon Apr 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.9.0-alt2
 - Updated build dependencies: libbotan is no longer required.
 
