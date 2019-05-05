@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -46,6 +46,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
+Requires: totem-video-thumbnailer
 %{?_enable_tracker:Requires: tracker}
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
@@ -54,7 +55,6 @@ BuildRequires: libappstream-glib-devel
 # for %%check
 BuildRequires: xvfb-run dbus-tools-gui /proc
 
-# From configure.ac
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
@@ -190,6 +190,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1 (fixed CVE-2019-11461)
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
