@@ -3,7 +3,7 @@
 
 Name: vkd3d
 Version: 1.1
-Release: alt0.1
+Release: alt0.3.gbe4ca96
 Summary: The vkd3d 3D Graphics Library
 
 Group: System/Libraries
@@ -81,6 +81,12 @@ done
 %endif
 
 %changelog
+* Sun May 05 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.3.gbe4ca96
+- GIT be4ca96.
+
+* Thu Feb 07 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.2.gfd3d661
+- GIT fd3d661.
+
 * Mon Dec 03 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.1
 - Bump to 1.1 release.
 - Disable demos and libxcb (can be enabled one day).
