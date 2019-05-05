@@ -6,7 +6,7 @@
 
 Name: vlc
 Version: 3.0.6
-Release: alt6
+Release: alt7
 
 Summary: VLC media player
 License: GPLv2
@@ -14,6 +14,7 @@ Group: Video
 
 Url: http://www.videolan.org
 Source: vlc-%version.tar
+Patch: vlc-3.0.6-alt-e2k-lcc123.patch
 
 BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
@@ -53,7 +54,7 @@ BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_wayland:BuildRequires: libwayland-egl-devel wayland-protocols}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
-%define allplugins aa ass audiocd bluray chromaprint dbus dv dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:caca projectm}
+%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:caca projectm}
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -640,6 +641,14 @@ This package contains fortunes from VLC media player.
 %prep
 %setup
 echo %version-%release > src/revision.txt
+%ifarch %e2k
+# lcc 1.23 isn't quite gcc5 regarding builtins as well
+%patch -p1
+# EDG frontend bug
+sed -i 's,const ATTR_USED,const,' modules/video_filter/deinterlace/yadif.h
+# modules/demux/adaptive/PlaylistManager.cpp:638: undefined reference to `__pthread_register_cancel' ...
+%add_optflags -pthread
+%endif
 
 %build
 %add_optflags -I%_includedir/samba-4.0
@@ -1398,6 +1407,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun May 05 2019 Michael Shigorin <mike@altlinux.org> 3.0.6-alt7
+- fixed build on E2K
+- fixed firewire knob
+
 * Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 3.0.6-alt6
 - introduced firewire, visualization, wayland knobs (on by default)
 
