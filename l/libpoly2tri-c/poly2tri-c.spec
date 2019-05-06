@@ -4,13 +4,15 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: A 2D constrained Delaunay triangulation library
 Group: System/Libraries
 License: BSD
+
 Url: http://code.google.com/p/%_name/
-#VCS: https://code.google.com/p/poly2tri-c/
+# Automatically exported from code.google.com/p/poly2tri-c
+# VCS: https://github.com/Paul-Browne/poly2tri-c
 Source: %_name-%version.tar
 
 BuildRequires: glib2-devel >= 2.28
@@ -35,7 +37,11 @@ Development files for %name.
 sed -i 's/-pedantic//' configure.ac
 %autoreconf
 %configure --disable-static
-%make
+%ifarch %e2k
+# lcc: "sweep.c", line 989: error: missing return statement at end of non-void function
+sed -i 's,-Werror,& -Wno-error=return-type,' poly2tri-c/p2t/{sweep,common}/Makefile
+%endif
+%make_build
 
 %install
 %makeinstall_std
@@ -51,6 +57,11 @@ sed -i 's/-pedantic//' configure.ac
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.1.0-alt2.1
+- fixed build with lcc on e2k
+- enabled parallel build
+- updated source git notice (aris@)
+
 * Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
 - fixed build with gcc5
 
