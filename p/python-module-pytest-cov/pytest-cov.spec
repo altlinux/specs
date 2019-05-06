@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.6.1
-Release: alt2
+Version: 2.7.1
+Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -19,16 +19,16 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-coverage
-BuildRequires: python-module-fields
-BuildRequires: python-module-process-tests
-BuildRequires: python-module-pytest-xdist
-BuildRequires: python-module-virtualenv
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-fields
-BuildRequires: python3-module-process-tests
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-tox
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(fields)
+BuildRequires: python2.7(process_tests)
+BuildRequires: python2.7(pytest-xdist)
+BuildRequires: python2.7(virtualenv)
+BuildRequires: python3(coverage)
+BuildRequires: python3(fields)
+BuildRequires: python3(process_tests)
+BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -57,6 +57,9 @@ through pytest-cov or through coverage's config file.
 %setup
 %patch -p1
 
+grep -qsF 'time.sleep(1)' tests/test_pytest_cov.py || exit 1
+sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
+
 rm -rf ../python3
 cp -a . ../python3
 
@@ -75,25 +78,24 @@ pushd ../python3
 popd
 
 %check
-# to read a custom pth-file one should add a such path to site-dir
-# this only needs for tests at RPM build time
-echo "import site;site.addsitedir(\"$(pwd)/src\")" > tests/sitecustomize.py
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
     cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
-grep -qs '[[:space:]]*hunter[[:space:]]*$' tox.ini || exit 1
-sed -i '/[[:space:]]*hunter[[:space:]]*$/d' tox.ini
+grep -qs "'hunter',$" setup.py || exit 1
+sed -i '/\x27hunter\x27,$/d' setup.py
 # don't use a specific version
-sed -i 's/==/>=/g' tox.ini
+sed -i 's/==/>=/g' tox.ini setup.py
 
 export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='RPM_BUILD_DIR'
+export PYTHONPATH_PY2=%_libdir/python%_python_version/site-packages
+export PYTHONPATH_PY3=%_libdir/python3/site-packages
+export TOX_TESTENV_PASSENV='PYTHONPATH_PY2 PYTHONPATH_PY3'
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -p auto -o -rv
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -108,6 +110,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Fri May 03 2019 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1
+- 2.6.1 -> 2.7.1.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
 - Fixed build.
 
