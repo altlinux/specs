@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: lib%{_name}3
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -129,6 +129,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.11-alt1
+- 3.24.11
+
 * Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.10-alt1
 - 3.24.10
 
