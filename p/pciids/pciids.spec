@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20190429
+Version: 20190506
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,6 +34,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Mon May 06 2019 Cronbuild Service <cronbuild@altlinux.org> 20190506-alt1
+- repocop cronbuild 20190506. At your service.
+
 * Mon Apr 29 2019 Cronbuild Service <cronbuild@altlinux.org> 20190429-alt1
 - repocop cronbuild 20190429. At your service.
 
