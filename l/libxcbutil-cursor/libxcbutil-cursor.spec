@@ -1,6 +1,6 @@
 Name: libxcbutil-cursor
 Version: 0.1.3
-Release: alt1
+Release: alt2
 Summary: Client and window-manager helper library on top of libxcb
 License: MIT
 Group: System/Libraries
@@ -12,7 +12,7 @@ Source1: m4.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: libxcbutil-devel >= 0.3.8
-BuildRequires: xorg-xproto-devel xorg-util-macros libxcbutil-proto libxcb-render-util-devel libxcbutil-image-devel gperf
+BuildRequires: xorg-xproto-devel xorg-util-macros xorg-xcbproto-devel libxcb-render-util-devel libxcbutil-image-devel gperf
 
 %description
 XCB util-cursor module provides the following libraries:
@@ -48,6 +48,9 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt2
+- fix build requires
+
 * Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1
 - new version
 
