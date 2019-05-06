@@ -1,5 +1,5 @@
 Name: purple-plugin-carbons
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Message Carbons plugin for libpurple
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Patch1: %name-%version-%release.patch
 
 BuildRequires: glib2-devel libpurple-devel libxml2-devel
+# need for tests
+BuildRequires: libcmocka-devel
 
 %description
 Implements XEP-0280: Message Carbons as a plugin.
@@ -30,10 +32,17 @@ make
 %install
 make DESTDIR=%buildroot install
 
+%check
+make test
+
 %files
 %_libdir/purple-2/carbons.so
 
 %changelog
+* Mon May 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2.2-alt1
+- Updated to 0.2.2.
+- spec: enabled tests (introduced in 0.2.2).
+
 * Wed Mar 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus.
 
