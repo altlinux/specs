@@ -4,16 +4,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.6
+Version: 0.9.8
 Release: alt1
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python
 Url: http://pypi.python.org/pypi/fastimport/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/f0/42/ae12d69ee5cca6bc8164765f186c12945d63d63d5107b6f9b81c746cabda/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+
+Source0: https://pypi.python.org/packages/aa/65/47a579aae80fbd8b89cfbdffcde8dff68d57e3148b99da6a326673021455/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-distribute
 %if_with python3
@@ -105,6 +105,10 @@ popd
 %doc PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%if_with python3
+%else
+%_bindir/*
+%endif
 
 %files tests
 %python_sitelibdir/*/tests
@@ -114,12 +118,16 @@ popd
 %doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%_bindir/*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon May 06 2019 Anatoly Kitaykin <cetus@altlinux.org> 0.9.8-alt1
+- Version 0.9.8
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1
 - automated PyPI update
 
