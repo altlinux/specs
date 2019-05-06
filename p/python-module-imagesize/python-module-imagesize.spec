@@ -1,8 +1,8 @@
 %define py_name imagesize
 
 Name: python-module-%py_name
-Version: 0.7.1
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Group: Development/Python
 %global short_desc Getting image size from png/jpeg/jpeg2000/gif file in pure Python
@@ -73,7 +73,7 @@ cd %name-%version
 
 # Just in case:
 # make sure we test the installed modules from %%buildroot,
-rm -r imagesize
+rm imagesize.py
 
 [ -n "$NOSE_PROCESSES" ] || NOSE_PROCESSES=%__nprocs; export NOSE_PROCESSES # like in %%make_build
 PYTHONPATH=%buildroot%python_sitelibdir nosetests test
@@ -81,15 +81,16 @@ PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 test
 
 %files
 %doc py2/{LICENSE,README}.rst
-%python_sitelibdir/%py_name
-%python_sitelibdir/%py_name-*.egg-info
+%python_sitelibdir/*
 
 %files -n python3-module-%py_name
 %doc py3/{LICENSE,README}.rst
-%python3_sitelibdir/%py_name
-%python3_sitelibdir/%py_name-*.egg-info
+%python3_sitelibdir/*
 
 %changelog
+* Mon May 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1.1
 - Rebuild with python3.7.
 
