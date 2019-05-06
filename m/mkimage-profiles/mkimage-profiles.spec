@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 1.3.7-alt1
+- docker, vm, browser fixups (obirvalger@)
+- elogind support, refactoring, cleanups (antohami@)
+- a couple more improvements (me)
+
 * Mon Apr 01 2019 Michael Shigorin <mike@altlinux.org> 1.3.6-alt1
 - no joke!
 
