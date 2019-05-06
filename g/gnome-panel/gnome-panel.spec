@@ -10,7 +10,7 @@
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -68,7 +68,8 @@ BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
 BuildRequires: gdm-libs-devel
 BuildRequires: systemd-devel >= %systemd_ver
-%{?_enable_eds:BuildRequires: evolution-data-server-devel >= %eds_ver} libicu-devel
+BuildRequires: libicu-devel
+%{?_enable_eds:BuildRequires: evolution-data-server-devel >= %eds_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -205,6 +206,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1.1
+- fixed BR.
+
 * Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
