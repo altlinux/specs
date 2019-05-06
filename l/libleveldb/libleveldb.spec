@@ -1,5 +1,5 @@
 Name: libleveldb
-Version: 1.20
+Version: 1.22
 Release: alt1
 
 Summary: A fast and lightweight key/value database library by Google
@@ -14,16 +14,14 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 ## patches from Fedora (as of leveldb-1.12.0-10.fc23, rediff)
-Patch2: leveldb-0002-Add-memory-barrier-on-PowerPC.patch
 Patch3: leveldb-0003-bloom_test-failure-on-big-endian-archs.patch
 Patch4: leveldb-0004-Allow-leveldbjni-build.patch
 Patch5: leveldb-0005-Added-a-DB-SuspendCompations-and-DB-ResumeCompaction.patch
 Patch6: leveldb-0006-allow-Get-calls-to-avoid-copies-into-std-string.patch
 
-
 # Automatically added by buildreq on Tue Apr 16 2013
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++ libsnappy-devel
+BuildRequires: gcc-c++ libsnappy-devel rpm-macros-cmake cmake
 
 %description
 LevelDB is a fast key-value storage library written at Google that provides an
@@ -41,20 +39,32 @@ Additional header files for development with %name.
 %setup
 %patch0 -p1
 # fedora patches
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 
-
 %build
-%autoreconf
-%configure --disable-static --with-pic
-%make_build
+%cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=yes
+%cmake_build
 
 %install
-make install DESTDIR=%buildroot
+%cmakeinstall_std
+
+cat > %name.pc << EOF
+prefix=%prefix
+exec_prefix=%prefix
+libdir=%_libdir
+includedir=%_includedir
+
+Name: %name
+Description: %summary
+Version: %version
+Libs: -l%name
+EOF
+
+mkdir -p %buildroot%_libdir/pkgconfig
+cp -a %name.pc %buildroot%_libdir/pkgconfig/
 
 %files
 %doc doc/ AUTHORS LICENSE README.md
@@ -64,8 +74,19 @@ make install DESTDIR=%buildroot
 %_includedir/leveldb/
 %_libdir/%name.so
 %_libdir/pkgconfig/*
+%_libdir/cmake/leveldb/
 
 %changelog
+* Mon May 06 2019 Alexei Takaseev <taf@altlinux.org> 1.22-alt1
+- 1.22
+- Remove unneeded patch leveldb-0002-Add-memory-barrier-on-PowerPC.patch
+- Re-applay Fedore patches:
+    * leveldb-0003-bloom_test-failure-on-big-endian-archs.patch
+    * leveldb-0004-Allow-leveldbjni-build.patch
+    * leveldb-0005-Added-a-DB-SuspendCompations-and-DB-ResumeCompaction.patch
+    * leveldb-0006-allow-Get-calls-to-avoid-copies-into-std-string.patch
+- Use CMAKE build system
+
 * Mon Sep 25 2017 Alexei Takaseev <taf@altlinux.org> 1.20-alt1
 - 1.20 (ALT#33915)
 
