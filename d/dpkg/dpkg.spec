@@ -2,16 +2,16 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.19.0.5
+Version: 1.19.5
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
 
 License: GPLv2+
 Group: System/Configuration/Packaging
-Url: http://packages.debian.org/unstable/base/dpkg.html
+Url: http://packages.debian.org/unstable/base/dpkg
 
-Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
+Source0: http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 Patch: dpkg-ALT-e2k-cputable.patch
 
 # Automatically added by buildreq on Tue Feb 20 2018
@@ -57,6 +57,8 @@ This module provides dpkg functionalities.
 %install
 %makeinstall_std
 
+rm -f %buildroot%_man7dir/deb-version.*
+
 # cleanup
 %if_without extbuild
 rm -rf %buildroot%_mandir/??/
@@ -74,6 +76,7 @@ cat dpkg-dev.lang >> %name.lang
 %dir %_datadir/%name
 %_datadir/%name/*table
 %_datadir/%name/*.mk
+%_datadir/%name/*.specs
 %dir /var/lib/%name/
 /var/lib/%name/*
 %dir %_sysconfdir/%name
@@ -99,6 +102,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.19.5-alt1
+- new version 1.19.5 (with rpmrb script) (ALT bug 36230)
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.19.0.5-alt1
 - Autobuild version bump to 1.19.0.5
 - Pick e2k hack into a patch
