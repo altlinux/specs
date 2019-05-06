@@ -12,10 +12,12 @@
 %def_enable installed_tests
 %def_enable udev
 %def_disable check
+# seccomp isn't currently supported on all the Linux architectures
+%def_enable libseccomp
 
 Name: %{_name}3
 Version: %ver_major.1.2
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -27,6 +29,8 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
+# add e2k to list of libseccomp incompatible cpus
+Patch: gnome-desktop-3.32.1.2-alt-e2k.patch
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
@@ -42,8 +46,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel
-# seccomp isn't currently supported on all the Linux architectures
-BuildRequires: libseccomp-devel
+%{?_enable_libseccomp:BuildRequires: libseccomp-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
 %description
@@ -125,6 +128,9 @@ the functionality of the Gnome 3 desktop library.
 
 %prep
 %setup -n %_name-%version
+%ifarch %e2k
+%patch -p1 -b .e2k
+%endif
 
 %build
 %meson \
@@ -179,6 +185,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1.2-alt2
+- introduced libceccomp knob
+- added e2k to list of libseccomp incompatible cpus
+
 * Thu Apr 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1.2-alt1
 - 3.32.1.2 (fixed CVE-2019-1146)
 
