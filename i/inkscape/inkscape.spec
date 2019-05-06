@@ -1,17 +1,20 @@
 %define major 0.92
+%define pre %nil
+
 %def_without gnome_vfs
 %def_without dbus
+%def_disable check
+%def_disable test
 
-%define pre %nil
 Name: inkscape
 Version: %major.4
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
 License: GPL
 Group: Graphics
-Url: http://inkscape.sourceforge.net/
+Url: http://inkscape.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -26,7 +29,6 @@ Patch2: inkscape-0.92.3-alt-dependencies.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
-#BuildPreReq: menu-devel
 BuildPreReq: desktop-file-utils
 
 %add_findreq_skiplist %_datadir/%name/extensions/*
@@ -40,14 +42,17 @@ BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libasp
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
 BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel libpotrace-devel
-BuildRequires: gcc-common libgomp6-devel
+%ifnarch %e2k
+# lcc has -lomp, not -lgomp
+BuildRequires: libgomp6-devel
+%endif
 BuildRequires: perl-podlators
 Requires: icc-profiles
 
 # For extensions
-# It is recommended to install skencil, pstoedit also
 # https://bugzilla.altlinux.org/21626
 Requires: wmf-utils python-module-lxml
+# Recommends: skencil pstoedit
 
 # mike: work around https://bugzilla.altlinux.org/24586
 Requires: gnome-icon-theme
@@ -77,13 +82,21 @@ inkview is standalone viewer for Inkscape files (SVG)
 %patch2 -p1
 
 %build
+%ifarch %e2k
+# src/2geom/ord.h:54 gets misinterpreted as of lcc 1.23.12
+sed -i "s|-Werror=return-type|-Wno-error=return-type|" configure.ac build*.xml
+export ac_cv_prog_cxx_openmp=unsupported
+%endif
 %autoreconf
-subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
+sed -i "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" configure
 %configure \
+%ifarch %e2k
+        --disable-openmp        \
+%endif
         --enable-lcms           \
         --enable-cdr            \
         --enable-visio          \
-        --enable-poppler-cairo \
+        --enable-poppler-cairo  \
         --enable-dbusapi
 %make_build
 
@@ -91,8 +104,8 @@ subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %makeinstall_std
 
 # remove unneeded man
-rm -rf %buildroot%_mandir/fr/
-rm -rf %buildroot%_mandir/de/
+#rm -rf %buildroot%_mandir/fr/
+#rm -rf %buildroot%_mandir/de/
 rm -rf %buildroot%_mandir/el/
 rm -rf %buildroot%_mandir/ja/
 rm -rf %buildroot%_mandir/sk/
@@ -100,10 +113,10 @@ rm -rf %buildroot%_mandir/zh_TW/
 
 %find_lang %name
 
-#%check
-#$(INKSCAPE) -z -f $< --export-eps=$@
-#$(INKSCAPE) -z -f $< --export-png=$@
-#true
+%check
+$(INKSCAPE) -z -f $< --export-eps=$@
+$(INKSCAPE) -z -f $< --export-png=$@
+true
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README doc
@@ -113,12 +126,19 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_desktopdir/inkscape.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/inkscape*
+%_mandir/??/man1/inkscape.??.1.*
 
 %files viewer
 %_bindir/inkview
 %_man1dir/inkview*
 
 %changelog
+* Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.92.4-alt2
+- E2K: disable openmp and -Werror=return-type
+- uncomment check section but disable it by default
+- minor spec cleanup
+- leave de/fr manpages in just in case
+
 * Sun Feb 10 2019 Vitaly Lipatov <lav@altlinux.ru> 0.92.4-alt1
 - new version 0.92.4 (with rpmrb script)
 
