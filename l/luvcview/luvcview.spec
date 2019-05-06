@@ -1,6 +1,6 @@
 Name: luvcview
 Version: 0.2.6
-Release: alt2
+Release: alt3
 
 Summary: SDL-based video grabber
 License: GPLv2+
@@ -13,7 +13,8 @@ Source2: uvcvideo.h
 Source3: uvc_compat.h
 Source4: luvcview.1
 Source5: luvcview.desktop
-Patch: linuxvideodev2.patch
+Patch0: linuxvideodev2.patch
+Patch1: luvc-0.2.6-debian-clang.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libSDL-devel
@@ -27,7 +28,8 @@ and problem debugging.
 cp -a %SOURCE1 .
 cp -a %SOURCE2 .
 cp -a %SOURCE3 .
-%patch -p0
+%patch0 -p0
+%patch1 -p1
 # debug spam :-/
 sed -i '/printf("find DRI \\n");/d' utils.c
 
@@ -46,6 +48,10 @@ install -pDm644 %SOURCE5 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.2.6-alt3
+- added debian clang patch (by Arthur Marble, deb#750506)
+  to fix build on e2k
+
 * Mon Nov 14 2016 Michael Shigorin <mike@altlinux.org> 0.2.6-alt2
 - added manpage from debian package and a desktop file (sigh)
 
