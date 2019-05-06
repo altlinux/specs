@@ -27,7 +27,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -168,7 +168,7 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/mimetypes/application-x-%rname.*
 #
-%_K5plug/kio_videodvd.so
+%_K5plug/kf5/kio/videodvd.so
 %_K5data/konqsidebartng/virtual_folders/services/videodvd.desktop
 %_K5srv/videodvd.protocol
 
@@ -185,6 +185,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

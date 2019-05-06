@@ -1,7 +1,7 @@
 %define rname baloo-widgets
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -77,9 +77,13 @@ KF5 library
 %files -n libkf5baloowidgets
 %_K5lib/libKF5BalooWidgets.so.*
 %_K5plug/*baloo*.so
+%_K5plug/kf5/kfileitemaction/*.so
 %_K5srv/*baloo*.desktop
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

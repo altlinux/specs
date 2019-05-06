@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -26,6 +26,7 @@ BuildRequires: libvncserver-devel xfreerdp libssh-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel
+BuildRequires: kf5-kwindowsystem-devel
 
 %description
 Remote Desktop Client.
@@ -94,6 +95,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
