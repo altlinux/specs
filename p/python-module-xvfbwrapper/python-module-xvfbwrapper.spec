@@ -1,11 +1,11 @@
 %global pypi_name xvfbwrapper
-%define version 0.2.4
+%define version 0.2.9
 
 %def_with python3
 
 Name:           python-module-%{pypi_name}
 Version:        %{version}
-Release:        alt1.2
+Release:        alt1
 Group:          Development/Python
 Summary:        run headless display inside X virtual framebuffer (Xvfb)
 
@@ -74,6 +74,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon May 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt1
+- Build new version.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt1.2
 - Rebuild with python3.7.
 
