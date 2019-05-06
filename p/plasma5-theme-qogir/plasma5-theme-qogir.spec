@@ -1,6 +1,6 @@
 Name: plasma5-theme-qogir
-Version: 20190404
-Release: alt2.git3bd657a
+Version: 20190506
+Release: alt1.giteae6302
 Summary: Qogir KDE theme
 
 Group: Graphical desktop/KDE
@@ -17,12 +17,6 @@ Requires: Kvantum icon-theme-qogir
 
 %description
 Qogir kde is a flat Design theme for KDE Plasma desktop.
-In this repository you'll find:
-- Aurorae Themes
-- Kvantum Themes
-- Plasma Color Schemes
-- Plasma Desktop Themes
-- Plasma Look-and-Feel Settings
 
 %prep
 %setup
@@ -50,6 +44,10 @@ cp -a ./Kvantum/* %buildroot%_datadir/Kvantum
 %_datadir/Kvantum/Qogir*
 
 %changelog
+* Mon May 06 2019 Leontiy Volodin <lvol@altlinux.org> 20190506-alt1.giteae6302
+- Updated from git (commit: eae6302)
+- Fixed %%description
+
 * Mon Apr 15 2019 Leontiy Volodin <lvol@altlinux.org> 20190404-alt2.git3bd657a
 - Fixed error with applying theme without icons
 

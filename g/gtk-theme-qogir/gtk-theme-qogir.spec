@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 20190407
+Version: 20190503
 Release: alt1
 Summary: Qogir GTK theme
 
@@ -32,6 +32,9 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Mon May 06 2019 Leontiy Volodin <lvol@altlinux.org> 20190503-alt1
+- New version
+
 * Thu Apr 11 2019 Leontiy Volodin <lvol@altlinux.org> 20190407-alt1
 - Initial build for ALT Sysiphus
 
