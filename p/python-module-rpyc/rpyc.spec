@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 3.3.0
-Release: alt1.git20141023.1.2
+Version: 4.0.2
+Release: alt1
 Summary: Remote Python Call (RPyC), a transparent and symmetric RPC library
 License: MIT
 Group: Development/Python
@@ -32,6 +32,7 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-plumbum python-module-pytest python3-module-nose python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-sphinx_rtd_theme
 
 %description
 RPyC (pronounced like are-pie-see), or Remote Python Call, is a
@@ -88,7 +89,6 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -155,6 +155,9 @@ popd
 %endif
 
 %changelog
+* Mon May 06 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt1.git20141023.1.2
 - (NMU) rebuild with python3.6
 
