@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.40
-Release: alt1
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -21,6 +21,7 @@ Url: http://www.jwz.org/%name
 # gear repos: http://packages.altlinux.org/en/Sisyphus/srpms/xscreensaver/gear
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: xscreensaver-5.40-do-not-claim-on-old-version.patch
 
 Source1: %name-%version-ad.tar
 
@@ -185,6 +186,7 @@ This package contains xscreensaver configuration frontend.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 cp %SOURCE6 po/ru.po
 
 %build
@@ -317,6 +319,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Mon May 06 2019 Anton Midyukov <antohami@altlinux.org> 5.40-alt2
+- Do not claim on old version
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 5.40-alt1
 - Build new version.
 - Fix displaying list of hacks (Closes: #35187).
