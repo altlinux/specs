@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: polkit
-Version: 0.115
-Release: alt5
+Version: 0.116
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -12,7 +12,7 @@ URL: http://www.freedesktop.org/wiki/Software/PolicyKit
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: lib%name = %version-%release
-PreReq: dbus
+Requires(pre): dbus
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -124,7 +124,7 @@ touch ChangeLog
 %_libdir/*.so.*
 
 %files -n lib%name-gir
-%_libdir/girepository-1.0/*.typelib
+%_typelibdir/*.typelib
 
 %files -n lib%name-devel
 %_includedir/*
@@ -135,13 +135,16 @@ touch ChangeLog
 %_datadir/gtk-doc/html/%name-1/
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/*.gir
+%_girdir/*.gir
 
 # examples
 %exclude %_bindir/pk-example-frobnicate
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.116-alt1
+- 0.116
+
 * Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.115-alt5
 - updated to 0.115-26-gc898fdf (fixed CVE-2018-19788)
 
