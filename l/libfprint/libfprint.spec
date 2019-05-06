@@ -1,12 +1,13 @@
 Name: libfprint
 Version: 0.7.0
-Release: alt1
-Summary: Tool kit for fingerprint scanner
-Group: System/Libraries
-License: LGPLv2+
-URL: http://www.freedesktop.org/wiki/Software/fprint/libfprint
-# git://anongit.freedesktop.org/libfprint/libfprint
+Release: alt2
 
+Summary: Tool kit for fingerprint scanner
+License: LGPLv2+
+Group: System/Libraries
+
+Url: http://www.freedesktop.org/wiki/Software/fprint/libfprint
+# git://anongit.freedesktop.org/libfprint/libfprint
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -27,11 +28,15 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 mkdir -p m4
 
 %build
+%ifarch %e2k
+# lcc 1.23.12's frontend is more strict...
+sed -i 's,int main(void),&;,' configure.ac
+%endif
 %autoreconf
 %configure \
 	--disable-static \
@@ -59,8 +64,12 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- fix build on e2k with lcc
+- minor spec cleanup
+
 * Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
-- new version 
+- new version
 
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.4.0-alt3
 - Rebuild with new libImageMagick
