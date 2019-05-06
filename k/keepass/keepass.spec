@@ -1,8 +1,8 @@
 %def_without doc
 
 Name: keepass
-Version: 2.41
-Release: alt2
+Version: 2.42.1
+Release: alt1
 
 Summary: Password manager
 
@@ -24,21 +24,14 @@ Patch1: keepass-2.35-fedora-config.patch
 # Locate locally-installed help files:
 Patch2: keepass-2.35-fedora-doc.patch
 
-BuildPreReq: /proc
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: ImageMagick
-%if_with doc
-BuildRequires: python-module-pychm
-BuildRequires: archmage
-%endif
+# Automatically added by buildreq on Wed Mar 27 2019
+# optimized out: fakeroot fontconfig fonts-bitmap-misc libX11-locales libgdk-pixbuf libwayland-client libwayland-server mono-core mono-data mono-data-oracle mono-data-sqlite mono-devel mono-dyndata mono-extras mono-locale-extras mono-monodoc mono-mvc mono-nunit mono-reactive mono-reactive-winforms mono-wcf mono-web mono-winforms mono-winfx python-base python-module-BeautifulSoup python-modules python-modules-compiler python-modules-email python-modules-encodings xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
+BuildRequires: ImageMagick-tools msbuild xvfb-run
 BuildRequires: desktop-file-utils
-BuildRequires: libgdiplus-devel
-BuildRequires: msbuild
-BuildRequires: mono-devel
-BuildRequires: mono-winforms
-BuildRequires: mono-web
-BuildRequires: python-devel
-BuildRequires: xorg-xvfb xvfb-run
+%if_with doc
+BuildRequires: archmage
+BuildRequires: python-module-pychm
+%endif
 Requires: mono-winforms >= 5.0.0.0
 Requires: xdotool
 
@@ -131,6 +124,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Mon May 06 2019 Oleg Solovyov <mcpain@altlinux.org> 2.42.1-alt1
+- new version: 2.42.1
+
 * Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.41-alt2
 - NMU: disable optional doc package build
 
