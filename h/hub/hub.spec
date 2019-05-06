@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.10.0
+Version: 2.11.2
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -120,6 +120,9 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 /usr/share/vim/vimfiles/syntax/pullrequest.vim
 
 %changelog
+* Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
+- new version 2.11.2 (with rpmrb script)
+
 * Wed Mar 20 2019 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt1
 - new version 2.10.0 (with rpmrb script)
 
