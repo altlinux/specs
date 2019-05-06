@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.2.4
+Version: 2.2.5.1
 Release: alt1
 Summary: Wraps (asynchronous) Psycopg2 for Tornado
 License: MIT
@@ -14,27 +14,24 @@ Url: https://pypi.python.org/pypi/Momoko
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/FSX/momoko.git
-Source0: https://pypi.python.org/packages/7e/02/0495484bdbb168c55239da25ddb30f60dd26f0fbc58e5c20464417972ac4/Momoko-%{version}.tar.gz
+Source0: %name-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-tornado python-module-psycopg2cffi
-#BuildPreReq: python-module-unittest2 python-module-psycopg2
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-cffi python-module-docutils
+BuildRequires: python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-psycopg2 python-module-pytest python-module-tornado
+BuildRequires: python-module-unittest2
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-tornado python3-module-psycopg2cffi
-#BuildPreReq: python3-module-unittest2 python3-module-psycopg2
+BuildRequires: python3-module-cffi python3-module-psycopg2
+BuildRequires: python3-module-pycares python3-module-pytest
+BuildRequires: python3-module-unittest2 python3-module-zope time
 %endif
 
 %py_provides %oname
 %py_requires tornado psycopg2cffi psycopg2
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: libsasl2-3 python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycares python-module-pycurl python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-pycparser python3-module-setuptools python3-module-zope.interface
-BuildRequires: python-module-alabaster python-module-cffi python-module-docutils python-module-html5lib python-module-objects.inv python-module-psycopg2 python-module-pytest python-module-tornado python-module-unittest2 python3-module-cffi python3-module-psycopg2 python3-module-pycares python3-module-pytest python3-module-unittest2 python3-module-zope rpm-build-python3 time
 
 %description
 Momoko wraps Psycopg2's functionality for use in Tornado.
@@ -60,7 +57,7 @@ Momoko wraps Psycopg2's functionality for use in Tornado.
 This package contains pickles for %oname.
 
 %prep
-%setup -q -n Momoko-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -117,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Mon May 06 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.5.1-alt1
+- Build new version.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1
 - automated PyPI update
 
