@@ -1,6 +1,6 @@
 Name: libxcbutil-icccm
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: Client and window-manager helper library on top of libxcb
 License: MIT
 Group: System/Libraries
@@ -12,7 +12,7 @@ Source1: m4.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: libxcbutil-devel >= 0.3.8
-BuildRequires: xorg-xproto-devel xorg-util-macros libxcbutil-proto
+BuildRequires: xorg-xproto-devel xorg-util-macros xorg-xcbproto-devel
 
 Provides: libxcbutil-ewmh = %version-%release
 
@@ -25,8 +25,8 @@ XCB util-wm module provides the following libraries:
 %package devel
 Summary: Development and header files for %name
 Group: Development/C
-Requires: %name = %version-%release
-
+Requires: %name = %EVR
+Provides: xcb-util-wm-devel = %EVR
 %description devel
 Development and header files for %name
 
@@ -51,6 +51,9 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 0.4.1-alt2
+- fix buildrequires, provides
+
 * Sun Mar 30 2014 Terechkov Evgenii <evg@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
