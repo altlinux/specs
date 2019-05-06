@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
@@ -17,16 +17,15 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-requests
-BuildRequires: python-module-gssapi
-BuildRequires: python-module-mock
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-gssapi
-BuildRequires: python3-module-mock
+BuildRequires: python2.7(gssapi)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(requests)
+BuildRequires: python3(gssapi)
+BuildRequires: python3(mock)
+BuildRequires: python3(requests)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -71,11 +70,14 @@ pushd ../python3
 popd
 
 %check
-python setup.py test
-
-pushd ../python3
-python3 setup.py test
-popd
+cat > tox.ini <<EOF
+[testenv]
+deps = -rrequirements.txt
+commands = {envpython} -m pytest {posargs:.}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -86,6 +88,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 06 2019 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1.
+
 * Mon Jul 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
 - Fix regex string escaping
 
