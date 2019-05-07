@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 242
-Release: alt4
+Release: alt5
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1837,6 +1837,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Sat May 04 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt5
+- merge with v242-stable db2e367bfc3b119609f837eb973d915f6c550b2f
+
 * Wed Apr 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt4
 - update rpm systemd.filetrigger
 
