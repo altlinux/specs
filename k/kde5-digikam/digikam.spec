@@ -1,3 +1,6 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define opencv_ver %{get_version libopencv-devel}
 
 %def_disable baloo
@@ -22,7 +25,7 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -56,6 +59,7 @@ BuildRequires: libqtav-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
+BuildRequires: libImageMagick-devel
 BuildRequires: sqlite3 zlib-devel
 BuildRequires: kde5-marble-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-kcalcore-devel
@@ -185,9 +189,9 @@ ECM_OPTIONAL_ADD_SUBDIRECTORY(doc)
 ECM_OPTIONAL_ADD_SUBDIRECTORY(doc-translated)
 __EOF__
 
-find -type f -name CMakeLists.txt | \
+find -type f -name CMakeLists.txt -o -name \*Target.cmake | \
 while read f ; do
-    sed -i '/^set_target_properties.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
+    sed -i '/^set_target_properties.*digikam.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
 %if_disabled obsolete_kde4
     sed -i 's|${DATA_INSTALL_DIR}/digikam|${KDE_INSTALL_DATADIR_KF5}/digikam|' $f
 %endif
@@ -234,6 +238,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
 %_K5bin/digitaglinktree
+%_K5plug/digikam/
 %_K5xdgapp/*.desktop
 %_K5xmlgui/%rname/
 %_K5xmlgui/showfoto/
@@ -272,6 +277,8 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 
 %files devel
 %_K5link/*.so
+%_includedir/digikam/
+%_libdir/cmake/digikam/
 
 %files -n %libdigikamdatabase
 %_K5lib/libdigikamdatabase.so.%sover
@@ -284,6 +291,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue May 07 2019 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- new version
+
 * Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt1
 - new version
 
