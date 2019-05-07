@@ -1,12 +1,13 @@
 Name: tcl-trf
-Version: 2.1
-Release: alt8
+Version: 2.1.4
+Release: alt1
 
 Summary: A tcl extension called Tcl Data transformations
 License: BSD
 Group: Development/Tcl
 Url: http://tcltrf.sourceforge.net/
 
+# CVS import tcltrf.cvs.sourceforge.net:/cvsroot/tcltrf module trf
 # git://git.altlinux.org/gears/t/tcl-trf.git
 Source: %name-%version-%release.tar
 
@@ -31,21 +32,49 @@ BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-m
 %build
 aclocal -I .
 autoconf
+%add_optflags -DSSL_STATIC_BUILD=1 -D_XOPEN_SOURCE
+export no_zlibtcl=true
+export CFLAGS="%optflags"
+export SHLIB_SUFFIX=.so
 %configure \
-    --enable-shared-zlib \
-    --enable-shared-bzlib
-%make_build
+		--enable-static-bzlib \
+		--enable-static-zlib \
+		--enable-static-md5 \
+		--with-bz2-include-dir=%_includedir \
+		--with-zlib-include-dir=%_includedir \
+		--with-ssl-include-dir=%_includedir/openssl \
+		--with-bz2-lib-dir=%_libdir \
+		--with-zlib-lib-dir=%_libdir \
+		--with-ssl-lib-dir=%_libdir \
+		--enable-threads
+%make_build LIBS="-lz -lbz2 -lcrypt -lcrypto"
 
 %install
 %makeinstall
+
+%check
+cat <<EOF >test.tcl
+#!/usr/bin/tclsh
+package require Trf
+EOF
+
+chmod +x test.tcl
+TCLLIBPATH=%buildroot%_tcllibdir ./test.tcl
 
 %files
 %doc ChangeLog README doc/license.terms
 %_tcllibdir/libTrf%version.so
 %_tcllibdir/Trf%version/pkgIndex.tcl
-%_tcldatadir/Trf%version
+%_tcllibdir/Trf%version
 
 %changelog
+* Tue May 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt1
+- Updated to 2.1.4.
+- Applied Debian patches.
+- Removed non-free files.
+- Added simple test to check extension loading.
+- Packaged %%_tcllibdir/Trf%%version (fix post-install unowned files).
+
 * Mon Oct 02 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1-alt8
 - adapted for new Tcl/Tk extenstion packaging policy
 - rebuilt without shared libcrypt and fixed bugs in static md5
