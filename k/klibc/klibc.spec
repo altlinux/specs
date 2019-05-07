@@ -1,6 +1,6 @@
 Name: klibc
-Version: 2.0.4
-Release: alt2
+Version: 2.0.6
+Release: alt1
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -9,12 +9,16 @@ URL: http://www.zytor.com/mailman/listinfo/%name
 Source0: %name-%version.tar
 Source1: %name-find-provides
 Source2: %name-find-requires
-Patch: %name-%version-%release.patch
 
 # due to %%base_arch
 BuildPreReq: rpm-build-kernel
+
+# Some architectures do not match arch naming in kernel.
 %ifarch riscv64
 %global base_arch riscv64
+%endif
+%ifarch ppc64le
+%global base_arch ppc64
 %endif
 
 %define klibcdir  %_libdir/%name
@@ -58,7 +62,6 @@ for inclusion in initramfs images and embedded systems.
 
 %prep
 %setup
-%patch -p1
 # Install fixed scsi headers
 install -d -m 0755 usr/include/scsi
 for f in %_includedir/scsi/*; do
@@ -153,6 +156,10 @@ strip -g %buildroot%klibcdir/lib/libc.so
 %doc %bindocdir
 
 %changelog
+* Wed May 08 2019 Nikita Ermakov <arei@altlinux.org> 2.0.6-alt1
+- Updated to 2.0.6.
+- Added ppc64le support (by Gleb F-Malinovskiy).
+
 * Tue Dec 4 2018 Nikita Ermakov <arei@altlinux.org> 2.0.4-alt2
 - Added RISC-V (rv64) support.
 

@@ -3,7 +3,7 @@
 
 Name: v86d
 Version: 0.1.10
-Release: alt9
+Release: alt10
 Summary: A x86 Emulation Daemon
 License: GPLv2
 Group: System/Kernel and hardware
@@ -88,6 +88,9 @@ install -pD -m 0755 {,%buildroot/sbin/}%name
 
 
 %changelog
+* Tue May 07 2019 Nikita Ermakov <arei@altlinux.org> 0.1.10-alt10
+- Rebuild with klibc-2.0.6-alt1.
+
 * Thu Nov 29 2018 Nikita Ermakov <arei@altlinux.org> 0.1.10-alt9
 - Added ExclusiveArch to point that this package only works with i586 and x86_64.
 - Rebuild with klibc-2.0.4-alt1.
