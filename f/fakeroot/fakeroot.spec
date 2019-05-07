@@ -1,6 +1,6 @@
 Name: fakeroot
 Version: 1.20.2
-Release: alt1
+Release: alt2
 
 Summary: Run a command in an environment faking root privileges for file manipulation
 License: GPLv3+
@@ -52,6 +52,9 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc debian/changelog.bz2 doc/README* DEBUG
 
 %changelog
+* Tue May 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.20.2-alt2
+- Fixed build on ppc64le.
+
 * Tue May 10 2016 Dmitry V. Levin <ldv@altlinux.org> 1.20.2-alt1
 - 1.18.4 -> 1.20.2.
 - Fixed irrelevant noise with recent changes in glibc.
