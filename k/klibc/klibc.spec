@@ -1,5 +1,5 @@
 Name: klibc
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
@@ -156,6 +156,9 @@ strip -g %buildroot%klibcdir/lib/libc.so
 %doc %bindocdir
 
 %changelog
+* Fri Aug 21 2020 Nikita Ermakov <arei@altlinux.org> 2.0.8-alt1
+- Updated to 2.0.8.
+
 * Wed Oct 23 2019 Nikita Ermakov <arei@altlinux.org> 2.0.7-alt1
 - Updated to 2.0.7.
 
