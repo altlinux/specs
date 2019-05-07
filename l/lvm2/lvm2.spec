@@ -1,5 +1,5 @@
-%define lvm2version 2.02.184
-%define dmversion 1.02.156
+%define lvm2version 2.02.185
+%define dmversion 1.02.158
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -44,7 +44,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt0.1.9d7afaaa
 License: GPL
 
 Group: System/Base
@@ -56,6 +56,7 @@ Source3: lvm2-monitor.init
 Source4: lvm2-lvmetad.init
 Source5: blk-availability.init
 Source6: lvm2-lvmpolld.init
+Source7: clvmd.sysconfig
 
 Patch: %name-%version-%release.patch
 
@@ -409,12 +410,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %if_enabled cluster
 mv %buildroot%_prefix/sbin/clvmd %buildroot%_sbindir/clvmd
 ln -r -s %buildroot%_sbindir/clvmd %buildroot%_prefix/sbin/clvmd
-%endif
 mkdir -p %buildroot%_sysconfdir/sysconfig
-cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/clvmd
-START_CLVM=yes
-#LVM_VGS=""
-__EOF__
+install -m 0644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/clvmd
+%endif
 
 %post
 %if_enabled lvmetad
@@ -618,6 +616,10 @@ __EOF__
 %endif
 
 %changelog
+* Tue May 07 2019 Alexey Shabalin <shaba@altlinux.org> 2.02.185-alt0.1.9d7afaaa
+- snapshot of stable-2.02 branch
+- update udev rules for lvm metad
+
 * Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 2.02.184-alt1
 - 2.02.184
 - enable use lvmetad by default

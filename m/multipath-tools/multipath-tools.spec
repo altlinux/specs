@@ -2,13 +2,12 @@
 
 %define syslibdir /%_lib
 %define libmpathdir %syslibdir/multipath
-%define systemd_ver %(pkg-config --modversion systemd 2> /dev/null)
 
 %add_verify_elf_skiplist /%_lib/libmpathpersist.so.*
 %add_verify_elf_skiplist /%_lib/libmultipath.so.*
 
 Name: multipath-tools
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -16,15 +15,13 @@ License: GPLv2+
 Group: System/Configuration/Hardware
 
 Url: http://christophe.varoqui.free.fr
+# http://git.opensvc.com/multipath-tools/.git
 Source: %name-%version.tar
 Source2: multipath.rules
 Source3: multipathd.init
 Source4: multipath.modules
 Source5: multipath.conf
 Patch1: %name-%version.patch
-
-# http://git.opensvc.com/multipath-tools/.git
-Packager: Konstantin Pavlov <thresh@altlinux.org>
 
 Requires: libmultipath = %EVR
 Requires: kpartx = %EVR
@@ -97,14 +94,12 @@ unset RPM_OPT_FLAGS
 	LIB=%_lib \
 	RUN=run \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
-	SYSTEMD=%systemd_ver \
 	SYSTEMDPATH=lib
 
 %install
 mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
 	DESTDIR=%buildroot \
-	SYSTEMD=%systemd_ver \
 	SYSTEMDPATH=lib \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
 	LIB=%_lib \
@@ -178,6 +173,10 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Tue May 07 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.1-alt1
+- 0.8.1
+- fixed udev rules
+
 * Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - 0.8.0
 - removed ALT glibc functions from util, since  ALT build glibc has its own
