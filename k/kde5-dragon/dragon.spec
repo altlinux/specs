@@ -1,7 +1,7 @@
 %define rname dragon
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -67,16 +67,19 @@ KF5 library
 %doc COPYING*
 %_K5xdgconf/*rc
 %_K5bin/*
-%_K5plug/*.so
+%_K5plug/kf5/parts/*.so
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*.*
 %_K5icon/*/*/actions/player-*.*
 %_K5srv/ServiceMenus/*.desktop
 %_K5srv/*.desktop
-%_K5xmlgui/*/
+#%_K5xmlgui/*/
 %_K5data/solid/actions/*.desktop
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

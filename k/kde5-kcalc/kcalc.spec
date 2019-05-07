@@ -1,7 +1,7 @@
 %define rname kcalc
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -21,6 +21,7 @@ BuildRequires: libgmp-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kinit-devel kf5-knotifications-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
+BuildRequires: kf5-kcrash-devel
 
 %description
 %summary.
@@ -70,6 +71,9 @@ KF5 library
 %_K5cfg/kcalc*
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

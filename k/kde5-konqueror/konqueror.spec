@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -152,7 +152,7 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 %_K5bin/fsview
 %_K5lib/libkdeinit5_konqueror.so
 %_K5lib/libkdeinit5_kfmclient.so
-%_K5lib/libkwebenginepartlib.so
+%_K5lib/libkwebenginepart.so
 %_K5plug/*.so
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/parts/*.so
@@ -193,6 +193,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

@@ -1,6 +1,6 @@
 %define rname kio-extras
 
-%define molletnetwork_sover 18
+%define molletnetwork_sover 19
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 %define kioarchive_sover 5
 %define libkioarchive libkioarchive%kioarchive_sover
@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -47,6 +47,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmode
 BuildRequires: kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-syntax-highlighting-devel
 
 %description
 Additional kio-slaves.
@@ -107,10 +108,8 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5xdgmime/*.xml
 
 %files
-%_K5plug/kf5/kio/*.so
-%_K5plug/kf5/kiod/*.so
+%_K5plug/kf5/*/*.so
 %_K5plug/*.so
-%_K5plug/kf5/kded/*.so
 %_K5data/kio_*/
 %_K5data/konqsidebartng
 %_K5data/konqueror
@@ -140,6 +139,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
