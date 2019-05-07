@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.107
+Version: 0.108
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -77,6 +77,9 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/query-kEVR.sh
 
 %changelog
+* Tue May 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.108-alt1
+- kernel-macros: added powerpc support to %%base_arch macro.
+
 * Thu Apr 04 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.107-alt1
 - kernel-macros: made %%setup_kernel_module automatically add
   the usual {,Build}Requires for kernel-modules-*.
