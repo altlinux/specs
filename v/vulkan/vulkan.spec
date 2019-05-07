@@ -2,7 +2,7 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.1.101
+Version: 1.1.107
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -14,25 +14,19 @@ Url: http://www.khronos.org/
 Source0: vulkan-loader.tar.xz
 # https://github.com/KhronosGroup/Vulkan-Headers
 Source1: vulkan-headers.tar.xz
-# https://github.com/KhronosGroup/SPIRV-Headers
-Source2: SPIRV-Headers.tar.xz
-# https://github.com/KhronosGroup/SPIRV-Tools
-Source3: SPIRV-Tools.tar.xz
-# https://github.com/KhronosGroup/glslang
-Source4: glslang.tar.xz
 # https://github.com/KhronosGroup/Vulkan-Tools
-Source5: vulkan-tools.tar.xz
+Source2: vulkan-tools.tar.xz
 # https://github.com/KhronosGroup/Vulkan-ValidationLayers
-Source6: vulkan-layers.tar.xz
-Patch1: spirv-tools-alt-use-python3.patch
-Patch2: 0003-layers-Don-t-set-an-rpath.patch
-Patch3: vulkan-alt-use-file-rev-spirv-tools.patch
+Source3: vulkan-layers.tar.xz
 
 BuildRequires: bison chrpath
 BuildRequires(pre): cmake gcc-c++ rpm-build-python3
 BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+# strict requires due internal dependency
+BuildRequires: glslang-devel = 7.11.3188
+BuildRequires: libspirv-tools-devel = 2019.3
 
 # textrel due asm optimisation in loader code
 %ifarch i586
@@ -100,37 +94,14 @@ Tools and utilities that can assist development by enabling developers to
 verify their applications correct use of the Vulkan API.
 
 %prep
-%setup -n %name-loader -b0 -b1 -b2 -b3 -b4 -b5 -b6
-pushd ../SPIRV-Tools
-%patch1 -p2
-popd
+%setup -n %name-loader -b0 -b1 -b2 -b3
 pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
-#%%patch2 -p1
 popd
-#%%patch3 -p2
 
 %build
-# first, SPIRV-Tools and glslang
-for dir in SPIRV-Tools glslang; do
-pushd %_builddir/$dir
-if [ "$dir" == "SPIRV-Tools" ]; then
-ln -s %_builddir/SPIRV-Headers external/SPIRV-Headers
-%_cmake -DSPIRV_BUILD_COMPRESSION:BOOL=ON
-else
-ln -s %_builddir/SPIRV-Tools External/spirv-tools
-%_cmake
-fi
-%cmake_build
-%cmakeinstall_std DESTDIR=$(pwd)/install
-pushd install
-ln -s usr/* .
-popd
-popd
-done
-
-# second, vulkan-headers
+# vulkan-headers first
 pushd %_builddir/vulkan-headers
 %_cmake
 %cmake_build
@@ -141,8 +112,10 @@ popd
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
 %_cmake \
+           -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
+           -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
 	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
-	   -DGLSLANG_INSTALL_DIR=%_builddir/glslang/install \
+	   -DGLSLANG_INSTALL_DIR=%_prefix \
 	   -DVulkanHeaders_INCLUDE_DIR=%buildroot%_includedir
 %cmake_build
 %cmakeinstall_std
@@ -153,7 +126,7 @@ done
 pushd %_builddir/vulkan-tools
 %_cmake \
 	   -DCMAKE_PREFIX_PATH=%buildroot%prefix \
-	   -DGLSLANG_INSTALL_DIR=%_builddir/glslang/install
+	   -DGLSLANG_INSTALL_DIR=%_prefix
 %cmake_build
 %cmakeinstall_std
 popd
@@ -204,6 +177,19 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/icd.d
 
 %changelog
+* Mon May 06 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.107-alt1
+- Updated to v1.1.107:
+  + vulkan-headers v1.1.107.
+  + vulkan-loader v1.1.107.
+  + vulkan-tools v1.1.107.
+  + vulkan-validation-layers v1.1.106.
+
+* Fri May 03 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.101-alt3
+- Relax glslang/libspirv-tools requires.
+
+* Thu May 02 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.101-alt2
+- Rebuild w/ system glslang and spirv-tools.
+
 * Tue Mar 05 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.101-alt1
 - Updated to SDK 1.1.101:
   + spirv-tools GIT 5994ae2a0.
