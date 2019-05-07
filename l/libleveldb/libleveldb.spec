@@ -1,6 +1,6 @@
 Name: libleveldb
 Version: 1.22
-Release: alt1
+Release: alt2
 
 Summary: A fast and lightweight key/value database library by Google
 
@@ -51,20 +51,20 @@ Additional header files for development with %name.
 %install
 %cmakeinstall_std
 
-cat > %name.pc << EOF
+cat > leveldb.pc << EOF
 prefix=%prefix
 exec_prefix=%prefix
 libdir=%_libdir
 includedir=%_includedir
 
-Name: %name
+Name: leveldb
 Description: %summary
 Version: %version
-Libs: -l%name
+Libs: -lleveldb
 EOF
 
 mkdir -p %buildroot%_libdir/pkgconfig
-cp -a %name.pc %buildroot%_libdir/pkgconfig/
+cp -a leveldb.pc %buildroot%_libdir/pkgconfig/
 
 %files
 %doc doc/ AUTHORS LICENSE README.md
@@ -77,6 +77,9 @@ cp -a %name.pc %buildroot%_libdir/pkgconfig/
 %_libdir/cmake/leveldb/
 
 %changelog
+* Tue May 07 2019 Alexei Takaseev <taf@altlinux.org> 1.22-alt2
+- Fix leveldb.pc file
+
 * Mon May 06 2019 Alexei Takaseev <taf@altlinux.org> 1.22-alt1
 - 1.22
 - Remove unneeded patch leveldb-0002-Add-memory-barrier-on-PowerPC.patch
