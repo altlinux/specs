@@ -3,7 +3,7 @@
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1
 
 Summary: Desktop presentation application
@@ -12,7 +12,7 @@ Group: Office
 Url: https://github.com/Philip-Scott/%_name
 
 %if_disabled snapshot
-Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/%_name-%version.tar.gz
+Source: %url/archive/%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -67,6 +67,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 
 
 %changelog
+* Tue May 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Sun Mar 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
