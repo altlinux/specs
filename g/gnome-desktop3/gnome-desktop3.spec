@@ -16,8 +16,8 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.1.2
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -185,6 +185,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue May 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
+- 3.32.2
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1.2-alt2
 - introduced libceccomp knob
 - added e2k to list of libseccomp incompatible cpus
