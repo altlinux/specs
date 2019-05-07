@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.1.5
+Version: 4.1.6
 Epoch: 1
 Release: %rel
 
@@ -82,27 +82,28 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 %install
 %make_install DESTDIR=%buildroot install
-install -Dp -m 0644 ./dist/unix/%name.desktop %buildroot%_desktopdir/%name.desktop
+install -Dp -m 0644 ./dist/unix/org.qbittorrent.qBittorrent.desktop %buildroot%_desktopdir/org.qbittorrent.qBittorrent.desktop
 make clean
 %_configure_script --prefix=%buildroot%_usr --disable-gui
 %make_build
 %make_install DESTDIR=%buildroot install
 
-%find_lang %name
-
 %files nox
 %_bindir/%name-nox
-%_man1dir/%name-nox.1.*
+%_man1dir/%name-nox.*
 
-%files -f %name.lang
+%files
 %doc AUTHORS COPYING INSTALL NEWS README.* TODO Changelog
 %_bindir/%name
 %_datadir/applications/*
-%_man1dir/%name.1.*
+%_man1dir/%name.*
 %_datadir/icons/hicolor/*/*/*
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 07 2019 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.6-alt1
+- 4.1.6
+
 * Thu Dec 27 2018 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.5-alt1
 - 4.1.5
 
