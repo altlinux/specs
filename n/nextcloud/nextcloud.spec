@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 15.0.5
+Version: 16.0.0
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -77,6 +77,9 @@ install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites
 #install nginx
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
+#cleanup autoreq (php7-devel (/usr/bin/phpize))
+rm %buildroot%installdir/apps/gallery/build/xdebug_install.sh
+
 %post apache2
 a2ensite %name
 a2enmod ssl
@@ -130,6 +133,10 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue May 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 16.0.0-alt1
+- version 16.0.0 (Apr 25 2019)
+- fix requires (closes: #36713)
+
 * Wed Mar 13 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 15.0.5-alt1
 - version 15.0.5 (Feb 28 2019)
 - NMU: Generate SSL key diring package installation (by cas@) 
