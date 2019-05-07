@@ -3,7 +3,7 @@
 
 Name: libqtxdg
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL
@@ -30,6 +30,9 @@ which implements functions of the XDG Specifications in Qt.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
+%endif
 
 %build
 %cmake
@@ -49,6 +52,9 @@ which implements functions of the XDG Specifications in Qt.
 %_datadir/cmake/*/
 
 %changelog
+* Tue May 07 2019 Michael Shigorin <mike@altlinux.org> 3.3.1-alt2
+- fixed build on e2k with lcc
+
 * Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 3.3.1-alt1
 - new version 3.3.1
 
