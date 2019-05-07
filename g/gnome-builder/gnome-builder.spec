@@ -13,7 +13,7 @@
 %def_with jedi
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -43,7 +43,7 @@ Source: %name-%version.tar
 %define gspell_ver 1.8.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.32.0
+%define dazzle_ver 3.32.2
 %define template_glib_ver 3.32.0
 
 # use python3
@@ -212,6 +212,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Tue May 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
+- 3.32.2
+
 * Thu Apr 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
