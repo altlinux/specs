@@ -1,10 +1,10 @@
 %define rname kdf
 
-%define kdfprivate_sover 18
+%define kdfprivate_sover 19
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libkdfprivate.so.*
 
 %changelog
+* Tue May 07 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
