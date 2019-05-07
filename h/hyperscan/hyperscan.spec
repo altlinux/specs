@@ -5,8 +5,8 @@
 %define develname libhyperscan-devel
 
 Name: hyperscan
-Version: %major.0
-Release: alt2
+Version: %major.1
+Release: alt1
 
 Summary: High-performance regular expression matching library
 
@@ -85,6 +85,9 @@ needed for developing Hyperscan applications.
 %_includedir/hs/
 
 %changelog
+* Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
+- new version 5.1.1 (with rpmrb script)
+
 * Fri Feb 22 2019 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt2
 - real build
 
