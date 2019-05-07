@@ -1,13 +1,13 @@
 %define ver_major 3.32
 
 Name: yelp-tools
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Collection of tools for building and converting documentation
 Group: Graphical desktop/GNOME
 License: GPLv2+
-Url: http://projects.gnome.org/yelp/
+Url: http://yelp.io
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -43,6 +43,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Tue May 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
+- 3.32.1
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
