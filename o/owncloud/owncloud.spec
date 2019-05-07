@@ -1,6 +1,6 @@
 Name: owncloud
-Version: 10.1.0
-Release: alt2
+Version: 10.1.1
+Release: alt1
 
 %define installdir %webserver_webappsdir/%name
 
@@ -43,6 +43,7 @@ Apache 2.x web-server default configuration for %name.
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
 Requires: %name = %EVR nginx
+Requires(post): cert-sh-functions
 
 %description nginx
 nginx web-server default configuration for %name.
@@ -86,6 +87,11 @@ ssl_generate "owncloud"
 %postun apache2
 %_initdir/httpd2 condreload
 
+%post nginx
+# Generate SSL key
+. cert-sh-functions
+ssl_generate "owncloud"
+
 %files
 %dir %installdir
 %dir %attr(0775,root,_webserver) %installdir/apps
@@ -118,6 +124,9 @@ ssl_generate "owncloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue May 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 10.1.1-alt1
+- 10.1.1
+
 * Wed Mar 13 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 10.1.0-alt2
 - fix deps and conf (apache/nginx)
 
