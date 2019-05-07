@@ -6,9 +6,12 @@
 %define libkaddressbookimportexportlibprivate libkaddressbookimportexportlibprivate%sover
 %define libshorturlpluginprivate libshorturlpluginprivate%sover
 %define libadblocklibprivate libadblocklibprivate%sover
-
+%define libgrammarcommon libgrammarcommon%sover
+%define libkmailgrammalecte libkmailgrammalecte%sover
+%define libkmaillanguagetool libkmaillanguagetool%sover
+    
 Name: kde5-pim-addons
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -89,6 +92,27 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n %libadblocklibprivate
+KF5 library
+
+%package -n %libgrammarcommon
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libgrammarcommon
+KF5 library
+
+%package -n %libkmailgrammalecte
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkmailgrammalecte
+KF5 library
+
+%package -n %libkmaillanguagetool
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkmaillanguagetool
 KF5 library
 
 %package kaddressbook
@@ -190,8 +214,23 @@ Requires: %name-common
 %files -n %libadblocklibprivate
 %_K5lib/libadblocklibprivate.so.%sover
 %_K5lib/libadblocklibprivate.so.*
+%files -n %libgrammarcommon
+%_K5lib/libgrammarcommon.so.%sover
+%_K5lib/libgrammarcommon.so.*
+%files -n %libkmailgrammalecte
+%_K5lib/libkmailgrammalecte.so.%sover
+%_K5lib/libkmailgrammalecte.so.*
+%files -n %libkmaillanguagetool
+%_K5lib/libkmaillanguagetool.so.%sover
+%_K5lib/libkmaillanguagetool.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

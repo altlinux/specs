@@ -4,7 +4,7 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -63,6 +63,7 @@ Obsoletes: libkpimitinerary < %EVR
 %K5install
 %find_lang %name --all-name
 
+
 %files common -f %name.lang
 %doc COPYING.LIB README.md
 %config(noreplace) %_K5xdgconf/*.*categories
@@ -75,10 +76,17 @@ Obsoletes: libkpimitinerary < %EVR
 #%_K5archdata/mkspecs/modules/qt_kitinerary.pri
 
 %files -n %libkpimitinerary
+%_K5exec/kitinerary*
 %_K5lib/libKPimItinerary.so.%sover
 %_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Tue Apr 30 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
+* Thu Apr 11 2019 Sergey V Turchin <zerg@altlinux.org> 19.03.90-alt1
+- new version
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
