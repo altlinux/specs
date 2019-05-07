@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -12,8 +12,8 @@ URL: http://www.tigervnc.com
 
 BuildRequires(pre): rpm-macros-cmake
 Requires: xauth xkeyboard-config fonts-bitmap-misc xorg-dri-swrast
-Provides: tightvnc = 1.7.6
-Obsoletes: tightvnc < 1.7.6
+Provides: tightvnc
+Obsoletes: tightvnc
 
 Source0: %name-%version.tar.gz
 Source1: vncserver.init
@@ -68,8 +68,8 @@ server.
 %package server
 Summary: A TigerVNC server
 Group: Networking/Remote access
-Provides: tightvnc-server = 1.7.6
-Obsoletes: tightvnc-server < 1.7.6
+Provides: tightvnc-server
+Obsoletes: tightvnc-server
 Requires: %name-common = %version-%release
 
 %description server
@@ -80,6 +80,7 @@ others to access the desktop on your machine.
 %package common
 Summary: A TigerVNC and TightVNC compatible passwd utilities
 Group: Networking/Remote access
+Conflicts: turbovnc-server
 
 %description common
 A TigerVNC and TightVNC compatible passwd utilities
@@ -253,6 +254,10 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue May 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.0-alt2
+- Spec cleanup
+- Fix repocop's test 'rpm-filesystem-conflict-file'
+
 * Mon Mar 25 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.0-alt1
 - New version (ALT #36339)
 - Update FC-getmaster.patch and tigervnc-stdinpasswd.patch
