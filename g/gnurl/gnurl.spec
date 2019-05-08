@@ -1,5 +1,5 @@
 Name: gnurl
-Version: 7.64.0
+Version: 7.64.1
 Release: alt1
 
 Summary: libgnurl is a fork of libcurl (use GnuTLS only)
@@ -77,10 +77,11 @@ utilize lib%name.
 	--disable-smtp --disable-gopher \
 	--disable-ntlm-wb \
 	--disable-rpat \
-	--with-ssl \
+	--without-ssl \
 	--with-libidn \
 	--without-libssh2 \
 	--without-libpsl \
+	--without-librtmp \
 	--without-gssapi \
 	--disable-static \
 	--enable-ipv6 \
@@ -117,6 +118,9 @@ utilize lib%name.
 %doc docs/{THANKS,BUGS,RESOURCES,TheArtOfHttpScripting,TODO,examples}
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 7.64.1-alt1
+- new version 7.64.1 (with rpmrb script)
+
 * Sat Mar 02 2019 Vitaly Lipatov <lav@altlinux.ru> 7.64.0-alt1
 - new version 7.64.0 (with rpmrb script)
 
