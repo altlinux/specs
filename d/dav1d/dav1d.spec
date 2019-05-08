@@ -1,17 +1,15 @@
 Name: dav1d
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: AV1 cross-platform Decoder
-
 License: BSD
 Group: Video
+
 Url: https://code.videolan.org/videolan/dav1d
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # Source-url: https://github.com/videolan/dav1d/archive/%version.tar.gz
 Source: %name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: gcc
 BuildRequires: nasm
@@ -62,12 +60,16 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_libdir/libdav1d.so.1*
 
 %files -n libdav1d-devel
-%doc %_host_alias/doc/html
+%doc %_target_platform/doc/html
 %_includedir/%name
 %_libdir/libdav1d.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed May 08 2019 Michael Shigorin <mike@altlinux.org> 0.3.0-alt2
+- fixed build on e2k
+- minor spec cleanup
+
 * Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - new version 0.3.0 (with rpmrb script)
 
