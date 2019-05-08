@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 Group: Development/Python
 License: MIT
@@ -46,10 +46,19 @@ Features include:
 * DNS requests done through libevent-dns
 * monkey patching utility to get pure Python modules to cooperate
 
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
+
 %package -n python-module-greentest
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+Requires: %name-tests = %EVR
 
 %description -n python-module-greentest
 gevent is a coroutine-based Python networking library that uses greenlet
@@ -76,10 +85,19 @@ Features include:
 * DNS requests done through libevent-dns
 * monkey patching utility to get pure Python modules to cooperate
 
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
+
 %package -n python3-module-greentest
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+Requires: python3-module-%oname-tests = %EVR
 
 %description -n python3-module-greentest
 gevent is a coroutine-based Python networking library that uses greenlet
@@ -133,7 +151,7 @@ export CARES_EMBED=0
 # remove all versions of greentest, leave only versions for current python version
 pushd src/greentest
 for i in * ; do
-	if [ -z "$(echo $i | grep ^%__python_version)" ] ; then
+	if [ -z "$(echo $i | grep ^%__python_version$)" ] ; then
  		rm -fR $i
 	fi
 done
@@ -147,7 +165,7 @@ rm -fR src/gevent/_util_py2.py*
 # remove all versions of greentest, leave only versions for current python3 version
 pushd src/greentest
 for i in * ; do
-	if [ -z "$(echo $i | grep ^%__python3_version)" ] ; then
+	if [ -z "$(echo $i | grep ^%__python3_version$)" ] ; then
 		rm -fR $i
 	fi
 done
@@ -188,6 +206,12 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/greentest
+%exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/testing
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests/
+%python_sitelibdir/%oname/testing/
 
 %files -n python-module-greentest
 %python_sitelibdir/greentest
@@ -204,12 +228,21 @@ popd
 %doc AUTHORS LICENSE* TODO *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/greentest
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/testing
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests/
+%python3_sitelibdir/%oname/testing/
 
 %files -n python3-module-greentest
 %python3_sitelibdir/greentest
 %endif
 
 %changelog
+* Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
+- Moved the tests out to subpackage.
+
 * Wed Feb 13 2019 Nikita Ermakov <arei@altlinux.org> 1.4.0-alt1
 - Updated to upstream version 1.4.0.
 
