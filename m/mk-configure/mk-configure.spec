@@ -1,6 +1,6 @@
 Name: mk-configure
-Version: 0.30.0
-Release: alt2
+Version: 0.31.0
+Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
@@ -66,6 +66,9 @@ bmake test
 %_man7dir/*
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.31.0-alt1
+- new version 0.31.0 (with rpmrb script)
+
 * Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 0.30.0-alt2
 - build with mk-files (ALT bug 36211)
 
