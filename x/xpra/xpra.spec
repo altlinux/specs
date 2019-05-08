@@ -1,8 +1,8 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 2.4.3
-Release: alt4
+Version: 2.5.1
+Release: alt1
 
 Summary: X Persistent Remote Applications
 
@@ -150,6 +150,9 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- new version 2.5.1 (with rpmrb script)
+
 * Mon Mar 11 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt4
 - build with OpenGL support (ALT bug 36154)
 - disable mdns
