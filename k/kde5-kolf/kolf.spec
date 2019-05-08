@@ -4,7 +4,7 @@
 %define libkolfprivate libkolfprivate%sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -77,6 +77,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkolfprivate.so.*
 
 %changelog
+* Wed May 08 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

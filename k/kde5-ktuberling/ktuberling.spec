@@ -1,7 +1,7 @@
 %define rname ktuberling
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -54,6 +54,9 @@ faces you can.
 %_K5xmlgui/ktuberling/
 
 %changelog
+* Wed May 08 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 

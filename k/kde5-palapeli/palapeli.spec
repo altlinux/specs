@@ -4,7 +4,7 @@
 %define libpala libpala%pala_sover
 
 Name: kde5-%rname
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init
 
@@ -71,6 +71,7 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %files common -f %name.lang
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*rc
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5icon/*/*/mimetypes/*palapeli*.*
 %_K5srvtyp/*pala*.desktop
 %_K5xdgmime/*palapeli*.xml
@@ -97,6 +98,9 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %_K5lib/libpala.so.*
 
 %changelog
+* Wed May 08 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Fri Mar 22 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
