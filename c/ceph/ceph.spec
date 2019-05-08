@@ -1,4 +1,4 @@
-%define git_version 3a54b2b6d167d4a2a19e003a705696d4fe619afc
+%define git_version d555a9489eb35f84f2e1ef49b77e19da9d113972
 
 %def_with ocf
 %def_without tcmalloc
@@ -40,8 +40,8 @@
 %endif
 
 Name: ceph
-Version: 14.2.0
-Release: alt2
+Version: 14.2.1
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1618,6 +1618,9 @@ fi
 %endif
 
 %changelog
+* Wed May 08 2019 Alexey Shabalin <shaba@altlinux.org> 14.2.1-alt1
+- 14.2.1
+
 * Tue Mar 26 2019 Alexey Shabalin <shaba@altlinux.org> 14.2.0-alt2
 - build with system zstd (fixed ALT#36406)
 - build with system rocksdb
