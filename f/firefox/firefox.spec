@@ -14,8 +14,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        66.0.1
-Release:        alt2
+Version:        66.0.5
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -402,6 +402,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed May 08 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.5-alt1
+- New release (66.0.5).
+
+* Fri Apr 12 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.3-alt1
+- New release (66.0.3).
+
 * Tue Apr 02 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.1-alt2
 - Incease minimum version of nspr, nss.
 - Improve firefox-wayland startup script.
