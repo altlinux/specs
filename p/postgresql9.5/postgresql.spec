@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     5
-%define postgresql_subminor  16
-%define postgresql_altrel    2
+%define postgresql_subminor  17
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -767,6 +767,10 @@ fi
 %endif
 
 %changelog
+* Wed May 08 2019 Alexei Takaseev <taf@altlinux.org> 9.5.17-alt1
+- 9.5.17
+- (Fixes CVE-2019-10130)
+
 * Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 9.5.16-alt2
 - Move *.control and *.sql files from -server to -contrib subpackage
   (Fixes ALT#36271)
