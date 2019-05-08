@@ -1,6 +1,6 @@
 Name: matrix-synapse
-Version: 0.99.0
-Release: alt2
+Version: 0.99.3.2
+Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache 2.0
@@ -139,6 +139,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.99.3.2-alt1
+- new version 0.99.3.2 (with rpmrb script)
+
 * Mon Feb 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.99.0-alt2
 - switch to python3
 
