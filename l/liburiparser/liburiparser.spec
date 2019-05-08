@@ -3,7 +3,7 @@
 
 %define oname uriparser
 Name: liburiparser
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -17,9 +17,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/uriparser/uriparser/archive/uriparser-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libcpptest-devel doxygen graphviz
+BuildRequires: cmake gcc-c++ libcpptest-devel
 
 %if_with doc
+BuildRequires: doxygen graphviz
 # uses qhelpgenerator-qt5 for doc
 BuildRequires: qt5-tools
 %endif
@@ -42,12 +43,17 @@ Header files for uriparser.
 
 %prep
 %setup
-%__subst "s|qhelpgenerator|qhelpgenerator-qt5|g" configure*
+#__subst "s|qhelpgenerator|qhelpgenerator-qt5|g" configure*
 
 %build
-%autoreconf
-%configure --disable-static \
-           %{subst_enable test}
+%cmake_insource \
+%if_without doc
+	-DURIPARSER_BUILD_DOCS:BOOL=OFF \
+%endif
+%if_disabled test
+        -DURIPARSER_BUILD_TESTS:BOOL=OFF \
+%endif
+        %nil
 %make_build
 
 %install
@@ -66,6 +72,10 @@ touch doc/html/FIXME.map
 %_pkgconfigdir/*
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3 (with rpmrb script)
+- switch to cmake
+
 * Wed Jan 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - new version 0.9.1 (with rpmrb script)
 
