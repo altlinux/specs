@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name libgda
@@ -33,8 +33,8 @@
 %add_python_req_skip rml2html
 
 Name: %{_name}5
-Version: %ver_major.8
-Release: alt2
+Version: %ver_major.9
+Release: alt1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -616,11 +616,11 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %files gir-devel
 %_datadir/gir-1.0/Gda-%abi_ver.gir
 
-#%files -n libgdaui5-gir
-#%_libdir/girepository-1.0/Gdaui-%abi_ver.typelib
+%files -n libgdaui5-gir
+%_typelibdir/Gdaui-%abi_ver.typelib
 
-#%files -n libgdaui5-gir-devel
-#%_datadir/gir-1.0/Gdaui-%abi_ver.gir
+%files -n libgdaui5-gir-devel
+%_girdir/Gdaui-%abi_ver.gir
 %endif
 
 %if_enabled static
@@ -648,6 +648,9 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Wed May 08 2019 Yuri N. Sedunov <aris@altlinux.org> 5.2.9-alt1
+- 5.2.9
+
 * Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 5.2.8-alt2
 - updated buildreqs for pgsql
 
