@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 18.12.3
+Version: 19.04.0
 Release: alt1
 %K5init altplace
 
@@ -162,6 +162,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Tue May 07 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
+- new version
+
 * Thu Mar 21 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.3-alt1
 - new version
 
