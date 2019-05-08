@@ -1,6 +1,6 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.4.4
+Version: 1.4.6
 Release: alt1
 
 Summary: Your friendly task manager
@@ -67,6 +67,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
+- new version 1.4.6 (with rpmrb script)
+
 * Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
 - new version 1.4.4 (with rpmrb script)
 
