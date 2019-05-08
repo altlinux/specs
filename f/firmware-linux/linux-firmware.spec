@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190424
+Version: 20190429
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,19 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed May 08 2019 Cronbuild Service <cronbuild@altlinux.org> 20190429-alt1
+- upstream changes (GIT 92e17d0):
+  + amdgpu: update vega20 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update vega12 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update vega10 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update polaris11 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update polaris10 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update raven2 to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update raven to the latest 19.10 firmware (thx Alex Deucher)
+  + amdgpu: update picasso to the latest 19.10 firmware (thx Alex Deucher)
+  + update fw for qat devices (thx Giovanni Cabiddu)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.2000.1122 (thx Ido Schimmel)
+
 * Thu Apr 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20190424-alt1
 - upstream changes (GIT 4b6cf2b):
   + drm/i915/firmware: Add ICL HuC v8.4.3238 (thx Anusha Srivatsa)
