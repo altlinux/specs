@@ -1,12 +1,12 @@
 %define ver_major 5.2
+%def_with emacs
 
 Name: gnuplot
-Epoch: 1
 Version: %ver_major.6
-Release: alt1
+Release: alt2
+Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
-Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 License: gnuplot and MIT
 Group: Sciences/Other
 URL: http://www.gnuplot.info/
@@ -30,7 +30,8 @@ BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
 BuildRequires: texinfo latex2html
-BuildRequires: emacs-common dblatex
+BuildRequires: dblatex
+%{?_with_emacs:BuildRequires: emacs-common}
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
@@ -39,10 +40,11 @@ BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools
 # for lua/TikZ
 BuildRequires: lua-devel tex(pgf.sty)
 
-
 Requires(post,postun): desktop-file-utils
 Requires: fonts-ttf-dejavu
 Requires: %name-common-x11 = %EVR
+
+Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 
 %package common
 Group: Sciences/Other
@@ -131,12 +133,17 @@ The gnuplot-demo package contains the demo applications related to gnuplot
 plotting tool
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
+%ifarch %e2k
+# lcc 1.23.12 is -std=c++03 by default but c++11 capable;
+# src/qtterminal/qt_term.cpp compilation needs that
+export CXXFLAGS+=-std=c++11
+%endif
 
 %define configure_opts --with-readline=gnu --with-png --with-pdf --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
 
@@ -258,6 +265,11 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Wed May 08 2019 Michael Shigorin <mike@altlinux.org> 1:5.2.6-alt2
+- fixed build with lcc on e2k
+- introduced emacs knob (on by default)
+- minor spec cleanup
+
 * Sat Jan 05 2019 Grigory Ustinov <grenka@altlinux.org> 1:5.2.6-alt1
 - Build new version.
 
