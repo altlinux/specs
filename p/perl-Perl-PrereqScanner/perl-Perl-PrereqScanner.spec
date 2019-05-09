@@ -2,7 +2,7 @@
 
 Name: perl-Perl-PrereqScanner
 Version: 1.023
-Release: alt1
+Release: alt2
 
 Summary: a tool to scan Perl code for its prerequisites
 
@@ -10,7 +10,7 @@ License: %perl_license
 Group: Development/Perl
 URL: http://search.cpan.org/dist/Perl-PrereqScanner/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 %define real_name Perl-PrereqScanner
@@ -20,11 +20,11 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sat May 30 2015
-# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-IO-String perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
-BuildRequires: perl-CPAN-Meta perl-Getopt-Long-Descriptive perl-Module-Path perl-Moose perl-PPI perl-String-RewritePrefix perl-namespace-autoclean perl-podlators
+# Automatically added by buildreq on Thu May 09 2019
+# optimized out: gem-power-assert perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-IO-String perl-JSON-PP perl-List-MoreUtils-XS perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Getopt-Long-Descriptive perl-List-MoreUtils perl-Module-Path perl-Moose perl-PPI-XS perl-String-RewritePrefix perl-namespace-autoclean
 
-BuildRequires: perl-Moose
+BuildRequires: perl-podlators
 
 %description
 Perl module Perl-PrereqScanner is the scanner that extracts loosely
@@ -51,6 +51,9 @@ The extraction may not be perfect but tries to do its best.
 %_man1dir/scan*
 
 %changelog
+* Thu May 09 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.023-alt2
+- Update BuildRequires to fix package build
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.023-alt1
 - New version
 
