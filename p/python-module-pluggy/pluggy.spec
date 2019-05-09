@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -91,6 +91,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
+- 0.9.0 -> 0.11.0.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
 - 0.8.1 -> 0.9.0.
 
