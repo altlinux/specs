@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname joblib
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.11
-Release: alt2
+Version: 0.13.2
+Release: alt1
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
@@ -12,18 +13,20 @@ Url: http://pypi.python.org/pypi/joblib
 
 # https://github.com/joblib/joblib.git
 Source: %name-%version.tar
-# Remove failing test, should be fixed in https://github.com/joblib/joblib/issues/413, but apparently it isn't
-Patch1: %oname-%version-alt-tests.patch
 BuildArch: noarch
 
-BuildRequires: python-module-nose python-module-pytest python-modules-json time
-BuildRequires: python-module-numpy
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pytest
-BuildRequires: python3-module-numpy
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: python2.7(numpy)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(numpy)
+BuildRequires: python3(tox)
 %endif
 
+# `distributed` is not packaged yet
+%filter_from_requires /python[23]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
 %description
 Joblib is a set of tools to provide lightweight pipelining in Python. In
 particular, joblib offers:
@@ -36,7 +39,6 @@ particular, joblib offers:
 Joblib is optimized to be fast and robust in particular on large data
 and has specific optimizations for numpy arrays.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Lightweight pipelining: using Python 3 functions as pipeline jobs
 Group: Development/Python3
@@ -71,7 +73,6 @@ Joblib is optimized to be fast and robust in particular on large data
 and has specific optimizations for numpy arrays.
 
 This package contains tests for joblib.
-%endif
 
 %package tests
 Summary: Tests for joblib
@@ -94,37 +95,30 @@ This package contains tests for joblib.
 
 %prep
 %setup
-%patch1 -p1
 
-%if_with python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
 pushd ../python3
 %python3_build_install
 popd
-%endif
 
 %check
-rm -fR build
-py.test -vv
-%if_with python3
-pushd ../python3
-rm -fR build
-py.test3 -vv
-popd
-%endif
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc *.rst
@@ -134,7 +128,6 @@ popd
 %files tests
 %python_sitelibdir/%oname/test*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
@@ -144,9 +137,11 @@ popd
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/test*
 %python3_sitelibdir/%oname/__pycache__/test*
-%endif
 
 %changelog
+* Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 0.13.2-alt1
+- Update to upstream version 0.13.2.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt2
 - Applied patch to tests.
 
