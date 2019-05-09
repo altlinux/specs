@@ -2,14 +2,17 @@
 
 Name: xblas
 Version: 1.0.248
-Release: alt1.2
+Release: alt1.3
 
 Summary: Extended and Mixed Precision version of BLAS
 License: MIT
 Group: Sciences/Mathematics
 
 Url: http://www.netlib.org/xblas/
-Source: http://www.netlib.org/xblas/xblas.tar.gz
+
+# Source-url: http://www.netlib.org/xblas/xblas-%version.tar.gz
+Source: %name-%version.tar
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -78,11 +81,10 @@ This package contains development documentation for XBLAS.
 %build
 %autoreconf
 %configure --enable-fortran --disable-plain-blas
-%make_build makefiles
-%make_build sources
+%make_build lib
 # non SMP build
-%make test-sources
-%make_build all
+%make test-lib
+
 
 %install
 install -d %buildroot%_libdir
@@ -101,6 +103,9 @@ g77 -shared -lm -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 ln -s lib%name.so.%sover lib%name.so
 popd
 
+%check
+%make tests
+
 %files
 %doc README
 
@@ -118,6 +123,10 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.248-alt1.3
+- fix source url
+- move test to check section, fix concurrent build issue
+
 * Thu Mar 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.248-alt1.2
 - fix build
 
