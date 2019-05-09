@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 1.18
+Version: 2.2
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -24,9 +24,9 @@ Source5: %{name}-update.sh
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sat Aug 25 2018
-# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3 tzdata
-BuildRequires: libgd3-devel
+# Automatically added by buildreq on Thu May 09 2019
+# optimized out: fontconfig gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tzdata
+BuildRequires: libgd3-devel libsqlite3-devel
 
 %define cron_freq    5
 %define cron_file    %_sysconfdir/cron.d/%name
@@ -98,7 +98,7 @@ chmod a-x examples/vnstat.cgi
 %install
 %makeinstall
 /bin/install -pD %SOURCE1  %buildroot%_controldir/%name
-/bin/install -pD %SOURCE3  %buildroot%cron_file
+/bin/install -pD -m 0664 %SOURCE3  %buildroot%cron_file
 /bin/sed -e 's#%%cron_freq#%{cron_freq}#' -i %buildroot%cron_file
 /bin/install -pD %SOURCE4  %buildroot%_tmpfilesdir/%{name}d.conf
 
@@ -164,6 +164,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Thu May 09 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.2-alt1
+- New version
+
 * Sat Aug 25 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.18-alt1
 - New version
 - Move cron script to -server package and disable it by default (Closes: 31477)
