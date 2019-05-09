@@ -1,15 +1,17 @@
 Name: qrupdate
 Version: 1.1.2
-Release: alt3
+Release: alt4
+
 Summary: Library for fast updating of QR and Cholesky decompositions
 License: GPLv3+
 Group: Sciences/Mathematics
+
 Url: http://sourceforge.net/projects/qrupdate/
+Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
-
-BuildPreReq: gcc-fortran f2c liblapack-devel
+BuildRequires: gcc-fortran f2c
+BuildRequires: liblapack-devel
 
 %description
 qrupdate is a Fortran library for fast updates of QR and Cholesky
@@ -37,6 +39,10 @@ This package contains development files of qrupdate.
 %prep
 %setup
 sed -i 's|^\(LIBDIR\).*|\1=%_lib|' Makeconf*
+%ifnarch x86_64 %ix86
+# only required for tests
+sed -i 's/^BLAS/#&/' Makeconf*
+%endif
 
 %build
 %make_build solib
@@ -52,6 +58,9 @@ sed -i 's|^\(LIBDIR\).*|\1=%_lib|' Makeconf*
 %_libdir/*.so
 
 %changelog
+* Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.2-alt4
+- Restrict use of blas to X86 (only required for tests)
+
 * Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt3
 - Rebuilt with updated openblas
 
