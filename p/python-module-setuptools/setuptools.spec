@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 40.8.0
-Release: alt1
+Release: alt2
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -163,17 +163,16 @@ ln -s easy_install-%_python_version -T %buildroot%_bindir/easy_install
 ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
 
 %check
+# bundled `pip` doesn't support PEP517 well for now
+# https://github.com/pypa/setuptools/issues/1644
+rm pyproject.toml
 sed -i -e '/\[testenv\]/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
     \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest\
-    {envbindir}\/pip install -I --no-build-isolation -e {toxinidir}' \
--e '/usedevelop=/d' tox.ini
-export LC_ALL=C.UTF-8
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='LC_ALL'
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
@@ -214,6 +213,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Mon May 13 2019 Stanislav Levin <slev@altlinux.org> 1:40.8.0-alt2
+- Fixed the testing against `virtualenv` 16.5.0.
+
 * Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1:40.8.0-alt1
 - 40.6.3 -> 40.8.0.
 
