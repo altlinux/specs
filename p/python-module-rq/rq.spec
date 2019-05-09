@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname rq
 
+%def_without check
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.2
-Release: alt1.1
+Version: 1.0
+Release: alt1
+
 Summary: Simple job queues for Python
+
 License: BSD
 Group: Development/Python
 BuildArch: noarch
+
 Url: https://pypi.python.org/pypi/rq/
 
-# https://github.com/nvie/rq.git
-Source: %oname-%version.tar
+# Source-url: https://pypi.io/packages/source/r/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-redis-py
 BuildRequires: python-module-click
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -43,7 +48,7 @@ processing them.
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -72,12 +77,14 @@ popd
 
 %python_install
 
+%if_with check
 %check
 python setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 popd
+%endif
 %endif
 
 %files
@@ -96,6 +103,11 @@ popd
 %endif
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- new version (1.0) with rpmgs script
+- cleanup spec
+- temp. disabled check section (obsoleted test uses queue.get_failed_queue)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
