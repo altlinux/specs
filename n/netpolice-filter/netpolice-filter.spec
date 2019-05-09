@@ -1,6 +1,6 @@
 Name: netpolice-filter
 Version: 1.01
-Release: alt5
+Release: alt5.1
 
 Summary: URL filter for c-icap server
 License: BSD
@@ -11,7 +11,7 @@ Source0: %name-%version.tar.gz
 Patch:   %name-fix-func-name-typo.patch
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
-BuildRequires: gcc-c++ c-icap-devel libmemcache-devel opendbx-devel zlib-devel
+BuildRequires: c-icap-devel libmemcache-devel opendbx-devel zlib-devel
 
 Requires(pre): shadow-utils
 
@@ -45,6 +45,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_libdir/c_icap/srv_url_filter.so
 
 %changelog
+* Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 1.01-alt5.1
+- Use no g++ at all (thx ldv@ for spotting this)
+
 * Wed May 08 2019 Michael Shigorin <mike@altlinux.org> 1.01-alt5
 - Use current g++
 
