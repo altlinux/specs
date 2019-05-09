@@ -3,14 +3,13 @@
 
 Name: simplescreenrecorder
 Version: 0.3.11
-Release: alt2
+Release: alt3
+
 Summary: Simple Screen Recording with OpenGL capture
-
-Group: Video
 License: GPLv3
-Url: http://www.maartenbaert.be/simplescreenrecorder/
-Obsoletes: simplescreenrecording
+Group: Video
 
+Url: http://www.maartenbaert.be/simplescreenrecorder/
 Source: %version.tar.gz
 
 BuildRequires: gcc-c++
@@ -31,6 +30,8 @@ BuildRequires: pkgconfig(xi)
 BuildRequires: qt5-linguist
 BuildRequires: libappstream-glib
 
+Obsoletes: simplescreenrecording
+
 %description
 %summary
 
@@ -44,6 +45,11 @@ for s in "GenericName=Simple screen recorder" \
 done
 # XXX waiting for support for channels
 ##sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
+
+%ifarch %e2k
+sed -i 's,^#ifdef __x86_64__,#if defined (__x86_64__) || defined (__e2k__),' \
+	glinject/elfhacks.h
+%endif
 
 %build
 %cmake \
@@ -73,6 +79,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/appdata/*
 
 %changelog
+* Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 0.3.11-alt3
+- fixed build on e2k
+- minor spec cleanup
+
 * Sun Feb 17 2019 Anton Midyukov <antohami@altlinux.org> 0.3.11-alt2
 - not ExclusiveArch
 - build with qt5
