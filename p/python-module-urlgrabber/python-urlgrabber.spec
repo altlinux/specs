@@ -1,27 +1,33 @@
-%define real_name urlgrabber
+%define oname urlgrabber
 
-%def_without python3
+%def_with python3
+
+Name: python-module-urlgrabber
+Version: 4.0.0
+Release: alt1
 
 Summary: High-level cross-protocol url-grabber
-Name: python-module-urlgrabber
-Version: 3.10.1
-Release: alt1.git20140204
+
 License: LGPL
 Group: Development/Python
 URL: http://urlgrabber.baseurl.org/
-# git://yum.baseurl.org/urlgrabber.git
-Source: urlgrabber-%{version}.tar
+
+# Source-url: https://pypi.io/packages/source/u/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 Patch: python-urlgrabber-2.9.6-reget.patch
+
 BuildArch: noarch
+
 Provides: urlgrabber
-# Automatically added by buildreq on Mon Dec 17 2007
+
 BuildRequires: python-devel python-modules-compiler python-modules-email python-modules-logging
 
-BuildPreReq: python-module-pycurl
+BuildRequires: python-module-pycurl python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-pycurl
-BuildPreReq: python-tools-2to3 python3-module-rfc822py3
+BuildRequires: python3-devel python3-module-pycurl python3-module-rfc822py3 python3-module-six
+#BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -29,22 +35,22 @@ python-urlgrabber is a high-level cross-protocol url-grabber for python
 supporting HTTP, FTP and file locations. Features include keepalive, byte
 ranges, throttling, authentication, proxies and more.
 
-%package -n python3-module-%real_name
+%package -n python3-module-%oname
 Summary: High-level cross-protocol url-grabber
 Group: Development/Python3
 
-%description -n python3-module-%real_name
+%description -n python3-module-%oname
 python-urlgrabber is a high-level cross-protocol url-grabber for python
 supporting HTTP, FTP and file locations. Features include keepalive, byte
 ranges, throttling, authentication, proxies and more.
 
 %prep
-%setup -n %real_name-%version
+%setup
 #patch0 -p1 -b .reget
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -73,19 +79,25 @@ mv %buildroot/usr/libexec/urlgrabber-ext-down %buildroot%_bindir/
 
 %files
 %doc ChangeLog README TODO
-%_docdir/%real_name-%version/*
-%_bindir/%real_name
+%_docdir/%oname-%version/*
+%_bindir/%oname
 %_bindir/urlgrabber-ext-down
-%python_sitelibdir/%real_name/*
+%python_sitelibdir/%oname/
+%python_sitelibdir/%oname-*.egg-info/
 
 %if_with python3
-%files -n python3-module-%real_name
+%files -n python3-module-%oname
 %doc ChangeLog README TODO
-%_bindir/%real_name.py3
-%python3_sitelibdir/%real_name/*
+%_bindir/%oname.py3
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-*.egg-info/
 %endif
 
 %changelog
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version (4.0.0) with rpmgs script
+- cleanup spec, enable python3 module build
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.1-alt1.git20140204
 - Version 3.10.1
 
