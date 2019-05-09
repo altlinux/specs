@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 6.1
-Release: alt1
+Release: alt2
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -31,13 +31,16 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
+rm -rf %buildroot/%_bindir/
 
 %files
 %python3_sitelibdir/jaraco/
-%python3_sitelibdir/%{modulename}*
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt2
+- fix packing
+
 * Sun Jan 27 2019 Andrey Cherepanov <cas@altlinux.org> 6.1-alt1
 - New version.
 
