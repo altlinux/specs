@@ -64,15 +64,16 @@
 %{!?zeroconf:%define zeroconf no}
 
 %define  Name MPD
+
 Name:    mpd
 Version: 0.20.23
-Release: alt2
-Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
+Release: alt3
 
+Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
 Group:   Sound
-URL:     http://musicpd.org
 
+Url:     http://musicpd.org
 Source: %name-%version.tar
 # VCS:   https://github.com/MusicPlayerDaemon/MPD.git
 Source1: %name.conf
@@ -235,7 +236,9 @@ bzip2 --best --keep --force NEWS
 
 %install
 %makeinstall_std protocoldir=%_docdir/%name-%version/html
+%if_enabled doc
 ln -s html %buildroot%_docdir/%name-%version/protocol
+%endif
 install -d %buildroot{%_localstatedir/%name/playlists,{%_runtimedir,%_logdir}/%name,%_sysconfdir,%_initdir,%_tmpfilesdir}
 sed -e "s|@localstatedir@|%_localstatedir|g" -e "s|@logdir@|%_logdir|g" %SOURCE1 > %buildroot%_sysconfdir/%name.conf
 chmod 644 %buildroot%_sysconfdir/%name.conf
@@ -299,6 +302,10 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 0.20.23-alt3
+- fixed doc knob
+- minor spec cleanup
+
 * Fri Apr 19 2019 Anton Midyukov <antohami@altlinux.org> 0.20.23-alt2
 - moved /var/run -> /run
 - moved /var/lock -> /run/lock
