@@ -1,5 +1,5 @@
 Name: vym
-Version: 2.6.11
+Version: 2.7.0
 Release: alt1
 
 Summary: QT based MindMap editor
@@ -13,14 +13,18 @@ Group: Office
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: %name-2.7.0-alt-pdf_path.patch
 
 Source1: %name.desktop
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Mon May 08 2017
-# optimized out: gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel
-BuildRequires: qt5-svg-devel qt5-tools
+# Automatically added by buildreq on Fri Apr 19 2019
+# optimized out: fontconfig gcc-c++ gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libstdc++-devel python-base python-modules python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tex-common texlive texlive-collection-basic texlive-dist
+BuildRequires: kf5-kwallet-devel qt5-location-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webchannel-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+
+# For PDF docs generation
+BuildRequires: makeinfo texi2dvi texlive-dist
 
 %description
 VYM (View Your Mind) is a tool to generate and manipulate maps which show your
@@ -30,7 +34,9 @@ over complex contexts.
 
 %prep
 %setup -q
-%patch0
+%patch0 -p1
+
+%patch1
 
 sed -e 's/QT4/QT5/g' -i CMakeLists.txt
 
@@ -44,15 +50,30 @@ for i in *.ts; do
 done
 popd
 
+pushd tex
+texi2dvi -p vym.tex    > /dev/null
+texi2dvi -p vym_es.tex > /dev/null
+texi2dvi -p vym_fr.tex > /dev/null
+popd
+
 %install
 %installqt5 PREFIX=%_prefix DATADIR=%_datadir
 install -D -m0644 doc/%name.1.gz %buildroot%_man1dir/%name.1.gz
 install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.desktop
 
-mkdir %buildroot%_datadir/%name/lang/$i
+
+mkdir %buildroot%_datadir/%name/lang/
 pushd lang
 for i in *.qm; do
     install -D -m0664 $i %buildroot%_datadir/%name/lang/$i
+done
+popd
+
+mkdir %buildroot%_datadir/%name/doc/
+pushd tex
+for i in *.pdf; do
+    install -D -m0644 $i %buildroot%_datadir/%name/doc/$i
 done
 popd
 
@@ -70,6 +91,9 @@ popd
 
 
 %changelog
+* Thu May 09 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.7.0-alt1
+- New version
+
 * Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.6.11-alt1
 - New version
 
