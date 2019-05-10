@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname trollius
 
-%def_with python3
+%def_without python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.1
-Release: alt2.1
+Version: 2.2
+Release: alt1
+
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
+
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/trollius/
 
-Source: %oname-%version.tar.gz
+# Source-url: http://pypi.python.org/packages/source/t/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools /dev/pts
 BuildPreReq: python-module-futures python-module-sphinx-devel
 BuildPreReq: python-modules-wsgiref python-module-mock
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -99,7 +104,7 @@ primitives.
 This package contains documentation for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -169,6 +174,10 @@ popd
 %endif
 
 %changelog
+* Fri May 10 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
+- new version 2.2 (with rpmrb script)
+- disable python3 (Trollius is deprecated and python2 only now)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
