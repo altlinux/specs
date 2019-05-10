@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1.1
+Release: alt1.2
 Summary: Tryton server
 License: GPL
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-lxml python-module-relatorio
 BuildPreReq: python-module-genshi python-module-dateutil
 BuildPreReq: python-module-polib python-module-sql
-BuildPreReq: python-module-psycopg2 python-module-MySQLdb2
+BuildPreReq: python-module-psycopg2 python-module-mysqlclient
 BuildPreReq: python-module-pywebdav unoconv python-module-pydot
 BuildPreReq: python-module-simplejson python-module-cdecimal
 BuildPreReq: python-module-bcrypt python-module-Levenshtein
@@ -30,7 +30,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-lxml
 BuildPreReq: python3-module-genshi python3-module-dateutil
 BuildPreReq: python3-module-polib python3-module-sql
-BuildPreReq: python3-module-psycopg2 python3-module-MySQLdb
+BuildPreReq: python3-module-psycopg2 python3-module-mysqlclient
 BuildPreReq: python3-module-pywebdav unoconv python3-module-pydot
 BuildPreReq: python3-module-simplejson python3-module-cdecimal
 BuildPreReq: python3-module-py3k-bcrypt python3-module-Levenshtein
@@ -179,6 +179,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri May 10 2019 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1.2
+- NMU: fix MySQLdb require
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
