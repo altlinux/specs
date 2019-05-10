@@ -1,22 +1,19 @@
 Name: debootstrap
-Version: 1.0.36
-Release: alt2
+Version: 1.0.114
+Release: alt1
 Summary: Debian GNU/Linux bootstrapper
 
 Group: System/Base
 License: MIT
 Url: http://code.erisian.com.au/Wiki/debootstrap
-Packager: Denis Baranov <baraka@altlinux.ru>
 
-Source: http://ftp.debian.org/debian/pool/main/d/debootstrap/%{name}_%version.tar
-Source1: devices.tar.gz
-Patch: debootstrap-devices.patch
+# Repacked http://ftp.debian.org/debian/pool/main/d/debootstrap/%{name}_%version.tar.gz
+Source: %name-%version.tar
 Patch1: debootstrap-perms.patch
 
 BuildArch: noarch
 
-BuildRequires: fakeroot
-Requires: gettext, wget, tar, gzip, binutils
+Requires: wget, tar
 
 %description
 debootstrap is used to create a Debian base system from scratch, without
@@ -28,17 +25,8 @@ This might be often useful coupled with virtualization techniques to run
 Debian GNU/Linux guest system.
 
 %prep
-%setup -n %{name}_%version
-%patch0 -p1
+%setup
 %patch1 -p1
-cp %SOURCE1 .
-
-%build
-# in Makefile, path is hardcoded, modify it to take rpm macros into account
-%__subst 's;/usr/sbin;%_sbindir;' Makefile
-
-# _smp_mflags would make no sense at all
-fakeroot make
 
 %install
 install -d %buildroot%_datadir/debootstrap/scripts/
@@ -48,8 +36,6 @@ install -p -m 0644 debootstrap.8 %buildroot%_man8dir
 %makeinstall_std \
        VERSION="%version-%release" \
        DSDIR=%buildroot%_datadir/debootstrap
-# substitute the rpm macro path
-%__subst 's;/usr/share;%_datadir;' %buildroot%_sbindir/debootstrap
 # correct the debootstrap script timestamp
 touch -r debootstrap  %buildroot%_sbindir/debootstrap
 
@@ -60,6 +46,9 @@ touch -r debootstrap  %buildroot%_sbindir/debootstrap
 %doc debian/changelog debian/copyright README
 
 %changelog
+* Fri May 10 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.114-alt1
+- Updated to 1.0.114.
+
 * Fri Oct 14 2011 Denis Baranov <baraka@altlinux.ru> 1.0.36-alt2
 - add devices.tar.gz in package
 
