@@ -6,7 +6,8 @@
 
 Name: python-module-%oname
 Version: 18.5.2
-Release: alt2
+Release: alt2.1
+
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -28,7 +29,7 @@ BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools python3-module-snappy python3-module-zope
-BuildRequires: python3-module-txaio-tests python3-module-unittest2 python3-module-mock python3-module-trollius-tests
+BuildRequires: python3-module-txaio-tests python3-module-unittest2 python3-module-mock
 BuildRequires: python3-module-pytest
 %endif
 
@@ -179,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Fri May 10 2019 Vitaly Lipatov <lav@altlinux.ru> 18.5.2-alt2.1
+- NMU: drop python3 trollius
+
 * Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 18.5.2-alt2
 - Fix build with python-3.7
 
