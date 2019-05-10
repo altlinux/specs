@@ -1,6 +1,6 @@
 Name: xtables-addons
-Version: 2.14
-Release: alt5
+Version: 3.3
+Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -14,7 +14,7 @@ Source1: %name.watch
 
 %define _libexecdir /usr/libexec
 
-BuildRequires: libiptables-devel libmnl-devel perl-Text-CSV_XS
+BuildRequires: libiptables-devel libmnl-devel perl-Text-CSV_XS perl-Net-CIDR-Lite
 Requires: iptables
 ExclusiveArch: %ix86 x86_32 x86_64
 
@@ -72,6 +72,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Fri Apr 19 2019 Anton Farygin <rider@altlinux.ru> 3.3-alt1
+- 3.3
+
 * Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt5
 - support for 5.0 kernel added
 
