@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	f13ead862171f50019c15c946d25e91f
+%define checksum	a22e1b59c5e8b8eff166271b08b4ad72
 
 Name:    clamav-db-%dbname
-Version: 20160317
+Version: 20170608
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -21,13 +21,12 @@ BuildArch: noarch
 Source: %dbname.cvd
 
 Requires:  clamav
-Provides:  clamav-db = 20141130
-Obsoletes: clamav-db < 20141130
+Provides:  clamav-db = %EVR
+Obsoletes: clamav-db < %EVR
 
 # Requires other databases
 Requires:  clamav-db-daily
 Requires:  clamav-db-bytecode
-Requires:  clamav-db-safebrowsing
 
 %description
 Database %dbname.cvd for ClamAV virus scanner.
@@ -57,6 +56,10 @@ test "$(md5sum "%buildroot%sys_db/%dbname.cvd" | cut -f1 -d' ')" = "%checksum"
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Fri May 10 2019 Andrey Cherepanov <cas@altlinux.org> 20170608-alt1
+- Update database.
+- Remove clamav-db-safebrowsing requirement for clamav-db.
+
 * Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 20160317-alt1
 - Update database
 - Test checksum
