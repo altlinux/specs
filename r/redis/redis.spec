@@ -1,5 +1,5 @@
 Name: redis
-Version: 4.0.11
+Version: 5.0.4
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -14,7 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
-Source1: %name.conf
 Source2: redis-benchmark.1
 Source3: redis-cli.1
 Source4: redis-server.1
@@ -64,7 +63,14 @@ for Windows currently.
 sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
 
 %build
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
+
+# For e2k - force use libc malloc instead jemalloc (see #35473)
+USE_MALLOC=
+%ifarch %e2k
+USE_MALLOC="MALLOC=libc"
+%endif
+
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" $USE_MALLOC
 
 %ifndef __BTE
     # make check needs network
@@ -75,7 +81,6 @@ sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Make
 %makeinstall_std PREFIX=%buildroot%prefix
 mkdir -p %buildroot%_sbindir/
 mkdir -p %buildroot%_sysconfdir/%name
-install -m644 %SOURCE1 %buildroot%_sysconfdir/%name/
 mv %buildroot%_bindir/redis-server %buildroot%_sbindir/
 mv %buildroot%_bindir/redis-sentinel %buildroot%_sbindir/
 
@@ -86,6 +91,16 @@ mkdir -p %buildroot%_man1dir
 install -m 644 %SOURCE2 %buildroot%_man1dir/
 install -m 644 %SOURCE3 %buildroot%_man1dir/
 install -m 644 %SOURCE4 %buildroot%_man1dir/
+
+# Tune default configuration
+sed -e '/^timeout[[:blank:]]/ s/0/300/' \
+    -e '/^daemonize[[:blank:]]/ s/no/yes/' \
+    -e '/^supervised[[:blank:]]/ s/no/auto/' \
+    -e '/^pidfile[[:blank:]]/ s^_6379.pid^/redis-server.pid^' \
+    -e '/^logfile[[:blank:]]/ s^""^"/var/log/redis/redis-server.log"^' \
+    -e '/^dir[[:blank:]]/ s^\./^/var/lib/redis^' \
+    -i %name.conf
+install -m644 %name.conf %buildroot%_sysconfdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
 install -m 644 %SOURCE5 %buildroot%_sysconfdir/bash_completion.d/redis-cli
@@ -144,6 +159,10 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Fri May 10 2019 Nikolay A. Fetisov <naf@altlinux.org> 5.0.4-alt1
+- New version
+- Use libc malloc for e2k arch (Closes: 35473)
+
 * Sun Aug 05 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.11-alt1
 - New version
 
