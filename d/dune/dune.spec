@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 1.9.1
+Version: 1.9.3
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -69,6 +69,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 
 
 %changelog
+* Sat May 11 2019 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Tue Apr 16 2019 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
 - 1.9.1
 
