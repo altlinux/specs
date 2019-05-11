@@ -1,8 +1,12 @@
 %set_verify_elf_method unresolved=strict
+%def_enable gui
+%def_enable docs
+%def_disable jsoncpp_bootstrap
 %def_without check
+
 Name: cmake
 Version: 3.13.4
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -21,10 +25,13 @@ Patch1: alt-fallback-modules-dir.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
-BuildRequires: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
+BuildRequires: libcurl-devel libexpat-devel libncurses-devel libxml2-devel
 BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
-BuildRequires: python-module-sphinx-devel librhash-devel libuv-devel
+BuildRequires: librhash-devel libuv-devel
 BuildRequires: shared-mime-info rpm-build-vim
+%{?!_disable_docs:BuildRequires: python-module-sphinx-devel}
+%{?!_disable_gui:BuildRequires: qt5-base-devel}
+
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
 
 Obsoletes: cpack < 2.4.5-alt3
@@ -145,30 +152,42 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--verbose \
 	--parallel=%__nprocs \
 	--system-libs \
+%if_enabled gui
 	--qt-gui \
+%endif
+%if_enabled docs
 	--sphinx-man \
 	--sphinx-html \
+%endif
 	--prefix=%prefix \
 	--datadir=/share/%name \
 	--mandir=/share/man \
-	--docdir=/share/doc/%name-%version
+	--docdir=/share/doc/%name-%version \
+%if_enabled jsoncpp_bootstrap
+	--no-system-jsoncpp \
+%endif
+	#
 
-
-export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form
+export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
 %make_build VERBOSE=1
 popd
 
 
 %install
 pushd build
-export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form
+export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
 %makeinstall_std
 popd
 #install -m644 ChangeLog.manual %buildroot%_docdir/%name-%version
 mv %buildroot/usr/lib %buildroot%_libdir || :
+%if_enabled jsoncpp_bootstrap
+cp build/Utilities/cmjsoncpp/libcmjsoncpp.so %buildroot%_libdir/
+%endif
+%if_with gui
 for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
+%endif
 mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
 install -m644 Auxiliary/vim/indent/%name.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
@@ -205,15 +224,20 @@ popd
 %_libdir/libcmsys_c.so
 %_datadir/%name/
 %_aclocaldir/*
+%if_enabled docs
 %_man1dir/cmake*.*
 %_man1dir/cpack.*
 %_man7dir/*
+%endif
 %dir %_docdir/%name-%version/
 #_docdir/%name-%version/ChangeLog.manual
 %_docdir/%name-%version/Copyright.txt
 %_docdir/%name-%version/cmcompress/
 %_docdir/%name-%version/cmsys/
 %exclude %_datadir/%name/Modules/
+%if_enabled jsoncpp_bootstrap
+%_libdir/libcmjsoncpp.so
+%endif
 
 %files modules
 %dir %_datadir/%name/
@@ -223,23 +247,30 @@ popd
 %files -n ccmake
 %_bindir/ccmake
 #_libdir/libcmForm.so
+%if_enabled docs
 %_man1dir/ccmake.*
+%endif
 
 
 %files -n ctest
 %_bindir/ctest
 %_libdir/libCTestLib.so
+%if_enabled docs
 %_man1dir/ctest.*
+%endif
 
 
+%if_enabled gui
 %files gui
 %_bindir/cmake-gui
 %_desktopdir/cmake-gui.desktop
 %_xdgmimedir/packages/cmakecache.xml
 %_iconsdir/*/*/*/CMakeSetup.png
 #_pixmapsdir/*
+%endif
 
 
+%if_enabled docs
 %files doc
 %dir %_docdir/%name-%version
 #_docdir/%name-%version/ccmake.*
@@ -247,6 +278,7 @@ popd
 #_docdir/%name-%version/cpack*
 #_docdir/%name-%version/ctest.*
 %_docdir/%name-%version/html
+%endif
 
 
 %files -n vim-plugin-%name
@@ -262,6 +294,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat May 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.13.4-alt2
+- macros: use %%_libsuff macro.
+- spec: add knobs useful for bootstrap.
+
 * Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 3.13.4-alt1
 - new version 3.13.4 (with rpmrb script)
 - treat "No source or binary directory provided" as warning (ALT bug 36051)
