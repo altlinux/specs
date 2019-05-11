@@ -2,11 +2,12 @@
 
 Name: argon2
 Version: 20171227
-Release: alt2
-Group: System/Base
-Summary: The password-hashing tools
+Release: alt3
 
+Summary: The password-hashing tools
 License: Public Domain or ASL 2.0
+Group: System/Base
+
 Url: https://github.com/P-H-C/phc-winner-argon2
 # Git-VCS: https://github.com/P-H-C/phc-winner-argon2.git
 Source: %name-%version.tar
@@ -55,24 +56,29 @@ The lib%name-devel package contains libraries and header files for
 developing applications that use lib%name.
 
 %prep
-%setup -q
+%setup
 
 # Fix pkgconfig file
 sed -e 's:lib/@HOST_MULTIARCH@:%_lib:;s/@UPSTREAM_VER@/%version/' -i lib%name.pc
 
-# Honours default RPM build options and library path, do not use -march=native
+# Honour default RPM build options and library path, do not use -march=native
 sed -e 's:-O3 -Wall:%optflags:' \
     -e '/^LIBRARY_REL/s:lib:%_lib:' \
     -e 's:-march=\$(OPTTARGET) :${CFLAGS} :' \
     -e 's:CFLAGS += -march=\$(OPTTARGET)::' \
     -i Makefile
 
+%ifarch %e2k
+# lcc 1.23's edg frontend can only do numbers here (#4061)
+sed -i 's,"O0",0,' src/core.c
+%endif
+
 %build
 # parallel build is not supported
 %make
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 # Drop static library
 rm %buildroot%_libdir/lib%name.a
@@ -104,6 +110,10 @@ install -Dpm 644 lib%name.pc %buildroot%_pkgconfigdir/lib%name.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat May 11 2019 Michael Shigorin <mike@altlinux.org> 20171227-alt3
+- fixed build with lcc on e2k
+- minor spec cleanup
+
 * Fri Nov 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 20171227-alt2
 - broke tag re-signed
 
