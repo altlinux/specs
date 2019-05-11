@@ -4,25 +4,31 @@
 %define gst_api_ver 1.0
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gupnp
+%def_with gstreamer
+%def_enable gtk_doc
+%def_disable check
 
 Name: libnice
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
 License: LGPLv2+/MPL
-URL: http://nice.freedesktop.org
+Url: http://nice.freedesktop.org
 
 Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
 %define glib_ver 2.48
+%define gi_ver 1.30
 %define tls_ver 2.12.0
 
-BuildRequires: glib2-devel >= %glib_ver gtk-doc libgupnp-igd-devel
-BuildRequires: gst-plugins%gst_api_ver-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: glib2-devel >= %glib_ver
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
+%{?_with_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
+BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgnutls-devel
 
 %description
@@ -111,23 +117,30 @@ for Gstreamer (1.0 API version)
 %build
 %configure \
 	%{subst_enable static} \
+	%{subst_enable gupnp} \
+	%{subst_enable gstreamer} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %_libdir/*.so.*
 %doc AUTHORS ChangeLog NEWS README
 
 %files devel
+%_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-%_includedir/*
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -140,16 +153,20 @@ for Gstreamer (1.0 API version)
 %files gir-devel
 %_girdir/Nice-%api_ver.gir
 
+%if_with gstreamer
 %files -n gst-plugins-nice%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstnice.so
-
 %exclude %_libdir/gstreamer-*/*.la
+%endif
 
 # don't package tools
 %exclude %_bindir/stun*
 
 
 %changelog
+* Sat May 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.16-alt1
+- 0.1.16
+
 * Tue Jan 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.15-alt1
 - 0.1.15
 
