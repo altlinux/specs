@@ -11,16 +11,16 @@
 
 Name: keepalived
 Version: 2.0.15
-Release: alt1
+Release: alt2
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
 Group: Networking/Other
+
 Url: http://www.keepalived.org/software/
 Source0: %url/%name-%version.tar
 Source1: %name.init
-
-Patch2: 0002-update-systemd-unit-file.patch
+Patch: 0002-update-systemd-unit-file.patch
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -43,8 +43,12 @@ an independent VRRPv2 stack to handle director failover. So in short keepalived 
 userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
-%setup -q
-%patch2 -p1
+%setup
+%patch -p1
+%ifarch %e2k
+# lcc 1.23's edg frontend can only do numbers here (#4061)
+sed -i 's,"O0",0,' lib/utils.c
+%endif
 
 %build
 %autoreconf
@@ -80,7 +84,6 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 install -pD -m644 keepalived/%name.service %buildroot%_unitdir/%name.service
 install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfig/%name
 
-
 %preun
 %preun_service keepalived
 
@@ -104,6 +107,10 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Sat May 11 2019 Michael Shigorin <mike@altlinux.org> 2.0.15-alt2
+- fixed build with lcc on e2k
+- minor spec cleanup
+
 * Sun Apr 07 2019 Anton Farygin <rider@altlinux.ru> 2.0.15-alt1
 - 2.0.15
 
