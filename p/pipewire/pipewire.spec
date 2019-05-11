@@ -14,7 +14,7 @@
 
 Name: pipewire
 Version: %ver_major.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -138,8 +138,10 @@ This package contains command line utilities for the PipeWire media server.
 %_pkgconfigdir/lib%name-%api_ver.pc
 %_pkgconfigdir/libspa-%spa_api_ver.pc
 
+%if_enabled docs
 %files libs-devel-doc
 %_datadir/doc/%name/html
+%endif
 
 %files utils
 %_bindir/%name-monitor
@@ -152,6 +154,9 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %changelog
+* Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1.2
+- fixed build without docs
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1.1
 - fixed build without mans
 
