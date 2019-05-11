@@ -4,7 +4,7 @@
 
 Name: perl-Compress-LZ4
 Version: 0.25
-Release: alt1.2
+Release: alt2
 
 Summary: Perl interface to the LZ4 (de)compressor
 
@@ -17,11 +17,16 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
 
+# Do not use bundled lz4 sources
+Patch: Compress-LZ4-0.22-Build-against-system-lz4.patch
+
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Sat Jul 30 2016
 # optimized out: perl python-base python-modules python3
 BuildRequires: perl-Encode
+
+BuildRequires: liblz4-devel
 
 %description
 Perl module Compress::LZ4 provides a Perl interface
@@ -29,6 +34,10 @@ to the LZ4 (de)compressor.
 
 %prep
 %setup -q -n %real_name-%version
+%patch0 -p1
+# Remove bundled lz4
+rm -Rf src
+sed -i -e '/^src\//d' MANIFEST
 
 %build
 %perl_vendor_build
@@ -42,6 +51,9 @@ to the LZ4 (de)compressor.
 %perl_vendor_autolib/Compress/LZ4*
 
 %changelog
+* Sat May 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.25-alt2
+- NMU: build against system lz4 (ALT bug 36390), thanks, Fedora
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1.2
 - rebuild with new perl 5.28.1
 
