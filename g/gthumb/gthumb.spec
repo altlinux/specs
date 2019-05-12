@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_base 3.8
@@ -15,7 +15,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -30,7 +30,6 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: gthumb-3.7.1-alt-pkglibdir.patch
 
 %define glib_ver 2.38.0
 %define gtk_ver 3.10.0
@@ -108,7 +107,6 @@ This package contains headers needed to build extensions for gThumb.
 
 %prep
 %setup
-%patch -b .pkglibdir
 
 %build
 %meson \
@@ -167,6 +165,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun May 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.7.2-alt1
+- updated to 3.7.2-2-ga3cf5b19
+
 * Tue Feb 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt1
 - 3.7.1
 
