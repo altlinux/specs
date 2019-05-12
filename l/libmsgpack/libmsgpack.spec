@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: Binary-based efficient object serialization library
 
@@ -15,15 +15,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Patch: msgpack-fix-int-float-test.patch
 
-# Automatically added by buildreq on Wed Aug 10 2016
-# optimized out: cmake cmake-modules libstdc++-devel openssh-common python-base python-modules python3 python3-base zlib-devel
-BuildRequires: cmake libgtest-devel zlib-devel
-
+BuildRequires: cmake zlib-devel
 BuildRequires: gcc-c++ >= 4.8
 
 # for %%check
-BuildRequires: libgtest-devel
-BuildRequires: zlib-devel
+BuildRequires: ctest libgtest-devel
 
 Provides: %oname = %version-%release
 Obsoletes: %oname
@@ -50,15 +46,15 @@ Libraries and header files for %name
 %__subst "s|/lib|/%_lib|g" CMakeLists.txt
 
 %build
-%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON
 %make_build
 
-#check
-#make check
+%check
+export LD_LIBRARY_PATH=$(pwd)
+%make test
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/*.a
 
 %files
 %doc AUTHORS COPYING ChangeLog LICENSE_1_0.txt NOTICE README README.md
@@ -72,6 +68,10 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/msgpack/
 
 %changelog
+* Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt2
+- enable tests
+- fix cmake static lib issue (use BUILD_SHARED_LIBS)
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1 (with rpmrb script)
 
