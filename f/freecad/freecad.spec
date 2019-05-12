@@ -14,7 +14,7 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -35,7 +35,7 @@ Patch2: %name-build-with-external-smesh.patch
 %endif
 
 # branch releases/FreeCAD-0-17
-Patch3: upstream.patch
+#Patch3: upstream.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -232,6 +232,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Sun May 12 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.2-alt1
+- New version.
+
 * Fri Apr 05 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.1-alt1
 - New version (ALT #36524).
 
