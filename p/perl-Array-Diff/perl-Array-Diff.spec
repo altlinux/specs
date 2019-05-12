@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/Deep.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(threads/shared.pm) perl-podlators
@@ -8,8 +9,8 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 %global rpm49 0
 
 Name:           perl-Array-Diff
-Version:        0.07
-Release:        alt2_28
+Version:        0.09
+Release:        alt1
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -17,8 +18,7 @@ Summary:        Find the differences between two arrays
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/Array-Diff
-Source0:        https://cpan.metacpan.org/authors/id/T/TY/TYPESTER/Array-Diff-%{version}.tar.gz
-Patch0:         Array-Diff-0.07-Fix-building-on-Perl-without-dot-in-INC.patch
+Source0:        http://www.cpan.org/authors/id/N/NE/NEILB/Array-Diff-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -66,7 +66,6 @@ If you need more complex array tools, check Array::Compare.
 
 %prep
 %setup -q -n Array-Diff-%{version}
-%patch0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -82,7 +81,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc --no-dereference LICENSE
+%doc LICENSE
 %else
 %doc LICENSE
 %endif
@@ -91,6 +90,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt1
+- automated CPAN update
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_28
 - update to new release by fcimport
 
