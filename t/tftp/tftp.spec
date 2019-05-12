@@ -6,7 +6,7 @@
 Name: tftp
 %define dname %{name}d
 Version: 5.2
-Release: alt1
+Release: alt2
 Summary: The client for the Trivial File Transfer Protocol (TFTP)
 License: BSD
 Group: Networking/File transfer
@@ -15,6 +15,8 @@ Source0: %url/%name-hpa-%version.tar
 Source1: %name.xinetd.in
 Source2: %dname.init.in
 Source3: %dname.sysconfig.in
+Source4: tftp.service.in
+Source5: tftp.socket
 Patch: %name-%version-%release.patch
 %define sys_user %name
 %define sys_group %name
@@ -97,7 +99,7 @@ This package provides documentation for TFTP client and server.
 install -m 0644 %SOURCE1 ./%name.xinetd.in
 install -m 0644 %SOURCE2 ./%dname.init.in
 install -m 0644 %SOURCE3 ./%dname.sysconfig.in
-
+install -m0644 %SOURCE4  .
 
 %build
 %define _optlevel s
@@ -110,7 +112,7 @@ install -m 0644 %SOURCE3 ./%dname.sysconfig.in
 
 %make_build
 
-for f in %name.xinetd %dname.sysconfig %dname.init; do
+for f in %name.xinetd %dname.sysconfig %dname.init tftp.service; do
     sed 's|@USER@|%sys_user|g;s|@BOOTDIR@|%bootdir|g' $f.in > $f
 done
 
@@ -123,6 +125,8 @@ ln -sf {in.,%buildroot%_sbindir/}%dname
 install -D -m 0640 %name.xinetd %buildroot%_sysconfdir/xinetd.d/%name
 install -D -m 0644 %dname.sysconfig %buildroot%_sysconfdir/sysconfig/%dname
 install -D -m 0755 %dname.init %buildroot%_initdir/%dname
+install -D -m 0644 %name.service %buildroot%_unitdir/%name.service
+install    -m 0644 %SOURCE5 %buildroot%_unitdir/%name.socket
 install -d -m 0755 %buildroot{%bootdir,%_docdir/%name-%version}
 install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
@@ -144,6 +148,7 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
 %files -n %{name}d
+%_unitdir/*
 %_sbindir/*
 %_man8dir/*
 %dir %bootdir
@@ -163,6 +168,9 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Sun May 12 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt2
+- add systemd units
+
 * Fri Sep 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt1
 - 5.2 released
 
