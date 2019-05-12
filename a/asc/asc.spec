@@ -1,30 +1,39 @@
 Name: asc
 Version: 2.6.1.0
-Release: alt1.1
-Group: Games/Strategy
+Release: alt2
+
 License: GPLv2+
+Group: Games/Strategy
+Url: http://www.asc-hq.org/
+
+Summary: ASC - a battle isle clone
 
 # repacked 'https://heanet.dl.sourceforge.net/project/asc-hq/ASC Source/2.6.0/asc-%%version.tar.bz2'
-Source: asc-%{version}.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: asc-%version.tar
 
 Source1: frontiers.ogg
 Source2: machine_wars.ogg
 Source3: time_to_strike.ogg
-URL: http://www.asc-hq.org/
-Summary: ASC - a battle isle clone
 
-# Automatically added by buildreq on Fri Jan 20 2017 (-ba)
-# optimized out: boost-devel-headers elfutils libSDL-devel libgpg-error libstdc++-devel perl pkg-config python-base xz zlib-devel
-BuildRequires: boost-devel bzlib-devel gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libpng-devel libsigc++2-devel libwxGTK-devel libxvid-devel zip
+Source10: %name.desktop
+Source11: %name.png
 
-BuildPreReq: libcurl-devel libogg-devel libxvid-devel
+BuildRequires: boost-program_options-devel bzlib-devel gcc-c++
+BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel
+BuildRequires: libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libsigc++2-devel libwxGTK3.0-devel
+BuildRequires: libcurl-devel libogg-devel libpng-devel libxvid-devel zip
+BuildRequires: desktop-file-utils
 
 %description
 ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series.
 
 %prep
-%setup 
+%setup
 cp %SOURCE1 %SOURCE2 %SOURCE3 data/music/
+# see https://slackbuilds.org/slackbuilds/14.2/games/d2x-rebirth/libphysfs-3.0.1.patch
+%__subst "s|__EXPORT__|PHYSFS_DECL|" source/libs/paragui/src/core/physfsrwops.h
 
 %build
 %autoreconf
@@ -35,13 +44,31 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 %install
 %makeinstall
 
+mkdir -p %buildroot%_desktopdir
+desktop-file-install --dir %buildroot%_desktopdir %SOURCE10
+mkdir -p %buildroot%_iconsdir/hicolor/32x32/apps
+mkdir -p %buildroot%_iconsdir/hicolor/256x256/apps
+install -p -m 644 data/icons/program-icon.png \
+    %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
+install -p -m 644 %SOURCE11 \
+    %buildroot%_iconsdir/hicolor/256x256/apps
+
 %files
-%_gamesdatadir/asc
+%_gamesdatadir/asc/
 %_bindir/asc*
 %_man6dir/*
+%{_datadir}/applications/*%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%_datadir/appdata/asc.appdata.xml
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.6.1.0-alt2
+- fix build with libphysfs-3.0.1 (ALT bug 36549)
+- cleanup BR
+- build with wxWidgets3.0
+- add desktop file and icons (thanks, Fedora)
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1.0-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
