@@ -8,14 +8,14 @@ BuildRequires: perl(experimental.pm) perl(lib/abs.pm) perl(parent.pm) perl(prefo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.9904
+Version: 0.9905
 Release: alt1
 Summary: a tool to scan your Perl code for its prerequisites
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Perl-PrereqScanner-NotQuiteLite-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -30,7 +30,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 scripts for %module_name
 
 %prep
-%setup -q -n Perl-PrereqScanner-NotQuiteLite-%{version}
+%setup -q -n %{module_name}-%{version}
 
 # no need to pull those test deps to Sisyphus:
 # use Acme::CPANAuthors
@@ -81,6 +81,9 @@ rm -f t/unless.t
 %_bindir/*
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.9905-alt1
+- automated CPAN update
+
 * Wed Feb 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.9904-alt1
 - automated CPAN update
 
