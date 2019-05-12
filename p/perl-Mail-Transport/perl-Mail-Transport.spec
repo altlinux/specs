@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Errno.pm) perl(ExtUtils/MakeMaker.pm) perl(Fil
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.003
+Version: 3.004
 Release: alt1
 Summary: Email message exchange
 Group: Development/Perl
@@ -45,6 +45,9 @@ There are various ways to install this module:
 %perl_vendor_privlib/M*
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 3.004-alt1
+- automated CPAN update
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
 - automated CPAN update
 
