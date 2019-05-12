@@ -1,5 +1,5 @@
 Name: perl-Time-Duration
-Version: 1.20
+Version: 1.21
 Release: alt1
 Epoch: 1
 
@@ -37,6 +37,9 @@ durations in rounded or exact terms.
 %perl_vendor_privlib/Time/Duration*
 
 %changelog
+* Sun May 12 2019 Nikolay A. Fetisov <naf@altlinux.org> 1:1.21-alt1
+- New version
+
 * Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1:1.20-alt1
 - New version
 
