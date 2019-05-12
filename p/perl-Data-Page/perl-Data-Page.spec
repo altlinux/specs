@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Data-Page
-Version: 2.02
-Release: alt1.1
+Version: 2.03
+Release: alt1
 
 Summary: %m_name - help when paging through sets of results
 
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Data-Page/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/L/LB/LBROCARD/Data-Page-2.02.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 13 2008 (-bi)
 BuildRequires: perl-Class-Accessor-Chained perl-Module-Build perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-version
@@ -36,7 +36,7 @@ various pages of data. The maths behind this is unfortunately
 fiddly, hence this module.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -45,10 +45,14 @@ fiddly, hence this module.
 %perl_vendor_install
 
 %files
+%doc Changes CONTRIBUTING README
 %perl_vendor_privlib/Data*
-%doc CHANGES README
+%doc README
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
