@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.6.7
+Version: 1.7.0
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -27,6 +27,7 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 Source2: CMakeLists.txt
+Source3: gen_source_list.sh
 
 Patch1: 0001_add-cmake.patch
 Patch3: 0003_qt-plugins.patch
@@ -150,6 +151,8 @@ or business messaging needs.
 %patch18 -p2
 
 cp %SOURCE2 Telegram/
+cp %SOURCE3 .
+./gen_source_list.sh
 # MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
 # remove fonts from resources
@@ -206,6 +209,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
+- new version 1.7.0 (with rpmrb script)
+
 * Thu Apr 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt1
 - new version 1.6.7 (with rpmrb script)
 
