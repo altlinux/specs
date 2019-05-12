@@ -2,7 +2,7 @@
 %define  oname PySocks
 
 Name:    python-module-%modulename
-Version: 1.6.8
+Version: 1.7.0
 Release: alt1
 
 Summary: A SOCKS proxy client and wrapper for Python.
@@ -37,6 +37,9 @@ Source:  %oname-%version.tar
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun May 12 2019 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New version.
+
 * Sun Dec 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.6.8-alt1
 - New version.
 
