@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Panotools-Script
 Name: perl-%dist
-Version: 0.28
-Release: alt2
+Version: 0.29
+Release: alt1
 
 Summary: Panorama Tools scripting
 License: GPLv2+
@@ -10,10 +11,7 @@ Packager: Dmitry Derjavin <dd@altlinux.org>
 Requires: zenity
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BP/BPOSTLE/Panotools-Script-%{version}.tar.gz
-Patch: Panotools-Script-0.28-perl-syntax.patch
-# Restore compatibility with Perl 5.26.0, CPAN RT#117275
-Patch1: Panotools-Script-0.28-Escape-literal-curly-bracket-in-a-regexp.patch
+Source0: http://www.cpan.org/authors/id/B/BP/BPOSTLE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,9 +22,7 @@ A perl module and utilities for reading, writing and manipulating
 hugin script files. http://hugin.sourceforge.net/
 
 %prep
-%setup -q -n %dist-%version
-%patch0 -p1
-%patch1 -p1
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -36,7 +32,7 @@ hugin script files. http://hugin.sourceforge.net/
 #/bin/mv %buildroot%_usr/man/man1 %buildroot%_mandir/
 
 %files
-%doc Changes README
+%doc Changes README doc
 %_bindir/*
 %_man1dir/*
 
@@ -44,6 +40,9 @@ hugin script files. http://hugin.sourceforge.net/
 #%perl_vendor_autolib/Panotools
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2
 - fixed build with new perl 5.26
 
