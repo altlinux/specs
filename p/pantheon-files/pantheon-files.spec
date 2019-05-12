@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 4.1
 %define _name files
@@ -6,16 +6,16 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
 Group: File tools
-Url: https://launchpad.net/pantheon-files
+Url: https://github.com/elementary/%_name
 
 %if_disabled snapshot
-Source: %_name-%version.tar.gz
+Source: %url/archive/%version/%_name-%version.tar.gz
 %else
 #VCS: https://github.com/elementary/files.git
 Source: %_name-%version.tar
@@ -99,6 +99,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Sun May 12 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.8-alt1
+- 4.1.8
+
 * Thu Apr 25 2019 Yuri N. Sedunov <aris@altlinux.org> 4.1.7-alt1
 - updated to 4.1.7-7-g732d80c3
 
