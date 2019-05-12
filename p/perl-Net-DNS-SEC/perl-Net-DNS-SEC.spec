@@ -6,7 +6,7 @@
 %add_findreq_skiplist */perl5/Net/DNS/SEC/EdDSA.pm
 
 Name: perl-%module_name
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: %module_name module for perl
@@ -40,6 +40,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_autolib/Net/DNS
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
