@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.87
+Version: 0.88
 Release: alt1
 
 Summary: Interface to read and parse BibTeX files
@@ -46,6 +46,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %exclude %_includedir/btparse.h
 
 %changelog
+* Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
+- automated CPAN update
+
 * Mon Apr 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.87-alt1
 - automated CPAN update
 
