@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.15
-Release: alt1.git2f79ff3bc6a7ad
+Release: alt2.git2f79ff3bc6a7ad
 
 Summary: System and process monitoring utilities
 License: GPLv2+, LGPLv2+
@@ -24,6 +24,7 @@ Requires: lib%name = %version-%release
 Requires: coreutils >= 0:5.2.1-alt2
 
 BuildRequires: libncursesw-devel
+BuildRequires: libsystemd-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
 
 %define _unpackaged_files_terminate_build 1
@@ -64,11 +65,12 @@ echo -n %version-%release > .tarball-version
 	--exec-prefix=/ \
 	--sbindir=/sbin \
 	--enable-watch8bit \
-	--enable-oomem \
 	--disable-static \
 	--disable-kill \
 	--enable-skill \
 	--disable-nls \
+	--disable-modern-top \
+	--with-systemd \
 	#
 %make_build
 
@@ -110,6 +112,11 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Mon May 13 2019 Mikhail Efremov <sem@altlinux.org> 3.3.15-alt2.git2f79ff3bc6a7ad
+- Enable systemd support.
+- Drop obsoleted configure option.
+- Return to original top defaults.
+
 * Fri Apr 26 2019 Mikhail Efremov <sem@altlinux.org> 3.3.15-alt1.git2f79ff3bc6a7ad
 - pmap: Fix build on i586.
 - top: Update "Protect scat() from buffer overflows" patch.
