@@ -2,7 +2,7 @@
 
 Name: tortoisehg
 Version: 4.9.1
-Release: alt1
+Release: alt2
 
 Summary: Mercurial GUI command line tool thg
 
@@ -92,6 +92,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %endif
 
 %changelog
+* Mon May 13 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt2
+- Update russian localization.
+
 * Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
 - Build new version.
 
