@@ -6,7 +6,7 @@
 Summary: Convolution engine library
 Name: zita-convolver
 Version: 4.0.0
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Sound
 Url: http://kokkinizita.linuxaudio.org/
@@ -43,8 +43,14 @@ contains libraries and header files for developing applications that use
 # No need to call ldconfig during packaging
 %__subst '\|ldconfig|d' libs/Makefile
 
+# Preserve timestamps
+%__subst 's|install |install -p |' libs/Makefile
+
+# Fix optflags
+%__subst 's|-march=native|%optflags|' libs/Makefile
+
 %build
-%make_build -C libs
+%make_build -C libs PREFIX=%prefix
 
 %install
 %makeinstall_std -C libs PREFIX=%prefix LIBDIR=%_lib
@@ -61,6 +67,9 @@ ln -s lib%name.so.%version %buildroot%_libdir/lib%name.so.%sover
 %_libdir/lib%name.so
 
 %changelog
+* Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt2
+- fix optflags (Closes: 36660)
+
 * Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 
