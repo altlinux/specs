@@ -6,7 +6,7 @@
 
 Name:    clamav-db-%dbname
 Version: 20170608
-Release: alt1
+Release: alt2
 
 Summary: Antivirus database for ClamAV (%dbname)
 Summary(ru): Антивирусная база для ClamAV (%dbname)
@@ -27,6 +27,8 @@ Obsoletes: clamav-db < %EVR
 # Requires other databases
 Requires:  clamav-db-daily
 Requires:  clamav-db-bytecode
+Provides:  clamav-db-safebrowsing = %EVR
+Obsoletes: clamav-db-safebrowsing < %EVR
 
 %description
 Database %dbname.cvd for ClamAV virus scanner.
@@ -56,6 +58,9 @@ test "$(md5sum "%buildroot%sys_db/%dbname.cvd" | cut -f1 -d' ')" = "%checksum"
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Mon May 13 2019 Andrey Cherepanov <cas@altlinux.org> 20170608-alt2
+- Obsoletes clamav-db-safebrowsing.
+
 * Fri May 10 2019 Andrey Cherepanov <cas@altlinux.org> 20170608-alt1
 - Update database.
 - Remove clamav-db-safebrowsing requirement for clamav-db.
