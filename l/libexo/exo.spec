@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.12.4
+Version: 0.12.5
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -66,7 +66,7 @@ useful for compiling texts or other data directly into programs.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-PreReq: %name = %version-%release  libxfce4util-devel > 4.5
+Requires: %name = %version-%release  libxfce4util-devel > 4.5
 Requires: %_name-csource = %version-%release
 
 %description devel
@@ -98,7 +98,7 @@ This is a GTK+3 version.
 %package devel-doc
 Summary: Documentation files for %name
 Group: Development/Documentation
-PreReq: %name-devel = %version-%release
+Requires: %name-devel = %version-%release
 BuildArch: noarch
 
 %description devel-doc
@@ -117,6 +117,7 @@ This package contains documentation files required for packaging
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
+	--enable-gtk2 \
 	--enable-gtk-doc \
 	--enable-debug=minimum
 
@@ -141,7 +142,7 @@ make check
 %exclude %_datadir/xfce4/helpers/debian-*.desktop
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/*
-%_pixmapsdir/%_name-*/
+%_pixmapsdir/%_name/
 
 %files -n %_name-utils
 %_bindir/*
@@ -171,6 +172,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Mon May 13 2019 Mikhail Efremov <sem@altlinux.org> 0.12.5-alt1
+- Don't use deprecated PreReq.
+- Updated to 0.12.5.
+
 * Mon Jan 21 2019 Mikhail Efremov <sem@altlinux.org> 0.12.4-alt1
 - Updated to 0.12.4.
 
