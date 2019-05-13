@@ -2,7 +2,7 @@
 
 Name: SFML
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -31,16 +31,20 @@ BuildRequires: libudev-devel
 BuildRequires: libvorbis-devel
 
 %description
-SFML is a simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing, graphics, audio and network.
-It is written in C++, and has bindings for various languages such as C, .Net, Ruby, Python.
+SFML is a simple, fast, cross-platform and object-oriented multimedia
+API. It provides access to windowing, graphics, audio and network.
+It is written in C++, and has bindings for various languages such as C,
+.Net, Ruby, Python.
 
 %package -n lib%name%soversion
 Summary: Simple and Fast Multimedia Library
 Group: System/Libraries
 
 %description -n lib%name%soversion
-SFML is a simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing, graphics, audio and network.
-It is written in C++, and has bindings for various languages such as C, .Net, Ruby, Python.
+SFML is a simple, fast, cross-platform and object-oriented multimedia
+API. It provides access to windowing, graphics, audio and network.
+It is written in C++, and has bindings for various languages such as C,
+.Net, Ruby, Python.
 
 %package -n lib%name-devel
 Summary: Development files for SFML
@@ -50,21 +54,23 @@ Conflicts: libsfml-devel
 
 %description -n lib%name-devel
 Contains libraries and header files for
-developing applications that use SFML
+developing applications that use SFML.
 
 %prep
 %setup
 
 %build
-%__mkdir_p %_target_platform
+mkdir -p %_target_platform
 pushd %_target_platform
 
 cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-%ifarch x86_64 aarch64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX="64" \
+%else
+	-DLIB_SUFFIX="" \
 %endif
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
@@ -76,7 +82,7 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__rm -rf %buildroot%_datadir/%name/{license,readme}.md
+rm -rf %buildroot%_datadir/%name/{license,readme}.md
 
 %files -n lib%name%soversion
 %doc changelog.md license.md readme.md
@@ -89,6 +95,10 @@ popd
 %_libdir/cmake/%name/%{name}*.cmake
 
 %changelog
+* Mon May 13 2019 Michael Shigorin <mike@altlinux.org> 2.5.1-alt2
+- fixed build on 64-bit platforms
+- minor spec cleanup
+
 * Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 2.5.1-alt1
 - Version 2.5.1
 
