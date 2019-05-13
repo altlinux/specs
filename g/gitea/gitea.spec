@@ -1,7 +1,7 @@
 %global import_path code.gitea.io/gitea
 
 Name:    gitea
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -73,6 +73,10 @@ useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 %doc *.md
 
 %changelog
+* Mon May 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Build new version.
+- Changed config file.
+
 * Tue Apr 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
 - Build new version.
 - Changed config file.
