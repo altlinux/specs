@@ -13,8 +13,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q2.1
-Release: alt1
+Version: 2019.Q2.3
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -26,7 +26,7 @@ Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
-BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel
+BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 %endif
@@ -37,6 +37,8 @@ Source2: llpc.tar.xz
 Source3: spvgen.tar.xz
 Source4: llvm.tar.xz
 Source5: amd_icd.json
+
+Patch: spvgen-alt-shared.patch
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -49,6 +51,9 @@ AMD developer tools.
 
 %prep
 %setup -n xgl -b0 -b1 -b2 -b3 -b4
+pushd %_builddir/spvgen
+%patch -p2
+popd
 
 %build
 # build amdvlk.so
@@ -81,6 +86,17 @@ install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon May 13 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.3-alt2
+- spvgen: fix build.
+
+* Mon May 13 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.3-alt1
+- 2019-05-12 update:
+  + xgl: eaecf6b9ad7bc3d310e752528f84fd52fba23747
+  + pal: fb9a4dc951c0afd737460b26afb716c96e966b77
+  + llpc: fdd5e24be2d9031ab685690cad1c9259d96518f6
+  + llvm: f41e1a873108a371ae5574d518c1ee6eb3814cee
+- json: bump vulkan version.
+
 * Mon Apr 15 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.1-alt1
 - 2019-4-10 update:
   + xgl: 5b4058dc288a25f6554fcc61f80bf3f27eb35d8d
