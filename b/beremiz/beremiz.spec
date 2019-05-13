@@ -1,9 +1,9 @@
 %python_req_hier
 
-%def_with docs
+%def_with doc
 Name: beremiz
 Version: 1.2
-Release: alt4.20190221
+Release: alt5.20190221
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -29,9 +29,9 @@ Patch2: BACnet-PATH.patch
 Buildarch: noarch
 BuildPreReq: rpm-build-python dos2unix desktop-file-utils
 
-%if_with docs
+%if_with doc
 BuildRequires(pre): rpm-macros-sphinx python-module-sphinx
-%endif #docs
+%endif #doc
 
 Requires: python-module-%name = %EVR
 Requires: python-module-%name-tests = %EVR
@@ -111,12 +111,12 @@ sed 's|/usr/bin/env python|%_bindir/python|g' -i *.py
 find . -type f -print0 | xargs -0 dos2unix
 
 %build
-%if_with docs
+%if_with doc
 pushd doc
 make html
 make man
 popd
-%endif #docs
+%endif #doc
 
 %install
 mkdir -p %buildroot%python_sitelibdir/%name
@@ -129,11 +129,11 @@ mkdir -p %buildroot%_docdir/%name-%version
 mv %buildroot%python_sitelibdir/%name/COPYING* %buildroot%_docdir/%name-%version
 mv %buildroot%python_sitelibdir/%name/README.md %buildroot%_docdir/%name-%version
 
-%if_with docs
+%if_with doc
 cp -r doc/_build/html/* %buildroot%_docdir/%name-%version
 mkdir -p %buildroot%_man1dir
 cp -r doc/_build/man/*.1 %buildroot%_man1dir
-%endif #docs
+%endif #doc
 
 ## == install icons
 mkdir -p %buildroot/%_miconsdir
@@ -246,7 +246,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %_liconsdir/*.png
 %_desktopdir/*.desktop
 %_docdir/%name-%version
+%if_with doc
 %_man1dir/*.1.*
+%endif #doc
 
 %files -n python-module-%name
 %python_sitelibdir/%name
@@ -256,6 +258,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt5.20190221
+- fix build without doc
+
 * Wed Apr 03 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt4.20190221
 - New snapshot
 
