@@ -1,7 +1,7 @@
 %define sover 0
 Name: tamu_anova
 Version: 0.2
-Release: alt3
+Release: alt3.qa1
 Summary: ANOVA Extensions to the GNU Scientific Library
 License: GPL v2
 Group: Sciences/Other
@@ -52,6 +52,7 @@ This package contains development files of TAMU ANOVA.
 %prep
 %setup
 %patch1 -p1
+sed -e 's@instdir = /usr/lib/@instdir = %_libdir@' -i Makefile.am
 
 %build
 ./autogen.sh
@@ -61,11 +62,6 @@ This package contains development files of TAMU ANOVA.
 
 %install
 %makeinstall_std
-
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
 
 pushd %buildroot%_libdir
 LIB=libtamuanova
@@ -85,6 +81,9 @@ popd
 %_infodir/*
 
 %changelog
+* Mon May 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt3.qa1
+- Fixed build on architectures with %%_libdir != /usr/lib .
+
 * Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt3
 - Rebuilt with new libgsl.
 
