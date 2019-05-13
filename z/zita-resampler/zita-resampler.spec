@@ -6,7 +6,7 @@
 Summary: Fast, high-quality sample rate conversion library
 Name: zita-resampler
 Version: 1.6.2
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Sound
 Url: http://kokkinizita.linuxaudio.org/linuxaudio/zita-resampler/resampler.html
@@ -51,17 +51,20 @@ This package contains the headers and development libraries for %name.
 %prep
 %setup
 %patch0 -p1 -b .destdir
-sed 's|ldconfig||' -i source/Makefile
+
+# To make sure to have the correct specific flags:
+sed -i -e 's|-O[23]|%optflags -I../source|' -e 's|ldconfig||' -e 's|-march=native||' source/Makefile
+sed -i -e 's|-O[23]|%optflags -I../source|' -e 's|-march=native||' apps/Makefile
 
 %build
+export LDFLAGS="-L../source"
 %ifarch %ix86 x86_64
-export CXXFLAGS+='%optflags -mno-avx -fpic'
+export CXXFLAGS+='-mno-avx'
 %endif
 %make_build -C source
 
 ln -sf libzita-resampler.so.%version source/libzita-resampler.so
-export LDFLAGS="-L../source"
-%make_build -C apps CXXFLAGS+=-I../source
+%make_build -C apps
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir -C source
@@ -84,6 +87,9 @@ export LDFLAGS="-L../source"
 %_libdir/lib%name.so
 
 %changelog
+* Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt3
+- Fix optflags
+
 * Sun Jan 20 2019 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt2
 - compilation with avx breaks work of package with older or lower
 Intel CPUs such as Atom. Recompilation with avx disabled
