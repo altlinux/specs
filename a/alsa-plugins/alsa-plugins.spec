@@ -1,7 +1,7 @@
 Name: alsa-plugins
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
 License: LGPL
@@ -66,6 +66,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Mon May 13 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.9-alt1
+- 1.1.9
+
 * Thu Jan 24 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.8-alt1
 - 1.1.8
 
