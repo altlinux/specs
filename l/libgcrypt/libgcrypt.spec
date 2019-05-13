@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.8.4
-Release: alt1
+Release: alt2
 
 %define soname %{name}%{soversion}
 
@@ -18,9 +18,11 @@ URL: http://www.gnupg.org/
 
 Source: %name-%version.tar
 
+Patch0: libgcrypt-1.8.4-fix-overflow-streebog.patch
+
 # GOST patch
 %define vkoversion 1.0.0
-Patch0: %name-%version-vko-%vkoversion.patch
+Patch1: %name-%version-vko-%vkoversion.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
@@ -93,6 +95,7 @@ Static libraries for the %name-devel package
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %if_enabled info_nogen
 sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
 sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
@@ -164,6 +167,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Mon May 13 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.4-alt2
+- Added patch fixing carry overflow in Stribog 512-bit addition.
+
 * Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.4-alt1
 - Freshed up to version 1.8.4.
 
