@@ -1,6 +1,6 @@
 Name: gmp
 Version: 6.1.2
-Release: alt2
+Release: alt3
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -146,6 +146,7 @@ __gmpn_bdiv_qr
 __gmpn_bdiv_qr_itch
 __gmpn_broot
 __gmpn_brootinv
+__gmpn_clz_tab
 __gmpn_cpuvec
 __gmpn_cpuvec_init
 __gmpn_cpuvec_initialized
@@ -260,6 +261,10 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Mon May 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.2-alt3
+- Made __gmpn_clz_tab symbol visible to fix testsuite (on at least
+  riscv64 architecture).
+
 * Thu Apr 13 2017 Anton Farygin <rider@altlinux.ru> 6.1.2-alt2
 - Enabled visibility for __gmpn_divexact, which is used in ocaml-zarith.
 
