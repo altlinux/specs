@@ -29,7 +29,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.19.3
+Version: 3.19.5
 Release: alt1
 %if_without ernie
 License: GPLv2+ and MIT and BSD
@@ -186,7 +186,6 @@ Patch131: hplip-use-binary-str.patch
 Patch132: hplip-colorlaserjet-mfp-m278-m281.patch
 Patch133: hplip-error-print.patch
 Patch134: hplip-hpfax-importerror-print.patch
-Patch135: hplip-wifisetup.patch
 # end fedora patches
 
 # ubuntu patches
@@ -349,13 +348,6 @@ models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains common libraries for
 The Hewlett-Packard  Inkjet  Driver  Project.
-
-%description
-This is the HP driver package to supply Linux support for most
-Hewlett-Packard DeskJet, LaserJet, PSC, OfficeJet, and PhotoSmart
-printers and all-in-one peripherals (also known as Multi-Function
-Peripherals or MFPs), which can print, scan, copy, fax, and/or access
-flash memory cards.
 
 %if_enabled PPDs
 %package PPDs
@@ -602,7 +594,6 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 
 %patch133 -p1 -b .error-print-fix
 %patch134 -p1 -b .hpfax-import-error-print
-%patch135 -p1 -b .wifisetup-bad-call-fix
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -1179,10 +1170,34 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.5-alt1
+- New version.
+- Added support for new printers:
+  + HP LaserJet Enterprise M507n
+  + HP LaserJet Enterprise M507dn
+  + HP LaserJet Enterprise M507x
+  + HP LaserJet Enterprise M507dng
+  + HP LaserJet Managed E50145dn
+  + HP LaserJet Managed E50145x
+  + HP LaserJet Enterprise MFP M528dn
+  + HP LaserJet Enterprise MFP M528f
+  + HP LaserJet Enterprise Flow MFP M528c
+  + HP LaserJet Enterprise Flow MFP M528z
+  + HP LaserJet Managed MFP E52645dn
+  + HP LaserJet Managed Flow MFP E52645c
+  + HP Color LaserJet Managed E75245dn
+  + HP Color LaserJet Enterprise M751n
+  + HP Color LaserJet Enterprise M751dn
+  + HP PageWide XL 3900PS MFP
+  + HP OfficeJet Pro 8030 All-in-One Printer series
+  + HP OfficeJet Pro 8020 All-in-One Printer series
+  + HP OfficeJet 8020 All-in-One Printer Series
+  + HP OfficeJet 8010 All-in-One Printer series
+
 * Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.3-alt1
 - New version.
 - Added support for new printers:
-  + HP OfficeJet Pro All-in-One 9010 
+  + HP OfficeJet Pro All-in-One 9010
   + HP OfficeJet Pro All-in-One 9020
   + HP OfficeJet All-in-One 9010
   + HP PageWide XL 4100 Printer
