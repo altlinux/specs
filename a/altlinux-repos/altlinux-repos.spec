@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Tue May 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9-alt1
+- Added p9 branch.
+
 * Fri Aug 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8-alt1
 - Added mirror.cs.msu.ru mirror (ALT#33802).
 
@@ -37,7 +40,7 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 - Added mirror.datacenter.by mirror.
 
 * Wed Jun 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6-alt1
-- Droped ibiblio.org mirror.
+- Dropped ibiblio.org mirror.
 - Moved vendors.list.d/alt.list from apt-conf-{branch,sisyphus}.
 
 * Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt1
