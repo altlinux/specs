@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: A library of shell functions
@@ -80,6 +80,12 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Tue May 14 2019 Alexey Gladkov <legion@altlinux.org> 0.4.7-alt1
+- Other changes:
+  + shell-temp: Add docs
+  + shell-git-config: Add functions to store values in memory
+  + shell-temp: Turn off verbose
+
 * Thu Apr 04 2019 Alexey Gladkov <legion@altlinux.ru> 0.4.6-alt1
 - New utilities:
   + shell-temp: New library to simplify creation of temporary
