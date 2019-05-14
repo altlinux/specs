@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.15.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -27,8 +27,6 @@ Source10: 01-plasma-nm.js
 Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 Patch13: alt-explain-password-request.patch
-# https://phabricator.kde.org/D20788
-Patch14: alt-reset-model.patch
 
 # Automatically added by buildreq on Tue Mar 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -213,7 +211,6 @@ Requires: wireguard-tools
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 cat %SOURCE1 >> po/ru/plasmanetworkmanagement-kded.po
 
@@ -297,6 +294,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_wireguardui.desktop
 
 %changelog
+* Tue May 07 2019 Oleg Solovyov <mcpain@altlinux.org> 1:5.15.4-alt2
+- password dialog: validate wireless keys
+
 * Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt1
 - new version
 
