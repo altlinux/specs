@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.3.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -143,6 +143,9 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Tue May 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0-alt2
+- puppetserver config path fixed
+
 * Wed May 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0-alt1
 - Version updated to 6.3.0
 
