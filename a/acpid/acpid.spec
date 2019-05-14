@@ -1,5 +1,5 @@
 Name: acpid
-Version: 2.0.22
+Version: 2.0.31
 Release: alt1
 Epoch: 1
 Summary: ACPI kernel daemon and control utility
@@ -13,6 +13,7 @@ PreReq: sysvinit-utils
 Source0: %name-%version.tar.xz
 Source1: %name.init
 Source2: %name.service
+Source3: %name.socket
 
 %description
 The ACPI specification defines power and system management functions
@@ -43,6 +44,7 @@ Power event config for acpid
 
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 install -pD -m644 %SOURCE2 %buildroot%systemd_unitdir/acpid.service
+install -pD -m644 %SOURCE3 %buildroot%systemd_unitdir/acpid.socket
 
 mkdir -p %buildroot%_sysconfdir/acpi/events
 cat << __EOF__ > %buildroot%_sysconfdir/acpi/events/power
@@ -56,9 +58,6 @@ ACPID_ARGS="-n"
 __EOF__
 
 %post
-if pidof %name >/dev/null 2>&1; then
-	[ -f %_var/run/%name.pid ] || pidof %name > %_var/run/%name.pid
-fi
 %post_service %name
 
 %preun
@@ -70,7 +69,7 @@ fi
 %dir %_sysconfdir/acpi/events
 %config(noreplace) %_sysconfdir/sysconfig/acpid
 %_initdir/%name
-%systemd_unitdir/acpid.service
+%systemd_unitdir/acpid.*
 %_bindir/*
 %_sbindir/*
 %_man8dir/*.8*
@@ -79,6 +78,9 @@ fi
 %config(noreplace) %_sysconfdir/acpi/events/power
 
 %changelog
+* Tue May 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.31-alt1
+- 2.0.31
+
 * Wed Mar 19 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.22-alt1
 - 2.0.22
 
