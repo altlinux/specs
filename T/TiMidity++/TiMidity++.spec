@@ -2,8 +2,8 @@
 %define _name timidity
 
 Name: TiMidity++
-Version: 2.14.0
-Release: alt7%prerel.qa2
+Version: 2.15.0
+Release: alt1
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -15,9 +15,28 @@ Source1: timidity.init
 Source2: timidity.sysconfig
 Source3: timidity.desktop
 Source100: TiMidity++.watch
+
+# ALT patches
 Patch0: TiMidity++-2.13.0-alt-config.patch
 Patch4: TiMidity++-2.14.0-tcltk-link.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+
+# Debian patches
+# 0002-improve-error-message.patch
+Patch100: TiMidity++-deb-improve-error-message.patch
+# 0004-Fix-off-by-one-crash-error-in-panning-reverb.patch
+Patch101: TiMidity++-deb-fix-off-by-one-crash-error-in-panning-reverb.patch
+# 0006-Don-t-crash-when-started-in-daemon-mode.patch
+Patch102: TiMidity++-deb-don-t-crash-when-started-in-daemon-mode.patch
+# 0010-Pass-LDFLAGS-to-addon-linking.patch
+Patch103: TiMidity++-deb-pass-ldflags-to-addon-linking.patch
+# 0011-Fix-spelling-errors-found-by-lintian.patch
+Patch104: TiMidity++-deb-fix-spelling-errors-found-by-lintian.patch
+
+# SUSE patches
+Patch200: TiMidity++-suse-fix-alsaseq-polling-at-idle-time.patch
+Patch201: TiMidity++-suse-timidity-no-date.patch
+Patch202: TiMidity++-suse-timidity-readmidi-zero-division-fix.patch
+Patch203: TiMidity++-suse-timidity-resample-frac-overflow-fix.patch
 
 %define tcl_ver 8.4.0-alt1
 %define tk_ver 8.4.0-alt1
@@ -68,6 +87,15 @@ timidity-eaw-patches.
 %setup -n %name-%version%prerel
 %patch0 -p1
 %patch4 -p2
+%patch100 -p2
+%patch101 -p2
+%patch102 -p2
+%patch103 -p2
+%patch104 -p2
+%patch200 -p1
+%patch201 -p0
+%patch202 -p1
+%patch203 -p1
 cp -a INSTALL INSTALL.orig
 
 %build
@@ -123,6 +151,10 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Tue May 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.15.0-alt1
+- 2.15.0.
+- Applied patches from Debian and SUSE projects.
+
 * Thu Feb 28 2019 Dmitry V. Levin <ldv@altlinux.org> 2.14.0-alt7.qa2
 - NMU: updated build dependencies, built with libpng16.so.16.
 
