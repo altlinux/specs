@@ -5,7 +5,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 7.2.1
+Version: 7.2.2
 Release: alt1
 
 Summary: DHCP Client
@@ -15,8 +15,6 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-# Patch from https://roy.marples.name/archives/dhcpcd-discuss/0002418.html
-Patch1: dhcpcd-bpf.patch
 
 AutoReq: yes, noshell
 
@@ -38,7 +36,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %add_optflags -fpie
@@ -94,6 +91,10 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Tue May 14 2019 Mikhail Efremov <sem@altlinux.org> 1:7.2.2-alt1
+- Drop obsoleted patch.
+- Updated to 7.2.2.
+
 * Mon Apr 29 2019 Mikhail Efremov <sem@altlinux.org> 1:7.2.1-alt1
 - Patch drom upstream:
   + Fix BPF buffer overflow.
