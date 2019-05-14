@@ -4,7 +4,7 @@
 
 Name:           dd_rescue
 Version:        1.99.8
-Release:        alt1
+Release:        alt2
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPL+
@@ -13,6 +13,8 @@ URL:            http://www.garloff.de/kurt/linux/ddrescue/
 Source:         %name-%version.tar
 # http://www.kalysto.org/pkg/dd_rhelp-%{rhelp_version}.tar.gz
 Source1:        dd_rhelp-%{rhelp_version}.tar
+
+Patch1: dd_rescue-%version-alt.patch
 
 BuildRequires: autoconf
 BuildRequires: libacl-devel libattr-devel
@@ -29,6 +31,8 @@ recovery.
 %prep
 %setup
 %setup -a 1 -D -T
+
+%patch1 -p1
 
 %build
 %make RPM_OPT_FLAGS="%{optflags}" %{?_smp_mflags} LIBDIR=%{_libdir}
@@ -53,6 +57,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzo.1*
 
 %changelog
+* Mon May 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.99.8-alt2
+- Fixed build for aarch64.
+
 * Fri May 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.99.8-alt1
 - Updated to upstream version 1.99.8.
 
