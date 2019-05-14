@@ -1,19 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    6.2.1
+Version:    6.3.0
 Release:    alt1
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
-
 Url:        https://github.com/puppetlabs/puppetserver
 
 BuildArch:  noarch
 
 Source: %name-%version.tar
-Patch0: fix-ruby-path.patch
 
 BuildPreReq: /proc
 BuildPreReq: rpm-build-java
@@ -35,8 +33,6 @@ control over the Ruby runtime.
 
 %prep
 %setup
-
-%patch -p0
 
 %install
 install -d -m 0755 %buildroot%_datadir/%name
@@ -147,6 +143,9 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Wed May 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0-alt1
+- Version updated to 6.3.0
+
 * Fri Mar 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.1-alt1
 - Version updated to 6.2.1
 
