@@ -1,5 +1,5 @@
 Name: arandr
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: Screen layout editor for xrandr 1.4 (Another XRandR gui)
@@ -14,11 +14,10 @@ Source: http://christian.amsuess.com/tools/arandr/files/%name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Mar 10 2013
-# optimized out: python-base python-devel python-module-BeautifulSoup python-module-OpenSSL python-module-Pygments python-module-distribute python-module-docutils python-module-flup python-module-genshi python-module-gevent python-module-geventutil python-module-greenlet python-module-html5lib python-module-imaging python-module-lxml python-module-odfpy python-module-py python-module-pygobject3 python-module-pyparsing python-module-qserve python-module-serial python-module-simplejson python-module-tempita python-module-timelib python-module-twisted-core python-module-webob python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-tkinter python-modules-wsgiref
-BuildRequires: python-module-mwlib python-module-paste
 
-BuildPreReq: python-module-docutils
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-paste
+BuildRequires: python3-module-docutils
 
 %description
 Provide a simple visual front end for XRandR 1.4, client
@@ -51,22 +50,26 @@ Features
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 %find_lang %name
 
 %files -f %name.lang
 %doc NEWS README TODO
 %_bindir/%name
 %_bindir/unxrandr
-%python_sitelibdir/screenlayout
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/screenlayout
+%python3_sitelibdir/*.egg-info
 %_desktopdir/arandr.desktop
 %_man1dir/*
 
 %changelog
+* Tue May 14 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.10-alt1
+- new version 0.1.10 (with rpmrb script)
+- switch to python3
+
 * Sat May 14 2016 Terechkov Evgenii <evg@altlinux.org> 0.1.9-alt1
 - 0.1.9
 
