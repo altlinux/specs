@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.6.2
+Version: 3.6.3
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -52,7 +52,6 @@ install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/au
 rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 
 %find_lang %name
-echo "%_datadir/locale/zh_Hant/LC_MESSAGES/guake.mo" >> %name.lang
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=System \
@@ -72,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt1
+- New version.
+
 * Thu May 02 2019 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
 - New version.
 
