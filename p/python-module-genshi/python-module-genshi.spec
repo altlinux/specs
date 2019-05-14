@@ -1,7 +1,7 @@
 %def_with python3
 
 Version: 0.7
-Release: alt1.1.1.1
+Release: alt2
 %setup_python_module genshi
 
 Name: python-module-genshi
@@ -49,6 +49,7 @@ This package contains tests for Genshi.
 Summary: A toolkit for stream-based generation of output for the web (Python 3)
 Group: Development/Python
 %add_python3_req_skip compiler
+%add_python3_req_skip compiler.ast
 
 %description -n python3-module-genshi
 Genshi is a Python library that provides an integrated set of
@@ -149,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Tue May 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7-alt2
+- Added compiler.ast to skip python3 autoreq generator list.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
