@@ -1,22 +1,23 @@
 Name:           pymol
-Version:        1.8.6.0
+Version:        2.3.0
 Release:        alt1
 Summary:        Python-enhanced molecular graphics tool
 Group:          Sciences/Chemistry
 License:        CNRI Python License
 URL:            http://www.pymol.org/
-# https://pymol.svn.sourceforge.net/svnroot/pymol
 
-Source:        %name-%version.tar
-Source1:			 http://pymolwiki.org/images/7/77/PymolRef.pdf
+# Source-url: https://github.com/schrodinger/pymol-open-source/archive/v%version.tar.gz
+Source:         %name-%version.tar
+Source1:        http://pymolwiki.org/images/7/77/PymolRef.pdf
 
 Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: libGLU-devel python-module-OpenGL libpng-devel tk-devel gcc-c++
+BuildRequires: libGLU-devel python-module-OpenGL libpng-devel gcc-c++
 BuildRequires: libnumpy-devel libfreetype-devel libGLUT-devel
-BuildRequires: python-devel libGLEW-devel
-BuildRequires: libxml2-devel libmsgpack-devel
+BuildRequires: python-devel libGLEW-devel libglm-devel
+BuildRequires: libxml2-devel libmsgpack-devel libmmtf-devel
+BuildRequires: qt5-base-devel
 
 %description
 PyMOL is a Python-enhanced molecular graphics tool. It excels at 3D
@@ -109,7 +110,7 @@ mkdir -pv %buildroot%_docdir/PyMOL
 cp PymolRef.pdf %buildroot%_docdir/PyMOL/
 
 %files
-%doc ChangeLog AUTHORS README LICENSE COPYING
+%doc ChangeLog AUTHORS README LICENSE
 %_bindir/*
 
 %files devel
@@ -119,10 +120,10 @@ cp PymolRef.pdf %buildroot%_docdir/PyMOL/
 
 %files -n python-module-%name
 %python_sitelibdir/*.egg-info
-%python_sitelibdir/pmg_wx
+%python_sitelibdir/pmg_qt
 %python_sitelibdir/pymol
 %python_sitelibdir/pymol2
-%python_sitelibdir/web/pymolhttpd.py*
+#python_sitelibdir/web/pymolhttpd.py*
 %exclude %python_sitelibdir/pymol/pymol_path/test
 
 %files -n python-module-chempy
@@ -135,6 +136,9 @@ cp PymolRef.pdf %buildroot%_docdir/PyMOL/
 %_docdir/PyMOL
 
 %changelog
+* Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version (2.3.0) with rpmgs script
+
 * Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.6.0-alt1
 - Updated to upstream version 1.8.6.0.
 
