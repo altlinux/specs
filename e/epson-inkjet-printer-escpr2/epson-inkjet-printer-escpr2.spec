@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr2
-%define ver     1.0.32
+%define ver     1.0.33
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -37,7 +37,7 @@ Version: %{ver}
 Release: alt1
 License: LGPL and SEIKO EPSON CORPORATION SOFTWARE LICENSE AGREEMENT
 URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
-# Open URL and search "WF-M5799"
+# Open http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=WF-M5799
 Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver 2 (ESC/P-R) for Linux
 
@@ -79,6 +79,15 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.33-alt1
+- New version.
+- Supported new models:
+  + Epson PX-M270FT Series
+  + Epson PX-M270T Series
+  + Epson PX-M885F
+  + Epson PX-S270T Series
+  + Epson PX-S885
+
 * Mon Apr 15 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.32-alt1
 - New version.
 - Supported new models:
