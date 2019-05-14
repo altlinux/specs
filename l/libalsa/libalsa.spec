@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.1.9
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -130,6 +130,8 @@ __EOF__
 
 install -d %buildroot%_localstatedir/alsa
 
+%define _unpackaged_files_terminate_build 1
+
 %pre
 [ ! -f %modutils_oss ] || {
 	grep -q "^above snd-" %modules_conf && {
@@ -165,6 +167,7 @@ done
 %files devel
 %_includedir/sys/*
 %_includedir/alsa
+%_includedir/asoundlib.h
 %_libdir/*.so
 %_pkgconfigdir/alsa.pc
 %_datadir/aclocal/*
@@ -180,6 +183,11 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue May 14 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.9-alt2
+- NMU.
+- Packaged %_includedir/asoundlib.h introduced in 1.1.9 to fix builds
+  of packages that use asoundlib.h header file.
+
 * Mon May 13 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.9-alt1
 - 1.1.9
 
