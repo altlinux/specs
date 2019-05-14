@@ -2,7 +2,7 @@
 
 Name: keepass
 Version: 2.42.1
-Release: alt1
+Release: alt2
 
 Summary: Password manager
 
@@ -34,6 +34,7 @@ BuildRequires: python-module-pychm
 %endif
 Requires: mono-winforms >= 5.0.0.0
 Requires: xdotool
+Requires: xsel
 
 # The debuginfo package would be empty if created.
 %global debug_package %nil
@@ -124,6 +125,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Tue May 14 2019 Oleg Solovyov <mcpain@altlinux.org> 2.42.1-alt2
+- require xsel
+
 * Mon May 06 2019 Oleg Solovyov <mcpain@altlinux.org> 2.42.1-alt1
 - new version: 2.42.1
 
