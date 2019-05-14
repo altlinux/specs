@@ -1,8 +1,9 @@
 %def_disable snapshot
 
-%define _name gtk+
-%define ver_major 3.94
-%define api_ver 4.0
+%define _name gtk
+%define ver_major 3.96
+%define api_ver_major 4
+%define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
 %define _libexecdir %_prefix/libexec
 
@@ -19,14 +20,15 @@
 %def_enable cloudprint
 %def_enable cloudproviders
 %def_enable vulkan
-%def_enable install_tests
+# File box-packing.ltr.nodes does not exist
+%def_disable install_tests
 %def_disable check
 
-Name: libgtk+4
+Name: lib%_name%api_ver_major
 Version: %ver_major.0
 Release: alt1
 
-Summary: The GIMP ToolKit (GTK+)
+Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
 License: %lgpl2plus
 Url: http://www.gtk.org
@@ -38,25 +40,22 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.53.0
+%define glib_ver 2.59.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.38.0
+%define pango_ver 1.41.0
 %define atk_ver 2.15.1
-%define atspi_ver 2.8.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.20
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.10.0
-%define wayland_protocols_ver 1.7
+%define wayland_ver 1.15.0
+%define wayland_protocols_ver 1.12
+%define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
-%define graphene_ver 1.5.1
+%define graphene_ver 1.9.1
 %define cloudproviders_ver 0.2.5
-
-Provides: libgtk3-engine-adwaita = %version-%release
-Obsoletes: libgtk3-engine-adwaita < 3.13.0
 
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
@@ -67,19 +66,19 @@ Requires: gtk+3-themes-incompatible
 
 BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
 BuildRequires: gcc-c++ sassc
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libcairo-gobject-devel >= %cairo_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libatk-devel >= %atk_ver
-BuildPreReq: at-spi2-atk-devel >= %atspi_ver
-BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
-BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
-BuildPreReq: libcups-devel >= %cups_ver
-BuildPreReq: libepoxy-devel >= %epoxy_ver
-BuildPreReq: libgraphene-devel >= %graphene_ver
+BuildRequires: glib2-devel >= %glib_ver libgio-devel
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libcairo-gobject-devel >= %cairo_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libatk-devel >= %atk_ver
+BuildRequires: libgdk-pixbuf-devel >= %pixbuf_ver
+BuildRequires: fontconfig-devel >= %fontconfig_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
+BuildRequires: libcups-devel >= %cups_ver
+BuildRequires: libepoxy-devel >= %epoxy_ver
+BuildRequires: libgraphene-devel >= %graphene_ver
 BuildRequires: iso-codes-devel
+BuildRequires: libfribidi-devel at-spi2-atk-devel
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
 %if_enabled x11
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
@@ -88,7 +87,7 @@ BuildRequires: libXrender-devel libXt-devel
 %endif
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -100,22 +99,22 @@ BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 BuildRequires: pkgconfig(gstreamer-player-1.0)
 
 %description
-GTK+ is a multi-platform toolkit for creating graphical user interfaces.
-Offering a complete set of widgets, GTK+ is suitable for projects
+GTK is a multi-platform toolkit for creating graphical user interfaces.
+Offering a complete set of widgets, GTK is suitable for projects
 ranging from small one-off projects to complete application suites.
 
-This package contains X11 part of GTK+. It is required for GNOME 3 desktop
+This package contains X11 part of GTK. It is required for GNOME 3 desktop
 and programs.
 
 %package devel
-Summary: Development files and tools for GTK+ applications
-Group: Development/GNOME and GTK+
+Summary: Development files and tools for GTK%api_ver_major applications
+Group: Development/C
 Requires: %name = %version-%release
 Requires: gtk-builder-convert
 
 %description devel
-This package contains development files for GTK+, X11 version. Use this to
-build programs that use GTK+.
+This package contains development files for GTK%api_ver_major. Use this to
+build programs that use GTK%api_ver_major.
 
 %package -n gtk4-demo
 Summary: GTK+ widgets demonstration program
@@ -125,10 +124,10 @@ Requires: %name = %version-%release
 %description -n gtk4-demo
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
 This package contains a program, along with its source code, that
-demonstrates GTK+ variety of all its widgets.
+demonstrates GTK%api_ver_major variety of all its widgets.
 
 %package -n %name-devel-doc
-Summary: Development documentation for GTK+
+Summary: Development documentation for GTK%api_ver_major
 Group: Development/Documentation
 Conflicts: %name < %version, %name > %version
 BuildArch: noarch
@@ -138,7 +137,7 @@ GTK+ is a multi-platform toolkit for creating graphical user interfaces.
 This package contains documentation needed for developing GTK+ applications.
 
 %package -n %name-devel-doc-examples
-Summary: Examples for developing applications which will use GTK+
+Summary: Examples for developing applications which will use GTK%api_ver_major
 Group: Development/GNOME and GTK+
 Conflicts: %name < %version-%release
 BuildArch: noarch
@@ -154,7 +153,7 @@ Requires: %name = %version-%release
 
 %description -n %name-devel-static
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
-This package contains the static libraries for GTK+.
+This package contains the static libraries for GTK%api_ver_major.
 
 %package gir
 Summary: GObject introspection data for the GTK+ library
@@ -162,10 +161,10 @@ Group: System/Libraries
 Requires: %name = %version-%release
 
 %description gir
-GObject introspection data for the GTK+ library
+GObject introspection data for the GTK%api_ver_major library
 
 %package gir-devel
-Summary: GObject introspection devel data for the GTK+ library
+Summary: GObject introspection devel data for the GTK%api_ver_major library
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-gir = %version-%release
@@ -177,7 +176,7 @@ GObject introspection devel data for the GTK+ library
 This package contains development documentation for GAIL.
 
 %package tests
-Summary: Tests for the GTK+3 packages
+Summary: Tests for the GTK%api_ver_major packages
 Group: Development/Other
 Requires: %name = %version-%release
 
@@ -250,11 +249,10 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_man1dir/gtk4-update-icon-cache.1.*
 %endif
 
-# conflicts with GTK+-3
-%exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-%exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
-%exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
-%exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
+%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.ColorChooser.gschema.xml
+%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.Debug.gschema.xml
+%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.EmojiChooser.gschema.xml
+%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.FileChooser.gschema.xml
 
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README.md
@@ -263,38 +261,43 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_bindir/gtk4-builder-tool
 %_includedir/gtk-%api_ver/
 %_libdir/libgtk-4.so
-%_pkgconfigdir/gtk+-%api_ver.pc
-%_pkgconfigdir/gtk+-x11-%api_ver.pc
-%_pkgconfigdir/gtk+-unix-print-%api_ver.pc
+%_pkgconfigdir/gtk%api_ver_major.pc
+%_pkgconfigdir/gtk%api_ver_major-x11.pc
+%_pkgconfigdir/gtk%api_ver_major-unix-print.pc
 #%_pkgconfigdir/gail-%api_ver.pc
 %dir %_datadir/gtk-%api_ver
-%_datadir/gtk-%api_ver/gtkbuilder.rng
+%_datadir/gtk-%api_ver/gtk%{api_ver_major}builder.rng
 #%_datadir/aclocal/gtk-%api_ver.m4
-%_datadir/gettext/its/gtkbuilder.its
-%_datadir/gettext/its/gtkbuilder.loc
-%{?_enable_man:%_man1dir/gtk4-builder-tool.1*}
+%_datadir/gettext/its/gtk%{api_ver_major}builder.its
+%_datadir/gettext/its/gtk%{api_ver_major}builder.loc
+%{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*}
 
 %if_enabled wayland
-%_pkgconfigdir/gtk+-wayland-%api_ver.pc
+%_pkgconfigdir/gtk%api_ver_major-wayland.pc
 %endif
 
 %if_enabled broadway
-%_pkgconfigdir/gtk+-broadway-%api_ver.pc
+%_pkgconfigdir/gtk%api_ver_major-broadway.pc
 %endif
 
 %files -n gtk4-demo
-%_desktopdir/gtk4-demo.desktop
-%_desktopdir/gtk4-widget-factory.desktop
-%_desktopdir/gtk4-icon-browser.desktop
+%_desktopdir/org.gtk.Demo4.desktop
+%_desktopdir/org.gtk.IconBrowser4.desktop
+%_desktopdir/org.gtk.WidgetFactory4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
 %_bindir/gtk4-widget-factory
 %_bindir/gtk4-icon-browser
-%_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
-%_iconsdir/hicolor/*x*/apps/gtk4-demo*.png
-%_iconsdir/hicolor/*x*/apps/gtk4-widget*.png
-%_datadir/metainfo/org.gtk.Demo.appdata.xml
-%_datadir/metainfo/org.gtk.WidgetFactory.appdata.xml
+%_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
+%_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
+%_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
+%_iconsdir/hicolor/scalable/apps/org.gtk.WidgetFactory4.svg
+%_iconsdir/hicolor/symbolic/apps/org.gtk.Demo4-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
+
+%_datadir/metainfo/org.gtk.Demo4.appdata.xml
+%_datadir/metainfo/org.gtk.WidgetFactory4.appdata.xml
 
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
@@ -333,6 +336,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue May 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.96.0-alt1
+- 3.96.0
+
 * Tue Jun 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.94.0-alt1
 - 3.94.0
 
