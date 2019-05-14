@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     7
-%define postgresql_altrel    3
+%define postgresql_minor     8
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -817,6 +817,12 @@ fi
 %endif
 
 %changelog
+* Mon May 13 2019 Alexei Takaseev <taf@altlinux.org> 10.8-alt1
+- 10.8
+- Re-applay patches from 1C:
+    * 00001-1c_FULL_100_EXT.patch
+    * 00004-postgresql-1c-10.patch
+
 * Fri Apr 05 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt3
 - Re-applay patches from 1C:
     * 00003-plantuner.patch
