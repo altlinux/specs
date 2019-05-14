@@ -1,6 +1,6 @@
 Name: audacity
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -25,9 +25,6 @@ Patch60: ALT-system-sbsms.patch
 # maybe useful when backporting to p8
 Patch130: NetBSD-ffmpeg3.patch
 Patch140: Fedora-libmp3lame-default.patch
-Patch150: Fedora-libdir.patch
-# This patch is applied on MIPS only
-Patch160: ALT-link-with-libatomic.patch
 Patch170: ALT-Remove-warning-about-alpha-version.patch
 
 # Patents on mp3 (liblame) expired in April 2017
@@ -102,20 +99,19 @@ For the most up to date manual content, use the on-line manual.
 %patch60 -p1
 %patch130 -p0
 %patch140 -p1
-%patch150 -p1
-%ifarch mips mipsel mips32 mips64
-%patch160 -p2
-%endif
 %patch170 -p1
 
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0/" || true
+sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffect.cpp
 
 %build
 # src/RevisionIdent.h is in src/.gitignore and may be missing, what leads to build errors, but it's empty in release tarballs
 [ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
 
-export CFLAGS="%{optflags} -fno-strict-aliasing"
-export CXXFLAGS="$CFLAGS -std=gnu++11"
+%global optflags %{optflags} -fno-strict-aliasing
+%ifarch mips mipsel mips32 mips64
+export LDFLAGS="${LDFLAGS} -latomic"
+%endif
 
 aclocal -I m4
 %autoreconf
@@ -186,6 +182,22 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Thu May 14 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.2-alt1
+- Version 2.3.2
+- Fixed NetBSD-ALT-Session-directory-in-home.patch:
+  this patch worked incorrectly, fixed it to really move session
+  directory from /var/tmp/audacity-$USER to $HOME/.audacity-tmp
+  to ensure session data consistency across reboots and after crashes;
+  this directory may be overriden with AUDACITY_TMPDIR variable
+- Use AUDACITY_TMPDIR env instead of TMPDIR to override session
+  directory because TMPDIR is set by default to tmpfs in many cases
+  what may lead to data loss
+- Removed Fedora-libdir.patch, instead using sed to fix ladspa directory
+- Dropped explicit -std=gnu++11 (build scripts set it by themselves)
+- Set LDFLAGS as env on mipsel instead of conditional patching
+  to not worry that the mipsel patch will become unappliable
+  (removed ALT-link-with-libatomic.patch)
+
 * Fri Apr 26 2019 Ivan A. Melnikov <iv@altlinux.org> 2.3.1-alt2
 - Fix build on mipsel.
 
