@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osec
-Version: 1.2.8
-Release: alt2
+Version: 1.2.9
+Release: alt1
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -30,6 +30,7 @@ Provides: %name-cron
 Requires: %name = %EVR
 Requires: %name-reporter
 Group: System/Base
+BuildArch: noarch
 
 %package mailreport
 Summary: Collection of reporters for osec
@@ -40,6 +41,7 @@ Requires: %name-cron
 Requires: /bin/mail
 Requires: perl-base
 Requires(pre): coreutils
+BuildArch: noarch
 
 %description
 This package contains osec program which performs files integrity check
@@ -99,6 +101,7 @@ rm -f %osec_statedir/osec.db.*
 
 %files cronjob
 %config(noreplace) /etc/cron.d/osec
+%dir %_datadir/osec
 %attr(700,root,root) %_datadir/osec/osec.cron
 %attr(770,root,%osec_group) %osec_statedir
 %defattr(600,root,root,700)
@@ -110,6 +113,9 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Tue May 14 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.9-alt1
+- New version (1.2.9);
+
 * Mon Apr 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.8-alt2
 - Update URL.
 
