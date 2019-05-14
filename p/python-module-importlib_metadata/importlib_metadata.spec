@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.9
+Version: 0.11
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: ASL2.0
@@ -106,11 +106,11 @@ do
 done
 
 %check
+grep -qsF 'pip<19.1' tox.ini || exit 1
+sed -i -e '/pip<19\.1/d' -e '/install_command/d' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-%define pynodots py%{python_version_nodots python}
-%define py3nodots py%{python_version_nodots python3}
-export TOXENV=%pynodots-nocov,%py3nodots-nocov
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %files
@@ -124,6 +124,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Tue May 14 2019 Stanislav Levin <slev@altlinux.org> 0.11-alt1
+- 0.9 -> 0.11.
+
 * Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 0.9-alt1
 - 0.8 -> 0.9.
 - Fixed testing.
