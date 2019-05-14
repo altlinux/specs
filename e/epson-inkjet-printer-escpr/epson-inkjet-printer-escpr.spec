@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.40
+%define ver     1.6.41
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -37,7 +37,7 @@ Version: %{ver}
 Release: alt1
 License: GPL
 URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
-# Open URL and search "ET-2750"
+# Open URL http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=ET-2750 and push button with magnifier
 Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
@@ -85,6 +85,13 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.41-alt1
+- New version.
+- Supported new models:
+  + Epson PX-S06 Series
+  + Epson WF-2830 Series
+  + Epson WF-2850 Series
+
 * Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 1.6.40-alt1
 - New version.
 - Supported new models:
