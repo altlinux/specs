@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.19.5
+Version: 1.19.6
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -102,6 +102,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue May 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.19.6-alt1
+- new version 1.19.6 (with rpmrb script)
+
 * Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.19.5-alt1
 - new version 1.19.5 (with rpmrb script) (ALT bug 36230)
 
