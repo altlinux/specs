@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.9.0
+Version: 3.10.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -85,8 +85,12 @@ can use for:
 %setup
 %patch -p1
 
-# our psutil is 5.4.7
+# unpin deps
+grep -qsF 'psutil >= 5.6.1' setup.cfg || exit 1
 sed -i 's/psutil >= 5.6.1, < 6;/psutil;/g' setup.cfg
+grep -qsF 'pip == 19.0.3' tox.ini || exit 1
+sed -i 's/pip == 19.0.3/pip >= 19.0.3/g' tox.ini
+
 cp -a . ../python3
 
 %build
@@ -158,6 +162,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Mon May 13 2019 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1
+- 3.9.0 -> 3.10.0.
+
 * Wed May 01 2019 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
 - 3.7.0 -> 3.9.0.
 
