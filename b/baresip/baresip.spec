@@ -1,5 +1,5 @@
 Name: baresip
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -46,6 +46,9 @@ sed -i 's,lib/baresip/modules,%_lib/baresip/modules,' src/config.c
 %_datadir/%name
 
 %changelog
+* Tue May 14 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1 (with rpmrb script)
+
 * Fri Dec 14 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - new version 0.6.0 (with rpmrb script)
 
