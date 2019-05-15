@@ -1,9 +1,11 @@
+%def_with emacs
+
 %define prerel %nil
 %define _name timidity
 
 Name: TiMidity++
 Version: 2.15.0
-Release: alt1
+Release: alt1.1
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -49,7 +51,8 @@ Conflicts: fluid-soundfont-lite-patches
 
 # Automatically added by buildreq on Thu Feb 28 2019
 # optimized out: emacs-base emacs-common fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libX11-locales libXext-devel libXmu-devel libXt-devel libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libp11-kit libpango-devel libpng-devel libtinfo-devel pkg-config python-base python-modules xorg-proto-devel zlib-devel
-BuildRequires: emacs-nox libXaw3d-devel libalsa-devel libao-devel libesd-devel libflac-devel libgtk+2-devel libjack-devel libncurses-devel libopenmotif-devel libslang2-devel libspeex-devel libvorbis-devel
+BuildRequires: libXaw3d-devel libalsa-devel libao-devel libesd-devel libflac-devel libgtk+2-devel libjack-devel libncurses-devel libopenmotif-devel libslang2-devel libspeex-devel libvorbis-devel
+%{?_with_emacs:BuildRequires: emacs-nox}
 
 BuildRequires: tcl-devel >= %tcl_ver, tk-devel >= %tk_ver
 
@@ -104,7 +107,7 @@ cp -a INSTALL INSTALL.orig
 export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notraceback"
 %configure \
     --program-prefix="" \
-    --enable-interface=xaw,ncurses,gtk,tcltk,emacs,slang \
+    --enable-interface=xaw,ncurses,gtk,tcltk,%{?_with_emacs:emacs,}slang \
     --enable-audio=default,oss,alsa,esd,vorbis,ao,jack,flac,speex \
     --with-default-output=alsa \
     --enable-server \
@@ -133,15 +136,19 @@ echo "dir %_datadir/%_name" >%buildroot%_sysconfdir/%_name.cfg
 
 # fixups
 sed -i 's,%buildroot,,g' %buildroot%_usr/lib/%_name/tkmidity.tcl
-sed -i 's@/usr/local/bin/%_name@%_bindir/%_name@' interface/%_name.el
-sed -i 's@%buildroot@@' interface/%_name.el
+%if_with emacs
+sed -i  -e 's@/usr/local/bin/%_name@%_bindir/%_name@' \
+	-e 's@%buildroot@@' interface/%_name.el
 install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
+%endif
 
 %files
 %_bindir/%_name
 %_usr/lib/%_name
 %_mandir/*/*
+%if_with emacs
 %_emacslispdir/%_name.el
+%endif
 %_desktopdir/%_name.desktop
 %_liconsdir/*
 %_initdir/%_name
@@ -151,6 +158,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Wed May 15 2019 Michael Shigorin <mike@altlinux.org> 2.15.0-alt1.1
+- introduced emacs knob (on by default)
+
 * Tue May 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.15.0-alt1
 - 2.15.0.
 - Applied patches from Debian and SUSE projects.
