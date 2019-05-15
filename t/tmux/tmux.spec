@@ -1,6 +1,6 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 2.9
+Version: 2.9a
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
@@ -32,6 +32,9 @@ such as GNU screen.
 %_man1dir/*
 
 %changelog
+* Wed May 15 2019 Fr. Br. George <george@altlinux.ru> 2.9a-alt1
+- Autobuild version bump to 2.9a
+
 * Wed May 15 2019 Fr. Br. George <george@altlinux.ru> 2.9-alt1
 - Autobuild version bump to 2.9
 
