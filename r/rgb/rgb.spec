@@ -1,6 +1,6 @@
 Name: rgb
 Version: 1.0.6
-Release: alt1
+Release: alt2
 Summary: Uncompile an rgb color
 Group: System/X11
 Source: %name-%version.tar.gz
@@ -8,6 +8,8 @@ License: MIT
 
 BuildRequires: libX11-devel
 BuildRequires: xorg-util-macros
+Provides: xorg-rgb = %version
+Obsoletes: xorg-rgb < %version
 
 %description
 The showrgb program reads an rgb color-name database compiled for use with
@@ -29,6 +31,9 @@ the dbm database routines and converts it back to source form.
 %_mandir/man1/*
 
 %changelog
+* Wed May 15 2019 Fr. Br. George <george@altlinux.ru> 1.0.6-alt2
+- Replace xorg-rgb
+
 * Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
