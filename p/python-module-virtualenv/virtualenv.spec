@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 16.5.0
+Version: 16.6.0
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -142,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/__pycache__/virtualenv.*
 
 %changelog
+* Thu May 16 2019 Stanislav Levin <slev@altlinux.org> 16.6.0-alt1
+- 16.5.0 -> 16.6.0.
+
 * Thu May 09 2019 Stanislav Levin <slev@altlinux.org> 16.5.0-alt1
 - 16.4.3 -> 16.5.0.
 
