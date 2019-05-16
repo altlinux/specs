@@ -1,6 +1,6 @@
 Name: warzone2100
 Version: 3.2.3
-Release: alt1.1
+Release: alt2
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA
@@ -43,6 +43,10 @@ Game data for warzone2100.
 %prep
 %setup -a 1
 cp %SOURCE2 ./src/autorevision.cache
+%ifarch %e2k
+# strip UTF-8 BOM
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 ./autogen.sh
@@ -75,6 +79,9 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Fri May 10 2019 Michael Shigorin <mike@altlinux.org> 3.2.3-alt2
+- E2K: avoid UTF-8 BOM
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.2.3-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
