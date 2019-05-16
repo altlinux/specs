@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-extlib
-Version: 1.7.5
-Release: alt2
+Version: 1.7.6
+Release: alt1
 
 Summary: extended standard library for OCaml
 License: LGPL v2, with exceptions
@@ -69,6 +69,9 @@ mkdir -p mkdir -p %buildroot%_libdir/ocaml
 %_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Thu May 16 2019 Anton Farygin <rider@altlinux.ru> 1.7.6-alt1
+- 1.7.6
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.7.5-alt2
 - rebuilt with ocaml-4.07.1
 
