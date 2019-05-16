@@ -3,7 +3,7 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 7.4
+Version: 9.96
 Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
@@ -47,6 +47,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu May 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.96-alt1
+- vendors.list.d/alt.list: add new [p9] and [sisyphus] signing keys.
+
 * Thu Dec 20 2018 Dmitry V. Levin <ldv@altlinux.org> 7.4-alt1
 - Updated URL and license information.
 - Fixed build with bash4.
