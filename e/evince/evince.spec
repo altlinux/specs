@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
@@ -15,7 +15,7 @@
 
 Name: evince
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -214,6 +214,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Thu May 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt2
+- updated to 3.32.0-22-g0fecf871
+
 * Thu Mar 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
