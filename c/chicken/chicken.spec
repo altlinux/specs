@@ -1,17 +1,16 @@
 Name: chicken
-Version: 4.1.0
-Release: alt2.1
+Version: 5.0.0
+Release: alt1
 License: BSD style (see LICENSE)
 Group: Development/Scheme
 Url: http://www.call-with-current-continuation.org/
 Source: %name-%version.tar
-Requires: libchicken-devel = %version-%release
+Requires: libchicken-devel = %EVR
 Summary: CHICKEN is a simple Scheme-to-C compiler
-Packager: Alexey Voinov <voins@altlinux.ru>
-
 BuildPreReq: chrpath
 
-# Automatically added by buildreq on Sat Nov 01 2003
+# /usr/bin/csi  and /usr/bin/csc from mono-devel and chicken is a different utilities with the same name
+Conflicts: mono-devel
 
 %description
 CHICKEN is a simple Scheme-to-C compiler supporting the language features as
@@ -27,18 +26,10 @@ Group: System/Libraries
 %description -n libchicken
 Runtime libraries for programs produced with chicken compiler
 
-%package -n libchicken-unsafe
-Summary: Faster runtime libraries for programs produced with chicken compiler
-Group: System/Libraries
-
-%description -n libchicken-unsafe
-Faster runtime libraries for programs produced with chicken compiler
-
 %package -n libchicken-devel
 Summary: Development libraries for using with chicken scheme-to-c compiler
 Group: Development/Scheme
 Requires: libchicken = %version-%release
-Requires: libchicken-unsafe = %version-%release
 
 %description -n libchicken-devel
 Development libraries for using with chicken scheme-to-c compiler
@@ -74,7 +65,7 @@ make PLATFORM=linux PREFIX=%_prefix LIBDIR=%_libdir \
     DESTDIR=$RPM_BUILD_ROOT install
 rm -rf $RPM_BUILD_ROOT%_datadir/%name/doc
 
-for i in %buildroot%_bindir/* %buildroot%_libdir/%name/4/*.so
+for i in %buildroot%_bindir/* %buildroot%_libdir/%name/9/*.so
 do
 	chrpath -d $i ||:
 done
@@ -85,22 +76,25 @@ done
 %_man1dir/*
 
 %files docs
-%doc LICENSE README html
+%doc LICENSE README 
 
 %files -n libchicken
-%_libdir/libchicken.so
+%_libdir/libchicken.so.*
 %_libdir/%name
 
-%files -n libchicken-unsafe
-%_libdir/libuchicken.so
 
 %files -n libchicken-devel
+%_libdir/libchicken.so
 %_includedir/*
 
 %files -n libchicken-devel-static
 %_libdir/lib*.a
 
 %changelog
+* Thu May 16 2019 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
+- updated to 5.0.0
+- added conflicts with mono-devel package
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.1
 - Removed bad RPATH
 
