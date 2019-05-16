@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 License: %lgpl3plus
 Group: Development/Tools
@@ -69,6 +69,9 @@ cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 %_datadir/zsh
 
 %changelog
+* Thu May 16 2019 Nikita Ermakov <arei@altlinux.org> 3.5.1-alt1
+- Updated to 3.5.1.
+
 * Mon May 13 2019 Nikita Ermakov <arei@altlinux.org> 3.5.0-alt1
 - Updated to 3.5.0.
 
