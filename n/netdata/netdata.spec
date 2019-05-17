@@ -1,9 +1,9 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit f8e0f3ced35509f608f360823c57c19b19eb6164
+%define release_commit 4f64e8edbdb0d4b68b882aa34474a0156b6ba150
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -181,6 +181,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Fri May 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
+- new version 1.14.0 (with rpmrb script)
+
 * Thu Mar 21 2019 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
 - new version 1.13.0 (with rpmrb script)
 
