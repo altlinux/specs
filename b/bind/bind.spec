@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.11.7
-%define src_version 9.11.7
+Version: 9.11.8
+%define src_version 9.11.8
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -437,6 +437,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Jun 20 2019 Stanislav Levin <slev@altlinux.org> 9.11.8-alt1
+- 9.11.7 -> 9.11.8 (fixes: CVE-2019-6471).
+
 * Thu May 16 2019 Stanislav Levin <slev@altlinux.org> 9.11.7-alt1
 - 9.11.6.P1 -> 9.11.7.
 
