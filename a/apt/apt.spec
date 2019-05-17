@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt63
+Release: alt64
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -41,6 +41,7 @@ BuildPreReq: setproctitle-devel
 BuildPreReq: liblua5.3-devel
 
 BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ libreadline-devel librpm-devel setproctitle-devel zlib-devel
+BuildRequires: libgnutls-devel
 
 %package -n libapt
 Summary: APT's core libraries
@@ -71,6 +72,12 @@ Summary: rsync method support for APT
 Summary(ru_RU.UTF-8): Поддержка метода rsync для APT
 Group: Development/Other
 Requires: %name = %EVR, rsync >= 2.5.5-alt3
+
+%package https
+Summary: https method support for APT
+Summary(ru_RU.UTF-8): Поддержка метода https для APT
+Group: Other
+Requires: %name = %EVR
 
 # {{{ descriptions 
 %define risk_usage_en This package is still under development.
@@ -128,6 +135,11 @@ This package contains method 'rsync' for APT.
 
 %risk_usage_en
 
+%description https
+This package contains method 'https' for APT.
+
+%risk_usage_en
+
 %description -n libapt -l ru_RU.UTF-8
 В этом пакете находится библиотеки управления пакетами
 из комплекта APT. В отличие от оригинальной версии для Debian, этот
@@ -162,6 +174,11 @@ This package contains method 'rsync' for APT.
 
 %description rsync -l ru_RU.UTF-8
 В этом пакете находится метод 'rsync' для APT
+
+%risk_usage
+
+%description https -l ru_RU.UTF-8
+В этом пакете находится метод 'https' для APT
 
 %risk_usage
 
@@ -249,6 +266,7 @@ unset RPM_PYTHON
 %_bindir/apt-*
 %_libdir/%name
 %exclude %_libdir/%name/methods/rsync
+%exclude %_libdir/%name/methods/https
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name/*.d
@@ -280,7 +298,15 @@ unset RPM_PYTHON
 %_libdir/%name/methods/rsync
 # Probably %%doc with README.rsync?
 
+%files https
+%dir %_libdir/%name
+%dir %_libdir/%name/methods
+%_libdir/%name/methods/https
+
 %changelog
+* Fri May 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt64
+- Ported https support from Debian via https method to apt-https package (Closes: #33732).
+
 * Sat May 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt63
 - archtable:
   + added ppc64le;
