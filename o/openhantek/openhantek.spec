@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 2.03
+Version: 2.04
 Release: alt1
 Epoch: 1
 
@@ -46,6 +46,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_udevrulesdir/60-hantek.rules
 
 %changelog
+* Fri May 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:2.04-alt1
+- new version 2.04 (with rpmrb script)
+
 * Tue May 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:2.03-alt1
 - switch to tarball from OpenHantek6022 repo (ALT bug 36725)
 
