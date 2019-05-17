@@ -8,16 +8,24 @@
 %endif
 
 Name:		bcc
-Version:	0.7.0
+Version:	0.9.0.0.55.ge86e0643
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	ASL 2.0
 URL:		https://github.com/iovisor/bcc
+# Also libbpf https://github.com/libbpf/libbpf
+# Which is a mirror of bpf-next linux tree's tools/lib/bpf
+# directory plus its supporting header files.
+# It's bundled with bcc in src/cc/libbpf
+
 Source:		%name-%version.tar
+Source1:	libbpf.tar
+
 ExclusiveArch:	x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): python3-module-setuptools
 BuildRequires:	bison
 BuildRequires:	cmake >= 2.8.7
 BuildRequires:	flex
@@ -28,8 +36,7 @@ BuildRequires:	llvm-devel >= 3.7.0
 BuildRequires:	lld
 BuildRequires:	llvm-devel-static
 BuildRequires:	clang-devel-static
-BuildRequires:	python-devel
-BuildRequires:	python-module-setuptools
+BuildRequires:	python3-devel
 BuildRequires:	libelf-devel-static
 BuildRequires:	zlib-devel
 BuildRequires:	libncurses-devel
@@ -59,6 +66,8 @@ control.
 
 %prep
 %setup -q
+mkdir src/cc/libbpf
+tar -xf %SOURCE1 -C src/cc/libbpf
 
 %build
 %if_without luajit
@@ -69,9 +78,6 @@ subst 's,share/bcc/introspection,bin,' introspection/CMakeLists.txt
 # tests are for aarch64, powerpc64, and x86_64 only,
 # but we don't run tests anyway (require root)
 subst '/add_subdirectory(tests)/d' CMakeLists.txt
-%ifarch i586
-subst '/case UINT128_T/d' src/cc/frontends/b/type_helper.h
-%endif
 # do not build examples to speed things up
 subst '/add_subdirectory(examples)/d' CMakeLists.txt
 
@@ -86,14 +92,23 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DREVISION=%version \
 	-DLLVM_DIR=$(llvm-config --cmakedir) \
 	-DUSINGISYSTEM:BOOL=no \
+	-DPYTHON_CMD=python3 \
 	%{?lua_config}
 %cmake_build
 
 %install
+%set_verify_elf_method relaxed
 %cmake_install install/strip DESTDIR=%buildroot
-install -d %buildroot/%python_sitelibdir
-rmdir %buildroot/%python_sitelibdir
-mv %buildroot/%python_sitelibdir_noarch %buildroot/%python_sitelibdir
+install -d %buildroot/%python3_sitelibdir
+rmdir %buildroot/%python3_sitelibdir
+mv %buildroot/%python3_sitelibdir_noarch %buildroot/%python3_sitelibdir
+# mangle shebangs
+find %{buildroot}/usr/share/bcc/tools -type f | xargs \
+    sed -i -e '1 s|^#!/usr/bin/python$|#!'%__python3'|' \
+           -e '1 s|^#!/usr/bin/env python$|#!'%__python3'|'
+install -d %buildroot%_man8dir
+rmdir %buildroot%_man8dir
+mv %buildroot/usr/share/bcc/man/man8 %buildroot%_man8dir
 
 %package -n libbcc
 Summary:	Shared Library for BPF Compiler Collection (BCC)
@@ -109,11 +124,11 @@ Requires:	libbcc = %version-%release
 %description -n libbcc-devel
 Includes and pkg-config for developing BCC programs
 
-%package -n python-module-bcc
+%package -n python3-module-bcc
 Summary:	Python bindings for BPF Compiler Collection (BCC)
 Group:		Development/Python
 Requires:	libbcc = %version-%release
-%description -n python-module-bcc
+%description -n python3-module-bcc
 Python bindings for BPF Compiler Collection (BCC)
 
 %package -n bcc-lua
@@ -126,7 +141,7 @@ Standalone tool to run BCC tracers written in Lua
 %package -n bcc-tools
 Summary:	Command line tools for BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
-Requires:	python-module-bcc = %version-%release
+Requires:	python3-module-bcc = %version-%release
 %description -n bcc-tools
 Command line tools for BPF Compiler Collection (BCC)
 
@@ -137,22 +152,26 @@ Command line tools for BPF Compiler Collection (BCC)
 %files -n libbcc-devel
 %doc FAQ.txt LINKS.md README.md
 %_libdir/pkgconfig/*.pc
-/usr/include/bcc/
+%_includedir/bcc/
 
-%files -n python-module-bcc
-%python_sitelibdir/bcc*
+%files -n python3-module-bcc
+%python3_sitelibdir/bcc*
 
 %if_with luajit
 %files -n bcc-lua
-/usr/bin/bcc-lua
+%_bindir/bcc-lua
 %endif
 
 %files -n bcc-tools
-/usr/bin/bps
-/usr/share/bcc/tools/
-/usr/share/bcc/man/
+%_bindir/bps
+%_datadir/bcc/tools/
+%_man8dir/*
 
 %changelog
+* Fri May 17 2019 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.55.ge86e0643-alt1
+- Update to bcc to v0.9.0-55-ge86e0643
+- Update libbpf to 5188b0ca
+
 * Wed Jan 09 2019 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt1
 - Update to 0.7.0.
 
