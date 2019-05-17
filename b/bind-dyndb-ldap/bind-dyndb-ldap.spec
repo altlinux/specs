@@ -3,7 +3,7 @@
 
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt5
+Release: alt6
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -59,6 +59,9 @@ systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Fri May 17 2019 Stanislav Levin <slev@altlinux.org> 11.1-alt6
+- Applied upstream patch.
+
 * Mon Nov 26 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt5
 - Built with new bind 9.11.5.
 - Fixed bind-dyndb-ldap upgrade.
