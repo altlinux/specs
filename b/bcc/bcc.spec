@@ -9,7 +9,7 @@
 
 Name:		bcc
 Version:	0.9.0.0.55.ge86e0643
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	ASL 2.0
@@ -109,6 +109,9 @@ find %{buildroot}/usr/share/bcc/tools -type f | xargs \
 install -d %buildroot%_man8dir
 rmdir %buildroot%_man8dir
 mv %buildroot/usr/share/bcc/man/man8 %buildroot%_man8dir
+pushd %{buildroot}%{_man8dir}
+rename '' bcc- *.gz
+popd
 
 %package -n libbcc
 Summary:	Shared Library for BPF Compiler Collection (BCC)
@@ -168,6 +171,9 @@ Command line tools for BPF Compiler Collection (BCC)
 %_man8dir/*
 
 %changelog
+* Sat May 18 2019 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.55.ge86e0643-alt2
+- Fix man pages collide with postfix and perf-tools (closes: #36761)
+
 * Fri May 17 2019 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.55.ge86e0643-alt1
 - Update to bcc to v0.9.0-55-ge86e0643
 - Update libbpf to 5188b0ca
