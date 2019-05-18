@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.5.0
+Version: 0.6.5
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -48,6 +48,9 @@ sed -i \
 %_xdgconfigdir/%name
 
 %changelog
+* Sat May 18 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.5-alt1
+- 0.6.5
+
 * Tue Apr 02 2019 Alexey Gladkov <legion@altlinux.ru> 0.5.0-alt1
 - 0.5.0
 
