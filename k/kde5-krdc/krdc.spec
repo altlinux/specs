@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 19.04.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Networking/Remote access
@@ -16,6 +16,7 @@ License: GPLv2+ / LGPLv2+
 Requires: xfreerdp freerdp-plugins-standard
 
 Source: %rname-%version.tar
+Patch1: kde5-krdc-19.04.0-update-translation.patch
 
 # Automatically added by buildreq on Thu Mar 30 2017 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel kf5-kwidgetsaddons-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils zlib-devel
@@ -59,6 +60,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -95,6 +97,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Mon May 20 2019 Pavel Moseev <mars@altlinux.org> 19.04.0-alt2
+- update translation
+
 * Mon May 06 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.0-alt1
 - new version
 
