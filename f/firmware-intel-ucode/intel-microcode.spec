@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20190312
+%define orig_timestamp 20190514
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 8
+Version: 9
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,54 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon May 20 2019 L.A. Kostis <lakostis@altlinux.ru> 2:9-alt1.20190514
+- Sync with Debian 3.20190514.1:
+  + New upstream microcode datafile 20190514
+  + SECURITY UPDATE
+    Implements MDS mitigation (RIDL, Fallout, Zombieload), INTEL-SA-00223
+    CVE-2018-12126, CVE-2018-12127, CVE-2018-12130, CVE-2019-11091
+  + New Microcodes:
+    sig 0x00030678, pf_mask 0x02, 2019-04-22, rev 0x0838, size 52224
+    sig 0x00030678, pf_mask 0x0c, 2019-04-22, rev 0x0838, size 52224
+    sig 0x00030679, pf_mask 0x0f, 2019-04-23, rev 0x090c, size 52224
+    sig 0x000406c3, pf_mask 0x01, 2019-04-23, rev 0x0368, size 69632
+    sig 0x000406c4, pf_mask 0x01, 2019-04-23, rev 0x0411, size 68608
+    sig 0x00050657, pf_mask 0xbf, 2019-02-27, rev 0x5000021, size 47104
+  + Updated Microcodes:
+    sig 0x000206a7, pf_mask 0x12, 2019-02-17, rev 0x002f, size 12288
+    sig 0x000306a9, pf_mask 0x12, 2019-02-13, rev 0x0021, size 14336
+    sig 0x000306c3, pf_mask 0x32, 2019-02-26, rev 0x0027, size 23552
+    sig 0x000306d4, pf_mask 0xc0, 2019-03-07, rev 0x002d, size 19456
+    sig 0x000306e4, pf_mask 0xed, 2019-03-14, rev 0x042e, size 16384
+    sig 0x000306e7, pf_mask 0xed, 2019-03-14, rev 0x0715, size 17408
+    sig 0x000306f2, pf_mask 0x6f, 2019-03-01, rev 0x0043, size 34816
+    sig 0x000306f4, pf_mask 0x80, 2019-03-01, rev 0x0014, size 18432
+    sig 0x00040651, pf_mask 0x72, 2019-02-26, rev 0x0025, size 21504
+    sig 0x00040661, pf_mask 0x32, 2019-02-26, rev 0x001b, size 25600
+    sig 0x00040671, pf_mask 0x22, 2019-03-07, rev 0x0020, size 14336
+    sig 0x000406e3, pf_mask 0xc0, 2019-04-01, rev 0x00cc, size 100352
+    sig 0x000406f1, pf_mask 0xef, 2019-03-02, rev 0xb000036, size 30720
+    sig 0x00050654, pf_mask 0xb7, 2019-04-02, rev 0x200005e, size 32768
+    sig 0x00050662, pf_mask 0x10, 2019-03-23, rev 0x001a, size 32768
+    sig 0x00050663, pf_mask 0x10, 2019-03-23, rev 0x7000017, size 24576
+    sig 0x00050664, pf_mask 0x10, 2019-03-23, rev 0xf000015, size 23552
+    sig 0x00050665, pf_mask 0x10, 2019-03-23, rev 0xe00000d, size 19456
+    sig 0x000506c9, pf_mask 0x03, 2019-01-15, rev 0x0038, size 17408
+    sig 0x000506ca, pf_mask 0x03, 2019-03-01, rev 0x0016, size 15360
+    sig 0x000506e3, pf_mask 0x36, 2019-04-01, rev 0x00cc, size 100352
+    sig 0x000506f1, pf_mask 0x01, 2019-03-21, rev 0x002e, size 11264
+    sig 0x000706a1, pf_mask 0x01, 2019-01-02, rev 0x002e, size 73728
+    sig 0x000806e9, pf_mask 0x10, 2019-04-01, rev 0x00b4, size 98304
+    sig 0x000806e9, pf_mask 0xc0, 2019-04-01, rev 0x00b4, size 99328
+    sig 0x000806ea, pf_mask 0xc0, 2019-04-01, rev 0x00b4, size 99328
+    sig 0x000806eb, pf_mask 0xd0, 2019-03-30, rev 0x00b8, size 98304
+    sig 0x000806ec, pf_mask 0x94, 2019-03-30, rev 0x00b8, size 97280
+    sig 0x000906e9, pf_mask 0x2a, 2019-04-01, rev 0x00b4, size 99328
+    sig 0x000906ea, pf_mask 0x22, 2019-04-01, rev 0x00b4, size 98304
+    sig 0x000906eb, pf_mask 0x02, 2019-04-01, rev 0x00b4, size 99328
+    sig 0x000906ec, pf_mask 0x22, 2019-02-14, rev 0x00ae, size 98304
+    sig 0x000906ed, pf_mask 0x22, 2019-03-17, rev 0x00b8, size 97280
+
 * Thu Apr 11 2019 L.A. Kostis <lakostis@altlinux.ru> 2:8-alt1.20190312
 - Sync with Debian 3.20190312.1:
   + Removed Microcodes:
