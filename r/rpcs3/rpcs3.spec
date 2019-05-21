@@ -1,5 +1,5 @@
-%define git_ver 8147
-%define git_commit 8009e53642496729955692c62e1f648973561d06
+%define git_ver 8152
+%define git_commit 9a26c0abdab4318ed3919b3961b427db9290804e
 
 %define glslang_commit c99304c5dc513c43b8f329663326331fc67d9e4d
 %define asmjit_commit 1e550aa568da993acb742ac19f2ab691a2806ad5
@@ -113,11 +113,18 @@ popd
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
+%dir %_iconsdir/hicolor/scalable
+%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
+%dir %_datadir/metainfo
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue May 21 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.6.8152-alt1
+- Version 0.0.6.8152
+- Fix post-install unowned files
+
 * Mon May 20 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.6.8147-alt1
 - Initial build for ALT Linux
 
