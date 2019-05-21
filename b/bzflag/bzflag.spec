@@ -10,7 +10,7 @@ Name: bzflag
 Version: 2.4.12
 
 # %%ifndef git_commit
-Release: alt1
+Release: alt2
 # %%else
 # Release: alt0.git_1_%git_commit
 # %%endif
@@ -223,6 +223,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Mon Nov 06 2017 Michael Shigorin <mike@altlinux.org> 2.4.12-alt2
+- E2K: avoid lcc-unsupported option
+
 * Wed Nov 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.12-alt1
 - Version 2.4.12 (Release)
 
