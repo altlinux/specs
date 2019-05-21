@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Time-Duration-Parse
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Parse string that represents time duration
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Time/Duration/Parse.pm
 
 %changelog
+* Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
