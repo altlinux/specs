@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 3.4
+Version: 3.5
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -131,6 +131,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Tue May 21 2019 Anton Farygin <rider@altlinux.ru> 3.5-alt1
+- 3.5
+
 * Mon Oct 01 2018 Anton Farygin <rider@altlinux.ru> 3.4-alt1
 - 3.4
 - enabled tests
