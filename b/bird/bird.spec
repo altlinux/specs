@@ -2,7 +2,7 @@
 
 Name: bird
 Version: 1.6.4
-Release: alt2
+Release: alt5
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -124,6 +124,9 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%{name}cl6
 
 %changelog
+* Tue May 21 2019 Anton Farygin <rider@altlinux.ru> 1.6.4-alt5
+- added upstream patch against errors with clang build
+
 * Wed Jan 16 2019 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
 - cleared from %%ubt macros
 
