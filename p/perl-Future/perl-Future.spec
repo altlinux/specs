@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Future
-Version: 0.39
+Version: 0.40
 Release: alt1
 
 Summary: represent an operation awaiting completion
@@ -25,12 +26,15 @@ BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README examples
+%doc Changes LICENSE README
 %perl_vendor_privlib/Future*
 %perl_vendor_privlib/Test/Future*
 %doc Changes LICENSE README
 
 %changelog
+* Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- new version
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - automated CPAN update
 
