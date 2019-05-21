@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 # hack for perl 5.26.1 migration
 %def_without test
 Name: perl-B-C
-Version: 1.55_04
-Release: alt1.2
+Version: 1.57
+Release: alt1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -31,7 +32,7 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-deve
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Artistic Copying README.alpha Todo
 %_bindir/*
 %_man1dir/*
 %perl_vendor_archlib/B
@@ -41,6 +42,9 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-deve
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.55_04-alt1.2
 - rebuild with new perl 5.28.1
 
