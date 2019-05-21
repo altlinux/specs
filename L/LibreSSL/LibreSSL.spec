@@ -11,8 +11,8 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.9.1
-Release: alt2
+Version: 2.9.2
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -261,6 +261,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Tue May 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.2-alt1
+- 2.9.2.
+
 * Sat Apr 27 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.1-alt2
 - Applied extra-symver.diff patch from openSUSE project that added symbol
   versions into the library.
