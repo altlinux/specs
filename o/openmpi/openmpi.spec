@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt7
+Release: alt8
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -57,7 +57,7 @@ Source:  openmpi-%version.tar
 #Patch0: openmpi-%version-%release.patch
 #Patch1: openmpi-arm-%version.patch
 
-BuildPreReq: rpm-macros-mpi-selector
+BuildPreReq: rpm-macros-mpi-selector rpm-macros-valgrind
 Requires(post,preun): mpi-selector
 
 
@@ -80,7 +80,10 @@ BuildPreReq: glibc-pthread
 Requires: libibverbs >= 1.1.2
 BuildPreReq: /proc flex gcc-c++ gcc-fortran
 BuildPreReq: rdma-core-devel
-BuildPreReq: valgrind-devel libiberty-devel
+%ifarch %valgrind_arches
+BuildPreReq: valgrind-devel
+%endif
+BuildPreReq: libiberty-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
@@ -331,6 +334,9 @@ EOF
 %endif
 
 %changelog
+* Wed May 22 2019 Nikita Ermakov <arei@altlinux.org> 2.0.1-alt8
+- Build with valgrind only for supported arches.
+
 * Thu Nov 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.1-alt7
 - Rebuilt without torque support.
 
