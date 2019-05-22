@@ -1,5 +1,5 @@
-%define git_ver 8152
-%define git_commit 9a26c0abdab4318ed3919b3961b427db9290804e
+%define git_ver 8156
+%define git_commit d616ce223c1c6e1e1918080245e0472907d4d254
 
 %define glslang_commit c99304c5dc513c43b8f329663326331fc67d9e4d
 %define asmjit_commit 1e550aa568da993acb742ac19f2ab691a2806ad5
@@ -121,6 +121,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed May 22 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.6.8156-alt1
+- Version 0.0.6.8156
+
 * Tue May 21 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.6.8152-alt1
 - Version 0.0.6.8152
 - Fix post-install unowned files
