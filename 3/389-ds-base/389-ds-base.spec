@@ -11,7 +11,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.1
+Version: 1.4.1.2
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -223,10 +223,11 @@ ldap/servers/slapd/ldaputil.c
         --enable-asan \
         --enable-debug \
 %endif
-        %{subst_enable perl} \
+        %{?_with_perl:--enable-perl } \
 	--with-nss-lib=%_libdir \
 	--with-nss-inc=%_includedir/nss \
         %{?_with_check:--enable-cmocka } \
+        %nil
 
 %make
 
@@ -371,8 +372,6 @@ fi
 %config(noreplace)%_sysconfdir/%pkgname/config/certmap.conf
 %config(noreplace)%_sysconfdir/%pkgname/config/ldap-agent.conf
 %config(noreplace)%_sysconfdir/%pkgname/config/template-initconfig
-%config(noreplace)%_sysconfdir/sysconfig/%pkgname
-%config(noreplace)%_sysconfdir/sysconfig/%pkgname.systemd
 %dir %_datadir/%pkgname
 %_datadir/%pkgname/data/
 %_datadir/%pkgname/inf/
@@ -564,6 +563,7 @@ fi
 
 %files -n python3-module-lib389
 %_sbindir/dsconf
+%_sbindir/dscontainer
 %_sbindir/dscreate
 %_sbindir/dsctl
 %_sbindir/dsidm
@@ -590,6 +590,9 @@ fi
 %endif
 
 %changelog
+* Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.2-alt1
+- 1.4.1.1 -> 1.4.1.2.
+
 * Tue Jan 22 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.1-alt1
 - 1.3.9.0 -> 1.4.1.1.
 - Stopped build for i586 arch.
