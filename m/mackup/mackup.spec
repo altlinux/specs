@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.22
+Version: 0.8.24
 Release: alt1
 
 Summary: Keep your application settings in sync
@@ -44,6 +44,9 @@ sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\/usr\/lib\/python3\/site-packages\/ma
 %python3_sitelibdir/%{name}*
 
 %changelog
+* Wed May 22 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.24-alt1
+- New version
+
 * Mon Mar 04 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.22-alt1
 - Initial build for ALT
 
