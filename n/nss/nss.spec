@@ -2,8 +2,8 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.43.0
-Release:	alt2
+Version:	3.44.0
+Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -271,6 +271,9 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 3.44.0-alt1
+- New version (3.44).
+
 * Tue May 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.43.0-alt2
 - Use %%_is_lp64 macro to determine if arch is 64-bit.
 
