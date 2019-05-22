@@ -2,13 +2,13 @@
 
 Name:     coolreader3
 Version:  3.2.29
-Release:  alt1
+Release:  alt2
 
 Summary: E-Book reader
-
-Group:    Text tools
 License:  %gpl2only
-URL:      http://coolreader.org
+Group:    Text tools
+
+Url:      http://coolreader.org
 #URL: http://sourceforge.net/projects/crengine
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
@@ -34,7 +34,10 @@ CHM, PDB.
 
 %prep
 %setup
-
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
@@ -79,6 +82,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Wed May 22 2019 Michael Shigorin <mike@altlinux.org> 3.2.29-alt2
+- E2K: strip UTF-8 BOM to fix build with lcc < 1.24
+
 * Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.29-alt1
 - Build new version (Closes: #36164).
 - Transfer to Qt5.
