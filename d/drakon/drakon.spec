@@ -1,6 +1,6 @@
 %define oname drakon_editor
 Name: drakon
-Version: 1.25
+Version: 1.31
 Release: alt1
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
@@ -9,7 +9,8 @@ License: Public domain
 Group: Development/Tools
 Url: http://drakon-editor.sourceforge.net/
 
-Source: http://prdownloads.sf.net/drakon-editor/%oname%{version}_rus.tar
+# Source-url: http://prdownloads.sf.net/drakon-editor/%oname%{version}.zip
+Source: %name-%version.tar
 
 %add_findreq_skiplist %_datadir/%name/examples/*
 %add_findreq_skiplist %_datadir/%name/testdata/*
@@ -75,6 +76,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/
 
 %changelog
+* Wed May 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt1
+- new version 1.31 (with rpmrb script) (ALT bug #36768)
+
 * Fri May 08 2015 Vitaly Lipatov <lav@altlinux.ru> 1.25-alt1
 - new version 1.25 (with rpmrb script)
 - build from drakon_editor1.25_rus.zip (ALT bug #30979)
