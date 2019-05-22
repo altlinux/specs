@@ -1,5 +1,5 @@
 Name: sonic-visualiser
-Version: 3.2.1
+Version: 3.3
 Release: alt1
 
 Summary: Application for viewing and analysing the contents of music audio files
@@ -14,14 +14,14 @@ Source0: %name-%version.tar
 Source1: %name.xml
 
 Patch0: sonic-visualiser-system-dataquay.patch
-Patch1: sonic-visualiser-3.1.1-test_fix.patch
+Patch1: sonic-visualiser-3.3-test_fix.patch
 
 BuildRequires: bzlib-devel capnproto-devel dataquay-minefeld-devel
 BuildRequires: libfftw3-devel libfishsound-devel libid3tag-devel
 BuildRequires: libjack-devel liblo-devel liblrdf-devel libmad-devel
 BuildRequires: liboggz-devel libportaudio2-devel libpulseaudio-devel
 BuildRequires: librubberband-devel libsamplerate-devel libsndfile-devel
-BuildRequires: libsord-devel qt5-svg-devel
+BuildRequires: libsord-devel qt5-svg-devel libopusfile-devel
 
 %description
 Sonic Visualiser is an application for viewing and analysing the
@@ -81,6 +81,9 @@ install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/app
 %_datadir/mimelnk/application/x-sonicvisualiser*
 
 %changelog
+* Wed May 22 2019 Grigory Ustinov <grenka@altlinux.org> 3.3-alt1
+- Build new version.
+
 * Thu Jan 10 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt1
 - Build new version.
 
