@@ -1,9 +1,9 @@
 Name: waybar
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
-URL: http://git.altlinux.org/people/glebfm/packages/waybar.git
+URL: https://github.com/Alexays/Waybar.git
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
@@ -17,10 +17,12 @@ BuildRequires: libgtkmm3-devel
 BuildRequires: libinput-devel
 BuildRequires: libnl-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libudev-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libwayland-cursor-devel
-BuildRequires: libwlroots-devel
+BuildRequires: libspdlog-devel
 BuildRequires: meson
+BuildRequires: cmake
 BuildRequires: wayland-protocols
 
 %description
@@ -48,6 +50,9 @@ sed -i \
 %_xdgconfigdir/%name
 
 %changelog
+* Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.6-alt1
+- 0.6.6
+
 * Sat May 18 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.5-alt1
 - 0.6.5
 
