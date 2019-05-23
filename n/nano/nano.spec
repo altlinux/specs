@@ -1,6 +1,6 @@
 Name: nano
-Version: 4.0
-Release: alt2
+Version: 4.2
+Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
 License: %gpl3plus/%fdl v1.2+
@@ -8,7 +8,7 @@ Group: Editors
 Url: https://nano-editor.org/
 Packager: Artem Zolochevskiy <azol@altlinux.org>
 
-# https://www.nano-editor.org/dist/v4/nano-4.0.tar.xz
+# https://www.nano-editor.org/dist/v4/nano-4.2.tar.xz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Thu May 23 2019 Artem Zolochevskiy <azol@altlinux.org> 4.2-alt1
+- update to 4.2
+
 * Mon Apr 15 2019 Artem Zolochevskiy <azol@altlinux.org> 4.0-alt2
 - RU Tooltip
 
