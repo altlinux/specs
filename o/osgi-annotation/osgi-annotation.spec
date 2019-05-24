@@ -8,15 +8,15 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    osgi-annotation
-Version: 6.0.0
-Release: alt1_7jpp8
+Version: 7.0.0
+Release: alt1_2jpp8
 Summary: Annotations for use in compiling OSGi bundles
 
 License: ASL 2.0
 URL:     http://www.osgi.org/
 # Upstream project is behind an account registration system with no anonymous
 # read access, so we download the source from maven central instead
-Source0: http://repo1.maven.org/maven2/org/osgi/osgi.annotation/%{version}/osgi.annotation-%{version}-sources.jar
+Source0: http://repo1.maven.org/maven2/org/osgi/osgi.annotation/%{version}/osgi.annotation-%{version}.jar
 Source1: http://repo1.maven.org/maven2/org/osgi/osgi.annotation/%{version}/osgi.annotation-%{version}.pom
 
 BuildArch:     noarch
@@ -40,8 +40,10 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -c -q
 
-mkdir -p src/main/resources && mv about.html src/main/resources
-mkdir -p src/main/java && mv org src/main/java
+mkdir -p src/main/java && mv OSGI-OPT/src/org src/main/java
+
+rm -r org OSGI-OPT
+
 cp -p %{SOURCE1} pom.xml
 
 # Ensure OSGi metadata is generated
@@ -73,7 +75,8 @@ cp -p %{SOURCE1} pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
+%doc about.html
 %dir %{_javadir}/osgi-annotation
 %dir %{_mavenpomdir}/osgi-annotation
 
@@ -81,6 +84,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_7jpp8
 - java update
 
