@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
-Version:        3.1.0
+Version:        3.1.1
 Release:        alt1_3jpp8
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
@@ -25,6 +25,7 @@ BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
@@ -32,7 +33,7 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.jdom:jdom)
+BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.vafer:jdependency)
@@ -73,6 +74,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_3jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_3jpp8
 - java fc28+ update
 
