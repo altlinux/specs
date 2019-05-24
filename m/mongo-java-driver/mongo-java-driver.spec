@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -16,11 +17,10 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:		%{?scl_prefix}mongo-java-driver
-Version:	3.4.2
-Release:	alt1_4jpp8
+Version:	3.6.4
+Release:	alt1_3jpp8
 Summary:	A Java driver for MongoDB
 
-Group:		Development/Other
 BuildArch:	noarch
 License:	ASL 2.0
 URL:		http://www.mongodb.org/display/DOCS/Java+Language+Center
@@ -28,15 +28,16 @@ Source0:	https://github.com/mongodb/%{pkg_name}/archive/r%{version}.tar.gz
 Patch0:         %{pkg_name}-gradle-local-fixes.patch
 
 %{!?scl:
-BuildRequires:	java-devel
+BuildRequires:  java-devel
 }
-BuildRequires:  %{?scl_prefix_java_common}gradle-local
-BuildRequires:  %{?scl_prefix_java_common}javapackages-tools
-BuildRequires:  %{?scl_prefix_java_common}javapackages-local
+BuildRequires:  gradle-local
+BuildRequires:  javapackages-tools
+BuildRequires:  javapackages-local
 BuildRequires:  mvn(io.netty:netty-buffer)
 BuildRequires:  mvn(io.netty:netty-transport)
 BuildRequires:  mvn(io.netty:netty-handler)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.xerial.snappy:snappy-java)
 
 
 %{!?scl:
@@ -51,8 +52,8 @@ Source44: import.info
 This is an ueber jar for the MongoDB Java driver.
 
 %package bson
+Group: Development/Other
 Summary:	A Java-based BSON implementation
-Group:		Development/Other
 %{!?scl:
 Requires:	javapackages-tools
 }
@@ -70,8 +71,8 @@ that require BSON.
 # and javadocs for this are in separate subpackages.
 
 %package driver
+Group: Development/Other
 Summary:	The MongoDB Java Driver
-Group:		Development/Other
 %{!?scl:
 Requires:	javapackages-tools
 }
@@ -83,8 +84,8 @@ Requires:       %{scl_runtime}
 The MongoDB Java Driver
 
 %package driver-core
+Group: Development/Other
 Summary:	The MongoDB Java Operations Layer
-Group:		Development/Other
 %{!?scl:
 Requires:	javapackages-tools
 }
@@ -97,8 +98,8 @@ The Java operations layer for the MongoDB Java Driver. Third
 parties can wrap this layer to provide custom higher-level APIs
 
 %package driver-async
+Group: Development/Other
 Summary:	The MongoDB Java Async Driver
-Group:		Development/Other
 %{!?scl:
 Requires:	javapackages-tools
 }
@@ -158,6 +159,9 @@ set -ex
 %doc README.md LICENSE.txt
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.4-alt1_3jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1_4jpp8
 - java update
 
