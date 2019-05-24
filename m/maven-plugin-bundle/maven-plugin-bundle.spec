@@ -4,7 +4,6 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,16 +12,14 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%if 0%{?fedora}
 %bcond_without obr
 %bcond_without reporting
-%endif
 
 %global site_name maven-bundle-plugin
 
 Name:           maven-plugin-bundle
-Version:        3.5.0
-Release:        alt1_1jpp8
+Version:        3.5.1
+Release:        alt1_2jpp8
 Summary:        Maven Bundle Plugin
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -58,7 +55,6 @@ BuildRequires:  mvn(org.apache.felix:org.apache.felix.bundlerepository)
 BuildRequires:  mvn(xpp3:xpp3)
 %endif
 %if %{with reporting}
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
@@ -123,12 +119,15 @@ rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt1_2jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_1jpp8
 - java update
 
