@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.4.6
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -22,6 +22,7 @@ Source11: pve-http-server.tar.xz
 Source12: extjs.tar.xz
 Source13: pve-widget-toolkit.tar.xz
 Source14: pve-i18n.tar.xz
+Source15: pve-mini-journalreader.tar.xz
 
 Source5: pve-manager-ru.po
 Source6: basealt_logo.png
@@ -71,7 +72,7 @@ BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage 
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc libnetfilter_conntrack-devel
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
-BuildRequires: perl(Template.pm) perl(IPC/Run.pm) perl(Term/ReadLine.pm) libjson-c-devel
+BuildRequires: perl(Template.pm) perl(IPC/Run.pm) perl(Term/ReadLine.pm) libjson-c-devel libsystemd-devel
 
 %description
 This package contains the PVE management tools
@@ -134,7 +135,7 @@ This is used to implement the PVE REST API
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
 
 %prep
-%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14
+%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14 -a15
 %patch0 -p0 -b .altwww
 %patch1 -p0 -b .alt
 %patch2 -p0 -b .alt
@@ -178,14 +179,14 @@ done
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
 %build
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit pve-mini-journalreader/src; do
     pushd $d
     %make
     popd
 done
 
 %install
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common pve-http-server extjs pve-widget-toolkit pve-i18n; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common pve-http-server extjs pve-widget-toolkit pve-i18n pve-mini-journalreader/src; do
     pushd $d
     %make DESTDIR=%buildroot install
     popd
@@ -306,6 +307,7 @@ __EOF__
 %_bindir/pveversion
 %_bindir/spiceproxy
 %_bindir/vzdump
+%_bindir/mini-journalreader
 %_datadir/javascript
 %_datadir/pve-i18n
 %dir %perl_vendor_privlib/PVE
@@ -518,6 +520,7 @@ __EOF__
 %_man8dir/qmeventd.8*
 
 %files -n pve-guest-common
+%dir %perl_vendor_privlib/PVE/VZDump
 %perl_vendor_privlib/PVE/VZDump/Plugin.pm
 %perl_vendor_privlib/PVE/ReplicationState.pm
 %perl_vendor_privlib/PVE/ReplicationConfig.pm
@@ -531,6 +534,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Fri May 24 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.4.6-alt2
+- pve-mini-journalreader 1.1-1
+
 * Mon May 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 5.4.6-alt1
 - pve-manager 5.4-6
 - pve-container 2.0-39
