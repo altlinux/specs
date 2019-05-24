@@ -7,11 +7,8 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Prevent brp-java-repack-jars from being run.
-%global __jar_repack %{nil}
-
 Name:           freemarker
-Version:        2.3.27
+Version:        2.3.28
 Release:        alt1_2jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
@@ -37,7 +34,6 @@ BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: apache-commons-logging
 BuildRequires: aqute-bnd
-BuildRequires: avalon-logkit >= 1.2
 BuildRequires: dom4j >= 1.6.1
 BuildRequires: hamcrest
 BuildRequires: ivy-local
@@ -51,7 +47,6 @@ BuildRequires: junit
 BuildRequires: jython
 BuildRequires: log4j-over-slf4j
 BuildRequires: rhino >= 1.6
-BuildRequires: saxpath
 BuildRequires: slf4j
 BuildRequires: xalan-j2 >= 2.7.0
 Source44: import.info
@@ -72,7 +67,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n incubator-freemarker-%{version}
+%setup -q
 
 find -type f -name "*.jar" -delete
 find -type f -name "*.class" -delete
@@ -91,6 +86,10 @@ rm ivysettings.xml
 sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
 sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
 
+# Drop unnecessary dep on saxpath and avalon
+sed -i -e '/saxpath/d' -e '/avalon-logkit/d' ivy.xml
+rm src/main/java/freemarker/log/_AvalonLoggerFactory.java
+
 %mvn_file org.%{name}:%{name} %{name}
 
 %build
@@ -108,6 +107,9 @@ ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3.28-alt1_2jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.27-alt1_2jpp8
 - java update
 
