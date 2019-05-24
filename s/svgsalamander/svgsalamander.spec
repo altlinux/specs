@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -5,19 +6,20 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag v1.1.1
+%global gittag v1.1.2
 %global gitname svgSalamander
 # spec file for package svgsalamander
 
 Name:           svgsalamander
-Version:        1.1.1
-Release:        alt1_4jpp8
+Version:        1.1.2
+Release:        alt1_1jpp8
 Summary:        An SVG engine for Java
 
-Group:          Development/Other
 License:        LGPLv2+ or BSD
 URL:            https://github.com/blackears/svgSalamander/
 Source0:        https://github.com/blackears/%{gitname}/archive/%{gittag}/%{gitname}-%{version}.tar.gz
+# Pulled from version 1.1.1
+Source1:        pom.xml
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
@@ -39,8 +41,8 @@ much easier for artists to design 2D game content - from rich interactive
 menus to charts and graphcs to complex animations.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -62,6 +64,7 @@ done
 
 %build
 pushd svg-core
+cp %SOURCE1 pom.xml
 %mvn_file : %{name} svgSalamander svg-salamander
 %mvn_alias : com.kitfox.svg:svg-salamander
 %mvn_build
@@ -81,6 +84,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_1jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
 - java update
 
