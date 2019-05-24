@@ -1,28 +1,23 @@
 %define _unpackaged_files_terminate_build 1
-%define oversion 1.0
 
-Name:		sway
-Version:	1.0
-Release:	alt1
-
-Summary:	i3wm drop-in replacement for Wayland
-
-Url:		http://swaywm.org/
-License:	MIT
-Group:		Graphical desktop/Other
+Name: sway
+Version: 1.1
+Release: alt1.rc3
+Summary: i3wm drop-in replacement for Wayland
+License: MIT
+Url: http://swaywm.org/
+Group: Graphical desktop/Other
 
 # https://github.com/swaywm/sway
 # git://git.altlinux.org/gears/s/sway.git
-Source0:	%name-%version-%release.tar
-Source2:	startsway
-
-Patch00:	sway-config.patch
-
-BuildPreReq: libwlc-devel >= 0.0.10
-BuildPreReq: libdbus-devel
+Source0: %name-%version.tar
+Source2: startsway
+Patch00: sway-config.patch
 
 BuildRequires: asciidoc-a2x
+BuildRequires: cmake
 BuildRequires: libcap-devel
+BuildRequires: libdbus-devel
 BuildRequires: libevdev-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libjson-c-devel
@@ -32,18 +27,25 @@ BuildRequires: libpcre-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwlc0-devel
+BuildRequires: libwlc-devel >= 0.0.10
 BuildRequires: libwlroots-devel
 BuildRequires: meson
+BuildRequires: scdoc
 BuildRequires: time
 
-Requires:	/etc/tcb
-Requires:	%name-data
-Requires(post):	/sbin/setcap
+# swaybg is now distributed as a standalone program which is compatible with many Wayland compositors (sway 1.1-rc1)
+Requires: swaybg
 
-%package	data
-Summary:	i3wm drop-in replacement for Wayland - data files
-Group:		Graphical desktop/Other
-BuildArch:	noarch
+# swayidle, a new idle management daemon, is available separately (sway 1.0)
+Requires: swayidle
+
+Requires: %name-data
+Requires(post): /sbin/setcap
+
+%package data
+Summary: i3wm drop-in replacement for Wayland - data files
+Group: Graphical desktop/Other
+BuildArch: noarch
 
 %define common_descr \
 Sway is a drop-in replacement for the i3 window manager, but for Wayland \
@@ -59,14 +61,11 @@ supports most of i3's features, and a few extras.
 This package contains data files.
 
 %prep
-%setup -n %name-%version-%release
+%setup
 %patch00 -p1
-
-sed -i -e "s/'json-c', version: '>=0.13'/'json-c', version: '>=0.12'/" meson.build
 
 %build
 %meson \
-	-Dsway-version="%oversion" \
 	-Dwerror=false \
 	#
 %meson_build
@@ -94,12 +93,11 @@ rm -rf -- \
 %_bindir/sway
 %_bindir/startsway
 %_bindir/swaybar
-%_bindir/swaybg
 %_bindir/swaymsg
 %_bindir/swaynag
-#%%_man1dir/*
-#%%_man5dir/*
-#%%_man7dir/*
+%_man1dir/*
+%_man5dir/*
+%_man7dir/*
 %_datadir/wayland-sessions/sway.desktop
 
 %files data
@@ -107,6 +105,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.1-alt1.rc3
+- New version (1.1-rc3)
+
 * Sun Mar 24 2019 Alexey Gladkov <legion@altlinux.ru> 1.0-alt1
 - New version (1.0)
 

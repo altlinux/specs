@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.5
+%define ver_major 0.6
 
 %def_enable libcap
 %def_enable x11
@@ -84,6 +84,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri May 24 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.0-alt1
+- New version (0.6.0)
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 
