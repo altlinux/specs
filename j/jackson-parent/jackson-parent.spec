@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-parent
-Version:       2.9.1
-Release:       alt1_3jpp8
+Version:       2.9.1.2
+Release:       alt1_1jpp8
 Summary:       Parent pom for all Jackson components
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-parent
@@ -43,6 +43,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.1.2-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_3jpp8
 - fc29 update
 
