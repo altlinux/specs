@@ -9,13 +9,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %global         gituser         syvaidya
 %global         gitname         openstego
-# Release 0.7.2 - 2017-12-17
-%global         commit          321eb6f0b374fcbfbfb50c1ba74d049a809e7ed2
+# Release 0.7.3 - 2018-04-15
+%global         commit          df7e186646f3cde69ead1a8be3de3290489aa2e4
 %global         shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           OpenStego
-Version:        0.7.2
-Release:        alt1_1jpp8
+Version:        0.7.3
+Release:        alt1_3jpp8
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
@@ -107,6 +107,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_3jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_1jpp8
 - java update
 
