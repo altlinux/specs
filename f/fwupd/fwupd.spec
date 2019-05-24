@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -221,6 +221,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hub.so
 %_libdir/fwupd-plugins-3/libfu_plugin_superio.so
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
+%_libdir/fwupd-plugins-3/libfu_plugin_synaptics_prometheus.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_synapticsmst.so
 %endif
@@ -266,6 +267,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Fri May 24 2019 Anton Farygin <rider@altlinux.ru> 1.2.9-alt1
+- 1.2.9
+
 * Thu Apr 25 2019 Anton Farygin <rider@altlinux.ru> 1.2.8-alt1
 - 1.2.8
 
