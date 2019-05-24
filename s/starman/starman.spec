@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 Name: starman
-Version: 0.4014
+Version: 0.4015
 Release: alt1
-Serial: 1
+Epoch: 1
 Summary: High-performance preforking PSGI/Plack web server
 
 Group: Networking/WWW
@@ -74,6 +75,7 @@ mkdir -p %buildroot/var/log/%name
 %preun_service %name
 
 %files
+%doc LICENSE README* Changes
 %_bindir/%name
 %_man1dir/%name.1*
 %perl_vendor_privlib/Starman*
@@ -83,9 +85,12 @@ mkdir -p %buildroot/var/log/%name
 %_initdir/%name
 %_sysconfdir/logrotate.d/%name
 %attr(3770,root,_starman) /var/log/%name
-%doc Changes README.md
+%doc Changes
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.4015-alt1
+- new version
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.4014-alt1
 - automated CPAN update
 
