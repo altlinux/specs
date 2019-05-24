@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %global oname oss-parent
 Name:          fasterxml-oss-parent
-Version:       26
-Release:       alt1_7jpp8
+Version:       34
+Release:       alt1_1jpp8
 Summary:       FasterXML parent pom
 License:       ASL 2.0
 URL:           http://fasterxml.com/
@@ -35,12 +35,16 @@ This package contains the parent pom file for FasterXML.com projects.
 %prep
 %setup -q -n %{oname}-%{oname}-%{version}
 
-%pom_remove_plugin org.sonatype.plugins:nexus-maven-plugin
+# Stuff unnecessary for RPM builds
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :maven-scm-plugin
-%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
-# org.kathrynhuxtable.maven.wagon:wagon-gitsite:0.3.1
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :nexus-maven-plugin
+%pom_remove_plugin :jdepend-maven-plugin
+%pom_remove_plugin :taglist-maven-plugin
 %pom_xpath_remove "pom:build/pom:extensions"
+
 # remove unavailable com.google.doclava doclava 1.0.3
 %pom_xpath_remove "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration"
 %pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']" '
@@ -48,10 +52,9 @@ This package contains the parent pom file for FasterXML.com projects.
   <encoding>UTF-8</encoding>
   <quiet>true</quiet>
   <source>${javac.src.version}</source>
+  <additionalJOption>-J-Xmx1024m</additionalJOption>
+  <maxmemory>${javadoc.maxmemory}</maxmemory>
 </configuration>'
-
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-site-plugin
 
 %build
 %mvn_build -j
@@ -64,6 +67,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 34-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 26-alt1_7jpp8
 - fc29 update
 
