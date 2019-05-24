@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Simple
 Name: perl-%dist
-Version: 3.35
+Version: 3.36
 Release: alt1
 
 Summary: Framework for parsing Pod
@@ -9,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/K/KH/KHW/Pod-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KH/KHW/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ documentation for Perl and for Perl modules. The Pod format is explained
 in the perlpod man page; the most common formatter is called "perldoc".
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 # avoid scanning the whole @INC
@@ -46,6 +46,9 @@ rm t/search50.t
 %doc	%perl_vendor_privlib/Pod/Simple/*.pod
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 3.35-alt1
 - automated CPAN update
 
