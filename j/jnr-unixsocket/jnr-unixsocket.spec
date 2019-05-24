@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
-Version:        0.18
-Release:        alt1_6jpp8
+Version:        0.21
+Release:        alt1_2jpp8
 Summary:        Unix sockets for Java
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -17,15 +17,13 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-constants)
-BuildRequires:  mvn(com.github.jnr:jnr-enxio) >= 0.16
+BuildRequires:  mvn(com.github.jnr:jnr-enxio)
 BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(com.github.jnr:jnr-posix)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
-
-Requires:  mvn(com.github.jnr:jnr-enxio) >= 0.16
 Source44: import.info
 
 %description
@@ -42,6 +40,9 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+find ./ -name '*.jar' -delete
+find ./ -name '*.class' -delete
+
 # remove unnecessary wagon extension
 %pom_xpath_remove pom:build/pom:extensions
 
@@ -55,14 +56,12 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :exec-maven-plugin
 
-# Remove enxio classes to avoid split-package problems, see https://github.com/jnr/jnr-unixsocket/pull/41
+# Remove enxio classes to avoid OSGi split-package problems,
+# see https://github.com/jnr/jnr-unixsocket/pull/41
 rm -r src/main/java/jnr/enxio
 
 # Fix jar plugin usage
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions"
-
-find ./ -name '*.jar' -delete 
-find ./ -name '*.class' -delete
 
 %build
 # Tests fails on some arches
@@ -79,6 +78,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_6jpp8
 - fc29 update
 
