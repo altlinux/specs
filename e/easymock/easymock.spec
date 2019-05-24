@@ -8,13 +8,16 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           easymock
-Version:        3.5
-Release:        alt1_2jpp8
+Version:        3.6
+Release:        alt1_3jpp8
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
 
-Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+# Remove bundled binaries which cannot be easily verified for licensing
+Source1:        generate-tarball.sh
 
 Patch1:         0001-Disable-android-support.patch
 Patch2:         0002-Unshade-cglib-and-asm.patch
@@ -66,6 +69,10 @@ Javadoc for %{name}.
 %patch3 -p1
 
 %pom_remove_plugin :maven-license-plugin
+%pom_remove_plugin :maven-timestamp-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin core
 
 # remove android support
 rm core/src/main/java/org/easymock/internal/Android*.java
@@ -83,9 +90,6 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 # remove some warning caused by unavailable plugin
 %pom_remove_plugin org.codehaus.mojo:versions-maven-plugin
-
-# retired
-%pom_remove_plugin :maven-timestamp-plugin
 
 # For compatibility reasons
 %mvn_file ":easymock{*}" easymock@1 easymock3@1
@@ -108,6 +112,9 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_3jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_2jpp8
 - java update
 
