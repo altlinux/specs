@@ -1,8 +1,9 @@
 %def_with perl
 %def_with cxx
+%def_without php
 Name: ossp-uuid
 Version: 1.6.2
-Release: alt1
+Release: alt2
 Summary: Universally Unique Identifier library
 License: MIT
 Group: System/Libraries
@@ -15,12 +16,9 @@ Url: http://www.ossp.org/pkg/lib/uuid/
 %define libdcedevel lib%{name}-dce-devel
 %define libcxxname lib%{name}++%libversion
 %define libcxxdevel lib%{name}++-devel
+%define phpname php7-%{name}
 
 Source: uuid-%version.tar.bz2
-#Patch0: uuid-1.6.2-ossp-alt.patch
-# use patch above, as it also renames uuid++.3
-# the rest is not different;
-# TODO:
 Patch0:         uuid-1.6.1-ossp.patch
 
 Patch1:         uuid-1.6.1-mkdir.patch
@@ -45,8 +43,11 @@ BuildRequires: perl-devel
 %if_with cxx
 BuildRequires: gcc-c++
 %endif
+%if_with php
+BuildRequires: rpm-build-php7
+%endif
 
-Conflicts: libossp-uuid < 1.6
+Conflicts: libossp-uuid < 1.5.1-alt3
 
 %description
 OSSP uuid is a ISO-C:1999 application programming interface (API)
@@ -122,9 +123,18 @@ Requires:       %libcxxname = %EVR
 C++ development headers and libraries for OSSP uuid.
 %endif
 
+%if_with php
+%package -n %phpname
+Group: Development/Other
+Summary:        PHP development support for Universally Unique Identifier library
+Requires:       %libname = %EVR
+
+%description -n %phpname
+PHP extension for OSSP uuid.
+%endif
+
 %prep
 %setup -q -n uuid-%version
-#patch0 -p2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1 -b .php54
@@ -144,7 +154,7 @@ export PGSQL_NAME=$(pwd)/pgsql/libossp-uuid.so
     --disable-static \
     %{subst_with perl} \
     %{subst_with cxx} \
-    --without-php \
+    %{subst_with php} \
     --with-dce \
     --without-pgsql
 
@@ -170,7 +180,8 @@ ln -s %name %buildroot%_bindir/uuid
 mv %buildroot%_man3dir/{uuid++.3,%{name}++.3}
 
 %check
-# TODO
+# TODO: killing rpath with sed -ri '...' libtool above breaks make check
+# better to kill rpath with chrpath -d later
 #make check
 
 %files
@@ -180,7 +191,7 @@ mv %buildroot%_man3dir/{uuid++.3,%{name}++.3}
 %_man1dir/*
 
 %files -n %libname
-%_libdir/libossp-uuid.so.*
+%_libdir/libossp-uuid.so.%{libversion}*
 
 %files -n %libdevel
 %_bindir/uuid-config
@@ -190,7 +201,7 @@ mv %buildroot%_man3dir/{uuid++.3,%{name}++.3}
 %_man3dir/ossp-uuid.3*
 
 %files -n %libdcename
-%_libdir/libossp-uuid_dce.so.*
+%_libdir/libossp-uuid_dce.so.%{libversion}*
 
 %files -n %libdcedevel
 %_includedir/uuid_dce.h
@@ -204,7 +215,7 @@ mv %buildroot%_man3dir/{uuid++.3,%{name}++.3}
 
 %if_with cxx
 %files -n %libcxxname
-%_libdir/libossp-uuid++.so.*
+%_libdir/libossp-uuid++.so.%{libversion}*
 
 %files -n %libcxxdevel
 %_includedir/uuid++.hh
@@ -212,8 +223,16 @@ mv %buildroot%_man3dir/{uuid++.3,%{name}++.3}
 %_man3dir/ossp-uuid++.3*
 %endif
 
+%if_with php
+%files -n %phpname
+todo_fill_me
+%endif
+
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2
+- added disabled php support
+
 * Thu May 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1
 - new version
 - added c++ support
