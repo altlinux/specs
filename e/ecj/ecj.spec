@@ -9,16 +9,16 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier M-4.7.3aRC2-201803300640
+%global qualifier S-4.11RC1-201903010040
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.7.3a
-Release: alt1_1jpp8
+Version: 4.11
+Release: alt1_0.1jpp8
 URL: http://www.eclipse.org
-License: EPL
+License: EPL-2.0
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC2.jar
+Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC1.jar
 Source1: ecj.sh.in
 Source3: https://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/%{version}/ecj-%{version}.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
@@ -29,11 +29,8 @@ Source5: java10api.jar
 # Always generate debug info when building RPMs (Andrew Haley)
 Patch0: %{name}-rpmdebuginfo.patch
 
-# Fix build with lambda syntax, ebz#520940
-Patch1: java8.patch
-
 # Include java API stubs in build
-Patch2: javaAPI.patch
+Patch1: javaAPI.patch
 
 BuildArch: noarch
 
@@ -59,11 +56,9 @@ the JDT Core batch compiler.
 %prep
 %setup -q -c
 %patch0 -p1
-%patch1 -p3
-%patch2 -b .orig
+%patch1
 
 sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
-sed -i -e "s/Xlint:none/Xlint:none -encoding cp1252/g" build.xml
 
 cp %{SOURCE3} pom.xml
 mkdir -p scripts/binary/META-INF/
@@ -112,11 +107,14 @@ mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 
 %files -f .mfiles
-%doc about.html
+%doc --no-dereference about.html
 %{_bindir}/ecj
 %{_mandir}/man1/ecj*
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_0.1jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.7.3a-alt1_1jpp8
 - java update
 
