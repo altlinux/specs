@@ -1,20 +1,21 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm) rpm-build-java
+BuildRequires: java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-native
-Version:        1.2.16
-Release:        alt1_2jpp8.1
+Version:        1.2.17
+Release:        alt1_3jpp8
 Summary:        Tomcat native library
 
-Group:          System/Libraries
 License:        ASL 2.0
 URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  libapr1-devel >= 1.4.3
@@ -55,6 +56,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libtcnative*.*a
 rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
+
+
+
+
 %files
 %{!?_licensedir:%global license %%doc}
 %doc --no-dereference LICENSE NOTICE
@@ -64,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_3jpp8
+- new version
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1_2jpp8.1
 - NMU: Rebuild with new openssl 1.1.0.
 
