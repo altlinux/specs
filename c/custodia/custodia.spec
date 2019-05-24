@@ -3,7 +3,7 @@
 
 Name: custodia
 Version: 0.6.0
-Release: alt2
+Release: alt3
 
 Summary: A tool for managing secrets
 License: %gpl3plus
@@ -52,6 +52,8 @@ Group: Development/Python
 %py3_requires urllib3.connection
 %py3_requires urllib3.connectionpool
 %py3_provides %name
+# due to file conflicts https://bugzilla.altlinux.org/show_bug.cgi?id=36781
+Conflicts: python-module-custodia
 
 %description -n python3-module-%name
 %overview
@@ -135,6 +137,9 @@ fi
 %_bindir/custodia-cli
 
 %changelog
+* Fri May 24 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt3
+- Fixed update (closes: #36781).
+
 * Sat Mar 30 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
 - Fixed FTBFS (closes: #36426).
 - Removed Python2 subpackage.
