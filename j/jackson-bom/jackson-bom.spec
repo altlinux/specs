@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-bom
-Version:       2.9.4
-Release:       alt1_3jpp8
+Version:       2.9.8
+Release:       alt1_1jpp8
 Summary:       Bill of materials POM for Jackson projects
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-bom
@@ -35,6 +35,9 @@ sed -i 's/\r//' LICENSE
 # Disable plugins not needed during RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin" base
 
+# New EE coords
+%pom_change_dep "javax.activation:javax.activation-api" "jakarta.activation:jakarta.activation-api" base
+
 %build
 %mvn_build -j
 
@@ -46,6 +49,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_3jpp8
 - fc29 update
 
