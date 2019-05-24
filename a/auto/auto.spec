@@ -8,34 +8,17 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          auto
-Version:       1.1
-Release:       alt1_6jpp8
+Version:       1.4.1
+Release:       alt1_1jpp8
 Summary:       A collection of source code generators for Java
 License:       ASL 2.0
 URL:           https://github.com/google/auto
 Source0:       https://github.com/google/auto/archive/auto-value-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.google.guava:guava)
-BuildRequires: mvn(com.squareup:javawriter)
-BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires: mvn(org.apache.velocity:velocity)
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-
-%if 0
-# Test deps
-BuildRequires: mvn(com.google.code.findbugs:jsr305:1.3.9)
-BuildRequires: mvn(junit:junit)
-# Unavailable test deps
-BuildRequires: mvn(com.google.dagger:dagger:2.0)
-BuildRequires: mvn(com.google.dagger:dagger-compiler:2.0)
-BuildRequires: mvn(com.google.guava:guava-testlib:18.0)
-BuildRequires: mvn(com.google.inject:guice:4.0-beta)
-BuildRequires: mvn(com.google.testing.compile:compile-testing:0.6)
-BuildRequires: mvn(com.google.truth:truth:0.25)
-%endif
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.guava:guava:19.0)
+BuildRequires:  mvn(com.squareup:javapoet)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -47,16 +30,11 @@ that automate those types of tasks.
 %package common
 Group: Development/Java
 Summary:       Auto Common Utilities
+# Obsoletes added in F30
+Obsoletes:     %{name}-factory < %{version}-%{release}
 
 %description common
 Common utilities for creating annotation processors.
-
-%package factory
-Group: Development/Java
-Summary:       JSR-330-compatible factories
-
-%description factory
-A source code generator for JSR-330-compatible factories.
 
 %package service
 Group: Development/Java
@@ -87,17 +65,12 @@ This package contains javadoc for %{name}.
 find -name '*.class' -print -delete
 find -name '*.jar' -print -delete
 
-%pom_xpath_inject "pom:project" "
-<modules>
-  <module>common</module>
-  <module>factory</module>
-  <module>service</module>
-  <module>value</module>
-</modules>"
+# Disable factory module due to missing dep:
+# com.google.googlejavaformat:google-java-format
+%pom_disable_module factory build-pom.xml
 
-%pom_xpath_set "pom:project/pom:version" %{version}
+%pom_xpath_set "pom:project/pom:version" 3
 for p in common factory service value ;do
-%pom_xpath_set "pom:parent/pom:version" %{version} ${p}
 %pom_xpath_set "pom:project/pom:version" %{version} ${p}
 %pom_xpath_remove "pom:dependency[pom:scope = 'test']" ${p}
 done
@@ -107,16 +80,15 @@ done
 %pom_remove_plugin :maven-invoker-plugin value
 %pom_remove_plugin :maven-invoker-plugin factory
 
-%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-service']/pom:version" %{version} factory
-%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-common']/pom:version" %{version} factory
-%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-common']/pom:version" %{version} service
-%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-common']/pom:version" %{version} value
-%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-service']/pom:version" %{version} value
+%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-common']/pom:version" %{version} factory service value
+%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-service']/pom:version" %{version} factory value
+%pom_xpath_set "pom:dependency[pom:artifactId = 'auto-value']/pom:version" %{version} factory
+
+%mvn_package :build-only __noinstall
 
 %build
-
 # Unavailable test deps
-%mvn_build -sf
+%mvn_build -sf -- -f build-pom.xml
 
 %install
 %mvn_install
@@ -128,10 +100,6 @@ done
 
 %files common -f .mfiles-%{name}-common
 %doc common/README.md
-%doc --no-dereference LICENSE.txt
-
-%files factory -f .mfiles-%{name}-factory
-%doc factory/README.md
 %doc --no-dereference LICENSE.txt
 
 %files service -f .mfiles-%{name}-service
@@ -146,6 +114,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_1jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6jpp8
 - java update
 
