@@ -1,8 +1,9 @@
 %def_with cmake
 %define major 1.8
+
 Name: sword
 Version: %major.1
-Release: alt3
+Release: alt4
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -57,6 +58,13 @@ will need to develop applications which will use the SWORD Bible Framework.
 %prep
 %setup
 
+%ifarch %e2k
+# mcst#4060
+%add_optflags -std=gnu++11
+# strip UTF-8 BOM for lcc < 1.24
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
+
 %build
 %if_with cmake
 %cmake -DLIBSWORD_LIBRARY_TYPE=Shared \
@@ -107,6 +115,9 @@ make tests
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 24 2019 Michael Shigorin <mike@altlinux.org> 1.8.1-alt4
+- fix build with lcc-1.23 on e2k
+
 * Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt3
 - rebuild with libicu63
 
