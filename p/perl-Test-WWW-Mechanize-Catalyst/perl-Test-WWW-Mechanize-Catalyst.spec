@@ -1,17 +1,17 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Compress/Zlib.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Compress/Zlib.pm) perl(ExtUtils/CBuilder.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.62
-Release:        alt1
+Release:        alt1_1
 License:        GPL+ or Artistic
 
-Source0:        http://www.cpan.org/authors/id/M/MS/MSTROUT/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/M/MS/MSTROUT/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
 URL:            https://metacpan.org/release/Test-WWW-Mechanize-Catalyst
 BuildArch:      noarch
 
@@ -61,11 +61,6 @@ Requires:       perl(namespace/clean.pm) >= 0.090
 Requires:       perl(Test/WWW/Mechanize.pm) >= 1.140
 Requires:       perl(WWW/Mechanize.pm) >= 1.540
 
-# obsolete/provide old tests subpackage
-# can be removed during F19 development cycle
-Obsoletes:      %{name}-tests < 0.56-3
-Provides:       %{name}-tests = %{version}-%{release}
-
 
 Source44: import.info
 
@@ -105,6 +100,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
 - automated CPAN update
 
