@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_22jpp8
+Release:          alt1_23jpp8
 Summary:          Model MBeans utility classes
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -78,6 +78,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_23jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_22jpp8
 - fc29 update
 
