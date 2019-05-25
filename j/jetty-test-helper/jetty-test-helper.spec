@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-test-helper
 Version:        3.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 # header-template.txt documents dual licensing
 License:        ASL 2.0 or EPL
 Summary:        Jetty toolchain test helper
@@ -64,6 +64,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE-eplv10-aslv20.html
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_6jpp8
 - fc29 update
 
