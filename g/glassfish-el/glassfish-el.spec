@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-el
 Version:       3.0.1
-Release:       alt1_0.9.b08jpp8
+Release:       alt1_0.10.b08jpp8
 Summary:       J2EE Expression Language Implementation
 License:       CDDL-1.1 or GPLv2 with exceptions
 URL:           http://uel.java.net
@@ -167,6 +167,9 @@ cp -p api/src/main/javadoc/doc-files/*-spec-license.html .
 %doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.10.b08jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.9.b08jpp8
 - fc29 update
 
