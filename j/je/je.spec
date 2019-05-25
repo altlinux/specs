@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          je
 Version:       6.3.8
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Berkeley DB Java Edition
 License:       AGPLv3 and BSD
 URL:           http://www.oracle.com/us/products/database/berkeley-db/je/overview/index.html
@@ -114,6 +114,9 @@ cp -a docs/examples %{buildroot}%{_javadocdir}/%{name}-examples
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_6jpp8
 - fc29 update
 
