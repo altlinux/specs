@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-transaction-1.2-api
 Version:          1.0.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Transaction 1.2 API
 License:          CDDL or GPLv2 with exceptions
 Url:              https://github.com/jboss/jboss-transaction-api_spec
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp8
 - fc29 update
 
