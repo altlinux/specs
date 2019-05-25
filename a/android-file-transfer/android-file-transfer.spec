@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel pkgco
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		android-file-transfer
-Version:	3.7
-Release:	alt2_2
+Version:	3.8
+Release:	alt1_1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
@@ -67,11 +67,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 %doc --no-dereference LICENSE
 %{_bindir}/*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/metainfo/%{name}.appdata.xml
+%{_metainfodir}/%{name}.appdata.xml
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_1
+- update by mgaimport
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.7-alt2_2
 - update by mgaimport
 
