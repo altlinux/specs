@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          johnzon
 Version:       0.9.4
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Implementation of JSR-353
 License:       ASL 2.0
 URL:           http://johnzon.apache.org/
@@ -208,6 +208,9 @@ asciidoctor MATURITY.adoc
 %files websocket -f .mfiles-johnzon-websocket
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_6jpp8
 - fc29 update
 
