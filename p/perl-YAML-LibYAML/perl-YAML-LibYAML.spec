@@ -22,11 +22,11 @@ BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Epoch:          1
 Version:        0.78
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/YAML/YAML-LibYAML-%{version}.tar.gz
 
 # Build
 BuildRequires:  coreutils
@@ -80,7 +80,7 @@ Requires:       perl(B/Deparse.pm)
 # https://github.com/ingydotnet/yaml-libyaml-pm/issues/49
 # version number determined by comparing commits in upstream repo:
 # https://github.com/yaml/libyaml/
-Provides:       bundled(libyaml) = 0.2.1
+Provides:       bundled(libyaml) = 0.2.2
 
 # Avoid provides for perl shared objects
 
@@ -95,11 +95,11 @@ bound to Python and was later bound to Ruby.
 %setup -q -n YAML-LibYAML-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=%{buildroot}
+%{makeinstall_std}
 find %{buildroot} -type f -name '*.bs' -empty -delete
 # %{_fixperms} -c %{buildroot}
 
@@ -107,12 +107,15 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.78-alt1_1
+- update to new release by fcimport
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.78-alt1
 - automated CPAN update
 
