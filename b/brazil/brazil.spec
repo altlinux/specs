@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -8,9 +9,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:      brazil
 Version:   2.3
-Release:   alt3_19jpp8
+Release:   alt3_20jpp8
 Summary:   Extremely small footprint Java HTTP stack
-Group:     Development/Other
 License:   SPL
 URL:       https://github.com/mbooth101/brazil
 
@@ -34,16 +34,16 @@ Labs. This package contains the core set of classes that are not dependent on
 any other external Java libraries.
 
 %package javadoc
+Group: Development/Java
 Summary:   Java-docs for %{name}
-Group:     Development/Java
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
 %package demo
+Group: Development/Other
 Summary:   Demos for %{name}
-Group:     Development/Other
 Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:  libtcl tcl
 
@@ -87,6 +87,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_20jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_19jpp8
 - fc29 update
 
