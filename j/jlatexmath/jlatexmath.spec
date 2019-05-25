@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
-Group:          Development/Other
 License:        GPLv2+
 URL:            http://forge.scilab.org/index.php/p/jlatexmath/
 Source0:        http://forge.scilab.org/index.php/p/jlatexmath/downloads/get/%{name}-src-all-%{version}.zip
@@ -34,8 +34,8 @@ The default encoding is UTF-8 and most of LaTeX commands are available.
 JLaTeXMath is a fork of the excellent project JMathTeX.
 
 %package fop
+Group: Development/Other
 Summary:        FOP plug-in for %{name}
-Group:          Development/Other
 
 BuildRequires:  jpackage-utils
 BuildRequires:  java-devel
@@ -51,8 +51,8 @@ Requires:       fop
 This package contains the FOP plug-in for %{name}.
 
 %package javadoc
+Group: Development/Java
 Summary:        API Documentation for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
@@ -98,6 +98,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_8jpp8
 - fc29 update
 
