@@ -1,5 +1,5 @@
 Name: 	 rubyzip
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
  
 Summary: rubyzip is a ruby module for reading and writing zip files
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat May 25 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.3-alt1
+- New version.
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - New version.
 
