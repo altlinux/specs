@@ -1,14 +1,15 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_17
+Release:        alt5_21
 Summary:        Falling blocks game
 
-Group:          Games/Other
 License:        GPLv2
 URL:            http://www.sacredchao.net/~piman/angrydd/
 Source0:        http://www.sacredchao.net/~piman/%{name}/%{name}-%{version}.tar.gz
@@ -17,7 +18,8 @@ Source3:        %{name}.desktop
 BuildArch:      noarch
 
 BuildRequires:  desktop-file-utils
-Requires:       pygame icon-theme-hicolor libgail libgtk+2
+BuildRequires: /usr/bin/pathfix.py python-devel
+Requires:       python-module-pygame icon-theme-hicolor libgail libgtk+2
 Source44: import.info
 
 %description
@@ -30,6 +32,7 @@ then break them, raining more gems down onto your opponent. The first person
 whose field fills up, loses.
 
 %prep
+pathfix.py -pni "%{__python} %{py2_shbang_opts}" .
 %setup -q
 
 sed -i 's|PREFIX ?= /usr/local|PREFIX ?= %{_prefix}|' Makefile
@@ -53,6 +56,7 @@ desktop-file-install                    \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications           \
   %{SOURCE3}
 
+pathfix.py -pni "%{__python} %{py2_shbang_opts}" $RPM_BUILD_ROOT%{_datadir}/%{name}/angrydd.py
 
 %files
 %doc COPYING README TODO
@@ -64,6 +68,9 @@ desktop-file-install                    \
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_21
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_17
 - update to new release by fcimport
 
