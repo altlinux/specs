@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdbi
 Version:       2.63.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       A SQL convenience library for Java
 License:       ASL 2.0
 URL:           http://jdbi.org/
@@ -100,6 +100,9 @@ find . -name "*.jar" -type f -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.63.1-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.63.1-alt1_6jpp8
 - fc29 update
 
