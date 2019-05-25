@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module Devel-StackTrace
 Name: perl-%module
-Version: 2.03
+Version: 2.04
 Release: alt1
 Epoch: 1
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/Devel/StackTrace*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.04-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.03-alt1
 - automated CPAN update
 
