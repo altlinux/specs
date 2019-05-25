@@ -1,3 +1,4 @@
+Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
@@ -11,9 +12,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_21jpp8
+Release:	alt1_22jpp8
 Summary:	A Java program for drawing Feynman diagrams
-Group:		Engineering
 License:	GPLv2+
 URL:		http://jaxodraw.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{major}-%{minor}_src.tar.gz
@@ -46,8 +46,8 @@ keyboard entries. Graphs may be exported to (encapsulated) postscript and can
 be saved in XML files to be used in later sessions.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
 Requires:	%{name} = %{version}-%{release}
 Requires:	jpackage-utils
 BuildArch: noarch
@@ -57,8 +57,8 @@ This package contains the API documentation for %{name}.
 
 
 %package latex
+Group: Engineering
 Summary:	LaTeX style file axodraw4j.sty for documents generated with jaxodraw
-Group:		Engineering
 License:	LPPL
 # In order to compile documents one needs a LaTeX compiler
 Requires:	tex(latex)
@@ -157,6 +157,9 @@ EOF
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_22jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_21jpp8
 - fc29 update
 
