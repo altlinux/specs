@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xprop imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
@@ -11,10 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt5_8jpp8
+Release:    alt5_9jpp8
 Summary:    Java ATK Wrapper
 
-Group:      Development/Other
 License:    LGPLv2+
 URL:        http://git.gnome.org/browse/java-atk-wrapper
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
@@ -89,6 +89,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt5_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt5_8jpp8
 - fc29 update
 
