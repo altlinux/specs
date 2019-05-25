@@ -1,13 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           monsterz
 Version:        0.7.1
-Release:        alt2_19
+Release:        alt2_23
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
-Group:          Games/Other
 License:        WTFPL
 URL:            http://sam.zoy.org/monsterz/
 Source0:        http://sam.zoy.org/%{name}/%{name}-%{version}.tar.gz
@@ -15,7 +16,9 @@ Source1:        %{name}.score
 Patch0:         %{name}-0.7.1-userpmopts.patch
 Patch1:         %{name}-0.7.1-64bitfix.patch
 Patch2:         %{name}-0.7.1-blit-crash.patch
+BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
+BuildRequires:  python-devel /usr/bin/pathfix.py
 Requires:       pygame
 Requires:       icon-theme-hicolor
 Provides:       %{name}-data = %{version}-%{release}
@@ -38,7 +41,7 @@ board again. Chain reactions earn you even more points.
 %patch1 -p1
 %endif
 %patch2 -p0
-
+pathfix.py -pni "%{__python} %{py2_shbang_opts}" .
 
 %build
 %make_build prefix=%{_usr} datadir=%{_datadir} pkgdatadir=%{_datadir}/%{name} CFLAGS="%{optflags}"
@@ -85,10 +88,14 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 %{_datadir}/%{name}
 %attr(2711,root,games) %{_bindir}/%{name}
 %attr(-,root,games) %config(noreplace) %{_var}/games/%{name}
-%doc AUTHORS COPYING README TODO
+%doc --no-dereference COPYING
+%doc AUTHORS README TODO
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_23
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_19
 - update to new release by fcimport
 
