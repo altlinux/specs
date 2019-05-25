@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt3_0.19.Beta2jpp8
+Release:          alt3_0.20.Beta2jpp8
 Summary:          JBoss Specification API Parent POM
 # The license is not included because it's not a part of this tag. License file
 # was pushed to trunk and no new tag will be created for this change.
@@ -49,6 +49,9 @@ Parent POM that allows building all specification projects at once.
 %files -f .mfiles
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.20.Beta2jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.19.Beta2jpp8
 - fc29 update
 
