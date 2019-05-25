@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_18jpp8
+Release: alt1_19jpp8
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
-Group: System/Libraries
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jfreereport/jcommon-serializer
 BuildRequires: ant java-devel jpackage-utils libbase >= 1.0.0
@@ -24,8 +24,8 @@ Jcommon-serializer is a general serialization framework used by JFreeChart,
 JFreeReport and other projects.
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Documentation
+Summary: Javadoc for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -58,6 +58,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_18jpp8
 - fc29 update
 
