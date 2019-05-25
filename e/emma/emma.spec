@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_20jpp8
+Release:        alt2_22jpp8
 Epoch:          0
 License:        CPL
 URL:            http://emma.sourceforge.net/
@@ -128,6 +128,9 @@ ant -Dbuild.compiler=modern build javadoc
 %doc cpl-v10.html
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_22jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_20jpp8
 - java update
 
