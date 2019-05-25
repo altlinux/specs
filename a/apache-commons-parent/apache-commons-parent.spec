@@ -1,21 +1,21 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-parent
-Version:        43
-Release:        alt1_3jpp8
+Version:        47
+Release:        alt1_2jpp8
 Summary:        Apache Commons Parent Pom
 License:        ASL 2.0
-URL:            http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-%{version}/
+URL:            https://commons.apache.org/commons-parent-pom.html
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/commons/commons-parent/%{version}/commons-parent-%{version}-src.zip
+Source0:        https://github.com/apache/commons-parent/archive/commons-parent-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache:apache:pom:)
@@ -33,7 +33,7 @@ Source44: import.info
 The Project Object Model files for the apache-commons packages.
 
 %prep
-%setup -q -n commons-parent-%{version}-src
+%setup -q -n commons-parent-commons-parent-%{version}
 
 # Plugin is not in fedora
 %pom_remove_plugin org.apache.commons:commons-build-plugin
@@ -44,6 +44,7 @@ The Project Object Model files for the apache-commons packages.
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-source-plugin
 
 # Remove profiles for plugins that are useless in package builds
 for profile in animal-sniffer japicmp jacoco cobertura clirr; do
@@ -61,6 +62,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:47-alt1_2jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:43-alt1_3jpp8
 - fc29 update
 
