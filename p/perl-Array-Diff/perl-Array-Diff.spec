@@ -1,7 +1,7 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/Deep.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(threads/shared.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,31 +9,22 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 %global rpm49 0
 
 Name:           perl-Array-Diff
-Version:        0.09
-Release:        alt1
-# Because 0.07 compares newer than 0.05002 in Perl world
+# Because 0.08 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
+Version:        0.09
+Release:        alt1_1
 Summary:        Find the differences between two arrays
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Array-Diff
-Source0:        http://www.cpan.org/authors/id/N/NE/NEILB/Array-Diff-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/Array/Array-Diff-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(ExtUtils/Manifest.pm)
-BuildRequires:  perl(Fcntl.pm)
-BuildRequires:  perl(File/Find.pm)
-BuildRequires:  perl(File/Path.pm)
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(FindBin.pm)
-BuildRequires:  perl(vars.pm)
 # Module Runtime
 BuildRequires:  perl(Algorithm/Diff.pm)
 BuildRequires:  perl(base.pm)
@@ -41,17 +32,10 @@ BuildRequires:  perl(Class/Accessor/Fast.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
-BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(Config.pm)
-BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(MIME/Base64.pm)
-BuildRequires:  perl(overload.pm)
-BuildRequires:  perl(PerlIO.pm)
-BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Test/More.pm)
+# Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(Text/Diff.pm)
 # Dependencies
 %if ! %{rpm49}
 Requires:       perl(Class/Accessor/Fast.pm)
@@ -74,14 +58,14 @@ perl Makefile.PL INSTALLDIRS=vendor
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -delete
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -90,6 +74,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt1_1
+- update to new release by fcimport
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt1
 - automated CPAN update
 
