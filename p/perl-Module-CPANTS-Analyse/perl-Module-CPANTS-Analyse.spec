@@ -1,21 +1,17 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators perl(Perl/PrereqScanner/NotQuiteLite.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-#TODO: BR:/R: perl(WorePAN) a.. 0.09 when available
-
 Name:           perl-Module-CPANTS-Analyse
 Version:        1.00
-Release:        alt1
+Release:        alt1_1
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Module-CPANTS-Analyse
-Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
-Source1:        https://raw.githubusercontent.com/cpants/Module-CPANTS-Analyse/master/xt/kwalitee/has_meta_json.t
+Source0:        https://cpan.metacpan.org/modules/by-module/Module/Module-CPANTS-Analyse-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -50,7 +46,7 @@ BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(JSON/PP.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(Module/CPANfile.pm)
-BuildRequires:  perl(Module/ExtractUse.pm)
+BuildRequires:  perl(Perl/PrereqScanner/NotQuiteLite.pm)
 BuildRequires:  perl(Module/Find.pm)
 BuildRequires:  perl(Software/License.pm)
 BuildRequires:  perl(Software/LicenseUtils.pm)
@@ -126,6 +122,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
