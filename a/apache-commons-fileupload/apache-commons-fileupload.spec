@@ -16,14 +16,14 @@ BuildRequires: jpackage-generic-compat
 %bcond_without  portlet
 
 Name:           apache-commons-fileupload
-Version:        1.3.3
-Release:        alt1_4jpp8
+Version:        1.4
+Release:        alt1_1jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/commons/fileupload/source/commons-fileupload-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/fileupload/source/commons-fileupload-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -69,13 +69,12 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 
 # -----------------------------------------------------------------------------
 
-%mvn_file ":{*}" %{name} @1
+%mvn_file ":{*}" @1 %{name}
 %mvn_alias : org.apache.commons:
 
 %build
-# fix build with generics support
 # tests fail to compile because they use an obsolete version of servlet API (2.4)
-%mvn_build -f
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.fileupload
 
 %install
 %mvn_install
@@ -89,6 +88,9 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_4jpp8
 - fc29 update
 
