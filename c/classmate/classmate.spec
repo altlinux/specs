@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          classmate
 Version:       1.3.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java introspection library
 License:       ASL 2.0
 Url:           http://github.com/cowtowncoder/java-classmate/
@@ -68,6 +68,9 @@ rm -r src/test/java/com/fasterxml/classmate/AnnotationsTest.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_5jpp8
 - fc29 update
 
