@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-plugin
-Version:        3.0.2
-Release:        alt1_1jpp8
+Version:        3.1.1
+Release:        alt1_2jpp8
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -38,6 +38,7 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
@@ -52,7 +53,7 @@ artifacts. It can copy and/or unpack artifacts from local or remote
 repositories to a specified location.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
@@ -82,6 +83,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_2jpp8
+- new version
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_1jpp8
 - new version
 
