@@ -1,19 +1,19 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Java chart library
 
-Group:          Development/Other
 License:        LGPLv2+
 URL:            http://www.jfree.org/jfreechart/
 Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.zip
@@ -38,8 +38,8 @@ developers to display professional quality charts in their applications.
 
 %if 0%{?fedora}
 %package swt
+Group: Development/Other
 Summary:        Swt extension for jfreechart
-Group:          Development/Other
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       eclipse-swt jpackage-utils
 
@@ -48,8 +48,8 @@ Experimental swt extension for jfreechart.
 %endif
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -129,6 +129,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_11jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_9jpp8
 - java update
 
