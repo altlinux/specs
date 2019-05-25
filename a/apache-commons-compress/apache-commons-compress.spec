@@ -11,8 +11,8 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.16.1
-Release:        alt1_1jpp8
+Version:        1.18
+Release:        alt1_4jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-compress/
@@ -22,13 +22,14 @@ Source0:        http://archive.apache.org/dist/commons/compress/source/%{short_n
 
 Patch0:         0001-Remove-Brotli-compressor.patch
 Patch1:         0002-Remove-ZSTD-compressor.patch
+Patch2:         0003-Avoid-use-of-internal-Mockito-API.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.objenesis:objenesis)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.powermock:powermock-api-mockito)
 BuildRequires:  mvn(org.powermock:powermock-module-junit4)
 BuildRequires:  mvn(org.tukaani:xz)
@@ -62,10 +63,21 @@ rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
 rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCase.java
 
+# Avoid using internal Mockito APIs
+%patch2 -p1
+
+# remove osgi tests, we don't have deps for them
+%pom_remove_dep org.ops4j.pax.exam:::test
+%pom_remove_dep :org.apache.felix.framework::test
+%pom_remove_dep :javax.inject::test
+%pom_remove_dep :slf4j-api::test
+rm src/test/java/org/apache/commons/compress/OsgiITest.java
+
+
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
 %install
 %mvn_install
@@ -77,6 +89,9 @@ rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCas
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.18-alt1_4jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16.1-alt1_1jpp8
 - java update
 
