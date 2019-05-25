@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          directory-project
 Version:       35
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Apache Directory Project Root pom
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -59,6 +59,9 @@ directory tools (Apache Directory Studio).
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 35-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 35-alt1_6jpp8
 - fc29 update
 
