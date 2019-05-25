@@ -7,7 +7,7 @@ Summary:	Parser Generator with Java Extension
 Name:		byaccj
 Epoch:		0
 Version:	1.15
-Release:	alt1_17jpp8
+Release:	alt1_19jpp8
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
 
@@ -47,6 +47,9 @@ install -p -m 755 src/yacc %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_19jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_17jpp8
 - java update
 
