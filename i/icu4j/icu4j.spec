@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Output.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(XML/LibXML.pm) rpm-build-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -9,19 +9,29 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 63.1
+%global gittag %(v=%{version}; echo "release-$v" | sed 's/\\./-/')
+%global srctgz %(v=%{version}; echo "icu4j-$v" | sed 's/\\./_/')
+
 Name:           icu4j
-Version:        59.1
-Release:        alt3_3jpp8
+Version:        63.1
+Release:        alt1_2jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
-License:        MIT and EPL
+# ICU itself is now covered by Unicode license, but still has contributed
+# components covered by MIT and BSD licenses
+# Data from the Timezone Database is Public Domain
+License:        Unicode and MIT and BSD and Public Domain
 URL:            http://site.icu-project.org/
 
-#CAUTION
-#to create a tarball use following procedure
-#svn co http://source.icu-project.org/repos/icu/tags/release-59-1/icu4j/ icu4j-59.1
-#tar caf icu4j-<version>.tar.xz icu4j-<version>/
-Source0:        icu4j-%{version}.tar.xz
+Source0:        https://github.com/unicode-org/icu/releases/download/%{gittag}/%{srctgz}.tgz
+
+# These pom templates are missing from the upstream source archive
+# See https://github.com/unicode-org/icu/pull/294
+Source1:        https://repo1.maven.org/maven2/com/ibm/icu/icu4j/%{version}/icu4j-%{version}.pom
+Source2:        https://repo1.maven.org/maven2/com/ibm/icu/icu4j-charset/%{version}/icu4j-charset-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/com/ibm/icu/icu4j-localespi/%{version}/icu4j-localespi-%{version}.pom
 
 # Add better OSGi metadata to core jar
 Patch0:         improve-osgi-manifest.patch
@@ -53,32 +63,29 @@ Java text and internationalization API design.
 
 %package charset
 Group: Development/Java
-Summary:        Charset converter library of %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary: Charset converter library of %{name}
 
 %description charset
 Charset converter library of %{name}.
 
 %package localespi
 Group: Development/Java
-Summary:        Locale SPI library of %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary: Locale SPI library of %{name}
 
 %description localespi
 Locale SPI library of %{name}.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
-Requires:       java-javadoc
+Summary: Javadoc for %{name}
+Requires: java-javadoc
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
 %prep
-%setup -q -n icu4j-%{version}
-
+%setup -q -c
 %patch0
 
 # Ivy local does not name these libs as icu4j expects
@@ -93,15 +100,25 @@ rm main/tests/core/src/com/ibm/icu/dev/test/calendar/DataDrivenCalendarTest.java
 rm main/tests/core/src/com/ibm/icu/dev/test/serializable/CompatibilityTest.java
 rm main/tests/core/src/com/ibm/icu/dev/test/serializable/CoverageTest.java
 rm main/tests/charset/src/com/ibm/icu/dev/test/charset/TestConversion.java
+rm main/tests/translit/src/com/ibm/icu/dev/test/translit/TransliteratorDisorderedMarksTest.java
 
 %build
 export JAVA_HOME=%{_jvmdir}/java/
 mkdir -p ~/.ant/lib
 ant -Divy.mode=local -Doffline=true -Dicu4j.api.doc.jdk.link=%{_javadocdir}/java \
-  all 
-#  check
+  all check
 
-%mvn_artifact pom.xml icu4j.jar
+# Temporary hack until https://github.com/unicode-org/icu/pull/294 is merged
+mkdir -p maven/icu4j{,-charset,-localespi}
+cp -p %{SOURCE1} maven/icu4j/pom.xml
+cp -p %{SOURCE2} maven/icu4j-charset/pom.xml
+cp -p %{SOURCE3} maven/icu4j-localespi/pom.xml
+
+for jar in icu4j icu4j-charset icu4j-localespi ; do
+  sed -i -e 's/@POMVERSION@/%{version}/' maven/$jar/pom.xml
+  %mvn_artifact maven/$jar/pom.xml $jar.jar
+  %mvn_package :$jar $jar
+done
 
 %install
 %mvn_install -J doc
@@ -110,20 +127,21 @@ ant -Divy.mode=local -Doffline=true -Dicu4j.api.doc.jdk.link=%{_javadocdir}/java
 install -m 644 icu4j-charset.jar   %{buildroot}%{_javadir}/icu4j/
 install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 
-%files -f .mfiles
+%files -f .mfiles-icu4j
 %doc --no-dereference main/shared/licenses/*
 %doc readme.html APIChangeReport.html
 
-%files charset
-%{_javadir}/icu4j/icu4j-charset.jar
+%files charset -f .mfiles-icu4j-charset
 
-%files localespi
-%{_javadir}/icu4j/icu4j-localespi.jar
+%files localespi -f .mfiles-icu4j-localespi
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference main/shared/licenses/*
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:63.1-alt1_2jpp8
+- new version
+
 * Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 1:59.1-alt3_3jpp8
 - fixed build
 
