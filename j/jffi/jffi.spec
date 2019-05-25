@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jffi
 Version:        1.2.12
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -117,6 +117,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_11jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_10jpp8
 - fc29 update
 
