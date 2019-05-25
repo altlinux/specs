@@ -7,8 +7,6 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 7.0.2
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,20 +37,21 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global releasename release_%(tr . _ <<< %{version})
-
 Name:           javacc
-Version:        7.0.2
-Release:        alt1_4jpp8.qa1
+Version:        7.0.4
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
 URL:            http://javacc.org
-Source0:        https://github.com/javacc/javacc/archive/%{releasename}.tar.gz
+Source0:        https://github.com/javacc/javacc/archive/%{version}.tar.gz
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  javacc
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 BuildArch:      noarch
 Source44: import.info
@@ -76,7 +75,7 @@ Manual for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Examples for %{name}
-Requires:       %{name} = %{EVR}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Examples for %{name}.
@@ -90,7 +89,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{releasename}
+%setup -q -n %{name}-%{version}
 
 # Remove binary information in the source tar
 find . -name "*.jar" -delete
@@ -98,11 +97,9 @@ find . -name "*.class" -delete
 
 find ./examples -type f -exec sed -i 's/\r//' {} \;
 
+%build
 build-jar-repository -p bootstrap javacc
 
-%mvn_file : %{name}
-
-%build
 # There is maven pom which doesn't really work for building. The tests don't
 # work either (even when using bundled jars).
 ant jar javadoc
@@ -111,6 +108,8 @@ ant jar javadoc
 %mvn_artifact --skip-dependencies pom.xml target/javacc-%{version}.jar
 
 %install
+%mvn_file : %{name}
+
 %mvn_install -J target/javadoc
 
 %jpackage_script javacc '' '' javacc javacc true
@@ -136,6 +135,9 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.0.4-alt1_2jpp8
+- new version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_4jpp8.qa1
 - NMU: applied repocop patch
 
