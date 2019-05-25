@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt3_15jpp8
+Release:       alt3_17jpp8
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -120,6 +120,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_17jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_15jpp8
 - java update
 
