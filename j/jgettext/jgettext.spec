@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jgettext
 Version:        0.14
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        An ANTLR-based parser and generator for GNU Gettext PO/POT 
 
 License:        LGPLv2
@@ -58,6 +58,9 @@ cp -p %{SOURCE1} .
 %doc --no-dereference lgpl-2.1.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_8jpp8
 - fc29 update
 
