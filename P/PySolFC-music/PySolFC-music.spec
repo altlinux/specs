@@ -1,22 +1,17 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%define debug_package %{nil}
-
 %define mainversion 1.1
 
 Name:           PySolFC-music
-Version:        4.40
-Release:        alt2_16
+Version:        4.50
+Release:        alt1_1
 Summary:        Music for PySolFC
 
-Group:          Games/Other
 License:        GPLv2+
-URL:            http://www.pysol.org/
-Source0:        ftp://ibiblio.org/pub/linux/games/solitaires/pysol-music-%{version}.tar.gz
-
-Requires:       PySolFC python-module-PySolFC
-Requires:       python-module-pygame
+URL:            https://pysolfc.sourceforge.io/
+Source0:        https://github.com/shlomif/pysol-music/archive/%{version}/pysol-music-%{version}.tar.gz
+Requires:       PySolFC >= %{mainversion}
 
 BuildArch: noarch
 Source44: import.info
@@ -40,6 +35,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.50-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_16
 - update to new release by fcimport
 
