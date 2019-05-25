@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -13,10 +14,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_19.svn96jpp8
+Release: alt3_20.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
-Group:   Development/Other
 License: ASL 2.0
 URL:     http://www.osgi.org/Repository/BIndex
 
@@ -76,6 +76,9 @@ install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_20.svn96jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_19.svn96jpp8
 - fc29 update
 
