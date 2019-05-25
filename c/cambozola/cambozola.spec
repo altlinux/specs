@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           cambozola
 Version:        0.936
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        A viewer for multipart jpeg streams
 
-Group:          Development/Other
 License:        GPLv2+
 URL:            http://www.charliemouse.com/code/cambozola/index.html
 Source0:        http://www.andywilcock.com/code/cambozola/%{name}-latest.tar.gz
@@ -37,8 +37,8 @@ that are often pumped out by a streaming webcam server,
 sending over multiple images per second.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -82,6 +82,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_7jpp8
 - fc29 update
 
