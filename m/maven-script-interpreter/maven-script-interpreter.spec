@@ -15,8 +15,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without  groovy
 
 Name:           maven-script-interpreter
-Version:        1.1
-Release:        alt1_10jpp8
+Version:        1.2
+Release:        alt1_2jpp8
 Summary:        Maven Script Interpreter
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-script-interpreter/
@@ -29,13 +29,13 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.beanshell:bsh)
 %if %{with groovy}
 BuildRequires:  mvn(org.codehaus.groovy:groovy)
 %endif
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 
@@ -78,6 +78,9 @@ sed -i /GroovyScriptInterpreter/d src/main/java/org/apache/maven/shared/scriptin
 
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_10jpp8
 - fc27 update
 
