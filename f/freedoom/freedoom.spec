@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -8,10 +9,9 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 Name:           freedoom
 
 Version:        0.11.3
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Doom styled first person shooter game
 
-Group:          Games/Other
 License:        BSD
 URL:            https://freedoom.github.io/
 Source0:        https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip
@@ -76,9 +76,10 @@ install -p -m 644 %{SOURCE4} %{SOURCE5} %{buildroot}%{_datadir}/appdata
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.xml
 ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
 
+
 %files
 %doc README.html CREDITS.txt
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 %{waddir}/%{name}1.wad
 %{_datadir}/appdata/%{name}1.appdata.xml
 %{_datadir}/applications/%{name}1.desktop
@@ -86,7 +87,7 @@ ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
 
 %files -n freedoom2
 %doc README.html CREDITS.txt
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 %{waddir}/%{name}.wad
 %{waddir}/%{name}2.wad
 %{_datadir}/appdata/%{name}2.appdata.xml
@@ -95,6 +96,9 @@ ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.11.3-alt1_6
+- update to new release by fcimport
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.3-alt1_2
 - NMU (for oddity@): new version by fcimport
 
