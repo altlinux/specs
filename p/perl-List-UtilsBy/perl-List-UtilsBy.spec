@@ -1,19 +1,24 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-List-UtilsBy
 Version:        0.11
-Release:        alt1
+Release:        alt1_5
 Summary:        Higher-order list utility functions
 License:        GPL+ or Artistic
-Group:          Development/Perl
-URL:            http://search.cpan.org/dist/List-UtilsBy/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/List-UtilsBy-%{version}.tar.gz
+URL:            https://metacpan.org/release/List-UtilsBy
+Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/List-UtilsBy-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 
 # for improved testing
 BuildRequires:  perl(Test/Pod.pm)
@@ -33,7 +38,7 @@ returned by the extra function, when given each value.
 %setup -q -n List-UtilsBy-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -46,10 +51,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 ./Build test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
+%%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_5
+- update to new release by fcimport
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
