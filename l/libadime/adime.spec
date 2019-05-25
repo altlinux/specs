@@ -1,15 +1,16 @@
+Group: System/Libraries
 %define oldname adime
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_23
+Release:        alt2_27
 Summary:        Allegro Dialogs Made Easy
-Group:          System/Libraries
 License:        zlib
 URL:            http://adime.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{oldname}/%{oldname}-%{version}.tar.gz
 Patch0:         adime-2.2.1-so-fixes.patch
+BuildRequires:  gcc
 BuildRequires:  liballegro-devel makeinfo
 Source44: import.info
 
@@ -21,8 +22,8 @@ data.
 
 
 %package devel
-Summary: Development libraries and headers for adime
 Group: Development/Other
+Summary: Development libraries and headers for adime
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -55,6 +56,8 @@ rm $RPM_BUILD_ROOT%{_infodir}/dir
 ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
+
+
 %files
 %doc license.txt thanks.txt changes.txt
 %{_libdir}/libadime.so.0
@@ -69,6 +72,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_27
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_23
 - update to new release by fcimport
 
