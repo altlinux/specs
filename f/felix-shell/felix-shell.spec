@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-shell
 Version:        1.4.3
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        Apache Felix Shell Service
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://felix.apache.org
 Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
@@ -32,7 +32,7 @@ Source44: import.info
 A simple OSGi command shell service.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
@@ -59,6 +59,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_12jpp8
 - fc29 update
 
