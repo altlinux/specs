@@ -1,68 +1,76 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-DistManifest
 Version:        1.014
-Release:        alt1
+Release:        alt1_12
 Summary:        Author test that validates a package MANIFEST
 License:        GPL+ or Artistic
-Group:          Development/Perl
-URL:            http://search.cpan.org/dist/Test-DistManifest/
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/Test-DistManifest-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-DistManifest
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-DistManifest-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time:
-BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
+BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Spec/Unix.pm)
 BuildRequires:  perl(Module/Manifest.pm)
 BuildRequires:  perl(Test/Builder.pm)
-BuildRequires:  perl(Test/More.pm)
 # Tests only:
+BuildRequires:  perl(if.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
+BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/NoWarnings.pm)
-Requires:       perl(Module/Manifest.pm) >= 0.07
+# Test::Warnings not used
+Requires:       perl(Module/Manifest.pm) >= 0.070
 Requires:       perl(Test/Builder.pm)
-# This is a plug-in into Test::More. Depend on it even if not mentioned in the
-# code
-Requires:       perl(Test/More.pm) >= 0.62
 
 # Filter underspecifed dependencies
 
 Source44: import.info
-%filter_from_requires /perl\\((Module.Manifest|Test.Builder).pm\\)$/d
+%filter_from_requires /perl(\(Module.Manifest\|Test.Builder\).pm)/d
 
 %description
-This module provides a simple method of testing that a MANIFEST matches the
-distribution.
+This Perl module provides a simple method of testing that a MANIFEST matches
+the distribution.
 
 %prep
 %setup -q -n Test-DistManifest-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+PERL_MM_FALLBACK_SILENCE_WARNING=1 perl Makefile.PL INSTALLDIRS=perl OPTIMIZE="$RPM_OPT_FLAGS"
+%make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 # post-install rpmbuild scripts contaminates RPM_BUILD_ROOT (bug #672538).
-#rm *.list
+rm *.list ||:
 make test
 
 %files
-%doc Changes examples LICENSE README
+%doc --no-dereference LICENSE
+%doc Changes CONTRIBUTING examples README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1_12
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1
 - automated CPAN update
 
