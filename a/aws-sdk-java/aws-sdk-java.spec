@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 9883b981ab5103cc6944fbf8f3b973994777350f
 Name:          aws-sdk-java
 Version:       1.11.3
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       AWS SDK for Java
 # Some source files are without license headers
 # reported @ https://github.com/aws/aws-sdk-java/issues/719
@@ -937,6 +937,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_7jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_5jpp8
 - java update
 
