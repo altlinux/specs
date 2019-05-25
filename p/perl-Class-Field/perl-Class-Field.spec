@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,12 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Class-Field
 Version:        0.24
-Release:        alt1
+Release:        alt1_1
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Class-Field
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -29,6 +29,8 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(utf8.pm)
 BuildRequires:  perl(warnings.pm)
+
+
 Source44: import.info
 
 %description
@@ -40,26 +42,25 @@ used to declare fields and constants in your class.
 
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc LICENSE CONTRIBUTING
+%doc --no-dereference LICENSE
 %doc Changes README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Class*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
