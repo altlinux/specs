@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logmanager
 Version:          2.0.4
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          JBoss Log Manager
 License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logmanager
@@ -59,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_5jpp8
 - fc29 update
 
