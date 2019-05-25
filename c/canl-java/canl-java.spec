@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		canl-java
-Version:	2.5.0
-Release:	alt1_3jpp8
+Version:	2.6.0
+Release:	alt1_1jpp8
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -22,12 +22,10 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
-#		Javadoc fixes (backport from upstream's git)
-Patch1:		%{name}-javadoc.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
-BuildRequires:	mvn(commons-io:commons-io)
+BuildRequires:	mvn(commons-io:commons-io) >= 2.4
 BuildRequires:	mvn(junit:junit) >= 4.8
 BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.54
 BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.54
@@ -49,7 +47,6 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
-%patch1 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -78,6 +75,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_3jpp8
 - fc29 update
 
