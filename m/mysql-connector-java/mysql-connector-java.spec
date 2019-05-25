@@ -7,13 +7,11 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global     builddir        build-mysql-jdbc
-%global     distdir         dist-mysql-jdbc
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       5.1.38
-Release:       alt1_6jpp8
+Version:       8.0.15
+Release:       alt1_1jpp8
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -28,11 +26,12 @@ Source0:       %{name}-%{version}-nojars.tar.xz
 # Following prebuilt jars and sources have been removed from the tarball:
 #
 # %%{name}-%%{version}-bin.jar
-# src/lib/c3p0-0.9.1-pre6.jar
-# src/lib/c3p0-0.9.1-pre6.src.zip
-# src/lib/jboss-common-jdbc-wrapper.jar
-# src/lib/jboss-common-jdbc-wrapper-src.jar
-# src/lib/slf4j-api-1.6.1.jar
+# lib/c3p0-0.9.1-pre6.jar
+# lib/c3p0-0.9.1-pre6.src.zip
+# lib/jboss-common-jdbc-wrapper.jar
+# lib/jboss-common-jdbc-wrapper-src.jar
+# lib/protobuf-java-3.6.1.jar
+# lib/slf4j-api-1.6.1.jar
 #
 # See http://bugs.mysql.com/bug.php?id=28512 for details.
 
@@ -40,16 +39,14 @@ Source0:       %{name}-%{version}-nojars.tar.xz
 # ./generate-tarball.sh version
 # will create a new tarball compressed with xz and without those jar files.
 Source1:       generate-tarball.sh
-# Patch to build with JDBC 4.1/Java 7
-Patch0:        %{name}-5.1.38-jdbc4.1.patch
-# Add system libraries
-Patch1:        %{name}-5.1.38-build.patch
-Patch2:        %{name}-hibernate.patch
+Patch3:        java-version-detection.patch
+Patch4:        remove-coverage-test.patch
 
 BuildArch:     noarch
 
 BuildRequires: ant >= 1.6.0
 BuildRequires: ant-contrib >= 1.0
+BuildRequires: ant-junit
 BuildRequires: apache-commons-logging
 BuildRequires: c3p0
 BuildRequires: git
@@ -58,6 +55,7 @@ BuildRequires: java-devel >= 1.6.0
 BuildRequires: javapackages-local
 BuildRequires: jta >= 1.0
 BuildRequires: junit
+BuildRequires: protobuf-java
 BuildRequires: slf4j
 
 Requires:      jta >= 1.0
@@ -83,11 +81,10 @@ for file in README README.md; do
  rm $file.orig
 done
 
-sed -i 's/>@.*</>%{version}</' src/doc/sources/pom.xml
+sed -i 's/>@.*</>%{version}</' src/build/misc/pom.xml
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 
@@ -96,30 +93,29 @@ export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.j
 
 # We currently need to disable jboss integration because of missing jboss-common-jdbc-wrapper.jar (built from sources).
 # See BZ#480154 and BZ#471915 for details.
-rm -rf src/com/mysql/jdbc/integration/jboss
-rm src/testsuite/regression/ConnectionRegressionTest.java
-rm src/testsuite/regression/DataSourceRegressionTest.java
-rm src/testsuite/regression/jdbc4/ConnectionRegressionTest.java
-rm src/testsuite/simple/ReadOnlyCallableStatementTest.java
-rm src/testsuite/simple/jdbc4/StatementsTest.java
+rm -rf src/main/user-impl/java/com/mysql/cj/jdbc/integration/jboss
+rm src/test/java/testsuite/regression/ConnectionRegressionTest.java
+rm src/test/java/testsuite/regression/DataSourceRegressionTest.java
+rm src/test/java/testsuite/simple/StatementsTest.java
 
-ant -DbuildDir=%{builddir} -DdistDir=%{distdir} \
-    -Dcom.mysql.jdbc.jdk8=%{java_home} \
-    -Dcom.mysql.jdbc.jdk6=%{java_home}/jre/lib/rt.jar \
-    -Dcom.mysql.jdbc.extra.libs=/usr/share/java \
-    dist
+ant -Dcom.mysql.cj.build.jdk=%{java_home} \
+    -Dcom.mysql.cj.extra.libs=/usr/share/java \
+    test dist
 
 %install
 # Install the Maven build information
 %mvn_file mysql:mysql-connector-java %{name}
-%mvn_artifact src/doc/sources/pom.xml build-mysql-jdbc/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT-bin.jar
+%mvn_artifact src/build/misc/pom.xml build/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT.jar
 %mvn_install
 
 %files -f .mfiles
 %doc CHANGES README README.md
-%doc --no-dereference COPYING
+%doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:8.0.15-alt1_1jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.1.38-alt1_6jpp8
 - java fc28+ update
 
