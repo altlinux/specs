@@ -21,8 +21,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without spring
 
 Name:           xbean
-Version:        4.8
-Release:        alt1_1jpp8
+Version:        4.9
+Release:        alt1_2jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -209,6 +209,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.9-alt1_2jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.8-alt1_1jpp8
 - java update
 
