@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-main
 Version: 5.4.0
-Release: alt1_6jpp8
+Release: alt1_7jpp8
 Summary: Apache Felix Main
-Group:   Development/Other
 License: ASL 2.0
 URL:     http://felix.apache.org
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
@@ -50,7 +50,7 @@ Obsoletes: felix < 2
 Apache Felix Main Classes.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
@@ -75,6 +75,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_6jpp8
 - fc29 update
 
