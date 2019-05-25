@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt5_26jpp8
+Release:        alt5_27jpp8
 Summary:        JavaCC Maven Plugin
 License:        ASL 2.0
 URL:            http://mojo.codehaus.org/javacc-maven-plugin/
@@ -66,6 +66,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_27jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_26jpp8
 - fc29 update
 
