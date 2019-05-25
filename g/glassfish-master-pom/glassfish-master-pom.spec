@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-master-pom
 Version:       8
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Master POM for Glassfish Maven projects
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -45,6 +45,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 8-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 8-alt1_12jpp8
 - fc29 update
 
