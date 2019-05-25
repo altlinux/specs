@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.28.20131227gitf159b88jpp8
+Release:        alt1_0.31.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 License:        GPLv2 with exceptions
@@ -29,7 +29,7 @@ Patch0:         %{name}-build.patch
 # See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
 BuildRequires:  javapackages-local
 
-BuildRequires:  ant java-devel java-javadoc jpackage-utils junit
+BuildRequires:  ant java-devel java-1.8.0-javadoc jpackage-utils junit
 Requires:       jpackage-utils
 
 BuildArch:      noarch
@@ -47,7 +47,7 @@ format string will be erroneous when executed at runtime.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc documentation for %{name}
-Requires:       java-javadoc
+Requires:       java-1.8.0-javadoc
 BuildArch: noarch
 
 %description javadoc
@@ -95,6 +95,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.31.20131227gitf159b88jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.28.20131227gitf159b88jpp8
 - java update
 
