@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/splint gcc-c++ libqb-devel pkgconfig(glib-2.0) python-devel
+BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0) python-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -13,11 +14,10 @@ BuildRequires: /usr/bin/splint gcc-c++ libqb-devel pkgconfig(glib-2.0) python-de
 %bcond_without check
 
 Name:           libqb
-Version:        1.0.3
-Release:        alt1_4
+Version:        1.0.5
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
@@ -48,6 +48,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
+
+
 %files
 %doc --no-dereference COPYING
 %{_sbindir}/qb-blackbox
@@ -55,8 +57,8 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %{_mandir}/man8/qb-blackbox.8*
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkgconfig
 
@@ -73,6 +75,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4
 - update to new release by fcimport
 
