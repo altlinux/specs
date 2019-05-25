@@ -1,5 +1,5 @@
 Name: virtualgl
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 %define vgl_name vgl
@@ -76,6 +76,7 @@ cat <<__EOF__ >include/boost/endian.hpp
 __EOF__
 
 sed -i -e 's,"glx.h",<GL/glx.h>,' server/*.[hc]*
+sed -i -e 's,"glxext.h",<GL/glxext.h>,' server/*.[hc]*
 # Remove bundled libraries
 rm -r common/glx* server/fltk
 rm doc/LICENSE-*.txt
@@ -146,6 +147,9 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Thu May 23 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.2-alt1
+- new version
+
 * Wed Jan 09 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.1-alt1
 - new version
 - remove ubt
