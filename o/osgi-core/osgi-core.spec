@@ -7,23 +7,22 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           osgi-core
-Version:        6.0.0
-Release:        alt1_6jpp8
-License:        ASL 2.0
+Version:        7.0.0
+Release:        alt1_1jpp8
 Summary:        OSGi Core API
+License:        ASL 2.0
 URL:            https://www.osgi.org
-Source0:        https://repo1.maven.org/maven2/org/osgi/osgi.core/%{version}/osgi.core-%{version}-sources.jar
-Source1:        https://repo1.maven.org/maven2/org/osgi/osgi.core/%{version}/osgi.core-%{version}.pom
 BuildArch:      noarch
+
+Source0:        https://osgi.org/download/r7/osgi.core-%{version}.jar
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.osgi:org.osgi.annotation)
+BuildRequires:  mvn(org.osgi:osgi.annotation)
 Source44: import.info
 
-
 %description
-OSGi Core Release 6, Interfaces and Classes for use in compiling bundles.
+OSGi Core, Interfaces and Classes for use in compiling bundles.
 
 %package javadoc
 Group: Development/Java
@@ -33,13 +32,17 @@ BuildArch: noarch
 %description javadoc
 This package provides %{summary}.
 
-
 %prep
 %setup -q -c
 
-cp -p %SOURCE1 pom.xml
-mkdir -p src/main/java
-mv org src/main/java/
+# Delete pre-built binaries
+rm -r org
+find -name '*.class' -delete
+
+mkdir -p src/main/{java,resources}
+mv OSGI-OPT/src/org src/main/java/
+
+mv META-INF/maven/org.osgi/osgi.core/pom.xml .
 
 %pom_xpath_inject pom:project '
 <packaging>bundle</packaging>
@@ -79,6 +82,9 @@ mv org src/main/java/
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_1jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_6jpp8
 - java update
 
