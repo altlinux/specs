@@ -1,15 +1,16 @@
-Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: boost-devel pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
+Group: Development/C
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorver 3 
 
 Name: libapogee
-Version: 3.1
-Release: alt1_4
+Version: 3.2
+Release: alt1_1
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -60,6 +61,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_1
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_4
 - new version
 
