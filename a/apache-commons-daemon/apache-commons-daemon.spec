@@ -1,4 +1,5 @@
 Epoch: 1
+Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -12,10 +13,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt3_18jpp8
+Release:        alt3_19jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
-Group:          System/Base
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch1:         apache-commons-daemon-JAVA_OS.patch
@@ -44,16 +44,16 @@ we define as Java daemons, or, in other words, non interactive
 Java applications.
 
 %package        jsvc
+Group: System/Base
 Summary:        Java daemon launcher
-Group:          System/Base
 Provides:       jsvc = 1:%{version}-%{release}
 
 %description    jsvc
 %{summary}.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch:      noarch
 
@@ -116,6 +116,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt3_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt3_18jpp8
 - restored jpp patches
 
