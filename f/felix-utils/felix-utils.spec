@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-utils
 Version:        1.10.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Utility classes for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_4jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_3jpp8
 - fc29 update
 
