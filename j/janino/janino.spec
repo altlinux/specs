@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 #
 Name:          janino
 Version:       2.7.8
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       An embedded Java compiler
 License:       BSD
 URL:           http://unkrig.de/w/Janino
@@ -137,6 +137,9 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 %doc --no-dereference new_bsd_license.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_11jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_10jpp8
 - fc29 update
 
