@@ -1,18 +1,17 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CPAN/Changes.pm) perl(Test/Pod/Coverage.pm) perl(Test/Spelling.pm) perl(Test/Synopsis.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
 Version:        0.39
-Release:        alt1
+Release:        alt1_1
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-PSGI/
-Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/Test-WWW-Mechanize-PSGI-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-WWW-Mechanize-PSGI
+Source0:        https://cpan.metacpan.org/authors/id/O/OA/OALDERS/Test-WWW-Mechanize-PSGI-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  %{__perl}
@@ -24,6 +23,7 @@ BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTTP/Message/PSGI.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/WWW/Mechanize.pm)
 BuildRequires:  perl(Try/Tiny.pm)
 
@@ -44,11 +44,11 @@ PSGI applications.
 %setup -q -n Test-WWW-Mechanize-PSGI-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-%{__make} %{?_smp_mflags}
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+make %{?_smp_mflags}
 
 %install
-%{__make} pure_install DESTDIR=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
@@ -57,11 +57,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{__make} test
 
 %files
-%doc Changes CONTRIBUTORS README.md
-%doc LICENSE
+%doc Changes
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - automated CPAN update
 
