@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -38,14 +39,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_13jpp8
+Release:        alt1_15jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
 URL:            http://www.urbanophile.com/arenn/hacking/download.html
 Source0:        http://www.urbanophile.com/arenn/hacking/getopt/java-getopt-%{version}.tar.gz
 Source2:        gnu-getopt-%{version}.pom
-Group:          Development/Other
 Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
 BuildArch:      noarch
@@ -64,8 +64,8 @@ in this software, but there certainly could be some lying about. I would
 appreciate bug reports as well as hearing about positive experiences.
 
 %package javadoc
+Group: Development/Documentation
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
 Requires:       jpackage-utils
 Provides:       gnu.getopt-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt-javadoc < %{epoch}:%{version}-%{release}
@@ -107,6 +107,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_15jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_13jpp8
 - java update
 
