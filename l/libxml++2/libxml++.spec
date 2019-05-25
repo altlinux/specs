@@ -1,5 +1,5 @@
 %def_enable snapshot
-%def_enable docs
+%def_enable doc
 
 %define ver_major 2.40
 %define xml_ver 2.6
@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -23,7 +23,7 @@ Patch: libxml++-0f5aa54.patch
 
 BuildPreReq: mm-common gcc-c++
 BuildRequires: libxml2-devel >= 2.6.1 libglibmm-devel >= 2.46.0
-%{?_enable_docs:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
+%{?_enable_doc:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
 
 %description
 libxml++ is a C++ wrapper for the libxml2 XML parser library.
@@ -50,7 +50,9 @@ This package contains the development documentation for libxml++ library.
 %prep
 %setup -n %_name-%version
 %patch -p1 -R -b .0f5aa54
-
+%ifarch %e2k
+%add_optflags -std=gnu++11
+%endif
 #sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 
 %build
@@ -58,7 +60,7 @@ mm-common-prepare --force --copy
 %autoreconf
 %configure --disable-static \
     %{?_enable_snapshot:--enable-maintainer-mode} \
-    %{?_disable_docs:--disable-documentation}
+    %{?_disable_doc:--disable-documentation}
 %make_build
 
 %install
@@ -75,11 +77,17 @@ mm-common-prepare --force --copy
 %_libdir/%_name-%xml_ver
 %_pkgconfigdir/*
 
+%if_enabled doc
 %files devel-doc
 %_datadir/devhelp/books/%_name-%xml_ver/*.devhelp2
 %_docdir/%_name-%xml_ver/*
+%endif
 
 %changelog
+* Sat May 25 2019 Michael Shigorin <mike@altlinux.org> 2.40.1-alt4
+- fix doc knob (and rename it from docs for consistency)
+- E2K: explicit -std=gnu++11
+
 * Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt3
 - reverted broken
   "Replace (deprecated) Glib::Threads::Mutex with std::mutex."
