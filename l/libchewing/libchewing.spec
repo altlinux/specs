@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 BuildRequires: perl(FileHandle.pm) perl(Text/Wrap.pm) texinfo
@@ -12,11 +13,10 @@ BuildRequires: perl(FileHandle.pm) perl(Text/Wrap.pm) texinfo
 
 Name:           libchewing
 Version:        0.5.1
-Release:        alt1_8
+Release:        alt1_11
 Summary:        Intelligent phonetic input method library for Traditional Chinese
 Summary(zh_TW): %{name_zh_TW}
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://chewing.csie.net/
 Source0:        https://github.com/chewing/%{name}/archive/v%{version}.tar.gz
@@ -43,9 +43,9 @@ input method that is useful for inputting Mandarin Chinese.
 使拼字輸入的人為選字機率降至最低，進而提升中文輸入、打字的效率。
 
 %package -n %{name}-devel
+Group: Development/Other
 Summary:        Development files for libchewing
 Summary(zh_TW): %{name_zh_TW}開發者套件
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description -n %{name}-devel
@@ -57,10 +57,10 @@ library.
 像是標頭檔(header files)，以及函式庫。
 
 
-%package -n python-module-chewing
+%package -n python-module-libchewing
+Group: System/Libraries
 Summary:        Python binding for libchewing
 Summary(zh_TW): %{name_zh_TW} python 綁定
-Group:          Development/Other
 BuildRequires:  python-devel
 Requires:       %{name} = %{version}-%{release}
 Requires:       python
@@ -70,10 +70,10 @@ Provides: %{name}-python = %{version}-%{release}
 Provides: %{name}-python = %{version}-%{release}
 Obsoletes: %{name}-python < %{version}-%{release}
 
-%description -n python-module-chewing
+%description -n python-module-libchewing
 Python binding of libchewing.
 
-%description -l zh_TW -n python-module-chewing
+%description -l zh_TW -n python-module-libchewing
 %{name_zh_TW} python 綁定
 
 %prep
@@ -99,6 +99,8 @@ touch %{buildroot}%{libchewing_python_dir}/__init__.py
 
 rm -f %{buildroot}/%{_infodir}/dir
 
+
+
 %files
 %doc README.md AUTHORS COPYING NEWS TODO
 %{_datadir}/%{name}/*
@@ -111,10 +113,13 @@ rm -f %{buildroot}/%{_infodir}/dir
 %{_libdir}/pkgconfig/chewing.pc
 %{_libdir}/*.so
 
-%files -n python-module-chewing
+%files -n python-module-libchewing
 %{libchewing_python_dir}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_11
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_8
 - update to new release by fcimport
 
