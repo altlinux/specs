@@ -1,3 +1,4 @@
+Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           imagej
 Version:        1.50
-Release:        alt1_6.hjpp8
+Release:        alt1_7.hjpp8
 Summary:        Image Processing and Analysis in Java
 
-Group:          Engineering
 License:        Public Domain
 URL:            http://rsbweb.nih.gov/ij/index.html
 Source0:        http://rsbweb.nih.gov/ij/download/src/ij150h-src.zip
@@ -131,6 +131,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_7.hjpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_6.hjpp8
 - fc29 update
 
