@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt4_19jpp8
+Release:        alt4_20jpp8
 Summary:        Jetty version management Maven plugin
 
 License:        ASL 2.0 or EPL
@@ -66,6 +66,9 @@ pushd %{name}
 %doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_20jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_19jpp8
 - fc29 update
 
