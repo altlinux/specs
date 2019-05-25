@@ -18,7 +18,7 @@ supported for compatibility with CJK standards. \
 
 Name:           fonts-otf-google-noto-cjk
 Version:        20190416
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Google Noto Sans CJK Fonts
 
 License:        OFL
@@ -277,6 +277,36 @@ Noto font Traditional Chinese Multilingual Sans Mono OTF.
 %{_fontconfig_templatedir}/66-%{fontconf}-sans-mono-cjk-tc.conf
 %config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-mono-cjk-tc.conf
 
+%package -n fonts-otf-google-noto-sans-cjk-hk
+Summary:	Traditional Chinese Multilingual Sans OTF font files for %{oldname}
+Group:		System/Fonts/True type
+Requires:	fonts-otf-%{fontname}-common = %EVR
+
+%description -n fonts-otf-google-noto-sans-cjk-hk
+%common_desc
+Noto font Traditional Chinese Multilingual Sans OTF.
+
+%files -n fonts-otf-google-noto-sans-cjk-hk
+%dir %_otffontsdir/%{fontname}
+%_otffontsdir/%{fontname}/NotoSansCJKhk-*.otf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-cjk-hk.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-cjk-hk.conf
+
+%package -n fonts-otf-google-noto-sans-mono-cjk-hk
+Summary:	Traditional Chinese Multilingual Sans Mono OTF font files for %{oldname}
+Group:		System/Fonts/True type
+Requires:	fonts-otf-%{fontname}-common = %EVR
+
+%description -n fonts-otf-google-noto-sans-mono-cjk-hk
+%common_desc
+Noto font Traditional Chinese Multilingual Sans Mono OTF.
+
+%files -n fonts-otf-google-noto-sans-mono-cjk-hk
+%dir %_otffontsdir/%{fontname}
+%_otffontsdir/%{fontname}/NotoSansMonoCJKhk-*.otf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-mono-cjk-hk.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-mono-cjk-hk.conf
+
 %package -n fonts-otf-google-noto-sans-jp
 Summary:	Japanese Region-specific Sans OTF font files for %{oldname}
 Group:		System/Fonts/True type
@@ -397,6 +427,21 @@ Noto font Traditional Chinese Region-specific Serif OTF.
 %{_fontconfig_templatedir}/66-%{fontconf}-serif-tc.conf
 %config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-tc.conf
 
+%package -n fonts-otf-google-noto-sans-hk
+Summary:	Traditional Chinese Region-specific Sans OTF font files for %{oldname}
+Group:		System/Fonts/True type
+Requires:	fonts-otf-%{fontname}-common = %EVR
+
+%description -n fonts-otf-google-noto-sans-hk
+%common_desc
+Noto font Traditional Chinese Region-specific Sans OTF.
+
+%files -n fonts-otf-google-noto-sans-hk
+%dir %_otffontsdir/%{fontname}
+%_otffontsdir/%{fontname}/NotoSansHK-*.otf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-hk.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-hk.conf
+
 %prep
 %setup -q -n noto-cjk-%{commit0}
 cp -p %{SOURCE1} %{SOURCE2} .
@@ -416,12 +461,12 @@ install -m 0644 -p NotoSansCJK-*.ttc %{buildroot}%{_fontdir}
 install -m 0644 -p NotoSerifCJK-*.ttc %{buildroot}%{_fontdir}
 
 # copy Multilingual OTF files
-install -m 0644 -p NotoSansCJK{jp,kr,sc,tc}-*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p NotoSansCJK{jp,kr,sc,tc,hk}-*.otf %{buildroot}%{_fontdir}
 install -m 0644 -p NotoSerifCJK{jp,kr,sc,tc}-*.otf %{buildroot}%{_fontdir}
-install -m 0644 -p NotoSansMonoCJK{jp,kr,sc,tc}-*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p NotoSansMonoCJK{jp,kr,sc,tc,hk}-*.otf %{buildroot}%{_fontdir}
 
 # copy Region-specific OTF
-install -m 0644 -p NotoSans{JP,KR,SC,TC}-*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p NotoSans{JP,KR,SC,TC,HK}-*.otf %{buildroot}%{_fontdir}
 install -m 0644 -p NotoSerif{JP,KR,SC,TC}-*.otf %{buildroot}%{_fontdir}
 
 
@@ -433,10 +478,12 @@ for f in sans-cjk-ttc serif-cjk-ttc \
     sans-cjk-kr serif-cjk-kr sans-mono-cjk-kr \
     sans-cjk-sc serif-cjk-sc sans-mono-cjk-sc \
     sans-cjk-tc serif-cjk-tc sans-mono-cjk-tc \
+    sans-cjk-hk sans-mono-cjk-hk \
     sans-jp serif-jp \
     sans-kr serif-kr \
     sans-sc serif-sc \
-    sans-tc serif-tc;
+    sans-tc serif-tc \
+    sans-hk;
 do
     fconf=$(basename -a *-%{fontconf}-$f.conf)
     if [ "$(echo $fconf | wc -w)" -ne 1 ]; then
@@ -460,6 +507,9 @@ done
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_2
+- update to new release by fcimport
+
 * Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_1
 - update to new release by fcimport
 
