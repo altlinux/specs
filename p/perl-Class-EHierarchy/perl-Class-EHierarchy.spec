@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(Scalar/Util.pm) perl(Test/More.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.00
+Version: 2.01
 Release: alt1
 Summary: Base class for hierarchally ordered objects
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
