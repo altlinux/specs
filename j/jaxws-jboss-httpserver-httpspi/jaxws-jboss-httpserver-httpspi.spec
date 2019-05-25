@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -13,9 +14,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jaxws-jboss-httpserver-httpspi
 Version:          1.0.1
-Release:          alt1_14jpp8
+Release:          alt1_15jpp8
 Summary:          JBoss httpserver to JAXWS 2.2 HTTP SPI bridge
-Group:            Development/Other
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 
@@ -45,8 +45,8 @@ Source44: import.info
 This package contains the JBoss httpserver to JAXWS 2.2 HTTP SPI bridge.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -71,6 +71,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_15jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_14jpp8
 - fc29 update
 
