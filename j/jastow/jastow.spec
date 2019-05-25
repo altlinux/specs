@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jastow
 Version:          2.0.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Jasper fork
 License:          ASL 2.0
 Url:              https://github.com/undertow-io/jastow
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5jpp8
 - fc29 update
 
