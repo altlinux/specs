@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -11,9 +12,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-commons-math
 Version:          3.4.1
-Release:          alt2_9jpp8
+Release:          alt2_10jpp8
 Summary:          Java library of lightweight mathematics and statistics components
-Group:            Development/Other
 License:          ASL 1.1 and ASL 2.0 and BSD
 URL:              http://commons.apache.org/math/
 Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
@@ -37,8 +37,8 @@ Java programming language or Commons Lang.
 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -74,6 +74,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt2_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt2_9jpp8
 - fc29 update
 
