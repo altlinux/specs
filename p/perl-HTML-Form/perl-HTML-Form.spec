@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,12 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Form
 Version:        6.04
-Release:        alt1
+Release:        alt1_1
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/HTML-Form
-Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/HTML-Form-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTML-Form-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -49,15 +49,11 @@ passed to the request() method of LWP::UserAgent.
 %setup -q -n HTML-Form-%{version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -68,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1_1
+- update to new release by fcimport
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
 - automated CPAN update
 
