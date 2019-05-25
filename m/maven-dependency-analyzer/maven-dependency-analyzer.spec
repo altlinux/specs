@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-analyzer
-Version:        1.8
-Release:        alt1_1jpp8
+Version:        1.10
+Release:        alt1_2jpp8
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
@@ -67,6 +67,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_1jpp8
 - java update
 
