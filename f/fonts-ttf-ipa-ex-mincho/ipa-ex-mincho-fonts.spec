@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,18 +8,17 @@ BuildRequires: unzip
 %global		priority	68
 %global		fontname	ipa-ex-mincho
 %global		fontconf	%{priority}-%{fontname}.conf
-%global		archiveversion	00201
+%global		archiveversion	00401
 %global		archivename	ipaexm%{archiveversion}
 
 Name:		fonts-ttf-ipa-ex-mincho
-Version:	002.01
-Release:	alt1_10
+Version:	004.01
+Release:	alt1_1
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
-Group:		System/Fonts/True type
 License:	IPA
 URL:		http://ossipedia.ipa.go.jp/ipafont/
-Source0:	http://info.openlab.ipa.go.jp/ipafont/fontdata/%{archivename}.zip
+Source0:	https://oscdl.ipa.go.jp/IPAexfont/%{archivename}.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
 
@@ -99,6 +99,9 @@ fi
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 004.01-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_10
 - update to new release by fcimport
 
