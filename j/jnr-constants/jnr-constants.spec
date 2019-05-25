@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-constants
-Version:        0.9.9
-Release:        alt1_4jpp8
+Version:        0.9.12
+Release:        alt1_2jpp8
 Summary:        Java Native Runtime constants 
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -56,6 +56,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.12-alt1_2jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.9-alt1_4jpp8
 - fc29 update
 
