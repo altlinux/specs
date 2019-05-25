@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-2.5-api
 Version:          1.0.1
-Release:          alt3_16jpp8
+Release:          alt3_17jpp8
 Summary:          Java Servlet 2.5 API
 License:          ASL 2.0 and W3C
 Url:              http://www.jboss.org
@@ -59,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_16jpp8
 - fc29 update
 
