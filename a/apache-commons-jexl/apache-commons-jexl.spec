@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_21jpp8
+Release:        alt2_22jpp8
 Summary:        Java Expression Language (JEXL)
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
@@ -108,6 +108,9 @@ echo "
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_22jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_21jpp8
 - fc29 update
 
