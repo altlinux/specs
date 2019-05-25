@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Name:           aopalliance
 Epoch:          0
 Version:        1.0
-Release:        alt6_17jpp8
+Release:        alt6_19jpp8
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
 URL:            http://aopalliance.sourceforge.net/
@@ -59,6 +59,9 @@ jar umf %{SOURCE2} build/%{name}.jar
 %files -f .mfiles
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_19jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_17jpp8
 - java update
 
