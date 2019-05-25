@@ -6,29 +6,24 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             felix-gogo-parent
-Version:          2
-Release:          alt1_3jpp8
-Summary:          Parent package for Felix Gogo
-License:          ASL 2.0
-URL:              http://felix.apache.org/documentation/subprojects/apache-felix-gogo.htm
+Name:           felix-gogo-parent
+Version:        4
+Release:        alt1_2jpp8
+Summary:        Parent pom for Apache Felix Gogo
+License:        ASL 2.0
+URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 
-Source0:          https://repo1.maven.org/maven2/org/apache/felix/gogo-parent/%{version}/gogo-parent-%{version}-source-release.tar.gz
+Source0:        http://archive.apache.org/dist/felix/gogo-parent-%{version}-source-release.tar.gz
 
-BuildArch:        noarch
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 Source44: import.info
 
 %description
-Apache Felix is a community effort to implement the OSGi R4 Service Platform
-and other interesting OSGi-related technologies under the Apache license. The
-OSGi specifications originally targeted embedded devices and home services
-gateways, but they are ideally suited for any project interested in the
-principles of modularity, component-orientation, and/or service-orientation.
-OSGi technology combines aspects of these aforementioned principles to define a
-dynamic service deployment framework that is amenable to remote management.
+Apache Felix Gogo is a subproject of Apache Felix implementing a command
+line shell for OSGi. It is used in many OSGi runtimes and servers.
 
 %prep
 %setup -q -n gogo-parent-%{version}
@@ -40,9 +35,12 @@ dynamic service deployment framework that is amenable to remote management.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2-alt1_3jpp8
 - java update
 
