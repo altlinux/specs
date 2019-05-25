@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           electric
 Version:        8.09
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
 License:        GPLv3
@@ -110,6 +110,9 @@ cp -rp apidoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_16jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_15jpp8
 - fc29 update
 
