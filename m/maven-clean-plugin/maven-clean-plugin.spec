@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-clean-plugin
-Version:        3.0.0
-Release:        alt1_4jpp8
+Version:        3.1.0
+Release:        alt1_2jpp8
 Summary:        Maven Clean Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-clean-plugin/
@@ -59,6 +59,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_2jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_4jpp8
 - fc27 update
 
