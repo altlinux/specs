@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -9,11 +10,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           gluegen2
 Version:        2.3.2
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
-Group:          Development/Other
 License:        BSD
 URL:            http://jogamp.org/
 Source0:        http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
@@ -29,6 +29,7 @@ Patch6:         %{name}-0006-disable-static-libgcc.patch
 Patch7:         %{name}-0007-add-ppc64-aarch64.patch
 Patch8:         %{name}-0008-jcpp-remove-javax-api.patch
 
+BuildRequires:  gcc
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  ant-antlr
@@ -50,8 +51,8 @@ representing all C types to represent the APIs for which it
 generates interfaces.
 
 %package devel
+Group: Development/Other
 Summary:        GlueGen2 devel utilities required to build JOGL2
-Group:          Development/Other
 BuildArch:      noarch
 
 Requires:       %{name} = %{version}-%{release}
@@ -65,16 +66,16 @@ GlueGen devel utilities provide some ant targets and shared files to build
 application.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for GlueGen2
-Group:          Development/Java
 BuildArch:      noarch
 
 %description javadoc
 Javadoc for GlueGen2.
 
 %package doc
+Group: Development/Java
 Summary:        GlueGen's user manual
-Group:          Development/Java
 BuildArch:      noarch
 
 %description doc
@@ -232,6 +233,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_8jpp8
 - java update
 
