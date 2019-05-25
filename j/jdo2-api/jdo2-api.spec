@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdo2-api
 Version:       2.2
-Release:       alt3_17jpp8
+Release:       alt3_18jpp8
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
 License:       ASL 2.0
 Url:           http://db.apache.org/jdo/
@@ -82,6 +82,9 @@ cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_18jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_17jpp8
 - fc29 update
 
