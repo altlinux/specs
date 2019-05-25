@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-interceptors-1.1-api
 Version:          1.0.2
-Release:          alt2_0.18.20120319git49a904jpp8
+Release:          alt2_0.19.20120319git49a904jpp8
 Summary:          Interceptors 1.1 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_0.19.20120319git49a904jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_0.18.20120319git49a904jpp8
 - fc29 update
 
