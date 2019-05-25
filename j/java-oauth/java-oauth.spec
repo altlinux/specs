@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname oauth
 Name:          java-oauth
 Version:       20100601
-Release:       alt2_16jpp8
+Release:       alt2_17jpp8
 Summary:       An open protocol to allow API authentication
 License:       ASL 2.0
 Url:           http://code.google.com/p/oauth/
@@ -77,6 +77,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_16jpp8
 - fc29 update
 
