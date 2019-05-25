@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_18jpp8.qa1
+Release:        alt4_20jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -71,7 +71,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Demos for %{name}
-Requires:       %{name} = %{EVR}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -107,6 +107,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt4_20jpp8
+- new version
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_18jpp8.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
