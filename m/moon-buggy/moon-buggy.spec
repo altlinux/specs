@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install texinfo
 # END SourceDeps(oneline)
@@ -9,9 +10,8 @@ BuildRequires: /usr/bin/desktop-file-install texinfo
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_20
+Release:         alt2_24
 License:         GPL+
-Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
 Source0:         http://seehuhn.de/media/programs/%{name}-%{version}.tar.gz
 Source1:         http://seehuhn.de/media/programs/%{name}-sound-%{version}.tar.gz
@@ -19,9 +19,11 @@ Source2:         %{name}.desktop
 Source3:         %{name}-sound.desktop
 Patch0:          moon-buggy-1.0.51-pause.patch
 Patch1:          moon-buggy-1.0.51-sound.patch
-BuildRequires:   libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, makeinfo
+%if 0%{?rhel} && 0%{?rhel} <= 7
+%endif
+BuildRequires:   gcc libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, makeinfo
 %if !%{oldstyle}
-BuildRequires:   libesd-devel, desktop-file-utils, autoconf-common, automake-common
+BuildRequires:   libesd-devel, desktop-file-utils, autoconf, automake
 %endif
 Source44: import.info
 
@@ -77,7 +79,8 @@ touch -c -r TODO TODO.utf8
 mv -f TODO.utf8 TODO
 
 %files 
-%doc ANNOUNCE AUTHORS ChangeLog COPYING README THANKS
+%doc --no-dereference COPYING
+%doc ANNOUNCE AUTHORS ChangeLog README THANKS
 %if !%{oldstyle}
 %doc README.sound
 %{_datadir}/%{name}/
@@ -92,6 +95,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_localstatedir}/games/%{name}/mbscore
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_20
 - update to new release by fcimport
 
