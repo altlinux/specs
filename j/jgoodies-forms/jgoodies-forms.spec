@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jgoodies-forms
 Version:        1.8.0
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Framework to lay out and implement elegant Swing panels in Java
 
-Group:          Development/Other
 License:        BSD
 URL:            http://www.jgoodies.com/freeware/forms/
 Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
@@ -33,8 +33,8 @@ possible, the good design easy and the bad difficult.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -93,6 +93,9 @@ done
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_8jpp8
 - fc29 update
 
