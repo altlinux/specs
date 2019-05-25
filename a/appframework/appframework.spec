@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    appframework
 Version: 1.03
-Release: alt2_20jpp8
+Release: alt2_21jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
-Group:   Development/Other
 
 Source0: https://appframework.dev.java.net/downloads/AppFramework-1.03-src.zip
 Patch0:  %{name}-%{version}-no-local-storage.diff
@@ -37,8 +37,8 @@ The JSR-296 Swing Application Framework prototype implementation is a small
 set of Java classes that simplify building desktop applications.
 
 %package javadoc
+Group: Development/Java
 Summary: Javadoc for %{name}
-Group:   Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -74,6 +74,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_21jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_20jpp8
 - fc29 update
 
