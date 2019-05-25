@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,18 +8,17 @@ BuildRequires: unzip
 %global		priority	68
 %global		fontname	ipa-ex-gothic
 %global		fontconf	%{priority}-%{fontname}.conf
-%global		archiveversion	00201
+%global		archiveversion	00401
 %global		archivename	ipaexg%{archiveversion}
 
 Name:		fonts-ttf-ipa-ex-gothic
-Version:	002.01
-Release:	alt1_10
+Version:	004.01
+Release:	alt1_1
 Summary:	Japanese Gothic-typeface OpenType font by IPA
 
-Group:		System/Fonts/True type
 License:	IPA
 URL:		http://ossipedia.ipa.go.jp/ipafont/
-Source0:	http://info.openlab.ipa.go.jp/ipafont/fontdata/%{archivename}.zip
+Source0:	https://oscdl.ipa.go.jp/IPAexfont/%{archivename}.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
 
@@ -34,8 +34,6 @@ This package contains Gothic (sans-serif) style font.
 
 %prep
 %setup -q -n %{archivename}
-iconv -f sjis -t utf-8 Readme_%{archivename}.txt > Readme_%{archivename}.utf8.txt
-touch -r Readme_%{archivename}.txt Readme_%{archivename}.utf8.txt
 
 %build
 
@@ -95,12 +93,15 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc Readme_%{archivename}.utf8.txt
+%doc Readme_%{archivename}.txt
 %doc --no-dereference IPA_Font_License_Agreement_v1.0.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 004.01-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_10
 - update to new release by fcimport
 
