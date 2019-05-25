@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -63,7 +63,7 @@ BuildRequires: mvn(org.apache.zookeeper:zookeeper)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
-BuildRequires: protobuf-compiler
+BuildRequires: libprotobuf17 protobuf-compiler
 
 %if %{with test}
 BuildRequires: mvn(commons-codec:commons-codec)
@@ -366,6 +366,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_6jpp8
 - fc29 update
 
