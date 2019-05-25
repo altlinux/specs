@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_15jpp8
+Release:        alt2_16jpp8
 Summary:        Pure-java port of asmjit
 
 License:        MIT
@@ -58,6 +58,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_16jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_15jpp8
 - fc29 update
 
