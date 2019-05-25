@@ -1,7 +1,7 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl(URI.pm) perl(URI/QueryParam.pm) perl-podlators
+BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl-podlators
 # END SourceDeps(oneline)
 # hacks around findreq ==============
 # GraphViz is optional dependency, not a requirement
@@ -36,7 +36,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rt
 #
-# Copyright (c) 2005-2018, Ralf Corsepius, Ulm, Germany.
+# Copyright (c) 2005-2019, Ralf Corsepius, Ulm, Germany.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -75,8 +75,8 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.3
-Release:	alt2_2
+Version:	4.4.4
+Release:	alt1_1
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -98,15 +98,10 @@ Patch4: 0004-Fix-permissions.patch
 
 BuildArch:	noarch
 
-Obsoletes:	rt3 < %{version}-%{release}
-Provides:	rt3 = %{version}-%{release}
-
 # This list is alpha sorted
 BuildRequires: rpm-build-perl
-BuildRequires: perl(Apache/DBI.pm)
 BuildRequires: perl(Apache/Session.pm)
 BuildRequires: perl(Business/Hours.pm)
-BuildRequires: perl(Cache/Simple/TimedExpiry.pm)
 BuildRequires: perl(CGI/Cookie.pm)
 BuildRequires: perl(CGI/PSGI.pm)
 BuildRequires: perl(CGI/Emulate/PSGI.pm)
@@ -114,14 +109,15 @@ BuildRequires: perl(Class/ReturnValue.pm)
 BuildRequires: perl(Convert/Color.pm)
 BuildRequires: perl(CPAN.pm)
 BuildRequires: perl(Crypt/Eksblowfish.pm)
-BuildRequires: perl(Crypt/SSLeay.pm)
 BuildRequires: perl(Crypt/X509.pm)
 BuildRequires: perl(CSS/Minifier/XS.pm)
 BuildRequires: perl(CSS/Squish.pm)
 BuildRequires: perl(Data/GUID.pm)
 BuildRequires: perl(Data/ICal.pm)
 BuildRequires: perl(Data/Page/Pageset.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Date/Extract.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Date/Manip.pm)
 BuildRequires: perl(DateTime/Format/Natural.pm)
 BuildRequires: perl(Date/Format.pm)
@@ -133,12 +129,14 @@ BuildRequires: perl(DBI.pm)
 BuildRequires: perl(DBIx/SearchBuilder.pm)
 BuildRequires: perl(Devel/StackTrace.pm)
 BuildRequires: perl(Devel/GlobalDestruction.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Digest/base.pm)
 BuildRequires: perl(Digest/MD5.pm)
-# Email::Address < 1.908 is vulnerable to CVE-2015-7686
 BuildRequires: perl(Email/Address.pm)
 BuildRequires: perl(Email/Address/List.pm)
 BuildRequires: perl(Encode.pm)
+BuildRequires: perl(Encode/HanExtra.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Errno.pm)
 BuildRequires: perl(File/Find.pm)
 BuildRequires: perl(File/Glob.pm)
@@ -153,8 +151,6 @@ BuildRequires: perl(GnuPG/Interface.pm)
 BuildRequires: perl(GraphViz.pm)
 BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(HTML/Entities.pm)
-%{?with_devel_mode:BuildRequires: perl(HTML/Form.pm)}
-BuildRequires: perl(HTML/FormatText.pm)
 BuildRequires: perl(HTML/FormatText/WithLinks.pm)
 BuildRequires: perl(HTML/FormatText/WithLinks/AndTables.pm)
 BuildRequires: perl(HTML/Mason.pm)
@@ -164,14 +160,11 @@ BuildRequires: perl(HTML/RewriteAttributes.pm)
 BuildRequires: perl(HTML/Scrubber.pm)
 BuildRequires: perl(HTML/TreeBuilder.pm)
 BuildRequires: perl(HTTP/Request/Common.pm)
-BuildRequires: perl(HTTP/Server/Simple.pm)
-BuildRequires: perl(HTTP/Server/Simple/Mason.pm)
 BuildRequires: perl(HTTP/Status.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(IPC/Run.pm)
 BuildRequires: perl(IPC/Run3.pm)
-BuildRequires: perl(IPC/Run/SafeHandles.pm)
 BuildRequires: perl(JSON.pm)
-BuildRequires: perl(JavaScript/Minifier.pm)
 BuildRequires: perl(JavaScript/Minifier/XS.pm)
 BuildRequires: perl(List/MoreUtils.pm)
 BuildRequires: perl(Locale/Maketext.pm)
@@ -183,24 +176,26 @@ BuildRequires: perl(Net/LDAP/Server/Test.pm)
 %{?with_devel_mode:BuildRequires: perl(Log/Dispatch/Perl.pm)}
 BuildRequires: perl(LWP.pm)
 BuildRequires: perl(LWP/UserAgent.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(LWP/Protocol/https.pm)
 BuildRequires: perl(Mail/Mailer.pm)
 BuildRequires: perl(MIME/Entity.pm)
 BuildRequires: perl(MIME/Types.pm)
 %{?with_devel_mode:BuildRequires: perl(Module/Refresh.pm)}
 BuildRequires: perl(Module/Versions/Report.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Mozilla/CA.pm)
 BuildRequires: perl(Mojo/DOM.pm)
 BuildRequires: perl(Net/CIDR.pm)
 BuildRequires: perl(Net/IP.pm)
-BuildRequires: perl(Net/Server.pm)
-BuildRequires: perl(Net/Server/PreFork.pm)
-BuildRequires: perl(Net/SMTP.pm)
-BuildRequires: perl(Net/SSL.pm)
+# In rt-test-dependencies, but seemingly unused
+BuildRequires: perl(Net/SSLeay.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(PerlIO/eol.pm)
 BuildRequires: perl(Pod/Usage.pm)
 BuildRequires: perl(Pod/Select.pm)
 BuildRequires: perl(Plack.pm)
+# In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Plack/Handler/Starlet.pm)
 %{?with_devel_mode:BuildRequires: perl(Plack/Middleware/Test/StashWarnings.pm)}
 BuildRequires: perl(Regexp/Common.pm)
@@ -236,6 +231,7 @@ BuildRequires: perl(Time/HiRes.pm)
 BuildRequires: perl(Time/ParseDate.pm)
 BuildRequires: perl(Tree/Simple.pm)
 BuildRequires: perl(UNIVERSAL/require.pm)
+BuildRequires: perl(URI/QueryParam.pm)
 %{?with_devel_mode:BuildRequires: perl(WWW/Mechanize.pm)}
 BuildRequires: perl(XML/RSS.pm)
 %{?with_devel_mode:BuildRequires: perl(XML/Simple.pm)}
@@ -278,14 +274,12 @@ Requires: perl(GD/Text.pm)
 Requires: perl(GD/Graph/bars.pm)
 Requires: perl(GD/Graph/pie.pm)
 Requires: perl(HTML/Quoted.pm)
-Requires: perl(HTTP/Server/Simple/Mason.pm)
 Requires: perl(HTML/Mason/Request.pm)
 Requires: perl(I18N/LangTags/List.pm)
 Requires: perl(IPC/Run3.pm)
 Requires: perl(LWP/MediaTypes.pm)
 Requires: perl(mod_perl2.pm)
 Requires: perl(Module/Versions/Report.pm)
-Requires: perl(Net/Server/PreFork.pm)
 Requires: perl(PerlIO/eol.pm)
 Requires: perl(Plack/Middleware/Test/StashWarnings.pm) >= 0.060
 Requires: perl(Plack/Handler/Starlet.pm)
@@ -295,6 +289,10 @@ Requires: perl(Time/ParseDate.pm)
 Requires: perl(URI/URL.pm)
 Requires: perl(XML/RSS.pm)
 
+# optional
+Requires:  perl(Encode/HanExtra.pm)
+
+
 # rpm fails to add these:
 Provides: perl(RT/Shredder/Exceptions.pm)
 
@@ -303,8 +301,6 @@ Requires: rt-mailgate
 
 
 
-# Keep FCGI optional
-
 # Work-around rpm's depgenerator defect: 
 
 
@@ -312,13 +308,10 @@ Requires: rt-mailgate
 
 # Filter bogus provides
 
-
 Source44: import.info
-%filter_from_requires /^perl(FCGI.ProcManager.pm)/d
 %filter_from_requires /^perl(DBIx.SearchBuilder.Handle..pm)/d
 %filter_from_provides /^perl(RT.pm)/d
 %filter_from_provides /^perl(HTML.Mason/d
-%filter_from_provides /^perl(IO.Handle.CRLF.pm)/d
 Patch33: rt-4.4.1-alt-buildroot.patch
 Conflicts: request-tracker < 4
 #Obsoletes: request-tracker < 4
@@ -339,9 +332,6 @@ Summary: rt's mailgate utility
 # rpm doesn't catch these:
 Requires:	perl(Pod/Usage.pm)
 Requires:	perl(HTML/TreeBuilder.pm)
-Requires:	perl(HTML/FormatText.pm)
-Obsoletes:	rt3-mailgate < %{version}-%{release}
-Provides:	rt3-mailgate = %{version}-%{release}
 
 %description mailgate
 %{summary}
@@ -356,6 +346,7 @@ Requires:	/usr/bin/prove
 Requires:	perl(RT/Test.pm)
 # rpm doesn't catch these:
 Requires:	perl(DBD/SQLite.pm)
+Requires:       perl(Encode/HanExtra.pm)
 Requires:	perl(GnuPG/Interface.pm)
 # Bug: The testsuite unconditionally depends upon perl(GraphViz)
 Requires:	perl(GraphViz.pm)
@@ -367,10 +358,8 @@ Requires:	perl(Test/Deep.pm)
 Requires:	perl(Test/Expect.pm)
 Requires:	perl(Test/MockTime.pm)
 Requires:	perl(Test/Warn.pm)
-
-Obsoletes:	rt3-tests < %{version}-%{release}
-Provides:	rt3-tests = %{version}-%{release}
 Conflicts: request-tracker < 4
+
 
 %description tests
 %{summary}
@@ -455,7 +444,6 @@ sed -i -e 's,$(RT_ETC_PATH)/upgrade,%{_datadir}/%{name}/upgrade,g' Makefile.in
 
 %build
 %configure \
---with-apachectl=/usr/sbin/apachectl \
 --with-web-user=apache --with-web-group=apache \
 --with-db-type=%{?with_mysql:mysql}%{?with_pg:Pg} \
 --enable-layout=Fedora \
@@ -656,6 +644,9 @@ fi
 %endif
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_1
+- update to new release by fcimport
+
 * Sun Feb 03 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.3-alt2_2
 - restored RT.pm provides
 
