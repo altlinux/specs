@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           hsqldb
 Version:        2.4.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -202,6 +202,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_5jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_3jpp8
 - java update
 
