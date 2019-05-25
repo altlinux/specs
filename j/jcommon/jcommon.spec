@@ -1,4 +1,5 @@
 Epoch: 0
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_8jpp8
+Release: alt1_9jpp8
 Summary: JFree Java utility classes
 License: LGPLv2+
-Group: System/Libraries
 # Github: https://github.com/jfree/jcommon
 # There are no tags which we can use to get sources. See:
 #   https://github.com/jfree/jcommon/issues/1
@@ -31,8 +31,8 @@ JCommon is a collection of useful classes used by
 JFreeChart, JFreeReport and other projects.
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Documentation
+Summary: Javadoc for %{name}
 Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -77,6 +77,9 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_8jpp8
 - fc29 update
 
