@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
@@ -11,15 +11,19 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global cvs_version 2_11_0
+%global cvs_version 2_12_0
 
 %define __requires_exclude system.bundle
 
 Name:          xerces-j2
-Version:       2.11.0
-Release:       alt3_31jpp8
+Version:       2.12.0
+Release:       alt1_2jpp8
 Summary:       Java XML parser
-License:       ASL 2.0
+# Most of the source is ASL 2.0
+# W3C licensed files:
+# src/org/apache/xerces/dom3/as
+# src/org/w3c/dom/html/HTMLDOMImplementation.java
+License:       ASL 2.0 and W3C
 URL:           http://xerces.apache.org/xerces2-j/
 
 Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
@@ -43,10 +47,6 @@ Patch0:        %{name}-build.patch
 # Patch the manifest so that it includes OSGi stuff
 Patch1:        %{name}-manifest.patch
 
-# Backported fix from upstream http://svn.apache.org/viewvc?view=revision&revision=1499506
-# See https://bugzilla.redhat.com/show_bug.cgi?id=1140031
-Patch2:        xerces-j2-CVE-2013-4002.patch
-
 BuildArch:     noarch
 
 BuildRequires: javapackages-local
@@ -59,6 +59,9 @@ BuildRequires: xml-commons-resolver >= 1.2
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
 Requires:      xml-commons-resolver >= 1.2
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 Provides:      jaxp_parser_impl = 1.4
 Provides:      %{name}-scripts = %{version}-%{release}
@@ -125,7 +128,6 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %setup -q -n xerces-%{cvs_version}
 %patch0 -p0 -b .orig
 %patch1 -p0 -b .orig
-%patch2 -p0 -b .orig
 
 # Copy the custom ant tasks into place
 mkdir -p tools/org/apache/xerces/util
@@ -210,6 +212,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.12.0-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_31jpp8
 - java update
 
