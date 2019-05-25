@@ -1,17 +1,17 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             guessencoding
 Version:          1.4
-Release:          alt2_16jpp8
+Release:          alt2_17jpp8
 Summary:          Guess encoding of files and return configured reader
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://docs.codehaus.org/display/GUESSENC/
 # svn export http://svn.codehaus.org/guessencoding/tags/guessencoding-1.4/
@@ -49,8 +49,8 @@ is not supported by the library.
 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
 Requires:         jpackage-utils
 BuildArch:        noarch
 
@@ -78,6 +78,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_16jpp8
 - fc29 update
 
