@@ -1,10 +1,11 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -19,10 +20,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Java Graph Drawing Component
 
-Group:          Development/Other
 License:        BSD
 URL:            http://www.jgraph.com/jgraph.html
 Source0:        http://www.jgraph.com/downloads/jgraphx/archive/%{pkg_name}-%(echo %{version} |sed 's/\./_/g').zip
@@ -46,8 +46,8 @@ JGraphX is the a powerful, easy-to-use and feature-rich graph drawing
 component for Java. It is a rewrite of JGraph, also known as JGraph 6.
 
 %package javadoc
+Group: Development/Java
 Summary:        API Documentation for %{name}
-Group:          Development/Java
 %{!?scl:
 Requires:       jpackage-utils
 Requires:       %{name} = %{version}-%{release}
@@ -91,17 +91,20 @@ popd
 %if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
- %doc --no-dereference license.txt
+  %doc --no-dereference license.txt
 %endif
 
 %files javadoc -f .mfiles-javadoc
 %if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
- %doc --no-dereference license.txt
+  %doc --no-dereference license.txt
 %endif
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_7jpp8
 - fc29 update
 
