@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt7_25jpp8
+Release:        alt7_27jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -167,6 +167,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_27jpp8
+- new version
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_25jpp8
 - fc28+ update
 
