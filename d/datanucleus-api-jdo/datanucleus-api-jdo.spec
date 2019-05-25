@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          datanucleus-api-jdo
 Version:       3.2.8
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       DataNucleus JDO API plugin
 License:       ASL 2.0
 URL:           https://github.com/datanucleus/datanucleus-api-jdo
@@ -67,6 +67,9 @@ cp -p META-INF/README.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_8jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_7jpp8
 - java update
 
