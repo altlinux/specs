@@ -1,16 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+Group: System/Libraries
 %define oldname fedora-gnat-project-common
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.12
+Version:        3.13
 Release:        alt1_1
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
-Group:          System/Libraries
 License:        Copyright only
 URL:            https://src.fedoraproject.org/cgit/rpms/fedora-gnat-project-common.git
 Source1:        directories.gpr.in
@@ -19,22 +16,16 @@ Source3:        gnat-project.sh
 Source4:        gnat-project.csh
 Source5:        configure
 Source6:        LICENSE
-#BuildArch:      noarch
+BuildArch:      noarch
 
 BuildRequires:  sed
 Requires:       setup
-# workaround for https://bugzilla.redhat.com/show_bug.cgi?id=613407:
-Requires:       libgnat-devel-static
-# macros.gnat requires __global_ldflags:
-# An RPM that knows about /usr/lib/rpm/macros.d is required:
-# Distribute this package only for architectures where libgnat-static is
-# available:
-ExclusiveArch:  noarch %{GNAT_arches}
 Source44: import.info
 Patch33: macros.gnat.in.patch
 Provides: fedora-gnat-project-common = %version
 Requires: rpm-macros-gnat = %{version}-%{release}
-# ("noarch" is included so that the build works.)
+# macros.gnat requires __global_ldflags:
+# An RPM that knows about /usr/lib/rpm/macros.d is required:
 
 %description
 The fedora-gnat-project-common package contains files that are used by the GNAT
@@ -87,6 +78,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.13-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_1
 - update to new release by fcimport
 
