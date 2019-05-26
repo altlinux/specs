@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             weld-parent
 Version:          34
-Release:          alt1_5jpp8
+Release:          alt1_7jpp8
 Summary:          Parent POM for Weld
 License:          ASL 2.0
 URL:              http://weld.cdi-spec.org
@@ -42,6 +42,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 34-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 34-alt1_5jpp8
 - java update
 
