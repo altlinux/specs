@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           derby
 Version:        10.13.1.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Relational database implemented entirely in Java
 
 License:        ASL 2.0
@@ -33,7 +33,7 @@ BuildRequires:  json_simple
 BuildRequires:  lucene4
 BuildRequires:  junit
 BuildRequires:  ant
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Requires(pre):  shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 BuildArch:      noarch
@@ -161,6 +161,9 @@ exit 0
 %doc --no-dereference db-derby-%{version}-src/NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:10.13.1.1-alt1_4jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:10.13.1.1-alt1_3jpp8
 - java update
 
