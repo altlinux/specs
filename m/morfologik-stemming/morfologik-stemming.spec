@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          morfologik-stemming
 Version:       2.0.1
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       Morfologik stemming library
 License:       BSD
 URL:           http://morfologik.blogspot.com/
@@ -86,6 +86,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_9jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_7jpp8
 - java update
 
