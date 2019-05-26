@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jsonp
 Version:       1.0.4
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       JSR 353 (JSON Processing) RI
 License:       CDDL or GPLv2 with exceptions
 URL:           http://java.net/projects/jsonp/
@@ -100,6 +100,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_7jpp8
 - java update
 
