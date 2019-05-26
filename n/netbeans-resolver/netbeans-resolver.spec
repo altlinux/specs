@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -10,10 +11,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_16jpp8
+Release: alt1_18jpp8
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
-Group:   Development/Other
 License: ASL 1.1
 URL:     http://xml.apache.org/commons/
 
@@ -39,8 +39,8 @@ Resolver subproject of xml-commons, version %{patched_resolver_ver} with
 a patch for NetBeans.
 
 %package javadoc
+Group: Development/Java
 Summary:    Javadocs for %{name}
-Group:      Development/Java
 Requires:   jpackage-utils
 BuildArch: noarch
 
@@ -79,6 +79,9 @@ cp -rp build/apidocs/resolver %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.resolver.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_18jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_16jpp8
 - java update
 
