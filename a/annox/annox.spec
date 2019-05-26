@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash b8565e1faa39c4eb8841902cf65a1615f5a933d7
 Name:          annox
 Version:       1.0.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java annotations in XML resources
 License:       BSD
 Url:           http://java.net/projects/annox
@@ -97,6 +97,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp8
 - fc29 update
 
