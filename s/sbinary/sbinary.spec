@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sbinary
 Version:        %{sbinary_version}
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Library for describing binary formats for Scala types
 
 License:        MIT
@@ -155,6 +155,9 @@ cp -rp core/target/scala-%{scala_version}/api/* %{buildroot}/%{_javadocdir}/%{na
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_8jpp8
 - java update
 
