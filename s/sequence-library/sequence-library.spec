@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sequence-library
 Version:        1.0.3
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -57,6 +57,9 @@ cp -pr %{SOURCE1} pom.xml
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3jpp8
+- new version
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1jpp8
 - new version
 
