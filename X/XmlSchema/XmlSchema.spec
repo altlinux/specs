@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           XmlSchema
 Version:        2.2.3
-Release:        alt2_2jpp8
+Release:        alt2_3jpp8
 Summary:        Lightweight schema object model
 License:        ASL 2.0
 URL:            http://ws.apache.org/xmlschema/
@@ -73,6 +73,9 @@ sed -i -e 's/\r//g' RELEASE-NOTE.txt
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt2_3jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt2_2jpp8
 - restored jpp patches
 
