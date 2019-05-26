@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          properties-maven-plugin
 Version:       1.0.0
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Properties Maven Plugin
 License:       ASL 2.0
 URL:           http://www.mojohaus.org/properties-maven-plugin/
@@ -74,6 +74,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
 - java update
 
