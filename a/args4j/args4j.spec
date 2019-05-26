@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           args4j
 Version:        2.33
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java command line arguments parser
 License:        MIT
 URL:            http://args4j.kohsuke.org
@@ -106,6 +106,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_6jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_4jpp8
 - java update
 
