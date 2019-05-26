@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          classycle
 Version:       1.4
-Release:       alt2_13jpp8
+Release:       alt2_14jpp8
 Summary:       Analysing Tools for Java Class and Package Dependencies
 License:       BSD
 URL:           http://classycle.sourceforge.net/
@@ -70,6 +70,9 @@ ant jar apidoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_14jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_13jpp8
 - fc29 update
 
