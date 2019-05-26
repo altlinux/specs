@@ -2,7 +2,7 @@
 %define oname premailer
 
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Turns CSS blocks into style attributes
@@ -38,6 +38,9 @@ style attributes in instead.
 %doc LICENSE README.*
 
 %changelog
+* Sun May 26 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.4.1-alt1
+- New version
+
 * Sun Mar 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.4.0-alt1
 - Initial build for ALT
 
