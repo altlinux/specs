@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-docck-plugin
 Version:        1.1
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Maven Documentation Checker Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-docck-plugin/
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6jpp8
 - java update
 
