@@ -7,15 +7,15 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-posix
-Version:        3.0.41
-Release:        alt1_4jpp8
+Version:        3.0.47
+Release:        alt1_2jpp8
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.jnr:jnr-constants) >= 0.9.9
+BuildRequires:  mvn(com.github.jnr:jnr-constants)
 BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -65,6 +65,9 @@ ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.47-alt1_2jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.41-alt1_4jpp8
 - fc29 update (using specdiff-tmp)
 
