@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_12jpp8
+Release:        alt2_14jpp8
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
-Group:          Development/Other
 License:        ASL 2.0
 URL:            https://github.com/sonatype/oss-parents
 Source:         https://github.com/sonatype/oss-parents/tarball/plugins-parent-%{version}#/%{name}-%{version}.tar.gz
@@ -42,6 +42,9 @@ cd ./plugins-parent
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 8-alt2_14jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt2_12jpp8
 - java update
 
