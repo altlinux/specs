@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.5.0
-Release:          alt1_7jpp8
+Release:          alt1_8jpp8
 Summary:          Apache Commons Validator
 License:          ASL 2.0
 URL:              http://commons.apache.org/validator/
@@ -68,6 +68,9 @@ sed -i 's/\r//' NOTICE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_7jpp8
 - fc29 update
 
