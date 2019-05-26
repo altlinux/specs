@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           signpost-core
 Version:        1.2.1.2
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        A simple, light-weight, and modular OAuth client library for the Java platform
 
 License:        ASL 2.0
@@ -97,6 +97,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt1_16jpp8
+- new version
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt1_15jpp8
 - new version
 
