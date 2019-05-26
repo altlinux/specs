@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          wildfly-common
 Version:       1.1.0
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       WildFly common utilities project
 License:       ASL 2.0
 URL:           http://wildfly.org/
@@ -72,6 +72,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_5jpp8
 - java update
 
