@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          josql
 Version:       2.2
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       Library to apply SQL-like syntax to Java objects
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
@@ -94,6 +94,9 @@ bnd wrap -p %{SOURCE2} -o %{name}.jar -v %{version} JoSQL-%{version}.jar
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_14jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_13jpp8
 - fc29 update
 
