@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt5_23jpp8
+Release:        alt5_25jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -189,6 +189,9 @@ done
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_25jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_23jpp8
 - java update
 
