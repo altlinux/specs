@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           kohsuke-pom
 Version:        14
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Kohsuke parent POM
 
 # License is specified in pom file
@@ -50,6 +50,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 14-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 14-alt1_6jpp8
 - fc29 update
 
