@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          wildfly-elytron
 Version:       1.0.2
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Security, Authentication, and Authorization SPIs for the WildFly project
 # LGPLv2: ./src/main/java/org/wildfly/security/permission/PermissionActions.java
 # most of the code in ./src/main/java/org/wildfly/security/manager/
@@ -79,6 +79,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp8
 - java update
 
