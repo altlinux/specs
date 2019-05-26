@@ -12,7 +12,7 @@ Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
 Version:        22
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 License:        ASL 2.0
 BuildArch:      noarch
 
@@ -40,9 +40,12 @@ chmod -R go=u-w *
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_8jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_5jpp8
 - fc27 update
 
