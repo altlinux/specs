@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-artifact-resolver
 Version:        1.0
-Release:        alt3_17jpp8
+Release:        alt3_20jpp8
 # Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
 Epoch:          1
 Summary:        Maven Artifact Resolution API
@@ -74,6 +74,9 @@ rm src/test/java/org/apache/maven/shared/artifact/resolver/DefaultProjectDepende
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_20jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_17jpp8
 - fc27 update
 
