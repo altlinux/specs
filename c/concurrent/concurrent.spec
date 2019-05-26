@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_24jpp8
+Release:        alt1_26jpp8
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -49,7 +50,6 @@ Source2:        %{name}-%{version}.pom
 Patch0:         concurrent-build.patch
 Patch1:         JDK-8-support.patch
 URL:            http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
-Group:          Development/Java
 
 BuildArch:      noarch
 
@@ -67,8 +67,8 @@ implementations of ideas that have been around for ages, and is merely intended
 to save you the trouble of coding them.
 
 %package javadoc
+Group: Development/Documentation
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -110,6 +110,9 @@ popd
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_26jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_24jpp8
 - java update
 
