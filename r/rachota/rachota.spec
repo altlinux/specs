@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 %global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_14.20130104cvsjpp8
+Release:        alt1_16.20130104cvsjpp8
 Summary:        Straightforward timetracking
 
-Group:          Development/Java
 License:        CDDL
 URL:            http://rachota.sourceforge.net/en/index.html
 ## Upstream does not provide any source tarball.
@@ -48,8 +48,8 @@ and invoices or analyses measured data and suggests hints to improve user's
 time usage. The totally portable yet personal timetracker. 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -94,6 +94,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_16.20130104cvsjpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_14.20130104cvsjpp8
 - java update
 
