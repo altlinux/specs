@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           opencsv
 Version:        2.3
-Release:        alt1_16jpp8
+Release:        alt1_18jpp8
 Summary:        A very simple CSV (comma-separated values) parser library for Java
 License:        ASL 2.0
 URL:            http://opencsv.sourceforge.net/
@@ -76,6 +76,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_18jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_16jpp8
 - java update
 
