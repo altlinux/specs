@@ -1,3 +1,4 @@
+Group: Text tools
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 Name:		publican-jboss
 Summary:	Common documentation files for %{brand}
 Version:	2.6
-Release:	alt2_11jpp8
+Release:	alt2_13jpp8
 License:	CC-BY-SA
-Group:		Text tools
 # Limited to these arches on RHEL 6 due to PDF + Java limitations
 %if %{RHEL6}
 ExclusiveArch:   i686 x86_64
@@ -46,6 +46,9 @@ publican install_brand --path=$RPM_BUILD_ROOT%{_datadir}/publican/Common_Content
 %{_datadir}/publican/Common_Content/%{brand}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_13jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_11jpp8
 - java update
 
