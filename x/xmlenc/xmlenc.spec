@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xmlenc
 Version:       0.53
-Release:       alt1_16jpp8
+Release:       alt1_18jpp8
 Summary:       Light-weight XML output library for Java
 License:       BSD
 #  http://xmlenc.sourceforge.net/
@@ -64,6 +64,9 @@ find . -name "*.jar" -type f -delete
 %doc --no-dereference COPYRIGHT.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_18jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_16jpp8
 - java update
 
