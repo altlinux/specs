@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-verifier
 Version:        1.6
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Maven verifier
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-verifier
@@ -43,13 +43,16 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_8jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5jpp8
 - fc27 update
 
