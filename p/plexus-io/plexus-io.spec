@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-io
 Version:        3.0.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Plexus IO Components
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-io
@@ -61,6 +61,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_4jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_2jpp8
 - java update
 
