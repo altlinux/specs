@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-classworlds
 Version:        2.5.2
-Release:        alt2_9jpp8
+Release:        alt2_11jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -69,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_11jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_9jpp8
 - java update
 
