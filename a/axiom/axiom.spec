@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           axiom
 Version:        1.2.14
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Epoch:          2
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -123,6 +123,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.2.14-alt1_4jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.2.14-alt1_2jpp8
 - new version
 
