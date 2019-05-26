@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          openjdk-orb
 Version:       8.0.7
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       A downstream fork of OpenJDK's ORB implementation
 # 2 file without license headers https://github.com/jboss/openjdk-orb/issues/2
 License:       GPLv2 with exceptions
@@ -88,6 +88,9 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 %doc --no-dereference ASSEMBLY_EXCEPTION LICENSE THIRD_PARTY_README
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 8.0.7-alt1_6jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 8.0.7-alt1_4jpp8
 - java update
 
