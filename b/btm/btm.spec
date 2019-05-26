@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -84,6 +84,9 @@ ant build
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_14jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_12jpp8
 - java update
 
