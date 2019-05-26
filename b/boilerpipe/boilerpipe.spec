@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          boilerpipe
 Version:       1.2.0
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Boilerplate Removal and Fulltext Extraction from HTML pages
 License:       ASL 2.0
 Url:           https://github.com/kohlschutter/boilerpipe
@@ -144,6 +144,9 @@ install -pm 644 dist/%{name}-demo-%{version}.jar \
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_12jpp8
 - fc29 update
 
