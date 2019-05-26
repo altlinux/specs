@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -14,10 +15,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt2_16jpp8
+Release:        alt2_17jpp8
 Summary:        A java library for lists of bytes
 
-Group:          Development/Other
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/%{cluster}/%{name}
 Source0:        http://download.github.com/%{cluster}-%{name}-%{version}-0-g%{git_commit}.tar.gz
@@ -76,6 +76,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_16jpp8
 - fc29 update
 
