@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          morphia
 Version:       1.0.1
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       A type-safe Java library for MongoDB
 License:       ASL 2.0
 URL:           https://github.com/mongodb/morphia
@@ -170,6 +170,9 @@ done
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_9jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp8
 - java update
 
