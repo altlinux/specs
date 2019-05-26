@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -45,9 +46,8 @@ BuildRequires: jpackage-generic-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_15jpp8
+Release:        alt4_17jpp8
 Epoch:          0
-Group:          Development/Java
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
 BuildArch:      noarch
@@ -67,8 +67,8 @@ Source44: import.info
 ObjectWeb Ant task
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -112,6 +112,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_17jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_15jpp8
 - java fc28+ update
 
