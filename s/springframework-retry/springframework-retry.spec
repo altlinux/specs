@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           springframework-retry
 Version:        1.1.1
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Abstraction around retrying failed operations
 
 License:        ASL 2.0
@@ -78,6 +78,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_9jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_7jpp8
 - java update
 
