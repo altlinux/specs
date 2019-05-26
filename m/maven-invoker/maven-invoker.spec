@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-invoker
 Version:        2.2
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
@@ -68,6 +68,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_9jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6jpp8
 - fc27 update
 
