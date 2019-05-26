@@ -1,7 +1,7 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt2_0.9.Beta3jpp8
+Release:        alt2_0.15.Beta3jpp8
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -45,7 +45,7 @@ Patch2:         %{name}-javadoc.patch
  
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  java-devel >= 1.6.0
 
 BuildRequires:  apache-ivy
@@ -55,7 +55,6 @@ BuildRequires:  apiviz
 BuildRequires:  jdepend
 BuildRequires:  javassist
 
-Requires:       jpackage-utils
 Requires:       javassist
 Source44: import.info
 
@@ -64,9 +63,8 @@ Papaki is a library for scanning annotations in Java 5+ code
 and generate a repository of these annotations.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -119,6 +117,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.15.Beta3jpp8
+- new version
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.9.Beta3jpp8
 - added BR: javapackages-local for javapackages 5
 
