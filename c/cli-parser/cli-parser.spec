@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cli-parser
 Version:       1.1.2
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Command Line Interface Parser for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/cli-parser
@@ -55,6 +55,9 @@ find . -name "*.jar" -print -delete
 %doc README.md
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_9jpp8
 - fc29 update
 
