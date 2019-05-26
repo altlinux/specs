@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             log4j-jboss-logmanager
 Version:          1.1.2
-Release:          alt1_5jpp8
+Release:          alt1_7jpp8
 Summary:          JBoss Log4j Emulation
 License:          ASL 2.0
 Url:              https://github.com/jboss-logging/log4j-jboss-logmanager
@@ -73,6 +73,9 @@ sed -i 's/createSourcesJar>true/createSourcesJar>false/' pom.xml
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_7jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_5jpp8
 - java update
 
