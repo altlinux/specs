@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-reporting-api
 Version:        3.0
-Release:        alt3_13jpp8
+Release:        alt3_16jpp8
 Epoch:          1
 Summary:        API to manage report generation
 License:        ASL 2.0
@@ -62,6 +62,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_16jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_13jpp8
 - fc27 update
 
