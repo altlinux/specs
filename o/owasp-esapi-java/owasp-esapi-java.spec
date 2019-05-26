@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             owasp-esapi-java
 Version:          2.1.0
-Release:          alt1_8jpp8
+Release:          alt1_10jpp8
 Summary:          OWASP Enterprise Security API
 License:          BSD
 URL:              https://www.owasp.org/index.php/Main_Page
@@ -105,6 +105,9 @@ sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/
 %doc --no-dereference LICENSE-CONTENT LICENSE-README
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_10jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_8jpp8
 - java update
 
