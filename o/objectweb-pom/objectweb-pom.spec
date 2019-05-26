@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           objectweb-pom
 Version:        1.5
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Objectweb POM
 BuildArch:      noarch
 License:        ASL 2.0
@@ -38,6 +38,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_9jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp8
 - fc27 update
 
