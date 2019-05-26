@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        2.6
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
@@ -114,6 +114,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_4jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_1jpp8
 - new version
 
