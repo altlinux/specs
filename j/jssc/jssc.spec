@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: rpm-build-java
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_11jpp8
+Release:	alt1_12jpp8
 License:	GPLv3+
-Group:		System/Libraries
 URL:		http://jssc.scream3r.org
 Source:		https://github.com/scream3r/java-simple-serial-connector/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # lack of license file, reported upstream:
@@ -103,6 +103,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_12jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_11jpp8
 - java update
 
