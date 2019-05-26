@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt6_23jpp8
+Release:        alt6_25jpp8
 Summary:        Maven plugin to update header licenses of source files
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://code.google.com/p/maven-license-plugin
 ### upstream only provides binaries or source without build scripts
@@ -53,8 +53,8 @@ possibility to update / reformat missing license headers.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch:      noarch
 
@@ -90,6 +90,9 @@ mkdir -p $RPM_BUILD_ROOT%{_javadir}
 %files javadoc  -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_25jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_23jpp8
 - java update
 
