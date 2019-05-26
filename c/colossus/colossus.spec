@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
@@ -11,10 +12,9 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Allows people to play Titan against each other or AIs
 
-Group:          Games/Other
 License:        GPLv2
 URL:            http://colossus.sourceforge.net/
 
@@ -55,8 +55,8 @@ seat or via a network. Several different AIs are provided that can play instead
 of humans.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -183,6 +183,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_11jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_10jpp8
 - fc29 update
 
