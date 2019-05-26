@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          reflectasm
 Version:       1.11.0
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       High performance Java library that provides reflection by using code generation
 License:       BSD
 URL:           https://github.com/EsotericSoftware/reflectasm
@@ -70,6 +70,9 @@ rm -r test/com/esotericsoftware/reflectasm/ClassLoaderTest.java
 %doc --no-dereference license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_6jpp8
 - java update
 
