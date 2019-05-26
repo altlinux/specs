@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          shibboleth-java-support
 Version:       7.1.1
-Release:       alt1_5jpp8
+Release:       alt1_8jpp8
 Summary:       Java Support for Shibboleth projects
 License:       ASL 2.0 and BSD
 URL:           http://shibboleth.net/
@@ -79,12 +79,15 @@ rm src/test/java/net/shibboleth/utilities/java/support/collection/LazyMapTest.ja
 
 %files -f .mfiles
 %doc doc/RELEASE-NOTES.txt
-%doc doc/LICENSE.txt doc/NOTICE.txt doc/OWASP-LICENSE.txt
+%doc --no-dereference doc/LICENSE.txt doc/NOTICE.txt doc/OWASP-LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc doc/LICENSE.txt doc/NOTICE.txt doc/OWASP-LICENSE.txt
+%doc --no-dereference doc/LICENSE.txt doc/NOTICE.txt doc/OWASP-LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt1_8jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt1_5jpp8
 - fc27 update
 
