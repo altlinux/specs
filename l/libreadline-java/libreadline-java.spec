@@ -8,11 +8,12 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global editline_ver    3.1-15
 %global src_dirs        org test
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt5_49jpp8
+Release:       alt5_50jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -25,9 +26,10 @@ Patch2:        %{name}-editline.patch
 BuildRequires: gcc
 BuildRequires: java-devel >= 1.4.2
 BuildRequires: javapackages-local
-BuildRequires: libedit-devel
+BuildRequires: libedit-devel >= %{editline_ver}
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 
+Requires:      libedit3 >= %{editline_ver}
 Source44: import.info
 
 %description
@@ -87,6 +89,9 @@ ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 %doc --no-dereference COPYING.LIB
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt5_50jpp8
+- new version
+
 * Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0:0.8.0-alt5_49jpp8
 - Removed fedora releases from BR: and R:.
 
