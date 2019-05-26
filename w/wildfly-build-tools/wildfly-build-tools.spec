@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          wildfly-build-tools
 Version:       1.1.6
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Wildfly build and provisioning tools
 License:       ASL 2.0
 URL:           https://github.com/wildfly/wildfly-build-tools
@@ -121,6 +121,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_4jpp8
 - java update
 
