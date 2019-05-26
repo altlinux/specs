@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-ear-plugin
 Version:        2.10
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Maven EAR Plugin
 
 License:        ASL 2.0
@@ -65,6 +65,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_6jpp8
 - java update
 
