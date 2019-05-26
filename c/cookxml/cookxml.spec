@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
@@ -8,9 +9,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             cookxml
 Version:          3.0.2
-Release:          alt3_16jpp8
+Release:          alt3_17jpp8
 Summary:          Dynamic XML data binding tool
-Group:            Development/Other
 License:          BSD
 URL:              http://cookxml.yuanheng.org/
 
@@ -33,8 +33,8 @@ CookXml is a powerful general purpose dynamic XML data binding tool.
 It is designed to be easy to use and easily extensible. 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
 Requires:         jpackage-utils
 BuildArch: noarch
 
@@ -76,6 +76,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_16jpp8
 - fc29 update
 
