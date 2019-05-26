@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          minidns
 Version:       0.1.7
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       Minimal DNS library for Java and Android systems
 License:       ASL 2.0 or LGPLv2+ or WTFPL
 URL:           https://github.com/rtreffer/minidns
@@ -96,6 +96,9 @@ cp -p %{SOURCE1} pom.xml
 %doc --no-dereference LICENCE*
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.7-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.7-alt1_6jpp8
 - java update
 
