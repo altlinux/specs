@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          stax-ex
 Version:       1.7.7
-Release:       alt1_8jpp8
+Release:       alt1_10jpp8
 Summary:       StAX API extensions
 License:       CDDL or GPLv2
 Url:           https://stax-ex.dev.java.net
@@ -77,6 +77,9 @@ dos2unix LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_8jpp8
 - java update
 
