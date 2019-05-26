@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_10jpp8
+Release:        alt3_12jpp8
 Summary:        Pure Java SQLite
 
 License:        GPLv2
@@ -82,6 +82,9 @@ ant jars osgi javadoc pom
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_12jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_10jpp8
 - java fc28+ update
 
