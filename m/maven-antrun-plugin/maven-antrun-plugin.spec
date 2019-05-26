@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-antrun-plugin
 Version:        1.8
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Maven AntRun Plugin
 
 License:        ASL 2.0
@@ -57,6 +57,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_8jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_5jpp8
 - fc27 update
 
