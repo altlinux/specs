@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_19jpp8
+Release:        alt1_20jpp8
 Summary:        Beans Binding (JSR 295) reference implementation
 
-Group:          Development/Other
 License:        LGPLv2+
 URL:            https://beansbinding.dev.java.net/
 Source0:        https://beansbinding.dev.java.net/files/documents/6779/73673/beansbinding-1.2.1-src.zip
@@ -34,8 +34,8 @@ on the ability to bind to Swing components, and easy integration with
 IDEs such as NetBeans. This project provides the reference implementation.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -66,6 +66,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_20jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_19jpp8
 - fc29 update
 
