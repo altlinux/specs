@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             maven-shared-jarsigner
 Version:          1.3.2
-Release:          alt1_7jpp8
+Release:          alt1_9jpp8
 Summary:          Component to assist in signing Java archives
 License:          ASL 2.0
 URL:              http://maven.apache.org/shared/maven-jarsigner/
@@ -55,6 +55,9 @@ find -name \*.jar -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_9jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_7jpp8
 - java update
 
