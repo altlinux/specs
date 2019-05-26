@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             maven-filtering
 Version:          3.1.1
-Release:          alt1_4jpp8
+Release:          alt1_7jpp8
 Summary:          Shared component providing resource filtering
 License:          ASL 2.0
 URL:              http://maven.apache.org/shared/%{name}/index.html
@@ -51,12 +51,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_7jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_4jpp8
 - fc27 update
 
