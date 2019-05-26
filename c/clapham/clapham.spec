@@ -1,3 +1,4 @@
+Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,13 +9,12 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           clapham
 Version:        0.1.003
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Railroad diagram generator for computer languages
 URL:            http://clapham.hydromatic.net/
 License:        GPLv2
 # NOTE: Clapham is not under a GPLv2+ license, because it only allows
 # use of later versions if they are "approved by The Eigenbase Project".
-Group:          Engineering
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.zip
 Source1:        %{name}.sh
@@ -97,6 +97,9 @@ cp -a doc/api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_18jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_17jpp8
 - fc29 update
 
