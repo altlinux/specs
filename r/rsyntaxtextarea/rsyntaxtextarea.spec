@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           rsyntaxtextarea
 Version:        2.6.1
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        A syntax highlighting, code folding text editor for Java Swing applications
 
 License:        BSD
@@ -66,15 +66,18 @@ done
 
 
 %files -f .mfiles
-%doc src/main/dist/%{upname}.License.txt
+%doc --no-dereference src/main/dist/%{upname}.License.txt
 %doc src/main/dist/readme.txt
 
 
 %files javadoc -f .mfiles-javadoc
-%doc src/main/dist/%{upname}.License.txt
+%doc --no-dereference src/main/dist/%{upname}.License.txt
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_5jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_2jpp8
 - new jpp release
 
