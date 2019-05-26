@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ws-xmlschema
 Version:       2.2.1
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Apache XMLSchema
 License:       ASL 2.0
 URL:           http://ws.apache.org/xmlschema/
@@ -88,6 +88,9 @@ rm RELEASE-NOTE.txt.orig
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_6jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_4jpp8
 - java update
 
