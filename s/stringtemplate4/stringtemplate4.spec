@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           stringtemplate4
 Version:        4.0.8
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        A Java template engine
 License:        BSD
 URL:            http://www.stringtemplate.org/
@@ -68,6 +68,9 @@ rm -r test/org/stringtemplate/v4/test/TestEarlyEvaluation.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_6jpp8
 - java update
 
