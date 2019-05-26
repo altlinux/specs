@@ -1,3 +1,4 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           naga
 Version:        3.0
-Release:        alt1_10.82svnjpp8
+Release:        alt1_12.82svnjpp8
 Summary:        Simplified Java NIO asynchronous sockets
 
-Group:        	System/Base
 License:        MIT
 URL:            http://code.google.com/p/naga/
 # Upstream does not release stable source tarballs.
@@ -51,8 +51,8 @@ to code partially read buffers and setting various selection key
 flags.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -87,6 +87,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_12.82svnjpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_10.82svnjpp8
 - java update
 
