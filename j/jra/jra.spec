@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -14,10 +15,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.15.alpha4jpp8
+Release:       alt2_0.16.alpha4jpp8
 Summary:       Java REST Annotations
 License:       ASL 2.0
-Group:         Development/Other
 URL:           http://jra.codehaus.org/
 
 # svn export https://svn.codehaus.org/jra/branches/jra-1.0-alpha-4/ jra-1.0-alpha-4
@@ -45,8 +45,8 @@ implementations. However, the idea with JRA is that many different frameworks
 (web, XML/SOAP, etc) may want to expose REST style services.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadocs for %{name}
-Group:         Development/Java
 Requires:      jpackage-utils
 BuildArch: noarch
 
@@ -72,6 +72,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.16.alpha4jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.15.alpha4jpp8
 - fc29 update
 
