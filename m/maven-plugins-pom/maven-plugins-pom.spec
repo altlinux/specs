@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{short_name}-pom
 Version:        28
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Maven Plugins POM
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/
@@ -46,6 +46,9 @@ Apache Maven plugins.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 28-alt1_9jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 28-alt1_6jpp8
 - fc27 update
 
