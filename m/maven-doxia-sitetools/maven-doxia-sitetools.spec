@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.7.5
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 URL:            http://maven.apache.org/doxia/
@@ -140,6 +140,9 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.5-alt1_4jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.5-alt1_1jpp8
 - new version
 
