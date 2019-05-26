@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-invoker-plugin
 Version:        1.10
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Maven Invoker Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
@@ -79,12 +79,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_9jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_6jpp8
 - fc27 update
 
