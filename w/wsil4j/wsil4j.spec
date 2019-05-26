@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_17jpp8
+Release:	alt2_19jpp8
 Summary:	Web Services Inspection Language for Java API
 
 License:	ASL 1.1
@@ -73,6 +73,9 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_19jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
 - java update
 
