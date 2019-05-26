@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jtoaster
 Version:       1.0.5
-Release:       alt2_10jpp8
+Release:       alt2_12jpp8
 Summary:       Java utility class for swing applications
 License:       ASL 2.0
 URL:           http://jtoaster.sourceforge.net/
@@ -78,6 +78,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
 %doc --no-dereference apache2.0_license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_12jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_10jpp8
 - java update
 
