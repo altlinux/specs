@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-cipher
 Version:        1.7
-Release:        alt3_14jpp8
+Release:        alt3_16jpp8
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -56,6 +56,7 @@ API documentation for %{name}.
 %mvn_file : plexus/%{name}
 
 %build
+# Tests depend on sisu-guice
 %mvn_build -f
 
 %install
@@ -68,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_16jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_14jpp8
 - java update
 
