@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          znerd-oss-parent
 Version:       3
-Release:       alt2_15jpp8
+Release:       alt2_17jpp8
 Summary:       Znerd.org OSS Parent
 License:       BSD
 URL:           https://github.com/znerd/znerd-oss-parent
@@ -42,6 +42,9 @@ Parent for znerd.org OSS Projects.
 %doc --no-dereference COPYRIGHT.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3-alt2_17jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3-alt2_15jpp8
 - java update
 
