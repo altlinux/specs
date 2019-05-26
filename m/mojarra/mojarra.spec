@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mojarra
 Version:       2.2.13
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       JSF Reference Implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://javaserverfaces.java.net
@@ -238,6 +238,9 @@ cp -rp jsf-ri/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_6jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_4jpp8
 - java update
 
