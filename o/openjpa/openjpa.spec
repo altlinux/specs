@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          openjpa
 Version:       2.4.1
-Release:       alt2_8jpp8
+Release:       alt2_10jpp8
 Summary:       Java Persistence 2.0 API
 # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
@@ -219,6 +219,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_10jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_8jpp8
 - rebuild with tomcat9
 
