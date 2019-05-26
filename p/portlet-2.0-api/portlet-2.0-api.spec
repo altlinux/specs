@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_15jpp8
+Release:       alt2_17jpp8
 Summary:       Java Portlet Specification V2.0
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -72,6 +72,9 @@ sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" po
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
 - java update
 
