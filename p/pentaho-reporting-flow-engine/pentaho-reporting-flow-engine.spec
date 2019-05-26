@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt1_15jpp8
+Release: alt1_17jpp8
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
-Group: System/Libraries
 Source: http://downloads.sourceforge.net/jfreereport/flow-engine-%{version}.zip
 URL: http://reporting.pentaho.org/
 BuildRequires: ant java-devel jpackage-utils libbase libserializer
@@ -29,8 +29,8 @@ Pentaho Reporting Flow Engine is a free Java report library, formerly
 known as 'JFreeReport'
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Documentation
+Summary: Javadoc for %{name}
 Requires: %{name} = 1:%{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -65,6 +65,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_17jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_15jpp8
 - java update
 
