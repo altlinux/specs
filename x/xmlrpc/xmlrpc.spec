@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_20jpp8
+Release:        alt7_22jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -119,6 +119,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_22jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_20jpp8
 - java fc28+ update
 
