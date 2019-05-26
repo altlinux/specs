@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		taggle
 Version:	1.0
-Release:	alt2_13jpp8
+Release:	alt2_15jpp8
 Summary:	An online french word game
 
-Group:		Games/Other
 License:	GPLv3+
 URL:		http://www.inouire.net/baggle/
 Source0:	http://www.inouire.net/fedora/baggle_%{version}_src.tar.gz
@@ -36,8 +36,8 @@ in a grid and players attempt to find words in sequence
 of adjacent letters
 
 %package server
+Group: Games/Other
 Summary:	Server for %{name}
-Group:		Games/Other
 Requires:	jpackage-utils
 
 %description server
@@ -101,6 +101,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13jpp8
 - java update
 
