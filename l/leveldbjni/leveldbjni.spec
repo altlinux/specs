@@ -14,12 +14,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:          leveldbjni
 Version:       1.8
-Release:       alt3_18jpp8
+Release:       alt3_20jpp8
 Summary:       A Java Native Interface to LevelDB
 License:       BSD
 URL:           https://github.com/fusesource/leveldbjni/
 Source0:       https://github.com/fusesource/leveldbjni/archive/%{name}-%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
@@ -140,6 +141,9 @@ export JAVA_HOME=%{_jvmdir}/java LEVELDB_HOME=%{_prefix} SNAPPY_HOME=%{_prefix}
 %doc --no-dereference license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt3_20jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt3_18jpp8
 - java fc28+ update
 
