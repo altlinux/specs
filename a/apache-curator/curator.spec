@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 %define oldname curator
 BuildRequires: /proc
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          apache-curator
 Version:       2.10.0
-Release:       alt1_5jpp8
+Release:       alt1_8jpp8
 Summary:       A set of Java libraries that make using Apache ZooKeeper much easier
 License:       ASL 2.0
 URL:           http://%{oldname}.apache.org/
@@ -174,17 +173,17 @@ sed -i "s/org.testng.internal.annotations.Sets/org.testng.collections.Sets/" \
 %mvn_install
 
 %files -f .mfiles-apache-curator
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files client -f .mfiles-curator-client
 %doc README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files examples -f .mfiles-curator-examples
 %files framework -f .mfiles-curator-framework
 %files recipes -f .mfiles-curator-recipes
 %files test -f .mfiles-curator-test
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files x-discovery -f .mfiles-curator-x-discovery
 %files x-discovery-server -f .mfiles-curator-x-discovery-server
@@ -192,9 +191,12 @@ sed -i "s/org.testng.internal.annotations.Sets/org.testng.collections.Sets/" \
 
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.10.0-alt1_8jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.0-alt1_5jpp8
 - new version
 
