@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             picketbox
 Version:          4.9.6
-Release:          alt1_6jpp8
+Release:          alt1_8jpp8
 Summary:          Security framework for Java Applications
 License:          LGPLv2+
 URL:              http://picketbox.jboss.org
@@ -114,6 +114,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.po
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_6jpp8
 - java update
 
