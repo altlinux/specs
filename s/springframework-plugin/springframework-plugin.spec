@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-plugin
 Name:          springframework-plugin
 Version:       1.1.0
-Release:       alt1_9jpp8
+Release:       alt1_11jpp8
 Summary:       Simple plugin infrastructure
 License:       ASL 2.0
 URL:           https://github.com/SpringSource/spring-plugin
@@ -108,6 +108,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_11jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_9jpp8
 - java update
 
