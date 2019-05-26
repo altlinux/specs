@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ehcache-sizeof-agent
 Version:       1.0.1
-Release:       alt2_16jpp8
+Release:       alt2_17jpp8
 Summary:       Ehcache Size Of Agent
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
@@ -65,6 +65,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_16jpp8
 - fc29 update
 
