@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:          simple-xml
 Summary:       An XML serialization framework for Java
 Version:       2.7.1
-Release:       alt1_12jpp8
+Release:       alt1_14jpp8
 License:       ASL 2.0
 Url:           http://simple.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/simple/%{name}-%{version}.tar.gz
@@ -82,6 +82,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_14jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_12jpp8
 - java update
 
