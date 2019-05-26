@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           resteasy
 Version:        3.0.19
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Framework for RESTful Web services and Java applications
 License:        ASL 2.0 and CDDL
 URL:            http://resteasy.jboss.org/
@@ -450,6 +450,9 @@ done
 %doc --no-dereference jaxrs/License.html
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.19-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.19-alt1_7jpp8
 - java update
 
