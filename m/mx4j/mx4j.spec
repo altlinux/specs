@@ -1,5 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
@@ -40,11 +41,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt4_28jpp8
+Release:        alt4_30jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
-Group:          Development/Other
 Source0:        %{name}-%{version}-src.tar.gz
 Source1:        %{name}-build.policy
 Source2:        CatalogManager.properties
@@ -99,7 +99,7 @@ OpenJMX is an open source implementation of the
 Java(TM) Management Extensions (JMX).
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -108,7 +108,7 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %package manual
-Group:          Development/Other
+Group: Development/Other
 Summary:        Documentation for %{name}
 BuildArch: noarch
 
@@ -219,6 +219,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_30jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_28jpp8
 - java update
 
