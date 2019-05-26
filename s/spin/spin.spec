@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           spin
 Version:        1.5
-Release:        alt2_17jpp8
+Release:        alt2_19jpp8
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
-Group:          Development/Java
 Url:            http://spin.sourceforge.net/
 BuildArch:      noarch
 
@@ -33,8 +33,8 @@ If it is used wisely in an application framework, the GUI programmers will
 never have to think about threads again.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -63,6 +63,9 @@ rm -rf lib
 %doc license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_19jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_17jpp8
 - java update
 
