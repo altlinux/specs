@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt8_0.15.20120509SNAPSHOTjpp8
+Release:       alt8_0.16.20120509SNAPSHOTjpp8
 Summary:       Commons Javaflow
 License:       ASL 2.0
 Url:           http://commons.apache.org/sandbox/javaflow/
@@ -112,6 +112,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.16.20120509SNAPSHOTjpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.15.20120509SNAPSHOTjpp8
 - fc29 update
 
