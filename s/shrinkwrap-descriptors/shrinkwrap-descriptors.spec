@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.20.alpha9jpp8
+Release:       alt3_0.22.alpha9jpp8
 Summary:       ShrinkWrap sub-project for creating Archive Descriptors
 # Some file are without license headers
 # reported @ https://github.com/shrinkwrap/descriptors/issues/106
@@ -287,6 +287,9 @@ export JAVA5_HOME=%{_jvmdir}/java
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.22.alpha9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.20.alpha9jpp8
 - java update
 
