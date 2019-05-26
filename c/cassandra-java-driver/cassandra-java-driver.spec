@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		cassandra-java-driver
 Version:	3.4.0
-Release:	alt1_2jpp8
+Release:	alt1_3jpp8
 Summary:	DataStax Java Driver for Apache Cassandra
 License:	ASL 2.0
 URL:		https://github.com/datastax/java-driver
@@ -149,6 +149,9 @@ rm manual/object_mapper/.nav
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_3jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_2jpp8
 - fc29 update
 
