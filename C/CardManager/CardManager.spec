@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           CardManager
 Version:        3
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Java application to allows you to play any, especially collectible, card game
 
-Group:          Games/Other
 License:        BSD
 URL:            http://cardmanager.wz.cz/
 Source0:        http://cardmanager.wz.cz/CardManager_sources%{version}.zip
@@ -43,8 +43,8 @@ Also please feel free to add your own backgrounds to
 collection under ~/CardManager/collection
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -103,6 +103,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3-alt1_12jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 3-alt1_11jpp8
 - java update
 
