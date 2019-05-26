@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          noggit
 Version:       0.7
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       JSON streaming parser
 License:       ASL 2.0
 URL:           http://noggit.org/
@@ -57,6 +57,9 @@ chmod 644 LICENSE.txt README.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_7jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5jpp8
 - java update
 
