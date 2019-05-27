@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:          maven-dependency-tree
 Version:       3.0
-Release:       alt1_4jpp8
+Release:       alt1_7jpp8
 Summary:       Maven dependency tree artifact
-Group:         Development/Other
 License:       ASL 2.0
 Url:           http://maven.apache.org/
 Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -36,7 +36,7 @@ Source44: import.info
 Apache Maven dependency tree artifact. Originally part of maven-shared.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
 
@@ -66,6 +66,9 @@ find -name Maven3DependencyGraphBuilder.java -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_7jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_4jpp8
 - fc27 update
 
