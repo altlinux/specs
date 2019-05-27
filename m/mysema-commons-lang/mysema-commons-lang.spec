@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mysema-commons-lang
 Version:       0.2.4
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       Mysema Commons Lang
 License:       ASL 2.0
 URL:           http://www.mysema.com/
@@ -117,6 +117,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_9jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_7jpp8
 - java update
 
