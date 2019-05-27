@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -41,13 +42,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.20.a2.2jpp8
+Release:        alt5_0.22.a2.2jpp8
 Epoch:          0
 Summary:        Plexus Ant component factory
 # Email from copyright holder confirms license.
 # See plexus-ant-factory_license_and_copyright.txt
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://plexus.codehaus.org/
 Source0:        %{name}-src.tar.bz2
 # svn export http://svn.codehaus.org/plexus/tags/plexus-ant-factory-1.0-alpha-2.1/ plexus-ant-factory/
@@ -70,8 +70,8 @@ Source44: import.info
 Ant component class creator for Plexus.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -103,6 +103,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.22.a2.2jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.20.a2.2jpp8
 - java update
 
