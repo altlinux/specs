@@ -22,14 +22,17 @@ BuildRequires: jpackage-generic-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_53jpp8
+Release:       alt12_57jpp8
 Epoch:         0
 License:       ANTLR-PD
 URL:           http://www.antlr2.org/
-Source0:       http://www.antlr2.org/download/antlr-%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:       antlr-%{version}.tar.gz
 Source1:       %{name}-build.xml
 Source2:       %{name}-script
 Source3:       http://repo2.maven.org/maven2/antlr/antlr/%{version}/%{name}-%{version}.pom
+# Repack the tarball without prebuilt binaries of unknown origin
+Source4:       generate-tarball.sh
 Patch1:        %{name}-%{version}-newgcc.patch
 # see BZ#848662
 Patch2:        antlr-examples-license.patch
@@ -51,7 +54,7 @@ BuildRequires: doxygen graphviz libgraphviz
 %if %{with python}
 # Do not support Python3
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-pkg_resources python-module-setuptools
 %endif
 Source44: import.info
 
@@ -66,6 +69,9 @@ parsers].
 Group: Development/Java
 Summary:       ANother Tool for Language Recognition
 Provides:      %{name} = %{version}-%{release}
+# Explicit requires for javapackages-tools since antlr-script
+# uses /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 BuildArch:     noarch
 
 %description tool
@@ -230,6 +236,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %endif
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_57jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_53jpp8
 - java update
 
