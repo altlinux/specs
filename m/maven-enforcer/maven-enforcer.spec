@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-enforcer
 Version:        1.4.1
-Release:        alt1_7jpp8
+Release:        alt1_10jpp8
 Summary:        Maven Enforcer
 License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
@@ -17,6 +17,8 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{version}/enforcer-%{version}-source-release.zip
 
+# TODO forward upstream
+# https://issues.apache.org/jira/browse/MENFORCER-267
 Patch0:         0001-Port-to-Maven-3-API.patch
 
 BuildRequires:  maven-local
@@ -111,6 +113,9 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_10jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_7jpp8
 - java update
 
