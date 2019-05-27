@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          sslext
 Version:       1.2
-Release:       alt3_12jpp8
+Release:       alt3_15jpp8
 Summary:       Struts SSL Switching Extension
 License:       ASL 1.1
 Url:           http://sslext.sourceforge.net/
@@ -46,8 +46,7 @@ BuildRequires: apache-commons-validator
 BuildRequires: jakarta-oro
 BuildRequires: struts
 BuildRequires: tomcat-jsp-2.3-api
-#BuildRequires: tomcat-servlet-3.1-api
-BuildRequires: glassfish-servlet-api
+BuildRequires: tomcat-servlet-4.0-api
 
 BuildArch:     noarch
 Source44: import.info
@@ -69,8 +68,7 @@ This package contains javadoc for %{name}.
 %setup -q
 mkdir -p web/WEB-INF/classes
 %patch0 -p0
-#sed -i "s|tomcat-servlet-3.0-api|tomcat-servlet-api|" build.xml
-sed -i "s|tomcat-servlet-3.0-api|glassfish-servlet-api|" build.xml
+sed -i "s|tomcat-servlet-3.0-api|tomcat-servlet-api|" build.xml
 sed -i "s|tomcat-jsp-2.2-api|tomcat-jsp-api|" build.xml
 sed -i "s|1.5|1.6|" build.xml
 %patch1 -p0
@@ -80,8 +78,7 @@ cp -p %{SOURCE1} pom.xml
 
 %build
 
-#export CLASSPATH=$(build-classpath tomcat-servlet-api tomcat-jsp-api)
-export CLASSPATH=$(build-classpath glassfish-servlet-api tomcat-jsp-api)
+export CLASSPATH=$(build-classpath tomcat-servlet-api tomcat-jsp-api)
 %ant compile make-jar javadoc
 
 %install
@@ -94,6 +91,9 @@ export CLASSPATH=$(build-classpath glassfish-servlet-api tomcat-jsp-api)
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_15jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_12jpp8
 - rebuild with tomcat9
 
