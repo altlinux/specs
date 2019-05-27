@@ -1,5 +1,5 @@
 %define module_name     dm-secdel
-%define module_version  1.0.3
+%define module_version  1.0.4
 %define module_release  alt1
 %define flavour         std-def
 %define karch %ix86 x86_64
@@ -39,7 +39,7 @@ tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 %setup -D -T -n %module_name-%module_version
 
 %build
-make -C %_usrsrc/linux-%kversion-%flavour-%krelease M=$(pwd) modules
+make VERSION=%version-%release -C %_usrsrc/linux-%kversion-%flavour-%krelease M=$(pwd) modules
 
 %install
 install -d %buildroot/%module_dir
