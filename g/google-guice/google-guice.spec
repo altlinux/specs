@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.1
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -290,6 +290,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_14jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_12jpp8
 - fc29 update
 
