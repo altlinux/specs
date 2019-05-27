@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dom4j
 Version:        2.0.0
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -53,7 +53,6 @@ Obsoletes:      %{name}-manual < 2.0.0
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(jaxen:jaxen)
-BuildRequires:  mvn(javax.xml.stream:stax-api)
 BuildRequires:  mvn(net.java.dev.msv:xsdlib)
 BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
@@ -87,7 +86,6 @@ Javadoc for %{name}.
 cp %{SOURCE1} pom.xml
 
 # optional deps missing from pom
-%pom_add_dep javax.xml.stream:stax-api::provided
 %pom_add_dep net.java.dev.msv:xsdlib::provided
 %pom_add_dep xpp3:xpp3::provided
 %pom_add_dep javax.xml.bind:jaxb-api::provided
@@ -114,6 +112,9 @@ export LANG=en_US.ISO8859-1
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_7jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_4jpp8
 - java update
 
