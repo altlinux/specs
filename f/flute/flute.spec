@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: flute
 Version: 1.3.0
-Release: alt1_19.OOo31jpp8
+Release: alt1_20.OOo31jpp8
 Summary: Java CSS parser using SAC
 # The entire source code is W3C except ParseException.java which is LGPLv2+
 License: W3C and LGPLv2+
-Group: System/Libraries
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}-OOo31.zip
 URL: http://www.w3.org/Style/CSS/SAC/
 BuildRequires: ant java-devel jpackage-utils sac
@@ -57,6 +57,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_20.OOo31jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_19.OOo31jpp8
 - fc29 update
 
