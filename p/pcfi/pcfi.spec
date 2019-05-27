@@ -1,3 +1,4 @@
+Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           pcfi
 Version:        2010.08.09
-Release:        alt2_13.20111103gitbd245c9jpp8
+Release:        alt2_15.20111103gitbd245c9jpp8
 Summary:        PDF Core Font Information
 
-Group:          Publishing
 License:        BSD
 URL:            https://github.com/jukka/pcfi
 Source0:        https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{commit}.tar.gz
@@ -52,6 +52,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_15.20111103gitbd245c9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_13.20111103gitbd245c9jpp8
 - java update
 
