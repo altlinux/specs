@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          opennlp
 Version:       1.5.3
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       A machine learning based toolkit for the processing of natural language text
 License:       ASL 2.0
 URL:           https://opennlp.apache.org/
@@ -118,6 +118,9 @@ rm -r opennlp-maxent/src/test/java/opennlp/perceptron/PerceptronPrepAttachTest.j
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_6jpp8
 - java update
 
