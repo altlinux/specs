@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          HdrHistogram
 Version:       2.1.9
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       A High Dynamic Range (HDR) Histogram
 License:       BSD and CC0
 URL:           http://hdrhistogram.github.io/%{name}/
@@ -20,6 +20,9 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 # fedora 25
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+# Explicit requires for javapackages-tools since HistogramLogProcessor script
+# uses /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 BuildArch:     noarch
 Source44: import.info
@@ -71,6 +74,9 @@ find  -name "*.jar"  -print -delete
 %doc --no-dereference COPYING.txt LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.9-alt1_7jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.9-alt1_5jpp8
 - java update
 
