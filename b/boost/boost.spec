@@ -55,7 +55,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt6
+Release: alt7
 
 Summary: Boost libraries
 License: Boost Software License
@@ -74,6 +74,12 @@ Patch82: boost-1.66.0-fedora-no-rpath.patch
 Patch84: boost-1.66.0-fedora-spirit-abs-overflow.patch
 Patch85: boost-1.67.0-upstream-python.patch
 Patch87: boost-1.66.0-fedora-numpy3.patch
+
+# RISC-V support
+Patch88: boost-1.67.0-add-support-for-risc-v-lp64d.patch
+Patch89: boost-1.67.0-add-detection-of-the-risc-v-architecture.patch
+Patch90: boost-1.67.0-alt-add-riscv-support-to-boostcpp-jam.patch
+Patch91: boost-1.67.0-define-the-riscv-architecture-feature.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1360,6 +1366,18 @@ popd
 
 %patch87 -p1
 
+# RISC-V support
+pushd libs/context
+%patch88 -p1
+popd
+pushd libs/config
+%patch89 -p1
+popd
+%patch90 -p1
+pushd tools/build
+%patch91 -p1
+popd
+
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
 %ifarch %e2k
@@ -1968,6 +1986,9 @@ done
 
 
 %changelog
+* Mon May 27 2019 Nikita Ermakov <arei@altlinux.org> 1:1.67.0-alt7
+- Add RISC-V support.
+
 * Thu Apr 04 2019 Michael Shigorin <mike@altlinux.org> 1:1.67.0-alt6
 - Support build on e2kv4 through %%e2k macro.
 
