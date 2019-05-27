@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        alt6_27jpp8
+Release:        alt6_31jpp8
 Summary: Jakarta Commons HTTPClient implements the client side of HTTP standards
 License:        ASL 2.0 and (ASL 2.0 or LGPLv2+)
 URL:            http://jakarta.apache.org/commons/httpclient/
@@ -42,6 +42,7 @@ BuildRequires:  junit
 
 Requires:       apache-commons-logging >= 0:1.0.3
 Requires:       apache-commons-codec
+Provides:       deprecated()
 Source44: import.info
 Provides: jakarta-commons-httpclient = 1:%version
 
@@ -66,6 +67,7 @@ for distributed communication.
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{oldname}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description    javadoc
@@ -75,6 +77,7 @@ BuildArch: noarch
 Group: Development/Java
 Summary:        Demos for %{oldname}
 Requires:       %{name} = %{epoch}:%{version}-%{release}
+Provides:       deprecated()
 
 %description    demo
 %{summary}.
@@ -83,6 +86,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Group: Development/Java
 Summary:        Manual for %{oldname}
 Requires:       %{name}-javadoc = %{epoch}:%{version}-%{release}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description    manual
@@ -157,6 +161,9 @@ ln -s %{_javadocdir}/%{oldname} dist/docs/apidocs
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_31jpp8
+- new version
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_27jpp8
 - update
 
