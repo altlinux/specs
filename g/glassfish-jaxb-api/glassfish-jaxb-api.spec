@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.12
-Release:       alt1_9jpp8
+Release:       alt1_11jpp8
 Summary:       Java Architecture for XML Binding
 License:       CDDL or GPLv2 with exception
 URL:           http://jaxb.java.net/
@@ -24,7 +24,6 @@ BuildRequires:  java-javadoc
 BuildRequires:  maven-local
 BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -63,30 +62,31 @@ cp -p %{SOURCE1} pom.xml
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
 %pom_remove_plugin org.glassfish.build:gfnexus-maven-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :cobertura-maven-plugin
 
+%pom_xpath_set "pom:instructions/pom:Import-Package" "javax.activation;resolution:=optional,*"
 
 sed -i 's|<location>${basedir}/offline-javadoc</location>|<location>%{_javadocdir}/java</location>|' pom.xml
 
 %build
-
 %mvn_file :%{oname} %{oname}
 %mvn_build
 
 %install
 %mvn_install
 
-mv %{buildroot}%{_javadocdir}/%{name} \
- %{buildroot}%{_javadocdir}/%{oname}
-
 %files -f .mfiles
 
-%files javadoc
-%{_javadocdir}/%{oname}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_11jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_9jpp8
 - fc29 update
 
