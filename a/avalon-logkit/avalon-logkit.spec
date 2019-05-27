@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           avalon-logkit
 Epoch:          0
 Version:        2.1
-Release:        alt2_29jpp8
+Release:        alt2_32jpp8
 Summary:        Java logging toolkit
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -28,8 +28,9 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(log4j:log4j)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
-Source44: import.info
 
+Provides:       deprecated()
+Source44: import.info
 
 %description
 LogKit is a logging toolkit designed for secure performance orientated
@@ -38,7 +39,8 @@ that you read the whitepaper and browse the API docs.
 
 %package javadoc
 Group: Development/Java
-Summary:    Javadoc for %{name}
+Summary:        Javadoc for %{name}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description javadoc
@@ -89,6 +91,9 @@ rm -rf src/java/org/apache/log/output/lf5
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_32jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_29jpp8
 - java update
 
