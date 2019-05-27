@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           mojo-parent
 Version:        40
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Codehaus MOJO parent project pom file
 
 License:        ASL 2.0
@@ -46,6 +46,9 @@ cp %SOURCE1 .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_8jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_5jpp8
 - fc27 update
 
