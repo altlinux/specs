@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          pax-logging
 Version:       1.6.9
-Release:       alt1_16jpp8
+Release:       alt1_18jpp8
 Summary:       OSGi Logging framework implementation
 License:       ASL 2.0 and BSD and MIT
 URL:           http://team.ops4j.org/wiki//display/paxlogging/Pax+Logging
@@ -112,6 +112,9 @@ cp -rp pax-logging-api/NOTICE.txt .
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_18jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_16jpp8
 - java update
 
