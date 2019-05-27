@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-resources-plugin
 Version:        3.1.0
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-resources-plugin
@@ -51,10 +51,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_4jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_1jpp8
 - java update
 
