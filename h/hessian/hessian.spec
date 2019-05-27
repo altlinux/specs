@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:          hessian
 Summary:       Java implementation of a binary protocol for web services 
 Version:       4.0.38
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Epoch:         1
 License:       ASL 1.1
 URL:           http://hessian.caucho.com/
@@ -96,6 +96,9 @@ cp -p %{SOURCE2} apache.license
 %doc --no-dereference apache.license
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.0.38-alt1_6jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.0.38-alt1_4jpp8
 - java update
 
