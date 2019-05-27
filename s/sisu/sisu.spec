@@ -13,9 +13,11 @@ BuildRequires: jpackage-generic-compat
 Name:           sisu
 Epoch:          2
 Version:        0.3.3
-Release:        alt1_3jpp8
+Release:        alt1_7jpp8
 Summary:        Eclipse dependency injection framework
-License:        EPL
+# sisu is EPL-1.0
+# bundled asm is BSD
+License:        EPL-1.0 and BSD
 URL:            http://eclipse.org/sisu
 
 Source0:        http://git.eclipse.org/c/%{name}/org.eclipse.%{name}.inject.git/snapshot/%{reltype}s/%{version}%{?reltag}.tar.bz2#/org.eclipse.%{name}.inject-%{version}%{?reltag}.tar.bz2
@@ -45,6 +47,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.testng:testng)
+
+Provides:       bundled(objectweb-asm)
 Source44: import.info
 
 
@@ -111,6 +115,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_7jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_3jpp8
 - java update
 
