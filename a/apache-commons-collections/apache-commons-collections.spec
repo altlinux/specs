@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_8jpp8
+Release:        alt1_12jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -76,12 +76,13 @@ find . -name "*.class" -exec rm -f {} \;
 sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 
 %mvn_package :%{short_name}-testframework testframework
-%mvn_file ':%{short_name}{,-testframework}' %{name}@1 %{short_name}@1
+%mvn_file ':%{short_name}{,-testframework}' %{short_name}@1 %{name}@1
 
 %build
 # 2017-09-18 mizdebsk: Temporarly disable tests, they stopped working
 # after Maven Surefire upgrade to 2.20, need to investigate why.
-%mvn_build -- -DskipTests
+%mvn_build -- -DskipTests \
+  -Dcommons.osgi.symbolicName=org.apache.commons.collections
 
 ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
@@ -90,7 +91,6 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 %install
 %mvn_install
 
-# Workaround for RPM bug #646523 - can't change symlink to directory
 %files -f .mfiles
 %doc PROPOSAL.html README.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -102,6 +102,9 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_12jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_8jpp8
 - java fc28+ update
 
