@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt4_24jpp8
+Release:        alt4_27jpp8
 Summary:        Plexus Security Dispatcher Component
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-sec-dispatcher
@@ -17,6 +17,7 @@ BuildArch:      noarch
 # svn export http://svn.sonatype.org/spice/tags/plexus-sec-dispatcher-1.4/
 # tar jcf plexus-sec-dispatcher-1.4.tar.bz2 plexus-sec-dispatcher-1.4/
 Source0:        %{name}-%{version}.tar.bz2
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Removed maven-compiler-plugin configuration version in the pom as annotations isn't available in version 1.4.
 Patch0:         %{name}-pom.patch
@@ -44,7 +45,11 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+
 %patch0 -p1
+
+cp %{SOURCE1} .
+
 %mvn_file : plexus/%{name}
 
 %build
@@ -54,10 +59,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_27jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_24jpp8
 - java update
 
