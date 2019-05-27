@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           antlr4
 Version:        4.5.2
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Java parser generator
 # C# runtime is MIT-licensed, but currently it is not used in this package
 License:        BSD
@@ -31,6 +31,9 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+# Explicit requires for javapackages-tools since antlr4-script
+# uses /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 Source44: import.info
 
 
@@ -111,6 +114,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_5jpp8
 - fc29 update
 
