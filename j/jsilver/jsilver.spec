@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsilver
 Version:        1.0.0
-Release:        alt2_13jpp8
+Release:        alt2_17jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
 License:        ASL 2.0 
@@ -24,10 +23,10 @@ Patch0:         jsilver-1.0.0-javascript.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  exec-maven-plugin
-BuildRequires:  maven-antrun-plugin
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  sablecc
-BuildRequires:  guava
 Source44: import.info
 
 %description
@@ -46,16 +45,14 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 
 find . -name *.jar -exec rm -f {} \;
-ln -s %{_javadir}/sablecc.jar sablecc/
+ln -s $(build-classpath sablecc) sablecc/
+
+%pom_change_dep :guava "com.google.guava:guava:15.0"
 
 %mvn_file : jsilver
 
 %build
 %mvn_build
-
-# workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1106598
-mkdir target
-mv build/site target
 
 %install
 %mvn_install
@@ -65,6 +62,9 @@ mv build/site target
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_17jpp8
+- new version
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
 - fixed build with new guava
 
