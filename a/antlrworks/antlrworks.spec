@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate rpm-build-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
-Group:          Development/Java
 License:        BSD
 URL:            http://www.antlr3.org/works
 Source0:        https://github.com/antlr/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
@@ -33,6 +33,9 @@ Requires:       graphviz libgraphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
 # Antlrworks requires javac
+# Explicit requires for javapackages-tools since antlrworks-script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 BuildArch:      noarch
 Source44: import.info
 
@@ -102,6 +105,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_12jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_10jpp8
 - fc29 update
 
