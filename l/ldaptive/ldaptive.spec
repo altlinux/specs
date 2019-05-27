@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ldaptive
 Version:       1.1.0
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       LDAP library for Java
 License:       ASL 2.0 or LGPLv3
 URL:           http://www.ldaptive.org/
@@ -118,6 +118,9 @@ cp -p distribution/NOTICE .
 %files templates -f .mfiles-%{name}-templates
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
 - java update
 
