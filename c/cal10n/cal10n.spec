@@ -10,11 +10,14 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           cal10n
 Version:        0.8.1
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
-Source0:        https://github.com/qos-ch/%{name}/archive/v_%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+# Remove bundled binaries which cannot be easily verified for licensing
+Source1:        generate-tarball.sh
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -89,6 +92,9 @@ find . -name \*.jar -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_5jpp8
 - java update
 
