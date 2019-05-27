@@ -4,11 +4,19 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without tests
+
 Name:		classloader-leak-test-framework
 Version:	1.1.1
-Release:	alt1_4jpp8
+Release:	alt1_7jpp8
 Summary:	Detection and verification of Java ClassLoader leaks
 License:	ASL 2.0
 URL:		https://github.com/mjiderhamn/classloader-leak-prevention/tree/master/%{name}
@@ -16,14 +24,14 @@ Source0:	https://github.com/mjiderhamn/classloader-leak-prevention/archive/%{nam
 
 BuildArch:	noarch
 
-# build
 BuildRequires:	maven-local
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.apache.bcel:bcel)
-# test dependencies
-BuildRequires:	mvn(javax.el:el-api)
-BuildRequires:	mvn(com.sun.faces:jsf-api)
-BuildRequires:	mvn(com.sun.faces:jsf-impl)
+%if %{with tests}
+BuildRequires: mvn(javax.el:el-api)
+BuildRequires: mvn(com.sun.faces:jsf-api)
+BuildRequires: mvn(com.sun.faces:jsf-impl)
+%endif
 Source44: import.info
 
 %description
@@ -46,7 +54,11 @@ rm -r classloader-leak-prevention
 cp -r %{name}/* .
 
 %build
+%if %{with tests}
 %mvn_build
+%else
+%mvn_build -f
+%endif
 
 %install
 %mvn_install
@@ -59,6 +71,9 @@ cp -r %{name}/* .
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
 - java update
 
