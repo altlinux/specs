@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_20jpp8
+Release:        alt3_22jpp8
 Summary:        Plexus Build API
 License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
@@ -61,6 +61,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_22jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_20jpp8
 - java update
 
