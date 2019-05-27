@@ -8,7 +8,7 @@
 %define oname opencolorio
 
 Name:           lib%oname
-Version:        1.1.0
+Version:        1.1.1
 Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
@@ -20,18 +20,16 @@ URL:            https://opencolorio.org/
 Source:         %name-%version.tar
 
 # patches from Fedora
-Patch0:         OpenColorIO-gcc.patch
-Patch1:         OpenColorIO-setuptools.patch
+
+# Work with system libraries instead of bundled.
+Patch0:         OpenColorIO-setuptools.patch
 
 # Fix build against yaml-cpp 0.6.0+
 # This patch is fine for our case (building against system yaml-cpp)
 # but probably a bit too simple-minded to upstream as-is. See
 # https://github.com/imageworks/OpenColorIO/issues/517
-Patch2:         ocio-1.1.0-yamlcpp060.patch
-
-# Fix build of Python bindings with GCC 8
-# https://github.com/imageworks/OpenColorIO/pull/518
-Patch3:         ocio-1.1.0-gcc8.patch
+Patch1:         ocio-1.1.0-yamlcpp060.patch
+Patch2:         ocio-glext_h.patch
 
 # Utilities
 BuildRequires:  cmake gcc-c++
@@ -92,7 +90,6 @@ Development libraries and headers for %oname.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 # Remove bundled libraries
 rm -f ext/lcms*
@@ -103,8 +100,8 @@ rm -f ext/yaml*
 %cmake_insource \
        -DOCIO_BUILD_STATIC=OFF \
        -DOCIO_BUILD_DOCS=OFF \
+       -DOCIO_BUILD_PYGLUE=OFF \
        -DOCIO_BUILD_TESTS=OFF \
-       -DOCIO_PYGLUE_SONAME=OFF \
        -DUSE_EXTERNAL_YAML=TRUE \
        -DUSE_EXTERNAL_TINYXML=TRUE \
        -DUSE_EXTERNAL_LCMS=TRUE \
@@ -139,7 +136,6 @@ find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \
 %_libdir/*.so.*
 %dir %_datadir/ocio
 %_datadir/ocio/setup_ocio.sh
-%python_sitelibdir/*.so
 
 %files -n %oname-tools
 %_bindir/*
@@ -148,11 +144,13 @@ find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \
 %files devel
 %_datadir/cmake/Modules/*
 %_includedir/OpenColorIO/
-%_includedir/PyOpenColorIO/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1.
+
 * Mon Oct 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Initial build for ALT.
 
