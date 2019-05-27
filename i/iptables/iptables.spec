@@ -1,6 +1,6 @@
 Name: iptables
 Version: 1.8.3
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPL-2.0-only
@@ -211,12 +211,6 @@ fi
 /%_lib/iptables/
 %_datadir/iptables/
 %_datadir/xtables/
-# hack around arepo: we have to package something harmless just to trigger
-# arepoizer, to generate i586-iptables package required by several other
-# i586-* packages.
-%ifarch i586
-/usr/lib/libiptc.so
-%endif
 %if_enabled nftables
 %exclude /sbin/arptables*
 %exclude /sbin/ebtables*
@@ -263,6 +257,10 @@ fi
 %endif
 
 %changelog
+* Mon May 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1.8.3-alt2
+- Removed arepo hack introduced in 1.4.13-alt1 to force generation
+  of i586-iptables package required by several other i586-* packages.
+
 * Mon May 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1.8.3-alt1
 - 1.4.21 -> 1.8.3 (closes: #36371).
 - Packaged -nft subpackage with nftables compatibility
