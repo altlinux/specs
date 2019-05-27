@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          portals-pom
 Version:       1.3
-Release:       alt3_17jpp8
+Release:       alt3_19jpp8
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -51,6 +51,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_19jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_17jpp8
 - java update
 
