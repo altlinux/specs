@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mongo-java-driver2
 Version:       2.14.3
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       MongoDB Java Driver
 # BSD-3-clause: src/main/org/bson/io/UTF8Encoding.java
 # CC-BY-SA-3.0: src/main/org/bson/util/annotations/*
@@ -79,6 +79,9 @@ find -name '*.jar' -print -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.14.3-alt1_6jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.14.3-alt1_4jpp8
 - java update
 
