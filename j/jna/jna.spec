@@ -5,11 +5,20 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Allow conditionally building without the reflections library
+%bcond_without reflections
+
 Name:           jna
 Version:        4.5.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -48,7 +57,9 @@ BuildRequires:  ant-junit
 BuildRequires:  junit
 BuildRequires:  libX11-devel
 BuildRequires:  libXt-devel
+%if %{with reflections}
 BuildRequires:  reflections
+%endif
 Source44: import.info
 
 %description
@@ -96,8 +107,15 @@ sed -i 's/\r//' LICENSE
 
 chmod -c 0644 LICENSE OTHERS CHANGES.md
 
+%if %{with reflections}
 sed s,'<include name="junit.jar"/>,&<include name="reflections.jar"/>,' -i build.xml
 build-jar-repository -s -p lib junit reflections ant
+%else
+build-jar-repository -s -p lib junit ant
+rm test/com/sun/jna/StructureFieldOrderInspector.java
+rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
+rm contrib/platform/test/com/sun/jna/platform/StructureFieldOrderTest.java
+%endif
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
@@ -140,6 +158,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_4jpp8
 - fc29 update
 
