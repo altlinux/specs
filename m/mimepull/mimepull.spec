@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             mimepull
 Version:          1.9.6
-Release:          alt1_6jpp8
+Release:          alt1_8jpp8
 Summary:          Streaming API to access attachments from a MIME message
 License:          CDDL and GPLv2 with exceptions
 URL:              http://mimepull.java.net
@@ -95,6 +95,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.6-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.6-alt1_6jpp8
 - java update
 
