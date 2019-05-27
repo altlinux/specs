@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-plugin-tools
 Version:        3.5.1
-Release:        alt1_1jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -255,17 +255,19 @@ API documentation for %{name}.
 
 %files -f .mfiles-maven-plugin-tools
 %dir %{_javadir}/%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files -n maven-plugin-annotations -f .mfiles-maven-plugin-annotations
 
 %files -n maven-plugin-plugin -f .mfiles-maven-plugin-plugin
 
 %files annotations -f .mfiles-maven-plugin-tools-annotations
+%doc --no-dereference LICENSE NOTICE
 
 %files ant -f .mfiles-maven-plugin-tools-ant
 
 %files api -f .mfiles-maven-plugin-tools-api
+%doc --no-dereference LICENSE NOTICE
 
 %files beanshell -f .mfiles-maven-plugin-tools-beanshell
 
@@ -276,18 +278,24 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-maven-plugin-tools-javadoc
 
 %files model -f .mfiles-maven-plugin-tools-model
+%doc --no-dereference LICENSE NOTICE
 
 %files -n maven-script -f .mfiles-maven-script
 
 %files -n maven-script-ant -f .mfiles-maven-script-ant
+%doc --no-dereference LICENSE NOTICE
 
 %files -n maven-script-beanshell -f .mfiles-maven-script-beanshell
+%doc --no-dereference LICENSE NOTICE
 
 %files javadocs -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_5jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_1jpp8
 - java update
 
