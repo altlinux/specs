@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-interceptor
 Version:          1.0.1
-Release:          alt2_19jpp8
+Release:          alt2_20jpp8
 Summary:          Java EE: Interceptor API v3.0
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_20jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_19jpp8
 - fc29 update
 
