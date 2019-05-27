@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          maven-native
 Version:       1.0
-Release:       alt1_0.14.alpha.8jpp8
+Release:       alt1_0.16.alpha.8jpp8
 Summary:       Compile c and c++ source under Maven
 License:       ASL 2.0 and MIT
 Url:           http://www.mojohaus.org/plugins.html
@@ -134,6 +134,9 @@ sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.16.alpha.8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.14.alpha.8jpp8
 - java update
 
