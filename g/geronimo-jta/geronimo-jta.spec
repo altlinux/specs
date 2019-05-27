@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		geronimo-jta
 Version:	1.1.1
-Release:	alt3_24jpp8
+Release:	alt3_25jpp8
 Summary:	J2EE JTA v1.1 API
 License:	ASL 2.0
 URL:		http://geronimo.apache.org/
@@ -67,6 +67,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_25jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_24jpp8
 - fc29 update
 
