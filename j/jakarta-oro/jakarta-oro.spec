@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_23jpp8
+Release:        alt2_26jpp8
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
@@ -54,6 +54,8 @@ BuildRequires:  javapackages-local
 BuildRequires:  ant
 
 BuildArch:      noarch
+
+Provides:       deprecated()
 Source44: import.info
 Provides: oro = %epoch:%version-%release
 
@@ -68,6 +70,7 @@ libraries from ORO, Inc. (www.oroinc.com).
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description javadoc
@@ -101,6 +104,9 @@ ant -Dfinal.name=%{base_name} jar javadocs
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_26jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_23jpp8
 - java update
 
