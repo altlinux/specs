@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-legal
 Version:       1.1
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Legal License for glassfish code
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -46,6 +46,9 @@ cp -p src/main/resources/META-INF/LICENSE.txt .
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_12jpp8
 - fc29 update
 
