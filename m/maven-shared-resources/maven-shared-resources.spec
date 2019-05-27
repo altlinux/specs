@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          maven-shared-resources
 Version:       2
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       A collection of templates that are specific to the Maven project
 License:       ASL 2.0
 URL:           http://maven.apache.org/shared/maven-shared-resources/
@@ -40,6 +40,9 @@ They are probably not of interest to projects other than Apache Maven.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2-alt1_6jpp8
 - java update
 
