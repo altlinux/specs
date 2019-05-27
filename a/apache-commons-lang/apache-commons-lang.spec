@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -14,10 +15,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_22jpp8
+Release:        alt5_24jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-Group:          Development/Other
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch1:         0002-Fix-FastDateFormat-for-Java-7-behaviour.patch
@@ -43,8 +43,8 @@ and a series of utilities dedicated to help with building methods, such
 as hashCode, toString and equals.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -66,18 +66,22 @@ sed -i 's/\r//' *.txt *.html
 %mvn_config buildSettings/compilerSource 1.3
 
 %build
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.lang
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc PROPOSAL.html LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%doc PROPOSAL.html RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_24jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_22jpp8
 - fc29 update
 
