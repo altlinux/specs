@@ -48,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsh
 Version:        2.0
-Release:        alt1_9.b6jpp8
+Release:        alt1_14.b6jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -56,8 +56,12 @@ URL:            http://www.beanshell.org/
 # bsf/src/bsh/util/BeanShellBSFEngine.java is public-domain
 License:        ASL 2.0 and BSD and Public Domain
 BuildArch:      noarch
-Source0:        https://github.com/beanshell/beanshell/archive/%{version}%{reltag}.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}-%{reltag}.tar.gz
 Source1:        %{name}-desktop.desktop
+# Remove bundled jars which cannot be easily verified for licensing
+# Remove code marked as SUN PROPRIETARY/CONFIDENTAIL
+Source2:        generate-tarball.sh
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
@@ -72,6 +76,10 @@ BuildRequires:  desktop-file-utils
 
 Requires:       bsf
 Requires:       jline
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
+
 
 Provides:       %{name}-utils = %{epoch}:%{version}-%{release}
 Obsoletes:      %{name}-utils < 0:2.0
@@ -120,13 +128,6 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n beanshell-%{version}%{reltag}
-
-rm -r lib
-find -name '*.jar' -delete
-find -name '*.class' -delete
-
-# those are now included in JDK itself
-rm -r engine/javax-src
 
 sed -i 's,org.apache.xalan.xslt.extensions.Redirect,http://xml.apache.org/xalan/redirect,' docs/manual/xsl/*.xsl
 
@@ -192,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_14.b6jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_9.b6jpp8
 - java update
 
