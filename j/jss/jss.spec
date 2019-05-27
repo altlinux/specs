@@ -4,7 +4,7 @@
 %def_with check
 
 Name: jss
-Version: 4.5.2
+Version: 4.5.3
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -33,6 +33,8 @@ BuildRequires: slf4j-jdk14
 
 %if_with check
 BuildRequires: ctest
+BuildRequires: hamcrest
+BuildRequires: junit
 BuildRequires: nss-utils
 %endif
 
@@ -121,6 +123,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1
+- 4.5.2 -> 4.5.3.
+
 * Fri Jan 18 2019 Stanislav Levin <slev@altlinux.org> 4.5.2-alt1
 - 4.5.0 -> 4.5.2.
 

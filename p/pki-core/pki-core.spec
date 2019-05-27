@@ -7,12 +7,12 @@
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.3.6
-%define jss_version         4.5.2
+%define tomcatjss_version   7.4.0
+%define jss_version         4.5.3
 
 Name: pki-core
-Version: 10.6.9
-Release: alt3
+Version: 10.7.0
+Release: alt1
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -51,11 +51,16 @@ BuildRequires: slf4j-jdk14
 BuildRequires: idm-console-framework
 BuildRequires: junit
 
+# build dependency to build man pages
+BuildRequires: go-md2man
+
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-nss
 
 %if_with check
+BuildRequires: ctest
 BuildRequires: nss-utils
+BuildRequires: openssl
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-ldap
 BuildRequires: python3-module-pyflakes
@@ -65,18 +70,18 @@ BuildRequires: python3-module-tox
 %endif
 
 #### Meta package ####
-Requires: dogtag-pki-server-theme >= %EVR
-Requires: dogtag-pki-console-theme >= %EVR
-Requires: python3-module-pki-base >= %EVR
-Requires: pki-base-java >= %EVR
-Requires: pki-tools >= %EVR
-Requires: pki-server >= %EVR
-Requires: pki-ca >= %EVR
-Requires: pki-kra >= %EVR
-Requires: pki-ocsp >= %EVR
-Requires: pki-tks >= %EVR
-Requires: pki-tps >= %EVR
-Requires: pki-console >= %EVR
+Requires: dogtag-pki-server-theme = %EVR
+Requires: dogtag-pki-console-theme = %EVR
+Requires: python3-module-pki-base = %EVR
+Requires: pki-base-java = %EVR
+Requires: pki-tools = %EVR
+Requires: pki-server = %EVR
+Requires: pki-ca = %EVR
+Requires: pki-kra = %EVR
+Requires: pki-ocsp = %EVR
+Requires: pki-tks = %EVR
+Requires: pki-tps = %EVR
+Requires: pki-console = %EVR
 
 %description
 Dogtag PKI is an enterprise software system designed
@@ -107,7 +112,7 @@ symmetric key operations to Java programs.
 Summary: Dogtag PKI Base Package
 Group: System/Base
 BuildArch: noarch
-Requires: python3-module-pki-base >= %EVR
+Requires: python3-module-pki-base = %EVR
 Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
@@ -123,7 +128,6 @@ Group: System/Base
 BuildArch: noarch
 Requires: pki-base = %EVR
 Requires: java-headless
-Requires: javassist
 Requires: xalan-j2
 Requires: xml-commons-apis
 Requires: xml-commons-resolver
@@ -172,6 +176,9 @@ Provides: pki-silent = %EVR
 Obsoletes: pki-deploy < %EVR
 Obsoletes: pki-setup < %EVR
 Obsoletes: pki-silent < %EVR
+
+# https://pagure.io/freeipa/issue/7742
+Conflicts: freeipa-server < 4.7.1
 
 %description -n pki-server
 The PKI Server Package contains libraries and utilities needed by the
@@ -320,8 +327,8 @@ Summary: PKI Console Package
 Group: Networking/Other
 BuildArch: noarch
 Requires: idm-console-framework
-Requires: pki-base-java >= %EVR
-Requires: dogtag-pki-console-theme >= %EVR
+Requires: pki-base-java = %EVR
+Requires: dogtag-pki-console-theme = %EVR
 
 %description -n pki-console
 The PKI Console is a Java application used to administer PKI server.
@@ -357,11 +364,10 @@ grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
 # change apache2 alt paths
 grep -rPl '#include \x22httpd/' | \
 xargs sed -i 's/#include \x22httpd\//#include \x22apache2\//g'
-# from sem@:
-# At least one script required bash4.
-# Just use sh4 for all scripts.
-egrep -rl '^#!/bin/(sh|bash)' | \
-    xargs sed -r -i 's;^#!/bin/(sh|bash)( -X)?;#!/bin/sh4;'
+
+# replace python2 shebangs with python3 to fix unmets
+grep -rlsm1 '^#!/usr/bin/python[[:space:]]*$' | \
+xargs sed -i '1s|^#!/usr/bin/python[[:space:]]*$|#!/usr/bin/python3|'
 
 %build
 # get Tomcat <major>.<minor> version number
@@ -404,13 +410,10 @@ fi
 %install
 %cmakeinstall_std
 # Customize client library links in /usr/share/pki/lib
-rm -f %buildroot%_datadir/pki/lib/scannotation.jar
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/lib/jboss-logging.jar
 ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/lib/jboss-annotations-api_1.2_spec.jar
 
 # Customize server library links in /usr/share/pki/server/common/lib
-rm -f %buildroot%_datadir/pki/server/common/lib/scannotation.jar
-rm -f %buildroot%_datadir/pki/server/common/lib/resteasy-jaxrs-api.jar
 ln -sf %jaxrs_api_jar %buildroot%_datadir/pki/server/common/lib/jboss-jaxrs-2.0-api.jar
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/server/common/lib/jboss-logging.jar
 ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/server/common/lib/jboss-annotations-api_1.2_spec.jar
@@ -443,6 +446,7 @@ ln -sf tps/libtokendb.so %buildroot%_libdir/libtokendb.so
 export PIP_NO_INDEX=YES
 export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
+%cmake_build test
 
 %pre -n pki-server
 %define pki_username pkiuser
@@ -551,6 +555,7 @@ fi
 %_bindir/OCSPClient
 %_bindir/PKCS10Client
 %_bindir/PKCS12Export
+%_bindir/PKICertImport
 %_bindir/PrettyPrintCert
 %_bindir/PrettyPrintCrl
 %_bindir/TokenInfo
@@ -569,13 +574,13 @@ fi
 %_man1dir/PrettyPrintCrl.1.*
 %_man1dir/pki.1.*
 %_man1dir/pki-audit.1.*
+%_man1dir/pki-ca-cert.1.*
 %_man1dir/pki-ca-kraconnector.1.*
 %_man1dir/pki-ca-profile.1.*
-%_man1dir/pki-cert.1.*
 %_man1dir/pki-client.1.*
 %_man1dir/pki-group.1.*
 %_man1dir/pki-group-member.1.*
-%_man1dir/pki-key.1.*
+%_man1dir/pki-kra-key.1.*
 %_man1dir/pki-pkcs12-cert.1.*
 %_man1dir/pki-pkcs12-key.1.*
 %_man1dir/pki-pkcs12.1.*
@@ -585,6 +590,7 @@ fi
 %_man1dir/pki-user-cert.1.*
 %_man1dir/pki-user-membership.1.*
 %_man1dir/PKCS10Client.1.*
+%_man1dir/PKICertImport.1.*
 
 %files -n pki-server
 %doc base/common/THIRD_PARTY_LICENSES
@@ -702,6 +708,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 10.7.0-alt1
+- 10.6.9 -> 10.7.0.
+
 * Tue Feb 05 2019 Stanislav Levin <slev@altlinux.org> 10.6.9-alt3
 - Added BR on "certutil" (needed for testing).
 
