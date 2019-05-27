@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          kryo
 Version:       3.0.3
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Object graph serialization framework for Java
 # ASL: src/com/esotericsoftware/kryo/util/IdentityMap.java src/com/esotericsoftware/kryo/util/IntMap.java
 License:       ASL 2.0 and BSD
@@ -90,6 +90,9 @@ sed -i 's/\r//' license.txt LICENSE-2.0.txt
 %doc --no-dereference license.txt LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_5jpp8
 - java update
 
