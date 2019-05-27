@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-interactivity
 Version:        1.0
-Release:        alt6_0.25.alpha6jpp8
+Release:        alt6_0.28.alpha6jpp8
 Epoch:          0
 Summary:        Plexus Interactivity Handler Component
 License:        MIT
@@ -19,6 +19,7 @@ BuildArch:      noarch
 # tar caf plexus-interactivity-1.0-alpha-6-src.tar.xz \
 #   plexus-interactivity-1.0-alpha-6
 Source0:        plexus-interactivity-1.0-alpha-6-src.tar.xz
+Source1:        LICENSE.MIT
 Patch1:         plexus-interactivity-dependencies.patch
 Patch2:         plexus-interactivity-jline2.patch
 
@@ -64,6 +65,8 @@ jline module for %{name}.
 %patch1 -p1
 %patch2 -p1
 
+cp %{SOURCE1} .
+
 %mvn_file ":{plexus}-{*}" @1/@2
 
 %build
@@ -75,13 +78,20 @@ jline module for %{name}.
 %mvn_install
 
 %files -f .mfiles
+%doc --no-dereference LICENSE.MIT
 %files api -f .mfiles-plexus-interactivity-api
+%doc --no-dereference LICENSE.MIT
 %files jline -f .mfiles-plexus-interactivity-jline
+%doc --no-dereference LICENSE.MIT
 
 %files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE.MIT
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.28.alpha6jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.25.alpha6jpp8
 - java update
 
