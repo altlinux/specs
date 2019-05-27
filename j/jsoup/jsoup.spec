@@ -8,13 +8,16 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsoup
 Version:        1.11.3
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Summary:        Java library for working with real-world HTML
 License:        MIT
 URL:            http://jsoup.org/
 BuildArch:      noarch
 
-Source0:        https://github.com/jhy/%{name}/archive/%{name}-%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+# The sources contain non-free scraped web pages as test data
+Source1:        generate-tarball.sh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -68,6 +71,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_4jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_1jpp8
 - java update
 
