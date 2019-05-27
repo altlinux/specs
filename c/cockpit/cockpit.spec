@@ -20,7 +20,7 @@
 # https://www.candlepinproject.org
 %def_without subscriptions
 # https://github.com/dm-vdo/vdo
-%def_without vdo
+%def_with vdo
 # http://www.freedesktop.org/software/PackageKit
 %def_without packagekit
 #
@@ -28,7 +28,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 192
+Version: 194
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -555,6 +555,7 @@ rm -r %buildroot/%_libexecdir/cockpit-pcp %buildroot/%_localstatedir/lib/pcp/
 rm -f \
 %buildroot/%_libexecdir/{cockpit-kube-auth,cockpit-kube-launch,cockpit-stub}
 rm -f %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-machines.metainfo.xml
+rm -f %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
 %endif
 
 # don't package css and js debug files
@@ -684,6 +685,7 @@ fi
 
 %files storaged
 %_datadir/cockpit/storaged/
+%_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
 
 %files tests
 %config(noreplace) %_sysconfdir/cockpit/cockpit.conf
@@ -737,6 +739,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Mon May 27 2019 Stanislav Levin <slev@altlinux.org> 194-alt1
+- 192 -> 194.
+
 * Thu Apr 18 2019 Stanislav Levin <slev@altlinux.org> 192-alt1
 - 191 -> 192.
 
