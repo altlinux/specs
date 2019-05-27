@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          neko-htmlunit
 Version:       2.23
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       HtmlUnit adaptation of NekoHtml
 License:       ASL 2.0
 URL:           http://htmlunit.sourceforge.net
@@ -61,6 +61,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1_6jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1_4jpp8
 - java update
 
