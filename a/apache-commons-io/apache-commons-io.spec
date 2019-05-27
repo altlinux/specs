@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           apache-commons-io
 Epoch:          1
 Version:        2.6
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
 URL:            http://commons.apache.org/io
@@ -40,7 +40,7 @@ sed -i 's/\r//' *.txt
 
 # NOTE: tests *may* fail because commons-io is on surefire's classpath and causes
 # tests to be run against the system version and not the one we just built
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build -- -Dmaven.test.skip.exec=true  -Dcommons.osgi.symbolicName=org.apache.commons.io
 
 %install
 %mvn_install
@@ -50,6 +50,9 @@ sed -i 's/\r//' *.txt
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_6jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_3jpp8
 - java update
 
