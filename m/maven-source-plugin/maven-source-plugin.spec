@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-source-plugin
 Version:        3.0.1
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Plugin creating source JAR
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-source-plugin/
@@ -54,12 +54,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_6jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_3jpp8
 - fc27 update
 
