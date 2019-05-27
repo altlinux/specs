@@ -9,9 +9,12 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             hawtjni
 Version:          1.16
-Release:          alt1_1jpp8
+Release:          alt1_4jpp8
 Summary:          Code generator that produces the JNI code
-License:          ASL 2.0 and EPL and BSD
+# Maven plugin is under ASL 2.0.
+# stdint.h, shipped in JAR as resource, used only with M$ VC++, is under BSD.
+# Everything else is under EPL-1.0
+License:          ASL 2.0 and EPL-1.0 and BSD
 URL:              http://hawtjni.fusesource.org/
 BuildArch:        noarch
 
@@ -105,6 +108,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_4jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_1jpp8
 - java update
 
