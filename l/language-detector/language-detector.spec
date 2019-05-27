@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          language-detector
 Version:       0.5
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Language Detection Library for Java
 # Source files without license headers https://github.com/optimaize/language-detector/issues/67
 License:       ASL 2.0
@@ -79,6 +79,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_7jpp8
+- new version
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_5jpp8
 - new version
 
