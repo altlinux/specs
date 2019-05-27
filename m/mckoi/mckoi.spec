@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_15jpp8
+Release:       alt2_17jpp8
 Summary:       Open Source Java SQL Database
 License:       GPLv2
 URL:           http://mckoi.com/database/
@@ -113,6 +113,9 @@ sh ./runLocalTest.sh
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_17jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_15jpp8
 - java update
 
