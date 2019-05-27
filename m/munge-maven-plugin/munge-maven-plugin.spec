@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           munge-maven-plugin
 Version:        1.0
-Release:        alt1_10jpp8
+Release:        alt1_13jpp8
 Summary:        Munge Maven Plugin
 License:        CDDL-1.0
 URL:            http://github.com/sonatype/munge-maven-plugin
@@ -66,13 +66,16 @@ This package provides %{summary}.
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_13jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_10jpp8
 - new fc release
 
