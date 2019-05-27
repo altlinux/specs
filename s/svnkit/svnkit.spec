@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Epoch:   1
 Name:    svnkit
 Version: 1.8.12
-Release: alt1_2jpp8
+Release: alt1_6jpp8
 Summary: Pure Java library to manage Subversion working copies and repositories
 
 # License located at https://svnkit.com/license.html
@@ -63,6 +63,9 @@ binaries to work on any OS that runs java.
 %package cli
 Group: Development/Java
 Summary: SVNKit based Subversion command line client
+# Explicit requires for javapackages-tools since scripts
+# use /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 %description cli
 %{summary}.
@@ -150,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.12-alt1_6jpp8
+- new version
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.12-alt1_2jpp8
 - new version
 
