@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           xml-commons-resolver
 Epoch:          0
 Version:        1.2
-Release:        alt1_24jpp8
+Release:        alt1_27jpp8
 Summary:        Resolver subproject of xml-commons
 License:        ASL 2.0
 URL:            http://xerces.apache.org/xml-commons/components/resolver/
@@ -27,6 +27,9 @@ Patch1:         %{name}-1.2-osgi.patch
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  apache-parent
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 # jpackage deprecations
 Conflicts: xml-commons-resolver10 < 0:1.3.05
@@ -92,6 +95,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc LICENSE.resolver.txt NOTICE-resolver.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_27jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_24jpp8
 - java update
 
