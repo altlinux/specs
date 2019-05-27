@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.6
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -58,7 +58,7 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %mvn_alias : org.apache.commons:%{short_name}
 
 %build
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.net
 
 %install
 %mvn_install
@@ -72,6 +72,9 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_4jpp8
 - fc29 update
 
