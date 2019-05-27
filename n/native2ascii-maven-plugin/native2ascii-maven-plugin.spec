@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          native2ascii-maven-plugin
 Version:       1.0
-Release:       alt3_0.15.beta1jpp8
+Release:       alt3_0.17.beta1jpp8
 Summary:       Native2Ascii Maven Plugin
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
@@ -69,6 +69,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.17.beta1jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.15.beta1jpp8
 - java update
 
