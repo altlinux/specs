@@ -16,15 +16,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt3_22jpp8
+Release:        alt3_25jpp8
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
 URL:            http://velocity.apache.org/
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/%{name}/engine/%{version}/%{name}-%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+# Remove bundled binaries which cannot be easily verified for licensing
+Source2:        generate-tarball.sh
 
 Patch0:         0001-Remove-avalon-logkit.patch
 Patch1:         0004-Use-log4j-1.2.17.patch
@@ -212,6 +215,9 @@ cp -pr examples test %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_25jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_22jpp8
 - java update
 
