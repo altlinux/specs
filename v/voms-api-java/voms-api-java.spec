@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.0
-Release:	alt1_1jpp8
+Release:	alt1_4jpp8
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -22,6 +22,7 @@ BuildArch:	noarch
 BuildRequires:	maven-local
 BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.5
 BuildRequires:	mvn(junit:junit)
+BuildRequires:	mvn(org.hamcrest:hamcrest-library)
 BuildRequires:	mvn(org.mockito:mockito-core)
 BuildRequires:	mvn(net.jcip:jcip-annotations)
 Requires:	mvn(eu.eu-emi.security:canl) >= 2.5
@@ -73,6 +74,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_4jpp8
+- new version
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_1jpp8
 - java fc28 update
 
