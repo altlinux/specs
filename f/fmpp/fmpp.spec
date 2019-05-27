@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		fmpp
 Version:	%{fmpp_version}
-Release:	alt1_10jpp8
+Release:	alt1_11jpp8
 Summary:	FreeMarker-based text file PreProcessor 
 
 License:	BSD
@@ -108,6 +108,9 @@ ant test
 %doc LICENSE.txt README.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.14-alt1_11jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.14-alt1_10jpp8
 - fc29 update
 
