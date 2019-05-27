@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           geronimo-validation
 Version:        1.1
-Release:        alt2_19jpp8
+Release:        alt2_20jpp8
 Summary:        Geronimo implementation of JSR 303
 License:        ASL 2.0
 # should be http://geronimo.apache.org/
@@ -62,6 +62,9 @@ Javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_20jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19jpp8
 - fc29 update
 
