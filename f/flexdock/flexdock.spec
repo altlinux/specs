@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		    flexdock
 Version:        1.2.4
-Release:	    alt1_8jpp8
+Release:	    alt1_9jpp8
 Summary:	    Docking framework for Java Swing GUI apps
 
-Group:		    Development/Other
 
 #Licence is MIT on their website
 License:	    MIT 
@@ -79,6 +79,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_8jpp8
 - fc29 update
 
