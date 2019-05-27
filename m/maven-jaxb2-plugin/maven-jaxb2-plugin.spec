@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          maven-jaxb2-plugin
 Version:       0.13.0
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       Provides the capability to generate java sources from schemas
 License:       BSD and ASL 2.0
 URL:           http://java.net/projects/maven-jaxb2-plugin/pages/Home
@@ -93,6 +93,9 @@ The API documentation of %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_8jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_6jpp8
 - java update
 
