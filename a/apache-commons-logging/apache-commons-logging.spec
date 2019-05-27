@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_14jpp8
+Release:        alt1_17jpp8
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
@@ -92,7 +92,7 @@ sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 
 %build
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.logging
 
 # The build produces more artifacts from one pom
 %mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
@@ -106,6 +106,9 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_17jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_14jpp8
 - fc29 update
 
