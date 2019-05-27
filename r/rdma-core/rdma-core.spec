@@ -2,7 +2,7 @@
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
-%ifnarch s390 %arm alpha armel armhf hppa m68k mips mips64el mipsel sh4
+%ifnarch s390 %arm alpha armel armhf hppa m68k mips mips64el mipsel sh4 %e2k
 %def_enable dma_coherent
 %else
 %def_disable dma_coherent
@@ -11,7 +11,7 @@
 
 Name: rdma-core
 Version: 22
-Release: alt2
+Release: alt2.1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -421,6 +421,9 @@ done
 %docdir/ibsrpdm.md
 
 %changelog
+* Mon May 27 2019 Michael Shigorin <mike@altlinux.org> 22-alt2.1
+- fix build on e2k
+
 * Sat Jan 19 2019 Alexey Shabalin <shaba@altlinux.org> 22-alt2
 - add symlinks to linux kernel headers
 - fixed path in pkconfig files
