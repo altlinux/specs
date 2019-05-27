@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 Name:       plexus-compiler
 Epoch:      0
 Version:    2.8.2
-Release:    alt1_2jpp8
+Release:    alt1_4jpp8
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
@@ -118,6 +118,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_4jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_2jpp8
 - java update
 
