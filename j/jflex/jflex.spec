@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.6.1
-Release:        alt1_10jpp8.qa1
+Release:        alt2_13jpp8
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -45,6 +45,9 @@ BuildRequires:  desktop-file-utils
 %if %{with emacs}
 BuildRequires:  emacs
 %endif
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
@@ -115,15 +118,6 @@ install -p -m 644 lib/jflex-mode.elc %{buildroot}%{_emacslispdir}/%{name}
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-# There is a file in the package with a name starting with <tt>._</tt>, 
-# the file name pattern used by Mac OS X to store resource forks in non-native 
-# file systems. Such files are generally useless in packages and were usually 
-# accidentally included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-# for ones installed as %%doc
-find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-
-
 %files -f .mfiles
 %doc doc
 %doc COPYRIGHT
@@ -144,6 +138,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_13jpp8
+- new version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt1_10jpp8.qa1
 - NMU: applied repocop patch
 
