@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-plugin-build-helper
 Version:        1.9.1
-Release:        alt1_5jpp8
+Release:        alt1_9jpp8
 Summary:        Build Helper Maven Plugin
-Group:          Development/Other
-License:        MIT and ASL 2.0
+License:        MIT
 URL:            http://mojo.codehaus.org/build-helper-maven-plugin/
 BuildArch: noarch
 
@@ -19,7 +19,6 @@ BuildArch: noarch
 # svn export https://svn.codehaus.org/mojo/tags/build-helper-maven-plugin-%{version} %{name}-%{version}
 # tar caf %{name}-%{version}.tar.xz %{name}-%{version}
 Source0:        %{name}-%{version}.tar.xz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -54,8 +53,8 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q 
-cp %{SOURCE1} LICENSE-2.0.txt
+%setup -q
+
 %pom_add_dep org.apache.maven:maven-compat
 
 %build
@@ -65,13 +64,16 @@ cp %{SOURCE1} LICENSE-2.0.txt
 %mvn_install
 
 %files -f .mfiles
-%doc header.txt LICENSE-2.0.txt
+%doc --no-dereference header.txt
 %dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
-%doc header.txt LICENSE-2.0.txt
+%doc --no-dereference header.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_9jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_5jpp8
 - fc27 update
 
