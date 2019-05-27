@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           openprops
 Version:        0.8.5
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
-Group:          Development/Other
 License:        GPLv2 with exceptions
 URL:            https://github.com/zanata/%{name}
 Source0:        https://github.com/zanata/%{name}/archive/%{name}-%{version}.zip
@@ -54,8 +54,8 @@ Also note that any header comment in the .properties file will be interpreted as
 a comment attached to the first message.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -82,6 +82,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_4jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_2jpp8
 - java update
 
