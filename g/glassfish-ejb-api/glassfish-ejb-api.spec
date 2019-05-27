@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-ejb-api
 Version:       3.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java EJB 3.2 API Design Specification
 License:       CDDL or GPLv2 with exceptions
 URL:           https://java.net/projects/ejb-spec/
@@ -75,6 +75,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_7jpp8
 - fc29 update
 
