@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt3_16jpp8
+Release:        alt3_18jpp8
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -102,6 +102,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %doc --no-dereference license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_18jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_16jpp8
 - java update
 
