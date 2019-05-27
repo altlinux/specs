@@ -2,13 +2,13 @@
 
 %def_enable bootstrap
 
-%define vtkver 8.1
+%define vtkver 8.2
 
 %define oname mayavi
 
 Name:           Mayavi
 Version:        4.6.2
-Release:        alt1
+Release:        alt2
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -183,6 +183,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %endif
 
 %changelog
+* Mon May 20 2019 Slava Aseev <ptrnine@altlinux.org> 4.6.2-alt2
+- Rebuild with vtk8.2
+
 * Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.2-alt1
 - Updated to upstream version 4.6.2.
 

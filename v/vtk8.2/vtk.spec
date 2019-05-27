@@ -4,10 +4,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define oname vtk
-%define ver 8.1
+%define ver 8.2
 Name: %oname%ver
-Version: %ver.1
-Release: alt3
+Version: %ver.0
+Release: alt1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -18,14 +18,13 @@ Source: %name-%version.tar
 # https://gitlab.kitware.com/vtk/vtk-m.git
 Source1: vtkm-%version.tar
 
-Patch0: %oname-%version-alt-armh.patch
 Patch1: %oname-%version-alt-build.patch
 
 Requires: lib%name = %EVR
 
-BuildRequires(pre): rpm-build-tcl rpm-build-python /proc
+BuildRequires(pre): rpm-build-python /proc
 BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ tcl-devel tk-devel cmake libGLU-devel libXt-devel
+BuildRequires: gcc-c++ tk-devel cmake libGLU-devel libXt-devel
 BuildRequires: libmysqlclient-devel postgresql-devel
 BuildRequires: boost-devel boost-filesystem-devel python-module-matplotlib
 BuildRequires: boost-graph-parallel-devel
@@ -53,8 +52,15 @@ BuildRequires: python-module-PyQt5-devel
 BuildRequires: phonon-devel python-module-sip-devel
 BuildRequires: libharu-devel
 BuildRequires: libgdal-devel
+BuildRequires: eigen3
+BuildRequires: libdouble-conversion-devel
+BuildRequires: liblzma-devel
+BuildRequires: libGLEW-devel
+BuildRequires: libproj-devel
+BuildRequires: libpugixml-devel
+BuildRequires: qt5-base-devel-static
 
-Conflicts: vtk vtk6.1 vtk6.2
+Conflicts: vtk vtk6.1 vtk6.2 vtk8.1
 
 %description
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -93,11 +99,11 @@ This package contains util libraries for VTK.
 Summary: Development files of The Visualization Toolkit (VTK)
 Group: Development/C++
 Requires: %name = %EVR
-Requires: %name-tcl = %EVR
 Requires: lib%name = %EVR
 Requires: qt5-base-devel
 Requires: libfreetype-devel
-Conflicts: libvtk-devel libvtk6.1-devel libvtk6.2-devel
+Requires: libdouble-conversion-devel
+Conflicts: libvtk-devel libvtk6.1-devel libvtk6.2-devel libvtk8.1-devel
 
 %description -n lib%name-devel
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -134,51 +140,6 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains documentation for VTK.
 
-%package tcl
-Summary: The Visualization Toolkit (VTK) TCL bindings
-Group: Development/Tcl
-Requires: %name = %EVR
-Requires: lib%name = %EVR
-Requires: lib%name-tcl = %EVR
-%add_tcl_lib_path %_libexecdir/tcltk/%oname-%ver
-Conflicts: vtk-tcl vtk6.1-tcl vtk6.2-tcl
-
-%description tcl
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package provides TCL bindings to VTK.
-
-%package -n lib%name-tcl
-Summary: Shared libraries of VTK-TCL bindings
-Group: System/Libraries
-Requires: lib%name = %EVR
-
-%description -n lib%name-tcl
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains shared libraries for TCL bindings to VTK.
-
-%package -n lib%name-tcl-devel
-Summary: Development files of VTK-TCL bindings
-Group: Development/Tcl
-Requires: lib%name-devel = %EVR
-Requires: lib%name-tcl = %EVR
-Conflicts: libvtk-tcl-devel libvtk6.1-tcl-devel libvtk6.2-tcl-devel
-
-%description -n lib%name-tcl-devel
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains development files for TCL bindings to VTK.
-
 %package python
 Summary: The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python
@@ -186,7 +147,7 @@ Requires: %name = %EVR
 Requires: lib%name = %EVR
 Requires: lib%name-python = %EVR
 Requires: python-module-%name = %EVR
-Conflicts: vtk-python vtk6.1-python vtk6.2-python
+Conflicts: vtk-python vtk6.1-python vtk6.2-python vtk8.1-python
 
 %description python
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -213,7 +174,7 @@ This package contains Python shared libraries of VTK.
 Summary: The Visualization Toolkit (VTK) Python development files
 Group: Development/Python
 Requires: lib%name-python = %EVR
-Conflicts: libvtk-python-devel libvtk6.1-python-devel libvtk6.2-python-devel
+Conflicts: libvtk-python-devel libvtk6.1-python-devel libvtk6.2-python-devel libvtk8.1-python-devel
 
 %description -n lib%name-python-devel
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -230,7 +191,7 @@ Requires: lib%name-python = %EVR
 Requires: python-module-pygtkglext
 %add_python_req_skip GDK gtkgl vtkParallelPython
 %py_requires gtk
-Conflicts: python-module-vtk python-module-vtk6.1 python-module-vtk6.2
+Conflicts: python-module-vtk python-module-vtk6.1 python-module-vtk6.2 python-module-vtk8.1
 Provides: python-module-vtk = %EVR
 
 %description -n python-module-%name
@@ -245,7 +206,7 @@ This package provides Python bindings to VTK.
 Summary: Tests for The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python
 Requires: python-module-%name = %EVR
-Conflicts: python-module-vtk-tests python-module-vtk6.1-tests python-module-vtk6.2-tests
+Conflicts: python-module-vtk-tests python-module-vtk6.1-tests python-module-vtk6.2-tests python-module-vtk8.1-tests
 
 %description -n python-module-%name-tests
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -259,10 +220,9 @@ This package contains tests for Python bindings to VTK.
 Summary: The Visualization Toolkit (VTK) examples
 Group: Development/Tools
 Requires: %name = %EVR
-Requires: %name-tcl = %EVR
 Requires: %name-data = %EVR
 %add_python_req_skip numeric
-Conflicts: vtk-examples vtk6.1-examples vtk6.2-examples
+Conflicts: vtk-examples vtk6.1-examples vtk6.2-examples vtk8.1-examples
 
 %description examples
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -302,9 +262,6 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 
 %prep
 %setup
-%ifarch armh
-%patch0 -p1
-%endif
 %patch1 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
@@ -362,7 +319,6 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DVTK_Group_Views=ON \
 	-DVTK_WRAP_PYTHON=ON \
 	-DVTK_WRAP_PYTHON_SIP=ON \
-	-DVTK_WRAP_TCL=ON \
 	-DVTK_USE_BOOST=ON \
 	-DUSE_VTK_USE_BOOST=ON \
 	-DModule_vtkInfovisBoost=ON \
@@ -396,7 +352,8 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DNETCDF_DIR=%_libdir/hdf5-seq \
 	-DVTK_INSTALL_LIBRARY_DIR=%_lib \
 	-DVTK_INSTALL_ARCHIVE_DIR=%_lib \
-	-DVTK_INSTALL_PACKAGE_DIR=%_lib/cmake/vtk-%ver
+	-DVTK_INSTALL_PACKAGE_DIR=%_lib/cmake/vtk-%ver \
+	-DModule_vtkGUISupportQtOpenGL=ON
 
 export LD_LIBRARY_PATH=$PWD/lib
 %make_build
@@ -453,46 +410,25 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 
 %files
 %doc Copyright.txt README.md
-%_bindir/vtk
-%_bindir/vtkEncodeString-%ver
-%_bindir/vtkHashSource-%ver
 %_bindir/vtkParseJava-%ver
 %_bindir/vtkWrapHierarchy-%ver
 %_bindir/vtkWrapJava-%ver
 
 %files -n lib%name
 %_libdir/*.so.*
-%exclude %_libdir/*TCL-%ver.so.*
 %exclude %_libdir/*Python*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_libdir/*.a
-%exclude %_libdir/*TCL-%ver.so
 %exclude %_libdir/*Python*.so
 %_includedir/%oname-%ver
-%exclude %_includedir/%oname-%ver/*Tcl*
 %exclude %_includedir/%oname-%ver/*Python*
 %_libdir/cmake/%oname-%ver
-%exclude %_libdir/cmake/%oname-%ver/*TCL*
-%exclude %_libdir/cmake/%oname-%ver/*Tcl*
 %exclude %_libdir/cmake/%oname-%ver/*Python*
 
 %files doc
 %_docdir/%oname-%ver
-
-%files tcl
-%_bindir/*Tcl*
-%_libexecdir/tcltk/%oname-%ver
-
-%files -n lib%name-tcl
-%_libdir/*TCL-%ver.so.*
-
-%files -n lib%name-tcl-devel
-%_libdir/*TCL-%ver.so
-%_libdir/cmake/%oname-%ver/*TCL*
-%_libdir/cmake/%oname-%ver/*Tcl*
-%_includedir/%oname-%ver/*Tcl*
 
 %files examples -f examples.fixed.list
 %doc vtk-examples/Examples
@@ -506,20 +442,20 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 
 %files -n lib%name-python
 %_libdir/*Python*.so.*
-%_libdir/libvtkRenderingPythonTkWidgets-8.1.so
+%_libdir/libvtkRenderingPythonTkWidgets-%ver.so
 
 %files -n lib%name-python-devel
 %_libdir/*Python*.so
-%exclude %_libdir/libvtkRenderingPythonTkWidgets-8.1.so
+%exclude %_libdir/libvtkRenderingPythonTkWidgets-%ver.so
 %_includedir/%oname-%ver/*Python*
 %_libdir/cmake/%oname-%ver/*Python*
 
 %files -n python-module-%name
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/test
+%exclude %python_sitelibdir/vtkmodules/test
 
 %files -n python-module-%name-tests
-%python_sitelibdir/%oname/test
+%python_sitelibdir/vtkmodules/test
 
 %files data
 %_datadir/%oname-%ver
@@ -527,6 +463,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Wed May 15 2019 Slava Aseev <ptrnine@altlinux.org> 8.2.0-alt1
+- Updated to upstream version 8.2.0.
+
 * Thu Oct 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.1-alt3
 - fixed build on armh
 

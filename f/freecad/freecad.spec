@@ -8,14 +8,14 @@
 %define build_parallel_jobs 7
 %endif
 
-%define vtkver 8.1
+%define vtkver 8.2
 
 # Last number in version is computed by command:
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
 Version: 0.18.2
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -225,6 +225,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Fri May 24 2019 Slava Aseev <ptrnine@altlinux.org> 1:0.18.2-alt3
+- Rebuild with vtk8.2
+
 * Tue May 21 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.2-alt2
 - Use desktop file and mime data from upstream (ALT #36762).
 - Add Russian localization of desktop file as patch.
