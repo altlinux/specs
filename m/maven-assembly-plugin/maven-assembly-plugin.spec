@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-assembly-plugin
 Version:        3.1.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Maven Assembly Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
@@ -71,6 +71,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_5jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_3jpp8
 - java update
 
