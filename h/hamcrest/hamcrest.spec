@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_23jpp8
+Release:        alt3_25jpp8
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -135,7 +135,7 @@ export CLASSPATH=$(build-classpath qdox)
 export OPT_JAR_LIST="junit ant/ant-junit"
 # The unit-test goal is switched off as some tests fail with JDK 7
 # see https://github.com/hamcrest/JavaHamcrest/issues/30
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
+ant -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
 
 # inject OSGi manifests
 jar ufm build/%{name}-core-%{version}.jar %{SOURCE8}
@@ -175,6 +175,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_25jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_23jpp8
 - java update
 
