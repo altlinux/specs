@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          native-platform
 Version:       0.14
-Release:       alt1_13jpp8
+Release:       alt1_15jpp8
 Summary:       Java bindings for various native APIs
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
@@ -31,6 +31,7 @@ Patch0:        0001-Load-lib-from-system.patch
 Patch1:        0002-Use-library-name-without-arch.patch
 
 # build tools and deps
+BuildRequires:  gcc-c++
 BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -96,6 +97,9 @@ install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{n
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_15jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_13jpp8
 - java update
 
