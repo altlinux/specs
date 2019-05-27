@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-doxia
 Version:        1.7
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -302,6 +302,9 @@ rm doxia-modules/doxia-module-markdown/src/test/java/org/apache/maven/doxia/modu
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_10jpp8
+- new version
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_9jpp8
 - java update
 
