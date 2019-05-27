@@ -9,9 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sisu-mojos
 Version:        0.3.1
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Sisu plugin for Apache Maven
-License:        EPL
+License:        EPL-1.0
 URL:            http://www.eclipse.org/sisu
 BuildArch:      noarch
 
@@ -64,6 +64,9 @@ mv releases/%{version}/* .
 %doc LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_6jpp8
 - java update
 
