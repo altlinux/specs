@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt1_10jpp8
+Release:       alt1_14jpp8
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -57,6 +57,9 @@ Summary:       Multi-Schema Validator Core
 # src/com/sun/msv/reader/xmlschema/DOMLSInputImpl.java is under ASL 2.0
 # msv/src/com/sun/msv/writer/ContentHandlerAdaptor.java is partially under Public Domain
 License:       BSD and ASL 1.1 and ASL 2.0 and Public Domain
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 %description   msv
 %{summary}.
@@ -64,6 +67,9 @@ License:       BSD and ASL 1.1 and ASL 2.0 and Public Domain
 %package       rngconv
 Group: Development/Java
 Summary:       Multi-Schema Validator RNG Converter
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 %description   rngconv
 %{summary}.
@@ -71,6 +77,9 @@ Summary:       Multi-Schema Validator RNG Converter
 %package       xmlgen
 Group: Development/Java
 Summary:       Multi-Schema Validator Generator
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 %description   xmlgen
 %{summary}.
@@ -235,6 +244,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2013.6.1-alt1_14jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2013.6.1-alt1_10jpp8
 - fc27 update
 
