@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-remote-resources-plugin
 Version:        1.5
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Remote Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
@@ -71,6 +71,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_4jpp8
+- new version
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1jpp8
 - unbootstrap build
 
