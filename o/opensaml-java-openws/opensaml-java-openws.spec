@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           opensaml-java-openws
 Version:        1.5.5
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java OpenWS library
 License:        ASL 2.0
 Group:          Development/Other
@@ -76,6 +76,9 @@ This package contains the API documentation for %{name}.
 %doc doc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_7jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_6jpp8
 - java update
 
