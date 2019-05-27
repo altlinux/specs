@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jamonapi
 Version:       2.74
-Release:       alt2_12jpp8
+Release:       alt2_15jpp8
 Summary:       A Java monitoring API
 License:       BSD
 URL:           http://jamonapi.sourceforge.net/
@@ -116,6 +116,9 @@ cp -p src/JAMonUsersGuide/JAMonLicense.html .
 %doc --no-dereference JAMonLicense.html
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt2_15jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt2_12jpp8
 - rebuild with tomcat9
 
