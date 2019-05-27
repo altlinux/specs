@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           istack-commons
 Version:        2.21
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Common code for some Glassfish projects
 License:        CDDL-1.1 and GPLv2 with exceptions
 URL:            http://istack-commons.java.net
@@ -181,6 +181,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1_9jpp8
 - fc29 update
 
