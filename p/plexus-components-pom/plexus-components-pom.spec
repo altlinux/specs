@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{short_name}-pom
 Version:        1.3.1
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Plexus Components POM
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-components
@@ -43,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_12jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_10jpp8
 - java update
 
