@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt4_19jpp8
+Release:        alt4_21jpp8
 Summary:        Maven Verifier Plugin
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-verifier-plugin/
 Source0:        http://www.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
@@ -30,7 +30,7 @@ Assists in integration testing by means of evaluating
 success/error conditions read from a configuration file.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -55,6 +55,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_21jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19jpp8
 - java update
 
