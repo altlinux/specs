@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          neethi
 Version:       3.0.3
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
@@ -70,6 +70,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_3jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_1jpp8
 - new version
 
