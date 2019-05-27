@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           multiverse
 Version:        0.7.0
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        A software transactional memory implementation for the JVM
 
 License:        ASL 2.0
@@ -64,6 +64,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_10jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_8jpp8
 - java update
 
