@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          littleproxy
 Version:       1.1.0
-Release:       alt2_3jpp8
+Release:       alt2_5jpp8
 Summary:       High Performance HTTP Proxy
 License:       ASL 2.0
 URL:           http://www.littleshoot.org/littleproxy/
@@ -157,6 +157,9 @@ rm src/test/java/org/littleshoot/proxy/IdleTest.java
 %doc --no-dereference COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_5jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_3jpp8
 - java update
 
