@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           felix-parent
 Version:        4
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
 URL:            http://felix.apache.org/
@@ -59,6 +59,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:4-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:4-alt1_6jpp8
 - fc29 update
 
