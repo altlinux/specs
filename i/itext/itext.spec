@@ -1,11 +1,12 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global alternate_name iText
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt3_40jpp8
+Release:          alt3_41jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -25,7 +26,6 @@ Release:          alt3_40jpp8
 #src/core/com/lowagie/text/pdf/codec/TIFFConstants.java is under libtiff
 License:          (LGPLv2+ or MPLv1.1) and ASL 2.0 and BSD and LGPLv2+ and (MPLv1.1 or MIT) and CC-BY and APAFML and libtiff
 URL:              http://www.lowagie.com/iText/
-Group:            Development/Other
 # sh itext-create-tarball.sh 2.1.7
 Source0:          %{name}-%{version}.tar.xz
 Source2:          http://repo2.maven.org/maven2/com/lowagie/itext/%{version}/itext-%{version}.pom
@@ -109,8 +109,8 @@ look and feel of HTML is browser dependent; with iText and PDF you can control
 exactly how your servlet's output will look.
 
 %package core
+Group: Development/Other
 Summary:          The core iText Java-PDF library
-Group:            Development/Other
 BuildArch:        noarch
 Requires:         bouncycastle-mail >= 1.52
 Requires:         bouncycastle-pkix >= 1.52
@@ -123,8 +123,8 @@ The core package contains the main iText library and the related maven POM
 files.
 
 %package rtf
+Group: Development/Other
 Summary:        Library to output Rich Text Files
-Group:          Development/Other
 BuildArch:      noarch
 License:        MPLv1.1 or LGPLv2+
 Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
@@ -135,8 +135,8 @@ Rich Text Files in addition to PDF files. These files can then be viewed and
 edited with RTF viewers such as OpenOffice.org Writer.
 
 %package rups
+Group: Development/Java
 Summary:        Reading/Updating PDF Syntax
-Group:          Development/Java
 BuildArch:      noarch
 License:        LGPLv2+ and CC-BY
 Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
@@ -149,8 +149,8 @@ iText's PdfReader (to inspect the internal structure of a PDF file), and
 iText's PdfStamper to manipulate a PDF file.
 
 %package toolbox
+Group: Development/Java
 Summary:        Some %{alternate_name} tools
-Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or MIT
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
@@ -163,8 +163,8 @@ permissive MIT license. This is a utility that allows you to use a number of
 iText tools.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{alternate_name}
-Group:          Development/Java
 BuildArch:      noarch
 Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
@@ -343,6 +343,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_41jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_40jpp8
 - fc29 update
 
