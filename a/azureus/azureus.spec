@@ -1,3 +1,4 @@
+Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -12,13 +13,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:		azureus
 Version:	5.7.6.0
-Release:	alt1_3jpp8
+Release:	alt1_6jpp8
 Summary:	A BitTorrent Client
-Group:		Networking/WWW
 
 #Exception for using Eclipse SWT
 #http://wiki.vuze.com/w/Vuze_License
-License:	GPLv2 with exceptions
+License:	GPLv2+ with exceptions
 
 URL:		http://azureus.sourceforge.net
 
@@ -44,6 +44,11 @@ Patch8: azureus-5.2-no-bundled-json.patch
 Patch9: azureus-5.3.0.0-no-bundled-bouncycastle
 Patch10: azureus-5.4.0.0-fix_compile.patch
 Patch11: vuze-5.3.0.0-disable-updaters.patch
+# On 2018-07-01, Tom Callaway was able to contact Allan Crooks by email.
+# Allan gave explicit permission for his files (PluginState.java, PluginStateImpl.java)
+# to be used under GPLv2+.
+# See also: https://github.com/BiglySoftware/BiglyBT/pull/559
+Patch12: azureus-5.7.6.0-relicense-allan-crooks-files.patch
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j12
@@ -98,6 +103,10 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch9 -p1 -b .no-bundled-bouncycastle
 %patch10 -p1 -b .5.4.0.0_fix_compile
 %patch11 -p1 -b .disable_updaters
+%patch12 -p1 -b .gplv2orlater
+
+# nuke this file to avoid any confusion of licensing
+rm -rf org/gudy/azureus2/ui/console/multiuser/TestUserManager.java
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -159,6 +168,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_6jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_3jpp8
 - java update
 
