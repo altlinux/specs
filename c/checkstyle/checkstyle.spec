@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           checkstyle
 Version:        8.0
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -65,6 +65,9 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:antlr-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+# Explicit requires for javapackages-tools since checkstyle-script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 Obsoletes:      %{name}-optional < %{version}-%{release}
 Obsoletes:      %{name}-demo < %{version}-%{release}
@@ -171,6 +174,9 @@ fi
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_4jpp8
 - fc29 update
 
