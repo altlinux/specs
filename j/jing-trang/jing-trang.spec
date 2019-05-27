@@ -8,7 +8,7 @@ BuildRequires: zip
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # TODO:
@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -51,7 +51,6 @@ BuildRequires:  jpackage-utils
 BuildRequires:  qdox
 BuildRequires:  relaxngDatatype
 BuildRequires:  relaxngDatatype-javadoc
-BuildRequires:  saxon >= 9.3
 BuildRequires:  testng
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
@@ -62,8 +61,8 @@ Source44: import.info
 %{summary}.
 
 %package     -n jing
+Group: Text tools
 Summary:        RELAX NG validator in Java
-Group:          Text tools
 Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
@@ -79,8 +78,8 @@ specifically W3C XML Schema, Schematron 1.5, and Namespace Routing
 Language.
 
 %package     -n jing-javadoc
+Group: Development/Java
 Summary:        Javadoc API documentation for Jing
-Group:          Development/Java
 Requires:       java-javadoc
 Requires:       relaxngDatatype-javadoc
 BuildArch: noarch
@@ -89,8 +88,8 @@ BuildArch: noarch
 Javadoc API documentation for Jing.
 
 %package     -n trang
+Group: Text tools
 Summary:        Multi-format schema converter based on RELAX NG
-Group:          Text tools
 Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
@@ -106,8 +105,8 @@ supported schema languages, except that W3C XML Schema is supported
 for output only, not for input.
 
 %package     -n dtdinst
+Group: Text tools
 Summary:        XML DTD to XML instance format converter
-Group:          Text tools
 Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 
@@ -123,7 +122,8 @@ rm -r gcj mod/datatype/src/main/org $(find . -name "*.jar")
 %patch1 -p1
 %patch2 -p1
 sed -i -e 's/\r//g' lib/isorelax.copying.txt
-find . -name "OldSaxon*.java" -delete # No "old" saxon available in Fedora
+# No "old" saxon available in Fedora, and "new" one can be skipped altogether
+find . -name "*Saxon*.java" -delete
 sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/dtdinst/\1"|' \
     dtdinst/index.html
 sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/trang/\1"|' \
@@ -132,7 +132,7 @@ sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/trang/\1"|' \
 
 %build
 CLASSPATH=$(build-classpath \
-    beust-jcommander xalan-j2 xalan-j2-serializer saxon) \
+    beust-jcommander xalan-j2 xalan-j2-serializer) \
 %ant -Dlib.dir=%{_javadir} -Dbuild.sysclasspath=last dist
 
 
@@ -190,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_3jpp8
 - java update
 
