@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           avalon-framework
 Epoch:          0
 Version:        4.3
-Release:        alt4_19jpp8
+Release:        alt4_23jpp8
 Summary:        Java components interfaces
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -25,8 +25,9 @@ BuildRequires:  mvn(avalon-logkit:avalon-logkit)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(log4j:log4j)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-Source44: import.info
 
+Provides:       deprecated()
+Source44: import.info
 
 %description
 The Avalon framework consists of interfaces that define relationships
@@ -39,7 +40,8 @@ ancestors and children.
 
 %package javadoc
 Group: Development/Java
-Summary:      API documentation %{name}
+Summary:        API documentation %{name}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description javadoc
@@ -75,6 +77,8 @@ for mod in api impl; do
       </plugins>" *${mod}*/project.xml
 done
 
+%mvn_alias 'avalon-framework:{*}' 'org.apache.avalon.framework:@1'
+
 %build
 # Test use old jmock
 %mvn_build -f
@@ -91,6 +95,9 @@ done
 %doc --no-dereference avalon-framework-api-4.3/NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_23jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_19jpp8
 - java update
 
