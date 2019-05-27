@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.10.1
-Release: alt5
+Version: 4.5.0
+Release: alt1
 
 Summary: Python test framework
 License: MIT
@@ -17,41 +17,55 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python2.7(setuptools_scm)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python-module-argcomplete
-BuildRequires: python-module-pathlib2
-BuildRequires: python-module-funcsigs
-BuildRequires: python-module-pluggy
-BuildRequires: python-module-atomicwrites
-BuildRequires: python-module-more-itertools
-BuildRequires: python-module-json
-BuildRequires: python-module-hypothesis
-BuildRequires: python-module-mock
-BuildRequires: python-module-decorator
-BuildRequires: python-module-numpy
-BuildRequires: python-module-pexpect
-BuildRequires: python-module-nose
-BuildRequires: python3-module-argcomplete
-BuildRequires: python3-module-decorator
-BuildRequires: python3-module-atomicwrites
-BuildRequires: python3-module-more-itertools
-BuildRequires: python3-module-funcsigs
-BuildRequires: python3-module-hypothesis
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-numpy
-BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-tox
+BuildRequires: python3(tox)
+
+BuildRequires: python2.7(argcomplete)
+BuildRequires: python2.7(atomicwrites)
+BuildRequires: python2.7(attr)
+BuildRequires: python2.7(decorator)
+BuildRequires: python2.7(funcsigs)
+BuildRequires: python2.7(hypothesis)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(more_itertools)
+BuildRequires: python2.7(nose)
+BuildRequires: python2.7(numpy)
+BuildRequires: python2.7(py)
+BuildRequires: python2.7(pathlib2)
+BuildRequires: python2.7(pexpect)
+BuildRequires: python2.7(pluggy)
+BuildRequires: python2.7(requests)
+BuildRequires: python2.7(six)
+BuildRequires: python2.7(wcwidth)
+
+BuildRequires: python3(argcomplete)
+BuildRequires: python3(atomicwrites)
+BuildRequires: python3(attr)
+BuildRequires: python3(decorator)
+BuildRequires: python3(funcsigs)
+BuildRequires: python3(hypothesis)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(more_itertools)
+BuildRequires: python3(nose)
+BuildRequires: python3(numpy)
+BuildRequires: python3(py)
+BuildRequires: python3(pathlib2)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(pluggy)
+BuildRequires: python3(requests)
+BuildRequires: python3(six)
+BuildRequires: python3(unittest2)
+BuildRequires: python3(wcwidth)
 %endif
 
-%py_requires py
 %py_requires funcsigs
 %py_requires pathlib2
+%py_requires py
+%py_requires wcwidth
 
 BuildArch: noarch
 
@@ -73,6 +87,8 @@ scales to support complex functional testing for applications and libraries.
 %package -n python3-module-%oname
 Summary: Python3 test framework
 Group: Development/Python3
+%py3_requires py
+%py3_requires wcwidth
 
 %description -n python3-module-%oname
 The pytest framework makes it easy to write small tests, yet
@@ -134,13 +150,13 @@ popd
 %python_install
 
 %check
-sed -i '/pytest --lsof {posargs}$/{s/{posargs}$/--ignore testing\/test_pdb.py --ignore testing\/test_terminal.py --ignore testing\/test_unittest.py &/g}' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 %define python2_nodots py%{python_version_nodots python}
 %define python3_nodots py%{python_version_nodots python3}
-export TOXENV=%python2_nodots,%python2_nodots-pexpect,%python3_nodots,%python3_nodots-pexpect
-tox.py3 --sitepackages -p auto -o -v -- --cache-clear
+export TOXENV=%python2_nodots,%python2_nodots-pexpect,\
+%python3_nodots,%python3_nodots-pexpect
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -164,6 +180,9 @@ tox.py3 --sitepackages -p auto -o -v -- --cache-clear
 %_bindir/pytest3
 
 %changelog
+* Mon May 27 2019 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
+- 3.10.1 -> 4.5.0.
+
 * Sun Mar 31 2019 Stanislav Levin <slev@altlinux.org> 3.10.1-alt5
 - Fixed testing against py 1.8.0.
 
