@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          felix-scr-generator
 Version:       1.18.0
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Descriptor Generator Implementation
 License:       ASL 2.0
 URL:           http://felix.apache.org/documentation/subprojects/apache-felix-service-component-runtime.html
@@ -83,6 +83,9 @@ This package contains API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_3jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_2jpp8
 - fc29 update
 
