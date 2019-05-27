@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt4_23jpp8
+Release:        alt4_25jpp8
 Summary:        A framework for testing concurrent Java application
 License:        BSD 
 URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
@@ -94,6 +94,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt4_25jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt4_23jpp8
 - java update
 
