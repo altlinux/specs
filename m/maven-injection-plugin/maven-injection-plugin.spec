@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-injection-plugin
 Version:        1.0.2
-Release:        alt3_18jpp8
+Release:        alt3_20jpp8
 Summary:        Bytecode injection at Maven build time
 License:        LGPLv2+
 URL:            http://www.jboss.org
@@ -53,6 +53,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_20jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_18jpp8
 - java update
 
