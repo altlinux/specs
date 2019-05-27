@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:		plexus-component-factories-pom
 Version:	1.0
-Release:	alt1_0.15.alpha11jpp8
+Release:	alt1_0.17.alpha11jpp8
 Summary:	Plexus Component Factories POM
 BuildArch:	noarch
-Group:		Development/Other
 License:	ASL 2.0
 URL:		https://github.com/codehaus-plexus/plexus-component-factories
 Source0:	http://repo1.maven.org/maven2/org/codehaus/plexus/%{artifactId}/%{version}-alpha-11/%{artifactId}-%{version}-alpha-11.pom
@@ -46,6 +46,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.17.alpha11jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.15.alpha11jpp8
 - java update
 
