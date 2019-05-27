@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-install-plugin
 Version:        2.5.2
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Maven Install Plugin
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-install-plugin
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -37,7 +37,7 @@ Source44: import.info
 Copies the project artifacts to the user's local repository.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -69,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_9jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_6jpp8
 - fc27 update
 
