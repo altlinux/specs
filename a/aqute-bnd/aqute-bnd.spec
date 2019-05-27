@@ -5,7 +5,6 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,14 +14,13 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without ant_tasks
-%if 0%{?fedora} || 0%{?rhel} > 7
 %bcond_without maven_plugin
-%endif
 
 Name:           aqute-bnd
 Version:        3.5.0
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        BND Tool
+# Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0
 URL:            http://bnd.bndtools.org/
 BuildArch:      noarch
@@ -63,6 +61,9 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 %endif
+# Explicit javapackages-tools requires since bnd script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
@@ -236,6 +237,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_5jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_2jpp8
 - java update
 
