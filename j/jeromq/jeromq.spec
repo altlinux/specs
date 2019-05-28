@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jeromq
 Version:        0.3.6
-Release:        alt2_5jpp8
+Release:        alt2_6jpp8
 Summary:        Pure Java implementation of libzmq
 License:        MPLv2.0
 URL:            https://github.com/zeromq/jeromq
@@ -53,6 +53,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt2_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt2_5jpp8
 - fc29 update
 
