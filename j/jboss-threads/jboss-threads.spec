@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-threads
 Version:          2.2.1
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          JBoss Threads
 # Not available license file https://issues.jboss.org/browse/JBTHR-36
 License:          LGPLv2+
@@ -63,6 +63,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_6jpp8
 - fc29 update
 
