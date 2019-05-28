@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy
 Version:        2.4.8
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -37,6 +37,7 @@ Patch2:         0003-Bintray.patch
 Patch3:         0004-Remove-android-support.patch
 Patch4:         0005-Update-to-QDox-2.0.patch
 Patch5:         0006-Disable-artifactory-publish.patch
+Patch6:         0007-Fix-missing-extension-definitions.patch
 
 
 BuildRequires:  gradle-local >= 2.1
@@ -245,16 +246,17 @@ find \( -name *.jar -o -name *.class \) -delete
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
+%mvn_package ':groovy::indy:'
 %mvn_package ':groovy-{*}' @1
+%mvn_package ':groovy-{*}::indy:' @1
 
 %build
-# When groovy is built, the whole build is executed twice - without and with indy
-# Supplying -x jarAllWithIndy -Pindy=true makes it compile with indy only
-%gradle_build -f -G distBin -- -x groovydoc -x javadoc -x jarAllWithIndy -Pindy=true
+%gradle_build -f -G jarAll -- -x groovydoc -x javadoc -Pindy=true
+%gradle_build -f -G distBin -- -x groovydoc -x javadoc -x jarAllWithIndy
 
 %install
-%pom_xpath_remove '*[local-name()="classifier"]' .xmvn-reactor
 %mvn_artifact %{SOURCE6} target/libs/groovy-all-%{version}-indy.jar
 %mvn_install
 
@@ -268,7 +270,7 @@ for mod in groovy groovy-ant groovy-bsf groovy-console groovy-docgenerator \
            groovy-jsr223 groovy-nio groovy-servlet groovy-sql groovy-swing \
            groovy-templates groovy-test groovy-testng groovy-xml; do
     ln -sf ../../java/%{name}/$mod.jar %{buildroot}%{_datadir}/%{name}/lib/$mod-%{version}.jar
-    ln -sf ../../java/%{name}/$mod.jar %{buildroot}%{_datadir}/%{name}/indy/$mod-%{version}-indy.jar
+    ln -sf ../../java/%{name}/$mod-indy.jar %{buildroot}%{_datadir}/%{name}/indy/$mod-%{version}.jar
 done
 
 ln -sf ../../java/%{name}/groovy-all.jar %{buildroot}%{_datadir}/%{name}/embeddable/groovy-all-%{version}.jar
@@ -400,6 +402,9 @@ touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
 %files xml -f .mfiles-xml
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_5jpp8
 - java update
 
