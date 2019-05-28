@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Summary: A Java template engine
 Name: stringtemplate
 Version: 3.2.1
-Release: alt2_17jpp8
+Release: alt2_19jpp8
 URL: http://www.stringtemplate.org/
 Source0: http://www.stringtemplate.org/download/stringtemplate-%{version}.tar.gz
 # Build jUnit tests + make the antlr2 generated code before preparing sources
@@ -64,6 +64,9 @@ ant javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_19jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_17jpp8
 - java update
 
