@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           Mars
 Version:        4.5
-Release:        alt3_7jpp8
+Release:        alt3_9jpp8
 Summary:        An interactive development environment for programming in MIPS assembly language
 
-Group:          Development/Java
 License:        MIT
 URL:            http://courses.missouristate.edu/KenVollmar/MARS/
 Source0:        http://courses.missouristate.edu/KenVollmar//mars/MARS_4_5_Aug2014/Mars4_5.jar
@@ -21,11 +21,11 @@ Source3:        build.xml
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  java-devel
+BuildRequires:  java-1.8.0-openjdk-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  desktop-file-utils
 
-Requires:       java
+Requires:       java-1.8.0-openjdk
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -61,6 +61,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.5-alt3_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5-alt3_7jpp8
 - restored jpp patches
 
