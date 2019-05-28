@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          serp
 Version:       1.15.2
-Release:       alt1_0.8.20150412cvsjpp8
+Release:       alt1_0.10.20150412cvsjpp8
 Summary:       Byte-code manipulation framework
 License:       BSD
 Url:           http://serp.sourceforge.net/
@@ -74,6 +74,9 @@ find . -name "*.jar" -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.15.2-alt1_0.10.20150412cvsjpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.15.2-alt1_0.8.20150412cvsjpp8
 - java update
 
