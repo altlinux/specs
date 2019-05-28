@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          json-smart
 Version:       2.2
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       A small and very fast json parser/generator for java
 License:       ASL 2.0
 URL:           https://github.com/netplex/json-smart-v2
@@ -72,6 +72,9 @@ rm accessors-smart/src/test/java/net/minidev/asm/TestDateConvert.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_4jpp8
 - java update
 
