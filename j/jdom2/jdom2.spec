@@ -8,32 +8,33 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_9jpp8
+Release:       alt1_13jpp8
 Summary:       Java manipulation of XML made easy
-License:       ASL 1.1 or BSD
+License:       Saxpath
 URL:           http://www.jdom.org/
-Source0:       https://github.com/hunterhacker/jdom/archive/JDOM-%{version}.tar.gz
+# ./generate-tarball.sh
+Source0:       %{name}-%{version}.tar.gz
 # originally taken from http://repo1.maven.org/maven2/org/jdom/jdom-contrib/1.1.3/jdom-contrib-1.1.3.pom
 Source1:       jdom-contrib-template.pom
 Source2:       jdom-junit-template.pom
 # Bnd tool configuration
 Source3:       bnd.properties
+# Remove bundled jars that might not have clear licensing
+Source4:       generate-tarball.sh
 # Use system libraries
 # Disable gpg signatures
 # Process contrib and junit pom files
-Patch0:        jdom-2.0.5-build.patch
+Patch0:        0001-Adapt-build.patch
 
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: bea-stax-api
 BuildRequires: isorelax
 BuildRequires: jaxen
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: log4j12
-BuildRequires: objectweb-asm3
 BuildRequires: aqute-bnd
 
 BuildArch:     noarch
@@ -60,8 +61,6 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n jdom-JDOM-%{version}
-find . -name "*.class" -print -delete
-find . -name "*.jar" -print -delete
 
 %patch0 -p1
 
@@ -73,6 +72,7 @@ sed -i 's/\r//' LICENSE.txt README.txt
 # Unable to run coverage: use log4j12 but switch to log4j 2.x
 sed -i.coverage "s|coverage, jars|jars|" build.xml
 
+mkdir lib
 build-jar-repository lib xerces-j2 xml-commons-apis jaxen junit isorelax xalan-j2 xalan-j2-serializer
 
 %build
@@ -97,6 +97,9 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_13jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_9jpp8
 - java update
 
