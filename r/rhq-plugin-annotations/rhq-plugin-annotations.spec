@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             rhq-plugin-annotations
 Version:          3.0.4
-Release:          alt2_14jpp8
+Release:          alt2_16jpp8
 Summary:          RHQ plugin annotations
 License:          GPL and LGPLv2+
 URL:              http://rhq-project.org
@@ -53,6 +53,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_16jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_14jpp8
 - java update
 
