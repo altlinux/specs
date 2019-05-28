@@ -4,27 +4,39 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without dom4j
+
 Name:           jaxen
 Epoch:          0
 Version:        1.1.6
-Release:        alt1_14jpp8
+Release:        alt1_19jpp8
 Summary:        An XPath engine written in Java
-License:        BSD
+# src/java/main/org/w3c/dom/UserDataHandler.java is W3C
+# rest is BSD
+License:        BSD and W3C
 URL:            http://jaxen.codehaus.org/
 BuildArch:      noarch
 
 Source0:        http://dist.codehaus.org/jaxen/distributions/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(jdom:jdom)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xml-apis:xml-apis)
+%if %{with dom4j}
+BuildRequires:  mvn(dom4j:dom4j)
+%endif
 Source44: import.info
 
 %description
@@ -53,8 +65,12 @@ BuildArch: noarch
 %prep
 %setup -q 
 
+%if %{without dom4j}
+rm -rf src/java/main/org/jaxen/dom4j
+%pom_remove_dep dom4j:dom4j
+%endif
+
 rm -rf src/java/main/org/jaxen/xom
-rm src/java/test/org/jaxen/test/XOM*.java
 %pom_remove_dep xom:xom
 
 %mvn_file : %{name}
@@ -79,6 +95,9 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_19jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_14jpp8
 - java update
 
