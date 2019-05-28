@@ -1,6 +1,6 @@
 Name: 	 xrdp
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -29,6 +29,7 @@ Patch10: lfs.diff
 # Other patches
 Patch12: xrdp-alt-startwm.patch
 Patch13: alt-add-russian-keyboard.patch
+Patch14: xrdp-alt-add-comment-about-windows_xp.patch
 
 BuildPreReq: rpm-build-intro rpm-macros-intro-conflicts
 BuildRequires: libjpeg-devel
@@ -90,6 +91,7 @@ tar xf %SOURCE6
 %patch10 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 cp %SOURCE3 %name-init
 
@@ -228,6 +230,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Tue May 28 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt2
+- Add sample configuration for Windows XP to xrdp.ini.
+
 * Fri Apr 19 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt1
 - New version.
 
