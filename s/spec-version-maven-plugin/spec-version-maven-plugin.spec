@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          spec-version-maven-plugin
 Version:       1.2
-Release:       alt1_11jpp8
+Release:       alt1_13jpp8
 Summary:       Spec Version Maven Plugin
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -73,6 +73,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_13jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_11jpp8
 - java update
 
