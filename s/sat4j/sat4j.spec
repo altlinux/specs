@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sat4j
 Version:        2.3.5
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        A library of SAT solvers written in Java
 
 License:        EPL or LGPLv2
@@ -55,6 +55,9 @@ ant -Dbuild.compiler=modern -Drelease=%{version} \
 # No %%doc files as the about.html is in the jar
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_14jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_12jpp8
 - java update
 
