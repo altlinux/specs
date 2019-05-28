@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           spring-ldap
 Version:        1.3.1
-Release:        alt4_17jpp8
+Release:        alt4_19jpp8
 Summary:        Java library for simplifying LDAP operations
 License:        ASL 2.0
 URL:            http://www.springframework.org/ldap
@@ -120,6 +120,9 @@ dos2unix readme.txt
 %doc --no-dereference license.txt notice.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_19jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_17jpp8
 - java update
 
