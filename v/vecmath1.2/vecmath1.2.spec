@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,9 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           vecmath1.2
 Version:        1.14
-Release:        alt1_18jpp8
+Release:        alt1_20jpp8
 Summary:        Free version of vecmath from the Java3D 1.2 specification
-Group:          System/Libraries
 License:        MIT
 URL:            http://www.objectclub.jp/download/vecmath_e
 Source0:        http://www.objectclub.jp/download/files/vecmath//%{name}-%{version}.tar.gz
@@ -32,7 +32,7 @@ Generic matrices' LU and SV decomposition are also there.
 
 
 %package javadoc
-Group:          Development/Other
+Group: Development/Other
 Summary:        Javadoc for %{name}
 Requires:       %{name} = %{version}-%{release}
 # Necessary due to architecture change to noarch
@@ -75,6 +75,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_20jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_18jpp8
 - java update
 
