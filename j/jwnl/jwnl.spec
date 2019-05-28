@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jwnl
 Version:       1.4
-Release:       alt1_0.5.rc3jpp8
+Release:       alt1_0.7.rc3jpp8
 Summary:       Java API for accessing the WordNet relational dictionary
 License:       BSD
 URL:           https://sourceforge.net/projects/jwordnet/
@@ -70,6 +70,9 @@ sed -i 's/\r//' changes.txt doc/*
 %doc --no-dereference license.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_0.7.rc3jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_0.5.rc3jpp8
 - java update
 
