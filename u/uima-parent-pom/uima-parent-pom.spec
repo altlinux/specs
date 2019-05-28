@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uima-parent-pom
 Version:       10
-Release:       alt2_6jpp8
+Release:       alt2_8jpp8
 Summary:       Apache UIMA Parent POM
 License:       ASL 2.0
 URL:           http://uima.apache.org/
@@ -81,6 +81,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.txt
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 10-alt2_8jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 10-alt2_6jpp8
 - java update
 
