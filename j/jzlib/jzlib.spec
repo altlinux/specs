@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jzlib
 Version:        1.1.3
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
@@ -76,6 +76,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_10jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_8jpp8
 - java update
 
