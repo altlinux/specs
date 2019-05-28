@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jhighlight
 Version:        1.0.1
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        An embeddable pure Java syntax highlighting library
 
-Group:          Development/Other
 License:        LGPLv2+ or CDDL
 URL:            http://svn.rifers.org/jhighlight
 
@@ -34,8 +34,8 @@ clearly so that you can easily identify the difference between your RIFE markup
 and the actual marked up source.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_9jpp8
 - fc29 update
 
