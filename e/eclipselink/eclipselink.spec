@@ -24,7 +24,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:          eclipselink
 Version:       2.6.3
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Eclipse Persistence Services Project
 License:       EPL and BSD
 Url:           http://www.eclipse.org/eclipselink/
@@ -120,7 +120,7 @@ cp -p %{SOURCE4} core-pom.xml
 %pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile core-pom.xml
 %pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile core-pom.xml
 %pom_add_dep org.ow2.asm:asm-util:5.0.4:compile core-pom.xml
-%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile core-pom.xml
+#%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile core-pom.xml
 
 cp -p %{SOURCE7} jpa-pom.xml
 %pom_change_dep org.eclipse.persistence:org.eclipse.persistence.antlr org.antlr:antlr-runtime:3.5.2 jpa-pom.xml
@@ -130,7 +130,7 @@ cp -p %{SOURCE7} jpa-pom.xml
 %pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile jpa-pom.xml
 %pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile jpa-pom.xml
 %pom_add_dep org.ow2.asm:asm-util:5.0.4:compile jpa-pom.xml
-%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile jpa-pom.xml
+#%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile jpa-pom.xml
 
 cp -p %{SOURCE11} sdo-pom.xml
 %pom_change_dep org.eclipse.persistence:commonj.sdo org.apache.tuscany.sdo:tuscany-sdo-api-r2.1:1.1.1 sdo-pom.xml
@@ -181,6 +181,9 @@ ant
 %doc --no-dereference license.html
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_7jpp8
+- new version
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_5jpp8
 - java update
 
