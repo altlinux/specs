@@ -13,7 +13,7 @@ Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Epoch:          0
 Version:        1.6.3
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 License:        CPL
 URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
@@ -70,6 +70,9 @@ ln -sf ../qname.jar %{buildroot}%{_javadir}/javax.wsdl/
 %doc --no-dereference license.html
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_14jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_12jpp8
 - java update
 
