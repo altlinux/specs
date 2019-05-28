@@ -14,7 +14,7 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt1_6jpp8
+Release:    alt1_9jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -36,6 +36,9 @@ BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildRequires: libxslt xsltproc
 BuildRequires: docbook-style-xsl
+# Explicit requires for javapackages-tools since closure-compiler script
+# uses /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 Source44: import.info
 
 %description
@@ -83,7 +86,7 @@ xsltproc \
 
 %install
 %mvn_install
-%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" args4j:google-gson:jsr-305:protobuf-java:js:guava20:%{name} %{name} true
+%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" args4j:google-gson:jsr-305:protobuf-java:guava20:%{name} %{name} true
 
 install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 
@@ -100,6 +103,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %doc --no-dereference COPYING
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_6jpp8
 - fc29 update
 
