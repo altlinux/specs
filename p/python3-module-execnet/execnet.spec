@@ -17,7 +17,7 @@ a minimal and fast API targetting the following uses: \
 %endif
 
 Name: %fname
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 %if ""==""
@@ -31,7 +31,6 @@ Group: Development/Documentation
 License: MIT
 Url: https://pypi.python.org/pypi/execnet/
 Source: %name-%version.tar
-Patch0: fix_test_close_initiating_remote_no_error.patch
 Patch1: fix-test_popen_nice-test.patch
 BuildArch: noarch
 
@@ -95,7 +94,6 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p2
 %if ""!=""
 %prepare_sphinx .
@@ -117,29 +115,17 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=`pwd`
-
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
 %if "3"=="3"
-
-# copy necessary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
--e py%{python_version_nodots python3} --notest
-cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
--e py%{python_version_nodots python3} -v -- -v
-
+TOXENV=py%{python_version_nodots python3} tox.py3 --sitepackages -rv
 %else
-
-# copy necessary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
--e py%{python_version_nodots python} --notest
-cp -T %_bindir/py.test .tox/py%{python_version_nodots python}/bin/py.test
-
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
--e py%{python_version_nodots python} -v -- -v
-
+TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
 %endif
 
 %if ""==""
@@ -159,6 +145,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
 %endif
 
 %changelog
+* Tue May 28 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.0 -> 1.6.0.
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
 - 1.2.0 -> 1.5.0.
 
