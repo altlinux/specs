@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-naming
 Version:          5.0.6
-Release:          alt2_0.16.CR1jpp8
+Release:          alt2_0.17.CR1jpp8
 Summary:          JBoss Naming
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -69,6 +69,9 @@ This package contains the API documentation for %{name}.
 %doc JBossORG-EULA.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.17.CR1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.16.CR1jpp8
 - fc29 update
 
