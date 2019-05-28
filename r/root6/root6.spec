@@ -1,0 +1,104 @@
+Name:     root6
+Version:  6.16.00
+Release:  alt1
+
+Summary:  C++ data analysis framework and interpreter from CERN.
+License:  %lgpl21plus
+Group:    Sciences/Physics
+Url:      http://github.com/root-project/root.git
+Packager: Nikita Ermakov <arei@altlinux.org>
+Source:   %name-%version.tar
+
+BuildPreReq: rpm-macros-cmake rpm-build-licenses
+BuildRequires: cmake libAfterImage libftgl2 libfftw3-devel libfreetype libGLEW2.1 libpcre3 zlib-devel liblzma libgsl python-modules /proc
+BuildRequires: libAfterImage-devel tbb-devel gcc-c++
+BuildRequires: libX11-devel libXft-devel libXpm-devel libXext-devel
+BuildRequires: libtiff-devel libSM-devel libICE-devel libGL-devel libjpeg-devel libpng-devel
+BuildRequires: python-dev
+
+ExcludeArch: %ix86
+
+# Bundled llvm 5.0.0.
+
+# Disable gcc switches option for clang
+%global optflags %(echo %{optflags} | sed 's;-frecord-gcc-switches[\ ]*;;')
+# libCling does not link directly with the ROOT liraries but contains undefined symbols from ROOT.
+%set_verify_elf_skiplist /usr/lib64/libCling.so
+
+%description
+C++ data analysis framework and interpreter from CERN.
+
+%prep
+%setup
+
+%build
+%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir \
+       -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+       -DCMAKE_INSTALL_DATAROOTDIR=%_datadir \
+       -DCMAKE_INSTALL_MANDIR=%_mandir \
+       -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
+       -DCMAKE_INSTALL_DATADIR=%_datadir/root6 \
+       -DCMAKE_INSTALL_MACRODIR=%_datadir/root6/macros \
+       -Dalien=OFF \
+       -Dbonjour=OFF \
+       -Dbuiltin_afterimage=OFF \
+       -Dbuiltin_fftw3=OFF\
+       -Dbuiltin_ftgl=OFF \
+       -Dbuiltin_freetype=OFF \
+       -Dbuiltin_glew=OFF \
+       -Dbuiltin_pcre=OFF \
+       -Dbuiltin_zlib=OFF \
+       -Dbuiltin_lzma=OFF \
+       -Dbuiltin_llvm=ON \
+       -Dbuildin_tbb=OFF \
+       -Dbuiltin_xrootd=OFF \
+       -Dcastor=OFF \
+       -Dccache=ON \
+       -Dchirp=OFF \
+       -Dclad=OFF \
+       -Ddcache=OFF \
+       -Dfitsio=OFF \
+       -Dfail-on-missin=ON \
+       -Dgfal=OFF \
+       -Dglite=OFF \
+       -Dgviz=OFF \
+       -Dhdfs=OFF \
+       -Dkrb5=OFF \
+       -Dldap=OFF \
+       -Dmonalisa=OFF \
+       -Dmysql=OFF \
+       -Dodbc=OFF \
+       -Dopengl=OFF \
+       -Doracle=OFF \
+       -Dpgsql=OFF \
+       -Dpythia6=OFF \
+       -Dpythia8=OFF \
+       -Dpython=OFF \
+       -Drfio=OFF \
+       -Dsapdb=OFF \
+       -Dsqlite=OFF \
+       -Dsrp=OFF \
+       -Dssl=OFF \
+       -Dtmva=OFF \
+       -Dxrootd=OFF \
+       -Dvdt=OFF \
+       -Dx11=ON \
+       -Dgnuinstall=ON
+%cmake_build
+
+%install
+%cmakeinstall_std
+
+%files
+%dir %_datadir/root6/
+%dir %_datadir/root6/macros/
+%_datadir/root6/macros/*
+%_includedir/*
+%_bindir/*
+%_libdir/*
+%_man1dir/*
+%_sysconfdir/*
+
+%changelog
+* Tue May 28 2019 Nikita Ermakov <arei@altlinux.org> 6.16.00-alt1
+- Initial release.
