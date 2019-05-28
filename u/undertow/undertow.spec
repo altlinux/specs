@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:             undertow
 Version:          1.4.0
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          Java web server using non-blocking IO
 License:          ASL 2.0
 URL:              http://undertow.io/
@@ -89,6 +89,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_6jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_4jpp8
 - java update
 
