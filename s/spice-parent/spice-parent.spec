@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           spice-parent
 Version:        26
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Sonatype Spice Components
 License:        ASL 2.0
 URL:            http://github.com/sonatype/oss-parents
@@ -45,6 +45,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 26-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 26-alt1_8jpp8
 - java update
 
