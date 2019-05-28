@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_12jpp8
+Release:       alt4_14jpp8
 Summary:       Open source XA JDBC Pool
 License:       LGPLv2+
 URL:           http://xapool.ow2.org/
@@ -84,6 +84,9 @@ ant dist
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_14jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_12jpp8
 - java update
 
