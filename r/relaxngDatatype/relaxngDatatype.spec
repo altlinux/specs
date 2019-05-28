@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           relaxngDatatype
 Version:        2011.1
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        RELAX NG Datatype API
 License:        BSD
 URL:            https://github.com/java-schema-utilities/relaxng-datatype-java
@@ -61,6 +61,9 @@ cp -p %{SOURCE1} .
 %doc copying.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2011.1-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2011.1-alt1_7jpp8
 - java update
 
