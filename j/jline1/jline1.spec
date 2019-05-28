@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
@@ -38,11 +39,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt3_17jpp8
+Release:        alt3_18jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
-Group:          Development/Other
 Source0:        http://download.sourceforge.net/sourceforge/jline/jline-%{version}.zip
 Source1:        CatalogManager.properties
 Patch1:         jline-0.9.94-crosslink.patch
@@ -75,16 +75,16 @@ masking, configurable key-bindings, and pass-through handlers to use to
 chain to other console applications.
 
 %package        demo
+Group: Development/Java
 Summary:        Demos for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -127,6 +127,9 @@ mv tmp/* .
 %doc LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17jpp8
 - fc29 update
 
