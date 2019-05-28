@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             stax2-api
 Version:          4.0.0
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
 URL:              http://wiki.fasterxml.com/WoodstoxStax2
@@ -59,6 +59,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_6jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_4jpp8
 - java update
 
