@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Enterprise Job Scheduler for Java
 Name:           quartz
 Version:        2.2.1
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.quartz-scheduler.org/
@@ -142,6 +142,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_10jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_8jpp8
 - java update
 
