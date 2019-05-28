@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jvnet-parent
 Version:        4
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Java.net parent POM file
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://www.java.net
 Source0:        http://repo1.maven.org/maven2/net/java/%{name}/%{version}/%{name}-%{version}.pom
@@ -44,6 +44,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1_12jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4-alt1_10jpp8
 - java update
 
