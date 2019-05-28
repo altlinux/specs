@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt2_17jpp8
+Release:          alt2_19jpp8
 Summary:          Apache Commons Pool Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -42,21 +42,25 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{short_name}-%{version}-src
 
 %mvn_alias : org.apache.commons:%{short_name}
-%mvn_file : %{name} %{short_name}
+%mvn_file : %{short_name} %{name}
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.pool
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.txt LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc README.txt RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_17jpp8
 - fc29 update
 
