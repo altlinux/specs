@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xmlstreambuffer
 Version:       1.5.4
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       XML Stream Buffer
 License:       CDDL or GPLv2 with exceptions
 Url:           http://java.net/projects/xmlstreambuffer/
@@ -98,6 +98,9 @@ rm -r test/com/sun/xml/stream/buffer/stax/InscopeNamespaceTest.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_7jpp8
 - java update
 
