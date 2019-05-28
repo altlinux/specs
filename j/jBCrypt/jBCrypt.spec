@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jBCrypt
 Version:        0.4
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Strong password hashing for Java
 
 License:        ISC
@@ -53,6 +53,9 @@ ant test dist
 %doc LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_8jpp8
 - fc29 update
 
