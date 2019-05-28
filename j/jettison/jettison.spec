@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jettison
 Version:        1.3.7
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        A JSON StAX implementation
 License:        ASL 2.0
 URL:            http://jettison.codehaus.org/
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.7-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.7-alt1_7jpp8
 - fc29 update
 
