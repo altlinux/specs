@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jorbis
 Version:        0.0.17
-Release:        alt1_18jpp8
+Release:        alt1_19jpp8
 Summary:        Pure Java Ogg Vorbis Decoder
 URL:            http://www.jcraft.com/jorbis/
 License:        LGPLv2+
-Group:          System/Libraries
 Source0:        http://www.jcraft.com/jorbis/%{name}-%{version}.zip
 # Some fixes from the jorbis copy embedded in cortada. I've mailed upstream
 # asking them to integrate these, for more info also see:
@@ -32,8 +32,8 @@ JOrbis is a pure Java Ogg Vorbis decoder.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Java docs for jorbis
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -41,9 +41,9 @@ This package contains the API documentation for jorbis.
 
 
 %package player
+Group: Sound
 Summary:        Java applet for playing ogg-vorbis files from a browser
 License:        GPLv2+
-Group:          Sound
 Requires:       java
 Requires:       %{name} = %{version}-%{release}
 
@@ -89,6 +89,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_18jpp8
 - fc29 update
 
