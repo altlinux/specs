@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt3_20jpp8
+Release:        alt3_21jpp8
 Summary:        Jetty test policy files
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -62,6 +62,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc --no-dereference epl-v10.html LICENSE-2.0.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_21jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_20jpp8
 - fc29 update
 
