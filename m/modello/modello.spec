@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
@@ -15,10 +14,11 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without jackson
+%bcond_without snakeyaml
 
 Name:           modello
 Version:        1.9.1
-Release:        alt1_3jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 Summary:        Modello Data Model toolkit
 # The majority of files are under MIT license, but some of them are
@@ -44,12 +44,17 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-BuildRequires:  mvn(org.yaml:snakeyaml)
 %if %{with jackson}
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 %endif
+%if %{with snakeyaml}
+BuildRequires:  mvn(org.yaml:snakeyaml)
+%endif
+# Explicit javapackages-tools requires since modello script uses
+# /usr/share/java-utils/java-functions
+Requires:         javapackages-tools
 Source44: import.info
 
 %description
@@ -85,6 +90,11 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 %pom_remove_dep :modello-plugin-jsonschema modello-maven-plugin
 %endif
 
+%if %{without snakeyaml}
+%pom_disable_module modello-plugin-snakeyaml modello-plugins
+%pom_remove_dep :modello-plugin-snakeyaml modello-maven-plugin
+%endif
+
 %build
 # skip tests because we have too old xmlunit in Fedora now (1.0.8)
 %mvn_build -f -- -Dmaven.version=3.1.1
@@ -98,7 +108,6 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE
 %{_bindir}/*
 %config(noreplace,missingok) /etc/java/%{name}.conf
@@ -107,6 +116,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_8jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_3jpp8
 - java update
 
