@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
@@ -48,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.4.0.9
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
@@ -252,6 +252,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_mandir}/man1/%{name}q.1*
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_7jpp8
 - java update
 
