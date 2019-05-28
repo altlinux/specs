@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          spymemcached
 Version:       2.11.4
-Release:       alt1_8jpp8
+Release:       alt1_10jpp8
 Summary:       Java client for memcached
 # ASL src/scripts/write-version-info.sh
 License:       ASL 2.0 and MIT
@@ -76,6 +76,9 @@ native2ascii -encoding UTF-8 src/main/java/net/spy/memcached/MemcachedConnection
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.11.4-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.11.4-alt1_8jpp8
 - java update
 
