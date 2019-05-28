@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-rat
 Version:        0.12
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Apache Release Audit Tool (RAT)
 
 License:        ASL 2.0
@@ -75,6 +75,9 @@ Shared beans and services.
 %package core
 Group: Development/Java
 Summary:        Core functionality for %{name}
+# Explicit requires for javapackages-tools since apache-rat-script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 %description core
 The core functionality of RAT, shared by the Ant tasks, and the Maven plugin.
@@ -171,6 +174,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_8jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_6jpp8
 - fc29 update
 
