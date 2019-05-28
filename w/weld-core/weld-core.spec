@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           weld-core
 Version:        2.3.5
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Reference Implementation for JSR-299: Contexts and Dependency Injection (CDI)
 
 # OFL: ./probe/core/src/main/client/font-awesome.*
@@ -160,6 +160,9 @@ sed -i -e 's/InstantiationException/InstantiationException, NoSuchMethodExceptio
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_7jpp8
+- new version
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_5jpp8
 - fixed build with new tomcat
 
