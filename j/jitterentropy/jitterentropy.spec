@@ -1,6 +1,6 @@
 Name: jitterentropy
-Version: 2.1.2
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Library implementing the jitter entropy source
 License: BSD or GPLv2
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_includedir
 %_man3dir/*
 
 %changelog
+* Thu Oct 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.0-alt1
+- New version
+
 * Wed Sep 04 2019 Michael Shigorin <mike@altlinux.org> 2.1.2-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - minor spec cleanup
