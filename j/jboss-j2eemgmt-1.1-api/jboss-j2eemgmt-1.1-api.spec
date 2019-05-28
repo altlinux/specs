@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jboss-j2eemgmt-api_1.1_spec
 Name:          jboss-j2eemgmt-1.1-api
 Version:       1.0.1
-Release:       alt2_14jpp8
+Release:       alt2_15jpp8
 Summary:       Java EE Management 1.1 API
 License:       LGPLv2+
 URL:           http://www.jboss.org/
@@ -61,6 +61,9 @@ This package contains javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_15jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_14jpp8
 - fc29 update
 
