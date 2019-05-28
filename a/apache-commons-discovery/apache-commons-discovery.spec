@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_19jpp8
+Release:        alt3_22jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -51,19 +51,23 @@ BuildArch: noarch
 %mvn_file : %{short_name} %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.discovery
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_22jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_19jpp8
 - java update
 
