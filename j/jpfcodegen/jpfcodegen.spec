@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jpfcodegen
 Version:        0.4
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        A tool for generating classes from JPF plug-ins
 
-Group:          Development/Java
 License:        LGPLv3
 URL:            https://github.com/JabRef/jpfcodegen
 
@@ -33,8 +33,8 @@ Requires:       jpackage-utils
 Source44: import.info
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 %description javadoc
@@ -80,6 +80,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_16jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_15jpp8
 - fc29 update
 
