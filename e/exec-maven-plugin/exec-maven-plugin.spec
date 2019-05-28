@@ -9,28 +9,32 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
 Version:        1.6.0
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Exec Maven Plugin
 
 License:        ASL 2.0
-URL:            http://mojo.codehaus.org/exec-maven-plugin
+URL:            http://www.mojohaus.org/exec-maven-plugin/
 Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/%{version}/exec-maven-plugin-%{version}-source-release.zip
+
+Patch1:         exec-maven-plugin-1.6.0-Port-to-Maven-3.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-exec)
-BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
-BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-toolchain)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Obsoletes:      maven-plugin-exec < %{version}-%{release}
@@ -54,11 +58,19 @@ API documentation for %{name}.
 sed -i 's/\r$//' LICENSE.txt
 find . -name *.jar -delete
 
+%pom_remove_dep :maven-project
+%pom_remove_dep :maven-toolchain
+%pom_remove_dep :maven-artifact-manager
+
+%pom_add_dep org.apache.maven:maven-compat
+%pom_add_dep junit:junit::test
+
 %pom_remove_plugin :animal-sniffer-maven-plugin
 
+%patch1 -p1
+
 %build
-# tests are disabled, see: rhbz#1095077
-%mvn_build -f
+%mvn_build -- -DmavenVersion=3
 
 %install
 %mvn_install
@@ -71,6 +83,9 @@ find . -name *.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4jpp8
 - fc29 update
 
