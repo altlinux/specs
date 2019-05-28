@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-common-core
 Version:          2.5.0
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          JBoss Common Classes
 # Under Public Domain license src/main/java/org/jboss/util/Base64.java
 License:          ASL 2.0 and Public Domain
@@ -75,6 +75,9 @@ rm src/test/java/org/jboss/test/util/test/xml/resolver/JBossEntityResolverUnitTe
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_6jpp8
 - fc29 update
 
