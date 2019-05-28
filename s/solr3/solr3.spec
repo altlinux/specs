@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             solr3
 Version:          3.6.2
-Release:          alt1_17jpp8
+Release:          alt1_19jpp8
 Summary:          Apache Solr
 License:          ASL 2.0
 Url:              http://lucene.apache.org/solr/
@@ -154,6 +154,9 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_19jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_17jpp8
 - java update
 
