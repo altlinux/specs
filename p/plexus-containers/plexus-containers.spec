@@ -11,13 +11,19 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-containers
 Version:        1.7.1
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Containers for Plexus
-License:        ASL 2.0 and MIT
+# Most of the files are either under ASL 2.0 or MIT
+# The following files are under xpp:
+# plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/Driver.java
+# plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/MXParser.java
+License:        ASL 2.0 and MIT and xpp
 URL:            https://github.com/codehaus-plexus/plexus-containers
 BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:        LICENSE.MIT
 
 Patch0:         0001-Port-to-current-qdox.patch
 
@@ -97,6 +103,9 @@ BuildArch: noarch
 
 %patch0 -p1
 
+cp %{SOURCE1} .
+cp %{SOURCE2} .
+
 %pom_remove_plugin -r :maven-site-plugin
 
 # For Maven 3 compat
@@ -151,14 +160,23 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 
 # plexus-containers pom goes into main package
 %files -f .mfiles-plexus-containers
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 %files component-annotations -f .mfiles-plexus-component-annotations
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 %files container-default -f .mfiles-plexus-container-default
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 %files component-metadata -f .mfiles-plexus-component-metadata
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 %files component-javadoc -f .mfiles-plexus-component-javadoc
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_9jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_6jpp8
 - java fc28+ update
 
