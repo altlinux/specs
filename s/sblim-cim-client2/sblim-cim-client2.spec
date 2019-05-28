@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -15,10 +16,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Java CIM Client library
 
-Group:          Development/Other
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 Source0:        http://downloads.sourceforge.net/project/sblim/%{name}/%{version}/%{name}-%{version}-src.zip
@@ -41,8 +41,8 @@ More infos about the Java Community Process and JSR48 can be found at
 http://www.jcp.org and http://www.jcp.org/en/jsr/detail?id=48.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 Requires:       sblim-cim-client2 = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -51,8 +51,8 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %package manual
+Group: Development/Java
 Summary:        Manual and sample code for %{name}
-Group:          Development/Java
 Requires:       sblim-cim-client2 = %{version}-%{release}
 BuildArch: noarch
 
@@ -125,6 +125,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_10jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_8jpp8
 - java update
 
