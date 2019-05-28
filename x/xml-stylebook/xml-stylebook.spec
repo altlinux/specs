@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.25.b3_xalan2.svn313293jpp8
+Release:       alt2_0.27.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
 License:       ASL 1.1
 URL:           http://xml.apache.org/
@@ -118,6 +118,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.27.b3_xalan2.svn313293jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.25.b3_xalan2.svn313293jpp8
 - java update
 
