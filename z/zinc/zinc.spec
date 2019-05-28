@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           zinc
 Version:        0.3.1
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Incremental scala compiler
 License:        ASL 2.0
 URL:            https://github.com/typesafehub/zinc
@@ -57,6 +57,9 @@ jar cf zinc.jar com
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_5jpp8
 - java update
 
