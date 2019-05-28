@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jxmpp
 Version:       0.4.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       An Open Source XMPP Java base-library
 License:       ASL 2.0
 URL:           https://github.com/igniterealtime/jxmpp
@@ -29,7 +29,7 @@ Source5:       http://repo1.maven.org/maven2/org/jxmpp/jxmpp-util-cache/%{namedv
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-#BuildRequires: mvn(org.gnu.inet:libidn)
+BuildRequires: mvn(org.gnu.inet:libidn)
 
 BuildArch:     noarch
 Source44: import.info
@@ -103,14 +103,14 @@ cat > pom.xml << EOF
   <name>jxmpp parent</name>
   <modules>
     <module>jxmpp-core</module>
+    <module>jxmpp-stringprep-libidn</module>
     <module>jxmpp-jid</module>
     <module>jxmpp-util-cache</module>
   </modules>
 </project>
 EOF
-#    <module>jxmpp-stringprep-libidn</module>
 
-for p in core jid util-cache;do
+for p in core jid stringprep-libidn util-cache;do
 
 %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" %{name}-${p}
 %pom_xpath_set "pom:name" "JXMPP ${p}" %{name}-${p}
@@ -158,8 +158,8 @@ done
 %files jid -f .mfiles-%{name}-jid
 %doc --no-dereference LICENSE
 
-#%files stringprep-libidn -f .mfiles-%{name}-stringprep-libidn
-#%doc --no-dereference LICENSE
+%files stringprep-libidn -f .mfiles-%{name}-stringprep-libidn
+%doc --no-dereference LICENSE
 
 %files util-cache -f .mfiles-%{name}-util-cache
 %doc README.md
@@ -169,6 +169,9 @@ done
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_8jpp8
+- new version
+
 * Tue Dec 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_7jpp8
 - built w/o libidn support
 
