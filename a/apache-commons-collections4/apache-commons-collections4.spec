@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Extension of the Java Collections Framework
 Name:           apache-commons-collections4
 Version:        4.1
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-collections/
 BuildArch:      noarch
@@ -37,10 +37,10 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n commons-collections4-%{version}-src
-%mvn_file : %{name} commons-collections4
+%mvn_file : commons-collections4 %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.collections4
 
 %install
 %mvn_install
@@ -53,6 +53,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_5jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3jpp8
 - fc29 update
 
