@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          zxing
 Version:       3.2.1
-Release:       alt2_7jpp8
+Release:       alt2_9jpp8
 Summary:       Java multi-format 1D/2D bar-code image processing library
 License:       ASL 2.0
 URL:           https://github.com/zxing/zxing/
@@ -126,7 +126,7 @@ sed -i '/Code39ExtendedBlackBox2TestCase/d' core/src/test/java/com/google/zxing/
 
 %build
 
-%mvn_build -s -- -Dmaven.test.skip.exec=true
+%mvn_build -s
 
 %install
 %mvn_install
@@ -145,6 +145,9 @@ sed -i '/Code39ExtendedBlackBox2TestCase/d' core/src/test/java/com/google/zxing/
 %doc --no-dereference COPYING NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt2_9jpp8
+- new version
+
 * Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt2_7jpp8
 - fc 28 update
 
