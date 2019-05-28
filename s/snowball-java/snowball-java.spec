@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          snowball-java
 Version:       0
-Release:       alt1_0.10.20130902jpp8
+Release:       alt1_0.12.20130902jpp8
 Summary:       Java stemming algorithm library
 License:       BSD
 URL:           http://snowball.tartarus.org/index.php
@@ -75,6 +75,9 @@ sed -i 's/\r//' license.txt notice.txt
 %doc --no-dereference license.txt notice.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.12.20130902jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.10.20130902jpp8
 - java update
 
