@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-parent
 Version:        19
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Summary:        Jetty parent POM file
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -44,6 +44,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 19-alt2_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 19-alt2_18jpp8
 - fc29 update
 
