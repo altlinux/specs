@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           test-interface
 Version:        %{test_interface_version}
-Release:        alt2_10jpp8
+Release:        alt2_12jpp8
 Summary:        Uniform interface to Scala and Java test frameworks
 
 License:        BSD
@@ -109,6 +109,9 @@ cp pom.xml target/%{name}-%{version}.pom
 %doc LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_10jpp8
 - java update
 
