@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_26jpp8
+Release:        alt1_29jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -25,9 +25,10 @@ Patch0:         jakarta-%{name}-attach-osgi-manifest.patch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
+
+Provides:       deprecated()
 Source44: import.info
 Provides: jakarta-regexp = %{version}-%{release}
-
 
 %description
 Regexp is a 100% Pure Java Regular Expression package that was
@@ -40,6 +41,7 @@ for visual debugging and testing suite for compatibility.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description javadoc
@@ -86,6 +88,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_29jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_26jpp8
 - java update
 
