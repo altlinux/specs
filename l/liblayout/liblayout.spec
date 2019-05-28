@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,16 +9,15 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: liblayout
 Version: 0.2.10
-Release: alt1_15jpp8
+Release: alt1_18jpp8
 Summary: CSS based layouting framework
 License: LGPLv2+ and UCD
-Group: System/Libraries
 Source: http://downloads.sourceforge.net/jfreereport/liblayout-%{version}.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant java-devel jpackage-utils flute libloader xml-commons-apis
+BuildRequires: ant java-devel jpackage-utils flute libloader
 BuildRequires: librepository pentaho-libxml libfonts sac libbase >= 1.1.3
 Requires: jpackage-utils flute libloader >= 1.1.3
-Requires: librepository >= 1.1.3 libfonts >= 1.1.3 sac xml-commons-apis
+Requires: librepository >= 1.1.3 libfonts >= 1.1.3 sac
 Requires: pentaho-libxml libbase >= 1.0.0
 BuildArch: noarch
 Source44: import.info
@@ -28,8 +28,8 @@ standard. The layouting expects to receive its content as a DOM structure
 (although it does not rely on the W3C-DOM API).
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Documentation
+Summary: Javadoc for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -42,7 +42,7 @@ Javadoc for %{name}.
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib flute libloader librepository libxml libfonts \
-    sac jaxp libbase commons-logging-api
+    sac libbase commons-logging-api
 
 %build
 ant jar javadoc
@@ -67,6 +67,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_18jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_15jpp8
 - java update
 
