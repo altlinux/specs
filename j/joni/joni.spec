@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -8,9 +9,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             joni
 Version:          2.1.3
-Release:          alt2_8jpp8
+Release:          alt2_9jpp8
 Summary:          Java port of Oniguruma regexp library 
-Group:            Development/Other
 License:          MIT
 URL:              http://github.com/jruby/%{name}
 Source0:          https://github.com/jruby/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.zip
@@ -41,7 +41,7 @@ joni is a port of Oniguruma, a regular expressions library,
 to java. It is used by jruby.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 Requires:       jpackage-utils
 BuildArch: noarch
@@ -72,6 +72,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_9jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_8jpp8
 - fc29 update
 
