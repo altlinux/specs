@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          smack
 Version:       4.1.5
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       Open Source XMPP (Jabber) client library
 License:       ASL 2.0
 URL:           http://www.igniterealtime.org/projects/smack/index.jsp
@@ -386,6 +386,9 @@ done
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.1.5-alt1_8jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.1.5-alt1_6jpp8
 - java update
 
