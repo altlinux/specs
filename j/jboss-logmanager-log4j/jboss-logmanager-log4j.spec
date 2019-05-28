@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logmanager-log4j
 Version:          1.0.0
-Release:          alt2_18jpp8
+Release:          alt2_19jpp8
 Summary:          JBoss LogManager Log4j Compatibility Library 
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logmanager-log4j
@@ -57,6 +57,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_19jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_18jpp8
 - fc29 update
 
