@@ -8,9 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          tiger-types
 Version:       2.2
-Release:       alt1_5jpp8
+Release:       alt1_8jpp8
 Summary:       Type arithmetic library for Java5
-License:       CDDL or GPLv2 with exceptions
+License:       CDDL-1.0 or GPLv2 with exceptions
 Url:           https://github.com/kohsuke/tiger-types
 Source0:       https://github.com/kohsuke/%{name}/archive/%{name}-%{version}.tar.gz
 # wget -O glassfish-LICENSE.txt https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
@@ -81,6 +81,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5jpp8
 - java update
 
