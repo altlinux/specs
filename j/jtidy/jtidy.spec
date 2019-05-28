@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             jtidy
 Version:          1.0
-Release:          alt3_0.26.20100930svn1125jpp8
+Release:          alt3_0.29.20100930svn1125jpp8
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
 License:          zlib
@@ -23,6 +23,9 @@ BuildArch:        noarch
 BuildRequires:    javapackages-local
 BuildRequires:    ant
 BuildRequires:    mvn(xerces:dom3-xml-apis)
+# Explicit javapackages-tools requires since jtidy script uses
+# /usr/share/java-utils/java-functions
+Requires:         javapackages-tools
 Source44: import.info
 
 %description
@@ -78,6 +81,9 @@ EOF
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.29.20100930svn1125jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.26.20100930svn1125jpp8
 - java update
 
