@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global hghash 7ff584954008
 Name:          jmh
 Version:       1.13
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       Java Microbenchmark Harness
 License:       GPLv2 with exceptions
 URL:           http://openjdk.java.net/projects/code-tools/jmh/
@@ -162,6 +162,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc --no-dereference LICENSE src/license/*
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_8jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_6jpp8
 - java update
 
