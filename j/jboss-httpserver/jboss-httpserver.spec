@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -14,9 +15,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-%{realname}
 Version:          1.0.0
-Release:          alt2_15jpp8
+Release:          alt2_16jpp8
 Summary:          JBoss httpserver
-Group:            Development/Other
 License:          GPLv2 and GPLv2 with exceptions
 URL:              https://github.com/jbossas/httpserver
 
@@ -45,8 +45,8 @@ Source44: import.info
 This package contains JBoss httpserver
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_16jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_15jpp8
 - fc29 update
 
