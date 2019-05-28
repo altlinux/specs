@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt3_17jpp8
+Release:        alt3_18jpp8
 Summary:        Jetty assembly descriptors used for building
 
-Group:          Development/Other
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
 Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
@@ -41,6 +41,9 @@ cp -p %{SOURCE1} %{SOURCE2} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17jpp8
 - fc29 update
 
