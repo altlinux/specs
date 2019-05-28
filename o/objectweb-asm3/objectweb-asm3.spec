@@ -7,12 +7,12 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           objectweb-asm3
 Version:        3.3.1
-Release:        alt1_18jpp8
+Release:        alt1_21jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -25,6 +25,9 @@ BuildRequires:  ant
 BuildRequires:  maven-local
 # shade-jar utility used in this spec file needs this
 BuildRequires:  objectweb-asm3
+# Explicit javapackages-tools requires since asm3-processor script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
@@ -118,6 +121,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_21jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_18jpp8
 - java update
 
