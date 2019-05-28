@@ -6,31 +6,34 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag M7
+%global vertag  M9
 
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_0.12.M7jpp8
+Release:        alt1_4.M9jpp8
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/com/thoughtworks/qdox/qdox/%{version}-%{vertag}/%{name}-%{version}-%{vertag}-project.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}-%{vertag}.tar.gz
 Source1:        qdox-MANIFEST.MF
+# Remove bundled binaries which are possibly proprietary
+Source2:        generate-tarball.sh
 
-BuildRequires:  byaccj
-BuildRequires:  jflex
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+
+BuildRequires:  byaccj
+BuildRequires:  jflex
 Source44: import.info
 Obsoletes: qdox16-poms < 1.1
-
 
 %description
 QDox is a high speed, small footprint parser
@@ -57,6 +60,7 @@ rm -rf bootstrap
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-failsafe-plugin
 %pom_remove_plugin :maven-jflex-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %mvn_file : %{name}
 %mvn_alias : qdox:qdox
@@ -84,6 +88,9 @@ jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
 %doc LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_4.M9jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.12.M7jpp8
 - java update
 
