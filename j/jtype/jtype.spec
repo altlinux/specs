@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jtype
 Version:        0.1.2
-Release:        alt2_15jpp8
+Release:        alt2_17jpp8
 Summary:        A small library for working with the Java 5 type system
 License:        ASL 2.0
 URL:            https://github.com/markhobson/jtype
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2_17jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2_15jpp8
 - java update
 
