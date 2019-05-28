@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          sqlite-jdbc
 Version:       3.15.1
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       SQLite JDBC library
 
 # ASL 2.0:
@@ -183,6 +183,9 @@ LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
 %doc --no-dereference LICENSE* NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_8jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_6jpp8
 - java update
 
