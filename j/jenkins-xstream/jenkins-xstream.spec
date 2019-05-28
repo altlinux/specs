@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt4_14.jenkins1jpp8
+Release:        alt4_15.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -128,6 +128,9 @@ API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_15.jenkins1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_14.jenkins1jpp8
 - fc29 update
 
