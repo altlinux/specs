@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_40jpp8
+Release:        alt2_43jpp8
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -232,6 +232,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_43jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_40jpp8
 - java update
 
