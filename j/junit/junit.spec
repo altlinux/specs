@@ -11,9 +11,9 @@ BuildRequires: jpackage-generic-compat
 Name:           junit
 Epoch:          1
 Version:        4.12
-Release:        alt1_8jpp8
+Release:        alt1_11jpp8
 Summary:        Java regression test package
-License:        EPL
+License:        EPL-1.0
 URL:            http://www.junit.org/
 BuildArch:      noarch
 
@@ -110,6 +110,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_11jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_8jpp8
 - java update
 
