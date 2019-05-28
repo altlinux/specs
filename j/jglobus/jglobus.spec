@@ -5,7 +5,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The gaxis module requires axis version 1.x
@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_10jpp8
+Release:	alt1_13jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -35,14 +35,42 @@ Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-Release-%{version}.ta
 #		DERObjectIdentifier is obsolete
 #		https://github.com/jglobus/JGlobus/pull/149
 Patch0:		%{name}-DERObjectIdentifier-is-obsolete.patch
-#		Don't force SSLv3
+#		Don't force SSLv3 in myproxy, allow TLS
+#		Backport from git (trunk)
 Patch1:		%{name}-dont-force-SSLv3.patch
 #		Relax proxy validation to be RFC-3820 compliant
 #		https://github.com/jglobus/JGlobus/issues/160
+#		https://github.com/jglobus/JGlobus/pull/165
 Patch2:		%{name}-key-usage.patch
 #		Fix javadoc
 #		https://github.com/jglobus/JGlobus/pull/162
 Patch3:		%{name}-javadoc.patch
+#		Do not accumulate matches in
+#		GlobusPathMatchingResourcePatternResolver
+#		https://github.com/jglobus/JGlobus/pull/157
+Patch4:		%{name}-do-not-accumulate-matches-in-GlobusPathMatchingResou.patch
+#		Compatibility with clients that request minimum TLS version 1.2
+#		https://github.com/jglobus/JGlobus/pull/166
+Patch5:		%{name}-do-not-force-SSLv3-TLSv1-allow-TLSv1.1-TLSv1.2.patch
+#		Remove synchronization on CRL in CRLChecker
+#		Drop workaround for race condition in BouncyCastle < 1.46
+#		Reduced lock contention leads to higher request throughput
+#		Backport from git (trunk and 2.1 branch)
+Patch6:		%{name}-remove-synchronization-on-CRL-in-CRLChecker.patch
+#		Fix "no key" error for PKCS#8 encoded keys
+#		https://github.com/jglobus/JGlobus/issues/118
+#		https://github.com/jglobus/JGlobus/issues/146
+#		https://github.com/jglobus/JGlobus/pull/164
+Patch7:		%{name}-support-PKCS8-key-format.patch
+#		Only allow TLSv1 and TLSv1.2 (not TLSv1.1)
+#		https://github.com/jglobus/JGlobus/pull/166
+Patch8:		%{name}-only-allow-TLSv1-and-TLSv1.2-not-TLSv1.1.patch
+#		Remove unused FORCE_SSLV3_AND_CONSTRAIN_CIPHERSUITES_FOR_GRAM
+#		https://github.com/jglobus/JGlobus/pull/166
+Patch9:		%{name}-remove-unused-FORCE_SSLV3_AND_CONSTRAIN_CIPHERSUITES.patch
+#		Adapt to changes in bouncycastle 1.61
+#		https://github.com/jglobus/JGlobus/pull/168
+Patch10:	%{name}-adapt-to-changes-in-PrivateKeyInfo-class.patch
 
 BuildArch:	noarch
 
@@ -188,6 +216,13 @@ This package contains the API documentation for %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
@@ -243,6 +278,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_10jpp8
 - fc29 update
 
