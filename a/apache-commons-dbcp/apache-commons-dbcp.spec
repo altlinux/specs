@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -11,9 +12,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_24jpp8
+Release:          alt2_26jpp8
 Summary:          Apache Commons DataBase Pooling Package
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
 BuildArch:        noarch
@@ -59,22 +59,26 @@ iconv -f iso8859-1 -t utf-8 RELEASE-NOTES.txt > RELEASE-NOTES.txt.conv && mv -f 
 %patch0
 
 %mvn_alias : org.apache.commons:%{short_name}
-%mvn_file : %{name} %{short_name}
+%mvn_file : %{short_name} %{name}
 
 %build
 # Skip tests, tomcat:naming-java and tomcat:naming-common not available
-%mvn_build -f
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.dbcp
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
+%doc README.txt RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_26jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_24jpp8
 - fc29 update
 
