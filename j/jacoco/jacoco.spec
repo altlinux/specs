@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -9,9 +10,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:      jacoco
 Version:   0.7.8
-Release:   alt1_5jpp8
+Release:   alt1_7jpp8
 Summary:   Java Code Coverage for Eclipse 
-Group:     System/Libraries
 License:   EPL
 URL:       http://www.eclemma.org/jacoco/
 Source0:   https://github.com/jacoco/jacoco/archive/v%{version}.tar.gz
@@ -132,6 +132,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_5jpp8
 - java update
 
