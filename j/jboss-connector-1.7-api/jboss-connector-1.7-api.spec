@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-connector-1.7-api
 Version:          1.0.0
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          Connector Architecture 1.7 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
@@ -60,6 +60,9 @@ cp %{SOURCE1} .
 %doc cddl.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_9jpp8
 - fc29 update
 
