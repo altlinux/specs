@@ -40,11 +40,11 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_20jpp8
+Release:        alt1_23jpp8
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
-Source0:        http://jarjar.googlecode.com/files/jarjar-src-1.4.zip
+Source0:        https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jarjar/jarjar-src-1.4.zip
 Source1:        jarjar.pom
 Source2:        jarjar-util.pom
 Patch0:         fix-maven-plugin.patch
@@ -57,6 +57,9 @@ BuildRequires:  objectweb-asm
 BuildRequires:  javapackages-local
 BuildRequires:  maven
 Requires:       objectweb-asm
+# Explicit javapackages-tools requires since jarjar script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 BuildArch:      noarch
 Source44: import.info
@@ -145,6 +148,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc COPYING
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_23jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_20jpp8
 - java update
 
