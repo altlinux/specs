@@ -4,12 +4,12 @@ BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jsonic
 Version:       1.3.0
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Simple JSON encoder/decoder for Java
 License:       ASL 2.0
 URL:           http://jsonic.sourceforge.jp/
@@ -84,6 +84,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_12jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_11jpp8
 - fc29 update
 
