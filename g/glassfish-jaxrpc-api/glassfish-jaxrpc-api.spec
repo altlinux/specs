@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-jaxrpc-api
 Version:       1.1.1
-Release:       alt1_6jpp8
+Release:       alt1_10jpp8
 Summary:       The Java API for XML-Based RPC (JAX-RPC)
 License:       CDDL or GPLv2 with exceptions
 URL:           https://metro.java.net/
@@ -16,14 +16,13 @@ URL:           https://metro.java.net/
 # tar cJf glassfish-jaxrpc-api-1.1.1.tar.xz glassfish-jaxrpc-api-1.1.1
 Source0:       %{name}-%{version}.tar.xz
 
-BuildRequires: maven-local
-BuildRequires: mvn(javax.servlet:javax.servlet-api)
-BuildRequires: mvn(net.java:jvnet-parent:pom:)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires: mvn(org.glassfish:legal)
-BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.glassfish:legal)
+BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -57,6 +56,10 @@ This package contains javadoc for %{name}.
   <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 </archive>'
 
+# Make OSGi dep on soap api optional
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions" \
+  "<Import-Package>javax.xml.soap;resolution:=optional,*</Import-Package>"
+
 %mvn_file : %{name}
 
 %build
@@ -76,6 +79,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_10jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6jpp8
 - java update
 
