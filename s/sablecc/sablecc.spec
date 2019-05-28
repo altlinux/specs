@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sablecc
 Version:        3.7
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        A parser generator written in Java
 License:        LGPLv2+
 URL:            http://sablecc.org
@@ -70,6 +70,9 @@ install -pm 0755 bin/%{name} %{buildroot}%{_bindir}/%{name}
 %doc doc/*
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt1_8jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt1_6jpp8
 - java update
 
