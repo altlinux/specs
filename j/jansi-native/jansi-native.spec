@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: rpm-build-java
@@ -12,9 +13,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jansi-native
 Version:        1.7
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
 Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-%{version}.tar.gz
@@ -43,10 +43,13 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jansi-native-jansi-native-%{version}
-%mvn_package :::linux%{bits}:
+
+%mvn_alias :jansi-linux%{bits} :jansi-linux
+%mvn_file :jansi-linux%{bits} %{name}/jansi-linux%{bits} %{name}/jansi-linux
 
 %build
 %mvn_build
+%mvn_build -- -Dplatform=linux%{bits}
 
 %install
 %mvn_install
@@ -59,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_8jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_5jpp8
 - regenerated to fix __isa_bits definition
 
