@@ -5,10 +5,11 @@
 # TODO: build and run tests
 
 %define oname openimageio
+%define soname 2.0
 
 Name:           lib%oname
-Version:        1.8.15
-Release:        alt2
+Version:        2.0.8
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -21,17 +22,15 @@ Source0:        %name-%version.tar
 # Images for test suite
 #Source1:        oiio-images.tar.gz
 
-Patch0:         OpenImageIO-man.patch
-
 Patch10: %oname-alt-link.patch
 
 BuildRequires:  cmake gcc-c++
 BuildRequires:  txt2man
 BuildRequires:  qt5-base-devel
-BuildRequires:  boost-devel boost-python-devel boost-filesystem-devel boost-asio-devel
+BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel ilmbase-devel
-BuildRequires:  python-devel
+BuildRequires:  python3-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libopenjpeg2.0-devel
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel
@@ -43,6 +42,8 @@ BuildRequires:  libpugixml-devel
 BuildRequires:  libopencv-devel
 BuildRequires:  libraw-devel
 BuildRequires:  libssl-devel
+BuildRequires:  librobin-map-devel
+BuildRequires:  pybind11-devel
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -61,19 +62,33 @@ classes, utilities, and applications. Main features include:
 - An ImageCache class that transparently manages a cache so that it can access
   truly vast amounts of image data.
 
+%package -n lib%oname%soname
+Summary:        Library for reading and writing images
+Group:          System/Libraries
 
-%package -n python-module-%oname
-Summary:        Python bindings for %oname
-Group:          Development/Python
-Requires:       %name = %EVR
+%description -n lib%oname%soname
+OpenImageIO is a library for reading and writing images, and a bunch of related
+classes, utilities, and applications. Main features include:
+- Extremely simple but powerful ImageInput and ImageOutput APIs for reading and
+  writing 2D images that is format agnostic.
+- Format plugins for TIFF, JPEG/JFIF, OpenEXR, PNG, HDR/RGBE, Targa, JPEG-2000,
+  DPX, Cineon, FITS, BMP, ICO, RMan Zfile, Softimage PIC, DDS, SGI,
+  PNM/PPM/PGM/PBM, Field3d.
+- An ImageCache class that transparently manages a cache so that it can access
+  truly vast amounts of image data.
 
-%description -n python-module-%oname
+%package -n python3-module-%oname
+Summary:        Python-3 bindings for %oname
+Group:          Development/Python3
+Requires:       lib%oname%soname = %EVR
+
+%description -n python3-module-%oname
 Python bindings for %oname.
 
 %package -n %oname-utils
 Summary:        Command line utilities for %oname
 Group:          Other
-Requires:       %name = %EVR
+Requires:       lib%oname%soname = %EVR
 
 %description -n %oname-utils
 Command-line tools to manipulate and get information on images using the
@@ -83,7 +98,7 @@ Command-line tools to manipulate and get information on images using the
 %package -n %oname-iv
 Summary:        %oname based image viewer
 Group:          Other
-Requires:       %name = %EVR
+Requires:       lib%oname%soname = %EVR
 
 %description -n %oname-iv
 A really nice image viewer, iv, based on %oname classes (and so will work
@@ -93,7 +108,7 @@ with any formats for which plugins are available).
 %package devel
 Summary:        Documentation for %oname
 Group:          Development/Other
-Requires:       %name = %EVR
+Requires:       lib%oname%soname = %EVR
 
 %description devel
 Development files for package %name
@@ -101,7 +116,6 @@ Development files for package %name
 
 %prep
 %setup
-%patch0 -p1
 %patch10 -p1
 
 # Remove bundled pugixml
@@ -122,8 +136,8 @@ sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
 %build
 %cmake \
        -DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
-       -DPYTHON_VERSION=%_python_version \
-       -DPYLIB_INSTALL_DIR:PATH=%python_sitelibdir \
+       -DPYTHON_VERSION=%_python3_version \
+       -DPYLIB_INSTALL_DIR:PATH=%python3_sitelibdir \
        -DBUILD_DOCS:BOOL=TRUE \
        -DINSTALL_DOCS:BOOL=FALSE \
        -DINSTALL_FONTS:BOOL=FALSE \
@@ -149,14 +163,14 @@ mkdir -p %buildroot%_man1dir
 cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 
 
-%files
+%files -n lib%oname%soname
 %doc CHANGES.md README.md
-%doc LICENSE
+%doc LICENSE.md LICENSE-THIRD-PARTY.md
 %_libdir/libOpenImageIO.so.*
 %_libdir/libOpenImageIO_Util.so.*
 
-%files -n python-module-%oname
-%python_sitelibdir/OpenImageIO.so
+%files -n python3-module-%oname
+%python3_sitelibdir/OpenImageIO.so
 
 %files -n %oname-utils
 %exclude %_bindir/iv
@@ -173,8 +187,13 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_libdir/libOpenImageIO.so
 %_libdir/libOpenImageIO_Util.so
 %_includedir/*
+%_libdir/pkgconfig/OpenImageIO.pc
+%_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon May 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.8-alt1
+- Updated to upstream version 2.0.8.
+
 * Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.8.15-alt2
 - rebuilt for libdcmtk14
 
