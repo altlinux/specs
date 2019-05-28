@@ -8,13 +8,16 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           guava20
 Version:        20.0
-Release:        alt1_5jpp8
+Release:        alt1_9jpp8
 Summary:        Google Core Libraries for Java
-License:        ASL 2.0
+# Most of the code is under ASL 2.0
+# Few classes are under CC0, grep for creativecommons
+License:        ASL 2.0 and CC0
 URL:            https://github.com/google/guava
 BuildArch:      noarch
 
 Source0:        https://github.com/google/guava/archive/v%{version}.tar.gz
+Patch0:         0001-Avoid-presizing-arrays.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
@@ -49,6 +52,8 @@ guava-testlib provides additional functionality for conveninent unit testing
 
 %prep
 %setup -q -n guava-%{version}
+
+%patch0 -p1
 
 find . -name '*.jar' -delete
 
@@ -101,6 +106,9 @@ find -name '*.java' | xargs sed -ri \
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 20.0-alt1_9jpp8
+- new version
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 20.0-alt1_5jpp8
 - new version
 
