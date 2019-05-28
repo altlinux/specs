@@ -53,7 +53,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt2_16jpp8
+Release:        alt2_18jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -223,6 +223,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_18jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_16jpp8
 - java update
 
