@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -10,9 +11,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.54
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Pure Java implementation of SSH2
-Group:          Development/Other
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
 BuildArch:      noarch
@@ -62,6 +62,9 @@ BuildArch: noarch
 %pom_xpath_remove pom:project/pom:build/pom:extensions
 %pom_xpath_set pom:project/pom:version %{version}
 
+# Java 5 is too old
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]//pom:target'
+
 %build
 %mvn_build
 
@@ -84,6 +87,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_6jpp8
 - java update
 
