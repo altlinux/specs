@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -13,10 +14,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        Java-based codings helper classes for Joni and JRuby
 
-Group:          Development/Other
 License:        MIT
 URL:            http://github.com/jruby/%{name}
 Source0:        https://github.com/jruby/jcodings/tarball/%{version}/jruby-%{name}-%{version}-0-g%{commit_hash}.tar.gz
@@ -52,6 +52,9 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 %doc README.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_15jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_14jpp8
 - fc29 update
 
