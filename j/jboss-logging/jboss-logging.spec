@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logging
 Version:          3.3.0
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          The JBoss Logging Framework
 License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logging
@@ -75,6 +75,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_5jpp8
 - fc29 update
 
