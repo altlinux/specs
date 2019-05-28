@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          simple
 Version:       6.0.1
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       Asynchronous HTTP server for Java
 License:       ASL 2.0 and LGPLv2+
 URL:           http://www.simpleframework.org/
@@ -91,6 +91,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_7jpp8
 - java update
 
