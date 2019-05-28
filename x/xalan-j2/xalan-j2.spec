@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -43,18 +43,22 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt4_34jpp8
+Release:        alt4_39jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        ASL 2.0 and W3C
 URL:            http://xalan.apache.org/
-Source0:        http://archive.apache.org/dist/xml/xalan-j/xalan-j_2_7_1-src.tar.gz
+
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-serializer-MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom
 Source3:        http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom
 Source4:        xsltc-%{version}.pom
 Source5:        %{name}-MANIFEST.MF
+# Remove bundled binaries which cannot be easily verified for licensing
+Source6:        generate-tarball.sh
 
 Patch0:         %{name}-noxsltcdeps.patch
 # Fix CVE-2014-0107: insufficient constraints in secure processing
@@ -74,7 +78,6 @@ BuildRequires:  sed
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
-BuildRequires:  xml-stylebook
 
 Requires:       xerces-j2
 
@@ -94,6 +97,7 @@ in other program.
 %package        xsltc
 Group: Development/Java
 Summary:        XSLT compiler
+License:        ASL 2.0
 Requires:       java_cup
 Requires:       bcel
 Requires:       regexp
@@ -106,6 +110,7 @@ lightweight and portable Java byte codes called translets.
 %package        manual
 Group: Development/Java
 Summary:        Manual for %{name}
+License:        ASL 2.0
 BuildArch: noarch
 
 %description    manual
@@ -114,6 +119,7 @@ Documentation for %{name}.
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
+License:        ASL 2.0
 BuildArch: noarch
 
 %description    javadoc
@@ -122,6 +128,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Development/Java
 Summary:        Demo for %{name}
+License:        ASL 2.0
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       glassfish-servlet-api
 
@@ -136,11 +143,6 @@ Demonstrations and samples for %{name}.
 find . -name '*.jar' -delete
 find . -name '*.class' -delete
 
-# this tar.gz contains bundled software, some of which has unclear
-# licensing terms (W3C Software/Document license) . We could probably
-# replicate this with our jars but it's too much work so just generate
-# non-interlinked documentation
-rm src/*tar.gz
 sed -i '/<!-- Expand jaxp sources/,/<delete file="${xml-commons-srcs.tar}"/{d}' build.xml
 
 # Remove classpaths from manifests
@@ -166,7 +168,6 @@ popd
 pushd tools
 ln -sf $(build-classpath java_cup) java_cup.jar
 ln -sf $(build-classpath ant) ant.jar
-ln -sf $(build-classpath xml-stylebook) stylebook-1.0-b3_xalan-2.jar
 popd
 export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
@@ -232,6 +233,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_39jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_34jpp8
 - java update
 
