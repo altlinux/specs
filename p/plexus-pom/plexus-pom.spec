@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -7,9 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          plexus-pom
 Version:       5.0
-Release:       alt1_2jpp8
+Release:       alt1_5jpp8
 Summary:       Root Plexus Projects POM
-Group:         Development/Other
 License:       ASL 2.0
 URL:           https://github.com/codehaus-plexus/plexus-pom
 Source0:       https://github.com/codehaus-plexus/plexus-pom/archive/plexus-%{version}.tar.gz
@@ -45,6 +45,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_5jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_2jpp8
 - java update
 
