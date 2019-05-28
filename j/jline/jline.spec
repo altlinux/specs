@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             jline
 Version:          2.14.6
-Release:          alt1_1jpp8
+Release:          alt1_4jpp8
 Summary:          JLine is a Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline2
@@ -61,6 +61,7 @@ This package contains the API documentation for %{name}.
 %pom_xpath_remove "pom:build/pom:extensions"
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 # Makes the build fail on deprecation warnings from jansi
 %pom_xpath_remove 'pom:arg[text()="-Werror"]'
@@ -91,6 +92,9 @@ find -name TerminalFactoryTest.java -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.14.6-alt1_4jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.14.6-alt1_1jpp8
 - new version
 
