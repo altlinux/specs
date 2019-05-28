@@ -9,15 +9,15 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven2
 Version:        2.2.1
-Release:        alt6_56jpp8
+Release:        alt6_61jpp8
 Summary:        Java project management and project comprehension tool
-License:        ASL 2.0 and MIT and BSD
+License:        ASL 2.0
 URL:            http://maven.apache.org
 BuildArch:      noarch
 
-# export https://svn.apache.org/repos/asf/maven/maven-2/tags/maven-%{version}/ apache-maven-%{version}
-# tar czvf %{name}-%{version}.tar.gz apache-maven-%{version}
+# ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
+Source1:        generate-tarball.sh
 
 Patch2:         %{name}-%{version}-update-tests.patch
 Patch4:         %{name}-%{version}-unshade.patch
@@ -34,6 +34,8 @@ BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+
+Provides:       deprecated()
 Source44: import.info
 
 %description
@@ -45,6 +47,7 @@ information.
 %package -n maven-artifact
 Group: Development/Java
 Summary:        Compatibility Maven artifact artifact
+Provides:       deprecated()
 
 %description -n maven-artifact
 Maven artifact manager artifact
@@ -52,6 +55,7 @@ Maven artifact manager artifact
 %package -n maven-artifact-manager
 Group: Development/Java
 Summary:        Compatibility Maven artifact manager artifact
+Provides:       deprecated()
 
 %description -n maven-artifact-manager
 Maven artifact manager artifact
@@ -59,6 +63,7 @@ Maven artifact manager artifact
 %package -n maven-model
 Group: Development/Java
 Summary:        Compatibility Maven model artifact
+Provides:       deprecated()
 
 %description -n maven-model
 Maven model artifact
@@ -66,6 +71,7 @@ Maven model artifact
 %package -n maven-monitor
 Group: Development/Java
 Summary:        Compatibility Maven monitor artifact
+Provides:       deprecated()
 
 %description -n maven-monitor
 Maven monitor artifact
@@ -73,6 +79,7 @@ Maven monitor artifact
 %package -n maven-plugin-registry
 Group: Development/Java
 Summary:        Compatibility Maven plugin registry artifact
+Provides:       deprecated()
 
 %description -n maven-plugin-registry
 Maven plugin registry artifact
@@ -80,6 +87,7 @@ Maven plugin registry artifact
 %package -n maven-profile
 Group: Development/Java
 Summary:        Compatibility Maven profile artifact
+Provides:       deprecated()
 
 %description -n maven-profile
 Maven profile artifact
@@ -87,6 +95,7 @@ Maven profile artifact
 %package -n maven-project
 Group: Development/Java
 Summary:        Compatibility Maven project artifact
+Provides:       deprecated()
 
 %description -n maven-project
 Maven project artifact
@@ -94,6 +103,7 @@ Maven project artifact
 %package -n maven-settings
 Group: Development/Java
 Summary:        Compatibility Maven settings artifact
+Provides:       deprecated()
 
 %description -n maven-settings
 Maven settings artifact
@@ -101,6 +111,7 @@ Maven settings artifact
 %package -n maven-toolchain
 Group: Development/Java
 Summary:        Compatibility Maven toolchain artifact
+Provides:       deprecated()
 
 %description -n maven-toolchain
 Maven toolchain artifact
@@ -108,6 +119,7 @@ Maven toolchain artifact
 %package -n maven-plugin-descriptor
 Group: Development/Java
 Summary:        Maven Plugin Description Model
+Provides:       deprecated()
 
 %description -n maven-plugin-descriptor
 Maven plugin descriptor artifact
@@ -115,6 +127,7 @@ Maven plugin descriptor artifact
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
+Provides:       deprecated()
 BuildArch: noarch
 
 %description javadoc
@@ -122,7 +135,7 @@ Javadoc for %{name}.
 
 
 %prep
-%setup -q -n apache-maven-2.2.1
+%setup -q
 
 %patch2 -b .update-tests
 
@@ -173,40 +186,43 @@ done
 %mvn_install
 
 %files -n maven-artifact -f .mfiles-maven-artifact
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-artifact-manager -f .mfiles-maven-artifact-manager
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-model -f .mfiles-maven-model
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-monitor -f .mfiles-maven-monitor
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-plugin-registry -f .mfiles-maven-plugin-registry
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-profile -f .mfiles-maven-profile
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-project -f .mfiles-maven-project
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-settings -f .mfiles-maven-settings
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-toolchain -f .mfiles-maven-toolchain
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files -n maven-plugin-descriptor -f .mfiles-maven-plugin-descriptor
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference apache-maven/LICENSE.txt apache-maven/NOTICE.txt
 
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_61jpp8
+- new version
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_56jpp8
 - fc27 update
 
