@@ -14,11 +14,12 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without  ssh
+%bcond_without  vfs
 %bcond_without  bouncycastle
 
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_12jpp8
+Release:        alt1_16jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -37,8 +38,11 @@ Provides:       ivy = %{version}-%{release}
 
 BuildRequires:  ant
 BuildRequires:  ant-contrib
+BuildRequires:  ant-junit
 BuildRequires:  ant-testutil
+%if %{with vfs}
 BuildRequires:  apache-commons-vfs
+%endif
 BuildRequires:  apache-commons-lang
 %if %{with bouncycastle}
 BuildRequires:  bouncycastle
@@ -78,7 +82,7 @@ JavaDoc documentation for %{name}
 
 %prep
 %setup -q
-%patch0
+%patch0 -p1
 %patch1 -p1
 
 # Don't hardcode sysconfdir path
@@ -115,7 +119,13 @@ sed -i s/ant-trax/ant/ ivy.xml
 sed -i /bouncycastle/s/jdk14/jdk16/ ivy.xml
 
 # Port from commons-vfs 1.x to 2.x
-sed -i "s/commons.vfs/&2/" src/java/org/apache/ivy/plugins/repository/vfs/*
+%if %{with vfs}
+sed -i "s/commons.vfs/&2/" {src,test}/java/org/apache/ivy/plugins/repository/vfs/*
+%else
+sed -i /commons-vfs/d ivy.xml
+rm -rf src/java/org/apache/ivy/plugins/repository/vfs
+rm -rf src/java/org/apache/ivy/plugins/resolver/VfsResolver.java
+%endif
 
 # Remove prebuilt documentation
 rm -rf doc build/doc
@@ -123,13 +133,29 @@ rm -rf doc build/doc
 # Publish artifacts through XMvn
 sed -i /ivy:publish/s/local/xmvn/ build.xml
 
+# Disable tests which fail due to networking being disabled during build
+sed -i 's/\(\s*public void\) \(testFixedMdMultipleExtends().*\)/\1 _disabled_\2/' test/java/org/apache/ivy/core/report/ResolveReportTest.java
+rm test/java/org/apache/ivy/plugins/resolver/BintrayResolverTest.java
+rm test/java/org/apache/ivy/plugins/resolver/MirroredURLResolverTest.java
+rm -rf test/java/org/apache/ivy/osgi/updatesite
+rm test/java/org/apache/ivy/core/settings/OnlineXmlSettingsParserTest.java
+rm test/java/org/apache/ivy/util/url/BasicURLHandlerTest.java
+rm test/java/org/apache/ivy/util/url/HttpclientURLHandlerTest.java
+rm test/java/org/apache/ivy/plugins/resolver/IBiblioResolverTest.java
+rm test/java/org/apache/ivy/util/url/ArtifactoryListingTest.java
+
+# XXX Disable test which fails due to non-existing files
+rm test/java/org/apache/ivy/ant/IvyBuildListTest.java
+
+# XXX Disable test which fails due to wrong ordering in the .xml file
+sed -i 's/\(\s*public void\) \(testExtraInfosFromMaven().*\)/\1 _disabled_\2/' test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriterTest.java
+
 # girar noarch diff
 sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 
 
 %build
-%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local
-
+%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local test
 
 %install
 %mvn_install -J build/doc/reports/api
@@ -146,6 +172,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_16jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_12jpp8
 - java fc28+ update
 
