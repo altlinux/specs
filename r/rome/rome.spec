@@ -6,11 +6,19 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with     jp_minimal
+
 Name:          rome
 Version:       1.7.0
-Release:       alt1_4jpp8
+Release:       alt1_7jpp8
 Summary:       RSS and Atom Utilities
 License:       ASL 2.0
 URL:           http://rometools.github.io/rome/
@@ -21,13 +29,14 @@ Source0:       %{name}-%{version}.tar.xz
 Source1:       %{name}-create-tarball.sh
 
 BuildRequires: maven-local
-BuildRequires: mvn(ch.qos.logback:logback-classic)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-httpclient:commons-httpclient)
 BuildRequires: mvn(javax.persistence:persistence-api)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(junit:junit)
+%if %{without jp_minimal}
 BuildRequires: mvn(net.oauth.core:oauth)
+%endif
 BuildRequires: mvn(org.apache.commons:commons-lang3)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.xmlrpc:xmlrpc-client)
@@ -85,12 +94,6 @@ Summary:       Support for OPML 1 and OPML 2 in ROME
 %description opml
 This module contains Outline Processor Markup Language parser and tools.
 
-#%%package parent
-#Summary:       Parent for all ROME projects
-
-#%%description parent
-#Parent POM for all ROME projects.
-
 %package propono
 Group: Development/Java
 Summary:       ROME Propono
@@ -143,7 +146,11 @@ sed -i "s|String, Object|String, String[]|" \
 # org.ops4j.pax.url:pax-url-wrap:2.4.5
 %pom_disable_module rome-osgi-test
 
-# No test dep
+# Unecessary test dep
+# ch.qos.logback:logback-classic
+%pom_remove_dep -r ch.qos.logback:
+
+# Unavailable test dep
 # jetty:jetty:4.2.12
 %pom_remove_dep -r jetty:jetty
 rm %{name}-fetcher/src/test/java/com/rometools/fetcher/AbstractJettyTest.java \
@@ -152,6 +159,12 @@ rm %{name}-fetcher/src/test/java/com/rometools/fetcher/AbstractJettyTest.java \
  %{name}-propono/src/test/java/com/rometools/propono/atom/server/AtomClientServerTest.java \
  %{name}-propono/src/test/java/com/rometools/propono/atom/server/TestAtomHandlerImpl.java \
  %{name}-propono/src/test/java/com/rometools/propono/atom/server/TestAtomHandlerFactory.java
+
+# Conditionally build oauth support
+%if %{with jp_minimal}
+%pom_remove_dep net.oauth.core: rome-propono
+rm rome-propono/src/main/java/com/rometools/propono/atom/client/OAuthStrategy.java
+%endif
 
 # Convert from dos to unix line ending
 sed -i.orig 's|\r||g' README.md
@@ -178,9 +191,6 @@ rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
 %files modules -f .mfiles-%{name}-modules
 %files opml -f .mfiles-%{name}-opml
 
-#%%files parent -f .mfiles-%%{name}-parent
-#%%license LICENSE
-
 %files propono -f .mfiles-%{name}-propono
 %doc --no-dereference %{name}-propono/NOTICE
 
@@ -192,6 +202,9 @@ rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_4jpp8
 - java update
 
