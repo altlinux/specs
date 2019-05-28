@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jsp-2.3-api
 Version:          1.0.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          JavaServer Pages 2.3 API (JSP)
 License:          (CDDL or GPLv2 with exceptions) or ASL 2.0
 URL:              https://github.com/jboss/jboss-jsp-api_spec
@@ -59,6 +59,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE LICENSE-2.0.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp8
 - fc29 update
 
