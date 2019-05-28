@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -12,9 +13,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javassist
 Version:        3.18.1
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
-Group:          Development/Other
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
 URL:            http://www.csg.is.titech.ac.jp/~chiba/%{name}/
 BuildArch:      noarch
@@ -42,8 +42,8 @@ bytecode-level API allows the users to directly edit a class file as
 other editors.
 
 %package javadoc
+Group: Development/Java
 Summary:           Javadocs for javassist
-Group:             Development/Java
 Requires:          jpackage-utils
 BuildArch: noarch
 
@@ -75,6 +75,9 @@ mkdir runtest
 %doc License.html
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_10jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_9jpp8
 - fc29 update
 
