@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global oname threeten
 Name:          time-api
 Version:       0.6.4
-Release:       alt2_11jpp8
+Release:       alt2_13jpp8
 Summary:       JSR-310 - Date and Time API
 # GPLv2: src-openjdk/main/java/java/util/GregorianCalendar.java
 #        src-openjdk/main/java/java/util/Calendar.java
@@ -84,6 +84,9 @@ ln -sf %{_javadir}/%{name}/%{name}.jar %{buildroot}%{_javadir}/javax.time/
 %doc COPYRIGHT-ASSIGN.txt LICENSE.txt LICENSE_OpenJDK.txt LICENSE_Oracle.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt2_13jpp8
+- new version
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt2_11jpp8
 - new version
 
