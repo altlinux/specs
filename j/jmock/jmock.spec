@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jmock
 Version:       2.8.2
-Release:       alt2_6jpp8
+Release:       alt2_7jpp8
 Summary:       Java library for testing code with mock objects
 License:       BSD
 Url:           http://www.jmock.org/
@@ -151,6 +151,9 @@ rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAccep
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt2_7jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt2_6jpp8
 - fc29 update
 
