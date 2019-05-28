@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mvel
 Version:       2.2.8
-Release:       alt1_4jpp8
+Release:       alt1_7jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
 Url:           https://github.com/mvel
@@ -32,6 +32,9 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-report-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.ow2.asm:asm-util)
+# Explicit requires for javapackages-tools since mvel script
+# uses /usr/share/java-utils/java-functions
+Requires:      javapackages-tools
 
 BuildArch:     noarch
 Source44: import.info
@@ -98,6 +101,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_7jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_4jpp8
 - java update
 
