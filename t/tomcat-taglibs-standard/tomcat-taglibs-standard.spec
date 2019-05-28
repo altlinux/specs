@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           tomcat-taglibs-standard
 Version:        1.2.5
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Epoch:          0
 Summary:        Apache Standard Taglib
 License:        ASL 2.0
@@ -68,6 +68,9 @@ Javadoc for %{name}.
 %doc NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_7jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_5jpp8
 - java update
 
