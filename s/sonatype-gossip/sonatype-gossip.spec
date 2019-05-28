@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_18jpp8
+Release:          alt1_20jpp8
 Summary:          SLF4j Gossip Provider
 License:          ASL 2.0
 URL:              http://github.com/jdillon/gossip
@@ -121,6 +121,9 @@ Gossip Support, helper and utilities.
 %files support -f .mfiles-gossip-support
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_20jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_18jpp8
 - java update
 
