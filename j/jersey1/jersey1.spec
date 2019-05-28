@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jersey1
 Version:       1.19
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 # License file with incorrect fsf address https://java.net/jira/browse/JERSEY-2870
@@ -359,6 +359,9 @@ install -p -m 644 ant-wadl-task %{buildroot}%{_sysconfdir}/ant.d/ant-wadl-task
 %doc --no-dereference license.html legal/LICENSE.txt legal/maintenance/copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_13jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_12jpp8
 - fc29 update
 
