@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mchange-commons
 Version:       0.2.11
-Release:       alt2_5jpp8
+Release:       alt2_8jpp8
 Summary:       A collection of general purpose utilities for c3p0
 License:       LGPLv2 or EPL
 URL:           https://github.com/swaldman/mchange-commons-java
@@ -29,6 +29,7 @@ BuildRequires: log4j12
 BuildRequires: slf4j
 BuildRequires: typesafe-config
 BuildRequires: python
+BuildRequires: python-base
 
 BuildArch:     noarch
 Source44: import.info
@@ -82,6 +83,9 @@ sbt package make-pom doc
 %doc --no-dereference LICENSE*
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2_8jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2_5jpp8
 - java fc28+ update
 
