@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           stream-lib
 Version:        %{streamlib_version}
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Stream summarizer and cardinality estimator
 License:        ASL 2.0
 URL:            https://github.com/addthis/stream-lib/
@@ -68,6 +68,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_11jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_9jpp8
 - java update
 
