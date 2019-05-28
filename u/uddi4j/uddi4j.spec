@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_17jpp8
+Release:	alt2_19jpp8
 Summary:	Universal Description, Discovery and Integration registry API for Java
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
@@ -70,6 +70,9 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_19jpp8
+- new version
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_17jpp8
 - java update
 
