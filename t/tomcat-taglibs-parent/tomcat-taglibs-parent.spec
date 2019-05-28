@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -8,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           tomcat-taglibs-parent
 Version:        3
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Apache Taglibs Parent
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://tomcat.apache.org/taglibs/
 Source0:        http://svn.apache.org/repos/asf/tomcat/taglibs/taglibs-parent/tags/taglibs-parent-3/pom.xml
@@ -39,6 +39,9 @@ cp -p %{SOURCE0} .
 %dir %{_mavenpomdir}/%{name}
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3-alt1_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3-alt1_7jpp8
 - java update
 
