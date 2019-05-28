@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen java-devel-default rpm-build-java
+BuildRequires: /usr/bin/doxygen /usr/bin/epydoc /usr/bin/gem /usr/bin/go /usr/bin/mvn /usr/bin/php /usr/bin/php-config /usr/bin/rspec /usr/bin/ruby /usr/bin/sphinx-build /usr/bin/swig /usr/bin/tox /usr/bin/valgrind /usr/sbin/saslpasswd2 gcc-c++ java-devel-default libruby-devel libsasl2-devel perl(ExtUtils/MakeMaker.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Switch.pm) perl(overload.pm) perl-devel python-devel rpm-build-java rpm-build-python rpm-build-ruby swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          qpid-proton-java
 Version:       0.12.2
-Release:       alt2_4jpp8
+Release:       alt2_5jpp8
 Summary:       Java libraries for Qpid Proton
 License:       ASL 2.0
 URL:           http://qpid.apache.org/proton/
@@ -72,6 +72,9 @@ rm contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch
 %doc --no-dereference proton-j/LICENSE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt2_5jpp8
+- new version
+
 * Mon Jun 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt2_4jpp8
 - fixed build with new maven
 
