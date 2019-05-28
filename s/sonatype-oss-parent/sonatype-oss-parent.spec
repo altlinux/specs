@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_14jpp8
+Release:        alt1_17jpp8
 Summary:        Sonatype OSS Parent
 
 License:        ASL 2.0
@@ -21,8 +21,9 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch: noarch
 
 BuildRequires:  maven-local
-Source44: import.info
 
+Provides:       deprecated()
+Source44: import.info
 
 %description
 Sonatype OSS parent pom used by other sonatype packages.
@@ -42,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 7-alt1_17jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 7-alt1_14jpp8
 - java update
 
