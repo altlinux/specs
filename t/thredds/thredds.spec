@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          thredds
 Version:       4.6.2
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       Thematic Realtime Environmental Distributed Data Services (TDS)
 # GPLv3: opendap/src/main/java/opendap/dap/parsers/DapParser.java
 # LGPLv3: opendap/src/main/java/opendap/servlet/AsciiWriter.java
@@ -275,6 +275,9 @@ sed -i '/org.apache.http.annotation/d' \
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_9jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_7jpp8
 - java update
 
