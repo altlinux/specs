@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           woden
 Version:        1.0
-Release:        alt2_0.17.M10jpp8
+Release:        alt2_0.20.M10jpp8
 Summary:        Web Service Description Language (WSDL) validating parser
 License:        ASL 2.0
 URL:            http://ws.apache.org/woden/
@@ -57,6 +57,9 @@ Parent pom of %{name} project.
 %package tool
 Group: Development/Java
 Summary: Command line tool for converting WSDL documents
+# Explicit requires for javapackages-tools since woden-tool script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 %description tool
 Command line tool for converting WSDL documents.
@@ -154,6 +157,9 @@ mv LICENSE.utf8 LICENSE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.20.M10jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.17.M10jpp8
 - java fc28+ update
 
