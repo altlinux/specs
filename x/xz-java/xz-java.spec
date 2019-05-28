@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xz-java
 Version:        1.8
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -61,6 +61,9 @@ ant maven
 %doc --no-dereference COPYING
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_4jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2jpp8
 - java update
 
