@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jgroups
 Version:       3.6.10
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Toolkit for reliable multicast communication
 License:       ASL 2.0 and LGPLv2+
 URL:           http://www.jgroups.org
@@ -92,6 +92,9 @@ chmod 644 README
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_6jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_5jpp8
 - fc29 update
 
