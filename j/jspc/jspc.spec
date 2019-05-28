@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -14,9 +15,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jspc
 Version:       2.0
-Release:       alt1_0.22.alpha.3jpp8
+Release:       alt1_0.24.alpha.3jpp8
 Summary:       Compile JSPs under Maven
-Group:         Development/Other
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/jspc/
 # svn export https://svn.codehaus.org/mojo/tags/jspc-2.0-alpha-3 jspc
@@ -64,7 +64,7 @@ pluggable JSP compiler implementation, which currently allows different
 versions of the Tomcat Jasper compiler to be used as needed.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
 
@@ -180,6 +180,9 @@ jar uf  %{name}-maven-plugin/target/%{name}-maven-plugin-2.0-alpha-3.jar META-IN
 %doc LICENSE.txt
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.24.alpha.3jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.22.alpha.3jpp8
 - java update
 
