@@ -1,17 +1,17 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_15jpp8
+Release:	alt1_16jpp8
 Summary:	Multi-paradigm scripting language for Java
 
-Group:		Development/Other
 License:	LGPLv2+ and BSD
 URL:		http://sleep.dashnine.org/
 Source0:	http://sleep.dashnine.org/download/sleep21-lgpl.tgz
@@ -41,8 +41,8 @@ Sleep ...
 
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
 Requires:	jpackage-utils
 BuildArch: noarch
 
@@ -99,6 +99,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_16jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_15jpp8
 - fc29 update
 
