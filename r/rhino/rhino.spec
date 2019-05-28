@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           rhino
 Version:        1.7.7.1
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
@@ -64,6 +64,9 @@ BuildRequires:  java-devel >= 1.6.0.0
 BuildRequires:  sonatype-oss-parent
 BuildRequires:  javapackages-local
 Requires:       jline
+# Explicit javapackages-tools requires since rhino script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Obsoletes:      %{name}-javadoc < %{version}-%{release}
 Obsoletes:      %{name}-manual < %{version}-%{release}
 
@@ -140,6 +143,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_7jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_4jpp8
 - java update
 
