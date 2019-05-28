@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          truezip
 Version:       7.7.9
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java based VFS for treating archive files as virtual directories
 
 License:       EPL
@@ -285,6 +285,9 @@ cp -p %{SOURCE1} .
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_7jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_6jpp8
 - java update
 
