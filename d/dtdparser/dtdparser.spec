@@ -1,8 +1,7 @@
-BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -40,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dtdparser
 Version:        1.21
-Release:        alt3_18jpp8
+Release:        alt3_23jpp8
 Summary:        A Java DTD Parser
 
 # The code has no license attribution.
@@ -56,11 +55,8 @@ Source1:        http://repo1.maven.org/maven2/com/wutka/%{name}/%{version}/%{nam
 # Without removing these comments, build fails
 Patch0:         %{name}-unmappable-chars-in-comments.patch
 
-BuildRequires:  ant
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
-
-Requires:       jpackage-utils
+BuildRequires: ant
+BuildRequires: javapackages-local
 Source44: import.info
 
 %description
@@ -71,11 +67,11 @@ use this library to parse a DTD.
 
 %package javadoc
 Group: Development/Documentation
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q
@@ -91,29 +87,20 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 ant build createdoc
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}120.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_artifact %{SOURCE1} dist/%{name}120.jar
+%mvn_install -J doc
 
 %files -f .mfiles
-%doc CHANGES LICENSE README ASL_LICENSE
+%doc CHANGES README
+%doc --no-dereference LICENSE ASL_LICENSE
 
-
-%files javadoc
-%doc %{_javadocdir}/*
-%doc LICENSE ASL_LICENSE
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE ASL_LICENSE
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt3_23jpp8
+- new version
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt3_18jpp8
 - added BR: javapackages-local for javapackages 5
 
