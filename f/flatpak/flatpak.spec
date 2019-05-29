@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.2.4
+Version: 1.4.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -26,7 +26,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
-%define ostree_ver 2018.7
+%define ostree_ver 2018.9
 %define bwrap_ver 0.2.1
 %define libarchive_ver 2.8.0
 
@@ -36,6 +36,7 @@ Requires: %_bindir/bwrap
 Requires: bubblewrap >= %bwrap_ver
 Requires: ostree
 Requires: dconf
+Requires: fuse
 
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -54,6 +55,7 @@ BuildRequires: pkgconfig(dconf)
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
 BuildRequires: libgpgme-devel
+BuildRequires: libfuse-devel
 BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
 BuildRequires: bubblewrap >= %bwrap_ver
@@ -131,6 +133,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_libexecdir/%name-session-helper
 %_libexecdir/%name-system-helper
 %_libexecdir/%name-validate-icon
+%_libexecdir/revokefs-fuse
 %dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
 %_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
@@ -159,6 +162,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Wed May 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4 (fixed CVE-2019-10063)
 
