@@ -1,6 +1,6 @@
 Name: iptables
-Version: 1.4.21
-Release: alt4
+Version: 1.8.3
+Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPL-2.0-only
@@ -21,6 +21,11 @@ BuildRequires: libnfnetlink-devel
 BuildRequires: libnetfilter_conntrack-devel
 
 %def_disable static
+%def_enable nftables
+
+%if_enabled nftables
+BuildRequires: bison flex libmnl-devel libnftnl-devel
+%endif
 
 %description
 iptables is used to set up, maintain, and inspect the tables of IP
@@ -32,6 +37,14 @@ Each chain is a list of rules which can match a set of packets.
 Each rule specifies what to do with a packet that matches.  This is
 called a `target', which may be a jump to a user-defined chain in
 the same table.
+
+%package nft
+Summary: nftables compatibility for iptables, arptables and ebtables
+Group: System/Kernel and hardware
+Requires: %name
+
+%description nft
+This package provides nftables compatibility for iptables, arptables and ebtables.
 
 %package ipv6
 Summary: IPv6 support for iptables
@@ -100,6 +113,7 @@ sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
 %autoreconf
 %configure \
 	%{subst_enable static} \
+	%{subst_enable nftables} \
 	--enable-bpf-compiler \
 	--disable-libipq \
 	--sbindir=/sbin \
@@ -110,9 +124,6 @@ sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
 
 %install
 %makeinstall_std
-
-# convert an absolute symlink into relative
-ln -snf ../../sbin/xtables-multi %buildroot%_bindir/iptables-xml
 
 mkdir -p %buildroot/%_lib
 # Relocate shared libraries from %_libdir/ to /%_lib/.
@@ -166,6 +177,7 @@ sed -i s/iptables/ip6tables/g %buildroot%_sysconfdir/sysconfig/ip6tables_modules
 find %buildroot -name 'lib*.la' -delete
 
 %set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %post
 if [ $1 -eq 1 ]; then
@@ -205,6 +217,18 @@ fi
 %ifarch i586
 /usr/lib/libiptc.so
 %endif
+%if_enabled nftables
+%exclude /sbin/arptables*
+%exclude /sbin/ebtables*
+%exclude /sbin/*-nft*
+%exclude /sbin/*-monitor
+%exclude /sbin/*-translate
+%exclude %_man8dir/*-nft*.*
+%exclude %_man8dir/*-monitor.*
+%exclude %_man8dir/*-translate.*
+%exclude /%_lib/iptables/libarpt_*.so
+%exclude /%_lib/iptables/libebt_*.so
+%endif
 
 %files ipv6
 %config(noreplace) %_sysconfdir/sysconfig/ip6tables*
@@ -224,7 +248,26 @@ fi
 %_libdir/lib*.a
 %endif
 
+%if_enabled nftables
+%files nft
+/sbin/*-nft*
+/sbin/*-monitor
+/sbin/*-translate
+%_man8dir/*-nft*.*
+%_man8dir/*-monitor.*
+%_man8dir/*-translate.*
+/%_lib/iptables/libarpt_*.so
+/%_lib/iptables/libebt_*.so
+# this files belongs to ebtables
+%exclude /etc/ethertypes
+%endif
+
 %changelog
+* Mon May 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1.8.3-alt1
+- 1.4.21 -> 1.8.3 (closes: #36371).
+- Packaged -nft subpackage with nftables compatibility
+  for iptables, arptables and ebtables.
+
 * Thu Feb 14 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt4
 - Fixed License tag.
 - Rebuilt to remove automatic dependency on i586-glibc-kernheaders.
