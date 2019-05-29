@@ -2,8 +2,8 @@
 %add_findreq_skiplist %_sysconfdir/%name/restart.d/*
 
 Name: needrestart
-Version: 3.3
-Release: alt2
+Version: 3.4
+Release: alt1
 
 Summary: Restart daemons after library updates
 License: GPLv2
@@ -66,6 +66,9 @@ EOF
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 
 %changelog
+* Wed May 29 2019 Terechkov Evgenii <evg@altlinux.org> 3.4-alt1
+- 3.4-3
+
 * Tue Jul 31 2018 Terechkov Evgenii <evg@altlinux.org> 3.3-alt2
 - Make main package arch-dependent due to different Requires (iucode_tool)
 
