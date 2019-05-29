@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.7
-Release: alt2.1
+Release: alt3
 Summary: Read DBF Files with Python
 License: MIT
 Group: Development/Python
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/dbfread/
 
 # https://github.com/olemb/dbfread.git
 Source: %{oname}-%{version}.tar.gz
+Patch: dbfread-2.0.7-Fix-Pytest4.x-compatibility-errors.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel python-module-setuptools
@@ -99,6 +100,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -166,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Wed May 29 2019 Stanislav Levin <slev@altlinux.org> 2.0.7-alt3
+- Fixed Pytest4.x compatibility errors.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.7-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
