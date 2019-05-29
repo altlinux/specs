@@ -6,7 +6,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.14
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -16,9 +16,9 @@ Url: https://github.com/LinuxCNC/linuxcnc
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
+Source1: aarch64-io.h
 Patch: fix_build_with_libmodbus3.1.4.patch
 Patch1: fix-dir-path.patch
-Patch2: without-sys-io.h-for-no-x86.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libmodbus)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: libncurses-devel libreadline-devel
+BuildRequires: libtirpc-devel
 BuildRequires: kmod
 BuildRequires: man-db
 BuildRequires: python-modules-tkinter python-modules-unittest
@@ -136,7 +137,14 @@ Spanish documementation for %name
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p1
+
+sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
+sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
+%ifarch aarch64
+cp %SOURCE1 src/rtapi/io.h
+sed -i 's|<sys/io.h>|"io.h"|' src/rtapi/uspace_rtapi_app.cc \
+  src/rtapi/rtapi_io.h src/rtapi/rtapi_pci.cc src/rtapi/rtai_ulapi.c
+%endif
 
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
@@ -270,6 +278,10 @@ popd
 %endif
 
 %changelog
+* Sat May 25 2019 Anton Midyukov <antohami@altlinux.org> 2.7.14-alt2
+- Add io.h for aarch64 (dummy) instead of without-sys-io.h-for-no-x86.patch
+- Build with libtirpc
+
 * Tue Jul 03 2018 Anton Midyukov <antohami@altlinux.org> 2.7.14-alt1
 - new version 2.7.14
 
