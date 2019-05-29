@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.7.3
-Release: alt1
+Release: alt2
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: PSFLv2
 Group: Development/Python
@@ -14,6 +14,7 @@ BuildArch: noarch
 Url: https://pypi.python.org/pypi/dugong/
 
 Source: %oname-%version.tar
+Patch: dugong-3.7.3-Fix-Pytest4.x-compatibility-errors.patch
 
 %if_with python2
 BuildRequires: python-devel python-module-setuptools
@@ -51,6 +52,7 @@ servers. It is an alternative to the standard library's http.client
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 %prepare_sphinx .
 ln -s ../objects.inv rst/
@@ -108,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Wed May 29 2019 Stanislav Levin <slev@altlinux.org> 3.7.3-alt2
+- Fixed Pytest4.x compatibility errors.
+
 * Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.3-alt1
 - Updated to upstream version 3.7.3.
 
