@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.1.1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -26,22 +26,24 @@ BuildRequires: python-module-sphinx_py3doc_enhanced_theme
 %endif
 
 %if_with check
-BuildRequires: python-module-aspectlib
-BuildRequires: python-module-cpuinfo
-BuildRequires: python-module-elasticsearch
-BuildRequires: python-module-freezegun
-BuildRequires: python-module-mock
-BuildRequires: python-module-pathlib
-BuildRequires: python-module-pygal
-BuildRequires: python-module-pytest-xdist
-BuildRequires: python-module-statistics
 BuildRequires: git-core
-BuildRequires: python3-module-aspectlib
-BuildRequires: python3-module-cpuinfo
-BuildRequires: python3-module-elasticsearch
-BuildRequires: python3-module-freezegun
-BuildRequires: python3-module-pygal
-BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3(tox)
+
+BuildRequires: python2.7(aspectlib)
+BuildRequires: python2.7(cpuinfo)
+BuildRequires: python2.7(elasticsearch)
+BuildRequires: python2.7(freezegun)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pathlib)
+BuildRequires: python2.7(pygal)
+BuildRequires: python2.7(pytest-xdist)
+BuildRequires: python2.7(statistics)
+BuildRequires: python3(aspectlib)
+BuildRequires: python3(cpuinfo)
+BuildRequires: python3(elasticsearch)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(pygal)
+BuildRequires: python3(pytest-xdist)
 %endif
 
 %py_requires cpuinfo
@@ -82,6 +84,20 @@ This package contains documentation for %oname.
 %setup
 %patch -p1
 
+# unpin or remove unpackaged testing deps
+grep -qsF 'pytest-instafail' tox.ini || exit 1
+grep -qsF 'pytest-travis-fold' tox.ini || exit 1
+grep -qsF 'pygaljs' tox.ini || exit 1
+grep -qsF 'hunter' tox.ini || exit 1
+sed -i \
+-e '/pytest-instafail/d' \
+-e '/pytest-travis-fold/d' \
+-e '/pygaljs/d' \
+-e '/hunter/d' \
+-e 's/elasticsearch==.*$/elasticsearch/g' \
+-e 's/==/>=/g' \
+tox.ini
+
 rm -rf ../python3
 cp -fR . ../python3
 
@@ -121,13 +137,16 @@ cp -a docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-export PYTHONPATH="$(pwd)"/src
-PATH=$PATH:%buildroot%_bindir %_bindir/py.test -vv
-
-pushd ../python3
-export PYTHONPATH="$(pwd)"/src
-PATH=$PATH:%buildroot%_bindir %_bindir/py.test3 -vv
-popd
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python}-nocov,\
+py%{python_version_nodots python3}-nocov
+tox.py3 --sitepackages -p auto -o -rv
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -152,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Wed May 29 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt1
+- 3.1.1 -> 3.2.2.
+
 * Thu Dec 20 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt2
 - Fixed build.
 
