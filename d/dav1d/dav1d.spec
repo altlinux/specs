@@ -1,6 +1,6 @@
 Name: dav1d
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: AV1 cross-platform Decoder
 License: BSD
@@ -66,6 +66,9 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Wed May 08 2019 Michael Shigorin <mike@altlinux.org> 0.3.0-alt2
 - fixed build on e2k
 - minor spec cleanup
