@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.13
-Release: alt1.1
+Release: alt2
 Summary: Translation toolset
 License: BSD
 Group: Development/Python
@@ -47,6 +47,8 @@ xgettext command from gettext, or pybabel from Babel.
 %prep
 %setup
 %patch1 -p1
+grep -qsF '[pytest]' setup.cfg || exit 1
+sed -i 's/\[pytest\]/[tool:pytest]/g' setup.cfg
 
 %if_with python3
 cp -fR . ../python3
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 4.13-alt2
+- Fixed Pytest4.x compatibility error.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.13-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
