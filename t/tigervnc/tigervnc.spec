@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.9.0
-Release: alt2
+Release: alt3
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -18,7 +18,6 @@ Obsoletes: tightvnc
 Source0: %name-%version.tar.gz
 Source1: vncserver.init
 Source2: vncserver.service
-Source6: vncviewer.desktop
 
 Source100: xorg-server-source-1.19.3.tar.bz2
 Source101: tightpasswd.tar.gz
@@ -212,7 +211,6 @@ cat << __EOF__ > %buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
 #EndSection
 __EOF__
 
-install -D %SOURCE6 %buildroot%_desktopdir/vncviewer.desktop
 
 # Build tightvnc compatible vncpasswd
 pushd tightpasswd
@@ -254,6 +252,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Thu May 30 2019 Pavel Moseev <mars@altlinux.org> 1.9.0-alt3
+- fix tooltip translation
+
 * Tue May 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.0-alt2
 - Spec cleanup
 - Fix repocop's test 'rpm-filesystem-conflict-file'
