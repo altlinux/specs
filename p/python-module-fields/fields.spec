@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 5.0.0
-Release: alt1
+Release: alt2
 Summary: Container class boilerplate killer
 License: BSD
 Group: Development/Python
@@ -41,6 +41,9 @@ Container class boilerplate killer.
 
 %prep
 %setup
+# Pytest4.x compatibility
+grep -qsF '[pytest]' setup.cfg || exit 1
+sed -i 's/\[pytest\]/[tool:pytest]/g' setup.cfg
 
 %if_with python3
 cp -fR . ../python3
@@ -92,5 +95,8 @@ popd
 %endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 5.0.0-alt2
+- Fixed Pytest4.x compatibility error.
+
 * Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt1
 - Initial build for ALT.
