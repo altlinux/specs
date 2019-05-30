@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: xdg-desktop-portal
-Version: 1.2.0
+Version: 1.4.2
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -16,7 +16,7 @@ Source: %url/releases/download/%version/%name-%version.tar.xz
 %define geoclue_ver 2.5.2
 
 Requires: dbus
-Requires: flatpak >= 1.2.0
+Requires: flatpak >= 1.4.0
 Requires: /usr/bin/fusermount
 Requires: pipewire
 Requires: geoclue2 >= %geoclue_ver
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libpipewire-0.2)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
 
 %description
@@ -81,6 +82,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Thu May 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Tue Jan 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
