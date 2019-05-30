@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname hamcrest
 
-%def_with python3
 %def_with doc
+%def_with check
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt2.a1.git20150729.1.1.1.1
+Release: alt3.a1.git20150729
 
 Summary: Hamcrest framework for matcher objects
 License: BSD
@@ -15,25 +16,26 @@ Url: https://pypi.python.org/pypi/PyHamcrest/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/hamcrest/PyHamcrest.git
 Source: %name-%version.tar
+Patch: hamcrest-2.0.0-Silence-warnings-from-tests-due-to-use-of-old-pytest.patch
 BuildArch: noarch
 
-BuildRequires: python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+
 %if_with doc
+BuildRequires: python2.7(sphinx_rtd_theme)
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
 BuildRequires: python-module-sphinx-devel
 %endif
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-tox python3-module-unittest2
-%if_with doc
-BuildRequires: python3-module-html5lib
-%endif
-%endif
 
-%py_provides %oname
-
-# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
-BuildRequires: python2.7(sphinx_rtd_theme)
+%if_with check
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(numpy)
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python3(mock)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(tox)
+%endif
 
 %description
 PyHamcrest is a framework for writing matcher objects, allowing you to
@@ -45,7 +47,6 @@ commonly used.
 %package -n python3-module-%oname
 Summary: Hamcrest framework for matcher objects
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 PyHamcrest is a framework for writing matcher objects, allowing you to
@@ -83,10 +84,9 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %if_with doc
 %prepare_sphinx .
@@ -96,20 +96,16 @@ ln -s ../objects.inv doc/
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %if_with doc
 export PYTHONPATH=$PWD/src
@@ -120,16 +116,15 @@ rm -f *requirements.txt
 %endif
 
 %check
-python setup.py test
-export PYTHONPATH=$PWD/src
-py.test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-#export PYTHONPATH=$PWD/src
-#py.test-%_python3_version
-popd
-%endif
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -rv
 
 %files
 %doc *.txt *.rst examples
@@ -144,13 +139,15 @@ popd
 %doc doc/_build/html/*
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst examples
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 2.0.0-alt3.a1.git20150729
+- Fixed Pytest4.x compatibility errors.
+- Enabled testing for Python3 package.
+
 * Tue Apr 23 2019 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1.1.1
 - introduce doc knob (on by default)
 - minor spec cleanup
