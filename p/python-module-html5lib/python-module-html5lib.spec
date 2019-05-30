@@ -6,7 +6,7 @@
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999999
-Release: alt4.qa1
+Release: alt5
 
 Summary: Library for working with HTML5 documents
 
@@ -17,6 +17,7 @@ Url: https://github.com/html5lib/html5lib-python
 
 # Source-url: https://github.com/html5lib/html5lib-python/archive/%version.tar.gz
 Source: %module_name-%version.tar
+Patch: html5lib-0.999999999-Fix-Pytest4.x-compatibility-error.patch
 
 %{?_with_doc:BuildRequires(pre): rpm-macros-sphinx}
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
@@ -100,6 +101,7 @@ This package contains tests for html5lib.
 
 %prep
 %setup -n %module_name-%version
+%patch -p1
 rm -f html5lib/tests/conftest.py
 sed -i "s|import chardet|raise ImportError('Skipping chardet test: file is missing')|g" html5lib/tests/test_encoding.py
 
@@ -175,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 1:0.999999999-alt5
+- Fixed Pytest4.x compatibility error.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.999999999-alt4.qa1
 - NMU: applied repocop patch
 
