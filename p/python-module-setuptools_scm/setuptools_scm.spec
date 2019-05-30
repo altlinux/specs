@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname setuptools_scm
-
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 2.1.0
+Version: 3.3.3
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -16,19 +15,20 @@ Packager: Python Development Team <python at packages.altlinux.org>
 
 # https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-tests.patch
+Patch1: %oname-2.1.0-alt-tests.patch
 
-%py_provides %oname
+%py_provides setuptools-scm
 Requires: git-core mercurial
 %py_requires setuptools
 
-BuildRequires: git-core mercurial
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pytest
+
+%if_with check
+BuildRequires: git-core
+BuildRequires: mercurial
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 %endif
 
 %description
@@ -41,11 +41,10 @@ MANIFEST.in file unnecessary in many cases).
 
 It falls back to PKG-INFO/.hg_archival.txt when necessary.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: The blessed package to manage your versions by scm tags
 Group: Development/Python3
-%py3_provides %oname
+%py3_provides setuptools-scm
 Requires: git-core mercurial
 %py3_requires setuptools
 
@@ -58,72 +57,60 @@ is able to list the files belonging to that project (which makes the
 MANIFEST.in file unnecessary in many cases).
 
 It falls back to PKG-INFO/.hg_archival.txt when necessary.
-%endif
 
 %prep
 %setup
 %patch1 -p1
 
-rm -f setuptools_scm/win_py31_compat.py
+rm ./src/setuptools_scm/win_py31_compat.py
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
-python setup.py egg_info
 %python_install
 
-%if_with python3
 pushd ../python3
-python3 setup.py egg_info
 %python3_install
 popd
-%endif
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TESTS_NO_NETWORK=1
-
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-python setup.py test
-unset SETUPTOOLS_SCM_PRETEND_VERSION
-export PYTHONPATH=$PWD
-py.test -vv
-
-%if_with python3
-pushd ../python3
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-python3 setup.py test
-unset SETUPTOOLS_SCM_PRETEND_VERSION
-export PYTHONPATH=$PWD
-py.test3 -vv
-popd
-%endif
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
+export TOXENV=py%{python_version_nodots python}-test,\
+py%{python_version_nodots python3}-test
+tox.py3 --sitepackages -p auto -o -rv
 
 %files
 %doc *.rst
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 3.3.3-alt1
+- 2.1.0 -> 3.3.3.
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated to upstream version 2.1.0.
 
