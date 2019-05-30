@@ -2,7 +2,7 @@
 %define dist Text-BibTeX
 Name: perl-%dist
 Version: 0.88
-Release: alt1
+Release: alt2
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -12,6 +12,8 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/A/AM/AMBS/%{dist}-%{version}.tar.gz
 Patch0: perl-Text-BibTeX-0.61-alt-rpath.patch
 Patch1:	perl-Text-BibTeX-0.61-alt-gcc47.patch
+# pretty stupid upstream :(
+Patch2: perl-Text-BibTeX-0.88-alt-e2k.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: perl-Capture-Tiny perl-Config-AutoConf perl-ExtUtils-LibBuilder perl-Module-Build perl-Pod-Parser perl(Unicode/Normalize.pm)
@@ -25,7 +27,7 @@ dealing with BibTeX data.
 %setup -q -n %{dist}-%{version}
 %patch0 -p1 
 %patch1 -p1 
-
+%patch2 -p1 
 
 %build
 %perl_vendor_build
@@ -46,6 +48,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %exclude %_includedir/btparse.h
 
 %changelog
+* Wed May 29 2019 Michael Shigorin <mike@altlinux.org> 0.88-alt2
+- fix build on e2k with upstream-style kludge
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
 - automated CPAN update
 
