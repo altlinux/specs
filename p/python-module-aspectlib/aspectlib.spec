@@ -5,21 +5,19 @@
 
 Name: python-module-%oname
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: An aspect-oriented programming, monkey-patch and decorators library
 License: BSD
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/fields
+Url: https://pypi.org/project/aspectlib/
 
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(fields)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(fields)
 %endif
 
 %description
@@ -40,6 +38,9 @@ It includes tools for debugging and testing: simple mock/record and a complete c
 
 %prep
 %setup
+# false dependency
+grep -qsF "'fields'" setup.py || exit 1
+sed -i "/'fields'/d" setup.py
 
 %if_with python3
 cp -fR . ../python3
@@ -88,5 +89,8 @@ popd
 %endif
 
 %changelog
+* Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 1.4.2-alt2
+- Removed false dependency on `fields`.
+
 * Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt1
 - Initial build for ALT.
