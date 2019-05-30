@@ -1,5 +1,5 @@
 Name: supervisor
-Version: 3.3.4
+Version: 3.3.5
 Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
@@ -79,6 +79,9 @@ rm -f %buildroot%prefix/doc/*.txt
 %config(noreplace) %_sysconfigdir/supervisord
 
 %changelog
+* Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.3.5-alt1
+- new version 3.3.5 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 3.3.4-alt1
 - new version 3.3.4 (with rpmrb script)
 
