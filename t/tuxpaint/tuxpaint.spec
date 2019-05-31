@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.23
-Release: alt2
+Release: alt3
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -13,6 +13,7 @@ Source: %name-%version.tar.gz
 Source1: %name.desktop
 
 Patch: kdelibs4-removal.patch
+Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 
 BuildRequires: libSDL-devel >= 1.2.4 libSDL_image-devel libSDL_mixer-devel libSDL_pango-devel libSDL_ttf-devel
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
@@ -52,6 +53,9 @@ Development shared library for %name
 %prep
 %setup
 %patch -p1
+%ifarch e2k
+%patch -p2
+%endif
 
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
@@ -107,6 +111,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Fri May 31 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt3
+- Fix build on e2k (thx glebfm@).
+
 * Wed May 29 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt2
 - Build without kdelibs.
 
