@@ -8,7 +8,7 @@
 
 Name: inkscape
 Version: %major.4
-Release: alt2
+Release: alt3
 
 Summary: A Vector Drawing Application
 
@@ -44,7 +44,7 @@ BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel libpotrace-devel
 %ifnarch %e2k
 # lcc has -lomp, not -lgomp
-BuildRequires: libgomp6-devel
+BuildRequires: libgomp-devel
 %endif
 BuildRequires: perl-podlators
 Requires: icc-profiles
@@ -133,6 +133,9 @@ true
 %_man1dir/inkview*
 
 %changelog
+* Wed May 29 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.92.4-alt3
+- spec: BR: replaced libgomp6-devel -> libgomp-devel.
+
 * Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.92.4-alt2
 - E2K: disable openmp and -Werror=return-type
 - uncomment check section but disable it by default
