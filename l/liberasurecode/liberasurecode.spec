@@ -1,5 +1,5 @@
 Name: liberasurecode
-Version: 1.0.8
+Version: 1.6.0
 Release: alt1
 Summary: Erasure Code API library written in C with pluggable backends
 Group: System/Libraries
@@ -16,12 +16,13 @@ Url: https://bitbucket.org/tsg-/liberasurecode/
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
 Source: %name-%version.tar
-Patch2: liberasurecode-1.0.5-docs.patch
+Patch2: liberasurecode-1.6.0-docs.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: doxygen
+BuildRequires: zlib-devel
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -47,7 +48,7 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch2 -p1
+%patch2 -p2
 
 %build
 autoreconf -i -v
@@ -69,6 +70,9 @@ make V=1 %{?_smp_mflags}
 %_libdir/*.so
 
 %changelog
+* Fri May 31 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
+- Build new version.
+
 * Wed Sep 23 2015 Lenar Shakirov <snejok@altlinux.ru> 1.0.8-alt1
 - First build for ALT
 
