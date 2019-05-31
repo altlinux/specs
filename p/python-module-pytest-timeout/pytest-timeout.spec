@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.3
-Release: alt1
+Release: alt2
 Summary: pytest plugin which will terminate tests after a certain timeout
 License: MIT
 Group: Development/Python
@@ -13,6 +13,7 @@ Group: Development/Python
 Url: https://pypi.org/project/pytest-timeout/
 
 Source: %name-%version.tar.gz
+Patch: pytest-timeout-1.3.3-Change-tests-to-use-pytest-param.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -61,6 +62,7 @@ nevertheless, which is the most important part at this stage.
 
 %prep
 %setup
+%patch -p1
 
 rm -rf ../python3
 cp -a . ../python3
@@ -80,21 +82,15 @@ pushd ../python3
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH="$(pwd)"
-export TOX_TESTENV_PASSENV='PYTHONPATH'
-# copy nessecary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-ln -s %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
-
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-ln -s %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README failure_demo.py
@@ -108,6 +104,9 @@ popd
 %python3_sitelibdir/pytest_timeout-*.egg-info/
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.3.3-alt2
+- Fixed Pytest4.x compatibility errors.
+
 * Thu Dec 27 2018 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1
 - 1.3.2 -> 1.3.3.
 
