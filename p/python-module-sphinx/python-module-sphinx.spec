@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.5
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -33,6 +33,7 @@ Source5: sphinx-1.6.4-alt-disable-remote-tests.patch
 Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
 # deprecate formatargspec() and format_annotation()
 Patch1: 464f94c2380b4cb2600735c0c0085e771da2bce4.patch
+Patch2: sphinx-1.6.5-Fix-sphinx.testing-uses-deprecated-pytest-API-Node.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-sphinx-objects.inv
@@ -227,6 +228,7 @@ This packages contains pickles for Sphinx.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 install -pm644 %_sourcedir/conf.py.template .
 
 ln -s %_datadir/python-sphinx/objects.inv doc/
@@ -392,6 +394,9 @@ PYTHONPATH=$(pwd) %make_build test
 
 
 %changelog
+* Sat Jun 01 2019 Stanislav Levin <slev@altlinux.org> 1:1.6.5-alt5
+- Fixed Pytest4.x compatibility errors.
+
 * Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.6.5-alt4
 - Fixed FTBFS (Closes: #36648).
 
