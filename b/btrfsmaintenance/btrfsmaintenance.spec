@@ -1,6 +1,6 @@
 Name: btrfsmaintenance
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Summary: Scripts for btrfs periodic maintenance tasks
 License: GPLv2
 Group: System/Base
@@ -36,6 +36,7 @@ install -m 644 btrfsmaintenance-functions %buildroot%_datadir/%name/
 
 # systemd services and timers
 install -m 755 -d %buildroot%_unitdir/
+install -m 755 -d %buildroot%_presetdir/
 install -m 644 -D btrfsmaintenance-refresh.service %buildroot%_unitdir/
 install -m 644 -D btrfsmaintenance-refresh.path %buildroot%_unitdir/
 install -m 644 -D btrfs-balance.service %buildroot%_unitdir/
@@ -46,6 +47,7 @@ install -m 644 -D btrfs-balance.timer %buildroot%_unitdir/
 install -m 644 -D btrfs-defrag.timer %buildroot%_unitdir/
 install -m 644 -D btrfs-scrub.timer %buildroot%_unitdir/
 install -m 644 -D btrfs-trim.timer %buildroot%_unitdir/
+install -m 644 -D 80-btrfsmaintenance.preset %buildroot%_presetdir/
 
 # config
 install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%name
@@ -73,10 +75,11 @@ install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%n
 %_unitdir/btrfs-defrag.timer
 %_unitdir/btrfs-scrub.timer
 %_unitdir/btrfs-trim.timer
+%_presetdir/80-btrfsmaintenance.preset
 
 %changelog
 
-* Fri May 31 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt2
+* Fri May 31 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt3
 - Fix %%post and %%preun scripts:
   - not only systemd *.service units, but also *.timer and *.path should be
     processed by systemctl set-default
