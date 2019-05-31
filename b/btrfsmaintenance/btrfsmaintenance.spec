@@ -1,8 +1,6 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: btrfsmaintenance
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: Scripts for btrfs periodic maintenance tasks
 License: GPLv2
 Group: System/Base
@@ -11,6 +9,9 @@ Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
+BuildRequires: pkgconfig(systemd)
+# https://bugzilla.altlinux.org/35388
+BuildRequires: rpm-macros-fedora-compat
 Requires: btrfs-progs
 
 %description
@@ -50,18 +51,12 @@ install -m 644 -D btrfs-trim.timer %buildroot%_unitdir/
 install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%name
 
 %post
-%post_service btrfsmaintenance-refresh
-%post_service btrfs-balance
-%post_service btrfs-defrag
-%post_service btrfs-scrub
-%post_service btrfs-trim
+# According to 80-btrfmaintenance.preset,
+# needed systemd units will be enabled automatically on package installation
+%systemd_post btrfsmaintenance-refresh.service btrfsmaintenance-refresh.path btrfs-balance.service btrfs-balance.timer btrfs-defrag.service btrfs-defrag.timer btrfs-scrub.service btrfs-scrub.timer btrfs-trim.service btrfs-trim.timer
 
 %preun
-%preun_service btrfsmaintenance-refresh
-%preun_service btrfs-balance
-%preun_service btrfs-defrag
-%preun_service btrfs-scrub
-%preun_service btrfs-trim
+%systemd_preun btrfsmaintenance-refresh.service btrfsmaintenance-refresh.path btrfs-balance.service btrfs-balance.timer btrfs-defrag.service btrfs-defrag.timer btrfs-scrub.service btrfs-scrub.timer btrfs-trim.service btrfs-trim.timer
 
 %files
 %doc COPYING README.md
@@ -80,6 +75,19 @@ install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%n
 %_unitdir/btrfs-trim.timer
 
 %changelog
+
+* Fri May 31 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt2
+- Fix %%post and %%preun scripts:
+  - not only systemd *.service units, but also *.timer and *.path should be
+    processed by systemctl set-default
+- Add systemd preset to autoenable needed systemd units (humans will not
+  understand which ones must be enabled manually as there are too many of them)
+- Adjusted default config /etc/sysconfig/btrfsmaintenance:
+  - Process all btrfs mount points by default, not only /
+  - Disable scrub by default;
+    it is not really needed on desktops and causes very high Load Average
+- These changes are in sync with
+  https://gitlab.com/nixtux-packaging/btrfsmaintenance
+
 * Sat Jan 12 2019 Vera Blagoveschenskaya <vercha@altlinux.org> 0.4.2-alt1
 - Initial build for ALT
-
