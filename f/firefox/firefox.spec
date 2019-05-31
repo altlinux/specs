@@ -6,15 +6,15 @@
 
 %define gst_version 1.0
 %define nspr_version 4.21
-%define nss_version 3.43.0
-%define rust_version  1.31.1
-%define cargo_version 1.31.1
+%define nss_version 3.44.0
+%define rust_version  1.33.0
+%define cargo_version 1.33.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        66.0.5
+Version:        67.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -37,16 +37,20 @@ Source9:        firefox-prefs.js
 Patch001: 0001-ALT-fix-werror-return-type.patch
 Patch002: 0002-SUSE-NonGnome-KDE-integration.patch
 Patch003: 0003-ALT-Use-system-nspr-headers.patch
-Patch004: 0004-MOZILLA-1423598-wayland-popup-tooltip-windows-can-be.patch
-Patch005: 0005-MOZILLA-1532643-wayland-CreateWidgetForPopup-needs-w.patch
-Patch006: 0006-MOZILLA-1535567-wayland-Fails-to-render-popup-window.patch
-Patch007: 0007-MOZILLA-1431399-wayland-with-WebRTC-playback-device-.patch
-Patch008: 0008-MOZILLA-1468911-wayland-Visible-artifacts-during-win.patch
-Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch010: 0010-MOZILLA-1515641-Addon.patch
+Patch004: 0004-FEDORA-build-arm-libopus.patch
+Patch005: 0005-FEDORA-build-arm.patch
+Patch006: 0006-MOZILLA-1423598-wayland-popup-tooltip-windows-can-be.patch
+Patch007: 0007-MOZILLA-1532643-wayland-CreateWidgetForPopup-needs-w.patch
+Patch008: 0008-MOZILLA-1535567-wayland-Fails-to-render-popup-window.patch
+Patch009: 0009-MOZILLA-1468911-wayland-Visible-artifacts-during-win.patch
+Patch010: 0010-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch011: 0011-MOZILLA-1353817-skia-build-error-on-aarch64.patch
-Patch012: 0012-FEDORA-build-arm-libopus.patch
-Patch013: 0013-FEDORA-build-arm.patch
+Patch012: 0012-MOZILLA-1508378-Fix-round-error-when-damage-rect-siz.patch
+Patch013: 0013-MOZILLA-1517205-WebRender-Crash-on-Wayland-when-addi.patch
+Patch014: 0014-MOZILLA-1539471-Track-active-popup-windows-on-Waylan.patch
+Patch015: 0015-MOZILLA-1521249-part-0-Remove-Rust-version-cap-from-.patch
+Patch016: 0016-MOZILLA-1521249-part-1-Update-encoding_rs-to-0.8.16.patch
+Patch017: 0017-MOZILLA-1521249-part-2-Make-packed_simd-compile-with.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -178,6 +182,10 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch011 -p1
 %patch012 -p1
 %patch013 -p1
+%patch014 -p1
+%patch015 -p1
+%patch016 -p1
+%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -402,6 +410,31 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 67.0-alt1
+- New release (67.0).
+- Fixed:
+  + CVE-2019-9815: Disable hyperthreading on content JavaScript threads on macOS
+  + CVE-2019-9816: Type confusion with object groups and UnboxedObjects
+  + CVE-2019-9817: Stealing of cross-domain images using canvas
+  + CVE-2019-9818: Use-after-free in crash generation server
+  + CVE-2019-9819: Compartment mismatch with fetch API
+  + CVE-2019-9820: Use-after-free of ChromeEventHandler by DocShell
+  + CVE-2019-9821: Use-after-free in AssertWorkerThread
+  + CVE-2019-11691: Use-after-free in XMLHttpRequest
+  + CVE-2019-11692: Use-after-free removing listeners in the event listener manager
+  + CVE-2019-11693: Buffer overflow in WebGL bufferdata on Linux
+  + CVE-2019-7317: Use-after-free in png_image_free of libpng library
+  + CVE-2019-11694: Uninitialized memory memory leakage in Windows sandbox
+  + CVE-2019-11695: Custom cursor can render over user interface outside of web content
+  + CVE-2019-11696: Java web start .JNLP files are not recognized as executable files for download prompts
+  + CVE-2019-11697: Pressing key combinations can bypass installation prompt delays and install extensions
+  + CVE-2019-11698: Theft of user history data through drag and drop of hyperlinks to and from bookmarks
+  + CVE-2019-11700: res: protocol can be used to open known local files
+  + CVE-2019-11699: Incorrect domain name highlighting during page navigation
+  + CVE-2019-11701: webcal: protocol default handler loads vulnerable web page
+  + CVE-2019-9814: Memory safety bugs fixed in Firefox 67
+  + CVE-2019-9800: Memory safety bugs fixed in Firefox 67 and Firefox ESR 60.7
+
 * Wed May 08 2019 Alexey Gladkov <legion@altlinux.ru> 66.0.5-alt1
 - New release (66.0.5).
 
