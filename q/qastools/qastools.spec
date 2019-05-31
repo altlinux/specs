@@ -1,21 +1,21 @@
 Name: qastools
 Version: 0.21.0
-Release: alt3%ubt
+Release: alt4
+
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
-
 Group: Sound
-Url: http://xwmw.org/qastools
-Packager: Anton Midyukov <antohami@altlinux.org>
 
+Url: http://xwmw.org/qastools
 Source: %name-%version.tar
 Patch: disabled-tray-icon-at-startup.patch
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
-#qt5-linguist
+# BuildRequires: qt5-linguist
 BuildRequires: pkgconfig(alsa)
 # For libudev.h
 BuildRequires: libudev-devel
@@ -102,6 +102,10 @@ done
 %_man1dir/qasmixer.1.*
 
 %changelog
+* Fri May 31 2019 Michael Shigorin <mike@altlinux.org> 0.21.0-alt4
+- Dropped %%ubt
+- Minor spec cleanup
+
 * Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt3%ubt
 - Rebuilt for aarch64
 
