@@ -4,12 +4,12 @@
 %define oname uriparser
 Name: liburiparser
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: A strictly RFC 3986 compliant URI parsing library
-
 License: BSD
 Group: System/Libraries
+
 Url: https://uriparser.github.io/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -57,7 +57,9 @@ Header files for uriparser.
 %make_build
 
 %install
+%if_with doc
 touch doc/html/FIXME.map
+%endif
 %makeinstall_std
 
 %files
@@ -66,12 +68,17 @@ touch doc/html/FIXME.map
 %_libdir/lib*.so.*
 
 %files devel
+%if_with doc
 %_docdir/%oname/
+%endif
 %_libdir/lib*.so
 %_includedir/%oname/
 %_pkgconfigdir/*
 
 %changelog
+* Fri May 31 2019 Michael Shigorin <mike@altlinux.org> 0.9.3-alt2
+- fix doc knob
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 - switch to cmake
