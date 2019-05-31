@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pycobertura
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.10.0
-Release: alt1.1
+Version: 0.10.5
+Release: alt1
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
@@ -13,20 +14,22 @@ Url: https://pypi.python.org/pypi/pycobertura/
 
 # https://github.com/SurveyMonkey/pycobertura.git
 Source: %name-%version.tar
+Patch: pycobertura-0.10.5-Fix-Pytest4.x-compatibility-error.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-click-tests python-module-colorama
-BuildRequires: python-module-tabulate python-module-mock
-BuildRequires: python-module-pytest-cov python-module-jinja2
-BuildRequires: python-module-html5lib
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-click-tests python3-module-colorama
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-tabulate python3-module-unittest2
-BuildRequires: python3-module-pytest-cov python3-module-jinja2
-BuildRequires: python3-module-html5lib python3-module-pbr
+
+%if_with check
+BuildRequires: python2.7(click.testing)
+BuildRequires: python2.7(colorama)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pytest_cov)
+BuildRequires: python2.7(tabulate)
+BuildRequires: python3(click.testing)
+BuildRequires: python3(colorama)
+BuildRequires: python3(mock)
+BuildRequires: python3(pytest_cov)
+BuildRequires: python3(tabulate)
+BuildRequires: python3(tox)
 %endif
 
 %py_provides %oname
@@ -34,7 +37,6 @@ BuildRequires: python3-module-html5lib python3-module-pbr
 %description
 A Cobertura coverage report parser written in Python.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A Cobertura coverage report parser written in Python
 Group: Development/Python3
@@ -42,28 +44,26 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 A Cobertura coverage report parser written in Python.
-%endif
 
 %prep
 %setup
+%patch -p1
+# unpin test requirements
+sed -i 's/,\?<.*//g' test-requirements.txt
 
+grep -qsF 'setuptools_git' setup.py || exit 1
 sed -i -e 's|setuptools_git|setuptools|g' setup.py
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -72,37 +72,36 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
-py.test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-py.test3
-popd
-%endif
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.md
 %_bindir/*
-%if_with python3
 %exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 0.10.5-alt1
+- 0.10.0 -> 0.10.5.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
