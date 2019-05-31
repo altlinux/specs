@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.8.7
+Version: 2.8.8
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri May 31 2019 Vitaly Lipatov <lav@altlinux.ru> 2.8.8-alt1
+- gitask: add rebuild support
+- rpmbs: use GIRARHOST for gita using
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 2.8.7-alt1
 - update pkgrepls
 - rpmgs: fix using Source-git: git://
