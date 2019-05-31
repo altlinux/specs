@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 18.8.1
-Release: alt1
+Release: alt2
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
 Group: Development/Python
@@ -16,6 +16,7 @@ Url: https://pypi.python.org/pypi/txaio/
 Source: %name-%version.tar
 Patch1: %oname-18.7.1-alt-docs.patch
 Patch2: python-txaio-skip-packaging-tests.patch
+Patch3: txaio-18.8.1-make-pytest-happy.patch
 
 BuildArch: noarch
 
@@ -119,6 +120,7 @@ This package contains pickles for %oname.
 %setup
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -186,6 +188,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Stanislav Levin <slev@altlinux.org> 18.8.1-alt2
+- Fixed Pytest4.x compatibility errors.
+
 * Sun Apr 28 2019 Anton Midyukov <antohami@altlinux.org> 18.8.1-alt1
 - Updated to upstream version 18.8.1.
 
