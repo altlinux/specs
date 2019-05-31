@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.8.0
 Release: alt1
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 License: ASLv2.0
@@ -18,11 +18,15 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python2.7(OpenSSL)
 BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(tornado)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tornado)
+BuildRequires: python3(tox)
 %endif
+
+%py_provides %oname
 
 %description
 A py.test plugin providing fixtures and markers to simplify testing of
@@ -31,6 +35,7 @@ asynchronous tornado applications.
 %package -n python3-module-%oname
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 A py.test plugin providing fixtures and markers to simplify testing of
@@ -56,11 +61,15 @@ pushd ../python3
 popd
 
 %check
-PYTHONPATH=$(pwd) py.test -vv
-
-pushd ../python3
-PYTHONPATH=$(pwd) py.test3 -vv
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    python test/create_cert.py --cert test/testcert.pem
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst
@@ -73,6 +82,9 @@ popd
 %python3_sitelibdir/pytest_tornado-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.5.0 -> 0.8.0.
+
 * Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
 - 0.4.5 -> 0.5.0.
 
