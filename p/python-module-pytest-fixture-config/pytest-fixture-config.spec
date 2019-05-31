@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-fixture-config
 
+%def_with check
+
 Name: python-module-%oname
-Version: 1.3.0
+Version: 1.7.0
 Release: alt1
 Summary: Fixture configuration utils for py.test
 License: MIT
@@ -12,9 +14,12 @@ BuildArch: noarch
 
 Source: %oname-%version.tar
 
-BuildRequires: python-dev python-module-pytest python2.7(six)
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-pytest python3(six)
+
+%if_with check
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Simple configuration objects for Py.test fixtures.
@@ -53,10 +58,14 @@ popd
 %python_install
 
 %check
-PYTHONPATH=$(pwd) py.test -v
-pushd ../python3
-PYTHONPATH=$(pwd) py.test3 -v
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc CHANGES.md README.md
@@ -70,6 +79,9 @@ popd
 %python3_sitelibdir/pytest_fixture_config.py
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.3.0 -> 1.7.0.
+
 * Fri Nov 30 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.11 -> 1.3.0.
 - Fixed build.

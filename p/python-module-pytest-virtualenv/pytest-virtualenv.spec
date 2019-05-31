@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Virtualenv fixture for py.test
 License: MIT
@@ -66,9 +66,6 @@ popd
 
 %check
 cat > tox.ini <<EOF
-[tox]
-envlist = py27,py36,py37
-
 [testenv]
 commands =
     {envpython} -m pytest {posargs:-vra}
@@ -89,6 +86,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.0 -> 1.7.0.
+
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
 - Fixed minor typo in tox.ini.
 
