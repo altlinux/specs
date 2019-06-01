@@ -4,15 +4,19 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.6
-Release: alt2.git20141223.1
+Version: 0.1.8
+Release: alt1
+
 Summary: Fast high-level web crawling framework for Python 3.3 or later base on asyncio
+
 License: Free
 Group: Development/Python
 Url: https://pypi.python.org/pypi/grapy/
 
 # https://github.com/Lupino/grapy.git
+# Source-url: https://pypi.io/packages/source/g/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 %if_with python2
@@ -46,11 +50,12 @@ Python 3.3 or later base on asyncio.
 
 %prep
 %setup
+subst "s|self.async|self.fasync|" grapy/core/request.py
 
 # don't explicitely require asyncio module, it's part of python3 base now
-sed -i \
-	-e "s|'asyncio', ||g" \
-	setup.py
+#sed -i \
+#	-e "s|'asyncio', ||g" \
+#	setup.py
 
 %if_with python3
 cp -fR . ../python3
@@ -101,6 +106,10 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.8-alt1
+- new version 0.1.8 (with rpmrb script)
+- switch to build from tarball
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt2.git20141223.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
