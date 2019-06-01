@@ -1,16 +1,16 @@
 %define oname libcloud
 
 Name: python-module-%oname
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 Summary: Library for interacting with popular cloud service
 
 License: Apache-2.0
 Group: Development/Python
 Url: http://libcloud.apache.org/
-# https://github.com/apache/libcloud
 BuildArch: noarch
 
+# Source-git: https://github.com/apache/libcloud
 Source: %oname-%version.tar
 
 BuildRequires: python-devel
@@ -140,6 +140,9 @@ popd
 
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Tue Mar 03 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
 - Updated version to 2.3.0
 
