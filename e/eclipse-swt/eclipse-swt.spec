@@ -16,13 +16,15 @@ Requires: libwebkitgtk2
 Requires: libwebkitgtk3
 
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 
 Source1: swt.i586.jar
 Source2: swt.x86_64.jar
-Source3: eclipse-swt.xml.i586
-Source4: eclipse-swt.xml.x86_64
-ExclusiveArch: %ix86 x86_64
+Source3: swt.aarch64.jar
+Source4: eclipse-swt.xml.i586
+Source5: eclipse-swt.xml.x86_64
+Source6: eclipse-swt.xml.aarch64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 SWT Library for GTK+.
@@ -40,12 +42,17 @@ mkdir -p $RPM_BUILD_ROOT/usr/lib/java/
 mkdir -p $RPM_BUILD_ROOT%_libdir/eclipse
 ln -s ../../lib/java/swt.jar %buildroot%_libdir/eclipse/swt.jar
 
-%ifarch x86_64
+%ifarch %{ix86}
 install -m 644 %{SOURCE4} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-%else
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
 install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
+%endif
+%ifarch x86_64
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
+%endif
+%ifarch aarch64
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
 %endif
 
 
@@ -55,6 +62,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
 %_libdir/eclipse/swt.jar
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt0.2jpp
+- added aarch64
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt0.1jpp
 - bootstrap pack of jars
 
