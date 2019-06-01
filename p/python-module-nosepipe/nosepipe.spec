@@ -4,16 +4,21 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.1
+Version: 0.9
+Release: alt1
+
 Summary: Plugin for the nose testing framework for running tests in a subprocess
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/nosepipe/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dmccombs/nosepipe.git
-Source0: https://pypi.python.org/packages/57/61/95306f40c9b61cfc06cef1c83e983db039298056cc3da50fcfad4a9baf37/%{oname}-%{version}.tar.gz
+# Source-url: https://pypi.io/packages/source/n/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -44,7 +49,7 @@ Use nosetests --with-process-isolation to enable the plugin. When
 enabled, each test is run in a separate process.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -87,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- new version 0.9 (with rpmrb script)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
