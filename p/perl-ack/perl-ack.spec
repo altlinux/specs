@@ -18,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 2.28
+Version: 3.0.0
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -31,7 +31,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{module}-v%{version}.tar.gz
 
 Provides: ack-grep
 
@@ -50,7 +50,7 @@ If you want to know about the ack program, see the ack file itself.
 No user-serviceable parts inside.  ack is all that should use this.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{module}-v%{version}
 rm t/ack-type.t
 
 %build
@@ -61,12 +61,15 @@ export TMPDIR=/tmp
 %perl_vendor_install
 
 %files
-%doc LICENSE.md Changes CONTRIBUTING.md README.md
+%doc LICENSE.md Changes README.md
 %_bindir/ack
 %_man1dir/*
 %perl_vendor_privlib/App/
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1
+- automated CPAN update
+
 * Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
 - automated CPAN update
 
