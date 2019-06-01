@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jogl2
 Version:        2.3.2
-Release:        alt2_6jpp8
+Release:        alt2_9jpp8
 %global src_name jogl-v%{version}
 Summary:        Java bindings for the OpenGL API
 
-Group:          Development/Other
 # For a breakdown of the licensing, see LICENSE.txt 
 License:        BSD and MIT and ASL 2.0 and ASL 1.1 
 URL:            http://jogamp.org/
@@ -23,7 +23,9 @@ Patch2:         %{name}-0002-deactivate-debug-printf.patch
 Patch3:         %{name}-0003-delete-not-supported-API.patch
 Patch4:         %{name}-0004-disable-some-tests.patch
 Patch5:         %{name}-add-secarchs.patch
+Patch6:         %{name}-mesa-profile-detection.patch
 
+BuildRequires:  gcc
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  gluegen2-devel = %{version}
@@ -51,8 +53,8 @@ open-source technologies initiated by the Game Technology Group at
 Sun Microsystems.
 
 %package doc
+Group: Development/Java
 Summary:        User manual for jogl2
-Group:          Development/Java
 BuildArch:      noarch
 
 %description doc
@@ -65,6 +67,7 @@ User manual for jogl2.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -145,6 +148,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_9jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_6jpp8
 - java update
 
