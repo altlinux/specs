@@ -4,15 +4,20 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
+
 Summary: List processing tools and functional utilities
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/toolz/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/75/9c/a26de5efd56009e15af607bff6d2a395631e3c20e7c64b861c9bc4b34288/%{oname}-%{version}.tar.gz
+# Source-url: https://pypi.io/packages/source/t/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -32,7 +37,7 @@ Group: Development/Python3
 A set of utility functions for iterators, functions, and dictionaries.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -67,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version 0.9.0 (with rpmrb script)
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1
 - automated PyPI update
 
