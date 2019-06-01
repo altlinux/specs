@@ -4,7 +4,7 @@
 
 Name:		ispell-ru-rk
 Version:	1.1
-Release:	alt7
+Release:	alt8
 
 Summary:	Russian dictionary for ispell -- KOI8-R encoding
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell -- кодировка KOI8-R
@@ -155,6 +155,10 @@ cat > $RPM_BUILD_ROOT%_altdir/aspell-ru-rk <<'EOF'
 %_libdir/aspell/ru.multi	%_libdir/aspell/ru-rk.multi	10
 %_libdir/aspell/russian.alias	%_libdir/aspell/russian-rk.alias	%_libdir/aspell/ru-rk.multi
 EOF
+cat > %buildroot%_altdir/aspell-ru-rk-dat << EOF
+/usr/share/aspell/ru.dat	/usr/share/aspell/ru-rk.dat	10
+/usr/share/aspell/ru_phonet.dat	/usr/share/aspell/ru-rk_phonet.dat	/usr/share/aspell/ru-rk.dat
+EOF
 
 
 %files
@@ -183,9 +187,13 @@ EOF
 %doc LICENSE.phonet
 %_altdir/aspell-ru-rk
 %_libdir/aspell/*
+%_altdir/aspell-ru-rk-dat
 %_datadir/aspell/*
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt8
+- added alternatives for %_datadir/aspell/ru.dat(+_phonetic)
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt7
 - applied repocop patches
 
