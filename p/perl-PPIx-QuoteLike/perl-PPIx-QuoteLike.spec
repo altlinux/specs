@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.006
+Version: 0.007
 Release: alt1
 Summary: Parse Perl string literals and string-literal-like things.
 Group: Development/Perl
@@ -35,6 +35,9 @@ similar code.
 %perl_vendor_privlib/P*
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
+- automated CPAN update
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
