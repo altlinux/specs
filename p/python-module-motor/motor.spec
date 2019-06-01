@@ -4,21 +4,26 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
+
 Summary: Non-blocking MongoDB driver for Tornado
+
 License: ASLv2.0
 Group: Development/Python
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/motor/
 
+BuildArch: noarch
+
 # https://github.com/mongodb/motor.git
+# Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tornado
 BuildRequires: python-module-pymongo python-module-pymongo-gridfs
 BuildRequires: python-module-futures
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -86,7 +91,9 @@ pushd ../python3
 popd
 %endif
 
-%make -C doc html SPHINXBUILD=py3_sphinx-build
+%if_with doc
+make -C doc SPHINXBUILD=py3_sphinx-build
+%endif
 
 %check
 python setup.py test
@@ -100,8 +107,10 @@ popd
 %doc *.rst
 %python_sitelibdir/*
 
+%if_with doc
 %files docs
 %doc doc/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -110,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version (2.0.0) with rpmgs script
+- switch to build from tarball
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
