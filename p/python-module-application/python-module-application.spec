@@ -1,7 +1,7 @@
 %define modulename application
 
 Name:    python-module-%modulename
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Basic building blocks for Python applications
@@ -41,6 +41,9 @@ logic itself.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jun 01 2019 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
+- New version.
+
 * Fri May 31 2019 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - New version.
 
