@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -9,25 +10,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:     nailgun
 Version:  0.9.1
-Release:  alt2_7jpp8
+Release:  alt2_11jpp8
 Summary:  Framework for running Java from the cli without the JVM startup overhead
-Group:    Development/Java
 License:  ASL 2.0
 URL:      http://martiansoftware.com/nailgun/
 
 # https://github.com/martylamb/nailgun/archive/nailgun-all-0.9.1.zip
 Source0:  %{name}-%{name}-all-%{version}.zip
-Patch0:   remove-tools-jar-dependencies.patch
-# Upstream patch to prevent invalid javadoc from failing the build in java 8.
-# https://github.com/martylamb/nailgun/commit/0a364b113a934da18fedc0081d4849e5c421d11d
-Patch1:   prevent-invalid-java-doc-from-failing-the-build.patch
 
-BuildRequires: java-devel
-BuildRequires:  jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-source-plugin
-BuildRequires: sonatype-oss-parent
-Requires:  jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 BuildArch: noarch
 
@@ -38,8 +30,8 @@ server (which is implemented in Java), and are triggered by the client
 (written in C), which handles all I/O.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch:      noarch
 
 %description javadoc
@@ -47,16 +39,15 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-all-%{version}
-#%patch0 -p1
-%patch1 -p1
 
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build -j
+%mvn_build
 
 %install
 %mvn_install
@@ -64,10 +55,12 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files -f .mfiles
 %doc README.md
 
-#%files javadoc -f .mfiles-javadoc
-#%doc LICENSE.txt
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_11jpp8
+- fixed arch build
+
 * Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_7jpp8
 - fixed build with maven-javadoc-plugin 3
 
