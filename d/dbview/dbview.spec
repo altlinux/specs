@@ -1,42 +1,38 @@
 Name: dbview
 Version: 1.0.4
-Release: alt2%ubt
+Release: alt3
 
-License: GPL
-Url: ftp://metalab.unc.edu/pub/Linux/apps/database/proprietary/
 Summary: Dbview - view dBase files
-Summary(ru_RU.CP1251): Dbview - программа для просмотра dBase файлов
+License: GPL
 Group: Databases
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
+Url: ftp://metalab.unc.edu/pub/Linux/apps/database/proprietary/
 Source: %name-%version.tar.gz
-Patch0: %name-makefile.patch.gz
-Patch1: %name-fixes.patch.gz
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildRequires(pre): rpm-build-ubt
 
+Summary(ru_RU.CP1251): Dbview - РїСЂРѕРіСЂР°РјРјР° РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° dBase С„Р°Р№Р»РѕРІ
+
 %description
-Dbview is a little tool that will display dBase III and IV files.
+dbview is a little tool that will display dBase III and IV files.
 You can also use it to convert your old .dbf files for further use with Unix.
 
 %description -l ru_RU.CP1251
-Dbview это маленькая утилита, которая отображает содержимое dBase файлов версии III и IV.
-Также, вы можете использовать её для преобразования ваших старых .dbf файлов в целях
-дальнейшего использования на Unix-системах.
+dbview - СЌС‚Рѕ РјР°Р»РµРЅСЊРєР°СЏ СѓС‚РёР»РёС‚Р°, РєРѕС‚РѕСЂР°СЏ РѕС‚РѕР±СЂР°Р¶Р°РµС‚ СЃРѕРґРµСЂР¶РёРјРѕРµ dBase-С„Р°Р№Р»РѕРІ
+РІРµСЂСЃРёРё III Рё IV.  РўР°РєР¶Рµ РІС‹ РјРѕР¶РµС‚Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РµС‘ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РІР°С€РёС…
+СЃС‚Р°СЂС‹С… .dbf-С„Р°Р№Р»РѕРІ РІ С†РµР»СЏС… РґР°Р»СЊРЅРµР№С€РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РЅР° Unix-СЃРёСЃС‚РµРјР°С….
 
 %prep
 %setup
-#patch0
-#patch1
+sed -i 's,-O6,-O3,' Makefile
 
 %build
 %make_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT{%_bindir,%_man1dir}
-
-install -m 755 %name $RPM_BUILD_ROOT%_bindir
-install -m 644 %name.1 $RPM_BUILD_ROOT%_man1dir
+install -pDm755 %name %buildroot%_bindir/%name
+install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc README dBASE
@@ -44,6 +40,12 @@ install -m 644 %name.1 $RPM_BUILD_ROOT%_man1dir
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jun 01 2019 Michael Shigorin <mike@altlinux.org> 1.0.4-alt3
+- minor spec cleanup
+- converted spec to UTF-8
+- dropped %%ubt
+- avoid superfluous (fake) optimization level
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.4-alt2%ubt
 - Updated spec to include man files with any compression
 
