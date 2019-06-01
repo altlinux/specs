@@ -15,7 +15,7 @@
 %def_without test
 
 Name: perl-Exception-Class-DBI
-Version: 1.01
+Version: 1.04
 Release: alt1
 
 Summary: %m_name - DBI Exception objects
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Exception-Class-DBI/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DW/DWHEELER/Exception-Class-DBI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 29 2008 (-bi)
 BuildRequires: perl-DBI perl-Exception-Class perl-Module-Build perl-Test-Pod perl-version
@@ -49,7 +49,7 @@ methods in addition to those provided by Exception::Class. These can be used to
 output detailed diagnostic information in the event of an exception.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -63,6 +63,9 @@ output detailed diagnostic information in the event of an exception.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - automated CPAN update
 
