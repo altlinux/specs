@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.20.20100211jpp8
+Release:	alt3_0.22.20100211jpp8
 License:	LGPLv2+
 URL:		http://rxtx.qbang.org/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -42,7 +42,6 @@ BuildRequires:	junit
 BuildRequires:	aqute-bnd
 BuildRequires:	javapackages-local
 Source44: import.info
-Patch33: rxtx-20100211-alt-hack.patch
 
 %description
 rxtx is an full implementation of java commapi which aims to support RS232
@@ -66,7 +65,6 @@ cp -a %{SOURCE1} .
 
 # Don't need to install jar file, mvn_install will do it
 sed -i -e '/JHOME/d' Makefile.in
-%patch33 -p1
 
 %build
 export JAVA_HOME=%{java_home}
@@ -95,6 +93,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.22.20100211jpp8
+- fixed arch build
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.20.20100211jpp8
 - java update
 
