@@ -12,7 +12,7 @@
 
 Name: zeitgeist
 Version: %major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -170,11 +170,11 @@ popd
 %install
 %makeinstall_std
 pushd py3build
-
-# install docs
+%makeinstall_std
+%if_enabled docs
 install -d -m755 %buildroot%pkgdocdir
 cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
-%makeinstall_std
+%endif
 popd
 
 %find_lang %name
@@ -226,6 +226,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1.1
+- fixed build without docs
+
 * Tue Feb 05 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
