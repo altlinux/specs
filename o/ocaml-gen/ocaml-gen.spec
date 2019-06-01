@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname gen
 Name: ocaml-%libname
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
@@ -56,6 +56,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Sat Jun 01 2019 Anton Farygin <rider@altlinux.ru> 0.5.2-alt1
+- 0.5.2
+
 * Wed Nov 07 2018 Anton Farygin <rider@altlinux.ru> 0.5.1-alt1
 - first build for ALT
 
