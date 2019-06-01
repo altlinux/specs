@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-SQL-Translator
-Version: 0.11024
+Version: 1.60
 Release: alt1
 
 Summary: Manipulate structured data definitions (SQL and more)
@@ -16,7 +16,7 @@ BuildArch: noarch
 %add_findreq_skiplist */Test/SQL/Translator*
 
 # Automatically added by buildreq on Sat Nov 19 2011 (-bi)
-BuildRequires: perl-Carp-Clan perl-Class-Base perl-Class-Data-Inheritable perl-Class-MakeMethods perl-Class-XSAccessor perl-DBI perl-Digest-SHA1 perl-File-ShareDir perl-GD perl-Graph perl-Moo perl-Spreadsheet-ParseExcel perl-Template perl-Test-Differences perl-Test-Exception perl-Test-Pod perl-Text-RecordParser perl-XML-LibXML perl-XML-Parser perl-XML-Writer perl-YAML perl(Digest/SHA.pm) perl(Package/Variant.pm) perl(Pod/Man.pm) perl(Try/Tiny.pm) perl(JSON.pm)
+BuildRequires: perl-Carp-Clan perl-Class-Base perl-Class-Data-Inheritable perl-Class-MakeMethods perl-Class-XSAccessor perl-DBI perl-Digest-SHA1 perl-File-ShareDir perl-GD perl-Graph perl-Moo perl-Spreadsheet-ParseExcel perl-Template perl-Test-Differences perl-Test-Exception perl-Test-Pod perl-Text-RecordParser perl-XML-LibXML perl-XML-Parser perl-XML-Writer perl-YAML perl(Digest/SHA.pm) perl(Package/Variant.pm) perl(Pod/Man.pm) perl(Try/Tiny.pm) perl(JSON.pm) perl(File/ShareDir/Install.pm) perl(JSON/MaybeXS.pm)
 
 %description
 SQL::Translator is a group of Perl modules that converts vendor-specific
@@ -44,6 +44,9 @@ delimited text files.
 %perl_vendor_privlib/auto/share/dist/SQL-Translator
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.11024-alt1
 - automated CPAN update
 
