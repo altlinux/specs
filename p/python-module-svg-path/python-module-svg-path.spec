@@ -1,10 +1,11 @@
+%def_without python2
 %def_with python3
 
 %define modname svg.path
 
 Name: python-module-svg-path
 Version: 2.2
-Release: alt2
+Release: alt3
 Summary: SVG path objects and parser
 
 Group: Development/Python
@@ -16,10 +17,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+%if_with python2
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools
 
 Requires: python-module-svg
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -63,7 +66,9 @@ cp -fR . ../python3-module-%modname
 %endif
 
 %build
+%if_with python2
 %python_build
+%endif
 %if_with python3
 pushd ../python3-module-%modname
 %python3_build
@@ -76,16 +81,22 @@ pushd ../python3-module-%modname
 %python3_install
 popd
 %endif
+
+%if_with python2
 %python_install
+%endif
 
 %check
+%if_with python2
 python setup.py test
+%endif
 %if_with python3
 pushd ../python3-module-%modname
 python3 setup.py test
 popd
 %endif
 
+%if_with python2
 %files
 %doc README.rst CHANGES.txt CONTRIBUTORS.txt
 %python_sitelibdir/svg/path
@@ -94,6 +105,7 @@ popd
 
 %files tests
 %python_sitelibdir/svg/path/tests
+%endif
 
 %if_with python3
 %files -n python3-module-svg-path
@@ -107,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt3
+- NMU: build python3 only module
+
 * Fri Jul 28 2017 Anton Midyukov <antohami@altlinux.org> 2.2-alt2
 - New subpackages tests
 

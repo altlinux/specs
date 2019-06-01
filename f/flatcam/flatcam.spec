@@ -1,6 +1,6 @@
 Name: flatcam
 Version: 8.5
-Release: alt3.20170702
+Release: alt4.20190601
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -10,10 +10,12 @@ BuildArch: noarch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Buildrequires(pre): rpm-build-python
-Buildrequires: python-module-setuptools desktop-file-utils
-Requires: python-module-svg-path
-Requires: python-module-matplotlib-qt4
+Buildrequires(pre): rpm-build-python3
+Buildrequires: python3-module-setuptools desktop-file-utils
+Requires: python3-module-svg-path
+Requires: python3-module-matplotlib-qt4
+
+%add_python3_req_skip ToolDblSided ToolTransform ToolMeasurement
 
 %description
 FlatCAM is a program for preparing CNC jobs for making PCBs on
@@ -25,10 +27,10 @@ for Isolation routing.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 # Install icons
 for x in 16 24 32 48 128; do
@@ -55,10 +57,14 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/descartes
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/descartes
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 8.5-alt4.20190601
+- NMU: update to 46454c293a9b390c931b52eb6217ca47e13b0231
+- build with python3
+
 * Sun Sep 03 2017 Anton Midyukov <antohami@altlinux.org> 8.5-alt3.20170702
 - Fix conflict with python-module-descartes.
 

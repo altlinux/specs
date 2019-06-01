@@ -1,61 +1,44 @@
 %define mname svg
 %define oname %mname.charts
 
-%def_with python3
+%def_with doc
+%def_without test
 
 Name: python-module-%oname
-Version: 3.0
-Release: alt2.1.1
+Version: 6.1
+Release: alt1
+
 Summary: Python SVG Charting Library
+
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/svg.charts/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-cssutils python-module-dateutil
-BuildPreReq: python-module-lxml python-module-six
-BuildPreReq: python-module-pytest-runner python-module-setuptools_scm
-BuildPreReq: python-module-sphinx-devel
-BuildRequires: python-module-pytest
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-cssutils python3-module-dateutil
-BuildPreReq: python3-module-lxml python3-module-six
-BuildPreReq: python3-module-pytest-runner python3-module-setuptools_scm
-BuildRequires: python3-module-pytest
+%if_with doc
+BuildRequires: rpm-macros-sphinx3 python3-module-sphinx python3-module-rst.linker
+BuildRequires: python3-module-jaraco.packaging
 %endif
 
-%py_provides %oname
-Requires: python-module-%mname = %EVR
-%py_requires cssutils dateutil lxml six
+%if_with test
+BuildRequires: python3-module-jaraco.itertools 
+%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-cssutils python3-module-dateutil
+BuildRequires: python3-module-lxml python3-module-six
+BuildRequires: python3-module-pytest-runner python3-module-setuptools_scm
+BuildRequires: python3-module-pytest python3-module-tempora
 
 %description
 svg.charts is a pure-python library for generating charts and graphs in
 SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-svg.charts is a pure-python library for generating charts and graphs in
-SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
-
-This package contains pickles for %oname.
-
-%package -n python-module-%mname
-Summary: Core files of %mname
-Group: Development/Python
-%py_provides %mname
-
-%description -n python-module-%mname
-Core files of %mname.
-
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python SVG Charting Library
 Group: Development/Python3
@@ -74,83 +57,51 @@ Group: Development/Python3
 
 %description -n python3-module-%mname
 Core files of %mname.
+
+%if_with doc
+%package -n python3-module-%oname-doc
+Summary: Doc files of %oname
+Group: Development/Python3
+
+%description -n python3-module-%oname-doc
+Doc files of %oname.
 %endif
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%if_with doc
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%ifarch x86_64
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
+# fix install hack
+[ "%_libexecdir" = %_libdir ] || mv %buildroot%_libexecdir %buildroot%_libdir
 
-install -p -m644 %mname/__init__.py \
-	%buildroot%python_sitelibdir/%mname/
-%if_with python3
-pushd ../python3
 install -p -m644 %mname/__init__.py \
 	%buildroot%python3_sitelibdir/%mname/
-popd
-%endif
 
+%if_with doc
 export PYTHONPATH=$PWD
 pushd docs
-sphinx-build -b pickle -d _build/doctrees . _build/pickle
-sphinx-build -b html -d _build/doctrees . _build/html
-popd
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-
-%check
-rm -f conf.py
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
+sphinx-build-3 -b pickle -d _build/doctrees . _build/pickle
+sphinx-build-3 -b html -d _build/doctrees . _build/html
 popd
 %endif
 
-%files
-%doc *.txt docs/_build/html
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/%mname/__init__.py*
+%if_with test
+%check
+rm -f conf.py
+python3 setup.py test
+%endif
 
-%files -n python-module-%mname
-%dir %python_sitelibdir/%mname
-%python_sitelibdir/%mname/__init__.py*
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt docs/_build/html
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%mname/__init__.py
@@ -161,9 +112,22 @@ popd
 %dir %python3_sitelibdir/%mname/__pycache__
 %python3_sitelibdir/%mname/__init__.py
 %python3_sitelibdir/%mname/__pycache__/__init__.*
+
+%if_with doc
+%files -n python3-module-%oname-doc
+%doc docs/_build/html
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
+- new version 6.1 (with rpmrb script)
+- python3 only
+
+* Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
+- new version (6.0) with rpmgs script
+- separate doc packing
+- disable check section (wait for jaraco.*)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt2.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
