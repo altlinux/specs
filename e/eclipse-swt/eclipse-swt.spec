@@ -1,14 +1,14 @@
 Epoch: 1
 Name: eclipse-swt
-Version: 4.6.0
+Version: 4.7.3
 Summary: SWT Library for GTK+
 License: EPL
 Url: http://www.eclipse.org/
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: eclipse-swt = 1:4.6.0-1.fc24
-Provides: mvn(org.eclipse.swt:org.eclipse.swt) = 3.104.1.v20151005.1500
-Provides: mvn(org.eclipse.swt:swt) = 3.104.1.v20151005.1500
-Provides: osgi(org.eclipse.swt) = 3.104.1
+Provides: eclipse-swt = 1:4.7.3a-4.fc28
+Provides: mvn(org.eclipse.swt:org.eclipse.swt) = 3.106.3.v20180409.1128
+Provides: mvn(org.eclipse.swt:swt) = 3.106.3.v20180409.1128
+Provides: osgi(org.eclipse.swt) = 3.106.3
 Requires: libgtk+2
 Requires: libgtk+3
 Requires: java
@@ -16,7 +16,7 @@ Requires: libwebkitgtk2
 Requires: libwebkitgtk3
 
 Group: Development/Java
-Release: alt0.2jpp
+Release: alt0.1jpp
 
 Source1: swt.i586.jar
 Source2: swt.x86_64.jar
@@ -62,6 +62,9 @@ install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
 %_libdir/eclipse/swt.jar
 
 %changelog
+* Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.7.3-alt0.1jpp
+- updated to 4.7.3
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt0.2jpp
 - added aarch64
 
