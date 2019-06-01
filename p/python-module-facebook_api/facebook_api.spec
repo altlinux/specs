@@ -1,24 +1,24 @@
 %define oname facebook_api
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 0.1.4
-Release: alt1.2
+Version: 0.1.10
+Release: alt1
+
 Summary: Facebook API
+
 License: GPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/facebook_api/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# Source-url: https://pypi.io/packages/source/f/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
+
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
 Facebook API.
@@ -33,37 +33,20 @@ Facebook API.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%files
-%python_sitelibdir/*
-
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.10-alt1
+- new version 0.1.10 (with rpmrb script)
+- python3 only
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.1.4-alt1.2
 - Rebuild with python3.7.
 

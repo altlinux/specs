@@ -1,42 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define oname appier
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.9.2
+Version: 1.18.25
 Release: alt1
+
 Summary: Appier Framework
+
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/appier/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/20/a2/22bc36e133c5eb70f8664c15ff46cec5c69169eca7977dfb3550da8837e0/%{oname}-%{version}.tar.gz
+# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
 Simple WSGI based framework for easy REST API creation. It aims at
 creating simple infra-structure for the consulting work that is being
 developed by the Hive Solutions team.
-
-%package tests
-Summary: Tests for Appier Framework
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-Simple WSGI based framework for easy REST API creation. It aims at
-creating simple infra-structure for the consulting work that is being
-developed by the Hive Solutions team.
-
-This package contains tests for Appier Framework.
 
 %package -n python3-module-%oname
 Summary: Appier Framework
@@ -60,39 +48,14 @@ developed by the Hive Solutions team.
 This package contains tests for Appier Framework.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%files
-%doc PKG-INFO README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test
-
-%files tests
-%python_sitelibdir/*/test
-
-%if_with python3
 %files -n python3-module-%oname
 %doc PKG-INFO README.rst
 %python3_sitelibdir/*
@@ -100,9 +63,12 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test
-%endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.18.25-alt1
+- new version 1.18.25 (with rpmrb script)
+- python3 only (uses yield from)
+
 * Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1
 - automated PyPI update
 
