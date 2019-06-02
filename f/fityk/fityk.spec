@@ -3,12 +3,14 @@
 %def_with docs
 %def_with python3
 
-Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.3.1
-Release: alt1
+Release: alt2
+
+Summary: Tool for fitting and analyzing data
 License: GPL
 Group: Sciences/Other
+
 Url: https://github.com/wojdyr/fityk
 # https://github.com/wojdyr/fityk.git
 Source0: %name-%version.tar
@@ -74,11 +76,14 @@ you will need to install %name-devel.
 
 %prep
 %setup
-#cp -fR %_includedir/cmpfit fityk/
 
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+%endif
+
+%ifarch %e2k
+%add_optflags -std=gnu++11
 %endif
 
 %build
@@ -201,6 +206,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1.3.1-alt2
+- E2K: explicit -std=gnu++11
+
 * Sun Aug 26 2018 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 - built with compat-libwxGTK3.0-gtk2-devel
