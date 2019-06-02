@@ -1,6 +1,6 @@
 Name: fmit
 Version: 1.2.6
-Release: alt1
+Release: alt2
 
 Summary: Free Music Instrument Tuner
 
@@ -32,6 +32,10 @@ JACK, OSS, ALSA, Portaudio support
 
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 mkdir BUILD
@@ -58,6 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1.2.6-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.6-alt1
 - new version 1.2.6 (with rpmrb script)
 
