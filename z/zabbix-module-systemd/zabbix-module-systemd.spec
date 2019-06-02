@@ -6,7 +6,7 @@
 
 Name: zabbix-module-systemd
 Version: 1.0.0
-Release: alt3
+Release: alt4
 Summary: systemd monitoring module for Zabbix
 
 Group: Monitoring
@@ -48,6 +48,9 @@ subst 's|/usr/lib64|%_libdir|g' configure.ac
 %doc README.md
 
 %changelog
+* Sun Jun  2 2019 Terechkov Evgenii <evg@altlinux.org> 1.0.0-alt4
+- Rebuild with zabbix-4.2
+
 * Thu Nov 30 2017 Alexei Takaseev <taf@altlinux.org> 1.0.0-alt3
 - Add loss BuildReq
 
