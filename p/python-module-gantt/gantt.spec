@@ -1,22 +1,29 @@
 %define oname gantt
 
+%def_without python2
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1
+Release: alt2
+
 Summary: This is a python class to create gantt chart using SVG
+
 License: GPLv3+
 Group: Development/Python
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/python-gantt/
+
+BuildArch: noarch
 
 Source: %name-%version.tar
 Patch1: %oname-%version-alt.patch
 
+%if_with python2
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-svgwrite python-module-clize
 BuildRequires: python-module-nose python2.7(dateutil)
+%endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -70,6 +77,9 @@ This package contains tests for %oname.
 %setup
 %patch1 -p1
 
+# hack to fix new clize bug: ValueError: Parameters --start-date and --svg use a duplicate alias '-s'
+subst "s|'S'|'b'|" org2gantt/org2gantt.py
+
 touch org2gantt/__init__.py
 
 %if_with python3
@@ -78,7 +88,9 @@ find ../python3/%oname -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -87,13 +99,15 @@ popd
 %endif
 
 %install
+install -d %buildroot%_bindir
+%if_with python2
 %python_install
 cp -fR org2gantt %buildroot%python_sitelibdir/
-install -d %buildroot%_bindir
 sed -i 's|python3|python|' \
 	%buildroot%python_sitelibdir/org2gantt/org2gantt.py
 ln -s %python_sitelibdir/org2gantt/org2gantt.py \
 	%buildroot%_bindir/org2gantt
+%endif
 
 %if_with python3
 pushd ../python3
@@ -107,9 +121,11 @@ popd
 %make doc
 
 %check
+%if_with python2
 export PYTHONPATH=$PWD
 python setup.py build_ext -i
 %make test PYTHON=python NOSETESTS=nosetests
+%endif
 %if_with python3
 pushd ../python3
 export PYTHONPATH=$PWD
@@ -118,12 +134,10 @@ python3 setup.py build_ext -i
 popd
 %endif
 
+%if_with python2
 %files
 %doc CHANGELOG *.txt org2gantt/*.org *.html
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+%_bindir/org2gantt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/example.org
@@ -131,11 +145,12 @@ popd
 %files tests
 %python_sitelibdir/*/test*
 %python_sitelibdir/*/example.org
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG *.txt org2gantt/*.org *.html
-%_bindir/*.py3
+%doc CHANGELOG *.txt org2gantt/*.org
+%_bindir/org2gantt.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
@@ -148,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt2
+- NMU: disable python2 module
+
 * Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1
 - Updated to upstream version 0.6.0.
 

@@ -1,25 +1,38 @@
 %define oname sigtools
 
+%def_without check
+%def_without python2
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt2.b2.git20150217.1.1
+Version: 2.0.2
+Release: alt1
+
 Summary: Python module to manipulate function signatures
+
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sigtools/
+
 Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/epsy/sigtools.git
+# Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-six python-module-funcsigs
 #BuildPreReq: python-module-sphinx
+%if_with check
+BuildRequires: python-module-unittest2 python-module-coverage python-module-mock
+%endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-unittest2 python3-module-coverage python3-module-mock
+%endif
 #BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-six python3-module-funcsigs
 #BuildPreReq: python3-module-sphinx
@@ -70,7 +83,9 @@ cp -fR . ../python3
 %endif
 
 %build
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -79,25 +94,35 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+rm -rf %buildroot%python_sitelibdir/sigtools/tests/
+%endif
 
 %if_with python3
 pushd ../python3
 %python3_install
+rm -rf %buildroot%python3_sitelibdir/sigtools/tests/
 popd
 %endif
 
+%if_with check
 %check
+%if_with python2
 python setup.py test
+%endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
 popd
 %endif
+%endif
 
+%if_with python2
 %files
 %doc *.rst docs/*.rst*
 %python_sitelibdir/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -106,6 +131,12 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
+- new version 2.0.2 (with rpmrb script)
+- switch to build from tarball
+- disable check (module repeated-test is missed)
+- build python3 module only
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.b2.git20150217.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
