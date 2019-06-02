@@ -10,25 +10,27 @@ BuildRequires: jpackage-generic-compat
 
 Name:          reflections
 Version:       0.9.10
-Release:       alt1_5jpp8
+Release:       alt1_8jpp8
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
 Source0:       https://github.com/ronmamo/reflections/archive/%{githash}/%{name}-%{githash}.tar.gz
 
-BuildRequires: java-atk-wrapper
-BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.findbugs:annotations)
-BuildRequires: mvn(com.google.code.gson:gson)
-BuildRequires: mvn(com.google.guava:guava)
-BuildRequires: mvn(dom4j:dom4j)
-BuildRequires: mvn(javax.servlet:javax.servlet-api)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.commons:commons-vfs2)
-BuildRequires: mvn(org.javassist:javassist)
-BuildRequires: mvn(org.jsr-305:ri)
-BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.slf4j:slf4j-simple)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:annotations)
+BuildRequires:  mvn(com.google.code.gson:gson)
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-vfs2)
+BuildRequires:  mvn(org.javassist:javassist)
+BuildRequires:  mvn(org.jsr-305:ri)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  java-atk-wrapper
+BuildRequires:  openjfx
+# due to openjfx
+ExclusiveArch: %{ix86} x86_64
 
 BuildArch:     noarch
 Source44: import.info
@@ -89,6 +91,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference COPYING.txt
 
 %changelog
+* Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_8jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_5jpp8
 - java update
 
