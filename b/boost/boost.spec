@@ -19,11 +19,7 @@
 %def_with python_compat_symlinks
 
 # mpi
-%ifarch %e2k
-%def_without mpi
-%else
 %def_with mpi
-%endif
 
 # long_double
 %ifarch %arm
@@ -55,7 +51,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt7
+Release: alt8
 
 Summary: Boost libraries
 License: Boost Software License
@@ -1986,6 +1982,9 @@ done
 
 
 %changelog
+* Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1:1.67.0-alt8
+- Don't disable mpi knob on e2k by default anymore.
+
 * Mon May 27 2019 Nikita Ermakov <arei@altlinux.org> 1:1.67.0-alt7
 - Add RISC-V support.
 
