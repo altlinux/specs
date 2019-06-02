@@ -6,7 +6,7 @@
 
 Name: zabbix-module-sockets
 Version: 1.1.0
-Release: alt3
+Release: alt4
 Summary: A Zabbix loadable module to monitor Linux Sockets
 
 Group: Monitoring
@@ -46,6 +46,9 @@ the state of sockets on Linux systems.
 %doc README.md templates/*.xml
 
 %changelog
+* Sun Jun  2 2019 Terechkov Evgenii <evg@altlinux.org> 1.1.0-alt4
+- Rebuild with zabbix-4.2
+
 * Thu Nov 30 2017 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt3
 - Add loss BuildReq
 
