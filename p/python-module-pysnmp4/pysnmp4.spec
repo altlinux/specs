@@ -1,15 +1,23 @@
 %def_with python3
 
-Summary: SNMP v1/v2c/v3 engine
 Name: python-module-pysnmp4
-Version: 4.3.1
-Release: alt1.2
-%setup_python_module pysnmp
-Url: http://pysnmp.sourceforge.net/
-Source0: %modulename-%version.tar
+Version: 4.4.9
+Release: alt1
+
+Summary: SNMP v1/v2c/v3 engine
+
 License: BSD
 Group: Development/Python
+Url: http://pysnmp.sourceforge.net/
+
+%setup_python_module pysnmp
+
+# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
+Source: %name-%version.tar
+
+
 BuildArch: noarch
+
 Conflicts: python-module-pysnmp
 
 %if_with python3
@@ -30,7 +38,7 @@ This is an alpha-quality revision of pure-Python, open source and free
 implementation of v1/v2c/v3 SNMP engine.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -67,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 4.4.9-alt1
+- new version 4.4.9 (with rpmrb script)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.3.1-alt1.2
 - (NMU) rebuild with python3.6
 
