@@ -9,10 +9,13 @@
 %def_enable installed_tests
 %def_enable gspell
 %def_enable check
+%ifarch %valgrind_arches
+%def_enable valgrind
+%endif
 
 Name: lib%{_name}4
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -26,8 +29,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.8.0
 
-BuildRequires(pre): rpm-build-gnome
-
+BuildRequires(pre): rpm-build-gnome rpm-macros-valgrind
 # From configure.ac
 BuildRequires: gcc-c++ autoconf-archive gtk-doc itstool
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -36,8 +38,7 @@ BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
-# for check
-BuildRequires: xvfb-run valgrind
+%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}}
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -105,7 +106,8 @@ the functionality of the installed GtkSourceView library.
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
-	%{?_enable_installed_tests:--enable-installed-tests}
+	%{?_enable_installed_tests:--enable-installed-tests} \
+	%{subst_enable valgrind}
 
 %make_build
 
@@ -150,6 +152,9 @@ xvfb-run %make check
 
 
 %changelog
+* Mon Jun 03 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1.1
+- made valgrind tests optional
+
 * Sat Mar 16 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
