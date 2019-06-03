@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.5.0.3
-Release: alt2
+Version: 3.6.0
+Release: alt1
 
 Summary: billiard is a fork of the Python 2.7 multiprocessing package
 License: GPL
@@ -12,17 +12,17 @@ Group: Development/Python
 Requires: python
 Url: https://github.com/celery/billiard/
 
-# https://github.com/celery/billiard.git
+# Source-git: https://github.com/celery/billiard.git
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools gcc-c++ python-module-sphinx
 BuildRequires: python2.7(case)
-BuildRequires: python2.7(unittest2) python2.7(mock) python2.7(pytest)
+BuildRequires: python2.7(unittest2) python2.7(mock) python2.7(pytest) python2.7(psutil)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(case)
-BuildRequires: python3(unittest2) python3(mock) python3(pytest)
+BuildRequires: python3(unittest2) python3(mock) python3(pytest) python3(psutil)
 %endif
 
 %add_findreq_skiplist %python_sitelibdir/%oname/popen_spawn_win32.py
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 04 2019 Vitaly Lipatov <lav@altlinux.ru> 3.6.0-alt1
+- new version (3.6.0) with rpmgs script
+
 * Fri Mar 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0.3-alt2
 - Updated build dependencies.
 

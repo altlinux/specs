@@ -2,39 +2,42 @@
 
 %define oname kombu
 
+# TODO: fix list issue
+%def_disable test
 %def_with python3
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.2.1
+Version: 4.4.0
 Release: alt1
+
 Group: Development/Python
 License: BSD License
 Summary: Kombu is an AMQP messaging framework for Python
+
 URL: https://github.com/celery/kombu/
 
 # https://github.com/celery/kombu.git
+# Source-url: https://pypi.io/packages/source/k/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
-
-Patch1: %oname-%version-alt-tests.patch
 
 # Patches from Debian
 Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
-Patch12: 0003-Remove-pytest-sugar-from-test-requirements.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-anyjson python-module-boto python-module-django
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python2.7(sphinx_celery)
 BuildRequires: python-module-pylibrabbitmq python-module-pymongo
 BuildRequires: python-module-amqp >= 1:1.4.9
-BuildRequires: python2.7(case) python2.7(unittest2) python2.7(mock) python2.7(pytest)
+BuildRequires: python2.7(case) python2.7(unittest2) python2.7(mock) python2.7(pytest) python2.7(Pyro4) python2.7(serpent)
 BuildRequires: python2.7(pytest_cov) python2.7(redis) python2.7(msgpack) python2.7(boto3) python2.7(pycurl)
 BuildRequires: python-module-tox
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-amqp >= 1:1.4.9
-BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest)
+BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest) python3(Pyro4) python3(serpent)
 BuildRequires: python3(pytest_cov) python3(redis) python3(msgpack) python3(boto3) python3(pycurl)
 BuildRequires: python3-module-tox
 %endif
@@ -84,9 +87,10 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 %patch11 -p1
-%patch12 -p1
+
+# drop cosmetic only module
+subst "s|pytest-sugar||" requirements/test.txt 
 
 %if_with python3
 cp -fR . ../python3
@@ -120,6 +124,7 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
+%if_enabled test
 %check
 python setup.py test
 
@@ -127,6 +132,7 @@ python setup.py test
 pushd ../python3
 python3 setup.py test
 popd
+%endif
 %endif
 
 %files
@@ -143,6 +149,10 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt1
+- new version 4.4.0 (with rpmrb script)
+- switch to build from tarball
+
 * Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.2.1-alt1
 - Updated to upstream version 4.2.1.
 
