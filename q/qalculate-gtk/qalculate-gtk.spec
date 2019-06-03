@@ -3,7 +3,7 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 2.8.2
+Version: 3.2.0
 Release: alt1
 
 Summary: A very versatile desktop calculator - GTK+ version.
@@ -49,6 +49,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/%shortname.png
 
 %changelog
+* Mon Jun 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt1
+- Updated to upstream version 3.2.0.
+
 * Tue Jan 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.2-alt1
 - Updated to upstream version 2.8.2.
 
