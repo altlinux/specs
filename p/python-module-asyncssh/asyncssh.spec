@@ -5,37 +5,39 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9.2
-Release: alt1.git20150126.1.2
+Version: 1.17.0
+Release: alt1
+
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
+
 License: Eclipse Public License v1.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/asyncssh/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ronf/asyncssh.git
+# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro
 
 %if_with python2
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-asyncio python-module-pycrypto
 #BuildPreReq: python-module-cryptography python-module-curve25519
+%py_provides %oname
+%py_requires asyncio Crypto curve25519
+%py_use cryptography >= 2.7
 %endif
 #BuildPreReq: %_bindir/openssl
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-pycrypto
-#BuildPreReq: python3-module-cryptography python3-module-curve25519
+BuildRequires: python3-module-pytest
 %endif
 
-%py_provides %oname
-%py_requires asyncio Crypto cryptography curve25519
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools
-BuildRequires: python3-module-cryptography python3-module-curve25519 python3-module-pycrypto python3-module-pytest rpm-build-python3
 
 %description
 AsyncSSH is a Python package which provides an asynchronous client and
@@ -46,7 +48,11 @@ framework.
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio Crypto cryptography curve25519
+%if_with python3
+%py3_requires asyncio 
+%py3_use Crypto curve25519
+%py3_use cryptography >= 2.7
+%endif
 
 %description -n python3-module-%oname
 AsyncSSH is a Python package which provides an asynchronous client and
@@ -82,6 +88,9 @@ pushd ../python3
 popd
 %endif
 
+rm -f %buildroot%python_sitelibdir/%oname/*_win32*
+rm -f %buildroot%python3_sitelibdir/%oname/*_win32*
+
 %check
 %if_with python2
 python setup.py test
@@ -94,17 +103,21 @@ popd
 
 %if_with python2
 %files
-%doc COPYRIGHT LICENSE README* docs/*.rst examples
+%doc COPYRIGHT LICENSE README* examples
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc COPYRIGHT LICENSE README* docs/*.rst examples
+%doc COPYRIGHT LICENSE README* examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.17.0-alt1
+- new version 1.17.0 (with rpmrb script)
+- switch to build from tarball
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt1.git20150126.1.2
 - (NMU) rebuild with python3.6
 
