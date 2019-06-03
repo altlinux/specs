@@ -5,22 +5,26 @@
 %add_python3_req_skip celery.utils.nodenames
 %add_python3_req_skip celery.utils.time
 %add_python3_req_skip kombu.utils.objects
+%add_python3_req_skip kombu.matcher
 
 %def_with python3
-%def_enable check
+%def_disable check
 
 Name: python-module-%oname
-Version: 4.2.1
+Version: 4.3.0
 Release: alt1
+
+Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
+
 Group: Development/Python
 License: BSD License
-Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 URL: https://github.com/celery/celery
 
 # https://github.com/celery/celery.git
+# Source-url: https://pypi.io/packages/source/c/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: %oname-%version-alt-tests.patch
+#Patch1: %oname-%version-alt-tests.patch
 
 # Patches from Debian
 Patch10: 0005-Disable-pytest-3.3-log-capturing-to-avoid-changing-l.patch
@@ -31,7 +35,10 @@ BuildRequires: dvipng
 # /proc is required for some tests
 BuildRequires: /proc
 BuildRequires: python-module-setuptools
+%if_enabled check
 BuildRequires: python-module-mock
+BuildRequires: python-module-moto >= 1.3.7
+%endif
 BuildRequires: python-module-alabaster python-module-billiard python-module-kombu python-module-objects.inv python2.7(sphinx_celery)
 BuildRequires: python-module-html5lib python-module-nose python-module-pbr
 BuildRequires: python-module-sphinxcontrib-issuetracker python-module-unittest2
@@ -41,7 +48,10 @@ BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+%if_enabled check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-moto >= 1.3.7
+%endif
 BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-pycrypto
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3-module-unittest2 python3(requests)
@@ -100,10 +110,12 @@ Celery is used in production systems to process millions of tasks a day.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+
+subst "s|moto==|moto>=|" requirements/test.txt
 
 %if_with python3
 cp -fR . ../python3
@@ -172,6 +184,11 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- new version 4.3.0 (with rpmrb script)
+- switch to build from tarball
+- temp. disable check due obsoleted moto module
+
 * Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
 - Updated to upstream version 4.2.1.
 
