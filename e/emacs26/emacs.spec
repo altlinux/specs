@@ -21,7 +21,7 @@
 
 Name: emacs26
 Version: 26.2
-Release: alt8
+Release: alt9
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -881,29 +881,27 @@ export EMACSLOADPATH="$(pwd)"/lisp
 %define _configure_script ../configure
 %if_enabled nox
 pushd build-nox
-%configure --disable-build-details --sharedstatedir=/var --without-all --with-pop --with-x=no --with-gpm --with-gnutls --with-selinux --with-xml2 --with-wide-int --without-lcms2
+%configure --disable-build-details --sharedstatedir=/var --without-all --with-pop --with-x=no --with-gpm --with-gnutls --with-selinux --with-xml2 --with-wide-int --without-lcms2 --with-modules
 popd
 %endif
 %if_enabled athena
 pushd build-athena
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2 --with-modules
 popd
 %endif
 %if_enabled gtk
 pushd build-gtk
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=gtk2 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=gtk2 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2 --with-modules
 popd
 %endif
 %if_enabled motif
-# export CFLAGS="%optflags -I%_prefix/X11R6/include"
-# export LDFLAGS="-Wl,-L%_prefix/X11R6/%_lib"
 pushd build-motif
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2 --with-modules
 popd
 %endif
 %if_enabled gtk3
 pushd build-gtk3
-%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2
+%configure --disable-build-details --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2 --with-modules
 popd
 %endif
 
@@ -1531,6 +1529,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Mon Jun  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2-alt9
+- Add --with-modules configure option (ALT#36839)
+
 * Mon Jun  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2-alt8
 - Add devel subpackage with emacs-module.h (ALT#36839)
 
