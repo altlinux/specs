@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt6
+Release: alt7
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -248,6 +248,7 @@ Obsoletes: rpmhdrmemcache <= 0.1.2-alt3.1
 %package checkinstall
 Summary: Run tests for %name immediately when this package is installed
 Group: Other
+BuildArch: noarch
 Requires: %name
 Requires: rpminstall-tests-checkinstall
 
@@ -294,6 +295,7 @@ popd
 # We need to build with --enable-python for the self-test suite, but we
 # actually package the bindings built with setup.py (#531543#c26)
 rm -rf %buildroot/%python_sitelibdir
+rm -rf %buildroot/%python3_sitelibdir
 pushd python
 %python_install
 %python3_install
@@ -517,11 +519,20 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon May 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt7
+(thx Vladimir D. Seleznev vseleznv@)
+- Added support for dbi matching against DistTag and BuildTime (closes: #36375).
+- Display NEVR with DistTag or BuildTime when label, specified to erase, is
+  matching to multiple packages.
+(thx Gleb F-Malinovskiy glebfm@)
+- Fix non-LFS functions on i586 in rpm-plugins/systemd_inhibit.so,
+  /usr/lib/rpm/sepdebugcrcfix (thx glebfm@).
+
 * Mon Feb 11 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt6
 - rpmRangesOverlap() made asymmetric w.r.t. underspecified release or disttag.
   (Provides: N = V can't anymore satisfy Requires: N = V-R. Look out for unmets!)
   (thx Vladimir D. Seleznev)
-- rpmRangesOverlap() optimized (can run ca. 30% faster).
+- rpmRangesOverlap() optimized (can run ca. 30%% faster).
 - checkinstall subpackage added.
 
 * Tue Jan 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.13.0.1-alt5

@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt64
+Release: alt65
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -23,10 +23,16 @@ Patch: apt-%version-%release.patch
 Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
 
 Requires: libapt = %EVR
-Requires: rpm >= 4.13.0.1-alt2, /etc/apt/pkgpriorities, apt-conf
+# We need (lib)rpm which finds pkgs by labels in N-E:V-R@T format (w/ buildtime)
+Requires: rpm >= 4.13.0.1-alt7
+Requires: /etc/apt/pkgpriorities, apt-conf
 # for methods.
 Requires: gzip, bzip2, xz
 Requires: gnupg, alt-gpgkeys
+
+# Older versions of update-kernel misunderstood the @-postfix with buildtime,
+# which is now added by APT to verstrs and the names of allow-duplicated pkgs.
+Conflicts: update-kernel < 0.9.13-alt1
 
 # for autopoint.
 BuildPreReq: cvs
@@ -215,7 +221,7 @@ sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 printf '%_target_cpu\t%_target_cpu' >> buildlib/archtable
 
 %autoreconf
-%add_optflags -DPKG_NEVRA=\\\"%name-%{?epoch:%epoch:}%version-%release.%_target_cpu\\\"
+%add_optflags -DAPTRPM_ID=\\\"%name-%{?epoch:%epoch:}%version-%release%{?disttag::%disttag}.%_target_cpu\\\"
 %configure --includedir=%_includedir/apt-pkg %{subst_enable static}
 
 # Probably this obsolete now?
@@ -304,6 +310,19 @@ unset RPM_PYTHON
 %_libdir/%name/methods/https
 
 %changelog
+* Thu May 30 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt65
+- Add buildtime to VerStrs (used by APT to identify package versions).
+  This data is used in several manners:
+  * by CheckDep() (only when matching a dependency with a real package);
+  * rpm_name_conversion() (only when making up an id for a duplicated package);
+  * and by *CmpVersion().
+  The latter needs buildtime to determine the correct upgrade direction and
+  can be called through the API with some externally supplied versions.
+  In order to honor buildtime without changing the API and its clients, we pass
+  buildtime inside the existing argument. (Also fixes ALT#36528)
+- Increase default APT::Cache-Limit in 1.5 times due to the extension of VerStrs
+  (ALT#36775).
+
 * Fri May 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt64
 - Ported https support from Debian via https method to apt-https package (Closes: #33732).
 
