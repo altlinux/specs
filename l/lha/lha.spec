@@ -1,6 +1,6 @@
 Name: lha
 Version: 1.14i
-Release: alt2.qa1
+Release: alt3
 Serial: 2
 
 %define addver -ac20050924p1
@@ -12,11 +12,7 @@ Group: Archiving/Compression
 
 Url: http://www2m.biglobe.ne.jp/~dolphin/lha/lha-unix.htm
 Source: http://www2m.biglobe.ne.jp/~dolphin/lha/prog/%fullname.tar.gz
-Patch1: %name-1.14i-make.patch
-Patch2: %name-1.14e-ext.patch
-Patch3: %name-1.14i-fix-includes.patch.bz2
-Patch4: %name-114i-rh-symlink.patch
-Patch5: %name-114i-rh-sec.patch
+Patch: %name-1.14i-fix-includes.patch.bz2
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
 %description
@@ -29,26 +25,26 @@ Amiga or DOS archives, or if you have to build LhA archives to
 be read on the Amiga or DOS.
 
 %prep
-%setup -q -n %fullname
-#patch1 -p1
-#patch2 -p0
-%patch3 -p1
-#patch4 -p1
-#patch5 -p1
+%setup -n %fullname
+%patch -p1
 
 %build
-%define _optlevel 9
+%define _optlevel 3
 %add_optflags %optflags_notraceback
 %configure
 %make_build OPTIMIZE="%optflags"
 
 %install
-install -pD -m0755 src/%name $RPM_BUILD_ROOT%_bindir/%name
+install -pDm755 src/%name %buildroot%_bindir/%name
 
 %files
 %_bindir/*
 
 %changelog
+* Mon Jun 03 2019 Michael Shigorin <mike@altlinux.org> 2:1.14i-alt3
+- E2K: fix build via lowering superfluous optimization level
+- minor spec cleanup
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2:1.14i-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
