@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20150621.1.1.1
+Release: alt2.git20150621
 Summary: A sphinx theme for generate reveal.js presentation
 License: MIT
 Group: Development/Python
@@ -14,6 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tell-k/sphinxjp.themes.revealjs.git
 Source: %name-%version.tar
+Patch: sphinxjp-0.3.0-Fix-Pytest4.x-compatibility-errors.patch
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -50,6 +51,7 @@ reveal.js style presentation theme for Sphinx.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -103,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2.git20150621
+- Fixed Pytest4.x compatibility errors.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.git20150621.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
