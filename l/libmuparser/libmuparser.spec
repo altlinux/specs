@@ -1,5 +1,5 @@
 Name: libmuparser
-Version: 2.2.6
+Version: 2.2.6.1
 Release: alt1
 
 Summary: a fast math parser library
@@ -62,6 +62,9 @@ sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.6.1-alt1
+- new version 2.2.6.1 (with rpmrb script)
+
 * Wed Mar 20 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
 - new version (2.2.6) with rpmgs script
 
