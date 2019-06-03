@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.23
-Release: alt3
+Release: alt4
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -53,9 +53,8 @@ Development shared library for %name
 %prep
 %setup
 %patch -p1
-%ifarch e2k
-%patch -p2
-%endif
+# we can do it not only on e2k
+%patch1 -p2
 
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
@@ -111,6 +110,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Mon Jun 03 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt4
+- Fix previous patch attachment.
+
 * Fri May 31 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt3
 - Fix build on e2k (thx glebfm@).
 
