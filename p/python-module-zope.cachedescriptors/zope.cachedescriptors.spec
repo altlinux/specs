@@ -1,23 +1,25 @@
-%define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
 %define oname zope.cachedescriptors
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.0
-#Release: alt1.dev0.git20150204.1
+Version: 4.3.1
+Release: alt1
+
 Summary: Method and property caching decorators
+
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.cachedescriptors/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/06/14/a188b03efc12813178585840e71a2c8751d0fe12dd644764c7025f202181/%{oname}-%{version}.tar.gz
+# Source-url: https://pypi.io/packages/source/z/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.testrunner
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -82,7 +84,7 @@ persistent objects.
 This package contains tests for zope.cachedescriptors.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -147,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
+- new version 4.3.1 (with rpmrb script)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
