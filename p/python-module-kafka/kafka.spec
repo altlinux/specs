@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.4.4
-Release: alt1
+Release: alt2
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
@@ -108,6 +108,10 @@ find -name '*.py' -print0 | xargs -0 \
 grep -qsF 'kafka.vendor' && { echo "There is the usage of bundled package"; \
 exit 1; }
 
+# unpin Pytest
+grep -qsF 'pytest<4.0' tox.ini || exit 1
+sed -i 's/pytest<4\.0/pytest/g' tox.ini
+
 %if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
@@ -181,6 +185,9 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jun 03 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt2
+- Allowed testing against Pytest4.x.
+
 * Sat Feb 16 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt1
 - 1.3.3 -> 1.4.4.
 - Dropped dependency on sphinxcontrib.napoleon.
