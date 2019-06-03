@@ -1,11 +1,11 @@
 
 %define branch_prefix .
-%define branch_id S1
+%define branch_id S2
 %define branch_suffix %%nil
 
 Name: ubt-common
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Group: Development/Other
 Summary: Common Universal Branch Tag
@@ -40,6 +40,9 @@ __EOF__
 %_rpmmacrosdir/ubt
 
 %changelog
+* Mon Jun 03 2019 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
+- update branch_id
+
 * Mon Feb 27 2017 Sergey V Turchin <zerg@altlinux.org> 0.2-alt2
 - bump release
 
