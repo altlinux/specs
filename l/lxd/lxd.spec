@@ -11,7 +11,7 @@
 
 Name:		lxd
 Version:	3.10
-Release:	alt2
+Release:	alt3
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -42,6 +42,9 @@ Requires:	btrfs-progs
 Requires:	lvm2
 Requires:	squashfs-tools
 Requires:	liblxd_sqlite3
+Requires:	rsync
+Requires:	iptables
+Requires:	dnsmasq
 
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
@@ -172,6 +175,9 @@ help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benc
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Sun Jun 02 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.10-alt3
+- Add rsync, iptables and dnsmasq to requires
+
 * Wed Mar 13 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.10-alt2
 - Fix build by vendorizing build dependencies
 
