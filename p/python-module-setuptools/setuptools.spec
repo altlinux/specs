@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 41.0.1
-Release: alt1
+Release: alt2
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -213,6 +213,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Mon Jun 03 2019 Stanislav Levin <slev@altlinux.org> 1:41.0.1-alt2
+- Allowed testing against Pytest4.x.
+
 * Tue May 14 2019 Stanislav Levin <slev@altlinux.org> 1:41.0.1-alt1
 - 40.8.0 -> 41.0.1.
 
