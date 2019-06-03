@@ -1,26 +1,28 @@
 %define oname ws4py
 %def_with python3
 
-Summary: WebSocket for Python (ws4py)
 Name: python-module-ws4py
-Version: 0.3.5.git.fd55907a
+Version: 0.5.1
 Release: alt1
+
+Summary: WebSocket for Python (ws4py)
+
 Url: https://github.com/Lawouach/WebSocket-for-Python
-Source: %name-%version.tar
-Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: ASL 2.0
 Group: Development/Python
 
-BuildArch: noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-setupdocs python3-module-setupdocs rpm-build-python3
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 
-#BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+# Source-url: https://pypi.io/packages/source/w/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+Patch1: %oname-async-fix.patch
+
+BuildArch: noarch
+BuildRequires: rpm-build-python python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-module-setupdocs python3-module-setuptools
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -38,12 +40,11 @@ defined in RFC 6455.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
-
-
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -67,19 +68,22 @@ popd
 
 
 %files
-%doc CHANGELOG.txt LICENSE README.md
+%doc CHANGELOG.md LICENSE README.md
 %python_sitelibdir/*
 
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG.txt LICENSE README.md
+%doc CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/*
 %endif
 
 
-
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
+- new version 0.5.1 (with rpmrb script)
+- switch to build from tarball
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.3.5.git.fd55907a-alt1
 - New version
 
