@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 0.9
-Release: alt2
+Release: alt3
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Mon Jun 03 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt3
+- Add noarch for p9_mipsel.
+
 * Mon May 27 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9-alt2
 - arei@: added armh, mipsel and riscv64 ports information.
 
