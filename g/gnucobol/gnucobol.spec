@@ -1,50 +1,59 @@
-Name: open-cobol
-Version: 1.1
-Release: alt3.1
+Name: gnucobol
+Version: 2.2
+Release: alt1
 
-Summary: OpenCOBOL - COBOL compiler
+Summary: GnuCOBOL (formely Open COBOL) - COBOL compiler
+
 License: GPLv2+ and LGPLv2+
 Group: Development/Other
 Url: http://www.opencobol.org
+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # Source:	http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-Source: http://www.sim-basis.de/%name-%version.tar.gz
+# Source-url: https://ftp.gnu.org/gnu/gnucobol/gnucobol-%version.tar.xz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Jun 06 2012
 # optimized out: libtinfo-devel
-BuildRequires: libdb4-devel libgmp-devel libncurses-devel
+BuildRequires: libdb4-devel libgmp-devel libncurses-devel help2man
 
 Requires: libcob = %version-%release
 Obsoletes: libcob-devel < %version
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
+Provides: open-cobol = %version-%release
+Obsoletes: open-cobol < %version
+
 %description
-OpenCOBOL is an open-source COBOL compiler, which translates COBOL
+GnuCOBOL is an open-source COBOL compiler, which translates COBOL
 programs to C code and compiles it using GCC.
 
 %package -n libcob
-Summary: OpenCOBOL runtime library
+Summary: GnuCOBOL runtime library
 License: LGPLv2+
 Group: Development/Other
 
 %description -n libcob
-OpenCOBOL is an open-source COBOL compiler, which translates COBOL
+GnuCOBOL is an open-source COBOL compiler, which translates COBOL
 programs to C code and compiles it using GCC.
 
-This package contains OpenCOBOL runtime library.
+This package contains GnuCOBOL runtime library.
 
 %prep
 %setup
+# hack to work around break -frecord-gcc-switches
+subst 's!/-g/!/-g /!' ./configure.ac
+%autoreconf
 
 %build
 %add_optflags %optflags_shared
-%configure --disable-rpath --disable-static
+%configure --disable-rpath --disable-static --enable-debug
 # get rid of RPATH
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
-%make_build
+%make_build || %make
 
 %install
 %makeinstall_std
@@ -59,16 +68,23 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_bindir/cobc
 %_bindir/cob-config
 %_bindir/cobcrun
-%_datadir/open-cobol
-%_infodir/open-cobol.info*
+%_datadir/gnucobol/
+%_infodir/gnucobol.info*
 %_includedir/*
 %_libdir/libcob.so
+%dir %_libdir/gnucobol/
+%_libdir/gnucobol/CBL_OC_DUMP.so
+%_man1dir/*
 
 %files -n libcob
-%doc COPYING.LIB
+%doc COPYING.LESSER
 %_libdir/libcob.so.*
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
+- new version (2.2) with rpmgs script
+- rename package from open-cobol to gnucobol
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3.1
 - NMU: added BR: texinfo
 
