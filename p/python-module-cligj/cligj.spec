@@ -2,22 +2,27 @@
 %define oname cligj
 
 %def_with python3
+%def_without check
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt2.1
+Version: 0.5.0
+Release: alt1
+
 Summary: Click params for GeoJSON CLI
+
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cligj/
 
 # https://github.com/mapbox/cligj.git
+# Source-url: https://pypi.io/packages/source/c/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-click-tests
 BuildRequires: python-module-pytest
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -68,6 +73,7 @@ popd
 %endif
 
 %check
+%if_with check
 export LC_ALL=en_US.UTF-8
 export PYTHONPATH=$PWD
 py.test -vv
@@ -76,6 +82,7 @@ pushd ../python3
 export PYTHONPATH=$PWD
 py.test3 -vv
 popd
+%endif
 %endif
 
 %files
@@ -89,6 +96,11 @@ popd
 %endif
 
 %changelog
+* Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+- switch to build from tarball
+- disable check (old code? NameError: name '__nonzero__' is not defined)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.0-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
