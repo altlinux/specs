@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.1.92
+%define emacs_version 26.2
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -20,8 +20,8 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.1.92
-Release: alt5
+Version: 26.2
+Release: alt8
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -778,6 +778,19 @@ included in the %name-cedet package, that extends the Emacs editor.
 You need to install %name-cedet-el only if you intend to modify any of the
 %name-cedet code or see some Lisp examples.
 
+%package devel
+Summary: Things needed to compile native modules for GNU Emacs
+Summary(ru_RU.UTF-8): Необходимое для компилирования модулей к GNU Emacs
+Group: Editors
+
+%description devel
+GNU Emacs is an extensible, customizable, self-documenting real-time
+display editor.  Emacs contains special code editing features, an
+extension language (Emacs Lisp), and the capability to read mail, news
+and more without leaving the editor.
+
+This package includes things you need to compile native modules for
+the Emacs editor
 
 %prep
 %setup -n %shortname
@@ -1514,8 +1527,19 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_emacs_datadir/%emacs_version/lisp/cedet/semantic/wisent/*.el.gz
 %_emacs_datadir/%emacs_version/lisp/cedet/srecode/*.el.gz
 
+%files devel
+%_includedir/emacs-module.h
 
 %changelog
+* Mon Jun  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2-alt8
+- Add devel subpackage with emacs-module.h (ALT#36839)
+
+* Sun Apr 14 2019 Terechkov Evgenii <evg@altlinux.org> 26.2-alt7
+- 26.2
+
+* Fri Apr 12 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.92-alt6
+- Rebuild with new libgif (task 216696)
+
 * Sat Feb 23 2019 Terechkov Evgenii <evg@altlinux.org> 26.1.92-alt5
 - 26.1.92
 
