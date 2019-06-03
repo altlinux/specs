@@ -8,7 +8,7 @@
 
 Name:           Mayavi
 Version:        4.6.2
-Release:        alt2
+Release:        alt3
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -26,7 +26,6 @@ BuildRequires: python-module-setuptools python-module-setupdocs
 BuildRequires: python-module-sphinx-devel libnumpy-devel
 BuildRequires: python-module-vtk%vtkver /proc
 BuildRequires: desktop-file-utils
-BuildRequires: libpympi-devel
 BuildRequires: vtk%vtkver-python
 BuildRequires: libGL-devel libGLU-devel xvfb-run
 %if_disabled bootstrap
@@ -183,6 +182,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %endif
 
 %changelog
+* Mon Jun 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.2-alt3
+- Updated build dependencies.
+
 * Mon May 20 2019 Slava Aseev <ptrnine@altlinux.org> 4.6.2-alt2
 - Rebuild with vtk8.2
 
