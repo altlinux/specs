@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.10.1
+Version: 1.10.4
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
@@ -14,6 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest-mock
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(setuptools_scm)
@@ -52,6 +53,7 @@ to worry about undoing patches at the end of a test
 
 %prep
 %setup
+%patch -p1
 rm -rf ../python3
 cp -a . ../python3
 
@@ -103,6 +105,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/pytest_mock.*
 
 %changelog
+* Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.10.4-alt1
+- 1.10.1 -> 1.10.4.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.10.1-alt1
 - 1.10.0 -> 1.10.1.
 
