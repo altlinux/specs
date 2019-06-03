@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.44
-Release: alt1.2
+Version: %ver_major.45
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -29,7 +29,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.44
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.44
+%define goffice_ver 0.10.45
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -121,8 +121,8 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 # itstool > 2.0.2 crashes on cs help translations
-rm -rf doc/cs
-sed -i 's/cs / /' doc/Makefile.am
+#rm -rf doc/cs
+#sed -i 's/cs / /' doc/Makefile.am
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -184,6 +184,9 @@ sed -i 's/cs / /' doc/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.45-alt1
+- 1.12.45
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.12.44-alt1.2
 - rebuild with new perl 5.28.1
 
