@@ -3,17 +3,21 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.2.0
-Release: alt1.1
+Version: 6.0.0
+Release: alt1
+
 Summary: Jupyter Terminal Console
+
 License: BSD
 Group: Development/Python
 BuildArch: noarch
+
 Url: https://pypi.python.org/pypi/jupyter_console
 
 # https://github.com/jupyter/jupyter_console.git
+# Source-url: https://pypi.io/packages/source/j/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-5.2.0-alt-docs.patch
 
 BuildRequires: python-devel python-module-setuptools /dev/pts
 BuildRequires: python-module-jupyter_client ipython
@@ -21,11 +25,13 @@ BuildRequires: python-module-ipykernel python-module-mock
 BuildRequires: python-module-pexpect python-module-nose
 BuildRequires: python-module-coverage python-module-traitlets-tests
 BuildRequires: python-module-ipython_genutils-tests
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinx-devel rpm-macros-sphinx
+BuildRequires: python-module-vine >= 1.3.0
 BuildRequires: python2.7(sphinx_rtd_theme) python2.7(sphinxcontrib_github_alt)
 BuildRequires: python2.7(pathlib2) python2.7(PIL)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-vine >= 1.3.0
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-jupyter_client ipython3
 BuildRequires: python3-module-ipykernel python3-module-mock
@@ -145,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 04 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
+- new version 6.0.0 (with rpmrb script)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
