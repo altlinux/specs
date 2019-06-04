@@ -1,7 +1,7 @@
 %define  modulename trustme
 
 Name:    python-module-%modulename
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
@@ -64,6 +64,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Tue Jun 04 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
+- New version.
+
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
 - New version.
 
