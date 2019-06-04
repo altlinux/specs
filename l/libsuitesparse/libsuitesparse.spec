@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define cholmod_ver 3.0.13
+%define umfpack_ver 5.7.8
+
 Name: libsuitesparse
-Version: 5.1.2
-Release: alt2
+Version: 5.4.0
+Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL, GPL
@@ -9,8 +13,7 @@ Url: http://faculty.cse.tamu.edu/davis/suitesparse.html
 
 Source: SuiteSparse-%version.tar
 Source1: cholmod.pc
-Source2: prepare_versions.sh
-Source3: umfpack.pc
+Source2: umfpack.pc
 
 Patch1: SuiteSparse-%version-alt.patch
 
@@ -24,16 +27,16 @@ BuildRequires: cmake
 %package devel
 Summary: Development files of SuiteSparse
 Group: Development/Other
-Requires: %name = %version-%release
-Conflicts: %name-devel < %version-%release
-Obsoletes: %name-devel < %version-%release
+Requires: %name = %EVR
+Conflicts: %name-devel < %EVR
+Obsoletes: %name-devel < %EVR
 Conflicts: libumfpack-devel UFconfig
 
 %package devel-static
 Summary: Static libraries of SuiteSparse
 Group: Development/Other
-Requires: %name-devel = %version-%release
-Conflicts: %name-devel < %version-%release
+Requires: %name-devel = %EVR
+Conflicts: %name-devel < %EVR
 
 %package devel-doc
 Summary: Documentation for %name
@@ -43,7 +46,12 @@ BuildArch: noarch
 %package examples
 Summary: Examples for %name
 Group: Sciences/Mathematics
-Requires: %name = %version-%release
+BuildArch: noarch
+
+%package tools
+Summary: %name tools
+Group: Sciences/Mathematics
+Requires: %name = %EVR
 
 %description
 Package contains a set of shared libraries to use efficient calculation
@@ -64,47 +72,69 @@ calculation algorithms with sparse matricies for your programs.
 %description examples
 Examples for SuiteSparse.
 
+%description tools
+Package contains Mongoose executable.
+Mongoose executable can read a Matrix Market file containing an adjacency
+matrix and output timing and partitioning information to a plain-text file.
+Simply call it with the following syntax:
+mongoose <MM-input-file.mtx> [output-file]
+
 %prep
 %setup
-install -m644 %SOURCE1 %SOURCE3 .
-install -m755 %SOURCE2 .
+install -m644 %SOURCE1 %SOURCE2 .
 %patch1 -p1
 
-%build
-./prepare_versions.sh
+# Copy examples src
+mkdir demos-src/
+cp -rpf --parents $(find ./ -name Demo) demos-src/
 
+%build
+sed -i "s|@VERSION@|%cholmod_ver|" cholmod.pc
+sed -i "s|@VERSION@|%umfpack_ver|" umfpack.pc
+
+# Remove rpath due to "RPATH contains illegal entry" error
+sed -i 's/ -Wl,-rpath=$(INSTALL_LIB)//' SuiteSparse_config/SuiteSparse_config.mk
+sed -i 's/ -Wl,-rpath=$(INSTALL_LIB)//' Mongoose/SuiteSparse_config/SuiteSparse_config.mk
 pushd GraphBLAS
-%cmake
+%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
+popd
+pushd Mongoose
+%cmake -DCMAKE_INSTALL_BINDIR=%_bindir -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
+popd
+pushd metis-5.1.0
+%cmake -DGKLIB_PATH=../GKlib
 popd
 
+export JOBS=%__nprocs
 %make -C SuiteSparse_config MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 %make -C CCOLAMD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
-%make TOPDIR=$PWD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
+%make TOPDIR=$PWD LD_LIBRARY_PATH=%_builddir/%name-%version/lib MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 %make docs MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 
 %install
 install -d %buildroot%_libdir
 install -d %buildroot%_includedir/suitesparse
 
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%makeinstall_std MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis LIB_SUFFIX=${LIB_SUFFIX} NAME=%name VERSION=%version INSTALL=%buildroot%_exec_prefix INSTALL_LIB=%buildroot%_libdir INSTALL_DOC=%buildroot%_docdir/%name-%version INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
 %makeinstall_std MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis INSTALL=%buildroot%_exec_prefix INSTALL_LIB=%buildroot%_libdir INSTALL_DOC=%buildroot%_docdir/%name-%version INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
+
+# Remove unnecessary static libraries
+rm -f %buildroot%_libdir/*.a
 
 install -p -m644 CXSparse/Include/cs.h \
 	%buildroot%_includedir/suitesparse/cx_cs.h
 install -d %buildroot%_pkgconfigdir
 install -m644 *.pc %buildroot%_pkgconfigdir
 
+pushd demos-src/
 for i in $(find ./ -name Demo); do
 	rm -f $(find $i -name '*.m')
 	wcl=$(ls $i |wc -l)
 	if [ "$wcl" != "0" ]; then
-		install -d %buildroot%_libdir/%name/demos/$i
-		cp -fR $i/* %buildroot%_libdir/%name/demos/$i/
+		install -d %buildroot%_datadir/%name/demos/$i
+		cp -fR $i/* %buildroot%_datadir/%name/demos/$i/
 	fi
 done
+popd
 
 install -d %buildroot%_docdir/%name-%version/ChangeLogs
 for i in BTF CAMD AMD CCOLAMD CHOLMOD COLAMD CSparse CXSparse KLU LDL \
@@ -142,10 +172,15 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_docdir/%name-%version
 
 %files examples
-%dir %_libdir/%name
-%_libdir/%name/demos
+%_datadir/%name/demos/
+
+%files tools
+%_bindir/mongoose
 
 %changelog
+* Tue Jun 04 2019 Slava Aseev <ptrnine@altlinux.org> 5.4.0-alt1
+- Updated to stable upstream version 5.4.0.
+
 * Fri Nov 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt2
 - Fixed build with new gcc.
 
