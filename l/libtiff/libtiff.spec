@@ -1,5 +1,5 @@
 Name: libtiff
-Version: 4.0.10.0.57.f9fc01c3
+Version: 4.0.10.0.93.91480d3d
 Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
@@ -166,6 +166,9 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Tue Jun 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10.0.93.91480d3d-alt1
+- Updated to v4.0.10-93-g91480d3d.
+
 * Tue Apr 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10.0.57.f9fc01c3-alt1
 - Updated to v4.0.10-57-gf9fc01c3 (ALT #36575, #34677).
 - Applied SUSE patches:
