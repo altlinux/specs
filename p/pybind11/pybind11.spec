@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -9,6 +9,7 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 
 Source0: %name-%version.tar
+Patch0: pybind11-2.2.4-compatibility-with-pytest-4.0-fix-1670.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
@@ -71,6 +72,7 @@ This package contains the Python 3 files.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 for py in python python3; do
@@ -109,16 +111,19 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Tue Jun 04 2019 Stanislav Levin <slev@altlinux.org> 2.2.4-alt2
+- Fixed Pytest4.x compatibility errors.
+
 * Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.4-alt1
 - New version
-- Remove %%ubt
+- Remove ubt
 
-* Fri Jun 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt2%ubt
+* Fri Jun 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt2
 - Fix build: add python(3)-module-setuptools build requirement
 
-* Fri Jun 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt1%ubt
+* Fri Jun 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt1
 - New version
 - Remove patches due to upstream application
 
-* Sat Apr 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.2-alt1%ubt
+* Sat Apr 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.2-alt1
 - Initial build
