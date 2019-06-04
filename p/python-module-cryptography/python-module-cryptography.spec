@@ -1,8 +1,10 @@
 %define oname cryptography
+
 %def_with python3
+%def_enable test
 
 Name: python-module-%oname
-Version: 2.6.1
+Version: 2.7
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -10,15 +12,31 @@ Summary: Cryptographic recipes and primitives to Python developers.
 License: %asl
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cryptography/
+
 Packager: Vladimir Didenko <cow@altlinux.org>
+
 # Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python rpm-build-licenses
 BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools
+BuildRequires: python-module-asn1crypto >= 0.21.0
+%if_enabled test
+BuildRequires: python-module-cryptography-vectors
+BuildRequires: python-module-pretend python-module-iso8601 python-module-pytz
+BuildRequires: python-module-pytest >= 3.9.3
+BuildRequires: python-module-hypothesis
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools
+BuildRequires: python3-module-asn1crypto >= 0.21.0
+%if_enabled test
+BuildRequires: python3-module-cryptography-vectors
+BuildRequires: python3-module-pretend python3-module-iso8601 python3-module-pytz
+BuildRequires: python3-module-pytest >= 3.9.3
+BuildRequires: python3-module-hypothesis
+%endif
 %endif
 
 %py_requires cffi
@@ -48,7 +66,7 @@ digests and key derivation functions.
 
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with python3
 rm -rf ../python3
@@ -78,6 +96,17 @@ popd
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._padding[)]/d
 %endif
 
+%if_enabled test
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+%endif
+
+
 %files
 %doc AUTHORS.rst  CHANGELOG.rst  CONTRIBUTING.rst  README.rst
 %python_sitelibdir/%oname/
@@ -90,6 +119,11 @@ popd
 %endif
 
 %changelog
+* Tue Jun 04 2019 Vitaly Lipatov <lav@altlinux.ru> 2.7-alt1
+- new version (2.7) with rpmgs script (ALT bug 36848)
+- switch to build from tarball
+- enable test
+
 * Wed Mar 13 2019 Vladimir Didenko <cow@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
