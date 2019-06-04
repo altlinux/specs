@@ -2,8 +2,9 @@
 %define _unpackaged_files_terminate_build 1
 
 %set_verify_elf_method relaxed
-%define gver 7
-%set_gcc_version %gver
+%ifnarch %e2k
+%set_gcc_version 7
+%endif
 %def_with qt4
 
 #===== DB subsystem modules ======
@@ -77,7 +78,7 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.9.0
-Release: alt3
+Release: alt4
 Source: openscada-%version.tar
 Source1: openscada-res.tar.xz
 Patch: added_lsb_header.patch
@@ -1776,6 +1777,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Tue Jun 04 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt4
+- fix build on e2k (with FireBird and Comedi disabled)
+
 * Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt3
 - no return statement in the non-void function fixed (according g++8)
 
