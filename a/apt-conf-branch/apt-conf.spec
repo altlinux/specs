@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 9.0
-Release: alt3
+Release: alt4
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Tue Jun 04 2019 Ivan A. Melnikov <iv@altlinux.org> 9.0-alt4
+- Correct fingerprint for P9 ports.
+
 * Mon May 27 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.0-alt3
 - Added ports support (thanks to arei@ for help; closes: #36785).
 
