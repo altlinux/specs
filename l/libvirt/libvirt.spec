@@ -184,7 +184,7 @@
 
 Name: libvirt
 Version: 5.4.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1222,26 +1222,6 @@ fi
 %if_with qemu
 %files daemon-driver-qemu
 %_libdir/%name/connection-driver/libvirt_driver_qemu.so
-%endif
-
-%if_with lxc
-%files daemon-driver-lxc
-%_libdir/%name/connection-driver/libvirt_driver_lxc.so
-%endif
-
-%if_with libxl
-%files daemon-driver-libxl
-%_libdir/%name/connection-driver/libvirt_driver_libxl.so
-%endif
-
-%if_with vbox
-%files daemon-driver-vbox
-%_libdir/%name/connection-driver/libvirt_driver_vbox.so
-%endif
-%endif #driver_modules
-
-%if_with qemu
-%files qemu-common
 %config(noreplace) %_sysconfdir/libvirt/qemu.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0750, root, root) %_runtimedir/%name/qemu
@@ -1252,18 +1232,11 @@ fi
 %dir %attr(0700, root, root) %_logdir/swtpm/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
-
-%if_with qemu_tcg
-%files qemu
 %endif
-%if_with qemu_kvm
-%files kvm
-%endif
-
-%endif #if_with qemu
 
 %if_with lxc
-%files lxc
+%files daemon-driver-lxc
+%_libdir/%name/connection-driver/libvirt_driver_lxc.so
 %config(noreplace) %_sysconfdir/libvirt/lxc.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.lxc
 %dir %_runtimedir/%name/lxc
@@ -1275,13 +1248,39 @@ fi
 %endif
 
 %if_with libxl
-%files xen
+%files daemon-driver-libxl
+%_libdir/%name/connection-driver/libvirt_driver_libxl.so
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/libxl
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
 %config(noreplace) %_sysconfdir/libvirt/libxl*.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.libxl
 %_datadir/augeas/lenses/libvirtd_libxl.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
+%endif
+
+%if_with vbox
+%files daemon-driver-vbox
+%_libdir/%name/connection-driver/libvirt_driver_vbox.so
+%endif
+%endif #driver_modules
+
+%if_with qemu
+%files qemu-common
+%if_with qemu_tcg
+%files qemu
+%endif
+%if_with qemu_kvm
+%files kvm
+%endif
+
+%endif #if_with qemu
+
+%if_with lxc
+%files lxc
+%endif
+
+%if_with libxl
+%files xen
 %endif #if_with libxl
 
 %if_with vbox
@@ -1345,6 +1344,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Jun 04 2019 Alexey Shabalin <shaba@altlinux.org> 5.4.0-alt2
+- move files of qemu,lxc,xen to daemon drivers
+
 * Tue Jun 04 2019 Alexey Shabalin <shaba@altlinux.org> 5.4.0-alt1
 - 5.4.0 (Fixes: CVE-2018-12126, CVE-2018-12127, CVE-2018-12130, CVE-2019-11091, CVE-2019-10132)
 
