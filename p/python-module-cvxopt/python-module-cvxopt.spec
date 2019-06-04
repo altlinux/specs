@@ -4,12 +4,15 @@
 
 Name: python-module-%oname
 Version: 1.1.7
-Release: alt2
+Release: alt3
+
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
+
 Url: http://cvxopt.org/
 Source: %oname-%version.tar.gz
+
 %setup_python_module %oname
 # disable requirements on commertial software
 %add_python_req_skip mosekarr pymosek mosek
@@ -111,6 +114,12 @@ This package contains pickles for CVXOPT.
 %setup
 sed -i 's,^BUILD_DSDP.\+$,BUILD_DSDP = 0,' setup.py
 
+%ifarch %e2k
+# openblas not available
+sed -i 's,openblas,blas,g' setup.py \
+	src/C/SuiteSparse/SuiteSparse_config/SuiteSparse_config.mk
+%endif
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -180,6 +189,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon May 27 2019 Michael Shigorin <mike@altlinux.org> 1.1.7-alt3
+- fixed build on e2k (use blas instead of openblas)
+
 * Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt2
 - fixed packaging on 64bit arches other than x86_64
 
