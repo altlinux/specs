@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -35,6 +35,7 @@ BuildRequires:  python3-module-shapely
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: Uranium-3.6.0-Support-Pytest-4-config.warn-is-no-more.patch
 
 %description
 %summary
@@ -49,6 +50,7 @@ related applications.
 
 %prep
 %setup
+%patch -p1
 
 # empty file. appending to the end to make sure we are not overriding
 # a non empty file in the future
@@ -94,6 +96,9 @@ python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %doc html LICENSE
 
 %changelog
+* Tue Jun 04 2019 Stanislav Levin <slev@altlinux.org> 3.6.0-alt2
+- Fixed Pytest4.x compatibility errors.
+
 * Fri Feb 01 2019 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
 - New version 3.6.0
 
