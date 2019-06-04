@@ -1,7 +1,7 @@
 %define rname kinfocenter
 
 Name: plasma5-%rname
-Version: 5.15.4
+Version: 5.15.5
 Release: alt1
 %K5init altplace
 
@@ -99,6 +99,9 @@ KF5 library
 %_K5xmlgui/*
 
 %changelog
+* Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt1
+- new version
+
 * Wed Apr 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 
