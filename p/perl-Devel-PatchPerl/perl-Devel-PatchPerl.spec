@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Devel-PatchPerl
-Version: 1.60
+Version: 1.62
 Release: alt1
 
 Summary: Patch perl source a la Devel::PPPort's buildperl.pl
@@ -29,9 +29,12 @@ BuildRequires: perl-Module-Pluggable perl-File-pushd perl-devel perl-IPC-Cmd
 %_bindir/patchperl
 %_man1dir/patchperl*
 %perl_vendor_privlib/Devel/PatchPerl*
-%doc Changes LICENSE README
+%doc Changes README
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1
+- new version
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
 - new version
 
