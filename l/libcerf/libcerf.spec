@@ -1,7 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/pod2man /usr/bin/pod2html gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define major	1
@@ -13,7 +14,7 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html gcc-c++
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
 Version:	1.13
-Release:	alt1_2
+Release:	alt1_3
 Group:		System/Libraries
 License:	MIT
 Url:		http://apps.jcns.fz-juelich.de/libcerf
@@ -84,6 +85,9 @@ export CC=clang
 
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_3
+- mga update
+
 * Mon Mar 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
 - new version
 
