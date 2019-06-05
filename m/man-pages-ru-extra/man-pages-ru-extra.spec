@@ -1,6 +1,6 @@
 Name: man-pages-ru-extra
 Version: 0.1
-Release: alt6
+Release: alt7
 
 Summary: Extra collection of Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux
@@ -60,7 +60,7 @@ make install \
 	LANG_SUBDIR=ru \
 	COMPRESS=none \
 	#
-	
+
 cd man-pages-security-ru-1.0
 make install \
         INSTALL="install -p -m644" \
@@ -101,6 +101,12 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Wed May 05 2019 Elena Mishina <lepata@altlinux.org> 0.1-alt7
+- Added: augenrules.8, audit.rules.7
+- Updated: ausearch.8, aureport.8, auditd.conf.5, auditd.8, auditctl.8
+- apt.conf.5: fixed typo (Closes: #24676)
+- mount.8: fixed typo (Closes: #30982)
+
 * Thu May 04 2017 Elena Mishina <lepata@altlinux.org> 0.1-alt6
 - update sources.list
 
@@ -208,7 +214,7 @@ fi
 - Added new translations: osec.1, tr.1, tsort.1, vsftpd.conf.5, sconfig.8
 
 * Thu Mar 15 2007 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt10
-- Added new translations: cat.1, fuser.1, uname.1, MB_CUR_MAX.3, MB_LEN_MAX.3, 
+- Added new translations: cat.1, fuser.1, uname.1, MB_CUR_MAX.3, MB_LEN_MAX.3,
   psignal.3, strsignal.3, badblocks.8
 - Updated: index.3, strcasecmp.3, strfry.3, strlen.3, strstr.3
 - Fixed typos in: sudoers.5
@@ -216,13 +222,13 @@ fi
 * Sun Nov 05 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt9
 - Added new translations: autofs.5, auto.master.5, autofs.8, automount.8,
   mkfs.8, rename.1, sort.1
-- Updated: acos.3, asin.3, atan.3, atanh.3, atan2.3, cos.3, cosh.3, hypot.3, 
+- Updated: acos.3, asin.3, atan.3, atanh.3, atan2.3, cos.3, cosh.3, hypot.3,
   sin.3, sinh.3, sqrt.3, tan.3
 - Fixed typos in: wget.1, fdatasync.2, mmap2.2, stat.2, sync.2
 - Renamed llab.3 to llabs.3
 
 * Sat May 27 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt8
-- Added new translations: 
+- Added new translations:
   arch.1 from man-pages-ru by ASP Linux
   ethtool.8 by Aleksander N. Gorohovski <angel@feht.dgtu.donetsk.ua>
   hotplug.8 by Aleksandr Savvin <savvin@mail.ru>
@@ -258,7 +264,7 @@ fi
 
 * Fri Apr 22 2005 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt1
 - 0.98
-- added: eject.1, chattr.1, getcontext.2, getpagesize.2, getpriority.2, 
+- added: eject.1, chattr.1, getcontext.2, getpagesize.2, getpriority.2,
   koi8-r.7, ldp.7, x25.7
 - updated: fcntl.2, muttrc.5
 
@@ -272,8 +278,8 @@ fi
   ssh-copy-id.1, ssh-keyscan.1, sftp-server.8
 
 * Tue Aug 03 2004 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.97-alt1
-- man-pages-ru-0.97: 
-  added: clone.2, mmap2.2, personality.2, pread.2, pwrite.2, syscall.2, 
+- man-pages-ru-0.97:
+  added: clone.2, mmap2.2, personality.2, pread.2, pwrite.2, syscall.2,
   sysinfo.2, umask.2
 - updated: pipe.2, sync.2
 
@@ -285,7 +291,7 @@ fi
   added getdents.2, getitimer.2, getpeername.2, getresgid.2
   killpg.2, vm86.2, uname.2, uselib.2, ustat.2, vhangup.2, wait4.2
 - updated mknod.2, unlink.2, write.2
-- man-pages-ru-ALT: 
+- man-pages-ru-ALT:
   added rsyncd.conf.5
 
 * Thu May 27 2004 Aleksandr Blokhin (Sass) <sass@altlinux.ru> 0.95-alt2
