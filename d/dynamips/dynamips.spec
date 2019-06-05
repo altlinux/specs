@@ -1,14 +1,14 @@
 Name: dynamips
 Version: 0.2.18
-Release: alt1.1
+Release: alt2
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
 Group: Emulators
 
 Url: https://github.com/GNS3/dynamips
-
 Source: %name-%version.tar
+
 BuildRequires(pre): rpm-macros-cmake cmake 
 BuildRequires: libelf-devel libpcap-devel libuuid-devel
 
@@ -32,6 +32,9 @@ The goals of this emulator are mainly:
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's,(__ia64__),& || defined (__e2k__),' common/dynamips_common.h
+%endif
 
 %build
 %cmake
@@ -52,6 +55,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Wed Jun 05 2019 Michael Shigorin <mike@altlinux.org> 0.2.18-alt2
+- E2K: initial architecture support
+
 * Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 0.2.18-alt1.1
 - rebuilt for aarch64
 
