@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Test/More.pm)
+BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires: gcc-c++ perl(Test/More.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,13 +11,14 @@ BuildRequires: perl(Test/More.pm)
 %define develname   lib%{name}-devel
 
 Name:		tap
-Version:	1.03
-Release:	alt1_9
+Version:	1.14.0
+Release:	alt1_1
 Summary:	Write tests that implement the Test Anything Protocol
 License:	GPL
 Group:		System/Libraries
-URL:		http://jc.ngo.org.uk/trac-bin/trac.cgi/wiki/LibTap
-Source:		http://download.berlios.de/web-cpan/tap-1.03.tar.gz
+URL:		https://www.shlomifish.org/open-source/projects/libtap/
+Source:		https://web-cpan.shlomifish.org/downloads/libtap-%{version}.tar.xz
+BuildRequires: ccmake cmake ctest
 Source44: import.info
 
 %description
@@ -46,21 +48,16 @@ Obsoletes:	lib%{name}0-devel
 This package contains development files for %{name}.
 
 %prep
-%setup -q
+%setup -q -n libtap-%{version}
+# hack
+sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 %build
-# fix build on aarch64
-autoreconf -vfi
-
-%configure \
-	--disable-static
+%{mageia_cmake}
 %make_build CFLAGS+=-UHAVE_LIBPTHREAD
 
 %install
-%makeinstall_std
-
-# we don't want these
-find %{buildroot} -name "*.la" -delete
+%makeinstall_std -C build
 
 %files -n %{libname}
 %doc COPYING NEWS README
@@ -69,11 +66,15 @@ find %{buildroot} -name "*.la" -delete
 
 %files -n %{develname}
 %{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/lib%{name}.pc
 %{_includedir}/*
 %{_mandir}/man3/*
 
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_1
+- update by mgaimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_9
 - new version
 
