@@ -1,7 +1,7 @@
 %define        pkgname rack
 
 Name:          ruby-%pkgname
-Version:       2.0.6
+Version:       2.0.7
 Release:       alt1
 Epoch:         1
 Summary:       Modular Ruby webserver interface
@@ -66,6 +66,9 @@ Rackup is an executable file for rack gem.
 %_bindir/rackup
 
 %changelog
+* Wed Jun 05 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.0.7-alt1
+- Bump to 2.0.7
+
 * Thu Jan 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.0.6-alt1
 - Bump to 2.0.6.
 - Use Ruby Policy 2.0.
