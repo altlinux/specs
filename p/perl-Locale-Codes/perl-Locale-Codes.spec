@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Locale-Codes
 Name: perl-%dist
-Version: 3.60
+Version: 3.61
 Release: alt1
 
 Summary: ISO codes for countries, languages, currencies, and scripts
@@ -9,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SB/SBECK/Locale-Codes-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SB/SBECK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Module-Build
+BuildRequires: perl-Module-Build perl(Test/Inter.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(File/Find/Rule.pm)
 
 %description
 This package contains four Perl modules (Locale::Language,
@@ -23,7 +23,7 @@ can be used to process ISO codes for identifying languages,
 countries, scripts, and currencies & funds.
 
 %prep
-%setup -q -n Locale-Codes-%{version}
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,6 +41,9 @@ countries, scripts, and currencies & funds.
 %doc	%perl_vendor_privlib/Locale/Codes/*.pod
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.61-alt1
+- automated CPAN update
+
 * Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 3.60-alt1
 - automated CPAN update
 
