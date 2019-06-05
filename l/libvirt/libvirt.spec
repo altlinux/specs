@@ -184,7 +184,7 @@
 
 Name: libvirt
 Version: 5.4.0
-Release: alt2
+Release: alt3
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -868,9 +868,11 @@ gzip -9 ChangeLog
 %makeinstall_std
 
 # Install sysv init scripts
+%if_with libvirtd
 install -pD -m 755 %SOURCE11  %buildroot%_initdir/libvirtd
 install -pD -m 755 %SOURCE12  %buildroot%_initdir/virtlockd
 install -pD -m 755 %SOURCE13  %buildroot%_initdir/virtlogd
+%endif
 install -pD -m 755 %SOURCE14  %buildroot%_initdir/libvirt-guests
 
 install -d -m 0755 %buildroot%_runtimedir/%name
@@ -1344,6 +1346,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jun 05 2019 Ivan A. Melnikov <iv@altlinux.org> 5.4.0-alt3
+- fix build without server_drivers
+
 * Tue Jun 04 2019 Alexey Shabalin <shaba@altlinux.org> 5.4.0-alt2
 - move files of qemu,lxc,xen to daemon drivers
 
