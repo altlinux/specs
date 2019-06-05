@@ -1,5 +1,7 @@
+%def_enable check
+
 Name: gengetopt
-Version: 2.22.6
+Version: 2.23
 Release: alt1
 
 Summary: Tool to write command line option parsing code for C programs
@@ -7,9 +9,10 @@ License: GPLv3+
 Group: Development/C
 Url: http://www.gnu.org/software/%name/
 
-Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
+Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.xz
 
-BuildRequires: gcc-c++ bison flex help2man source-highlight
+BuildRequires: gcc-c++ bison flex help2man source-highlight makeinfo
+%{?_enable_check:BuildRequires: valgrind}
 
 %description
 Gengetopt is a tool to generate C code to parse the command line
@@ -24,11 +27,11 @@ actual command line parsing.
 
 %build
 %configure --docdir=%pkgdocdir
-# SMP-incompatible build
-%make
+%make_build
 
 %install
 %makeinstall_std
+rm %buildroot%_infodir/index.info
 
 %check
 %make check
@@ -36,12 +39,15 @@ actual command line parsing.
 %files
 %_bindir/%name
 %_datadir/%name/
-%_infodir/%name.info*
+%_infodir/%name.info.*
 %_man1dir/%name.1*
 %doc %pkgdocdir/
 
 
 %changelog
+* Wed Jun 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.23-alt1
+- 2.23
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.22.6-alt1
 - first build for Sisyphus
 
