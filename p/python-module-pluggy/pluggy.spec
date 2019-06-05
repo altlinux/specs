@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -20,7 +20,9 @@ BuildRequires: python2.7(setuptools_scm)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
+BuildRequires: python2.7(importlib_metadata)
 BuildRequires: python2.7(pytest)
+BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(tox)
 %endif
 
@@ -91,6 +93,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Thu Jun 06 2019 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
+- 0.11.0 -> 0.12.0.
+
 * Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
 - 0.9.0 -> 0.11.0.
 
