@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt65
+Release: alt66
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -310,6 +310,10 @@ unset RPM_PYTHON
 %_libdir/%name/methods/https
 
 %changelog
+* Wed Jun 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt66
+- Fortified https method (Closes: #33732)
+- Dropped processing Realm name in http/https methods (Closes: #33236)
+
 * Thu May 30 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt65
 - Add buildtime to VerStrs (used by APT to identify package versions).
   This data is used in several manners:
