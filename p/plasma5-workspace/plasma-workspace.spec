@@ -24,8 +24,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.15.4
-Release: alt2
+Version: 5.15.5
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -381,6 +381,9 @@ done
 
 
 %changelog
+* Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.5-alt1
+- new version
+
 * Tue May 07 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.4-alt2
 - fix digital clock defaults
 
