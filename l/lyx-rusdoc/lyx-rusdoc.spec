@@ -1,16 +1,17 @@
 Name: lyx-rusdoc
-Version: 1.5.0
+Version: 2.3.0
 Release: alt1
 
 Summary: The documentation for LyX and GOST text class
-Summary(ru_RU.KOI8-R): Русская документация по LyX и классу текста GOST
+Summary(ru_RU.UTF-8): п═я┐я│я│п╨п╟я▐ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п©п╬ LyX п╦ п╨п╩п╟я│я│я┐ я┌п╣п╨я│я┌п╟ GOST
+
 License: GPL
 Group: Office
 Url: http://www.etersoft.ru
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 
 BuildArchitectures: noarch
 Requires: lyx-gost
@@ -19,11 +20,11 @@ Requires: lyx-gost
 The %name package contains additional describes in russian
 for LyX, and the documentation for LyX/LaTeX class GOST.
 
-%description -l ru_RU.KOI8-R
-Пакет %name содержит дополнительные описания LyX'а
-на русском языке, а также документацию для класса текста GOST LyX/LaTeX,
-предназначенного для подготовки технической текстовой документации
-в соответствии с ГОСТ 2.105-95.
+%description -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ п╬п©п╦я│п╟п╫п╦я▐ LyX'п╟
+п╫п╟ я─я┐я│я│п╨п╬п╪ я▐п╥я▀п╨п╣, п╟ я┌п╟п╨п╤п╣ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╢п╩я▐ п╨п╩п╟я│я│п╟ я┌п╣п╨я│я┌п╟ GOST LyX/LaTeX,
+п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╢п╩я▐ п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ я┌п╣я┘п╫п╦я┤п╣я│п╨п╬п╧ я┌п╣п╨я│я┌п╬п╡п╬п╧ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦
+п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ п⌠п·п║п╒ 2.105-95.
 
 %prep
 %setup
@@ -39,6 +40,9 @@ done
 %_bindir/*
 
 %changelog
+* Wed Jun 05 2019 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- convert docs to new lyx/latex format (ALT bug 20654)
+
 * Wed Dec 05 2007 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - cleanup spec, convert docs to new lyx format
 
