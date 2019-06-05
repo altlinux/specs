@@ -1,6 +1,6 @@
 Group: Games/Arcade
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libGL-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-install libglvnd-devel zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install libGL-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_13
+Release:        alt2_14
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -154,6 +154,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_14
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_13
 - update to new release by fcimport
 
