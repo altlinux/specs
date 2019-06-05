@@ -1,7 +1,7 @@
 %def_with python3
 %add_python3_path %_datadir/waf3
 Name: waf
-Version: 2.0.15
+Version: 2.0.17
 Release: alt1
 
 Summary: A Python-based build system
@@ -131,6 +131,9 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Wed Jun 05 2019 Anton Farygin <rider@altlinux.ru> 2.0.17-alt1
+- 2.0.17
+
 * Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 2.0.15-alt1
 - 2.0.15
 
