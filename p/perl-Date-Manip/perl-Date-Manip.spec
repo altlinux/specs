@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators perl(File/Find/Rule.pm)
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.76
+Version: 6.77
 Release: alt1
 
 Summary: Date manipulation routines
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SB/SBECK/Date-Manip-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SB/SBECK/%{dist}-%{version}.tar.gz
 
 %add_findprov_skiplist */Date/Manip/Offset/*.pm
 %add_findprov_skiplist */Date/Manip/TZ/*.pm
@@ -36,7 +36,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n Date-Manip-%{version}
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -65,6 +65,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 6.77-alt1
+- automated CPAN update
+
 * Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 6.76-alt1
 - automated CPAN update
 
