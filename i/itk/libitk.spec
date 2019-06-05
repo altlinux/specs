@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define soname 1
+%define vtkver 8.2
 
 Name: itk
 Version: 5.0
-Release: alt2.rc1
+Release: alt3.rc1
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -18,13 +19,14 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel 
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
 BuildRequires: python-devel
-BuildRequires: libvxl-devel libvtk8.1-devel qt5-webkit-devel zlib-devel
+BuildRequires: libvxl-devel libvtk%vtkver-devel qt5-webkit-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk 
 
-BuildRequires: vtk8.1-python libfftw3-devel libgtest-devel eigen3
+BuildRequires: vtk%vtkver-python libfftw3-devel libgtest-devel eigen3
 BuildRequires: libminc-devel
 BuildRequires: libniftilib-devel
+BuildRequires: libXext-devel
 
 %define _description \
 The Insight Toolkit (ITK) is an open-source, cross-platform toolkit for \
@@ -39,7 +41,7 @@ a MRI scan in order to combine the information contained in both.
 %description %_description
 
 %package -n lib%name%soname
-Summary: Shared libraries files for ITK
+Summary: Shared libraries for ITK
 Group: System/Libraries
 %description -n lib%name%soname
 This package contains ITK shared libraries.
@@ -67,6 +69,22 @@ Group: Documentation
 BuildArch: noarch
 %description doc 
 This package contains documentation for ITK.
+%_description
+
+%package -n lib%name%soname-glue
+Summary: Shared libraries for ITK-VTK bindings
+Group: System/Libraries
+%description -n lib%name%soname-glue
+This package contains shared libraries for VTK bindings to ITK.
+%_description
+
+%package -n lib%name-glue-devel
+Summary: Development files for ITK-VTK bindings
+Group: Development/C++
+Requires: lib%name%soname-glue = %EVR
+Requires: lib%name-devel = %EVR
+%description -n lib%name-glue-devel
+This package contains development files for VTK bindings to ITK.
 %_description
 
 %prep
@@ -130,6 +148,7 @@ rm -rf Modules/ThirdParty/VNL/src/
        -DITK_USE_SYSTEM_ZLIB=ON \
        -DITK_USE_SYSTEM_VXL=ON \
        -DDO_NOT_INSTALL_ITK_TEST_DRIVER=ON \
+       -DModule_ITKVtkGlue=ON \
     %nil
 %cmake_build
 
@@ -142,11 +161,20 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 
 %files -n lib%name%soname
 %_libdir/lib*.so.%soname
+%exclude %_libdir/libITKVtkGlue-%version.so.%soname
 
 %files -n lib%name-devel
 %_libdir/lib*.so
+%exclude %_libdir/libITKVtkGlue-%version.so
 %_includedir/%name/
 %_libdir/cmake/
+%exclude %_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
+%exclude %_includedir/%name/ITKVtkGlueExport.h
+%exclude %_includedir/%name/itkImageToVTKImageFilter.*
+%exclude %_includedir/%name/itkViewImage.*
+%exclude %_includedir/%name/itkVTKImageToImageFilter.*
+%exclude %_includedir/%name/QuickView.h
+%exclude %_includedir/%name/vtkCaptureScreen.h
 
 %files examples
 %doc itk-examples/Examples/
@@ -155,7 +183,23 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %files doc
 %doc %_docdir/%name/
 
+%files -n lib%name%soname-glue
+%_libdir/libITKVtkGlue-%version.so.%soname
+
+%files -n lib%name-glue-devel
+%_libdir/libITKVtkGlue-%version.so
+%_includedir/%name/ITKVtkGlueExport.h
+%_includedir/%name/itkImageToVTKImageFilter.*
+%_includedir/%name/itkViewImage.*
+%_includedir/%name/itkVTKImageToImageFilter.*
+%_includedir/%name/QuickView.h
+%_includedir/%name/vtkCaptureScreen.h
+%_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
+
 %changelog
+* Tue Jun 04 2019 Slava Aseev <ptrnine@altlinux.org> 5.0-alt3.rc1
+- Enable vtkGlue module
+
 * Wed Mar 27 2019 Slava Aseev <ptrnine@altlinux.org> 5.0-alt2.rc1
 - Switch on build examples
 
