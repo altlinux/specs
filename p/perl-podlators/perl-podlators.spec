@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist podlators
 Name: perl-%dist
-Version: 4.11
+Version: 4.12
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -43,6 +43,9 @@ to subclass.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt1
+- automated CPAN update
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 4.11-alt1
 - automated CPAN update
 
