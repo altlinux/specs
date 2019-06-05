@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
-Version:        1.20181021
-Release:        alt2_1
+Version:        1.20190601
+Release:        alt1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
-Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -55,11 +55,13 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.20190601-alt1
+- automated CPAN update
+
 * Wed Jan 02 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.20181021-alt2_1
 - updated provides
 
