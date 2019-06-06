@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 3
 
 Name: wxsvg
-Version: 1.5.15
+Version: 1.5.18
 Release: alt1
 Epoch: 1
 
@@ -70,7 +71,8 @@ Development shared library for wxSVG
 %_bindir/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 %exclude %_libdir/*.a
 
 %files -n lib%name-devel-static
@@ -82,6 +84,12 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jun 05 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.18-alt1
+- 1.5.18
+
+* Thu Jan 31 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.16-alt1
+- 1.5.16
+
 * Tue Jan 22 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.15-alt1
 - 1.5.15
 
