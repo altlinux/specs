@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.11
+Version: 0.17
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: ASL2.0
@@ -124,6 +124,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Wed Jun 05 2019 Stanislav Levin <slev@altlinux.org> 0.17-alt1
+- 0.11 -> 0.17.
+
 * Tue May 14 2019 Stanislav Levin <slev@altlinux.org> 0.11-alt1
 - 0.9 -> 0.11.
 
