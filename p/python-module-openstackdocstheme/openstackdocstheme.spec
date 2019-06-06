@@ -2,7 +2,7 @@
 %def_with   python3
 
 Name:       python-module-%oname
-Version:    1.29.2
+Version:    1.30.0
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -103,6 +103,9 @@ cp -r %oname/theme/* \
 %doc doc/build/html
 
 %changelog
+* Thu Jun 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.0-alt1
+- Build new version.
+
 * Mon Apr 15 2019 Grigory Ustinov <grenka@altlinux.org> 1.29.2-alt1
 - Build new version.
 
