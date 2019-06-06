@@ -7,14 +7,14 @@
 %define gst_version 1.0
 %define nspr_version 4.21
 %define nss_version 3.44.0
-%define rust_version  1.33.0
-%define cargo_version 1.33.0
+%define rust_version  1.35.0
+%define cargo_version 1.35.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        67.0
+Version:        67.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -410,6 +410,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Jun 05 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.1-alt1
+- New release (67.0.1).
+
 * Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 67.0-alt1
 - New release (67.0).
 - Fixed:
