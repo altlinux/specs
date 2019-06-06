@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.15.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Packaging
@@ -115,6 +115,9 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 %_K5icon/*/*/apps/*flatpak*.*
 
 %changelog
+* Thu Jun 06 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt2
+- new version
+
 * Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt1
 - new version
 
