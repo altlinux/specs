@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.15.5
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -49,6 +49,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_K5xdgconf/plasma-workspace/env/*.sh
 
 %changelog
+* Fri Jun 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt3
+- fix environment script
+
 * Fri Jun 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt2
 - export environment variable to turn on portal
 
