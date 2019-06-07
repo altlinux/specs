@@ -1,6 +1,6 @@
 Name: alterator
-Version: 5.3
-Release: alt1.qa1
+Version: 5.4
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,11 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Jun 07 2019 Paul Wolneykien <manowar@altlinux.org> 5.4-alt1
+- Added new type: ipv4-address-range ("192.168.0.1-255", etc.).
+- Added new type: ipv4-address-range-list ("192.168.0.1-255
+  192.168.1.1-255", etc.).
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.3-alt1.qa1
 - NMU: applied repocop patch
 

@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-xinetd
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -17,7 +17,8 @@ Requires:  gettext xinetd
 Requires:  alterator-services
 
 # we use alterator-read-desktop from alterator >= 3.6-alt7
-Requires: alterator >= 3.6-alt7
+# alterator >= 5.4 (ipv4-address-range-list type)
+Requires: alterator >= 5.4
 Requires:  alterator-perl-functions >= 0.4-alt4
 Conflicts: alterator-fbi < 5.23-alt1
 Conflicts: alterator-lookout < 1.3-alt10
@@ -43,6 +44,11 @@ alterator module for xinetd
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jun 07 2019 Paul Wolneykien <manowar@altlinux.org> 1.10-alt1
+- Require alterator >= 5.4 (for ipv4-address-range-list type).
+- Fix: Use ipv4-address-range-list type for "only_from" field
+  instead of hostname-list.
+
 * Wed Oct 14 2009 Vladislav Zavjalov <slazav@altlinux.org> 1.9-alt1
 - ajax.scm: use new card-index module
 - backend: fix handling of services with id!=name
