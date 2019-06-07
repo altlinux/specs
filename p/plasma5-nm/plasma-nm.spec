@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.15.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -294,6 +294,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_wireguardui.desktop
 
 %changelog
+* Thu Jun 06 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.5-alt2
+- new version
+
 * Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.5-alt1
 - new version
 

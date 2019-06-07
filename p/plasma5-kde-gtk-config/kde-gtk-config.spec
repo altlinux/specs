@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.15.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5icon/*/*/apps/kde-gtk-config.*
 
 %changelog
+* Thu Jun 06 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.5-alt2
+- new version
+
 * Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.15.5-alt1
 - new version
 

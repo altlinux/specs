@@ -2,7 +2,7 @@
 
 Name: plasma5-kgamma
 Version: 5.15.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -54,6 +54,9 @@ Obsoletes: kf5-kgamma < %EVR
 %_K5srv/kgamma.desktop
 
 %changelog
+* Thu Jun 06 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt2
+- new version
+
 * Tue Jun 04 2019 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt1
 - new version
 
