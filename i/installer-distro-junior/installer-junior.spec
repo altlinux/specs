@@ -1,6 +1,6 @@
 Name:    installer-distro-junior
-Version: 8.1
-Release: alt2
+Version: 9.0
+Release: alt1
 
 Summary: Installer common files
 License: GPL
@@ -103,6 +103,10 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Fri Jun 07 2019 Andrey Cherepanov <cas@altlinux.org> 9.0-alt1
+- Disable dnsmasq and deprecated services.
+- Disable systemd-networkd.service and systemd-resolved.service.
+
 * Tue Mar 19 2019 Andrey Cherepanov <cas@altlinux.org> 8.1-alt2
 - Remove strict dependency to openntpd.
 
