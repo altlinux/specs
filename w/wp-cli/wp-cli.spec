@@ -1,5 +1,5 @@
 Name: wp-cli
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
@@ -46,6 +46,9 @@ test "$(%buildroot%_bindir/wp cli version)" = "WP-CLI %version"
 %_bindir/wp
 
 %changelog
+* Fri Jun 07 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Fri Mar 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version (2.1.0) with rpmgs script
 
