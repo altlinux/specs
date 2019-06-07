@@ -3,7 +3,7 @@
 
 Name:     earlyoom
 Version:  1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -63,6 +63,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/default/%name
 
 %changelog
+* Fri Jun 07 2019 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
+- add condrestart, condstop in init script
+
 * Wed Jun 05 2019 Anton Midyukov <antohami@altlinux.org> 1.3-alt1
 - new version 1.3
 
