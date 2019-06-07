@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
 Version: 2.8.12.3
-Release: alt5.git.ead9b38
+Release: alt6.git.ead9b38
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -73,6 +73,11 @@ applications with %name.
 rm -rf modules/{lua-*,wxstedit}/*
 sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 	CMakeLists.txt
+# Build for ZBS, hence add some patches and tricks from
+#   https://github.com/pkulchenko/ZeroBraneStudio/blob/master/build/build-win32.sh#L300
+sed -i 's/\(m_wxlState = wxLuaState(wxlState.GetLuaState(), wxLUASTATE_GETSTATE|wxLUASTATE_ROOTSTATE);\)/\/\/ removed by ZBS build process \/\/ \1/' modules/wxlua/wxlcallb.cpp
+sed -i 's/LUA_VERSION_NUM < 502/0/' modules/wxlua/wxlcallb.cpp
+sed -i '/Unable to call an unknown method/{N;s/.*/    \/\/ removed by ZBS build process/}' modules/wxlua/wxlbind.cpp
 
 # prepare external wxstedit
 mkdir -p modules/wxstedit
@@ -84,9 +89,14 @@ make -C bindings \
 	clean all \
 	LUA=%_bindir/lua%luaver
 
+# Build for ZBS, hence add some patches and tricks from
+#   https://github.com/pkulchenko/ZeroBraneStudio/blob/master/build/build-win32.sh#L316
 %cmake \
 	-DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
-	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit
+	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit \
+	-DCMAKE_CXX_FLAGS="-DLUA_COMPAT_MODULE" \
+	-DwxWidgets_COMPONENTS="stc;gl;html;aui;adv;core;net;base" \
+	-DwxLuaBind_COMPONENTS="stc;gl;html;aui;adv;core;net;base" \
 
 %make_build -C BUILD
 if [ -x /usr/bin/doxygen ]; then
@@ -133,6 +143,9 @@ mv %buildroot%_datadir/%name/samples docs2distribute/
 %endif
 
 %changelog
+* Fri Jun 07 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt6.git.ead9b38
+- some fixes for ZeroBraneStudio
+
 * Tue Sep 04 2018 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt5.git.ead9b38
 - change upstream to https://github.com/pkulchenko/wxlua/
 
