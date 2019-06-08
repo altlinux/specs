@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.12
-Release: alt3
+Release: alt4
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -49,6 +49,10 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Sat Jun 08 2019 Leonid Krivoshein <klark@altlinux.org> 0.12-alt4
+- backend: add workarounds to avoid UEFI/NVRAM hardware problems
+- bin/grub-disk and backend: more friendly for l10n translations
+
 * Thu Jun 06 2019 Leonid Krivoshein <klark@altlinux.org> 0.12-alt3
 - list devices and set/reset password in web-ui fixed (closes: #34208)
 
