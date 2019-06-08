@@ -2,8 +2,8 @@
 
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
-Version: 5.2.1
-Release: alt3
+Version: 5.2.2
+Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
@@ -44,6 +44,8 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %files
 %doc README.md
 %dir %_libdir/ocaml/%oname
+%_libdir/ocaml/%oname/dune-package
+%_libdir/ocaml/%oname/opam
 %_libdir/ocaml/%oname/META
 %_libdir/ocaml/%oname/*.cmi
 %_libdir/ocaml/%oname/*.cma
@@ -55,6 +57,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %_libdir/ocaml/%oname/metaquot_404
 %_libdir/ocaml/%oname/metaquot_405
 %_libdir/ocaml/%oname/metaquot_406
+%_libdir/ocaml/%oname/metaquot_407
 
 %files devel
 %_libdir/ocaml/%oname/*.cmx
@@ -63,6 +66,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %_libdir/ocaml/%oname/*.ml
 
 %changelog
+* Thu Jun 06 2019 Anton Farygin <rider@altlinux.ru> 5.2.2-alt1
+- 5.2.2
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 5.2.1-alt3
 - rebuild with ocaml-migrate-parsetree 1.2.0
 
