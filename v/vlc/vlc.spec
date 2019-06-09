@@ -5,8 +5,8 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.6
-Release: alt7
+Version: 3.0.7
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -1407,6 +1407,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 3.0.7-alt1
+- 3.0.7
+
 * Sun May 05 2019 Michael Shigorin <mike@altlinux.org> 3.0.6-alt7
 - fixed build on E2K
 - fixed firewire knob
