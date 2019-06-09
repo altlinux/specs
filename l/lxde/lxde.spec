@@ -1,6 +1,6 @@
 Name: lxde
 Version: 1.1
-Release: alt1
+Release: alt2
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
@@ -33,7 +33,6 @@ License: GPL
 BuildArch: noarch
 Requires: lxde-common lxde-lxpanel lxde-lxsession lxde-freedesktop-menu lxde-lxsession-edit
 Requires: pcmanfm2 menu-cache lxde-lxappearance lxde-lxappearance-obconf
-Requires: openbox
 
 %description lite
 %summary
@@ -42,6 +41,9 @@ Requires: openbox
 %files lite
 
 %changelog
+* Sat Jun 08 2019 Anton Midyukov <antohami@altlinux.org> 1.1-alt2
+- lxde-lite not requre openbox more
+
 * Fri Jun 07 2019 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - drop lxde-sysvinit
 - add requires for lxde-settings-lxdesktop
