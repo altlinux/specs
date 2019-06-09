@@ -3,7 +3,7 @@ Name: snr
 License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
-Version: 1.1
+Version: 1.2
 Release: alt1
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -35,6 +35,10 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Sun Jun 09 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.2-alt1
+- Version 1.2:
+  - Accept absolute path to rootfs dir
 
 * Sun Jun 09 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.1-alt1
 - Initial build for ALT Linux
