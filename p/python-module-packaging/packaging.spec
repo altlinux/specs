@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname packaging
 
-%def_with python3
+%def_with docs
+%def_with check
 
 Name: python-module-%oname
-Version: 16.8
-Release: alt1.qa1%ubt
+Version: 19.0
+Release: alt1
 Summary: Core utilities for Python packages
 License: ASLv2.0 or BSD
 Group: Development/Python
@@ -14,28 +16,42 @@ BuildArch: noarch
 # https://github.com/pypa/packaging.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-devel python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib
-BuildRequires: python-module-invoke python-module-objects.inv python-module-tox
-BuildPreReq: python-module-sphinx-devel
-BuildRequires: python-module-pytest python2.7(pretend) python2.7(pyparsing) python2.7(six)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-coverage python3-module-invoke python3-module-tox
-BuildRequires: python3-module-pytest python3(pretend) python3(pyparsing) python3(six)
+
+%if_with docs
+BuildRequires: python-module-sphinx-devel
+%endif
+
+%if_with check
+BuildRequires: python2.7(coverage)
+BuildRequires: python2.7(pretend)
+BuildRequires: python2.7(pyparsing)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(coverage)
+BuildRequires: python3(pretend)
+BuildRequires: python3(pyparsing)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 %endif
 
 %description
 Core utilities for Python packages.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Core utilities for Python packages
 Group: Development/Python3
 
 %description -n python3-module-%oname
 Core utilities for Python packages.
-%endif
+
+%if_with docs
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+%summary
+This package contains documentation for %oname
 
 %package pickles
 Summary: Pickles for %oname
@@ -45,67 +61,71 @@ Group: Development/Python
 Core utilities for Python packages.
 
 This package contains pickles for %oname.
+%endif
 
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
+%if_with docs
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-
-%check
-py.test -v
-%if_with python3
-pushd ../python3
-py.test3 -v
-popd
 %endif
 
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
+
 %files
-%doc *.rst LICENSE* docs/_build/html tasks
-%python_sitelibdir/*
+%doc *.rst LICENSE*
+%python_sitelibdir/%oname/
+%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/* tasks
 
 %files pickles
 %python_sitelibdir/*/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst LICENSE* docs/_build/html tasks
-%python3_sitelibdir/*
 %endif
 
+%files -n python3-module-%oname
+%doc *.rst LICENSE*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+
 %changelog
-* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 16.8-alt1.qa1%ubt
+* Thu Jun 06 2019 Stanislav Levin <slev@altlinux.org> 19.0-alt1
+- 16.8 -> 19.0.
+
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 16.8-alt1.qa1
 - NMU: applied repocop patch
 
-* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 16.8-alt1%ubt
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 16.8-alt1
 - Updated to upstream version 16.8.
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.4-alt2.dev0.git20150801.1
