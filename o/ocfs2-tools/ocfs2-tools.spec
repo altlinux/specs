@@ -1,7 +1,7 @@
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
-Version: 1.8.5
-Release: alt3.0378c47
+Version: 1.8.6
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 # https://github.com/markfasheh/ocfs2-tools
@@ -97,6 +97,7 @@ make DESTDIR="%buildroot" install
 %_man8dir/o2cluster.8*
 %_man8dir/o2hbmonitor.8*
 %_man8dir/ocfs2_hb_ctl.8*
+%_man8dir/defragfs.ocfs2.8*
 %_man1dir/o2info.1*
 %dir /var/run/o2cb
 
@@ -118,6 +119,9 @@ make DESTDIR="%buildroot" install
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.8.6-alt1
+- 1.8.6
+
 * Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 1.8.5-alt3.0378c47
 - added the systemd service (closes: #28070)
 
