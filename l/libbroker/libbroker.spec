@@ -1,7 +1,7 @@
 # TODO: add pybind11
 
 Name: libbroker
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Zeek's Messaging Library 
@@ -13,10 +13,6 @@ Url: https://github.com/zeek/broker
 # Source-url: https://github.com/zeek/broker/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-# CMake scripts used in Zeek
-# Source1-url: https://github.com/zeek/cmake/archive/master.zip
-Source1: cmake.tar
-
 Patch1: libbroker-external-sqlite.patch
 
 BuildRequires: cmake gcc-c++
@@ -24,6 +20,8 @@ BuildRequires: libcaf-devel
 BuildRequires: librocksdb-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libssl-devel
+
+BuildRequires: zeek-cmake
 # for doc
 #BuildRequires: python-module-sphinx
 
@@ -43,13 +41,15 @@ Group: Networking/Other
 This package contains the header files for %name.
 
 %prep
-%setup -a1
+%setup
 %patch1 -p2
+
+# use cmake file from zeek-cmake package
+rm -rf cmake/
+ln -s %_datadir/zeek-cmake/ cmake
 
 # use system lib
 rm -rf src/3rdparty/caf/ aux/libbrokerker/3rdparty/caf/
-# disable rpath
-%__subst "s|.*SetupRPATH.*||" cmake/CommonCMakeConfig.cmake
 
 # TODO
 #find -name CMakeLists.txt | xargs sed -i "s|DESTINATION lib|DESTINATION %_lib|"
@@ -82,5 +82,9 @@ sed -i "s|.{BROKER_VERSION_MAJOR}\..{BROKER_VERSION_MINOR}|0.%version|" CMakeLis
 %_libdir/libbroker.so
 
 %changelog
+* Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+- build with external zeek-cmake scripts
+
 * Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - initial build for ALT Sisyphus
