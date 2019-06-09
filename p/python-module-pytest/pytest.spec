@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.5.0
+Version: 4.6.2
 Release: alt1
 
 Summary: Python test framework
@@ -35,6 +35,7 @@ BuildRequires: python2.7(more_itertools)
 BuildRequires: python2.7(nose)
 BuildRequires: python2.7(numpy)
 BuildRequires: python2.7(py)
+BuildRequires: python2.7(packaging)
 BuildRequires: python2.7(pathlib2)
 BuildRequires: python2.7(pexpect)
 BuildRequires: python2.7(pluggy)
@@ -53,6 +54,7 @@ BuildRequires: python3(more_itertools)
 BuildRequires: python3(nose)
 BuildRequires: python3(numpy)
 BuildRequires: python3(py)
+BuildRequires: python3(packaging)
 BuildRequires: python3(pathlib2)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(pluggy)
@@ -180,6 +182,11 @@ tox.py3 --sitepackages -p auto -o -v
 %_bindir/pytest3
 
 %changelog
+* Wed Jun 05 2019 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1
+- 4.5.0 -> 4.6.2
+  ~ The 4.6.X series will be the last series to support Python 2
+  ~ https://docs.pytest.org/en/latest/py27-py34-deprecation.html
+
 * Mon May 27 2019 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
 - 3.10.1 -> 4.5.0.
 
