@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: dynamips
-Version: 0.2.18
-Release: alt2
+Version: 0.2.20
+Release: alt1
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
@@ -55,6 +58,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Sun Jun 09 2019 Anton Midyukov <antohami@altlinux.org> 0.2.20-alt1
+- new version 0.2.20
+
 * Wed Jun 05 2019 Michael Shigorin <mike@altlinux.org> 0.2.18-alt2
 - E2K: initial architecture support
 
