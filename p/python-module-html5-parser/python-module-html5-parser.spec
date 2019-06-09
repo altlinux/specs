@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-html5-parser
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Fast C based HTML 5 parsing for python
@@ -80,6 +80,9 @@ Based on Google gumbo-parser C library.
 
 
 %changelog
+* Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
+- new version 0.4.6 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt1
 - new version 0.4.5 (with rpmrb script)
 - cleanup spec (use python3_dir* macros from rpm-build-intro)
