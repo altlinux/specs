@@ -3,8 +3,8 @@
 
 %define modulename hyperframe
 Name: python-module-hyperframe
-Version: 5.1.0
-Release: alt1.qa1
+Version: 5.2.0
+Release: alt1
 
 Summary: HTTP/2 framing layer for Python
 
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
+- new version 5.2.0 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1.qa1
 - NMU: applied repocop patch
 
