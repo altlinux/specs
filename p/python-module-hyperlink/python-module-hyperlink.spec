@@ -3,8 +3,8 @@
 
 %define modulename hyperlink
 Name: python-module-hyperlink
-Version: 17.3.0
-Release: alt1.qa1
+Version: 19.0.0
+Release: alt1
 
 Summary: A featureful, correct URL for Python
 
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt1
+- new version 19.0.0 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 17.3.0-alt1.qa1
 - NMU: applied repocop patch
 
