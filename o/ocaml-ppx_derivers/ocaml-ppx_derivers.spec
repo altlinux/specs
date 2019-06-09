@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_derivers
 Name: ocaml-%libname
-Version: 1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: ppx_type_conv/ppx_deriving interoperability library
 Group: Development/ML
 License: BSD
@@ -62,6 +62,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Fri Jun 07 2019 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.2-alt2
 - rebuilt with dune-1.8
 

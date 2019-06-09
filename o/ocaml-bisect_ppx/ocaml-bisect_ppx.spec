@@ -1,13 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 1.4.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL2
 Url: https://github.com/aantron/bisect_ppx
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1
 BuildRequires: ocaml-findlib-devel
@@ -15,6 +16,7 @@ BuildRequires: opam dune
 BuildRequires: ocaml-ppx_tools_versioned-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-ocamlbuild
 
 %description
 Bisect_ppx helps you test thoroughly. It is a small preprocessor that inserts
@@ -26,6 +28,7 @@ showing which places were visited and which were missed.
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+Requires: ocaml-ocamlbuild
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -33,6 +36,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make_build
@@ -69,6 +73,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_libdir/ocaml/%libname/runtime/*.cmxs
 
 %changelog
+* Fri Jun 07 2019 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.4.0-alt2
 - rebuilt with dune-1.8
 
