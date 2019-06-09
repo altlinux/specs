@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache 2.0
@@ -82,6 +82,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/internalhash.h
 
 %changelog
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 0.12.1-alt1
+- 0.12.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
