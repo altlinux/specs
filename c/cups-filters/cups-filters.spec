@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -104,8 +104,6 @@ serial backend for cups
 %patch0 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
-%patch5 -p2
 
 %build
 # work-around Rpath
@@ -140,7 +138,6 @@ rm -rf %buildroot%_docdir/%name
 %doc README AUTHORS NEWS
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %config(noreplace) %_initdir/cups-browsed
-%_sysconfdir/fonts/conf.d/*.conf
 %attr(0755,root,root) %_cups_serverbin/filter/*
 %attr(0755,root,root) %_cups_serverbin/driver/*
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
@@ -189,6 +186,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.25.0-alt1
+- new version 1.25.0
+
 * Wed Jun 05 2019 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
 - new version 1.24.0
 
@@ -282,57 +282,57 @@ rm -rf %buildroot%_docdir/%name
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 1.17.9-alt1
 - new version 1.17.9
 
-* Sat Oct 07 2017 Michael Shigorin <mike@altlinux.org> 1.17.8-alt2%ubt
+* Sat Oct 07 2017 Michael Shigorin <mike@altlinux.org> 1.17.8-alt2
 - introduced php knob (on by default)
 
-* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 1.17.8-alt1%ubt
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 1.17.8-alt1
 - new version 1.17.8
 
-* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 1.17.7-alt1%ubt
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 1.17.7-alt1
 - new version 1.17.7
 - build with ldap
 - enabled auto-setup for driverless printers
 
-* Tue Aug 22 2017 Anton Farygin <rider@altlinux.ru> 1.16.3-alt1%ubt
+* Tue Aug 22 2017 Anton Farygin <rider@altlinux.ru> 1.16.3-alt1
 - new version 1.16.3
 
-* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.16.2-alt1%ubt
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.16.2-alt1
 - new version 1.16.2
 
-* Mon Aug 14 2017 Anton Farygin <rider@altlinux.ru> 1.16.1-alt1%ubt
+* Mon Aug 14 2017 Anton Farygin <rider@altlinux.ru> 1.16.1-alt1
 - new version 1.16.1
 
-* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 1.16.0-alt1%ubt
+* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 1.16.0-alt1
 - new version 1.16.0
 
-* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 1.14.1-alt2%ubt
+* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 1.14.1-alt2
 - rebuild with new php
 
-* Mon Jul 03 2017 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1%ubt
+* Mon Jul 03 2017 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
 - new version 1.14.1
 
-* Wed May 24 2017 Anton Farygin <rider@altlinux.ru> 1.14.0-alt1%ubt
+* Wed May 24 2017 Anton Farygin <rider@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0
 
-* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.13.5-alt1%ubt
+* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.13.5-alt1
 - new version
 
-* Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 1.13.4-alt1%ubt
+* Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 1.13.4-alt1
 - new version 1.13.4
 
-* Mon Jan 30 2017 Anton Farygin <rider@altlinux.ru> 1.13.3-alt1%ubt
+* Mon Jan 30 2017 Anton Farygin <rider@altlinux.ru> 1.13.3-alt1
 - new version 1.13.3
 
-* Fri Dec 30 2016 Anton Farygin <rider@altlinux.ru> 1.13.2-alt1%ubt
+* Fri Dec 30 2016 Anton Farygin <rider@altlinux.ru> 1.13.2-alt1
 - new version 1.13.2
 
-* Mon Dec 19 2016 Anton Farygin <rider@altlinux.ru> 1.13.1-alt1%ubt
+* Mon Dec 19 2016 Anton Farygin <rider@altlinux.ru> 1.13.1-alt1
 - new version 1.13.1
 
-* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1%ubt
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1
 - new version 1.13.0
 
-* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 1.12.0-alt1%ubt
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 1.12.0-alt1
 - new version 1.12.0
 
 * Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.11.6-alt1
