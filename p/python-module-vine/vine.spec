@@ -4,15 +4,19 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.4
+Version: 1.3.0
 Release: alt1
+
 Summary: Python promises
+
 License: BSD
 Group: Development/Python
-BuildArch: noarch
 Url: https://github.com/celery/vine
 
+BuildArch: noarch
+
 # https://github.com/celery/vine.git
+# Source-url: https://github.com/celery/vine/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
@@ -71,5 +75,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+- switch to build from tarball
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.4-alt1
 - Initial build for ALT.
