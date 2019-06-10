@@ -3,12 +3,13 @@ Name: snr
 License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
-Version: 1.2
+Version: 1.3
 Release: alt1
 Source0: %name-%version.tar
 BuildArch: noarch
 BuildRequires: md2man
 Requires: systemd-container
+Requires: iproute2
 
 %description
 Simple wrapper to quickly run systemd-nspawn containers with support to:
@@ -35,6 +36,16 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Mon Jun 10 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.3-alt1
+- Version 1.3:
+  - Explicitly require iproute2 (shell.req does not detect its necessity)
+  - Removed hardcoded binding of /mnt/dev (forgot to remove it)
+  - Added bind_options and other_options to config
+  - Echo help/man when called without arguements or with --help (-h)
+  - Parse all CLI arguements earlier to prevent doing unneeded actions
+  - Check that target directory looks like an OS tree
+  - Append sbin to PATH when ip utility was not found
 
 * Sun Jun 09 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.2-alt1
 - Version 1.2:
