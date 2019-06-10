@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.5
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -48,6 +48,8 @@ BuildRequires: python2.7(sphinxcontrib)
 BuildRequires: %py_dependencies imagesize
 # For %%check:
 BuildRequires: %py_dependencies mock
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
 # minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
 BuildRequires: python-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
@@ -356,6 +358,7 @@ PYTHONPATH=$(pwd) %make_build test
 %exclude %_bindir/*-3*
 %sphinx_dir/
 %exclude %sphinx_dir/tests
+%exclude %sphinx_dir/testing
 %exclude %sphinx_dir/pickle
 %exclude %sphinx_dir/doctrees
 %python_sitelibdir/*.egg-info
@@ -368,6 +371,7 @@ PYTHONPATH=$(pwd) %make_build test
 
 %files tests
 %sphinx_dir/tests
+%sphinx_dir/testing
 
 %files doc
 %doc %_docdir/%name
@@ -381,12 +385,14 @@ PYTHONPATH=$(pwd) %make_build test
 %_bindir/*-3*
 %sphinx3_dir/
 %exclude %sphinx3_dir/tests
+%exclude %sphinx3_dir/testing
 %python3_sitelibdir/*.egg-info
 
 %files -n python3-module-%oname-devel
 
 %files -n python3-module-%oname-tests
 %sphinx3_dir/tests
+%sphinx3_dir/testing
 
 %files -n rpm-macros-sphinx3
 %_rpmmacrosdir/sphinx3
@@ -394,6 +400,9 @@ PYTHONPATH=$(pwd) %make_build test
 
 
 %changelog
+* Sun Jun 09 2019 Stanislav Levin <slev@altlinux.org> 1:1.6.5-alt6
+- Moved tests out to their own package.
+
 * Sat Jun 01 2019 Stanislav Levin <slev@altlinux.org> 1:1.6.5-alt5
 - Fixed Pytest4.x compatibility errors.
 

@@ -1,7 +1,10 @@
 %define oname amqpy
+
+%def_with check
+
 Name: python3-module-%oname
 Version: 0.12.4
-Release: alt1.git20160226.1.1
+Release: alt1.git20160226.1.1.1
 Summary: Pure-Python 3 AMQP client library
 License: MIT
 Group: Development/Python3
@@ -9,11 +12,15 @@ Url: https://pypi.python.org/pypi/amqpy/
 
 # https://github.com/veegee/amqpy.git
 Source: %name-%version.tar
+Patch: 0.12.4-amqpy-Add-rabbitmq-pytest-mark.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-module-sphinx-devel python3-module-sphinx
+
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %py_provides %oname
 
@@ -44,6 +51,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
@@ -58,7 +66,16 @@ ln -s ../objects.inv docs/source/
 mv docs/build/html docs_html
 
 %check
-python3 setup.py test
+cat > tox.ini <<EOF
+[testenv]
+deps =
+    pytest
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v -- amqpy/ -m 'not rabbitmq' -vra
 
 %files
 %doc AUTHORS *.rst docs_html
@@ -69,6 +86,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1.git20160226.1.1.1
+- Added missing dep on Pytest.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1.git20160226.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

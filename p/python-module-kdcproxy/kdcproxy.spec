@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A kerberos KDC HTTP proxy WSGI module
 License: %mit
@@ -25,6 +25,7 @@ BuildRequires: python2.7(coverage)
 BuildRequires: python2.7(dns)
 BuildRequires: python2.7(mock)
 BuildRequires: python2.7(pyasn1)
+BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(webtest)
 BuildRequires: python3(asn1crypto)
 BuildRequires: python3(coverage)
@@ -93,6 +94,9 @@ export TOXENV=%py_nodot-asn1crypto,%py_nodot-pyasn1,%py3_nodot-asn1crypto,\
 %python3_sitelibdir/%mname-*.egg-info
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 0.4.1-alt2
+- Added missing dep on Pytest.
+
 * Tue Feb 12 2019 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4 -> 0.4.1.
 
