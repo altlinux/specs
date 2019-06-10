@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.4
-Release: alt1
+Release: alt2
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -23,6 +23,7 @@ BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python2.7(coverage)
 BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pytest)
 BuildRequires: python3(coverage)
 BuildRequires: python3(tox)
 %endif
@@ -105,6 +106,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/pytest_mock.*
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.10.4-alt2
+- Added missing dep on Pytest.
+
 * Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.10.4-alt1
 - 1.10.1 -> 1.10.4.
 

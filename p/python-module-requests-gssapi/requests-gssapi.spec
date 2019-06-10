@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(gssapi)
 BuildRequires: python2.7(mock)
 BuildRequires: python2.7(requests)
+BuildRequires: python2.7(pytest)
 BuildRequires: python3(gssapi)
 BuildRequires: python3(mock)
 BuildRequires: python3(requests)
@@ -88,6 +89,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.1 -> 1.1.0.
+
 * Mon May 06 2019 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - 1.0.0 -> 1.0.1.
 

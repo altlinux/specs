@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.1
+Release: alt3
 Summary: All-in-one infinity value for Python. Can be compared to any object
 License: BSD
 Group: Development/Python
@@ -17,10 +17,12 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Pygments python-module-six
+BuildPreReq: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Pygments python3-module-six
+BuildPreReq: python3-module-pytest
 %endif
 
 %description
@@ -59,11 +61,9 @@ popd
 %endif
 
 %check
-python setup.py test
 py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
 py.test3
 popd
 %endif
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.4-alt3
+- Added missing dep on Pytest.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
