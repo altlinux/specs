@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.3.7
-Release: alt1
+Release: alt2
 
 Summary: heavily refactored vim fork
 
@@ -22,8 +22,13 @@ BuildRequires: libmsgpack-devel
 BuildRequires: libtermkey-devel
 BuildRequires: libuv-devel
 BuildRequires: libvterm-devel
-BuildRequires: lua lua-devel lua-lpeg lua-mpack luajit libluajit-devel
+BuildRequires: lua lua-devel lua-lpeg lua-mpack
 BuildRequires: unibilium-devel
+
+BuildRequires(pre): rpm-macros-luajit
+%ifarch %luajit_arches
+BuildRequires: luajit libluajit-devel
+%endif
 
 Provides: nvim = %EVR
 Requires: %name-runtime = %EVR
@@ -82,6 +87,9 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Mon Jun 10 2019 Michael Shigorin <mike@altlinux.org> 0.3.7-alt2
+- Moved to rpm-macros-luajit
+
 * Mon Jun 10 2019 Vladimir Didenko <cow@altlinux.org> 0.3.7-alt1
 - New version
 
