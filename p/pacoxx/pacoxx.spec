@@ -5,12 +5,13 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt5
+Release: alt6
+
 Summary: PaCO++: Portable Parallel CORBA Object
 License: GPLv2+ / LGPLv2+
 Group: Networking/Remote access
-Url: http://www.irisa.fr/myriads/Paco++/
 
+Url: http://www.irisa.fr/myriads/Paco++/
 Source: %name-%version.tar
 
 BuildRequires(pre): %mpiimpl-devel
@@ -131,7 +132,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PACOORB=%prefix
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 export LIB_SUFFIX=64
 %endif
 %makeinstall_std
@@ -144,7 +145,7 @@ mv %buildroot%ldir/bin/* %buildroot%_bindir/
 mv %buildroot%ldir/include %buildroot%prefix/
 
 cat <<EOF >%buildroot%_bindir/pacoenv.sh
-#!/bin/bash
+#!/bin/sh
 
 export PACOORB=%prefix
 export PACOPATH=%ldir
@@ -181,6 +182,10 @@ chmod +x %buildroot%_bindir/pacoenv.sh
 %ldir/Examples
 
 %changelog
+* Mon Jun 10 2019 Michael Shigorin <mike@altlinux.org> 0.2.beta-alt6
+- Fixed build on 64-bit arches
+- Minor spec cleanup
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.beta-alt5
 - Fixed build.
 
