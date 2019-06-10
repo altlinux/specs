@@ -1,5 +1,7 @@
+%define lua lua5.1
+
 Name: ZeroBraneStudio
-Version: 1.20
+Version: 1.80
 Release: alt1
 Summary: lightweight cross-platform Lua IDE
 License: MIT
@@ -8,11 +10,14 @@ Url: http://studio.zerobrane.com/
 BuildArch: noarch
 
 # https://github.com/pkulchenko/ZeroBraneStudio
-Source: %name-%version.tar
+Source: https://github.com/pkulchenko/ZeroBraneStudio/archive/%version.tar.gz
+Source88: %name.watch
+Patch: zbs-1.8.0.patch
 
-Requires: wxlua luarocks(luasocket) >= 3.0
+Requires: wxlua luarocks5.1(luasocket) >= 3.0 luarocks5.1(luafilesystem) luarocks5.1(lpeg)
+#Requires: luarocks(git)
 # Requires: luarocks(copas) luarocks(mobdebug) luarocks(lua-parser-loose)
-Requires: lua5
+Requires: %lua
 
 BuildRequires: desktop-file-utils
 
@@ -25,23 +30,26 @@ others). It originated from the Estrela Editor.
 
 %prep
 %setup
+%patch0 -p1
 rm -rf bin \
+	*.exe \
 	zbstudio/ZeroBraneStudio.app \
 	lualibs/{socket{,.lua},mime.lua} \
+	lualibs/re.lua \
 ; echo FIXME: Leaving \
 	lualibs/{copas,coxpcall} \
 	lualibs/mobdebug \
 	lualibs/lua_{lexer,parser}_loose.lua \
 
 %install
-sed -r -i "/ide.config.stylesoutshell/ i ide.config.path.lua = '%_bindir/lua'" src/main.lua
+sed -r -i "/ide.config.stylesoutshell/ i ide.config.path.lua = '%_bindir/%lua'" src/main.lua
 
 mkdir -p %buildroot%_desktopdir %buildroot%_iconsdir
 cp -a . %buildroot%_datadir/%name
 cp -a zbstudio/res/icons %buildroot%_iconsdir/hicolor
 
 desktop-file-install \
-	--set-key=Exec --set-value='sh -c "cd %_datadir/%name ; exec lua src/main.lua"' \
+	--set-key=Exec --set-value='sh -c "cd %_datadir/%name ; exec %lua src/main.lua"' \
 	--dir=%buildroot%_desktopdir zbstudio/res/zbstudio.desktop
 
 #
@@ -55,6 +63,10 @@ desktop-file-install \
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Jun 06 2019 Ildar Mulyukov <ildar@altlinux.ru> 1.80-alt1
+- new version
+- fix lua-5.1 as the interpreter
+
 * Tue Nov 10 2015 Ildar Mulyukov <ildar@altlinux.ru> 1.20-alt1
 - new version
 
