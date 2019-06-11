@@ -3,7 +3,7 @@
 %define with_python3 1
 
 Name: python-module-editor
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Programmatically open an editor, capture the result
@@ -78,6 +78,9 @@ chmod a+x %buildroot%python3_sitelibdir/editor.py
 %endif
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - new version 1.0.3 (with rpmrb script)
 
