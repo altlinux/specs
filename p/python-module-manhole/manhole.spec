@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ BuildRequires: python2.7(sphinx_py3doc_enhanced_theme)
 BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python2.7(process_tests)
+BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(requests)
 BuildRequires: python2.7(subprocess32)
 BuildRequires: python3(process_tests)
@@ -176,6 +177,9 @@ export TOXENV=%py_nodot-normal-normal-nocov,%py3_nodot-normal-normal-nocov
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- Added missing dep on Pytest.
+
 * Mon Feb 18 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.0.0 -> 1.6.0.
 
