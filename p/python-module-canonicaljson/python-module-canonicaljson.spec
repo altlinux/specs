@@ -3,8 +3,8 @@
 
 %define modulename canonicaljson
 Name: python-module-canonicaljson
-Version: 1.1.3
-Release: alt1.qa1
+Version: 1.1.4
+Release: alt1
 
 Summary: Canonical JSONs
 
@@ -94,6 +94,9 @@ popd
 
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1.qa1
 - NMU: applied repocop patch
 
