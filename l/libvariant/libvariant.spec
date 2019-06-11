@@ -1,6 +1,6 @@
 Name: libvariant
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: C++11/C++14 Variant
 
@@ -44,6 +44,9 @@ cp -a include/mapbox %buildroot%_includedir/%name/
 %_includedir/%name/mapbox/
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
+- new version 1.1.6 (with rpmrb script)
+
 * Tue Jun 19 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt2
 - enable check
 
