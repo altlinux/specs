@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.8.3
-%define major 4.9
+%define major 4.10
 
 Name: wine
 Version: %major.1
@@ -396,6 +396,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
+%_datadir/wine/winehid.inf
 %_datadir/wine/l_intl.nls
 %_datadir/wine/fonts/
 
@@ -475,6 +476,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.10.1-alt1
+- new version 4.10.1 (with rpmrb script)
+
 * Wed May 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.9.1-alt1
 - new version 4.9.1 (with rpmrb script)
 - strict require wine-mono-4.8.3
