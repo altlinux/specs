@@ -3,8 +3,8 @@
 
 %define modulename bleach
 Name: python-module-bleach
-Version: 2.1.3
-Release: alt1.qa1
+Version: 3.1.0
+Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
 
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt1.qa1
 - NMU: applied repocop patch
 
