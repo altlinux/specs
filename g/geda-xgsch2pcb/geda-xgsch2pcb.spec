@@ -1,6 +1,6 @@
 Name: geda-xgsch2pcb
 Version: 0.1.3
-Release: alt2
+Release: alt3
 
 Summary: xgsch2pcb
 License: GPL
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Wed May 22 2019
 # optimized out: fontconfig libX11-locales libgdk-pixbuf libgpg-error perl perl-Encode perl-XML-Parser perl-parent python-base python-module-pycairo python-module-pygobject python-modules python-modules-compiler python-modules-distutils python-modules-encodings python-modules-logging python-modules-xml sh4
-BuildRequires: desktop-file-utils intltool python-module-dbus python-module-pygtk
+BuildRequires: desktop-file-utils intltool python-module-dbus python-module-pygtk python-module-setuptools
 
 %description
 Graphic wrapper for gsch2pcb. This is a easy way to forward notation and
@@ -39,18 +39,23 @@ for f in `grep -rl @pkglibdir@ .`; do sed -i s,@pkglibdir@,%python_sitelibdir_no
 
 %install
 %make DESTDIR=%buildroot install
-mkdir -p %buildroot%python_sitelibdir_noarch/xgsch2pcb
+mkdir -p %buildroot%python_sitelibdir_noarch/xgsch2pcb/
 mv %buildroot%python_sitelibdir_noarch/*.py %buildroot%python_sitelibdir_noarch/xgsch2pcb/
 
-%files -n %name
+%find_lang %name
+rm -f %buildroot/usr/share/applications/mimeinfo.cache
+
+%files -f %name.lang
 %_bindir/*
-%python_sitelibdir/xgsch2pcb
+%python_sitelibdir_noarch/xgsch2pcb/
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/48x48/apps/geda-xgsch2pcb.png
 %_datadir/icons/hicolor/scalable/apps/geda-xgsch2pcb.svg
-%_datadir/locale/ru/*
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.3-alt3
+- NMU: fix build, fix message files packing
+
 * Wed May 22 2019 Fr. Br. George <george@altlinux.ru> 0.1.3-alt2
 - Move invalid-placed python module files
 
