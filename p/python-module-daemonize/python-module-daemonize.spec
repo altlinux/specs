@@ -3,8 +3,8 @@
 
 %define modulename daemonize
 Name: python-module-daemonize
-Version: 2.4.7
-Release: alt1.qa1
+Version: 2.5.0
+Release: alt1
 
 Summary: Library for writing system daemons in Python
 
@@ -76,6 +76,9 @@ popd
 
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1.qa1
 - NMU: applied repocop patch
 
