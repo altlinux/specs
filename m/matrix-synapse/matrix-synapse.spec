@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 0.99.3.2
+Version: 1.0.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -26,7 +26,8 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use canonicaljson >= 1.1.3
 %py3_use signedjson >= 1.0.0
 %py3_use pynacl >= 1.2.1
-%py3_use service-identity >= 16.0.0
+%py3_use idna >= 2
+%py3_use service-identity >= 18.1.0
 # logcontext handling relies on the ability to cancel inlineCallbacks
 # (https://twistedmatrix.com/trac/ticket/4632) which landed in Twisted 18.7.
 %py3_use twisted-core >= 18.7.0
@@ -38,7 +39,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use pyasn1-modules >= 0.0.7
 %py3_use daemonize >= 2.3.1
 %py3_use bcrypt >= 3.1.0
-%py3_use Pillow >= 3.1.2
+%py3_use Pillow >= 4.3.0
 %py3_use sortedcontainers >= 1.4.4
 %py3_use psutil >= 2.0.0
 %py3_use pymacaroons-pynacl >= 0.13.0
@@ -57,7 +58,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 #py3_use matrix-synapse-ldap3 >= 0.1
 # "email.enable_notifs"
 %py3_use jinja2 >= 2.9
-%py3_use bleach >= 1.4.2
+%py3_use bleach >= 1.4.3
 # "acme": ["txacme>=0.9.2"],
 
 %py3_use pysaml2 >= 4.5.0
@@ -65,6 +66,9 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use lxml >= 3.5.0
 # "test"
 %py3_use mock >= 2.0
+
+# enable logging to systemd's journal
+%py3_use systemd >= 231
 
 
 
@@ -128,6 +132,7 @@ fi
 %_libexecdir/%name/move_remote_media_to_new_store.py
 %_libexecdir/%name/sync_room_to_group.pl
 %_libexecdir/%name/generate_config
+%_libexecdir/%name/generate_signing_key.py
 %_sbindir/synctl
 %_unitdir/matrix-synapse.service
 %_tmpfilesdir/%name.conf
@@ -139,6 +144,10 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+- update requires
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.99.3.2-alt1
 - new version 0.99.3.2 (with rpmrb script)
 
