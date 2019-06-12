@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-prometheus_client
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: The Python client for Prometheus
@@ -70,6 +70,9 @@ The Python client for Prometheus.
 
 
 %changelog
+* Wed Jun 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - initial build for ALT Sisyphus
 
