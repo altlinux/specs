@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
@@ -18,12 +18,14 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scipy libnumpy-devel
+BuildRequires: python-module-numpy-testing
 BuildRequires: python-module-matplotlib python-module-nose
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy libnumpy-py3-devel
+BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-matplotlib python3-module-nose
 %endif
 
@@ -169,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 1:0.7-alt2
+- Added missing dep on `numpy.testing`.
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1:0.7-alt1
 - new version 0.7 (with rpmrb script)
 - switch to build from tarball

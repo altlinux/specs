@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.1
+Release: alt2
 Summary: Pythonic interface to netCDF4 via h5py
 License: BSD
 Group: Development/Python
@@ -19,12 +19,14 @@ BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-h5py python-module-netCDF4
 BuildRequires: python-module-Cython
 BuildRequires: python-module-pytest
+BuildRequires: python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-h5py python3-module-netCDF4
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %py_provides %oname
@@ -104,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 0.5.0-alt2
+- Added missing dep on `numpy.testing`.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

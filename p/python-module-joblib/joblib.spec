@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.13.2
-Release: alt1
+Release: alt2
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
@@ -20,8 +20,10 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: /proc
 BuildRequires: python2.7(numpy)
+BuildRequires: python2.7(numpy.testing)
 BuildRequires: python2.7(pytest)
 BuildRequires: python3(numpy)
+BuildRequires: python3(numpy.testing)
 BuildRequires: python3(tox)
 %endif
 
@@ -139,6 +141,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/%oname/__pycache__/test*
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 0.13.2-alt2
+- Added missing dep on `numpy.testing`.
+
 * Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 0.13.2-alt1
 - Update to upstream version 0.13.2.
 

@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname numpy
 %define majver 1.15
 %def_without latex
@@ -13,7 +15,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -31,8 +33,8 @@ Source: %oname-%version.tar
 Source1: %oname.pc
 Source2: site.cfg
 Source3: sphinx-theme.tar
+Patch0: numpy-1.15.4-Remove-strict-dependency-on-testing-package.patch
 
-Requires: %name-testing = %EVR
 Requires: lib%oname = %EVR
 Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
@@ -77,7 +79,6 @@ basic linear algebra and random number generation.
 %package -n python3-module-%oname
 Summary: NumPy: array processing for numbers, strings, records, and objects (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname-testing = %EVR
 Requires: lib%oname-py3 = %EVR
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
@@ -309,6 +310,7 @@ This package contains documentation for NumPy in PDF format.
 
 %prep
 %setup
+%patch0 -p1
 
 install -m644 %SOURCE1 %SOURCE2 .
 tar xf %SOURCE3
@@ -683,6 +685,9 @@ fi
 %exclude %_bindir/f2py3
 %endif
 %python_sitelibdir/%oname
+%exclude %python_sitelibdir/%oname/conftest.py*
+%exclude %python_sitelibdir/%oname/f2py/f2py_testing.py*
+%exclude %python_sitelibdir/%oname/ma/timer_comparison.py*
 %exclude %python_sitelibdir/%oname/testing
 %exclude %python_sitelibdir/%oname/tests
 %exclude %python_sitelibdir/%oname/*/test*
@@ -733,6 +738,12 @@ fi
 #_bindir/py3_*
 %_bindir/f2py3
 %python3_sitelibdir/%oname
+%exclude %python3_sitelibdir/%oname/conftest.py
+%exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
+%exclude %python3_sitelibdir/%oname/f2py/f2py_testing.py
+%exclude %python3_sitelibdir/%oname/f2py/__pycache__/f2py_testing.*
+%exclude %python3_sitelibdir/%oname/ma/timer_comparison.py
+%exclude %python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/test*
@@ -794,10 +805,13 @@ fi
 
 %files testing
 %python_sitelibdir/%oname/testing
+%python_sitelibdir/%oname/conftest.py*
 
 %if_with python3
 %files -n python3-module-%oname-testing
 %python3_sitelibdir/%oname/testing
+%python3_sitelibdir/%oname/conftest.py
+%python3_sitelibdir/%oname/__pycache__/conftest.*
 %endif
 
 %files tests
@@ -806,6 +820,8 @@ fi
 %exclude %python_sitelibdir/%oname/testing/tests
 %python_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
 %if_with tests
+%python_sitelibdir/%oname/f2py/f2py_testing.py*
+%python_sitelibdir/%oname/ma/timer_comparison.py*
 %python_sitelibdir/f2py_ext*
 #python_sitelibdir/f2py_f90_ext*
 %python_sitelibdir/gen_ext*
@@ -823,6 +839,10 @@ fi
 %exclude %python3_sitelibdir/%oname/testing/tests
 %python3_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
 %if_with tests
+%python3_sitelibdir/%oname/f2py/f2py_testing.py
+%python3_sitelibdir/%oname/f2py/__pycache__/f2py_testing.*
+%python3_sitelibdir/%oname/ma/timer_comparison.py
+%python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
 %python3_sitelibdir/f2py_ext*
 #python_sitelibdir/f2py_f90_ext*
 %python3_sitelibdir/gen_ext*
@@ -935,6 +955,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 11 2019 Stanislav Levin <slev@altlinux.org> 1:1.15.4-alt2
+- Dropped dependency on testing/test packages in the main one.
+
 * Tue Dec 25 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1:1.15.4-alt1
 - Update to upstream version 1.15.4
 - Remove runnig 2to3 on generators

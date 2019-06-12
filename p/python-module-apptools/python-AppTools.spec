@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.4.0
-Release:        alt2
+Release:        alt3
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -19,6 +19,7 @@ BuildArch:      noarch
 BuildRequires:  python-module-setuptools, python-devel
 BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
 BuildRequires: python-module-traits-tests python-module-wx python-module-tables-tests xvfb-run
+BuildRequires: python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs python-tools-2to3
@@ -184,6 +185,9 @@ xvfb-run py.test
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 4.4.0-alt3
+- Added missing dep on `numpy.testing`.
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
 - Updated to upstream release version 4.4.0.
 

@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.2.4
-Release: alt2
+Release: alt3
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -28,7 +28,9 @@ BuildRequires: python-module-setuptools
 # These are only needed for the checks
 BuildRequires: python-module-pytest
 BuildRequires: python-module-numpy
+BuildRequires: python-module-numpy-testing
 BuildRequires: python3-module-numpy
+BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-scipy
 BuildRequires: eigen3-devel
 BuildRequires: ctest
@@ -111,6 +113,9 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 2.2.4-alt3
+- Added missing dep on `numpy.testing`.
+
 * Tue Jun 04 2019 Stanislav Levin <slev@altlinux.org> 2.2.4-alt2
 - Fixed Pytest4.x compatibility errors.
 

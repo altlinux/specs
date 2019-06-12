@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5.17
-Release: alt1.post1.1.1.1
+Release: alt1.post1.1.1.1.1
 
 Summary: Planar geometries, predicates, and operations
 
@@ -22,6 +22,7 @@ BuildPreReq: python-module-descartes python-module-sphinx-devel
 BuildPreReq: python-module-matplotlib-sphinxext
 BuildPreReq: python-module-packaging
 BuildRequires: python-module-pytest
+BuildRequires: python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -29,6 +30,7 @@ BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-descartes
 BuildPreReq: python3-module-packaging
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
 BuildRequires: xvfb-run
 %endif
 
@@ -161,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 1.5.17-alt1.post1.1.1.1.1
+- Added missing dep on `numpy.testing`.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.17-alt1.post1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
