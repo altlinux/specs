@@ -8,17 +8,17 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv58
+%global gittag r1rv61
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.58
-Release:          alt2_3jpp8
+Version:          1.61
+Release:          alt1_1jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 
-Source0:          https://github.com/bcgit/bc-java/archive/%{gittag}/%{name}-%{version}.tar.gz
+Source0:          https://github.com/bcgit/bc-java/archive/%{gittag}.tar.gz
 
 # POMs from Maven Central
 Source1:          http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/%{version}/bcprov-jdk15on-%{version}.pom
@@ -119,20 +119,13 @@ cp -p %{SOURCE3} bcpg.pom
 cp -p %{SOURCE4} bcmail.pom
 cp -p %{SOURCE5} bctls.pom
 
-%ifarch %e2k
-sed -i -e '/target..javadoc-/d' ant/jdk15+.xml
-%endif
-
 %build
 ant -f ant/jdk15+.xml \
   -Djunit.jar.home=$(build-classpath junit) \
   -Dmail.jar.home=$(build-classpath javax.mail) \
   -Dactivation.jar.home= \
   -Drelease.debug=true \
-  clean build-provider build \
-%ifnarch %e2k
-  test
-%endif
+  clean build-provider build test
 
 cat > bnd.bnd <<EOF
 -classpath=bcprov.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
@@ -157,9 +150,7 @@ rm -rf build/artifacts/jdk1.5/javadoc/lcrypto
 install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d
 touch $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d/2000-%{classname}
 
-%ifnarch %e2k
 %mvn_install -J build/artifacts/jdk1.5/javadoc
-%endif
 
 %post
 {
@@ -226,12 +217,13 @@ fi
 %files tls -f .mfiles-bctls
 %doc --no-dereference build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
 
-%ifnarch %e2k
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.html
-%endif
 
 %changelog
+* Wed Jun 12 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.61-alt1_1jpp8
+- new version
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt2_3jpp8
 - e2k build w/o javadoc & tests
 
