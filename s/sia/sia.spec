@@ -1,7 +1,7 @@
 # TODO: build from source
 
 Name: sia
-Version: 1.3.7
+Version: 1.4.0
 Release: alt1
 
 Summary: Blockchain-based marketplace for file storage
@@ -12,7 +12,8 @@ Url: https://sia.tech
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/NebulousLabs/Sia/releases/download/v%version/Sia-v%version-linux-amd64.zip
+#Source-url: https://github.com/NebulousLabs/Sia/releases/download/v%version/Sia-v%version-linux-amd64.zip
+# Source-url: https://sia.tech/releases/Sia-v%version-linux-amd64.zip
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -40,6 +41,9 @@ install -m755 -D siac %buildroot%_bindir/siac
 %_bindir/siac
 
 %changelog
+* Wed Jun 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
 - new version 1.3.7 (with rpmrb script)
 
