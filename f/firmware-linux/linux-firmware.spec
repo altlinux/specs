@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190514
+Version: 20190603
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Jun 12 2019 Cronbuild Service <cronbuild@altlinux.org> 20190603-alt1
+- upstream changes (GIT 1884732):
+  + update firmware for mhdp8546 (thx Damian Kos)
+  + rsi: update firmware images for Redpine 9113 chipset (thx Siva Rebbagondla)
+  + imx: sdma: update firmware to v3.5/v4.5 (thx Robin Gong)
+  + nvidia: update GP10[2467] SEC2 RTOS with the one already used
+    on GP108 (thx Ben Skeggs)
+
 * Thu May 16 2019 Cronbuild Service <cronbuild@altlinux.org> 20190514-alt1
 - upstream changes (GIT 711d329):
   + Update firmware file for Intel Bluetooth 8265 (thx Amit K Bag)
