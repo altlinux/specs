@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-asar
-Version: 1.0.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Simple extensive tar-like archive format with indexing
@@ -27,7 +27,8 @@ BuildRequires(pre): rpm-build-intro >= 1.9.18
 
 BuildRequires: rpm-build-nodejs node
 BuildRequires(pre): rpm-macros-nodejs
-Requires: node
+
+Requires: node >= 8
 # rpm-build-nodejs
 
 Provides: nodejs-%node_module = %version-%release
@@ -76,6 +77,10 @@ mkdir -p %buildroot%_bindir/
 %nodejs_sitelib/%node_module
 
 %changelog
+* Thu Jun 13 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
+- new version 2.0.2 (with rpmrb script)
+ + drop support for Node < 8
+
 * Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version 1.0.0 (with rpmrb script)
 
