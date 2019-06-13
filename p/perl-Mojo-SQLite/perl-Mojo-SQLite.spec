@@ -2,7 +2,7 @@
 
 Name:           perl-Mojo-SQLite
 Version:        3.001
-Release:        alt1
+Release:        alt2
 Summary:        Tiny Mojolicious wrapper for SQLite
 License:        Artistic 2.0
 Group:		Development/Perl
@@ -11,7 +11,6 @@ Source:        	%name-%version.tar
 
 BuildArch:      noarch
 BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(strict)
 BuildRequires:  perl(warnings.pm)
 BuildRequires: 	perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Term/ReadLine.pm)
@@ -63,5 +62,8 @@ and manage your database schema with migrations.
 %perl_vendorlib/Mojo*
 
 %changelog
+* Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.001-alt2
+- fixed BR: perl(strict)
+
 * Tue Nov 20 2018 Alexandr Antonov <aas@altlinux.org> 3.001-alt1
 - initial build for ALT
