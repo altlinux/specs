@@ -1,3 +1,4 @@
+%def_with wss4j
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -23,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 Name:          cxf
 Epoch:         1
 Version:       3.1.6
-Release:       alt3_7jpp8
+Release:       alt4_7jpp8
 Summary:       Apache CXF
 License:       ASL 2.0
 URL:           http://cxf.apache.org/
@@ -91,11 +92,13 @@ BuildRequires: mvn(org.apache.mina:mina-core)
 BuildRequires: mvn(org.apache.neethi:neethi)
 BuildRequires: mvn(org.apache.velocity:velocity)
 BuildRequires: mvn(org.apache.ws.xmlschema:xmlschema-core) >= 2.2.1
+%if_with wss4j
 BuildRequires: mvn(org.apache.wss4j:wss4j-policy) >= 2.1.5
 BuildRequires: mvn(org.apache.wss4j:wss4j-ws-security-common) >= 2.1.5
 BuildRequires: mvn(org.apache.wss4j:wss4j-ws-security-dom) >= 2.1.5
 BuildRequires: mvn(org.apache.wss4j:wss4j-ws-security-policy-stax) >= 2.1.5
 BuildRequires: mvn(org.apache.wss4j:wss4j-ws-security-stax) >= 2.1.5
+%endif
 BuildRequires: mvn(org.apache.xmlbeans:xmlbeans)
 BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -152,6 +155,7 @@ Obsoletes:     %{name}-api < %{version}-%{release}
 
 BuildArch:     noarch
 Source44: import.info
+Patch33: cxf-3.1.6-wss4j-2.1.12.patch
 
 %description
 Apache CXF is an open-source services framework that aids in
@@ -207,9 +211,19 @@ find . -name "*.class" -print -delete
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch33 -p1
 
 # viy: maven-javadoc-plugin 3
 %pom_disable_module "java2wadl-plugin" maven-plugins
+# viy: wss4j > 2.1.5
+%if_without wss4j
+%pom_disable_module "security" rt/ws
+%pom_disable_module "rm" rt/ws
+%pom_disable_module "security-saml" rt
+%pom_disable_module "xml" rt/rs/security
+%pom_disable_module "oauth2-saml" rt/rs/security/oauth-parent
+%pom_disable_module "sso/saml" rt/rs/security
+%endif
 
 # Disable main modules
 # No ant-trax
@@ -418,6 +432,9 @@ install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %
 #%doc LICENSE NOTICE
 
 %changelog
+* Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt4_7jpp8
+- fixed build with new wss4j
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt3_7jpp8
 - rebuild with tomcat9
 
