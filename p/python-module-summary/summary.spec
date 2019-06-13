@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150209.1.1.1
+Release: alt1.git20150209.1.1.1.1
 Summary: Extractor to get main content from the web page
 License: MIT
 Group: Development/Python
@@ -34,6 +34,8 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cssselect python-module-future python-module-genshi python-module-lxml python-module-matplotlib python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-scipy python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cssselect python3-module-genshi python3-module-lxml python3-module-matplotlib python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-scipy python3-module-setuptools python3-module-yaml
 BuildRequires: python-module-chardet python-module-html5lib python-module-networkx-core python-module-nltk python-module-pydot python-module-pygraphviz python-module-setuptools python3-module-chardet python3-module-html5lib python3-module-networkx-core python3-module-nltk python3-module-pydot python3-module-pygraphviz python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-numpy-testing
+BuildRequires: python3-module-numpy-testing
 
 %description
 A python script provides content extraction and summarization of the web
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.git20150209.1.1.1.1
+- Added missing dep on `numpy.testing`.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.git20150209.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

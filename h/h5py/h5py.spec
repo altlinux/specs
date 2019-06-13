@@ -23,7 +23,7 @@ presented using a dictionary metaphor, indexed by name.
 
 Name: h5py
 Version: 2.9.0
-Release: alt1
+Release: alt2
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -38,12 +38,14 @@ BuildRequires: libsz2-devel python-module-Cython python-module-Pyrex
 BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: python-module-setuptools python-module-six
 BuildRequires: python-module-pkgconfig python-module-unittest2
+BuildRequires: python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython python3-module-six
 BuildRequires: python3-module-pkgconfig
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -205,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 2.9.0-alt2
+- Added missing dep on `numpy.testing`.
+
 * Wed Mar 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Build new version.
 

@@ -1,6 +1,6 @@
 Name: camotics
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -29,6 +29,7 @@ BuildRequires: libexpat-devel
 BuildRequires: libv8-3.14-devel
 BuildRequires: libevent-devel
 BuildRequires: python-module-simplejson
+BuildRequires: python-module-six
 BuildRequires: libssl-devel
 BuildRequires: libre2-devel
 BuildRequires: zlib-devel
@@ -115,6 +116,9 @@ chrpath -d %buildroot%_bindir/*
 %_datadir/%name
 
 %changelog
+* Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
+- Added missing dep on `six`.
+
 * Mon Apr 15 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - New version 1.2.0
 - build with qt5
