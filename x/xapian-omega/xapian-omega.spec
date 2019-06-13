@@ -1,19 +1,18 @@
 Name: xapian-omega
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: A CGI search frontend and indexers built on Xapian
-
 License: GPLv2+
 Group: Networking/WWW
+
 Url: http://www.xapian.org
-
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar.bz2
-
-Requires: xapian-core >= %version
 
 # Automatically added by buildreq on Sun Jan 03 2010 (-bi)
 BuildRequires: gcc-c++ glibc-devel-static libxapian-devel perl-DBI libpcre-devel zlib-devel libmagic-devel
+
+Requires: xapian-core >= %version
 
 %description
 Omega is a CGI application which uses the Xapian Information Retrieval
@@ -21,6 +20,10 @@ library to index and search collections of documents.
 
 %prep
 %setup
+%ifarch %e2k
+# unsupported as of lcc 1.23.12
+sed -i 's, -fno-gnu-keywords,,' configure*
+%endif
 
 %build
 %configure
@@ -34,17 +37,16 @@ mkdir -p %buildroot%_var/www/cgi-bin/
 mv %buildroot%_libdir/%name/bin/omega %buildroot%_var/www/cgi-bin
 
 # Create /var directories
-mkdir -p %buildroot%_localstatedir/omega/data
-mkdir -p %buildroot%_localstatedir/omega/cdb
+mkdir -p %buildroot%_localstatedir/omega/{cdb,data}
 mkdir -p %buildroot%_logdir/omega
 
 # Default templates
 mkdir -p %buildroot%_localstatedir/omega/templates
-cp -r templates/* %buildroot%_localstatedir/omega/templates/
+cp -a templates/* %buildroot%_localstatedir/omega/templates/
 
 # Images
 mkdir -p %buildroot%_var/www/icons/omega
-cp -r images/* %buildroot%_var/www/icons/omega/
+cp -a images/* %buildroot%_var/www/icons/omega/
 
 rm -rf %buildroot%_docdir/%name/
 
@@ -77,6 +79,10 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Thu Jun 13 2019 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
+- E2K: avoid lcc-unsupported options
+- minor spec cleanup
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to latest stable upstream version 1.4.5.
 
