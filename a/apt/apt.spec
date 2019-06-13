@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt67
+Release: alt68
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -23,16 +23,23 @@ Patch: apt-%version-%release.patch
 Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
 
 Requires: libapt = %EVR
-# We need (lib)rpm which finds pkgs by labels in N-E:V-R@T format (w/ buildtime)
-Requires: rpm >= 4.13.0.1-alt7
-Requires: /etc/apt/pkgpriorities, apt-conf
+Requires: rpm >= 4.13.0.1-alt2, /etc/apt/pkgpriorities, apt-conf
+# We need (lib)rpm which finds pkgs by labels in N-E:V-R@T format:
+Requires: RPMQ(EPOCH)
+Requires: RPMQ(BUILDTIME)
+Requires: RPMQ(DISTTAG)
 # for methods.
 Requires: gzip, bzip2, xz
 Requires: gnupg, alt-gpgkeys
 
-# Older versions of update-kernel misunderstood the @-postfix with buildtime,
-# which is now added by APT to verstrs and the names of allow-duplicated pkgs.
-Conflicts: update-kernel < 0.9.13-alt1
+# Older versions of update-kernel misunderstood the @-postfix (with buildtime
+# and disttag), which is now added by APT to verstrs and the names of
+# allow-duplicated pkgs. (Epoch was also treated differently before, but that
+# was not important until we added disttags, which are also separated by :.)
+Conflicts: update-kernel < 0.9.14-alt1
+# Older versions of apt-scripts-nvidia relied on a certain format of the APT ids
+# of allow-duplicated packages, which changed (due to appending buildtime).
+Conflicts: apt-scripts-nvidia < 0.5.0-alt1
 
 # for autopoint.
 BuildPreReq: cvs
@@ -310,6 +317,9 @@ unset RPM_PYTHON
 %_libdir/%name/methods/https
 
 %changelog
+* Wed Jun 05 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt68
+- Add disttag to VerStrs (used by APT to identify package versions).
+
 * Wed Jun 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt67
 - Print error and disable 'upgrade' by default.
   Using 'dist-upgrade' instead of 'upgrade' is advised.
