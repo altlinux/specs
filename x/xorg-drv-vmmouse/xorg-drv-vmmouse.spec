@@ -1,18 +1,17 @@
-
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-vmmouse
 Version: 13.1.0
-Release: alt3
+Release: alt4
 
 Summary: VMWare mouse input driver
 License: MIT/X11
 Group: System/X11
+
 Url: http://xorg.freedesktop.org
-
-Requires: XORG_ABI_XINPUT = %get_xorg_abi_xinput
-
 Source: %name-%version.tar
+
+ExclusiveArch: x86_64 %ix86
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 
@@ -21,11 +20,13 @@ BuildRequires(Pre): xorg-sdk xorg-util-macros
 #BuildRequires: glibc-devel-static libudev-devel python-module-google python3-dev rpm-build-ruby xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-sdk
 BuildRequires: glibc-devel libudev-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
+Requires: XORG_ABI_XINPUT = %get_xorg_abi_xinput
+
 %description
 Xorg input driver for VMWare mouse.
 
 %prep
-%setup -q
+%setup
 %autoreconf
 
 %build
@@ -40,10 +41,10 @@ Xorg input driver for VMWare mouse.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-mkdir -p %buildroot/%_xconfdir
-install -m 0644 %buildroot/%_xorgsysconfigdir/*vmmouse*.conf %buildroot/%_xconfdir/
+mkdir -p %buildroot%_xconfdir
+install -pm644 %buildroot%_xorgsysconfigdir/*vmmouse*.conf %buildroot%_xconfdir/
 
 %files
 %config(noreplace) %_xconfdir/*vmmouse*.conf
@@ -55,6 +56,10 @@ install -m 0644 %buildroot/%_xorgsysconfigdir/*vmmouse*.conf %buildroot/%_xconfd
 %_man4dir/*vmmouse*.*
 
 %changelog
+* Thu Jun 13 2019 Michael Shigorin <mike@altlinux.org> 13.1.0-alt4
+- added ExclusiveArch:
+- minor spec cleanup
+
 * Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 13.1.0-alt3
 - requires XORG_ABI_XINPUT = 24.1
 
