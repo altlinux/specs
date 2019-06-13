@@ -4,13 +4,13 @@
 
 Name: lua5.3-luarocks
 Version: 2.4.2
-Release: alt5
+Release: alt6
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
 Url: http://www.luarocks.org
 Provides: %oname = %EVR
-Conflicts: %oname < %EVR
+Obsoletes: %oname < %EVR
 Conflicts: rpm-macros-lua < 1.4
 #This is %%luarocks_dbdir_prefix-%current_lua_version
 #	which is defined in rpm-macros-lua package
@@ -42,7 +42,6 @@ This is the instance for lua 5.3
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
-Provides: %oname = %EVR
 #This is %%luarocks_dbdir_prefix-%current_lua_version
 #	which is defined in rpm-macros-lua package
 Provides: %_prefix/lib/luarocks/rocks-5.1
@@ -139,6 +138,9 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Fri Jun 14 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt6
+- fix RPM deps (+Obsoletes, -Provides)
+
 * Wed Jun 05 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt5
 - great split: luarocks -> lua@luaversion@-luarocks (with 5.1 and 5.3 versions)
 - luarocks tree is now %luarocks_dbdir_prefix-@luaversion@ (separate for different versions)
