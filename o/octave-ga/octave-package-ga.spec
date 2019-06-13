@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
-%define octave_pkg_name ga
+%define octpkg ga
 Epoch: 1
-Name: octave-%octave_pkg_name
-Version: 0.10.0
-Release: alt4
+Name: octave-%octpkg
+Version: 0.10.1
+Release: alt1
 Summary: Genetic Algorithm
 
 Group: Sciences/Mathematics
-License: GPLv2+
+License: GPL version 3 or later
 URL: http://octave.sf.net
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{version}.tar.gz
+Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
+BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -29,28 +30,25 @@ Requires: octave >= 3.4.0
 Genetic optimization code
 
 %prep
-%setup -q -n %{octave_pkg_name}
+%setup -q -n %{octpkg}-%{version}
 
 %build
-octave -q -H --no-window-system --no-site-file --eval "pkg build -verbose -nodeps . %SOURCE0"
+%octave_build
 
 %install
-mkdir -p %buildroot%_datadir/octave/packages
-mkdir -p %buildroot%_libdir/octave/packages
-%if_with _octave_arch
-octave -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%version-$(octave -H --no-window-system --no-site-file --eval "printf([__octave_config_info__(\"canonical_host_type\"), \"-\",  __octave_config_info__(\"api_version\")])").tar.gz"
-%else
-octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %octave_pkg_name-%version-any-none.tar.gz"
-%endif
+%octave_install
 
 %files
-%doc DESCRIPTION COPYING NEWS doc
-%_datadir/octave/packages/%octave_pkg_name-%version
+%doc DESCRIPTION NEWS COPYING doc
+%_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
-%_libdir/octave/packages/%octave_pkg_name-%version
+%_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.10.1-alt1
+- regenerated from template by package builder
+
 * Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.10.0-alt4
 - build for octave 4.4
 
