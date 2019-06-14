@@ -3,7 +3,7 @@
 
 Name: installer-feature-rootgtktheme
 Version: 0.1.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Installer stage3 for root GTK theme settings
 License: GPL
@@ -14,7 +14,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This package contains installer stage3 hook for
@@ -38,5 +37,8 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
-* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
+* Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt2
+- dont use ubt macro
+
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
