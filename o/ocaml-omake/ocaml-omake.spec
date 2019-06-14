@@ -1,6 +1,6 @@
 Name:           ocaml-omake
 Version:        0.10.3
-Release:        alt1%ubt
+Release:        alt2
 Summary:        Build system with automated dependency analysis
 License:        LGPLv2+ with exceptions and GPLv2+ and BSD
 Group:          Development/ML
@@ -9,7 +9,6 @@ URL:            http://omake.metaprl.org/download.html
 Source: 	%name-%version.tar
 
 BuildRequires: rpm-build-ocaml ocaml ocaml-curses libreadline-devel gcc-c++ ocaml-findlib hevea
-BuildRequires(pre):rpm-build-ubt
 Provides: ocaml4-omake = %version-%release
 Obsoletes: ocaml4-omake
 
@@ -43,9 +42,9 @@ make all
 
 %install
 make install \
-  INSTALL_ROOT=$RPM_BUILD_ROOT 
+  INSTALL_ROOT=%buildroot
 
-chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
+chmod 0755 %buildroot%_bindir/*
 
 %files
 %doc LICENSE LICENSE.OMake
@@ -55,10 +54,13 @@ chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
 %_bindir/osh
 
 %changelog
-* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 0.10.3-alt1%ubt
+* Fri Jun 14 2019 Anton Farygin <rider@altlinux.ru> 0.10.3-alt2
+- cleanup spec
+
+* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 0.10.3-alt1
 - 0.10.3
 
-* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.9.8.6-alt1%ubt
+* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.9.8.6-alt1
 - renamed to ocaml-omake
 - built with new ocaml-4.04
 
