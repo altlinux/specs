@@ -1,7 +1,7 @@
 
 Name: installer-feature-sudo-enable-by-default-kde5su
 Version: 1.0
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Configuration/Other
 Summary: Setup kdesu for using sudo by default
@@ -13,7 +13,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Setup kdesu for using sudo by default.
@@ -40,5 +39,8 @@ Setup kdesu for using sudo by default.
 %_datadir/install2/postinstall.d/*
 
 %changelog
-* Fri Apr 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1%ubt
+* Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 1.0-alt2
+- dont use ubt macro
+
+* Fri Apr 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - initial build
