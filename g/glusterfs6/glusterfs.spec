@@ -1,7 +1,7 @@
 # TODO: --enable-bd-xlator
 
 %define oname glusterfs
-%define major 6.2
+%define major 6.3
 %def_enable rdma
 %def_enable epoll
 %def_enable fusermount
@@ -69,6 +69,7 @@ BuildRequires: libcmocka-devel
 BuildRequires: systemd
 
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
+Conflicts: glusterfs3
 
 
 %description
@@ -91,6 +92,7 @@ BuildRequires: libibverbs-devel
 BuildRequires: librdmacm-devel >= 1.0.19.1-alt1
 
 Requires: %name = %EVR
+Conflicts: glusterfs3-rdma
 
 %description rdma
 GlusterFS is a clustered file-system capable of scaling to several
@@ -109,6 +111,7 @@ Group: System/Base
 Requires: %name-server = %version-%release
 Requires: nfs-ganesha
 #Requires:         pcs
+Conflicts: glusterfs3-ganesha
 AutoReq: yes,noshell
 
 %description ganesha
@@ -128,6 +131,7 @@ Summary: GlusterFS Geo-replication
 Group: System/Base
 Requires: %name = %EVR
 Requires: rsync >= 3.0.0
+Conflicts: glusterfs3-georeplication
 
 %description georeplication
 GlusterFS is a clustered file-system capable of scaling to several
@@ -145,6 +149,7 @@ Summary: GlusterFS thin-arbiter module
 Group: System/Base
 Requires: %name = %EVR
 Requires: %name-server = %EVR
+Conflicts: glusterfs3-thin-arbiter
 
 %description thin-arbiter
 This package provides a tie-breaker functionality to GlusterFS
@@ -159,6 +164,7 @@ Group: System/Base
 BuildRequires: libfuse-devel
 
 Requires: %name = %EVR
+Conflicts: glusterfs3-client
 
 #Obsoletes: %name-client < 3.1.0
 #Provides: %name-client = %version-%release
@@ -177,6 +183,7 @@ This package provides support to FUSE based clients.
 %package -n lib%name-api
 Summary: GlusterFS api library
 Group: System/Libraries
+Conflicts: libglusterfs3-api
 #Requires: %name = %version-%release
 #Requires:         %name-client-xlators = %version-%release
 
@@ -196,6 +203,7 @@ Summary: Development libraries for GlusterFS api library
 Group: Development/Other
 Requires: lib%name-api = %EVR
 Requires: lib%name-devel = %EVR
+Conflicts: libglusterfs3-api-devel
 
 %description -n lib%name-api-devel
 GlusterFS is a distributed file-system capable of scaling to several
@@ -213,6 +221,7 @@ Summary: Clustered file-system server
 Group: System/Servers
 Requires: %name = %EVR
 Requires: %name-client = %EVR
+Conflicts: glusterfs3-server
 
 %description server
 GlusterFS is a clustered file-system capable of scaling to several
@@ -230,6 +239,7 @@ Summary: GlusterFS Events
 Group: System/Servers
 Requires: %name = %EVR
 #Requires: python3-module-requests
+Conflicts: glusterfs3-gfevents
 
 %description gfevents
 GlusterFS Events
@@ -239,6 +249,7 @@ Summary: Vim syntax file
 Group: Editors
 Requires: xxd
 BuildArch: noarch
+Conflicts: glusterfs3-vim
 
 %description vim
 GlusterFS is a clustered file-system capable of scaling to several
@@ -256,6 +267,7 @@ Summary: Development Libraries
 Group: Development/Other
 Requires: lib%name = %EVR
 Requires: lib%name-api-devel = %EVR
+Conflicts: libglusterfs3-devel
 #Conflicts: %oname-devel
 #Obsoletes: %name-devel < %version-%release
 #Provides: %name-devel = %version-%release
@@ -275,6 +287,7 @@ This package provides the development libraries.
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
+Conflicts: python3-module-glusterfs3
 #setup_python_module %name
 
 %description -n python3-module-%name
@@ -283,6 +296,7 @@ This package provides Python API for %name
 %package -n lib%name
 Summary: GlusterFS common libraries
 Group: System/Base
+Conflicts: libglusterfs3
 #Obsoletes: %oname-libs <= 2.0.0
 #Obsoletes: %name-libs
 #Provides: %name-libs = %version-%release
@@ -601,6 +615,10 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 %preun_service glusterd
 
 %changelog
+* Fri Jun 14 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3-alt1
+- new version 6.3 (with rpmrb script)
+- add conflicts to *gluster3 packages (ALT bug 36896)
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2-alt1
 - new version 6.2 (with rpmrb script)
 
