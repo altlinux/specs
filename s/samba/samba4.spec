@@ -60,7 +60,7 @@
 
 Name:    samba
 Version: 4.10.3
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -328,6 +328,7 @@ link against the SMB, RPC and other protocols provided by the Samba suite.
 %package common-tools
 Summary: Tools for Samba servers and clients
 Group: System/Servers
+Requires: %name-common = %version-%release
 Requires: %name-libs = %version-%release
 Provides: %dcname-common-tools = %version-%release
 Obsoletes: %dcname-common-tools < 4.10
@@ -1808,6 +1809,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jun 14 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.3-alt3
+- Add requires samba-common-tools for samba-common
+
 * Mon May 27 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.3-alt2
 - Build with MIT and Heimdal separately
 - Fix upgrade of latest samba-4.9 builds from branches
