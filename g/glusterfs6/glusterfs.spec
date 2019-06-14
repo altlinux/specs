@@ -15,7 +15,7 @@
 
 Name: glusterfs6
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -35,7 +35,8 @@ Source7: glusterd.init
 Source8: glustereventsd.init
 
 # Stop unsupported i586 build
-ExcludeArch: %ix86
+# Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
+#ExcludeArch: %ix86
 
 #add_verify_elf_skiplist %_libdir/libgfdb.so.0.0.1
 %add_verify_elf_skiplist %_libdir/libgfrpc.so.0.0.1
@@ -615,6 +616,9 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 %preun_service glusterd
 
 %changelog
+* Fri Jun 14 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3-alt2
+- enable build for ix86 (32bit)
+
 * Fri Jun 14 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3-alt1
 - new version 6.3 (with rpmrb script)
 - add conflicts to *gluster3 packages (ALT bug 36896)
