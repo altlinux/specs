@@ -1,6 +1,6 @@
 Name: installer-feature-desktop-etcissue
 Version: 0.1.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Setup /etc/issue
 License: GPL
@@ -9,7 +9,6 @@ Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Setup /etc/issue and /etc/issue.net .
@@ -28,8 +27,11 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1%ubt
+* Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt2
+- dont use ubt macro
+
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
 - fix check /etc/issue presence
 
-* Mon Apr 16 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
+* Mon Apr 16 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
