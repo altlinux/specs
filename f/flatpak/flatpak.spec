@@ -12,11 +12,10 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
-
 Group: Development/Tools
 License: LGPLv2.1+
 Url: http://flatpak.org/
@@ -25,6 +24,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
+
+%define flatpak_group %name
+%define flatpak_user %name
 
 %define ostree_ver 2018.9
 %define bwrap_ver 0.2.1
@@ -93,7 +95,7 @@ This package contains the pkg-config file and development headers for %name.
 
 %build
 # workaround for collision with new copy_file_range glibc function. remove it when it's no longer needed.
-%add_optflags -DHAVE_DECL_COPY_FILE_RANGE
+#%%add_optflags -DHAVE_DECL_COPY_FILE_RANGE
 # User namespace support is sufficient.
 %configure --with-priv-mode=none \
            --with-system-bubblewrap \
@@ -108,6 +110,11 @@ This package contains the pkg-config file and development headers for %name.
 install -d %buildroot%_localstatedir/lib/flatpak
 
 %find_lang %name
+
+%pre
+%_sbindir/groupadd -r -f %flatpak_group 2>/dev/null ||:
+%_sbindir/useradd -r -n -g %flatpak_group -d / \
+	-s /sbin/nologin -c "User for flatpak system helper" %flatpak_user 2>/dev/null ||:
 
 %post
 # Create an (empty) system-wide repo.
@@ -162,8 +169,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
-* Fri Jun 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
-- 1.4.1
+* Fri Jun 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+- %%pre: create flatpak group/user
 
 * Wed May 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
