@@ -1,7 +1,7 @@
 
 Name: eigen2
 Version: 2.0.17
-Release: alt2%ubt
+Release: alt3
 
 Group: Development/C++
 Summary: Lightweight C++ template library for vector and matrix math, a.k.a. linear algebra
@@ -17,7 +17,6 @@ Patch1: eigen_ftbfs.patch
 # Automatically added by buildreq on Thu Apr 13 2017 (-bi)
 # optimized out: cmake-modules fontconfig ghostscript-classic libgpg-error libstdc++-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base
 #BuildRequires: cmake doxygen gcc-c++ ghostscript-common python-module-google python3-dev ruby-stdlibs
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen gcc-c++ ghostscript-common
 
 %description
@@ -56,7 +55,10 @@ popd
 %_datadir/pkgconfig/%name.pc
 
 %changelog
-* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt2%ubt
+* Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt3
+- don't use ubt macro
+
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt2
 - fix to build
 
 * Fri Mar 30 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt0.M60P.1
