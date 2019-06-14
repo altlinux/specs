@@ -1,6 +1,6 @@
 Name: gnulib
 Version: 0.1.2433.3043e
-Release: alt1
+Release: alt2
 
 Summary: GNU Portability Library
 # assorted licenses, see the source
@@ -11,6 +11,7 @@ Url: https://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
+Patch3: nproc-Ensure-nproc-NPROC_ALL-nproc-NPROC_CURRENT-wit.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -27,6 +28,7 @@ source repository.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 
@@ -47,6 +49,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Tue Jun 11 2019 Nikita Ermakov <arei@altlinux.org> 0.1.2433.3043e-alt2
+- Ensure nproc(NPROC_ALL) >= nproc(NPROC_CURRENT) with glibc >= 2.26.
+
 * Sat Feb 02 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1.2433.3043e-alt1
 - v0.1-2313-g4652c7baf -> v0.1-2433-g3043e43a7 (closes: ##35859).
 
