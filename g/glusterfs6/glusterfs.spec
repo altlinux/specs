@@ -1,27 +1,26 @@
 # TODO: --enable-bd-xlator
 
-%define oname glusterfs
 %define major 6.3
-%def_enable rdma
+#define _localstatedir /var
 %def_enable epoll
 %def_enable fusermount
+# disable NFS ganesha
+%def_disable ganesha
 %def_enable georeplication
 # disable OCF resource agents
 %def_without ocf
-# disable NFS ganesha
-%def_without ganesha
-
-%define subst_enable_with() %{expand:%%{?_enable_%1:--enable-%2} } %{expand:%%{?_disable_%1:--disable-%2} }
+# rdma package
+%def_enable ibverbs
 
 Name: glusterfs6
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
-License: GPLv2/LGPLv3
+License: GPLv2/LGPLv3+
 Group: System/Base
-Url: http://www.gluster.org/
+Url: https://www.gluster.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -46,12 +45,18 @@ Source8: glustereventsd.init
 
 # fixme:
 # glusterfs5
-%add_python3_req_skip changelogdata libgfchangelog
+# add_python3_req_skip changelogdata libgfchangelog
 # glusterfs5-georeplication
-%add_python3_req_skip gsyncdstatus argsupgrade gsyncdconfig rconf repce subcmds syncdutils
+# add_python3_req_skip gsyncdstatus argsupgrade gsyncdconfig rconf repce subcmds syncdutils
 # glusterfs5-gfevents
-%add_python3_req_skip eventsapiconf eventtypes gfevents.eventsapiconf gfevents.eventtypes gfevents.utils handlers
+# add_python3_req_skip eventsapiconf eventtypes gfevents.eventsapiconf gfevents.eventtypes gfevents.utils handlers
 
+%add_python3_lib_path %_libexecdir/glusterfs/gfevents
+%add_python3_lib_path %_libexecdir/glusterfs/python/syncdaemon
+%add_python3_lib_path %_libexecdir/glusterfs/glusterfind
+%allow_python3_import_path %_libexecdir/glusterfs/gfevents
+%allow_python3_import_path %_libexecdir/glusterfs/python/syncdaemon
+%allow_python3_import_path %_libexecdir/glusterfs/glusterfind
 
 # TODO: remove
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
@@ -59,19 +64,18 @@ Source8: glustereventsd.init
 %define glusterlibdir %_libdir/glusterfs/%version
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3
+BuildRequires: python3-dev
 
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
 BuildRequires: libssl-devel libcurl-devel zlib-devel libtirpc-devel
 BuildRequires: libcmocka-devel
-
 BuildRequires: systemd
-
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
-Conflicts: glusterfs3
+%{?_enable_ibverbs:BuildRequires: rdma-core-devel}
 
+Conflicts: glusterfs3
 
 %description
 GlusterFS is a clustered file-system capable of scaling to several
@@ -89,8 +93,6 @@ both GlusterFS server and client framework.
 %package rdma
 Summary: GlusterFS rdma support for ib-verbs
 Group: System/Base
-BuildRequires: libibverbs-devel
-BuildRequires: librdmacm-devel >= 1.0.19.1-alt1
 
 Requires: %name = %EVR
 Conflicts: glusterfs3-rdma
@@ -185,6 +187,7 @@ This package provides support to FUSE based clients.
 Summary: GlusterFS api library
 Group: System/Libraries
 Conflicts: libglusterfs3-api
+Requires: %name = %EVR
 #Requires: %name = %version-%release
 #Requires:         %name-client-xlators = %version-%release
 
@@ -238,9 +241,11 @@ This package provides the glusterfs server daemon.
 %package gfevents
 Summary: GlusterFS Events
 Group: System/Servers
-Requires: %name = %EVR
+BuildArch: noarch
+Requires: %name-server = %EVR
+Provides: %name-events = %EVR
 #Requires: python3-module-requests
-Conflicts: glusterfs3-gfevents
+Conflicts: glusterfs3-events
 
 %description gfevents
 GlusterFS Events
@@ -249,6 +254,7 @@ GlusterFS Events
 Summary: Vim syntax file
 Group: Editors
 Requires: xxd
+Requires: vim
 BuildArch: noarch
 Conflicts: glusterfs3-vim
 
@@ -269,9 +275,6 @@ Group: Development/Other
 Requires: lib%name = %EVR
 Requires: lib%name-api-devel = %EVR
 Conflicts: libglusterfs3-devel
-#Conflicts: %oname-devel
-#Obsoletes: %name-devel < %version-%release
-#Provides: %name-devel = %version-%release
 
 %description -n lib%name-devel
 GlusterFS is a clustered file-system capable of scaling to several
@@ -298,9 +301,6 @@ This package provides Python API for %name
 Summary: GlusterFS common libraries
 Group: System/Base
 Conflicts: libglusterfs3
-#Obsoletes: %oname-libs <= 2.0.0
-#Obsoletes: %name-libs
-#Provides: %name-libs = %version-%release
 
 %description -n lib%name
 GlusterFS is a distributed file-system capable of scaling to several
@@ -312,6 +312,26 @@ called Translators from GNU Hurd kernel. Much of the code in GlusterFS
 is in user space and easily manageable.
 
 This package provides the base GlusterFS libraries.
+
+%package resource-agents
+Summary: OCF Resource Agents for GlusterFS
+License: GPLv3+
+Group: System/Base
+BuildArch: noarch
+Requires: %name-server = %EVR
+
+%description resource-agents
+GlusterFS is a distributed file-system capable of scaling to several
+petabytes. It aggregates various storage bricks over Infiniband RDMA
+or TCP/IP interconnect into one large parallel network file
+system. GlusterFS is one of the most sophisticated file systems in
+terms of features and extensibility.  It borrows a powerful concept
+called Translators from GNU Hurd kernel. Much of the code in GlusterFS
+is in user space and easily manageable.
+
+This package provides the resource agents which plug glusterd into
+Open Cluster Framework (OCF) compliant cluster resource managers,
+like Pacemaker.
 
 %prep
 %setup
@@ -326,18 +346,18 @@ This package provides the base GlusterFS libraries.
 echo "v%version-%release" >VERSION
 
 %build
+export PYTHON=%__python3
 # need from build from git repo (but incorporated in tarballs)
 ./autogen.sh
 %configure \
-            --with-systemddir=%_unitdir \
-            --localstatedir=/var/ \
-            --libexecdir=%_libexecdir \
-            %{subst_with ocf} \
-            %{subst_enable_with rdma ibverbs} \
-            %{subst_enable epoll} \
-            %{subst_enable fusermount} \
-            %{subst_enable_with geo-replication geo-replication}
-
+  %{subst_enable ibverbs} \
+  %{subst_enable epoll} \
+  %{subst_enable fusermount} \
+  %{subst_enable georeplication} \
+  %{subst_with ocf} \
+  --with-systemddir=%_unitdir \
+  --localstatedir=/var/
+  
 # NOTE: --enable-asan makes all sizeof is 0, see broken-configure TESTS
 
 # TODO: make check
@@ -350,7 +370,7 @@ echo "v%version-%release" >VERSION
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std PYTHON=%__python3
 # Install include directory
 mkdir -p %buildroot%_includedir/glusterfs
 install -p -m 0644 libglusterfs/src/*.h %buildroot%_includedir/glusterfs/
@@ -395,6 +415,8 @@ mkdir -p %buildroot%_sharedstatedir/glusterd/
 
 install -D -m644 extras/systemd/glusterd.service %buildroot/%_unitdir/glusterd.service
 install -D -m644 extras/systemd/glustereventsd.service %buildroot/%_unitdir/glustereventsd.service
+install -D -m644 extras/systemd/gluster-ta-volume.service %buildroot/%_unitdir/gluster-ta-volume.service
+install -D -m644 extras/systemd/glusterfssharedstorage.service %buildroot/%_unitdir/glusterfssharedstorage.service
 
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
@@ -431,6 +453,12 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 # remove cloudsync-plugins
 rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 
+%post server
+%post_service glusterd
+
+%preun server
+%preun_service glusterd
+
 # TODO: move common part to -common?
 %files
 %doc ChangeLog INSTALL README.md THANKS COPYING-GPLV2 COPYING-LGPLV3
@@ -458,8 +486,9 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 #_sbindir/snap_scheduler.py
 %_logdir/glusterfs/
 %exclude %_man8dir/mount.glusterfs.8*
+%dir %_datadir/glusterfs/scripts
 
-%if_enabled rdma
+%if_enabled ibverbs
 %files rdma
 %glusterlibdir/rpc-transport/rdma.so
 %endif
@@ -609,13 +638,19 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
 
-%post server
-%post_service glusterd
-
-%preun server
-%preun_service glusterd
+%if_with ocf
+%files resource-agents
+%dir %_target_libdir_noarch/ocf
+%dir %_target_libdir_noarch/ocf/resource.d/glusterfs
+%_target_libdir_noarch/ocf/resource.d/glusterfs/glusterd
+%endif
 
 %changelog
+* Fri Jun 14 2019 Andrew A. Vasilyev <andy@altlinux.org> 6.3-alt3
+- add resource-agents
+- fix georeplication option in configure
+- minor spec cleanup
+
 * Fri Jun 14 2019 Vitaly Lipatov <lav@altlinux.ru> 6.3-alt2
 - enable build for ix86 (32bit)
 
