@@ -1,12 +1,11 @@
 Name: megatools
 Version: 1.10.2
-Release: alt1%ubt
+Release: alt2
 Summary: Command line client for MEGA
 License: GPLv3+
 Url: http://megatools.megous.com/
 Group: Archiving/Backup
 Source0: %name-%version.tar
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libfuse-devel, libcurl-devel, openssl-devel, glib2-devel, libgmp-devel
 BuildRequires: gobject-introspection-devel, asciidoc-a2x
 
@@ -42,8 +41,11 @@ export LD_LIBRARY_PATH=$PWD/.libs
 %_mandir/man7/%name.7.*
 
 %changelog
-* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 1.10.2-alt1%ubt
+* Fri Jun 14 2019 Anton Farygin <rider@altlinux.ru> 1.10.2-alt2
+- removed ubt macros
+
+* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 1.10.2-alt1
 - 1.10.2
 
-* Mon Feb 06 2017 Anton Farygin <rider@altlinux.ru> 1.9.98-alt1%ubt
+* Mon Feb 06 2017 Anton Farygin <rider@altlinux.ru> 1.9.98-alt1
 - first build for ALT
