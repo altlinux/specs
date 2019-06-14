@@ -1,6 +1,6 @@
 Name: ocamldsort
 Version: 0.16.0
-Release: alt1%ubt
+Release: alt2
 Summary: Makefile helper for OCaml
 License: GPL
 Group: Development/ML
@@ -9,7 +9,6 @@ Url: http://www.normalesup.org/~ara/informatique.html
 Source: %name-%version.tar
 
 BuildRequires: ocaml >= 4.04, ocaml-camlp4-devel
-BuildRequires(pre):rpm-build-ubt
 
 %description
 
@@ -34,7 +33,10 @@ mv ocamldsort.opt ocamldsort
 %doc README
 
 %changelog
-* Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1%ubt
+* Fri Jun 14 2019 Anton Farygin <rider@altlinux.ru> 0.16.0-alt2
+- removed ubt macros
+
+* Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - new version
 
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.14.4-alt1.qa1
