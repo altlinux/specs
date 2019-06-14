@@ -3,7 +3,7 @@
 
 Name: alterator-browser-gui-common
 Version: 0.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Common files for alterator GUI browser
 License: GPL
@@ -11,8 +11,6 @@ Group: System/Configuration/Other
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Common files for alterator GUI browser
@@ -28,5 +26,8 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 %_datadir/%name/
 
 %changelog
-* Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1%ubt
+* Fri Jun 14 2019 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt2
+- don't use ubt macro
+
+* Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1
 - initial build
