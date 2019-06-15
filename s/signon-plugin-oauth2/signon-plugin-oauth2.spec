@@ -1,6 +1,6 @@
 Name: signon-plugin-oauth2
 Version: 0.24
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: OAuth2 plugin for the Accounts framework
@@ -59,6 +59,9 @@ sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth
 %_libdir/pkgconfig/signon-oauth2plugin.pc
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2
+- NMU: remove %ubt from release
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.24-alt1%ubt
 - new version
 
