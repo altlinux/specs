@@ -3,7 +3,7 @@
 
 Name: oath-toolkit
 Version: 2.6.2
-Release: alt2%ubt
+Release: alt3
 Summary: Toolkit for one-time password authentication systems
 License: %gpl3plus
 Group: Security/Networking
@@ -180,6 +180,9 @@ touch ChangeLog
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt3
+- NMU: remove %ubt from release
+
 * Fri Sep 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt2%ubt
 - rebuild for aarch64
 
