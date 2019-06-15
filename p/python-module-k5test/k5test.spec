@@ -3,7 +3,7 @@
 
 Name: python-module-%mname
 Version: 0.9.2
-Release: alt1%ubt
+Release: alt2
 Summary: Library for setting up self-contained Kerberos 5 environments
 
 Group: Development/Python
@@ -65,6 +65,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2
+- NMU: remove %ubt from release
+
 * Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1%ubt
 - 0.9.1 -> 0.9.2
 
