@@ -1,6 +1,6 @@
 Name: adns
 Version: 1.5.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: GNU adns, an asynchronous DNS resolver
 License: GPLv2+
@@ -80,6 +80,9 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 %_libdir/lib%name.a
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
+- NMU: remove %ubt from release
+
 * Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1%ubt
 - new version
 
