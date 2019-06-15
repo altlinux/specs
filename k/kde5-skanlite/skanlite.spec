@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 2.1.0
-Release: alt1%ubt
+Release: alt2
 %K5init
 
 Group: Graphics
@@ -48,6 +48,9 @@ with auto-generated names and format.
 %_K5xdgapp/org.kde.skanlite.desktop
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt2
+- NMU: remove %ubt from release
+
 * Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1%ubt
 - new version
 
