@@ -5,7 +5,7 @@
 Summary: Library providing binary-decimal and decimal-binary routines for IEEE doubles
 Name: lib%oname
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2
 License: BSD
 Group: System/Libraries
 Url: https://github.com/floitsch/double-conversion
@@ -59,6 +59,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%oname
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt2
+- NMU: remove %ubt from release
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1%ubt
 - Updated to upstream version 3.0.0.
 
