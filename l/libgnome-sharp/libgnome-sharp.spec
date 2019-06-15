@@ -5,7 +5,7 @@
 Summary: GNOME bindings for Mono
 Name: lib%{realname}
 Version: 2.24.2
-Release: alt4%ubt
+Release: alt5
 License: LGPLv2+
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
@@ -73,6 +73,9 @@ to parse and bind Gnome libraries.
 %_pkgconfigdir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.24.2-alt5
+- NMU: remove %ubt from release
+
 * Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt4%ubt
 - Rebuilt for additional architectures.
 
