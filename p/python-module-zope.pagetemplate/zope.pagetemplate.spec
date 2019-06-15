@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Zope Page Templates
 License: ZPLv2.1
@@ -144,6 +144,9 @@ popd
 %python3_sitelibdir/zope/pagetemplate/tests
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt2
+- NMU: remove %ubt from release
+
 * Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1%ubt
 - 4.2.1 -> 4.3.0
 
