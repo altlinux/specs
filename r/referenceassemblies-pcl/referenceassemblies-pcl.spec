@@ -19,7 +19,7 @@
 
 Name:           referenceassemblies-pcl
 Version:        2014.04.14
-Release:	alt2%ubt
+Release:	alt3
 Url:            http://go-mono.org/
 # https://github.com/mono/linux-packaging-referenceassemblies-pcl/
 Source0:	%name-%version.tar
@@ -57,6 +57,9 @@ cp -a v4.6  %buildroot%_monodir/xbuild-frameworks/.NETPortable/
 %doc EULA.rtf
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2014.04.14-alt3
+- NMU: remove %ubt from release
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.04.14-alt2%ubt
 - Rebuilt with support of %%ubt macro.
 
