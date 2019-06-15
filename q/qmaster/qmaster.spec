@@ -1,6 +1,6 @@
 Name:     qmaster
 Version:  0.2.3
-Release:  alt2%ubt
+Release:  alt3
 
 Summary:  Modbus network emulator
 License:  GPL-2.0
@@ -48,6 +48,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt3
+- NMU: remove %ubt from release
+
 * Sat Mar 10 2018 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2%ubt
 - Fix Url
 
