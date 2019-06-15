@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt1%ubt
+Release: alt2
 Summary:  Sliding window memory map manager
 License: BSD
 BuildArch: noarch
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt2
+- NMU: remove %ubt from release
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%ubt
 - Updated to upstream version 2.0.3.
 
