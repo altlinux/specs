@@ -2,7 +2,7 @@
 
 Name: apache2-mod_lookup_identity
 Version: 1.0.0
-Release: alt1%ubt
+Release: alt2
 License: ASL 2.0 
 Group: System/Servers
 Summary: Apache module to retrieve additional information about the authenticated user
@@ -45,5 +45,8 @@ install -m 644 .libs/mod_lookup_identity.so %buildroot%apache2_moduledir/mod_loo
 %apache2_moduledir/mod_lookup_identity.so
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2
+- NMU: remove %ubt from release
+
 * Mon Nov 13 2017 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1%ubt
 - Initial build
