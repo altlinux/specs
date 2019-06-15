@@ -4,7 +4,7 @@
 %define rname gwenview
 Name: kde4-gwenview
 Version: 4.14.3
-Release: alt4%ubt
+Release: alt5
 
 Group: Graphics
 Summary: Image viewer for KDE
@@ -80,6 +80,9 @@ done
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.3-alt5
+- NMU: remove %ubt from release
+
 * Thu Nov 02 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt4%ubt
 - rebuild with new exiv2
 
