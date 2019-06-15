@@ -10,7 +10,7 @@
 
 Name:		kapacitor
 Version:	1.3.3
-Release:	alt1%ubt
+Release:	alt2
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
 Group:		Development/Other
@@ -99,6 +99,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2
+- NMU: remove %ubt from release
+
 * Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.3-alt1%ubt
 - 1.3.3
 
