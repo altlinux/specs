@@ -1,6 +1,6 @@
 Name: sngrep
 Version: 1.4.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
 
@@ -44,6 +44,9 @@ as PCAP viewer.
 %_man8dir/sngrep.8*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt2
+- NMU: remove %ubt from release
+
 * Wed Apr 12 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.4.2-alt1%ubt
 - added ubt
 
