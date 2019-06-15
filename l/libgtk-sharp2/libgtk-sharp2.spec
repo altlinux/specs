@@ -4,7 +4,7 @@
 Summary: GTK+ and GNOME bindings for Mono
 Name: lib%{realname}2
 Version: 2.12.11
-Release: alt5%ubt
+Release: alt6
 License: LGPLv2+
 Group: Development/Other
 Url: http://www.mono-project.com/
@@ -122,6 +122,9 @@ NOCONFIGURE=1 ./bootstrap-2.12
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.11-alt6
+- NMU: remove %ubt from release
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt5%ubt
 - Rebuilt with support of %%ubt macro.
 
