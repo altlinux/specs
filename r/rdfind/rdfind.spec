@@ -1,6 +1,6 @@
 Name: rdfind
 Version: 1.3.4
-Release: alt1%ubt
+Release: alt2
 Summary: Program that finds duplicate files
 Group: File tools
 License: GPLv2
@@ -29,6 +29,9 @@ Rdfind is a program that finds duplicate files.
 %_man1dir/%{name}*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2
+- NMU: remove %ubt from release
+
 * Fri Dec 30 2016 Sergey Novikov <sotor@altlinux.org> 1.3.4-alt1%ubt
 - Added ubt tag for simplifying backporting process
 
