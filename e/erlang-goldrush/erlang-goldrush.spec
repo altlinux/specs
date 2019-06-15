@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 0.1.9
-Release: alt1%ubt
+Release: alt2
 Summary: Small, fast event processing and monitoring for Erlang/OTP applications
 License: MIT
 Group: Development/Erlang
@@ -39,6 +39,9 @@ A small Erlang app that provides fast event stream processing.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.9-alt2
+- NMU: remove %ubt from release
+
 * Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9-alt1%ubt
 - Updated to upstream version 0.1.9.
 
