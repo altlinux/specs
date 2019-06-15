@@ -1,6 +1,6 @@
 Name: qtsoap
 Version: 2.7
-Release: alt2%ubt
+Release: alt3
 
 Group: System/Libraries
 Summary: The Simple Object Access Protocol Qt-based client side library
@@ -116,6 +116,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3
+- NMU: remove %ubt from release
+
 * Fri Jan 05 2017 Anton Midyukov <antohami@altlinux.org> 2.7-alt2%ubt
 - build qtsoap5
 
