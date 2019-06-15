@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 1.0
-Release: alt1%ubt
+Release: alt2
 Summary: URL safe base64-compatible codec
 Group: Development/Erlang
 License: MIT
@@ -38,5 +38,8 @@ Standalone URL safe base64-compatible codec.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- NMU: remove %ubt from release
+
 * Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1%ubt
 - Initial build for ALT.
