@@ -2,7 +2,7 @@
 Name: adcli
 Version: 0.8.2
 
-Release: alt1%ubt
+Release: alt2
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -44,6 +44,9 @@ standard LDAP and Kerberos calls.
 %_mandir/*/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt2
+- NMU: remove %ubt from release
+
 * Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1%ubt
 - 0.8.2
 
