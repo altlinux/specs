@@ -1,6 +1,6 @@
 Name: dansguardian
 Version: 2.12.0.3
-Release: alt1%ubt
+Release: alt2
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
@@ -78,6 +78,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.0.3-alt2
+- NMU: remove %ubt from release
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 2.12.0.3-alt1%ubt
 - new version
 
