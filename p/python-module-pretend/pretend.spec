@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt1.qa1%ubt
+Release: alt2.qa1
 Summary: A library for stubbing in Python
 License: BSD
 Group: Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2.qa1
+- NMU: remove %ubt from release
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1.qa1%ubt
 - NMU: applied repocop patch
 
