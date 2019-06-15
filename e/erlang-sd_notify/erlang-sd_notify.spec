@@ -6,7 +6,7 @@
 
 Name: erlang-%realname
 Version: 1.0
-Release: alt2%ubt
+Release: alt3
 Summary: Erlang interface to systemd notify subsystem
 Group: Development/Erlang
 License: MIT
@@ -42,6 +42,9 @@ BuildRequires: libsystemd-devel
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3
+- NMU: remove %ubt from release
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2%ubt
 - Disabled tests.
 
