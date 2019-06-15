@@ -2,7 +2,7 @@
 
 Name: cmark
 Version: 0.28.3
-Release: alt1%ubt
+Release: alt2
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
 Group: Text tools
@@ -74,5 +74,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.28.3-alt2
+- NMU: remove %ubt from release
+
 * Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.28.3-alt1%ubt
 - Initial build for ALT.
