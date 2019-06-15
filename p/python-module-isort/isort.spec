@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.2.15
-Release:        alt1.qa1%ubt
+Release:        alt2.qa1
 Summary:        Python utility / library to sort Python imports
 Group:          Development/Python
 License:        MIT
@@ -92,6 +92,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt2.qa1
+- NMU: remove %ubt from release
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt1.qa1%ubt
 - NMU: applied repocop patch
 
