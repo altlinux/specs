@@ -1,6 +1,6 @@
 Name: ferrisloki
 Version: 3.0.13
-Release: alt1%ubt
+Release: alt2
 Summary: Loki C++ library from Modern C++ Design
 License: GPL
 Group: System/Libraries
@@ -71,5 +71,8 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.13-alt2
+- NMU: remove %ubt from release
+
 * Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.13-alt1%ubt
 - Initial build for ALT.
