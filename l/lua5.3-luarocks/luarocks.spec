@@ -4,7 +4,7 @@
 
 Name: lua5.3-luarocks
 Version: 2.4.2
-Release: alt6
+Release: alt7
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -138,6 +138,9 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Sat Jun 15 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt7
+- improved %oname.filetrigger (closes: 36897)
+
 * Fri Jun 14 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt6
 - fix RPM deps (+Obsoletes, -Provides)
 
