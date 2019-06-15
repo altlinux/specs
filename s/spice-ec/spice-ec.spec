@@ -1,6 +1,6 @@
 Name: spice-ec
 Version: 1.0.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Spice Easy Connect
 License: GPLv3
@@ -32,6 +32,9 @@ SPICE remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2
+- NMU: remove %ubt from release
+
 * Thu Mar 15 2018 Maxim Voronov <mvoronov@altlinux.org> 1.0.1-alt1%ubt
 - new version
 
