@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1%ubt
+Release: alt2
 Summary: A slugifier that works in unicode
 License: BSD
 BuildArch: noarch
@@ -132,5 +132,8 @@ popd
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.5-alt2
+- NMU: remove %ubt from release
+
 * Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.5-alt1%ubt
 - Initial build for ALT.
