@@ -4,7 +4,7 @@
 
 Name: erlang-%realname
 Version: 0.14.8
-Release: alt1%ubt
+Release: alt2
 Summary: JSON NIFs for Erlang
 Group: Development/Erlang
 License: MIT
@@ -49,5 +49,8 @@ rm -rf c_src/double-conversion
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.8-alt2
+- NMU: remove %ubt from release
+
 * Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.8-alt1%ubt
 - Initial build for ALT.
