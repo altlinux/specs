@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 0.12.0
-Release: alt1%ubt
+Release: alt2
 Summary: A Kerberos authentication handler for python-requests
 License: %mit
 Group: Development/Python
@@ -92,6 +92,9 @@ popd
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2
+- NMU: remove %ubt from release
+
 * Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1%ubt
 - v0.11.0 -> v0.12.0
 
