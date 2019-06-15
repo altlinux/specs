@@ -2,7 +2,7 @@
 
 Name: seappletsimple
 Version: 0.2.3
-Release: alt1%ubt
+Release: alt2
 
 Summary: Simple applet for SELinux
 License: GPL
@@ -65,6 +65,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2
+- NMU: remove %ubt from release
+
 * Thu Mar 09 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.3-alt1%ubt
 - fix release build
 
