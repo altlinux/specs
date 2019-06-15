@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt1.qa1%ubt
+Release: alt2.qa1
 Summary: IO of git-style object databases
 License: BSD
 BuildArch: noarch
@@ -176,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt2.qa1
+- NMU: remove %ubt from release
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1.qa1%ubt
 - NMU: applied repocop patch
 
