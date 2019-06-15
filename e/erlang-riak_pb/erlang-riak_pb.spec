@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 2.3.2
-Release: alt1%ubt
+Release: alt2
 Summary: Riak Protocol Buffers Messages
 Group: Development/Erlang
 License: ASL 2.0
@@ -47,5 +47,8 @@ various Erlang-specific utility modules for the message types.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2
+- NMU: remove %ubt from release
+
 * Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.2-alt1%ubt
 - Initial build for ALT.
