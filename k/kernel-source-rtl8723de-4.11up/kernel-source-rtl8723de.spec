@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name-4.11up
 Version: %module_version
-Release: alt4%ubt
+Release: alt5
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -40,5 +40,8 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 kernel-sourc
 %_usrsrc/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.1.8-alt5
+- NMU: remove %ubt from release
+
 * Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt4%ubt
 - initial build
