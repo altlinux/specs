@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: Zope Exceptions
 License: ZPLv2.1
@@ -124,6 +124,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
+- NMU: remove %ubt from release
+
 * Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt2%ubt
 - Fix a wrong logic of packaging for non x86_64 arch
 
