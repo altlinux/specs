@@ -2,7 +2,7 @@
 
 Name: erlang-riak_client
 Version: 2.5.3
-Release: alt1%ubt
+Release: alt2
 Summary: Erlang client for Riak
 Group: Development/Erlang
 License: ASL 2.0
@@ -42,5 +42,8 @@ Erlang client for Riak.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2
+- NMU: remove %ubt from release
+
 * Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.3-alt1%ubt
 - Initial build for ALT.
