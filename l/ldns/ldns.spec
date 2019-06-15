@@ -6,7 +6,7 @@
 
 Name: ldns
 Version: 1.7.0
-Release: alt2%ubt
+Release: alt3
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -156,6 +156,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3
+- NMU: remove %ubt from release
+
 * Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2%ubt
 - Rebuilt with openssl 1.1.
 
