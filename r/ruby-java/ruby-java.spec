@@ -1,6 +1,6 @@
 Name: ruby-java
 Version: 0.0.2
-Release: alt2%ubt
+Release: alt3
 
 Summary: The caffeine boost you need for your late-night coding sprints.
 Group: Development/Ruby
@@ -52,6 +52,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt3
+- NMU: remove %ubt from release
+
 * Thu Jun 07 2018 Maxim Voronov <mvoronov@altlinux.org> 0.0.2-alt2%ubt
 - Disable tests because of not existed bundler/setup
 
