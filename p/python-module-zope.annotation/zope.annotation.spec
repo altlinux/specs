@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: Object annotation mechanism
 License: ZPLv2.1
@@ -139,6 +139,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.0-alt3
+- NMU: remove %ubt from release
+
 * Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2%ubt
 - Fixed tests.
 
