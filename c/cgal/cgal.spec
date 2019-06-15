@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 4.12
-Release: alt2%ubt
+Release: alt3
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -145,6 +145,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt3
+- NMU: remove %ubt from release
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12-alt2%ubt
 - NMU: rebuilt with boost-1.67.0
 
