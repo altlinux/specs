@@ -1,6 +1,6 @@
 Name: orion
 Version: 1.6.1
-Release: alt3%ubt
+Release: alt4
 
 Summary: Seek and watch streams on Twitch
 
@@ -47,6 +47,9 @@ A desktop client for Twitch.tv. Features:
 %doc README.md COPYING LICENSE.txt
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt4
+- NMU: remove %ubt from release
+
 * Fri Mar 16 2018 Maxim Voronov <mvoronov@altlinux.org> 1.6.1-alt3%ubt
 - add qt5-graphicaleffects dependency
 
