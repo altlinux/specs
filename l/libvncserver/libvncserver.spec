@@ -10,7 +10,7 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.11
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -160,6 +160,9 @@ mkdir -p x11vnc
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.11-alt2
+- NMU: remove %ubt from release
+
 * Wed Sep 20 2017 Sergey V Turchin <zerg@altlinux.org> 0.9.11-alt1%ubt
 - new version
 
