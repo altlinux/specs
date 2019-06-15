@@ -3,7 +3,7 @@
 
 Name: signon-ui
 Version: 0.17
-Release: alt0.7%ubt
+Release: alt1.7
 
 Group: System/Libraries
 Summary: Online Accounts Sign-on Ui
@@ -70,6 +70,9 @@ mkdir -p %buildroot/%_sysconfdir/signon-ui/webkit-options.d
 %_sysconfdir/signon-ui
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.7
+- NMU: remove %ubt from release
+
 * Thu Jun 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.17-alt0.7%ubt
 - fix crash; thanks mcpain@alt
 
