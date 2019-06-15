@@ -9,7 +9,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -141,7 +141,7 @@ export NPROCS=1
 %_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libwacom-properties.so
 %_libdir/%{name}-1/panels/libdate_time.so
-%_libdir/%{name}-1/panels/libonline-accounts.so
+%{?_enable_onlineaccounts:%_libdir/%{name}-1/panels/libonline-accounts.so}
 %_libdir/*.so.*
 
 %exclude %_libdir/%{name}-1/panels/*.la
@@ -168,6 +168,9 @@ export NPROCS=1
 
 
 %changelog
+* Sat Jun 15 2019 Michael Shigorin <mike@altlinux.org> 4.0.1-alt1.2
+- fix onlineaccounts knob
+
 * Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1.1
 - fix build on beekeeper machines
 
