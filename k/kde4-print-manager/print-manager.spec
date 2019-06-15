@@ -3,7 +3,7 @@
 %define rname print-manager
 Name: kde4-print-manager
 Version: 14.12.1
-Release: alt3%ubt
+Release: alt4
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
@@ -101,6 +101,9 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.deskt
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 14.12.1-alt4
+- NMU: remove %ubt from release
+
 * Fri Feb 03 2017 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt3%ubt
 - build with new cups
 
