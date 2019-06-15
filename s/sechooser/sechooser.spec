@@ -3,7 +3,7 @@
 
 Name: sechooser
 Version: 0.2.2
-Release: alt3%ubt
+Release: alt4
 
 Summary: Selinux user range chooser
 License: GPL
@@ -62,6 +62,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt4
+- NMU: remove %ubt from release
+
 * Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt3%ubt
 - build with Qt5
 
