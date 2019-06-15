@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.15.0
-Release: alt1.qa1%ubt
+Release: alt2.qa1
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 License: MIT/X Consortium
 Group: Development/Python
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.15.0-alt2.qa1
+- NMU: remove %ubt from release
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.15.0-alt1.qa1%ubt
 - NMU: applied repocop patch
 
