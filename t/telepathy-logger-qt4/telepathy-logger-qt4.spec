@@ -1,7 +1,7 @@
 
 Name: telepathy-logger-qt4
 Version: 0.8.0
-Release: alt3%ubt
+Release: alt4
 %define sover 1
 %define libname lib%name%sover
 
@@ -68,6 +68,9 @@ export QTDIR=%_qt4dir
 %_libdir/pkgconfig/TelepathyLoggerQt4.pc
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt4
+- NMU: remove %ubt from release
+
 * Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt3%ubt
 - fix build requires
 
