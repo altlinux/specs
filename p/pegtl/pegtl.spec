@@ -1,7 +1,7 @@
 
 Name: pegtl
 Version: 1.3.1
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: Parsing Expression Grammar Template Library
@@ -47,5 +47,8 @@ find pegtl.hh pegtl/ -type f -exec install -D -p -m 0644 "{}" "%buildroot/%_incl
 %_includedir/pegtl/
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2
+- NMU: remove %ubt from release
+
 * Fri Aug 04 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1%ubt
 - initial build
