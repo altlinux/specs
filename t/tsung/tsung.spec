@@ -1,6 +1,6 @@
 Name: tsung
 Version: 1.7.0
-Release: alt2.qa1%ubt
+Release: alt3.qa1
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -66,6 +66,9 @@ install -m 0644 CHANGELOG* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3.qa1
+- NMU: remove %ubt from release
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt2.qa1%ubt
 - NMU: applied repocop patch
 
