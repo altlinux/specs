@@ -1,6 +1,6 @@
 Name: rpm-build-mingw64
 Version: 23
-Release: alt5%ubt
+Release: alt6
 
 Summary: MinGW RPM build helper files and macros
 
@@ -65,6 +65,9 @@ install -m 0644 Makefile.mingw64 %buildroot%_datadir/mingw64/
 %_libexecdir/mingw64-scripts
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 23-alt6
+- NMU: remove %ubt from release
+
 * Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 23-alt5%ubt
 - fix ubt-macro usage in changelog
 
