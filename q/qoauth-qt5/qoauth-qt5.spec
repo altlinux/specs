@@ -3,7 +3,7 @@
 
 Name:          qoauth-qt5
 Version:       2.0.1
-Release:       alt0.3%ubt
+Release:       alt1.3
 
 Group:         System/Libraries
 Summary:       Qt-based C++ library for OAuth authorization scheme
@@ -86,6 +86,9 @@ make check || :
 %_qt5_archdatadir/mkspecs/features/oauth.prf
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1.3
+- NMU: remove %ubt from release
+
 * Thu Dec 21 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt0.3%ubt
 - fix library install path
 
