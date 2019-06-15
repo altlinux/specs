@@ -9,7 +9,7 @@
 
 Name: fuzzylite
 Version: 5.1
-Release: alt1%ubt
+Release: alt2
 Summary: A fuzzy logic control library in C++
 Group: System/Libraries
 # Next version (6.0) will be: GPLv3 or ASL 2.0
@@ -84,5 +84,8 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.1-alt2
+- NMU: remove %ubt from release
+
 * Mon Apr 30 2018 Anton Midyukov <antohami@altlinux.org> 5.1-alt1%ubt
 - Initial build for ALT Sisyphus
