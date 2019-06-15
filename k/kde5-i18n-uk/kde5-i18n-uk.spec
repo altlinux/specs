@@ -4,7 +4,7 @@
 
 Name: kde5-i18n-%lng
 Version: 17.04.0
-Release: alt1%ubt
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Applications
@@ -29,6 +29,9 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 %files
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 17.04.0-alt2
+- NMU: remove %ubt from release
+
 * Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - remove all translations
 
