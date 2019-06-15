@@ -1,6 +1,6 @@
 Name: telepathy-morse
 Version: 0.1.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Morse is a Qt-based Telegram connection manager for the Telepathy framework.
 License: GPLv2
@@ -34,6 +34,9 @@ BuildRequires: libtelegram-qt5-devel
 %_datadir/telepathy/
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2
+- NMU: remove %ubt from release
+
 * Fri Apr 20 2018 Oleg Solovyov <mcpain@altlinux.org> 0.1.0-alt1%ubt
 - initial build for ALT
 
