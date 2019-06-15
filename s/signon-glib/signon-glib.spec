@@ -5,7 +5,7 @@
 
 Name: signon-glib
 Version: 1.14
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: Single signon authentication library for GLib applications
@@ -66,6 +66,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_girdir/Signon-1.0.gir
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2
+- NMU: remove %ubt from release
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.14-alt1%ubt
 - new version
 
