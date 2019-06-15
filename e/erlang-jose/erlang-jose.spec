@@ -32,7 +32,7 @@
 
 Name: erlang-%realname
 Version: 1.8.4
-Release: alt1%ubt
+Release: alt2
 Summary: JSON Object Signing and Encryption (JOSE) for Erlang and Elixir
 Group: Development/Erlang
 License: MPLv2.0
@@ -76,5 +76,8 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2
+- NMU: remove %ubt from release
+
 * Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt1%ubt
 - Initial build for ALT.
