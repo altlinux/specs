@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 0.3
-Release: alt1%ubt
+Release: alt2
 Summary: Lua in Erlang
 Group: Development/Erlang
 License: ASL 2.0
@@ -35,5 +35,8 @@ An experimental implementation of Lua 5.2 written solely in pure Erlang.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2
+- NMU: remove %ubt from release
+
 * Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt1%ubt
 - Initial build for ALT.
