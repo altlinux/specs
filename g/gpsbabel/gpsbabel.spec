@@ -2,7 +2,7 @@
 
 Name: gpsbabel
 Version: 1.5.4
-Release: alt2%ubt
+Release: alt3
 
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
@@ -97,6 +97,9 @@ install -m 0644 -p gpsbabel.png %buildroot%_iconsdir/hicolor/256x256/apps/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt3
+- NMU: remove %ubt from release
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt2%ubt
 - Built Qt5 gui.
 
