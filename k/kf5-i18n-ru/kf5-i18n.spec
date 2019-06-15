@@ -4,7 +4,7 @@
 
 Name: kf5-i18n-%lng
 Version: 5.12.0
-Release: alt1%ubt
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -78,6 +78,9 @@ done
 #%lang(%lng) %_K5i18n/%lng/LC_MESSAGES/*.mo
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.12.0-alt2
+- NMU: remove %ubt from release
+
 * Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
 - don't package translations
 
