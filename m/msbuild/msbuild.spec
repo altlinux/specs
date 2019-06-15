@@ -2,7 +2,7 @@
 
 Name: msbuild
 Version: 15.6
-Release: alt1%ubt.2018.01.17.14.14
+Release: alt2.2018.01.17.14.14
 Summary: Microsoft Build Engine (MSBuild), XML-based platform for building applications
 
 Group: Development/Other
@@ -53,5 +53,8 @@ rm -rf %buildroot%_datadir
 %_monodir/xbuild/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 15.6-alt2.2018.01.17.14.14
+- NMU: remove %ubt from release
+
 * Tue Jul 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.6-alt1%ubt.2018.01.17.14.14
 - Initial build for ALT.
