@@ -1,6 +1,6 @@
 Name: tora
 Version: 3.2
-Release: alt3%ubt
+Release: alt4
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -59,6 +59,9 @@ install -pm 644 src/tora.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt4
+- NMU: remove %ubt from release
+
 * Fri Sep 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt3%ubt
 - Fixed build with new Qt.
 
