@@ -19,7 +19,7 @@
 %define bugfix 7
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
+Release: alt4
 
 Group: Editors
 Summary: Advanced text editor
@@ -225,6 +225,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.7-alt4
+- NMU: remove %ubt from release
+
 * Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt3%ubt
 - fix to build with new gcc
 
