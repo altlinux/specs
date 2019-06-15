@@ -1,7 +1,7 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt4%ubt
+Release: alt5
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -67,6 +67,9 @@ install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt5
+- NMU: remove %ubt from release
+
 * Fri Apr 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt4%ubt
 - port to Qt5
 
