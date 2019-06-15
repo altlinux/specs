@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 2.6.0
-Release: alt1%ubt
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -87,5 +87,8 @@ KF5 library
 %_K5lib/libKGantt.so.*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt2
+- NMU: remove %ubt from release
+
 * Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1%ubt
 - initial build
