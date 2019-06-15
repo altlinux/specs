@@ -3,7 +3,7 @@
 
 Name: itpp
 Version: 4.3.1
-Release: alt1%ubt.1
+Release: alt2.1
 Summary: C++ library of math, signal processing and communication routines
 License: GPL-2.0+
 Group: Development/C
@@ -127,6 +127,9 @@ fdupes -s %buildroot%_docdir
 %_docdir/%name
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt2.1
+- NMU: remove %ubt from release
+
 * Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 4.3.1-alt1%ubt.1
 - Rebuilt for aarch64
 
