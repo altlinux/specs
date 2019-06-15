@@ -1,6 +1,6 @@
 Name: fatsort
 Version: 1.4.2.439
-Release: alt1%ubt
+Release: alt2
 Summary: A command-line utilitiy that sorts directory structures of FAT12, FAT16 and FAT32 file systems
 License: %pubdomain
 Group: File tools
@@ -32,5 +32,8 @@ the command line.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.2.439-alt2
+- NMU: remove %ubt from release
+
 * Wed Jan 17 2018 Anton Shevtsov <x09@altlinux.org> 1.4.2.439-alt1%ubt
 - Initial build for ALT 
