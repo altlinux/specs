@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 0.9.0
-Release: alt1%ubt
+Release: alt2
 Summary: A set of Protocol Buffers tools and modules for Erlang applications
 Group: Development/Erlang
 License: Apache 2.0
@@ -45,5 +45,8 @@ install -D -p -m 0755 %SOURCE1 %buildroot%_bindir/protoc-erl
 %_bindir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2
+- NMU: remove %ubt from release
+
 * Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt1%ubt
 - Initial build for ALT.
