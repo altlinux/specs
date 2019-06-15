@@ -1,7 +1,7 @@
 Summary: Powerful file manager for the console
 Name: lfm
 Version: 3.1
-Release: alt1%ubt
+Release: alt2
 License: GPL
 Group: Development/Python
 URL: https://inigo.katxi.org/devel/lfm/
@@ -35,6 +35,9 @@ export LC_ALL=en_US.UTF-8
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2
+- NMU: remove %ubt from release
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1%ubt
 - Updated to upstream version 3.1.
 - Added %%ubt macro to release.
