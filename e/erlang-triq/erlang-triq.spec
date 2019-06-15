@@ -4,7 +4,7 @@
 
 Name: erlang-%realname
 Version: 1.2.0
-Release: alt1%ubt
+Release: alt2
 Summary: A property-based testing library for Erlang
 Group: Development/Erlang
 License: Apache 2.0
@@ -41,5 +41,8 @@ export ERL_LIBS=%buildroot%_erllibdir
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2
+- NMU: remove %ubt from release
+
 * Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1%ubt
 - Initial build for ALT.
