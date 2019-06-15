@@ -1,6 +1,6 @@
 Name: nano-editor
 Version: 0.1
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Configuration/Other
 Summary: Set EDITOR environment variable to nano by default
@@ -29,5 +29,8 @@ install -D -m 0755 %SOURCE0 %buildroot/%_sysconfdir/profile.d/nano-editor.sh
 %config(noreplace) %_sysconfdir/profile.d/nano-editor.sh
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2
+- NMU: remove %ubt from release
+
 * Wed Jul 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1%ubt
 - initial build
