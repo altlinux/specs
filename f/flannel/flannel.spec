@@ -14,7 +14,7 @@
 
 Name: flannel
 Version: 0.10.0
-Release: alt1%ubt
+Release: alt2
 Summary: flannel is a network fabric for containers
 Group: Development/Other
 License: ASL 2.0
@@ -68,5 +68,8 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2
+- NMU: remove %ubt from release
+
 * Sun May 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1%ubt
 - Initial package
