@@ -3,7 +3,7 @@
 
 Name: chromaprint
 Version: 1.4.3
-Release: alt1%ubt
+Release: alt2
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
@@ -79,6 +79,9 @@ applications which will use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt2
+- NMU: remove %ubt from release
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1%ubt
 - new version
 
