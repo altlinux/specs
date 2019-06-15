@@ -4,7 +4,7 @@
 %define rname libkdcraw
 Name: libkdcraw4
 Version: 15.08.0
-Release: alt4%ubt
+Release: alt5
 
 Group: System/Libraries
 Summary: Decoding RAW pictures
@@ -67,6 +67,9 @@ Development files for %name
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 15.08.0-alt5
+- NMU: remove %ubt from release
+
 * Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt4%ubt
 - fix to build with new libraw
 
