@@ -2,7 +2,7 @@
 %define rname kfilemetadata
 Name: kde4-kfilemetadata
 Version: 4.14.3
-Release: alt5%ubt
+Release: alt6
 
 Group: System/Libraries
 Summary: A library for extracting file metadata
@@ -61,6 +61,9 @@ Summary: %name library
 %_K4libdir/cmake/KFileMetaData/
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.3-alt6
+- NMU: remove %ubt from release
+
 * Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt5%ubt
 - build without ffmpeg
 
