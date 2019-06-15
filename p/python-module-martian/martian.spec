@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 1.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: A library to grok configuration from Python code
 License: ZPLv2.1
@@ -103,6 +103,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2
+- NMU: remove %ubt from release
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1%ubt
 - Updated to upstream version 1.2.
 
