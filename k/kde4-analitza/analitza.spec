@@ -3,7 +3,7 @@
 %define rname analitza
 Name: kde4-analitza
 Version: 4.14.0
-Release: alt2%ubt
+Release: alt3
 
 Group: System/Libraries
 Summary: Mathematical features
@@ -103,6 +103,9 @@ Development files for %name
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.0-alt3
+- NMU: remove %ubt from release
+
 * Wed Jul 11 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2%ubt
 - fix build requires
 
