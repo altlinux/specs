@@ -1,6 +1,6 @@
 Name: pve-spice-client
 Version: 2.0.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: PVE Spice Client
 License: GPLv3
@@ -35,6 +35,9 @@ Spice remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2
+- NMU: remove %ubt from release
+
 * Thu Jun 21 2018 Maxim Voronov <mvoronov@altlinux.org> 2.0.0-alt1%ubt
 - Totally changed GUI.
 - Added possibility to run remote viewer from command line.
