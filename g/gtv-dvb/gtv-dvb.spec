@@ -1,6 +1,6 @@
 Name: gtv-dvb
 Version: 2.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: Media Player & IPTV & Digital TV (DVB, ATSC, DTMB)
 
@@ -36,6 +36,9 @@ Audio & Video & Digital TV - Gstreamer 1.0
 %doc README.md LICENSE
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2
+- NMU: remove %ubt from release
+
 * Sun Apr 15 2018 Anton Midyukov <antohami@altlinux.org> 2.2-alt1%ubt
 - new version 2.2
 
