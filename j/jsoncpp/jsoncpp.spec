@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 1.8.4
-Release: alt2%ubt
+Release: alt3
 %define rname jsoncpp
 %define sover 19
 %define libname lib%rname%sover
@@ -81,6 +81,9 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 #%_docdir/%name/
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
+- NMU: remove %ubt from release
+
 * Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt2%ubt
 - fix package specfile
 
