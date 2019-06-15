@@ -1,6 +1,6 @@
 Name: pinta
 Version: 1.6
-Release: alt3%ubt
+Release: alt4
 
 Summary: An easy to use drawing and image editing program
 
@@ -63,6 +63,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt4
+- NMU: remove %ubt from release
+
 * Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3%ubt
 - NMU: rebuilt with %%ubt.
 
