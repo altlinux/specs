@@ -1,7 +1,7 @@
 %define module_name proxmoxer
 Name: python-module-%module_name
 Version: 1.0.2
-Release: alt2%ubt
+Release: alt3
 
 Summary: Wrapper around Proxmox REST API v2
 License: %mit
@@ -42,6 +42,9 @@ rm -rf %buildroot%python_sitelibdir/tests
 %python_sitelibdir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3
+- NMU: remove %ubt from release
+
 * Fri Jun 08 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.2-alt2%ubt
 - Fixed the dependencies and a bogus `Provides: python2.7(tests)`.
 
