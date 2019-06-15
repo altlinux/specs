@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 18.9.0.%svn
-Release: alt1%ubt
+Release: alt2
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -171,6 +171,9 @@ done
 
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 18.9.0.9113-alt2
+- NMU: remove %ubt from release
+
 * Thu Sep 20 2018 Sergey V Turchin <zerg@altlinux.org> 18.9.0.9113-alt1%ubt
 - new version
 
