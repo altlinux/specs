@@ -4,7 +4,7 @@
 
 Name: python-module-%shortname
 Version: 0.3.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Python library for Windows Remote Management
 
@@ -110,6 +110,9 @@ popd
 %_bindir/*py3*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2
+- NMU: remove %ubt from release
+
 * Fri Jan 26 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1%ubt
 - 0.2.0 -> 0.3.0
 
