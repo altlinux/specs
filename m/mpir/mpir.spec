@@ -1,6 +1,6 @@
 Name: mpir
 Version: 3.0.0
-Release: alt2%ubt
+Release: alt3
 Summary: A library for arbitrary precision arithmetic
 
 License: LGPLv3+
@@ -85,6 +85,9 @@ mv doc/devel doc/html
 %_infodir/mpir.info*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt3
+- NMU: remove %ubt from release
+
 * Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2%ubt
 - Rebuilt for aarch64
 
