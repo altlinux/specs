@@ -5,7 +5,7 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt5%ubt
+Release: alt6
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
@@ -78,6 +78,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.4-alt6
+- NMU: remove %ubt from release
+
 * Fri Jul 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt5%ubt
 - Rebuilt for additional architectures.
 
