@@ -15,7 +15,7 @@
 
 Name: mkvtoolnix
 Version: 23.0.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
@@ -155,6 +155,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 23.0.0-alt2
+- NMU: remove %ubt from release
+
 * Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 23.0.0-alt1%ubt
 - Updated to upstream version 23.0.0.
 
