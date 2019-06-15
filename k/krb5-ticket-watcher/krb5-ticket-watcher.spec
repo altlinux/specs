@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt15%ubt
+Release: alt16
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -63,6 +63,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt16
+- NMU: remove %ubt from release
+
 * Tue Sep 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt15%ubt
 - fixed methods in accordance with the new version
 
