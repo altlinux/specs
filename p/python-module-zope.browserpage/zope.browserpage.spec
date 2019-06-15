@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: ZCML directives for configuring browser views for Zope
 License: ZPLv2.1
@@ -135,6 +135,9 @@ popd
 %python3_sitelibdir/zope/browserpage/tests
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt2
+- NMU: remove %ubt from release
+
 * Wed Mar 07 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
 - 4.1.1 -> 4.2.0
 
