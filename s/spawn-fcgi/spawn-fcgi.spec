@@ -3,7 +3,7 @@
 
 Name: spawn-fcgi
 Version: 1.6.4
-Release: alt2%ubt
+Release: alt3
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -61,6 +61,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt3
+- NMU: remove %ubt from release
+
 * Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2%ubt
 - fixes fcgiwrap location in default config
 
