@@ -10,7 +10,7 @@
 
 Name: docker-machine
 Version: 0.15.0
-Release: alt1%ubt
+Release: alt2
 Summary: Docker Machine is a tool that lets you install Docker Engine on virtual hosts
 
 Group: Development/Other
@@ -57,6 +57,9 @@ rm -rf -- %buildroot/%_datadir
 %_bindir/%name
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.15.0-alt2
+- NMU: remove %ubt from release
+
 * Thu Jun 14 2018 Alexey Shabalin <shaba@altlinux.ru> 0.15.0-alt1%ubt
 - First build for ALTLinux.
 
