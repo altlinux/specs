@@ -1,6 +1,6 @@
 Name:     mbelib
 Version:  1.3.0
-Release:  alt1%ubt.1
+Release:  alt2.1
 
 Summary:  P25 Phase 1 and ProVoice vocoder
 License:  ISC
@@ -49,6 +49,9 @@ Development files for mbelib
 %_libdir/libmbe.so
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2.1
+- NMU: remove %ubt from release
+
 * Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1%ubt.1
 - Rebuilt for aarch64
 
