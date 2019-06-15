@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.7
-Release: alt2%ubt
+Release: alt3
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -99,6 +99,9 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
 #%_libdir/lib*.a
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt3
+- NMU: remove %ubt from release
+
 * Wed Nov 08 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.7-alt2%ubt
 - fix build
 - add ubt tag
