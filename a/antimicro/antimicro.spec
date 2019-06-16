@@ -1,6 +1,6 @@
 Name: antimicro
 Version: 2.23
-Release: alt1
+Release: alt2
 
 Summary: Graphical program used to map keyboard buttons and mouse controls to a gamepad
 License: GPLv3+
@@ -30,6 +30,10 @@ additional features.
 
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %cmake_insource \
@@ -67,6 +71,9 @@ appstream-util validate-relax --nonet \
 # - consider qt5 build?
 
 %changelog
+* Sun Jun 16 2019 Michael Shigorin <mike@altlinux.org> 2.23-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 2.23-alt1
 - 2.23
 
