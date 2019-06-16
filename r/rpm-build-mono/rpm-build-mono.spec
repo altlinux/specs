@@ -1,6 +1,6 @@
 Name: rpm-build-mono
 Version: 2.0.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: RPM helper macros and dependency utils to build Mono packages
 License: GPL
@@ -36,6 +36,9 @@ install -pD -m755 mono.prov.files %buildroot%_rpmlibdir/mono.prov.files
 %_rpmlibdir/mono*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3
+- NMU: remove %ubt from release
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2%ubt
 - Rebuilt with support of %%ubt macro.
 
