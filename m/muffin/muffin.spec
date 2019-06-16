@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 4.0.7
-Release: alt1
+Release: alt1.1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -137,6 +137,10 @@ GObject introspection devel data for the Muffin library
 [ ! -d m4 ] && mkdir m4
 cp %SOURCE1 m4/
 
+%ifarch %e2k
+sed -i 's,-Werror=pointer-arith,,' */configure.ac
+%endif
+
 %build
 %autoreconf
 %configure --disable-static \
@@ -194,6 +198,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sat Jun 15 2019 Michael Shigorin <mike@altlinux.org> 4.0.7-alt1.1
+- E2K: ftbfs workaround until lcc 1.23.19+ (mcst#4023)
+
 * Wed Apr 10 2019 Vladimir Didenko <cow@altlinux.org> 4.0.7-alt1
 - 4.0.7
 
