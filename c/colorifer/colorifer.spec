@@ -1,17 +1,15 @@
 Name: colorifer
 Version: 1.0.1
-Release: alt16
+Release: alt17
 
 Summary: Simple program output colorifer
 License: GPLv2+
 Group: Text tools
 
-Packager: Stanislav Ievlev <inger@altlinux.ru>
-
 Url: http://colorifer.sourceforge.net/
 Source: %name-%{version}rc6.tar.bz2
-
-Patch1: %name-alt-compat1.patch
+Patch: %name-alt-compat1.patch
+Packager: Stanislav Ievlev <inger@altlinux.ru>
 
 Requires: lib%name = %version-%release
 
@@ -40,10 +38,14 @@ Shared library between colorifer tools
 
 %prep
 %setup -n %name-%{version}rc6
-%patch1 -p2
+%patch -p2
 
 %build
 %add_optflags -DCONFIGDIR=\\\"%_datadir/%name/\\\"
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %make_build DEBUG_LDGLAGS= DEBUG_LDGLAGS_UTILS=
 
 %install
@@ -68,6 +70,10 @@ mkdir -p %buildroot%_datadir/%name/
 %_libdir/*.so.*
 
 %changelog
+* Sun Jun 16 2019 Michael Shigorin <mike@altlinux.org> 1.0.1-alt17
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt16
 - Fixed build with current boost and gcc.
 
