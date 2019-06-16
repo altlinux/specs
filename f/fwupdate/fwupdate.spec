@@ -2,7 +2,7 @@
 %global soversion 1
 Name: fwupdate
 Version: 11
-Release: alt1%ubt
+Release: alt2
 Summary: Tools to manage UEFI firmware updates
 License: GPLv2+
 Url: https://github.com/rhinstaller/fwupdate
@@ -161,6 +161,9 @@ mv %buildroot/boot/efi/EFI/%efidir/fwup* %buildroot/%_libdir/efi/fw/
 %_libdir/efi/fw/fw*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 11-alt2
+- NMU: remove %ubt from release
+
 * Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 11-alt1%ubt
 - new version
 
