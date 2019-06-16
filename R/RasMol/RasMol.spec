@@ -4,7 +4,7 @@
 
 Name: RasMol
 Version: %series.%patchlevel
-Release: alt4
+Release: alt5
 
 Summary: Molecular Graphics Visualisation Tool
 License: GPL-like
@@ -21,12 +21,17 @@ Source6: rasmol.desktop
 Patch: RasMol-2.7.5-gentoo-bundled-lib.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Инструмент для визуализации молекулярных структур
-Summary(uk_UA.KOI8-U): ╤нструмент для в╕зуал╕зац╕╖ молекулярних структур
+Summary(ru_RU.UTF-8): п≤п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦ п╪п╬п╩п╣п╨я┐п╩я▐я─п╫я▀я┘ я│я┌я─я┐п╨я┌я┐я─
+Summary(uk_UA.UTF-8): п├п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈ п╪п╬п╩п╣п╨я┐п╩я▐я─п╫п╦я┘ я│я┌я─я┐п╨я┌я┐я─
 
 # Automatically added by buildreq on Fri Sep 23 2011
 # optimized out: CBFlib CQRlib CVector CVector-devel NearTree libX11-devel libXext-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libCBFlib-devel libCQRlib-devel libNearTree-devel imake libXi-devel libgfortran-devel xorg-cf-files
+BuildRequires: libCBFlib-devel libCQRlib-devel libNearTree-devel imake libXi-devel xorg-cf-files
+
+%ifnarch %e2k
+# lcc has f2c (and no libgfortran at all)
+BuildRequires: libgfortran-devel
+%endif
 
 Provides: rasmol = %version-%release
 Requires: fonts-bitmap-75dpi xdpyinfo
@@ -36,21 +41,25 @@ RasMol is a molecular graphics program intended for the visualisation of
 proteins, nucleic acids and small molecules. The program is aimed at
 display, teaching and generation of publication quality images.
 
-%description -l ru_RU.KOI8-R
-RasMol - программа молекулярной графики, используемая для визуализации
-протеинов, нуклеиновых кислот и небольших молекул.  Пригодна для
-отображения, обучения и генерации изображений для публикаций.
+%description -l ru_RU.UTF-8
+RasMol - п©я─п╬пЁя─п╟п╪п╪п╟ п╪п╬п╩п╣п╨я┐п╩я▐я─п╫п╬п╧ пЁя─п╟я└п╦п╨п╦, п╦я│п©п╬п╩я▄п╥я┐п╣п╪п╟я▐ п╢п╩я▐ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦
+п©я─п╬я┌п╣п╦п╫п╬п╡, п╫я┐п╨п╩п╣п╦п╫п╬п╡я▀я┘ п╨п╦я│п╩п╬я┌ п╦ п╫п╣п╠п╬п╩я▄я┬п╦я┘ п╪п╬п╩п╣п╨я┐п╩.  п÷я─п╦пЁп╬п╢п╫п╟ п╢п╩я▐
+п╬я┌п╬п╠я─п╟п╤п╣п╫п╦я▐, п╬п╠я┐я┤п╣п╫п╦я▐ п╦ пЁп╣п╫п╣я─п╟я├п╦п╦ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ п╢п╩я▐ п©я┐п╠п╩п╦п╨п╟я├п╦п╧.
 
-%description -l uk_UA.KOI8-U
-RasMol - програма молекулярно╖ граф╕ки, що застосову╓ться для
-в╕зуал╕зац╕╖ проте╖н╕в, нукле╖нових кислот та невеликих молекул.
-Придатна до в╕дображення, навчання та генерац╕╖ зображень для
-публ╕кац╕й.
+%description -l uk_UA.UTF-8
+RasMol - п©я─п╬пЁя─п╟п╪п╟ п╪п╬п╩п╣п╨я┐п╩я▐я─п╫п╬я≈ пЁя─п╟я└я√п╨п╦, я┴п╬ п╥п╟я│я┌п╬я│п╬п╡я┐я■я┌я▄я│я▐ п╢п╩я▐
+п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈ п©я─п╬я┌п╣я≈п╫я√п╡, п╫я┐п╨п╩п╣я≈п╫п╬п╡п╦я┘ п╨п╦я│п╩п╬я┌ я┌п╟ п╫п╣п╡п╣п╩п╦п╨п╦я┘ п╪п╬п╩п╣п╨я┐п╩.
+п÷я─п╦п╢п╟я┌п╫п╟ п╢п╬ п╡я√п╢п╬п╠я─п╟п╤п╣п╫п╫я▐, п╫п╟п╡я┤п╟п╫п╫я▐ я┌п╟ пЁп╣п╫п╣я─п╟я├я√я≈ п╥п╬п╠я─п╟п╤п╣п╫я▄ п╢п╩я▐
+п©я┐п╠п╩я√п╨п╟я├я√п╧.
 
 %prep
 %setup
 %patch -p1
 sed -i 's,^#include \(<\|"\)cbf,#include \1cbf/cbf,' src/{cif.h,maps.c}
+%ifarch %e2k
+# lcc has f2c
+sed -i 's, -lgfortran,,' src/*akefile
+%endif
 
 %build
 CFLAGS="%optflags"
@@ -107,6 +116,10 @@ install -pDm644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 # - consider adding rasmol-gtk
 
 %changelog
+* Sun Jun 16 2019 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt5
+- E2K: avoid explicit -lgfortran (f2c)
+- spec converted to UTF-8
+
 * Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt4
 - rebuilt with current NearTree
 
