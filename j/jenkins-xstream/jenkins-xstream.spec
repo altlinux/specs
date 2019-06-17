@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt4_15.jenkins1jpp8
+Release:        alt5_15.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -26,7 +26,7 @@ Patch0:         0001-Prevent-deserialization-of-void.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(com.thoughtworks.xstream:xstream-parent:pom:)
+BuildRequires:  mvn(com.thoughtworks.xstream:xstream-parent:pom:1.4.7)
 BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(junit:junit)
@@ -128,6 +128,9 @@ API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt5_15.jenkins1jpp8
+- build with xstream 1.4.9
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_15.jenkins1jpp8
 - new version
 
