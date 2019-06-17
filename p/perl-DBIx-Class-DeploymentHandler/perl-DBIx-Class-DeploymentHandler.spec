@@ -2,7 +2,7 @@
 %define sname dbix-class-deploymenthandler
 
 Name:           perl-DBIx-Class-DeploymentHandler
-Version:        0.002231
+Version:        0.002232
 Release:        alt1
 Summary:        Extensible DBIx::Class deployment
 License:        GPL+ or Artistic
@@ -74,10 +74,13 @@ of roles.
 %perl_vendor_install
 
 %files
-%doc Changes TODO README
+%doc Changes README
 %{perl_vendorlib}/DBIx/Class/DeploymentHandler*
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.002232-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.002231-alt1
 - automated CPAN update
 
