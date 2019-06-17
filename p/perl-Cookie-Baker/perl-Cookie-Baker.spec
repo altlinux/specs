@@ -6,7 +6,7 @@ BuildRequires: perl(Cookie/Baker/XS.pm) perl(Exporter.pm) perl(Module/Build.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: Cookie string generator / parser
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes README.md LICENSE
+%doc Changes README.md
 %perl_vendor_privlib/C*
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
