@@ -1,19 +1,18 @@
-%def_enable openssl11
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/openssl bzlib-devel gcc-c++ java-devel-default rpm-build-java
+BuildRequires: bzlib-devel java-devel-default rpm-build-java
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 BuildRequires: zlib-devel
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hadoop
-%define version 2.7.3
+%define version 2.7.6
 %global _hardened_build 1
 
 %global hadoop_version %{version}
@@ -26,8 +25,8 @@ BuildRequires: jpackage-generic-compat
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*$
 
 Name:   hadoop
-Version: 2.7.3
-Release: alt6_7jpp8
+Version: 2.7.6
+Release: alt1_5jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -59,7 +58,7 @@ Patch2: %{name}-jni-library-loading.patch
 Patch4: %{name}-no-download-tomcat.patch
 # Use dlopen to find libjvm.so
 Patch5: %{name}-dlopen-libjvm.patch
-# Update to Guava 18.0
+# Update to Guava 20
 Patch7: %{name}-guava.patch
 # Update to Netty 3.6.6-Final
 Patch8: %{name}-netty-3-Final.patch
@@ -74,18 +73,20 @@ Patch12: %{name}-armhfp.patch
 Patch13: hadoop-jersey1.patch
 # fix java8 doclint
 Patch14: hadoop-2.4.1-disable-doclint.patch
-%if 0%{?fedora} > 25
 # Fix Protobuf compiler errors after updating to 3.1.0
 Patch19: protobuf3.patch
-%endif
 # Patch openssl 1.0.2 to use 1.1.0
 Patch21: %{name}-openssl.patch
 # fix exception no longer thrown in aws
 Patch22: %{name}-aws.patch
 # fix classpath issues
 Patch23: classpath.patch
-Patch32: hadoop-2.7.3-alt-E2K.patch
-Patch33: hadoop-2.7.3-guava20.0.patch
+
+# fix container-executor compilation rbhz#1597446
+Patch24: fix-container-executor-cmake.patch
+
+# fix rhbz#1593020
+Patch25: backport-CVE-2018-8009.patch
 
 BuildRequires: ant
 BuildRequires: antlr-tool
@@ -119,13 +120,14 @@ BuildRequires: apache-curator
 BuildRequires: ecj >= 1:4.2.1
 BuildRequires: libfuse-devel
 BuildRequires: fusesource-pom
+BuildRequires: gcc-c++
 BuildRequires: geronimo-jms
 BuildRequires: glassfish-jaxb
 BuildRequires: glassfish-jsp
 BuildRequires: glassfish-jsp-api
 BuildRequires: google-guice
 BuildRequires: grizzly
-BuildRequires: guava
+BuildRequires: guava20
 BuildRequires: guice-servlet
 BuildRequires: hamcrest
 BuildRequires: hawtjni
@@ -183,24 +185,24 @@ BuildRequires: objectweb-asm
 BuildRequires: objenesis >= 1.2
 BuildRequires: libssl-devel
 BuildRequires: paranamer
-BuildRequires: protobuf-compiler
+BuildRequires: libprotobuf17 protobuf-compiler
 BuildRequires: protobuf-java
 BuildRequires: relaxngDatatype
 BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: tomcat-log4j
-BuildRequires: tomcat-servlet-4.0-api
 BuildRequires: txw2
 BuildRequires: xmlenc
 BuildRequires: zookeeper-java > 3.4.5
 # For tests
 BuildRequires: jersey1-test-framework
 Source44: import.info
+Patch33: hadoop-2.7.3-alt-E2K.patch
 
 %description
 Apache Hadoop is a framework that allows for the distributed processing of
@@ -459,10 +461,14 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
-%patch32 -p1
-%patch33 -p1
+%patch24 -p1
+%patch25 -p1
 
 %pom_xpath_set "pom:properties/pom:protobuf.version" 3.6.1 hadoop-project
+
+# These native libs won't build on s390x and armv7hl (possibly due to some cmake issue with provided compat functions)
+%pom_remove_plugin :maven-antrun-plugin hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager
+
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions/pom:execution[pom:phase='test-compile']" "<id>default-jar</id>"  hadoop-yarn-project/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-applications-distributedshell
 
 # Remove the maven-site-plugin.  It's not needed
@@ -537,12 +543,7 @@ rm -f hadoop-common-project/hadoop-common/src/test/java/org/apache/hadoop/http/T
 rm -f hadoop-common-project/hadoop-kms/src/test/java/org/apache/hadoop/crypto/key/kms/server/TestKMSWithZK.java
 rm -f hadoop-common-project/hadoop-kms/src/test/java/org/apache/hadoop/crypto/key/kms/server/MiniKMS.java
 rm -f hadoop-common-project/hadoop-kms/src/test/java/org/apache/hadoop/crypto/key/kms/server/TestKMS.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/ha/TestDelegationTokensWithHA.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/tools/TestDelegationTokenRemoteFetcher.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/TestStreamFile.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/ha/TestDelegationTokensWithHA.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/protocol/datatransfer/sasl/TestSaslDataTransfer.java
-rm -f hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/balancer/TestBalancerWithSaslDataTransfer.java
+rm -rf hadoop-hdfs-project/hadoop-hdfs/src/test
 rm -rf hadoop-hdfs-project/hadoop-hdfs-httpfs/src/test
 rm -rf hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-web-proxy/src/test
 rm -rf hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-applicationhistoryservice/src/test
@@ -561,6 +562,11 @@ rm -rf hadoop-mapreduce-project/hadoop-mapreduce-examples/src/test
 rm -rf hadoop-tools/hadoop-streaming/src/test
 rm -rf hadoop-tools/hadoop-gridmix/src/test/java
 rm -rf hadoop-tools/hadoop-extras/src/test
+rm -rf hadoop-hdfs-project/hadoop-hdfs/src/contrib/bkjournal/src/test
+rm -rf hadoop-hdfs-project/hadoop-hdfs-nfs/src/test
+rm -rf hadoop-tools/hadoop-distcp/src/test
+rm -rf hadoop-tools/hadoop-archives/src/test
+rm -rf hadoop-tools/hadoop-datajoin/src/test
 
 # Remove dist plugin. It's not needed and has issues
 %pom_remove_plugin :maven-antrun-plugin hadoop-common-project/hadoop-kms
@@ -592,8 +598,6 @@ rm -rf hadoop-tools/hadoop-extras/src/test
 # Add missing deps
 %pom_add_dep org.iq80.leveldb:leveldb hadoop-hdfs-project/hadoop-hdfs
 %pom_add_dep org.iq80.leveldb:leveldb hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-common
-%pom_add_dep org.eclipse.jetty:jetty-util-ajax hadoop-hdfs-project/hadoop-hdfs
-%pom_add_dep org.eclipse.jetty:jetty-util-ajax hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager
 
 # remove plugins that are not needed
 %pom_remove_plugin :maven-jar-plugin hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-web-proxy
@@ -643,8 +647,10 @@ rm -rf hadoop-tools/hadoop-extras/src/test
 
 # Jar files that need to be overridden due to installation location
 %mvn_file :%{name}-common::tests: %{name}/%{name}-common
+%patch33 -p1
 
 %build
+
 # increase JVM memory limits to avoid OOM during build
 %ifarch s390x ppc64le
 export MAVEN_OPTS="-Xms2048M -Xmx4096M"
@@ -732,9 +738,6 @@ done
 
 # This binary is obsoleted and causes a conflict with qt-devel
 rm -rf %{buildroot}/%{_bindir}/rcc
-
-# We don't care about this
-rm -f %{buildroot}/%{_bindir}/test-container-executor
 
 # Duplicate files
 rm -f %{buildroot}/%{_sbindir}/hdfs-config.sh
@@ -1040,7 +1043,7 @@ fi
 %{_sbindir}/stop-secure-dns.sh
 %{_sbindir}/slaves.sh
 
-%if_enabled openssl11
+%if 0
 %files common-native
 %{_libdir}/%{name}/libhadoop.*
 %endif
@@ -1138,9 +1141,12 @@ fi
 %files yarn-security
 %config(noreplace) %{_sysconfdir}/%{name}/container-executor.cfg
 # Permissions set per upstream guidelines: https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html#Configuration_in_Secure_Mode
-%attr(6010,root,yarn) %{_bindir}/container-executor
+# %%attr(6010,root,yarn) %%{_bindir}/container-executor
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_5jpp8
+- new version
+
 * Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt6_7jpp8
 - fixed build (closes: #36462)
 
