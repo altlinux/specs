@@ -7,35 +7,32 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          randomizedtesting
-Version:       2.3.1
-Release:       alt1_5jpp8
+Version:       2.5.3
+Release:       alt1_3jpp8
 Summary:       Java Testing Framework
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/randomizedtesting.html
 Source0:       https://github.com/carrotsearch/randomizedtesting/archive/release/%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.gson:gson)
-BuildRequires: mvn(com.google.guava:guava)
-BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(dom4j:dom4j)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.ant:ant-junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven:maven-artifact)
-BuildRequires: mvn(org.apache.maven:maven-compat)
-BuildRequires: mvn(org.apache.maven:maven-core)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires: mvn(org.assertj:assertj-core)
-BuildRequires: mvn(org.hamcrest:hamcrest-core)
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.simpleframework:simple-xml)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-BuildRequires: mvn(stax:stax-api)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.guava:guava:19.0)
+BuildRequires:  mvn(de.thetaphi:forbiddenapis)
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-junit)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.simpleframework:simple-xml)
 
 BuildArch:     noarch
 Source44: import.info
@@ -123,7 +120,7 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCustomMethodProvider.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestExpected.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestFailurePropagationCompatibility.java \
- randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestFilteringWarnings.java \
+ randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestHooksWithEmptyTestSet.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestIgnoredRunCount.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestJ9SysThreads.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestListenersAnnotation.java \
@@ -139,6 +136,7 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestSeedDecorator.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestSeedFixingWithProperties.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestSeedParameterOptional.java \
+ randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestSeedRepeatable.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestStackAugmentation.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestTargetMethod.java \
  randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestTestFiltering.java \
@@ -173,17 +171,17 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
 # first: Forked JVM's classpath must include a junit4 JAR.
 # [junit4:junit4] ERROR: JVM J0 ended with an exception: Forked JVM's classpath must include a junit4 JAR.
 %pom_xpath_remove "pom:executions/pom:execution[pom:id = 'surefire-it']" junit4-ant
+
+# Don't execute site plugin for RPM build
+%pom_remove_plugin :maven-site-plugin
  
-%mvn_package :%{name}-parent %{name}-runner
-
 %build
-
 %mvn_build -s
 
 %install
 %mvn_install
 
-%files
+%files -f .mfiles-%{name}-parent
 %doc CHANGES.txt CONTRIBUTING.txt README.txt
 %doc --no-dereference LICENSE.txt
 
@@ -195,6 +193,9 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_3jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_5jpp8
 - java update
 
