@@ -2,7 +2,7 @@
 
 Name: kdevelop5
 Version: 5.3.2
-Release: alt1
+Release: alt2
 Summary: A cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
 Group: Development/Tools
 License: GPLv2
@@ -78,6 +78,9 @@ chmod +x %buildroot/%_bindir/kdevelop5
 %_libdir/*.so
 
 %changelog
+* Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
+- Rebuild witn new okteta
+
 * Mon Mar 18 2019 Fr. Br. George <george@altlinux.ru> 5.3.2-alt1
 - Autobuild version bump to 5.3.2
 
