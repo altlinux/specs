@@ -4,7 +4,7 @@
 
 Name: qt5-quick1
 Version: 5.9.4
-Release: alt2%ubt
+Release: alt3
 
 Group: System/Libraries
 Summary: A declarative language for describing user interfaces in Qt5
@@ -56,6 +56,9 @@ Requires: %name-common = %EVR
 %files devel
 
 %changelog
+* Thu Nov 22 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt3
+- rebuild
+
 * Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt2%ubt
 - make empty package to system update
 
