@@ -7,7 +7,7 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.14.11
-Release: alt9%ubt
+Release: alt10
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -419,6 +419,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.11-alt10
+- NMU: remove %ubt from release
+
 * Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt9%ubt
 - build with new gpgme
 
