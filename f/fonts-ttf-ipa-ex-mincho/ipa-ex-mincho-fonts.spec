@@ -1,5 +1,6 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ipa-ex-mincho-fonts
@@ -13,7 +14,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-ex-mincho
 Version:	004.01
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 License:	IPA
@@ -23,7 +24,7 @@ Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel
+BuildRequires:	fontpackages-devel libappstream-glib
 Source44: import.info
 
 %description
@@ -46,8 +47,8 @@ install -m 0755 -d	$RPM_BUILD_ROOT%{_fontconfig_templatedir}	\
 install -m 0644 -p	%{SOURCE1}	\
 			$RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 
-install -m 0755 -d $RPM_BUILD_ROOT%{_datadir}/appdata
-install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
+install -m 0755 -d $RPM_BUILD_ROOT%{_metainfodir}
+install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_metainfodir}
 
 ln -s	%{_fontconfig_templatedir}/%{fontconf}	\
 	$RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
@@ -86,6 +87,8 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
@@ -95,10 +98,13 @@ fi
 
 %doc Readme_%{archivename}.txt
 %doc --no-dereference IPA_Font_License_Agreement_v1.0.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_metainfodir}/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 004.01-alt1_2
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 004.01-alt1_1
 - update to new release by fcimport
 
