@@ -4,7 +4,6 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%define _without_maven 1
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -47,11 +46,12 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_without  hibernate
+# Allow building with a minimal dependency set
+%bcond_with jp_minimal
 
 Name:           xstream
-Version:        1.4.9
-Release:        alt1_7jpp8
+Version:        1.4.11.1
+Release:        alt1_2jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
@@ -59,35 +59,31 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
 
-# Fixes deserialization of void
-# https://bugzilla.redhat.com/show_bug.cgi?id=1441542
-# backport of https://github.com/x-stream/xstream/commit/b3570be2f39234e61f99f9a20640756ea71b1b40
-Patch0:         0001-Prevent-deserialization-of-void.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(dom4j:dom4j)
-BuildRequires:  mvn(javassist:javassist)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(joda-time:joda-time)
-BuildRequires:  mvn(net.sf.kxml:kxml2)
 BuildRequires:  mvn(net.sf.kxml:kxml2-min)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.codehaus.jettison:jettison)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-%if %{with hibernate}
-BuildRequires:  mvn(org.hibernate:hibernate-core)
-BuildRequires:  mvn(org.hibernate:hibernate-envers)
-%endif
 BuildRequires:  mvn(org.jdom:jdom)
 BuildRequires:  mvn(org.jdom:jdom2)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(stax:stax)
 BuildRequires:  mvn(stax:stax-api)
-BuildRequires:  mvn(xom:xom)
 BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(xpp3:xpp3_min)
+
+%if %{without jp_minimal}
+BuildRequires:  mvn(javassist:javassist)
+BuildRequires:  mvn(org.codehaus.jettison:jettison)
+BuildRequires:  mvn(org.hibernate:hibernate-core)
+BuildRequires:  mvn(org.hibernate:hibernate-envers)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(xom:xom)
+%endif
 Source44: import.info
 
 
@@ -120,7 +116,7 @@ BuildArch: noarch
 %description    javadoc
 %{name} API documentation.
 
-%if %{with hibernate}
+%if %{without jp_minimal}
 %package        hibernate
 Group: Development/Java
 Summary:        hibernate module for %{name}
@@ -152,10 +148,6 @@ Parent POM for %{name}.
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
 
-%patch0 -p1
-
-# Remove org.apache.maven.wagon:wagon-webdav
-%pom_xpath_remove "pom:project/pom:build/pom:extensions"
 # Require org.codehaus.xsite:xsite-maven-plugin
 %pom_disable_module xstream-distribution
 
@@ -164,13 +156,12 @@ find . -name "*.jar" -print -delete
 #  org.openjdk.jmh:jmh-generator-annprocess:jar:1.11.1
 %pom_disable_module xstream-jmh
 
-%pom_remove_plugin :xsite-maven-plugin
-%pom_remove_plugin :jxr-maven-plugin
 # Unwanted
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-dependency-plugin
 %pom_remove_plugin :maven-eclipse-plugin
 %pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :xsite-maven-plugin
 
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl xstream
@@ -194,8 +185,15 @@ find . -name "*.jar" -print -delete
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
 %pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
 
-%if %{without hibernate}
+%if %{with jp_minimal}
+# Don't build hibernate module
 %pom_disable_module xstream-hibernate
+# Disable support for some lesser used XML backends
+%pom_remove_dep -r xom:xom
+%pom_remove_dep -r org.codehaus.jettison:jettison
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Xom*
+rm xstream/src/java/com/thoughtworks/xstream/io/json/Jettison*
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXom.java
 %endif
 
 %mvn_file :%{name} %{name}/%{name} %{name}
@@ -205,24 +203,30 @@ find . -name "*.jar" -print -delete
 
 %build
 # test skipped for unavailable test deps (com.megginson.sax:xml-writer)
-%mvn_build -f -s
+%mvn_build -f -s -- -Dversion.java.source=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
-%dir %{_javadir}/%{name}
+%doc README.txt
+%doc --no-dereference LICENSE.txt
+
 %files parent -f .mfiles-%{name}-parent
-%if %{with hibernate}
+
+%if %{without jp_minimal}
 %files hibernate -f .mfiles-%{name}-hibernate
 %endif
+
 %files benchmark -f .mfiles-%{name}-benchmark
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.11.1-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_7jpp8
 - java update
 
