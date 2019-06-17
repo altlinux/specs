@@ -10,8 +10,8 @@ BuildRequires: perl(Math/Decimal64.pm)
 ExcludeArch: aarch64
 
 Name: perl-%module_name
-Version: 4.11
-Release: alt2
+Version: 4.12
+Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -44,6 +44,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt1
+- automated CPAN update
+
 * Sat Apr 13 2019 Michael Shigorin <mike@altlinux.org> 4.11-alt2
 - support e2kv4 through %%e2k macro use
 
