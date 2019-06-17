@@ -1,4 +1,7 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 %define oldname linux-libertine-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -18,7 +21,7 @@ proprietary standard fonts.
 
 Name:           fonts-ttf-linuxlibertine
 Version:        5.3.0
-Release:        alt1_12.%{posttag}
+Release:        alt1_15.%{posttag}
 Summary:        Linux Libertine Open Fonts
 
 License:        GPLv2+ with exceptions or OFL
@@ -31,7 +34,7 @@ Source4:        libertine.metainfo.xml
 Source5:        biolinum.metainfo.xml
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel
+BuildRequires:  fontpackages-devel libappstream-glib
 #BuildRequires:  fontforge
 Requires:       fonts-ttf-linuxlibertine-common = %{version}-%{release}
 Source44: import.info
@@ -93,9 +96,9 @@ done
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/libertine.metainfo.xml
+        %{buildroot}%{_metainfodir}/libertine.metainfo.xml
 install -Dm 0644 -p %{SOURCE5} \
-        %{buildroot}%{_datadir}/appdata/biolinum.metainfo.xml
+        %{buildroot}%{_metainfodir}/biolinum.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -131,6 +134,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+
 %files -n fonts-ttf-linuxlibertine-common
 %doc --no-dereference GPL.txt LICENCE.txt OFL-1.1.txt
 %doc Bugs.txt ChangeLog.txt Readme-TEX.txt README
@@ -140,7 +146,7 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_libertine}
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/LinLibertine*.otf
-%{_datadir}/appdata/libertine.metainfo.xml
+%{_metainfodir}/libertine.metainfo.xml
 
 %{_fontconfig_templatedir}/%{fontconf_metrics}
 %{_fontconfig_confdir}/%{fontconf_metrics}
@@ -150,9 +156,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_biolinum}
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.otf
-%{_datadir}/appdata/biolinum.metainfo.xml
+%{_metainfodir}/biolinum.metainfo.xml
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_15.2012_07_02
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_12.2012_07_02
 - update to new release by fcimport
 
