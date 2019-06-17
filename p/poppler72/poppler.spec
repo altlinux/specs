@@ -38,7 +38,7 @@
 %define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
+Release: alt4
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -67,7 +67,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
 
-BuildRequires(pre): rpm-utils rpm-build-ubt
+BuildRequires(pre): rpm-utils
 BuildRequires: cmake
 %if_enabled qt5
 BuildRequires: qt5-base-devel
@@ -393,22 +393,25 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt3%ubt
+* Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt4
+- dont use ubt macro
+
+* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt3
 - rename qt4 devel package
 
-* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt2%ubt
+* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt2
 - build only compat library and Qt4-plugin
 
-* Mon Apr 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt1%ubt
+* Mon Apr 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt1
 - new version
 
-* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 0.60.1-alt1%ubt
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 0.60.1-alt1
 - new version
 
-* Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 0.56.0-alt1%ubt
+* Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 0.56.0-alt1
 - new version
 
-* Thu Feb 09 2017 Sergey V Turchin <zerg@altlinux.org> 0.51.0-alt1%ubt
+* Thu Feb 09 2017 Sergey V Turchin <zerg@altlinux.org> 0.51.0-alt1
 - new version
 
 * Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 0.48.0-alt1
