@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-compiler-plugin
-Version:        3.7.0
+Version:        3.8.0
 Release:        alt1_1jpp8
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_1jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.7.0-alt1_1jpp8
 - java update
 
