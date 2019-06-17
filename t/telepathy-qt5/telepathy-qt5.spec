@@ -9,7 +9,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.7
-Release: alt2%ubt
+Release: alt3
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -25,7 +25,7 @@ Patch3: 0003-CMakeLists.txt-require-python-2.7.patch
 Patch4: 0004-Adapt-the-client-registrar-to-the-new-thread-based-i.patch
 Patch5: 0005-Revert-cmake-telepathy-service-does-not-depend-on-te.patch
 
-BuildRequires(pre): rpm-build-ubt qt5-base-devel qt5-tools
+BuildRequires(pre): qt5-base-devel qt5-tools
 BuildRequires: python < 3 python >= 2.7
 BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
 BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
@@ -145,7 +145,10 @@ export QT_DOC_DIR=%_qt5_docdir
 #%_libdir/lib*.a
 
 %changelog
-* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2%ubt
+* Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt3
+- dont use ubt macro
+
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2
 - update package Url
 
 * Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
