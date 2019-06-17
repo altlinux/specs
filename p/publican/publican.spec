@@ -1,3 +1,4 @@
+Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: /usr/bin/desktop-file-install perl(HTML/WikiConverter.pm) perl-podlators
@@ -30,11 +31,10 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt3_11
+Release:        alt3_13
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
-Group:          Publishing
 URL:            https://publican.fedorahosted.org
 Source0:        https://fedorahosted.org/released/publican/Publican-v%{version}.tar.gz
 BuildArch:      noarch
@@ -191,7 +191,7 @@ As well as ensuring your DocBook XML is valid, publican works to ensure
 your XML is up to publishable standard.
 
 %package doc
-Group:          Documentation
+Group: Documentation
 Summary:        Documentation for the Publican package
 Requires:       xdg-utils
 Obsoletes:      publican-doc < 3
@@ -204,7 +204,7 @@ using publican. It is not a DocBook XML tutorial and concentrates
 solely on using the publican tools.
 
 %package releasenotes
-Group:          Documentation
+Group: Documentation
 Summary:        Release notes for the Publican package
 Requires:       xdg-utils
 
@@ -212,7 +212,7 @@ Requires:       xdg-utils
 Release notes for Publican %{version}.
 
 %package common-web
-Group:          Documentation
+Group: Documentation
 Summary:        Website style for common brand
 Requires:       publican
 
@@ -220,7 +220,7 @@ Requires:       publican
 Website style for common brand.
 
 %package common-db5-web
-Group:          Documentation
+Group: Documentation
 Summary:        Website style for common brand for DocBook5 content
 Requires:       publican
 
@@ -337,6 +337,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt3_13
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt3_11
 - update to new release by fcimport
 
