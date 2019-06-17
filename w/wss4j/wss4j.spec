@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          wss4j
-Version:       2.1.5
-Release:       alt1_5jpp8
+Version:       2.1.12
+Release:       alt1_2jpp8
 Summary:       Apache WS-Security implementation
 License:       ASL 2.0
 URL:           http://ws.apache.org/wss4j/
@@ -27,7 +27,6 @@ BuildRequires: mvn(org.apache.commons:commons-compress)
 BuildRequires: mvn(org.apache.directory.server:apacheds-kerberos-codec)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-# neethi:3.0.3
 BuildRequires: mvn(org.apache.neethi:neethi)
 BuildRequires: mvn(org.apache.santuario:xmlsec) >= 2.0.5
 BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on)
@@ -95,8 +94,8 @@ rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java
  ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SAMLTokenTest.java
 
 %build
-
-%mvn_build -- -Dmaven.test.skip.exec=true
+# Tests disabled due to requiring certs that use disabled insecure algorithms (RSA < 1024)
+%mvn_build -f -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -109,6 +108,9 @@ rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.12-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_5jpp8
 - java update
 
