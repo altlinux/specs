@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Crypt-Rijndael
 Name: perl-%dist
-Version: 1.13
-Release: alt1.2
+Version: 1.14
+Release: alt1
 
 Summary: Crypt::CBC compliant Rijndael encryption module
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/L/LE/LEONT/Crypt-Rijndael-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage
@@ -19,7 +19,7 @@ This module implements the Rijndael cipher, which has just been selected
 as the Advanced Encryption Standard.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ as the Advanced Encryption Standard.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1.2
 - rebuild with new perl 5.28.1
 
