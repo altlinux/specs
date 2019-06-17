@@ -1,4 +1,7 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 %define oldname naver-nanum-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -13,7 +16,7 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt2_23.20140930
+Release:    alt2_25.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
@@ -42,7 +45,7 @@ Source13:   %{fontname}-myeongjo.metainfo.xml
 Source14:   %{fontname}-pen.metainfo.xml
 
 BuildArch: noarch
-BuildRequires: fontpackages-devel
+BuildRequires: fontpackages-devel libappstream-glib
 
 Provides:   nhn-nanum-fonts = %{version}-%{release}
 Obsoletes:  nhn-nanum-fonts < %{version}-%{release}
@@ -84,7 +87,7 @@ This package consists of the Nanum fonts Barun Gothic font faces.
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothicBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothicLight.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothicUltraLight.ttf
-%{_datadir}/appdata/%{fontname}-barun-gothic.metainfo.xml
+%{_metainfodir}/%{fontname}-barun-gothic.metainfo.xml
 
 %package -n fonts-ttf-naver-nanum-barun-pen
 Group: System/Fonts/True type
@@ -104,7 +107,7 @@ This package consists of the Nanum fonts Barun Pen font faces.
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunpenR.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunpenB.ttf
-%{_datadir}/appdata/%{fontname}-barun-pen.metainfo.xml
+%{_metainfodir}/%{fontname}-barun-pen.metainfo.xml
 
 %package -n fonts-ttf-naver-nanum-brush
 Group: System/Fonts/True type
@@ -123,7 +126,7 @@ This package consists of the Nanum fonts Brush font faces.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-brush.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumBrush.ttf
-%{_datadir}/appdata/%{fontname}-brush.metainfo.xml
+%{_metainfodir}/%{fontname}-brush.metainfo.xml
 
 %package -n fonts-ttf-naver-nanum-gothic
 Group: System/Fonts/True type
@@ -148,7 +151,7 @@ This package consists of the Nanum fonts Gothic font faces.
 %{_fontbasedir}/*/%{_fontstem}/NanumGothicBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumGothicExtraBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumGothicLight.ttf
-%{_datadir}/appdata/%{fontname}-gothic.metainfo.xml
+%{_metainfodir}/%{fontname}-gothic.metainfo.xml
 
 %package -n fonts-ttf-naver-nanum-myeongjo
 Group: System/Fonts/True type
@@ -169,7 +172,7 @@ This package consists of the Nanum fonts Myeongjo font faces.
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjo.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjoBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjoExtraBold.ttf
-%{_datadir}/appdata/%{fontname}-myeongjo.metainfo.xml
+%{_metainfodir}/%{fontname}-myeongjo.metainfo.xml
 
 %package -n fonts-ttf-naver-nanum-pen
 Group: System/Fonts/True type
@@ -188,7 +191,7 @@ This package consists of the Nanum fonts Pen font faces.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pen.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumPen.ttf
-%{_datadir}/appdata/%{fontname}-pen.metainfo.xml
+%{_metainfodir}/%{fontname}-pen.metainfo.xml
 
 %prep
 %setup -n %{oldname}-%{version} -c
@@ -230,19 +233,19 @@ done
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE8} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-barun-gothic.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-barun-gothic.metainfo.xml
 install -Dm 0644 -p %{SOURCE9} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-barun-pen.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-barun-pen.metainfo.xml
 install -Dm 0644 -p %{SOURCE10} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-brush.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-brush.metainfo.xml
 install -Dm 0644 -p %{SOURCE11} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-gothic.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-gothic.metainfo.xml
 install -Dm 0644 -p %{SOURCE12} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}.metainfo.xml
 install -Dm 0644 -p %{SOURCE13} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-myeongjo.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-myeongjo.metainfo.xml
 install -Dm 0644 -p %{SOURCE14} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-pen.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-pen.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -278,11 +281,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+
 %files -n fonts-ttf-naver-nanum-common
 %doc --no-dereference COPYING
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_metainfodir}/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_25.20140930
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_23.20140930
 - update to new release by fcimport
 
