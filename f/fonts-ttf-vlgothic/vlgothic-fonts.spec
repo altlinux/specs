@@ -1,4 +1,7 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 %define oldname vlgothic-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -17,7 +20,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20141206
-Release:	alt2_12
+Release:	alt2_14
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -31,7 +34,7 @@ Patch0:		%{oldname}-1331050.patch
 Patch1:		%{oldname}-p-1331050.patch
 
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel
+BuildRequires:	fontpackages-devel libappstream-glib
 BuildRequires:	fonttools
 
 Obsoletes:	%{oldname}-common < 20121230-2
@@ -94,9 +97,9 @@ done
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE3} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}.metainfo.xml
 install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}-proportional.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -132,6 +135,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
@@ -139,7 +145,7 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/VL-Gothic-Regular.ttf
 %doc README*
 %doc --no-dereference LICENSE*
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_metainfodir}/%{fontname}.metainfo.xml
 
 %files -n fonts-ttf-vlgothic-p
 %{_fontconfig_templatedir}/%{pfontconf}.conf
@@ -148,9 +154,12 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/VL-PGothic-Regular.ttf
 %doc README*
 %doc --no-dereference LICENSE*
-%{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
+%{_metainfodir}/%{fontname}-proportional.metainfo.xml
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 20141206-alt2_14
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 20141206-alt2_12
 - update to new release by fcimport
 
