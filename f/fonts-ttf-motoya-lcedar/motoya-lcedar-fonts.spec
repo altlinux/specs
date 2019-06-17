@@ -1,4 +1,7 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 %define oldname motoya-lcedar-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +13,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-motoya-lcedar
 Version:	1.00
-Release:	alt3_0.19.%{archivedate}git
+Release:	alt3_0.20.%{archivedate}git
 Summary:	Japanese Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
@@ -22,7 +25,7 @@ Source10:	%{fontname}-fontconfig.conf
 Source11:       %{fontname}.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel
+BuildRequires:	fontpackages-devel libappstream-glib
 Source44: import.info
 
 %description
@@ -51,7 +54,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdi
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE11} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,6 +90,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -94,10 +100,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc readme.txt
 %doc --no-dereference notice.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_metainfodir}/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.20.20110406git
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.19.20110406git
 - update to new release by fcimport
 
