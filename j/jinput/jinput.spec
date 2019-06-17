@@ -7,21 +7,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Upstream is not in the habit of releasing tarballs.  We pull from git.
-%global gitdate         20170607
-%global gittag          294629a312eed88be8558a8cebc23da87772ffcd
-%global shorttag        %(cut -b -7 <<< %{gittag})
-
 Name:           jinput
-Version:        2.0.7
-Release:        alt2_12.20170607git.294629ajpp8
+Version:        2.0.9
+Release:        alt1_2jpp8
 Summary:        Java Game Controller API
 
 License:        BSD
 URL:            https://github.com/jinput/jinput
-Source0:        https://github.com/jinput/jinput/tarball/%{gittag}/%{name}-%{name}-%{shorttag}.tar.gz
-# Fedora-specific patch: will not be sent upstream.  Remove build.xml rules
-# for building non-free plugin code.
+Source0:        https://github.com/jinput/jinput/archive/%{version}/%{name}-%{version}.tar.gz
+# Fedora-specific patch: will not be sent upstream.  Remove dependencies on
+# Windows and OSX code, and fix build issues with the AWT plugin.
 Patch0:         001_jinput_build.patch
 # Fedora-specific patch: will not be sent upstream.  Do not strip the native
 # library.
@@ -31,19 +26,15 @@ Patch1:         002_jinput_dontstripso.patch
 Patch2:         003_jinput_usesystemload.patch
 # Patch from https://java.net/jira/browse/JINPUT-51 to fix a resource leak
 Patch4:         005_jinput_leak.patch
-# Patch to be sent upstream to migrate to Java 5 (Java generics)
-Patch5:         006_jinput_java5.patch
-# Patch to be sent upstream to adapt to a change in headers in Linux 4.5
-Patch6:         007_jinput_linux_4.5.patch
 
-BuildRequires:  ant
 BuildRequires:  gcc
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  java-javadoc >= 1:1.6.0
-BuildRequires:  javapackages-local
-BuildRequires:  jpackage-utils
-BuildRequires:  jutils
 BuildRequires:  jutils-javadoc
+BuildRequires:  maven-local
+BuildRequires:  mvn(net.java.jutils:jutils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -67,81 +58,44 @@ BuildArch:      noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-%{shorttag}
-%patch0
-%patch1
-%patch2
-%patch4 -p1
-%patch5
-%patch6
-
-# Don't use prebuilt jars
-rm -f lib/*.jar
-build-jar-repository -s -p lib jutils
-
-fixtimestamp() {
-  touch -r $1.orig $1
-  rm -f $1.orig
-}
-
-# Fix the version string in the POMs
-for fil in jinput.pom jinput-platform.pom; do
-  sed -i.orig 's/@VERSION@/%{version}/' $fil
-  fixtimestamp $fil
-done
-
-# Fix the version string in net.java.games.input.Version
-%global buildnum %(cut -d. -f1 <<< %{release})
-sed -i.orig 's/@API_VERSION@/%{version}/;s/@BUILD_NUMBER@/%{buildnum}/' \
-    coreAPI/src/java/net/java/games/input/Version.java
-fixtimestamp coreAPI/src/java/net/java/games/input/Version.java
+%setup -q
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
+%patch4 -p0
 
 # Use Fedora's CFLAGS and LDFLAGS
 sed -i "s|-O2 -Wall|$RPM_OPT_FLAGS|;s|-shared|& $RPM_LD_FLAGS|" \
-    plugins/linux/src/native/build.xml
+    plugins/linux/build.xml
 
-# Prevent jutils.jar from being included in jinput.jar
-sed -i '\@zipfileset.*/>@d' build.xml
+# Remove unnecessary maven plugins
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin -r :maven-nativedependencies-plugin
 
-# We cannot resolve this self-dependency properly, so just remove it
-%pom_remove_dep net.java.jinput:jinput-platform jinput.pom
+# The examples have a jar (rather than pom) dependency on the main project
+%pom_xpath_remove pom:project/pom:dependencies/pom:dependency/pom:type \
+  examples/pom.xml
+
+# The native plugin is included
+%mvn_package net.java.jinput:linux-plugin::natives-linux:%{version}-SNAPSHOT
 
 %build
 # Get the latest definitions from <linux/input-event-codes.h>
-ant -f plugins/linux/src/native/build.xml createNativeDefinitions.java
+gawk -f plugins/linux/src/main/native/getDefinitions \
+  %{_includedir}/linux/input.h \
+  %{_includedir}/linux/input-event-codes.h \
+  > plugins/linux/src/main/java/net/java/games/input/NativeDefinitions.java
 
 # Build
-ant dist
-
-# The ant target to build javadocs has several problems.  It looks for the
-# jutils jar in the wrong place.  It doesn't link to the jutils javadocs.
-# It creates distinct sets of javadoc pages for the coreAPI and for the
-# plugins, where we would like all of the pages to be in a single javadoc
-# package.  We can solve all but the last with a bit of judicious hacking in
-# the appropriate build.xml files, but that last point is difficult to address
-# without resulting in broken links from the plugin pages to the coreAPI pages.
-# Therefore, we throw up our hands in despair and do this instead:
-javadoc -d javadoc -classpath lib/jutils.jar:dist/jinput.jar -package \
-  -sourcepath plugins/awt/src:plugins/linux/src/java:coreAPI/src/java \
-  -link file://%{_javadocdir}/jutils -link file://%{_javadocdir}/java \
-  -source 1.6 net.java.games.input
+%mvn_build
 
 %install
-%mvn_artifact %{name}-platform.pom
-%mvn_artifact %{name}.pom dist/%{name}.jar
-%mvn_install -J javadoc/
+%mvn_install
 
 # jni
-install -Dp -m 755 dist/libjinput* \
-    $RPM_BUILD_ROOT%{_libdir}/%{name}/libjinput.so
-ln -s ../../..%{_jnidir}/%{name}/%{name}.jar $RPM_BUILD_ROOT%{_libdir}/%{name}/
-
-%check
-# Do not rebuild; just run the test
-sed -e 's/"versiontest" depends="init,all"/"versiontest"/' \
-    -e 's/"runtest" depends="dist"/"runtest"/' \
-    -i build.xml
-ant versiontest
+install -Dp -m 755 plugins/linux/target/natives/libjinput*.so \
+    %{buildroot}%{_libdir}/%{name}/libjinput.so
+ln -s ../../..%{_jnidir}/%{name}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
 
 %files -f .mfiles
 %doc README.md
@@ -150,6 +104,9 @@ ant versiontest
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_2jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_12.20170607git.294629ajpp8
 - java update
 
