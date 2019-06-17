@@ -1,7 +1,7 @@
 
 Name: kvpnc
 Version: 0.9.6
-Release: alt4%ubt
+Release: alt5
 #define beta rc1
 
 Group: Networking/Remote access
@@ -77,6 +77,9 @@ done
 %_K4iconsdir/*/*/actions/fritzboximport.*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt5
+- NMU: remove %ubt from release
+
 * Thu Nov 09 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.6-alt4%ubt
 - fix build
 
