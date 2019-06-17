@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.72
-Release: alt1
+Version: 0.73
+Release: alt2
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -14,12 +15,20 @@ Source: %oname-%version.tar
 Patch1: %oname-0.71-alt-build.patch
 
 BuildArch: noarch
-BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm)
+BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm) perl(Future/IO.pm)
 
 %add_findreq_skiplist */IO/Async/MergePoint.pm
 
 %description
 %summary
+
+%package -n perl-Future-IO-Impl-IOAsync
+Summary: Future::IO Implementation using IO::Async
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description -n perl-Future-IO-Impl-IOAsync
+Future::IO Implementation using IO::Async
 
 %prep
 %setup -q -n %oname-%version
@@ -32,11 +41,19 @@ BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refco
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE examples
+%doc Changes README examples
 %perl_vendor_privlib/IO/Async*
-%doc Changes LICENSE README
+
+%files -n perl-Future-IO-Impl-IOAsync
+%perl_vendor_privlib/Future/IO/Impl/IOAsync.pm
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.73-alt2
+- added perl-Future-IO-Impl-IOAsync subpackage
+
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- new version
+
 * Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 
