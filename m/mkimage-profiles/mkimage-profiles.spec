@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 1.3.10-alt1
+- add server-v profile, drop groups/openstack (shaba@)
+
 * Mon Jun 10 2019 Michael Shigorin <mike@altlinux.org> 1.3.9-alt1
 - uboot feature, bootloader refactoring, etc (antohami@)
 - cleanlog factored out from reports.mk (me)
