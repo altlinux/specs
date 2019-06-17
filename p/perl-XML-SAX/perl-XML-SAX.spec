@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-SAX
 Name: perl-%dist
-Version: 1.00
+Version: 1.02
 Release: alt1
 
 Summary: Simple API for XML
@@ -54,6 +54,9 @@ EOF
 %config	%perl_vendor_privlib/XML/SAX/ParserDetails.ini
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
