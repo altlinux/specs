@@ -5,7 +5,7 @@ Name: qca2
 %define minor 2
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.1%ubt
+Release: alt1.1
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -264,6 +264,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1.1
+- NMU: remove %ubt from release
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt0.1%ubt
 - 2.2.0 snapshot
 
