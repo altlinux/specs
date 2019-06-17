@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Test-Strict
 Name: perl-Test-Strict
-Version: 0.48
+Version: 0.52
 Release: alt1
 Summary: Check syntax, presence of use strict; and test coverage
 
@@ -34,6 +34,9 @@ mkdir cover_db
 %doc Changes README
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- new version
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - new version
 
