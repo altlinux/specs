@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %def_with test
 %define dist Test-Taint
 Name: perl-%dist
-Version: 1.06
-Release: alt4.1
+Version: 1.08
+Release: alt1
 
 Summary: Checks for taintedness of variables
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/Test-Taint-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -26,7 +27,7 @@ handle, and easy ways to check and report on the taintedness of your data,
 in standard the Test::More manpage style.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +41,9 @@ in standard the Test::More manpage style.
 %perl_vendor_autolib/Test
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.06-alt4.1
 - rebuild with new perl 5.28.1
 
