@@ -1,5 +1,6 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname hanazono-fonts
@@ -14,7 +15,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-hanazono
 Version:	20170904
-Release:	alt1_1
+Release:	alt1_5
 Summary:	Japanese Mincho-typeface TrueType font
 
 License:	Copyright only or OFL
@@ -24,7 +25,7 @@ Source1:	%{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel
+BuildRequires:	fontpackages-devel libappstream-glib
 Source44: import.info
 
 %description
@@ -65,7 +66,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdi
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_metainfodir}/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -101,15 +102,21 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc LICENSE.txt README.txt THANKS.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_metainfodir}/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 20170904-alt1_5
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20170904-alt1_1
 - update to new release by fcimport
 
