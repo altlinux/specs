@@ -76,7 +76,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 
 Name:		rt
 Version:	4.4.4
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -644,6 +644,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_2
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_1
 - update to new release by fcimport
 
