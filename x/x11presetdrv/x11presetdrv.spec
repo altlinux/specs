@@ -2,7 +2,7 @@
 
 Name: x11presetdrv
 Version: 2.1.2
-Release: alt2%ubt
+Release: alt3
 
 Group: System/Configuration/Hardware
 Summary: X Window System drivers preparing utility
@@ -64,6 +64,9 @@ __EOF__
 %_presetdir/??-%name.preset
 
 %changelog
+* Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt3
+- dont use ubt macro
+
 * Fri Dec 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2%ubt
 - turn on systemd service by default again
 
