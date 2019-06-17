@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        6.1.0
-Release:        alt1_7jpp8
+Release:        alt2_7jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -40,7 +40,7 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{without jp_minimal}
-BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
+BuildRequires:  randomizedtesting2.3.1-runner
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -475,6 +475,9 @@ popd
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt2_7jpp8
+- Build with randomizedtesting2.3.1-runner
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt1_7jpp8
 - java update
 

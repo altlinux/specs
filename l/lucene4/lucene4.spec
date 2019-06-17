@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene4
 Version:        4.10.4
-Release:        alt1_12jpp8
+Release:        alt2_12jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -85,8 +85,8 @@ BuildRequires:  regexp
 
 # test-framework deps
 BuildRequires:  junit
-BuildRequires:  randomizedtesting-junit4-ant
-BuildRequires:  randomizedtesting-runner
+BuildRequires:  randomizedtesting2.3.1-junit4-ant
+BuildRequires:  randomizedtesting2.3.1-runner
 
 Provides:       %{name}-core = %{epoch}:%{version}-%{release}
 
@@ -197,6 +197,9 @@ mv lucene/build/poms/pom.xml .
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt2_12jpp8
+- build with randomizedtesting2.3.1
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_12jpp8
 - java update
 
