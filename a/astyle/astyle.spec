@@ -1,9 +1,6 @@
 Name: astyle
 Version: 3.1
-Release: alt1
-
-%global majorversion    3
-%global soversion       %version
+Release: alt2
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
 License: GPL
@@ -11,11 +8,13 @@ Group: Development/Other
 
 Url: http://%name.sourceforge.net/
 Source: %{name}_%{version}_linux.tar.gz
+# Make the astyle-lib usable for arduino
+Patch: astyle-arduino.patch
 
 BuildRequires: gcc-c++ java-devel-default
 
-# Make the astyle-lib usable for arduino
-Patch0: astyle-arduino.patch
+%global majorversion    3
+%global soversion       %version
 
 %package -n lib%name
 Group: Development/C++
@@ -50,34 +49,38 @@ incorporated as classes in another C++ program.
 
 %prep
 %setup -n %name
-%patch0 -p1
-
-%build
+%patch -p1
 chmod a-x src/*
 chmod a-x doc/*
 
+%build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
+
 pushd src
     # it's much easier to compile it here than trying to fix the Makefile
-    g++ $RPM_OPT_FLAGS -DASTYLE_LIB -DASTYLE_JNI -fPIC -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
+    g++ %optflags -DASTYLE_LIB -DASTYLE_JNI -fPIC -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
     g++ -shared -o libastyle.so.%soversion *.o -Wl,-soname,libastyle.so.%majorversion
     ln -s libastyle.so.%soversion libastyle.so
-    g++ $RPM_OPT_FLAGS -c ASLocalizer.cpp astyle_main.cpp
-    g++ $RPM_OPT_FLAGS -o astyle ASLocalizer.o astyle_main.o -L. -lastyle
+    g++ %optflags -c ASLocalizer.cpp astyle_main.cpp
+    g++ %optflags -o astyle ASLocalizer.o astyle_main.o -L. -lastyle
 popd
 
 %install
 pushd src
-    mkdir -p $RPM_BUILD_ROOT{%_bindir,%_libdir,%_includedir}
+    mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 
-    install -p -m 755 astyle $RPM_BUILD_ROOT%_bindir
-    install -p -m 755 libastyle.so.%soversion $RPM_BUILD_ROOT%_libdir
-    cp -P libastyle.so $RPM_BUILD_ROOT%_libdir
-    install -p -m 644 astyle.h $RPM_BUILD_ROOT%_includedir
+    install -p -m 755 astyle %buildroot%_bindir
+    install -p -m 755 libastyle.so.%soversion %buildroot%_libdir
+    cp -P libastyle.so %buildroot%_libdir
+    install -p -m 644 astyle.h %buildroot%_includedir
 popd
 
 # hardcoded path! for --help
 mkdir -p %buildroot%_datadir/doc/%name/html
-install -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
+install -p -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 
 %files
 %doc %_datadir/doc/%name
@@ -91,6 +94,10 @@ install -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 %_includedir/%name.h
 
 %changelog
+* Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 3.1-alt2
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 3.1-alt1
 - Autobuild version bump to 3.1
 
