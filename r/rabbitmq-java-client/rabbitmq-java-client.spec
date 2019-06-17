@@ -1,10 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rabbitmq-java-client
 Version:       3.6.5
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Java Advanced Message Queue Protocol client library
 License:       ASL 2.0 and GPLv2+ and MPLv1.1
 URL:           http://www.rabbitmq.com/java-client.html
@@ -33,7 +34,7 @@ BuildArch:     noarch
 BuildRequires: maven-local mvn(commons-cli:commons-cli) mvn(commons-io:commons-io) mvn(junit:junit)
 BuildRequires: ant ant-junit
 BuildRequires: java-headless
-BuildRequires: python >= 2.6 python-module-simplejson
+BuildRequires: python-devel >= 2.6 python-module-simplejson
 
 %if 0%{?with buildtex}
 BuildRequires: texi2html
@@ -44,7 +45,7 @@ BuildRequires: %{_bindir}/pdflatex
 # for tests execution
 BuildRequires:  rabbitmq-server
 BuildRequires:  coreutils
-BuildRequires:  procps
+BuildRequires:  libprocps procps
 
 Requires:       rabbitmq-server
 Requires:       activemq
@@ -99,11 +100,11 @@ sed -i "s|, test-bundlor.do||" build.xml
 sed -i 's,\(\"haltOnFailureJunit\" value=\"\).*\",\1%{failjunit}\",' build.xml
 sed -i 's,\(\"haltOnFailureJava\" value=\"\).*\",\1%{failjava}\",' build.xml
 
+%mvn_file com.rabbitmq:amqp-client %{name} %{jarname} amqp-client
+
 
 %build
-%mvn_file com.rabbitmq:amqp-client %{name} %{jarname} amqp-client
-export JAVA_HOME=%{java_home}
-ant -Dimpl.version=%{version} maven-bundle
+%ant -Dimpl.version=%{version} -Dpython.bin=%{__python} maven-bundle
 
 # distribute documentation
 cd doc/channels
@@ -121,22 +122,23 @@ find . -not -name channels.\* -delete
 %check
 ant test-jar
 
+%if 0
 #ant test-suite
 #ant -Dtest=testDoubleDeletionExchange test-single
-#ant test-server
+ant test-server
 
 # client tests need a mock server, ugly hackery :)
 export RABBITMQ_LOG_BASE=.
 export RABBITMQ_MNESIA_BASE=.
-#%{_prefix}/lib/rabbitmq/bin/rabbitmq-server start -detached
-#pgrep -cf rabbitmq_server && ant test-client
+%{_prefix}/lib/rabbitmq/bin/rabbitmq-server start -detached
+pgrep -cf rabbitmq_server && ant test-client
 
 # FIXME functional tests failure ahead!
 #ant test-functional
 #ant test-functional-and-server-with-ha
 
-#pkill -f rabbitmq_server ||:
-
+pkill -f rabbitmq_server ||:
+%endif
 
 %files -f .mfiles
 %doc --no-dereference LICENSE*
@@ -150,6 +152,9 @@ export RABBITMQ_MNESIA_BASE=.
 
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_6jpp8
+- fc29 update
+
 * Tue Apr 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_4jpp8
 - fixes for e2k
 
