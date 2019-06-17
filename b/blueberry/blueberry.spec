@@ -1,6 +1,6 @@
 Name: blueberry
 Version: 1.2.5
-Release: alt2
+Release: alt3
 Summary: A Bluetooth configuration tool
 License: GPLv3
 Group: System/Configuration/Hardware
@@ -12,8 +12,11 @@ Provides: blueman
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+# use python3
+AutoReqProv: nopython
+
 BuildArch: noarch
-Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl gnome-bluetooth bluez-tools libnotify-gir
+Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl gnome-bluetooth bluez-tools libnotify-gir rpm-build-python3
 
 %description
 Utility for Bluetooth devices graphical configuration
@@ -52,6 +55,9 @@ Blueberry applet for Cinnamon
 %_datadir/cinnamon/applets/blueberry@cinnamon.org
 
 %changelog
+* Mon Jun 17 2019 Vladimir Didenko <cow@altlinux.org> 1.2.5-alt3
+- update to the git82682e9f for python3 build (closes: #36908)
+
 * Fri Apr 5 2019 Vladimir Didenko <cow@altlinux.org> 1.2.5-alt2
 - add libnotify-gir to requires and fix Makefile to install
   obex-agent desktop file (fixes: #36451)
