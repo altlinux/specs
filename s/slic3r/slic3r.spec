@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 28
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global use_system_admesh 0
@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt2_6
+Release:        alt2_8
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -250,6 +250,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_8
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_6
 - update to new release by fcimport
 
