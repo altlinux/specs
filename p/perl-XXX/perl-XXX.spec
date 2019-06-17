@@ -6,7 +6,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-XXX
-Version:        0.32
+Version:        0.33
 Release:        alt1
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
@@ -59,11 +59,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE CONTRIBUTING
+%doc CONTRIBUTING
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
