@@ -9,11 +9,13 @@
 %def_enable vqsim
 
 Name: corosync
-Summary: The Corosync Cluster Engine and Application Programming Interfaces
 Version: 3.0.2
-Release: alt1
+Release: alt2
+
+Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
+
 Url: http://corosync.github.io/corosync/
 
 # https://github.com/corosync/corosync.git
@@ -21,7 +23,7 @@ Source0: %name-%version.tar
 Source1: corosync-init
 Source2: corosync-notifyd-init
 
-#fixed systemd units
+# fixed systemd units
 Source11: corosync.service
 
 Provides: corosync2 = %version-%release
@@ -127,9 +129,9 @@ rm -rf %buildroot%_docdir/*
 mkdir -p %buildroot%_sysconfdir/sysconfig
 
 # /etc/sysconfig/corosync-notifyd
-install -m 644 tools/corosync-notifyd.sysconfig.example %buildroot%_sysconfdir/sysconfig/corosync-notifyd
+install -p -m 644 tools/corosync-notifyd.sysconfig.example %buildroot%_sysconfdir/sysconfig/corosync-notifyd
 # /etc/sysconfig/corosync
-install -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconfig/corosync
+install -p -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconfig/corosync
 
 %check
 %make check
@@ -161,7 +163,9 @@ install -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconfig/
 %_initrddir/corosync-notifyd
 %_datadir/corosync
 %_datadir/snmp/mibs/COROSYNC-MIB.txt
+%if_enabled augeas
 %_datadir/augeas/lenses/*
+%endif
 %dir %_localstatedir/lib/corosync
 %attr(700, root, root) %_logdir/cluster
 %_man5dir/*
@@ -190,6 +194,10 @@ install -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconfig/
 %endif
 
 %changelog
+* Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 3.0.2-alt2
+- fix augeas knob
+- minor spec cleanup
+
 * Sun Jun 16 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
