@@ -1,6 +1,6 @@
 Name: cdemu-daemon
-Version: 3.2.1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -79,6 +79,9 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Mon Jun 17 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.2-alt1
+- Version 3.2.2
+
 * Sat Jan 26 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt2
 - Remove %ubt macro
 
