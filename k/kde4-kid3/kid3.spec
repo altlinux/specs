@@ -2,7 +2,7 @@
 %define rname kid3
 Name: kde4-%rname
 Version: 3.4.5
-Release: alt4%ubt
+Release: alt5
 
 Group: Sound
 Summary: ID3 tagger
@@ -169,6 +169,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.5-alt5
+- NMU: remove %ubt from release
+
 * Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt4%ubt
 - fix build requires
 
