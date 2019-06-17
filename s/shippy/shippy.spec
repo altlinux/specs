@@ -1,23 +1,27 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install unzip
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           shippy
-Version:        1.3.3.7
-Release:        alt2_25
-Summary:        Space invaders / Galaxians like game with powerups
-Group:          Games/Other
+Version:        1.5.0
+Release:        alt1_1
+Summary:        Space invaders / Galaxians like game with power-ups
 License:        GPL+
-URL:            http://www.shippysite.com/
-Source0:        http://downloads.sourceforge.net/ship84/shipv%{version}UNIX.zip
+URL:            http://identicalsoftware.com/shippy1984/
+Source0:        http://identicalsoftware.com/shippy1984/shippy-%{version}.tgz
 Source1:        shippy.png
 Source2:        shippy.desktop
 Source3:        shippy.sh
 Source4:        %{name}.appdata.xml
-Patch0:         shippy-merged.patch
-Patch1:         shippy-improved-splash.patch
-BuildRequires:  dumb-devel libSDL_mixer-devel
+# Patch to add/keep the shared highscore support Fedora patched into 1.3.3.7
+# so that people do not loose their highscores
+Patch0:         shippy-1.5.0-shared-highscores.patch
+Patch1:         shippy-1.5.0-warning-fixes.patch
+Patch2:         shippy-1.5.0-sdl2-fs-toggle.patch
+BuildRequires:  gcc
+BuildRequires:  dumb-devel libSDL2_mixer-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       %{name}-common = %{version}
 Provides:       %{name}-engine = %{version}
@@ -32,9 +36,9 @@ No longer! Shippy1984 is the game you have been waiting for!
 
 
 %package allegro
-Summary:	Shippy1984 Allegro version
-Group:		Games/Other
-Requires:	%{name}-common = %{version}
+Group: Games/Other
+Summary:        Shippy1984 Allegro version
+Requires:       %{name}-common = %{version}
 Provides:       %{name}-engine = %{version}
 
 %description allegro
@@ -42,8 +46,8 @@ Alternative version of Shippy1984 compiled to use the allegro display library.
 
 
 %package common
-Summary:	Shippy1984 common files
-Group:		Games/Other
+Group: Games/Other
+Summary:        Shippy1984 common files
 Requires:       %{name}-engine = %{version}
 Requires:       icon-theme-hicolor
 
@@ -53,20 +57,19 @@ Shippy1984 game.
 
 
 %prep
-%setup -q -c
+%setup -q
 %patch0 -p1
 %patch1 -p1
-sed -i 's/\r//' NOTES.txt LICENSE.txt docs/manual.html
+%patch2 -p1
 mv docs html
-mv data/splash2.bmp data/splash.bmp
 #see comment in %%install
 rm data/scores.lst
 
 
 %build
-%make_build SDL=1 \
+%make_build SDL2=1 \
  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -DDATADIR=\\\"%{_datadir}/%{name}/\\\"" \
- LDFLAGS="-g `sdl-config --libs` -lSDL_mixer"
+ LDFLAGS="-g `sdl2-config --libs` -lSDL2_mixer"
 mv %{name} %{name}-sdl
 
 %make_build ALLEGRO=1 \
@@ -116,6 +119,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_25
 - update to new release by fcimport
 
