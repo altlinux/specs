@@ -8,7 +8,7 @@ BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators perl(Test/Most
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Graphics-ColorNames
-Version:        3.4.0
+Version:        3.5.0
 Release:        alt1
 Summary:        Defines RGB values for common color names
 License:        Artistic 2.0
@@ -68,11 +68,13 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc LICENSE
 %doc Changes README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1
+- automated CPAN update
+
 * Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1
 - automated CPAN update
 
