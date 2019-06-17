@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.0
-%define kernel_sublevel .19
+%define kernel_sublevel .21
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -621,6 +621,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Jun 17 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.0.21-alt2
+- multiple kernel remote denial of service issues fixed
+
+* Wed Jun 05 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.0.21-alt1
+- v5.0.21
+
+* Fri May 31 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.0.20-alt1
+- v5.0.20
+
 * Tue May 28 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.0.19-alt1
 - v5.0.19
 
