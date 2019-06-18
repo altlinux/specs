@@ -9,7 +9,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20190303
+Version: 20190618
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -42,13 +42,14 @@ License: GPL
 %description
 Distro-specific packages with design and texts
 
-%ifarch %ix86 x86_64
 %package bootloader
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 License: GPL
 
+%ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
+%endif #ifarch
 BuildRequires: design-bootloader-source >= 5.0-alt2
 Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
@@ -68,18 +69,19 @@ Summary: Theme for splash animations during bootup
 License: Distributable
 Group:  System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme plymouth(system-theme)
+BuildArch: noarch
 Requires: plymouth-plugin-script
 Requires: plymouth
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootsplash ";done )
 %description bootsplash
 This package contains graphics for boot process, displayed via Plymouth
-%endif #ifarch
 
 %package alterator
 Summary: Design for alterator for %Brand %Theme
 License: GPL
 Group: System/Configuration/Other
+BuildArch: noarch
 Provides: design-alterator-browser-%theme branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
 Obsoletes: branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
@@ -95,6 +97,7 @@ Design for QT and web alterator for %Brand %Theme
 Summary: design for ALT
 License: Different licenses
 Group: Graphics
+BuildArch: noarch
 
 Provides: design-graphics-%theme branding-alt-%theme-graphics
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
@@ -112,6 +115,7 @@ This package contains some graphics for ALT design.
 %package release
 Summary: %distribution %Theme release file
 Group: System/Configuration/Other
+BuildArch: noarch
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
 Obsoletes: %obsolete_list branding-alt-%theme-release
 Conflicts: %conflicts_list
@@ -126,6 +130,7 @@ Obsoletes: alt-license-%theme alt-notes-%theme
 Summary: Distribution license and release notes
 License: Distributable
 Group: Documentation
+BuildArch: noarch
 Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-school-server alt-notes-server-lite alt-notes-skif alt-notes-terminal
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-notes ";done )
 
@@ -137,6 +142,7 @@ Distribution license and release notes
 Summary: Slideshow for %Brand %version %Theme installer
 License: Distributable
 Group: System/Configuration/Other
+BuildArch: noarch
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-slideshow ";done )
 
 %description slideshow
@@ -147,6 +153,7 @@ Slideshow for %Brand %version %Theme installer
 Summary: ALT welcome page
 License: distributable
 Group: System/Base
+BuildArch: noarch
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 
@@ -166,6 +173,16 @@ Requires(post): indexhtml-common
 
 %description indexhtml
 ALT index.html welcome page.
+
+%package xfce-settings
+
+Summary: XFCE settings for %Brand %version %Theme
+License: Distributable
+Group: Graphical desktop/XFce
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
+
+%description xfce-settings
+XFCE settings for %Brand %version %Theme
 
 %prep
 %setup -n branding
@@ -223,24 +240,33 @@ popd
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
 
-%ifarch %ix86 x86_64
+# xfce-settings
+pushd xfce-settings
+mkdir -p %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
+mkdir -p %buildroot/etc/skel/.config/xfce4/panel
+cp -r etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/* %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
+cp -r etcskel/.config/xfce4/panel/* %buildroot/etc/skel/.config/xfce4/panel
+popd
+
 #bootloader
 %pre bootloader
 [ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
 [ -s /boot/splash/%theme ] && rm -fr /boot/splash/%theme ||:
 
 %post bootloader
+%ifarch %ix86 x86_64
 ln -snf %theme/message /boot/splash/message
 . /etc/sysconfig/i18n
 lang=$(echo $LANG | cut -d. -f 1)
 cd boot/splash/%theme/
 echo $lang > lang
 [ "$lang" = "C" ] || echo lang | cpio -o --append -F message
+%endif #ifarch
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
-
+%ifarch %ix86 x86_64
 %preun bootloader
 [ $1 = 0 ] || exit 0
 [ "`readlink /boot/splash/message`" != "%theme/message" ] ||
@@ -250,10 +276,12 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post indexhtml
 %_sbindir/indexhtml-update
 
-%ifarch %ix86 x86_64
 %files bootloader
+%ifarch %ix86 x86_64
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
+%endif #ifarch
+
 
 #bootsplash
 %post bootsplash
@@ -261,7 +289,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ -f /etc/sysconfig/grub2 ] && \
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
-%endif #ifarch
 
 %files alterator
 %config %_altdir/*.rcc
@@ -272,10 +299,8 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 
-%ifarch %ix86 x86_64
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
-%endif #ifarch
 
 %files release
 %_sysconfdir/*-release
@@ -296,7 +321,16 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %indexhtmldir/img
 %_desktopdir/indexhtml.desktop
 
+%files xfce-settings
+%_sysconfdir/skel/.config/xfce4
+
 %changelog
+* Tue Jun 18 2019 Anton Midyukov <antohami@altlinux.org> 20190618-alt1
+- build bootloader and bootsplash for all ARCH
+- change color blue to progress bar
+- xfce-settings back in minimal
+- browser-qt: transparent background for an inscription
+
 * Sun Mar 03 2019 Anton Midyukov <antohami@altlinux.org> 20190303-alt1
 - Cleanup plymouth theme (Closes: 36179)
 - Use resources generator from Qt5
