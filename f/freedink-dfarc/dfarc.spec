@@ -1,12 +1,13 @@
 Name: freedink-dfarc
 Version: 3.12
-Release: alt2
-Summary: Frontend and .dmod installer for GNU FreeDink
+Release: alt3
 
-Group: Games/Adventure
+Summary: Frontend and .dmod installer for GNU FreeDink
 License: GPLv3+
+Group: Games/Adventure
+
 Url: http://www.freedink.org/
-Source0: ftp://ftp.gnu.org/gnu/freedink/dfarc-%version.tar.gz
+Source: ftp://ftp.gnu.org/gnu/freedink/dfarc-%version.tar.gz
 Packager: Fr. Br. George <george@altlinux.ru>
 
 BuildRequires(pre): rpm-build-xdg
@@ -19,6 +20,10 @@ it's numerous Dink Modules (or D-Mods).
 %prep
 %setup -n dfarc-%version
 sed -i 's/BZ2_compressBlock/BZ2_bzDecompress/' configure.ac
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 
 %build
 %autoreconf
@@ -42,6 +47,9 @@ install -D share/freedink-mime.xml %buildroot%_xdgmimedir/packages/freedink-mime
 %_mandir/man1/*
 
 %changelog
+* Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 3.12-alt3
+- E2K: explicit -std=c++11
+
 * Mon Aug 27 2018 Anton Midyukov <antohami@altlinux.org> 3.12-alt2
 - rebuilt with wxGTK3.0
 
