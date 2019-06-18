@@ -1,6 +1,6 @@
 Name: focuswriter
 Version: 1.6.16
-Release: alt1
+Release: alt2
 
 Summary: FocusWriter is a fullscreen, distraction-free word processor
 License: GPLv3
@@ -22,6 +22,10 @@ that only one thing matters: your writing.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.23.12 doesn't grok u'’' even with -std=c++11
+sed -i "s,u'’',\"’\",g" src/{block_stats,spelling/dictionary_provider_*}.cpp
+%endif
 
 %build
 sed -i 's|DATADIR/metainfo/|DATADIR/appdata/|g' %name.pro
@@ -30,6 +34,8 @@ qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
+# http://altlinux.org/Icon_Paths_Policy
+rm -f %buildroot%_pixmapsdir/*.xpm
 
 %files
 %_bindir/%name
@@ -40,6 +46,9 @@ qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.16-alt2
+- E2K: ftbfs workaround
+
 * Wed Oct 03 2018 Michael Shigorin <mike@altlinux.org> 1.6.16-alt1
 - 1.6.16
 - minor spec cleanup
