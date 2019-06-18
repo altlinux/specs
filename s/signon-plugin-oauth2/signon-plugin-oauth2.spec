@@ -1,15 +1,15 @@
 Name: signon-plugin-oauth2
 Version: 0.24
-Release: alt2
+Release: alt3
 
-Group: System/Libraries
 Summary: OAuth2 plugin for the Accounts framework
-Url: https://gitlab.com/accounts-sso/signon-plugin-oauth2
 License: LGPLv2
+Group: System/Libraries
+
+Url: https://gitlab.com/accounts-sso/signon-plugin-oauth2
+Source: signon-oauth2-%version.tar
 
 Requires: signon-ui
-
-Source: signon-oauth2-%version.tar
 
 # Automatically added by buildreq on Thu Jul 09 2015 (-bi)
 # optimized out: elfutils kf5-attica-devel kf5-kjs-devel libqt5-core libqt5-network libqt5-xmlpatterns libsignon-plugins1 libsignon-qt51 libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
@@ -30,9 +30,13 @@ Summary: Development files for %name
 %summary.
 
 %prep
-%setup -qn signon-oauth2-%version
+%setup -n signon-oauth2-%version
 sed -i '/^SUBDIRS/s/tests//' signon-oauth2.pro
 sed -i '/^SUBDIRS/s/example//' signon-oauth2.pro
+%ifarch %e2k
+# moc_base-plugin.cpp:30: offsetof against non-POD
+%add_optflags -Wno-error=invalid-offsetof
+%endif
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -59,6 +63,10 @@ sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth
 %_libdir/pkgconfig/signon-oauth2plugin.pc
 
 %changelog
+* Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 0.24-alt3
+- E2K: ftbfs workaround
+- minor spec cleanup
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2
 - NMU: remove %ubt from release
 
