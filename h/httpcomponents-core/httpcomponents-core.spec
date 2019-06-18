@@ -9,11 +9,14 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           httpcomponents-core
 Summary:        Set of low level Java HTTP transport components for HTTP services
-Version:        4.4.9
-Release:        alt1_4jpp8
+Version:        4.4.10
+Release:        alt1_3jpp8
 License:        ASL 2.0
 URL:            http://hc.apache.org/
 Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
+# Expired test certificates. Backported from upstream commit 8caeb927a.
+Patch0:         0001-Re-generated-expired-test-certificates.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -55,16 +58,11 @@ BuildArch: noarch
 %prep
 %setup -q
 
+%patch0 -p1
+
 # Random test failures on ARM -- 100 ms sleep is not eneough on this
 # very performant arch, lets make it 2 s
 sed -i '/Thread.sleep/s/100/2000/' httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlers.java
-
-# The following tests use DSA key, which is rejected by Fedora's security policy
-# https://issues.apache.org/jira/browse/HTTPCORE-519
-rm httpcore/src/test/java/org/apache/http/ssl/TestSSLContextBuilder.java
-rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestCustomSSL.java
-rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlers.java
-rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlersPipelining.java
 
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
@@ -79,6 +77,7 @@ rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandl
 for module in httpcore httpcore-nio; do
     %pom_xpath_remove "pom:project/pom:packaging" $module
     %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
+    %pom_remove_plugin :maven-jar-plugin $module
     %pom_xpath_inject "pom:build/pom:plugins" "
         <plugin>
           <groupId>org.apache.felix</groupId>
@@ -88,6 +87,7 @@ for module in httpcore httpcore-nio; do
             <instructions>
               <Export-Package>*</Export-Package>
               <Private-Package></Private-Package>
+              <Automatic-Module-Name>org.apache.httpcomponents.$module</Automatic-Module-Name>
               <_nouses>true</_nouses>
             </instructions>
           </configuration>
@@ -111,6 +111,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.10-alt1_3jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.4.9-alt1_4jpp8
 - java update
 
