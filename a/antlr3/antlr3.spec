@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java rpm-macros-generic-compat
-BuildRequires: gcc-c++ perl-devel rpm-build-java unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
+BuildRequires: gcc-c++ rpm-build-java unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -11,13 +11,13 @@ BuildRequires: jpackage-generic-compat
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 17
+%global baserelease 19
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Epoch:              1
 Version:            %{antlr_version}
-Release:            alt1_17jpp8
+Release:            alt1_19jpp8
 License:            BSD
 URL:                http://www.antlr3.org/
 
@@ -275,6 +275,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_19jpp8
+- fc update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_17jpp8
 - regenerated to fix __isa_bits definition
 
