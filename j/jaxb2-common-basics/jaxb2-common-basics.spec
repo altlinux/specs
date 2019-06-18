@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jaxb2-common-basics
 Version:       0.9.5
-Release:       alt2_5jpp8
+Release:       alt3_5jpp8
 Summary:       JAXB2 Basics
 License:       BSD
 Url:           https://github.com/highsource/jaxb2-basics
@@ -17,7 +17,7 @@ Source0:       https://github.com/highsource/jaxb2-basics/archive/%{version}.tar
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.code.javaparser:javaparser:1)
-BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
@@ -92,6 +92,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt3_5jpp8
+- build with jts1.14
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt2_5jpp8
 - build with javaparser1
 

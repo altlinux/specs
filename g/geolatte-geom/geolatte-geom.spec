@@ -8,14 +8,14 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          geolatte-geom
 Version:       0.14
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       A geometry model for Java that conforms to the Simple Features For SQL
 License:       LGPLv3+
 URL:           http://www.geolatte.org/
 Source0:       https://github.com/GeoLatte/geolatte-geom/archive/v%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
 BuildRequires: mvn(commons-collections:commons-collections)
 BuildRequires: mvn(dom4j:dom4j)
 BuildRequires: mvn(jaxen:jaxen)
@@ -51,6 +51,7 @@ This package contains javadoc for %{name}.
 %pom_add_dep commons-collections:commons-collections:3.2.1:test
 
 %mvn_file org.geolatte:%{name} %{name}
+%pom_change_dep com.vividsolutions:jts:1.13 com.vividsolutions:jts:1.14.0
 
 %build
 
@@ -67,6 +68,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference copyright-template.vml
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_7jpp8
+- build with jts1.14
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_7jpp8
 - java update
 
