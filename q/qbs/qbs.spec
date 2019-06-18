@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.5.2
+Version: 1.13.1
 Release: alt1
 
 Summary: Qt Build Suite
@@ -9,7 +9,7 @@ Group: Development/Tools
 Url: http://qt-project.org/wiki/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://download.qt-project.org/official_releases/%name/%version/%name-src-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: qt5-script-devel
 
@@ -39,9 +39,10 @@ BuildArch: noarch
 Provides examples for using the %name
 
 %prep
-%setup -n %name-src-%version
+%setup
 
 %build
+export LD_LIBRARY_PATH=`pwd`/lib
 %qmake_qt5 -r %name.pro \
 	QBS_INSTALL_PREFIX=%_prefix \
 	QBS_LIB_INSTALL_DIR=%_libdir \
@@ -53,38 +54,37 @@ Provides examples for using the %name
 %make_build
 
 %install
-%__make INSTALL_ROOT=%buildroot install
+make INSTALL_ROOT=%buildroot install
+rm -f %buildroot%_libdir/libqbscore.prl
+rm -rf %buildroot%_datadir/qbs/python/dmgbuild
 
 %files
 %doc LGPL_EXCEPTION.txt LICENSE.LGPLv3 LICENSE.LGPLv21 README
 %_bindir/%name
 %_bindir/%name-config
 %_bindir/%name-config-ui
-%_bindir/%name-qmltypes
+%_bindir/%name-create-project
 %_bindir/%name-setup-android
 %_bindir/%name-setup-qt
 %_bindir/%name-setup-toolchains
-%dir %_datadir/%name
-%_datadir/%name/imports
-%dir %_datadir/%name/modules
-%_datadir/%name/modules
-%dir %_libdir/%name
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/lib%{name}_cpp_scanner.so
-%_libdir/%name/plugins/lib%{name}_qt_scanner.so
+%_datadir/%name
+%exclude %_datadir/%name/examples
+%_libdir/%name/plugins/*.so
 %_libdir/lib%{name}core.so.*
-%_libdir/lib%{name}qtprofilesetup.so.*
+%_prefix/libexec/qbs
+%_man1dir/%name.1*
 
 %files devel
 %_includedir/%name
 %_libdir/lib%{name}core.so
-%_libdir/lib%{name}qtprofilesetup.so
 
 %files examples
-%dir %_datadir/%name
 %_datadir/%name/examples
 
 %changelog
+* Tue Jun 18 2019 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt1
+- New version.
+
 * Tue Jul 12 2016 Nazarov Denis <nenderus@altlinux.org> 1.5.2-alt1
 - Version 1.5.2
 
