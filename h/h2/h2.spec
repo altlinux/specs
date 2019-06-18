@@ -4,11 +4,12 @@ BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           h2
 Version:        1.4.196
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Java SQL database
 
 # Most classes are dual licensed as EPL/MPL
@@ -61,6 +62,12 @@ find -name '*.jar' -delete
 find -name '*.exe' -delete
 find -name '*.dll' -delete
 
+%if 0%{?fedora} >= 29
+# Fix jts package name
+sed -i -e 's/com\.vividsolutions\.jts/org.locationtech.jts/' $(find -name *.java)
+sed -i -e 's/vividsolutions/vividsolutions locationtech/' src/tools/org/h2/build/doc/dictionary.txt
+%endif
+
 # Don't attempt to download from Internet
 sed -i -e '/downloadTest();/d' -e '/download();/d' \
   src/tools/org/h2/build/Build.java
@@ -101,6 +108,9 @@ sh build.sh jar docs
 %doc --no-dereference src/docsrc/html/license.html
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.196-alt1_6jpp8
+- fixed build with new jts
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.196-alt1_3jpp8
 - java update
 
