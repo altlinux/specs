@@ -1,12 +1,17 @@
+%def_with fasm
 Name:		refal2
 Version:	0.2.3
-Release:	alt3
+Release:	alt4
 Summary:	Functional programming language, oriented on symbolic information processing
 Group:		Development/Functional
 License:	BSD-like
 URL:		https://github.com/FrBrGeorge/refal2
 Source:		%name-%version.tar.gz
 ExclusiveArch:	%ix86
+
+%if_with fasm
+BuildRequires: fasm
+%endif
 
 %description
 Refal (REcursive Function Agorithmic Language) is a functional
@@ -31,7 +36,11 @@ as definitive realization of Refal language
 %setup
 
 %build
+%if_with fasm
+make FASM=1
+%else
 make
+%endif
 
 %install
 %makeinstall libdir=%buildroot%prefix/lib
@@ -43,8 +52,11 @@ make
 %_includedir/*
 
 %changelog
+* Tue Jun 18 2019 Fr. Br. George <george@altlinux.ru> 0.2.3-alt4
+- Provide FASM/GCC build option, build with FASM
+
 * Mon Jun 17 2019 Fr. Br. George <george@altlinux.ru> 0.2.3-alt3
-- Make package exclusive  for ix86
+- Make package exclusive for ix86
 
 * Sun Jun 16 2019 Fr. Br. George <george@altlinux.ru> 0.2.3-alt2
 - Upstream switch to https://github.com/FrBrGeorge/refal2
