@@ -9,7 +9,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.7
-Release: alt3
+Release: alt4
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -100,6 +100,9 @@ Static libraries for %name.
 %patch5 -p1
 
 %build
+%ifarch %e2k
+%add_optflags -std=c++11
+%endif
 export PATH=%_qt5_bindir:$PATH
 export QT_DOC_DIR=%_qt5_docdir
 %cmake \
@@ -141,10 +144,14 @@ export QT_DOC_DIR=%_qt5_docdir
 %_pkgconfigdir/TelepathyQt5*.pc
 %_includedir/telepathy-qt5
 
-%files devel-static
+#%files devel-static
 #%_libdir/lib*.a
 
 %changelog
+* Tue Jun 18 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt4
+- add optflags for E2K
+- don't package devel-static
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt3
 - dont use ubt macro
 
