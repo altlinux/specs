@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 Name:          querydsl
 # NOTE: newer release use hibernate-core:4.3.11.Final
 Version:       4.0.4
-Release:       alt2_6jpp8
+Release:       alt3_6jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -48,7 +48,7 @@ BuildRequires: mvn(com.infradna.tool:bridge-method-injector)
 BuildRequires: mvn(com.mysema.codegen:codegen)
 BuildRequires: mvn(com.mysema.commons:mysema-commons-lang)
 BuildRequires: mvn(com.thoughtworks.proxytoys:proxytoys)
-BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
 BuildRequires: mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires: mvn(javassist:javassist)
 BuildRequires: mvn(javax.inject:javax.inject)
@@ -427,6 +427,8 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %mvn_package :%{name}-jdo::apt: %{name}-jdo
 %mvn_package :%{name}-jpa::apt: %{name}-jpa
 
+%pom_change_dep com.vividsolutions:jts:1.10 com.vividsolutions:jts:1.14.0 querydsl-sql-spatial
+
 %build
 
 # Unavailable test deps
@@ -483,6 +485,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt3_6jpp8
+- build with jts1.14
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt2_6jpp8
 - added BR: apache-parent for javapackages 5
 

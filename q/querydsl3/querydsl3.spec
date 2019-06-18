@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          querydsl3
 Version:       3.7.2
-Release:       alt2_9jpp8
+Release:       alt3_9jpp8
 Summary:       Type safe queries for Java
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -41,7 +41,7 @@ BuildRequires: mvn(com.infradna.tool:bridge-method-injector)
 BuildRequires: mvn(com.mysema.codegen:codegen)
 BuildRequires: mvn(com.mysema.commons:mysema-commons-lang)
 BuildRequires: mvn(com.thoughtworks.proxytoys:proxytoys)
-BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
 BuildRequires: mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires: mvn(javassist:javassist)
 BuildRequires: mvn(javax.inject:javax.inject)
@@ -390,6 +390,9 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %mvn_package :querydsl-jdo::apt: querydsl-jdo
 %mvn_package :querydsl-jpa::apt: querydsl-jpa
 
+# viy:
+%pom_change_dep com.vividsolutions:jts:1.10 com.vividsolutions:jts:1.14.0 querydsl-sql
+
 %build
 
 # Unavailable test deps
@@ -445,6 +448,9 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt3_9jpp8
+- build with jts1.14
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt2_9jpp8
 - java update
 

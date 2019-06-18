@@ -8,14 +8,14 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          spatial4j
 Version:       0.5.0
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       A Geospatial Library for Java
 License:       ASL 2.0
 URL:           https://github.com/locationtech/spatial4j
 Source0:       https://github.com/spatial4j/spatial4j/archive/%{name}-0.5.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.noggit:noggit)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
@@ -56,6 +56,8 @@ This package contains javadoc for %{name}.
 
 %mvn_file : %{name}
 
+%pom_change_dep com.vividsolutions:jts:1.13 com.vividsolutions:jts:1.14.0
+
 %build
 
 # Test skipped for unavailable test deps
@@ -72,6 +74,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_7jpp8
+- build with jts1.14
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_7jpp8
 - java update
 
