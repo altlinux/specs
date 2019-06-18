@@ -17,11 +17,11 @@
 %def_without pam_helper
 %def_with suid_binaries
 # for silly lightdm
-%def_enable wmsession
+%def_disable wmsession
 
 Name: enlightenment
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -161,7 +161,6 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 
 %if_enabled wmsession
 mkdir -p %buildroot%_bindir/
-install -p -m755 %SOURCE2 %buildroot%_bindir/
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
 install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenment
 # replace original desktop file
@@ -171,6 +170,11 @@ install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 # fix Name in session desktop files
 sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Xorg/' %buildroot%_datadir/xsessions/%name.desktop
 sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name.desktop
+
+# use start_enlighttenment instead of enlightenment_start for lightdm
+install -p -m755 %SOURCE2 %buildroot%_bindir/
+sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name.desktop
+
 
 %find_lang %name
 
@@ -205,9 +209,9 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %_bindir/%{name}_open
 %_bindir/%{name}_remote
 %_bindir/%{name}_start
-%{?_enable_wmsession:%_bindir/start_%name}
+%_bindir/start_%name
 %_datadir/%name/
-%{?_enable_wmsession:%exclude %_datadir/xsessions/%name.desktop}
+%_datadir/xsessions/%name.desktop
 %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
 %_datadir/pixmaps/emixer.png
 %_pixmapsdir/%name-askpass.png
@@ -225,6 +229,10 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Jun 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt2
+- disabled  %%wmsession, replaced enlighttenment_start by
+  start_enlightenment in xsession file (ALT #36913)
+
 * Thu Sep 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt1
 - 0.22.4
 - used own pam-helper
