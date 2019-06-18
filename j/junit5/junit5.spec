@@ -12,22 +12,23 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 5.3.1
 # Component versions, taken from gradle.properties
-%global platform_version 1.0.0
-%global jupiter_version 5.0.0
-%global vintage_version 4.12.0
+%global platform_version 1.%(v=%{version}; echo ${v:2})
+%global jupiter_version %{version}
+%global vintage_version %{version}
 
-# Build with or without Gradle plugin.
-# NOTE: We are always building junit5 using Maven.
-# Turned off by default as it's not compatible with current gradle
-%bcond_with gradle
+# Build with or without the console modules
+# Disabled by default due to missing dep: info.picocli:picocli
+%bcond_with console
 
 Name:           junit5
-Version:        5.0.0
-Release:        alt1_3jpp8
+Version:        5.3.1
+Release:        alt1_1jpp8
 Summary:        Java regression testing framework
-# junit-platform-surefire-provider is under ASL 2.0, all other modules use EPL (see LICENSE.md)
-License:        EPL and ASL 2.0
+# junit-platform-surefire-provider is under ASL 2.0, all other modules use EPL-2.0 (see LICENSE.md)
+License:        EPL-2.0 and ASL 2.0
 URL:            http://junit.org/junit5/
 BuildArch:      noarch
 
@@ -40,7 +41,6 @@ Source200:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform
 Source201:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console/%{platform_version}/junit-platform-console-%{platform_version}.pom
 Source202:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/%{platform_version}/junit-platform-console-standalone-%{platform_version}.pom
 Source203:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-engine/%{platform_version}/junit-platform-engine-%{platform_version}.pom
-Source204:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-gradle-plugin/%{platform_version}/junit-platform-gradle-plugin-%{platform_version}.pom
 Source205:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-launcher/%{platform_version}/junit-platform-launcher-%{platform_version}.pom
 Source206:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-runner/%{platform_version}/junit-platform-runner-%{platform_version}.pom
 Source207:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-api/%{platform_version}/junit-platform-suite-api-%{platform_version}.pom
@@ -56,31 +56,23 @@ Source400:      https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-e
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.univocity:univocity-parsers)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.sf.jopt-simple:jopt-simple)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.surefire:common-java5)
 BuildRequires:  mvn(org.apache.maven.surefire:surefire-api)
 BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
 
-%if %{with gradle}
-BuildRequires:  mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
-BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
-BuildRequires:  mvn(org.gradle:gradle-base-services)
-BuildRequires:  mvn(org.gradle:gradle-base-services-groovy)
-BuildRequires:  mvn(org.gradle:gradle-core)
-BuildRequires:  mvn(org.gradle:gradle-language-jvm)
-BuildRequires:  mvn(org.gradle:gradle-model-core)
-BuildRequires:  mvn(org.gradle:gradle-platform-base)
-BuildRequires:  mvn(org.gradle:gradle-platform-jvm)
-BuildRequires:  mvn(org.gradle:gradle-plugins)
-BuildRequires:  mvn(org.gradle:gradle-reporting)
-BuildRequires:  mvn(org.gradle:gradle-testing-base)
-BuildRequires:  mvn(org.gradle:gradle-testing-jvm)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
+%if %{with console}
+BuildRequires:  mvn(info.picocli:picocli)
 %endif
 
 BuildRequires:  asciidoc asciidoc-a2x
+
+%if %{with console}
+# Explicit requires for javapackages-tools since junit5 script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
+%endif
 Source44: import.info
 
 %description
@@ -114,7 +106,6 @@ cp -p %{SOURCE200} junit-platform-commons/pom.xml
 cp -p %{SOURCE201} junit-platform-console/pom.xml
 cp -p %{SOURCE202} junit-platform-console-standalone/pom.xml
 cp -p %{SOURCE203} junit-platform-engine/pom.xml
-cp -p %{SOURCE204} junit-platform-gradle-plugin/pom.xml
 cp -p %{SOURCE205} junit-platform-launcher/pom.xml
 cp -p %{SOURCE206} junit-platform-runner/pom.xml
 cp -p %{SOURCE207} junit-platform-suite-api/pom.xml
@@ -132,7 +123,7 @@ for pom in $(find -mindepth 2 -name pom.xml); do
     bsn=$(sed 's|/pom.xml$||;s|.*/|org.|;s|-|.|g' <<<"$pom")
     %pom_xpath_inject pom:project "<properties><osgi.bsn>${bsn}</osgi.bsn></properties>" $pom
     # Incorrect scope - API guardian is just annotation, needed only during compilation
-    %pom_xpath_set -r "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
+    %pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
 done
 
 # Add deps which are shaded by upstream and therefore not present in POMs.
@@ -145,28 +136,10 @@ done
 # Incorrect scope - Junit4 is needed for compilation too, not only runtime.
 %pom_xpath_set "pom:dependency[pom:artifactId='junit']/pom:scope" compile junit-vintage-engine
 
-%if %{with gradle}
-
-# Gradle plugin is written in Groovy, so compile it with GMavenPlus.
-%pom_xpath_inject pom:project "<build><plugins><plugin><groupId>org.codehaus.gmavenplus</groupId><artifactId>gmavenplus-plugin</artifactId><version>1.6</version><executions><execution><goals><goal>compile</goal></goals></execution></executions></plugin></plugins></build>" junit-platform-gradle-plugin
-
-# Gradle deps are only for compilation, and therefore not included in POM.
-%pom_add_dep org.codehaus.groovy:groovy-all::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-base-services-groovy::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-base-services::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-core::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-language-jvm::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-model-core::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-platform-base::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-platform-jvm::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-plugins::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-reporting::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-testing-base::provided junit-platform-gradle-plugin
-%pom_add_dep org.gradle:gradle-testing-jvm::provided junit-platform-gradle-plugin
-%pom_add_dep org.slf4j:slf4j-api::provided junit-platform-gradle-plugin
-
-%else
-%pom_disable_module junit-platform-gradle-plugin
+%if %{without console}
+# Disable the console modules
+%pom_disable_module junit-platform-console
+%pom_disable_module junit-platform-console-standalone
 %endif
 
 %mvn_package :aggregator __noinstall
@@ -182,10 +155,14 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %install
 %mvn_install
 
+%if %{with console}
 %jpackage_script org/junit/platform/console/ConsoleLauncher "" "" junit5:junit:opentest4j:jopt-simple %{name} true
+%endif
 
 %files -f .mfiles
+%if %{with console}
 %{_bindir}/%{name}
+%endif
 %doc --no-dereference LICENSE.md LICENSE-Eclipse.md LICENSE-Apache.md
 
 %files javadoc -f .mfiles-javadoc
@@ -195,6 +172,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.1-alt1_1jpp8
+- new version
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_3jpp8
 - new version
 
