@@ -4,11 +4,19 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with    jp_minimal
+
 Name:          jackson-modules-base
 Version:       2.9.4
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Jackson modules: Base
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-modules-base
@@ -22,7 +30,9 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(com.google.inject:guice)
+%if %{without jp_minimal}
 BuildRequires:  mvn(com.thoughtworks.paranamer:paranamer)
+%endif
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.mockito:mockito-all)
@@ -63,6 +73,7 @@ annotations as an alternative to native Jackson annotations. It is most often
 used to make it easier to reuse existing data beans that used with JAXB
 framework to read and write XML.
 
+%if %{without jp_minimal}
 %package -n jackson-module-mrbean
 Group: Development/Java
 Summary: Functionality for implementing interfaces and abstract types dynamically
@@ -71,6 +82,7 @@ Summary: Functionality for implementing interfaces and abstract types dynamicall
 Mr Bean is an extension that implements support for "POJO type materialization"
 ability for databinder to construct implementation classes for Java interfaces
 and abstract classes, as part of deserialization.
+%endif
 
 %package -n jackson-module-osgi
 Group: Development/Java
@@ -82,6 +94,7 @@ Thanks to the JacksonInject annotations, the OsgiJacksonModule will search for
 the required service in the OSGI service registry and injects it in the object
 while deserializing.
 
+%if %{without jp_minimal}
 %package -n jackson-module-paranamer
 Group: Development/Java
 Summary: Jackson module that uses Paranamer to introspect names of constructor params
@@ -89,6 +102,7 @@ Summary: Jackson module that uses Paranamer to introspect names of constructor p
 %description -n jackson-module-paranamer
 Module that uses Paranamer library to auto-detect names of Creator
 (constructor, static factory method, annotated with @JsonCreator) methods.
+%endif
 
 %package javadoc
 Group: Development/Java
@@ -120,6 +134,12 @@ cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
 # This is provided by modern JREs
 %pom_remove_dep "javax.xml.bind:jaxb-api" jaxb
 
+%if %{with jp_minimal}
+# Disable modules with additional deps
+%pom_disable_module paranamer
+%pom_disable_module mrbean
+%endif
+
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
@@ -144,22 +164,29 @@ cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
 %doc jaxb/README.md jaxb/release-notes
 %doc --no-dereference LICENSE NOTICE
 
+%if %{without jp_minimal}
 %files -n jackson-module-mrbean -f .mfiles-jackson-module-mrbean
 %doc mrbean/README.md mrbean/release-notes
 %doc --no-dereference LICENSE NOTICE
+%endif
 
 %files -n jackson-module-osgi -f .mfiles-jackson-module-osgi
 %doc osgi/README.md osgi/release-notes
 %doc --no-dereference LICENSE NOTICE
 
+%if %{without jp_minimal}
 %files -n jackson-module-paranamer -f .mfiles-jackson-module-paranamer
 %doc paranamer/README.md paranamer/release-notes
 %doc --no-dereference LICENSE NOTICE
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_4jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
 - java update
 
