@@ -1,6 +1,6 @@
 Name: focuswriter
 Version: 1.6.16
-Release: alt2
+Release: alt3
 
 Summary: FocusWriter is a fullscreen, distraction-free word processor
 License: GPLv3
@@ -23,8 +23,8 @@ that only one thing matters: your writing.
 %prep
 %setup
 %ifarch %e2k
-# lcc 1.23.12 doesn't grok u'’' even with -std=c++11
-sed -i "s,u'’',\"’\",g" src/{block_stats,spelling/dictionary_provider_*}.cpp
+# lcc 1.23.12 doesn't grok u'’' by default
+%add_optflags -finput-charset=utf8
 %endif
 
 %build
@@ -46,6 +46,9 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.16-alt3
+- E2K: better fix (see also mcst#3940)
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.16-alt2
 - E2K: ftbfs workaround
 
