@@ -1,18 +1,18 @@
 %def_with lash
 
 Name: vkeybd
-Version: 0.1.18c
-Release: alt1.qa2
+Version: 0.1.18d
+Release: alt1
 Epoch: 1
 
 Summary: Virtual keyboard for MIDI and ALSA drivers
 Summary(ru_RU.UTF-8): Эмулятор MIDI-клавиатуры для MIDI- и ALSA-драйверов
 Group: Sound
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://www.alsa-project.org/~iwai/alsa.html
-Packager: Alexander Myltsev <avm@altlinux.ru>
 
-Source: ftp://ftp.suse.com/pub/people/tiwai/vkeybd/%name-%version.tar.gz
+# repacked ftp://ftp.suse.com/pub/people/tiwai/vkeybd/%name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.png
 
 %define tcl_ver 8.5.1-alt1
@@ -72,6 +72,9 @@ Vkeybd — это виртуальная клавиатура для MIDI- и AL
 %doc README
 
 %changelog
+* Tue Jun 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.18d-alt1
+- 0.1.18d
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.18c-alt1.qa2
 - NMU: rebuilt against Tcl/Tk 8.6.
 
