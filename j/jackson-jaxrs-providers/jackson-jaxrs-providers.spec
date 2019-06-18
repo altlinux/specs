@@ -4,11 +4,19 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with jp_minimal
+
 Name:          jackson-jaxrs-providers
 Version:       2.9.4
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-jaxrs-providers
@@ -17,10 +25,6 @@ Source0:       https://github.com/FasterXML/jackson-jaxrs-providers/archive/%{na
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
-BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
-BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
-BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
@@ -32,10 +36,16 @@ BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  mvn(org.ow2.asm:asm)
+%if %{without jp_minimal}
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(org.glassfish.jersey.containers:jersey-container-servlet)
 BuildRequires:  mvn(org.glassfish.jersey.core:jersey-server)
 BuildRequires:  mvn(org.jboss.resteasy:resteasy-jaxrs)
-BuildRequires:  mvn(org.ow2.asm:asm)
+%endif
 
 BuildArch:      noarch
 Source44: import.info
@@ -45,20 +55,21 @@ This is a multi-module project that contains Jackson-based JAX-RS providers for
 following data formats: JSON, Smile (binary JSON), XML, CBOR (another kind of
 binary JSON), YAML.
 
-%package -n jackson-jaxrs-cbor-provider
-Group: Development/Java
-Summary:       Jackson-JAXRS-CBOR
-
-%description -n jackson-jaxrs-cbor-provider
-Functionality to handle CBOR encoded input/output for JAX-RS implementations
-(like Jersey and RESTeasy) using standard Jackson data binding.
-
 %package -n jackson-jaxrs-json-provider
 Group: Development/Java
 Summary:       Jackson-JAXRS-JSON
 
 %description -n jackson-jaxrs-json-provider
 Functionality to handle JSON input/output for JAX-RS implementations
+(like Jersey and RESTeasy) using standard Jackson data binding.
+
+%if %{without jp_minimal}
+%package -n jackson-jaxrs-cbor-provider
+Group: Development/Java
+Summary:       Jackson-JAXRS-CBOR
+
+%description -n jackson-jaxrs-cbor-provider
+Functionality to handle CBOR encoded input/output for JAX-RS implementations
 (like Jersey and RESTeasy) using standard Jackson data binding.
 
 %package -n jackson-jaxrs-smile-provider
@@ -85,6 +96,7 @@ Summary:       Jackson-JAXRS-YAML
 %description -n jackson-jaxrs-yaml-provider
 Functionality to handle YAML input/output for JAX-RS implementations
 (like Jersey and RESTeasy) using standard Jackson data binding.
+%endif
 
 %package datatypes
 Group: Development/Java
@@ -131,8 +143,23 @@ sed -i 's/\r//' LICENSE NOTICE
 %pom_remove_dep org.jboss.resteasy:resteasy-jackson2-provider json
 rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProviderLoadingTest.java
 
+%if %{with jp_minimal}
+# Disable extra test deps
+%pom_remove_dep org.glassfish.jersey.core:
+%pom_remove_dep org.glassfish.jersey.containers:
+# Disable extra providers
+%pom_disable_module cbor
+%pom_disable_module smile
+%pom_disable_module xml
+%pom_disable_module yaml
+%endif
+
 %build
-%mvn_build -s 
+%if %{with jp_minimal}
+%mvn_build -s -f
+%else
+%mvn_build -s
+%endif
 
 %install
 %mvn_install
@@ -141,11 +168,13 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc README.md release-notes/*
 %doc --no-dereference LICENSE NOTICE
 
-%files -n jackson-jaxrs-cbor-provider -f .mfiles-jackson-jaxrs-cbor-provider
 %files -n jackson-jaxrs-json-provider -f .mfiles-jackson-jaxrs-json-provider
+%if %{without jp_minimal}
+%files -n jackson-jaxrs-cbor-provider -f .mfiles-jackson-jaxrs-cbor-provider
 %files -n jackson-jaxrs-smile-provider -f .mfiles-jackson-jaxrs-smile-provider
 %files -n jackson-jaxrs-xml-provider -f .mfiles-jackson-jaxrs-xml-provider
 %files -n jackson-jaxrs-yaml-provider -f .mfiles-jackson-jaxrs-yaml-provider
+%endif
 
 %files datatypes -f .mfiles-jackson-datatype-jaxrs
 %doc --no-dereference LICENSE NOTICE
@@ -157,6 +186,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_4jpp8
+- new version
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
 - java update
 
