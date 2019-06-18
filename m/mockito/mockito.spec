@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           mockito
 Version:        1.10.19
-Release:        alt1_15jpp8
+Release:        alt1_17jpp8
 Summary:        A Java mocking framework
 
 License:        MIT
@@ -61,12 +61,12 @@ This package contains the API documentation for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-# workaround rhbz#1292777 Files not found for javadoc generation
-touch javadoc/stylesheet.css
 
 %pom_add_dep net.sf.cglib:cglib:3.1 maven/mockito-core.pom
 find . -name "*.java" -exec sed -i "s|org\.%{name}\.cglib|net\.sf\.cglib|g" {} +
 mkdir -p lib/compile
+
+%pom_xpath_remove 'target[@name="javadoc"]/copy' build.xml
 
 %build
 build-jar-repository lib/compile objenesis cglib junit hamcrest/core
@@ -101,6 +101,9 @@ sed -i -e "s|@version@|%{version}|g" maven/%{name}-core.pom
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_17jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_15jpp8
 - java update
 
