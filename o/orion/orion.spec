@@ -1,15 +1,13 @@
 Name: orion
 Version: 1.6.1
-Release: alt4
+Release: alt5
 
 Summary: Seek and watch streams on Twitch
-
 License: GPLv3+
 Group: Networking/Other
+
 Url: https://alamminsalo.github.io/orion/
-
 Source: %name-%version.tar
-
 Patch0: orion-1.5.1-fix_prefix.patch
 Patch1: orion-1.5.1-fix_desktop.patch
 
@@ -31,6 +29,10 @@ A desktop client for Twitch.tv. Features:
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %qmake_qt5 "CONFIG+=multimedia"
@@ -47,6 +49,9 @@ A desktop client for Twitch.tv. Features:
 %doc README.md COPYING LICENSE.txt
 
 %changelog
+* Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.1-alt5
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt4
 - NMU: remove %ubt from release
 
