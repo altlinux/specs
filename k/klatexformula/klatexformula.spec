@@ -1,13 +1,14 @@
 Name: klatexformula
 Version: 4.0.0
-Release: alt3
+Release: alt4
+
+Summary: Generating images from LaTeX equations
 License: GPLv2
 Group: Publishing
-Summary: Generating images from LaTeX equations
-Url: http://klatexformula.sourceforge.net/
 
+Url: http://klatexformula.sourceforge.net/
 Source: %name-%version.tar.gz
-Patch1: klatexformula-4.0.0-alt-qt-5.11.patch
+Patch: klatexformula-4.0.0-alt-qt-5.11.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -31,9 +32,13 @@ TODO: make shared version of %name-devel.
 
 %prep
 %setup
-%patch1 -p2
+%patch -p2
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %cmake	\
 	-D KLF_LIBKLFBACKEND_AUTO_STATIC=False \
 	..
@@ -62,6 +67,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 4.0.0-alt4
+- E2K: explicit -std=c++11
+
 * Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 4.0.0-alt3
 - Fix icon paths
 
