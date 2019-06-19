@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -150,6 +150,9 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- new version 2.5.2 (with rpmrb script)
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - new version 2.5.1 (with rpmrb script)
 
