@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        6.1.0
-Release:        alt2_7jpp8
+Release:        alt3_7jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -44,7 +44,7 @@ BuildRequires:  randomizedtesting2.3.1-runner
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(com.spatial4j:spatial4j)
+BuildRequires:  mvn(com.spatial4j:spatial4j:0.5.0)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
@@ -345,6 +345,10 @@ sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
 %mvn_package ":%{name}-analyzers-common" %{name}-analysis
 %mvn_package ":{*}-aggregator" @1
 
+#sed -i '/spatial4j/s,0\.4\.1,0.5.0,' lucene/ivy-versions.properties
+sed -i '/spatial4j/s,rev="[^"]*",rev="0.5",' lucene/spatial/ivy.xml lucene/benchmark/ivy.xml lucene/spatial-extras/ivy.xml
+#sed -i 's,artifact name="spatial4j",artifact name="spatial4j-0.5",' lucene/spatial-extras/ivy.xml
+
 %build
 pushd %{name}
 find -maxdepth 2 -type d -exec mkdir -p '{}/lib' \;
@@ -423,6 +427,7 @@ popd
 %mvn_package :lucene-solr-grandparent __noinstall
 %endif
 
+sed -i 's,<version>any</version>,<version>0.5</version>,' lucene/spatial-extras/pom.xml lucene/benchmark/pom.xml
 
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
@@ -475,6 +480,9 @@ popd
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt3_7jpp8
+- build with spatial4j0.5.0
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt2_7jpp8
 - Build with randomizedtesting2.3.1-runner
 
