@@ -14,7 +14,7 @@
 
 Name: glusterfs6
 Version: %major
-Release: alt3
+Release: alt4
 
 Summary: Cluster File System
 
@@ -32,6 +32,7 @@ Source3: umount.glusterfs
 Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
+Patch0001: 0001-Increase-soname-version-of-libs-to-major-version-6.patch
 
 # Stop unsupported i586 build
 # Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
@@ -75,6 +76,7 @@ BuildRequires: systemd
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
 %{?_enable_ibverbs:BuildRequires: rdma-core-devel}
 
+Provides: glusterfs = %EVR
 Conflicts: glusterfs3
 
 %description
@@ -95,6 +97,7 @@ Summary: GlusterFS rdma support for ib-verbs
 Group: System/Base
 
 Requires: %name = %EVR
+Provides: glusterfs-rdma = %EVR
 Conflicts: glusterfs3-rdma
 
 %description rdma
@@ -114,6 +117,7 @@ Group: System/Base
 Requires: %name-server = %version-%release
 Requires: nfs-ganesha
 #Requires:         pcs
+Provides: glusterfs-ganesha = %EVR
 Conflicts: glusterfs3-ganesha
 AutoReq: yes,noshell
 
@@ -134,6 +138,7 @@ Summary: GlusterFS Geo-replication
 Group: System/Base
 Requires: %name = %EVR
 Requires: rsync >= 3.0.0
+Provides: glusterfs-georeplication = %EVR
 Conflicts: glusterfs3-georeplication
 
 %description georeplication
@@ -152,6 +157,7 @@ Summary: GlusterFS thin-arbiter module
 Group: System/Base
 Requires: %name = %EVR
 Requires: %name-server = %EVR
+Provides: glusterfs-thin-arbiter = %EVR
 Conflicts: glusterfs3-thin-arbiter
 
 %description thin-arbiter
@@ -167,10 +173,8 @@ Group: System/Base
 BuildRequires: libfuse-devel
 
 Requires: %name = %EVR
+Provides: glusterfs-client = %EVR
 Conflicts: glusterfs3-client
-
-#Obsoletes: %name-client < 3.1.0
-#Provides: %name-client = %version-%release
 
 %description client
 GlusterFS is a clustered file-system capable of scaling to several
@@ -186,10 +190,7 @@ This package provides support to FUSE based clients.
 %package -n lib%name-api
 Summary: GlusterFS api library
 Group: System/Libraries
-Conflicts: libglusterfs3-api
 Requires: %name = %EVR
-#Requires: %name = %version-%release
-#Requires:         %name-client-xlators = %version-%release
 
 %description -n lib%name-api
 GlusterFS is a distributed file-system capable of scaling to several
@@ -225,6 +226,7 @@ Summary: Clustered file-system server
 Group: System/Servers
 Requires: %name = %EVR
 Requires: %name-client = %EVR
+Provides: glusterfs-server = %EVR
 Conflicts: glusterfs3-server
 
 %description server
@@ -244,7 +246,7 @@ Group: System/Servers
 BuildArch: noarch
 Requires: %name-server = %EVR
 Provides: %name-events = %EVR
-#Requires: python3-module-requests
+Provides: glusterfs-gfevents = %EVR
 Conflicts: glusterfs3-events
 
 %description gfevents
@@ -256,6 +258,7 @@ Group: Editors
 Requires: xxd
 Requires: vim
 BuildArch: noarch
+Provides: glusterfs-vim = %EVR
 Conflicts: glusterfs3-vim
 
 %description vim
@@ -291,8 +294,8 @@ This package provides the development libraries.
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
+Provides: python3-module-glusterfs = %EVR
 Conflicts: python3-module-glusterfs3
-#setup_python_module %name
 
 %description -n python3-module-%name
 This package provides Python API for %name
@@ -300,7 +303,6 @@ This package provides Python API for %name
 %package -n lib%name
 Summary: GlusterFS common libraries
 Group: System/Base
-Conflicts: libglusterfs3
 
 %description -n lib%name
 GlusterFS is a distributed file-system capable of scaling to several
@@ -318,6 +320,7 @@ Summary: OCF Resource Agents for GlusterFS
 License: GPLv3+
 Group: System/Base
 BuildArch: noarch
+Provides: glusterfs-resource-agents = %EVR
 Requires: %name-server = %EVR
 
 %description resource-agents
@@ -335,6 +338,7 @@ like Pacemaker.
 
 %prep
 %setup
+%patch0001 -p2
 
 # due log2 in 6.0
 %__subst "s|libgfrpc_la_LIBADD =|libgfrpc_la_LIBADD = -lm|" rpc/rpc-lib/src/Makefile.am
@@ -646,6 +650,10 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 %endif
 
 %changelog
+* Wed Jun 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 6.3-alt4
+- add Provides: glusterfs
+- Increase soname version of libs to major version 6
+
 * Fri Jun 14 2019 Andrew A. Vasilyev <andy@altlinux.org> 6.3-alt3
 - add resource-agents
 - fix georeplication option in configure
