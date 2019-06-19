@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene5
 Version:        5.5.0
-Release:        alt2_0jpp8
+Release:        alt3_0jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -34,7 +34,7 @@ BuildRequires:  randomizedtesting2.3.1-runner
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(com.spatial4j:spatial4j)
+BuildRequires:  mvn(com.spatial4j:spatial4j:0.5.0)
 BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
@@ -350,7 +350,7 @@ Summary:      Spatial Strategies for Apache Lucene
 
 %if_with manualreq
 AutoReq: yes,nomaven
-Requires: mvn(com.spatial4j:spatial4j)  
+Requires: mvn(com.spatial4j:spatial4j:0.5.0) 
 Requires: %{name}-misc = %EVR
 Requires: %{name}-queries = %EVR
 Requires: %{name}-spatial3d = %EVR
@@ -529,6 +529,9 @@ sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" dev-too
 %mvn_package ":{*}-aggregator" @1
 
 %mvn_compat_version : 5 %{version}
+#sed -i '/spatial4j/s,0\.4\.1,0.5.0,' lucene/ivy-versions.properties
+
+sed -i '/spatial4j/s,rev=".*",rev="0.5",' lucene/spatial/ivy.xml lucene/benchmark/ivy.xml
 
 %build
 pushd %{oldname}
@@ -624,6 +627,9 @@ popd
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt3_0jpp8
+- build with spatial4j0.5.0
+
 * Mon Jun 04 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt2_0jpp8
 - built with compat randomizedtesting
 
