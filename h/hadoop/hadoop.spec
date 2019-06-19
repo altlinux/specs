@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.6
-Release: alt1_5jpp8
+Release: alt2_5jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -1043,7 +1043,7 @@ fi
 %{_sbindir}/stop-secure-dns.sh
 %{_sbindir}/slaves.sh
 
-%if 0
+%if 1
 %files common-native
 %{_libdir}/%{name}/libhadoop.*
 %endif
@@ -1144,6 +1144,9 @@ fi
 # %%attr(6010,root,yarn) %%{_bindir}/container-executor
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt2_5jpp8
+- build with native java
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_5jpp8
 - new version
 
