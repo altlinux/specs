@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 3.1.1
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Summary: Binary-based efficient object serialization library
 
@@ -68,6 +68,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack/
 
 %changelog
+* Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0 (with rpmrb script)
+
 * Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt2
 - enable tests
 - fix cmake static lib issue (use BUILD_SHARED_LIBS)
