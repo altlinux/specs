@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 Name:          querydsl
 # NOTE: newer release use hibernate-core:4.3.11.Final
 Version:       4.0.4
-Release:       alt3_6jpp8
+Release:       alt4_6jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -80,7 +80,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.eclipse.persistence:eclipselink)
-BuildRequires: mvn(org.geolatte:geolatte-geom)
+BuildRequires: mvn(org.geolatte:geolatte-geom:0.14)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
 BuildRequires: mvn(org.hibernate:hibernate-core:4)
 BuildRequires: mvn(org.hibernate:hibernate-entitymanager:4)
@@ -485,6 +485,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt4_6jpp8
+- build with geolatte-geom0.14
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt3_6jpp8
 - build with jts1.14
 
