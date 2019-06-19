@@ -4,7 +4,7 @@
 
 Name: phonon-backend-vlc
 Version: 0.8.2
-Release: alt4%ubt
+Release: alt5
 
 Group: Sound
 Summary: VLC plugin for Phonon
@@ -17,7 +17,7 @@ Provides: phonon-backend = %{get_version phonon-devel}
 #Provides: phonon-xine = 4.4.4.1 phonon-backend-xine = 4.4.4.1
 #Obsoletes: phonon-xine < 4.4.4.1 phonon-backend-xine < 4.4.4.1
 
-BuildRequires(pre): libqt4-devel phonon-devel rpm-build-ubt
+BuildRequires(pre): libqt4-devel phonon-devel
 BuildRequires: cmake gcc-c++ automoc
 BuildRequires: libvlc-devel >= 1.1
 BuildRequires: kde-common-devel
@@ -76,7 +76,10 @@ Phonon-VLC is a backend for KDE4 Multimedia Framework
 %_K4srv/phononbackends/vlc.desktop
 
 %changelog
-* Sat Feb 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt4%ubt
+* Wed Jun 19 2019 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt5
+- dont use ubt macro
+
+* Sat Feb 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt4
 - rebuild with new vlc
 
 * Tue Nov 07 2017 Oleg Solovyov <mcpain@altlinux.org> 0.8.2-alt3
