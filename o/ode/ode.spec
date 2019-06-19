@@ -1,11 +1,12 @@
 Name: ode
 Version: 0.13.1
-Release: alt2.hg20140702
+Release: alt3.hg20140702
+
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
-Url: http://www.ode.org/
 
+Url: http://www.ode.org/
 # hg clone https://bitbucket.org/odedevs/ode
 Source: %name-%version.tar
 Source1: http://www.ode.org/ode-latest-userguide.pdf
@@ -95,6 +96,10 @@ touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 ./bootstrap
 #autoreconf
 %add_optflags -fno-strict-aliasing
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -117,8 +122,7 @@ touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 %install
 %makeinstall_std
 
-#demos
-
+# demos
 install -d %buildroot%_libdir/%name
 cp -fR drawstuff %buildroot%_libdir/%name/
 
@@ -131,7 +135,6 @@ rm -f $(find ./ -name 'Makefile.*') \
 popd
 
 # docs
-
 install -d %buildroot%_docdir/lib%name-devel
 install -p -m644 %SOURCE1 %SOURCE2 \
 	%buildroot%_docdir/lib%name-devel
@@ -153,6 +156,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 0.13.1-alt3.hg20140702
+- E2K: explicit -std=c++11
+
 * Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.13.1-alt2.hg20140702
 - Fixed build with new toolchain.
 
