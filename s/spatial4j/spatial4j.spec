@@ -7,25 +7,23 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          spatial4j
-Version:       0.5.0
-Release:       alt2_7jpp8
+Version:       0.7
+Release:       alt1_3jpp8
 Summary:       A Geospatial Library for Java
 License:       ASL 2.0
-URL:           https://github.com/locationtech/spatial4j
-Source0:       https://github.com/spatial4j/spatial4j/archive/%{name}-0.5.tar.gz
+URL:           https://projects.eclipse.org/projects/locationtech.spatial4j
+Source0:       https://github.com/locationtech/spatial4j/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.noggit:noggit)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-
-# test deps
-%if 0
-BuildRequires: mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.slf4j:slf4j-simple)
-%endif
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.locationtech.jts:jts-core)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.noggit:noggit)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
 
 BuildArch:     noarch
 Source44: import.info
@@ -38,42 +36,39 @@ shapes to strings.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-0.5
+%setup -q -n %{name}-%{name}-%{version}
 
 # Unwanted tasks
 %pom_remove_plugin de.thetaphi:forbiddenapis
 %pom_remove_plugin org.jacoco:jacoco-maven-plugin
 
-# the attach-sources execution breaks OSGi manifest generation
-%pom_remove_plugin :maven-jar-plugin
-
-%mvn_file : %{name}
-
-%pom_change_dep com.vividsolutions:jts:1.13 com.vividsolutions:jts:1.14.0
+# Backward compatibility aliases
+%mvn_alias org.locationtech.spatial4j:spatial4j com.spatial4j:spatial4j
 
 %build
-
-# Test skipped for unavailable test deps
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGES.md README.md
-%doc --no-dereference LICENSE.txt
+%doc CHANGES.md README.md FORMATS.md
+%doc --no-dereference asl-v20.txt notice.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference asl-v20.txt notice.md
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_3jpp8
+- new version
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_7jpp8
 - build with jts1.14
 
