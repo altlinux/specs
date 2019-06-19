@@ -46,7 +46,7 @@ BuildRequires: jpackage-generic-compat
 
 %global section		devel
 %global source_path	pgjdbc/src/main/java/org/postgresql
-%global parent_ver	1.1.3
+%global parent_ver	1.1.5
 %global parent_poms_builddir	./pgjdbc-parent-poms
 
 %global pgjdbc_mvn_options -DwaffleEnabled=false -DosgiEnabled=false \\\
@@ -54,8 +54,8 @@ BuildRequires: jpackage-generic-compat
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.2.2
-Release:	alt1_4jpp8
+Version:	42.2.5
+Release:	alt1_2jpp8
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
@@ -69,7 +69,7 @@ Source1:	https://github.com/pgjdbc/pgjdbc-parent-poms/archive/REL%parent_ver/pgj
 
 # disable test that makes unpredictable assumptions about non-routable IPs
 # See https://github.com/pgjdbc/pgjdbc/issues/556
-Patch0:         disable-ConnectTimeoutTest.patch
+Patch0:		disable-ConnectTimeoutTest.patch
 
 BuildArch:	noarch
 BuildRequires:	java-devel >= 1.8
@@ -85,14 +85,14 @@ BuildRequires:	mvn(com.ongres.scram:client)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-clean-plugin)
 
 %if %runselftest
-BuildRequires:	postgresql10-contrib postgresql10-server
+BuildRequires:	postgresql11-contrib
 BuildRequires:	postgresql-test-rpm-macros
 %endif
 
 # gettext is only needed if we try to update translations
 #BuildRequires:	gettext
 
-Obsoletes:      %{name}-parent-poms < 42.2.2-2
+Obsoletes:	%{name}-parent-poms < 42.2.2-2
 Source44: import.info
 
 %description
@@ -120,8 +120,6 @@ mv pgjdbc-parent-poms-REL%parent_ver pgjdbc-parent-poms
 
 # remove any binary libs
 find -name "*.jar" -or -name "*.class" | xargs rm -f
-
-%pom_disable_module ubenchmark
 
 # Build parent POMs in the same Maven call.
 %pom_xpath_inject pom:modules "<module>%parent_poms_builddir</module>"
@@ -195,6 +193,9 @@ opts="-f"
 
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:42.2.5-alt1_2jpp8
+- new version
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0:42.2.2-alt1_4jpp8
 - fc28+ update
 
