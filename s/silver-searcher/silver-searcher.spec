@@ -1,18 +1,17 @@
 Name: silver-searcher
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: A code searching tool similar to ack, with a focus on speed
 License: Apache-2.0
 Group: Development/Tools
-# https://github.com/ggreer/the_silver_searcher/
-Url: https://geoff.greer.fm/ag/
 
-Packager: %packager
+Url: https://geoff.greer.fm/ag/
+# https://github.com/ggreer/the_silver_searcher/
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jun 07 2015
-BuildRequires: clang liblzma-devel libpcre-devel zlib-devel
+BuildRequires: liblzma-devel libpcre-devel zlib-devel
 
 %description
 Ag (silversearcher) is a code searching tool.
@@ -23,12 +22,12 @@ just add their patterns to a .ignore file.
 The command name is 33%% shorter than ack, and all keys are on the home row!
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
 %configure
-make
+%make_build
 
 %install
 %makeinstall_std
@@ -41,6 +40,10 @@ make
 %doc README.md
 
 %changelog
+* Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 2.2.0-alt2
+- fixed build on e2k (looks like clang was overlooked anyways)
+- minor spec cleanup
+
 * Sat Aug 18 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.2.0-alt1
 - new version 2.2.0
 
