@@ -1,7 +1,7 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.7.4
+Version: 1.7.6
 Epoch: 1
 Release: alt1
 
@@ -92,6 +92,9 @@ rm -fv %buildroot/usr/lib/ginac-excompiler
 %_infodir/*.info*
 
 %changelog
+* Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.6-alt1
+- new version 1.7.6 (with rpmrb script)
+
 * Wed Feb 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt1
 - new version 1.7.4 (with rpmrb script)
 - disable doc build
