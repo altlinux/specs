@@ -1,25 +1,36 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without  junit5
+
 Name:           maven-surefire
-Version:        2.21.0
-Release:        alt1_1jpp8
+Version:        2.22.0
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
 URL:            http://maven.apache.org/surefire/
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/surefire/surefire/%{version}/surefire-%{version}-source-release.tar
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+# Remove bundled binaries which cannot be easily verified for licensing
+Source1:        generate-tarball.sh
 Source2:        http://junit.sourceforge.net/cpl-v10.html
 
 Patch0:         0001-Maven-3.patch
-Patch1:         0002-Fix-test-with-doxia-1.7.patch
+Patch1:         0002-Port-to-current-doxia.patch
 Patch2:         0003-Port-to-TestNG-6.11.patch
 Patch3:         0004-Port-to-current-maven-shared-utils.patch
 
@@ -53,8 +64,12 @@ BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
 
+%if %{with junit5}
+BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
+%endif
+
 # PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       procps
+Requires:       libprocps procps
 Source44: import.info
 
 %description
@@ -80,6 +95,15 @@ Summary:                JUnit provider for Maven Surefire
 
 %description provider-junit
 JUnit provider for Maven Surefire.
+
+%if %{with junit5}
+%package provider-junit5
+Group: Development/Java
+Summary:                JUnit 5 provider for Maven Surefire
+
+%description provider-junit5
+JUnit 5 provider for Maven Surefire.
+%endif
 
 %package provider-testng
 Group: Development/Java
@@ -138,6 +162,10 @@ sed -i /-Xdoclint:all/d pom.xml
 
 %pom_disable_module surefire-shadefire
 
+%if %{without junit5}
+%pom_disable_module surefire-junit-platform surefire-providers
+%endif
+
 %pom_remove_dep -r org.apache.maven.surefire:surefire-shadefire
 
 # Help plugin is needed only to evaluate effective Maven settings.
@@ -148,7 +176,7 @@ sed -i /-Xdoclint:all/d pom.xml
 %pom_remove_plugin -r :jacoco-maven-plugin
 
 # Not in Fedora
-%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
 # Complains
 %pom_remove_plugin -r :apache-rat-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
@@ -168,6 +196,7 @@ sed -i /-Xdoclint:all/d pom.xml
 
 %build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
+%mvn_package ":*junit-platform*" junit5
 %mvn_package ":*{junit,testng,failsafe-plugin,report-parser}*"  @1
 %mvn_package ":*tests*" __noinstall
 # tests turned off because they need jmock
@@ -180,7 +209,7 @@ sed -i /-Xdoclint:all/d pom.xml
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE NOTICE cpl-v10.html
+%doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %files plugin -f .mfiles-surefire-plugin
 %files report-plugin -f .mfiles-report-plugin
@@ -188,11 +217,17 @@ sed -i /-Xdoclint:all/d pom.xml
 %files provider-junit -f .mfiles-junit
 %files provider-testng -f .mfiles-testng
 %files -n maven-failsafe-plugin -f .mfiles-failsafe-plugin
+%if %{with junit5}
+%files provider-junit5 -f .mfiles-junit5
+%endif
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE cpl-v10.html
+%doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.22.0-alt1_4jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.21.0-alt1_1jpp8
 - java update
 
