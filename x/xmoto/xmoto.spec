@@ -1,16 +1,15 @@
 Name: xmoto
 Version: 0.5.11
-Release: alt2.r3421
+Release: alt3.r3421
 
 Summary: A challenging 2D motocross platform game.
 License: GPL
 Group: Games/Arcade
-Packager: Denis Pynkin <dans@altlinux.ru>
 
 Url: http://xmoto.tuxfamily.org
 Source: %name-%version-src.tar
-
-Patch1: xmoto-0.5.11-alt-build.patch
+Patch: xmoto-0.5.11-alt-build.patch
+Packager: Denis Pynkin <dans@altlinux.ru>
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
@@ -24,33 +23,39 @@ BuildRequires: libxml2-devel
 Requires: fonts-ttf-dejavu
 
 %description
-XMoto is a challenging 2D motocross platform game, where physics play an all important role in the gameplay. You need to control your bike to its limit, if you want to have a chance finishing the more difficult of the challenges.
+XMoto is a challenging 2D motocross platform game, where physics play an
+all important role in the gameplay. You need to control your bike to its
+limit, if you want to have a chance finishing the more difficult of the
+challenges.
 
 %prep
-%setup -q
-%patch1 -p3
+%setup
+%patch -p3
 
 %build
-export LDFLAGS="-L%_x11libdir"
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %autoreconf
-%configure --bindir=%_gamesbindir \
-		--with-enable-zoom=1 \
-		--with-enable-www=1 \
-		--with-renderer-openGl=1
-
+%configure \
+	--bindir=%_gamesbindir \
+	--with-enable-zoom=1 \
+	--with-enable-www=1 \
+	--with-renderer-openGl=1
 %make
 
 %install
 %makeinstall_std
 
 mkdir -p %buildroot%_datadir/applications
-cp extra/xmoto.desktop %buildroot%_datadir/applications
-install -D -m 644 extra/xmoto.xpm %buildroot%_liconsdir/%name.xpm
+cp -a extra/xmoto.desktop %buildroot%_datadir/applications
+install -pDm644 extra/xmoto.xpm %buildroot%_liconsdir/%name.xpm
 
 rm -rf %buildroot%_datadir/%name/Textures/Fonts/*.ttf
 
-ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/Textures/Fonts/
-ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures/Fonts/
+ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
+	%buildroot%_datadir/%name/Textures/Fonts/
 
 %find_lang --output=%name.files %name
 
@@ -62,12 +67,11 @@ ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures
 %_datadir/%name
 %_man6dir/*
 
-# FIXME: remove in next version
-%triggerpostun -- %name < 0.5.7
-[ -L %_datadir/%name/Textures/Fonts/DejaVuSans.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf %_datadir/%name/Textures/Fonts/
-[ -L %_datadir/%name/Textures/Fonts/DejaVuSansMono.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %_datadir/%name/Textures/Fonts/
-
 %changelog
+* Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 0.5.11-alt3.r3421
+- E2K: explicit -std=c++11
+- Spec cleanup
+
 * Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.11-alt2.r3421
 - Fixed build with new toolchain.
 
