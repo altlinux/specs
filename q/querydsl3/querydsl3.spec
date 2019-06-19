@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          querydsl3
 Version:       3.7.2
-Release:       alt3_9jpp8
+Release:       alt4_9jpp8
 Summary:       Type safe queries for Java
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -68,7 +68,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.eclipse.persistence:eclipselink)
-BuildRequires: mvn(org.geolatte:geolatte-geom)
+BuildRequires: mvn(org.geolatte:geolatte-geom:0.14)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
 BuildRequires: mvn(org.hibernate:hibernate-core:4)
 BuildRequires: mvn(org.hibernate:hibernate-entitymanager:4)
@@ -448,6 +448,9 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt4_9jpp8
+- build with geolatte-geom0.14
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt3_9jpp8
 - build with jts1.14
 
