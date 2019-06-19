@@ -4,7 +4,7 @@
 %def_without python3
 
 Name: breezy
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Breezy is a fork of decentralized revision control system Bazaar
@@ -25,14 +25,14 @@ BuildRequires(pre): rpm-build-licenses
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires: python3-devel
 BuildRequires: python3-module-six
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-configobj
 
 %else
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-six
 BuildRequires: python-module-Cython
 BuildRequires: python-module-configobj
@@ -194,6 +194,9 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/contrib
 
 %changelog
+* Wed Jun 19 2019 Anatoly Kitaykin <cetus@altlinux.org> 3.0.1-alt1
+- Release 3.0.1
+
 * Fri Apr 26 2019 Anatoly Kitaykin <cetus@altlinux.org> 3.0.0-alt1
 - Initial build
 
