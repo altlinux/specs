@@ -1,20 +1,19 @@
 %define oname bugzilla
 
-
 Name: python-module-%oname
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: A python library.. for bugzilla!
 
 License: GPLv2.0
 Group: Development/Python
-Url: https://fedorahosted.org/python-bugzilla/
+Url: https://github.com/python-bugzilla/python-bugzilla
 
 BuildArch: noarch
 
-# Source-url: https://fedorahosted.org/releases/p/y/python-bugzilla/python-bugzilla-0.9.0.tar.gz
-Source: bugzilla-%version.tar
+# Source-url: https://pypi.io/packages/source/p/python-bugzilla/python-bugzilla-%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Jan 13 2010
 BuildRequires(pre): rpm-build-python
@@ -55,7 +54,7 @@ It also includes a 'bugzilla' commandline client which can be used for quick,
 ad-hoc bugzilla jiggery-pokery.
 
 %prep
-%setup -n bugzilla-%version
+%setup
 
 rm -rf ../python3
 cp -fR . ../python3
@@ -92,6 +91,10 @@ popd
 
 
 %changelog
+* Wed Jun 19 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+- switch to build from tarball
+
 * Tue Mar 27 2018 Andrey Bychkov <mrdrew@altlinux.ru> 2.1.0-alt1
 - Version 2.1.0
 
