@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene4
 Version:        4.10.4
-Release:        alt2_12jpp8
+Release:        alt3_12jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -72,7 +72,7 @@ BuildRequires:  jetty-util
 BuildRequires:  morfologik-stemming
 BuildRequires:  uimaj
 BuildRequires:  uima-addons
-BuildRequires:  spatial4j
+BuildRequires:  spatial4j0.5.0
 BuildRequires:  nekohtml
 BuildRequires:  xerces-j2
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -150,6 +150,7 @@ sed -i -e '/Export-Package/a<Import-Package>org.apache.lucene*;version="[${proje
 # compatibility with existing packages
 %mvn_alias :lucene-analyzers-common :lucene-analyzers
 %mvn_compat_version : 4 %{version}
+sed -i '/spatial4j/s,0\.4\.1,0.5.0,' lucene/ivy-versions.properties
 
 %build
 pushd lucene
@@ -197,6 +198,9 @@ mv lucene/build/poms/pom.xml .
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt3_12jpp8
+- build with spatial4j0.5.0
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt2_12jpp8
 - build with randomizedtesting2.3.1
 
