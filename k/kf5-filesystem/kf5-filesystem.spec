@@ -2,7 +2,7 @@
 
 %define major 5
 %define minor 19
-%define bugfix 1
+%define bugfix 2
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
@@ -68,7 +68,7 @@ mkdir -p %buildroot/%_K5cf_bin
 
 mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
 
-mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5/ServiceMenus,kservicetypes5,kxmlgui5}
+mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5/ServiceMenus,kservicetypes5,kxmlgui5,knsrcfiles}
 
 mkdir -p %buildroot/%_K5i18n/
 for l in %lng_list
@@ -110,6 +110,9 @@ install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 %dir %_desktopdir/kf5
 
 %changelog
+* Wed Jun 19 2019 Sergey V Turchin <zerg@altlinux.org> 5.19.2-alt1
+- add knsrcfiles dir
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.19.1-alt1
 - obsolete kf5-i18n-*
 
