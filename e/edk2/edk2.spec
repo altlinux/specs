@@ -27,7 +27,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20190308
+Version: 20190501
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -35,7 +35,8 @@ Summary: EFI Development Kit II
 Source: %name-%version.tar
 
 Source2: openssl.tar
-Source3: Logo.bmp
+Source3: berkeley-softfloat-3.tar
+Source4: Logo.bmp
 
 Patch1: %name-%version.patch
 
@@ -152,7 +153,7 @@ EFI Development Kit II implementation of UEFI Shell 2.0+
 %setup -q
 %patch1 -p1
 
-cp -f %SOURCE3 MdeModulePkg/Logo/
+cp -f %SOURCE4 MdeModulePkg/Logo/
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -178,6 +179,10 @@ rm -rf ShellBinPkg
 # add openssl
 mkdir -p CryptoPkg/Library/OpensslLib/openssl
 tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/openssl
+
+# add /berkeley-softfloat-3
+mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
 %build
 
@@ -414,6 +419,9 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %changelog
+* Wed Jun 19 2019 Alexey Shabalin <shaba@altlinux.org> 20190501-alt1
+- edk2-stable201905 (Fixes: CVE-2018-12182)
+
 * Tue Apr 02 2019 Alexey Shabalin <shaba@altlinux.org> 20190308-alt1
 - edk2-stable201903 (Fixes: CVE-2018-12178, CVE-2018-12180, CVE-2018-12181, CVE-2018-3630)
 
