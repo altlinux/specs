@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-Tiny
 Name: perl-%dist
-Version: 2.23
+Version: 2.24
 Release: alt1
 
 Summary: Read/Write .ini style files with as little code as possible
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Config-Tiny-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{dist}-%{version}.tgz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ a lot of memory and modules. The ::Tiny family of modules is specifically
 intended to provide an ultralight alternative to the standard modules.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,13 @@ intended to provide an ultralight alternative to the standard modules.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Changelog.ini
 %perl_vendor_privlib/Config
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1
 - automated CPAN update
 
