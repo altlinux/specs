@@ -6,8 +6,8 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.320
-Release: alt1.1
+Version: 0.321
+Release: alt1
 Summary: Timing side-channel protected string compare
 Group: Development/Perl
 License: perl
@@ -29,11 +29,14 @@ You should pass this function two strings of the same length. Just like perl's `
 %perl_vendor_install
 
 %files
-%doc README COPYING Changes
+%doc README Changes
 %perl_vendor_archlib/S*
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.321-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.320-alt1.1
 - rebuild with new perl 5.28.1
 
