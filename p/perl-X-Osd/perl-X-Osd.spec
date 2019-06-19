@@ -1,13 +1,14 @@
 %define dist X-Osd
+
 Name: perl-%dist
 Version: 0.7
-Release: alt4.2
+Release: alt5
 
 Summary: Perl extension to the X On Screen Display library (xosd)
 License: GPL
 Group: Development/Perl
 
-URL: %CPAN %dist
+Url: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -15,13 +16,13 @@ BuildRequires: libxosd-devel perl-devel xvfb-run
 
 %description
 XOSD displays text on your screen, sounds simple right? The difference
-is it is unmanaged and shaped, so it appears transparent. This gives the
-effect of an On Screen Display, like your TV/VCR etc..
+is it is unmanaged and shaped, so it appears transparent. This gives
+the effect of an On Screen Display, like your TV/VCR etc..
 It currently supports 3 type of writes, string for simple text, printf
 formatted text, slider and percentage display.
 
 %prep
-%setup -q -n %dist-%version
+%setup -n %dist-%version
 
 %ifndef _build_display
 %def_without test
@@ -30,6 +31,7 @@ formatted text, slider and percentage display.
 %build
 %perl_vendor_build
 
+%check
 xvfb-run -a make test
 
 %install
@@ -41,6 +43,9 @@ xvfb-run -a make test
 %perl_vendor_autolib/X
 
 %changelog
+* Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 0.7-alt5
+- moved tests into %%check section
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.7-alt4.2
 - rebuild with new perl 5.28.1
 
