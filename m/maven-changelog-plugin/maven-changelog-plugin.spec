@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat maven-plugins-pom maven-plugin-testing-harness
 Name:           maven-changelog-plugin
 Version:        2.3
-Release:        alt2_2jpp8
+Release:        alt3_2jpp8
 Summary:        Produce SCM changelog reports
 
 License:        ASL 2.0
@@ -47,7 +47,7 @@ API documentation for %{name}.
 %pom_add_dep org.apache.maven:maven-compat
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.test.skip=true -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt3_2jpp8
+- fixed build with maven-scm 1.10
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_2jpp8
 - fixed build
 

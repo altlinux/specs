@@ -38,8 +38,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           maven-scm
-Version:        1.9.5
-Release:        alt1_6jpp8
+Version:        1.10.0
+Release:        alt1_4jpp8
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
@@ -49,11 +49,10 @@ Source0:        http://archive.apache.org/dist/maven/scm/%{name}-%{version}-sour
 
 # Patch to migrate to new plexus default container
 # This has been sent upstream: https://issues.apache.org/jira/browse/SCM-731
-Patch1:         0001-Port-maven-scm-to-latest-version-of-plexus-default-c.patch
+Patch1:         0001-Port-maven-scm-to-latest-version-of-plexus-default.patch
 # Workaround upstream's workaround for a modello bug, see: https://issues.apache.org/jira/browse/SCM-518
 Patch2:         0002-Fix-vss-modello-config.patch
-# Compatibility with JGit 4.x, not yet forwarded
-Patch3:         0003-Compatibility-with-JGit-4.0.0.patch
+Patch3:         0003-Port-to-current-plexus-utils.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -62,7 +61,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven:maven-settings:2.2.1)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -108,6 +107,8 @@ Javadoc for %{name}.
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 
 %pom_remove_plugin :maven-enforcer-plugin
+
+%pom_change_dep -r :maven-project :maven-compat
 
 # Remove providers-integrity from build (we don't have mks-api)
 %pom_remove_dep org.apache.maven.scm:maven-scm-provider-integrity maven-scm-providers/maven-scm-providers-standard
@@ -156,6 +157,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10.0-alt1_4jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.5-alt1_6jpp8
 - java fc28+ update
 

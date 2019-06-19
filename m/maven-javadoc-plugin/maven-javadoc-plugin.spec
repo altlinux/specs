@@ -7,14 +7,16 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
-Version:        3.0.0
-Release:        alt1_4jpp8
+Version:        3.0.1
+Release:        alt1_3jpp8
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch1:         0001-Port-to-current-plexus-utils.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -61,6 +63,8 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
+%patch1 -p1
+
 %pom_remove_plugin :maven-enforcer-plugin
 
 %build
@@ -76,6 +80,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_3jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_4jpp8
 - java fc28+ update
 

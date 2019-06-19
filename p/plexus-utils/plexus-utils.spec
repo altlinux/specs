@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-utils
-Version:        3.0.24
-Release:        alt1_5jpp8
+Version:        3.1.0
+Release:        alt1_4jpp8
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -27,6 +27,9 @@ BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
+
+# https://github.com/codehaus-plexus/plexus-utils/issues/45
+Patch1:         0001-Follow-symlinks-in-NioFiles.copy.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -52,6 +55,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+
+%patch1 -p1
 
 cp %{SOURCE1} .
 
@@ -86,6 +91,9 @@ cp %{SOURCE1} .
 %doc NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_4jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.24-alt1_5jpp8
 - java update
 
