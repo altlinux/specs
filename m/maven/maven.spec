@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -22,10 +23,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven
 Epoch:          1
-Version:        3.5.3
-Release:        alt1_1jpp8
+Version:        3.5.4
+Release:        alt1_4jpp8
 Summary:        Java project management and project comprehension tool
-License:        ASL 2.0
+# maven itself is ASL 2.0
+# bundled slf4j is MIT
+License:        ASL 2.0 and MIT
 URL:            http://maven.apache.org/
 BuildArch:      noarch
 
@@ -238,6 +241,9 @@ build-jar-repository -s -p %{buildroot}%{apphomedir}/lib \
 rm %{buildroot}%{apphomedir}/lib/jboss-interceptors*.jar
 rm %{buildroot}%{apphomedir}/lib/javax.el-api*.jar
 
+# Native lib whose extraction we suppressed
+ln -s %{_jnidir}/jansi-native/jansi-linux.jar %{buildroot}%{apphomedir}/lib/
+
 install -p -m 644 %{SOURCE2} %{buildroot}%{apphomedir}/bin/
 gzip -9 %{buildroot}%{apphomedir}/bin/mvn.1
 install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn%{?maven_version_suffix}
@@ -309,6 +315,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_4jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.5.3-alt1_1jpp8
 - new version
 
