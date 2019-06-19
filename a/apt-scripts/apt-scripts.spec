@@ -1,6 +1,6 @@
 Name: apt-scripts
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: Lua scripts for APT
 License: GPL-2.0-or-later
@@ -49,6 +49,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Wed Jun 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.4-alt2
+- apt-get dedup implies Apt::Get::Fix-Broken
+
 * Thu Jun 13 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.4-alt1
 - added 'apt-get dedup'
 - fixed package license
