@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        67.0.1
+Version:        67.0.3
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -410,6 +410,16 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Jun 19 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.3-alt1
+- New release (67.0.3).
+- Fixed:
+  + CVE-2019-11707: Type confusion in Array.pop
+
+* Tue Jun 18 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.2-alt1
+- New release (67.0.2).
+- Fixed:
+  + CVE-2019-11702: IE protocols can be used to open known local files
+
 * Wed Jun 05 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.1-alt1
 - New release (67.0.1).
 
