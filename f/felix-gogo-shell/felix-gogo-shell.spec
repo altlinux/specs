@@ -6,52 +6,47 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit 08a6b74
+%global bundle  org.apache.felix.gogo.shell
 
 Name:           felix-gogo-shell
-Version:        1.0.0
-Release:        alt1_3jpp8
-Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
+Version:        1.1.0
+Release:        alt1_1jpp8
+Summary:        Apache Felix Gogo command line shell for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 BuildArch:      noarch
 
-# Upstream forgot to make a proper source release, make tarball from commit marked by maven-release-plugin
-Source0:        https://github.com/apache/felix/tarball/%{commit}#/felix-%{version}.tar.gz
+Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:) >= 4
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
-Apache Felix is a community effort to implement the OSGi R4 Service Platform
-and other interesting OSGi-related technologies under the Apache license. The
-OSGi specifications originally targeted embedded devices and home services
-gateways, but they are ideally suited for any project interested in the
-principles of modularity, component-orientation, and/or service-orientation.
-OSGi technology combines aspects of these aforementioned principles to define a
-dynamic service deployment framework that is amenable to remote management.
+Apache Felix Gogo is a subproject of Apache Felix implementing a command
+line shell for OSGi. It is used in many OSGi runtimes and servers.
+
+This package provides a simple textual user interface to interact with the
+command processor.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n apache-felix-%{commit}/gogo/shell
+%setup -q -n %{bundle}-%{version}
 
-# Use parent from rpm, not from the tarball
-%pom_xpath_remove pom:parent/pom:relativePath
-
-%pom_change_dep :org.osgi.core :osgi.core
-%pom_change_dep :org.osgi.compendium :osgi.cmpn
+%mvn_file : felix/%{bundle}
 
 %build
 %mvn_build
@@ -66,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
 - java update
 
