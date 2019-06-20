@@ -3,7 +3,7 @@
 %global realname lager
 
 Name: erlang-%realname
-Version: 3.6.7
+Version: 3.6.10
 Release: alt1
 Summary: A logging framework for Erlang/OTP
 Group: Development/Erlang
@@ -41,6 +41,9 @@ plays nicely with traditional UNIX logging tools like logrotate and syslog.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Jun 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.10-alt1
+- Updated to upstream version 3.6.10.
+
 * Mon Jan 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.7-alt1
 - Updated to upstream version 3.6.7.
 

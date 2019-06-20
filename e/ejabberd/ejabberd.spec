@@ -12,13 +12,13 @@
 %def_enable tools
 
 Name: ejabberd
-Version: 19.02
-Release: alt3
+Version: 19.05
+Release: alt1
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
 BuildArch: noarch
-Url: http://www.process-one.net/en/ejabberd/
+Url: https://www.process-one.net/en/ejabberd/
 
 # https://github.com/processone/ejabberd.git
 Source: %name-%version.tar
@@ -209,6 +209,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Thu Jun 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 19.05-alt1
+- Updated to upstream version 19.05.
+
 * Fri Mar 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 19.02-alt3
 - ejabberd.service: service type was changed to notify again (was changed by
   mistake in the previous release).
