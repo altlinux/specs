@@ -21,7 +21,7 @@
 
 Name: enlightenment
 Version: %ver_major.4
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -168,12 +168,14 @@ install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 %endif
 
 # fix Name in session desktop files
-sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Xorg/' %buildroot%_datadir/xsessions/%name.desktop
-sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name.desktop
+sed -i 's/^\(Name.*=Enlightenment\)$/\1 on Xorg/' %buildroot%_datadir/xsessions/%name.desktop
+sed -i 's/^\(Name.*=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name.desktop
+# rename xsession file
+mv %buildroot%_datadir/xsessions/%name.desktop %buildroot%_datadir/xsessions/%name-xorg.desktop
 
 # use start_enlighttenment instead of enlightenment_start for lightdm
 install -p -m755 %SOURCE2 %buildroot%_bindir/
-sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name.desktop
+sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name-xorg.desktop
 
 
 %find_lang %name
@@ -211,7 +213,7 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_bindir/%{name}_start
 %_bindir/start_%name
 %_datadir/%name/
-%_datadir/xsessions/%name.desktop
+%_datadir/xsessions/%name-xorg.desktop
 %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
 %_datadir/pixmaps/emixer.png
 %_pixmapsdir/%name-askpass.png
@@ -229,6 +231,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Jun 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt2.1
+- renamed /usr/share/xsessions/enlightenment.desktop to enlightenment-xorg.desktop
+
 * Tue Jun 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt2
 - disabled  %%wmsession, replaced enlighttenment_start by
   start_enlightenment in xsession file (ALT #36913)
