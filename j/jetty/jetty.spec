@@ -59,7 +59,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20180503
+%global addver  .v20180605
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -68,8 +68,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           jetty
-Version:        9.4.10
-Release:        alt1_1.v20180503jpp8
+Version:        9.4.11
+Release:        alt1_3.v20180605jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -151,7 +151,7 @@ BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 #BuildRequires:  mvn(org.eclipse.jetty.toolchain.setuid:jetty-setuid-java)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 # duplicate providers, choose one
 BuildRequires:  jboss-websocket-1.0-api
@@ -719,14 +719,14 @@ find . -name "*.class" -exec rm {} \;
 # Disable building source release
 %pom_xpath_remove 'pom:execution[pom:id="sources"]' jetty-home
 
-# Remove google analytics from javadoc
-%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-javadoc-plugin"]/pom:configuration/pom:header'
-
 # Unwanted JS in javadoc
 sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
 
 # it doesn't like the trailing semicolon
 sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xml
+
+# only used for integration tests
+%pom_remove_plugin :maven-invoker-plugin jetty-jspc-maven-plugin
 
 # missing deps
 %pom_disable_module test-jetty-osgi jetty-osgi/pom.xml
@@ -891,8 +891,8 @@ build-jar-repository %{buildroot}%{apphomedir}/lib/apache-jsp \
 ecj=`echo %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt*.ecj-*.jar`
 rm $ecj
 
-# substitute dependency jars
-xmvn-subst -s -L -t jar -R %{buildroot} %{buildroot}%{apphomedir}
+# substitute dependency jars (keep start.jar with shaded jetty util)
+xmvn-subst -s -L -R %{buildroot} %{buildroot}%{apphomedir}/lib
 
 # ecj doesn't have javapackages metadata in manifest, remove when fixed
 ln -sf %{_javadir}/ecj.jar $ecj
@@ -1056,6 +1056,9 @@ exit 0
 %doc --no-dereference LICENSE-eplv10-aslv20.html LICENSE-MIT
 
 %changelog
+* Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 9.4.11-alt1_3.v20180605jpp8
+- new version
+
 * Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 9.4.10-alt1_1.v20180503jpp8
 - new version
 
