@@ -2,23 +2,28 @@
 
 Name: qview
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Practical and minimal image viewer
 License: GPLv3
 Group: Graphics
 
-URL: https://github.com/jurplel/qView
+Url: https://github.com/jurplel/qView
 Source: %name-%version.tar
+Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: qt5-base-devel
 
 %description
 qView is an image viewer designed with minimalism and usability in mind.
 
-
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.h' -print0 |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 qmake-qt5
@@ -26,7 +31,8 @@ qmake-qt5
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
-rm -f %buildroot/usr/share/licenses/qview/LICENSE
+# NB: it's not %%_licensedir
+rm -rf %buildroot%_datadir/licenses/%name
 
 %files
 %_bindir/%name
@@ -36,5 +42,9 @@ rm -f %buildroot/usr/share/licenses/qview/LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 2.0-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+- minor spec cleanup
+
 * Mon May 27 2019 Alexander Makeenkov <amakeenk@altlinux.org> 2.0-alt1
 - Initial build for ALT
