@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/valgrind
+#BuildRequires: /usr/bin/valgrind
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt4_14
+Release:        alt4_14.1
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -111,6 +111,9 @@ mv src/examples .
 
 
 %changelog
+* Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 1.0.0-alt4_14.1
+- E2K: avoid valgrind
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt4_14
 - set doc to noarch
 
