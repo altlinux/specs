@@ -1,6 +1,6 @@
 Name: exim
-# pre-4.93 snapshot
-Version: 4.92.0.1
+# pre-release snapshot
+Version: 4.92.1.0.1
 Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
@@ -216,5 +216,8 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod SECURITY.md vmail-dovecot.txt
 
 %changelog
+* Thu Jun 20 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.1.0.1-alt1
+- update to post-4.92.1 snapshot
+
 * Thu Jun 20 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.0.1-alt1
 - re-import from upstream and rebuild from scratch
