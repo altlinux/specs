@@ -1,12 +1,12 @@
 Name: sven
 Version: 0.6
-Release: alt2.1.qa2
+Release: alt3
 
 Summary: Sven - multimedia keyboard daemon
 License: GPL
 Group: System/Configuration/Other
 
-Url: http://sven.linux.kiev.ua/
+#Url: http://sven.linux.kiev.ua/
 
 Source0: %name-%version.tar.bz2
 Source1: %name.png
@@ -30,7 +30,7 @@ Patch13: %name-0.6-alt-DSO.patch
 BuildRequires: libgtk+2-devel libpcre-devel libX11-devel libXext-devel libXi-devel libXmu-devel libXtst-devel xorg-cf-files
 
 %description
-Sven is a good program for multimedia buttons. You can adjust it for any keyboard.
+Sven is a program for multimedia buttons. You can adjust it for any keyboard.
 It is possible to adjust for performance of different programs for each button.
 
 %package devel
@@ -42,7 +42,7 @@ Requires: %name
 Contains development files you'll need to build plugins for %name.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -59,24 +59,22 @@ Contains development files you'll need to build plugins for %name.
 %patch13 -p2
 
 %build
+cp -at . -- /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
 ./autogen.sh
 %configure
-
 %make
 
 %install
 mkdir -p %buildroot{%_bindir,%_datadir/pixmaps,%_datadir/applications,%_datadir/%name,%_libdir/%name}
-make install DESTDIR=%buildroot
+%makeinstall_std
 
-#do not pack static files
+# do not pack static files
 rm -f %buildroot%_libdir/lib%name.a
 
-#menu support
-
+# menu support
 mkdir -p %buildroot%_iconsdir
 mkdir -p %buildroot%_datadir/pixmaps
 mkdir -p %buildroot%_datadir/applications
-#%%__cp %_builddir/%name-%version/images/%name.png %buildroot%_iconsdir/
 install -pD -m644 %SOURCE1 %buildroot%_iconsdir/
 install -pD -m644 %SOURCE1 %buildroot%_datadir/pixmaps/
 install -pD -m644 %SOURCE2 %buildroot%_datadir/applications/
@@ -99,6 +97,11 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/applications/
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 0.6-alt3
+- enable new platforms
+- drop old Url:
+- minor spec cleanup
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.1.qa2
 - Fixed build
 
