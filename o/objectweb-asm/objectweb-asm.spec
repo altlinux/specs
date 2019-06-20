@@ -7,19 +7,27 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag ASM_6_1_1
+%bcond_without junit5
+%bcond_without osgi
 
 Name:           objectweb-asm
-Version:        6.1.1
+Version:        6.2.1
 Release:        alt1_1jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
 BuildArch:      noarch
 
-Source0:        https://gitlab.ow2.org/asm/asm/repository/%{gittag}/archive.tar.gz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 Source1:        parent.pom
 Source2:        http://repo1.maven.org/maven2/org/ow2/asm/asm/%{version}/asm-%{version}.pom
 Source3:        http://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/%{version}/asm-analysis-%{version}.pom
@@ -30,17 +38,32 @@ Source7:        http://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/as
 Source8:        http://repo1.maven.org/maven2/org/ow2/asm/asm-xml/%{version}/asm-xml-%{version}.pom
 # We still want to create an "all" uberjar, so this is a custom pom to generate it
 # TODO: Fix other packages to no longer depend on "asm-all" so we can drop this
-Source9:        asm-all-%{version}.pom
+Source9:        asm-all.pom
+# The source contains binary jars that cannot be verified for licensing and could be proprietary
+Source10:       generate-tarball.sh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.ow2:ow2:pom:)
+%if %{with junit5}
 BuildRequires:  mvn(org.codehaus.janino:janino)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-params)
-BuildRequires:  mvn(org.junit.platform:junit-platform-surefire-provider)
-BuildRequires:  mvn(org.ow2:ow2:pom:)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
+%endif
+
+%if %{with osgi}
+# asm-all needs to be in pluginpath for BND.  If this self-dependency
+# becomes a problem then ASM core will have to be build from source
+# with javac before main maven build, just like bnd-module-plugin
+BuildRequires:  objectweb-asm >= 6
+%endif
+
+# Explicit javapackages-tools requires since asm-processor script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
@@ -59,27 +82,24 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q -n asm-%{gittag}-11b3cabce9b90706cf91a47dd15215c667f8055b
-
-find -name *.jar -delete
-rm -rf gradle/
+%setup -q
 
 # A custom parent pom to aggregate the build
 cp -p %{SOURCE1} pom.xml
+
+%if %{without junit5}
+%pom_disable_module asm-test
+%endif
 
 # Insert poms into modules
 for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util asm-xml; do
   cp -p $RPM_SOURCE_DIR/${pom}-%{version}.pom $pom/pom.xml
   # Fix junit5 configuration
+%if %{with junit5}
   %pom_add_dep org.junit.jupiter:junit-jupiter-engine:5.1.0:test $pom
-  %pom_add_plugin org.apache.maven.plugins:maven-surefire-plugin:2.21.0 $pom \
-"            <dependencies>
-                <dependency>
-                    <groupId>org.junit.platform</groupId>
-                    <artifactId>junit-platform-surefire-provider</artifactId>
-                    <version>1.2.0-RC1</version>
-                </dependency>
-            </dependencies>"
+  %pom_add_plugin org.apache.maven.plugins:maven-surefire-plugin:2.22.0 $pom
+%endif
+%if %{with osgi}
   if [ "$pom" != "asm-test" ] ; then
     # Make into OSGi bundles
     bsn="org.objectweb.${pom//-/.}"
@@ -91,16 +111,25 @@ for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util asm-xml; do
         <Bundle-SymbolicName>$bsn</Bundle-SymbolicName>
         <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment>
         <_removeheaders>Bnd-LastModified,Build-By,Created-By,Include-Resource,Require-Capability,Tool</_removeheaders>
-        <_pluginpath>$(pwd)/tools/bnd-module-plugin/bnd-module-plugin.jar</_pluginpath>
+        <_pluginpath>$(pwd)/tools/bnd-module-plugin/bnd-module-plugin.jar, $(find-jar objectweb-asm/asm-all)</_pluginpath>
         <_plugin>org.objectweb.asm.tools.ModuleInfoBndPlugin;</_plugin>
       </instructions>
     </configuration>"
   fi
+%endif
 done
+
+# Disable tests that use unlicensed class files
+sed -i -e '/testReadAndWriteWithComputeMaxsAndLargeSubroutines/i@org.junit.jupiter.api.Disabled("missing class file")' \
+  asm/src/test/java/org/objectweb/asm/ClassWriterTest.java
+sed -i -e '/testMergeWithJsrReachableFromTwoDifferentPaths/i@org.junit.jupiter.api.Disabled("missing class file")' \
+  asm-analysis/src/test/java/org/objectweb/asm/tree/analysis/BasicInterpreterTest.java
+sed -i -e '/testSortLocalVariablesAndInstantiate()/i@org.junit.jupiter.api.Disabled("missing class file")' \
+  asm-commons/src/test/java/org/objectweb/asm/commons/LocalVariablesSorterTest.java
 
 # Insert asm-all pom
 mkdir -p asm-all
-cp -p %{SOURCE9} asm-all/pom.xml
+sed 's/@VERSION@/%{version}/g' %{SOURCE9} > asm-all/pom.xml
 
 # Remove invalid self-dependency
 %pom_remove_dep org.ow2.asm:asm-test asm-test
@@ -120,7 +149,11 @@ javac -sourcepath ../../asm/src/main/java/ -cp $(build-classpath aqute-bnd) $(fi
 jar cf bnd-module-plugin.jar -C src/main/java org
 popd
 
+%if %{with junit5}
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%else
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%endif
 
 %install
 %mvn_install
@@ -135,6 +168,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.2.1-alt1_1jpp8
+- new version
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:6.1.1-alt1_1jpp8
 - new version
 
