@@ -13,7 +13,7 @@ BuildRequires: source-highlight python3-module-nose python3-module-setuptools
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -25,6 +25,10 @@ BuildRequires: jpackage-generic-compat
 # Don't generate requires on jpackage-utils and java-headless for
 # provided pseudo-artifacts: com.sun:tools and sun.jdk:jconsole.
 %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}/maven-metadata/javapackages-metadata.xml$
+
+# Disable automatic bytecode compilation for files in java-utils
+# https://fedoraproject.org/wiki/Packaging:Python_Appendix#Manual_byte_compilation
+%global _python_bytecompile_extra 0
 
 %bcond_without asciidoc
 %bcond_without gradle
@@ -44,15 +48,14 @@ BuildRequires: jpackage-generic-compat
 %global default_jre %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/jre-1.8.0-openjdk
 
 Name:           javapackages-tools
-Version:        5.0.0
-Release:        alt1_12jpp8
+Version:        5.3.0
+Release:        alt1_1jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
 Source0:        https://github.com/fedora-java/javapackages/archive/%{version}.tar.gz
-Patch0:         0001-Fix-traceback-on-corrupt-zipfile.patch
 
 BuildArch:      noarch
 
@@ -72,13 +75,12 @@ BuildRequires:  python3-module-nose
 %endif
 BuildRequires:  python3-module-six
 
+Requires:       javapackages-filesystem = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       coreutils
 Requires:       findutils
 Requires:       which
 # default JRE
 
-Obsoletes:      eclipse-filesystem < 2
-Provides:       eclipse-filesystem = %{version}-%{release}
 Provides:       jpackage-utils = %{version}-%{release}
 # These could be generated automatically, but then we would need to
 # depend on javapackages-local for dependency generator.
@@ -130,6 +132,16 @@ Requires:       python3
 RPM build helpers for Java packages.
 
 
+
+%package -n javapackages-filesystem
+Group: Development/Java
+Summary:        Java packages filesystem layout
+Obsoletes:      eclipse-filesystem < 2
+Provides:       eclipse-filesystem = %{version}-%{release}
+
+%description -n javapackages-filesystem
+This package provides some basic directories into which Java packages
+install their content.
 
 %package -n maven-local
 Group: Development/Java
@@ -212,8 +224,6 @@ This package provides non-essential macros and scripts to support Java packaging
 %prep
 %setup -q -n javapackages-%{version}
 
-%patch0 -p1
-
 %if %{without asciidoc}
 sed -i '/^manpage /d' build
 sed -i '/${mandir}/d' install
@@ -242,7 +252,7 @@ sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
 %if %{with xmvn_javadoc}
 sed -i 's|mvn_build.py|& --xmvn-javadoc|' $(find %{buildroot} -name 'macros*.fjava')
 %endif
-sed -e 's/.[17]$/&*/' -e 's/.py$/&*/' -i files-*
+sed -e 's/.[17]$/&*/' -i files-*
 
 %if %{without gradle}
 rm -rf %{buildroot}%{_bindir}/gradle-local
@@ -269,15 +279,16 @@ install -m755 -D %{SOURCE48} %buildroot%_rpmmacrosdir/maven.env
 # altlinux python support
 sed -i -e 's,python?\.?,python*,' files-python
 # in rpm-build-java or useless in alt
-sed -i -e '/usr\/lib\/rpm/d' files-common files-local
+sed -i -e '/usr\/lib\/rpm/d' files-filesystem files-tools files-local
 rm -rf %buildroot/usr/lib/rpm/fileattrs
 
 # useless on alt and requires python
-sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common files-local
+sed -i -e '/usr\/bin\/xmvn-builddep/d' files-local
 rm -rf %buildroot/usr/bin/xmvn-builddep
 
 pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
+mv macros.javapackages-filesystem javapackages-filesystem
 mv macros.jpackage javapackages-jpackage
 #mv macros.scl-java-template javapackages-scl-java-template
 popd
@@ -296,7 +307,9 @@ popd
 %endif
 %endif
 
-%files -f files-common
+%files -f files-tools
+
+%files -n javapackages-filesystem -f files-filesystem
 
 %files -n javapackages-local -f files-local
 # alt python3 cache
@@ -305,6 +318,7 @@ popd
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-jpackage
+%_rpmmacrosdir/javapackages-filesystem
 #%_rpmmacrosdir/javapackages-scl-java-template
 
 %files -n rpm-build-java
@@ -333,6 +347,9 @@ popd
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.3.0-alt1_1jpp8
+- new version
+
 * Thu May 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1_12jpp8
 - java update
 
