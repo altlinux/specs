@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.41
-Release: alt2
+Release: alt3
 
 Summary: Put propagator into make-initrd generated image
 
@@ -35,10 +35,13 @@ mkdir -p %buildroot%_datadir/make-initrd/features/
 cp -a propagator %buildroot%_datadir/make-initrd/features/
 mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 
-%files 
+%files
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Jun 20 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.41-alt3
+- mount.aufs removed from config.mk (Closes: 36930)
+
 * Wed Jun 19 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.41-alt2
 - unneede dependence on aufs2-util removed
 
