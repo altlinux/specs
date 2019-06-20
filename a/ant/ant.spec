@@ -45,17 +45,15 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_without tests
+%bcond_with tests
 %bcond_without javadoc
-
-# Disabled for now, asi it doesn't work (tests fail) and nobody needs it
-%bcond_with junit5
+%bcond_without junit5
 
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.3
-Release:        alt1_2jpp8
+Version:        1.10.5
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -64,11 +62,16 @@ License:        ASL 2.0
 URL:            https://ant.apache.org/
 Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
 Source2:        apache-ant-1.8.ant.conf
+# manpage
+Source3:        ant.asciidoc
 
 BuildRequires:  javapackages-local
 BuildRequires:  java-devel >= 1.8.0
 BuildRequires:  ant >= 1.10.2
 BuildRequires:  ant-junit
+
+BuildRequires:  asciidoc asciidoc-a2x
+BuildRequires:  xmlto
 
 BuildRequires:  mvn(antlr:antlr)
 BuildRequires:  mvn(bcel:bcel)
@@ -85,6 +88,8 @@ BuildRequires:  mvn(oro:oro)
 BuildRequires:  mvn(regexp:regexp)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-resolver:xml-resolver)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
 
 %if %{with junit5}
 BuildRequires:  junit5
@@ -94,6 +99,9 @@ BuildRequires:  junit5
 # workflow requires full JDK, so we recommend it here.
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
+# Require full javapackages-tools since the ant script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 BuildArch:      noarch
 Source44: import.info
@@ -440,7 +448,7 @@ rm src/tests/junit/org/apache/tools/ant/types/selectors/SignedSelectorTest.java 
    src/tests/junit/org/apache/tools/mail/MailMessageTest.java
 
 #install jars
-build-jar-repository -s -p lib/optional antlr bcel javamail/mailapi jdepend junit log4j-1 oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core xz-java
+build-jar-repository -s -p lib/optional antlr bcel javamail/mailapi jdepend junit log4j-1 oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core hamcrest/library xz-java
 %if %{with junit5}
 build-jar-repository -s -p lib/optional junit5 opentest4j
 %endif
@@ -476,6 +484,11 @@ mv LICENSE.utf8 LICENSE
 %if %with javadoc
 %{ant} javadocs
 %endif
+
+# typeset the manpage
+mkdir man
+asciidoc -b docbook -d manpage -o man/%{name}.xml %{SOURCE3}
+xmlto man man/%{name}.xml -o man
 
 #remove empty jai and netrexx jars. Due to missing dependencies they contain only manifests.
 rm -fr build/lib/ant-jai.jar build/lib/ant-netrexx.jar
@@ -533,9 +546,9 @@ cp -p src/etc/*.xsl $RPM_BUILD_ROOT%{ant_home}/etc
 
 # install everything else
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-cp -p src/script/{ant,antRun} $RPM_BUILD_ROOT%{_bindir}
+cp -p src/script/ant $RPM_BUILD_ROOT%{_bindir}/
 ln -sf %{_bindir}/ant $RPM_BUILD_ROOT%{ant_home}/bin/
-ln -sf %{_bindir}/antRun $RPM_BUILD_ROOT%{ant_home}/bin/
+cp -p src/script/antRun $RPM_BUILD_ROOT%{ant_home}/bin/
 
 # default ant.conf
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}
@@ -576,11 +589,15 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # fix link between manual and javadoc
 (cd manual; ln -sf %{_javadocdir}/%{name} api)
+
+# manpage
+install -d -m 755 %{buildroot}%{_mandir}/man1/
+install -p -m 644 man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
 %if %with tests
 %check
-LC_ALL=en_US.utf8 %{ant} test
+LC_ALL=C.UTF-8 %{ant} test
 %endif
 
 %files
@@ -588,10 +605,10 @@ LC_ALL=en_US.utf8 %{ant} test
 %doc --no-dereference LICENSE NOTICE
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %attr(0755,root,root) %{_bindir}/ant
-%attr(0755,root,root) %{_bindir}/antRun
 %dir %{ant_home}/bin
 %{ant_home}/bin/ant
-%{ant_home}/bin/antRun
+%attr(0755,root,root) %{ant_home}/bin/antRun
+%{_mandir}/man1/%{name}.*
 %dir %{ant_home}/etc
 %{ant_home}/etc/ant-update.xsl
 %{ant_home}/etc/changelog.xsl
@@ -718,6 +735,9 @@ LC_ALL=en_US.utf8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10.5-alt1_5jpp8
+- new version
+
 * Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.3-alt1_2jpp8
 - new version
 
