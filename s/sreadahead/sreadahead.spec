@@ -1,8 +1,6 @@
 Name: sreadahead
 Version: 1.0
-Release: alt1.qa1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt2
 
 Summary: Super Read Ahead
 License: GPLv2+
@@ -11,28 +9,33 @@ Group: System/Configuration/Boot and Init
 Url: http://code.google.com/p/sreadahead/
 Source: http://sreadahead.googlecode.com/files/sreadahead-%version.tar.gz
 Patch0: sreadahead-1.0-asneeded.patch
+Patch1: sreadahead-1.0-alt-ioprio-arches.patch
+Packager: Michael Shigorin <mike@altlinux.org>
 
 %description
-sreadahead speeds up booting by pre-reading disk blocks used during previous boots.
+sreadahead speeds up booting by pre-reading disk blocks
+used during previous boots.
 
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
-%define _optlevel s
 %make_build CFLAGS="%optflags"
 
 %install
-install -d %buildroot/var/lib/sreadahead/debugfs
-install -d %buildroot/sbin
-install -p -m755 sreadahead %buildroot/sbin/
+install -d %buildroot%_localstatedir/%name/debugfs
+install -pDm755 %name %buildroot/sbin/%name
 
 %files
 /sbin/*
-/var/lib/sreadahead
+%_localstatedir/%name
 
 %changelog
+* Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 1.0-alt2
+- added patch to support non-x86 arches
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
