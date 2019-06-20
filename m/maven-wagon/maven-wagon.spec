@@ -18,8 +18,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-wagon
 Epoch:          0
-Version:        3.0.0
-Release:        alt1_1jpp8
+Version:        3.1.0
+Release:        alt1_2jpp8
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
 URL:            http://maven.apache.org/wagon
@@ -220,6 +220,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_2jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_1jpp8
 - new version
 
