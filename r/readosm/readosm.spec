@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ readosm-devel
+BuildRequires: gcc-c++ 
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           readosm
 Version:        1.1.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Library to extract data from Open Streetmap input files
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ make check
 %{_includedir}/%{name}.h
 
 %changelog
+* Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt2_1
+- avoid self-BR
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
 - NMU (for oddity@): new version by fcimport
 
