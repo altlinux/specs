@@ -3,20 +3,17 @@
 
 Name: qhexedit2
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: Binary Editor for Qt
 License: LGPLv2
 Group: Editors
+
 Url: https://github.com/Simsys/qhexedit2
-
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: qhexedit.desktop
-
-# Fix build issues
 Patch: qhexedit2_build.patch
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires: rpm-build-python rpm-build-python3
 BuildRequires: desktop-file-utils
@@ -97,11 +94,15 @@ Development files for the %name Qt5 Python3 bindings
 %setup
 %patch -p1
 
-# Prevent rpmlint W: doc-file-dependency %_docdir/qhexedit2-doc/html/installdox %_bindir/perl
+# Prevent rpmlint W: doc-file-dependency %%_docdir/qhexedit2-doc/html/installdox %%_bindir/perl
 rm -f doc/html/installdox
 
 %build
-# Build library, qt5
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
+
 # Build library, qt5
 mkdir build-lib-qt5
 pushd build-lib-qt5
@@ -110,9 +111,9 @@ LDFLAGS="%optflags -Wl,--as-needed" %qmake_qt5 ../src/qhexedit.pro
 popd
 
 # Build sip bindings, qt5, python2
-USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python-qt5
+USE_QT5=1 CFLAGS="%optflags" python setup.py build --build-base=build-python-qt5
 # Build sip bindings, qt5, python3
-USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5
+USE_QT5=1 CFLAGS="%optflags" python3 setup.py build --build-base=build-python3-qt5
 # Build application
 mkdir build-example
 pushd build-example
@@ -143,8 +144,8 @@ EOF
 
 # Python bindings
 # Distutils does not support --build-base with install, you need to build also...
-USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python2-qt5 install --skip-build --root %buildroot
-USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
+USE_QT5=1 CFLAGS="%optflags" python setup.py build --build-base=build-python2-qt5 install --skip-build --root %buildroot
+USE_QT5=1 CFLAGS="%optflags" python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
 install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip/qhexedit/qhexedit.sip
 install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip3/qhexedit/qhexedit.sip
 
@@ -185,5 +186,9 @@ desktop-file-install --dir=%buildroot%_desktopdir/ %SOURCE1
 %_datadir/sip3/qhexedit/
 
 %changelog
+* Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 0.8.3-alt2
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Mon Sep 17 2018 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
 - Initial build for Sisyphus
