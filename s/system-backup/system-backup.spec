@@ -1,6 +1,6 @@
 Name:		system-backup
 Version:	0.1.1
-Release:	alt1
+Release:	alt2
 
 Summary:	Script for local system backup
 License:	GPL-3
@@ -27,6 +27,10 @@ install -pm755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Fri Jun 21 2019 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt2
+- Exclude backup storage directory for all backups.
+- Change primary digest algo: MD5->SHA256.
+
 * Fri Jun 21 2019 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt1
 - Automatic exclude backup storage directory for self-system backup.
 - Determinate filesystem on whole disk drive added.
