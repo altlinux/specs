@@ -3,7 +3,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.7.6.1
-Release: alt4.1
+Release: alt5
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -21,6 +21,8 @@ Patch0: man-db-2.7.6.1-change-owner-of-man-cache.patch
 
 # http://lists.nongnu.org/archive/html/man-db-devel/2017-01/msg00013.html
 Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
+
+Patch2: man-db-2.7.6.1-e2k-mcst-path.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -71,6 +73,9 @@ This package provides periodic update of man-db cache.
 
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+%patch2 -p1
+%endif
 
 %build
 %configure \
@@ -160,6 +165,9 @@ cat %name.lang %name-gnulib.lang > %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Fri Jun 21 2019 Andrey Savchenko <bircoph@altlinux.org> 2.7.6.1-alt5
+- Add MCST-specific man path on e2k
+
 * Thu May 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6.1-alt4.1
 - NMU: added Provides: man-whatis
 
