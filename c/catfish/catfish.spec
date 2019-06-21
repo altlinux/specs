@@ -1,6 +1,6 @@
 Name: catfish
 Version: 1.4.7
-Release: alt1
+Release: alt2
 Summary: A handy file search tool
 
 Group: File tools
@@ -8,6 +8,7 @@ License: GPLv2+
 Url: http://www.twotoasts.de/index.php/catfish/
 Source: %name-%version.tar.gz
 BuildArch: noarch
+Patch: catfish-1.4.7-ALT-searchODF.patch
 
 ##BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
 # Automatically added by buildreq on Mon Jun 10 2019
@@ -18,6 +19,9 @@ BuildRequires: intltool python3-dev python3-module-distutils-extra python3-modul
 Requires: %_bindir/locate
 Requires: %_bindir/find
 Requires: python3-module-catfish
+
+# XXX /etc/mime.types belongs here
+Requires: mailcap
 
 %description
 A handy file search tool using different backends which is
@@ -37,6 +41,7 @@ Supplemental Python3 module for catfish, a handy file search tool
 
 %prep
 %setup -n %name-%version
+%patch -p0
 
 %build
 %python3_build
@@ -67,6 +72,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jun 21 2019 Fr. Br. George <george@altlinux.ru> 1.4.7-alt2
+- Rough ODF search implemented
+
 * Mon Jun 10 2019 Fr. Br. George <george@altlinux.ru> 1.4.7-alt1
 - Autobuild version bump to 1.4.7 (Closes: #36594)
 - Switch to Python3
@@ -122,22 +130,22 @@ rm -rf %buildroot%_defaultdocdir/%name
 * Thu Oct 18 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-1
 - 0.3
 
-* Fri Oct  5 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.3.c
+* Fri Oct 05 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.3.c
 - Remove beagle dependency for now because beagle is not
   available on ppc64 (although catfish itself is noarch :( )
 
-* Wed Oct  3 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.2.c
+* Wed Oct 03 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.2.c
 - License update
 - Create sub-metapackage to install all supported search engines
 - Remove redhat-artwork dependency
 
-* Fri Aug  3 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.1.c
+* Fri Aug 03 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.1.c
 - 0.3c
 
 * Tue May 15 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.1.b
 - 0.3b
 
-* Wed Apr  4 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.1.a
+* Wed Apr 04 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.3-0.1.a
 - 0.3a
 
 * Wed Feb 28 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.2.2-1
@@ -160,7 +168,7 @@ rm -rf %buildroot%_defaultdocdir/%name
 - Remove the dependencies for beagle, nautilus,
   replace with redhat-artwork
 
-* Mon Jan  1 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.2a-1
+* Mon Jan 01 2007 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.2a-1
 - 0.2a
 
 * Sat Dec 23 2006 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp>
@@ -173,8 +181,8 @@ rm -rf %buildroot%_defaultdocdir/%name
 - 0.1d
 - Disable pyxdg support on devel for now.
 
-* Sat Dec  8 2006 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.1c-2
+* Fri Dec 08 2006 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.1c-2
 - Fix type typo
 
-* Fri Dec  8 2006 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.1c-1
+* Fri Dec 08 2006 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> 0.1c-1
 - Initial packaging to import to Fedora Extras.
