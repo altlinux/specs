@@ -1,14 +1,14 @@
 %define oname defusedxml
 
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: XML bomb protection for Python stdlib modules
 License: Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/defusedxml/
 
-Source: %oname-%version.tar.gz
+Source: defusedxml-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
@@ -46,6 +46,12 @@ pushd ../python3
 %python3_install
 popd
 
+%check
+%__python tests.py
+pushd ../python3
+%__python3 tests.py
+popd
+
 %files
 %doc README.txt CHANGES.txt LICENSE
 %python_sitelibdir/*
@@ -55,6 +61,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 20 2019 Fr. Br. George <george@altlinux.ru> 0.6.0-alt1
+- Autobuild version bump to 0.6.0
+
 * Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
