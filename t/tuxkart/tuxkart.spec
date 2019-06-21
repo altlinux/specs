@@ -1,16 +1,16 @@
-
-Name:  tuxkart
+Name: tuxkart
 Version: 0.4.0
-Release: alt2.qa1
+Release: alt3
 
 Summary: Tuxedo T Penguin stars in Tuxkart
 License: GPL
 Group: Games/Arcade
-Source: http://tuxkart.sourceforge.net/dist/%{name}-%{version}.tar.gz
 
+Url: http://tuxkart.sourceforge.net/
+Source: http://tuxkart.sourceforge.net/dist/%name-%version.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-URL: http://tuxkart.sourceforge.net/
+ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Mon Oct 06 2003 (-bi)
 BuildRequires: xorg-cf-files libX11-devel libXi-devel libXext-devel libXmu-devel gcc-c++ libGLU-devel libaudio-devel libglut-devel libstdc++-devel plib-devel
@@ -19,15 +19,12 @@ BuildRequires: xorg-cf-files libX11-devel libXi-devel libXext-devel libXmu-devel
 This is another game that stars your Favorite Hero: Tux, the Linux Penguin.
 
 %prep
-%setup -q
-find . -type f|xargs chmod -x
-#%__subst 's/-O6//g' configure.in
-#aclocal
-#autoconf
-#automake
-chmod a+x ./configure
+%setup
+find . -type f \! -name configure -print0 | xargs -r0 chmod -x --
+sed -i 's/-O6/-O%_optlevel/g' configure*
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -35,7 +32,7 @@ chmod a+x ./configure
 %makeinstall
 
 install -m755 -d %buildroot%_desktopdir/
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -54,9 +51,14 @@ EOF
 %_bindir/*
 %_datadir/games/tuxkart
 %_datadir/tuxkart
-%_desktopdir/%{name}.desktop
+%_desktopdir/%name.desktop
 
 %changelog
+* Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 0.4.0-alt3
+- fix superfluous optimization level
+- minor spec fixup/cleanup
+- build for x86 only (aarch64 ftbfs)
+
 * Mon Apr 18 2011 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2.qa1
 - NMU: converted menu to desktop file
 
@@ -80,7 +82,7 @@ EOF
 
 * Sat Nov 18 2000 Daouda Lo <daouda@mandrakesoft.com> 0.0.3-3mdk
 - build against new libstdc++
-- rm hardcoded path to binary in menu 
+- rm hardcoded path to binary in menu
 - rpmlint 100%% happy
 
 * Tue Sep 19 2000 Lenny Cartier <lenny@mandrakesoft.com> 0.0.3-2mdk
