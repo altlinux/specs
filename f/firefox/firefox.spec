@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        67.0.3
+Version:        67.0.4
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -410,6 +410,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Jun 21 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.4-alt1
+- New release (67.0.4).
+- Fixed:
+ + CVE-2019-11708: sandbox escape using Prompt:Open
+
 * Wed Jun 19 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.3-alt1
 - New release (67.0.3).
 - Fixed:
