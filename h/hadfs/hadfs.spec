@@ -10,7 +10,7 @@
 
 Name: hadfs
 Version: 0.1.0.0
-Release: alt3
+Release: alt4
 License: BSD3
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 Group: Development/Haskell
@@ -26,6 +26,7 @@ BuildPreReq: %hsc_namever-network
 BuildPreReq: %hsc_namever-unix-compat
 BuildPreReq: libldap-devel libfuse-devel
 
+Requires: libsasl2-plugin-gssapi
 
 %description
 Active Directory File System (ADFS) is administration tool
@@ -48,6 +49,9 @@ rm -rf %buildroot/%_libdir/%hsc_name-%hsc_version/
 %files -f %name-files.all
 
 %changelog
+* Fri Jun 21 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0.0-alt4
+- Add requires to GSSAPI SASL2 plugin
+
 * Mon Jun 17 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0.0-alt3
 - Prepare static build for Sisyphus
 - Clean submodules from package sources
