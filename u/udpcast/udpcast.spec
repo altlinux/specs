@@ -1,12 +1,12 @@
 Name: udpcast
 Version: 20110710
-Release: alt1.1
+Release: alt2
 
 Summary: UDP broadcast file distribution and installation
 License: GPLv2+ and BSD
 Group: Networking/Other
 
-URL: http://udpcast.linux.lu/
+Url: http://udpcast.linux.lu/
 Source: http://udpcast.linux.lu/download/%name-%version.tar.gz
 Patch:  udpcast-fix-build.patch
 
@@ -21,7 +21,10 @@ Allows easy installation of client machines via UDP broadcast.
 %patch -p2
 
 # Don't pass -s (strip) option to ld
-subst 's/LDFLAGS +=-s//' Makefile.in
+sed -i 's/LDFLAGS +=-s//' Makefile.in
+
+# -O6 is just as insane in 2019
+sed -i 's/-O6/-O%_optlevel/' Makefile.in
 
 %build
 %configure
@@ -38,6 +41,9 @@ subst 's/LDFLAGS +=-s//' Makefile.in
 %doc cmd.html COPYING
 
 %changelog
+* Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 20110710-alt2
+- Fix superfluous optimization level
+
 * Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 20110710-alt1.1
 - Fix build
 
