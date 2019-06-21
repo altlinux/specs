@@ -1,5 +1,5 @@
 Name: odfpy
-Version: 1.3.6
+Version: 1.4.0
 Release: alt1
 Summary: Python scripts for manipulating OpenDocument files
 
@@ -81,22 +81,28 @@ understanding of data types.
 %python3_install
 
 %files -n %packagename
-%docdir examples
-%docdir contrib
+%doc examples
+%doc contrib
+%doc *odt
 %python_sitelibdir/*egg-info
 %python_sitelibdir/odf/
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %files -n python3-module-%name
-%docdir examples
-%docdir contrib
+%doc examples
+%doc contrib
+%doc *odt
 %python3_sitelibdir/*egg-info
 %python3_sitelibdir/odf/
 
 %changelog
+* Thu Jun 20 2019 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1
+- Autobuild version bump to 1.4.0
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.3.6-alt1
 - Autobuild version bump to 1.3.6
 
