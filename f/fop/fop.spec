@@ -13,52 +13,53 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.0
-Release:        alt1_9jpp8
+Version:        2.2
+Release:        alt1_4jpp8
 # ASL 1.1:
-# several files in src/java/org/apache/fop/render/awt/viewer/resources/
+# several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is ASL 2.0
 License:        ASL 2.0 and ASL 1.1
-URL:            http://xmlgraphics.apache.org/fop
-# ./clean-tarball %%{version}
-Source0:        %{name}-%{version}-clean.tar.gz
+URL:            https://xmlgraphics.apache.org/fop
+Source0:        https://www.apache.org/dist/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
 Source1:        %{name}.script
 Source2:        batik-pdf-MANIFEST.MF
-Source3:        http://mirrors.ibiblio.org/pub/mirrors/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
-Source4:        http://www.apache.org/licenses/LICENSE-1.1.txt
-Patch0:         0001-Main.patch
-Patch1:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
-Patch2:         0003-Disable-javadoc-doclint.patch
-Patch3:         0004-Port-to-QDox-2.0.patch
-# https://issues.apache.org/jira/browse/FOP-2461
-Patch4:         0005-NPE-FOP-2461.patch
-Patch5:         0006-Allow-javascript-in-javadoc.patch
+Source3:        https://maven.ibiblio.org/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
+Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
+Patch1:         0001-Main.patch
+Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
+Patch3:         0003-Disable-javadoc-doclint.patch
+Patch4:         0004-Port-to-QDox-2.0.patch
+Patch5:         0005-Allow-javascript-in-javadoc.patch
+Patch6:         0006-Non-free-colour-profile-was-removed.patch
 
 BuildArch:      noarch
 
-Requires:       xmlgraphics-commons >= 1.5
-Requires:       avalon-framework >= 4.1.4
-Requires:       batik >= 1.7
-Requires:       xalan-j2 >= 2.7.0
-Requires:       xml-commons-apis >= 1.3.04
-Requires:       apache-commons-httpclient
 Requires:       apache-commons-io >= 1.2
 Requires:       apache-commons-logging >= 1.0.4
+Requires:       avalon-framework >= 4.1.4
+Requires:       batik >= 1.7
 Requires:       fontbox
+Requires:       apache-commons-httpclient
 Requires:       java
+Requires:       xalan-j2 >= 2.7.0
+Requires:       xml-commons-apis >= 1.3.04
+Requires:       xmlgraphics-commons >= 1.5
+# Explicit requires for javapackages-tools since fop script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 
 BuildRequires:  ant
-BuildRequires:  javapackages-local
-BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-io
+BuildRequires:  apache-commons-logging
 BuildRequires:  avalon-framework
-BuildRequires:  xmlgraphics-commons >= 1.5
 BuildRequires:  batik
-BuildRequires:  servlet
-BuildRequires:  qdox
-BuildRequires:  xmlunit
-BuildRequires:  junit
 BuildRequires:  fontbox
+BuildRequires:  javapackages-local
+BuildRequires:  junit
+BuildRequires:  qdox
+BuildRequires:  servlet
+BuildRequires:  xmlgraphics-commons >= 1.5
+BuildRequires:  xmlunit
 Source44: import.info
 
 Provides: xmlgraphics-fop = %{epoch}:%version-%release
@@ -83,17 +84,19 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 cp %{SOURCE4} LICENSE-1.1
 
+rm -f fop/lib/*.jar fop/lib/build/*.jar
+
 #upstream workaround -- many thanks to spepping@apache.org -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
-ln -s %{_javadir}/qdox.jar lib/build/qdox.jar
+ln -s %{_javadir}/qdox.jar fop/lib/build/qdox.jar
 
 %build
 #qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
@@ -101,16 +104,18 @@ export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
     fontbox xmlgraphics-commons batik-all avalon-framework-api \
     avalon-framework-impl servlet batik/batik-svg-dom xml-commons-apis \
     xml-commons-apis-ext objectweb-asm/asm-all xmlunit)
-ant jar-main transcoder-pkg javadocs
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+ant -f fop/build.xml jar-main transcoder-pkg javadocs
 
 %install
 # inject OSGi manifest
-jar ufm build/%{name}.jar %{SOURCE2}
+jar ufm fop/build/%{name}.jar %{SOURCE2}
+
 
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-install -p -m 644 build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
+install -p -m 644 fop/build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -p -m 644 fop/build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
 
 # script
 install -d -m 755 %{buildroot}%{_bindir}
@@ -118,11 +123,11 @@ install -p -m 755 %{SOURCE1} %{buildroot}%{_bindir}/fop
 
 # data
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf
-cp -rp conf/* %{buildroot}%{_datadir}/%{name}/conf
+cp -rp fop/conf/* %{buildroot}%{_datadir}/%{name}/conf
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
+cp -rp fop/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
 
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
@@ -152,6 +157,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Fri Jun 21 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_4jpp8
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_9jpp8
 - java update
 
