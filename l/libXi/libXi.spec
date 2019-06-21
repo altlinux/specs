@@ -1,6 +1,6 @@
 Name: libXi
-Version: 1.7.9
-Release: alt2
+Version: 1.7.10
+Release: alt1
 Summary: X Input Extension Library
 License: MIT/X11
 Group: System/Libraries
@@ -33,6 +33,7 @@ develop programs which make use of %name
 %build
 %autoreconf
 %configure \
+	--disable-specs \
 	--disable-static
 %make_build
 
@@ -43,14 +44,15 @@ develop programs which make use of %name
 %_libdir/*.so.*
 
 %files devel
-%dir %_docdir/%name
-%_docdir/%name/*.html
 %_includedir/X11
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
 %changelog
+* Fri Jun 21 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.7.10-alt1
+- 1.7.10
+
 * Tue Apr 02 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.7.9-alt2
 - removed ubt
 

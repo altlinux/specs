@@ -1,5 +1,5 @@
 Name: libX11
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 Epoch: 3
 Summary: X11 Library
@@ -54,21 +54,19 @@ This package contains set of Xorg locales
 	%{subst_enable ipv6} \
 	%{subst_enable loadable_i18n} \
 	%{subst_enable xlocaledir} \
+	--disable-specs \
 	--disable-static
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
-find %buildroot%_docdir -name \*.xml -delete
-find %buildroot%_docdir -name \*.db -delete
-
 %if_enabled loadable_i18n
 rm -f %buildroot%_libdir/X11/locale/common/*.la
 %endif
 
 %files
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS COPYING NEWS README.md
 %_libdir/*.so.*
 %if_enabled loadable_i18n
 %_libdir/X11/locale
@@ -78,7 +76,6 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_man5dir/*.5*
 
 %files devel
-%_docdir/%name
 %_includedir/X11/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -88,6 +85,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Fri Jun 21 2019 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.8-alt1
+- 1.6.8
+
 * Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.7-alt1
 - 1.6.7
 
