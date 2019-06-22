@@ -6,7 +6,7 @@
 
 Name: erlang-%realname
 Version: 1.0
-Release: alt3
+Release: alt4
 Summary: Erlang interface to systemd notify subsystem
 Group: Development/Erlang
 License: MIT
@@ -16,7 +16,6 @@ Url: https://github.com/systemd/erlang-sd_notify
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-devel erlang-otp-devel
 BuildRequires: rebar
 BuildRequires: libsystemd-devel
@@ -42,6 +41,9 @@ BuildRequires: libsystemd-devel
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3
 - NMU: remove %ubt from release
 
