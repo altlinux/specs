@@ -1,7 +1,7 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt5
+Release: alt6
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -22,7 +22,7 @@ Patch1: kcheckers-0.8.1-alt-prefix.patch
 Patch2: kcheckers-0.8.1-alt-qt-translator.patch
 Patch3: kcheckers-0.8.1-qt5.patch
 
-BuildRequires(pre): qt5-base-devel rpm-build-ubt
+BuildRequires(pre): qt5-base-devel
 BuildRequires: qt5-tools
 
 %description
@@ -67,6 +67,9 @@ install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt6
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt5
 - NMU: remove %ubt from release
 
