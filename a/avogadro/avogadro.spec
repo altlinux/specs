@@ -8,7 +8,7 @@
 
 Name: avogadro
 Version: 1.2.0
-Release: alt5
+Release: alt6
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -37,7 +37,6 @@ Patch102: avogadro-1.1.1-alt-fix-gcc6-version.patch
 
 # Automatically added by buildreq on Tue Feb 08 2011 (-bi)
 #BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libglew-devel libnumpy-devel libopenbabel-devel libqt3-devel libxkbfile-devel openbabel python-module-numpy-testing python-module-sip-devel python-modules-ctypes qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): python-module-sip-devel
 BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen3 gcc-c++
 BuildRequires: libGLEW-devel libnumpy-devel libopenbabel-devel libqt4-devel
@@ -145,6 +144,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt6
+- NMU: remove rpm-build-ubt from BR:
+
 * Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt5
 - rebuild with python-module-sip-4.9.13
 
