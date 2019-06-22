@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 1.8.4
-Release: alt3
+Release: alt4
 %define rname jsoncpp
 %define sover 19
 %define libname lib%rname%sover
@@ -16,7 +16,6 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Jun 11 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
 #BuildRequires: cmake doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw gcc-c++ graphviz libdb4-devel python-module-google python-modules-compiler rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen gcc-c++ graphviz rpm-build-python python-modules kde-common-devel
 
 %description
@@ -81,6 +80,9 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 #%_docdir/%name/
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
 - NMU: remove %ubt from release
 
