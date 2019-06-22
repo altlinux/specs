@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 6.8
-Release: alt3
+Release: alt4
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -11,7 +11,7 @@ Group: System/Kernel and hardware
 Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt rpm-macros-pam0
+BuildRequires(pre): rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
 BuildRequires: python-module-docutils
 Requires: keyutils
@@ -98,6 +98,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 6.8-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Mar 28 2019 Michael Shigorin <mike@altlinux.org> 6.8-alt3
 - introduced doc knob (on by default) to work around ftbfs on e2k
 - added explicit BR(pre): rpm-macros-pam0
