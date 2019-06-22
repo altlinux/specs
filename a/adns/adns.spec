@@ -1,12 +1,11 @@
 Name: adns
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: GNU adns, an asynchronous DNS resolver
 License: GPLv2+
 Group: Networking/Other
 URL: http://www.gnu.org/software/adns/
-BuildRequires(pre):rpm-build-ubt
 
 Source: adns-%version.tar
 Patch0: %name-%version-alt.patch
@@ -80,6 +79,9 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 %_libdir/lib%name.a
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
 - NMU: remove %ubt from release
 
