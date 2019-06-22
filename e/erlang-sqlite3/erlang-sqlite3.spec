@@ -4,7 +4,7 @@
 
 Name: erlang-%realname
 Version: 1.1.6
-Release: alt2
+Release: alt3
 Summary: Sqlite gen_server port for Erlang. Creates, reads and writes to sqlite database.
 Group: Development/Erlang
 License: Erlang Public License Version 1.1
@@ -14,7 +14,6 @@ Url: https://github.com/processone/erlang-sqlite3
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: libsqlite3-devel
@@ -41,6 +40,9 @@ rm -rf sqlite3_amalgamation
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt2
 - NMU: remove %ubt from release
 
