@@ -6,7 +6,7 @@
 
 Name: freerdp
 Version: 2.0.0
-Release: alt1.git20181120
+Release: alt2.git20181120
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -20,7 +20,6 @@ Requires: xfreerdp = %EVR
 Requires: wlfreerdp = %EVR
 Requires: %name-plugins-standard = %EVR
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++
 BuildRequires: docbook-style-xsl git-core xmlto libpcre-devel
 BuildRequires: pkgconfig(alsa)
@@ -293,6 +292,9 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2.git20181120
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Nov 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.0.0-alt1.git20181120
 - Fifth release candidate for 2.0.0:
 - multiple CVE fixes
