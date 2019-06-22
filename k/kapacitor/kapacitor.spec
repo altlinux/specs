@@ -10,7 +10,7 @@
 
 Name:		kapacitor
 Version:	1.3.3
-Release:	alt2
+Release:	alt3
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
 Group:		Development/Other
@@ -25,7 +25,7 @@ Source103: %name.service
 Source104: %name.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 
 %description
 Open source framework for processing, monitoring, and alerting on time series data.
@@ -99,6 +99,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2
 - NMU: remove %ubt from release
 
