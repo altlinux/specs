@@ -2,13 +2,12 @@
 
 Name: apache2-mod_lookup_identity
 Version: 1.0.0
-Release: alt2
+Release: alt3
 License: ASL 2.0 
 Group: System/Servers
 Summary: Apache module to retrieve additional information about the authenticated user
 Url: http://www.adelton.com/apache/mod_lookup_identity/
 Source0: %name-%version.tar
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): apache2-devel
 BuildRequires: libdbus-devel
 BuildRequires: pkgconfig
@@ -45,6 +44,9 @@ install -m 644 .libs/mod_lookup_identity.so %buildroot%apache2_moduledir/mod_loo
 %apache2_moduledir/mod_lookup_identity.so
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2
 - NMU: remove %ubt from release
 
