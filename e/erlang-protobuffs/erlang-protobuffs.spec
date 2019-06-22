@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 0.9.0
-Release: alt2
+Release: alt3
 Summary: A set of Protocol Buffers tools and modules for Erlang applications
 Group: Development/Erlang
 License: Apache 2.0
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 Source1: erlang-protobuffs-fedora-protoc-erl
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-common_test-devel
@@ -45,6 +44,9 @@ install -D -p -m 0755 %SOURCE1 %buildroot%_bindir/protoc-erl
 %_bindir/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2
 - NMU: remove %ubt from release
 
