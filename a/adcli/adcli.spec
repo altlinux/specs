@@ -2,7 +2,7 @@
 Name: adcli
 Version: 0.8.2
 
-Release: alt2
+Release: alt3
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -11,7 +11,6 @@ Url: http://cgit.freedesktop.org/realmd/adcli
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool
 BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel libsasl2-devel
@@ -44,6 +43,9 @@ standard LDAP and Kerberos calls.
 %_mandir/*/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt2
 - NMU: remove %ubt from release
 
