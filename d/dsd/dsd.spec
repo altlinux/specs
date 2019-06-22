@@ -1,6 +1,6 @@
 Name:     dsd
 Version:  1.7.0
-Release:  alt2.20150806.1
+Release:  alt3.20150806.1
 
 Summary:  Digital Speech Decoder
 License:  GPLv2+
@@ -11,7 +11,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(sndfile)
@@ -39,6 +39,9 @@ which is a separate package.
 %_bindir/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3.20150806.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt2.20150806.1
 - NMU: remove %ubt from release
 
