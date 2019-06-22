@@ -18,7 +18,7 @@
 
 Name: calligraplan
 Version: 3.1.0
-Release: alt4.qa1
+Release: alt5.qa1
 Epoch: 0
 %K5init
 
@@ -35,7 +35,7 @@ Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.t
 # Upstream patches
 Patch1: 0001-Fix-build-with-Qt-5.11-missing-headers.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
@@ -262,6 +262,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt5.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt4.qa1
 - NMU: applied repocop patch
 
