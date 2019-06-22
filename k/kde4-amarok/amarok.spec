@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.9.0
-Release: alt7
+Release: alt8
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -26,7 +26,7 @@ Patch102: alt-ffmpeg3.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
-BuildRequires(pre): rpm-build-ubt kde4libs-devel kde4base-runtime-devel
+BuildRequires(pre): kde4libs-devel kde4base-runtime-devel
 BuildRequires: libmariadbd-devel libmariadb-devel
 BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
@@ -162,6 +162,9 @@ fi
 
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt8
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Jan 14 2019 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt7
 - crean requires
 
