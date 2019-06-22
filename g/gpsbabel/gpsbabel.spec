@@ -2,7 +2,7 @@
 
 Name: gpsbabel
 Version: 1.5.4
-Release: alt3
+Release: alt4
 
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libexpat-devel libusb-devel zlib-devel libminizip-devel gcc-c++
 BuildRequires: libshape-devel
 BuildRequires: qt5-base-devel qt5-tools
@@ -97,6 +96,9 @@ install -m 0644 -p gpsbabel.png %buildroot%_iconsdir/hicolor/256x256/apps/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt3
 - NMU: remove %ubt from release
 
