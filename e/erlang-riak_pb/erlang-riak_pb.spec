@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 2.3.2
-Release: alt2
+Release: alt3
 Summary: Riak Protocol Buffers Messages
 Group: Development/Erlang
 License: ASL 2.0
@@ -17,7 +17,6 @@ Patch1: erlang-riak_pv-upstream-nowarn.patch
 Patch2: erlang-riak_pb-alt-deps.patch
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-hamcrest
@@ -47,6 +46,9 @@ various Erlang-specific utility modules for the message types.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2
 - NMU: remove %ubt from release
 
