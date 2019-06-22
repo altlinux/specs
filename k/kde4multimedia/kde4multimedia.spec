@@ -10,7 +10,7 @@ Name: kde4multimedia
 %define minor 08
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -36,7 +36,7 @@ Patch1: alt-kmix-plasma.patch
 # ALT
 #
 
-BuildRequires(pre): rpm-build-ubt kde4libs-devel
+BuildRequires(pre): kde4libs-devel
 #kde4base-workspace-devel
 BuildRequires: gcc-c++
 BuildRequires: libcdparanoia-devel
@@ -321,6 +321,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 15.08.0-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Mar 15 2019 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt4
 - fix requires
 
