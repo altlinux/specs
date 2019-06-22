@@ -2,7 +2,7 @@
 
 Name: erlang-riak_client
 Version: 2.5.3
-Release: alt2
+Release: alt3
 Summary: Erlang client for Riak
 Group: Development/Erlang
 License: ASL 2.0
@@ -15,7 +15,6 @@ Source: %name-%version.tar
 Patch1: erlang-riak_client-alt-nowarn.patch
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-riak_pb
@@ -42,6 +41,9 @@ Erlang client for Riak.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2
 - NMU: remove %ubt from release
 
