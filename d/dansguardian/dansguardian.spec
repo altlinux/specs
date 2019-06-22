@@ -1,6 +1,6 @@
 Name: dansguardian
 Version: 2.12.0.3
-Release: alt2
+Release: alt3
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
@@ -14,7 +14,6 @@ Patch2: %name-lists-2.9.8.1.patch
 Patch3: %name-2.10.1.1-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++ libpcre-devel zlib-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 DansGuardian is a web content filtering proxy that uses Squid to do all the fetching.
@@ -78,6 +77,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.0.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.0.3-alt2
 - NMU: remove %ubt from release
 
