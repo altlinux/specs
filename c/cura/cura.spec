@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 3.6.0
-Release: alt1.1
+Release: alt2.1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -19,7 +19,6 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
@@ -99,6 +98,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.6.0-alt2.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Apr 19 2019 Anton Midyukov <antohami@altlinux.org> 1:3.6.0-alt1.1
 - Not rebuild locales files
 
