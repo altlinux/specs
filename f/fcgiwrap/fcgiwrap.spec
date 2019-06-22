@@ -1,7 +1,7 @@
 Summary: Simple FastCGI wrapper for CGI scripts
 Name: fcgiwrap
 Version: 1.1.0
-Release: alt4
+Release: alt5
 License: BSD-style
 Group: System/Servers
 URL: http://nginx.localdomain.pl/wiki/FcgiWrap
@@ -11,7 +11,6 @@ Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Tue Oct 19 2010
 BuildRequires: libfcgi-devel
-BuildRequires(pre):rpm-build-ubt
 BuildRequires: libsystemd-devel
 
 %description
@@ -44,6 +43,9 @@ autoreconf -fisv
 %_man8dir/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt4
 - fixed build with recent gcc
 
