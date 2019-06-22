@@ -14,7 +14,7 @@
 
 Name: flannel
 Version: 0.10.0
-Release: alt2
+Release: alt3
 Summary: flannel is a network fabric for containers
 Group: Development/Other
 License: ASL 2.0
@@ -27,7 +27,7 @@ Source4: flannel-tmpfiles.conf
 
 ExclusiveArch: %go_arches
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc
 
 %description
@@ -68,6 +68,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2
 - NMU: remove %ubt from release
 
