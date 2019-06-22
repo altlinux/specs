@@ -1,6 +1,6 @@
 Name: facile
 Version: 1.1.3
-Release: alt7
+Release: alt8
 
 Group: System/Libraries
 Summary: Constraint programming library
@@ -10,7 +10,6 @@ URL: http://www.recherche.enac.fr/log/facile/
 Source0: http://www.recherche.enac.fr/log/facile/distrib/%name-%version.tar.gz
 Patch1: facile-1.1-install.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-ocaml ocaml
 
 %description
@@ -32,6 +31,9 @@ make DESTDIR=%buildroot install
 %_libdir/ocaml/facile
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt8
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt7
 - rebuild with new ocaml
 
