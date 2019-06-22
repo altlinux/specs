@@ -3,7 +3,7 @@
 
 Name: autotrace
 Version: 0.31.1
-Release: alt9
+Release: alt10
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -25,7 +25,6 @@ Patch8: %name-0.31.1-CVE-2016-7392.patch
 %define pstoedit_ver 3.32
 
 Requires: lib%name = %version-%release
-BuildRequires(pre):rpm-build-ubt
 
 %if_with pstoedit
 BuildPreReq: libpstoedit-devel >= %pstoedit_ver
@@ -136,6 +135,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.31.1-alt10
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Jun 05 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.31.1-alt9
 - resurrect in sisyphus
 
