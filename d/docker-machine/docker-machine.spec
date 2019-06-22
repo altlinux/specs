@@ -10,7 +10,7 @@
 
 Name: docker-machine
 Version: 0.15.0
-Release: alt2
+Release: alt3
 Summary: Docker Machine is a tool that lets you install Docker Engine on virtual hosts
 
 Group: Development/Other
@@ -18,7 +18,7 @@ License: ASL 2.0
 Url: https://%import_path
 ExclusiveArch: %go_arches
 Source: %name-%version.tar
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 
 %description
 Machine lets you create Docker hosts on your computer, on cloud providers, and
@@ -57,6 +57,9 @@ rm -rf -- %buildroot/%_datadir
 %_bindir/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.15.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.15.0-alt2
 - NMU: remove %ubt from release
 
