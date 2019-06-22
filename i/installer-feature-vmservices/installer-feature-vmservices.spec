@@ -1,6 +1,6 @@
 Name: installer-feature-vmservices
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Setup virtual machine services
 License: GPL
@@ -9,7 +9,6 @@ Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Setup services for start/not start in/out of virtual machine.
@@ -28,6 +27,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - using systemd-detect-virt
 
