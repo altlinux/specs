@@ -6,7 +6,7 @@
 
 Name: avidemux-qt
 Version: 2.7.3
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -43,7 +43,6 @@ Patch100: avidemux-2.5.1-opencore-check.patch
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake-modules elfutils glibc-devel-static libEGL-devel libGL-devel libX11-devel libXext-devel libXv-devel libalsa-devel libgpg-error libjack-devel libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libqt5-core libqt5-gui libqt5-script libqt5-widgets libqt5-xml libstdc++-devel libvorbis-devel libxcb-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir rsync ruby ruby-stdlibs xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: bzlib-devel cmake gcc-c++ git-core libSDL-devel libXvMC-devel libaften-devel libarts-devel libdca-devel libfaad-devel liblame-devel liblzma-devel liblzo2-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel libsqlite3-devel libva-devel libvdpau-devel libvpx-devel libx264-devel libx265-devel libxvid-devel nss-ldapd perl-podlators python-module-google qt5-script-devel qt5-tools rpm-build-python3 rpm-build-ruby texi2html xsltproc yasm zlib-devel-static
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-devel libSDL2-devel python-devel
 BuildRequires: libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
 #BuildRequires: libaften-devel
@@ -200,6 +199,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 2.7.3-alt1
 - new version (ALT#36355)
 
