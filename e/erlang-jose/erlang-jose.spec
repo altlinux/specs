@@ -32,7 +32,7 @@
 
 Name: erlang-%realname
 Version: 1.8.4
-Release: alt2
+Release: alt3
 Summary: JSON Object Signing and Encryption (JOSE) for Erlang and Elixir
 Group: Development/Erlang
 License: MPLv2.0
@@ -46,7 +46,6 @@ Patch1: erlang-jose-fedora-use-include-instead-of-include_lib-for-jose-in-tests.
 Patch2: erlang-jose-fedora-remove-warnings_as_errors-to-work-around-47.patch
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 BuildRequires: erlang-common_test-devel
@@ -76,6 +75,9 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2
 - NMU: remove %ubt from release
 
