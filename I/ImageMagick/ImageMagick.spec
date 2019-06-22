@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -39,7 +39,6 @@ Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
 BuildPreReq: libpng-devel
 
-BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel libtiff-devel libwmf-devel libxml2-devel perl-devel xdg-utils xorg-cf-files
@@ -252,6 +251,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 6.9.10.49-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Jun 11 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.49-alt1
 - new version 6.9.10.49
 
