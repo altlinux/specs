@@ -1,6 +1,6 @@
 Name: dbview
 Version: 1.0.4
-Release: alt3
+Release: alt4
 
 Summary: Dbview - view dBase files
 License: GPL
@@ -10,7 +10,6 @@ Url: ftp://metalab.unc.edu/pub/Linux/apps/database/proprietary/
 Source: %name-%version.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-BuildRequires(pre): rpm-build-ubt
 
 Summary(ru_RU.CP1251): Dbview - программа для просмотра dBase файлов
 
@@ -40,6 +39,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 01 2019 Michael Shigorin <mike@altlinux.org> 1.0.4-alt3
 - minor spec cleanup
 - converted spec to UTF-8
