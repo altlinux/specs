@@ -1,6 +1,6 @@
 Name: gtv-dvb
 Version: 2.2
-Release: alt2
+Release: alt3
 
 Summary: Media Player & IPTV & Digital TV (DVB, ATSC, DTMB)
 
@@ -11,7 +11,6 @@ Url: https://github.com/vl-nix/gtv
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Buildrequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-plugins-bad-1.0) 
 Requires: v4l-utils gst-libav
 
@@ -36,6 +35,9 @@ Audio & Video & Digital TV - Gstreamer 1.0
 %doc README.md LICENSE
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2
 - NMU: remove %ubt from release
 
