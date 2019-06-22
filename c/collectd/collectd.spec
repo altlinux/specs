@@ -33,7 +33,7 @@
 
 Name: collectd
 Version: 5.8.1
-Release: alt4
+Release: alt5
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -48,7 +48,6 @@ Patch0: %name-%version-alt.patch
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
 BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
 BuildRequires: libstatgrab-devel
-BuildRequires(pre):rpm-build-ubt
 
 %if_enabled perl
 BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser perl-RRD
@@ -816,6 +815,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 5.8.1-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Mar 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.1-alt4
 - rebuilt without x11amp plugin
 
