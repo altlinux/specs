@@ -2,7 +2,7 @@
 
 Name: erlang-%realname
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: Lua in Erlang
 Group: Development/Erlang
 License: ASL 2.0
@@ -13,7 +13,6 @@ Url: https://github.com/rvirding/luerl
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 
@@ -35,6 +34,9 @@ An experimental implementation of Lua 5.2 written solely in pure Erlang.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2
 - NMU: remove %ubt from release
 
