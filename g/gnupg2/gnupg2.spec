@@ -4,7 +4,7 @@
 
 Name: gnupg2
 Version: 2.2.15
-Release: alt1
+Release: alt2
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -62,7 +62,6 @@ Provides: %name(gost) = %gostversion
 Patch19: %name-%version-issuers-%issuersversion.patch
 Provides: %name(issuersconf) = %issuersversion
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgcrypt-devel >= 1.8.3-alt4
 BuildRequires: libksba-devel >= 1.3.6-alt7
 BuildRequires: libassuan-devel
@@ -162,6 +161,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.15-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Mar 26 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.15-alt1
 - Freshed up to version 2.2.15.
 
