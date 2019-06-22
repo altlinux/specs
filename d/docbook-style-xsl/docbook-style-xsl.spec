@@ -2,7 +2,7 @@
 
 Name: docbook-style-xsl
 Version: 1.79.1
-Release: alt3
+Release: alt4
 Group: Publishing
 
 Summary: Norman Walsh's XSL stylesheets for DocBook XML
@@ -52,7 +52,6 @@ Patch7: docbook-style-xsl-non-recursive-string-subst.patch
 
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: xsltproc perl-base xml-utils unzip
 
 %package doc
@@ -158,6 +157,9 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.79.1-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.79.1-alt3
 - NMU: remove %ubt from release
 
