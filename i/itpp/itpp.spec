@@ -3,7 +3,7 @@
 
 Name: itpp
 Version: 4.3.1
-Release: alt2.1
+Release: alt3.1
 Summary: C++ library of math, signal processing and communication routines
 License: GPL-2.0+
 Group: Development/C
@@ -21,7 +21,7 @@ Patch3: itpp-respect_dlib_suffix.diff
 # PATCH-FIX-UPSTREAM itpp-reproducible.patch bmwiedemann -- https://sourceforge.net/p/itpp/git/merge-requests/3/
 Patch4: itpp-reproducible.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
@@ -127,6 +127,9 @@ fdupes -s %buildroot%_docdir
 %_docdir/%name
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt3.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt2.1
 - NMU: remove %ubt from release
 
