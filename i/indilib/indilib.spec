@@ -3,7 +3,7 @@
 
 Name: indilib
 Version: 1.7.5
-Release: alt1
+Release: alt2
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -24,7 +24,6 @@ Source: lib%{shortname}_%version.tar
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
 BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel libtheora-devel
 BuildRequires: kde-common-devel
@@ -119,6 +118,9 @@ popd
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.5-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt1
 - new version
 
