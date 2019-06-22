@@ -9,7 +9,7 @@
 
 Name: fuzzylite
 Version: 5.1
-Release: alt2
+Release: alt3
 Summary: A fuzzy logic control library in C++
 Group: System/Libraries
 # Next version (6.0) will be: GPLv3 or ASL 2.0
@@ -19,7 +19,7 @@ Url: http://www.fuzzylite.com
 Source: %name-%version.tar
 Patch0: fuzzylite-5.1-fuzzylite.pc-configurable-for-different-architectures.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: ccmake cmake ctest
 Requires: %libname = %EVR
@@ -84,6 +84,9 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 5.1-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.1-alt2
 - NMU: remove %ubt from release
 
