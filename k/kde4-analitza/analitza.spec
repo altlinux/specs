@@ -3,7 +3,7 @@
 %define rname analitza
 Name: kde4-analitza
 Version: 4.14.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Mathematical features
@@ -17,7 +17,6 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Jan 25 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libicu libqt3-devel libreadline-devel python-module-distribute rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel libreadline-devel zlib-devel kde-common-devel
 BuildRequires: libncursesw-devel libGL-devel
 
@@ -103,6 +102,9 @@ Development files for %name
 
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.0-alt3
 - NMU: remove %ubt from release
 
