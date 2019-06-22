@@ -2,7 +2,7 @@
 
 Name: cmark
 Version: 0.28.3
-Release: alt2
+Release: alt3
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
 Group: Text tools
@@ -11,7 +11,6 @@ URL: https://github.com/commonmark/cmark
 # https://github.com/commonmark/cmark.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake ctest
 
 %description
@@ -74,6 +73,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.28.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.28.3-alt2
 - NMU: remove %ubt from release
 
