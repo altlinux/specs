@@ -5,7 +5,7 @@
 
 Name: kde4-styles-%rname
 Version: 5.14.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE4 visual style
@@ -20,7 +20,7 @@ Patch1: alt-install-colors.patch
 # Automatically added by buildreq on Fri Oct 26 2018 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxcb-devel libxkbfile-devel perl phonon-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby-stdlibs sh3 xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
 #BuildRequires: gcc-c++ glibc-devel-static kde4libs-devel libXxf86misc-devel libfftw3-devel libicu62 libqt4-webkit-devel python3-dev ruby
-BuildRequires(pre): kde-common-devel rpm-build-ubt
+BuildRequires(pre): kde-common-devel
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel kde4libs-devel libXxf86misc-devel libfftw3-devel libqt4-webkit-devel zlib-devel
 
@@ -61,6 +61,9 @@ KDE4 library
 %_K4libdir/libbreezecommon4.so.*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 5.14.2-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.14.2-alt1
 - new version
 
