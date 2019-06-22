@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 4.12
-Release: alt3
+Release: alt4
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -17,7 +17,6 @@ Source5: %name.pc
 
 Requires: lib%name = %EVR
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
 BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
@@ -145,6 +144,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt3
 - NMU: remove %ubt from release
 
