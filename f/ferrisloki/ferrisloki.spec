@@ -1,6 +1,6 @@
 Name: ferrisloki
 Version: 3.0.13
-Release: alt2
+Release: alt3
 Summary: Loki C++ library from Modern C++ Design
 License: GPL
 Group: System/Libraries
@@ -9,7 +9,6 @@ Url: http://www.libferris.com/
 # https://sourceforge.net/projects/witme/files/ferrisloki/
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libsigc++2-devel
 
 %description
@@ -71,6 +70,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.13-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.13-alt2
 - NMU: remove %ubt from release
 
