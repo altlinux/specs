@@ -4,7 +4,7 @@
 
 Name: erlang-%realname
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: A property-based testing library for Erlang
 Group: Development/Erlang
 License: Apache 2.0
@@ -15,7 +15,6 @@ Url: https://github.com/triqng/triq
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: rebar
 
@@ -41,6 +40,9 @@ export ERL_LIBS=%buildroot%_erllibdir
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2
 - NMU: remove %ubt from release
 
