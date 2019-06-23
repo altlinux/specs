@@ -4,7 +4,7 @@
 
 Name: python-module-%shortname
 Version: 0.3.0
-Release: alt2
+Release: alt3
 
 Summary: Python library for Windows Remote Management
 
@@ -18,7 +18,6 @@ Source0: %name-%version.tar
 # similar to winexe based on Samba <https://sourceforge.net/projects/winexe/>
 Source1: winexe_py3winrm
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
@@ -110,6 +109,9 @@ popd
 %_bindir/*py3*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2
 - NMU: remove %ubt from release
 
