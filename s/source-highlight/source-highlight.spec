@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt7
+Release: alt8
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -11,7 +11,6 @@ Url: http://www.gnu.org/software/src-highlite/
 Source: %name-%version.tar
 Patch: https://src.fedoraproject.org/rpms/source-highlight/raw/master/f/source-highlight-3.1.8-no-black.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel gcc-c++ ctags help2man doxygen texlive-collection-basic texinfo
 BuildRequires: flex
 
@@ -93,6 +92,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt8
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue May 21 2019 Michael Shigorin <mike@altlinux.org> 3.1.8-alt7
 - added fedora patch to avoid black-on-black (see rh#1688372)
 - dropped %%ubt
