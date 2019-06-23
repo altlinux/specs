@@ -1,6 +1,6 @@
 Name: suricata
 Version: 4.0.3
-Release: alt2
+Release: alt3
 
 Summary: Intrusion Detection System
 
@@ -17,7 +17,6 @@ Source5: suricata.init
 
 Patch: alt-suricata-4.0.3-config.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libtool_2.4 libpcap-devel libpcre-devel libyaml-devel
 BuildRequires: libjansson-devel libnss-devel libcap-ng-devel libgnutls-devel
 BuildRequires: libnet-devel libmagic-devel zlib-devel liblua-devel
@@ -122,6 +121,9 @@ getent passwd _suricata > /dev/null \
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt2
 - NMU: rebuild with preludedb
 
