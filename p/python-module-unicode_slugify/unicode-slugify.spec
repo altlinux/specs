@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt2
+Release: alt3
 Summary: A slugifier that works in unicode
 License: BSD
 BuildArch: noarch
@@ -17,7 +17,6 @@ Url: https://pypi.org/project/unicode-slugify
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(six) python2.7(unidecode)
 BuildRequires: python-module-nose
@@ -132,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.5-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.5-alt2
 - NMU: remove %ubt from release
 
