@@ -1,6 +1,6 @@
 Name: qastools
 Version: 0.21.0
-Release: alt4
+Release: alt5
 
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch: disabled-tray-icon-at-startup.patch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
@@ -102,6 +102,9 @@ done
 %_man1dir/qasmixer.1.*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.21.0-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri May 31 2019 Michael Shigorin <mike@altlinux.org> 0.21.0-alt4
 - Dropped %%ubt
 - Minor spec cleanup
