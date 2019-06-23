@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 3.6.0
-Release: alt2
+Release: alt3
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -16,7 +16,7 @@ URL:     https://github.com/Ultimaker/Uranium
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3-devel cmake
 BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
@@ -96,6 +96,9 @@ python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %doc html LICENSE
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Jun 04 2019 Stanislav Levin <slev@altlinux.org> 3.6.0-alt2
 - Fixed Pytest4.x compatibility errors.
 
