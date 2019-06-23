@@ -1,6 +1,6 @@
 Name: qtsoap
 Version: 2.7
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: The Simple Object Access Protocol Qt-based client side library
@@ -13,7 +13,6 @@ Source: qtsoap-%version.tar.gz
 Patch1: qtsoap-2.7_1-opensource-install-pub-headers.patch
 Patch2: qtsoap-2.7_1-qt5-cleanups.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel-static phonon-devel libqt4-devel qt5-base-devel
 
 %description
@@ -116,6 +115,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3
 - NMU: remove %ubt from release
 
