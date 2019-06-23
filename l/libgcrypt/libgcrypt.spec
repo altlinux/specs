@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.8.4
-Release: alt2
+Release: alt3
 
 %define soname %{name}%{soversion}
 
@@ -24,7 +24,6 @@ Patch0: libgcrypt-1.8.4-fix-overflow-streebog.patch
 %define vkoversion 1.0.0
 Patch1: %name-%version-vko-%vkoversion.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -167,6 +166,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon May 13 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.4-alt2
 - Added patch fixing carry overflow in Stribog 512-bit addition.
 
