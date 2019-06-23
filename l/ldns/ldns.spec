@@ -6,7 +6,7 @@
 
 Name: ldns
 Version: 1.7.0
-Release: alt3
+Release: alt4
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -15,7 +15,6 @@ Summary: Lowlevel DNS(SEC) library with API
 # https://github.com/NLnetLabs/ldns.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libssl-devel doxygen perl libpcap-devel
 %if_with python
 BuildRequires:  python-devel, swig
@@ -156,6 +155,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3
 - NMU: remove %ubt from release
 
