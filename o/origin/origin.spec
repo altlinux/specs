@@ -30,7 +30,7 @@
 
 Name: origin
 Version: 3.11.0
-Release: alt1
+Release: alt2
 Summary: Open Source Container Management
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -40,7 +40,7 @@ Source: %name-%version.tar
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: systemd
 BuildRequires: bsdtar
 BuildRequires: golang >= %golang_version
@@ -293,6 +293,9 @@ install -p -m 644 contrib/systemd/origin-accounting.conf %buildroot%_sysconfdir/
 %_bindir/template-service-broker
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.11.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 3.11.0-alt1
 - new version 3.11.0
 
