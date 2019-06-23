@@ -4,7 +4,7 @@
 
 Name: smokeqt
 Version: 4.14.3
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Wed Sep 14 2011 (-bi)
 # optimized out: cmake-modules elfutils fontconfig libGL-devel libGLU-devel libqscintilla2-6-qt4 libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-help libqt4-multimedia libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config
 #BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 phonon-devel smokegen-devel
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt4-devel phonon-devel smokegen-devel
 #BuildRequires: kde-common-devel libsoprano-devel kde4libs-devel
 BuildRequires: kde-common-devel kde4libs-devel
@@ -374,6 +373,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.3-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.3-alt1
 - NMU: this is git v4.14.3 - set correct spec version
 
