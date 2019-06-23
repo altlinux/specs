@@ -1,6 +1,6 @@
 Name: pinta
 Version: 1.6
-Release: alt4
+Release: alt5
 
 Summary: An easy to use drawing and image editing program
 
@@ -21,7 +21,6 @@ ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm sparcv9 alpha s390x
 
 
 # Manually:
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-mono
 BuildRequires: glib2-devel intltool monodevelop libgtk-sharp2-devel
 
@@ -63,6 +62,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt4
 - NMU: remove %ubt from release
 
