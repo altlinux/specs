@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt2
+Release: alt3
 
 Summary: Zope Page Templates
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.pagetemplate
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -144,6 +143,9 @@ popd
 %python3_sitelibdir/zope/pagetemplate/tests
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt2
 - NMU: remove %ubt from release
 
