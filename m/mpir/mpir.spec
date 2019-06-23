@@ -1,6 +1,6 @@
 Name: mpir
 Version: 3.0.0
-Release: alt4
+Release: alt5
 Summary: A library for arbitrary precision arithmetic
 
 License: LGPLv3+
@@ -11,7 +11,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 # Repacked http://mpir.org/%name-%version.tar.bz2
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: texinfo
 BuildRequires: yasm
@@ -88,6 +87,9 @@ mv doc/devel doc/html
 %_infodir/mpir.info*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Jun 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.0-alt4
 - Fixed build on ppc64le.
 - Dropped useless aarch64 patch.
