@@ -1,7 +1,7 @@
 %define module_name proxmoxer
 Name: python-module-%module_name
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: Wrapper around Proxmox REST API v2
 License: %mit
@@ -13,7 +13,6 @@ Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
 
 BuildPreReq: rpm-build-python
 BuildRequires: python-devel
@@ -42,6 +41,9 @@ rm -rf %buildroot%python_sitelibdir/tests
 %python_sitelibdir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3
 - NMU: remove %ubt from release
 
