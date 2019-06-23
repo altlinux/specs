@@ -1,6 +1,6 @@
 Name: sngrep
 Version: 1.4.2
-Release: alt2
+Release: alt3
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
 
@@ -14,7 +14,6 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires: libncurses-devel libpcap libgnutls-devel libpcap-devel libpcre-devel libgcrypt-devel
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 sngrep is a tool for displaying SIP calls message flows from terminal.
@@ -44,6 +43,9 @@ as PCAP viewer.
 %_man8dir/sngrep.8*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt2
 - NMU: remove %ubt from release
 
