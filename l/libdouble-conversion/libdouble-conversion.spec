@@ -5,14 +5,13 @@
 Summary: Library providing binary-decimal and decimal-binary routines for IEEE doubles
 Name: lib%oname
 Version: 3.0.0
-Release: alt2
+Release: alt3
 License: BSD
 Group: System/Libraries
 Url: https://github.com/floitsch/double-conversion
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake ctest
 BuildRequires: gcc-c++
 
@@ -59,6 +58,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%oname
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt2
 - NMU: remove %ubt from release
 
