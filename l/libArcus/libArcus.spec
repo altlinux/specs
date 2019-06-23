@@ -3,7 +3,7 @@
 
 Name: libArcus
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -15,7 +15,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: fix_find_sip.patch
 
-Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3-dev cmake gcc-c++ pkgconfig(protobuf) python3-module-sip-devel protobuf-compiler
 
@@ -64,6 +63,9 @@ Communication library between internal components for Ultimaker software
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
 - New version 3.6.0
 
