@@ -3,7 +3,7 @@
 Summary: A system for processing and editing unstructured 3D triangular meshes
 Name: meshlab
 Version: 2016.12
-Release: alt4
+Release: alt5
 Url: http://meshlab.sourceforge.net/
 License: GPLv2+ and BSD and Public Domain
 Group: Graphics
@@ -61,7 +61,6 @@ Patch110: meshlab-2016.12-alt-qt5.11.patch
 # Fix no return statement in the non-void function
 Patch120: %name-g++8.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgomp-devel
 BuildRequires: bzlib-devel
 BuildRequires: pkgconfig(glew)
@@ -256,6 +255,9 @@ install -m 644 meshlab-%version/src/plugins_experimental/filter_segmentation/lic
 %_pixmapsdir/%name.png
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2016.12-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Feb 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 2016.12-alt4
 - no return statement in the non-void function fixed (according g++8)
 
