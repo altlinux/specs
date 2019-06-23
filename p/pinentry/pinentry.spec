@@ -5,7 +5,7 @@
 
 Name: pinentry
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -22,7 +22,6 @@ Source1: pinentry-wrapper
 # ALT
 Patch10: alt-mask-xprop.patch
 
-BuildRequires(pre): rpm-build-ubt
 %if_enabled qt5
 BuildRequires(pre): qt5-base-devel
 %endif
@@ -221,6 +220,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Apr 01 2019 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt3
 - fix spec cleanup
 
