@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: Shared Zope Toolkit browser components
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.browser
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -118,6 +117,9 @@ popd
 %python3_sitelibdir/zope/browser/*/tests.*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2
 - NMU: remove %ubt from release
 
