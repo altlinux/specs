@@ -1,7 +1,7 @@
 Summary: Powerful file manager for the console
 Name: lfm
 Version: 3.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/Python
 URL: https://inigo.katxi.org/devel/lfm/
@@ -10,7 +10,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %name-%version-alt-prefs.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python3-devel
 
 %description
@@ -35,6 +34,9 @@ export LC_ALL=en_US.UTF-8
 %_man1dir/%name.1*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2
 - NMU: remove %ubt from release
 
