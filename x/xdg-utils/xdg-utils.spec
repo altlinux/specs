@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.3
-Release: alt5
+Release: alt6
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -29,7 +29,6 @@ Patch15: xdg-email-detect-thunderbird-mate.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 25 2007
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: xmlto w3m
 
 AutoReq: no
@@ -104,6 +103,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt6
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt5
 - fix detect thunderbird for MATE
 
