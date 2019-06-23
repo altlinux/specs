@@ -2,7 +2,7 @@
 
 Name: libebml
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
@@ -12,7 +12,6 @@ Url: http://www.matroska.org
 # https://github.com/Matroska-Org/libebml.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
 
 %description
@@ -47,6 +46,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.7-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Apr 09 2019 Michael Shigorin <mike@altlinux.org> 1.3.7-alt1
 - 1.3.7
 - drop e2k workarounds for good
