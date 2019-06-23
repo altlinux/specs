@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0
-Release:        alt2.qa1
+Release:        alt3.qa1
 Summary:        Github roles for Sphinx docs
 Group:          Development/Python
 License:        BSD
@@ -14,7 +14,6 @@ BuildArch:      noarch
 # https://github.com/jupyter/sphinxcontrib_github_alt.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -62,6 +61,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.qa1
 - NMU: applied repocop patch
 
