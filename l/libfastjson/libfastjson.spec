@@ -2,7 +2,7 @@
 
 Name: libfastjson
 Version: 0.99.8
-Release: alt2
+Release: alt3
 
 Summary: A JSON implementation in C
 License: MIT
@@ -11,7 +11,6 @@ Group: System/Libraries
 Url: https://github.com/rsyslog/libfastjson
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 libfastjson implements a reference counting object
@@ -65,6 +64,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.99.8-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 0.99.8-alt2
 - drop %%ubt macro
 - minor spec cleanup
