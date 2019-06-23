@@ -15,7 +15,7 @@
 
 Name: mkvtoolnix
 Version: 23.0.0
-Release: alt2
+Release: alt3
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
@@ -27,7 +27,6 @@ Source: %name-%version.tar
 
 Provides: mkvmerge = %EVR
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
@@ -155,6 +154,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 23.0.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 23.0.0-alt2
 - NMU: remove %ubt from release
 
