@@ -12,7 +12,7 @@
 
 Name: prometheus-%oname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 Summary: Prometheus blackbox prober exporter
 
 Group: Development/Other
@@ -25,7 +25,7 @@ Source3: %name.init
 Source4: %name.service
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: promu
 BuildRequires: /proc
 
@@ -72,6 +72,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
