@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6.2
-Release: alt3
+Release: alt4
 
 Summary: Zope Internationalization Support
 License: ZPLv2.1
@@ -16,7 +16,6 @@ Url: http://pypi.python.org/pypi/zope.i18n
 Source: %name-%version.tar
 Patch0: %oname-fix-tests.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -171,6 +170,9 @@ popd
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Apr 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt3
 - requires for tests fixed
 
