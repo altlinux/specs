@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt2
+Release: alt3
 Summary:  Sliding window memory map manager
 License: BSD
 BuildArch: noarch
@@ -17,7 +17,6 @@ Url: https://pypi.org/project/smmap2
 Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-coverage python-module-nosexcover
@@ -120,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt2
 - NMU: remove %ubt from release
 
