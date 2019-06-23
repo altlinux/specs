@@ -4,7 +4,7 @@
 %define utilsname libzip-utils
 Name: libzip
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: C library for reading, creating, and modifying zip archives
@@ -13,7 +13,6 @@ Url: http://www.nih.at/libzip/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
 BuildRequires: /usr/bin/groff
 BuildRequires: libssl-devel zlib-devel bzlib-devel
@@ -84,6 +83,9 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 %_man3dir/*ZIP*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Feb 26 2019 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
 - new version
 
