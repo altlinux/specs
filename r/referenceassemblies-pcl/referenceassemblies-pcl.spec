@@ -19,7 +19,7 @@
 
 Name:           referenceassemblies-pcl
 Version:        2014.04.14
-Release:	alt3
+Release:	alt4
 Url:            http://go-mono.org/
 # https://github.com/mono/linux-packaging-referenceassemblies-pcl/
 Source0:	%name-%version.tar
@@ -30,7 +30,6 @@ Group:          Development/Other
 BuildArch:      noarch
 
 BuildRequires(Pre): rpm-build-mono >= 2.0.0
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: mono-devel >= 5.0.0.0
 BuildRequires: /proc
 
@@ -57,6 +56,9 @@ cp -a v4.6  %buildroot%_monodir/xbuild-frameworks/.NETPortable/
 %doc EULA.rtf
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2014.04.14-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2014.04.14-alt3
 - NMU: remove %ubt from release
 
