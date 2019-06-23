@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
 Group: System/Libraries
@@ -10,7 +10,6 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel
 
 %description
@@ -51,6 +50,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Mar 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
