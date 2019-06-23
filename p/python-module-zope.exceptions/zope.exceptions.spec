@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: Zope Exceptions
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.exceptions
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
@@ -124,6 +123,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
 - NMU: remove %ubt from release
 
