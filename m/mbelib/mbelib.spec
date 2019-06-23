@@ -1,6 +1,6 @@
 Name:     mbelib
 Version:  1.3.0
-Release:  alt2.1
+Release:  alt3.1
 
 Summary:  P25 Phase 1 and ProVoice vocoder
 License:  ISC
@@ -12,7 +12,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source:   %name-%version.tar
 Patch:    cmakelibdir.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 
 %description
@@ -49,6 +49,9 @@ Development files for mbelib
 %_libdir/libmbe.so
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt3.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2.1
 - NMU: remove %ubt from release
 
