@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.2.15
-Release:        alt2.qa1
+Release:        alt3.qa1
 Summary:        Python utility / library to sort Python imports
 Group:          Development/Python
 License:        MIT
@@ -14,7 +14,6 @@ BuildArch:      noarch
 # https://github.com/timothycrosley/isort.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-mock
 %if_with python3
@@ -92,6 +91,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt3.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt2.qa1
 - NMU: remove %ubt from release
 
