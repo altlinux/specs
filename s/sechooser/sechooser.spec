@@ -3,7 +3,7 @@
 
 Name: sechooser
 Version: 0.2.2
-Release: alt4
+Release: alt5
 
 Summary: Selinux user range chooser
 License: GPL
@@ -13,7 +13,6 @@ Requires: qt5-translations
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libselinux-devel
 %if_disabled qt5
 BuildRequires: gcc-c++ libqt4-devel
@@ -62,6 +61,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt4
 - NMU: remove %ubt from release
 
