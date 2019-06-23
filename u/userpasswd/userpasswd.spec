@@ -1,6 +1,6 @@
 Name: userpasswd
 Version: 0.3.3
-Release: alt2
+Release: alt3
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -12,7 +12,6 @@ Source: %name-%version.tar
 Conflicts: usermode
 BuildRequires: libgtk+2-devel
 
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Install this package if you would like to provide users with
@@ -36,6 +35,9 @@ graphical tool for changing password.
 %_datadir/pixmaps/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Dec 19 2018 Michael Shigorin <mike@altlinux.org> 0.3.3-alt2
 - drop %%ubt
 
