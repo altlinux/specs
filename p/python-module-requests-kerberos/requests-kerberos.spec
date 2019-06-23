@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 0.12.0
-Release: alt2
+Release: alt3
 Summary: A Kerberos authentication handler for python-requests
 License: %mit
 Group: Development/Python
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
@@ -92,6 +91,9 @@ popd
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2
 - NMU: remove %ubt from release
 
