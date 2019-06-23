@@ -1,6 +1,6 @@
 Name:     sddm-config-editor
 Version:  0.1
-Release:  alt2.20170916.1
+Release:  alt3.20170916.1
 
 Summary:  SDDM Configuration Editor
 License:  ASL 2.0
@@ -11,7 +11,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5Core)
@@ -49,6 +48,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3.20170916.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2.20170916.1
 - NMU: remove %ubt from release
 
