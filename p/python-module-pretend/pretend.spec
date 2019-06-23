@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt2.qa1
+Release: alt3.qa1
 Summary: A library for stubbing in Python
 License: BSD
 Group: Development/Python
@@ -14,7 +14,6 @@ BuildArch: noarch
 # https://github.com/alex/pretend.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -76,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt3.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2.qa1
 - NMU: remove %ubt from release
 
