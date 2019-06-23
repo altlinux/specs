@@ -4,12 +4,11 @@ Summary: Qt library for Telegram network
 %define libtelegramqt5 lib%name
 
 Version: 0.1.0
-Release: alt3
+Release: alt4
 Group: System/Libraries
 License: LGPLv2.1
 URL: https://github.com/Kaffeine/telegram-qt
 Source0: telegram-qt5-%version.tar
-buildRequires(pre): rpm-build-ubt
 BuildRequires: libssl-devel qt5-base-devel qt5-declarative-devel zlib-devel
 BuildRequires: cmake
 
@@ -51,6 +50,9 @@ Group:      Development/KDE and QT
 %_libdir/cmake/TelegramQt5/
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt3
 - NMU: remove %ubt from release
 
