@@ -2,7 +2,7 @@
 
 Name: ocaml-biniou
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD
@@ -15,7 +15,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-easy-format-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: jbuilder opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Biniou (pronounced "be new") is a binary data format designed for
@@ -73,6 +72,9 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3
 - rebuilt for ocaml-4.07.1
 
