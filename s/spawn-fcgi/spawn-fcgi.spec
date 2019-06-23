@@ -3,12 +3,11 @@
 
 Name: spawn-fcgi
 Version: 1.6.4
-Release: alt3
+Release: alt4
 
 Summary: spawn FastCGI applications
 License: BSD
 Group: System/Servers
-BuildRequires(pre):rpm-build-ubt
 
 # git remote add upstream git://git.lighttpd.net/spawn-fcgi
 Url: http://redmine.lighttpd.net/projects/spawn-fcgi/wiki
@@ -61,6 +60,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt3
 - NMU: remove %ubt from release
 
