@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt7
+Release: alt8
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -53,6 +53,9 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.5-alt8
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Nov 30 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt7
 - Wrong command "automount -m" changed to "df -a -t autofs"
 - and "mount -t autofs" (closes: #35577)
