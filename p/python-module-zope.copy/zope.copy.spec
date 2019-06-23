@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: Pluggable object copying mechanism
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.copy
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -131,6 +130,9 @@ popd
 %python3_sitelibdir/zope/copy/tests
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1
 - new version 4.2
 
