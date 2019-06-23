@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
 Version:   1.4
-Release:   alt4
+Release:   alt5
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -15,7 +15,6 @@ BuildRequires: cmake swig
 BuildRequires: python-devel rpm-build-python
 BuildRequires: libconfuse-devel
 
-BuildRequires(pre): rpm-build-ubt
 
 %define    namepp libftdipp1
 %define    pyname python-module-ftdi1
@@ -159,6 +158,9 @@ fi
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4
 - NMU: remove %ubt from release
 
