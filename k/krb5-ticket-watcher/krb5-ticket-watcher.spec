@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt16
+Release: alt17
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -19,7 +19,6 @@ Patch9: alt-password-dialog-ontop.patch
 Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
 Patch11: fix-deprecated-krb5-api-meth.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
 BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
 
@@ -63,6 +62,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt17
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt16
 - NMU: remove %ubt from release
 
