@@ -1,6 +1,6 @@
 Name: rpm-build-erlang
 Version: 0.7.10.1
-Release: alt3
+Release: alt4
 Summary: RPM helper scripts to calculate Erlang dependencies
 License: %gpl3plus
 Group: Development/Erlang
@@ -11,7 +11,6 @@ Requires: file >= 4.26
 Requires: rpm-macros-erlang >= 0.6.2
 AutoReq: yes, noerlang
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: erlang-otp-devel
 
@@ -41,6 +40,9 @@ install -m 0755 erlang.* %buildroot%_rpmlibdir/
 
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.10.1-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.10.1-alt3
 - Removed %%ubt macro.
 
