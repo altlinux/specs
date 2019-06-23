@@ -1,6 +1,6 @@
 Name: tsung
 Version: 1.7.0
-Release: alt3.qa1
+Release: alt4.qa1
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -10,7 +10,6 @@ BuildArch: noarch
 Provides: erlang-%name = %version-%release
 Requires: erlang-otp  perl-RRD
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-erlang
 BuildRequires: rpm-build-erlang
@@ -66,6 +65,9 @@ install -m 0644 CHANGELOG* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name
 
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt4.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3.qa1
 - NMU: remove %ubt from release
 
