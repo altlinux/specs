@@ -18,7 +18,7 @@
 
 Name: mlt
 Version: 6.16.0
-Release: alt1
+Release: alt2
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -43,7 +43,7 @@ Patch103: alt-libav.patch
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
 #BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL2_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libavformat-devel
+BuildRequires(pre): rpm-build-kf5 libavformat-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: frei0r-devel libSDL2_image-devel libalsa-devel libexif-devel
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
@@ -199,6 +199,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 6.16.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed May 08 2019 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
 - new version
 
