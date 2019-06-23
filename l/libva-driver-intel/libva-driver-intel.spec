@@ -1,6 +1,6 @@
 Name: libva-driver-intel
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: VA-API (Video Acceleration API) user mode driver for Intel GEN Graphics family
 License: GPLv2
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 BuildRequires: intel-gen4asm
 BuildRequires: libdrm-devel libX11-devel libGL-devel libEGL-devel
 BuildRequires: libva-devel >= 1.7.0
-BuildRequires(pre): rpm-build-ubt
 ExclusiveArch: %ix86 x86_64
 
 %description
@@ -38,6 +37,9 @@ Video decode driver for Intel chipsets.
 %_libdir/dri/*.so
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Feb 18 2019 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
