@@ -2,7 +2,7 @@
 
 Name: screenshot-tool
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Screenshot tool designed for elementary OS
 Group: Graphical desktop/GNOME
@@ -18,7 +18,6 @@ Provides: %rdn_name = %version-%release
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): meson
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: vala >= 0.24
 BuildRequires: vala-tools
@@ -55,6 +54,9 @@ BuildRequires: desktop-file-utils
 %_iconsdir/hicolor/*/apps/accessories-screenshot.svg
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Nov 09 2018 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
