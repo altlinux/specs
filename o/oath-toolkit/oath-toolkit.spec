@@ -3,7 +3,7 @@
 
 Name: oath-toolkit
 Version: 2.6.2
-Release: alt3
+Release: alt4
 Summary: Toolkit for one-time password authentication systems
 License: %gpl3plus
 Group: Security/Networking
@@ -12,7 +12,7 @@ Url: http://www.nongnu.org/oath-toolkit/
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: libgcrypt-devel
 BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -180,6 +180,9 @@ touch ChangeLog
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt3
 - NMU: remove %ubt from release
 
