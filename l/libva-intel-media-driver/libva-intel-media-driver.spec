@@ -1,7 +1,7 @@
 %define soname 7
 Name: libva-intel-media-driver
 Version: 19.1.0
-Release: alt1
+Release: alt2
 
 Summary: Intel(R) Media Driver for VAAPI
 License: MIT
@@ -14,7 +14,6 @@ BuildRequires: libdrm-devel libX11-devel libGL-devel libEGL-devel gcc-c++ libpci
 BuildRequires: libva-devel >= 2.3.0
 BuildRequires: cmake rpm-macros-cmake
 BuildRequires: intel-gmmlib-devel >= 18.3.0
-BuildRequires(pre): rpm-build-ubt
 ExclusiveArch: x86_64
 
 %description
@@ -63,6 +62,9 @@ This package provides the development environment for libigfxcmrt
 %_pkgconfigdir/igfxcmrt.pc
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 19.1.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Apr 26 2019 Anton Farygin <rider@altlinux.ru> 19.1.0-alt1
 - 19.1.0
 
