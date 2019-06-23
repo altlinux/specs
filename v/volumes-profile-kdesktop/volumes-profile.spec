@@ -1,6 +1,6 @@
 Name: volumes-profile-kdesktop
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Volumes description for Desktop KDE distribution
 License: GPL
@@ -9,7 +9,6 @@ Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Volumes description for Desktop KDE distribution
@@ -30,6 +29,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Dec 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - use LVM by default
 
