@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.3b1
-Release: alt1
+Release: alt2
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python
@@ -12,7 +12,6 @@ Url: http://pyopengl.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-Cython libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -69,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.3b1-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.3b1-alt1
 - Build new version for python3.7.
 
