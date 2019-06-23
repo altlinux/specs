@@ -1,11 +1,10 @@
 Name: rdfind
 Version: 1.3.4
-Release: alt2
+Release: alt3
 Summary: Program that finds duplicate files
 Group: File tools
 License: GPLv2
 Url: https://rdfind.pauldreik.se/
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libnettle-devel
 BuildRequires: gcc-c++
 Source0: %name-%version.tar
@@ -29,6 +28,9 @@ Rdfind is a program that finds duplicate files.
 %_man1dir/%{name}*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2
 - NMU: remove %ubt from release
 
