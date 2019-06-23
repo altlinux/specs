@@ -1,6 +1,6 @@
 Name: tora
 Version: 3.2
-Release: alt4
+Release: alt5
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -17,7 +17,7 @@ Patch2: %name-%version-upstream-qscintilla-qt5.patch
 Patch3: %name-%version-upstream-issue-96.patch
 Patch4: %name-%version-upstream-issue-101.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ postgresql-devel boost-devel libferrisloki-devel
 BuildRequires: qt5-base-devel qt5-tools-devel libqscintilla2-qt5-devel
 
@@ -59,6 +59,9 @@ install -pm 644 src/tora.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt5
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt4
 - NMU: remove %ubt from release
 
