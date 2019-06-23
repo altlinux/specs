@@ -1,13 +1,12 @@
 Name: nextcloud-client
 Version: 2.5.2
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
 License: GPLv2
 Url: https://github.com/nextcloud/desktop
 
-BuildRequires(pre): rpm-build-ubt
 
 Provides: mirall = %version-%release
 Obsoletes: mirall <= %version-%release
@@ -83,6 +82,9 @@ ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Mar 25 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5.2-alt1
 - new version (ALT#36361)
 
