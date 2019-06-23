@@ -1,6 +1,6 @@
 Name: orion
 Version: 1.6.1
-Release: alt5
+Release: alt6
 
 Summary: Seek and watch streams on Twitch
 License: GPLv3+
@@ -13,7 +13,6 @@ Patch1: orion-1.5.1-fix_desktop.patch
 
 Requires: qt5-quickcontrols qt5-quickcontrols2 icon-theme-hicolor qt5-multimedia qt5-graphicaleffects
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel >= 5.8 qt5-quickcontrols qt5-svg-devel qt5-quickcontrols2-devel qt5-multimedia-devel
 
 %description
@@ -49,6 +48,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %doc README.md COPYING LICENSE.txt
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt6
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.1-alt5
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
