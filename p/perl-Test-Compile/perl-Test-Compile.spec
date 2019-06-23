@@ -2,13 +2,13 @@
 %define sname test-compile
 
 Name: perl-Test-Compile
-Version: 1.3.0
+Version: 2.0.0
 Release: alt1
 Summary: Check whether Perl module files compile correctly
 License: GPL+ or Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Test-Compile/
-Source: %sname-%version.tar
+Source0: http://www.cpan.org/authors/id/E/EG/EGILES/Test-Compile-v%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: coreutils
@@ -37,7 +37,7 @@ Test::Compile lets you check the validity of a Perl module file or Perl script
 file, and report its results in standard Test::Simple fashion.
 
 %prep
-%setup -n %sname-%version
+%setup -q -n Test-Compile-v%{version}
 
 %build
 %perl_vendor_build
@@ -50,5 +50,8 @@ file, and report its results in standard Test::Simple fashion.
 %perl_vendorlib/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 1.3.0-alt1
 - initial build for ALT
