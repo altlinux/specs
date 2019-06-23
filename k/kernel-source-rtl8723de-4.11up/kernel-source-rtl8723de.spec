@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name-4.11up
 Version: %module_version
-Release: alt5
+Release: alt6
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -19,7 +19,6 @@ Conflicts: kernel-source-%module_name
 Source: %name-%version.tar
 Patch1: alt-build-time.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools
 
 %description
@@ -40,6 +39,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 kernel-sourc
 %_usrsrc/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.1.8-alt6
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.1.8-alt5
 - NMU: remove %ubt from release
 
