@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Text-Markdown-Hoedown
-Version: 1.02
-Release: alt1.2
+Version: 1.03
+Release: alt1
 
 Summary: hoedown for Perl5
 Group: Development/Perl
@@ -26,9 +27,12 @@ BuildRequires: perl(parent.pm) perl(File/pushd.pm) perl-devel perl(CPAN/Meta.pm)
 %files
 %perl_vendor_autolib/Text/Markdown/Hoedown*
 %perl_vendor_archlib/Text/Markdown/Hoedown*
-%doc Changes LICENSE README.md
+%doc Changes README.md
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.2
 - rebuild with new perl 5.28.1
 
