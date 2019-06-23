@@ -1,6 +1,6 @@
 Name: spice-ec
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: Spice Easy Connect
 License: GPLv3
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 Requires: virt-viewer
 
-BuildRequires(pre): rpm-build-ubt rpm-macros-cmake cmake
+BuildRequires(pre): rpm-macros-cmake cmake
 BuildRequires: qt5-base-devel
 
 %description
@@ -32,6 +32,9 @@ SPICE remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2
 - NMU: remove %ubt from release
 
