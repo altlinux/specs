@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.1
-Release:        alt3.qa1
+Release:        alt4.qa1
 Summary:        Sphinx API for Web Apps
 License:        BSD
 Group:          Development/Python
@@ -14,7 +14,6 @@ URL:            http://sphinx-doc.org/
 # https://github.com/sphinx-doc/sphinxcontrib-websupport.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-docutils python-module-jinja2 python-module-mock python-module-pytest
 BuildRequires: python-module-setuptools python-module-six python-module-sphinx python2.7(sqlalchemy)
 BuildRequires: python-module-whoosh python-module-xapian
@@ -88,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3.qa1
 - NMU: applied repocop patch
 
