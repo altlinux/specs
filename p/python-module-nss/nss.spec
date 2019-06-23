@@ -3,7 +3,7 @@
 %define mname nss
 Name: python-module-%mname
 Version: 1.0.1
-Release: alt3
+Release: alt4
 Summary: Python binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
 License: MPLv2.0 or GPLv2+ or LGPLv2+
 Group: Development/Python
@@ -13,7 +13,6 @@ Url: http://www.mozilla.org/projects/security/pki/python-nss
 Source: %name-%version.tar
 
 %py_provides %mname
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -97,6 +96,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Apr 05 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt3
 - Rebuild for python3.7.
 
