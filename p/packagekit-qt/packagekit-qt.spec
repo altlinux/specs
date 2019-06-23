@@ -4,7 +4,7 @@
 
 Name: packagekit-qt
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt support library for PackageKit
@@ -21,7 +21,6 @@ Source: PackageKit-Qt-%version.tar
 # Automatically added by buildreq on Thu Aug 02 2018 (-bi)
 # optimized out: cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libqt5-core libqt5-dbus libstdc++-devel packagekit perl pkg-config python-base python-modules python3 python3-base qt5-base-common rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: cmake libssl-devel python3-dev qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake libssl-devel qt5-base-devel
 BuildRequires: libpackagekit-glib-devel
 
@@ -65,6 +64,9 @@ Provides: PackageKit-Qt5-devel = %version-%release
 %_libdir/cmake/packagekitqt5/
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt2
 - fix build requires
 
