@@ -5,7 +5,7 @@
 
 Name: signon-glib
 Version: 1.14
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Single signon authentication library for GLib applications
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 # optimized out: elfutils glib2-devel gnu-config gobject-introspection gtk-doc libgio-devel pkg-config python-base python-devel python-module-google python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base rpm-build-gir ruby ruby-stdlibs xml-utils
 #BuildRequires: dconf glib-networking glibc-devel-static gobject-introspection-devel gtk-doc-mkpdf libGConf rpm-build-python3 rpm-build-ruby rpm-build-vala signon-devel time
 #BuildRequires: dconf glib-networking glibc-devel gobject-introspection-devel gtk-doc-mkpdf rpm-build-vala signon-devel
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel gobject-introspection-devel gtk-doc-mkpdf rpm-build-vala signon-devel
 
 %description
@@ -66,6 +65,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_girdir/Signon-1.0.gir
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2
 - NMU: remove %ubt from release
 
