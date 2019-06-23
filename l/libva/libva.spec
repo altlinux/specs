@@ -5,7 +5,7 @@
 
 Name: libva
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -29,7 +29,6 @@ BuildRequires: libEGL-devel
 BuildRequires: libXext-devel libXfixes-devel
 %endif
 BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -75,6 +74,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Feb 18 2019 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
