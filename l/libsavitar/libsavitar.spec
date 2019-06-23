@@ -3,7 +3,7 @@
 
 Name: libsavitar
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
 Group: Development/Other
@@ -13,7 +13,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: %name-no-pugixml.patch
 
-Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: cmake dos2unix gcc-c++ libpugixml-devel python3-devel python3-module-sip-devel %_bindir/sip
 
@@ -80,6 +79,9 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Fri Dec 21 2018 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
 - new version 3.6.0
 
