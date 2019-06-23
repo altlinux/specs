@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.5
-Release: alt3
+Release: alt4
 
 Summary: Zope Component Architecture
 License: ZPLv2.1
@@ -15,7 +15,6 @@ Url: http://pypi.python.org/pypi/zope.component
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -151,6 +150,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.5-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Mar 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.5-alt3
 - check disabled for build in p8
 
