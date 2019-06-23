@@ -3,7 +3,7 @@
 
 Name: zoneminder
 Version: 1.32.3
-Release: alt2
+Release: alt3
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -22,7 +22,6 @@ Conflicts: zm <= 1.22.3
 Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php7-pdo_mysql su perl-Sys-Mmap webserver perl-Pod-Usage perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU
 AutoReq: noperl
 BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
-BuildRequires(pre): rpm-build-ubt
 
 %description
 ZoneMinder is a set of applications which is intended to provide a complete
@@ -147,6 +146,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.32.3-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Jan 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.32.3-alt2
 - fix FTBFS due to transition to libmysqlclient21
 
