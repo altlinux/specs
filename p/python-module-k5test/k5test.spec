@@ -3,7 +3,7 @@
 
 Name: python-module-%mname
 Version: 0.9.2
-Release: alt2
+Release: alt3
 Summary: Library for setting up self-contained Kerberos 5 environments
 
 Group: Development/Python
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/k5test
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -65,6 +64,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2
 - NMU: remove %ubt from release
 
