@@ -5,13 +5,12 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt6
+Release: alt7
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
 
 BuildRequires(pre): rpm-build-mono
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: sqlite3 mono-full mono-devel-full pkg-config /proc
 
 %define xspConfigsLocation %_sysconfdir/xsp/4.0
@@ -78,6 +77,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.4-alt7
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.4-alt6
 - NMU: remove %ubt from release
 
