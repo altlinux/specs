@@ -8,7 +8,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.3.2
-Release: alt3
+Release: alt4
 
 Summary: The Zope publisher publishes Python objects on the web
 License: ZPLv2.1
@@ -20,7 +20,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 Patch1: %oname-fix-tests.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -193,6 +192,9 @@ popd
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.3.2-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Apr 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.3.2-alt3
 - requires for tests fixed
 
