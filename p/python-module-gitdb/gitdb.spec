@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt2.qa1
+Release: alt3.qa1
 Summary: IO of git-style object databases
 License: BSD
 BuildArch: noarch
@@ -17,7 +17,6 @@ Url: https://pypi.python.org/pypi/gitdb/
 Source: %name-%version.tar
 Patch1: %oname-alt-build.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: git-core
 BuildRequires: python-devel python-module-setuptools
@@ -176,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt3.qa1
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt2.qa1
 - NMU: remove %ubt from release
 
