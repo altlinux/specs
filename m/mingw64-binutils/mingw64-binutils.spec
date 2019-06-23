@@ -1,6 +1,6 @@
 Name: mingw64-binutils
 Version: 2.32
-Release: alt1
+Release: alt2
 
 Summary: MinGW Windows binutils
 
@@ -10,7 +10,6 @@ Url: http://www.gnu.org/software/binutils/
 
 Source: binutils-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-mingw64
 
 BuildRequires: flex
@@ -66,6 +65,9 @@ ln -sf ../../..%_bindir/%_mingw64_target-dllwrap \
 %exclude %_man5dir/x86_64-pc-mingw32-gdbinit.5.xz
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.32-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Feb 20 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.32-alt1
 - 2.32 release
 
