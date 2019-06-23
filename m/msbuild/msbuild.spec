@@ -2,7 +2,7 @@
 
 Name: msbuild
 Version: 15.6
-Release: alt2.2018.01.17.14.14
+Release: alt3.2018.01.17.14.14
 Summary: Microsoft Build Engine (MSBuild), XML-based platform for building applications
 
 Group: Development/Other
@@ -13,7 +13,6 @@ Url: https://github.com/Microsoft/msbuild
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-mono >= 2.0
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: mono-devel-full
 
 Requires: mono-devel-full
@@ -53,6 +52,9 @@ rm -rf %buildroot%_datadir
 %_monodir/xbuild/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 15.6-alt3.2018.01.17.14.14
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 15.6-alt2.2018.01.17.14.14
 - NMU: remove %ubt from release
 
