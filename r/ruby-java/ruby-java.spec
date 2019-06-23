@@ -1,6 +1,6 @@
 Name: ruby-java
 Version: 0.0.2
-Release: alt3
+Release: alt4
 
 Summary: The caffeine boost you need for your late-night coding sprints.
 Group: Development/Ruby
@@ -11,7 +11,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ruby rpm-build-ubt
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
 %description
@@ -52,6 +52,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt3
 - NMU: remove %ubt from release
 
