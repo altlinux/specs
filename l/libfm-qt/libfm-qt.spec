@@ -3,7 +3,7 @@
 
 Name: libfm-qt
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -39,6 +39,11 @@ This package contains files needed to build applications using LibFM-Qt.
 
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -print0 |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %cmake -DREQUIRED_QT_VERSION=5.9
@@ -63,6 +68,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Mon Jun 24 2019 Michael Shigorin <mike@altlinux.org> 0.14.1-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt1
 - new version 0.14.1
 
