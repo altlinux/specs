@@ -9,7 +9,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20190618
+Version: 20190624
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -244,8 +244,10 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 pushd xfce-settings
 mkdir -p %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
 mkdir -p %buildroot/etc/skel/.config/xfce4/panel
+mkdir -p %buildroot/etc/skel/.config/autostart
 cp -r etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/* %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
 cp -r etcskel/.config/xfce4/panel/* %buildroot/etc/skel/.config/xfce4/panel
+cp -r etcskel/.config/autostart/* %buildroot/etc/skel/.config/autostart
 popd
 
 #bootloader
@@ -323,8 +325,13 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files xfce-settings
 %_sysconfdir/skel/.config/xfce4
+%_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Mon Jun 24 2019 Anton Midyukov <antohami@altlinux.org> 20190624-alt1
+- xfce-settings: replaced clipman and power-manager applets on tray
+applications
+
 * Tue Jun 18 2019 Anton Midyukov <antohami@altlinux.org> 20190618-alt1
 - build bootloader and bootsplash for all ARCH
 - change color blue to progress bar
