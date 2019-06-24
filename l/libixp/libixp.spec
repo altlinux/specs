@@ -1,6 +1,6 @@
 Name: libixp
 Version: 0.5
-Release: alt1.qa1
+Release: alt2
 
 Summary: Plan9 file protocol library
 License: MIT
@@ -17,11 +17,9 @@ libixp's server api is based heavily on that of Plan 9's lib9p.
 %prep
 %setup
 %patch -p1
-
-%ifarch x86_64
+%if "%_lib" == "lib64"
 sed -i -r 's@/lib($|[ 	/])@/lib64\1@' config.mk
 %endif
-
 
 %build
 %define soname libixp.so.0
@@ -78,6 +76,9 @@ or from shell scripts.
 %_man1dir/ixpc.1*
 
 %changelog
+* Mon Jun 24 2019 Michael Shigorin <mike@altlinux.org> 0.5-alt2
+- fix build on 64-bit arches
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
