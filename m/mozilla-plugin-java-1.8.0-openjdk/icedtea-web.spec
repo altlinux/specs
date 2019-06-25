@@ -36,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.8
-Release:	alt1_1jpp8
+Release:	alt1_2jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 
 License:    LGPLv2+ and GPLv2 with exceptions
@@ -70,11 +70,9 @@ Requires(postun):      javapackages-tools
 Requires:      tagsoup
 
 # Post requires alternatives to install tool alternatives.
-# in version 1.7 and higher for --family switch
 # jnlp protocols support
 Requires(post):   GConf libGConf
 # Postun requires alternatives to uninstall tool alternatives.
-# in version 1.7 and higher for --family switch
 # jnlp protocols support
 Requires(postun):   GConf libGConf
 
@@ -91,8 +89,18 @@ Source44: import.info
 # TODO: move here
 #define mozilla_java_plugin_so %{_prefix}/lib/%{sdkdir}/IcedTeaPlugin.so
 %define mozilla_java_plugin_so %{_libdir}/IcedTeaPlugin.so
+
+# hack not to forget to rebuild this pkg with every new openjdk
+# JAVACANDIDATE in alternatives below is release-dependent :(
+%define _alt_javacandidate %(head -2 /etc/alternatives/packages.d/java-%{javaver}-openjdk-java-headless| tail -1 | awk '{print $3}')
+%if "%{_alt_javacandidate}" != ""
+Requires: %{_alt_javacandidate}
+%endif
 Provides: icedtea-web = %version-%release
 Obsoletes: mozilla-plugin-java-1.7.0-openjdk < 1.5
+Patch33: translation-desktop-files.patch
+Source45: Messages_ru.properties
+
 #BuildRequires: java-%javaver-%origin-devel
 
 %description
@@ -149,6 +157,15 @@ This package contains ziped sources of the IcedTea-Web project.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch1 -p1
+%patch33 -p2
+
+cp -f %SOURCE45 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
+sed -i 's/en_US.UTF-8/en_US.UTF-8 ru_RU.UTF-8/' Makefile.am
+
+# test fails when /tmp files go missing :( aarch64 known mystery bug
+%ifarch aarch64
+sed -i 's,\$(CARGO) test,echo test,' Makefile.am
+%endif
 
 %build
 autoreconf -vfi
@@ -209,7 +226,7 @@ cp  netx.build/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/javaws.src.zip
 cp liveconnect/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/plugin.src.zip
 
 %find_lang %{oldname} --all-name --with-man
-# multiple -f flags in %files: merging -f %{oldname}.lang into -f .mfiles
+# multiple -f flags in %files for <main>: merging -f %{oldname}.lang into -f .mfiles
 cat %{oldname}.lang >> .mfiles
 
 install -d -m 755 %buildroot/etc/icedtea-web
@@ -230,7 +247,7 @@ sed -e 's,^JAVA_ARGS=,JAVA_ARGS="-Djava.security.policy=/etc/icedtea-web/javaws.
 # ControlPanel freedesktop.org menu entry
 cat >> $RPM_BUILD_ROOT%{_desktopdir}/%{altname}-control-panel.desktop << EOF
 [Desktop Entry]
-Name=Java Plugin Control Panel (%{name})
+Name=Java %javaver Plugin Control Panel
 Comment=Java Control Panel
 Exec=itweb-settings.itweb
 Icon=java-%{javaver}
@@ -244,7 +261,7 @@ EOF
 # javaws freedesktop.org menu entry
 cat >> $RPM_BUILD_ROOT%{_desktopdir}/%{altname}-javaws.desktop << EOF
 [Desktop Entry]
-Name=Java Web Start (%{name})
+Name=Java Web Start (%{javaver})
 Comment=Java Application Launcher
 MimeType=application/x-java-jnlp-file;
 Exec=javaws.itweb %%u
@@ -343,6 +360,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Tue Jun 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2jpp8
+- restored Ivan Razzhivin patches
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_1jpp8
 - new version
 
