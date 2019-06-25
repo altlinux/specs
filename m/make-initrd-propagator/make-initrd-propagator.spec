@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
-Version: 0.41
-Release: alt3
+Version: 0.42
+Release: alt1
 
 Summary: Put propagator into make-initrd generated image
 
@@ -39,6 +39,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Jun 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.42-alt1
+- config.mk: removed copy of *-net-name-slot.rules udev rule (copying
+  of absent file is going to be error in upcoming release of make-initrd).
+
 * Thu Jun 20 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.41-alt3
 - mount.aufs removed from config.mk (Closes: 36930)
 
