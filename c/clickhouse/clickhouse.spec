@@ -1,0 +1,139 @@
+Name: clickhouse
+Version: 19.9.2.4
+Release: alt1
+Summary: open source distributed column-oriented DBMS
+License: Apache License 2.0
+Group: Databases
+Source: %name-%version.tar
+Source1: %name-%version-contrib-base64.tar
+Source2: %name-%version-contrib-simdjson.tar
+Patch0: %name-%version-%release.patch
+Url: https://clickhouse.yandex/
+BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata, libjemalloc-devel, cctz-devel
+BuildRequires: rpm-macros-cmake, liblz4-devel, zlib-devel, /proc, libzstd-devel, libmariadb-devel
+BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
+BuildRequires: libgsasl-devel, libcap-ng, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
+BuildRequires: libpoco-devel, libgtest-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
+BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
+BuildRequires: llvm-devel, clang, libstdc++-devel, perl-JSON-XS, libb64-devel, libhyperscan-devel
+ExclusiveArch: x86_64
+
+%description
+ClickHouse is an open-source column-oriented database management system that
+allows generating analytical data reports in real time.
+
+%package common-static
+Group: Databases
+Summary: Common files for %name
+
+%description common-static
+This package provides common files for both clickhouse server and client.
+
+%package -n libclickhouse
+Summary: Shared library for ClickHouse
+Group: Databases
+%description -n libclickhouse
+This package contains shared library for ClickHouse DBMS.
+
+%package server
+Summary: Server binary for ClickHouse
+Group: Databases
+Requires: %name-common-static = %EVR
+
+%description server
+This package contains server binaries for ClickHouse DBMS.
+
+%package client
+Summary: Client binary for ClickHouse
+Group: Databases
+Requires: %name-common-static = %EVR
+
+%description client
+This package contains clickhouse-client , clickhouse-local and clickhouse-benchmark
+
+%package test
+Summary: ClickHouse tests
+Group: Databases
+Requires: %name-client = %EVR
+
+%description test
+ClickHouse tests
+
+%prep
+%setup -a1 -a2
+%patch0 -p1
+mv %name-%version-contrib-base64/* contrib/base64/
+mv %name-%version-contrib-simdjson/* contrib/simdjson/
+
+%build
+%remove_optflags -frecord-gcc-switches
+export CC=clang
+export CXX=clang++
+%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DLLVM_VERSION=7 
+%cmake_build
+
+%install
+%cmakeinstall_std
+install -Dm0644 debian/clickhouse-server.cron.d %buildroot%_sysconfdir/cron.d/clickhouse-server
+install -Dm0644 debian/clickhouse.limits %buildroot%_sysconfdir/security/limits.d/clickhouse.conf
+install -Dm0644 debian/clickhouse-server.service %buildroot%_unitdir/clickhouse-server.service
+mkdir -p %buildroot%_localstatedir/clickhouse
+mkdir -p %buildroot%_logdir/clickhouse-server
+
+%pre server
+%_sbindir/groupadd -r -f _clickhouse 2> /dev/null ||:
+%_sbindir/useradd -r -g _clickhouse -d %_localstatedir/lib/%name -s /dev/null -c "ClickHouse User" _clickhouse 2> /dev/null ||:
+
+%post server
+%post_service clickhouse-server
+
+%preun server
+%preun_service clickhouse-server
+
+
+
+%files common-static
+%_datadir/clickhouse
+%_bindir/clickhouse
+%_bindir/clickhouse-odbc-bridge
+%_sysconfdir/security/limits.d/clickhouse.conf
+
+%files -n libclickhouse
+%_libdir/*.so.*
+
+%files server
+%_sysconfdir/cron.d/clickhouse-server
+%_sysconfdir/clickhouse-server/config.xml
+%_sysconfdir/clickhouse-server/users.xml
+%_bindir/clickhouse-server
+%_bindir/clickhouse-report
+%_bindir/clickhouse-copier
+%_unitdir/clickhouse-server.service
+%dir %attr(0750,_clickhouse,_clickhouse) %_logdir/clickhouse-server
+%dir %attr(0750,_clickhouse,_clickhouse) %_localstatedir/clickhouse
+
+%files client
+%_sysconfdir/clickhouse-client/config.xml
+%_bindir/clickhouse-client
+%_bindir/clickhouse-local
+%_bindir/clickhouse-compressor
+%_bindir/clickhouse-benchmark
+%_bindir/clickhouse-obfuscator
+%_bindir/clickhouse-format
+%_bindir/clickhouse-extract-from-config
+
+%files test
+%_bindir/clickhouse-test
+%_bindir/clickhouse-test-server
+%_bindir/clickhouse-performance-test
+%_datadir/clickhouse-test
+%_sysconfdir/clickhouse-client/client-test.xml
+%_sysconfdir/clickhouse-server/server-test.xml
+
+%changelog
+* Tue Jun 25 2019 Anton Farygin <rider@altlinux.ru> 19.9.2.4-alt1
+- updated to 19.9.2.4
+
+* Wed Jun 19 2019 Anton Farygin <rider@altlinux.ru> 19.8.3.8-alt1
+- first build for ALT
+
