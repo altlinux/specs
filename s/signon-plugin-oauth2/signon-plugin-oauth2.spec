@@ -1,15 +1,15 @@
 Name: signon-plugin-oauth2
 Version: 0.24
-Release: alt4
+Release: alt5
 
-Summary: OAuth2 plugin for the Accounts framework
-License: LGPLv2
 Group: System/Libraries
-
+Summary: OAuth2 plugin for the Accounts framework
 Url: https://gitlab.com/accounts-sso/signon-plugin-oauth2
-Source: signon-oauth2-%version.tar
+License: LGPLv2
 
 Requires: signon-ui
+
+Source: signon-oauth2-%version.tar
 
 # Automatically added by buildreq on Thu Jul 09 2015 (-bi)
 # optimized out: elfutils kf5-attica-devel kf5-kjs-devel libqt5-core libqt5-network libqt5-xmlpatterns libsignon-plugins1 libsignon-qt51 libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
@@ -29,7 +29,7 @@ Summary: Development files for %name
 %summary.
 
 %prep
-%setup -n signon-oauth2-%version
+%setup -qn signon-oauth2-%version
 sed -i '/^SUBDIRS/s/tests//' signon-oauth2.pro
 sed -i '/^SUBDIRS/s/example//' signon-oauth2.pro
 %ifarch %e2k
@@ -62,6 +62,9 @@ sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth
 %_libdir/pkgconfig/signon-oauth2plugin.pc
 
 %changelog
+* Tue Jun 25 2019 Sergey V Turchin <zerg@altlinux.org> 0.24-alt5
+- fix minor spec cleanup
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt4
 - NMU: remove rpm-build-ubt from BR:
 
