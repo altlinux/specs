@@ -1,21 +1,33 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname okular
 %def_enable msits
 %def_enable mobile
+%_K5if_ver_gteq %ubt_id M90
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 
 %define sover 9
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
 Version: 19.04.2
-Release: alt1
-%K5init
+Release: alt2
+%K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Office
 Summary: Document Viewer
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: %name-core = %EVR
+Requires: %name-core
+%if_enabled obsolete_kde4
+Provides: kde4-okular = %version-%release
+Obsoletes: kde4-okular < %version-%release
+%endif
 
 Source: %rname-%version.tar
 Patch1: alt-chm-encoding.patch
@@ -67,6 +79,7 @@ Requires: kf5-filesystem
 Summary: Core files for %name
 Group: Graphical desktop/KDE
 Requires: %name-common = %EVR
+Requires: kde5-runtime
 %description core
 Core files for %name
 
@@ -102,7 +115,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %install
 %K5install
+%if_disabled obsolete_kde4
 %K5install_move data okular kpackage kconf_update
+%endif
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -123,18 +138,27 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5xdgapp/org.kde.okular.kirigami.desktop
 %_K5xdgapp/org.kde.mobile.okular_*.desktop
 %else
-%exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/
+%{?_enable_obsolete_kde4:%exclude %_datadir/kpackage/genericqml/org.kde.mobile.okular/}
+%{!?_enable_obsolete_kde4:%exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/}
 %exclude %_K5xdgapp/org.kde.mobile.okular.desktop
 %exclude %_K5xdgapp/org.kde.mobile.okular_*.desktop
 %endif
 
 %files core
+%if_enabled obsolete_kde4
+%_datadir/okular/
+%else
 %_K5data/okular/
+%endif
 %_K5qml/org/kde/okular/
 %_K5plug/okular/
 %_K5plug/okularpart.so
 %_K5srv/okular*.desktop
+%if_enabled obsolete_kde4
+%_datadir/kconf_update/okular*
+%else
 %_K5conf_up/okular*
+%endif
 %_K5cfg/*okular*
 %_K5cfg/*settings*
 %if_enabled msits
@@ -152,6 +176,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Jun 26 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.2-alt2
+- obsolete kde4-okular
+
 * Mon Jun 10 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.2-alt1
 - new version
 
@@ -170,52 +197,52 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 * Mon Nov 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - build without purpose
 
-* Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+* Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - use low memory usage level profile by default (ALT#35091)
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2
 - update build requires
 
-* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Thu Mar 22 2018 Oleg Solovyov <mcpain@altlinux.org> 17.12.3-alt2%ubt
+* Thu Mar 22 2018 Oleg Solovyov <mcpain@altlinux.org> 17.12.3-alt2
 - apply CHM patch
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Thu Dec 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+* Thu Dec 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2
 - exclude internal ooo generator
 
-* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Wed Aug 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
+* Wed Aug 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2
 - fix CHM default encoding
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
-* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.1-alt1%ubt
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.1-alt1
 - new version
 
 * Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.80-alt0.M80P.1
