@@ -28,7 +28,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.12.3
+Version: 5.12.4
 Release: alt1
 
 Group: System/Libraries
@@ -41,7 +41,7 @@ Source: %qt_module-opensource-src-%version.tar
 # FC
 Patch1:  qtwebengine-everywhere-src-5.10.0-linux-pri.patch
 Patch2:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
-Patch3:  qtwebengine-opensource-src-5.12.1-fix-extractcflag.patch
+Patch3:  qtwebengine-opensource-src-5.12.4-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
 Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
@@ -344,6 +344,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Jun 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
+- new version
+
 * Thu Apr 25 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
 - new version
 
