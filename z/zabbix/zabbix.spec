@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		92832
+%define svnrev		3b65466259
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 4.2.1
+Version: 4.2.4
 Release: alt1
 Epoch: 1
 
@@ -29,9 +29,8 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-%{?_enable_java:BuildPreReq: java-devel-default}
-BuildPreReq: libelf-devel
-BuildRequires(pre): rpm-build-webserver-common rpm-macros-apache2
+%{?_enable_java:BuildRequires(pre): java-devel-default}
+BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
@@ -638,6 +637,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Jun 26 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.4-alt1
+- 4.2.4
+
 * Fri May 17 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.1-alt1
 - 4.2.1
 
