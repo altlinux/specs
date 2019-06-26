@@ -1,15 +1,16 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
 Name: isomd5sum
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Utilities to implant/verify md5sum in ISO images
 License: %gpl2plus
 Group: System/Base
+
 Url: https://github.com/rhinstaller/isomd5sum
 Source: %name-%version.tar
+Patch: 0001-Makefile-getconf-LIBDIR-instead-of-arch-list.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-python3
 BuildRequires: libpopt-devel python3-devel
@@ -38,12 +39,13 @@ and verifying MD5 checksum in an ISO9660 image.
 
 %prep
 %setup
+%patch -p1
 
 %build
-PYTHON=%__python3 make checkisomd5 implantisomd5 pyisomd5sum.so
+PYTHON=python3 make checkisomd5 implantisomd5 pyisomd5sum.so
 
 %install
-PYTHON=%__python3 %makeinstall_std
+PYTHON=python3 %makeinstall_std
 
 %files
 %doc COPYING
@@ -60,6 +62,10 @@ PYTHON=%__python3 %makeinstall_std
 %_datadir/pkgconfig/isomd5sum.pc
 
 %changelog
+* Wed Jun 26 2019 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
+- fixed build on 64-bit arches (patch suggested upstream)
+- minor spec cleanup
+
 * Mon Mar 04 2019 Anton Midyukov <antohami@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
