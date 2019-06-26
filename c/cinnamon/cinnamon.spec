@@ -1,6 +1,8 @@
+%def_disable gtk_doc
+
 Name: cinnamon
-Version: 4.0.9
-Release: alt4
+Version: 4.2.0
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -22,7 +24,6 @@ AutoReqProv: nopython
 %define gtk_ver 3.0.0
 %define gi_ver 0.10.1
 %define muffin_ver 4.0.0
-%define eds_ver 2.91.6
 %define json_glib_ver 0.13.2
 %define cjs_ver 4.0.0
 %define tp_glib_ver 0.15.5
@@ -58,6 +59,7 @@ Requires: python3-module-PAM
 Requires: python3-module-Pillow
 Requires: python3-module-pexpect
 Requires: python3-module-xapps-overrides
+Requires: python3-module-tinycss
 # required by keyboard applet
 Requires: libxapps-gir
 # needed to install applets
@@ -67,12 +69,11 @@ BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
-BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel libcinnamon-desktop-gir-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel libnm-gir-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
-BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
+BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel
 
 # for barriers
@@ -128,17 +129,17 @@ Development docs package for Cinnamon.
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
+%patch -p1
 
 rm -rf debian
 
 %build
 %autoreconf
-%configure --disable-static \
-           --enable-compile-warnings=yes\
-           --without-ca-certificates\
-           --disable-gtk-doc
-
+%configure \
+	--disable-static \
+	--enable-compile-warnings=yes \
+	--without-ca-certificates \
+	%{?_disable_gtk_doc:--disable-gtk-doc}
 %make_build
 
 %install
@@ -146,13 +147,13 @@ export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall_std
 
 # Remove .la file
-rm -rf $RPM_BUILD_ROOT/%_libdir/cinnamon/libcinnamon.la
+rm -rf %buildroot/%_libdir/cinnamon/libcinnamon.la
 
-rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon.1
-rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon2d.1
+rm -f %buildroot/%_man1dir/gnome-session-cinnamon.1
+rm -f %buildroot/%_man1dir/gnome-session-cinnamon2d.1
 
-desktop-file-validate $RPM_BUILD_ROOT%_datadir/applications/cinnamon.desktop
-desktop-file-validate $RPM_BUILD_ROOT%_datadir/applications/cinnamon2d.desktop
+desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
+desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
 
 desktop-file-install                                 \
  --add-category="Utility"                            \
@@ -160,13 +161,13 @@ desktop-file-install                                 \
  --remove-key="Encoding"                             \
  --add-only-show-in="GNOME"                          \
  --delete-original                                   \
- --dir=$RPM_BUILD_ROOT%_datadir/applications       \
- $RPM_BUILD_ROOT%_datadir/applications/cinnamon-settings.desktop
+ --dir=%buildroot%_datadir/applications       \
+ %buildroot%_desktopdir/cinnamon-settings.desktop
 
 #install polkit files
-install -m 0755 -d $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
-install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
-install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
+install -m 0755 -d %buildroot/%_datadir/polkit-1/actions/
+install -D -p -m 0644 %SOURCE2 %buildroot/%_datadir/polkit-1/actions/
+install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 
 # Clean-up requires
 
@@ -203,23 +204,18 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %files data
 %exclude %_xdgmenusdir/cinnamon-applications-merged
 %exclude %_xdgmenusdir/cinnamon-applications.menu
-%_datadir/glib-2.0/schemas/*.xml
-%_datadir/applications/*.desktop
 %exclude %_datadir/xsessions/*.desktop
-%_datadir/cinnamon/
-%_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
-%_datadir/icons/hicolor/*/actions/*.svg
-%_datadir/icons/hicolor/*/apps/*.svg
-%_datadir/icons/hicolor/*/categories/*.svg
-%_datadir/icons/hicolor/*/emblems/*.svg
-%_datadir/icons/hicolor/*/devices/*.svg
-%_datadir/desktop-directories/*.directory
 %exclude %_datadir/cinnamon-session/sessions/*.session
-
+%_datadir/cinnamon/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
 %_datadir/dbus-1/services/org.Cinnamon.Slideshow.service
-%_mandir/man1/*.1.*
+%_datadir/desktop-directories/*.directory
+%_datadir/glib-2.0/schemas/*.xml
+%_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/*/*.svg
+%_man1dir/*.1.*
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -227,6 +223,20 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt2
+- add python3-module-tinycss to requires
+
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- 4.2.0-3-g4d1da807
+
+* Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt6
+- 4.0.9-129-g8cff53c1
+
+* Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 4.0.9-alt5
+- dropped BR: eds, libfolks (unneeded)
+- explicitly disabled gtk_doc knob
+- spec cleanup
+
 * Tue Apr 30 2019 Vladimir Didenko <cow@altlinux.org> 4.0.9-alt4
 - add python3-module-xapps-overrides to requires (closes: #36699)
 

@@ -19,8 +19,8 @@
 %def_enable python
 
 Name: xplayer
-Version: 2.0.2
-Release: alt1.1
+Version: 2.2.0
+Release: alt1
 
 Summary: Xplayer is a generic media player.
 Group: Video
@@ -317,6 +317,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Jun 26 2019 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- fix build on beekeeper machines
+
 * Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1.1
 - fix build on beekeeper machines
 
