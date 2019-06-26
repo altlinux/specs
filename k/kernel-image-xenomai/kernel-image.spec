@@ -1,6 +1,6 @@
 %define flavour			xenomai
 Name: kernel-image-%flavour
-Release: alt1
+Release: alt3
 
 %define kernel_base_version	4.14
 %define kernel_sublevel		.128
@@ -245,6 +245,33 @@ scripts/config -d CONFIG_ACPI_PROCESSOR
 scripts/config -d CONFIG_INTEL_IDLE
 scripts/config -d CONFIG_INPUT_PCSPKR
 
+# Enable EFI handover support
+scripts/config -e EFI
+scripts/config -e EFI_STUB
+
+scripts/config -m ISO9660_FS
+scripts/config -m UDF_FS
+scripts/config -m VFAT_FS
+
+# For test SM box
+scripts/config -m IGB
+scripts/config -m DRM_AST
+scripts/config -m I2C_PIIX4
+scripts/config -m SENSORS_K10TEMP
+scripts/config -m DRM_RADEON
+scripts/config -m FB_RADEON
+scripts/config -m USB_XHCI_HCD
+scripts/config -m SCSI_DH
+scripts/config -m SCSI_DH_EMC
+scripts/config -m SCSI_DH_RDAC
+scripts/config -m SCSI_DH_ALUA
+
+scripts/config -m IPMI_SI
+scripts/config -m IPMI_DEVICE_INTERFACE
+scripts/config -m IPMI_HANDLER
+scripts/config -m IPMI_SSIF
+scripts/config -m IPMI_WATCHDOG
+
 %make_build olddefconfig
 egrep 'IPIPE|XENO' .config
 
@@ -425,6 +452,13 @@ grep Xenomai boot.log
 %modules_dir/build
 
 %changelog
+* Wed Jun 26 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.128-alt3
+- Add filesystems required for fstab to finish system boot
+
+* Tue Jun 25 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.128-alt2
+- Enable EFI handover support
+- Enable igb and some other drivers useful for SM
+
 * Fri Jun 21 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.128-alt1
 - v4.14.128 with spec based on kernel-image-std-def-4.14.104-alt1
 - I-pipe 4.14.128 with Xenomai Cobalt
