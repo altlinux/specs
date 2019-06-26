@@ -1,6 +1,6 @@
 Name: pqiv
 Version: 2.8.5
-Release: alt4
+Release: alt5
 
 Summary: Minimalist Image Viewer
 License: GPL3+
@@ -19,7 +19,7 @@ BuildRequires: libImageMagick-devel
 %description
 Originally, PQIV was written as a drop-in replacement for QIV.
 
-This is common package, install either gtk2, gtk3 subpackages (or both).
+This is common package, install gtk2/gtk3 subpackages (or both).
 
 %package gtk2
 Summary: %name build with gtk2
@@ -73,21 +73,21 @@ Backend for %name
 %prep
 %setup -n %name
 %patch -p1
-%ifarch x86_64 aarch64
-subst 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
+%if "%_lib" == "lib64"
+sed -i 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
 %endif
 
 %build
 for ver in 3 2;do
-./configure \
---gtk-version=$ver \
---prefix=%prefix \
---destdir=%buildroot \
---backends=gdkpixbuf,libav,poppler,spectre,wand \
---backends-build=shared
+	./configure \
+		--gtk-version=$ver \
+		--prefix=%prefix \
+		--destdir=%buildroot \
+		--backends=gdkpixbuf,libav,poppler,spectre,wand \
+		--backends-build=shared
 
-%make_build
-mv %name %{name}-gtk$ver
+	%make_build
+	mv %name %{name}-gtk$ver
 done
 mv %{name}-gtk2 %name
 
@@ -135,6 +135,10 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Wed Jun 26 2019 Michael Shigorin <mike@altlinux.org> 2.8.5-alt5
+- Fixed build on 64-bit arches
+- Minor spec cleanup
+
 * Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 2.8.5-alt4
 - Rebuilt for ffmpeg-4.0.
 
