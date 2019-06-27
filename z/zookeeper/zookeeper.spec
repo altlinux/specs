@@ -3,9 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-python3 rpm-macros-java
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
 # END SourceDeps(oneline)
+%define _libexecdir %_prefix/libexec
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 29
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _hardened_build 1
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          zookeeper
 Version:       3.4.9
-Release:       alt3_13jpp8
+Release:       alt4_13jpp8
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           https://zookeeper.apache.org/
@@ -329,6 +330,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Thu Jun 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt4_13jpp8
+- use libexec as libexecdir for bash scripts to work
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt3_13jpp8
 - new version
 
