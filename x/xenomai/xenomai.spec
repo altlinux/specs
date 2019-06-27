@@ -3,7 +3,7 @@
 Summary: Real-Time Framework for Linux (Cobalt)
 Name: xenomai
 Version: 3.0.8
-Release: alt2
+Release: alt3
 Source0: %{name}-%{version}.tar
 License: GPL
 Group: Networking/Other
@@ -79,10 +79,18 @@ cp -Ra	scripts	\
 cp config/version-{code,label} \
 		%buildroot/usr/src/xenomai-kernel-source/config/
 mv %buildroot/usr/sbin/version %buildroot/usr/sbin/xeno-version
+mkdir -p %buildroot/etc/udev/rules.d
+for f in kernel/cobalt/udev/*.rules; do
+  cp $f %buildroot/etc/udev/rules.d/
+done
+
+%pre
+%_sbindir/groupadd -r -f xenomai 2> /dev/null ||:
 
 %files
 %doc README
 /etc/*.conf
+/etc/udev/rules.d/*.rules
 %_bindir/*
 %exclude %_bindir/xeno-config
 %exclude %_bindir/wrap-link.sh
@@ -108,6 +116,9 @@ mv %buildroot/usr/sbin/version %buildroot/usr/sbin/xeno-version
 %_usrsrc/xenomai-kernel-source
 
 %changelog
+* Fri Jun 28 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt3
+- Add udev rules and groupadd.
+
 * Thu Jun 27 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt2
 - Make proper -devel package.
 
