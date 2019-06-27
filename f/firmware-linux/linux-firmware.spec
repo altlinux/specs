@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190603
+Version: 20190620
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,20 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Jun 27 2019 Cronbuild Service <cronbuild@altlinux.org> 20190620-alt1
+- upstream changes (GIT 7ae3a09):
+  + iwlwifi: add new firmwares for integrated 22000 series (thx Luca Coelho)
+  + iwlwifi: update FW for 22000 to Core45-96 (thx Luca Coelho)
+  + iwlwifi: update FWs for 9000 series to Core45-96 (thx Luca Coelho)
+  + iwlwifi: update Core45 FWs for 22260, 9000 and 9260 (thx Luca Coelho)
+  + iwlwifi: udpate -36 firmware for 8000 series (thx Emmanuel Grumbach)
+  + cavium: Add firmware for CNN55XX crypto driver. (thx Phani Kiran Hemadri)
+  + Update firmware file for Intel Bluetooth 22161 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + Update AMD SEV firmware (thx Allen, John)
+  + update licence text for Marvell firmware (thx Ganapathi Bhat)
+
 * Wed Jun 12 2019 Cronbuild Service <cronbuild@altlinux.org> 20190603-alt1
 - upstream changes (GIT 1884732):
   + update firmware for mhdp8546 (thx Damian Kos)
