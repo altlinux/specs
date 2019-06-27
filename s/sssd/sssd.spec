@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define libwbc_alternatives_version 0.14.0
+%define libwbc_alternatives_version 0.15.0
 %def_with kcm
 %def_without secrets
 %def_disable local_provider
@@ -21,7 +21,7 @@
 
 Name: sssd
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -849,6 +849,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Fri Jun 28 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.1.0-alt2
+- Update libwbclient-sssd interface to version 0.15 (Closes: 36750)
+
 * Tue Mar 26 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.1.0-alt1
 - Update to 2.1.0 for samba-4.10.0
 
