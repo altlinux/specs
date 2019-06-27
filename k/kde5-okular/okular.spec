@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 19.04.2
-Release: alt2
+Release: alt4
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Office
@@ -27,11 +27,14 @@ Requires: %name-core
 %if_enabled obsolete_kde4
 Provides: kde4-okular = %version-%release
 Obsoletes: kde4-okular < %version-%release
+Provides: kde4graphics-okular = %version-%release
+Obsoletes: kde4graphics-okular < %version-%release
 %endif
 
 Source: %rname-%version.tar
 Patch1: alt-chm-encoding.patch
 Patch2: alt-def-memory-level.patch
+Patch3: alt-print-truncate-title.patch
 
 # Automatically added by buildreq on Tue Jan 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
@@ -102,6 +105,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %build
@@ -176,6 +180,12 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Jun 27 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.2-alt4
+- obsolete kde4graphics-okular
+
+* Thu Jun 27 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.2-alt3
+- more truncate long document title for printing
+
 * Wed Jun 26 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.2-alt2
 - obsolete kde4-okular
 
