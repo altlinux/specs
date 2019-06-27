@@ -3,7 +3,7 @@
 Summary: Real-Time Framework for Linux (Cobalt)
 Name: xenomai
 Version: 3.0.8
-Release: alt1
+Release: alt2
 Source0: %{name}-%{version}.tar
 License: GPL
 Group: Networking/Other
@@ -78,22 +78,28 @@ cp -Ra	scripts	\
 	kernel	%buildroot/usr/src/xenomai-kernel-source/
 cp config/version-{code,label} \
 		%buildroot/usr/src/xenomai-kernel-source/config/
+mv %buildroot/usr/sbin/version %buildroot/usr/sbin/xeno-version
 
 %files
 %doc README
 /etc/*.conf
 %_bindir/*
+%exclude %_bindir/xeno-config
+%exclude %_bindir/wrap-link.sh
 %_sbindir/*
 %_libexecdir/%name/
 
 %files -n lib%name
-%_libdir/lib*.so*
-%_libdir/*.wrappers
-%_libdir/dynlist.ld
-%_libdir/%name/*.o
+%_libdir/lib*.so.*
 
 %files -n lib%name-devel
 %_includedir/xenomai
+%_libdir/*.so
+%_bindir/xeno-config
+%_bindir/wrap-link.sh
+%_libdir/*.wrappers
+%_libdir/dynlist.ld
+%_libdir/%name/*.o
 
 %files -n lib%name-devel-static
 %_libdir/lib*.a*
@@ -102,6 +108,9 @@ cp config/version-{code,label} \
 %_usrsrc/xenomai-kernel-source
 
 %changelog
+* Thu Jun 27 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt2
+- Make proper -devel package.
+
 * Fri Jun 21 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt1
 - Update to 3.0.8
 - Add xenomai-kernel-source package
