@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 88
+%define somajor 89
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 77
+%define minor 78
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -399,8 +399,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Thu Jun 27 2019 Sergey V Turchin <zerg@altlinux.org> 0.77.0-alt2
-- build only compat library
+* Thu Jun 27 2019 Sergey V Turchin <zerg@altlinux.org> 0.78.0-alt1
+- new version
 
 * Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.77.0-alt1
 - new version
