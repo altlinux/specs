@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.8.9
+Version: 2.8.10
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 2.8.10-alt1
+- rpmgs: add support for any version prefix in a git tag
+- gitask: add copy command
+- gitask: allow list packages and tasks
+- rpmbs: add -F option to run task after add
+- gitask: fix task cancel on git.eter/git.office
+- gitask: add rebuild command
+
 * Fri Jun 07 2019 Vitaly Lipatov <lav@altlinux.ru> 2.8.9-alt1
 - run gear-remotes-restore if .gear/upstream/remotes is exists
 - use UTF8 locale instead of C
