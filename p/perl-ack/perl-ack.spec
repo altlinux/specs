@@ -18,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -67,6 +67,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Fri Jun 28 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1
+- automated CPAN update
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1
 - automated CPAN update
 
