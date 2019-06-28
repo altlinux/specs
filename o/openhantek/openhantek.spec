@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 2.09
+Version: 2.10
 Release: alt1
 Epoch: 1
 
@@ -46,6 +46,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_udevrulesdir/60-hantek.rules
 
 %changelog
+* Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1:2.10-alt1
+- new version 2.10 (with rpmrb script)
+
 * Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1:2.09-alt1
 - new version 2.09 (with rpmrb script)
 
