@@ -18,7 +18,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt10
+Release: alt11
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -323,8 +323,8 @@ export RPM_LD_PRELOAD_py3_rpmb=%buildroot%python3_sitelibdir/rpm/_rpmb%_python3_
 export RPM_FILES_TO_LD_PRELOAD_py3_rpmb=%python3_sitelibdir/rpm/_rpms%_python3_extension_suffix
 popd
 
-mkdir -p %buildroot/usr/lib/tmpfiles.d
-echo "r /var/lib/rpm/__db.*" > %buildroot/usr/lib/tmpfiles.d/rpm.conf
+mkdir -p %buildroot/lib/tmpfiles.d
+echo "r /var/lib/rpm/__db.*" > %buildroot/lib/tmpfiles.d/rpm.conf
 
 mkdir -p %buildroot%_sysconfdir/rpm
 mkdir -p %buildroot%_sysconfdir/rpm/macros.d
@@ -402,7 +402,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %files -f %name.lang
 %doc CREDITS doc/manual/[a-z]*
 
-/usr/lib/tmpfiles.d/rpm.conf
+/lib/tmpfiles.d/rpm.conf
 %dir %_sysconfdir/rpm
 
 %attr(0755, root, root) %dir /var/lib/rpm
@@ -541,6 +541,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri Jun 28 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt11
+- Renamed /usr/lib/tmpfiles.d/rpm.conf to /lib/tmpfiles.d/rpm.conf.
+- rpmspec: backported my parseBits fixes from rpm-4.15.0.
+
 * Thu Jun 20 2019 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt10
 - Packaged the forgtotten new rpmvercmp.h (whose use is discouraged
   in favor of rpmEVRDTCompare() or rpmRangesOverlap()).
