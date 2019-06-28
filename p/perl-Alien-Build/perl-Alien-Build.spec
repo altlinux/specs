@@ -23,7 +23,7 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 %{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
-Version:        1.74
+Version:        1.76
 Release:        alt1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
@@ -190,11 +190,14 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc LICENSE author.yml
+%doc author.yml
 %doc Changes* example README SUPPORT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Jun 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.76-alt1
+- automated CPAN update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.74-alt1
 - automated CPAN update
 
