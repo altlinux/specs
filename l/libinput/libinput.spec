@@ -7,8 +7,8 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.13.3
-Release: alt2
+Version: 1.13.4
+Release: alt1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -141,6 +141,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Fri Jun 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.13.4-alt1
+- 1.13.4
+
 * Tue Jun 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13.3-alt2
 - Fixed build with disabled check.
 - Enabled build of testsuite by default.
