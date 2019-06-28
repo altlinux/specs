@@ -4,16 +4,15 @@
 
 Name: mpv
 Version: 0.29.1
-Release: alt4
+Release: alt5
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
-Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
 License: GPLv2+
 Group: Video
 
-URL: http://mpv.io/
+Url: http://mpv.io/
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Patch: %name-%version-alt.patch
 
 Packager: %packager
 
@@ -28,6 +27,8 @@ BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
 %endif
+
+Summary(ru_RU.UTF-8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -113,6 +114,11 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Sat Jun 29 2019 Michael Shigorin <mike@altlinux.org> 0.29.1-alt5
+- Fix build with older libEGL, see upstream issue #5599
+  (commit taken from NetBSD)
+- Minor spec cleanup
+
 * Fri Apr 12 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.29.1-alt4
 - Use %%luajit_arches macro to disable lua support on architectures
   unsupported by luajit.
