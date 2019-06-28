@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.11
+Version: 2.1.12
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -47,6 +47,16 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.12-alt1
+- fail if depends file is missed
+- improve component download
+- writedeps: run rpmreqs from builder32 always
+- log: more clean overwrite log
+- fix copying and write deps
+- disable _build_name_fmt (eterbug #13109)
+- writedeps: fix files expand (eterbug #13148)
+- update list of systems
+
 * Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.11-alt1
 - writedeps: skip write deps for debug packages
 - copying: rewrite debug packages copying
