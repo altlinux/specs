@@ -1,6 +1,6 @@
 Name: mokutil
-Version: 0.3.0
-Release: alt3.dev.git20180724
+Version: 0.4.0
+Release: alt1
 Epoch: 1
 
 Summary: Tool to manage UEFI Secure Boot MoK Keys
@@ -10,7 +10,6 @@ Url: https://github.com/lcp/mokutil
 #Git: https://github.com/lcp/mokutil.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gnu-efi
 BuildRequires: efivar-devel
 BuildRequires: efivar
@@ -42,6 +41,10 @@ make PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
 %_datadir/bash-completion/completions/mokutil
 
 %changelog
+* Fri Jun 28 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:0.4.0-alt1
+- new version
+  + spec: remove rpm-build-ubt from BR
+
 * Fri Jun 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:0.3.0-alt3.dev.git20180724
 - remove ubt
 
