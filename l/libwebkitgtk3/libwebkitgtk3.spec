@@ -20,7 +20,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt7
+Release: alt8
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -233,7 +233,7 @@ rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmai
 %add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough
 # Use linker flags to reduce memory consumption
 %add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
-%ifarch ppc ppc64 ppc64le
+%ifarch ppc ppc64 ppc64le riscv64
 %add_optflags -DENABLE_YARR_JIT=0
 %endif
 
@@ -245,8 +245,11 @@ echo "GTK_DOC_CHECK([1.10])" >> configure.ac
 gtkdocize --copy
 %autoreconf -I Source/autotools
 %configure \
-%ifarch ppc ppc64 ppc64le
+%ifarch ppc ppc64 ppc64le riscv64
 	--disable-jit \
+%endif
+%ifarch riscv64
+	--enable-fast-malloc \
 %endif
 	--enable-video \
 	--with-acceleration-backend=%acceleration_backend \
@@ -351,6 +354,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Thu Jun 20 2019 Nikita Ermakov <arei@altlinux.org> 2.4.11-alt8
+- Add RISC-V (vr64gc) support.
+
 * Fri May 31 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.11-alt7
 - Fixed build on ppc architectures.
 
