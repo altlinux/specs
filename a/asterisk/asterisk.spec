@@ -1,7 +1,7 @@
 # -*- mode: rpm-spec; mode: folding -*-
 Name: asterisk
-Version: 15.6.1
-Release: alt2
+Version: 16.4.0
+Release: alt1
 
 Summary: Open source PBX
 License: GPL
@@ -15,10 +15,11 @@ BuildRequires: curl gcc-c++
 BuildRequires: libedit-devel libncurses-devel libuuid-devel libjansson-devel
 BuildRequires: libsqlite3-devel libxml2-devel liburiparser-devel libxslt-devel
 BuildRequires: libpopt-devel libspandsp-devel libfftw3-devel
-BuildRequires: libcurl-devel libsrtp2-devel
+BuildRequires: libcurl-devel libsrtp2-devel libjansson-devel
 BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
+BuildRequires: libpjsip-devel >= 2.8
 
 Source0: %name-%version-%release.tar
 
@@ -103,9 +104,8 @@ This package contains development part of Asterisk.
 %setup
 
 %build
-export EXTERNALS_CACHE_DIR=$(pwd)/.gear
 sh bootstrap.sh
-%configure --localstatedir=/var
+%configure --localstatedir=/var --without-pjproject-bundled
 %make_build
 
 %install
@@ -168,7 +168,6 @@ cp -av alt/config/* %buildroot%_sysconfdir/asterisk
 %_sbindir/asterisk
 %_sbindir/rasterisk
 
-%_libdir/libasteriskpj.so.2
 %_libdir/libasteriskssl.so.1
 
 %dir %_libdir/asterisk
@@ -281,6 +280,9 @@ cp -av alt/config/* %buildroot%_sysconfdir/asterisk
 #}}}
 
 %changelog
+* Thu Jun 27 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.4.0-alt1
+- 16.4.0 released
+
 * Fri Apr 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.6.1-alt2
 - drop redundant libpq-devel BR
 
