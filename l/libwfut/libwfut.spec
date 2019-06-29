@@ -6,7 +6,7 @@ BuildRequires: python-devel
 %define _localstatedir %{_var}
 Name:           libwfut
 Version:        0.2.3
-Release:        alt1_17
+Release:        alt2_17
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/Other
@@ -42,6 +42,10 @@ Development libraries and headers for linking against the libwfut library.
 %patch0 -p1
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %configure --disable-static
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -78,6 +82,9 @@ make check
 
 
 %changelog
+* Sat Jun 29 2019 Michael Shigorin <mike@altlinux.org> 0.2.3-alt2_17
+- E2K: explicit -std=c++11
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_17
 - update to new release by fcimport
 
