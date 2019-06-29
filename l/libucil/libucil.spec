@@ -10,7 +10,7 @@ BuildRequires: pkgconfig(libavcodec)
 Summary:	Library to render text and graphic overlays onto video images
 Name:		libucil
 Version:	0.9.10
-Release:	alt2_12
+Release:	alt3_12
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://www.unicap-imaging.org/
@@ -40,8 +40,9 @@ and graphic overlays onto video images.
 Summary:	Dynamic libraries for libucil
 Group:		System/Libraries
 Conflicts:	libunicap < 0.9.12
-Conflicts:	libucil < 0.9.12
-Obsoletes:	libucil < 0.9.12
+Conflicts:      libucil < 0.9.10
+Provides:	libucil = %EVR
+Obsoletes:      libucil < 0.9.10
 
 %description -n %{lib_name}
 Unicap provides a uniform interface to video capture devices. It allows
@@ -96,6 +97,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Jun 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt3_12
+- added provides (closes: #36954)
+
 * Tue Apr 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt2_12
 - added confilcts and obsoletes with libucil (closes: #36698)
 
