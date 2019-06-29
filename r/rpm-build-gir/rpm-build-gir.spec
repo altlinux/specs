@@ -1,6 +1,6 @@
 Name: rpm-build-gir
-Version: 0.7.2
-Release: alt5
+Version: 0.7.3
+Release: alt1
 
 Summary: RPM helper macros and dependency utils to build GObject Introspection packages
 License: GPL
@@ -39,6 +39,9 @@ ln -s gir.prov.files %buildroot%_rpmlibdir/gir.req.files
 %_rpmlibdir/typelib*
 
 %changelog
+* Fri Jun 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
+- gir-js.req: modified to support more JS expressions (ALT #36929)
+
 * Sun Jun 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt5
 - gir-js.req: fixed regexp for syntax without semicolon at end of lines
 
