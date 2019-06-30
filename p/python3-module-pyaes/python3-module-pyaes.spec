@@ -1,7 +1,7 @@
 %define modulename pyaes
 
 Name: python3-module-pyaes
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Pure-Python Implementation of the AES block-cipher and common modes of operation
@@ -10,9 +10,9 @@ Url: https://github.com/ricmoo/pyaes
 License: MIT
 Group: Development/Python
 
-# Source-url: https://github.com/ricmoo/pyaes/archive/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
 Source: %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -40,5 +40,8 @@ for API reference and details.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - initial build for ALT Sisyphus
