@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-alsaaudio
-Version: 0.7
-Release: alt1.1.1.1
+Version: 0.8.4
+Release: alt1
 
 Summary: Wrapper for accessing the ALSA API from Python
 
@@ -14,7 +14,8 @@ Url: http://pyalsaaudio.sourceforge.net/
 %setup_python_module %oname
 %define _python_egg_info %python_sitelibdir/%oname-%version-py%_python_version.egg-info
 
-Source: http://prdownloads.sf.net/%oname/%oname-%version.tar.bz2
+# Source-url: https://pypi.io/packages/source/p/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Jan 09 2009
 BuildRequires: libalsa-devel python-devel
@@ -40,7 +41,7 @@ sequencer support is low on our priority list, but volunteers are welcome.
 %endif
 
 %prep
-%setup -q -n %oname-%version
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -63,7 +64,6 @@ popd
 %endif
 
 %files
-%doc README TODO
 %python_sitelibdir/alsaaudio.so
 %_python_egg_info
 
@@ -73,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
+- build new version
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
