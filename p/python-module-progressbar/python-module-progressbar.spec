@@ -3,21 +3,21 @@
 %def_with python3
 
 Name: python-module-progressbar
-Version: 2.4
-Release: alt1.dev.2
+Version: 2.5
+Release: alt1
 
 Summary: Text progressbar library for python
 
 Group: Development/Python
 License: LGPLv2+
-Url: http://code.google.com/p/python-progressbar
+Url: https://github.com/niltonvolpato/python-progressbar
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# get from https://pypi.python.org/pypi/py3-progressbar/
-Source: %modulename-%version.tar
+# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
+Source: %name-%version.tar
 
 %setup_python_module %modulename
 
@@ -50,11 +50,11 @@ The progressbar module is very easy to use, yet very powerful. And
 automatically supports features like auto-resizing when available.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
+- new version 2.5 (with rpmrb script)
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1.dev.2
 - Rebuild with python3.7.
 
