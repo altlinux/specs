@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.9
-Release: alt2
+Version: 3.11
+Release: alt1
 
 Summary: lex and yacc python implementation
 
@@ -13,7 +13,8 @@ License: BSD
 Group: Development/Python
 Url: http://www.dabeaz.com/ply/
 
-Source0: https://pypi.python.org/packages/a8/4d/487e12d0478ee0cbb15d6fe9b8916e98fe4e2fce4cc65e4de309209c0b24/%oname-%version.tar.gz
+# Source-url: https://pypi.io/packages/source/p/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -34,7 +35,7 @@ PLY is a 100%% Python implementation of the common parsing tools lex
 and yacc.
 
 %prep
-%setup -n %oname-%version
+%setup
 cp -a . ../python3
 
 %build
@@ -72,6 +73,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.11-alt1
+- new version 3.11 (with rpmrb script)
+
 * Fri Jun 15 2018 Stanislav Levin <slev@altlinux.org> 3.9-alt2
 - Fix python3 package
 - Enable tests
