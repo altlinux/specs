@@ -2,8 +2,8 @@
 
 %define modulename Automat
 Name: python-module-automat
-Version: 0.6.0
-Release: alt1.qa1
+Version: 0.7.0
+Release: alt1
 
 Summary: Self-service finite-state machines for the programmer on the go
 
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1.qa1
 - NMU: applied repocop patch
 
