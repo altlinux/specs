@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.5
-Release: alt1.1.1.2
+Version: 0.4.2
+Release: alt1
 
 Summary: Stateful programmatic web browsing
 
@@ -16,8 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %setup_python_module %oname
 
-Source: http://wwwsearch.sourceforge.net/mechanize/src/%oname-%version.tar
-Patch: mechanize-0.2.5-alt-python3.patch
+# Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -48,12 +48,11 @@ Stateful programmatic web browsing in Python,
 after Andy Lester's Perl module WWW::Mechanize.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
 pushd ../python3
-%patch -p2
 popd
 %endif
 
@@ -62,7 +61,7 @@ popd
 
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -77,7 +76,7 @@ popd
 %endif
 
 %files
-%doc docs/ examples/
+%doc examples/
 %python_sitelibdir/*
 
 %if_with python3
@@ -86,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- new version (0.4.2) with rpmgs script
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt1.1.1.2
 - (NMU) rebuild with python3.6
 
