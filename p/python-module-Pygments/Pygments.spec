@@ -1,16 +1,19 @@
 %define oname Pygments
 
 Name: python-module-Pygments
-Version: 2.2.0
-Release: alt2
+Version: 2.4.2
+Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
+
 License: BSD
 Group: Development/Python
 Url: http://pygments.org/
+
 BuildArch: noarch
 
-Source: Pygments-%version.tar.gz
+Source: %name-%version.tar
+Source1: autobuild.watch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-Pyrex
@@ -138,7 +141,7 @@ to prettify source code. Highlights are:
 This package contains pickles for %name.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 rm -rf ../python3
 cp -a . ../python3
@@ -180,7 +183,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pygments/
 pushd ../python3
 install -d %buildroot%_docdir/python3-module-%oname/
 cp -fR tests %buildroot%python3_sitelibdir/pygments/
-rm %buildroot%python3_sitelibdir/pygments/tests/examplefiles/unicodedoc.py
+rm -fv %buildroot%python3_sitelibdir/pygments/tests/examplefiles/unicodedoc.py
+rm -fv %buildroot%python3_sitelibdir/pygments/tests/examplefiles/output/unicodedoc.py
+rm -fv %buildroot%python3_sitelibdir/pygments/tests/examplefiles/output/linecontinuation.py
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/pygments/
 cp -fR doc/_build/html %buildroot%_docdir/python3-module-%oname/
 popd
@@ -223,6 +228,9 @@ popd
 
 
 %changelog
+* Sat Jun 29 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- new version 2.4.2
+
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.2.0-alt2
 - rebuild with python3.6
 
