@@ -1,20 +1,17 @@
 Name: paprefs
 Version: 0.9.10
-Release: alt1.1
+Release: alt2
 
 Summary: PulseAudio Preferences
 License: GPL
 Group: Sound
+
 Url: http://freedesktop.org/software/pulseaudio/%name
 Source0: http://freedesktop.org/software/pulseaudio/%name/%name-%version.tar.xz
-
 Source1: %name.desktop
-
 Patch0: paprefs-0.9.6-alt-desktop-file.patch
-
 Patch1: %name-%version-modules-path.patch
 Patch2: %name-%version-module-combine-sink.patch
-
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Requires: pulseaudio >= 0.9.5
@@ -40,13 +37,16 @@ touch -r configure.ac.stamp configure.ac
 %patch2 -p1 -b .module-combine-sink
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-%__install -p -m644 -D %SOURCE1 $RPM_BUILD_ROOT%_datadir/applications/%name.desktop
-
+%makeinstall_std
+install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -55,6 +55,10 @@ touch -r configure.ac.stamp configure.ac
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Sun Jun 30 2019 Michael Shigorin <mike@altlinux.org> 0.9.10-alt2
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.10-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
