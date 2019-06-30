@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1
-Release: alt1.2
+Version: 3.4
+Release: alt1
 
 Summary: high-level interface to the ftplib module
 
@@ -13,7 +13,9 @@ Group: Development/Python
 Url: http://ftputil.sschwarzer.net/trac
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://ftputil.sschwarzer.net/trac/attachment/wiki/Download/%oname-%version.tar.bz2
+
+# Source-url: https://pypi.io/packages/source/f/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -42,7 +44,7 @@ module. The FTPHost objects generated with ftputil allow many operations
 similar to those of os  and os.path
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -77,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- new version 3.4 (with rpmrb script)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.1-alt1.2
 - (NMU) rebuild with python3.6
 
