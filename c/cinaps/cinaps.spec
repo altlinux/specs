@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: cinaps
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: Trivial metaprogramming tool.
 License: Apache-2.0
@@ -32,5 +32,8 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %nam
 %_libdir/ocaml/%name/opam
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - first build for ALT
