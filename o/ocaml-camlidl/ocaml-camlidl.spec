@@ -1,5 +1,5 @@
 Name: ocaml-camlidl
-Version: 1.06
+Version: 1.07
 Release: alt1
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL and LGPLv2 with exceptions
@@ -70,6 +70,7 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %files
 %doc LICENSE
 %_libdir/ocaml/*.*
+%_libdir/ocaml/stublibs/dllcamlidl.so
 %exclude %_libdir/ocaml/*.a
 %exclude %_libdir/ocaml/*.cmxa
 %_bindir/camlidl
@@ -82,6 +83,9 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1.07-alt1
+- 1.07
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.06-alt1
 - 1.06
 
