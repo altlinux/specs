@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.15
-Release: alt3.1
+Version: 1.3.18
+Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -230,6 +230,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1.3.18-alt1
+- 1.3.18
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.15-alt3.1
 - rebuild with new perl 5.28.1
 
