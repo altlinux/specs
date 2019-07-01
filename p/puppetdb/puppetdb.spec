@@ -2,7 +2,7 @@
 
 Name:     puppetdb
 Version:  6.2.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -44,8 +44,8 @@ install -D %name.service %buildroot%_unitdir/%name.service
 
 %if_enabled initd
 install -D %name.init %buildroot%_initdir/%name
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
-cat >%buildroot%_sysconfdir/tmpfiles.d/%name.conf <<EOF
+mkdir -p %buildroot%_tmpfilesdir/tmpfiles.d
+cat >%buildroot%_tmpfilesdir/%name.conf <<EOF
 d /var/run/puppetdb 0775 _puppetdb _puppetdb -
 EOF
 mkdir -p %buildroot%_runtimedir/%name
@@ -117,7 +117,7 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %dir %attr(0770,_puppetdb,_puppetdb) %_localstatedir/%name
 %if_enabled initd
 %_initdir/%name
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %_sysconfdir/logrotate.d/%name
 %_runtimedir/%name
 %doc docs/%name/*
@@ -145,6 +145,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 
 
 %changelog
+* Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.0-alt2
+- fix path to puppetdb.conf
+
 * Wed Mar 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.0-alt1
 - Version updated to 6.2.0
 
