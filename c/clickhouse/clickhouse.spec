@@ -1,6 +1,6 @@
 Name: clickhouse
 Version: 19.9.2.4
-Release: alt1
+Release: alt2
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
 Group: Databases
@@ -12,7 +12,7 @@ Url: https://clickhouse.yandex/
 BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata, libjemalloc-devel, cctz-devel
 BuildRequires: rpm-macros-cmake, liblz4-devel, zlib-devel, /proc, libzstd-devel, libmariadb-devel
 BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
-BuildRequires: libgsasl-devel, libcap-ng, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
+BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
 BuildRequires: libpoco-devel, libgtest-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
 BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
 BuildRequires: llvm-devel, clang, libstdc++-devel, perl-JSON-XS, libb64-devel, libhyperscan-devel
@@ -96,15 +96,15 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %_datadir/clickhouse
 %_bindir/clickhouse
 %_bindir/clickhouse-odbc-bridge
-%_sysconfdir/security/limits.d/clickhouse.conf
+%config(noreplace) %_sysconfdir/security/limits.d/clickhouse.conf
 
 %files -n libclickhouse
 %_libdir/*.so.*
 
 %files server
-%_sysconfdir/cron.d/clickhouse-server
-%_sysconfdir/clickhouse-server/config.xml
-%_sysconfdir/clickhouse-server/users.xml
+%config(noreplace) %_sysconfdir/cron.d/clickhouse-server
+%config(noreplace) %_sysconfdir/clickhouse-server/config.xml
+%config(noreplace) %_sysconfdir/clickhouse-server/users.xml
 %_bindir/clickhouse-server
 %_bindir/clickhouse-report
 %_bindir/clickhouse-copier
@@ -113,7 +113,7 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %dir %attr(0750,_clickhouse,_clickhouse) %_localstatedir/clickhouse
 
 %files client
-%_sysconfdir/clickhouse-client/config.xml
+%config(noreplace) %_sysconfdir/clickhouse-client/config.xml
 %_bindir/clickhouse-client
 %_bindir/clickhouse-local
 %_bindir/clickhouse-compressor
@@ -127,10 +127,13 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %_bindir/clickhouse-test-server
 %_bindir/clickhouse-performance-test
 %_datadir/clickhouse-test
-%_sysconfdir/clickhouse-client/client-test.xml
-%_sysconfdir/clickhouse-server/server-test.xml
+%config(noreplace) %_sysconfdir/clickhouse-client/client-test.xml
+%config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 19.9.2.4-alt2
+- config files was marked for prevent rewrite during an update
+
 * Tue Jun 25 2019 Anton Farygin <rider@altlinux.ru> 19.9.2.4-alt1
 - updated to 19.9.2.4
 
