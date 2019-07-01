@@ -2,7 +2,7 @@
 
 Name: gpsim
 Version: 0.31.0
-Release: alt1
+Release: alt2
 
 Summary: Software simulator for Microchip PIC microcontrollers
 Summary(ru_RU.UTF-8): Программный эмулятор микроконтроллеров PIC фирмы Microchip
@@ -94,6 +94,10 @@ applications which will use libgpsim
 %patch7 -p2
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %autoreconf
 %configure --disable-static --enable-sockets
 %make_build
@@ -101,13 +105,10 @@ applications which will use libgpsim
 %install
 %makeinstall
 
-# I really don't know why they are not stripped by rpmbuild
-strip %buildroot%_bindir/%name %buildroot%_libdir/*.so.*
-
 # install appdata, desktop file and icon
-install -Dm 644 doc/metadata/gpsim.appdata.xml %buildroot%_datadir/appdata/gpsim.appdata.xml
-install -Dm 644 doc/metadata/gpsim.desktop %buildroot%_desktopdir/gpsim.desktop
-install -Dm 644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
+install -pDm644 doc/metadata/gpsim.appdata.xml %buildroot%_datadir/appdata/gpsim.appdata.xml
+install -pDm644 doc/metadata/gpsim.desktop %buildroot%_desktopdir/gpsim.desktop
+install -pDm644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 
 %files
 %_bindir/%name
@@ -127,6 +128,10 @@ install -Dm 644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 %_libdir/*.so
 
 %changelog
+* Mon Jul 01 2019 Michael Shigorin <mike@altlinux.org> 0.31.0-alt2
+- E2K: explicit -std=c++11
+- Don't strip libraries (for debuginfo)
+
 * Mon Jul 01 2019 Andrey Cherepanov <cas@altlinux.org> 0.31.0-alt1
 - New version.
 
