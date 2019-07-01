@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mailman3
-Version: 3.2.0
-Release: alt4
+Version: 3.2.2
+Release: alt2
 
 Summary: Managing electronic mail discussion and e-newsletter lists.
 License: GPLv3
@@ -17,6 +17,8 @@ Source3: %name.service
 Source4: %name.logrotate
 Source5: %name-digests.service
 Source6: %name-digests.timer
+
+Patch0: %name-fix-import.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
@@ -85,6 +87,8 @@ This package contain python modules for %name.
 %prep
 %setup
 
+%patch0 -p1
+
 %build
 %python3_build
 
@@ -105,7 +109,7 @@ EOF
 chmod +x %buildroot%_bindir/%name
 
 install -D -m 0640 %SOURCE1 %buildroot%_sysconfdir/mailman.cfg
-install -D -m 0644 %SOURCE2 %buildroot%_prefix/lib/tmpfiles.d/%name.conf
+install -D -m 0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 install -D -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d/
@@ -144,7 +148,7 @@ getent passwd mailman >/dev/null || \
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_unitdir/*.service
 %_unitdir/*.timer
-%_prefix/lib/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %dir %_sysconfdir/%name.d
 %dir %attr(0755,mailman,mailman) %_localstatedir/%name
 %dir %attr(2775,mailman,mail)   %_localstatedir/%name/data
@@ -158,6 +162,15 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.2-alt2
+- fix import module 'importlib_resources'
+
+* Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.2-alt1
+- Version updated to 3.2.2
+
+* Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt5
+- fix path to mailman3.conf
+
 * Tue Mar 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt4
 - Lockdir path fixed
 
