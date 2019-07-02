@@ -1,6 +1,6 @@
 Name: liburing
 Version: 0.1
-Release: alt3
+Release: alt4
 
 Summary: Linux-native io_uring I/O access library
 License: LGPL-2.1-or-later
@@ -35,10 +35,16 @@ linked programs that use Linux-native io_uring.
 %setup
 
 %build
+./configure \
+	--prefix=%_prefix \
+	--includedir=%_includedir \
+	--libdir=%_libdir \
+	--mandir=%_mandir \
+	#
 %make_build
 
 %install
-%makeinstall_std prefix=%_prefix libdir=%_libdir mandir=%_mandir
+%makeinstall_std
 
 %files
 %_libdir/liburing.so.*
@@ -47,12 +53,16 @@ linked programs that use Linux-native io_uring.
 %files devel
 %_includedir/*
 %_libdir/%name.so
+%_pkgconfigdir/%name.pc
 %_man2dir/*
 
 %files devel-static
 %_libdir/%name.a
 
 %changelog
+* Mon Jun 17 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1-alt4
+- Updated to upstream commit 043ea2257fb692324f1cb491ae092cdcb311732a.
+
 * Mon May 20 2019 Dmitry V. Levin <ldv@altlinux.org> 0.1-alt3
 - Updated to upstream commit 375bed76ba7292122f828fbf49c2b530506fdce8
   that adds support for all mainline architectures.
