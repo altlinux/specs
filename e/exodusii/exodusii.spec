@@ -7,7 +7,7 @@ Name: exodusii
 Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt2.git20150119
+Release: alt3.git20150119
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -86,10 +86,7 @@ This package contains python binding for EXODUS II.
 %setup
 install -p -m644 %SOURCE1 exodus
 install -p -m644 %SOURCE1 nemesis
-%ifarch x86_64
-LIB64=64
-%endif
-sed -i "s|@64@|$LIB64|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
+sed -i "s|@64@|%_libsuff|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
 sed -i "s|@PWD@|$PWD|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
 
 %build
@@ -99,9 +96,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 pushd exodus
 cmake \
-%ifarch x86_64
-	-DLIB_SUFFIX:STRING="64" \
-%endif
+	-DLIB_SUFFIX:STRING="%_libsuff" \
 	-DSOMVER:STRING="%somver" \
 	-DSOVER:STRING="%sover" \
 	-DNETCDF_SO_ROOT=%_libdir \
@@ -111,9 +106,7 @@ cmake \
 popd
 pushd nemesis
 cmake \
-%ifarch x86_64
-	-DLIB_SUFFIX:STRING="64" \
-%endif
+	-DLIB_SUFFIX:STRING="%_libsuff" \
 	-DSOMVER:STRING="%somver" \
 	-DSOVER:STRING="%sover" \
 	.
@@ -159,6 +152,9 @@ mv nemesis/README README.Nemesis
 %python_sitelibdir/*
 
 %changelog
+* Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 6.09.0-alt3.git20150119
+- NMU: fixed LIB_SUFFIX= on non-x86_64
+
 * Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt2.git20150119
 - NMU: updated build dependencies.
 
