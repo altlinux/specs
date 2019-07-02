@@ -1,23 +1,26 @@
 # TODO generate version
-Name:		argwrapper
-Version:	0.02
-Release:	alt1
-Source:		%name-%version.tar
-License:	GPLv3
-Group:		File tools
-Summary:	Run a binary with environment and arguments sewed into wrapper name
 
-BuildRequires:	txt2man glibc-devel-static
+Name: argwrapper
+Version: 0.02
+Release: alt2
+
+Summary: Run a binary with environment and arguments sewed into wrapper name
+License: GPLv3
+Group: File tools
+
+Url: http://git.altlinux.org/people/george/packages/argwrapper.git
+Source: %name-%version.tar
+
+BuildRequires: txt2man glibc-devel-static
 
 %description
-
 When called without parameters, argwrapper assumes it's a wrapper call.
-It parses it's zero argument (argv[0], usually binary file name) and
+It parses its zero argument (argv[0], usually binary file name) and
 splits it into series of environment variables assignments, wrapped
 program name and command line arguments.
 
-When called with some command line parameters, argwrapper assumes it's
-a filename generator call. It selects a character for argument
+When called with some command line parameters, argwrapper assumes
+it's a filename generator call. It selects a character for argument
 separator, a replacement characters for '/' path separator and other
 optional chars, if any. It's guaranteed that none of the characters
 selected is appeared within original command line. Then '/' and optional
@@ -42,6 +45,11 @@ make check
 %_man1dir/%name.*
 
 %changelog
+* Tue Jul 02 2019 Michael Shigorin <mike@altlinux.org> 0.02-alt2
+- s/--static/-static/ to fix build with lcc on e2k
+- Added an Url:
+- Minor spec cleanup
+
 * Fri Sep 05 2014 Fr. Br. George <george@altlinux.ru> 0.02-alt1
 - Initial build
 
