@@ -9,14 +9,12 @@ Provides: eclipse-swt = 1:4.9.0-2.fc29
 Provides: mvn(org.eclipse.swt:org.eclipse.swt) = 3.108.0.v20180912.1831
 Provides: mvn(org.eclipse.swt:swt) = 3.108.0.v20180912.1831
 Provides: osgi(org.eclipse.swt) = 3.108.0
-Requires: libgtk+2
 Requires: libgtk+3
 Requires: java
-Requires: libwebkitgtk2
-Requires: libwebkitgtk3
+Requires: libwebkit2gtk
 
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 
 # extract jar&xmvn xml from arch rpm
 Source01: extract.sh
@@ -79,6 +77,9 @@ install -m 644 %{SOURCE51} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.
 %_libdir/eclipse/swt.jar
 
 %changelog
+* Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.9.0-alt0.2jpp
+- updated requires thanks to arei@
+
 * Sun Jun 30 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.9.0-alt0.1jpp
 - updated to 4.9.0; added armv7hl and ppc64le
 
