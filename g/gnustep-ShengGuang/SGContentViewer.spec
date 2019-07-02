@@ -2,7 +2,7 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt5
+Release: alt6
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -78,9 +78,7 @@ This package contains development files of ShengGuang.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-%ifarch x86_64
-	LIB_SUFFIX=64 \
-%endif
+	LIB_SUFFIX=%_libsuff \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 pushd %buildroot%_libdir/GNUstep/Libraries
@@ -109,6 +107,9 @@ ln -s %_libdir/GNUstep/Headers/ShengGuang \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 2006-alt6
+- NMU: fixed LIB_SUFFIX= on non-x86_64
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt5
 - Built with clang
 
