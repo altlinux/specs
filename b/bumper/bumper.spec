@@ -1,20 +1,24 @@
 Name: bumper
-Version: 0.1.8
-Release: alt1.git20150215.1
+Version: 0.1.13
+Release: alt1
+
 Summary: Bump (pin/manage) your dependency requirements with ease
+
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/bumper/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/maxzheng/bumper.git
+# Source-url: https://pypi.io/packages/source/b/%name/%name-%version.tar.gz
 Source: %name-%version.tar
+
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-bumper-lib
-BuildPreReq: python-module-requests python-module-simplejson
-
-%py_requires bumper requests simplejson
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-setuptools
+%py3_use bumper-lib >= 0.2.17
+%py3_use requests simplejson
 
 %description
 Bump (pin/manage) your dependency requirements with ease.
@@ -30,22 +34,27 @@ Feature Summary:
 
 %prep
 %setup
+subst "s|'setuptools-git'|'setuptools'|" setup.py
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%python3_test
 
 %files
 %doc *.rst docs/*.rst
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
+* Mon Jul 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.13-alt1
+- new version (0.1.13) with rpmgs script
+- switch to build from tarball, use python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.8-alt1.git20150215.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
