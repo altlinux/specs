@@ -5,7 +5,7 @@
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt1
+Release: alt2
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -87,10 +87,7 @@ Parallel netCDF.
 rm -fR autom4te.cache
 
 %build
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-sed -i -e "s|@LIB_SUFFIX@|$LIB_SUFFIX|g" pnetcdf_pc.in
+sed -i -e "s|@LIB_SUFFIX@|%_libsuff|g" pnetcdf_pc.in
 
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
@@ -105,17 +102,14 @@ export F90FLAGS="%optflags"
 	--enable-mpi-io-test \
 	--enable-fortran \
 	--enable-strict
-%make SOVER=%sover LIB_SUFFIX=$LIB_SUFFIX
+%make SOVER=%sover LIB_SUFFIX=%_libsuff
 %make -C doc
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%makeinstall SOVER=%sover LIB_SUFFIX=$LIB_SUFFIX
+%makeinstall SOVER=%sover LIB_SUFFIX=%_libsuff
 
 # fix pkg-config file
 sed -i -e "s|%buildroot||" %buildroot%_pkgconfigdir/*.pc
@@ -140,6 +134,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2
+- NMU: fixed LIB_SUFFIX= on non-x86_64
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
 - Updated to upstream version 1.8.1.
 
