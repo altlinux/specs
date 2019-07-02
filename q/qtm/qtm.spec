@@ -2,7 +2,7 @@
 
 Name: qtm
 Version: 1.3.17
-Release: alt1
+Release: alt2
 
 Summary: Qt4 blogging client
 License: GPLv2+
@@ -30,10 +30,8 @@ mkdir build/
 cd build
 cmake ../ \
         -DCMAKE_INSTALL_PREFIX=%_prefix \
-%ifarch x86_64
-        -DLIB_SUFFIX=64 \
-%endif
-				-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+        -DLIB_SUFFIX=%_libsuff \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
         -DCMAKE_BUILD_TYPE="Release" \
         -DCMAKE_CXX_FLAGS:STRING="%optflags" \
         -DCMAKE_SKIP_RPATH=YES
@@ -60,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/%name.*
 
 %changelog
+* Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.17-alt2
+- NMU: fixed LIB_SUFFIX= on non-x86_64
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.17-alt1
 - Version 1.3.17
 
