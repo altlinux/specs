@@ -13,8 +13,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q2.3
-Release: alt2
+Version: 2019.Q3.1
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -86,6 +86,15 @@ install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Jul 03 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q3.1-alt1
+- 2019-6-30 update:
+  + llpc: aa8a9d7f2b7ad7b81b70e7959e99e3f31f85c211
+  + llvm: 8118692e8aefbd95f791ff49beddb8ce90e8927c
+  + pal:6c8eaa257e6216437fdfe3f17d418eccfe42e0bd
+  + spvgen: 53245b96b7a647743f50b9d841751f9755002661
+  + xgl: eee58c8e482ac4a6fdc40452cb4ad744395d0f74
+- icd.json: bump vulkan api version
+
 * Mon May 13 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.3-alt2
 - spvgen: fix build.
 
