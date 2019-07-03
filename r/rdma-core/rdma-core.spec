@@ -2,7 +2,7 @@
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
-%ifnarch s390 %arm alpha armel armhf hppa m68k mips mips64el mipsel sh4 %e2k
+%ifnarch s390 %arm alpha armel armhf hppa m68k mips mips64el mipsel sh4 %e2k riscv64
 %def_enable dma_coherent
 %else
 %def_disable dma_coherent
@@ -11,7 +11,7 @@
 
 Name: rdma-core
 Version: 24.0
-Release: alt2
+Release: alt3
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -424,6 +424,9 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %docdir/ibsrpdm.md
 
 %changelog
+* Wed Jul 03 2019 Nikita Ermakov <arei@altlinux.org> 24.0-alt3
+- fix build on riscv64
+
 * Fri Jun 14 2019 Rustem Bapin <rbapin@altlinux.org> 24.0-alt2
 - move efa* in %files under dma_coherent define for fix build on mipsel
 
