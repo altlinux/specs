@@ -1,27 +1,23 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%define plugname rails
+%define        plugname rails
 
-Name: vim-plugin-%plugname
-Version: 2.0
-Release: alt1
-Serial: 1
+Name:          vim-plugin-%plugname
+Version:       5.4
+Release:       alt1
+Serial:        1
+Summary:       Ruby on Rails: easy file navigation, enhanced syntax highlighting, and more
+Group:         Editors
+License:       Charityware (Vim)
+Url:           https://www.vim.org/scripts/script.php?script_id=1567
+# VCS:         https://github.com/tpope/vim-rails.git
+Packager:      VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Ruby on Rails: easy file navigation, enhanced syntax highlighting, and more
-Group: Editors
-License: Charityware (Vim)
-Url: http://rails.vim.tpope.net/
-
-Packager: VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
-
-BuildArch: noarch
-
-Source: %plugname-%version.tar
-Patch: %name-%version-%release.patch
-
-PreReq: vim-common >= 4:6.3.007-alt1
-
+Source:        %name-%version.tar
 BuildRequires(pre): vim-devel
+BuildRequires(pre): vim-common >= 4:6.3.007-alt1
+
 
 %description
 TextMate may be the latest craze for developing Ruby on Rails applications,
@@ -41,8 +37,7 @@ To enable this plugin define "use_rails_plugin" variable somewhere
 in your .vimrc file.
 
 %prep
-%setup -n %plugname-%version
-%patch -p1
+%setup
 
 %install
 %__mkdir_p %buildroot%vim_runtime_dir
@@ -60,6 +55,10 @@ in your .vimrc file.
 %vim_plugin_dir/*
 
 %changelog
+* Wed Jul 03 2019 Pavel Skrylev <majioa@altlinux.org> 1:5.4-alt1
+- Added remote source vcs
+- Bump to 5.4
+
 * Sun Jul 13 2008 Sir Raorn <raorn@altlinux.ru> 1:2.0-alt1
 - Updated to v2.0-3-gb4f93c4 (Rails 2.1 support)
 
@@ -71,4 +70,3 @@ in your .vimrc file.
 
 * Mon Sep 25 2006 Sir Raorn <raorn@altlinux.ru> 128-alt1
 - Built for Sisyphus
-
