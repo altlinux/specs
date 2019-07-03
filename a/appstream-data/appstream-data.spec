@@ -2,7 +2,7 @@
 
 Name:      appstream-data
 Summary:   ALT Linux AppStream metadata
-Version:   20181212
+Version:   20190702
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -31,6 +31,9 @@ cp -r manual-%version/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Wed Jul 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190702-alt1
+- Updated appstream-data for Sisyphus.
+
 * Wed Dec 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20181212-alt1
 - Generated appstream-data for Sisyphus.
 
