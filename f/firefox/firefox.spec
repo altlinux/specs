@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        67.0.4
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -51,6 +51,9 @@ Patch014: 0014-MOZILLA-1539471-Track-active-popup-windows-on-Waylan.patch
 Patch015: 0015-MOZILLA-1521249-part-0-Remove-Rust-version-cap-from-.patch
 Patch016: 0016-MOZILLA-1521249-part-1-Update-encoding_rs-to-0.8.16.patch
 Patch017: 0017-MOZILLA-1521249-part-2-Make-packed_simd-compile-with.patch
+Patch018: 0018-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch019: 0019-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -186,6 +189,8 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch015 -p1
 %patch016 -p1
 %patch017 -p1
+%patch018 -p1
+%patch019 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -198,7 +203,7 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch %{ix86}
+%ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch x86_64
 ac_add_options --disable-webrtc
@@ -267,9 +272,9 @@ export BUILD_VERBOSE_LOG=1
 export MOZ_MAKE_FLAGS="-j6"
 export PATH="$PWD/.cargo/bin:$PATH"
 
-%__autoconf old-configure.in > old-configure
+autoconf old-configure.in > old-configure
 pushd js/src
-%__autoconf old-configure.in > old-configure
+autoconf old-configure.in > old-configure
 popd
 
 ./mach build
@@ -287,7 +292,7 @@ cd mozilla
 
 export SHELL=/bin/sh
 
-%__mkdir_p \
+mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
 	%buildroot/%mozilla_noarch_extdir/%firefox_cid \
 	#
@@ -353,8 +358,8 @@ mkdir -p -- ./%firefox_prefix/distribution
 cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
 
 # install menu file
-%__install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
-%__install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
+install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
+install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
 
 # Add alternatives
 mkdir -p ./%_altdir
@@ -410,6 +415,10 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Jul 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 67.0.4-alt2
+- Added ppc64le support.
+- spec: cleaned up rpm-build internal macros.
+
 * Fri Jun 21 2019 Alexey Gladkov <legion@altlinux.ru> 67.0.4-alt1
 - New release (67.0.4).
 - Fixed:
