@@ -1,4 +1,4 @@
-%define ver_major 4.0
+%define ver_major 4.2
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -137,6 +137,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- bump version
+
 * Wed Nov 28 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
 - add yelp to cinnamon-default (closes: #35658)
 - bump version
