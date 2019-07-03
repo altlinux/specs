@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190620
+Version: 20190625
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Jul 03 2019 Cronbuild Service <cronbuild@altlinux.org> 20190625-alt1
+- upstream changes (GIT 70e4394):
+  + rsi: add firmware image for redpine 9116 chipset (thx Siva Rebbagondla)
+  + Add firmware file for Intel Bluetooth AX201 (thx Bag, Amit K)
+
 * Thu Jun 27 2019 Cronbuild Service <cronbuild@altlinux.org> 20190620-alt1
 - upstream changes (GIT 7ae3a09):
   + iwlwifi: add new firmwares for integrated 22000 series (thx Luca Coelho)
