@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.2
+%define emacs_version 26.2.90
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -20,8 +20,8 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.2
-Release: alt9
+Version: 26.2.90
+Release: alt10
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1529,6 +1529,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Wed Jul  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2.90-alt10
+- 26.2.90
+
 * Mon Jun  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2-alt9
 - Add --with-modules configure option (ALT#36839)
 
