@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: xreader
-Version: 2.0.2
-Release: alt1
+Version: 2.2.1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -28,8 +28,9 @@ Requires: dconf
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: meson
 BuildRequires: glib2-devel
-BuildRequires: gcc-c++ gnome-common gtk-doc
+BuildRequires: gcc-c++ gnome-common
 BuildRequires: intltool yelp-tools itstool
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
@@ -37,6 +38,7 @@ BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-
 BuildRequires: libSM-devel libICE-devel libXi-devel
 BuildRequires: libxapps-devel
 BuildRequires: libwebkit2gtk-devel
+BuildRequires: mathjax
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -85,23 +87,20 @@ GObject introspection devel data for the Xreader library
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-	--disable-schemas-compile \
-	--enable-pdf \
-	--enable-tiff \
-	--enable-djvu \
-	--enable-dvi \
-	--enable-comics \
-	--enable-gtk-doc \
-	--enable-dbus \
-	%{subst_enable xps} \
-	%{subst_enable introspection} \
-	--disable-static
-%make_build
+%meson \
+  -Ddeprecated_warnings=false \
+  -Ddjvu=true \
+  -Ddvi=true \
+  -Dt1lib=true \
+  -Dpixbuf=true \
+  -Dcomics=true \
+  -Dintrospection=true
+# Don't use parallel build because it is broken at least for -j64
+%define _smp_mflags -j1
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 
@@ -114,7 +113,6 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/xreader/%so_ver
 %dir %_libdir/xreader/%so_ver/backends
 %_libdir/xreader/%so_ver/backends/*.so
-%exclude %_libdir/xreader/%so_ver/backends/*.la
 %_libdir/xreader/%so_ver/backends/*.xreader-backend
 %_datadir/glib-2.0/schemas/org.x.reader.gschema.xml
 %_libexecdir/xreader*
@@ -136,8 +134,6 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libdir/libxreaderdocument.so
 %_libdir/libxreaderview.so
 %_pkgconfigdir/*.pc
-%_datadir/gtk-doc/html/%name
-%_datadir/gtk-doc/html/libxreader*
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -150,6 +146,12 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt2
+- Don't use parallel build (it is broken with -j64)
+
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- New version
+
 * Wed Dec 26 2018 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
 - New version
 

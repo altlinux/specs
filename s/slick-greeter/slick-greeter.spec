@@ -2,8 +2,8 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 1.2.4
-Release: alt3
+Version: 1.2.5
+Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -80,6 +80,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man1/slick-greeter-check-hidpi.1.*
 
 %changelog
+* Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Thu Jun 27 2019 Vladimir Didenko <cow@altlinux.org> 1.2.4-alt3
 - call /etc/X11/xinit/fixkeyboard on start (closes: #36932)
 

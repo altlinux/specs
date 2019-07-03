@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.0.7
-Release: alt1.1
+Version: 4.2.0
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -198,6 +198,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Sat Jun 15 2019 Michael Shigorin <mike@altlinux.org> 4.0.7-alt1.1
 - E2K: ftbfs workaround until lcc 1.23.19+ (mcst#4023)
 
