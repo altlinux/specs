@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable static
 %define major 1.6
 %define oname fox
 
 Name: libfox
-Version: %major.55
+Version: %major.57
 Release: alt1
 
 Summary: The FOX C++ GUI Toolkit shared libraries
@@ -34,7 +36,7 @@ extension beyond the built-in widgets by application writers.
 %package devel
 Summary: Development files and documentation for the FOX GUI toolkit.
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The fox-devel package contains the files necessary to develop applications
@@ -53,7 +55,7 @@ The package contains HTML documentation.
 %package devel-static
 Summary: A version of the FOX GUI toolkit for static linking
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 The fox-static package contains the files necessary to link applications
@@ -65,7 +67,7 @@ running the application.
 %package examples
 Summary: FOX example applications
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: %oname-examples
 Obsoletes: %oname-examples
 Obsoletes: %{name}14-examples
@@ -143,6 +145,10 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 %_man1dir/calculator.*
 
 %changelog
+* Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.57-alt1
+- Updated to stable upstream version 1.6.57.
+- Recoded spec to UTF-8.
+
 * Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.55-alt1
 - Updated to upstream version 1.6.55.
 
@@ -285,15 +291,14 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 * Tue Oct 10 2000 David Sugar <dyfet@ostel.com> 0.99.132-3
 - rtti forced for rpm build specs that use -fno-rtti.
 
-* Fri Mar 24 2000 José Romildo Malaquias <romildo@iceb.ufpo.b> 0.99.122-1
+* Fri Mar 24 2000 JosÃ© Romildo Malaquias <romildo@iceb.ufpo.b> 0.99.122-1
 - new version
 
-* Fri Mar 24 2000 José Romildo Malaquias <romildo@iceb.ufpo.b> 0.99.119-1
+* Fri Mar 24 2000 JosÃ© Romildo Malaquias <romildo@iceb.ufpo.b> 0.99.119-1
 - new version
 
-* Sun Mar 05 2000 José Romildo Malaquias <romildo@iceb.ufpo.b>
+* Sun Mar 05 2000 JosÃ© Romildo Malaquias <romildo@iceb.ufpo.b>
 - some adaptations
 
-* Tue Nov 10 1998 René van Paassen <M.M.vanPaassen@lr.tudelft.nl>
+* Tue Nov 10 1998 RenÃ© van Paassen <M.M.vanPaassen@lr.tudelft.nl>
 - initial package
-
