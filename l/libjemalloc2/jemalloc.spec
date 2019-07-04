@@ -1,18 +1,22 @@
 %def_disable static
+
 %define title jemalloc
 %define sorev 2
+
 Name: libjemalloc2
-Version: 5.1.0
-Release: alt4
+Version: 5.2.0
+Release: alt1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
-Source: jemalloc-%version.tar.bz2
 Url: http://jemalloc.net/
+
+Source: %title-%version.tar
 
 # Automatically added by buildreq on Mon May 14 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel python-base
-BuildRequires: gcc-c++ git-core xsltproc
+BuildRequires: gcc-c++
+BuildRequires: xsltproc docbook-style-xsl
 
 %description
 jemalloc is a general-purpose scalable concurrent malloc(3)
@@ -111,6 +115,9 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
+- Updated to upstream version 5.2.0
+
 * Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 5.1.0-alt4
 - shell wrapper with LD_PRELOAD moved to package libjemalloc-tools to avoid files
   conflict with previouis libjemalloc build
