@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 1.9.7
+Version: 2.0.1
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -49,7 +49,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_NS=1 USE_SYSTEMD=1 %{?_enable_lua:USE_LUA=1} \
+%make_build CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_SYSTEMD=1 %{?_enable_lua:USE_LUA=1} \
 	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
@@ -65,7 +65,7 @@ pushd contrib/systemd
 popd
 
 %install
-%make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux2628"
+%make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux-glibc"
 %make_install install-man DESTDIR=%buildroot PREFIX="%_prefix"
 
 install -p -D -m 0644 %SOURCE1 %buildroot%haproxy_confdir/%name.cfg
@@ -106,6 +106,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Sat Jun 29 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Tue May 07 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.7-alt1
 - 1.9.7
 
