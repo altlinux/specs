@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt68
+Release: alt68.1
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -317,6 +317,13 @@ unset RPM_PYTHON
 %_libdir/%name/methods/https
 
 %changelog
+* Thu Jul  4 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt68.1
+- Made the treatment of the File Provides and the version ID of
+  installed packages "stable": not affected negatively by sources.list.
+  Also negative effects of different pkglists from sources.list on each other
+  have been mitigated. (A pkglist from sources.list that lacked disttags could
+  shadow the File Provides of packages from the database or other pkglists.)
+
 * Wed Jun 05 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt68
 - Add disttag to VerStrs (used by APT to identify package versions).
 
