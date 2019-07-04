@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.5.0
-Release: alt3
+Version: 2.6.0
+Release: alt1
 
 Summary: Function and Data Plotter
 License: GPL
@@ -14,18 +14,18 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: ccmake gcc-c++ extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-svg-devel 
+BuildRequires: qt5-base-devel qt5-svg-devel
 BuildRequires: kf5-karchive-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kio-devel kf5-knewstuff-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel
-BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel 
+BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel
 BuildRequires: libgsl-devel libhdf5-devel libnetcdf-devel
 BuildRequires: libxkbfile-devel xorg-xf86vidmodeproto-devel
 BuildRequires: qt5-serialport-devel
-BuildRequires: kf5-syntax-highlighting-devel 
+BuildRequires: kf5-syntax-highlighting-devel
 
 Conflicts: labplot1.6
 Requires: ImageMagick-tools gsl pstoedit
@@ -57,7 +57,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %find_lang %name --with-kde
 
 %files -f %name.lang
-%doc AUTHORS README COPYING ChangeLog
+%doc AUTHORS README.md COPYING ChangeLog
 %config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/*
 %_K5data/%{name}2/
@@ -69,6 +69,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.0-alt1
+- Updated to upstream version 2.6.0.
+
 * Thu May 23 2019 Michael Shigorin <mike@altlinux.org> 2.5.0-alt3
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - minor spec cleanup
@@ -76,7 +79,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 * Mon Oct 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt2
 - Updated runtime dependencies.
 
-* Mon Aug 29 2018 Pavel Moseev <mars@altlinux.org> 2.5.0-alt1
+* Wed Aug 29 2018 Pavel Moseev <mars@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
