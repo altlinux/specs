@@ -1,13 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gxml
-%define ver_major 0.16
+%define ver_major 0.18
 %define api_ver 0.16
 %def_enable docs
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
@@ -117,6 +118,9 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %endif
 
 %changelog
+* Thu Jul 04 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt2
 - updated to 0.16.3-3-ge51ce7b
 
