@@ -11,12 +11,12 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      774a1f4eee66e29a71ca12e88ac2220670990f7e
+%global commit      2d0083d657f82c47044c8d3948ba434b622fe2fd
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.09.6
-Release: alt1
+Version:    18.09.7
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -34,8 +34,6 @@ Source2: %repo_engine.init
 Source3: %repo_engine.sysconf
 Source4: %repo_engine-storage.sysconf
 Source5: daemon.json
-
-Patch1: %name-18.09.1-bash-completion.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
@@ -68,7 +66,6 @@ servers, OpenStack clusters, public instances, or combinations of the above.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 
@@ -177,6 +174,12 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 18.09.7-alt2
+- fix spec file
+
+* Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 18.09.7-alt1
+- 18.09.7
+
 * Wed May 8 2019 Vladimir Didenko <cow@altlinux.org> 18.09.6-alt1
 - 18.09.6
 
