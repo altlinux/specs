@@ -1,21 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    castxml
-Version: 0.0.1.20181115
-Release: alt1.gitc3a239d
+Version: 0.2.0
+Release: alt1
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
-
-# The main program is Apache 2.0
-# src/kwsys/* is BSD
-License: Apache 2.0 and BSD
+License: Apache 2.0
 URL:     https://github.com/CastXML/CastXML
 
 # https://github.com/CastXML/CastXML.git
 Source:	%name-%version.tar
-
-# Link against the shared llvm library (one common library).
-Patch1: %name-fedora-shared.patch
 
 BuildRequires: cmake ctest gcc-c++
 BuildRequires: llvm-devel lld
@@ -45,10 +39,6 @@ may support alternative output formats.
 
 %prep
 %setup
-%patch1 -p1
-
-# LLVM_LIBRARY_DIRS does not work, and can not be overridden with -D flag
-#sed 's!${LLVM_LIBRARY_DIRS}!${LLVM_LIBRARY_DIR}!' -i CMakeLists.txt
 
 %build
 export CC=clang
@@ -59,6 +49,7 @@ export CXX=clang++
        -DCastXML_INSTALL_DOC_DIR:STRING=share/doc/%name \
        -DCastXML_INSTALL_MAN_DIR:STRING=share/man \
        -DCLANG_RESOURCE_DIR:PATH=$(clang -print-file-name=include)/.. \
+       -DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
        -DBUILD_TESTING:BOOL=ON \
        -DSPHINX_MAN:BOOL=ON \
        -DCMAKE_EXE_LINKER_FLAGS:STRING=-fuse-ld=lld \
@@ -90,6 +81,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
+- Updated to upstream release version 0.2.0.
+
 * Sat Dec 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1.20181115-alt1.gitc3a239d
 - Updated to upstream snapshot c3a239d.
 
