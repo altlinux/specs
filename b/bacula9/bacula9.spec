@@ -13,8 +13,8 @@
 %endif
 
 Name: bacula9
-Version: 9.4.2
-Release: alt4
+Version: 9.4.4
+Release: alt1
 
 License: AGPLv3
 Summary: Network based backup program
@@ -883,6 +883,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt1
+- Updated to upstream version 9.4.4.
+
 * Sun Apr 21 2019 Michael Shigorin <mike@altlinux.org> 9.4.2-alt4
 - minor spec cleanup
 
