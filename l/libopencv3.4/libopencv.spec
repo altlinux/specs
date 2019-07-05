@@ -40,7 +40,7 @@
 %define sover 3.4
 Name: lib%bname%sover
 Epoch: 1
-Version: 3.4.5
+Version: 3.4.6
 Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -58,8 +58,7 @@ Source1: %bname-contrib-%version.tar
 Source2: %bname-xfeatures2d-boostdesc-%version.tar
 Source3: %bname-xfeatures2d-vgg-%version.tar
 
-Patch1: %bname-alt-build.patch
-Patch2: %bname-alt-unimplemented-functions.patch
+Patch1: %bname-alt-unimplemented-functions.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -248,7 +247,6 @@ This package contains %Name examples.
 %prep
 %setup -b 1 -b 2 -b 3
 %patch1 -p1
-%patch2 -p1
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
@@ -287,6 +285,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	%{?_with_gdcm: -DWITH_GDCM=ON} \
 	-DBUILD_DOCS:BOOL=ON \
 	-DOPENCV_DOC_INSTALL_PATH=%_docdir/%name/ \
+	-DOPENCV_3P_LIB_INSTALL_PATH=%_libdir/%Name/3rdparty/%_lib \
+	-DOPENCV_LICENSES_INSTALL_PATH=%_datadir/%Name/licenses \
+	%nil
 
 %cmake_build VERBOSE=1
 %cmake_build VERBOSE=1 opencv_docs
@@ -306,7 +307,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_pkgconfigdir/*
 %_datadir/%Name/*.supp
 %_datadir/%Name/*.cmake
-%ifarch %{ix86} x86_64
+%ifarch %{ix86} x86_64 armh
+%dir %_libdir/%Name
+%dir %_libdir/%Name/3rdparty
+%dir %_libdir/%Name/3rdparty/%_lib
 %_libdir/%Name/3rdparty/%_lib/*.a
 %endif
 
@@ -332,6 +336,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.6-alt1
+- Updated to upstream version 3.4.6.
+
 * Wed Jan 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.5-alt1
 - Updated to upstream version 3.4.5.
 
