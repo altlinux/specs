@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt3
+Release: alt4
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -272,7 +272,6 @@ fi
 %_datadir/openqa/etc/openqa/openqa.ini
 %_datadir/openqa/etc/openqa/database.ini
 %config %_sysconfdir/logrotate.d/*
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.openqa.conf
 %dir
 %_unitdir/openqa-webui.service
 %_unitdir/openqa-gru.service
@@ -288,7 +287,6 @@ fi
 %_datadir/openqa/assets
 %dir %_datadir/openqa/script
 %_datadir/openqa/script/check_dependencies
-%_datadir/openqa/script/clean_needles
 %_datadir/openqa/script/create_admin
 %_datadir/openqa/script/fetchneedles
 %_datadir/openqa/script/initdb
@@ -351,6 +349,8 @@ fi
 %_datadir/openqa/script/dump_templates
 %_datadir/openqa/script/load_templates
 %_datadir/openqa/lib/OpenQA/Client.pm
+%_datadir/openqa/script/configure-web-proxy
+%_datadir/openqa/script/openqa-clone-job
 %_bindir/openqa-client
 %_bindir/openqa-clone-job
 %_bindir/openqa-dump-templates
@@ -363,6 +363,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Fri Jul 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt4
+- update to current version
+
 * Fri Apr 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt3
 - update to current version
 
