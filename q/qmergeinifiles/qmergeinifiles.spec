@@ -1,7 +1,7 @@
 
 Name: qmergeinifiles
-Version: 2.0.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 
 Summary: Utility to merge INI-format files
@@ -31,6 +31,9 @@ Utility to merge INI-format files
 %_bindir/*
 
 %changelog
+* Fri Jul 05 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
+- fix to show usage info when debug output disabled
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt2
 - dont use ubt macro
 
