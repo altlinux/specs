@@ -1,11 +1,10 @@
 %define _libexecdir %_prefix/libexec
 
 %define api_ver 3.0
-%def_enable python
 
 Name: xed
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: xed is a small and lightweight text editor.
 License: GPLv2
@@ -13,16 +12,11 @@ Group: Editors
 Url: https://github.com/linuxmint/xed
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
 %define pluginsdir %_libdir/%name/plugins
-
-# From configure.ac
-%define glib_ver 2.36.0
-%define gtk_ver 3.10
-%define gtksourceview_ver 3.10
-%define enchant_ver 1.2.0
 
 Requires: %name-data = %version-%release
 Requires: dconf gnome-icon-theme gvfs zenity
@@ -30,17 +24,18 @@ Requires: dconf gnome-icon-theme gvfs zenity
 
 Provides: typelib(Xed)
 
-BuildPreReq: rpm-build-gnome >= 0.6
+BuildPreReq: rpm-build-gnome
+BuildPreReq: rpm-build-python3
 
-BuildPreReq: intltool >= 0.50.1
+BuildPreReq: intltool
 BuildRequires: yelp-tools xmllint itstool
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: desktop-file-utils >= 0.22
-BuildPreReq: libenchant-devel >= %enchant_ver
-BuildPreReq: iso-codes-devel >= 0.35
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
+BuildPreReq: gtk-doc
+BuildPreReq: desktop-file-utils
+BuildPreReq: libenchant-devel
+BuildPreReq: iso-codes-devel
+BuildPreReq: libgio-devel
+BuildPreReq: libgtk+3-devel
+BuildPreReq: libgtksourceview3-devel
 BuildRequires: meson
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: libSM-devel
@@ -76,6 +71,7 @@ Libraries needed to develop plugins for xed.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -143,6 +139,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 5 2019 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt2
+- fix build for Python 3
+
 * Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
 - New version
 
