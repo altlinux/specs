@@ -1,15 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: plzip
-Version: 1.6
+Version: 1.8
 Release: alt1
 
 Summary: Plzip is a parallel version of the lzip data compressor
 License: GPLv3+
 Group: Archiving/Compression
+Url: https://www.nongnu.org/lzip/plzip.html
 
-Url: http://www.nongnu.org/lzip/plzip.html
-Source: http://download.savannah.gnu.org/releases-noredirect/lzip/plzip-%version.tar.gz
+# https://download.savannah.gnu.org/releases/lzip/plzip/plzip-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Jan 27 2010
 BuildRequires: gcc-c++ lzlib-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -26,10 +28,12 @@ multiprocessor machines.
 %build
 %configure CXXFLAGS="%optflags %optflags_nocpp"
 %make_build
-make check
 
 %install
 %makeinstall_std
+
+%check
+make check
 
 %files
 %_bindir/*
@@ -37,6 +41,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8-alt1
+- Updated to upstream version 1.8.
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt1
 - Updated to upstream version 1.6.
 
