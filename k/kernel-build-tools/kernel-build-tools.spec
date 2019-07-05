@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.110
+Version: 0.111
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -24,9 +24,10 @@ Conflicts: rpm-build < 4.0.4-alt1
 
 %ifnarch %ix86 x86_64 ppc64le
 Provides: kernel-headers-modules-un-def
+Provides: kernel-headers-modules-std-def
+Provides: kernel-headers-modules-std-debug
 %endif
 %ifnarch %ix86 x86_64
-Provides: kernel-headers-modules-std-def
 Provides: kernel-headers-modules-ovz-el
 Provides: kernel-headers-modules-ovz-el7
 %endif
@@ -79,6 +80,11 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/query-kEVR.sh
 
 %changelog
+* Fri Jul 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.111-alt1
+- rpm-build-kernel:
+  + removed P: kernel-headers-modules-std-def on ppc64le;
+  + added P: kernel-headers-modules-std-debug on excluded architectures.
+
 * Thu Jul 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.110-alt1
 - rpm-build-kernel: removed P: kernel-headers-modules-un-def on ppc64le.
 
