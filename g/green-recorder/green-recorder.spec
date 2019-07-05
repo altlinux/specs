@@ -2,13 +2,13 @@ Name: green-recorder
 Summary: A simple yet functional desktop recorder for Linux systems
 Group: Video
 Url: https://github.com/foss-project/%name
-Version: 3.1
+Version: 3.2.2
 Release: alt1
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 License: GPLv3
 BuildArch: noarch
-BuildRequires: python-devel rpm-build-python rpm-build-gir
+BuildRequires: python3-devel rpm-build-python rpm-build-gir
 Requires: ffmpeg
 Requires: pulseaudio
 
@@ -44,6 +44,9 @@ window. And a lot more.
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jul 05 2019 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt1
+- new version 3.2.2
+
 * Thu Apr 12 2018 Anton Midyukov <antohami@altlinux.org> 3.1-alt1
 - new version 3.1
 
