@@ -8,14 +8,13 @@
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
 Version: 6.3
-Release: alt3.1
+Release: alt4.1
 License: GPL
 Group: Development/Other
 URL: http://www.nongnu.org/avrdude/
 Source0: http://download.savannah.gnu.org/releases/avrdude/%name-%version.tar.gz
 Patch: avrdude-install-header.patch
 
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: gnu-config libtinfo-devel libusb-devel libusb-compat-devel makeinfo
 BuildRequires: flex libelf-devel libftdi1-devel libncurses-devel libreadline-devel
@@ -83,6 +82,9 @@ rm -f %buildroot%_libdir/*.so*
 %_libdir/*.a
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 6.3-alt4.1
+- NMU: remove rpm-build-ubt from BR:
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 6.3-alt3.1
 - Rebuild with libreadline7.
 
