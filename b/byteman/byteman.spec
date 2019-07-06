@@ -1,36 +1,47 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
+BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name byteman
-%global javacup_or_asm java_cup:java_cup|org.ow2.asm:asm-all
+# Note to the interested reader:
+#   fedpkg mockbuild --without tests
+# will make mvn_build macro skip tests.
+# See: https://github.com/fedora-java/javapackages/issues/62
+
+%global javacup_or_asm java_cup:java_cup|org\\.ow2\\.asm:asm.*
+# Don't have generated mvn()-style requires for java_cup or asm
+%global mvn_javacup_or_asm_matcher .*mvn\\(%{javacup_or_asm}\\)
+# Don't have generated requires for java-headless >= 1:1.9
+%global java_headless_matcher java-headless >= 1:(1\\.9|9)
 
 
 %global apphomedir %{_datadir}/%{name}
 %global bindir %{apphomedir}/bin
 
 Name:             byteman
-Version:          3.0.6
-Release:          alt1_5jpp8
+Version:          4.0.4
+Release:          alt1_2jpp9
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
-# wget -O 3.0.6.tar.gz https://github.com/bytemanproject/byteman/archive/3.0.6.tar.gz
+# wget -O 4.0.4.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.4.tar.gz
 Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.tar.gz
 
 BuildArch:        noarch
 
+# Byteman 4.x requires JDK 9+ to build. Require JDK 10 explicitly.
+BuildRequires:    java-9-openjdk-devel
 BuildRequires:    maven-local
 BuildRequires:    maven-shade-plugin
 BuildRequires:    maven-source-plugin
 BuildRequires:    maven-plugin-plugin
 BuildRequires:    maven-plugin-bundle
+BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-failsafe-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
@@ -46,10 +57,15 @@ BuildRequires:    testng
 # JBoss modules byteman plugin requires it
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
 
-Provides:         bundled(objectweb-asm) = 0:5.0.4-2
-Provides:         bundled(java_cup) = 1:0.11b-3
+Provides:         bundled(objectweb-asm) = 6.2
+Provides:         bundled(java_cup) = 1:0.11b-8
+# We are filtering java-headless >= 1:1.9 requirement. Add
+# JDK 8 requirement here explicitly which shouldn't match the filter.
+
+# Related pieces removed via pom_xpath_remove macros
+Patch1:           remove_submit_integration_test_verification.patch
 Source44: import.info
-%filter_from_requires /^.*mvn\\(%{javacup_or_asm}\\)$/d
+%filter_from_requires /^%{mvn_javacup_or_asm_matcher}|%{java_headless_matcher}$/d
 
 %description
 Byteman is a tool which simplifies tracing and testing of Java programs.
@@ -77,14 +93,40 @@ Summary:          Maven plugin for checking Byteman rules.
 %description rulecheck-maven-plugin
 This package contains the Byteman rule check maven plugin.
 
+%package bmunit
+Group: Development/Java
+Summary:          TestNG and JUnit integration for Byteman.
+
+%description bmunit
+The Byteman bmunit jar provides integration of Byteman into
+TestNG and JUnit tests.
+
+%package dtest
+Group: Development/Java
+Summary:          Remote byteman instrumented testing.
+
+%description dtest
+The Byteman dtest jar supports instrumentation of test code executed on
+remote server hosts and validation of assertions describing the expected
+operation of the instrumented methods.
+
 %prep
 %setup -q -n byteman-%{version}
-# Fix doclint problem
-%pom_xpath_inject  "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:configuration" "<additionalparam>-Xdoclint:none</additionalparam>"
 
 # Fix the gid:aid for java_cup
 sed -i "s|net.sf.squirrel-sql.thirdparty-non-maven|java_cup|" agent/pom.xml
 sed -i "s|java-cup|java_cup|" agent/pom.xml
+sed -i "s|net.sf.squirrel-sql.thirdparty-non-maven|java_cup|" tests/pom.xml
+sed -i "s|java-cup|java_cup|" tests/pom.xml
+
+# Remove Submit integration test invocations (agent)
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit']" agent
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit.compiled']" agent
+%patch1 -p2
+
+# Remove Submit integration test invocations (tests)
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit']" tests
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit.compiled']" tests
 
 # Remove scope=system and systemPath for com.sun:tools
 %pom_xpath_remove "pom:profiles/pom:profile/pom:dependencies/pom:dependency[pom:artifactId='tools']/pom:scope" install
@@ -93,7 +135,6 @@ sed -i "s|java-cup|java_cup|" agent/pom.xml
 %pom_xpath_remove "pom:profiles/pom:profile/pom:dependencies/pom:dependency[pom:artifactId='tools']/pom:systemPath" contrib/bmunit
 
 # Some tests fail intermittently during builds. Disable them.
-%pom_disable_module tests contrib/jboss-modules-system
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:executions" contrib/bmunit
 %pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration" '<skip>true</skip>' contrib/bmunit
 
@@ -101,10 +142,19 @@ sed -i "s|java-cup|java_cup|" agent/pom.xml
 %pom_disable_module download
 %pom_disable_module docs
 
-# Put maven plugin into a separate package
+# Don't use javadoc plugin, use XMvn for javadocs
+%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_xpath_remove 'pom:execution[pom:id="make-javadoc-assembly"]' byteman
+
+# Put byteman-rulecheck-maven-plugin into a separate package
 %mvn_package ":byteman-rulecheck-maven-plugin" rulecheck-maven-plugin
+# Put byteman-bmunit/byteman-dtest into a separate packages since they
+# runtime require junit
+%mvn_package ":byteman-bmunit" bmunit
+%mvn_package ":byteman-dtest" dtest
 
 %build
+export JAVA_HOME=/usr/lib/jvm/java-9-openjdk
 %mvn_build
 
 %install
@@ -138,12 +188,23 @@ for m in bmunit dtest install sample submit; do
   ln -s %{_javadir}/byteman/byteman-${m}.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman-${m}.jar
 done
 
+# Create contrib/jboss-module-system structure since bminstall expects it
+# for the -m option.
+install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/contrib
+install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system
+ln -s %{_javadir}/byteman/byteman-jboss-modules-plugin.jar $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system/byteman-jboss-modules-plugin.jar
+
 ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.jar
 
 %files -f .mfiles
-%{apphomedir}/*
+%{apphomedir}/lib/byteman.jar
+%{apphomedir}/lib/byteman-install.jar
+%{apphomedir}/lib/byteman-sample.jar
+%{apphomedir}/lib/byteman-submit.jar
+%{apphomedir}/contrib/*
+%{bindir}/*
 %{_bindir}/*
-%doc README docs/ProgrammersGuide.pdf
+%doc README
 %doc --no-dereference docs/copyright.txt
 
 %files javadoc -f .mfiles-javadoc
@@ -152,7 +213,18 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %files rulecheck-maven-plugin -f .mfiles-rulecheck-maven-plugin
 %doc --no-dereference docs/copyright.txt
 
+%files bmunit -f .mfiles-bmunit
+%doc --no-dereference docs/copyright.txt
+%{apphomedir}/lib/byteman-bmunit.jar
+
+%files dtest -f .mfiles-dtest
+%doc --no-dereference docs/copyright.txt
+%{apphomedir}/lib/byteman-dtest.jar
+
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_2jpp9
+- new version
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt1_5jpp8
 - java update
 
