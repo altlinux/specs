@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 Obsoletes: ecj-standalone <= 3.4.2-alt4_0jpp6
-BuildRequires: /proc
+BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -14,7 +11,7 @@ Epoch: 1
 Summary: Eclipse Compiler for Java
 Name: ecj
 Version: 4.11
-Release: alt1_0.1jpp8
+Release: alt1_0.1jpp9
 URL: http://www.eclipse.org
 License: EPL-2.0
 
@@ -112,6 +109,9 @@ install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_0.1jpp9
+- rebuild with java 9
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_0.1jpp8
 - new version
 
