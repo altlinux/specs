@@ -12,12 +12,12 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 # Conditionals to help breaking vorbis-java-tika <-> tika dependency cycle
 %if 0%{?fedora}
-%bcond_without tika
+%bcond_with tika
 %endif
 
 Name:          vorbis-java
 Version:       0.8
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Ogg and Vorbis toolkit for Java
 License:       ASL 2.0
 URL:           https://github.com/Gagravarr/VorbisJava
@@ -106,6 +106,9 @@ find . -name "*.jar" -delete
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_6jpp8
+- build with tika
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_5jpp8
 - new version; bootstrap build w/o tika
 
