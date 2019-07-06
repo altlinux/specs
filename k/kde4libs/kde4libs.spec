@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -127,7 +127,6 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
 # security
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): kde-common-devel libqt4-devel libstrigi-devel attica-devel
 #BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel >= 2.1
 BuildRequires: bzlib-devel cmake libalsa-devel libselinux-devel
@@ -363,6 +362,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.14.38-alt4
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Nov 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.38-alt3
 - load dolphin translations to file dialogs
 
