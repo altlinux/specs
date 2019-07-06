@@ -1,16 +1,19 @@
 Name: judy
 Version: 1.0.5
-Release: alt2
+Release: alt3
+
 Summary: Judy is a C library that implements a dynamic array
 License: LGPLv2.1
 Group: Sciences/Mathematics
+
 Url: https://sourceforge.net/projects/judy/
+Source: %name-%version.tar.gz
+Patch1: judy-1.0.5-parallel-make.patch
+Patch2: Judy-1.0.4-test-shared.patch
+Patch4: 04_fix_undefined_behavior_during_aggressive_loop_optimizations.patch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
-
 BuildRequires(pre): gcc-c++ gcc libstdc++-devel
-
 Requires: lib%name = %version-%release
 
 %description
@@ -63,23 +66,20 @@ This package contains development documentation of Judy.
 
 %prep
 %setup
-
+%patch1 -p0
+%patch2 -p1
+%patch4 -p1
 rm -fR autom4te.cache
 
 %build
 %add_optflags -fno-strict-aliasing -fpermissive
 %autoreconf
-
 %configure
-for i in $(find ./ -name Makefile); do
-	sed -i 's|%_arch-alt-linux-gcc|g++|g' $i
-done
-
+#find -name Makefile | xargs -r -- sed -i 's|%_arch-alt-linux-gcc|g++|g'
 %make_build
 
 %install
 %makeinstall_std
-
 install -d %buildroot%_bindir
 install -m644 tool/jhton %buildroot%_bindir
 
@@ -99,6 +99,11 @@ install -m644 tool/jhton %buildroot%_bindir
 %doc examples
 
 %changelog
+* Mon Mar 11 2019 Michael Shigorin <mike@altlinux.org> 1.0.5-alt3
+- Replaced the source tarball with pristine one (sans s/J/j/)
+  thus dropping ALT patches applied within it
+- Added some debian, fedora, gentoo patches to help fix build on e2k
+
 * Sun Oct 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2
 - Provided Judy1, JudySL and JudyHS (ALT #27813)
 
