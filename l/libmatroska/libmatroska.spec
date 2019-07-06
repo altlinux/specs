@@ -2,7 +2,7 @@
 
 Name: libmatroska
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: an extensible open standard Audio/Video container format
 License: LGPL
@@ -12,7 +12,6 @@ Url: http://www.matroska.org
 # https://github.com/Matroska-Org/libmatroska.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
 BuildRequires: libebml-devel >= 1.3.7
 
@@ -72,6 +71,9 @@ This package contains Matroska Development Documenation
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue Apr 09 2019 Michael Shigorin <mike@altlinux.org> 1.5.0-alt1
 - 1.5.0
 - minor spec cleanup
