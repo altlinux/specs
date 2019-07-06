@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Use 5.1.2 snapshot there was no release tagged by upstream,
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-indexer
 Version:        5.1.2
-Release:        alt1_0.4.gite0570bfjpp8
+Release:        alt1_0.8.gite0570bfjpp8
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
@@ -108,13 +105,16 @@ rm indexer-core/src/main/java/org/apache/maven/index/util/zip/TrueZipZipFileHand
 %mvn_install
 
 %files -f .mfiles
-%doc NOTICE
+%doc --no-dereference NOTICE
 %doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc NOTICE
+%doc --no-dereference NOTICE
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_0.8.gite0570bfjpp8
+- build with lucene7
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_0.4.gite0570bfjpp8
 - fixed build with new lucene
 
