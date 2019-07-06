@@ -2,7 +2,7 @@
 
 Name:     puppetdb
 Version:  6.2.0
-Release:  alt2
+Release:  alt3
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -13,7 +13,7 @@ Source:   %name-%version.tar
 
 BuildArch:      noarch
 
-BuildPreReq: /proc rpm-build-java rpm-build-ruby rpm-build-ubt
+BuildPreReq: /proc rpm-build-java rpm-build-ruby
 
 Requires: puppet
 Requires: postgresql
@@ -145,6 +145,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 6.2.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.2.0-alt2
 - fix path to puppetdb.conf
 
