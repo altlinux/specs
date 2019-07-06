@@ -1,9 +1,11 @@
+# we have patch for lucene 6, but not for lucene 7
+%def_with lucene5
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -28,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          infinispan
 Version:       8.2.4
-Release:       alt1_5jpp8
+Release:       alt2_5jpp8
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -55,8 +57,13 @@ BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
 BuildRequires: mvn(org.apache.logging.log4j:log4j-jcl)
 BuildRequires: mvn(org.apache.logging.log4j:log4j-slf4j-impl)
+%if_with lucene5
+BuildRequires: mvn(org.apache.lucene:lucene-core:5) >= 5.3.1
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common:5) >= 5.3.1
+%else
 BuildRequires: mvn(org.apache.lucene:lucene-core) >= 5.3.1
 BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common) >= 5.3.1
+%endif
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -130,7 +137,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
+%if_without lucene5
 %patch0
+%endif
 
 find .  -name "*.jar" -print -delete
 find .  -name "*.class" -print -delete
@@ -277,6 +286,8 @@ done
 # This component is now owned and maintained by the Infinispan team
 %mvn_alias :infinispan-directory-provider org.hibernate:hibernate-search-infinispan
 
+sed -i /version.lucene/s,5.5.1,5.5.0, server/integration/versions/pom.xml parent/pom.xml
+
 %build
 
 %mvn_build -f
@@ -292,6 +303,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt2_5jpp8
+- build with lucene5 (it does not build with lucene7)
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt1_5jpp8
 - java update
 
