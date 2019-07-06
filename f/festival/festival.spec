@@ -11,12 +11,14 @@
 # rms voice is missing yet
 %def_disable festival_test
 %def_without legacy_server_scripts
+%def_without bootstrap
+%def_with test
 %define festival_libexec_dir /usr/lib/festival
 
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt6
+Release:	alt7
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -36,7 +38,11 @@ Source5:	festival-1.96-0.7-alt-siteinit.scm
 Source6:	festival-1.96-0.7-alt-sitevars.scm
 
 # for make test; TODO: # rms voice is missing yet
+%if_without bootstrap
+%if_with test
 BuildRequires: festvox_kallpc16k festvox_don festvox_rablpc16k
+%endif
+%endif
 ### TODO:
 #README.alt
 #french lang?
@@ -300,7 +306,9 @@ Patch137: speech_tools-2.0.96-alt-gcc48.patch
 
 Patch1000: speech_tools-alt-nullptrs.patch
 
+%if_without bootstrap
 Requires:	festvox
+%endif
 
 # --displayname
 Requires:	service => 0.5.9-alt1
@@ -329,7 +337,7 @@ simply rendering text as speech it can be used in an interactive
 command mode for testing and developing various aspects of speech
 synthesis technology.
 
-Festival offers a full text to speech system with various APIs, as 
+Festival offers a full text to speech system with various APIs, as
  well an environment for development and research of speech synthesis
  techniques. It includes a Scheme-based command interpreter.
 
@@ -511,6 +519,10 @@ echo "PROJECT_LIBRARY_USES_estools = estbase tinfo" >> config/project.mak
 cd $RPM_BUILD_DIR/speech_tools
 %add_optflags -Wno-non-template-friend
 cp -pv /usr/share/gnu-config/* .
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+sed -i 's,^CXXFLAGS.*$,& -std=c++11,' config/compilers/gcc_defaults.mak
+%endif
 # parallel build fails :( so not %make
 #-------------
 # new g++ 4.3 have no -fno-shared-data option
@@ -834,6 +846,11 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Sat Jul 06 2019 Michael Shigorin <mike@altlinux.org> 2.0.95-alt7
+- introduced test knob (on by default) and bootstrap one (off):
+  festival <-> festvox BR/R loop
+- E2K: explicit -std=c++11
+
 * Fri May 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.95-alt6
 - fixed build on aarch64
 
