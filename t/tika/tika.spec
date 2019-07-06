@@ -23,7 +23,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          tika
 Version:       1.17
-Release:       alt1_0jpp8
+Release:       alt1_4jpp8
 Summary:       A content analysis toolkit
 License:       ASL 2.0
 Url:           http://tika.apache.org/
@@ -329,7 +329,7 @@ rm -r %{name}-parsers/src/test/java/org/apache/tika/parser/microsoft/ProjectPars
  %{name}-parsers/src/test/java/org/apache/tika/parser/pdf/PDFParserTest.java
 
 # Fix build against lucene 6.3+
-%if 0%{?fedora} >= 129
+%if 0%{?fedora} >= 29
 sed -i -e 's/\(import org.apache\.lucene\.analysis.\)util\.FilteringTokenFilter/\1FilteringTokenFilter/' \
   tika-eval/src/main/java/org/apache/tika/eval/tokens/*FilterFactory.java
 %endif
@@ -384,6 +384,9 @@ rm -r %{name}-batch/src/test/java/org/apache/tika/batch/fs/BatchDriverTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4jpp8
+- build with lucene7
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_0jpp8
 - new version; build with old lucene 6.1
 

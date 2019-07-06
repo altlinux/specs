@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) rpm-build-java
+BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,33 +18,27 @@ BuildRequires: jpackage-generic-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        6.1.0
-Release:        alt3_7jpp8
+Version:        7.1.0
+Release:        alt1_3jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
 # solr source contains both lucene and dev-tools
-Source0:        http://www.apache.org/dist/lucene/solr/%{version}/solr-%{version}-src.tgz
+Source0:        https://archive.apache.org/dist/lucene/solr/%{version}/solr-%{version}-src.tgz
 
 Patch0:         0001-Disable-ivy-settings.patch
 Patch1:         0002-Dependency-generation.patch
-# CVE-2017-12629 - https://bugzilla.redhat.com/show_bug.cgi?id=1501529
-# Backport of lucene part of https://github.com/apache/lucene-solr/commit/926cc4d65b6d2cc40ff07f76d50ddeda947e3cc4
-Patch2:         0001-SOLR-11477-Disallow-resolving-of-external-entities-i.patch
 
 BuildRequires:  ant
 BuildRequires:  ivy-local
 BuildRequires:  maven-local
-
 BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{without jp_minimal}
-BuildRequires:  randomizedtesting2.3.1-runner
+BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(com.spatial4j:spatial4j:0.5.0)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
@@ -65,6 +59,7 @@ BuildRequires:  mvn(org.eclipse.jetty:jetty-io)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
+BuildRequires:  mvn(org.locationtech.spatial4j:spatial4j)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(xerces:xercesImpl)
@@ -319,21 +314,16 @@ BuildArch: noarch
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 rm -rf solr
 
 find -name "*.jar" -delete
 
-mv lucene/*.txt .
-
-sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" dev-tools/maven/pom.xml.template
+# don't generate uses clauses in osgi metadata
+sed -i -e "/<Export-Package>/a<_nouses>true</_nouses>" dev-tools/maven/pom.xml.template
 
 # make the target public
 sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
-# avoid descent to other modules to avoid unnecessary compilation of modules we
-# will recompile with maven anyway
-%pom_xpath_remove 'target[@name="compile-tools"]/modules-crawl' lucene/build.xml
 
 # suggest provides spellchecker
 %mvn_alias :%{name}-suggest :%{name}-spellchecker
@@ -345,15 +335,11 @@ sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
 %mvn_package ":%{name}-analyzers-common" %{name}-analysis
 %mvn_package ":{*}-aggregator" @1
 
-#sed -i '/spatial4j/s,0\.4\.1,0.5.0,' lucene/ivy-versions.properties
-sed -i '/spatial4j/s,rev="[^"]*",rev="0.5",' lucene/spatial/ivy.xml lucene/benchmark/ivy.xml lucene/spatial-extras/ivy.xml
-#sed -i 's,artifact name="spatial4j",artifact name="spatial4j-0.5",' lucene/spatial-extras/ivy.xml
-
 %build
 pushd %{name}
 find -maxdepth 2 -type d -exec mkdir -p '{}/lib' \;
 # generate dependencies
-ant -f common-build.xml filter-pom-templates -Divy.mode=local -Dversion=%{version}
+ant -f common-build.xml filter-pom-templates -Divy.mode=local -Dversion=%{version} -Divy.available=true
 
 # fix source dir + move to expected place
 for pom in `find build/poms/%{name} -name pom.xml`; do
@@ -365,11 +351,8 @@ done
 # unresolvable test dep
 %pom_remove_dep org.locationtech.spatial4j:spatial4j::test spatial-extras
 
-# fix dep on spatial4j
-%pom_change_dep org.locationtech.spatial4j:spatial4j com.spatial4j:spatial4j spatial-extras
-%pom_change_dep org.locationtech.spatial4j:spatial4j com.spatial4j:spatial4j benchmark
-find benchmark spatial-extras -name *.java -exec sed -i \
-  -e 's/org\.locationtech\.spatial4j/com.spatial4j.core/' {} \;
+# currently unavailable in Fedora
+%pom_remove_dep ua.net.nlp:morfologik-ukrainian-search analysis/morfologik
 
 # test deps
 %pom_add_dep org.antlr:antlr-runtime::test demo
@@ -378,7 +361,7 @@ popd
 
 mv lucene/build/poms/pom.xml .
 
-# deal with split packages in core/misc modules by adding additional metadata and
+# deal with split packages in core/misc/analysis modules by adding additional metadata and
 # require-bundling the core bundle from misc
 %pom_xpath_set "pom:Export-Package" "*;version=\"%{version}\""
 %pom_add_plugin org.apache.felix:maven-bundle-plugin lucene/misc \
@@ -390,6 +373,13 @@ mv lucene/build/poms/pom.xml .
  org.apache.lucene.search;version=\"%{version}\";misc=split;mandatory:=misc,
  org.apache.lucene.store;version=\"%{version}\";misc=split;mandatory:=misc,
  org.apache.lucene.util.fst;version=\"%{version}\";misc=split;mandatory:=misc,
+ *;version=\"%{version}\"</Export-Package>
+</instructions></configuration>"
+%pom_add_plugin org.apache.felix:maven-bundle-plugin lucene/analysis/common \
+"<configuration><instructions>
+<Require-Bundle>org.apache.lucene.core;bundle-version=\"%{version}\"</Require-Bundle>
+<Export-Package>
+ org.apache.lucene.analysis.standard;version=\"%{version}\";analysis=split;mandatory:=analysis,
  *;version=\"%{version}\"</Export-Package>
 </instructions></configuration>"
 
@@ -427,8 +417,6 @@ popd
 %mvn_package :lucene-solr-grandparent __noinstall
 %endif
 
-sed -i 's,<version>any</version>,<version>0.5</version>,' lucene/spatial-extras/pom.xml lucene/benchmark/pom.xml
-
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
 
@@ -439,8 +427,9 @@ sed -i 's,<version>any</version>,<version>0.5</version>,' lucene/spatial-extras/
 %global _docdir_fmt %{name}
 
 %files -f .mfiles-%{name}-core
-%doc CHANGES.txt README.txt MIGRATE.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc lucene/CHANGES.txt lucene/README.txt
+%doc lucene/MIGRATE.txt lucene/JRE_VERSION_MIGRATION.txt
+%doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %files analysis -f .mfiles-%{name}-analysis
 %files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
@@ -477,9 +466,12 @@ sed -i 's,<version>any</version>,<version>0.5</version>,' lucene/spatial-extras/
 %endif
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.1.0-alt1_3jpp8
+- new version
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt3_7jpp8
 - build with spatial4j0.5.0
 
