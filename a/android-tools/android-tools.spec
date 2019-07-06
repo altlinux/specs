@@ -1,6 +1,6 @@
 Name: android-tools
 Version: 5.1.1
-Release: alt3
+Release: alt4
 
 Summary: Android Debug CLI tools
 License: APL
@@ -29,6 +29,8 @@ Patch10: define-shell-command.patch
 Patch11: fix-implicit-declaration-function.patch
 Patch12: adb_libssl_11.diff
 Patch13: adb_libssl_bc.diff
+
+Patch100: android-tools-5.1.1-boehm-use-stdatomic.patch
 
 BuildRequires: libselinux-devel libssl-devel zlib-devel libpcre-devel
 
@@ -61,6 +63,8 @@ in a special format which can be used with fastboot.
 # for openssl 1.1:
 %patch12 -p1
 %patch13 -p1
+
+%patch100 -p1
 
 # use system libselinux
 sed -i -e 's/\(LIBS.*\) libselinux.a \(.*\)/\1 -lselinux \2/' debian/makefiles/fastboot.mk
@@ -97,6 +101,9 @@ done
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Sat Jul 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.1.1-alt4
+- Fixed build on ppc64le (tnx to Hans Boehm for stdatomic patch).
+
 * Tue Sep 04 2018 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.1-alt3
 - rebuilt with OpenSSL 1.1.x
 
