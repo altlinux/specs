@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.3.0
-Release:    alt2
+Release:    alt3
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 BuildPreReq: /proc
 BuildPreReq: rpm-build-java
 BuildPreReq: rpm-build-ruby
-BuildPreReq: rpm-build-ubt
 
 Requires: clojure
 Requires: puppet
@@ -143,6 +142,9 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 6.3.0-alt3
+- NMU: remove rpm-build-ubt from BR:
+
 * Tue May 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0-alt2
 - puppetserver config path fixed
 
