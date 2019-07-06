@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.25.3
+Version: 5.26.0
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -23,9 +23,9 @@ Source7: monit.service
 Source100: monit.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-PreReq: openssl
-Requires(post,preun): chkconfig
 Requires: %name-base = %version-%release
+Requires: openssl
+Requires(post,preun): chkconfig
 Requires(post,preun): service >= 0.5-alt1
 
 # Automatically added by buildreq on Fri Apr 06 2012
@@ -182,6 +182,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Sat Jul 06 2019 Michael Shigorin <mike@altlinux.org> 5.26.0-alt1
+- new version (watch file uupdate)
+
 * Thu Mar 07 2019 Michael Shigorin <mike@altlinux.org> 5.25.3-alt1
 - new version (watch file uupdate)
 
