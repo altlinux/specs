@@ -3,14 +3,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.5
-Release: alt1.1
+Version: 1.0.6
+Release: alt1
 
 Summary: The rencode module is similar to bencode from the BitTorrent project
 
 Group: Development/Python
 License: LGPL
-Url: https://pypi.python.org/pypi/rencod
+Url: https://pypi.python.org/pypi/rencode
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -21,12 +21,10 @@ Source: %name-%version.tar
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-Cython python3-module-wheel
 %endif
 
-# manually removed:  python3-module-zope ruby ruby-stdlibs
-# Automatically added by buildreq on Sat Apr 23 2016
-# optimized out: python-base python-devel python-module-distribute python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base
-BuildRequires: python-module-Cython python-module-PyXML python-module-google python-module-mwlib python3-dev python3-module-Cython
+BuildRequires: python-module-Cython python-module-wheel
 
 %description
 The rencode module is similar to bencode from the BitTorrent project.
@@ -85,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
+- new version 1.0.6 (with rpmrb script)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
