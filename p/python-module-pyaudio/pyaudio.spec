@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python-module-setuptools python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
 %define oldname pyaudio
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,7 +11,7 @@ BuildRequires: python-module-setuptools python3-module-setuptools
 
 Name:		python-module-pyaudio
 Version:	0.2.11
-Release:	alt1_1
+Release:	alt1_3
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
 Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
@@ -19,7 +19,6 @@ Summary:	%{sum}
 
 BuildRequires:  gcc
 BuildRequires:	libportaudio2-devel
-BuildRequires:	python-devel
 BuildRequires:	python3-devel
 Source44: import.info
 
@@ -46,18 +45,10 @@ a variety of platforms.
 rm -rf packaging
 
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
-
-%files -n python-module-pyaudio
-%doc README CHANGELOG
-%{python_sitelibdir}/*.py*
-%{python_sitelibdir}/*.so
-%{python_sitelibdir}/*egg-info
 
 %files -n python3-module-pyaudio
 %doc README CHANGELOG
@@ -67,6 +58,9 @@ rm -rf packaging
 %{python3_sitelibdir}/*egg-info
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_3
+- update to new release by fcimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_1
 - update to new release by fcimport
 
