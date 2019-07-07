@@ -1,7 +1,7 @@
 Name: expect
 Version: 5.45.4
-Release: alt3
-Serial: 1
+Release: alt4
+Epoch: 1
 
 Summary: A tcl extension for simplifying program-script interaction
 License: BSD
@@ -9,7 +9,7 @@ Group: Development/Tcl
 Url: http://core.tcl.tk/expect
 
 # fossil export
-Source0: %name-%version.tar
+Source0: %name-%version-%release.tar
 # ALT patches
 Patch1: expect-5.38-rh-mkpasswd.patch
 Patch2: expect-5.38-rh-rftp.patch
@@ -65,15 +65,14 @@ Requires: /proc
 %package devel
 Summary: Expect header files and lib%name manpage
 Group: Development/C
-Requires: %name = %serial:%version-%release tcl-devel >= 8.5.0-alt0.3
+Requires: %name = %epoch:%version-%release tcl-devel >= 8.5.0-alt0.3
 
 %package examples
 Summary: Example applications using Expect
 BuildArch: noarch
 Group: Development/Tcl
-Requires: %name = %serial:%version-%release tcl(Tk)
+Requires: %name = %epoch:%version-%release tcl(Tk)
 # filename collision
-Conflicts: mkpasswd
 
 %description
 Expect is a tcl extension for automating interactive applications such
@@ -158,6 +157,12 @@ cat <<EOF > %buildroot%_tcldatadir/%name%version/pkgIndex.tcl
 package ifneeded Expect %version [list load [file join \$dir .. .. .. %_lib lib%name%version.so]]
 EOF
 
+# mkpasswd-expect
+mv %buildroot%_bindir/mkpasswd{,-expect}
+mv %buildroot%_man1dir/mkpasswd{,-expect}.1
+sed -i 's/mkpasswd/mkpasswd-expect/g;s/MKPASSWD/MKPASSWD-EXPECT/g;' %buildroot%_man1dir/mkpasswd-expect.1
+sed -i 's/mkpasswd/mkpasswd-expect/g' %buildroot%_bindir/mkpasswd-expect
+
 %check
 make test
 
@@ -184,6 +189,10 @@ make test
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Sun Jul 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt4
+- renamed mkpasswd to mkpasswd-expect to avoid file collision.
+- removed package conflict to mkpasswd.
+
 * Mon Jan 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45.4-alt3
 - added conflict to expect-examples subpackage with mkpasswd;
 - removed -lieee again;
