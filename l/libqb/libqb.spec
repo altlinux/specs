@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0) python-devel
+BuildRequires: /usr/bin/splint gcc-c++ python-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -15,19 +15,22 @@ Group: System/Libraries
 
 Name:           libqb
 Version:        1.0.5
-Release:        alt1_1
-Summary:        An IPC library for high performance servers
+Release:        alt1_2
+Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
+Patch0:         IPC-avoid-temporary-channel-priority-loss.patch
 
 BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
 BuildRequires:  gcc
-Source44: import.info
+# for ipc.test only (part of check scriptlet)
+BuildRequires:  pkgconfig(glib-2.0)
 # git-style patch application
-#BuildRequires: git  # for when patches around
+BuildRequires:  git
+Source44: import.info
 
 %description
 libqb provides high-performance, reusable features for client-server
@@ -36,7 +39,8 @@ and polling.
 
 %prep
 %setup
-#autosetup -p1 -S git_am  # for when patches around
+%setup -q # for when patches around
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -75,6 +79,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_2
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
 - update to new release by fcimport
 
