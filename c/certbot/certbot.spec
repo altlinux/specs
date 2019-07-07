@@ -3,7 +3,7 @@
 %def_with plugins
 
 Name: certbot
-Version: 0.34.2
+Version: 0.35.1
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-intro
 
 #Requires: python-module-%name = %version-%release
 Provides: python-module-%name = %EVR
@@ -42,7 +43,7 @@ Requires: python-base >= 2.7.9
 #BuildRequires: python-repoze-sphinx-autointerface
 #BuildRequires: python-sphinxcontrib-programoutput
 
-BuildRequires: python-module-acme >= %version
+%py_use acme >= 0.29.0
 
 Provides: letsencrypt = %version
 Obsoletes: letsencrypt
@@ -78,7 +79,7 @@ Obsoletes: python-module-letsencrypt
 
 
 %description -n python-module-%name
-The python2 libraries to interface with letsencrypt.
+The python2 libraries to interface with %name.
 
 # TODO
 %if_with plugins
@@ -234,6 +235,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 0.35.1-alt1
+- new version 0.35.1 (with rpmrb script)
+
 * Tue May 14 2019 Vitaly Lipatov <lav@altlinux.ru> 0.34.2-alt1
 - new version 0.34.2 (with rpmrb script)
 
