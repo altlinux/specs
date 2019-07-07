@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname lohit-devanagari-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,9 +9,8 @@
 
 Name:           fonts-ttf-lohit-devanagari
 Version:        2.95.4
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Free Devanagari Script Font
-Group:          System/Fonts/True type
 License:        OFL
 URL:            https://pagure.io/lohit
 Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
@@ -20,7 +20,6 @@ BuildRequires:  fontpackages-devel
 BuildRequires:  ttfautohint
 BuildRequires: python3-devel
 Source44: import.info
-ExcludeArch: aarch64
 
 %description
 This package provides a free Devanagari Script TrueType/OpenType font.
@@ -101,6 +100,9 @@ fi
 
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_7
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_5
 - update to new release by fcimport
 
