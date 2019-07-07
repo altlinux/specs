@@ -2,7 +2,7 @@
 Epoch: 1
 %define dist JSON-PP
 Name: perl-%dist
-Version: 4.03
+Version: 4.04
 Release: alt1
 
 Summary: JSON::XS compatible pure-Perl module
@@ -37,6 +37,9 @@ It comes to be a perl core module in Perl 5.14.
 %_man1dir/json_pp*
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.04-alt1
+- automated CPAN update
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.03-alt1
 - automated CPAN update
 
