@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.9.0
-%define major 4.11
+%define major 4.12.1
 
 Name: wine
 Version: %major.1
@@ -30,6 +30,8 @@ Source4: %name-%version-icons.tar
 Source5: %name-patches-%version.tar
 
 AutoReq: yes, noperl
+
+ExclusiveArch: %ix86 x86_64 aarch64
 
 # try build wine64 only on ALT
 %if %_vendor == "alt"
@@ -91,9 +93,6 @@ BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
 
 BuildRequires: perl-XML-Simple
 
-# with prelink not found, base address of core dlls won't be set correctly
-BuildRequires: prelink
-
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
@@ -153,7 +152,8 @@ Warning: it may kill your X server suddenly.
 Summary: Wine meta package
 Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
-BuildArch: noarch
+# due ExclusiveArch
+#BuildArch: noarch
 Requires: %name = %version-%release
 Requires: %name-programs = %version-%release
 Requires: lib%name-gl = %version-%release
@@ -172,7 +172,8 @@ Wine meta package. Use it for install all wine subpackages.
 Summary: Wine programs
 Group: Emulators
 Requires: %name = %version-%release
-BuildArch: noarch
+# due ExclusiveArch
+#BuildArch: noarch
 
 Conflicts: wine-vanilla-programs
 
@@ -476,6 +477,15 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.1-alt1
+- new version (4.12.1.1) with rpmgs script
+- fixe 64 bit build
+
+* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1-alt1
+- new version 4.12.1 (with rpmrb script)
+- enable ExclusiveArch for x86 and aarch64
+- remove BR: prelink
+
 * Sat Jun 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.11.1-alt1
 - new version 4.11.1 (with rpmrb script)
 - strict require wine-mono-4.9.0
