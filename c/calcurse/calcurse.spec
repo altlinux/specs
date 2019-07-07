@@ -2,13 +2,13 @@ Group: Office
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           calcurse
-Version:        4.4.0
+Version:        4.5.0
 Release:        alt1_1
 Summary:        Text-based personal organizer
 
 License:        BSD
-URL:            http://calcurse.org
-Source0:        http://calcurse.org/files/%{name}-%{version}.tar.gz
+URL:            https://calcurse.org
+Source0:        https://calcurse.org/files/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  gettext-tools libasprintf-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel autoconf automake asciidoc asciidoc-a2x
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1_1
+- update to new release by fcimport
+
 * Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_1
 - new version
 
