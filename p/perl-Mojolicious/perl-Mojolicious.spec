@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Mojolicious
-Version: 8.17
+Version: 8.18
 Release: alt1
 Summary: Real-time web framework
 
@@ -50,7 +50,7 @@ mkdir -p %buildroot/%_sysconfdir/sysconfig
 cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 
 %files
-%doc LICENSE Changes README.md examples
+%doc Changes README.md examples
 %_bindir/hypnotoad
 %_bindir/mojo
 %_bindir/morbo
@@ -62,9 +62,12 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %perl_vendor_privlib/Mojo*
 %perl_vendor_privlib/Test/Mojo.pm
 %perl_vendor_privlib/ojo.pm
-%doc LICENSE Changes
+%doc Changes
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 8.18-alt1
+- new version
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 8.17-alt1
 - new version
 
