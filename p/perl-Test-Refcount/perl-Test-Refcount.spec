@@ -1,25 +1,25 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(B.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-Refcount
-Version:        0.08
-Release:        alt1_12
+Version:        0.10
+Release:        alt1_1
 Summary:        Assert reference counts on objects
 
-Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-Refcount
 Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Devel/Refcount.pm)
 # Test suite fails with Perl 5.18 if Devel::FindRef is installed (CPAN RT#85998)
 #BuildRequires:  perl(Devel::FindRef)
+BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -40,26 +40,28 @@ properly DESTROYed when it drops all of its references to it.
 
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+/usr/bin/perl Build.PL --installdirs=vendor
+./Build
 
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
-
+./Build install --destdir=$RPM_BUILD_ROOT --create_packlist=0
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 
 %check
-make test
+./Build test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/Test
 
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- new version
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_12
 - update to new release by fcimport
 
