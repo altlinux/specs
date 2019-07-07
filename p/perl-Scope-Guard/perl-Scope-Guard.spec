@@ -16,34 +16,32 @@
 
 Name: perl-Scope-Guard
 Version: 0.21
-Release: alt1
+Release: alt2
 
 Summary: lexically scoped resource management
-
 License: Artistic
 Group: Development/Perl
-Url: http://search.cpan.org/dist/Scope-Guard/
 
+Url: http://search.cpan.org/dist/Scope-Guard/
+Source: http://www.cpan.org/authors/id/C/CH/CHOCOLATE/Scope-Guard-%{version}.tar.gz
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CH/CHOCOLATE/Scope-Guard-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 23 2008 (-bi)
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
-This module provides a convenient way to perform cleanup or other forms of resource
-management at the end of a scope. It is particularly useful when dealing with exceptions:
-the Scope::Guard constructor takes a reference to a subroutine that is guaranteed to
-be called even if the thread of execution is aborted prematurely. This effectively allows
-lexically-scoped "promises" to be made that are automatically honoured by perl's garbage
-collector.
-
-For more information, see: <http://www.cuj.com/documents/s=8000/cujcexp1812alexandr/>
+This module provides a convenient way to perform cleanup or other forms
+of resource management at the end of a scope. It is particularly useful
+when dealing with exceptions: the Scope::Guard constructor takes a
+reference to a subroutine that is guaranteed to be called even if the
+thread of execution is aborted prematurely. This effectively allows
+lexically-scoped "promises" to be made that are automatically honoured
+by perl's garbage collector.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -n %m_distro-%version
 
 %build
 %perl_vendor_build
@@ -56,6 +54,10 @@ For more information, see: <http://www.cuj.com/documents/s=8000/cujcexp1812alexa
 %doc Changes README
 
 %changelog
+* Mon Jul 08 2019 Michael Shigorin <mike@altlinux.org> 0.21-alt2
+- cleaned up spec including %%description excluding rotten link
+  (redirects to a useless loan site now)
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
