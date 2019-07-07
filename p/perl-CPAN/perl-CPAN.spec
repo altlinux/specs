@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN
 Name: perl-%dist
-Version: 2.26
+Version: 2.27
 Release: alt1
 
 Summary: Download and build Perl modules from CPAN sites
@@ -54,6 +54,9 @@ rm t/30shell.t t/31sessions.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1
+- automated CPAN update
+
 * Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 2.26-alt1
 - automated CPAN update
 
