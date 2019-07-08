@@ -3,7 +3,7 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 License: GPLv2+
@@ -119,6 +119,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Jul 8 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
