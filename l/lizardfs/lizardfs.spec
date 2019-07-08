@@ -11,7 +11,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc1
+Release: alt0.rc1.16.g9c119b5c
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -19,7 +19,7 @@ Url: https://www.lizardfs.org/
 Source: %name-%version.tar
 Source1: pam-lizardfs
 Source2: 10-lizardfs.conf
-Source3: spdlog-0.14.0.zip
+#Source3: spdlog-0.14.0.zip
 %if_with ganesha
 Source4: nfs-ganesha-2.5-stable.zip
 Source5: ntirpc-1.5.zip
@@ -27,7 +27,6 @@ Source5: ntirpc-1.5.zip
 # Patch: %name-%version.patch
 
 Conflicts: moosefs
-ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): unzip
@@ -44,6 +43,7 @@ BuildRequires: libdb4-devel
 BuildRequires: libsystemd-devel
 BuildRequires: thrift
 BuildRequires: zlib-devel
+BuildRequires: libspdlog-devel
 
 %description
 LizardFS is an Open Source, easy to deploy and maintain, distributed,
@@ -84,22 +84,29 @@ Requires: bash-completion
 %description client
 LizardFS client: mfsmount and lizardfs.
 
-%package lib-client
+%package -n lib%name-client
 Summary: LizardFS client C/C++ library
 Group: System/Libraries
+Provides: %name-lib-client = %EVR
+Obsoletes: %name-lib-client < %EVR
 
-%description lib-client
+%description -n lib%name-client
 LizardFS client library for C/C++ bindings.
 
-%if_with ganesha
+%package -n lib%name-client-devel
+Summary: LizardFS client C/C++ library
+Group: Development/C++
+
+%description -n lib%name-client-devel
+LizardFS client library for C/C++ bindings.
+
 %package nfs-ganesha
 Summary: LizardFS plugin for nfs-ganesha
 Group: System/Servers
-Requires: %name-lib-client
+Requires: lib%name-client = %EVR
 
 %description nfs-ganesha
 LizardFS fsal plugin for nfs-ganesha.
-%endif
 
 %package cgi
 Summary: LizardFS CGI Monitor
@@ -136,7 +143,7 @@ LizardFS cluster management tool.
 %prep
 %setup
 
-unzip -q -d external %SOURCE3
+#unzip -q -d external %SOURCE3
 %if_with ganesha
 unzip -q -d external %SOURCE4
 unzip -q -d external %SOURCE5
@@ -158,13 +165,14 @@ done
 	-DCMAKE_BUILD_TYPE=Release \
 	-DENABLE_TESTS=NO \
 	-DENABLE_DEBIAN_PATHS=YES \
+	-DCMAKE_INSTALL_PREFIX=/ \
 	-DENABLE_CLIENT_LIB=YES \
 %if_with ganesha
 	-DENABLE_NFS_GANESHA=YES \
 %endif
 	-DENABLE_URAFT=YES \
-	-DCMAKE_INSTALL_PREFIX=/ \
-    -DENABLE_DOCS=YES
+	-DENABLE_DOCS=YES \
+	-DENABLE_POLONAISE=OFF
 
 %cmake_build
 
@@ -295,70 +303,30 @@ popd
 
 %files client
 %doc NEWS README.md UPGRADE
-%_bindir/lizardfs
-%_bindir/mfstools.sh
-%_bindir/mfsmount
-%_bindir/mfsappendchunks
-%_bindir/mfscheckfile
-%_bindir/mfsdeleattr
-%_bindir/mfsdirinfo
-%_bindir/mfsfileinfo
-%_bindir/mfsfilerepair
-%_bindir/mfsgeteattr
-%_bindir/mfsgetgoal
-%_bindir/mfsgettrashtime
-%_bindir/mfsmakesnapshot
-%_bindir/mfsrepquota
-%_bindir/mfsrgetgoal
-%_bindir/mfsrgettrashtime
-%_bindir/mfsrsetgoal
-%_bindir/mfsrsettrashtime
-%_bindir/mfsseteattr
-%_bindir/mfssetgoal
-%_bindir/mfssetquota
-%_bindir/mfssettrashtime
-%_man1dir/lizardfs-appendchunks.1*
-%_man1dir/lizardfs-checkfile.1*
-%_man1dir/lizardfs-deleattr.1*
-%_man1dir/lizardfs-dirinfo.1*
-%_man1dir/lizardfs-fileinfo.1*
-%_man1dir/lizardfs-filerepair.1*
-%_man1dir/lizardfs-geteattr.1*
-%_man1dir/lizardfs-getgoal.1*
-%_man1dir/lizardfs-gettrashtime.1*
-%_man1dir/lizardfs-makesnapshot.1*
-%_man1dir/lizardfs-repquota.1*
-%_man1dir/lizardfs-rgetgoal.1*
-%_man1dir/lizardfs-rgettrashtime.1*
-%_man1dir/lizardfs-rremove.1*
-%_man1dir/lizardfs-rsetgoal.1*
-%_man1dir/lizardfs-rsettrashtime.1*
-%_man1dir/lizardfs-seteattr.1*
-%_man1dir/lizardfs-setgoal.1*
-%_man1dir/lizardfs-setquota.1*
-%_man1dir/lizardfs-settrashtime.1*
-%_man1dir/lizardfs.1*
+%_bindir/*
+%exclude %_bindir/lizardfs-admin
+%exclude %_bindir/lizardfs-probe
+%_man1dir/*
 %_man5dir/iolimits.cfg.5*
 %_man5dir/mfsmount.cfg.5*
 %_man7dir/mfs.7*
 %_man7dir/moosefs.7*
 %_man7dir/lizardfs.7*
-%_man1dir/mfsmount.1*
 %_sysconfdir/bash_completion.d/lizardfs
 %dir %liz_confdir
 %config(noreplace) %liz_confdir/mfsmount.cfg
 %config(noreplace) %liz_confdir/iolimits.cfg
 
-%files lib-client
+%files -n lib%name-client
 %_libdir/liblizardfsmount_shared.so
 %_libdir/liblizardfs-client.so
+
+%files -n lib%name-client-devel
 %_libdir/liblizardfs-client-cpp.a
 %_libdir/liblizardfs-client-cpp_pic.a
 %_libdir/liblizardfs-client.a
 %_libdir/liblizardfs-client_pic.a
-%_includedir/lizardfs/
-%_includedir/lizardfs/lizardfs_c_api.h
-%_includedir/lizardfs/lizardfs_error_codes.h
+%_includedir/lizardfs
 
 %if_with ganesha
 %files nfs-ganesha
@@ -369,14 +337,7 @@ popd
 
 %files cgi
 %doc NEWS README.md UPGRADE
-%dir %_datadir/mfscgi
-%_datadir/mfscgi/err.gif
-%_datadir/mfscgi/favicon.ico
-%_datadir/mfscgi/index.html
-%_datadir/mfscgi/logomini.png
-%_datadir/mfscgi/mfs.css
-%_datadir/mfscgi/mfs.cgi
-%_datadir/mfscgi/chart.cgi
+%_datadir/mfscgi
 
 %files cgiserv
 %doc NEWS README.md UPGRADE
@@ -396,19 +357,22 @@ popd
 %_man8dir/lizardfs-probe.8*
 
 %files uraft
-%attr(755,root,root) %_sbindir/lizardfs-uraft
-%attr(755,root,root) %_sbindir/lizardfs-uraft-helper
+%_sbindir/lizardfs-uraft
+%_sbindir/lizardfs-uraft-helper
 %doc NEWS README.md UPGRADE
 %_man8dir/lizardfs-uraft.8*
 %_man8dir/lizardfs-uraft-helper.8*
 %_man5dir/lizardfs-uraft.cfg.5*
 %config(noreplace) %liz_confdir/lizardfs-uraft.cfg
-%attr(754,root,root) %_initdir/lizardfs-uraft
-%attr(644,root,root) %_unitdir/lizardfs-uraft.service
-%attr(644,root,root) %_unitdir/lizardfs-ha-master.service
-%attr(644,root,root) %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
+%_initdir/lizardfs-uraft
+%_unitdir/lizardfs-uraft.service
+%_unitdir/lizardfs-ha-master.service
+%_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
-* Thu May 28 2019 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc1
+* Mon Jul 08 2019 Alexey Shabalin <shaba@altlinux.org> 3.13.0-alt0.rc1.16.g9c119b5c
+- upstream snapshot (fixed build on 32-bit arch)
+
+* Tue May 28 2019 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc1
 - Import from upstream 3.13.0-rc1
 
