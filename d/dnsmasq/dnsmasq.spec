@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.80
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -139,6 +139,11 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -n _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Jul 08 2019 Mikhail Efremov <sem@altlinux.org> 2.80-alt2
+- Fix build with glibc kernheaders 5.2.
+- dnsmasq.init: Fix indentation.
+- dnsmasq-helper: Fix indentation.
+
 * Tue Oct 23 2018 Mikhail Efremov <sem@altlinux.org> 2.80-alt1
 - init: Don't use netstat (closes: #34783).
 - Use its own user to run dnsmasq service.
