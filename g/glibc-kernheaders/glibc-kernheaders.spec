@@ -1,4 +1,4 @@
-%define kernel_base_version 5.1
+%define kernel_base_version 5.2
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -330,6 +330,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Jul 07 2019 Dmitry V. Levin <ldv@altlinux.org> 5.2-alt1
+- v5.1 -> v5.2.
+
 * Mon May 06 2019 Dmitry V. Levin <ldv@altlinux.org> 5.1-alt1
 - v5.0 -> v5.1.
 
