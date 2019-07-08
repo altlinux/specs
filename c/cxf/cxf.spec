@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 Name:          cxf
 Epoch:         1
 Version:       3.1.6
-Release:       alt4_7jpp8
+Release:       alt5_7jpp8
 Summary:       Apache CXF
 License:       ASL 2.0
 URL:           http://cxf.apache.org/
@@ -156,6 +156,7 @@ Obsoletes:     %{name}-api < %{version}-%{release}
 BuildArch:     noarch
 Source44: import.info
 Patch33: cxf-3.1.6-wss4j-2.1.12.patch
+Patch34: cxf-3.1.6-jaxrs-api-2.1.5.patch
 
 %description
 Apache CXF is an open-source services framework that aids in
@@ -212,6 +213,7 @@ find . -name "*.class" -print -delete
 %patch4 -p1
 %patch5 -p1
 %patch33 -p1
+%patch34 -p1
 
 # viy: maven-javadoc-plugin 3
 %pom_disable_module "java2wadl-plugin" maven-plugins
@@ -432,6 +434,9 @@ install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %
 #%doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 08 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt5_7jpp8
+- fixed build with new glassfish-jax-rs-api 2.1
+
 * Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt4_7jpp8
 - fixed build with new wss4j
 
