@@ -1,6 +1,6 @@
 Name: xclip
 Version: 0.12
-Release: alt1.qa1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,6 +40,9 @@ make DESTDIR=%buildroot install install.man
 %_bindir/*
 
 %changelog
+* Tue Jul 09 2019 Nikita Ermakov <arei@altlinux.org> 0.12-alt2
+- NMU: Introduce -nonl option.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
