@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.11
+Version: 1.3.11.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Jul 09 2019 Michael Shigorin <mike@altlinux.org> 1.3.11.1-alt1
+- x11: reverted vulkan changes (need more testing)
+
 * Mon Jul 08 2019 Michael Shigorin <mike@altlinux.org> 1.3.11-alt1
 - pkg.in/profiles subdirs support (shaba@)
 - repo fixup regarding target arch (obirvalger@)
