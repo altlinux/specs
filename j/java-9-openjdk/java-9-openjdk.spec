@@ -21,10 +21,8 @@ BuildRequires: ca-certificates-java
 %def_disable systemtap
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
-#BuildRequires: libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
-#BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
 %filter_from_requires /.usr.bin.java/d
 BuildRequires: /proc rpm-build-java
@@ -266,7 +264,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{majorver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2_6jpp8
+Release: alt3_6jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1357,7 +1355,7 @@ cat <<EOF >>%buildroot%_altdir/%name-javac
 EOF
 cat <<EOF >>%buildroot%_altdir/%name-javac-versioned
 %{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%priority
-%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}
+%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%priority
 EOF
 
 # ----- end: JPackage compatibility alternatives ------
@@ -1659,6 +1657,9 @@ fi
 
 
 %changelog
+* Tue Jul 09 2019 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt3_6jpp8
+- updated alternatives layout again
+
 * Mon Jul 08 2019 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt2_6jpp8
 - new alternatives layout
 
