@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xsp
-Url: http://go-mono.com/
+Url: https://www.mono-project.com
 License: X11/MIT
 Group: System/Servers
-Version: 4.4
-Release: alt7
+Version: 4.6
+Release: alt1
 Summary: Small Web Server Hosting ASP.NET
 
-Source: %name-%version.tar.bz2
+# https://github.com/mono/xsp.git
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-mono
 BuildRequires: sqlite3 mono-full mono-devel-full pkg-config /proc
@@ -17,11 +18,11 @@ BuildRequires: sqlite3 mono-full mono-devel-full pkg-config /proc
 %define xspAvailableApps %xspConfigsLocation/applications-available
 %define xspEnabledApps %xspConfigsLocation/applications-enabled
 
-Conflicts: mono4-xsp
-Obsoletes: mono4-xsp
-Provides: mono4-xsp = %version-%release
+Provides:  mono4-xsp = %EVR
+Conflicts: mono4-xsp < %EVR
+Obsoletes: mono4-xsp < %EVR
 
-Provides: mono(fastcgi-mono-server4) = 4.4.0.0
+Provides: mono(fastcgi-mono-server4) = 4.6.0.0
 
 %description
 The XSP server is a small Web server that hosts the Mono System.Web
@@ -31,14 +32,11 @@ classes for running what is commonly known as ASP.NET.
 %setup
 
 %build
-pushd xsp
-%define _configure_script ./autogen.sh
+NOCONFIGURE=yes sh ./autogen.sh
 %configure
 %make
-popd
 
 %install
-pushd xsp
 %makeinstall_std
 
 rm -rf %buildroot%_libdir/xsp/unittests
@@ -52,8 +50,6 @@ mkdir -p %buildroot%_runtimedir/xsp2
 install -m 644 man/mono-asp-apps.1 %buildroot%_man1dir/mono-asp-apps.1
 install -m 644 packaging/opensuse/xsp2.logrotate %buildroot%_logrotatedir/xsp2
 install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-apps
-popd
-
 
 %files
 %config (noreplace) %_logrotatedir/*
@@ -77,19 +73,22 @@ popd
 %_man1dir/*
 
 %changelog
+* Tue Jul 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6-alt1
+- Updated to upstream version 4.6.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.4-alt7
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.4-alt6
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Fri Jul 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt5%ubt
+* Fri Jul 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt5
 - Rebuilt for additional architectures.
 
-* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt4%ubt
+* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt4
 - Rebuilt with corrected monodoc directory.
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt3%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt3
 - Rebuilt with support of %%ubt macro.
 
 * Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt2
