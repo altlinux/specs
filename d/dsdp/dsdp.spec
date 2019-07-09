@@ -7,7 +7,7 @@
 %define sover %somver.5.8
 Name: dsdp
 Version: 5.8
-Release: alt12
+Release: alt13
 Summary: Implementation of an interior-point method for semidefinite programming
 License: BSD-like
 Group: Sciences/Mathematics
@@ -15,10 +15,12 @@ Url: http://www.mcs.anl.gov/hs/software/DSDP/
 
 ExclusiveArch: %ix86 x86_64
 
-Source: http://www.mcs.anl.gov/hs/software/DSDP/DSDP5.8.tar.gz
+# http://www.mcs.anl.gov/hs/software/DSDP/DSDP5.8.tar.gz
+Source: DSDP5.8.tar
 
 BuildPreReq: liblapack-devel libscalapack-devel
 BuildPreReq: %mpiimpl-devel unzip pblas-devel
+BuildRequires: libarpack-devel
 
 %description
 The DSDP software is a free open source implementation of an interior-point
@@ -75,9 +77,9 @@ This package contains shared library of DSDP.
 %package -n lib%name-devel
 Summary: Development files of DSDP
 Group: Development/C
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel < %EVR
 
 %description -n lib%name-devel
 The DSDP software is a free open source implementation of an interior-point
@@ -206,6 +208,9 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/lib%name-devel
 
 %changelog
+* Tue Jul 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8-alt13
+- Updated build dependencies.
+
 * Wed Aug 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8-alt12
 - Rebuilt without plapack
 
