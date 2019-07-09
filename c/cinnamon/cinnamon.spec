@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -31,6 +31,7 @@ Patch: %name-%version-%release.patch
 
 Provides: desktop-notification-daemon
 
+Requires: dconf
 Requires: upower
 Requires: polkit >= %polkit_ver
 Requires: polkit-gnome
@@ -91,6 +92,9 @@ Group: Graphical desktop/GNOME
 BuildArch: noarch
 Provides: python3(cme)
 Provides: python3(Spices)
+# https://bugzilla.altlinux.org/36995
+Requires: python3-module-PAM
+Requires: python3-module-xapps-overrides
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
@@ -102,8 +106,6 @@ BuildArch: noarch
 
 %description devel-doc
 Development docs package for Cinnamon.
-
-#%%add_verify_elf_skiplist %_bindir/%name
 
 %prep
 %setup -n %name-%version
@@ -193,6 +195,10 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Tue Jul 09 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt4
+- added dconf to requires
+- data: added python3-module-{PAM,xapps-overrides} dependencies (ALT #36995),
+
 * Thu Jul 04 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt3
 - spec: dropped a batch of manual python3/typelib dependencies,
   used rpm-build-{python3,gir} to generate automatic ones.
