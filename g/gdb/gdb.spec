@@ -11,7 +11,7 @@
 
 Name: gdb
 Version: 8.2.50.20180917
-Release: alt4
+Release: alt5
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -28,6 +28,7 @@ Source3: gdb-gstack.man
 Patch1: gdb-alt-testsuite-version.patch
 Patch2: gdb-alt-readline.patch
 Patch3: gdb-alt-bfd.patch
+Patch4: gdb-alt-fix-build-on-mips.patch
 
 ### Fedora patches
 # Match the Fedora's version info.
@@ -733,6 +734,7 @@ mv readline/doc readline-doc
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 # We want to use these as system libraries.
 rm -r readline zlib
@@ -854,7 +856,10 @@ fi
 
 %files -n gdbserver
 %_bindir/gdbserver
+# no ipa_obj for mips*
+%ifnarch %mips
 %_libdir/libinproctrace.so
+%endif
 %endif
 
 %files light
@@ -872,6 +877,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Tue Jul 09 2019 Ivan A. Melnikov <iv@altlinux.org> 8.2.50.20180917-alt5
+- Fix build on mips.
+
 * Thu Jun 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 8.2.50.20180917-alt4
 - %%pre: corrected the old symlink path in 8.2.50.20180917-alt3.
 
