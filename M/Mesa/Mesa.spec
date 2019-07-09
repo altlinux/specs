@@ -55,6 +55,8 @@
 %gallium_drivers_add etnaviv
 %gallium_drivers_add freedreno
 %gallium_drivers_add kmsro
+%gallium_drivers_add panfrost
+%gallium_drivers_add lima
 %endif
 %ifarch %vulkan_intel_arches
 %vulkan_drivers_add intel
@@ -64,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.1.1
+Version: 19.1.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -493,6 +495,9 @@ cd -
 %endif
 
 %changelog
+* Tue Jul 09 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.2-alt1
+- 19.1.2
+
 * Wed Jun 26 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.1-alt1
 - 19.1.1
 
