@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          shrinkwrap-resolver
 Version:       2.2.2
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       Java API to obtain Maven artifacts
 # Some file are without license headers
 # reported @ https://issues.jboss.org/projects/SHRINKRES/issues/SHRINKRES-242
@@ -18,6 +15,7 @@ Source0:       https://github.com/shrinkwrap/resolver/archive/%{version}.tar.gz
 
 Patch0:        shrinkwrap-resolver-2.2.2-maven-model3.4.patch
 Patch1:        shrinkwrap-resolver-2.2.2-override.patch
+Patch2:        shrinkwrap-resolver-2.2.2-maven-resolver131.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
@@ -211,6 +209,7 @@ rm -rf */target
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Build problems, use old configurations
 %pom_remove_plugin -r :maven-checkstyle-plugin
@@ -273,6 +272,9 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt2_6jpp8
+- fixed build with new maven-resolver
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_6jpp8
 - new version
 
