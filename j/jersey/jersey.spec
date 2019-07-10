@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_with jetty
 Name:          jersey
 Version:       2.23.2
-Release:       alt1_5jpp8
+Release:       alt2_5jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -52,7 +52,7 @@ BuildRequires: mvn(javax.persistence:persistence-api)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(javax.servlet.jsp:jsp-api)
 BuildRequires: mvn(javax.validation:validation-api)
-BuildRequires: mvn(javax.ws.rs:javax.ws.rs-api)
+BuildRequires: mvn(javax.ws.rs:javax.ws.rs-api:2.0.1)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
@@ -140,7 +140,6 @@ find . -name "*.class" -print -delete
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
 
 # Remove repackaged dependencies: guava, atinject
 sed -i '/jersey.repackaged/d' \
@@ -409,6 +408,9 @@ sed -i "s|Xmx1024m|Xmx512m|" pom.xml
 %doc --no-dereference LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %changelog
+* Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt2_5jpp8
+- fixed build with new jax rs api
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_5jpp8
 - fc29 update
 
