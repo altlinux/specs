@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-resolver
 Epoch:          1
-Version:        1.1.1
+Version:        1.3.1
 Release:        alt1_2jpp8
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
@@ -25,19 +25,16 @@ BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
-
-# XXX Remove after F26 EOL
-Obsoletes:      aether < 1:1.0.3
 Source44: import.info
 
 %description
@@ -49,9 +46,6 @@ artifact transports and artifact resolution.
 %package api
 Group: Development/Java
 Summary:   Maven Artifact Resolver API
-# XXX Remove after F26 EOL
-Obsoletes: aether-api < 1:1.0.3
-Obsoletes: aether-ant-tasks < 1:1.0.1-9
 
 %description api
 The application programming interface for the repository system.
@@ -59,8 +53,6 @@ The application programming interface for the repository system.
 %package spi
 Group: Development/Java
 Summary:   Maven Artifact Resolver SPI
-# XXX Remove after F26 EOL
-Obsoletes: aether-spi < 1:1.0.3
 
 %description spi
 The service provider interface for repository system implementations and
@@ -69,8 +61,6 @@ repository connectors.
 %package util
 Group: Development/Java
 Summary:   Maven Artifact Resolver Utilities
-# XXX Remove after F26 EOL
-Obsoletes: aether-util < 1:1.0.3
 
 %description util
 A collection of utility classes to ease usage of the repository system.
@@ -78,8 +68,6 @@ A collection of utility classes to ease usage of the repository system.
 %package impl
 Group: Development/Java
 Summary:   Maven Artifact Resolver Implementation
-# XXX Remove after F26 EOL
-Obsoletes: aether-impl < 1:1.0.3
 
 %description impl
 An implementation of the repository system.
@@ -87,8 +75,6 @@ An implementation of the repository system.
 %package test-util
 Group: Development/Java
 Summary:   Maven Artifact Resolver Test Utilities
-# XXX Remove after F26 EOL
-Obsoletes: aether-test-util < 1:1.0.3
 
 %description test-util
 A collection of utility classes to ease testing of the repository system.
@@ -96,8 +82,6 @@ A collection of utility classes to ease testing of the repository system.
 %package connector-basic
 Group: Development/Java
 Summary:   Maven Artifact Resolver Connector Basic
-# XXX Remove after F26 EOL
-Obsoletes: aether-connector-basic < 1:1.0.3
 
 %description connector-basic
 A repository connector implementation for repositories using URI-based layouts.
@@ -105,8 +89,6 @@ A repository connector implementation for repositories using URI-based layouts.
 %package transport-classpath
 Group: Development/Java
 Summary:   Maven Artifact Resolver Transport Classpath
-# XXX Remove after F26 EOL
-Obsoletes: aether-transport-classpath < 1:1.0.3
 
 %description transport-classpath
 A transport implementation for repositories using classpath:// URLs.
@@ -114,8 +96,6 @@ A transport implementation for repositories using classpath:// URLs.
 %package transport-file
 Group: Development/Java
 Summary:   Maven Artifact Resolver Transport File
-# XXX Remove after F26 EOL
-Obsoletes: aether-transport-file < 1:1.0.3
 
 %description transport-file
 A transport implementation for repositories using file:// URLs.
@@ -123,8 +103,6 @@ A transport implementation for repositories using file:// URLs.
 %package transport-http
 Group: Development/Java
 Summary:   Maven Artifact Resolver Transport HTTP
-# XXX Remove after F26 EOL
-Obsoletes: aether-transport-http < 1:1.0.3
 
 %description transport-http
 A transport implementation for repositories using http:// and https:// URLs.
@@ -132,8 +110,6 @@ A transport implementation for repositories using http:// and https:// URLs.
 %package transport-wagon
 Group: Development/Java
 Summary:   Maven Artifact Resolver Transport Wagon
-# XXX Remove after F26 EOL
-Obsoletes: aether-transport-wagon < 1:1.0.3
 
 %description transport-wagon
 A transport implementation based on Maven Wagon.
@@ -211,6 +187,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1_2jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1.1-alt1_2jpp8
 - java update
 
