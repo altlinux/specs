@@ -1,6 +1,6 @@
 Name: libcrl
 Version: 0.9
-Release: alt1
+Release: alt2
 
 %define soname %version
 
@@ -20,6 +20,8 @@ BuildRequires: gyp gcc-c++
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5
 BuildRequires: qt5-base-devel
+# thera are #if __has_include(<gsl/gsl>)
+BuildRequires: libgsl-devel
 
 %add_optflags -fPIC
 
@@ -37,6 +39,7 @@ developing applications that use %name.
 %prep
 %setup
 cp %SOURCE1 .
+cp .gear/Makefile src/Makefile
 %__subst "s|so\.0\..|so.%version|" crl.gyp
 
 %build
@@ -45,6 +48,7 @@ cp %SOURCE1 .
 #OSError: [Errno 38] Function not implemented
 gyp --depth=. --no-parallel
 %make_build CXXFLAGS="%optflags -std=c++17 $(pkg-config --cflags Qt5Core)" CFLAGS="%optflags" V=1
+ln -s %name.so.%soname out/Default/lib.target/%name.so
 
 cat <<EOF >%name.pc
 includedir=%_includedir
@@ -59,6 +63,10 @@ Libs: -lcrl
 Libs.private:
 Cflags: -I\${includedir}/%name
 EOF
+
+%check
+cd src
+make test
 
 %install
 install -m644 -D out/Default/lib.target/%name.so.%soname %buildroot%_libdir/%name.so.%soname
@@ -78,6 +86,10 @@ done
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 10 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt2
+- build test and run it in the check section
+- add BR: libgsl-devel
+
 * Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - merge commit '9ea870038a2a667add7f621be6252db909068386'
 
