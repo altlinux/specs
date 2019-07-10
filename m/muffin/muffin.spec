@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -198,6 +198,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - 4.2.0
 

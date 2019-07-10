@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: xreader
-Version: 2.2.1
-Release: alt2
+Version: 2.2.2
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -95,8 +95,6 @@ GObject introspection devel data for the Xreader library
   -Dpixbuf=true \
   -Dcomics=true \
   -Dintrospection=true
-# Don't use parallel build because it is broken at least for -j64
-%define _smp_mflags -j1
 %meson_build
 
 %install
@@ -146,6 +144,10 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
+- New version
+- Remove workaround for broken parallel build (fixed by upstream)
+
 * Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt2
 - Don't use parallel build (it is broken with -j64)
 
