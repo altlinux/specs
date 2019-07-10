@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.2.0
-Release: alt4
+Version: 4.2.1
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -195,6 +195,10 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
+- 4.2.1
+- fix lightdm-settings call
+
 * Tue Jul 09 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt4
 - added dconf to requires
 - data: added python3-module-{PAM,xapps-overrides} dependencies (ALT #36995),

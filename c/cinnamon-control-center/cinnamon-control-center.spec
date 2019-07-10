@@ -8,7 +8,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -168,6 +168,9 @@ export NPROCS=1
 
 
 %changelog
+* Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - 4.2.0
 

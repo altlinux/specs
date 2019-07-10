@@ -3,8 +3,8 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 2.2.0
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: xed is a small and lightweight text editor.
 License: GPLv2
@@ -12,7 +12,6 @@ Group: Editors
 Url: https://github.com/linuxmint/xed
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -24,8 +23,8 @@ Requires: dconf gnome-icon-theme gvfs zenity
 
 Provides: typelib(Xed)
 
-BuildPreReq: rpm-build-gnome
-BuildPreReq: rpm-build-python3
+BuildRequires(pre): rpm-build-gnome
+BuildRequires(pre): rpm-build-python3
 
 BuildPreReq: intltool
 BuildRequires: yelp-tools xmllint itstool
@@ -45,6 +44,8 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel
 BuildRequires: libgspell-devel
 BuildRequires: libxapps-devel
+
+%add_python3_path %pluginsdir
 
 %description
 xed is a small and lightweight text editor.
@@ -71,7 +72,6 @@ Libraries needed to develop plugins for xed.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -134,11 +134,18 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/services/org.x.editor.*service
 %doc README AUTHORS NEWS
 
+# All xed python modules are intended for internal usage only
+%filter_from_provides /python3/d
+
 %files devel
 %_includedir/*
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- New version
+- Cleaner fix for Python3 build
+
 * Fri Jul 5 2019 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt2
 - fix build for Python 3
 
