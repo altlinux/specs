@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    appstream-data-generator
-Version: 20190703
+Version: 20190710
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -36,5 +36,9 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Wed Jul 10 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190710-alt1
+- Added option for processing desktop files
+  and converting them into appdata.xml files (Closes: #36994).
+
 * Wed Jul 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190703-alt1
 - Initial build for ALT
