@@ -3,8 +3,8 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.15
-Release: alt2
+Version: 2.2.17
+Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -161,6 +161,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Jul 09 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt1
+- Freshed up to version 2.2.17.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.15-alt2
 - NMU: remove rpm-build-ubt from BR:
 
