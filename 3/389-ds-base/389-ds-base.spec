@@ -12,7 +12,7 @@
 
 Name: 389-ds-base
 Version: 1.4.1.2
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -206,6 +206,10 @@ sed -i 's|\(saslpath = "/usr/\)lib\(/aarch64-linux-gnu"\)|\1lib64\2|g' \
 ldap/servers/slapd/ldaputil.c
 
 %build
+%ifarch mipsel
+export LDFLAGS='-latomic'
+%endif
+
 %autoreconf
 
 %configure  \
@@ -590,6 +594,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 10 2019 Ivan A. Melnikov <iv@altlinux.org> 1.4.1.2-alt2
+- Link with libatomic on mipsel.
+
 * Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.2-alt1
 - 1.4.1.1 -> 1.4.1.2.
 
