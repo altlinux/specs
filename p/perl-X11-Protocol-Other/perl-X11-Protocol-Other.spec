@@ -1,15 +1,15 @@
 %define dist X11-Protocol-Other
 
 Name:     perl-%dist
-Version:  30
+Version:  31
 Release:  alt1
 
 Summary:  This is some miscellaneous extras and helpers for X11::Protocol
 License:  GPLv3+
 Group:    Development/Perl
-Packager: Sergey Vlasov <vsu@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-URL: %CPAN %dist
+URL: https://metacpan.org/release/X11-Protocol-Other
 Source: %dist-%version.tar.gz
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ This is some miscellaneous extras and helpers for X11::Protocol.
 %perl_vendor_privlib/Encode/X11.pm
 
 %changelog
+* Wed Jul 10 2019 Andrey Cherepanov <cas@altlinux.org> 31-alt1
+- New version.
+
 * Sun Apr 09 2017 Andrey Cherepanov <cas@altlinux.org> 30-alt1
 - New version
 
