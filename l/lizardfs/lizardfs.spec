@@ -11,7 +11,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc1.16.g9c119b5c
+Release: alt0.rc1.16.g9c119b5c.1
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -54,6 +54,8 @@ http://lizardfs.com
 %package master
 Summary: LizardFS master server
 Group: System/Servers
+Conflicts: moosefs-common
+Conflicts: moosefs-master
 #Requires: pam
 
 %description master
@@ -63,6 +65,8 @@ LizardFS master (metadata) server together with metadata restore utility.
 %package metalogger
 Summary: LizardFS metalogger server
 Group: System/Servers
+Conflicts: moosefs-common
+Conflicts: moosefs-metalogger
 
 %description metalogger
 LizardFS metalogger (metadata replication) server.
@@ -70,6 +74,8 @@ LizardFS metalogger (metadata replication) server.
 %package chunkserver
 Summary: LizardFS data server
 Group: System/Servers
+Conflicts: moosefs-common
+Conflicts: moosefs-chunkserver
 
 %description chunkserver
 LizardFS data server.
@@ -80,6 +86,8 @@ Group: System/Servers
 Requires: fuse
 Requires: libfuse
 Requires: bash-completion
+Conflicts: moosefs-common
+Conflicts: moosefs-client
 
 %description client
 LizardFS client: mfsmount and lizardfs.
@@ -111,6 +119,7 @@ LizardFS fsal plugin for nfs-ganesha.
 %package cgi
 Summary: LizardFS CGI Monitor
 Group: System/Servers
+Conflicts: moosefs-cgi
 #Requires: python2
 
 %description cgi
@@ -120,6 +129,7 @@ LizardFS CGI Monitor.
 Summary: Simple CGI-capable HTTP server to run LizardFS CGI Monitor
 Group: System/Servers
 Requires: %name-cgi = %EVR
+Conflicts: moosefs-cgiserv
 
 %description cgiserv
 Simple CGI-capable HTTP server to run LizardFS CGI Monitor.
@@ -370,6 +380,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Wed Jul 10 2019 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc1.16.g9c119b5c.1
+- add conflicts with moosefs-*
+
 * Mon Jul 08 2019 Alexey Shabalin <shaba@altlinux.org> 3.13.0-alt0.rc1.16.g9c119b5c
 - upstream snapshot (fixed build on 32-bit arch)
 
