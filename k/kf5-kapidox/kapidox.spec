@@ -1,11 +1,10 @@
 %define rname kapidox
 
-# python3(gv) absent
-%def_disable python3
+%def_enable python3
 
 Name: kf5-%rname
 Version: 5.59.0
-Release: alt2
+Release: alt3
 %K5init altplace
 %if_disabled python3
 %setup_python_module %rname
@@ -109,6 +108,9 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Wed Jul 10 2019 Sergey V Turchin <zerg@altlinux.org> 5.59.0-alt3
+- build with python3
+
 * Tue Jul 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.59.0-alt2
 - allow to build with python3
 
