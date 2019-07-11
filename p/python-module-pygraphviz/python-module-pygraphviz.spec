@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -74,10 +74,10 @@ This package contains tests for %module_name.
 %endif
 
 %install
-ln -sf build2 build
+ln -snf build2 build
 %python_install
 %if_with python3
-ln -sf build3 build
+ln -snf build3 build
 %python3_build_install
 %endif
 
@@ -99,6 +99,9 @@ ln -sf build3 build
 %endif
 
 %changelog
+* Thu Jul 11 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt3
+- Fix ln options to change symlink
+
 * Mon Feb 04 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt2
 - Cleanup spec
 
