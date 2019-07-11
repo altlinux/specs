@@ -2,7 +2,7 @@
 %define beta %nil
 Name: testdisk
 Version: 7.1
-Release: alt2
+Release: alt3
 
 Summary: Tool to check and undelete partition
 
@@ -16,8 +16,10 @@ Source: %name-%version.tar
 # manually removed: python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Apr 02 2017
 # optimized out: gcc-c++ glibc-devel-static gnu-config libcom_err-devel libncurses-devel libntfs-3g libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel libtinfo-devel pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libuuid-devel
-
+BuildRequires: libe2fs-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libuuid-devel
+%if_with ewf
+BuildRequires: libewf-devel
+%endif
 BuildRequires: qt5-base-devel qt5-tools zlib-devel
 
 Provides: testdisk-doc = %name-%version
@@ -75,7 +77,7 @@ http://www.cgsecurity.org/wiki/PhotoRec
 
 %prep
 %setup
-%add_optflags -std=c++11
+%add_optflags
 
 %build
 %configure
@@ -105,6 +107,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt3
+- build without libewf
+
 * Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt2
 - build 7.1 release
 
