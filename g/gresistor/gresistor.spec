@@ -1,21 +1,18 @@
 Summary: Identify resistors
 Name: gresistor
-Version: 0.0.1
-Release: alt3.1.1.qa1
+Version: 0.0.2
+Release: alt1
 License: GPL
 Group: Sciences/Physics
-URL: http://www.minipop.org/index.php?file=progs/gresistor/gresistor.tpl
-Packager: Mikhail Pokidko <pma@altlinux.org>
-Source: %name-%{version}.tar.gz
-#Patch1: %name.python2.5.patch
+URL:              https://sourceforge.net/projects/gresistor/
+Source0:          http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch: noarch
-
-#BuildRequires: python
 
 # Automatically added by buildreq on Wed Sep 13 2006
 BuildRequires: python-devel python-modules-encodings
 BuildRequires: desktop-file-utils
+Requires: python-module-pygtk-libglade
 
 %description
 To allow for identification, resistors are usually marked with colored bands. 
@@ -34,7 +31,7 @@ value is changing according to the selected color.
 python setup.py build
 
 %install
-python setup.py install --prefix %buildroot%_prefix
+python setup.py install -O1 --skip-build --root %buildroot
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--remove-category=gResistor \
@@ -48,10 +45,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_datadir/%name/
 %_datadir/applications/%name.desktop
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 #python_sitelibdir/SimpleGladeApp.py*
 %python_sitelibdir/*
 
 %changelog
+* Thu Jul 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1
+- new version (closes: #37018)
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.0.1-alt3.1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
