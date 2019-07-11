@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -21,11 +21,14 @@ Requires: unzip
 # as in fedora biarch packages; could be detected by peering in SPEC
 Requires: zip
 
-Requires: java-devel java
+# hack til migration on 1.8-compat
+Requires: java-devel = 0:1.8.0
+#Requires: java-devel java-headless java
 Requires: java-javadoc
 
+
 %description
-JPackage compatibility package. The main goal is to provide all nessssary 
+JPackage compatibility package. The main goal is to provide all nessssary
 symlinks, Requires and BuildRequires for ALTLinux to create a build environment
 compatible with JPackage.org.
 
@@ -85,10 +88,6 @@ Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
 
 Requires: jpackage-generic-compat
 Provides: jpackage-core = %version-%release
-#Provides: jpackage-1.4-compat = %version-%release
-#Provides: jpackage-1.5-compat = %version-%release
-#Provides: jpackage-1.6-compat = %version-%release
-#Provides: jpackage-1.7-compat = %version-%release
 Provides: jpackage-compat = %version-%release
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
@@ -105,6 +104,53 @@ JPackage compatibility package. the main goal is to provide all nessssary symlin
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-1.8.0.
 
+%package -n jpackage-9-compat
+Summary: JPackage build environment with java-9.
+Group: Development/Java
+#Provides: jpackage-core = %version-%release
+#Provides: jpackage-compat = %version-%release
+
+Requires: jpackage-generic-compat
+Requires(pre): java-9-devel >= 9 java-9 >= 9
+Conflicts: java-devel > 9.99 java > 9.99 java-headless > 9.99
+
+%description -n jpackage-9-compat
+JPackage compatibility package. the main goal is to provide all nessssary symlinks,
+Requires and BuildRequires for ALT to be build compatible with JPackage.
+Provides JPackage build environment with java-9.
+
+%package -n jpackage-10-compat
+Summary: JPackage build environment with java-10.
+Group: Development/Java
+#Provides: jpackage-core = %version-%release
+#Provides: jpackage-compat = %version-%release
+
+Requires: jpackage-generic-compat
+Requires(pre): java-10-devel >= 10 java-10 >= 10
+Conflicts: java-devel > 10.99 java > 10.99 java-headless > 10.99
+
+%description -n jpackage-10-compat
+JPackage compatibility package. the main goal is to provide all nessssary symlinks,
+Requires and BuildRequires for ALT to be build compatible with JPackage.
+Provides JPackage build environment with java-10.
+
+%package -n jpackage-11-compat
+Summary: JPackage build environment with java-11.
+Group: Development/Java
+#Provides: jpackage-core = %version-%release
+#Provides: jpackage-compat = %version-%release
+
+Requires: jpackage-generic-compat
+Requires(pre): java-11-devel >= 11 java-11
+# hack
+Conflicts: java-devel > 11.99 java > 11.99 java-headless > 11.99
+
+
+%description -n jpackage-11-compat
+JPackage compatibility package. the main goal is to provide all nessssary symlinks,
+Requires and BuildRequires for ALT to be build compatible with JPackage.
+Provides JPackage build environment with java-11.
+
 %prep
 
 %build
@@ -117,8 +163,14 @@ install -d $RPM_BUILD_ROOT%_datadir
 #files -n jpackage-1.6.0-compat
 #files -n jpackage-1.7.0-compat
 %files -n jpackage-1.8-compat
+%files -n jpackage-9-compat
+%files -n jpackage-10-compat
+%files -n jpackage-11-compat
 
 %changelog
+* Thu Jul 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- java 11 support
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - cleaned up BuildRequires.
 
