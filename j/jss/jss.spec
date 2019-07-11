@@ -5,7 +5,7 @@
 
 Name: jss
 Version: 4.5.3
-Release: alt1
+Release: alt2
 
 Summary: Java Security Services (JSS)
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -23,6 +23,7 @@ BuildRequires: gcc-c++
 BuildRequires: glassfish-jaxb-api
 BuildRequires: /proc
 BuildRequires: cmake
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
@@ -41,7 +42,7 @@ BuildRequires: nss-utils
 Requires: apache-commons-lang
 Requires: apache-commons-codec
 Requires: glassfish-jaxb-api
-Requires: java-headless
+Requires: java-1.8.0-openjdk-headless
 Requires: slf4j
 
 %description
@@ -123,6 +124,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Thu Jul 11 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt2
+- Pinned supported Java.
+
 * Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1
 - 4.5.2 -> 4.5.3.
 
