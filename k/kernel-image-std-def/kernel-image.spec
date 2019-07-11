@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	4.19
-%define kernel_sublevel .57
+%define kernel_sublevel .58
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -657,6 +657,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Jul 12 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.58-alt1
+- v4.19.58
+
 * Fri Jul 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.19.57-alt2
 - Added ppc64le support.
 
