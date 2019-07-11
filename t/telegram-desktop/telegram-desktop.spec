@@ -10,7 +10,7 @@
 
 Name: telegram-desktop
 Version: 1.7.14
-Release: alt1
+Release: alt2
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -215,6 +215,11 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.7.14-alt2
+- reenable GTK file chooser possibility:
+  - drop TDESKTOP_DISABLE_GTK_INTEGRATION
+  - add  TDESKTOP_FORCE_GTK_FILE_DIALOG
+
 * Tue Jul 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.7.14-alt1
 - new version (1.7.14) with rpmgs script
 - fix build with current Qt (thanks, arseerfc@)
