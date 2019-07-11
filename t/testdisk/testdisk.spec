@@ -1,8 +1,8 @@
 # change to %nil for release
-%define beta -WIP
+%define beta %nil
 Name: testdisk
 Version: 7.1
-Release: alt1
+Release: alt2
 
 Summary: Tool to check and undelete partition
 
@@ -105,6 +105,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt2
+- build 7.1 release
+
 * Sun Apr 02 2017 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
 - new version 7.1-WIP (with rpmrb script)
 
