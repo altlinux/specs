@@ -12,7 +12,7 @@
 
 Name: pki-core
 Version: 10.7.0
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-java
 
-BuildRequires: java-devel
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
@@ -127,7 +127,7 @@ Summary: Dogtag PKI Base Java Package
 Group: System/Base
 BuildArch: noarch
 Requires: pki-base = %EVR
-Requires: java-headless
+Requires: java-1.8.0-openjdk-headless
 Requires: xalan-j2
 Requires: xml-commons-apis
 Requires: xml-commons-resolver
@@ -708,6 +708,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Thu Jul 11 2019 Stanislav Levin <slev@altlinux.org> 10.7.0-alt2
+- Pinned supported Java.
+
 * Tue May 21 2019 Stanislav Levin <slev@altlinux.org> 10.7.0-alt1
 - 10.6.9 -> 10.7.0.
 
