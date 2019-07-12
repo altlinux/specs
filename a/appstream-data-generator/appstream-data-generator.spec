@@ -4,7 +4,7 @@
 
 Name:    appstream-data-generator
 Version: 20190712
-Release: alt1
+Release: alt2
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
 License: GPLv3+
@@ -38,6 +38,10 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190712-alt2
+- Improved processing of options "additionaldesktopnames", "additionalpackages"
+  and "skiplanguageslist."
+
 * Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190712-alt1
 - Updated option descriptions in help message (Closes: #37021).
 - Added options to configure generation of
