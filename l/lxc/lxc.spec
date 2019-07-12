@@ -29,8 +29,7 @@
 
 Name: lxc
 Version: 3.0.4
-Release: alt1
-Packager: Denis Pynkin <dans@altlinux.org>
+Release: alt2
 
 URL: https://linuxcontainers.org/
 Source: %name-%version.tar
@@ -39,7 +38,7 @@ Patch: %name-%version-%release.patch
 
 Summary: %name : Linux Container
 Group: System/Configuration/Other
-License: LGPL
+License: LGPL-2.1-or-later
 Requires: libcap gzip-utils
 %ifarch x86_64 %arm
 Requires: criu
@@ -202,6 +201,10 @@ fi
 %_pam_modules_dir/*
 
 %changelog
+* Fri Jul 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.4-alt2
+- Fixed working on kernel 5.1.
+- spec: fixed license LGPL to LGPL-2.1-or-later.
+
 * Thu Jul 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.4-alt1
 - 3.0.4.
 
