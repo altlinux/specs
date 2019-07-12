@@ -8,7 +8,7 @@
 %define soname 2.0
 
 Name:           lib%oname
-Version:        2.0.8
+Version:        2.0.9
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -24,13 +24,14 @@ Source0:        %name-%version.tar
 
 Patch10: %oname-alt-link.patch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires:  python3-devel
 BuildRequires:  cmake gcc-c++
 BuildRequires:  txt2man
 BuildRequires:  qt5-base-devel
 BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel ilmbase-devel
-BuildRequires:  python3-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libopenjpeg2.0-devel
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel
@@ -41,7 +42,6 @@ BuildRequires:  libjasper-devel
 BuildRequires:  libpugixml-devel
 BuildRequires:  libopencv-devel
 BuildRequires:  libraw-devel
-BuildRequires:  libssl-devel
 BuildRequires:  librobin-map-devel
 BuildRequires:  pybind11-devel
 
@@ -130,28 +130,24 @@ rm -rf src/include/tbb
 #rm -rf ../oiio-images && mkdir ../oiio-images && pushd ../oiio-images
 #tar --strip-components=1 -xzf %{SOURCE1}
 
-# Try disabeling old CMP
+# Try disabling old CMP
 sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
 
 %build
 %cmake \
-       -DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
-       -DPYTHON_VERSION=%_python3_version \
-       -DPYLIB_INSTALL_DIR:PATH=%python3_sitelibdir \
-       -DBUILD_DOCS:BOOL=TRUE \
-       -DINSTALL_DOCS:BOOL=FALSE \
-       -DINSTALL_FONTS:BOOL=FALSE \
-       -DUSE_EXTERNAL_PUGIXML:BOOL=TRUE \
-       -DUSE_OPENSSL:BOOL=TRUE \
-       -DSTOP_ON_WARNING:BOOL=FALSE \
-       -DUSE_CPP:STRING=14 \
-%ifarch ppc ppc64
-       -DNOTHREADS:BOOL=FALSE \
-%endif
-       -DJPEG_INCLUDE_DIR=%_includedir \
-       -DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
-       -DOpenGL_GL_PREFERENCE=GLVND \
-       -DVERBOSE=TRUE
+	-DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
+	-DPYTHON_VERSION=%_python3_version \
+	-DBUILD_DOCS:BOOL=TRUE \
+	-DINSTALL_DOCS:BOOL=FALSE \
+	-DINSTALL_FONTS:BOOL=FALSE \
+	-DUSE_EXTERNAL_PUGIXML:BOOL=TRUE \
+	-DSTOP_ON_WARNING:BOOL=FALSE \
+	-DUSE_CPP:STRING=14 \
+	-DJPEG_INCLUDE_DIR=%_includedir \
+	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
+	-DOpenGL_GL_PREFERENCE=GLVND \
+	-DVERBOSE=TRUE \
+	%nil
 
 %cmake_build
 
@@ -161,7 +157,6 @@ sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
 # Move man pages to the right directory
 mkdir -p %buildroot%_man1dir
 cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
-
 
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
@@ -191,6 +186,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.9-alt1
+- Updated to upstream version 2.0.9.
+
 * Mon May 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.8-alt1
 - Updated to upstream version 2.0.8.
 
