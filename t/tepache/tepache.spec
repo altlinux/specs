@@ -1,43 +1,56 @@
-Name: tepache
-Version: 1.1
-Release: alt2.1
-
-Summary: Tepache is a code sketcher for python.
-
-License: LGPL
 Group: Development/Python
-Url: http://primates.ximian.com/~sandino/python-glade/tepache/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
-Source: %name-%version.tar.gz
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-setuptools
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           tepache
+Version:        1.1.2
+Release:        alt1_14
+Summary:        Code sketcher for python
 
-BuildArch: noarch
+License:        LGPLv2+
+URL:            http://launchpad.net/tepache
+Source0:        http://launchpad.net/tepache/trunk/%{version}/+download/%{name}-%{version}.tar.gz
+Patch0:         tepache-1.1.2-rev_6.patch
 
-# Automatically added by buildreq on Fri Aug 26 2005 (-bi)
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
+BuildArch:      noarch
+BuildRequires:  python-devel
+Source44: import.info
 
 %description
-Tepache is a code sketcher for python that uses pygtk and glade.
-t creates pure python modules with classes that are clean 
-abstractions for the toplevel widgets of the glade files. 
-That is why we say tepache is not a code generator, 
-it is a code sketcher.
+Tepache is a code sketcher for python that uses pygtk and glade. It could look
+like other glade codegens, but it is totally different. Not a glade
+codegen but a code sketcher.
+
 
 %prep
-%setup -n %name-%version
-rm -f glade-2.10.0-simplegladepython.2.patch
+%setup -q
+%patch0 -p0
+
 
 %build
 %python_build
 
+
 %install
 %python_install
 
-%files
-%doc ChangeLog COPYING.LGPL README sample.glade
+# Python scripts in site-packages should not be executible
+#sed -i -e 's,#!/usr/bin/env python,#,g' %{buildroot}%{python_sitelibdir_noarch}/*.py
 
-%_bindir/*
+ 
+%files
+%doc README
+%{_bindir}/tepache
+%{python_sitelibdir_noarch}/*
+
 
 %changelog
+* Fri Jul 12 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_14
+- new version
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt2.1
 - Rebuild with Python-2.7
 
