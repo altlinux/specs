@@ -1,12 +1,9 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,8 +16,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without osgi
 
 Name:           objectweb-asm
-Version:        6.2.1
-Release:        alt1_1jpp8
+Version:        7.0
+Release:        alt1_2jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -35,12 +32,11 @@ Source4:        http://repo1.maven.org/maven2/org/ow2/asm/asm-commons/%{version}
 Source5:        http://repo1.maven.org/maven2/org/ow2/asm/asm-test/%{version}/asm-test-%{version}.pom
 Source6:        http://repo1.maven.org/maven2/org/ow2/asm/asm-tree/%{version}/asm-tree-%{version}.pom
 Source7:        http://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/asm-util-%{version}.pom
-Source8:        http://repo1.maven.org/maven2/org/ow2/asm/asm-xml/%{version}/asm-xml-%{version}.pom
 # We still want to create an "all" uberjar, so this is a custom pom to generate it
 # TODO: Fix other packages to no longer depend on "asm-all" so we can drop this
-Source9:        asm-all.pom
+Source8:        asm-all.pom
 # The source contains binary jars that cannot be verified for licensing and could be proprietary
-Source10:       generate-tarball.sh
+Source9:       generate-tarball.sh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -92,7 +88,7 @@ cp -p %{SOURCE1} pom.xml
 %endif
 
 # Insert poms into modules
-for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util asm-xml; do
+for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util; do
   cp -p $RPM_SOURCE_DIR/${pom}-%{version}.pom $pom/pom.xml
   # Fix junit5 configuration
 %if %{with junit5}
@@ -129,7 +125,7 @@ sed -i -e '/testSortLocalVariablesAndInstantiate()/i@org.junit.jupiter.api.Disab
 
 # Insert asm-all pom
 mkdir -p asm-all
-sed 's/@VERSION@/%{version}/g' %{SOURCE9} > asm-all/pom.xml
+sed 's/@VERSION@/%{version}/g' %{SOURCE8} > asm-all/pom.xml
 
 # Remove invalid self-dependency
 %pom_remove_dep org.ow2.asm:asm-test asm-test
@@ -158,7 +154,7 @@ popd
 %install
 %mvn_install
 
-%jpackage_script org.objectweb.asm.xml.Processor "" "" %{name}/asm:%{name}/asm-attrs:%{name}/asm-util:%{name}/asm-xml %{name}-processor true
+%jpackage_script org.objectweb.asm.xml.Processor "" "" %{name}/asm:%{name}/asm-attrs:%{name}/asm-util %{name}-processor true
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt
@@ -168,6 +164,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.0-alt1_2jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.2.1-alt1_1jpp8
 - new version
 
