@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-wagon
 Epoch:          0
-Version:        3.1.0
+Version:        3.2.0
 Release:        alt1_2jpp8
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
@@ -37,12 +37,12 @@ BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 %if %{with scm}
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
 %endif
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
@@ -220,6 +220,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_2jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_2jpp8
 - new version
 
