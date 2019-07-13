@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           t-digest
 Version:        3.0
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        A new data structure for on-line accumulation of statistics
 License:        ASL 2.0
 URL:            %{url}
@@ -66,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICES
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_9jpp8
+- explicit build with java8
+
 * Mon Jan 28 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_8jpp8
 - new version
 
