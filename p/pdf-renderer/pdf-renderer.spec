@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global alternate_name PDFRenderer
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        A 100% Java PDF renderer and viewer
 Name:           pdf-renderer
 Version:        0
-Release:        alt3_0.21.128svn.20110310jpp8
+Release:        alt3_0.23.128svn.20110310jpp8
 #src/com/sun/pdfview/decode/CCITTFaxDecoder.java under a BSD-alike License
 #src/com/sun/pdfview/font/ttf/resource/glyphlist.txt and src/com/sun/pdfview/font/ttf/AdobeGlyphList.java
 #are under Adobe Glyph List License
@@ -26,10 +23,10 @@ BuildRequires:  ant
 BuildRequires:  ant-apache-regexp
 BuildRequires:  java-devel >= 1.7
 BuildRequires:  javapackages-local
-BuildRequires:  urw-fonts
+BuildRequires:  fonts-type1-urw
 BuildArch:      noarch
 
-Requires:       urw-fonts
+Requires:       fonts-type1-urw
 Provides:       %{alternate_name} == %{version}-%{release}
 Source44: import.info
 
@@ -112,6 +109,9 @@ ln -s pdf-renderer.jar PDFRenderer.jar
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.23.128svn.20110310jpp8
+- explicit build with java8
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.21.128svn.20110310jpp8
 - java update
 
