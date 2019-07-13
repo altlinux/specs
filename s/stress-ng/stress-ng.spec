@@ -1,9 +1,10 @@
 Name: stress-ng
 Version: 0.09.60
-Release: alt1
+Release: alt2
+
 Summary: Stress test a computer system in various ways
-Group: System/Kernel and hardware
 License: GPLv2
+Group: System/Kernel and hardware
 
 Url: http://kernel.ubuntu.com/~cking/stress-ng/
 #Git: git://kernel.ubuntu.com/cking/stress-ng.git
@@ -26,6 +27,10 @@ various operating system kernel interfaces.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.23 can't do string attribute form (1.24.03 will; mcst#4061)
+sed -ri 's,"-O([0123])",\1,' stress-ng.h
+%endif
 
 %build
 %make_build
@@ -42,6 +47,9 @@ various operating system kernel interfaces.
 %_mandir/man1/stress-ng.1.*
 
 %changelog
+* Sat Jul 13 2019 Michael Shigorin <mike@altlinux.org> 0.09.60-alt2
+- E2K: fix build with lcc 1.23
+
 * Mon Jul 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 0.09.60-alt1
 - New version
 - Spec: cleanup
