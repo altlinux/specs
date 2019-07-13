@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           univocity-parsers
 Version:        2.5.5
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
 URL:            https://github.com/uniVocity/univocity-parsers
@@ -39,6 +36,7 @@ API documentation for %{name}.
 %setup -q
 
 %pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 # Tests require univocity-output-tester, which is not packaged yet.
@@ -54,6 +52,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_5jpp8
+- fc update & java 8 build
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_2jpp8
 - new version
 
