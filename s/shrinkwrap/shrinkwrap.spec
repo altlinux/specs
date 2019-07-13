@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt2_5jpp8
+Release:       alt2_7jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -151,7 +148,7 @@ rm LICENSE.orig
 
 %build
 
-%mvn_build -s -- -Dmaven.test.failure.ignore=true
+%mvn_build -s
 
 %install
 %mvn_install
@@ -183,6 +180,9 @@ rm LICENSE.orig
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_7jpp8
+- explicit build with java8
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_5jpp8
 - fixed build with new maven surefire
 
