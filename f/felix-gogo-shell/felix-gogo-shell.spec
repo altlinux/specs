@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle  org.apache.felix.gogo.shell
 
 Name:           felix-gogo-shell
 Version:        1.1.0
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Apache Felix Gogo command line shell for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
@@ -61,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
+- explicit build with java8
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1jpp8
 - new version
 
