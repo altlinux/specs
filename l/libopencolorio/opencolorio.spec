@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        1.1.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -96,6 +96,12 @@ rm -f ext/lcms*
 rm -f ext/tinyxml*
 rm -f ext/yaml*
 
+%ifarch %e2k
+# lcc: Lut3DOp.cpp is too sloppy code for my -Werror!
+sed -i 's, -Werror,,' src/core/CMakeLists.txt
+%add_optflags -std=c++11
+%endif
+
 %build
 %cmake_insource \
        -DOCIO_BUILD_STATIC=OFF \
@@ -106,10 +112,13 @@ rm -f ext/yaml*
        -DUSE_EXTERNAL_TINYXML=TRUE \
        -DUSE_EXTERNAL_LCMS=TRUE \
        -DUSE_EXTERNAL_SETUPTOOLS=TRUE \
-%ifnarch x86_64
+%ifnarch x86_64 %e2k
        -DOCIO_USE_SSE=OFF \
 %endif
+%ifnarch %e2k
        -DOpenGL_GL_PREFERENCE=GLVND \
+%endif
+	#
 
 # LD_LIBRARY_PATH is needed for proper doc generation
 LD_LIBRARY_PATH=$(pwd)/src/core %make_build
@@ -148,6 +157,12 @@ find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jul 13 2019 Michael Shigorin <mike@altlinux.org> 1.1.1-alt1.1
+- E2K:
+  + explicit -std=c++11
+  + avoid unwarranted -Werror
+  + build without libglvnd for now
+
 * Mon May 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
 - Updated to upstream version 1.1.1.
 
