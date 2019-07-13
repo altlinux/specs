@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          metrics
 Version:       3.1.2
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       Java library which gives you what your code does in production
 License:       ASL 2.0
 URL:           http://metrics.dropwizard.io
@@ -404,6 +401,9 @@ rm -rf docs/target/singlehtml/.buildinfo
 %endif
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_8jpp8
+- explicit build with java8
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_6jpp8
 - java update
 
