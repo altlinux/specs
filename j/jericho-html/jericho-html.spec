@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jericho-html
 Version:        3.3
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Java library allowing analysis and manipulation of parts of an HTML document
 License:        EPL or LGPLv2+
 URL:            http://jericho.htmlparser.net/
@@ -89,12 +89,15 @@ export CLASSPATH=classes:samples/console/classes:$(build-classpath junit hamcres
 %files -f .mfiles
 %doc --no-dereference licence-epl-1.0.html licence-lgpl-2.1.txt licence.txt
 %doc project-description.txt release.txt
-#%doc samples
+#doc samples
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference licence-epl-1.0.html licence-lgpl-2.1.txt licence.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_14jpp8
+- explicit build with java8
+
 * Sun Apr 22 2018 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_12jpp8
 - java update
 
