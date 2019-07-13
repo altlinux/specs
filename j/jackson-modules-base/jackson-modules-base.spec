@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,8 +12,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with    jp_minimal
 
 Name:          jackson-modules-base
-Version:       2.9.4
-Release:       alt1_4jpp8
+Version:       2.9.8
+Release:       alt1_2jpp8
 Summary:       Jackson modules: Base
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-modules-base
@@ -33,6 +30,7 @@ BuildRequires:  mvn(com.google.inject:guice)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.thoughtworks.paranamer:paranamer)
 %endif
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.mockito:mockito-all)
@@ -131,14 +129,22 @@ cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
 # NoClassDefFoundError: net/sf/cglib/core/CodeGenerationException
 %pom_add_dep cglib:cglib:3.2.4:test guice
 
-# This is provided by modern JREs
-%pom_remove_dep "javax.xml.bind:jaxb-api" jaxb
-
 %if %{with jp_minimal}
 # Disable modules with additional deps
 %pom_disable_module paranamer
 %pom_disable_module mrbean
 %endif
+
+# Allow javax,activation to be optional
+%pom_add_plugin "org.apache.felix:maven-bundle-plugin" jaxb "
+<configuration>
+  <instructions>
+    <Import-Package>javax.activation;resolution:=optional,*</Import-Package>
+  </instructions>
+</configuration>"
+
+# This test fails since mockito was upgraded to 2.x
+rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.java
 
 %mvn_file ":{*}" jackson-modules/@1
 
@@ -184,6 +190,9 @@ cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_2jpp8
+- new version
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_4jpp8
 - new version
 

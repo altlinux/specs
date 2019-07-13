@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-datatype-joda
-Version:       2.9.4
-Release:       alt1_3jpp8
+Version:       2.9.8
+Release:       alt1_1jpp8
 Summary:       Add-on module for Jackson to support Joda data-types
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonModuleJoda
@@ -62,6 +59,9 @@ cp -p src/main/resources/META-INF/LICENSE .
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_3jpp8
 - fc29 update
 

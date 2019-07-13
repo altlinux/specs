@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,13 +11,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %bcond_with jp_minimal
 
-# Unavailable deps
-# https://bugzilla.redhat.com/show_bug.cgi?id=1369227
-%bcond_with pcollections
-
 Name:          jackson-datatypes-collections
-Version:       2.9.4
-Release:       alt1_4jpp8
+Version:       2.9.8
+Release:       alt1_1jpp8
 Summary:       Jackson datatypes: collections
 # Source files without license headers https://github.com/FasterXML/jackson-datatypes-collections/issues/10
 License:       ASL 2.0
@@ -37,9 +30,6 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.carrotsearch:hppc)
-%if %{with pcollections}
-BuildRequires:  mvn(org.pcollections:pcollections)
-%endif
 %endif
 
 BuildArch:      noarch
@@ -71,14 +61,6 @@ Summary:       Add-on module for Jackson to support HPPC data-types
 Jackson data-type module to support JSON serialization and
 deserialization of High-Performance Primitive Collections
 data-types.
-
-%package -n jackson-datatype-pcollections
-Group: Development/Java
-Summary:       Add-on module for Jackson to support PCollections data-types
-
-%description -n jackson-datatype-pcollections
-Jackson data-type module to support JSON serialization and
-deserialization of PCollections data-types.
 %endif
 
 %package javadoc
@@ -97,13 +79,12 @@ cp -p hppc/src/main/resources/META-INF/LICENSE .
 
 %if %{with jp_minimal}
 # Disable modules with additional deps
-%pom_disable_module pcollections
 %pom_disable_module hppc
-%else
-%if %{without pcollections}
+%endif
+
+# Deps are missing from Fedora for these modules:
+%pom_disable_module eclipse-collections
 %pom_disable_module pcollections
-%endif
-%endif
 
 %build
 %mvn_build -s
@@ -123,18 +104,15 @@ cp -p hppc/src/main/resources/META-INF/LICENSE .
 %files -n jackson-datatype-hppc -f .mfiles-jackson-datatype-hppc
 %doc hppc/README.md hppc/release-notes
 %doc --no-dereference LICENSE
-
-%if %{with pcollections}
-%files -n jackson-datatype-pcollections -f .mfiles-jackson-datatype-pcollections
-%doc pcollections/README.md pcollections/release-notes
-%doc --no-dereference LICENSE
-%endif
 %endif
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
+- new version
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_4jpp8
 - new version
 
