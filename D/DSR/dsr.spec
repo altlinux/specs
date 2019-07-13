@@ -1,7 +1,7 @@
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
 Version: 226
-Release: alt1
+Release: alt2
 BuildArch: noarch
 URL: https://www.xs3.uni-freiburg.de/research/dsr
 License: Beerware
@@ -43,8 +43,8 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/manuals
 mkdir -p %buildroot%_datadir/%name/example
-mkdir -p %buildroot%_datadir/%name/mpmath
-mkdir -p %buildroot%_datadir/%name/networkx
+#mkdir -p %buildroot%_datadir/%name/mpmath
+#mkdir -p %buildroot%_datadir/%name/networkx
 mkdir -p %buildroot%_datadir/%name/rmsd
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
@@ -52,8 +52,8 @@ install -m 644 *.py %buildroot%_datadir/%name
 install -m 644 dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
-cp -R mpmath %buildroot%_datadir/%name
-cp -R networkx %buildroot%_datadir/%name
+#cp -R mpmath %buildroot%_datadir/%name
+#cp -R networkx %buildroot%_datadir/%name
 cp -R rmsd %buildroot%_datadir/%name
 
 %files
@@ -62,6 +62,9 @@ cp -R rmsd %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Sun Jul 14 2019 Denis G. Samsonenko <ogion@altlinux.org> 226-alt2
+- exclude networkx and mpmath from package
+
 * Sun Jul 14 2019 Denis G. Samsonenko <ogion@altlinux.org> 226-alt1
 - new version
 
