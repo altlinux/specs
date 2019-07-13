@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global reltag .v20180117
+%global reltag .v20181017
 
 Name:           jetty-alpn
-Version:        8.1.12
-Release:        alt1_2.v20180117jpp8
+Version:        8.1.13
+Release:        alt1_1.v20181017jpp8
 # alpn-tests also contains EPL and ASL, but is not installed
 License:        GPLv2+ with exceptions
 Summary:        Jetty implementation of ALPN API
@@ -66,6 +63,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 8.1.13-alt1_1.v20181017jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 8.1.12-alt1_2.v20180117jpp8
 - new version
 
