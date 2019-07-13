@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -20,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-log4j-extras
 Version:       1.2.17.1
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Apache Extras Companion for Apache log4j
 
 License:       ASL 2.0
@@ -87,6 +86,9 @@ args="-j"
 %endif
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17.1-alt1_13jpp8
+- explicit build with java8
+
 * Mon Jan 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17.1-alt1_12jpp8
 - new version
 
