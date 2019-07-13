@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -24,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rabbitmq-java-client
 Version:       3.6.5
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java Advanced Message Queue Protocol client library
 License:       ASL 2.0 and GPLv2+ and MPLv1.1
 URL:           http://www.rabbitmq.com/java-client.html
@@ -33,7 +32,6 @@ Source0:       http://www.rabbitmq.com/releases/%{name}/v%{version}/%{name}-%{ve
 BuildArch:     noarch
 BuildRequires: maven-local mvn(commons-cli:commons-cli) mvn(commons-io:commons-io) mvn(junit:junit)
 BuildRequires: ant ant-junit
-BuildRequires: java-headless
 BuildRequires: python-devel >= 2.6 python-module-simplejson
 
 %if 0%{?with buildtex}
@@ -152,6 +150,9 @@ pkill -f rabbitmq_server ||:
 
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_7jpp8
+- explicit build with java8
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_6jpp8
 - fc29 update
 
