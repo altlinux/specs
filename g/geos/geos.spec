@@ -4,7 +4,7 @@
 %def_without python3
 
 Name: geos
-Version: 3.7.2
+Version: 3.8.0
 Release: alt1
 
 Summary: Geometry Engine - Open Source
@@ -17,10 +17,11 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # VCS: https://git.osgeo.org/gogs/geos/geos.git
 Source: %name-%version.tar
 Patch1: %name-fix-lib-destination.patch
+Patch2: %name-alt-fix-link-benchmarks.patch
 
 BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ python-devel swig
-BuildPreReq: cmake doxygen graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
@@ -33,21 +34,6 @@ functionality of JTS in C++. This includes all the OpenGIS
 "Simple Features for SQL" spatial predicate functions and
 spatial operators, as well as specific JTS topology functions
 such as IsValid().
-
-%package doc
-Summary: Documentation for GEOS
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-GEOS (Geometry Engine - Open Source) is a C++ port of the Java
-Topology Suite (JTS). As such, it aims to contain the complete
-functionality of JTS in C++. This includes all the OpenGIS
-"Simple Features for SQL" spatial predicate functions and
-spatial operators, as well as specific JTS topology functions
-such as IsValid().
-
-This package contains documentation for GEOS.
 
 %package -n lib%name
 Summary: Geometry Engine - Open Source
@@ -102,6 +88,7 @@ Ruby bindings for the lib%name library.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %ifarch %e2k
 # strip UTF-8 BOM
@@ -165,8 +152,6 @@ LIB_SUFFIX=64
 	ENABLE_PYTHON=1 ENABLE_SWIG=1
 %endif
 
-%make -C doc doxygen-html
-
 %install
 %makeinstall_std
 
@@ -192,13 +177,14 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 make check || exit 0
 
 %files -n lib%name
-%doc AUTHORS COPYING NEWS README.md TODO
+%doc AUTHORS NEWS README.md
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
 %_bindir/%name-config
 %_libdir/lib*.so
 %_includedir/*
+%_libdir/cmake/GEOS
 
 %if_with python
 %files -n python-module-%name
@@ -215,10 +201,10 @@ make check || exit 0
 %ruby_sitearchdir/*
 %endif
 
-%files doc
-%doc doc/doxygen_docs/html/*
-
 %changelog
+* Tue Oct 29 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version.
+
 * Sun May 05 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.2-alt1
 - New version.
 
