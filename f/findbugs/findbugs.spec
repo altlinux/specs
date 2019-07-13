@@ -2,18 +2,18 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(FileHandle.pm) rpm-build-java unzip
+BuildRequires: perl(FileHandle.pm) unzip
 # END SourceDeps(oneline)
 BuildRequires: tex(pdftex.def)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global noupdatechecks_version 20140707gitcce19ac
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_14jpp8
+Release:        alt1_17jpp8
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -53,6 +53,8 @@ Patch3:         findbugs-manual.patch
 # Port to dom4j 2.0
 Patch4:         findbugs-dom4j.patch
 
+Patch5:         findbugs-javadoc.patch
+
 BuildArch:      noarch
 
 BuildRequires:  findbugs-bcel
@@ -60,7 +62,6 @@ BuildRequires:  ant
 BuildRequires:  docbook-style-xsl
 BuildRequires:  apache-commons-lang
 BuildRequires:  dom4j
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  jaxen
 BuildRequires:  jcip-annotations
 BuildRequires:  jdepend
@@ -136,6 +137,7 @@ README.fedora for more information.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cp -p %{SOURCE2} README.fedora
 
@@ -250,6 +252,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_17jpp8
+- fc update
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_14jpp8
 - fc28+ update
 
