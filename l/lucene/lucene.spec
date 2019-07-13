@@ -18,8 +18,8 @@ BuildRequires: jpackage-1.8-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        7.1.0
-Release:        alt1_3jpp8
+Version:        7.7.0
+Release:        alt1_1jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -28,6 +28,12 @@ Source0:        https://archive.apache.org/dist/lucene/solr/%{version}/solr-%{ve
 
 Patch0:         0001-Disable-ivy-settings.patch
 Patch1:         0002-Dependency-generation.patch
+
+# io.sgr:s2-geometry-library-java is not present on Fedora
+# This patch reverts these two commits:
+#   https://github.com/apache/lucene-solr/commit/e3032dd3fcc28570c5f9d2dab4961b5b07555912
+#   https://github.com/apache/lucene-solr/commit/e0d6465af94b6c6f7b8d570dee97c98de572c876
+Patch2:         0003-Remove-dep-on-missing-google-geometry-library.patch
 
 BuildRequires:  ant
 BuildRequires:  ivy-local
@@ -47,9 +53,6 @@ BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:  mvn(org.apache.uima:Tagger)
-BuildRequires:  mvn(org.apache.uima:uimaj-core)
-BuildRequires:  mvn(org.apache.uima:WhitespaceTokenizer)
 BuildRequires:  mvn(org.carrot2:morfologik-fsa)
 BuildRequires:  mvn(org.carrot2:morfologik-polish)
 BuildRequires:  mvn(org.carrot2:morfologik-stemming)
@@ -79,6 +82,9 @@ cross-platform.
 %package analysis
 Group: Development/Java
 Summary:      Lucene Common Analyzers
+# Obsoletes added in F30
+# This module was removed upstream and no replacement exists
+Obsoletes:    %{name}-analyzers-uima < %{version}-%{release}
 
 %description analysis
 Lucene Common Analyzers.
@@ -276,14 +282,12 @@ Summary:      Lucene Morfologik Polish Lemmatizer
 A dictionary-driven lemmatizer for Polish (includes morphosyntactic
 annotations).
 
-%package analyzers-uima
+%package analyzers-nori
 Group: Development/Java
-Summary:      Lucene UIMA Analysis Components
+Summary:      An analyzer with morphological analysis for Korean
 
-%description analyzers-uima
-Lucene Integration with UIMA for extracting metadata from arbitrary (text)
-fields and enrich document with features extracted from UIMA types (language,
-sentences, concepts, named entities, etc.).
+%description analyzers-nori
+An analyzer with morphological analysis for Korean.
 
 %package analyzers-kuromoji
 Group: Development/Java
@@ -314,6 +318,7 @@ BuildArch: noarch
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 rm -rf solr
 
@@ -410,12 +415,17 @@ pushd lucene
 %pom_disable_module morfologik analysis
 %pom_disable_module phonetic analysis
 %pom_disable_module stempel analysis
-%pom_disable_module uima analysis
+%pom_disable_module nori analysis
 popd
 
 %mvn_package :lucene-parent __noinstall
 %mvn_package :lucene-solr-grandparent __noinstall
 %endif
+
+# OpenNLP is not new enough in Fedora, always disable for now
+pushd lucene
+%pom_disable_module opennlp analysis
+popd
 
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
@@ -460,7 +470,7 @@ popd
 %files analyzers-phonetic -f .mfiles-%{name}-analyzers-phonetic
 %files analyzers-icu -f .mfiles-%{name}-analyzers-icu
 %files analyzers-morfologik -f .mfiles-%{name}-analyzers-morfologik
-%files analyzers-uima -f .mfiles-%{name}-analyzers-uima
+%files analyzers-nori -f .mfiles-%{name}-analyzers-nori
 %files analyzers-kuromoji -f .mfiles-%{name}-analyzers-kuromoji
 %files analyzers-stempel -f .mfiles-%{name}-analyzers-stempel
 %endif
@@ -469,6 +479,9 @@ popd
 %doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.7.0-alt1_1jpp8
+- new version
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.1.0-alt1_3jpp8
 - new version
 
