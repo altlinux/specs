@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          narayana
 Version:       5.3.3
-Release:       alt1_4jpp8
+Release:       alt2_4jpp8
 Summary:       Distributed Transaction Manager
 License:       LGPLv2+
 URL:           http://narayana.io/
@@ -47,9 +47,9 @@ BuildRequires: mvn(org.jacorb:jacorb)
 BuildRequires: mvn(org.jacorb:jacorb-idl-compiler)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 BuildRequires: mvn(org.jboss:jboss-transaction-spi) >= 7.3.0
-BuildRequires: mvn(org.jboss.byteman:byteman)
-BuildRequires: mvn(org.jboss.byteman:byteman-dtest)
-BuildRequires: mvn(org.jboss.byteman:byteman-submit)
+BuildRequires: mvn(org.jboss.byteman:byteman:3)
+BuildRequires: mvn(org.jboss.byteman:byteman-dtest:3)
+BuildRequires: mvn(org.jboss.byteman:byteman-submit:3)
 BuildRequires: mvn(org.jboss.integration:jboss-corba-ots-spi)
 BuildRequires: mvn(org.jboss.ironjacamar:ironjacamar-spec-api)
 BuildRequires: mvn(org.jboss.jandex:jandex-maven-plugin)
@@ -183,6 +183,9 @@ done
 %doc --no-dereference common/copyright.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt2_4jpp8
+- fixed build (built with byteman3)
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_4jpp8
 - java update
 
