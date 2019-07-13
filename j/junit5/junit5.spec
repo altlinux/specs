@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 5.3.1
+%define version 5.4.0
 # Component versions, taken from gradle.properties
 %global platform_version 1.%(v=%{version}; echo ${v:2})
 %global jupiter_version %{version}
@@ -24,15 +21,14 @@ BuildRequires: jpackage-generic-compat
 %bcond_with console
 
 Name:           junit5
-Version:        5.3.1
+Version:        5.4.0
 Release:        alt1_1jpp8
 Summary:        Java regression testing framework
-# junit-platform-surefire-provider is under ASL 2.0, all other modules use EPL-2.0 (see LICENSE.md)
-License:        EPL-2.0 and ASL 2.0
+License:        EPL-2.0
 URL:            http://junit.org/junit5/
 BuildArch:      noarch
 
-Source0:        https://github.com/junit-team/junit5/archive/r%{version}.tar.gz
+Source0:        https://github.com/junit-team/junit5/archive/r%{version}/junit5-%{version}.tar.gz
 
 # Aggregator POM (used for packaging only)
 Source100:      aggregator.pom
@@ -44,7 +40,7 @@ Source203:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform
 Source205:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-launcher/%{platform_version}/junit-platform-launcher-%{platform_version}.pom
 Source206:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-runner/%{platform_version}/junit-platform-runner-%{platform_version}.pom
 Source207:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-api/%{platform_version}/junit-platform-suite-api-%{platform_version}.pom
-Source208:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-surefire-provider/%{platform_version}/junit-platform-surefire-provider-%{platform_version}.pom
+Source208:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-reporting/%{platform_version}/junit-platform-reporting-%{platform_version}.pom
 # Jupiter POMs
 Source301:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/%{jupiter_version}/junit-jupiter-api-%{jupiter_version}.pom
 Source302:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/%{jupiter_version}/junit-jupiter-engine-%{jupiter_version}.pom
@@ -57,8 +53,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.univocity:univocity-parsers)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.surefire:common-java5)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-api)
 BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
 
@@ -98,9 +92,6 @@ JUnit 5 User Guide.
 %setup -q -n %{name}-r%{version}
 find -name \*.jar -delete
 
-cp -p junit-jupiter-api/LICENSE.md LICENSE-Eclipse.md
-cp -p junit-platform-surefire-provider/LICENSE.md LICENSE-Apache.md
-
 cp -p %{SOURCE100} pom.xml
 cp -p %{SOURCE200} junit-platform-commons/pom.xml
 cp -p %{SOURCE201} junit-platform-console/pom.xml
@@ -109,7 +100,7 @@ cp -p %{SOURCE203} junit-platform-engine/pom.xml
 cp -p %{SOURCE205} junit-platform-launcher/pom.xml
 cp -p %{SOURCE206} junit-platform-runner/pom.xml
 cp -p %{SOURCE207} junit-platform-suite-api/pom.xml
-cp -p %{SOURCE208} junit-platform-surefire-provider/pom.xml
+cp -p %{SOURCE208} junit-platform-reporting/pom.xml
 cp -p %{SOURCE301} junit-jupiter-api/pom.xml
 cp -p %{SOURCE302} junit-jupiter-engine/pom.xml
 cp -p %{SOURCE303} junit-jupiter-migrationsupport/pom.xml
@@ -129,9 +120,6 @@ done
 # Add deps which are shaded by upstream and therefore not present in POMs.
 %pom_add_dep net.sf.jopt-simple:jopt-simple:5.0.4 junit-platform-console
 %pom_add_dep com.univocity:univocity-parsers:2.5.4 junit-jupiter-params
-
-# Incorrect scope - whoever needs Surefire provider will have to depend on Surefire.
-%pom_xpath_set "pom:dependency[pom:groupId='org.apache.maven.surefire']/pom:scope" provided junit-platform-surefire-provider
 
 # Incorrect scope - Junit4 is needed for compilation too, not only runtime.
 %pom_xpath_set "pom:dependency[pom:artifactId='junit']/pom:scope" compile junit-vintage-engine
@@ -163,15 +151,18 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %if %{with console}
 %{_bindir}/%{name}
 %endif
-%doc --no-dereference LICENSE.md LICENSE-Eclipse.md LICENSE-Apache.md
+%doc --no-dereference LICENSE.md LICENSE-notice.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.md LICENSE-Eclipse.md LICENSE-Apache.md
+%doc --no-dereference LICENSE.md LICENSE-notice.md
 
 %files guide
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_1jpp8
+- new version
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.1-alt1_1jpp8
 - new version
 
