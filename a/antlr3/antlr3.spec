@@ -1,33 +1,42 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java unzip
+BuildRequires: gcc-c++ perl-devel unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 19
+%global baserelease 22
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Epoch:              1
 Version:            %{antlr_version}
-Release:            alt1_19jpp8
+Release:            alt1_22jpp8
 License:            BSD
 URL:                http://www.antlr3.org/
 
-Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}.tar.gz
+Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}/%{name}-%{antlr_version}.tar.gz
 #Source2:            http://www.antlr3.org/download/Python/antlr_python_runtime-%{python_runtime_version}.tar.gz
 Source3:            http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
 
 Patch0:             0001-java8-fix.patch
 # Generate OSGi metadata
 Patch1:         osgi-manifest.patch
+# Increase the default conversion timeout to avoid build failures when complex
+# grammars are processed on slow architectures.  Patch from Debian.
+Patch2:         0002-conversion-timeout.patch
+# Fix problems with the C template.  Patch from Debian.
+Patch3:         0003-fix-c-template.patch
+# Keep Token.EOF_TOKEN for backwards compatibility.  Patch from Debian.
+Patch4:         0004-eof-token.patch
+# Make parsers reproducible.  Patch from Debian.
+Patch5:         0005-reproducible-parsers.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.antlr:antlr)
@@ -62,6 +71,10 @@ BuildArch:   noarch
 Provides:    %{name} = %{epoch}:%{antlr_version}-%{release}
 Obsoletes:   %{name} < %{epoch}:%{antlr_version}-%{release}
 Requires:    %{name}-java = %{epoch}:%{antlr_version}-%{release}
+# Explicit requires for javapackages-tools since antlr3-script
+# uses /usr/share/java-utils/java-functions
+Requires:    javapackages-tools
+
 
 Provides:    ant-antlr3 = %{epoch}:%{antlr_version}-%{release}
 Obsoletes:   ant-antlr3 < %{epoch}:%{antlr_version}-%{release}
@@ -141,6 +154,10 @@ C++ runtime support for ANTLR-generated parsers.
 sed -i "s,\${buildNumber},`cat %{_sysconfdir}/fedora-release` `date`," tool/src/main/resources/org/antlr/antlr.properties
 %patch0 -p1
 %patch1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
@@ -275,6 +292,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_22jpp8
+- build with java 8
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_19jpp8
 - fc update
 
