@@ -1,23 +1,24 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jaxb2-common-basics
 Version:       0.9.5
-Release:       alt3_5jpp8
+Release:       alt3_9jpp8
 Summary:       JAXB2 Basics
 License:       BSD
 Url:           https://github.com/highsource/jaxb2-basics
 Source0:       https://github.com/highsource/jaxb2-basics/archive/%{version}.tar.gz
 
+Patch0: 0001-Port-to-latest-version-of-javaparser.patch
+
 BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.javaparser:javaparser:1)
-BuildRequires: mvn(com.vividsolutions:jts:1.14.0)
+BuildRequires: mvn(com.google.code.javaparser:javaparser)
+BuildRequires: mvn(com.vividsolutions:jts)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
@@ -54,6 +55,8 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n jaxb2-basics-%{version}
+%patch0 -p1
+
 # Cleanup
 find -name "*.bat" -print -delete
 find -name "*.class" -print -delete
@@ -77,6 +80,9 @@ find -name "*.jar" -print -delete
 
 %pom_xpath_set "pom:plugin[pom:groupId = 'org.jvnet.jaxb2.maven2' ]/pom:artifactId" maven-jaxb22-plugin
 
+# Fix jts package name
+sed -i -e 's/com\.vividsolutions\.jts/org.locationtech.jts/' $(find -name *.java)
+
 %build
 
 %mvn_build
@@ -92,6 +98,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt3_9jpp8
+- fc update & java 8 build
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt3_5jpp8
 - build with jts1.14
 
