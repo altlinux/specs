@@ -1,30 +1,36 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+Epoch:          1
 Name:           apache-sshd
-Version:        0.14.0
-Release:        alt1_8jpp8
+Version:        2.0.0
+Release:        alt1_4jpp8
 Summary:        Apache SSHD
 License:        ASL 2.0
 URL:            http://mina.apache.org/sshd-project
 
-Source0:        http://www.eu.apache.org/dist/mina/sshd/%{version}/dist/%{name}-%{version}-src.tar.gz
+Source0:        https://archive.apache.org/dist/mina/sshd/%{version}/apache-sshd-%{version}-src.tar.gz
+
+Patch0:         0001-Avoid-optional-dependency-on-native-tomcat-APR-libra.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.jcraft:jzlib)
-BuildRequires:  mvn(commons-httpclient:commons-httpclient)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.i2p.crypto:eddsa)
+BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.mina:mina-core)
-BuildRequires:  mvn(org.apache.tomcat:tomcat-jni)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
 BuildRequires:  mvn(org.bouncycastle:bcpg-jdk15on)
 BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 BuildArch:      noarch
@@ -45,23 +51,37 @@ This package provides %{name}.
 %prep
 %setup -q
 
-# Use tomcat-jni instead of unavailable tomcat-apr
-%pom_change_dep -r tomcat:tomcat-apr org.apache.tomcat:tomcat-jni:8.0.23
+# Avoid optional dep on tomcat native APR library
+%patch0 -p1
+rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 
-# Build the core only:
+# Avoid unnecessary dep on spring framework
+%pom_remove_dep :spring-framework-bom
+
+# Build the core modules only
 %pom_disable_module assembly
-%pom_disable_module sshd-pam
-%pom_disable_module sshd-sftp
+%pom_disable_module sshd-mina
+%pom_disable_module sshd-netty
+%pom_disable_module sshd-ldap
 %pom_disable_module sshd-git
+%pom_disable_module sshd-contrib
+%pom_disable_module sshd-spring-sftp
+%pom_disable_module sshd-cli
 
-# Disable the plugins that we don't need:
-%pom_remove_plugin :maven-remote-resources-plugin
-# Too many files with unapproved license
-%pom_remove_plugin org.apache.rat:apache-rat-plugin
+# Disable plugins we don't need for RPM builds
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :groovy-maven-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+
+# Suppress generation of uses clauses
+%pom_xpath_inject "pom:configuration/pom:instructions" "<_nouses>true</_nouses>" .
 
 %build
 # tests require ch.ethz.ganymed:ganymed-ssh2
-%mvn_build -f
+%mvn_build -f -- -Dworkspace.root.dir=$(pwd)
 
 %install
 %mvn_install
@@ -73,6 +93,9 @@ This package provides %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt1_4jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_8jpp8
 - fc29 update
 
