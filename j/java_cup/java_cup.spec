@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global pkg_version     11b
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt1_10jpp8
+Release:        alt2_10jpp8
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -105,6 +102,9 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 %doc --no-dereference licence.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.11b-alt2_10jpp8
+- fc update & java 8 build
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.11b-alt1_10jpp8
 - new version
 
