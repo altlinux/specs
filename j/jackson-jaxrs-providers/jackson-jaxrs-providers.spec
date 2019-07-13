@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jackson-jaxrs-providers
 Version:       2.9.8
-Release:       alt1_1jpp8
+Release:       alt2_1jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-jaxrs-providers
@@ -155,7 +155,7 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %if %{with jp_minimal}
 %mvn_build -s -f
 %else
-%mvn_build -s
+%mvn_build -s -f
 %endif
 
 %install
@@ -183,6 +183,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt2_1jpp8
+- build with new jersey
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
 - new version
 
