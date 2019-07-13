@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apiguardian
 Version:        1.0.0
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        API Guardian Java annotation
 License:        ASL 2.0
 URL:            https://github.com/apiguardian-team/apiguardian
@@ -85,6 +82,9 @@ cp -p %{SOURCE100} pom.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
+- explicit build with java8
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
 - fc29 update
 
