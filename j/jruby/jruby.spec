@@ -2,11 +2,11 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /.usr.lib.*jffi/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jruby
 Version:        1.7.22
-Release:        alt1_6jpp8.qa2
+Release:        alt2_8jpp8
 Summary:        Pure Java implementation of the Ruby interpreter
 # (CPL or GPLv2+ or LGPLv2+) - JRuby itself
 # BSD - some files under lib/ruby/shared
@@ -105,23 +105,14 @@ Standard Libraries.
 Group: Development/Java
 Summary:        JRuby development environment
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires: rpm-macros-%{name} = %{EVR}
+Requires:       rpm-macros-%{name} = %{EVR}
 
 %description    devel
 Macros for building JRuby-specific libraries.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
-
-
 %package -n rpm-macros-%{name}
 Summary: Set of RPM macros for packaging %name-based applications
-Group: Development/Other
+Group: Development/Java
 # uncomment if macroses are platform-neutral
 #BuildArch: noarch
 # helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
@@ -130,6 +121,15 @@ Conflicts: jruby-devel <= 1.7.22-alt1_6jpp8
 %description -n rpm-macros-%{name}
 Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
+
+
+%package        javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description    javadoc
+Javadoc for %{name}.
 
 %prep
 %setup -q
@@ -265,16 +265,18 @@ EOF
 
 %files devel
 %exclude %_rpmmacrosdir/*
-#%_rpmmacrosdir/macros-jruby
-
-%files javadoc -f .mfiles-javadoc
-%doc COPYING LICENSE.RUBY LEGAL
 
 %files -n rpm-macros-%{name}
 %_rpmmacrosdir/*
 
 
+%files javadoc -f .mfiles-javadoc
+%doc COPYING LICENSE.RUBY LEGAL
+
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt2_8jpp8
+- explicit build with java8
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_6jpp8.qa2
 - NMU: applied repocop patch
 
