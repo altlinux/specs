@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          axis2
 Version:       1.7.7
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Java-based Web Services / SOAP / WSDL engine
 License:       ASL 2.0
 URL:           http://axis.apache.org/axis2/java/core/
@@ -190,6 +190,9 @@ sed -i -e 's/\r//g' NOTICE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_3jpp8
+- explicit build with java8
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_1jpp8
 - new version
 - note: built with ws-xmlschema, not XmlSchema
