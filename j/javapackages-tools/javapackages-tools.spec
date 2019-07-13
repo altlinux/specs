@@ -1,8 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-java
-BuildRequires: python-devel python3-devel rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 # optional dependencies of jpackage-utils
 %filter_from_requires /^.usr.bin.jar/d
@@ -10,10 +9,11 @@ BuildRequires: python-devel python3-devel rpm-build-java
 %define _unpackaged_files_terminate_build 1
 
 BuildRequires: source-highlight python3-module-nose python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
 %add_python3_path /usr/share/java-utils/
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -37,10 +37,10 @@ BuildRequires: jpackage-generic-compat
 
 %if 0%{?fedora} || 0%{?rhel} > 7
 %global python_prefix python3
-%global python_interpreter %{__python3}
+%global python_interpreter %{?__python3}%{!?__python3:dummy}
 %else
 %global python_prefix python
-%global python_interpreter %{__python}
+%global python_interpreter %{?__python2}%{!?__python2:dummy}
 %global rpmmacrodir /etc/rpm
 %endif
 
@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        5.3.0
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -216,7 +216,7 @@ Requires:       xmvn-subst
 Requires:       xmvn-resolve
 # Java build systems don't have hard requirement on java-devel, so it should be there
 Requires:       python3-module-javapackages = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{python_prefix}
+Requires:       %{python_interpreter}
 
 %description -n javapackages-local
 This package provides non-essential macros and scripts to support Java packaging.
@@ -347,6 +347,9 @@ popd
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.3.0-alt1_4jpp8
+- fc update
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.3.0-alt1_1jpp8
 - new version
 
