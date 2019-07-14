@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-9-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -24,12 +24,12 @@ BuildRequires: jpackage-generic-compat
 %global bindir %{apphomedir}/bin
 
 Name:             byteman
-Version:          4.0.4
-Release:          alt1_2jpp9
+Version:          4.0.5
+Release:          alt1_3jpp9
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
-# wget -O 4.0.4.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.4.tar.gz
+# wget -O 4.0.5.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.5.tar.gz
 Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.tar.gz
 
 BuildArch:        noarch
@@ -57,7 +57,7 @@ BuildRequires:    testng
 # JBoss modules byteman plugin requires it
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
 
-Provides:         bundled(objectweb-asm) = 6.2
+Provides:         bundled(objectweb-asm) = 7.0
 Provides:         bundled(java_cup) = 1:0.11b-8
 # We are filtering java-headless >= 1:1.9 requirement. Add
 # JDK 8 requirement here explicitly which shouldn't match the filter.
@@ -155,7 +155,11 @@ sed -i "s|java-cup|java_cup|" tests/pom.xml
 
 %build
 export JAVA_HOME=/usr/lib/jvm/java-9-openjdk
-%mvn_build
+# Use --xmvn-javadoc so as to avoid maven-javadoc-plugin issue
+# (fixed in 3.1.0, fedora has 3.0.1):
+# See https://issues.apache.org/jira/browse/MJAVADOC-555
+#     https://bugs.openjdk.java.net/browse/JDK-8212233
+%mvn_build --xmvn-javadoc
 
 %install
 %mvn_install
@@ -222,6 +226,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Sun Jul 14 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.5-alt1_3jpp9
+- new version
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_2jpp9
 - new version
 
