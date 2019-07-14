@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.8
-Release: alt8
+Release: alt9
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Jul 15 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt9
+- (UNetUDP): fix bug in init digital sensors
+
 * Mon Mar 18 2019 Pavel Vainerman <pv@altlinux.ru> 2.8-alt8
 - minor fixes
 
