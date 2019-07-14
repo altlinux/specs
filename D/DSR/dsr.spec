@@ -1,6 +1,6 @@
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
-Version: 219
+Version: 226
 Release: alt1
 BuildArch: noarch
 URL: https://www.xs3.uni-freiburg.de/research/dsr
@@ -62,6 +62,9 @@ cp -R rmsd %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Sun Jul 14 2019 Denis G. Samsonenko <ogion@altlinux.org> 226-alt1
+- new version
+
 * Sun Jan 20 2019 Denis G. Samsonenko <ogion@altlinux.org> 219-alt1
 - new version
 
