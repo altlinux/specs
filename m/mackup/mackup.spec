@@ -1,20 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.24
+Version: 0.8.25
 Release: alt1
-
 Summary: Keep your application settings in sync
 License: GNU GPL v3.0
 Group: Other
-
 URL: https://github.com/lra/mackup
 Source: %name-%version.tar
 
 BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-setuptools
 
@@ -24,9 +20,9 @@ What does it do:
 - Syncs your application settings among all your workstations
 - Restores your configuration on any fresh install in one command line
 By only tracking pure configuration files, it keeps the crap out of your
-freshly new installed workstation (no cache, temporary and locally specificfiles are transfered).
-Mackup makes setting up the environment easy and simple, saving time for your family,
-great ideas, and all the cool stuff you like.
+freshly new installed workstation (no cache, temporary and locally specificfiles
+are transfered). Mackup makes setting up the environment easy and simple, saving
+time for your family, great ideas, and all the cool stuff you like.
 
 
 %prep
@@ -44,6 +40,9 @@ sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\/usr\/lib\/python3\/site-packages\/ma
 %python3_sitelibdir/%{name}*
 
 %changelog
+* Sun Jul 14 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.25-alt1
+- New version
+
 * Wed May 22 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.24-alt1
 - New version
 
