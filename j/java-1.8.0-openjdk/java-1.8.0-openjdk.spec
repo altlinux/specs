@@ -1,15 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-generic-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: ca-certificates-java
-# ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
-%ifarch %{arm}
-%set_verify_elf_method textrel=relaxed
-%endif
 %def_enable accessibility
-%def_disable jvmjardir
 %def_disable javaws
 %def_disable moz_plugin
 %def_disable control_panel
@@ -17,14 +11,11 @@ BuildRequires: ca-certificates-java
 %def_disable systemtap
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
-BuildRequires: libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
-BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
 %filter_from_requires /.usr.bin.java/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -309,7 +300,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt1_0jpp8
+Release: alt2_0jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -586,7 +577,7 @@ BuildRequires: libXt-devel
 BuildRequires: libXtst-devel
 # Requirements for setting up the nss.cfg
 BuildRequires: libnss-devel libnss-devel-static
-BuildRequires: xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel
+BuildRequires: xorg-proto-devel
 BuildRequires: zip
 BuildRequires: unzip
 # Use OpenJDK 7 where available (on RHEL) to avoid
@@ -637,25 +628,24 @@ Provides: java = %{epoch}:%{javaver}
 Provides: java-fonts = %{epoch}:%{version}
 
 #Obsoletes: java-1.7.0-openjdk
+Obsoletes: java-1.5.0-gcj
+Obsoletes: sinjdoc
 Source44: import.info
 
 %define altname %name
 %define label -%{name}
 %define javaws_ver      %{javaver}
 
-%ifarch x86_64 aarch64
+%if "%{_lib}" == "lib64"
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()(64bit)
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
-Provides: %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/libjvm.so()(64bit)
-Provides: %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/libjvm.so(SUNWprivate_1.1)(64bit)
-%endif
-%ifarch %ix86
+Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so()(64bit)
+Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
+%else
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so()
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.1)
-Provides: %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/libjvm.so()
-Provides: %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/libjvm.so(SUNWprivate_1.1)
+Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so()
+Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)
 %endif
 Patch33: java-1.8.0-openjdk-alt-no-Werror.patch
 Patch34: java-1.8.0-openjdk-alt-link.patch
@@ -857,7 +847,7 @@ BuildArch: noarch
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-javadoc = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-%{origin}-javadoc = %{epoch}:%{version}-%{release}
-# fc provides
+# hack till java 9+ will come
 Provides: java-javadoc = 1:1.9.0
 
 #Obsoletes: java-1.7.0-openjdk-javadoc
@@ -1097,18 +1087,18 @@ for file in %{SOURCE9} %{SOURCE10} ; do
     sed -i -e  "s:@JAVA_VENDOR@:%{origin}:g" $OUTPUT_FILE
 done
 done
-
-# Setup nss.cfg
-sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
-sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
+sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
 %patch34 -p1
+
+# Setup nss.cfg
+#sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 
 
 %build
 # How many CPU's do we have?
-#export NUM_PROC=%(/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :)
+export NUM_PROC=%(/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :)
 export NUM_PROC=${NUM_PROC:-1}
 %if 0%{?_smp_ncpus_max}
 # Honor %%_smp_ncpus_max
@@ -1162,6 +1152,7 @@ bash ../../configure \
     --with-boot-jdk=/usr/lib/jvm/java-openjdk \
     --with-debug-level=$debugbuild \
     --enable-unlimited-crypto \
+    --disable-system-nss \
     --with-zlib=system \
     --with-libjpeg=system \
     --with-giflib=system \
@@ -1172,8 +1163,6 @@ bash ../../configure \
     --with-extra-cflags="$EXTRA_CFLAGS" \
     --with-extra-ldflags="%{ourldflags}" \
     --with-num-cores="$NUM_PROC"
-
-#    --enable-system-nss \
 
 cat spec.gmk
 cat hotspot-spec.gmk
@@ -1206,7 +1195,7 @@ popd >& /dev/null
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{jdkimage}
 
 # Install nss.cfg right away as we will be using the JRE above
-install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
+#install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
 
 # Use system-wide tzdata
 rm $JAVA_HOME/jre/lib/tzdb.dat
@@ -1310,7 +1299,6 @@ $JAVA_HOME/bin/javap -l java.nio.ByteBuffer | grep LocalVariableTable
 done
 
 %install
-unset JAVA_HOME
 STRIP_KEEP_SYMTAB=libjvm*
 
 for suffix in %{build_loop} ; do
@@ -1530,8 +1518,6 @@ find $RPM_BUILD_ROOT/%{_jvmdir}/%{sdkdir}/ -name "THIRD_PARTY_README" -exec chmo
 
 # end, dual install
 done
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -1543,18 +1529,19 @@ done
 # intentionally only for non-debug
 %endif
 
-sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+export LANG=ru_RU.UTF-8
+if stat -t %buildroot/usr/share/applications/*policytool.desktop; then
+  sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Name --set-value='OpenJDK %majorver Policy Tool' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Comment --set-value='Manage OpenJDK %majorver policy files' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Name[ru] --set-value='Настройка политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Comment[ru] --set-value='Управление файлами политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
+fi
 sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
-desktop-file-edit --set-key=Name --set-value='OpenJDK %majorver Policy Tool' %buildroot/usr/share/applications/*policytool.desktop
-desktop-file-edit --set-key=Comment --set-value='Manage OpenJDK %majorver policy files' %buildroot/usr/share/applications/*policytool.desktop
 #Name=OpenJDK 8 Monitoring & Management Console
 desktop-file-edit --set-key=Name --set-value='OpenJDK %majorver Management Console' %buildroot/usr/share/applications/*jconsole.desktop
 #Comment=Monitor and manage OpenJDK applications
 desktop-file-edit --set-key=Comment --set-value='Monitor and manage OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
-
-export LANG=ru_RU.UTF-8
-desktop-file-edit --set-key=Name[ru] --set-value='Настройка политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
-desktop-file-edit --set-key=Comment[ru] --set-value='Управление файлами политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
 desktop-file-edit --set-key=Name[ru] --set-value='Консоль OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
 desktop-file-edit --set-key=Comment[ru] --set-value='Мониторинг и управление приложениями OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
 
@@ -1640,10 +1627,12 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  cat <<EOF >>%buildroot%_altdir/%name-java-headless
+  if [ -e %{_jvmdir}/%{jredir}/bin/$i ]; then
+    cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
+  fi
 done
 
 %if_enabled control_panel
@@ -1654,15 +1643,10 @@ EOF
 %endif
 # ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-java-headless
-%{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmdir}/jre-%{javaver}-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%if_enabled jvmjardir
-%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%endif
+%{_jvmdir}/jre	%{_jvmdir}/%{jredir}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jredir}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jredir}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{javaver}-%{origin}	%{_jvmdir}/%{jredir}	%{_jvmdir}/%{jredir}/bin/java
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
@@ -1693,16 +1677,13 @@ EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-  cat <<EOF >>%buildroot%_altdir/%name-javac
+cat <<EOF >>%buildroot%_altdir/%name-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%if_enabled jvmjardir
-%{_jvmjardir}/java	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java-%{javaver}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%endif
+EOF
+cat <<EOF >>%buildroot%_altdir/%name-javac-versioned
+%{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%priority
+%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%priority
 EOF
 
 # ----- end: JPackage compatibility alternatives ------
@@ -1784,7 +1765,7 @@ fi
 %{_mandir}/man1/tnameserv-%{uniquesuffix}.1*
 %{_mandir}/man1/unpack200-%{uniquesuffix}.1*
 %{_mandir}/man1/policytool-%{uniquesuffix}.1*
-%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/nss.cfg
+#%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/nss.cfg
 %ifarch %{jit_arches}
 %ifnarch %{power64}
 %attr(444, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa
@@ -1800,6 +1781,7 @@ fi
 
 %files devel
 %_altdir/%altname-javac
+%_altdir/%altname-javac-versioned
 %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 %doc %{buildoutputdir}/images/%{jdkimage}/ASSEMBLY_EXCEPTION
 %doc %{buildoutputdir}/images/%{jdkimage}/LICENSE
@@ -1895,6 +1877,9 @@ fi
 %endif
 
 %changelog
+* Sun Jul 14 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.212.b04-alt2_0jpp8
+- new alternatives layout
+
 * Fri Jun 28 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.212.b04-alt1_0jpp8
 - new version
 
