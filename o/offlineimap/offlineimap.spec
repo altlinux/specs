@@ -1,5 +1,5 @@
 Name: offlineimap
-Version: 7.0.12
+Version: 7.2.4
 Release: alt1
 Summary: Powerful IMAP/Maildir synchronization and reader support
 
@@ -52,6 +52,9 @@ install -p docs/%name.1 %buildroot/%_man1dir/
 %doc COPYING %name.conf* *.md docs/html
 
 %changelog
+* Sun Jul 14 2019 Denis Smirnov <mithraen@altlinux.ru> 7.2.4-alt1
+- Version 7.2.4 (ALT #36991)
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.12-alt1
 - automated PyPI update
 
