@@ -11,11 +11,11 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 # Byte Buddy requires itself to build, so set this flag
 # to break the bootstrap cycle
-%bcond_without bootstrap
+%bcond_with bootstrap
 
 Name:          byte-buddy
 Version:       1.9.5
-Release:       alt1_0jpp8
+Release:       alt1_5jpp8
 Summary:       Runtime code generation for the Java virtual machine
 License:       ASL 2.0
 URL:           http://bytebuddy.net/
@@ -172,6 +172,9 @@ cat .mfiles-%{name}-dep >> .mfiles-%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Jul 14 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.5-alt1_5jpp8
+- full build
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.5-alt1_0jpp8
 - bootstrap build
 
