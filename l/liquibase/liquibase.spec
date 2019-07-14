@@ -1,21 +1,18 @@
 Group: Databases
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 3.6.1
+Version: 3.6.3
 Release: alt1_1jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
 
 Source0: https://github.com/liquibase/liquibase/archive/%{name}-parent-%{version}.tar.gz
 
-BuildRequires: java-devel >= 1.6.0
+BuildRequires: java-devel >= 1.7.0
 BuildRequires: javapackages-tools
 BuildRequires: maven-local
 BuildRequires: mvn(ch.qos.logback:logback-classic)
@@ -38,7 +35,7 @@ BuildRequires: mvn(org.yaml:snakeyaml)
 
 BuildArch:     noarch
 
-Requires: javapackages-tools
+Requires: javapackages-filesystem
 Requires: mvn(ch.qos.logback:logback-classic)
 Requires: mvn(commons-cli:commons-cli)
 Requires: mvn(org.apache.felix:org.apache.felix.framework)
@@ -161,6 +158,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_1jpp8
+- new version
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt1_1jpp8
 - java update
 
