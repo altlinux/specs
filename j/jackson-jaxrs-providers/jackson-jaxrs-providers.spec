@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,8 +12,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with jp_minimal
 
 Name:          jackson-jaxrs-providers
-Version:       2.9.4
-Release:       alt1_4jpp8
+Version:       2.9.8
+Release:       alt1_1jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-jaxrs-providers
@@ -186,6 +183,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
+- new version
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_4jpp8
 - new version
 
