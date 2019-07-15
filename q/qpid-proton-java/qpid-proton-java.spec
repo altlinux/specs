@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: /usr/bin/doxygen /usr/bin/epydoc /usr/bin/gem /usr/bin/go /usr/bin/mvn /usr/bin/php /usr/bin/php-config /usr/bin/rspec /usr/bin/ruby /usr/bin/sphinx-build /usr/bin/swig /usr/bin/tox /usr/bin/valgrind /usr/sbin/saslpasswd2 gcc-c++ java-devel-default libruby-devel libsasl2-devel perl(ExtUtils/MakeMaker.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Switch.pm) perl(overload.pm) perl-devel python-devel rpm-build-java rpm-build-python rpm-build-ruby swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          qpid-proton-java
 Version:       0.12.2
-Release:       alt2_5jpp8
+Release:       alt3_5jpp8
 Summary:       Java libraries for Qpid Proton
 License:       ASL 2.0
 URL:           http://qpid.apache.org/proton/
@@ -24,7 +24,7 @@ BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.geronimo.specs:specs:pom:)
 BuildRequires: mvn(org.fusesource.hawtbuf:hawtbuf)
 BuildRequires: mvn(org.fusesource.hawtdispatch:hawtdispatch-transport)
-BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.mockito:mockito-core:1)
 
 BuildArch:     noarch
 Source44: import.info
@@ -56,6 +56,7 @@ rm tests/java/org/apache/qpid/proton/JythonTest.java
 rm contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch/api/SampleTest.java
 
 %mvn_alias :proton-j org.apache.qpid:proton-api org.apache.qpid:proton-j-impl
+%pom_change_dep -r :mockito-core :mockito-core:1.10.19
 
 %build
 
@@ -72,6 +73,9 @@ rm contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch
 %doc --no-dereference proton-j/LICENSE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt3_5jpp8
+ -build with mockito1
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt2_5jpp8
 - new version
 
