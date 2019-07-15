@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ rpm-build-java unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 28
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -28,8 +28,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with bootstrap
 
 Name:           gradle
-Version:        4.3.1
-Release:        alt3_7jpp8
+Version:        4.4.1
+Release:        alt1_3jpp8
 Summary:        Build automation tool
 # Some examples and integration tests are under GNU LGPL and Boost
 # Software License, but are not used to create binary package.
@@ -96,8 +96,9 @@ BuildRequires:  gradle-local
 
 # Generic build dependencies
 BuildRequires:  desktop-file-utils
+BuildRequires:  glibc-locales
 BuildRequires:  coreutils
-BuildRequires:  procps
+BuildRequires:  libprocps procps
 
 # manpage build dependencies
 BuildRequires:  asciidoc asciidoc-a2x
@@ -129,7 +130,6 @@ BuildRequires:  mvn(com.google.oauth-client:google-oauth-client)
 BuildRequires:  mvn(com.googlecode.jarjar:jarjar)
 BuildRequires:  mvn(com.googlecode.jatl:jatl)
 BuildRequires:  mvn(com.jcraft:jsch)
-BuildRequires:  mvn(com.puppycrawl.tools:checkstyle)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.typesafe.zinc:zinc)
 BuildRequires:  mvn(com.uwyn:jhighlight)
@@ -202,6 +202,7 @@ BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-webapp)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-xml)
+BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime)
@@ -263,6 +264,7 @@ Requires:       base64coder
 Requires:       beust-jcommander
 Requires:       bouncycastle
 Requires:       bouncycastle-pg
+Requires:       bsh
 Requires:       ecj
 Requires:       glassfish-servlet-api
 Requires:       google-gson
@@ -283,6 +285,7 @@ Requires:       jcip-annotations
 Requires:       jcl-over-slf4j
 Requires:       jetty-server
 Requires:       jetty-util
+Requires:       jgit
 Requires:       joda-time
 Requires:       jsch
 Requires:       jsr-305
@@ -396,6 +399,7 @@ rm -r subprojects/ide-native
 sed -i -e 's,/usr/share/fonts/lato,/usr/share/fonts/ttf/lato,;s,/usr/share/fonts/liberation,/usr/share/fonts/ttf/liberation,' ../../SOURCES/gradle-font-metadata.xml
 
 %build
+export LANG=en_US.UTF8
 %if %{with bootstrap}
 mkdir -p subprojects/docs/src/main/resources
 mkdir -p subprojects/core/src/main/resources/org/gradle/api/internal/runtimeshaded
@@ -478,6 +482,9 @@ sed -i -e s,/usr/bin/bash,/bin/sh, %buildroot%_bindir/*
 %config(noreplace,missingok) /etc/java/%name.conf
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_3jpp8
+- new version
+
 * Mon Jun 04 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt3_7jpp8
 - unbootstrap rebuild with new guava and objectweb-asm
 

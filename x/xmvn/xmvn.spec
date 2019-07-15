@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -24,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_21jpp8
+Release:        alt1_23jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -39,6 +36,7 @@ Patch3:         0001-Support-setting-Xdoclint-none-in-m-javadoc-p-3.0.0.patch
 Patch4:         0001-Fix-configuration-of-aliased-plugins.patch
 Patch5:         0001-Don-t-use-JAXB-for-converting-bytes-to-hex-string.patch
 Patch6:         0001-Use-apache-commons-compress-for-manifest-injection-a.patch
+Patch7:         0001-port-to-gradle-4.4.1.patch
 
 BuildRequires:  maven >= 3.5.0
 BuildRequires:  maven-local
@@ -61,7 +59,7 @@ BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-containers-component-annotations
 BuildRequires:  plexus-containers-component-metadata
 %if %{with gradle}
-BuildRequires:  gradle >= 4.3.1
+BuildRequires:  gradle >= 4.4.1
 %endif
 
 Requires:       %{name}-minimal = %{version}-%{release}
@@ -117,7 +115,6 @@ This package provides XMvn parent POM.
 %package        api
 Group: Development/Java
 Summary:        XMvn API
-Obsoletes:      %{name}-launcher < 3.0.0
 
 %description    api
 This package provides XMvn API module which contains public interface
@@ -246,6 +243,7 @@ This package provides %{summary}.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # Bisect IT has no chances of working in local, offline mode, without
 # network access - it needs to access remote repositories.
@@ -341,6 +339,13 @@ install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf/
 cp -P ${maven_home}/conf/settings.xml %{buildroot}%{_datadir}/%{name}/conf/
 cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 
+pushd %buildroot%{_datadir}/%{name}/lib
+[ -e jansi-linux.jar ] || exit 1
+rm jansi-linux.jar
+ln -s /usr/lib/java/jansi-native/jansi-linux.jar .
+popd
+
+
 %files
 %{_bindir}/mvn-local
 
@@ -395,6 +400,9 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_23jpp8
+- build with new gradle
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_21jpp8
 - new version
 
