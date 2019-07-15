@@ -14,14 +14,14 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.2.9
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
 Source1: fwupd.watch
 Patch0: %name-%version-alt.patch
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
 
 BuildRequires: docbook-utils
 BuildRequires: gettext
@@ -267,6 +267,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Jul 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.9-alt2
+- Added ppc64le to ExclusiveArch tag.
+
 * Fri May 24 2019 Anton Farygin <rider@altlinux.ru> 1.2.9-alt1
 - 1.2.9
 
