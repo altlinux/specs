@@ -1,7 +1,7 @@
 %define pypi_name pelican
 
 Name: python-module-%pypi_name
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 Summary: A tool to generate a static blog from reStructuredText or Markdown input files
 Group: Development/Python
@@ -91,6 +91,9 @@ LC_ALL=en_US.UTF-8 python -m unittest discover ||:
 %files -n pelican
 
 %changelog
+* Mon Jul 15 2019 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
 - New version.
 
