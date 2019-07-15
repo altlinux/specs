@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt2_8jpp8
+Release:                   alt3_8jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -201,7 +201,7 @@ popd
 rm dist/javalib/*.jar
 build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
   objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
-  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
+  jffi jffi-native jnr-constants jnr-ffi/jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
   netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
   jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
 
@@ -279,6 +279,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt3_8jpp8
+- rebuild with new jnr-ffi
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_8jpp8
 - cleaned up provides (closes: #36611)
 - build with guava
