@@ -1,12 +1,12 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: bzlib-devel java-devel-default rpm-build-java
+BuildRequires: bzlib-devel rpm-build-java
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 BuildRequires: zlib-devel
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 29
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.6
-Release: alt2_5jpp8
+Release: alt3_5jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -139,7 +139,6 @@ BuildRequires: istack-commons
 BuildRequires: jackson
 BuildRequires: apache-commons-httpclient
 BuildRequires: java-base64
-BuildRequires: java-devel
 BuildRequires: java-xmlbuilder
 BuildRequires: javamail
 BuildRequires: javapackages-tools
@@ -177,7 +176,7 @@ BuildRequires: maven-shade-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-war-plugin
 BuildRequires: metrics
-BuildRequires: mockito
+BuildRequires: mockito1
 BuildRequires: native-maven-plugin
 BuildRequires: netty3
 BuildRequires: netty
@@ -192,7 +191,7 @@ BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: tomcat-log4j
@@ -253,7 +252,7 @@ Requires: javamail
 Requires: jettison
 Requires: jetty8
 Requires: jsr-311
-Requires: mockito
+Requires: mockito1
 Requires: objectweb-asm
 Requires: objenesis
 Requires: paranamer
@@ -648,6 +647,8 @@ rm -rf hadoop-tools/hadoop-datajoin/src/test
 # Jar files that need to be overridden due to installation location
 %mvn_file :%{name}-common::tests: %{name}/%{name}-common
 %patch33 -p1
+#pom_change_dep -r :mockito-core :mockito-core:1.10.19
+%pom_change_dep -r :mockito-all :mockito-all:1.10.19
 
 %build
 
@@ -1144,6 +1145,9 @@ fi
 # %%attr(6010,root,yarn) %%{_bindir}/container-executor
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt3_5jpp8
+- build with mockito1
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt2_5jpp8
 - build with native java
 
