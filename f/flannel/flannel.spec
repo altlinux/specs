@@ -1,6 +1,6 @@
 
 %global import_path github.com/coreos/flannel 
-%global commit 2fd6898a7c9a11a12e63b56ca01143a260ee0aad
+%global commit d3eea7f5cdb895965394eb5f34645cdc3b535d5b 
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -13,8 +13,8 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.10.0
-Release: alt3
+Version: 0.11.0
+Release: alt1
 Summary: flannel is a network fabric for containers
 Group: Development/Other
 License: ASL 2.0
@@ -68,6 +68,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Jul 15 2019 Alexey Shabalin <shaba@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
