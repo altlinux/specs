@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash 3017160f847564879520c564b4bb04abb7b680fe
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           signpost-core
 Version:        1.2.1.2
-Release:        alt1_16jpp8
+Release:        alt2_16jpp8
 Summary:        A simple, light-weight, and modular OAuth client library for the Java platform
 
 License:        ASL 2.0
@@ -26,7 +26,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.mockito:mockito-core:1)
 Source44: import.info
 
 %description
@@ -78,6 +78,8 @@ sed -i 's/\r//' LICENSE
 %mvn_file :%{name} %{name}
 %mvn_file :signpost-commonshttp4 signpost-commonshttp4
 
+%pom_change_dep -r :mockito-core :mockito-core:1.10.19
+
 %build
 %mvn_build -s
 
@@ -97,6 +99,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt2_16jpp8
+ -build with mockito1
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt1_16jpp8
 - new version
 
