@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          arquillian-core
 Version:       1.1.11
-Release:       alt1_9jpp8
+Release:       alt2_9jpp8
 Summary:       Java Testing Platform for the JVM Member
 # No license header report @ https://github.com/arquillian/arquillian-core/issues/101
 License:       ASL 2.0
@@ -49,7 +49,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.eclipse.jetty:jetty-server:8.1)
 BuildRequires: mvn(org.eclipse.jetty:jetty-servlet:8.1)
-BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.mockito:mockito-all:1)
 BuildRequires: mvn(org.slf4j:slf4j-simple)
 BuildRequires: mvn(org.testng:testng)
 
@@ -365,6 +365,8 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 
 # Use jetty:8.1.2.v20120308
 %pom_xpath_set pom:properties/pom:version.jetty_jetty 8.1 protocols/servlet
+#pom_change_dep -r :mockito-core :mockito-core:1.10.19
+%pom_change_dep -r :mockito-all :mockito-all:1.10.19
 
 %build
 
@@ -439,6 +441,9 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt2_9jpp8
+ -build with mockito1
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_9jpp8
 - fc29 update
 
