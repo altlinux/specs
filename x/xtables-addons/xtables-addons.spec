@@ -1,6 +1,6 @@
 Name: xtables-addons
 Version: 3.3
-Release: alt1
+Release: alt2
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -16,7 +16,6 @@ Source1: %name.watch
 
 BuildRequires: libiptables-devel libmnl-devel perl-Text-CSV_XS perl-Net-CIDR-Lite
 Requires: iptables
-ExclusiveArch: %ix86 x86_32 x86_64
 
 %description
 Xtables-addons is the proclaimed successor to patch-o-matic(-ng).
@@ -72,6 +71,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Mon Jul 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt2
+- Dropped ExclusiveArch tag.
+
 * Fri Apr 19 2019 Anton Farygin <rider@altlinux.ru> 3.3-alt1
 - 3.3
 
