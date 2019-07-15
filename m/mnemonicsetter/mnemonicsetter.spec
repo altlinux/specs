@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mnemonicsetter
 Version:        0.5
-Release:        alt1_4jpp8
+Release:        alt2_4jpp8
 Summary:        Menu and toolbar mnemonic library
 License:        ASL 2.0
 URL:            https://github.com/dpolivaev/%{name}
@@ -20,7 +20,7 @@ Source0:        https://github.com/dpolivaev/%{name}/archive/%{name}_%{version}.
 Patch0:         %{name}-remove-bintray-plugin.patch
 
 BuildRequires:  gradle-local
-BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.mockito:mockito-all:1)
 Source44: import.info
 
 %description
@@ -43,6 +43,9 @@ echo 'rootProject.name="%{name}"' >settings.gradle
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_4jpp8
+ -build with mockito1
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_4jpp8
 - java update
 
