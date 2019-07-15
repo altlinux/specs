@@ -1,12 +1,11 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -59,7 +58,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20180605
+%global addver  .v20190610
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -68,12 +67,12 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           jetty
-Version:        9.4.11
-Release:        alt1_3.v20180605jpp8
+Version:        9.4.19
+Release:        alt1_1.v20190610jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
-License:        ASL 2.0 or EPL
+License:        ASL 2.0 or EPL-1.0
 URL:            http://www.eclipse.org/jetty/
 Source0:        https://github.com/eclipse/%{name}.project/archive/%{name}-%{version}%{addver}.tar.gz
 Source1:        jetty.sh
@@ -94,8 +93,6 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 %if %{without jp_minimal}
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-unixsocket)
-BuildRequires:  mvn(com.hazelcast:hazelcast)
-BuildRequires:  mvn(com.hazelcast:hazelcast-client)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(javax.enterprise:cdi-api)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -127,16 +124,12 @@ BuildRequires:  mvn(org.apache.taglibs:taglibs-standard-spec)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-jasper)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.eclipse.equinox.http:servlet)
 BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
 BuildRequires:  mvn(org.eclipse.jetty.orbit:javax.mail.glassfish)
 BuildRequires:  mvn(org.eclipse.jetty.orbit:javax.security.auth.message)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-assembly-descriptors)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-schemas)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-helper)
-BuildRequires:  mvn(org.eclipse.osgi:org.eclipse.osgi)
-BuildRequires:  mvn(org.eclipse.osgi:org.eclipse.osgi.services)
-BuildRequires:  mvn(org.infinispan:infinispan-core)
 BuildRequires:  mvn(org.jboss.weld.servlet:weld-servlet-core)
 BuildRequires:  mvn(org.mongodb:mongo-java-driver)
 BuildRequires:  mvn(org.ow2.asm:asm)
@@ -152,6 +145,7 @@ BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
 BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  junit5
 
 # duplicate providers, choose one
 BuildRequires:  jboss-websocket-1.0-api
@@ -162,6 +156,9 @@ BuildArch:      noarch
 
 # jp_minimal doesn't have main package
 %if %{without jp_minimal}
+# Explicit requires for javapackages-tools since jetty.sh script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Requires:       %{name}-annotations = %{version}-%{release}
 Requires:       %{name}-ant = %{version}-%{release}
 Requires:       %{name}-client = %{version}-%{release}
@@ -193,8 +190,6 @@ Requires:       %{name}-util = %{version}-%{release}
 Requires:       %{name}-util-ajax = %{version}-%{release}
 Requires:       %{name}-webapp = %{version}-%{release}
 Requires:       %{name}-xml = %{version}-%{release}
-Requires:       %{name}-infinispan = %{version}-%{release}
-Requires:       %{name}-hazelcast = %{version}-%{release}
 Requires:       %{name}-cdi = %{version}-%{release}
 Requires:       %{name}-websocket-api = %{version}-%{release}
 Requires:       %{name}-websocket-client = %{version}-%{release}
@@ -204,11 +199,6 @@ Requires:       %{name}-websocket-servlet = %{version}-%{release}
 Requires:       %{name}-javax-websocket-client-impl = %{version}-%{release}
 Requires:       %{name}-javax-websocket-server-impl = %{version}-%{release}
 Requires:       %{name}-nosql = %{version}-%{release}
-Requires:       %{name}-httpservice = %{version}-%{release}
-Requires:       %{name}-osgi-boot = %{version}-%{release}
-Requires:       %{name}-osgi-boot-warurl = %{version}-%{release}
-Requires:       %{name}-osgi-boot-jsp = %{version}-%{release}
-Requires:       %{name}-osgi-alpn = %{version}-%{release}
 Requires:       %{name}-quickstart = %{version}-%{release}
 Requires:       %{name}-jstl = %{version}-%{release}
 Requires:       %{name}-alpn-client = %{version}-%{release}
@@ -227,15 +217,17 @@ Provides:       group(%username) = %jtuid
 Provides:       user(%username) = %jtuid
 %endif # without jp_minimal
 
-Obsoletes:      %{name}-manual < 9.4.0-0.4
-Obsoletes:      %{name}-ajp < 9.4.0-0.4
-Obsoletes:      %{name}-nested < 9.4.0-0.4
-Obsoletes:      %{name}-overlay-deployer < 9.4.0-0.4
-Obsoletes:      %{name}-policy < 9.4.0-0.4
-Obsoletes:      %{name}-websocket-mux-extension < 9.4.0-0.4
-Obsoletes:      %{name}-runner < 9.4.0-0.4
-Obsoletes:      %{name}-osgi-npn < 9.4.0-0.4
+# (Added in F25)
 Obsoletes:      %{name}-monitor < 9.4.0-0.4
+# Hazelcast in Fedora is too old for jetty to build against (Added in F29)
+Obsoletes:      %{name}-hazelcast < 9.4.18-1
+# Infinispan in Fedora is too old for jetty to build against (Added in F31)
+Obsoletes:      %{name}-infinispan < 9.4.18-1
+# Eclipse no longer available (Added in F31)
+Obsoletes:      %{name}-osgi-alpn < 9.4.18-1
+Obsoletes:      %{name}-osgi-boot < 9.4.18-1
+Obsoletes:      %{name}-osgi-boot-jsp < 9.4.18-1
+Obsoletes:      %{name}-osgi-boot-warurl < 9.4.18-1
 Source44: import.info
 Source45: jetty.init
 
@@ -287,7 +279,6 @@ Summary:        http-spi module for Jetty
 %package        io
 Group: Networking/WWW
 Summary:        io module for Jetty
-Obsoletes:      %{name}-websocket < 9.4.0-0.4
 
 %description    io
 %{extdesc} %{summary}.
@@ -324,6 +315,8 @@ Summary:        server module for Jetty
 %package        servlet
 Group: Networking/WWW
 Summary:        servlet module for Jetty
+# Eclipse no longer available (Added in F31)
+Obsoletes:      %{name}-httpservice < 9.4.18-1
 
 %description    servlet
 %{extdesc} %{summary}.
@@ -332,7 +325,7 @@ Summary:        servlet module for Jetty
 Group: Networking/WWW
 Summary:        util module for Jetty
 # Utf8Appendable.java is additionally under MIT license
-License:        (ASL 2.0 or EPL) and MIT
+License:        (ASL 2.0 or EPL-1.0) and MIT
 
 %description    util
 %{extdesc} %{summary}.
@@ -400,13 +393,6 @@ Summary:        Jetty CDI Configuration
 %description cdi
 %{extdesc} %{summary}.
 
-%package        hazelcast
-Group: Networking/WWW
-Summary:        hazelcast module for Jetty
-
-%description    hazelcast
-%{extdesc} %{summary}.
-
 %package        fcgi-client
 Group: Networking/WWW
 Summary:        FastCGI client module for Jetty
@@ -419,13 +405,6 @@ Group: Networking/WWW
 Summary:        FastCGI client module for Jetty
 
 %description    fcgi-server
-%{extdesc} %{summary}.
-
-%package        infinispan
-Group: Networking/WWW
-Summary:        infinispan module for Jetty
-
-%description    infinispan
 %{extdesc} %{summary}.
 
 %package        jaspi
@@ -568,41 +547,6 @@ Summary:        nosql module for Jetty
 %description    nosql
 %{extdesc} %{summary}.
 
-%package        httpservice
-Group: Networking/WWW
-Summary:        httpservice module for Jetty
-
-%description    httpservice
-%{extdesc} %{summary}.
-
-%package        osgi-boot
-Group: Networking/WWW
-Summary:        osgi-boot module for Jetty
-
-%description    osgi-boot
-%{extdesc} %{summary}.
-
-%package        osgi-boot-warurl
-Group: Networking/WWW
-Summary:        osgi-boot-warurl module for Jetty
-
-%description    osgi-boot-warurl
-%{extdesc} %{summary}.
-
-%package        osgi-boot-jsp
-Group: Networking/WWW
-Summary:        osgi-boot-jsp module for Jetty
-
-%description    osgi-boot-jsp
-%{extdesc} %{summary}.
-
-%package        osgi-alpn
-Group: Networking/WWW
-Summary:        osgi-alpn module for Jetty
-
-%description    osgi-alpn
-%{extdesc} %{summary}.
-
 %package        quickstart
 Group: Networking/WWW
 Summary:        quickstart module for Jetty
@@ -672,7 +616,7 @@ Summary:        jstl module for Jetty
 Group: Development/Java
 Summary:        Javadoc for %{name}
 # some MIT-licensed code (from Utf8Appendable) is used to generate javadoc
-License:        (ASL 2.0 or EPL) and MIT
+License:        (ASL 2.0 or EPL-1.0) and MIT
 BuildArch: noarch
 
 %description    javadoc
@@ -699,6 +643,10 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r :buildnumber-maven-plugin
+%pom_remove_plugin -r :h2spec-maven-plugin
+
+# Unnecessary pom flattening can be skipped
+%pom_remove_plugin -r :flatten-maven-plugin jetty-bom
 
 %pom_disable_module aggregates/jetty-all
 
@@ -708,6 +656,11 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_dep "com.sun.net.httpserver:http" jetty-http-spi
 
 %pom_change_dep -r org.mortbay.jasper:apache-jsp org.apache.tomcat:tomcat-jasper
+
+%pom_add_dep 'org.junit.jupiter:junit-jupiter-engine:${junit.version}' tests/test-sessions/test-sessions-common
+
+# Old version of jetty not available for tests, so use this version
+%pom_change_dep 'org.eclipse.jetty:jetty-util' 'org.eclipse.jetty:jetty-util:${project.version}' tests/test-webapps/test-servlet-spec/test-spec-webapp
 
 # provided by glassfish-jsp-api that has newer version
 %pom_change_dep -r javax.servlet.jsp:jsp-api javax.servlet.jsp:javax.servlet.jsp-api
@@ -722,14 +675,11 @@ find . -name "*.class" -exec rm {} \;
 # Unwanted JS in javadoc
 sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
 
-# it doesn't like the trailing semicolon
-sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xml
-
 # only used for integration tests
 %pom_remove_plugin :maven-invoker-plugin jetty-jspc-maven-plugin
 
-# missing deps
-%pom_disable_module test-jetty-osgi jetty-osgi/pom.xml
+# These bundles have a dep on Eclipse that is not available on every arch
+%pom_disable_module jetty-osgi
 
 # We don't have asciidoctor-maven-plugin
 %pom_disable_module jetty-documentation
@@ -751,10 +701,25 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 %pom_disable_module test-memcached-sessions tests/test-sessions
 %pom_remove_dep :jetty-memcached-sessions jetty-home
 
-# missing test deps for jetty-hazelcast
-rm -r jetty-hazelcast/src/test
-%pom_remove_dep :::test jetty-hazelcast
-%pom_xpath_remove 'pom:dependency[pom:type="test-jar"]' jetty-hazelcast
+# Hazelcast in Fedora is too old to build against
+%pom_disable_module jetty-hazelcast
+%pom_disable_module test-hazelcast-sessions tests/test-sessions
+%pom_remove_dep :jetty-hazelcast jetty-home
+
+# Infinispan in Fedora is too old to build against
+%pom_disable_module jetty-infinispan
+%pom_disable_module test-infinispan-sessions tests/test-sessions
+%pom_remove_dep :infinispan-embedded jetty-home
+%pom_remove_dep :infinispan-embedded-query jetty-home
+%pom_remove_dep :infinispan-remote jetty-home
+%pom_remove_dep :infinispan-remote-query jetty-home
+%pom_xpath_remove "pom:execution[pom:id='unpack-infinispan-config']" jetty-home
+
+# Not currently able to build tests, so can't build benchmarks
+%pom_disable_module jetty-jmh
+
+# Distribution tests require internet access, so disable
+%pom_disable_module test-distribution tests
 
 # missing conscrypt
 %pom_disable_module jetty-alpn-conscrypt-server jetty-alpn
@@ -798,8 +763,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-jaspi
 %pom_disable_module jetty-rewrite
 %pom_disable_module jetty-nosql
-%pom_disable_module jetty-infinispan
-%pom_disable_module jetty-hazelcast
 %pom_disable_module jetty-unixsocket
 %pom_disable_module tests
 %pom_disable_module examples
@@ -807,7 +770,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-distribution
 %pom_disable_module jetty-runner
 %pom_disable_module jetty-http-spi
-%pom_disable_module jetty-osgi
 %pom_disable_module jetty-alpn
 %pom_disable_module jetty-home
 
@@ -936,8 +898,6 @@ ln -sf %{rundir} %{buildroot}%{apphomedir}/work
 
 # replace the startup script with ours
 cp -p %{SOURCE1} %{buildroot}%{apphomedir}/bin/jetty.sh
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{rundir}
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -978,7 +938,7 @@ exit 0
 %files server -f .mfiles-jetty-server
 %files servlet -f .mfiles-jetty-servlet
 %files util -f .mfiles-jetty-util
-%doc --no-dereference LICENSE-eplv10-aslv20.html NOTICE.txt LICENSE-MIT
+%doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 %files webapp -f .mfiles-jetty-webapp
 %files jmx -f .mfiles-jetty-jmx
 %files xml -f .mfiles-jetty-xml
@@ -1004,7 +964,7 @@ exit 0
 
 %files project -f .mfiles-project
 %doc README.md VERSION.txt
-%doc --no-dereference LICENSE-eplv10-aslv20.html NOTICE.txt
+%doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %files annotations -f .mfiles-jetty-annotations
 %files ant -f .mfiles-jetty-ant
@@ -1013,8 +973,6 @@ exit 0
 %files fcgi-client -f .mfiles-fcgi-client
 %files fcgi-server -f .mfiles-fcgi-server
 %files http-spi -f .mfiles-jetty-http-spi
-%files infinispan -f .mfiles-jetty-infinispan
-%files hazelcast -f .mfiles-jetty-hazelcast
 %files jaspi -f .mfiles-jetty-jaspi
 %files jndi -f .mfiles-jetty-jndi
 %files jsp -f .mfiles-jetty-jsp
@@ -1044,18 +1002,16 @@ exit 0
 %files http2-http-client-transport -f .mfiles-http2-http-client-transport
 %files http2-server -f .mfiles-http2-server
 %files nosql -f .mfiles-jetty-nosql
-%files httpservice -f .mfiles-jetty-httpservice
-%files osgi-alpn -f .mfiles-jetty-osgi-alpn
-%files osgi-boot -f .mfiles-jetty-osgi-boot
-%files osgi-boot-warurl -f .mfiles-jetty-osgi-boot-warurl
-%files osgi-boot-jsp -f .mfiles-jetty-osgi-boot-jsp
 %files spring -f .mfiles-jetty-spring
 %endif # without jp_minimal
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-eplv10-aslv20.html LICENSE-MIT
+%doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 9.4.19-alt1_1.v20190610jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 9.4.11-alt1_3.v20180605jpp8
 - new version
 
