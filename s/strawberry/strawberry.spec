@@ -1,6 +1,6 @@
 Name: strawberry
 Version: 0.5.5
-Release: alt1
+Release: alt2
 Summary: Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -21,7 +21,7 @@ Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.ta
 Patch: strawberry-udisks-headers.patch
 
 BuildRequires: boost-program_options-devel ccache gcc-c++ gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
-BuildRequires: extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler
+BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
 %endif
@@ -96,5 +96,8 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawbs.s
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Jul 15 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt2
+- Added BR.
+
 * Thu Jul 11 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec)
