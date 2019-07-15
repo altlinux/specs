@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-redis
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.3.5
-Release:       alt2_5jpp8
+Release:       alt3_5jpp8
 Summary:       Provides support to increase developer productivity in Java when using Redis
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-redis/
@@ -41,7 +41,7 @@ BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.codehaus.jackson:jackson-mapper-asl)
 BuildRequires: mvn(org.jredis:jredis-core-api)
 BuildRequires: mvn(org.jredis:jredis-core-ri)
-BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.mockito:mockito-core:1)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.springframework:spring-aop)
 BuildRequires: mvn(org.springframework:spring-context)
@@ -97,7 +97,7 @@ sed -i "s/Base64.decode(string)/java.util.Base64.getDecoder().decode(string)/g" 
 %pom_add_dep javax.annotation:jsr250-api::test
 %pom_add_dep javax.transaction:jta::test
 %pom_add_dep junit:junit::test
-%pom_add_dep org.mockito:mockito-core::test
+%pom_add_dep org.mockito:mockito-core:1.10.19:test
 %pom_add_dep org.springframework:spring-test::test
 %pom_add_dep org.springframework:spring-jdbc::test
 
@@ -157,6 +157,9 @@ rm -r src/test/java/org/springframework/data/redis/cache/AbstractNativeCacheTest
 %doc license.txt notice.txt
 
 %changelog
+* Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt3_5jpp8
+ -build with mockito1
+
 * Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt2_5jpp8
 - fixed build
 
