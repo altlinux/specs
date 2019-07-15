@@ -1,5 +1,5 @@
 Name:           python-module-tweepy
-Version:        3.7.0
+Version:        3.8.0
 Release:        alt1
 Summary:        Twitter library for python
 
@@ -9,7 +9,7 @@ URL:            https://github.com/tweepy/tweepy
 
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
-Source0:        tweepy-%{version}.tar.gz
+Source0:        tweepy-%version.tar
 
 BuildArch:      noarch
 BuildRequires(pre): rpm-build-python
@@ -39,6 +39,9 @@ rm -rf %buildroot%python_sitelibdir/examples
 %python_sitelibdir/tweepy-*.egg-info
 
 %changelog
+* Mon Jul 15 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version.
+
 * Mon Apr 08 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
 
