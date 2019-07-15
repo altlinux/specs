@@ -4,7 +4,7 @@
 
 Name:    trove4j
 Version: 3.0.3
-Release: alt1
+Release: alt2
 Summary: High performance collections for java
 Group:   Development/Java
 License: LGPLv2.1
@@ -40,7 +40,7 @@ significant performance gains.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 %patch2 -p1
 
 find -name '*.jar' -delete
@@ -60,5 +60,8 @@ ant -Dversion.number=%version
 %dir %{_javadir}/%{name}
 
 %changelog
+* Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3-alt2
+- Fixed build with new java.
+
 * Fri Nov 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3-alt1
 - Initial build for ALT.
