@@ -23,7 +23,7 @@ BuildRequires: jpackage-1.8-compat
 Name:           maven
 Epoch:          1
 Version:        3.5.4
-Release:        alt1_7jpp8
+Release:        alt1_10jpp8
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -39,8 +39,6 @@ Patch1:         0001-Adapt-mvn-script.patch
 # Downstream-specific, avoids dependency on logback
 # Used only when %%without logback is in effect
 Patch2:         0002-Invoke-logback-via-reflection.patch
-# We don't have mockito 2 yet
-Patch3:         0003-Revert-MNG-6335-Update-Mockito-to-2.12.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava:20.0)
@@ -75,7 +73,7 @@ BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
-BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.mockito:mockito-core) >= 2
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
@@ -179,7 +177,6 @@ BuildArch: noarch
 %setup -q -n apache-%{name}-%{version}
 
 %patch1 -p1
-%patch3 -p1
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -315,6 +312,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_10jpp8
+- fixed build
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_7jpp8
 - build with new mockito
 
