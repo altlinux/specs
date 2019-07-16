@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Because dash is not allowed in RPM version numbers
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           swingx
 Version:        1.6.5.1
-Release:        alt2_11jpp8
+Release:        alt2_13jpp8
 Summary:        A collection of Swing components
 License:        LGPLv2
 URL:            https://swingx.java.net/
@@ -71,10 +68,11 @@ find . -name "*.class" -exec rm -f {} \;
 find . -name "*.so" -exec rm -f {} \;
 find . -name "*.dll" -exec rm -f {} \;
 
-# Don't install SwingX Test Support module (code and classes to
-# support testing SwingX).  Classes contained in this module are for
-# internal SwingX use only.
-%mvn_package :swingx-testsupport __noinstall
+# Don't build or install SwingX Test Support module (code and classes
+# to support testing SwingX). Classes contained in this module are for
+# internal SwingX use only. And the Test Support module doesn't build
+# against the version of mockito in Fedora >= 30.
+%pom_disable_module swingx-testsupport
 
 
 %build
@@ -94,6 +92,9 @@ find . -name "*.dll" -exec rm -f {} \;
 
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_13jpp8
+- build with new mockito
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_11jpp8
 - new version
 
