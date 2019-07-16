@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -65,6 +65,8 @@ Requires: libgtk2-engine-adwaita
 Requires: gnome-backgrounds
 # default font
 Requires: fonts-otf-abattis-cantarell
+# additional icons for cinnamon apps
+Requires: xapps-icons
 
 # Cinnamon uses yelp to show help
 Requires: yelp
@@ -137,6 +139,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue Jul 16 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt2
+- add dependency on xapps-icons (closes: #36996)
+
 * Mon Jul 1 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - bump version
 
