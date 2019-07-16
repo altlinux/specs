@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -24,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 Name:           maven
 Epoch:          1
 Version:        3.5.4
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -156,6 +155,9 @@ Summary:        Core part of Maven
 # If XMvn is part of the same RPM transaction then it should be
 # installed first to avoid triggering rhbz#1014355.
 
+# Require full javapackages-tools since maven-script uses
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 # Maven upstream uses patched version of SLF4J.  They unpack
 # slf4j-simple-sources.jar, apply non-upstreamable, Maven-specific
 # patch (using a script written in Groovy), compile and package as
@@ -261,8 +263,6 @@ ln -sf %{confdir}/logging %{buildroot}%{apphomedir}/conf
 #touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
-
-# touching all ghosts; hack for rpm 4.0.4
 #for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
 #do
 #    mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -315,6 +315,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_7jpp8
+- build with new mockito
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_4jpp8
 - new version
 
