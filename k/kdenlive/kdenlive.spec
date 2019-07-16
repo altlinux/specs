@@ -3,8 +3,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 19.04.2
-Release: alt2
+Version: 19.04.3
+Release: alt1
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -93,6 +93,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_man1dir/kdenlive*
 
 %changelog
+* Tue Jul 16 2019 Sergey V Turchin <zerg@altlinux.org> 19.04.3-alt1
+- new version
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 19.04.2-alt2
 - NMU: remove rpm-build-ubt from BR:
 
@@ -120,43 +123,43 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 * Mon Oct 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.2-alt1
 - new version
 
-* Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.1-alt1%ubt
+* Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.1-alt1
 - new version
 
-* Thu Aug 23 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.0-alt1%ubt
+* Thu Aug 23 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.0-alt1
 - new version
 
-* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Wed May 16 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Wed May 16 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Fri Mar 16 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Fri Mar 16 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
+* Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1
 - new version
 
-* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Tue Oct 31 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+* Tue Oct 31 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1
 - new version
 
-* Thu Jul 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Thu Jul 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2
 - rebuild with ffmpeg
 
-* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
