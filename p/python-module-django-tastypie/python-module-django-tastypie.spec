@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 Group: Development/Python
 License: BSD License
@@ -105,6 +105,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Tue Jul 16 2019 Grigory Ustinov <grenka@altlinux.org> 0.14.2-alt1
+- Build new version.
+
 * Wed Dec 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.14.1-alt1
 - Build new version.
 
