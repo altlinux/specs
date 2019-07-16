@@ -1,43 +1,38 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mockito
-Version:        1.10.19
-Release:        alt1_17jpp8
-Summary:        A Java mocking framework
-
+Version:        2.23.9
+Release:        alt1_4jpp8
+Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
-URL:            http://%{name}.org
+URL:            https://site.mockito.org/
+BuildArch:      noarch
+
+# Source tarball and the script to generate it
 Source0:        %{name}-%{version}.tar.xz
 Source1:        make-%{name}-sourcetarball.sh
-Patch0:         fixup-ant-script.patch
-Patch1:         fix-bnd-config.patch
-Patch2:         %{name}-matcher.patch
-# Workaround for NPE in setting NamingPolicy in cglib
-Patch3:         setting-naming-policy.patch
-# because we have old objenesis
-Patch4:         fix-incompatible-types.patch
 
-BuildArch:      noarch
-BuildRequires:  javapackages-local
-BuildRequires:  java-devel
-BuildRequires:  ant
-BuildRequires:  objenesis
-BuildRequires:  cglib
-BuildRequires:  junit
-BuildRequires:  hamcrest
-BuildRequires:  aqute-bnd
+# A custom build script to allow building with maven instead of gradle
+Source2:        mockito-core.pom
 
-Requires:       objenesis
-Requires:       cglib
-Requires:       junit
-Requires:       hamcrest
+# Mockito expects byte-buddy to have a shaded/bundled version of ASM, but
+# we don't bundle in Fedora, so this patch makes mockito use ASM explicitly
+Patch0:         use-unbundled-asm.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.bytebuddy:byte-buddy)
+BuildRequires:  mvn(net.bytebuddy:byte-buddy-agent)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.objenesis:objenesis)
+BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
 
 %description
@@ -48,7 +43,7 @@ errors.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadocs for %{name}
+Summary: Javadocs for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -57,50 +52,40 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %patch0
-%patch1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
-%pom_add_dep net.sf.cglib:cglib:3.1 maven/mockito-core.pom
-find . -name "*.java" -exec sed -i "s|org\.%{name}\.cglib|net\.sf\.cglib|g" {} +
-mkdir -p lib/compile
+# Use our custom build script
+sed -e 's/@VERSION@/%{version}/' %{SOURCE2} > pom.xml
 
-%pom_xpath_remove 'target[@name="javadoc"]/copy' build.xml
+# OGGi metadata configuration
+cat > osgi.bnd <<EOF
+Automatic-Module-Name: org.mockito
+Bundle-SymbolicName: org.mockito
+Bundle-Name: Mockito Mock Library for Java.
+Import-Package: junit.*;resolution:=optional,org.junit.*;resolution:=optional,org.hamcrest;resolution:=optional,org.mockito*;version="%{version}",*
+Private-Package: org.mockito.*
+-removeheaders: Bnd-LastModified,Include-Resource,Private-Package
+EOF
 
-%build
-build-jar-repository lib/compile objenesis cglib junit hamcrest/core
-ant jar javadoc
-
-# Convert to OSGi bundle
-pushd target
-bnd wrap \
- --version %{version} \
- --output %{name}-core-%{version}.bar \
- --properties ../conf/%{name}-core.bnd \
- %{name}-core-%{version}.jar
-mv %{name}-core-%{version}.bar %{name}-core-%{version}.jar
-
-# Explicit Require-Bundle on hamcrest
-unzip mockito-core-%{version}.jar META-INF/MANIFEST.MF
-sed -i -e '2iRequire-Bundle: org.hamcrest.core' META-INF/MANIFEST.MF
-jar umf META-INF/MANIFEST.MF mockito-core-%{version}.jar
-popd
-
-sed -i -e "s|@version@|%{version}|g" maven/%{name}-core.pom
-%mvn_artifact maven/%{name}-core.pom target/%{name}-core-%{version}.jar
+# Compatibility alias
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
+%build
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+
 %install
-%mvn_install -J target/javadoc
+%mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
+%doc doc/design-docs/custom-argument-matching.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.23.9-alt1_4jpp8
+- new version
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_17jpp8
 - new version
 
