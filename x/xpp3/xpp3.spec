@@ -1,10 +1,7 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global oversion 1.1.4c
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.4
-Release:        alt1_19.cjpp8
+Release:        alt1_20.cjpp8
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
@@ -99,6 +96,9 @@ ln -s xpp3_min.jar %buildroot%_javadir/xpp3-minimal.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_20.cjpp8
+- build with new gradle
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_19.cjpp8
 - fc29 update (using specdiff-tmp)
 
