@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,13 +17,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.5
-Release:           alt1_5jpp8
+Version:           4.5.6
+Release:           alt1_3jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
 
 Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
+Patch1:            0002-Port-to-mockito-2.patch
 
 BuildArch:         noarch
 
@@ -80,7 +80,9 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1
 
+%mvn_package :::tests: __noinstall
 %mvn_package :httpclient-cache cache
 
 # Remove optional build deps not available in Fedora
@@ -97,7 +99,6 @@ BuildArch: noarch
 rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
 
 # Don't compile/run httpclient-cache tests - they are incompatible with EasyMock 3.3
-%pom_remove_plugin org.apache.maven.plugins:maven-jar-plugin httpclient-cache
 %pom_remove_dep org.easymock:easymockclassextension
 for dep in org.easymock:easymockclassextension org.slf4j:slf4j-jcl; do
     %pom_remove_dep $dep httpclient-cache
@@ -106,49 +107,30 @@ rm -rf httpclient-cache/src/test
 
 %pom_remove_plugin :download-maven-plugin httpclient
 
-# Add proper Apache felix bundle plugin instructions
-# so that we get a reasonable OSGi manifest.
-for module in httpclient httpmime httpclient-cache fluent-hc; do
-    %pom_xpath_remove "pom:project/pom:packaging" $module
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
-done
+%pom_xpath_inject "pom:archive" "
+    <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>"
 
-# Make fluent-hc into bundle
+%pom_xpath_inject pom:build/pom:plugins "
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>bundle-manifest</id>
+          <phase>process-classes</phase>
+          <goals>
+            <goal>manifest</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>"
+
 %pom_xpath_inject pom:build "
-<plugins>
+<pluginManagement>
+  <plugins>
     <plugin>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
-    </plugin>
-</plugins>" fluent-hc
-
-# Make httpmime into bundle
-%pom_xpath_inject pom:build/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
-    </plugin>" httpmime
-
-# Make httpclient into bundle
-%pom_xpath_inject pom:reporting/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <configuration>
-        <instructions>
-          <Export-Package>*</Export-Package>
-          <Private-Package></Private-Package>
-          <Import-Package>!org.apache.avalon.framework.logger,!org.apache.log,!org.apache.log4j,*</Import-Package>
-        </instructions>
-      </configuration>
-    </plugin>" httpclient
-%pom_xpath_inject pom:build/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
       <configuration>
         <instructions>
           <Export-Package>org.apache.http.*,!org.apache.http.param</Export-Package>
@@ -158,10 +140,14 @@ done
         </instructions>
         <excludeDependencies>true</excludeDependencies>
       </configuration>
-    </plugin>" httpclient
+    </plugin>
+  </plugins>
+</pluginManagement>
+" httpclient
 
-# Make httpclient-cache into bundle
-%pom_xpath_inject pom:build/pom:plugins "
+%pom_xpath_inject pom:build "
+<pluginManagement>
+  <plugins>
     <plugin>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-bundle-plugin</artifactId>
@@ -175,7 +161,9 @@ done
         </instructions>
         <excludeDependencies>true</excludeDependencies>
       </configuration>
-    </plugin>" httpclient-cache
+    </plugin>
+  </plugins>
+</pluginManagement>" httpclient-cache
 
 # requires network
 rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
@@ -207,6 +195,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.6-alt1_3jpp8
+- new version
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.5-alt1_5jpp8
 - fc29 update
 
