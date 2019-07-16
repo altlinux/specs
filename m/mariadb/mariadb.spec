@@ -35,9 +35,14 @@
 %def_without rocksdb
 %endif
 
-%def_with galera
 %def_without cassandra
+%ifnarch armh
+%def_with galera
 %def_with oqgraph
+%else
+%def_without galera
+%def_without oqgraph
+%endif
 %def_with sphinx
 %def_with connect
 %def_with gssapi
@@ -46,7 +51,7 @@
 
 Name: mariadb
 Version: 10.4.6
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -1008,6 +1013,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.4.6-alt3
+- built without galera/oqgraph on armh
+
 * Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.6-alt2
 - add dir /usr/lib/mariadb/plugin/auth_pam_tool_dir to chroot
 
