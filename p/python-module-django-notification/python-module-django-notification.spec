@@ -1,12 +1,10 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140207.2
 %define module_name django-notification
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.2.1
-#Release: alt1.git20140207.1
+Version: 0.2.2
+Release: alt1
 Group: Development/Python
 License: MIT License
 Summary: User notification management for the Django web framework
@@ -73,6 +71,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jul 16 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
+- Build new version.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1.git20140207.2
 - Rebuild with python3.7.
 
