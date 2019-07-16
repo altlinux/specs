@@ -46,7 +46,7 @@
 
 Name: mariadb
 Version: 10.4.6
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -507,7 +507,7 @@ export LDFLAGS
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
-mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir/auth_pam_tool_dir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify}
 
 # don't fiddle with the initscript!
@@ -1008,6 +1008,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.6-alt2
+- add dir /usr/lib/mariadb/plugin/auth_pam_tool_dir to chroot
+
 * Fri Jul 12 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.6-alt1
 - 10.4.6
 
