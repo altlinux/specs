@@ -1,11 +1,11 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Note to packagers: When rebasing this to a later version, do not
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy
 Version:        2.4.8
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -42,7 +42,6 @@ Patch6:         0007-Fix-missing-extension-definitions.patch
 
 BuildRequires:  gradle-local >= 2.1
 BuildRequires:  javapackages-local
-BuildRequires:  java-devel >= 1.8
 BuildRequires:  ant
 BuildRequires:  antlr-tool
 BuildRequires:  ant-antlr
@@ -55,7 +54,6 @@ BuildRequires:  jline
 BuildRequires:  apache-commons-cli
 BuildRequires:  apache-commons-beanutils
 BuildRequires:  apache-commons-collections
-BuildRequires:  checkstyle
 BuildRequires:  jarjar
 BuildRequires:  glassfish-jsp-api
 BuildRequires:  glassfish-servlet-api
@@ -366,7 +364,7 @@ SentUpstream: No public bugtracker
   -->
 </application>
 EOF
-# multiple -f flags in %files: merging -f .mfiles-all into -f .mfiles
+# multiple -f flags in %files for lib: merging -f .mfiles-all into -f .mfiles
 cat .mfiles-all >> .mfiles
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/groovy-starter.conf`
@@ -402,6 +400,9 @@ touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
 %files xml -f .mfiles-xml
 
 %changelog
+* Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_9jpp8
+- build with new gradle
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_8jpp8
 - new version
 
