@@ -1,6 +1,6 @@
 %define branch 2.2
 %define version %branch.3
-%define release alt1
+%define release alt2
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -26,6 +26,8 @@ Provides: %pkg_name = %EVR
 %py3_provides django.utils.six.moves.urllib.parse
 %py3_provides django.utils.six.moves.urllib.request
 Conflicts: python3-module-django1.11
+
+%add_python3_req_skip django.test.signals
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six
@@ -189,6 +191,9 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt2
+- tear circular dependencies python3-module-django2.2 and python3-module-django2.2-tests
+
 * Mon Jul 15 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt1
 - 2.2.3
 - build python3 only
