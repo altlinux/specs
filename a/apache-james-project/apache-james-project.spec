@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-james-project
 Version:        1.8.1
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Main project POM files and resources
 License:        ASL 2.0
 URL:            http://james.apache.org/
@@ -45,6 +42,9 @@ Main project POM files and resources for Apache James project.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_18jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_17jpp8
 - fc29 update
 
