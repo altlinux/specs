@@ -1,14 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             decentxml
 Version:          1.4
-Release:          alt3_18jpp8
+Release:          alt3_19jpp8
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 URL:              http://code.google.com/p/%{name}
@@ -75,6 +75,9 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 %doc LICENSE
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_19jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_18jpp8
 - fc29 update
 
