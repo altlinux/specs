@@ -1,19 +1,18 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    c3p0
 Version: 0.9.5
-Release: alt1_0.7.pre8jpp8
+Release: alt1_0.8.pre8jpp8
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2 or EPL
 URL:     https://github.com/swaldman/c3p0
-Group:   Development/Other
 
 BuildRequires: javapackages-local
 BuildRequires: ant
@@ -33,8 +32,8 @@ and Statement Pooling, as described by the jdbc3 spec and jdbc2 standard
 extension.
 
 %package  javadoc
+Group: Development/Java
 Summary:  API documentation for %{name}
-Group:    Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -81,6 +80,9 @@ cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt1_0.8.pre8jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt1_0.7.pre8jpp8
 - fc29 update
 
