@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shared-jar
 Version:        1.2
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 # Maven-shared defines maven-shared-jar version as 1.1
 Epoch:          1
 Summary:        Maven JAR Utilities
@@ -69,6 +69,9 @@ find -type f -iname '*.jar' -delete
 
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_7jpp8
+- fc update & java 8 build
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_5jpp8
 - java fc28+ update
 
