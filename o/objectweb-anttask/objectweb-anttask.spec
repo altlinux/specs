@@ -3,8 +3,8 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -46,13 +46,12 @@ BuildRequires: jpackage-generic-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_17jpp8
+Release:        alt5_17jpp8
 Epoch:          0
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
 BuildArch:      noarch
 Source0:        http://download.forge.objectweb.org/monolog/ow_util_ant_tasks_1.3.2.zip
-BuildRequires:  java-devel
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  jpackage-utils >= 0:1.6
 
@@ -112,6 +111,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt5_17jpp8
+- fc update & java 8 build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_17jpp8
 - new version
 
