@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # use dcm4che-test as name, no use carrying the version in the name
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt3_0.16.20110530svn15516jpp8
+Release:        alt3_0.17.20110530svn15516jpp8
 Summary:        Test images for dcm4che2
 License:        MPLv1.1 or GPLv2 or LGPLv2
 URL:            http://www.dcm4che.org/confluence/display/proj/The+Project
@@ -21,7 +18,6 @@ BuildArch:      noarch
 # tar -cvJf dcm4che2-test-2.6.tar.xz dcm4che2-test-2.6/
 Source0:        dcm4che2-test-%{version}.tar.xz
 
-BuildRequires:    java-devel
 BuildRequires:    maven-local
 Source44: import.info
 
@@ -53,6 +49,9 @@ rm -rf target/site/apidocs/javadoc.sh
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.17.20110530svn15516jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.16.20110530svn15516jpp8
 - fc29 update
 
