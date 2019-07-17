@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           SimplyHTML
 Version:        0.16.18
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Application and a java component for rich text processing
 License:        GPLv2 and BSD
 URL:            http://simplyhtml.sourceforge.net/
@@ -60,6 +57,9 @@ echo 'rootProject.name="%{name}"' >settings.gradle
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.18-alt1_6jpp8
+- fc update & java 8 build
+
 * Mon Feb 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.18-alt1_5jpp8
 - java update
 
