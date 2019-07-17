@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java unzip
+BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -31,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt2_31jpp8
+Release:        alt2_33jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -127,6 +127,9 @@ install -pm 755 lib/libwrapper.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 %doc --no-dereference doc/license.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt2_33jpp8
+- fc update & java 8 build
+
 * Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt2_31jpp8
 - e2k support
 
