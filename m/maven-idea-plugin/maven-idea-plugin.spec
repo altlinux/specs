@@ -1,17 +1,16 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-idea-plugin
 Version:        2.2.1
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Maven IDEA Plugin
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 # svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-idea-plugin-2.2.1
@@ -70,6 +69,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_11jpp8
+- fc update & java 8 build
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_9jpp8
 - java update
 
