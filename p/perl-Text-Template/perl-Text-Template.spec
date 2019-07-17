@@ -2,7 +2,7 @@
 %define module Text-Template
 
 Name: perl-Text-Template
-Version: 1.55
+Version: 1.56
 Release: alt1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -11,7 +11,7 @@ Summary: Expand template text with embedded Perl
 Group: Development/Perl
 License: GPL or Artistic
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/Text-Template-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,7 +32,7 @@ of the program into the template.  That prevents code bloat and encour-
 ages functional separation.
 
 %prep
-%setup -q -n Text-Template-%{version}
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,11 +41,14 @@ ages functional separation.
 %perl_vendor_install
 
 %files
-%doc LICENSE README Changes
+%doc README Changes
 #%doc README Changes FAQ ANNOUNCE scripts templates
 %perl_vendor_privlib/Text*
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
+- automated CPAN update
+
 * Tue Feb 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
 - automated CPAN update
 
