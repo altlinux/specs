@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-mime4j
 Version:        0.8.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Apache JAMES Mime4j
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
@@ -70,6 +70,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_3jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_2jpp8
 - fc29 update
 
