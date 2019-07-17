@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-maven-plugin
 Version:       1.0.2
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Maven XML Plugin
 License:       ASL 2.0
 URL:           http://www.mojohaus.org/xml-maven-plugin/
@@ -64,6 +64,9 @@ sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.x
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp8
+- fc update & java 8 build
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp8
 - java update
 
