@@ -15,8 +15,8 @@
 %define _enable_test 1
 
 Name: perl-Apache-Test
-Version: 1.40
-Release: alt2
+Version: 1.41
+Release: alt1
 
 Summary: Test.pm wrapper with helpers for testing Apache
 
@@ -30,7 +30,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Autoreq: yes, noperl
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/S/SH/SHAY/Apache-Test-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Dec 09 2006
 BuildRequires: perl-devel perl-libwww apache2-mod_perl
@@ -41,7 +41,7 @@ testing an Apache server.
 
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -56,6 +56,9 @@ rm -f %buildroot%perl_vendor_privlib/Apache/TestConfigData.pm
 %perl_vendor_privlib/Apache/
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
+- automated CPAN update
+
 * Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.40-alt2
 - BuildRequires w/o apache1
 
