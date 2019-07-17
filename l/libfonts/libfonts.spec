@@ -1,23 +1,23 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libfonts
 Version: 1.1.3
-Release: alt1_21jpp8
+Release: alt1_23jpp8
 Summary: TrueType Font Layouting
 License: LGPLv2 and UCD
-Group: System/Libraries
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib java-devel jpackage-utils libloader >= 1.1.3
+BuildRequires: ant ant-contrib jpackage-utils libloader >= 1.1.3
 Requires: jpackage-utils libloader >= 1.1.3
 BuildArch: noarch
 Patch0: libfonts-1.1.2.build.patch
@@ -29,8 +29,8 @@ This library allows to read TrueType-Font files to extract layouting specific
 informations.
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Java
+Summary: Javadoc for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_23jpp8
+- fc update & java 8 build
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_21jpp8
 - java update
 
