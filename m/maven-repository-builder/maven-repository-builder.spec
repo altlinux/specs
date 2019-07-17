@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-repository-builder
 Version:        1.0
-Release:        alt3_8jpp8
+Release:        alt3_10jpp8
 # Maven-shared defines maven-repository-builder version as 1.0
 Epoch:          1
 Summary:        Maven repository builder
@@ -77,6 +77,9 @@ cp %{SOURCE1} LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_10jpp8
+- fc update & java 8 build
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_8jpp8
 - java fc28+ update
 
