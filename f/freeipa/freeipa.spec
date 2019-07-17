@@ -8,6 +8,7 @@
 %def_without only_client
 %endif
 
+%def_with fastlint
 %def_with fasttest
 %if_with lint
     %define linter_options --enable-pylint --with-jslint
@@ -32,12 +33,13 @@
 %define pki_version 10.6.7
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
-%define slapi_nis_version 0.56.1
+%define slapi_nis_version 0.56.3
 %define sssd_version 1.16.3
+%define openldap_version 2.4.47-alt2
 
 Name: freeipa
 Version: 4.7.2
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -58,7 +60,7 @@ BuildRequires: libpopt-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
 BuildRequires: libxmlrpc-devel
-BuildRequires: openldap-devel
+BuildRequires: openldap-devel >= %openldap_version
 
 %if_without only_client
 BuildRequires(pre): rpm-macros-apache2
@@ -90,6 +92,19 @@ BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-pyasn1-modules
 BuildRequires: python3-module-six
 BuildRequires: python3-module-sss_nss_idmap
+
+%if_with fasttest
+BuildRequires: keyutils
+%endif
+
+#
+# Build dependencies for wheel packaging and PyPI upload
+#
+%if_with wheels
+BuildRequires: python3(tox)
+BuildRequires: python3(twine)
+BuildRequires: python3(wheel)
+%endif
 
 #
 # Build dependencies for lint and fastcheck
@@ -163,7 +178,7 @@ Requires: libp11-kit
 Requires: gzip
 Requires: oddjob
 Requires: 389-ds-base >= %ds_version
-Requires: openldap-clients
+Requires: openldap-clients >= %openldap_version
 Requires: nss-utils
 Requires: krb5-kdc >= %krb5_version
 Requires: krb5-kinit >= %krb5_version
@@ -178,6 +193,7 @@ Requires: python3-module-ipaserver = %EVR
 Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-gssapi
 Requires: python3-module-systemd
+Requires: slapi-nis >= %slapi_nis_version
 
 # upgrade path from monolithic -server to -server + -server-dns
 Obsoletes: %name-server <= 4.2.0
@@ -373,7 +389,8 @@ Summary: Python3 libraries used by IPA
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: gnupg2
-Requires: libkeyutils
+Requires: keyutils
+Requires: less
 Requires: python3-module-cffi
 Requires: python3-module-ipa_hbac
 Requires: python3-module-ldap >= %python_ldap_version
@@ -593,7 +610,7 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 
 %check
 # run tests in upstream PR manner
-%{?_with_lint:make "GIT_BRANCH=master" fastlint}
+%{?_with_fastlint:make "GIT_BRANCH=master" fastlint}
 %{?_with_fasttest:make fasttest}
 %{?_with_lint:make lint}
 %make check VERBOSE=yes LIBDIR=%_libdir
@@ -980,6 +997,9 @@ fi
 %python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Mon Jul 15 2019 Stanislav Levin <slev@altlinux.org> 4.7.2-alt3
+- Added support for CI testing (ALT).
+
 * Mon May 27 2019 Stanislav Levin <slev@altlinux.org> 4.7.2-alt2
 - Fixed `without_lint` build.
 - Fixed replica install.
