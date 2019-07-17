@@ -1,11 +1,8 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
@@ -40,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           slf4j
 Version:        1.7.25
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
@@ -237,6 +234,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_6jpp8
+- fc update & java 8 build
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_4jpp8
 - java update
 
