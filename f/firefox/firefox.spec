@@ -6,7 +6,7 @@
 
 %define gst_version 1.0
 %define nspr_version 4.21
-%define nss_version 3.44.0
+%define nss_version 3.45.0
 %define rust_version  1.35.0
 %define cargo_version 1.35.0
 
@@ -14,8 +14,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        67.0.4
-Release:        alt2
+Version:        68.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -39,21 +39,11 @@ Patch002: 0002-SUSE-NonGnome-KDE-integration.patch
 Patch003: 0003-ALT-Use-system-nspr-headers.patch
 Patch004: 0004-FEDORA-build-arm-libopus.patch
 Patch005: 0005-FEDORA-build-arm.patch
-Patch006: 0006-MOZILLA-1423598-wayland-popup-tooltip-windows-can-be.patch
-Patch007: 0007-MOZILLA-1532643-wayland-CreateWidgetForPopup-needs-w.patch
-Patch008: 0008-MOZILLA-1535567-wayland-Fails-to-render-popup-window.patch
-Patch009: 0009-MOZILLA-1468911-wayland-Visible-artifacts-during-win.patch
-Patch010: 0010-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch011: 0011-MOZILLA-1353817-skia-build-error-on-aarch64.patch
-Patch012: 0012-MOZILLA-1508378-Fix-round-error-when-damage-rect-siz.patch
-Patch013: 0013-MOZILLA-1517205-WebRender-Crash-on-Wayland-when-addi.patch
-Patch014: 0014-MOZILLA-1539471-Track-active-popup-windows-on-Waylan.patch
-Patch015: 0015-MOZILLA-1521249-part-0-Remove-Rust-version-cap-from-.patch
-Patch016: 0016-MOZILLA-1521249-part-1-Update-encoding_rs-to-0.8.16.patch
-Patch017: 0017-MOZILLA-1521249-part-2-Make-packed_simd-compile-with.patch
-Patch018: 0018-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch019: 0019-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-
+Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch009: 0009-ALT-Include-linux-sockios.h-header.patch
+Patch010: 0010-ALT-Fix-aarch64-build.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -142,7 +132,7 @@ The Mozilla Firefox project is a redesign of Mozilla's browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
@@ -182,15 +172,6 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch008 -p1
 %patch009 -p1
 %patch010 -p1
-%patch011 -p1
-%patch012 -p1
-%patch013 -p1
-%patch014 -p1
-%patch015 -p1
-%patch016 -p1
-%patch017 -p1
-%patch018 -p1
-%patch019 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -226,16 +207,15 @@ replace-with = "vendored-sources"
 directory = "$PWD/my_rust_vendor"
 EOF
 
-env CARGO_HOME="$PWD/.cargo" cargo install cbindgen
-
-rm -f -- .cargo/config
-
 
 %build
 cd mozilla
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %firefox_prefix
+
+env CARGO_HOME="$PWD/.cargo" \
+	cargo install cbindgen
 
 export MOZ_BUILD_APP=browser
 
@@ -415,6 +395,31 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Jul 11 2019 Alexey Gladkov <legion@altlinux.ru> 68.0-alt1
+- New release (68.0).
+- Fixed:
+  + CVE-2019-9811: Sandbox escape via installation of malicious language pack
+  + CVE-2019-11711: Script injection within domain through inner window reuse
+  + CVE-2019-11712: Cross-origin POST requests can be made with NPAPI plugins by following 308 redirects
+  + CVE-2019-11713: Use-after-free with HTTP/2 cached stream
+  + CVE-2019-11714: NeckoChild can trigger crash when accessed off of main thread
+  + CVE-2019-11729: Empty or malformed p256-ECDH public keys may trigger a segmentation fault
+  + CVE-2019-11715: HTML parsing error can contribute to content XSS
+  + CVE-2019-11716: globalThis not enumerable until accessed
+  + CVE-2019-11717: Caret character improperly escaped in origins
+  + CVE-2019-11718: Activity Stream writes unsanitized content to innerHTML
+  + CVE-2019-11719: Out-of-bounds read when importing curve25519 private key
+  + CVE-2019-11720: Character encoding XSS vulnerability
+  + CVE-2019-11721: Domain spoofing through unicode latin 'kra' character
+  + CVE-2019-11730: Same-origin policy treats all files in a directory as having the same-origin
+  + CVE-2019-11723: Cookie leakage during add-on fetching across private browsing boundaries
+  + CVE-2019-11724: Retired site input.mozilla.org has remote troubleshooting permissions
+  + CVE-2019-11725: Websocket resources bypass safebrowsing protections
+  + CVE-2019-11727: PKCS#1 v1.5 signatures can be used for TLS 1.3
+  + CVE-2019-11728: Port scanning through Alt-Svc header
+  + CVE-2019-11710: Memory safety bugs fixed in Firefox 68
+  + CVE-2019-11709: Memory safety bugs fixed in Firefox 68 and Firefox ESR 60.8
+
 * Mon Jul 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 67.0.4-alt2
 - Added ppc64le support.
 - spec: cleaned up rpm-build internal macros.
