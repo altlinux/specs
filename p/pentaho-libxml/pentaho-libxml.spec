@@ -1,25 +1,25 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define origname libxml
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_17jpp8
+Release: alt1_19jpp8
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
-Group: System/Libraries
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{origname}-%%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
 Source: %{origname}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib java-devel jpackage-utils libbase libloader
+BuildRequires: ant ant-contrib jpackage-utils libbase libloader
 Requires: java jpackage-utils libbase >= 1.1.2 libloader >= 1.1.2
 BuildArch: noarch
 Patch0: libxml-1.1.2-build.patch
@@ -30,8 +30,8 @@ Pentaho LibXML is a namespace aware SAX-Parser utility library. It eases the
 pain of implementing non-trivial SAX input handlers.
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Java
+Summary: Javadoc for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_19jpp8
+- fc update & java 8 build
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_17jpp8
 - java update
 
