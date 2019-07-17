@@ -17,8 +17,8 @@ BuildRequires: jpackage-1.8-compat
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.6
-Release:           alt1_3jpp8
+Version:           4.5.7
+Release:           alt1_1jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
@@ -94,6 +94,7 @@ BuildArch: noarch
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 # Fails due to strict crypto policy - uses DSA in test data
 rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
@@ -195,6 +196,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.7-alt1_1jpp8
+- new version
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.6-alt1_3jpp8
 - new version
 
