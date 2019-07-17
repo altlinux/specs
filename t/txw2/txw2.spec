@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: txw2
 Version: 20110809
-Release: alt2_18jpp8
+Release: alt2_20jpp8
 Summary: Typed XML writer for Java
 License: CDDL-1.1 and GPLv2 with exceptions
 URL: https://txw.dev.java.net
@@ -66,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_20jpp8
+- fc update & java 8 build
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_18jpp8
 - java update
 
