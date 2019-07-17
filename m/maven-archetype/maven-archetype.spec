@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archetype
 Version:        2.4
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
@@ -222,6 +222,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_10jpp8
+- fc update & java 8 build
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_8jpp8
 - java update
 
