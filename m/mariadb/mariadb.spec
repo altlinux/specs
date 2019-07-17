@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.4.6
-Release: alt3
+Release: alt4
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -782,6 +782,7 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/%name
 %attr(750,root,mysql) %dir %ROOT/%prefix/%plugindir
+%attr(750,root,mysql) %dir %ROOT/%prefix/%plugindir/auth_pam_tool_dir
 %if_with galera
 %attr(750,root,mysql) %dir %ROOT/%_libdir/galera
 %endif
@@ -1013,6 +1014,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 17 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.6-alt4
+- fix execute prestart chroot build
+
 * Tue Jul 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.4.6-alt3
 - built without galera/oqgraph on armh
 
