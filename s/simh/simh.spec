@@ -1,6 +1,6 @@
 Name: simh
-Version: 3.9.0
-Release: alt0.1
+Version: 3.10.0
+Release: alt1
 Summary: A highly portable, multi-system emulator
 
 Group: Emulators
@@ -88,6 +88,9 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 #%%doc DOC/*.pdf
 
 %changelog
+* Tue Jul 16 2019 Andrey Bergman <vkni@altlinux.org> 3.10.0-alt1
+- Version update.
+
 * Sun Aug 05 2012 Andrey Bergman <vkni@altlinux.org> 3.9.0-alt0.1
 - Version update.
 
