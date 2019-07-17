@@ -2,15 +2,15 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt2_10jpp8
+Release:        alt2_11jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -283,6 +283,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_11jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_10jpp8
 - fc29 update
 
