@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bcel
 Version:        6.2
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
@@ -85,6 +82,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.2-alt1_4jpp8
+- fc update & java 8 build
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:6.2-alt1_2jpp8
 - java update
 
