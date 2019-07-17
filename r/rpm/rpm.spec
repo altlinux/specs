@@ -18,7 +18,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt11
+Release: alt12
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -287,7 +287,6 @@ for i in $(find . -name ltmain.sh) ; do
      sed -i.backup -e 's~compiler_flags=$~compiler_flags="%optflags"~' $i
 done;
 
-%define _configure_target --build=%_target_platform --host=%_target_platform
 %configure \
 	--with-vendor=alt \
 	--with-external-db \
@@ -541,6 +540,12 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Wed Jul 17 2019 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt12
+- Add E2K arch support:
+  - add e2k entries in rpmrc.in;
+  - add runtime arch detection.
+- Remove unnecessary _configure_target redefinition.
+
 * Fri Jun 28 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt11
 - Renamed /usr/lib/tmpfiles.d/rpm.conf to /lib/tmpfiles.d/rpm.conf.
 - rpmspec: backported my parseBits fixes from rpm-4.15.0.
