@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jchardet
 Version:        1.1
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
@@ -69,6 +69,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_19jpp8
+- fc update & java 8 build
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_18jpp8
 - fc29 update
 
