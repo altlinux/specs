@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt68.1
+Release: alt69
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -229,6 +229,9 @@ printf '%_target_cpu\t%_target_cpu' >> buildlib/archtable
 
 %autoreconf
 %add_optflags -DAPTRPM_ID=\\\"%name-%{?epoch:%epoch:}%version-%release%{?disttag::%disttag}.%_target_cpu\\\"
+%ifarch %e2k
+%add_optflags -std=gnu++11
+%endif
 %configure --includedir=%_includedir/apt-pkg %{subst_enable static}
 
 # Probably this obsolete now?
@@ -317,6 +320,9 @@ unset RPM_PYTHON
 %_libdir/%name/methods/https
 
 %changelog
+* Wed Jul 17 2019 Andrew Savchenko <bircoph@altlinux.org> 0.5.15lorg2-alt69
+- Add E2K arch support.
+
 * Thu Jul  4 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt68.1
 - Made the treatment of the File Provides and the version ID of
   installed packages "stable": not affected negatively by sources.list.
