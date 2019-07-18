@@ -1,18 +1,18 @@
 Name: libglfw3
-Version: 3.2.1
+Version: 3.3
 Release: alt1
 Summary: A cross-platform multimedia library
 License: zlib
 Group: System/Libraries
 Url: http://www.glfw.org/index.html
-Source: glfw-%version.tar.bz2
+Source: %version.tar.gz
 Obsoletes: libglfw = 3.0.2
 
 # Automatically added by buildreq on Wed Oct 16 2013
 # optimized out: cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 BuildRequires: cmake doxygen glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel libxkbcommon-devel
-BuildRequires:  libvulkan-devel
-BuildRequires:  libwayland-client-devel libwayland-cursor-devel libwayland-server-devel wayland-devel
+BuildRequires: libvulkan-devel
+BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-server-devel wayland-devel
 
 %description
 GLFW is a free, Open Source, multi-platform library for OpenGL
@@ -46,7 +46,7 @@ find . -type f | xargs sed -i 's/\r//'
 %makeinstall -C BUILD DESTDIR=%buildroot PREFIX=%prefix LIBDIR=%_lib
 
 %files
-%doc README.md COPYING.txt
+%doc README.md
 %_libdir/libglfw.so.*
 
 %files devel
@@ -56,6 +56,9 @@ find . -type f | xargs sed -i 's/\r//'
 %_libdir/cmake/glfw3/*.cmake
 
 %changelog
+* Thu Jul 18 2019 Fr. Br. George <george@altlinux.ru> 3.3-alt1
+- Autobuild version bump to 3.3
+
 * Sat Mar 17 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1
 - NMU: updated to 3.2.1
 
