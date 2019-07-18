@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.2
 
 %def_enable gtk_doc
 
 Name: nautilus-python
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
@@ -87,6 +87,9 @@ rm -f examples/{Makefile*,README.in}
 %exclude %_docdir/%name
 
 %changelog
+* Thu Jul 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
 - updated to NAUTILUS_PYTHON_1_2_2-11-g13d40c1
 - switched to python3
