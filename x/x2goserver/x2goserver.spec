@@ -2,8 +2,8 @@
 %define nx_version 3.5.2.31
 
 Name:    x2goserver
-Version: 4.1.0.2
-Release: alt2
+Version: 4.1.0.3
+Release: alt1
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -409,6 +409,9 @@ exit 0
 %_datadir/x2go/versions/VERSION.x2goserver-xsession
 
 %changelog
+* Thu Jul 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0.3-alt1
+- version updated to 4.1.0.3
+
 * Mon Jun 01 2019 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.2-alt2
 - fix tmpfiles
 
