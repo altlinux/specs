@@ -4,7 +4,7 @@
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -43,7 +43,7 @@ BuildRequires: libgjs-devel
 
 %description
 Foliate is a simple and modern GTK eBook reader with following features:
-- View EPUB, .mobi, .azw, and .azw3 files
+- View EPUB and Kindle files
 - Two-page view and scrolled view
 - Customize font and line-spacing
 - Light, sepia, dark, and invert mode
@@ -77,6 +77,9 @@ Foliate is a simple and modern GTK eBook reader with following features:
 
 
 %changelog
+* Thu Jul 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Mon Jul 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
