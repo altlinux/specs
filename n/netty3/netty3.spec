@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: rpm-build-java /proc
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty3
 Version:        3.10.6
-Release:        alt2_5jpp8
+Release:        alt2_6jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 # CC0: src/main/java/org/jboss/netty/handler/codec/base64/Base64.java
 License:        ASL 2.0 and BSD and CC0
@@ -145,6 +142,9 @@ tar -x -C ~ -f %SOURCE21
 %doc --no-dereference LICENSE.txt NOTICE.txt
  
 %changelog
+* Thu Jul 18 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt2_6jpp8
+- java 8 build
+
 * Sat Feb 02 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt2_5jpp8
 - fixed build
 
