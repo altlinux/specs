@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190625
+Version: 20190717
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,29 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Jul 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20190717-alt1
+- upstream changes (GIT bf13a71):
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 22161 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + amdgpu: update vega10 VCE firmware (thx Alex Deucher)
+  + amdgpu: update picasso vcn firmware (thx Alex Deucher)
+  + amdgpu: update raven vcn firmware (thx Alex Deucher)
+  + amdgpu: update tonga to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: update vega12 to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: partially revert 2579167548be33afb1fe2a9a5c141561ee5a8bbe (thx Alex Deucher)
+  + amdgpu: update vega10 to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: update polaris12 to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: update raven2 to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: update raven to latest 19.20 firmware (thx Alex Deucher)
+  + amdgpu: update picasso to latest 19.20 firmware (thx Alex Deucher)
+  + drm/i915/firmware: Add v33 of GuC for ICL (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v33 of GuC for KBL (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v33 of GuC for SKL (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v33 of GuC for GLK (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v33 of GuC for BXT (thx Anusha Srivatsa)
+
 * Wed Jul 03 2019 Cronbuild Service <cronbuild@altlinux.org> 20190625-alt1
 - upstream changes (GIT 70e4394):
   + rsi: add firmware image for redpine 9116 chipset (thx Siva Rebbagondla)
