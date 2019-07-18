@@ -2,7 +2,7 @@
 
 Name:      appstream-data
 Summary:   ALT Linux AppStream metadata
-Version:   20190715
+Version:   20190718
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -31,6 +31,10 @@ cp -r manual-%version/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Thu Jul 18 2019 Andrey Cherepanov <cas@altlinux.org> 20190718-alt1
+- Add LibreOffice and LibreOffice-still.
+- Fix gnome-games-aisleriot item.
+
 * Mon Jul 15 2019 Andrey Cherepanov <cas@altlinux.org> 20190715-alt1
 - Add applications and popular fonts.
 
