@@ -14,8 +14,8 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.18.2
-Release: alt3
+Version: 0.18.3
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -225,6 +225,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Thu Jul 18 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.3-alt1
+- New version.
+
 * Fri May 24 2019 Slava Aseev <ptrnine@altlinux.org> 1:0.18.2-alt3
 - Rebuild with vtk8.2
 
