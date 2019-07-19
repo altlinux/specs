@@ -1,0 +1,78 @@
+Name: waypipe
+Version: 0.3.0.0.26.git99c24b9
+Release: alt1
+
+Summary: Network transparency agent for Wayland
+
+Group: Networking/File transfer
+License: MIT/X11
+URL: https://gitlab.freedesktop.org/mstoeckl/waypipe/
+
+Source: %name-%version-%release.tar
+# VCS: git://gitlab.freedesktop.org/mstoeckl/waypipe.git
+#Patch: %name-%version-%release.patch
+
+# 'man-pages' is always enabled.
+# We can't embed a hyphen in a rpm macro name, and anyway
+# one short man doesn't weigh much.
+%def_with with_video
+%def_with with_dmabuf
+%def_with with_lz4
+%def_without with_zstd
+%def_with with_vaapi
+
+%define meson_subst_bool() %{expand:%%{?_enable_%{1}:-D%{1}=true}%%{?_disable_%{1}:-D%{1}=false}}
+%define meson_subst_feature() %{expand:%%{?_with_%{1}:-D%{1}=enabled}%%{?_without_%{1}:-D%{1}=disabled}}
+
+BuildRequires: meson >= 0.47.0
+BuildRequires: gcc
+%{?_with_with_video:BuildRequires: pkgconfig(libavcodec)}
+%{?_with_with_video:BuildRequires: pkgconfig(libswscale)}
+%{?_with_with_dmabuf:BuildRequires: libgbm-devel}
+%{?_with_with_dmabuf:BuildRequires: pkgconfig(libdrm)}
+%{?_with_with_lz4:BuildRequires: pkgconfig(liblz4)}
+%{?_with_with_zstd:BuildRequires: pkgconfig(libzstd) >= 1.4.0}
+%{?_with_with_vaapi:BuildRequires: pkgconfig(libva)}
+BuildRequires: wayland-protocols libwayland-server-devel libwayland-client-devel
+BuildRequires: scdoc
+
+%define unpackaged_files_terminate_build 1
+
+%description
+waypipe is a tool which can be used to relay both messages and data between any
+Wayland client and compositor over a single transport channel. This should
+enable Wayland-based workflows similar to those using `ssh -X'.
+
+%prep
+%setup -n %name-%version-%release
+#patch -p1
+
+%build
+export CFLAGS="%optflags -Wno-error=unused-result"
+%meson \
+    -D'man-pages=enabled'                \
+    %{meson_subst_feature with_video}    \
+    %{meson_subst_feature with_dmabuf}   \
+    %{meson_subst_feature with_lz4}      \
+    %{meson_subst_feature with_zstd}     \
+    %{meson_subst_feature with_vaapi}    \
+    #
+%meson_build
+
+%check
+#export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+
+%install
+%meson_install
+
+%files
+%doc README.md COPYING
+%_bindir/waypipe
+%_man1dir/waypipe.1*
+
+%changelog
+* Fri Jul 19 2019 Arseny Maslennikov <arseny@altlinux.org> 0.3.0.0.26.git99c24b9-alt1
+- Initial build for ALT Sisyphus.
+  The libzstd in Sisyphus is too old to be used by waypipe,
+  so the package is built without libzstd for now.
