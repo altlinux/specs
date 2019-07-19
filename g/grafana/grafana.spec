@@ -13,7 +13,7 @@
 
 Name:		grafana
 Version:	6.2.5
-Release:	alt1
+Release:	alt2
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -30,8 +30,7 @@ Source103: %name-server.service
 Source104: %name.tmpfiles
 
 
-#ExclusiveArch:  %go_arches
-ExclusiveArch: x86_64
+ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires: npm yarn
 BuildRequires: node node-devel
@@ -162,6 +161,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Fri Jul 19 2019 Alexey Shabalin <shaba@altlinux.org> 6.2.5-alt2
+- build for all arches
+
 * Fri Jul 12 2019 Alexey Shabalin <shaba@altlinux.org> 6.2.5-alt1
 - 6.2.5
 
