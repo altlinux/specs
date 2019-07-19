@@ -1,10 +1,10 @@
 Name: waypipe
-Version: 0.3.0.0.26.git99c24b9
+Version: 0.3.0.0.29.gitb9821d4
 Release: alt1
 
 Summary: Network transparency agent for Wayland
 
-Group: Networking/File transfer
+Group: Networking/Remote access
 License: MIT/X11
 URL: https://gitlab.freedesktop.org/mstoeckl/waypipe/
 
@@ -33,10 +33,11 @@ BuildRequires: gcc
 %{?_with_with_lz4:BuildRequires: pkgconfig(liblz4)}
 %{?_with_with_zstd:BuildRequires: pkgconfig(libzstd) >= 1.4.0}
 %{?_with_with_vaapi:BuildRequires: pkgconfig(libva)}
-BuildRequires: wayland-protocols libwayland-server-devel libwayland-client-devel
+BuildRequires: wayland-protocols >= 1.12
+BuildRequires: libwayland-server-devel libwayland-client-devel
 BuildRequires: scdoc
 
-%define unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 %description
 waypipe is a tool which can be used to relay both messages and data between any
@@ -72,6 +73,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Sat Jul 20 2019 Arseny Maslennikov <arseny@altlinux.org> 0.3.0.0.29.gitb9821d4-alt1
+- 0.3.0-26-g99c24b9 -> 0.3.0-29-gb9821d4.
+
 * Fri Jul 19 2019 Arseny Maslennikov <arseny@altlinux.org> 0.3.0.0.26.git99c24b9-alt1
 - Initial build for ALT Sisyphus.
   The libzstd in Sisyphus is too old to be used by waypipe,
