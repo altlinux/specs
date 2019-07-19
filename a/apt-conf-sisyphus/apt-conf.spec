@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 9.96
-Release: alt3
+Release: alt4
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -47,6 +47,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Fri Jul 19 2019 Alexey Shabalin <shaba@altlinux.org> 9.96-alt4
+- cleanup and update pkgpriorities
+
 * Tue Jun 04 2019 Ivan A. Melnikov <iv@altlinux.org> 9.96-alt3
 - Correct fingerprint for P9 ports.
 
