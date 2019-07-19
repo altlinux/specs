@@ -1,3 +1,4 @@
+%filter_from_requires /^osgi.com.github.jnr.jffi/d
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -11,8 +12,8 @@ BuildRequires: jpackage-1.8-compat
 %global sover 1.2
 
 Name:           jffi
-Version:        1.2.12
-Release:        alt2_11jpp8
+Version:        1.2.19
+Release:        alt1_0jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -34,7 +35,6 @@ BuildRequires:  libffi-devel
 BuildRequires:  ant
 BuildRequires:  ant-junit
 Source44: import.info
-Patch33: jffi-1.2.12-aarch64.patch
 
 %description
 An optimized Java interface to libffi.
@@ -75,7 +75,6 @@ build-jar-repository -s -p lib/ junit hamcrest/core
 
 %mvn_package 'com.github.jnr:jffi::native:' native
 %mvn_file ':{*}' %{name}/@1 @1
-%patch33 -p1
 
 %build
 # ant will produce JAR with native bits
@@ -119,6 +118,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.19-alt1_0jpp8
+- new version
+
 * Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt2_11jpp8
 - aarch64 support & java 8 build
 
