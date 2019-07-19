@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global		upstream_name    scram
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		ongres-%upstream_name
 Version:	%(echo %upstream_version | sed 's/-/_/g')
-Release:	alt1_6jpp8
+Release:	alt1_7jpp8
 Summary:	Salted Challenge Response Authentication Mechanism (SCRAM) - Java Implementation
 License:	BSD
 URL:		https://github.com/ongres/%upstream_name
@@ -76,6 +73,9 @@ find \( -name '*.jar' -o -name '*.class' \) -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0_beta.2-alt1_7jpp8
+- fc update & java 8 build
+
 * Tue Jan 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0_beta.2-alt1_6jpp8
 - java update
 
