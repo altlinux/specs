@@ -1,14 +1,11 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:     jnr-ffi
-Version:  2.1.6
-Release:  alt1_4jpp8
+Version:  2.1.8
+Release:  alt1_3jpp8
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
@@ -60,20 +57,21 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 sed -i 's|-Werror||' libtest/GNUmakefile
 
 %build
-%mvn_build
+%mvn_build -f -- -Dasm.version=7.0
 
 %install
 %mvn_install
-ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
-%_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.8-alt1_3jpp8
+- fc update & java 8 build
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_4jpp8
 - java update
 
