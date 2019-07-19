@@ -6,7 +6,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.8.3
-Release: alt3
+Release: alt4
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -685,6 +685,10 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Fri Jul 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 5.8.3-alt4
+- run python3 for novnc websockify script
+- fix datastore scripts file mode
+
 * Mon Jul 15 2019 Andrew A. Vasilyev <andy@altlinux.org> 5.8.3-alt3
 - add moosefs support
 
