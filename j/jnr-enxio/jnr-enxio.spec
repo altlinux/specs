@@ -1,14 +1,11 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-enxio
-Version:        0.16
-Release:        alt1_4jpp8
+Version:        0.19
+Release:        alt1_2jpp8
 Summary:        Unix sockets for Java
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
@@ -17,7 +14,7 @@ URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
 # Avoid split-package situation, this patch submitted upstream here: https://github.com/jnr/jnr-enxio/pull/26
-Patch0: add-abstract-impls-from-unixsocket.patch
+Patch0: 0001-Add-enxio-classes-from-jnr-unixsocket.patch
 
 BuildArch:      noarch
 
@@ -64,6 +61,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_2jpp8
+- fc update & java 8 build
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_4jpp8
 - java update
 
