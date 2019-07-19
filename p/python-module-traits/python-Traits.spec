@@ -2,11 +2,11 @@
 
 %define oname traits
 
-%def_without python3
+%def_with python3
 
 Name:           python-module-%oname
-Version:        4.6.0
-Release:        alt2
+Version:        5.1.2
+Release:        alt1
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -15,7 +15,7 @@ Group:          Development/Python
 # which is GPLv2+ all remaining source or image files are in BSD
 # 3-clause license. Confirmed from upstream.
 License:        BSD and EPL and LGPLv2 and GPLv2+
-URL:            http://code.enthought.com/projects/traits/
+URL:            https://docs.enthought.com/traits/
 
 # https://github.com/enthought/traits.git
 Source: Traits-%version.tar
@@ -25,10 +25,11 @@ Patch1: %oname-alt-docs.patch
 BuildRequires(pre): python-module-sphinx-devel
 BuildRequires: python-module-setuptools libnumpy-devel python-devel
 BuildRequires: python-module-Pygments
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
-BuildRequires: libnumpy-py3-devel python-tools-2to3
+BuildRequires: libnumpy-py3-devel
 %endif
 
 %description
@@ -108,9 +109,8 @@ definition called a trait. This package contains tests for it.
 %patch1 -p1
 
 # file not utf-8
-iconv -f iso8859-1 -t utf-8 image_LICENSE_Eclipse.txt \
- > image_LICENSE_Eclipse.txt.conv && mv -f \
- image_LICENSE_Eclipse.txt.conv image_LICENSE_Eclipse.txt
+iconv -f iso8859-1 -t utf-8 < image_LICENSE_Eclipse.txt > image_LICENSE_Eclipse.txt.conv && \
+	mv -f image_LICENSE_Eclipse.txt.conv image_LICENSE_Eclipse.txt
 
 %if_with python3
 rm -rf ../python3
@@ -126,9 +126,6 @@ cp -a . ../python3
 
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
 %python3_build_debug
 popd
 %endif
@@ -136,28 +133,13 @@ popd
 %install
 %python_install
 
-rm -f %buildroot/%python_sitelibdir/traits/protocols/_speedups.c
-rm -f %buildroot/%python_sitelibdir/traits/ctraits.c
-
-# Prevents non standard permissions
-#chmod 755 %buildroot/%python_sitelibdir/traits/protocols/_speedups.so
-chmod 755 %buildroot/%python_sitelibdir/traits/ctraits.so
-
 %if_with python3
 pushd ../python3
 %python3_install
-
-rm -f %buildroot/%python3_sitelibdir/traits/protocols/_speedups.c
-rm -f %buildroot/%python3_sitelibdir/traits/ctraits.c
-
-# Prevents non standard permissions
-#chmod 755 %buildroot/%python_sitelibdir/traits/protocols/_speedups.so
-#chmod 755 %buildroot/%python_sitelibdir/traits/ctraits.so
 popd
 %endif
 
 # pickles
-
 install -d %buildroot%python_sitelibdir/%oname
 export PYTHONPATH=%buildroot%python_sitelibdir
 %generate_pickles docs/source docs/source %oname
@@ -165,7 +147,8 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc *.txt
+%doc image_LICENSE*.txt LICENSE.txt
+%doc README.rst CHANGES.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
@@ -187,17 +170,24 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc image_LICENSE*.txt LICENSE.txt
+%doc README.rst CHANGES.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/testing
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/testing
 %endif
 
 %changelog
+* Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt1
+- Updated to upstream version 5.1.2.
+- Built modules for python-3.
+
 * Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2
 - Updated to upstream release version 4.6.0.
 

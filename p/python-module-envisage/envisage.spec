@@ -1,24 +1,46 @@
-%define oname envisage
-Name:           python-module-%oname
-Version:        4.5.0
-Release:        alt1.git20150428
-Summary:        Extensible Application Framework
+%define _unpackaged_files_terminate_build 1
 
+%def_with python3
+
+%define oname envisage
+
+Name:           python-module-%oname
+Version:        4.7.2
+Release:        alt1
+Summary:        Extensible Application Framework
 Group:          Development/Python
 License:        BSD
-URL:            http://code.enthought.com/projects/envisage/
-# https://github.com/enthought/envisage.git
-Source:        %oname-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+URL:            https://docs.enthought.com/envisage/
 
 BuildArch:      noarch
-BuildRequires:  python-module-setuptools, python-devel
-BuildPreReq: python-module-setupdocs python-module-sphinx-devel
-Requires:       python-module-apptools
-Provides: python-module-EnvisageCore = %version-%release
-Obsoletes: python-module-EnvisageCore < %version-%release
-Provides: python-module-EnvisagePlugins = %version-%release
-Obsoletes: python-module-EnvisagePlugins < %version-%release
+
+# https://github.com/enthought/envisage.git
+Source:        %name-%version.tar
+
+Patch1:        %oname-alt-docs.patch
+
+BuildRequires(pre): python-module-setupdocs python-module-sphinx-devel
+BuildRequires: python-devel python-module-setuptools
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+%endif
+
+Requires: python-module-apptools
+
+Provides: python-module-EnvisageCore = %EVR
+Obsoletes: python-module-EnvisageCore < %EVR
+Provides: python-module-EnvisagePlugins = %EVR
+Obsoletes: python-module-EnvisagePlugins < %EVR
+
+%add_findprov_skiplist %python_sitelibdir/%oname/plugins/*
+%add_findreq_skiplist  %python_sitelibdir/%oname/plugins/*
+
+%if_with python3
+%add_findprov_skiplist %python3_sitelibdir/%oname/plugins/*
+%add_findreq_skiplist  %python3_sitelibdir/%oname/plugins/*
+%endif
 
 %description
 Envisage is a Python-based framework for building extensible
@@ -26,6 +48,53 @@ applications, that is, applications whose functionality can be
 extended by adding "plug-ins". Envisage provides a standard mechanism
 for features to be added to an application, whether by the original
 developer or by someone else.
+
+%package tests
+Summary: Tests for Extensible Application Framework
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Envisage is a Python-based framework for building extensible
+applications, that is, applications whose functionality can be
+extended by adding "plug-ins". Envisage provides a standard mechanism
+for features to be added to an application, whether by the original
+developer or by someone else.
+
+This package contains tests for Envisage.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: Extensible Application Framework
+Group: Development/Python3
+%add_python3_req_skip wx
+%add_python3_req_skip ui.main
+%add_python3_req_skip envisage.plugins.text_editor.editor.text_editor
+%add_python3_req_skip envisage.workbench envisage.workbench.services
+%add_python3_req_skip envisage.ui.single_project
+%add_python3_req_skip envisage.single_project.services
+
+%description -n python3-module-%oname
+Envisage is a Python-based framework for building extensible
+applications, that is, applications whose functionality can be
+extended by adding "plug-ins". Envisage provides a standard mechanism
+for features to be added to an application, whether by the original
+developer or by someone else.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Extensible Application Framework
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Envisage is a Python-based framework for building extensible
+applications, that is, applications whose functionality can be
+extended by adding "plug-ins". Envisage provides a standard mechanism
+for features to be added to an application, whether by the original
+developer or by someone else.
+
+This package contains tests for Envisage.
+%endif
 
 %package docs
 Summary: Documentation for Extensible Application Framework
@@ -54,27 +123,25 @@ developer or by someone else.
 
 This package contains pickles for Envisage.
 
-%package tests
-Summary: Tests for Extensible Application Framework
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-Envisage is a Python-based framework for building extensible
-applications, that is, applications whose functionality can be
-extended by adding "plug-ins". Envisage provides a standard mechanism
-for features to be added to an application, whether by the original
-developer or by someone else.
-
-This package contains tests for Envisage.
-
 %prep
 %setup
+%patch1 -p1
+
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
 
 %prepare_sphinx .
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 export PYTHONPATH=$PWD
 %generate_pickles docs/source docs/source %oname
@@ -83,22 +150,33 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc *.txt
+%doc image_LICENSE*.txt LICENSE.txt
+%doc CHANGES.txt README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/*/tests
 %exclude %python_sitelibdir/*/*/*/*/tests
 %exclude %python_sitelibdir/*/*/*/example*
+%exclude %python_sitelibdir/*/*/*/*/example*
 %exclude %python_sitelibdir/%oname/pickle
 
 %files tests
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/*/tests
 %python_sitelibdir/*/*/*/*/tests
 %python_sitelibdir/*/*/*/example*
+%python_sitelibdir/*/*/*/*/example*
 
 %files docs
 %doc examples html
@@ -107,7 +185,34 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
 
+%if_with python3
+%files -n python3-module-%oname
+%doc image_LICENSE*.txt LICENSE.txt
+%doc CHANGES.txt README.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/example*
+%exclude %python3_sitelibdir/*/*/*/*/example*
+%exclude %python3_sitelibdir/*/*/*/*/*/example*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+%python3_sitelibdir/*/*/*/*/tests
+%python3_sitelibdir/*/*/*/example*
+%python3_sitelibdir/*/*/*/*/example*
+%python3_sitelibdir/*/*/*/*/*/example*
+%endif
+
 %changelog
+* Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.2-alt1
+- Updated to upstream version 4.7.2.
+- Built modules for python-3.
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20150428
 - New snapshot
 

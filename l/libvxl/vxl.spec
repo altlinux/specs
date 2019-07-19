@@ -4,7 +4,7 @@
 
 Name: libvxl
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -26,9 +26,9 @@ written in ANSI/ISO C++ and is designed to be portable over many platforms.
 %description 
 %_description
 
-# dcmtk required, because its contains DICOM tags list
 %package -n %libvxl
 Summary: Shared libraries for VXL
+# dcmtk required, because its contains DICOM tags list
 Requires: dcmtk
 Group: System/Libraries
 %description -n %libvxl 
@@ -75,6 +75,7 @@ rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
     -DBUILD_TESTING:BOOL=OFF \
     -DVNL_CONFIG_LEGACY_METHODS=ON \
     -DVXL_BUILD_DOCUMENTATION=ON \
+    -DVXL_LEGACY_FUTURE_REMOVE:BOOL=OFF \
     %nil
 %cmake_build VERBOSE=1
 %cmake_build build_doxygen_doc 
@@ -96,5 +97,9 @@ rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
 %doc BUILD/doxy/html
 
 %changelog
+* Tue Jul 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
+- Fixed generated header installation.
+- Enabled deprecated functions.
+
 * Mon Dec 24 2018 Slava Aseev <ptrnine@altlinux.org> 2.0.2-alt1
 - Initial build for ALT
