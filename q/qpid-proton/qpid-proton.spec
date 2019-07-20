@@ -3,7 +3,7 @@
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 
 Name: qpid-proton
-Version: 0.26.0
+Version: 0.28.0
 Release: alt1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
@@ -217,6 +217,9 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %endif
 
 %changelog
+* Sat Jul 20 2019 Alexey Shabalin <shaba@altlinux.org> 0.28.0-alt1
+- new version 0.28.0
+
 * Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 0.26.0-alt1
 - new version 0.26.0
 - drop perl binding package
