@@ -1,9 +1,9 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.12
-%define		svn svn8656
+%define		svn svn9005
 
-Version:	%branch.0
+Version:	%branch.1
 Name:		qmmp-plugin-pack
 Release:	alt1.%svn
 Summary:	Plugin pack is a set of extra plugins for Qmmp.
@@ -155,6 +155,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib D
 %_libdir/qmmp-%branch/Visual/libgoom.so
 
 %changelog
+* Sat Jul 20 2019 Motsyo Gennadi <drool@altlinux.ru> 0.12.1-alt1.svn9005
+- build svn9005
+
 * Sat Jan 26 2019 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn8656
 - build svn8656
 
