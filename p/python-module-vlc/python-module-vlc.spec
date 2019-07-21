@@ -1,11 +1,11 @@
 %define oname vlc
 
 Name: python-module-%oname
-Version: 3.0.102
+Version: 3.0.6109
 Release: alt1
 
 Summary: Binding for the native libvlc API.
-License: GPL
+License: LGPLv2.1+
 Group: Development/Python
 Url: https://wiki.videolan.org/PythonBinding
 BuildArch: noarch
@@ -63,6 +63,9 @@ popd
 
 
 %changelog
+* Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.6109-alt1
+- New version
+
 * Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.0.102-alt1
 - Init build to Sisyphus
 
