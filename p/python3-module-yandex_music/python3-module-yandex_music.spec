@@ -3,11 +3,11 @@
 
 Name: python3-module-%oname
 Version: 0.0.5
-Release: alt1
+Release: alt2
 Summary: Unofficial library for Yandex.Music API
 License: LGPLv3
 Group: Development/Python3
-URL: https://github.com/MarshalX/yandex-music-api
+Url: https://github.com/MarshalX/yandex-music-api
 Source: %name-%version.tar
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
@@ -37,6 +37,9 @@ cp -R examples/* %buildroot%python3_sitelibdir/%oname/examples
 %doc LICENSE README.*
 
 %changelog
+* Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.5-alt2
+- Minor spec fix
+
 * Wed Jul 17 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.5-alt1
 - New version
 
