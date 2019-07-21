@@ -2,11 +2,11 @@
 
 Name: mackup
 Version: 0.8.25
-Release: alt2
+Release: alt3
 Summary: Keep your application settings in sync
 License: GNU GPL v3.0
 Group: Other
-URL: https://github.com/lra/mackup
+Url: https://github.com/lra/mackup
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -41,6 +41,9 @@ sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\/usr\/lib\/python3\/site-packages\/ma
 %config(noreplace) %python3_sitelibdir/%name/applications/mackup.cfg
 
 %changelog
+* Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.25-alt3
+- Minor spec fix
+
 * Sun Jul 14 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.25-alt2
 - Fixed replacing of mackup.cfg file
 
