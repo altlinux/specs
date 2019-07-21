@@ -3,19 +3,15 @@
 
 Name: python3-module-%oname
 Version: 0.6.0
-Release: alt1
-
+Release: alt2
 Summary: Work with IMAP protocol easy and effective
 License: MIT
 Group: Development/Python3
-
-URL: https://github.com/ikvk/imap_tools
+Url: https://github.com/ikvk/imap_tools
 Source: %name-%version.tar
 
 BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
 
 %description
@@ -44,6 +40,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %doc LICENSE README.*
 
 %changelog
+* Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.0-alt2
+- Minor spec fix
+
 * Sun Jun 23 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.0-alt1
 - New version
 
