@@ -1,6 +1,6 @@
 Name: clickhouse
-Version: 19.9.2.4
-Release: alt2
+Version: 19.9.5.36
+Release: alt1
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
 Group: Databases
@@ -9,7 +9,7 @@ Source1: %name-%version-contrib-base64.tar
 Source2: %name-%version-contrib-simdjson.tar
 Patch0: %name-%version-%release.patch
 Url: https://clickhouse.yandex/
-BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata, libjemalloc-devel, cctz-devel
+BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
 BuildRequires: rpm-macros-cmake, liblz4-devel, zlib-devel, /proc, libzstd-devel, libmariadb-devel
 BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
 BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
@@ -69,8 +69,8 @@ mv %name-%version-contrib-simdjson/* contrib/simdjson/
 %remove_optflags -frecord-gcc-switches
 export CC=clang
 export CXX=clang++
-%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DLLVM_VERSION=7 
-%cmake_build
+%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DLLVM_VERSION=7 -DENABLE_JEMALLOC=0
+%cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -131,6 +131,10 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Mon Jul 22 2019 Anton Farygin <rider@altlinux.ru> 19.9.5.36-alt1
+- new version
+- build without jemalloc
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 19.9.2.4-alt2
 - config files was marked for prevent rewrite during an update
 
