@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -218,6 +218,11 @@ _EOF_
 
 
 %changelog
+* Mon Jul 22 2019 Anton Farygin <rider@altlinux.ru> 3.0.3-alt1
+- 3.0.3
+- fixes:
+    * ASN.1 BER and related dissectors crash. CVE-2019-13619
+
 * Fri May 31 2019 Anton Farygin <rider@altlinux.ru> 3.0.2-alt1
 - 3.0.2
 - fixes:
