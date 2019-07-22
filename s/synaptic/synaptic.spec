@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt21
+Release: alt22
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -109,6 +109,9 @@ autoconf
 %endif
 
 %add_optflags -fno-exceptions
+%ifarch %e2k
+%add_optflags -std=gnu++11
+%endif
 %configure --with-vte --with-pkg-hold --enable-scripts
 %make_build
 
@@ -140,6 +143,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Jul 22 2019 Andrew Savchenko <bircoph@altlinux.org> 0.58-alt22
+- Fix build on e2k (-std=gnu++11 is required for the latest apt).
+
 * Thu Feb 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt21
 - NMU: fixed -Wreturn-type warnings.
 
