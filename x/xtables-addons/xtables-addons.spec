@@ -1,6 +1,6 @@
 Name: xtables-addons
 Version: 3.3
-Release: alt2
+Release: alt3
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -11,6 +11,7 @@ License: GPLv2
 # git://git.altlinux.org/gears/x/xtables-addons.git
 Source: %name-%version.tar
 Source1: %name.watch
+Patch0: xtables-addons-3.3-ubuntu-fix-deprecated-flags-field.patch
 
 %define _libexecdir /usr/libexec
 
@@ -41,6 +42,7 @@ XTable addons module sources for Linux kernel.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -71,6 +73,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Mon Jul 22 2019 Anton Farygin <rider@altlinux.ru> 3.3-alt3
+- added patch from ubuntu for build with kernel 5.2
+
 * Mon Jul 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt2
 - Dropped ExclusiveArch tag.
 
