@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.71
+Version: 0.72
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -14,7 +14,7 @@ Source3: putty.desktop
 Source4: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 
 %description
 This is the Unix port of the popular Windows ssh client, PuTTY. It
@@ -54,6 +54,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Sun Jul 21 2019 Michael Shigorin <mike@altlinux.org> 0.72-alt1
+- new version (watch file uupdate)
+
 * Sat Mar 16 2019 Michael Shigorin <mike@altlinux.org> 0.71-alt1
 - new version (watch file uupdate)
 
