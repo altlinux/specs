@@ -10,7 +10,7 @@
 
 Name: corosync
 Version: 3.0.2
-Release: alt2
+Release: alt3
 
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
@@ -29,6 +29,8 @@ Source11: corosync.service
 Provides: corosync2 = %version-%release
 Obsoletes: corosync2 < %version-%release
 Requires: lib%name = %version-%release
+# NSS crypto plugin should be always installed
+Requires: libknet1-crypto-nss-plugin
 
 BuildRequires: doxygen libqb-devel graphviz libsocket-devel zlib-devel libknet-devel
 %{?_enable_monitoring:BuildRequires: libstatgrab-devel}
@@ -194,6 +196,9 @@ install -p -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconf
 %endif
 
 %changelog
+* Tue Jul 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt3
+- add libknet1-crypto-nss-plugin dependency
+
 * Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 3.0.2-alt2
 - fix augeas knob
 - minor spec cleanup
@@ -223,5 +228,5 @@ install -p -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconf
 * Tue Feb 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3.0-alt1
 - New version
 
-* Sun Sep 20 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.1-alt1
+* Tue Sep 20 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.1-alt1
 - Initial build (using Fedora spec)
