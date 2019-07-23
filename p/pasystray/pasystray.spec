@@ -1,6 +1,6 @@
 Name:		pasystray
-Version:	0.6.0
-Release:	alt2
+Version:	0.7.1
+Release:	alt1
 
 Summary:	a replacement for the deprecated padevchooser
 License:	GPLv2.1
@@ -59,6 +59,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Mon Jul 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Build new version.
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
 - Fixed FTBS (Add missing rpm-build-xdg).
 
@@ -67,4 +70,3 @@ applications.
 
 * Thu Mar 02 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus.
-
