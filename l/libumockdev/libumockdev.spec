@@ -1,9 +1,11 @@
 %define _name umockdev
 %define api_ver 1.0
+
+%def_enable gudev
 %def_disable check
 
 Name: lib%_name
-Version: 0.12.1
+Version: 0.13.1
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -17,9 +19,11 @@ Source: https://github.com/martinpitt/%_name/releases/download/%version/%_name-%
 
 %define glib_ver 2.32
 
+BuildRequires: autoconf-archive
 BuildRequires: gtk-doc
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libudev-devel libgudev-devel
+BuildRequires: libudev-devel
+%{?_enable_gudev:BuildRequires: libgudev-devel}
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
 %{?_enable_check:BuildRequires: /proc}
@@ -117,6 +121,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Mon Jul 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
 - 0.12.1
 
