@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -44,13 +44,16 @@ risking the system's stability.
 
 %build
 # Recommended optimization option for x86 builds
-regparm_opts=
 %ifarch %ix86 x86_64
 regparm_opts="USE_REGPARM=1"
 %endif
 
+%ifarch mipsel
+addlib_opts=ADDLIB=-latomic
+%endif
+
 %make_build CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_SYSTEMD=1 %{?_enable_lua:USE_LUA=1} \
-	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
+	${regparm_opts:-} ${addlib_opts:-} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
 %make halog OPTIMIZE="%optflags"
@@ -106,6 +109,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Tue Jul 23 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt2
+- fix build on mipsel
+
 * Sat Jun 29 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
