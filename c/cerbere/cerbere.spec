@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.2
+%define ver_major 2.5
 %define rdn_name io.elementary.cerbere
 
 Name: cerbere
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: service to relaunch Pantheon apps
@@ -42,6 +42,9 @@ they crash or are killed by another process.
 %doc README*
 
 %changelog
+* Thu Jul 18 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Tue Jul 31 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
