@@ -1,8 +1,8 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 4.9.1
-Release: alt2
+Version: 5.0.2
+Release: alt1
 
 Summary: Mercurial GUI command line tool thg
 
@@ -21,6 +21,7 @@ Requires: python-module-pygnome-gconf
 Requires: python-module-PyQt5 python-module-qscintilla2-qt5 python-module-Pygments
 Requires: python-module-pygobject
 
+BuildRequires: mercurial
 BuildRequires: python-devel gettext python-module-sphinx python-module-PyQt5
 BuildRequires: python-module-enum34 desktop-file-utils libappstream-glib
 
@@ -92,6 +93,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %endif
 
 %changelog
+* Tue Jul 23 2019 Grigory Ustinov <grenka@altlinux.org> 5.0.2-alt1
+- Build new version.
+
 * Mon May 13 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt2
 - Update russian localization.
 

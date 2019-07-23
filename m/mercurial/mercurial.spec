@@ -1,4 +1,4 @@
-Version: 4.9
+Version: 5.0
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -126,6 +126,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python_sitelibdir/hgext3rd
 
 %changelog
+* Mon May 20 2019 Grigory Ustinov <grenka@altlinux.org> 5.0-alt1
+- 5.0
+
 * Wed Mar 06 2019 Grigory Ustinov <grenka@altlinux.org> 4.9-alt1
 - 4.9
 
