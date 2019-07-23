@@ -2,20 +2,20 @@
 
 Name:          ruby-%pkgname
 Version:       1.10.3
-Release:       alt1
+Release:       alt2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:         Development/Ruby
 License:       MIT
 URL:           https://nokogiri.org/
-# VCS:         https://github.com/sparklemotion/nokogiri.git
+%vcs           https://github.com/sparklemotion/nokogiri.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 Patch:         shutdown-libxml2-warning.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config zlib-devel
-#BuildRequires: db2latex-xsl xhtml1-dtds
-BuildRequires: ruby-hoe
+# BuildRequires: db2latex-xsl xhtml1-dtds
+BuildRequires: gem(hoe)
 BuildRequires: gem(rake-compiler)
 BuildRequires: gem(concourse)
 BuildRequires: gem(rexical)
@@ -39,21 +39,21 @@ This package contanis Ruby libraries for Nokogiri.
 
 
 %package       devel
-Summary:       Development files for Nokogiri
+Summary:       Development files for %gemname gem
 Group:         Development/Ruby
 BuildArch:     noarch
 
 %description   devel
-Development files for Nokogiri.
+Development files for %gemname gem.
 
 
 %package       doc
-Summary:       Documentation for Nokogiri
+Summary:       Documentation for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description doc
-Documentation for Nokogiri.
+Documentation for %gemname gem.
 
 
 %prep
@@ -61,13 +61,13 @@ Documentation for Nokogiri.
 %patch -p1
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -84,6 +84,9 @@ Documentation for Nokogiri.
 %ruby_includedir/*
 
 %changelog
+* Tue Jun 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.3-alt2
+- Fix spec
+
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 1.10.3-alt1
 - New version.
 

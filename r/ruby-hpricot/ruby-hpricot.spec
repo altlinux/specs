@@ -1,20 +1,21 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-
 %define        pkgname hpricot
 
 Name:          ruby-%pkgname
 Version:       0.8.6
-Release:       alt4
+Release:       alt4.1
 Summary:       A Fast, Enjoyable HTML Parser for Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://github.com/hpricot/hpricot
-# VCS:         https://github.com/hpricot/hpricot.git
+%vcs           https://github.com/hpricot/hpricot.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ragel
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Hpricot is a fast, flexible HTML parser written in C.  It's designed to
@@ -22,25 +23,44 @@ be very accommodating (like Tanaka Akira's HTree) and to have a very
 helpful library (like some JavaScript libs -- JQuery, Prototype -- give
 you.)  The XPath and CSS parser, in fact, is based on John Resig's JQuery.
 
+
+%package       devel
+Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Development files for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
 
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -51,7 +71,14 @@ Documentation files for %gemname gem.
 %files doc
 %ruby_gemdocdir
 
+%files         devel
+%ruby_includedir/%{gemname}*
+
+
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt4.1
+! spec
+
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt4
 - Clean up the spec from the dog-nail
 

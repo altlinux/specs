@@ -1,21 +1,19 @@
 # vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname daemons
 
-%define pkgname daemons
+Name:          ruby-%pkgname
+Version:       1.3.1
+Release:       alt1
+Summary:       A toolkit to create and control daemons in different ways
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/thuehlinger/daemons
+%vcs           https://github.com/thuehlinger/daemons.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Name: ruby-%pkgname
-Version: 1.2.6
-Release: alt1
-
-Summary: A toolkit to create and control daemons in different ways
-Group: Development/Ruby
-License: MIT
-Url: http://rubyforge.org/projects/daemons/
-
-BuildArch: noarch
-
-Source: %pkgname-%version.tar
-
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
 Daemons provides an easy way to wrap existing ruby scripts (for
@@ -30,35 +28,46 @@ features like exception backtracing and logging (in case your
 ruby script crashes) and monitoring and automatic restarting of
 your processes if they crash.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -q -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
+
+%check
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc examples
-%ruby_ri_sitedir/Daemon*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
+- Bump to 1.3.1
+- Use Ruby Policy 2.0
+
 * Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.6-alt1
 - New version.
 

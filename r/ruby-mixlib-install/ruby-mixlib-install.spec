@@ -1,13 +1,13 @@
 %define        pkgname mixlib-install
 
 Name:          ruby-%pkgname
-Version:       3.11.11
+Version:       3.11.20
 Release:       alt1
 Summary:       A library for interacting with Chef Software Inc's software distribution systems
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/mixlib-install
-# VCS:         https://github.com/chef/mixlib-install.git
+%vcs           https://github.com/chef/mixlib-install.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -19,35 +19,43 @@ BuildRequires(pre): rpm-build-ruby
 %summary.
 
 
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
 
-
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   -n %pkgname
-Executable file for %gemname gem.
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build --ignore=acceptance
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -61,6 +69,10 @@ Executable file for %gemname gem.
 %_bindir/%pkgname
 
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 3.11.20-alt1
+- Fix spec
+- Bump to 3.11.20
+
 * Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 3.11.11-alt1
 - Bump to 3.11.11
 - Use Ruby Policy 2.0

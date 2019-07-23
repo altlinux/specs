@@ -1,60 +1,59 @@
-%define  pkgname fog-openstack
+%define        pkgname fog-openstack
 
-Name:    ruby-%pkgname
-Version: 0.1.24
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       1.0.8
+Release:       alt1
+Summary:       Fog for OpenStack Platform
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/fog/fog-openstack
+%vcs           https://github.com/fog/fog-openstack.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Fog for OpenStack Platform
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/fog/fog-openstack
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
-%summary
+%summary. This is the plugin Gem to talk to OpenStack clouds via fog.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
+%description   doc
+Documentation files for %gemname gem.
 
-%description doc
-Documentation files for %{name}.
+%description   doc -l ru_RU.UTF8
+Файлы сведений для %gemname самоцвета.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+%gem_install
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%gem_test
 
 %files
-%doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.8-alt1
+- Bump to 1.0.8
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.24-alt1.1
 - Rebuild with new Ruby autorequirements.
 - Disable tests.

@@ -1,23 +1,20 @@
-%define  pkgname CFPropertyList
+%define  pkgname cfpropertylist
+%define  gemname CFPropertyList
 
-Name:    ruby-cfpropertylist
-Version: 3.0.0
-Release: alt2.1
+Name:          ruby-%pkgname
+Version:       3.0.0
+Release:       alt3
+Summary:       Read, write and manipulate both binary and XML property lists as defined by apple
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/ckruse/CFPropertyList
+%vcs           https://github.com/ckruse/CFPropertyList.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Read, write and manipulate both binary and XML property lists as defined by apple
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/ckruse/CFPropertyList
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-# For tests
-BuildRequires: ruby-nokogiri
+BuildRequires: gem(nokogiri)
 BuildRequires: libxml-ruby
 
 %description
@@ -25,42 +22,45 @@ CFPropertyList implementation class to read, manipulate and write both
 XML and binary property list files (plist(5)) as defined by Apple. Have
 a look at CFPropertyList::List for more documentation.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
-sed -n '1,/^end$/p' Rakefile > %pkgname.gemspec
+%ruby_build --use=CFPropertyList --alias=cfpropertylist
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Tue Jul 23 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt3
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2.1
 - Rebuild with new Ruby autorequirements.
 

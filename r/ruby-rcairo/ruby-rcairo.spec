@@ -1,13 +1,14 @@
 %define        pkgname cairo
+%define        gemname cairo
 
 Name:          ruby-r%pkgname
 Version:       1.16.4
-Release:       alt1
+Release:       alt1.1
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
-Url:           http://cairographics.org/rcairo
-# VCS:         https://github.com/rcairo/rcairo.git
+Url:           https://rcairo.github.io/
+%vcs           https://github.com/rcairo/rcairo.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -16,14 +17,24 @@ Obsoletes:     rcairo < 1.7.0
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libcairo-devel
-BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel
-BuildRequires: xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel
-BuildRequires: libXdamage-devel libXxf86vm-devel libpcre-devel libuuid-devel
+BuildRequires: glib2-devel
+BuildRequires: libpixman-devel
+BuildRequires: xorg-glproto-devel
+BuildRequires: xorg-dri2proto-devel
+BuildRequires: libXau-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXext-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libpcre-devel
+BuildRequires: libuuid-devel
 BuildRequires: libffi-devel
 BuildRequires: bzlib-devel
 BuildRequires: libossp-uuid-dce-devel
 BuildRequires: libdrm-devel
-BuildRequires: pkgconfig(expat) pkgconfig(harfbuzz) pkgconfig(xshmfence)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(xshmfence)
 BuildRequires: gem(native-package-installer) >= 1.0.3
 BuildRequires: gem(pkg-config) >= 1.2.2
 
@@ -39,7 +50,7 @@ BuildArch:     noarch
 Obsoletes:     rcairo-devel < 1.7.0
 Provides:      rcairo-devel = %version-%release
 # due to #include <cairo.h>
-Requires:      libcairo-devel
+#Requires:      libcairo-devel
 
 %description   devel
 Ruby bindings for cairo // cairo extension for Ruby.
@@ -48,12 +59,16 @@ This package contains development files.
 
 
 %package       doc
-Summary:       Documentation for Nokogiri
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation for Nokogiri.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
@@ -77,6 +92,9 @@ Documentation for Nokogiri.
 %ruby_gemdocdir
 
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.4-alt1.1
+- Fix spec
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.16.4-alt1
 - Bump to 1.16.4
 

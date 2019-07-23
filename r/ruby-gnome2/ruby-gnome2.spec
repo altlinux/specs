@@ -1,11 +1,11 @@
 Name: 	       ruby-gnome2
-Version:       3.3.6
+Version:       3.3.7
 Release:       alt1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ruby-gnome2.osdn.jp/
-# VCS:         https://github.com/ruby-gnome2/ruby-gnome2.git
+%vcs           https://github.com/ruby-gnome2/ruby-gnome2.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -46,6 +46,8 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: at-spi2-atk-devel
 BuildRequires: libselinux-devel
 BuildRequires: libXtst-devel
+BuildRequires: libthai-devel
+BuildRequires: libdatrie-devel
 BuildRequires: bzlib-devel
 BuildRequires: ruby-rcairo-devel
 
@@ -777,17 +779,69 @@ BuildArch:     noarch
 Documentation files for %{name}.
 
 
+%package       -n gem-wnck3
+Summary:       Executable file for wnck3 gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета wnck3
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-wnck3
+Executable file for wnck3 gem.
+
+%description   -n gem-wnck3 -l ru_RU.UTF8
+Исполнямка для wnck3 самоцвета.
+
+
+%package       -n gem-wnck3-doc
+Summary:       Documentation files for wnck3 gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета wnck3
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-wnck3-doc
+Documentation files for wnck3 gem.
+
+%description   -n gem-wnck3-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета wnck3.
+
+
+%package       -n gem-libsecret
+Summary:       Executable file for libsecret gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета libsecret
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-libsecret
+Executable file for libsecret gem.
+
+%description   -n gem-libsecret -l ru_RU.UTF8
+Исполнямка для libsecret самоцвета.
+
+
+%package       -n gem-libsecret-doc
+Summary:       Documentation files for libsecret gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libsecret
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-libsecret-doc
+Documentation files for libsecret gem.
+
+%description   -n gem-libsecret-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета libsecret.
+
+
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build --ignore=ruby-gnome2
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files         -n ruby-gnome2
 
@@ -1059,8 +1113,30 @@ Documentation files for %{name}.
 %files         -n gem-webkit2-gtk-doc
 %ruby_gemsdocdir/webkit2-gtk-%version
 
+%files         -n gem-wnck3
+%ruby_gemspecdir/wnck3-%version.gemspec
+%ruby_gemslibdir/wnck3-%version
+
+%files         -n gem-wnck3-doc
+%ruby_gemsdocdir/wnck3-%version
+
+%files         -n gem-libsecret
+%ruby_gemspecdir/libsecret-%version.gemspec
+%ruby_gemslibdir/libsecret-%version
+
+%files         -n gem-libsecret-doc
+%ruby_gemsdocdir/libsecret-%version
+
 
 %changelog
+* Tue Aug 20 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
+^ v3.3.7
++ libthai-devel, and libdatrie-devel build reqs
++ wnck3, and libsecret gems
+
+* Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.6-alt2
+- ignore ruby-gnome2 gemfile
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.6-alt1
 - Bump to 3.3.6
 

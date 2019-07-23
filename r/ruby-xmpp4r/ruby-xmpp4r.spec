@@ -1,23 +1,22 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname xmpp4r
 
-Name: ruby-%pkgname
-Version: 0.5.6
-Release: alt1
+Name:          ruby-%pkgname
+Version:       0.5.6
+Release:       alt2
+Summary:       XMPP/Jabber library for Ruby
+License:       GPLv2
+Group:         Development/Ruby
+Url:           http://xmpp4r.github.io/
+%vcs           https://github.com/xmpp4r/xmpp4r.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: XMPP/Jabber library for Ruby
-License: GPLv2/Ruby
-Group: Development/Ruby
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
-# see also https://github.com/ln/xmpp4r
-Url: http://home.gna.org/xmpp4r/
-Source: %pkgname-%version.tar
-
-Obsoletes: xmpp4r
-BuildArch: noarch
-
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+Obsoletes:     xmpp4r
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 XMPP4R is an XMPP/Jabber library for Ruby. Its goal is to provide
@@ -32,35 +31,44 @@ scripts in Ruby.
    of reinventing the wheel
  * Very easy to extend
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%ruby_build --use=%pkgname --version-replace=%version
 
 %install
 %ruby_install
-%rdoc lib/
+
+%check
+%ruby_test
 
 %files
-%doc CHANGELOG README.rdoc
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc data/doc/xmpp4r/examples
-%ruby_ri_sitedir/Jabber*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.6-alt2
+- Use Ruby Policy 2.0
+
 * Thu Jul 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.6-alt1
 - New version.
 

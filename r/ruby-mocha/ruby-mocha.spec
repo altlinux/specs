@@ -1,60 +1,65 @@
-%define pkgname mocha
+%define        pkgname mocha
 
-Name: ruby-%pkgname
-Version: 1.7.0
-Release: alt1
+Name:          ruby-%pkgname
+Version:       1.9.0
+Release:       alt1
+Summary:       Library for mocking and stubbing in Ruby
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/freerange/mocha
+%vcs           https://github.com/freerange/mocha.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Library for mocking and stubbing in Ruby
-Group: Development/Ruby
-License: MIT/Ruby
-Url: http://rubyforge.org/projects/mocha/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-BuildArch: noarch
-
-Source: %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby 
-BuildRequires: ruby-tool-rdoc ruby-tool-setup ruby-test-unit
-BuildRequires: ruby-metaclass
+BuildRequires: gem(metaclass)
 
 %description
 Mocha is a library for mocking and stubbing in Ruby using a syntax
 like that of JMock. Mocha provides a unified, simple and readable
 syntax for both traditional and partial mocking.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
 
 %check
-%ruby_test_unit -Ilib:test test/unit/*_test.rb test/unit/*/*_test.rb
+%ruby_test
 
 %files
-%doc *.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/Mocha*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.9.0-alt1
+- Bump to 1.9.0
+- Use Ruby Policy 2.0
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - New version.
 

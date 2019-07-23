@@ -1,27 +1,21 @@
-%define  pkgname bundler
-%def_disable man
+%define        pkgname bundler
 
-Name:    ruby-%pkgname
-Version: 2.0.1
-Release: alt1
+Name:          ruby-%pkgname
+Version:       2.0.2
+Release:       alt1
+Summary:       Manage your Ruby application's gem dependencies
+License:       MIT
+Group:         Development/Ruby
+Url:           https://bundler.io/
+%vcs           https://github.com/bundler/bundler.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Manage your Ruby application's gem dependencies
-License: MIT
-Group:   Development/Ruby
-Url:     https://bundler.io/
-# VCS:   https://github.com/bundler/bundler.git
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
-Requires: bundle = %version-%release
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-#BuildRequires: gem(rake) gem(rdiscount) gem(ronn) gem(rspec) gem(rubocop) gem(mustache) gem(automatiek)
-%if_enabled man
-BuildRequires: ronn groff-base
-%endif
+BuildRequires: gem(ronn)
+BuildRequires: groff-base
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -35,81 +29,68 @@ them when new versions become available. Finally, it records the exact
 versions that have been installed, so that others can install the exact
 same gems.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n bundle
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+Conflicts:     golang-tools
 
-%description doc -l ru_RU.UTF-8
-Документация для %{name}.
+%description   -n bundle
+Executable file for %gemname gem.
 
-
-%package -n bundle
-Summary: Bundle is the executable file for bundler.
-Group: Development/Ruby
-
-BuildArch: noarch
-
-Requires: gem(bundler) = %version
-Conflicts: golang-tools
+%description   -n bundle -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
 
 
-%description -n bundle
-Bundle is the executable file for bundler.
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description -n bundle -l ru_RU.UTF-8
-Исполняемый файл для утилиты bundler.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
-rm -f bin/{rake,rspec,rubocop,bundle,bundle1,bundle2,with_rubygems}
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-install -p -m 755 exe/{bundle,bundler} %buildroot/%_bindir
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-
-%if_enabled man
-# Generate man page
-ronn --roff %buildroot%_mandir/*.ronn
-mkdir -p %buildroot%_man1dir
-mv %buildroot%_mandir/*.1 %buildroot%_man1dir
-mkdir -p %buildroot%_man5dir
-mv %buildroot%_mandir/*.5 %buildroot%_man5dir
-%endif
-rm -rf %buildroot%_mandir/*.ronn
 
 %check
-#%rake spec:deps
-#%rake_spec
+%ruby_test
 
 %files
-%rubygem_gemdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
+%files         -n bundle
 %doc README*
-%ruby_ri_sitedir/*
-
-%files -n bundle
 %_bindir/*
-%if_enabled man
-%_man1dir/*
-%_man5dir/*
-%endif
+%_mandir/*
+
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt1
+^ v2.0.2
+! spec
+- findreq build error
+
+* Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt2
+- Use Ruby Policy 2.0.
+
 * Wed Jan 9 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
 - Bump to 2.0.1.
 - Place library files into gem folder.

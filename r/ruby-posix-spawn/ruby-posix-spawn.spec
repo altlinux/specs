@@ -2,18 +2,19 @@
 
 Name:          ruby-%pkgname
 Version:       0.3.13
-Release:       alt2
+Release:       alt2.1
 Summary:       Ruby process spawning library
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/rtomayko/posix-spawn
-# VCS:         https://github.com/rtomayko/posix-spawn.git
+%vcs           https://github.com/rtomayko/posix-spawn.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Patch:         upstream-fix-build-on-i586.patch
 
 BuildRequires(pre): rpm-build-ruby
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -56,13 +57,13 @@ Documentation files for %gemname gem.
 %patch -p1
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -78,6 +79,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.1
+! spec
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2
 - Use Ruby Policy 2.0
 

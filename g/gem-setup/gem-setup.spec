@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt7
+Release:       alt8
 
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -33,6 +33,7 @@ Just instruct one's users to install Ruby Setup (gem install setup) and go from
 there. As long as a project is setup.rb compliant, as most are, then there is
 little to nothing it's developer must do.
 
+
 %package       doc
 Summary:       Documentation files for %name
 Group:         Documentation
@@ -40,6 +41,7 @@ BuildArch:     noarch
 
 %description   doc
 Documentation files for %name.
+
 
 %prep
 %setup
@@ -63,7 +65,52 @@ Documentation files for %name.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Aug 21 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt8
+- mistake in dependecies detection for Gemfile source
+! default datadir to libdir for site ruby packages
+! getting task list from MultiTask instead of Task
++ load rake task imports before executio pre tasks
+! state dir for gem target from localstatedir to datadir
++ logdir option, and its processing
+! installer's group methods
+! options parser for sources to make both key and value changeable
+! options pass via parser for rakefile source
+! object class options store to specfic one by changing from @@ to @.
++ ronn man detection and compilation
++ prefixes command line parameter: gem,ruby...
++ source directory groups command line parameters: --src<param>dirs
+! source module parameter parsing
++ String#pluralize
++ spec selection from Gem::PackageTask object for Rakefile
+- Require dirs detection mistake, not filters out only path with the beginning
+  '/'
+- Hoe presence detection error
++ Rookbook gemspec parser (example: erubis gem)
+- Olddoc syntax typo
+- Hoe syntax typo
++ try load hoe gem in the beginning of the how gemspec module
++ support for group trees instead of file lists in sources
+- installation module to support trees
+- compilation modules supporting trees
+- dep module supporting trees
+- bin group name to exe in sources and targets
+- include group name to inc in sources and targets
+- etc group name to conf in sources and targets
+- lost methods in ruby target
++ some kernel methods
+- Prefix remove alias "rails-plugin" for packages
+- Gemfile installation for the Gemfile source is used for gem version
+  replacements
+- ERROR msg profix replaced with WARN
+- fix DSL dependenciy replace list for #to_gemfile
+- added compatibility call to external program to do some things for the
+  action with --compat=/path/to/program
+- fixed name of the gem file to Gemfile
+- fix loading and saving version replace list for the common and source parts
+- added gem replace verison list argument to gemfile source
+
 * Tue Apr 30 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt7
 - Set default external CP to UTF8
 

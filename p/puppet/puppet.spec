@@ -1,16 +1,16 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.8.0
+%define        core_version   6.9.0
 %define        dm_version     1.0.1
 
 Name:          %pkgname
 Version:       %core_version
-Release:       alt1
+Release:       alt0.1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       ASL 2.0
 URL:           https://puppet.com/
-# VCS:         https://github.com/puppetlabs/puppet.git
+%vcs           https://github.com/puppetlabs/puppet.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
 
 %gem_replace_version CFPropertyList ~> 3.0
-%gem_replace_version fast_gettext ~> 1.7
 %add_findreq_skiplist %ruby_gemslibdir/*
 
 Requires: shadow-change
@@ -38,6 +37,7 @@ elements like packages, services, and files.
 
 %package       -n gem-deep-merge
 Version:       %dm_version
+Release:       alt1
 Summary:       Deep merge hash
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -48,6 +48,7 @@ BuildArch:     noarch
 
 %package       -n gem-deep-merge-doc
 Version:       %dm_version
+Release:       alt1
 Summary:       Documentation for gem-deep-merge gem
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -58,6 +59,7 @@ BuildArch:     noarch
 
 %package       -n gem-%pkgname
 Version:       %core_version
+Release:       alt0.1
 Summary:       Core library code for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -68,6 +70,7 @@ BuildArch:     noarch
 
 %package       -n gem-%pkgname-doc
 Version:       %core_version
+Release:       alt0.1
 Summary:       Documentation for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -80,10 +83,10 @@ BuildArch:     noarch
 %setup -n %name-%version
 
 %build
-%gem_build
+%ruby_build --ignore=full_catalog,acceptance
 
 %install
-%gem_install
+%ruby_install
 
 # SysVInit files
 install -Dp -m0644 %confdir/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
@@ -108,7 +111,7 @@ echo "D /run/%name 0755 _%name %name -" > \
 mkdir -p %buildroot%_sysconfdir/%name/modules
 
 # Create service directory
-mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run}/puppet
+mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run,%_cachedir}/puppet
 
 # Install NetworkManager dispatcher
 install -Dpv %SOURCE3 \
@@ -123,6 +126,10 @@ cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
 #report = true
 #reports = puppetdb
 END.
+
+# link to gem library code base
+ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
+
 
 %pre
 %_sbindir/groupadd -r -f puppet
@@ -167,7 +174,11 @@ END.
 %attr(1770,_puppet,puppet) %dir %_var/run/puppet
 %doc %_man8dir/*
 %doc %_man5dir/puppet.conf.5*
-
+%dir %_datadir/puppet
+%dir %_logdir/puppet
+%dir %_cachedir/puppet
+%dir %_localstatedir//puppet
+%dir %_var/run/puppet
 
 %files         -n gem-%pkgname
 %ruby_gemspec
@@ -185,6 +196,11 @@ END.
 
 
 %changelog
+* Mon Aug 19 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.1
+^ v6.9.0
++ links to required dirs in spec
+! spec
+
 * Fri Aug 16 2019 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt1
 - New version.
 

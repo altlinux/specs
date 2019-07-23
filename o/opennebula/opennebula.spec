@@ -6,7 +6,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.8.4
-Release: alt3
+Release: alt3.1
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -33,6 +33,9 @@ BuildRequires: zlib-devel
 BuildRequires: node node-gyp npm node-devel
 BuildRequires: ronn
 BuildRequires: groff-base
+
+%gem_replace_version highline ~> 2.0
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 OpenNebula.org is an open-source project aimed at building the industry
@@ -266,7 +269,9 @@ popd
 # Compile OpenNebula
 scons -j2 mysql=yes new_xmlrpc=yes sunstone=no systemd=yes rubygems=yes
 
-%gem_build --use=install_gems --alias=opennebula-common --join=lib:bin --use=flow --alias=opennebula-flow --join=lib:bin --use=opennebula-cli --join=lib:bin
+%ruby_build --ignore=packethost \
+            --use=install_gems --alias=opennebula-common --join=lib:bin \
+            --use=flow --alias=opennebula-flow --join=lib:bin --srclibdir= --srcconfdir= # --use=opennebula-cli --join=lib:bin
 
 # build man pages
 pushd share/man
@@ -286,7 +291,8 @@ touch %buildroot%oneadmin_home/sunstone/main.js
 rm -f %buildroot%_libexecdir/one/sunstone/public/dist/main.js
 ln -r -s %buildroot%oneadmin_home/sunstone/main.js %buildroot%_libexecdir/one/sunstone/public/dist/main.js
 
-%gem_install
+%ruby_install
+
 # delete duplicated with gems files
 ## opennebula
 rm -rf %buildroot%_libexecdir/one/ruby/opennebula
@@ -351,9 +357,11 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modules %buildroot%_sysconfdi
 # cleanup
 rm -f %buildroot%_datadir/one/Gemfile
 rm -f %buildroot%_datadir/one/install_gems
+rm -rf %buildroot%_libdir/install_gems
 rm -rf %buildroot%_libexecdir/one/ruby/vendors
-rm -rf %buildroot%ruby_gemspecdir/packethost*.gemspec
-rm -rf %buildroot%ruby_gemslibdir/packethost*
+
+# fix placement
+mv %buildroot%_libdir/flow %buildroot%_datadir/flow
 
 # Python
 #pushd src/oca/python
@@ -559,6 +567,7 @@ fi
 %_bindir/oneflow-server
 %_unitdir/opennebula-flow.service
 %_initdir/opennebula-flow
+%_datadir/flow
 
 %files provision
 %_bindir/oneprovision
@@ -667,6 +676,9 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 5.8.4-alt3.1
+! spec to fix dependency gem version
+
 * Wed Jul 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.4-alt3
 - revert "remove support tab"
 - check enable support-tab in yaml files

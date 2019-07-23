@@ -1,19 +1,20 @@
 %define        pkgname em-mongo
 
-Name: 	       ruby-%pkgname
+Name:          ruby-%pkgname
 Version:       0.6.0
-Release:       alt2
+Release:       alt2.1
 Summary:       EventMachine MongoDB Driver (based off of RMongo)
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/bcg/em-mongo
-# VCS:         https://github.com/bcg/em-mongo.git
+%vcs           https://github.com/bcg/em-mongo.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-%gem_replace_version bson ~> 4.0
 BuildRequires(pre): rpm-build-ruby
+%gem_replace_version bson ~> 4.0
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 An EventMachine client for MongoDB. Originally based on RMongo, this client aims
@@ -29,33 +30,42 @@ deferrable.
 
 
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{name}.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build --ignore=gem
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
-%ruby_gemlibdir/*
+%ruby_gemlibdir
 
 %files         doc
-%ruby_gemdocdir/*
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2.1
+! spec
+
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2
 - Use Ruby Policy 2.0.
 

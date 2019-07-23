@@ -1,19 +1,18 @@
-%define  pkgname ox
+%define        pkgname ox
 
-Name: 	 ruby-%pkgname
-Version: 2.10.0
-Release: alt2
+Name:          ruby-%pkgname
+Version:       2.11.0
+Release:       alt1
+Summary:       Ruby Optimized XML Parser
+License:       MIT
+Group:         Development/Ruby
+Url:           http://www.ohler.com/ox
+%vcs           https://github.com/ohler55/ox.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Ruby Optimized XML Parser
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     http://www.ohler.com/ox
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 A fast XML parser and object serializer that uses only standard C lib.
@@ -22,38 +21,59 @@ optimized XML handling. It was designed to be an alternative to Nokogiri
 and other Ruby XML parsers for generic XML parsing and as an alternative
 to Marshal for Object serialization.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %{name}.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      ruby-%pkgname-doc
+Obsoletes:     ruby-%pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%package       -n gem-%pkgname-devel
+Summary:       Development files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-devel
+Development files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
-%doc *.md
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
-
-%files doc
-%ruby_gemdocdir
 %ruby_gemextdir
 
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
+
 %changelog
-* Tue Apr 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.10.0-alt2
-- Rebuild with new ruby scheme
+* Tue Aug 27 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.0-alt1
+^ v2.11.0
+! spec
+
+* Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.10.0-alt2
+- Use Ruby Policy 2.0
 
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
 - New version.

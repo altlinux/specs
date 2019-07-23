@@ -1,61 +1,62 @@
-%define  pkgname hirb
+%define        pkgname hirb
 
-Name:    ruby-%pkgname
-Version: 0.7.3
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       0.7.3
+Release:       alt2
+Summary:       A mini view framework for console/irb that's easy to use
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/cldwalker/hirb
+%vcs           https://github.com/cldwalker/hirb.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/cldwalker/hirb
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
-%summary
+A mini view framework for console/irb that's easy to use, even while under its
+influence. Console goodies include a no-wrap table, auto-pager, tree and menu.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
-rake generate > %pkgname.gemspec
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
 - Rebuild with new Ruby autorequirements.
 

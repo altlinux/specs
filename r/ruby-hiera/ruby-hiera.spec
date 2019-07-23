@@ -1,17 +1,17 @@
 %define        pkgname hiera
 
 Name: 	       ruby-%pkgname
-Version:       3.5.0
-Release:       alt1
+Version:       3.6.0
+Release:       alt0.1
 Summary:       A simple pluggable Hierarchical Database
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://projects.puppetlabs.com/projects/hiera/
-# VCS:         https://github.com/puppetlabs/hiera.git
+%vcs           https://github.com/puppetlabs/hiera.git
 Packager:      Andrey Cherepanov <cas@altlinux.org>
 BuildArch:     noarch
 
-Source:        %pkgname-%version.tar
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist *.erb
@@ -19,35 +19,73 @@ BuildRequires(pre): rpm-build-ruby
 %description
 A simple pluggable Hierarchical Database.
 
+
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
+%package       devel
+Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Ruby
+
+%description   devel
+Development files for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{name}.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-%gem_build
+%ruby_build --ignore=acceptance
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
-%_bindir/%pkgname
+%doc README*
 %ruby_gemlibdir
 %ruby_gemspec
+
+%files         -n %pkgname
+%_bindir/%{pkgname}*
 
 %files         doc
 %ruby_gemdocdir
 
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt0.1
+- Bump to 2.6.0 pre
+- Fix spec
+
 * Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
 - Bump to 3.5.0;
 - Use Ruby Policy 2.0.

@@ -1,67 +1,86 @@
-Name:    mustache
-Version: 1.1.0
-Release: alt1
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname mustache
 
-Summary: Logic-less Ruby templates
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/mustache/mustache
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
+Name:          %pkgname
+Version:       1.1.0
+Release:       alt2
+Summary:       Logic-less Ruby templates
+License:       MIT
+Group:         Development/Ruby
+Url:           http://mustache.github.io/
+%vcs           https://github.com/mustache/mustache.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:  %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
+Inspired by ctemplate and et, Mustache is a framework-agnostic way to render
+logic-free views.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+As ctemplates says, "It emphasizes separating logic from presentation: it is
+impossible to embed application logic in this template language."
 
-BuildArch: noarch
 
-%description doc
-Documentation files for %{name}.
+%package       -n gem-%pkgname
+Summary:       Library for %gemname gem
+Summary(ru_RU.UTF-8): Библиотечные файлы для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-%pkgname
+Library for %gemname gem.
+
+%description   -n gem-%pkgname -l ru_RU.UTF8
+Библиотечные файлы для %gemname самоцвета.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+Provides:      %pkgname-doc
+Obsoletes:     %pkgname-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -q
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-
-mkdir -p %buildroot%_man1dir
-mv %buildroot%_mandir/*.1 %buildroot%_man1dir
-mkdir -p %buildroot%_man5dir
-mv %buildroot%_mandir/*.5 %buildroot%_man5dir
-rm -f %buildroot%_mandir/*.*
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/%name
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%_man1dir/*.1*
-%_man5dir/*.5*
+%_bindir/%{pkgname}*
+%_mandir/*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
 
 %changelog
+* Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt2
+- Use Ruby Policy 2.0
+
 * Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 

@@ -1,19 +1,16 @@
-%define     pkgname fog-vsphere
+%define        pkgname fog-vsphere
 
-Name:       ruby-%pkgname
-Version:    2.5.0
-Release:    alt1
-
-Summary:    Fog for vSphere
-License:    MIT
-Group:      Development/Ruby
-Url:        https://github.com/fog/fog-vsphere
-# VCS:      https://github.com/fog/fog-vsphere.git
-
-Packager:   Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch:  noarch
-
-Source:     %pkgname-%version.tar
+Name:          ruby-%pkgname
+Version:       3.1.0
+Release:       alt1
+Summary:       Fog for vSphere
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/fog/fog-vsphere
+%vcs           https://github.com/fog/fog-vsphere.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 
@@ -21,44 +18,43 @@ BuildRequires(pre): rpm-build-ruby
 The VMware vSphere provider allows you to use the abstractions of the Fog cloud
 services library to communicate with vSphere.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для %gemname самоцвета
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
-mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
-
 
 %check
 %ruby_test
 
 %files
-%doc README*
-%rubygem_gemdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
+- Bump to 3.1.0
+- Use Ruby Policy 2.0
+
 * Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
 - Bump to 2.5.0.
 

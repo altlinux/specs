@@ -2,17 +2,20 @@
 
 Name:          ruby-%pkgname
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby binding to the Z39.50 Object-Orientation Model (ZOOM)
 Group:         Development/Ruby
 License:       LGPL
 Url:           https://github.com/bricestacey/ruby-zoom
-# VCS:         https://github.com/bricestacey/ruby-zoom.git
+%vcs           https://github.com/bricestacey/ruby-zoom.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:        %pkgname-%version.tar
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libyaz-devel ruby-test-unit zlib-devel libgcrypt-devel
+BuildRequires: gem(test-unit)
+BuildRequires: libyaz-devel
+BuildRequires: zlib-devel
+BuildRequires: libgcrypt-devel
 
 %description
 Ruby/ZOOM provides a Ruby binding to the Z39.50 Object-Orientation Model
@@ -25,44 +28,39 @@ implementation of the Z39.50/SRW/SRU standards, but could be easily ported to
 any ZOOM compliant implementation.
 
 
-%package       doc
-Summary:       Documentation files for %name
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %name
-
-
 %package       devel
-Summary:       Headers for %name
+Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Ruby
-BuildArch:     noarch
 
 %description   devel
-%summary.
+Development files for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %files
 %ruby_gemspec
-%ruby_gemslibdir
-%ruby_gemsextdir
-
-%files doc
-%ruby_gemsdocdir
+%ruby_gemlibdir
+%ruby_gemextdir
 
 %files devel
 %ruby_includedir/*
 
 %changelog
+* Sat Jul 20 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt2
+- Fix build
+
 * Thu Feb 21 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1
 - Bump to 0.5;
 - Use Ruby Policy 2.0.

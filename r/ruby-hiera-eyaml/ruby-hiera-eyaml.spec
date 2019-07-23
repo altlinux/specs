@@ -1,59 +1,82 @@
-%define  pkgname hiera-eyaml
- 
-Name: 	 ruby-%pkgname
-Version: 2.1.0 
-Release: alt2
- 
-Summary: A backend for Hiera that provides per-value asymmetric encryption of sensitive data
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/voxpupuli/hiera-eyaml
- 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
- 
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%define        pkgname hiera-eyaml
 
-%gem_replace_version highline ~> 1.7
- 
+Name: 	       ruby-%pkgname
+Version:       3.0.0
+Release:       alt1
+Summary:       A backend for Hiera that provides per-value asymmetric encryption of sensitive data
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/voxpupuli/hiera-eyaml
+%vcs           https://github.com/voxpupuli/hiera-eyaml.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+
+%gem_replace_version highline ~> 2.0
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+
 %description
 hiera-eyaml is a backend for Hiera that provides per-value encryption of
 sensitive data within yaml files to be used by Puppet.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+
+%package       -n eyaml
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n eyaml
+Executable file for %gemname gem.
+
+%description   -n eyaml -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
- 
+%setup
+
 %build
-%gem_build
- 
+%ruby_build
+
 %install
-%gem_install
- 
+%ruby_install
+
 %check
-%gem_test
- 
+%ruby_test
+
 %files
 %doc README*
-%_bindir/eyaml
 %ruby_gemspec
 %ruby_gemlibdir
- 
-%files doc
+
+%files         -n eyaml
+%_bindir/eyaml
+
+%files         doc
 %ruby_gemdocdir
- 
+
+
 %changelog
+* Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+^ 3.0.0
+! spec
+
 * Wed Apr 10 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt2
 - Use new ruby packaging policy
 - Make appropriate require to highline

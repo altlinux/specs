@@ -1,13 +1,13 @@
 %define        pkgname hoe
 
 Name:          ruby-%pkgname
-Version:       3.17.2
+Version:       3.18.0
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/seattlerb/hoe
-# VCS:         https://github.com/seattlerb/hoe.git
+%vcs           https://github.com/seattlerb/hoe.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 Source:        %name-%version.tar
@@ -20,24 +20,28 @@ BuildRequires(pre): rpm-build-ruby
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build --shebang=auto
+%ruby_build --shebang=auto
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %_bindir/sow
@@ -47,7 +51,12 @@ Documentation files for %gemname gem.
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Jul 29 2019 Pavel Skrylev <majioa@altlinux.org> 3.18.0-alt1
+! v3.18.0
+! spec
+
 * Thu Apr 25 2019 Pavel Skrylev <majioa@altlinux.org> 3.17.2-alt1
 - Bump to 3.17.2
 - Use Ruby Policy 2.0

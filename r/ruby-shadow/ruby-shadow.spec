@@ -1,58 +1,44 @@
-%define  pkgname ruby-shadow
+%define        pkgname ruby-shadow
+%define        gemname ruby-shadow
 
-Name: 	 %pkgname
-Version: 2.5.0
-Release: alt3
+Name: 	       %pkgname
+Version:       2.5.0
+Release:       alt4
+Summary:       Shadow Password module for Ruby
+License:       Public Domain License
+Group:         Development/Ruby
+Url:           https://github.com/apalmblad/ruby-shadow
+%vcs           https://github.com/apalmblad/ruby-shadow.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
-Summary: Shadow Password module for Ruby
-License: Public Domain License
-Group:   Development/Ruby
-Url:     https://github.com/apalmblad/ruby-shadow
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
 
 %description
 This module provides tools to read, and, on Linux, append, information
 related to password files.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-
-BuildArch: noarch
-
-%description doc
-Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config -- --use-system-libraries
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
+%ruby_gemextdir
 
-%files doc
-%ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt4
+- Use Ruby Policy 2.0
+
 * Thu Nov 29 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt3
 - Gemify package.
 
