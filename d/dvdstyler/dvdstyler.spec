@@ -1,6 +1,6 @@
 Name: dvdstyler
-Version: 3.1
-Release: alt2
+Version: 3.1.1
+Release: alt1
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -92,6 +92,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Tue Jul 23 2019 Anton Farygin <rider@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2
 - NMU: remove rpm-build-ubt from BR:
 

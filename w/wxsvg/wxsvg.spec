@@ -2,8 +2,8 @@
 %define soname 3
 
 Name: wxsvg
-Version: 1.5.18
-Release: alt2
+Version: 1.5.19
+Release: alt1
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -78,6 +78,9 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jul 23 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.19-alt1
+- 1.5.19
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.5.18-alt2
 - explicit -std=c++11
 - minor spec cleanup/fixup
