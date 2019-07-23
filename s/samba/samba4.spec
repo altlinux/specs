@@ -60,7 +60,7 @@
 
 Name:    samba
 Version: 4.10.3
-Release: alt4
+Release: alt5
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1822,6 +1822,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jul 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.3-alt5
+- Partial fixes for SMBLoris vulnerability on smbd
+  + Add smbd read timeout parameter
+  + Set max smbd processes to 768
+
 * Thu Jul 04 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.3-alt4
 - Remove conflict to libwbclient-sssd due problem that apt install
   it for with gssntlmssp-debuginfo (Closes: 36750)
