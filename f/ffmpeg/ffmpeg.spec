@@ -101,8 +101,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.1.3
-Release:	alt3
+Version:	4.1.4
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -777,6 +777,9 @@ xz Changelog
 %endif
 
 %changelog
+* Tue Jul 23 2019 Anton Farygin <rider@altlinux.ru> 2:4.1.4-alt1
+- 4.1.4 (fixes: CVE-2019-12730)
+
 * Sun May 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:4.1.3-alt3
 - Built with support of:
   + libaom and HAP codecs;
