@@ -1,24 +1,41 @@
 %define _unpackaged_files_terminate_build 1
+
+%def_with python3
+%def_enable bootstrap
+
 %define oname Enable
 Name: python-module-%oname
-Version: 4.6.1
+Version: 4.8.0
 Release: alt1
 Summary: Drawing and interaction packages
 
 Group: Development/Python
 License: BSD and GPLv2
-URL: http://code.enthought.com/projects/enable/
-# https://github.com/enthought/enable.git
-Source0: https://pypi.python.org/packages/08/3d/d57626e77a6fdc16feab3b5df615507193ad5c1ec163d960f1f54e729e70/enable-%{version}.tar.bz2
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+URL: https://github.com/enthought/enable/
 
-BuildRequires: python-devel, python-module-setuptools
-BuildPreReq: libnumpy-devel gcc-c++ swig python-module-Pyrex
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: libGL-devel libX11-devel python-module-Cython
-BuildPreReq: libGLU-devel python-module-traits fonts-ttf-PT
+# https://github.com/enthought/enable.git
+Source: enable-%version.tar
+
+BuildRequires: gcc-c++ swig
+BuildRequires: libX11-devel libGL-devel libGLU-devel
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: libnumpy-devel
+BuildRequires: python-module-Cython
+%if_disabled bootstrap
+BuildRequires: python-module-Pyrex
+BuildRequires: python-module-sphinx-devel python-module-Pygments
+BuildRequires: python-module-traits fonts-ttf-PT
+%endif
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-Cython
+%endif
 
 %add_python_req_skip macport mac_context hypothesis
+%add_python_req_skip tvtk
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -29,6 +46,59 @@ multi-platform DisplayPDF vector drawing engine that supports multiple
 output backends, including Windows, GTK, and Macintosh native windowing
 systems, a variety of raster image formats, PDF, and Postscript.
 
+%package tests
+Summary: Tests for Enable project
+Group: Development/Python
+Requires: %name = %EVR
+%add_python_req_skip hypothesis
+
+%description tests
+The Enable project provides two related multi-platform packages for
+drawing GUI objects. The Enable package is a multi-platform object
+drawing library built on top of Kiva. The core of Enable is a
+container/component model for drawing and event notification. Kiva is a
+multi-platform DisplayPDF vector drawing engine that supports multiple
+output backends, including Windows, GTK, and Macintosh native windowing
+systems, a variety of raster image formats, PDF, and Postscript.
+
+This package contains tests for Enable project.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: Drawing and interaction packages
+Group: Development/Python3
+%add_python3_req_skip macport mac_context hypothesis
+%add_python3_req_skip wx.aui wx.glcanvas wx.grid wx.py.shell
+
+%description -n python3-module-%oname
+The Enable project provides two related multi-platform packages for
+drawing GUI objects. The Enable package is a multi-platform object
+drawing library built on top of Kiva. The core of Enable is a
+container/component model for drawing and event notification. Kiva is a
+multi-platform DisplayPDF vector drawing engine that supports multiple
+output backends, including Windows, GTK, and Macintosh native windowing
+systems, a variety of raster image formats, PDF, and Postscript.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Enable project
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%add_python3_req_skip hypothesis
+%add_python3_req_skip etsdevtools.debug.memusage
+
+%description -n python3-module-%oname-tests
+The Enable project provides two related multi-platform packages for
+drawing GUI objects. The Enable package is a multi-platform object
+drawing library built on top of Kiva. The core of Enable is a
+container/component model for drawing and event notification. Kiva is a
+multi-platform DisplayPDF vector drawing engine that supports multiple
+output backends, including Windows, GTK, and Macintosh native windowing
+systems, a variety of raster image formats, PDF, and Postscript.
+
+This package contains tests for Enable project.
+%endif
+
+%if_disabled bootstrap
 %package pickles
 Summary: Pickles for Enable project
 Group: Development/Python
@@ -44,28 +114,11 @@ systems, a variety of raster image formats, PDF, and Postscript.
 
 This package contains pickles for Enable project.
 
-%package tests
-Summary: Tests for Enable project
-Group: Development/Python
-Requires: %name = %version-%release
-%add_python_req_skip hypothesis
-
-%description tests
-The Enable project provides two related multi-platform packages for
-drawing GUI objects. The Enable package is a multi-platform object
-drawing library built on top of Kiva. The core of Enable is a
-container/component model for drawing and event notification. Kiva is a
-multi-platform DisplayPDF vector drawing engine that supports multiple
-output backends, including Windows, GTK, and Macintosh native windowing
-systems, a variety of raster image formats, PDF, and Postscript.
-
-This package contains tests for Enable project.
-
 %package doc
 Summary: Documentation for Enable project
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 
 %description doc
 The Enable project provides two related multi-platform packages for
@@ -77,43 +130,79 @@ output backends, including Windows, GTK, and Macintosh native windowing
 systems, a variety of raster image formats, PDF, and Postscript.
 
 This package contains development documentation for Enable project.
+%endif
 
 %prep
-%setup -q -n enable-%{version}
+%setup -n enable-%version
 
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
+# remove python3-only backend
+rm -rf enable/enable/vtk_backend
+
+%if_disabled bootstrap
 %prepare_sphinx .
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%if_disabled bootstrap
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
+%endif
 
 %install
 %python_install
 
-find %buildroot%python_sitelibdir -type f -name '*.py' -exec \
-	sed -i 's|// |#|' '{}' +
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 rm -fR %buildroot%python_sitelibdir/enthought/kiva/mac
 rm -f $(find %buildroot%python_sitelibdir -name '*mac*.py*')
 
+# remove shebangs from files
+find %buildroot%python_sitelibdir -type f -name '*.py' -exec \
+	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
+
+%if_with python3
+rm -fR %buildroot%python3_sitelibdir/enthought/kiva/mac
+rm -f $(find %buildroot%python3_sitelibdir -name '*mac*.py*')
+
+# remove shebangs from files
+find %buildroot%python3_sitelibdir -type f -name '*.py' -exec \
+	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
+%endif
+
+%if_disabled bootstrap
 install -d %buildroot%python_sitelibdir/enable
 cp -fR pickle %buildroot%python_sitelibdir/enable/
+%endif
 
 %files
-%doc *.rst PKG-INFO docs examples
+%doc image_LICENSE*.txt LICENSE.txt
+%doc *.rst CHANGES.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/example*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
+%if_disabled bootstrap
 %exclude %python_sitelibdir/enable/pickle
-
-%files pickles
-%dir %python_sitelibdir/enable
-%python_sitelibdir/enable/pickle
+%endif
 
 %files tests
 %python_sitelibdir/*/test*
@@ -121,10 +210,39 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 
+%if_disabled bootstrap
+%files pickles
+%dir %python_sitelibdir/enable
+%python_sitelibdir/enable/pickle
+
 %files doc
-%doc docs/kiva examples
+%doc docs examples
+%endif
+
+%if_with python3
+%files -n python3-module-%oname
+%doc image_LICENSE*.txt LICENSE.txt
+%doc *.rst CHANGES.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/example*
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/example*
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+%endif
 
 %changelog
+* Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt1
+- Updated to upstream version 4.8.0.
+- Built modules for python-3.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt1
 - automated PyPI update
 

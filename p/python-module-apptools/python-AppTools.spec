@@ -1,28 +1,37 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname apptools
 
-%def_without python3
+%def_with python3
 
 Name:           python-module-%oname
 Version:        4.4.0
-Release:        alt3
+Release:        alt4
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
 License:        BSD and LGPLv2+
-URL:            http://www.enthought.com/
+URL:            https://docs.enthought.com/apptools/
+
 # https://github.com/enthought/apptools.git
-Source:        AppTools-%version.tar.gz
+Source:         %name-%version.tar
 Source1:        README.fedora.python-AppTools
-Patch1: %oname-%version-alt-build.patch
+Patch1:         %oname-%version-alt-build.patch
 
 BuildArch:      noarch
-BuildRequires:  python-module-setuptools, python-devel
+
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
 BuildRequires: python-module-traits-tests python-module-wx python-module-tables-tests xvfb-run
 BuildRequires: python-module-numpy-testing
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setupdocs python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-traits-tests python3-module-numpy-testing
+BuildRequires: python3(tables) python3(tables.tests) python3(pandas)
 %endif
 
 %py_requires %oname.help.help_plugin.examples_preferences
@@ -50,10 +59,25 @@ functionality that is commonly needed by many applications
 
 and many more.
 
+%package tests
+Summary: Tests for AppTools
+Group: Development/Python
+Requires: %name = %EVR
+%add_python_req_skip util
+
+%description tests
+The AppTools project includes a set of packages that Enthought has
+found useful in creating a number of applications.
+
+This package contains tests for AppTools.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: Enthough Tool Suite Application Tools (Python 3)
 Group: Development/Python3
+%add_python3_req_skip traits.protocols.api
+%add_python3_req_skip new wx
+%add_python3_req_skip codetools.contexts.api
 
 %description -n python3-module-%oname
 The AppTools project includes a set of packages that Enthought has
@@ -76,6 +100,27 @@ functionality that is commonly needed by many applications
       full-blown security).
 
 and many more.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for AppTools
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%add_python3_req_skip apptools.template.impl.base_data_context_adapter
+%add_python3_req_skip blockcanvas.app.utils
+%add_python3_req_skip chaco.api
+%add_python3_req_skip chaco.scatter_markers
+%add_python3_req_skip chaco.tools.api
+%add_python3_req_skip enable.wx_backend.api
+%add_python3_req_skip etsdevtools.developer.features.api
+%add_python3_req_skip etsdevtools.developer.helper.themes
+%add_python3_req_skip traitsui.wx.themed_slider_editor
+%add_python3_req_skip traitsui.wx.themed_text_editor
+
+%description -n python3-module-%oname-tests
+The AppTools project includes a set of packages that Enthought has
+found useful in creating a number of applications.
+
+This package contains tests for AppTools.
 %endif
 
 %package docs
@@ -99,36 +144,27 @@ found useful in creating a number of applications.
 
 This package contains pickles for AppTools.
 
-%package tests
-Summary: Tests for AppTools
-Group: Development/Python
-Requires: %name = %EVR
-%add_python_req_skip util
-
-%description tests
-The AppTools project includes a set of packages that Enthought has
-found useful in creating a number of applications.
-
-This package contains tests for AppTools.
-
 %prep
-%setup -n AppTools-%version
+%setup
 %patch1 -p1
-#rm -rf AppTools.egg-info
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+
+pushd ../python3
+find ./ -name '*.py' -exec 2to3 -w -n '{}' +
+find ./ -name '*.py' | xargs sed -i -e 's:email.MIMEBase:email.mime.base:g'
+popd
 %endif
 
 %prepare_sphinx docs/source
 
 %build
 %python_build
+
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
 %python3_build
 popd
 %endif
@@ -139,13 +175,12 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %install
 %python_install -O1
 install -p -m644 %SOURCE1 README.fedora
+
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
-
-# pickles
 
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
@@ -155,21 +190,29 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 rm examples/permissions/server/test_client.py
 xvfb-run py.test
 
+%if_with python3
+pushd ../python3
+# remove buggy test
+rm examples/permissions/server/test_client.py
+xvfb-run py.test3
+popd
+%endif
+
 %files
-%doc *.txt README.fedora
+%doc image_LICENSE*.txt LICENSE.txt
+%doc README.fedora README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
-#_bindir/*
 %exclude %python_sitelibdir/%oname/*/test*
-%exclude %python_sitelibdir/%oname/*/*/*/example*
-%exclude %python_sitelibdir/%oname/*/*/example*
 %exclude %python_sitelibdir/%oname/*/*/test*
+%exclude %python_sitelibdir/%oname/*/*/example*
+%exclude %python_sitelibdir/%oname/*/*/*/example*
 
 %files tests
 %python_sitelibdir/%oname/*/test*
-%python_sitelibdir/%oname/*/*/*/example*
-%python_sitelibdir/%oname/*/*/example*
 %python_sitelibdir/%oname/*/*/test*
+%python_sitelibdir/%oname/*/*/example*
+%python_sitelibdir/%oname/*/*/*/example*
 
 %files docs
 %doc examples html
@@ -180,11 +223,27 @@ xvfb-run py.test
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt README.fedora
+%doc image_LICENSE*.txt LICENSE.txt
+%doc README.fedora README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/*/test*
+%exclude %python3_sitelibdir/%oname/*/*/test*
+%exclude %python3_sitelibdir/%oname/*/*/example*
+%exclude %python3_sitelibdir/%oname/*/*/*/example*
+%exclude %python3_sitelibdir/%oname/*/*/*/*/example*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/*/test*
+%python3_sitelibdir/%oname/*/*/test*
+%python3_sitelibdir/%oname/*/*/example*
+%python3_sitelibdir/%oname/*/*/*/example*
+%python3_sitelibdir/%oname/*/*/*/*/example*
 %endif
 
 %changelog
+* Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt4
+- Built modules for python-3.
+
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 4.4.0-alt3
 - Added missing dep on `numpy.testing`.
 

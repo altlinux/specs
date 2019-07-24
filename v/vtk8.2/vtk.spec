@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -22,11 +22,11 @@ Patch1: %oname-%version-alt-build.patch
 
 Requires: lib%name = %EVR
 
-BuildRequires(pre): rpm-build-python /proc
+BuildRequires(pre): rpm-build-python3 /proc
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ tk-devel cmake libGLU-devel libXt-devel
 BuildRequires: libmysqlclient-devel postgresql-devel
-BuildRequires: boost-devel boost-filesystem-devel python-module-matplotlib
+BuildRequires: boost-devel boost-filesystem-devel
 BuildRequires: boost-graph-parallel-devel
 BuildRequires: vtk-data%ver
 BuildRequires: libfreetype-devel libjpeg-devel
@@ -35,7 +35,7 @@ BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildRequires: doxygen graphviz libgsl-devel
 BuildRequires: libbfd-devel libnumpy-devel libopenmotif-devel
 BuildRequires: libgl2ps-devel
-BuildRequires: python-devel libXxf86misc-devel libimlxx-devel
+BuildRequires: libXxf86misc-devel libimlxx-devel
 BuildRequires: libdc1394-devel libtheora-devel
 BuildRequires: libgsm-devel libvorbis-devel libtag-devel
 BuildRequires: gnuplot
@@ -48,17 +48,18 @@ BuildRequires: liblz4-devel
 BuildRequires: libnetcdf-devel libnetcdf_c++-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
-BuildRequires: python-module-PyQt5-devel
-BuildRequires: phonon-devel python-module-sip-devel
+BuildRequires: qt5-base-devel-static
+BuildRequires: phonon-devel
 BuildRequires: libharu-devel
 BuildRequires: libgdal-devel
-BuildRequires: eigen3
+BuildRequires: eigen3-devel
 BuildRequires: libdouble-conversion-devel
 BuildRequires: liblzma-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libproj-devel
 BuildRequires: libpugixml-devel
-BuildRequires: qt5-base-devel-static
+BuildRequires: python3-devel python3-module-matplotlib
+BuildRequires: python3-module-PyQt5-devel python3-module-sip-devel
 
 Conflicts: vtk vtk6.1 vtk6.2 vtk8.1
 
@@ -99,10 +100,14 @@ This package contains util libraries for VTK.
 Summary: Development files of The Visualization Toolkit (VTK)
 Group: Development/C++
 Requires: %name = %EVR
+Requires: %name-python3 = %EVR
 Requires: lib%name = %EVR
+Requires: lib%name-python3 = %EVR
+# Following dependencies are duplicates from build dependencies
 Requires: qt5-base-devel
 Requires: libfreetype-devel
 Requires: libdouble-conversion-devel
+Requires: python3-devel
 Conflicts: libvtk-devel libvtk6.1-devel libvtk6.2-devel libvtk8.1-devel
 
 %description -n lib%name-devel
@@ -140,16 +145,21 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains documentation for VTK.
 
-%package python
+%package python3
 Summary: The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 Requires: lib%name = %EVR
-Requires: lib%name-python = %EVR
-Requires: python-module-%name = %EVR
+Requires: lib%name-python3 = %EVR
+Requires: python3-module-%name = %EVR
+# TODO: when new version of vtk is built, replace following 3 lines with a single one:
+# Conflicts: vtk8.2-python
+Provides:  vtk8.2-python = %EVR
+Conflicts: vtk8.2-python < %EVR
+Obsoletes: vtk8.2-python < %EVR
 Conflicts: vtk-python vtk6.1-python vtk6.2-python vtk8.1-python
 
-%description python
+%description python3
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -157,12 +167,12 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package provides Python bindings to VTK.
 
-%package -n lib%name-python
+%package -n lib%name-python3
 Summary: The Visualization Toolkit (VTK) Python shared libraries
 Group: System/Libraries
 Requires: lib%name = %EVR
 
-%description -n lib%name-python
+%description -n lib%name-python3
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -170,31 +180,15 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains Python shared libraries of VTK.
 
-%package -n lib%name-python-devel
-Summary: The Visualization Toolkit (VTK) Python development files
-Group: Development/Python
-Requires: lib%name-python = %EVR
-Conflicts: libvtk-python-devel libvtk6.1-python-devel libvtk6.2-python-devel libvtk8.1-python-devel
-
-%description -n lib%name-python-devel
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains Python development files of VTK.
-
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python
-Requires: lib%name-python = %EVR
-Requires: python-module-pygtkglext
-%add_python_req_skip GDK gtkgl vtkParallelPython
-%py_requires gtk
-Conflicts: python-module-vtk python-module-vtk6.1 python-module-vtk6.2 python-module-vtk8.1
-Provides: python-module-vtk = %EVR
+Group: Development/Python3
+Requires: lib%name-python3 = %EVR
+%add_python3_req_skip GDK gtk gtkgl gtk.gtkgl pygtk vtkParallelPython
+%py3_requires PyQt5
+Provides: python3-module-vtk = %EVR
 
-%description -n python-module-%name
+%description -n python3-module-%name
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -202,13 +196,12 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package provides Python bindings to VTK.
 
-%package -n python-module-%name-tests
+%package -n python3-module-%name-tests
 Summary: Tests for The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python
-Requires: python-module-%name = %EVR
-Conflicts: python-module-vtk-tests python-module-vtk6.1-tests python-module-vtk6.2-tests python-module-vtk8.1-tests
+Group: Development/Python3
+Requires: python3-module-%name = %EVR
 
-%description -n python-module-%name-tests
+%description -n python3-module-%name-tests
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -221,7 +214,7 @@ Summary: The Visualization Toolkit (VTK) examples
 Group: Development/Tools
 Requires: %name = %EVR
 Requires: %name-data = %EVR
-%add_python_req_skip numeric
+%add_python3_req_skip numeric
 Conflicts: vtk-examples vtk6.1-examples vtk6.2-examples vtk8.1-examples
 
 %description examples
@@ -281,6 +274,7 @@ cp -a Examples vtk-examples
 %build
 PATH=$PATH:%_qt5_bindir
 
+export PYTHON=%__python3
 export VTK_DATA_ROOT=%_datadir/%oname-%ver
 %add_optflags -I%_includedir/gsl
 %add_optflags -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_SOCKET_H
@@ -330,11 +324,12 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DModule_vtkIOGeoJSON=ON \
 	-DBUILD_TESTING=ON \
 	-DVTK_SMP_IMPLEMENTATION_TYPE="Sequential" \
-	-DVTK_INSTALL_PYTHON_MODULE_DIR="%python_sitelibdir" \
-	-DPYTHON_INCLUDE_DIR=%python_includedir \
-	-DVTK_PYTHON_INCLUDE_DIR=%python_includedir \
+	-DVTK_PYTHON_VERSION=3 \
+	-DVTK_INSTALL_PYTHON_MODULE_DIR="%python3_sitelibdir" \
+	-DPYTHON_INCLUDE_DIR=%__python3_includedir \
+	-DVTK_PYTHON_INCLUDE_DIR=%__python3_includedir \
 	-DVTK_USE_SYSTEM_SIX=ON \
-	-DSIP_INCLUDE_DIR:PATH=%python_includedir \
+	-DSIP_INCLUDE_DIR:PATH=%__python3_includedir \
 	-DVTK_USE_QVTK=ON \
 	-DVTK_USE_QVTK_OPENGL=ON \
 	-DVTK_USE_QVTK_QTOPENGL=ON \
@@ -395,7 +390,7 @@ done
 
 # List of executable test binaries
 find bin \( -name \*Tests -o -name Test\* -o -name VTKBenchMark \) \
-         -printf '%f\n' > testing.list
+         -printf '%%f\n' > testing.list
 
 for file in $(cat testing.list); do
 	install -p bin/$file %buildroot%_bindir/$file
@@ -416,16 +411,18 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 
 %files -n lib%name
 %_libdir/*.so.*
-%exclude %_libdir/*Python*.so.*
+%exclude %_libdir/*Python3?D-%ver.so.*
+%exclude %_libdir/libvtkWrappingPython3?Core-%ver.so.*
+%exclude %_libdir/libvtkPythonInterpreter-%ver.so.*
+%exclude %_libdir/libvtkFiltersPython-%ver.so.*
+%exclude %_libdir/libvtkPythonContext2D-%ver.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_libdir/*.a
-%exclude %_libdir/*Python*.so
+%exclude %_libdir/libvtkRenderingPythonTkWidgets-%ver.so
 %_includedir/%oname-%ver
-%exclude %_includedir/%oname-%ver/*Python*
 %_libdir/cmake/%oname-%ver
-%exclude %_libdir/cmake/%oname-%ver/*Python*
 
 %files doc
 %_docdir/%oname-%ver
@@ -436,26 +433,24 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files qt5-designer-plugin
 %_qt5_plugindir/designer/*
 
-%files python
+%files python3
 %_bindir/*python*
 %_bindir/*Python*
 
-%files -n lib%name-python
-%_libdir/*Python*.so.*
+%files -n lib%name-python3
+%_libdir/*Python3?D-%ver.so.*
+%_libdir/libvtkWrappingPython3?Core-%ver.so.*
+%_libdir/libvtkPythonInterpreter-%ver.so.*
+%_libdir/libvtkFiltersPython-%ver.so.*
+%_libdir/libvtkPythonContext2D-%ver.so.*
 %_libdir/libvtkRenderingPythonTkWidgets-%ver.so
 
-%files -n lib%name-python-devel
-%_libdir/*Python*.so
-%exclude %_libdir/libvtkRenderingPythonTkWidgets-%ver.so
-%_includedir/%oname-%ver/*Python*
-%_libdir/cmake/%oname-%ver/*Python*
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/vtkmodules/test
 
-%files -n python-module-%name
-%python_sitelibdir/*
-%exclude %python_sitelibdir/vtkmodules/test
-
-%files -n python-module-%name-tests
-%python_sitelibdir/vtkmodules/test
+%files -n python3-module-%name-tests
+%python3_sitelibdir/vtkmodules/test
 
 %files data
 %_datadir/%oname-%ver
@@ -463,6 +458,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Mon Jul 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt2
+- Rebuilt with python-3.
+
 * Wed May 15 2019 Slava Aseev <ptrnine@altlinux.org> 8.2.0-alt1
 - Updated to upstream version 8.2.0.
 

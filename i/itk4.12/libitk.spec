@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
+%define oname itk
 %define soname 1
-%define itkver 5.0
+%define itkver 4.12
 %define vtkver 8.2
 
-Name: itk
-Version: 5.0.0
+Name: %oname%itkver
+Version: 4.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -15,7 +16,7 @@ Url: https://itk.org
 
 # https://github.com/InsightSoftwareConsortium/ITK
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %oname-%version-alt-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
@@ -42,17 +43,25 @@ a MRI scan in order to combine the information contained in both.
 
 %description %_description
 
-%package -n lib%name%soname
+%package -n lib%oname%itkver
 Summary: Shared libraries for ITK
 Group: System/Libraries
-%description -n lib%name%soname
+%description -n lib%oname%itkver
 This package contains ITK shared libraries.
+%_description
+
+%package -n lib%oname%itkver-glue
+Summary: Shared libraries for ITK-VTK bindings
+Group: System/Libraries
+%description -n lib%oname%itkver-glue
+This package contains shared libraries for VTK bindings to ITK.
 %_description
 
 %package -n lib%name-devel
 Summary: Development files for ITK
 Group: Development/C++
-Requires: lib%name%soname = %EVR
+Requires: lib%oname%itkver = %EVR
+Requires: lib%oname%itkver-glue = %EVR
 Requires: %name-testdriver = %EVR
 # Following dependencies are duplicates from build dependencies
 Requires: eigen3-devel
@@ -63,6 +72,7 @@ Requires: libxml2-devel
 Requires: libnetcdf-devel
 Requires: libvtk%vtkver-devel
 Requires: libvxl-devel
+Conflicts: lib%oname-devel
 %description -n lib%name-devel
 This package contains development files for ITK.
 %_description
@@ -70,7 +80,8 @@ This package contains development files for ITK.
 %package testdriver
 Summary: Test driver for ITK
 Group: Development/Tools
-Requires: lib%name%soname = %EVR
+Requires: lib%oname%itkver = %EVR
+Conflicts: %oname-testdriver
 %description testdriver
 This package contains test driver for ITK.
 %_description
@@ -78,7 +89,7 @@ This package contains test driver for ITK.
 %package examples
 Summary: Examples for ITK
 Group: Development/Tools
-Requires: lib%name%soname = %EVR
+Requires: lib%oname%itkver = %EVR
 %description examples
 This package contains source code of ITK examples.
 %_description
@@ -89,22 +100,6 @@ Group: Documentation
 BuildArch: noarch
 %description doc 
 This package contains documentation for ITK.
-%_description
-
-%package -n lib%name%soname-glue
-Summary: Shared libraries for ITK-VTK bindings
-Group: System/Libraries
-%description -n lib%name%soname-glue
-This package contains shared libraries for VTK bindings to ITK.
-%_description
-
-%package -n lib%name-glue-devel
-Summary: Development files for ITK-VTK bindings
-Group: Development/C++
-Requires: lib%name%soname-glue = %EVR
-Requires: lib%name-devel = %EVR
-%description -n lib%name-glue-devel
-This package contains development files for VTK bindings to ITK.
 %_description
 
 %prep
@@ -170,7 +165,6 @@ rm -rf Modules/ThirdParty/DoubleConversion/src
        -DITK_USE_SYSTEM_VXL=ON \
        -DITK_USE_SYSTEM_DOUBLECONVERSION=ON \
        -DModule_ITKVtkGlue=ON \
-       -DITKV4_COMPATIBILITY:BOOL=ON \
     %nil
 %cmake_build
 
@@ -182,22 +176,14 @@ rm -f BUILD/bin/itkTestDriver
 
 install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 
-%files -n lib%name%soname
+%files -n lib%oname%itkver
 %_libdir/lib*.so.%soname
 %exclude %_libdir/libITKVtkGlue-%itkver.so.%soname
 
 %files -n lib%name-devel
 %_libdir/lib*.so
-%exclude %_libdir/libITKVtkGlue-%itkver.so
+%_libdir/cmake/*
 %_includedir/%name/
-%_libdir/cmake/
-%exclude %_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
-%exclude %_includedir/%name/ITKVtkGlueExport.h
-%exclude %_includedir/%name/itkImageToVTKImageFilter.*
-%exclude %_includedir/%name/itkViewImage.*
-%exclude %_includedir/%name/itkVTKImageToImageFilter.*
-%exclude %_includedir/%name/QuickView.h
-%exclude %_includedir/%name/vtkCaptureScreen.h
 
 %files testdriver
 %_bindir/itkTestDriver
@@ -209,22 +195,12 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %files doc
 %doc %_docdir/%name/
 
-%files -n lib%name%soname-glue
+%files -n lib%oname%itkver-glue
 %_libdir/libITKVtkGlue-%itkver.so.%soname
 
-%files -n lib%name-glue-devel
-%_libdir/libITKVtkGlue-%itkver.so
-%_includedir/%name/ITKVtkGlueExport.h
-%_includedir/%name/itkImageToVTKImageFilter.*
-%_includedir/%name/itkViewImage.*
-%_includedir/%name/itkVTKImageToImageFilter.*
-%_includedir/%name/QuickView.h
-%_includedir/%name/vtkCaptureScreen.h
-%_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
-
 %changelog
-* Mon Jul 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt1
-- Updated to upstream release version 5.0.0.
+* Tue Jul 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.2-alt1
+- Built upstream version 4.12.2.
 
 * Tue Jun 04 2019 Slava Aseev <ptrnine@altlinux.org> 5.0-alt3.rc1
 - Enable vtkGlue module

@@ -2,16 +2,16 @@
 
 %define oname traitsui
 
-%def_without python3
-%def_enable bootstrap
+%def_with python3
+%def_disable bootstrap
 
 Name: python-module-%oname
-Version: 6.0.0
+Version: 6.1.1
 Release: alt1
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python
 License: BSD, EPL and LGPL
-URL: http://www.enthought.com/
+URL: https://docs.enthought.com/traitsui
 BuildArch: noarch
 
 # https://github.com/enthought/traitsui.git
@@ -28,7 +28,6 @@ BuildRequires: python-module-traits
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs
-BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -42,6 +41,16 @@ Model-View-Controller (MVC) design pattern for Traits-based objects.
 %package -n python3-module-%oname
 Summary: A set of user interface tools designed to complement Traits (Python 3)
 Group: Development/Python3
+# skip wx requirements
+%add_python3_req_skip pyface.ui.wx.grid.api
+%add_python3_req_skip pyface.ui.wx.grid.trait_grid_cell_adapter
+%add_python3_req_skip pyface.ui.wx.image_list
+%add_python3_req_skip pyface.ui.wx.progress_dialog
+%add_python3_req_skip pyface.wx.dialog
+%add_python3_req_skip pyface.wx.drag_and_drop
+%add_python3_req_skip wx.animate wx.calendar wx.combo wx.gizmos
+%add_python3_req_skip wx.grid wx.html wx.lib.masked wx.lib.mixins.listctrl
+%add_python3_req_skip wx.lib.scrolledpanel wx.stc wx.wizard
 
 %description -n python3-module-%oname
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -123,11 +132,9 @@ ln -s ../objects.inv docs/source/
 
 %build
 %python_build_debug
+
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i ||:
-done
 %python3_build_debug
 popd
 %endif
@@ -177,12 +184,18 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
 %endif
 
 %changelog
+* Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
+- Updated to upstream version 6.1.1.
+- Built modules for python-3.
+
 * Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
 - Updated to upstream version 6.0.0.
 
