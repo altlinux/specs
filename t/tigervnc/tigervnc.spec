@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.9.0
-Release: alt3
+Release: alt4
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -19,7 +19,7 @@ Source0: %name-%version.tar.gz
 Source1: vncserver.init
 Source2: vncserver.service
 
-Source100: xorg-server-source-1.19.3.tar.bz2
+Source100: xorg-server-source.tar.bz2
 Source101: tightpasswd.tar.gz
 Source200: repatch_spec.sh
 Source201: repatch_spec.unused
@@ -154,7 +154,7 @@ pushd unix/xserver
 	--with-pic \
 	--with-xkb-output=%_localstatedir/xkb
 
-%make_build LIBS="-ljpeg -lpam -lz -lgnutls -lm"
+%make_build LIBS="-ljpeg -lpam -lz -lgnutls -lm" CPPFLAGS="-I/usr/include/libdrm"
 popd
 
 # Build icons
@@ -252,6 +252,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Wed Jul 24 2019 Fr. Br. George <george@altlinux.ru> 1.9.0-alt4
+- Update to XServer 1.20 (ALT: #37059)
+
 * Thu May 30 2019 Pavel Moseev <mars@altlinux.org> 1.9.0-alt3
 - fix tooltip translation
 
@@ -286,12 +289,12 @@ popd
 - (cas@) Package vncserver@.service file
 - (cas@) Return missing xorg-extension-vnc configuration file
 
-* Wed Jun 25 2015 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+* Thu Jun 25 2015 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Version update
 - FC patches import
 - Old vncpasswd binary renamed to tightpasswd
 
-* Tue Apr 22 2015 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
 - Massive submajor version update
 
 * Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt2
