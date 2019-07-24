@@ -14,13 +14,13 @@
 
 Name: bacula9
 Version: 9.4.4
-Release: alt1
+Release: alt2
 
 License: AGPLv3
 Summary: Network based backup program
 Group: Archiving/Backup
 
-Url: http://www.bacula.org/
+Url: https://www.bacula.org/
 # http://git.bacula.org/bacula.git
 Source: %name-%version.tar
 Source1: bacula-dir.init
@@ -44,8 +44,11 @@ Patch2: %name-gui-alt.patch
 Patch3: %name-9.0.6-alt-mysql8-transition.patch
 Patch4: bacula-9.4.0-fedora-seg-fault.patch
 
-BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
+BuildRequires: gcc-c++
+BuildRequires: libMySQL-devel postgresql-devel
+BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel
+BuildRequires: dvd+rw-tools groff-base iputils bc 
 
 %if_enabled bat
 BuildRequires: qt5-base-devel
@@ -406,12 +409,11 @@ functions such as:
 - Live AJAX based statuses.
 
 %prep
-%setup -b 0
-%setup -b 8
-%setup -b 9
+%setup -b 8 -b 9
 %if_enabled webgui
-%setup -b 15
+%setup -T -D -b 15
 %endif
+
 %patch1 -p1
 
 %if_enabled webgui
@@ -435,7 +437,6 @@ autoconf -B autoconf autoconf/configure.in >configure
 
 %configure \
 	--with-openssl \
-	--with-python \
 	--mandir=%_mandir \
 	--with-working-dir=%_localstatedir/bacula \
 	--with-scriptdir=%_datadir/bacula/scripts \
@@ -550,9 +551,9 @@ define command{
 EOF
 
 mkdir -p %buildroot/%_altdir
-echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-postgresql-%version.so      5" > %buildroot/%_altdir/bacula-dir.pgsql
 echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-sqlite3-%version.so        10" > %buildroot/%_altdir/bacula-dir.sqlite3
 echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-mysql-%version.so          20" > %buildroot/%_altdir/bacula-dir.mysql
+echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-postgresql-%version.so     30" > %buildroot/%_altdir/bacula-dir.pgsql
 
 mkdir -p %buildroot/%_logdir/bacula/
 
@@ -756,22 +757,22 @@ fi
 
 %files director-common
 %doc COPYING ChangeLog ReleaseNotes VERIFYING updatedb
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/client.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/fileset.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/job.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/messages.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/pool.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/schedule.d
-%dir %attr (0750,root,bacula) %_sysconfdir/bacula/storage.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/client.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/fileset.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/job.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/messages.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/pool.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/schedule.d
+%dir %attr (0770,root,bacula) %_sysconfdir/bacula/storage.d
 %dir %attr (1770,root,bacula) %_logdir/bacula/
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-dir.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/client.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/fileset.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/job.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/messages.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/pool.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/schedule.d/*.conf
-%config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/storage.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/bacula-dir.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/client.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/fileset.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/job.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/messages.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/pool.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/schedule.d/*.conf
+%config(noreplace) %attr (0660,root,bacula) %_sysconfdir/bacula/storage.d/*.conf
 %config(noreplace) %_sysconfdir/sysconfig/bacula
 %_initdir/bacula-dir
 %_sbindir/bregex
@@ -883,6 +884,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt2
+- Updated permissions for baculum.
+- Increased priority of postgresql backend.
+
 * Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt1
 - Updated to upstream version 9.4.4.
 
