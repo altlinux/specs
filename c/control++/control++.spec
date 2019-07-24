@@ -2,7 +2,7 @@
 
 Name: control++
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -59,6 +59,9 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Wed Jul 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt2
+- Enhanced manual.
+
 * Tue Apr 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt1
 - Ability to perform exclusive mode setting for a unit ('micro mode');
 - Ability to check compliance of micro modes;
