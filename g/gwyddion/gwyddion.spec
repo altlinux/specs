@@ -1,7 +1,8 @@
+%def_with kde4
 
 Name: gwyddion
 Version: 2.49
-Release: alt1
+Release: alt1.1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -15,14 +16,16 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro libGConf-devel
 
-BuildRequires: GConf gcc-c++ imake kde4libs-devel libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
+BuildRequires: GConf gcc-c++ imake libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
 BuildRequires: libxml2-devel perl-Pod-Usage python-module-distribute python-module-pygtk-devel
-BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel chrpath kde4libs-devel libruby-devel
+BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel chrpath libruby-devel
 
 # File Format and some features support
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
 
 BuildPreReq: perl-podlators libpng-devel
+
+%{?_with_kde4:BuildRequires: kde4libs-devel}
 
 %define _gtkdocdir %_datadir/gtk-doc/html
 %define pkglibdir %_libdir/%name
@@ -109,22 +112,24 @@ Python tools for Gwyddion module development
 %setup
 
 # Don't install .la files.
-%__subst '/# Install the pseudo-library/,/^$/d' ltmain.sh
-# Replace universal %_bindir/env shbang with the real thing.
-%__subst '1s/env *//' plugins/process/*.{py,rb,pl}
+sed -i '/# Install the pseudo-library/,/^$/d' ltmain.sh
+# Replace universal %%_bindir/env shbang with the real thing.
+sed -i '1s/env *//' plugins/process/*.{py,rb,pl}
 
-%__subst 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
-%__subst 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
+sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
+sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
 
 # Fix libpython linking
-%__subst 's|--ldflags|--libs|' m4/gwy-python.m4
+sed -i 's|--ldflags|--libs|' m4/gwy-python.m4
 
 %build
 autoconf -f
+%if_with kde4
+%add_optflags -I%_K4includedir
+%endif
 %configure \
-	CFLAGS='%optflags -I%_K4includedir'  \
-	CXXFLAGS='%optflags -I%_K4includedir'  \
-	--with-kde4-thumbnailer \
+	CFLAGS='%optflags' CXXFLAGS='%optflags' \
+	%{?_with_kde4:--with-kde4-thumbnailer} \
 	--disable-rpath \
 	--with-gconf-schema-file-dir=%_sysconfdir/gconf/schemas \
 	--enable-library-bloat 
@@ -132,7 +137,7 @@ autoconf -f
 
 %install
 %makeinstall_std
-# Install the icon to the hicolor theme *and* to %_pixmapsdir because
+# Install the icon to the hicolor theme *and* to %%_pixmapsdir because
 # some distros expect it in one place, some in another.
 mkdir -p %buildroot%_pixmapsdir
 install pixmaps/%name.png %buildroot%_pixmapsdir
@@ -263,14 +268,19 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %files thumbnailer-gconf
 %_sysconfdir/gconf/schemas/*.schemas
 
+%if_with kde4
 %files thumbnailer-kde4
 %_libdir/kde4/gwythumbcreator.so
+%endif
 
 %files -n python-module-pygwy
 %python_sitelibdir/*
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Wed Jul 24 2019 Michael Shigorin <mike@altlinux.org> 2.49-alt1.1
+- introduce kde4 knob (on by default)
+
 * Sun Dec 24 2017 Alexei Mezin <alexvm@altlinux.org> 2.49-alt1
 - new version
 
