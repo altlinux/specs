@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
+
 %def_without python2
 
 Name: tbb
 Version: 2019
-Release: alt1.u2
+Release: alt1.u8
 Summary: Threading Building Blocks
 License: Apache 2.0
 Group: Development/Tools
-Url: http://threadingbuildingblocks.org/
+Url: https://www.threadingbuildingblocks.org/
 
-# https://github.com/01org/tbb.git
+# https://github.com/intel/tbb.git
 Source: %name-%version.tar
 
 # These are downstream sources. (from mageia spec file)
@@ -25,12 +26,13 @@ Patch1: %name-2019.u2-alt-build.patch
 
 Requires: lib%name = %EVR
 
-BuildRequires: gcc-c++
-BuildRequires: python-devel
-BuildRequires: swig
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires: gcc-c++
+BuildRequires: python3-devel
+BuildRequires: swig
+
+%if_with python2
+BuildRequires: python-devel
 %endif
 
 %description
@@ -255,6 +257,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2019-alt1.u8
+- Updated to upstream version 2019.U8.
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2019-alt1.u2
 - NMU: new version
 - packed cmake
