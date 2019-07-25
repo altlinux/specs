@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.22
+Version: 2.5.23
 Release: alt1
 
 Group: System/Libraries
@@ -159,7 +159,8 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 # correct content of doc. directory
-/bin/rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog}
+/bin/rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
+/bin/cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
 
 # remove circular symlink in /usr/include/gphoto2
 /bin/rm -f %buildroot%_includedir/gphoto2/gphoto2
@@ -208,6 +209,7 @@ export utilsdir=%_libexecdir/%name
 %_datadir/doc/%name/AUTHORS
 %_datadir/doc/%name/NEWS
 %_datadir/doc/%name/README.md
+%_datadir/doc/%name/OUTDATED.txt
 %exclude %_datadir/locale/*/LC_MESSAGES/%{name}_port*
 %if_enabled hal
 %ghost %_datadir/hal/fdi/information/20thirdparty/*
@@ -236,6 +238,7 @@ export utilsdir=%_libexecdir/%name
 %exclude %_datadir/doc/%name/AUTHORS
 %exclude %_datadir/doc/%name/NEWS
 %exclude %_datadir/doc/%name/README.md
+%exclude %_datadir/doc/%name/OUTDATED.txt
 
 %if_enabled static
 %files -n %name-devel-static
@@ -245,6 +248,11 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Thu Jul 25 2019 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.23-alt1
+- 2.5.23
+- drivers for cameras older than 15 years disabled for installation,
+  see OUTDATED.txt for notes
+
 * Thu Jan 03 2019 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.22-alt1
 - 2.5.22
 
