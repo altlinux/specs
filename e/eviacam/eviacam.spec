@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     eviacam
-Version:  2.1.3
-Release:  alt3
+Version:  2.1.4
+Release:  alt1
 
 Summary:  Mouse replacement software that moves the pointer as you move your head
 Group: 	  System/Base
@@ -13,6 +13,7 @@ Url:      http://viacam.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 Patch1:   %name-alt-compat.patch
+Patch2:   %name-upstream-opencv-4.2-compat.patch
 
 BuildRequires: libwxGTK3.0-devel libopencv-devel libXtst-devel libXext-devel libgtk+3-devel gcc-c++ libv4l-devel
 
@@ -24,6 +25,7 @@ is required. Based on the award winning Facial Mouse software.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 touch config.rpath
@@ -45,6 +47,9 @@ touch config.rpath
 %_man1dir/*
 
 %changelog
+* Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt1
+- Updated to upstream version 2.1.4.
+
 * Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt3
 - Rebuilt with wxGTK-3.0 and gtk+-3.
 

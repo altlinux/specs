@@ -3,13 +3,14 @@
 
 Name:           simarrange
 Version:        0.0
-Release:        alt3.%{relstring}
+Release:        alt4.%{relstring}
 Summary:        STL 2D plate packer with collision simulation
 
 Group:		Engineering
 License:        AGPLv3+
 URL:            https://github.com/kliment/%name
 Source0:        %{name}-%{version}.tar
+Patch1:         simarrange-fedora-opencv4.patch
 BuildRequires:  libadmesh-devel
 BuildRequires:  libgomp-devel
 BuildRequires:  libargtable2-devel
@@ -26,6 +27,7 @@ orientation already.
 
 %prep
 %setup -q
+%patch1 -p1
 
 mv simarrange.c simarrange.cpp
 
@@ -35,8 +37,8 @@ rm admesh -rf
 
 %build
 # the build script is one line and would need patching, so just skip it
-g++ %{optflags} simarrange.cpp -o ./%{name} -lm -lopencv_imgproc -lopencv_core \
-    -lopencv_highgui -lopencv_imgcodecs -ladmesh -largtable2 -fopenmp -DPARALLEL
+g++ %{optflags} simarrange.cpp -o ./%{name} -lm $(pkg-config opencv4 --cflags --libs) \
+    -ladmesh -largtable2 -fopenmp -DPARALLEL
 
 %install
 install -Dpm0755 %name %buildroot%_bindir/%name
@@ -48,6 +50,9 @@ install -Dpm0644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0-alt4.git0f1fbef
+- Rebuilt with opencv-4.3.0.
+
 * Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0-alt3.git0f1fbef
 - NMU: rebuilt with opencv 3.4.
 

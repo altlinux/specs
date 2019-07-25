@@ -15,7 +15,7 @@
 
 Name: gmic
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -31,6 +31,9 @@ Source: %name-%version.tar
 Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
+
+Patch1: gmic-alt-opencv4.patch
+Patch2: gmic-fedora-opencv.patch
 
 Requires: lib%name = %version-%release
 
@@ -106,6 +109,8 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
+%patch1 -p2
+%patch2 -p1
 dos2unix src/Makefile
 # fix libdir
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
@@ -186,6 +191,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.0-alt2
+- Fixed build with opencv-4.3.0.
+
 * Mon Mar 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
 - 2.9.0
 

@@ -6,7 +6,7 @@
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver.0
-Release: alt1
+Release: alt2
 
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: GPL-2.0+
@@ -59,6 +59,9 @@ Face detect plugin for %name
 %patch -p1
 
 %build
+# hack for compilation with opencv4 support
+%add_optflags $(pkg-config --cflags opencv4)
+
 mkdir -p m4
 %autoreconf
 %configure --disable-static
@@ -93,6 +96,9 @@ ln -s config.h include/cvconfig.h
 %endif
 
 %changelog
+* Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2
+- Rebuilt with opencv-4.3.0.
+
 * Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
