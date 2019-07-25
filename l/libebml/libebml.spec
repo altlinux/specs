@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libebml
-Version: 1.3.7
-Release: alt2
+Version: 1.3.9
+Release: alt1
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
@@ -46,6 +46,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.9-alt1
+- Updated to upstream version 1.3.9.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.7-alt2
 - NMU: remove rpm-build-ubt from BR:
 
@@ -56,7 +59,7 @@ Files needed to build programs using libebml
 * Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
 - Rebuild for e2k.
 
-* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1.S1
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1
 - Updated to upstream version 1.3.6.
 
 * Sun Apr 01 2018 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1

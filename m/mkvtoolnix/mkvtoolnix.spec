@@ -14,8 +14,8 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 23.0.0
-Release: alt3
+Version: 35.0.0
+Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
@@ -29,10 +29,11 @@ Provides: mkvmerge = %EVR
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
-BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
-BuildRequires: libcurl-devel libebml-devel >= 1.3.6 libmatroska-devel >= 1.4.9
+BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs
+BuildRequires: libcurl-devel libebml-devel >= 1.3.9 libmatroska-devel >= 1.5.2 libfmt-devel >= 5.3.0
 BuildRequires: docbook-style-xsl xsltproc ruby-tools
 BuildRequires: libpugixml-devel
+BuildRequires: po4a
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
 %{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel cmark-devel}
@@ -96,9 +97,9 @@ rm -rf lib/pugixml
 
 %build
 ./autogen.sh
-export LINGUAS="en ru uk"
 %configure \
     --disable-option-checking \
+    --disable-update-check \
     %{subst_enable debug} \
     %{subst_enable profiling} \
     %{subst_enable gui} \
@@ -117,7 +118,14 @@ rake DESTDIR=%buildroot install
 install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %buildroot%_bindir
 %endif
 
-%find_lang %name
+%find_lang --with-man %name
+%find_lang --with-man %name-gui
+%find_lang --with-man mkvextract
+%find_lang --with-man mkvmerge
+%find_lang --with-man mkvpropedit
+%find_lang --with-man mkvinfo
+
+cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 
 %files -f %name.lang
 %doc COPYING AUTHORS NEWS.md README.md examples
@@ -131,19 +139,20 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %_iconsdir/hicolor/*/apps/mkvmerge.*
 %_iconsdir/hicolor/*/apps/mkvpropedit.*
 
-%files -n mkvinfo
+%files -n mkvinfo -f mkvinfo.lang
 %_bindir/mkvinfo
 %_man1dir/mkvinfo.*
 %_iconsdir/hicolor/*/apps/mkvinfo.*
 
 %if_enabled gui
-%files gui
+%files gui -f %name-gui.lang
 %_bindir/%name-gui
 %_man1dir/%name-gui.*
 %_iconsdir/hicolor/*/apps/%name-gui.*
 %_desktopdir/org.bunkus.%name-gui.desktop
-%_xdgmimedir/packages/%name.xml
+%_xdgmimedir/packages/org.bunkus.%name-gui.xml
 %_datadir/mkvtoolnix/sounds/*.ogg
+%_datadir/metainfo/org.bunkus.%name-gui.appdata.xml
 %endif
 
 %if_with tools
@@ -154,13 +163,16 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Thu Jul 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 35.0.0-alt1
+- Updated to upstream version 35.0.0 (Closes: #36879).
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 23.0.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 23.0.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 23.0.0-alt1%ubt
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 23.0.0-alt1
 - Updated to upstream version 23.0.0.
 
 * Thu Jun 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 12.0.0-alt1
