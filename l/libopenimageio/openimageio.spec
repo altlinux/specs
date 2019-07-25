@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.0.9
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -23,6 +23,7 @@ Source0:        %name-%version.tar
 #Source1:        oiio-images.tar.gz
 
 Patch10: %oname-alt-link.patch
+Patch11: %oname-alt-mipsel-link-atiomic.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -117,6 +118,7 @@ Development files for package %name
 %prep
 %setup
 %patch10 -p1
+%patch11 -p1
 
 # Remove bundled pugixml
 rm -f src/include/OpenImageIO/pugixml.hpp \
@@ -186,6 +188,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Jul 25 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.9-alt2
+- Link with libatomic on mipsel.
+
 * Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.9-alt1
 - Updated to upstream version 2.0.9.
 
