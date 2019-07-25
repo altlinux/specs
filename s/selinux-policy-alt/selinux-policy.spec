@@ -1,12 +1,12 @@
 %define policy_name alt
-%define date 20190701
+%define date 20190725
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
 Version: 0.0.50
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -266,6 +266,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/allow_smb.pp
 
 %changelog
+* Thu Jul 25 2019 Denis Medvedev <nbr@altlinux.org> 0.0.50-alt2
+- to sisyphus
+
 * Tue Jul 02 2019 Denis Medvedev <nbr@altlinux.org> 0.0.50-alt1
 - to sisyphus
 
