@@ -1,6 +1,6 @@
 Name: clisp
 Version: 2.49.92
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Common Lisp (ANSI CL) implementation
@@ -74,6 +74,9 @@ make check
 %_man1dir/*
 
 %changelog
+* Thu Jul 25 2019 Ivan A. Melnikov <iv@altlinux.org> 1:2.49.92-alt2
+- Apply debian patch to fix tests on mipsel.
+
 * Thu Dec 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.49.92-alt1
 - 2.49.92 released
 
