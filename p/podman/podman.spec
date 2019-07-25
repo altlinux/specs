@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.1.2
+Version:  1.4.4
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -66,6 +66,9 @@ install -Dm 644 libpod.conf %buildroot%_datadir/containers/libpod.conf
 %doc *.md
 
 %changelog
+* Thu Jul 25 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.4-alt1
+- new version 1.4.4
+
 * Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
 - new version 1.1.2
 
