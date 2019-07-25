@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cmark
-Version: 0.28.3
-Release: alt3
+Version: 0.29.0
+Release: alt1
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
 Group: Text tools
@@ -44,7 +44,8 @@ This package provides the cmark library.
 
 %build
 %cmake \
-	-DCMARK_STATIC=OFF
+	-DCMARK_STATIC=OFF \
+	%nil
 
 %cmake_build
 
@@ -73,11 +74,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Thu Jul 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.29.0-alt1
+- Updated to upstream version 0.29.0.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.28.3-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.28.3-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.28.3-alt1%ubt
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.28.3-alt1
 - Initial build for ALT.
