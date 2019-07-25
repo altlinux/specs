@@ -4,7 +4,7 @@
 
 Name: libfilezilla
 Version: 0.17.1
-Release: alt1
+Release: alt2
 Summary: Small and modern C++ library
 License: GPLv2+
 Group: System/Libraries
@@ -60,6 +60,10 @@ Header files for development with %name.
 %setup
 
 %build
+%ifarch mipsel
+export LIBS=-latomic
+%endif
+
 %configure \
 	--disable-static \
 	%nil
@@ -92,6 +96,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 24 2019 Ivan A. Melnikov <iv@altlinux.org> 0.17.1-alt2
+- Fix build on mipsel.
+
 * Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.1-alt1
 - Updated to upstream version 0.17.1.
 
