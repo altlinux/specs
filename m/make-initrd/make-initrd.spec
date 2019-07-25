@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.11
+Version: 2.2.12
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,19 @@ fi
 %endif
 
 %changelog
+* Thu Jul 25 2019 Alexey Gladkov <legion@altlinux.ru> 2.2.12-alt1
+- Runtime changes:
+  + Add /etc/sysconfig/init
+  + Change activation of emergency console
+  + rc.sysexec: Fix verbosity
+  + simplify killall code
+  + Do not print non-error messages if the 'quiet' parameter is
+    specified
+- Feature changes:
+  + plymouth: Handle ImageDir
+  + kbd: Rework feature
+  + kbd: Add gzip/bzip2/xz if files are compressed
+
 * Fri Jul 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.2.11-alt1
 - Runtime changes:
   + Fix optional check for preloaded modules (thx Alexey Gladkov)
