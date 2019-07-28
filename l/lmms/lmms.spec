@@ -1,13 +1,14 @@
 %define _libexecdir %_prefix/libexec
+
 Name: lmms
 Version: 1.2.0
-Release: alt2.20190117
+Release: alt3.20190117
 
 Summary: Linux MultiMedia Studio
 License: GPL
 Group: Sound
-Url: http://lmms.sourceforge.net
 
+Url: http://lmms.sourceforge.net
 # https://github.com/LMMS/lmms.git
 Source: %name-%version.tar
 Source4: %name-16x16.png
@@ -68,6 +69,10 @@ Development files and headers for %name
 %patch1 -p1
 mv qt5-x11embed/* src/3rdparty/qt5-x11embed
 mv rpmalloc/* src/3rdparty/rpmalloc/rpmalloc/
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %cmake \
@@ -107,6 +112,9 @@ rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 %_includedir/%name
 
 %changelog
+* Sun Jul 28 2019 Michael Shigorin <mike@altlinux.org> 1.2.0-alt3.20190117
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Fri Jan 18 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2.20190117
 - new snapshot
 - build with qt5
