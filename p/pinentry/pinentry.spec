@@ -1,11 +1,13 @@
 %def_disable libcap
 %def_enable qt5
-%def_disable tqt
+%ifnarch riscv64
+%def_enable qt4
+%endif
 %def_disable fltk
 
 Name: pinentry
 Version: 1.1.0
-Release: alt4
+Release: alt5
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -13,7 +15,7 @@ Group: File tools
 Url: http://gnupg.org/related_software/pinentry/
 
 Requires: %name-common = %version-%release
-Requires: %name-qt4 = %version-%release
+%{?_enable_qt4:Requires: %name-qt4 = %version-%release}
 Requires: %name-gtk2 = %version-%release
 
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
@@ -23,15 +25,14 @@ Source1: pinentry-wrapper
 Patch10: alt-mask-xprop.patch
 
 %if_enabled qt5
-BuildRequires(pre): qt5-base-devel
-%endif
-%if_enabled tqt
-BuildRequires: libtqt3-devel
+BuildRequires: qt5-base-devel
 %endif
 %if_enabled libfltk-devel
 BuildRequires: libfltk-devel
 %endif
-BuildRequires(pre): libqt4-devel
+%if_enabled qt4
+BuildRequires: libqt4-devel
+%endif
 %if_enabled libcap
 BuildRequires: libcap-devel
 %endif
@@ -73,6 +74,7 @@ Requires: xprop
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 
+%if_enabled qt5
 %package qt5
 Group: %group
 Summary: %summary
@@ -82,7 +84,9 @@ Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
+%endif
 
+%if_enabled qt4
 %package qt4
 Group: %group
 Summary: %summary
@@ -90,6 +94,7 @@ Requires: xprop
 Requires: %name-common = %EVR
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
+%endif
 
 %description gtk2
 This is simple PIN or passphrase entry dialog which utilize
@@ -97,12 +102,16 @@ the Assuan protocol as described by the aegypten project.
 %description gnome3
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
+%if_enabled qt5
 %description qt5
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
+%endif
+%if_enabled qt4
 %description qt4
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
+%endif
 %description common
 This package contains common files and documentation for %name.
 
@@ -111,14 +120,16 @@ This package contains common files and documentation for %name.
 tar xf %SOURCE0
 mv %name-%version gui
 
-cp -a gui gui-qt5
+%{?_enable_qt4:cp -a gui gui-qt4}
+%{?_enable_qt5:cp -a gui gui-qt5}
 cp -a gui tui
-mv gui gui-qt4
 
 install -pm644 %SOURCE1 pinentry-wrapper
 %patch10 -p0
 
-for d in gui-qt5 gui-qt4 tui ; do
+for d in tui gui \
+             %{?_enable_qt4:gui-qt4} \
+             %{?_enable_qt5:gui-qt5} ; do
     pushd $d
     %autoreconf
     popd
@@ -127,31 +138,45 @@ done
 %build
 %add_optflags -std=gnu++11
 
-pushd gui-qt5
+pushd tui
+%configure \
+    --disable-rpath \
+    --enable-pinentry-curses \
+    --enable-pinentry-tty \
+    --disable-pinentry-gtk2 \
+    --disable-pinentry-fltk \
+    --disable-pinentry-gnome3 \
+    --disable-pinentry-qt \
+    --disable-libsecret \
+    %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
+    #
+%make_build
+popd
+
+pushd gui
 %configure \
     --disable-rpath \
     --disable-pinentry-curses \
     --disable-pinentry-tty \
     --enable-pinentry-gtk2 \
-    %{?_enable_tqt:--enable-pinentry-tqt} \
     %{?_enable_fltk:--enable-pinentry-fltk} \
     --enable-pinentry-gnome3 \
-    --enable-pinentry-qt \
-    --enable-pinentry-qt5 \
-    --enable-pinentry-qt-clipboard \
+    --disable-pinentry-qt \
+    --disable-pinentry-qt5 \
+    --disable-pinentry-qt-clipboard \
     --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
 %make_build
 popd
 
+%if_enabled qt4
 pushd gui-qt4
 %configure \
     --disable-rpath \
     --disable-pinentry-curses \
     --disable-pinentry-tty \
     --disable-pinentry-gtk2 \
-    --disable-pinentry-tqt \
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
     --enable-pinentry-qt \
@@ -162,39 +187,54 @@ pushd gui-qt4
     #
 %make_build
 popd
+%endif
 
-pushd tui
+%if_enabled qt5
+pushd gui-qt5
 %configure \
     --disable-rpath \
-    --enable-pinentry-curses \
-    --enable-pinentry-tty \
+    --disable-pinentry-curses \
+    --disable-pinentry-tty \
     --disable-pinentry-gtk2 \
-    --disable-pinentry-tqt \
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
-    --disable-pinentry-qt \
-    --disable-libsecret \
+    --enable-pinentry-qt \
+    --enable-pinentry-qt5 \
+    --enable-pinentry-qt-clipboard \
+    --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
 %make_build
 popd
+%endif
 
 %install
-pushd gui-qt5
-%makeinstall_std
-popd
-mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5
-pushd gui-qt4
-%makeinstall_std
-popd
-mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt4
 pushd tui
 %makeinstall_std
 popd
 rm %buildroot%_bindir/%name
 
+pushd gui
+%makeinstall_std
+popd
+rm %buildroot%_bindir/%name
+
+%if_enabled qt4
+pushd gui-qt4
+%makeinstall_std
+popd
+mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt4
+%endif
+
+%if_enabled qt5
+pushd gui-qt5
+%makeinstall_std
+popd
+mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5
+%endif
+
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
-ln -s %name-qt5 %buildroot/%_bindir/%name-qt
+%{?_enable_qt5:ln -s %name-qt5 %buildroot/%_bindir/%name-qt}
 
 install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 
@@ -202,24 +242,34 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_bindir/%name-gtk
 %_bindir/%name-gtk-2
 
+%if_enabled qt4
 %files qt4
 %_bindir/%name-qt4
+%endif
 
+%if_enabled qt5
 %files qt5
 %_bindir/%name-qt5
 %_bindir/%name-qt
+%endif
 
 %files gnome3
 %_bindir/%name-gnome3
 
 %files common
-%doc gui-qt5/AUTHORS gui-qt5/NEWS gui-qt5/README gui-qt5/THANKS
+%doc gui/AUTHORS gui/NEWS gui/README gui/THANKS
 %_bindir/%name
 %_bindir/%name-curses
 %_bindir/%name-tty
 %_infodir/*.info*
 
 %changelog
+* Mon Jul 29 2019 Nikita Ermakov <arei@altlinux.org> 1.1.0-alt5
+- NMU: Clean up spec file.
+  + Make qt4 optional and disable it for riscv64 architecture.
+  + Make qt5 option actually work.
+  + Remove obsolete libtqt3-devel (trinity-tqt3 package was removed).
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt4
 - NMU: remove rpm-build-ubt from BR:
 
