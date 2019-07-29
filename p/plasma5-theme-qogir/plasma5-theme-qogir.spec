@@ -1,6 +1,6 @@
 Name: plasma5-theme-qogir
-Version: 20190506
-Release: alt1.giteae6302
+Version: 20190716
+Release: alt1.git7975ec7
 Summary: Qogir KDE theme
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Requires: Kvantum icon-theme-qogir
 Qogir kde is a flat Design theme for KDE Plasma desktop.
 
 %prep
-%setup
+%setup -n %name-buildroot
 
 %build
 
@@ -34,6 +34,15 @@ mkdir -p %buildroot%_datadir/plasma/look-and-feel
 cp -a ./plasma/look-and-feel/* %buildroot%_datadir/plasma/look-and-feel
 mkdir -p %buildroot%_datadir/Kvantum
 cp -a ./Kvantum/* %buildroot%_datadir/Kvantum
+mkdir -p %buildroot%_datadir/sddm/themes/Qogir
+cp -a ./sddm/Qogir/* %buildroot%_datadir/sddm/themes/Qogir
+mkdir -p %buildroot%_datadir/wallpapers
+cp -a ./wallpaper/Qogir* %buildroot%_datadir/wallpapers
+
+%__subst 's|$(dirname $0)|%buildroot%_datadir|; s|-ur|-urv|' install.sh
+./install.sh
+%__subst 's|/usr/share/sddm/themes|%buildroot%_datadir/sddm/themes|; s|-ur|-urav|; s|Qogir|sddm/Qogir|' sddm/install.sh
+./sddm/install.sh
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -42,8 +51,15 @@ cp -a ./Kvantum/* %buildroot%_datadir/Kvantum
 %_datadir/plasma/desktoptheme/Qogir*
 %_datadir/plasma/look-and-feel/com.github.vinceliuice.Qogir*
 %_datadir/Kvantum/Qogir*
+%_datadir/sddm/themes/Qogir*
+%_datadir/wallpapers/Qogir*
 
 %changelog
+* Mon Jul 29 2019 Leontiy Volodin <lvol@altlinux.org> 20190716-alt1.git7975ec7
+- Updated from git (commit: 7975ec7)
+- Added wallpapers and sddm theme
+- Used install.sh and sddm/install.sh
+
 * Mon May 06 2019 Leontiy Volodin <lvol@altlinux.org> 20190506-alt1.giteae6302
 - Updated from git (commit: eae6302)
 - Fixed %%description
