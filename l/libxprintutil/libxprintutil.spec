@@ -1,7 +1,7 @@
 Name: libxprintutil
 Summary: The XprintUtil Library
 Version: 1.0.1
-Release: alt4
+Release: alt5
 Group: System/X11
 License: MIT
 Url: http://xorg.freedesktop.org
@@ -14,34 +14,30 @@ BuildRequires: gcc-c++ libXp-devel libXt-devel
 %description
 The XprintUtil Library allows X11 application to print
 
-%package -n libxprintutil-devel
+%package devel
 Summary: Development files for %name
 Group: System/X11
 Requires: libxprintutil = %version-%release
 
-%description -n libxprintutil-devel
+%description devel
 Development files for %name
 
-%files -n libxprintutil-devel
+%files devel
 %_libdir/libXprintUtil.so
 %_pkgconfigdir/xprintutil.pc
 %_includedir/X11/XprintUtil/xprintutil.h
 
-#-----------------------------------------------------------
-
-%package -n libxprintutil-static-devel
+%package devel-static
 Summary: Static development files for %name
 Group: System/X11
 Requires: libxprintutil-devel = %version-%release
 Provides: libxprintutil-static-devel = %version-%release
 
-%description -n libxprintutil-static-devel
+%description devel-static
 Static development files for %name
 
-%files -n libxprintutil-static-devel
+%files devel-static
 %_libdir/libXprintUtil.a
-
-#-----------------------------------------------------------
 
 %prep
 %setup -q -n libXprintUtil-%version
@@ -58,6 +54,9 @@ Static development files for %name
 %_libdir/libXprintUtil.so.1.0.0
 
 %changelog
+* Mon Jul 29 2019 Fr. Br. George <george@altlinux.ru> 1.0.1-alt5
+- Fix devel-tatic package name (Closes: #36964)
+
 * Thu Mar 07 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt4
 - Remove xorg-x11-proto-devel from requirements
 
