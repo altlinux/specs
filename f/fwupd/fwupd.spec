@@ -13,13 +13,13 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.9
-Release: alt2
+Version: 1.2.10
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
-Source1: fwupd.watch
+Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
 
@@ -54,6 +54,8 @@ BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: help2man
 BuildRequires: libxmlb-devel
+BuildRequires: bash-completion
+BuildRequires: cmake
 
 %if_enabled dell
 BuildRequires: libsmbios-devel
@@ -112,6 +114,7 @@ Data files for installed tests.
     -Dgtkdoc=true \
     -Dman=false \
     -Dlvfs=true \
+    -Dplugin_flashrom=false \
 %if_enabled tests
     -Dtests=true \
 %else
@@ -164,6 +167,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libexecdir/fwupd/fwupdtool
 %_libexecdir/fwupd/fwupdagent
 %_libexecdir/fwupd/fwupdoffline
+%_datadir/bash-completion/completions/*
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 %if_enabled uefi
 %_libexecdir/fwupd/fwupdate
@@ -214,7 +218,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
-%_libdir/fwupd-plugins-3/libfu_plugin_flashrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fastboot.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nitrokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hid.so
@@ -267,6 +270,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.2.10-alt1
+- 1.2.10
+
 * Mon Jul 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.9-alt2
 - Added ppc64le to ExclusiveArch tag.
 
