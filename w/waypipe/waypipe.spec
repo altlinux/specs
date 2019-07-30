@@ -1,5 +1,5 @@
 Name: waypipe
-Version: 0.3.0.0.29.gitb9821d4
+Version: 0.4.0
 Release: alt1
 
 Summary: Network transparency agent for Wayland
@@ -73,6 +73,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Tue Jul 30 2019 Arseny Maslennikov <arseny@altlinux.org> 0.4.0-alt1
+- 0.3.0-29-gb9821d4 -> 0.4.0.
+
 * Sat Jul 20 2019 Arseny Maslennikov <arseny@altlinux.org> 0.3.0.0.29.gitb9821d4-alt1
 - 0.3.0-26-g99c24b9 -> 0.3.0-29-gb9821d4.
 
