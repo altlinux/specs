@@ -1,6 +1,6 @@
 Name: Kvantum
-Version: 0.11.1
-Release: alt2
+Version: 0.11.2
+Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
 License: GPLv3
@@ -88,6 +88,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/kvantummanager/translations
 
 %changelog
+* Tue Jul 30 2019 Leontiy Volodin <lvol@altlinux.org> 0.11.2-alt1
+- 0.11.2
+
 * Tue Jul 02 2019 Michael Shigorin <mike@altlinux.org> 0.11.1-alt2
 - E2K: explicit -std=c++11
 - minor spec cleanup
