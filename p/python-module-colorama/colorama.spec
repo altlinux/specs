@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.9
-Release: alt1.1
+Version: 0.4.1
+Release: alt1
 Summary: Simple cross-platform colored terminal text in Python
 License: BSD
 Group: Development/Python
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Build new version (Closes: #37069).
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.9-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
