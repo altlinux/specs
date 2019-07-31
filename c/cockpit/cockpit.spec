@@ -9,8 +9,13 @@
 %def_with basic
 %def_with optional
 %def_with doc
-%ifarch aarch64 x86_64
+%ifarch aarch64 x86_64 ppc64le
 %def_with kubernetes
+%endif
+%ifarch aarch64 x86_64 ppc64le
+%def_enable docker
+%else
+%def_disable docker
 %endif
 %def_with check
 
@@ -29,7 +34,7 @@
 
 Name: cockpit
 Version: 194
-Release: alt1
+Release: alt2
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -83,7 +88,7 @@ Requires: cockpit-system
 %if_with dashboard
 Requires: cockpit-dashboard
 %endif
-%ifarch x86_64 aarch64
+%if_enabled docker
 Requires: cockpit-docker
 %endif
 Requires: cockpit-networkmanager
@@ -386,7 +391,6 @@ bastion hosts, and a basic dashboard.
 
 ###############################################################################
 
-%ifarch x86_64 aarch64
 %package docker
 Summary: Cockpit user interface for Docker containers
 Group: System/Base
@@ -397,7 +401,6 @@ Requires: docker-ce
 %description docker
 The Cockpit components for interacting with Docker and user interface.
 This package is not yet complete.
-%endif
 
 ###############################################################################
 
@@ -510,7 +513,7 @@ rm -rf %buildroot%_datadir/cockpit/pcp/
 rm -rf %buildroot/%_datadir/cockpit/subscriptions/
 %endif
 
-%ifnarch x86_64 aarch64
+%if_disabled docker
 rm -rf %buildroot/%_datadir/cockpit/docker/
 %endif
 
@@ -717,7 +720,7 @@ fi
 %_datadir/cockpit/dashboard/
 %endif
 
-%ifarch x86_64 aarch64
+%if_enabled docker
 %files docker
 %_datadir/cockpit/docker/
 %endif
@@ -739,6 +742,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Thu Jul 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 194-alt2
+- Enabled docker and kubernetes subpackages on ppc64le.
+
 * Mon May 27 2019 Stanislav Levin <slev@altlinux.org> 194-alt1
 - 192 -> 194.
 
