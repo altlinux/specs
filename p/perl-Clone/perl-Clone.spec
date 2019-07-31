@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Clone
 Name: perl-%dist
-Version: 0.41
-Release: alt1.1
+Version: 0.43
+Release: alt1
 
 Summary: Recursively copy Perl datatypes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/G/GA/GARU/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -29,11 +29,14 @@ including tied variables and objects.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README.md
 %perl_vendor_archlib/Clone*
 %perl_vendor_autolib/Clone*
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1.1
 - rebuild with new perl 5.28.1
 
