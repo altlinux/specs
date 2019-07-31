@@ -6,13 +6,12 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.8.4
-Release: alt2
+Release: alt3
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
 
 Source0: %name-%version.tar
-Patch0001: 0001-Remove-Support.patch
 
 BuildRequires(pre): rpm-build-ruby rpm-build-python3
 BuildRequires: gcc-c++
@@ -241,7 +240,6 @@ OpenNebula provisioning tool
 
 %prep
 %setup
-%patch0001 -p1
 
 # add symlink to node headers
 node_ver=$(node -v | sed -e "s/v//")
@@ -669,6 +667,10 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Wed Jul 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.4-alt3
+- revert "remove support tab"
+- check enable support-tab in yaml files
+
 * Fri Jul 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 5.8.4-alt2
 - remove support tab
 
