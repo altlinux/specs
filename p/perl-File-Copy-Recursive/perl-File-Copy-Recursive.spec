@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Copy-Recursive
 Name: perl-%dist
-Version: 0.44
+Version: 0.45
 Release: alt1
 
 Summary: Perl extension for recursively copying files and directories
@@ -35,6 +35,9 @@ or directory's mode.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
