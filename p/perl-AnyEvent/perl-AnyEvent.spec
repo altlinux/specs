@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist AnyEvent
 Name: perl-%dist
-Version: 7.15
+Version: 7.16
 Release: alt1
 
 Summary: Framework for multiple event loops
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/AnyEvent-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 Patch: AnyEvent-7.14-syntax-fix.patch
 
 BuildArch: noarch
@@ -30,7 +30,7 @@ same event loop (as only a single event loop can coexist peacefully at any one
 time).
 
 %prep
-%setup -q -n AnyEvent-%{version}
+%setup -q -n %{dist}-%{version}
 %patch -p1
 sed -i 's@require "lib/AnyEvent@require "AnyEvent@' lib/AnyEvent/Util.pm
 
@@ -49,6 +49,9 @@ sed -i- '/ PM /,/}/d' Makefile.PL
 %perl_vendor_privlib/AnyEvent*
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 7.16-alt1
+- automated CPAN update
+
 * Tue Feb 26 2019 Igor Vlasenko <viy@altlinux.ru> 7.15-alt1
 - automated CPAN update
 
