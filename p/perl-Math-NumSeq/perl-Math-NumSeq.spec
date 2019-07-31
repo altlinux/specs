@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(B/Concise.pm) perl(Bit/Vector.pm) perl(Class/Singleton.pm) perl(Compress/Zlib.pm) perl(Data/Float.pm) perl(Devel/Peek.pm) perl(Devel/TimeThis.pm) perl(Encode.pm) perl(File/Find.pm) perl(File/Map.pm) perl(Graph/Easy.pm) perl(HTML/Entities/Interpolate.pm) perl(IO/Select.pm) perl(IO/Uncompress/Gunzip.pm) perl(List/MoreUtils.pm) perl(Locale/Messages.pm) perl(Math/BaseCnv.pm) perl(Math/BigFloat.pm) perl(Math/BigRat.pm) perl(Math/Fibonacci.pm) perl(Math/Prime/Util.pm) perl(Math/Sequence.pm) perl(Math/Symbolic/AuxFunctions.pm) perl(Math/Symbolic/Custom/Simplification.pm) perl(Math/Symbolic/Custom/Transformation.pm) perl(Math/Symbolic/Derivative.pm) perl(Path/Class.pm) perl(Safe.pm) perl(Search/Dict.pm) perl(Smart/Comments.pm) perl(String/BitCount.pm) perl(String/Parity.pm) perl(Symbol.pm) perl(Test/Weaken.pm) perl(Text/Tabs.pm) perl(Tie/File.pm) perl(Tie/IxHash.pm) perl(Time/HiRes.pm) perl(URI/Escape.pm) perl(X11/Keysyms.pm) perl(X11/Protocol.pm) perl(X11/Protocol/WM.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-NumSeq
-Version:        72
+Version:        73
 Release:        alt1
 Summary:        Number sequences
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Math-NumSeq/
-Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-NumSeq-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-NumSeq-%{version}.tar.gz
 BuildArch:      noarch
 
 %global with_maximum_interoperation 0
@@ -97,10 +97,13 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 #make test
 
 %files
-%doc Changes COPYING
+%doc Changes examples
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 73-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 72-alt1
 - automated CPAN update
 
