@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Daemon
 Name: perl-%dist
-Version: 6.04
+Version: 6.05
 Release: alt1
 
 Summary: a simple http server class
@@ -9,14 +9,14 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-HTTP-Message perl-devel perl(Module/Build.pm) perl(Test/Needs.pm)
+BuildRequires: perl-HTTP-Message perl-devel perl(Module/Build.pm) perl(Test/Needs.pm) perl(IO/Socket/IP.pm)
 
 %description
 Instances of the HTTP::Daemon class are HTTP/1.1 servers that listen
@@ -38,6 +38,9 @@ too.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 6.05-alt1
+- automated CPAN update
+
 * Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
 - automated CPAN update
 
