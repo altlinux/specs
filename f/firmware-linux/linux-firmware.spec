@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190717
+Version: 20190726
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Jul 31 2019 Cronbuild Service <cronbuild@altlinux.org> 20190726-alt1
+- upstream changes (GIT dff98c6):
+  + nvidia: add missing entries in WHENCE (thx Ben Skeggs)
+  + Update NXP Management Complex firmware to version 10.16.2 (thx Cristian Sovaiala)
+  + iwlwifi: update -48 FWs for Qu and cc (thx Luca Coelho)
+  + iwlwifi: update FWs for 3168, 7265D, 9000, 9260, 8000, 8265
+    and cc (thx Luca Coelho)
+
 * Thu Jul 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20190717-alt1
 - upstream changes (GIT bf13a71):
   + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
