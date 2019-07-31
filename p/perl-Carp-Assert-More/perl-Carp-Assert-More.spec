@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Carp-Assert-More
-Version: 1.16
+Version: 1.18
 Release: alt1
 
 Summary: Carp-Assert-More - convenience wrappers around Carp::Assert
@@ -50,6 +50,9 @@ to make the habit of writing assertions even easier.
 %perl_vendor_privlib/Carp/
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 
