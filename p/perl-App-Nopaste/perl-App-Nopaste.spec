@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(parent.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-App-Nopaste
-Version:        1.012
-Release:        alt1_1
+Version:        1.013
+Release:        alt1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/App-Nopaste
-Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -93,7 +94,6 @@ make test
 
 %files
 %doc Changes CONTRIBUTING README
-%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/App*
 
 %files -n nopaste
@@ -101,6 +101,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1
+- automated CPAN update
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.012-alt1_1
 - update to new release by fcimport
 
