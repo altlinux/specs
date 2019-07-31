@@ -17,7 +17,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt7
+Release: alt8
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -180,12 +180,6 @@ This package makes %name functionality accessible from Tcl
 %add_optflags -DNDEBUG
 # altbug #34101
 sed -i 's,-Wall -ffast-math,-Wall,' configure*
-
-# Some plugins use C++ and need lcxa. It can't be loaded
-# dynamically, so all binaries should be linked with it.
-%ifarch %e2k
-cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
-%endif
 
 # skip internal libltdl
 rm -rf libltdl/ m4/ltdl.m4
@@ -366,6 +360,9 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Jul 31 2019 Andrey Savchenko <bircoph@altlinux.org> 2.40.1-alt8
+- remove e2k hack as it is needed no longer
+
 * Wed Jul 10 2019 Sergey V Turchin <zerg@altlinux.org> 2.40.1-alt7
 - build with python3
 
