@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 Name: perl-Minilla
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: CPAN module authoring tool
@@ -29,9 +30,12 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Va
 %_bindir/minil
 %perl_vendor_privlib/Module/BumpVersion.pm
 %perl_vendor_privlib/Minilla*
-%doc Changes LICENSE README.md
+%doc Changes README.md
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt1
+- new version
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1
 - automated CPAN update
 
