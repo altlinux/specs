@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.25
-Release: alt3
+Version: 0.8.26
+Release: alt1
 Summary: Keep your application settings in sync
 License: GNU GPL v3.0
 Group: Other
@@ -41,6 +41,9 @@ sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\/usr\/lib\/python3\/site-packages\/ma
 %config(noreplace) %python3_sitelibdir/%name/applications/mackup.cfg
 
 %changelog
+* Wed Jul 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.26-alt1
+- New version
+
 * Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.25-alt3
 - Minor spec fix
 
