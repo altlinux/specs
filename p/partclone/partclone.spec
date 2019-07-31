@@ -1,8 +1,9 @@
 %def_enable xfs
+%def_enable reiser4
 
 Name: partclone
 Version: 0.3.6
-Release: alt0.3.git96f986f
+Release: alt0.4.git96f986f
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -11,15 +12,17 @@ Group: Archiving/Backup
 Url: http://partclone.org
 # Upstream: git://github.com/Thomas-Tsai/partclone.git
 Source: http://download.sourceforge.net/%name/%name-%version.tar
-Patch0: partclone-0.3.6-no_fail_mbr.patch
+Patch: partclone-0.3.6-no_fail_mbr.patch
 
 # Automatically added by buildreq on Fri Dec 04 2015
 # optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
-BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libreiser4-devel libuuid-devel libvmfs-devel
-
+BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libuuid-devel libvmfs-devel
 BuildRequires: libvmfs-devel > 0.2.1-alt1
 %if_enabled xfs
 BuildRequires: libxfs-devel
+%endif
+%if_enabled reiser4
+BuildRequires: libreiser4-devel
 %endif
 
 # TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
@@ -30,7 +33,7 @@ reiserfs, reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 echo '#define git_version "%version"' > src/version.h
 
 %build
@@ -41,15 +44,13 @@ echo '#define git_version "%version"' > src/version.h
 %configure \
 	--enable-btrfs \
 	--enable-extfs \
-	--enable-reiser4 \
 	--enable-reiserfs \
 	--enable-hfsp \
 	--enable-fat \
 	--enable-ntfs \
 	--enable-vmfs \
-%if_enabled xfs
-	--enable-xfs \
-%endif
+	%{subst_enable reiser4} \
+	%{subst_enable xfs} \
 	--enable-ncursesw
 %make_build CC="gcc -I/usr/include/vmfs"
 
@@ -62,6 +63,10 @@ echo '#define git_version "%version"' > src/version.h
 %_man8dir/*
 
 %changelog
+* Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 0.3.6-alt0.4.git96f986f
+- introduce reiser4 knob (on by default)
+- minor spec cleanup
+
 * Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt0.3.git96f986f
 - Rebuilt with new reiser4 libraries.
 
