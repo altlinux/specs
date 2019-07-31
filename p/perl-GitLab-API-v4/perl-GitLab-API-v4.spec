@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Const/Fast.pm) perl(Exporter.pm) perl(ExtUtils
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
+Version: 0.20
 Release: alt1
 Summary: A complete GitLab API v4 client.
 Group: Development/Perl
@@ -42,7 +42,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md
+%doc Changes README.md
 %perl_vendor_privlib/G*
 
 %files scripts
@@ -50,6 +50,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
