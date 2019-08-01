@@ -9,8 +9,8 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.082.0
-Release: alt2
+Version: 2.087.0
+Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -21,10 +21,11 @@ Source2: druntime-%version.tar
 Source3: phobos-%version.tar
 Source4: tools-%version.tar
 
-Patch1: druntime-%version-alt-build.patch
+Patch1: druntime-2.082.0-alt-build.patch
 Patch2: posix-in-druntime.patch
-Patch3: dmd-%version-alt-build-removed.patch
-Patch4: phobos-%version-alt-build.patch
+Patch3: dmd-2.082.0-alt-build-removed.patch
+Patch4: dmd-2.087.0-alt-version-check.patch
+Patch5: phobos-2.082.0-alt-build.patch
 
 BuildRequires: gcc-c++ curl-devel
 BuildRequires: zlib-devel
@@ -76,8 +77,10 @@ popd
 
 %patch3 -p2
 
-pushd ../phobos
 %patch4 -p2
+
+pushd ../phobos
+%patch5 -p2
 popd
 
 %build
@@ -163,6 +166,9 @@ cp -r docs/man/man5/* %buildroot%_man5dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Jul 30 2019 Konstantin Rybakov <kastet@altlinux.org> 2.087.0-alt1
+- Updated to upstream version 2.087.0.
+
 * Tue Mar 26 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.082.0-alt2
 - Linked dynamic libraries to system zlib (Closes: #36380)
 
