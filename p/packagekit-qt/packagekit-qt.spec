@@ -4,7 +4,7 @@
 
 Name: packagekit-qt
 Version: 1.0.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt support library for PackageKit
@@ -44,6 +44,11 @@ Provides: PackageKit-Qt5-devel = %version-%release
 %setup -qn PackageKit-Qt-%version
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
+
 %cmake
 
 %cmake_build
@@ -64,6 +69,9 @@ Provides: PackageKit-Qt5-devel = %version-%release
 %_libdir/cmake/packagekitqt5/
 
 %changelog
+* Thu Aug 01 2019 Michael Shigorin <mike@altlinux.org> 1.0.1-alt4
+- E2K: explicit -std=c++11
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3
 - NMU: remove rpm-build-ubt from BR:
 
