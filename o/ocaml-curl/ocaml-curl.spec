@@ -6,7 +6,7 @@
 
 Name: ocaml-%pkgname
 Version: 0.8.2
-Release: alt2
+Release: alt3
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -65,6 +65,9 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.8.2-alt3
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.8.2-alt2
 - rebuilt with ocaml-4.07.1
 

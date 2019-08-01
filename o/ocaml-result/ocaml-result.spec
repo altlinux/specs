@@ -1,7 +1,7 @@
 %define module result
 Name: ocaml-%module
-Version: 1.3
-Release: alt3
+Version: 1.4
+Release: alt2
 Summary: Compat result type
 
 License: BSD
@@ -10,7 +10,7 @@ Source0: %name-%version.tar
 Group: Development/ML
 
 BuildRequires: ocaml 
-BuildRequires: ocaml-findlib jbuilder opam
+BuildRequires: ocaml-findlib dune opam
 
 %description
 Projects that want to use the new result type defined in
@@ -30,11 +30,11 @@ files for developing applications that use %name.
 %setup
 
 %build
-jbuilder build
+dune build
 
 %install
 mkdir -p %buildroot%_libdir/ocaml
-jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.md
@@ -51,6 +51,12 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%module/*.ml
 
 %changelog
+* Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.4-alt2
+- rebuilt with ocaml-4.08
+
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.4-alt1
+- 1.4
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt3
 - rebuilt with ocaml-4.07.1
 

@@ -1,13 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gapi
-Version: 0.3.10
-Release: alt2
+Version: 0.3.13
+Release: alt1
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
 Url: https://github.com/astrada/gapi-ocaml
 Source0: %name-%version.tar
-BuildRequires: ocaml >= 4.06
+BuildRequires: ocaml >= 4.08
 BuildRequires: ocaml-ocamldoc dune opam ocaml-base ocaml-stdio ocaml-configurator
 BuildRequires: ocaml-biniou
 BuildRequires: ocaml-findlib-devel >= 1.7.1
@@ -86,6 +86,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml gapi
 %_libdir/ocaml/gapi-ocaml/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.3.13-alt1
+- 0.3.13
+
 * Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 0.3.10-alt2
 - 0.3.10
 

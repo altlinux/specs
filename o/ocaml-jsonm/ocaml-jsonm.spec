@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-jsonm
 Version: 1.0.1
-Release: alt3
+Release: alt4
 Summary: Non-blocking streaming codec to decode and encode JSON
 License: BSD3
 Group: Development/ML
@@ -61,6 +61,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/jsonm/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.0.1-alt4
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt3
 - rebuilt with ocaml-4.07.1
 

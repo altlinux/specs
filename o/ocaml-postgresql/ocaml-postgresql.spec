@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname postgresql
 Name: ocaml-%libname
-Version: 4.4.2
+Version: 4.5.0
 Release: alt1
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
@@ -63,6 +63,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 4.5.0-alt1
+- 4.5.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 4.4.2-alt1
 - 4.4.2
 

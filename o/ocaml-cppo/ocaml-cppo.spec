@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
-Version: 1.6.5
-Release: alt4
+Version: 1.6.6
+Release: alt1
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
@@ -73,6 +73,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.ml
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.6.6-alt1
+- 1.6.6
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.6.5-alt4
 - rebuilt with dune-1.8
 

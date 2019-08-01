@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname stringext
 Name: ocaml-%libname
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: Extra string functions for OCaml
 Group: Development/ML
 License: BSD
@@ -63,6 +63,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.5.0-alt2
 - rebuilt with dune-1.8
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-parmap
 Version: 1.0
-Release: alt2.rc10
+Release: alt3.rc10
 Summary: small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
 License: LGPLv2+ with exceptions
@@ -58,6 +58,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_man3dir/*.3o*
 
 %changelog
+* Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 1.0-alt3.rc10
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0-alt2.rc10
 - rebuilt with ocaml-4.07.1
 

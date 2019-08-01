@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlgraph
 Version: 1.8.8
-Release: alt3
+Release: alt4
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
@@ -104,6 +104,9 @@ install -m 0755 -p view_graph/viewgraph.opt \
 %_bindir/*
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.8.8-alt4
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.8.8-alt3
 - rebuilt with ocaml-4.07.1
 

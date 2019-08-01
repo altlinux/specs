@@ -1,16 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-num
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
 License: LGPLv2+ with exceptions
 
 Url: https://github.com/ocaml/num
 Source0: %name-%version.tar
-
-# Downstream patch to make DESTDIR installs work.
-Patch1: 0001-install-Use-DESTDIR.patch
+Patch1: ocaml-num-1.2-Use-DESTDIR.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
 
@@ -76,6 +74,9 @@ find $OCAMLFIND_DESTDIR -name '*.cmti' -delete
 %_libdir/ocaml/*.mli
 
 %changelog
+* Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1-alt3
 - rebuilt with ocaml-4.07.1
 

@@ -1,5 +1,5 @@
 Name: google-drive-ocamlfuse
-Version: 0.7.6
+Version: 0.7.8
 Release: alt1
 License: BSD-2-Clause
 Summary: FUSE filesystem for Google Drive
@@ -54,6 +54,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_bindir/%name
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.7.8-alt1
+- 0.7.8
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 0.7.6-alt1
 - 0.7.6
 

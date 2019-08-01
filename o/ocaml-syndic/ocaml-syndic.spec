@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname syndic
 Name: ocaml-%libname
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: RSS1, RSS2, Atom and OPML1 parsing for OCaml
 Group: Development/ML
@@ -59,6 +59,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 

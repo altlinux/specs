@@ -2,7 +2,7 @@
 
 Name: ocaml-mysql
 Version: 1.2.2
-Release: alt4
+Release: alt5
 
 Summary: MySQL bindings for OCaml
 License: LGPL
@@ -15,7 +15,7 @@ Patch0: ocaml-mysql-1.2.2-alt-mysql8-transition.patch
 
 Requires: %name-runtime = %version-%release
 
-BuildRequires: ocaml-camlp4 ocaml-findlib libMySQL-devel zlib-devel chrpath
+BuildRequires: ocaml-findlib libMySQL-devel zlib-devel chrpath
 
 %package runtime
 Summary: MySQL bindings for OCaml
@@ -63,6 +63,10 @@ mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 1.2.2-alt5
+- rebuilt with ocaml-4.08.0
+- removed campl4 from build requires
+
 * Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.2.2-alt4
 - fix FTBFS against libmysqlclient21
 

@@ -3,7 +3,7 @@ Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
 Version: 1.3.0
-Release: alt4
+Release: alt5
 Summary: A streaming XML codec
 License: BSD
 Url: http://erratique.ch/software/xmlm
@@ -58,6 +58,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.3.0-alt5
+- rebuilt with ocaml-4.08
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt4
 - fixed the version repesentation for ocaml findlib
 

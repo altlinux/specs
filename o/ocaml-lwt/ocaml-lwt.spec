@@ -1,8 +1,8 @@
 # on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 4.1.0
-Release: alt4
+Version: 4.2.1
+Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -12,8 +12,8 @@ Url: http://ocsigen.org/lwt/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4-devel ocaml-react glib2-devel libev-devel chrpath
-BuildRequires: dune opam ocaml-cppo
+BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
+BuildRequires: dune opam ocaml-cppo ocaml-bisect_ppx-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -36,8 +36,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-make default-config
-make
+dune build
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/
@@ -56,7 +55,7 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.cma
 %_libdir/ocaml/lwt/unix/*.cmi
 %_libdir/ocaml/lwt/unix/*.cmxs
-%_libdir/ocaml/stublibs/*.so*
+%_libdir/ocaml/stublibs/*.so
 
 %files devel
 %_libdir/ocaml/lwt*/dune-package
@@ -66,13 +65,20 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt*/*.cmxa
 %_libdir/ocaml/lwt*/*.cmx
 %_libdir/ocaml/lwt*/*.mli
+%_libdir/ocaml/lwt*/*.ml
+%_libdir/ocaml/lwt*/*.exe
 %_libdir/ocaml/lwt/unix/*.a
 %_libdir/ocaml/lwt/unix/*.cmt*
 %_libdir/ocaml/lwt/unix/*.cmxa
 %_libdir/ocaml/lwt/unix/*.cmx
 %_libdir/ocaml/lwt/unix/*.mli
+%_libdir/ocaml/lwt/unix/*.ml
+%_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 4.2.1-alt1
+- 4.2.1
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 4.1.0-alt4
 - rebuilt with dune-1.8
 

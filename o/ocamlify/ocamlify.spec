@@ -1,6 +1,6 @@
 Name: ocamlify
 Version: 0.0.2
-Release: alt1
+Release: alt2
 Summary: Include files in OCaml code
 License: LGPL with static compilation exception
 Group: Development/ML
@@ -39,6 +39,9 @@ ocaml -unsafe-string setup.ml -install
 %_bindir/ocamlify
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.0.2-alt2
+- rebuilt with ocaml-4.08
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 0.0.2-alt1
 - first build for ALT with patches from Mageia
 

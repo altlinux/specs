@@ -2,7 +2,7 @@
 %define libname rresult
 Name:           ocaml-%libname
 Version:        0.6.0
-Release:        alt1
+Release:        alt2
 Summary:        Result value combinators for OCaml
 License:        ISC
 Group:          Development/ML
@@ -53,6 +53,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.6.0-alt2
+- rebuilt with ocaml-4.08
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 0.6.0-alt1
 - first build for ALT
 

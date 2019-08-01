@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-extlib
 Version: 1.7.6
-Release: alt1
+Release: alt2
 
 Summary: extended standard library for OCaml
 License: LGPL v2, with exceptions
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 Requires: ocaml-runtime
-BuildRequires: rpm-build-ocaml ocaml-ocamldoc ocaml-findlib ocaml-cppo ocaml-camlp4-devel
+BuildRequires: rpm-build-ocaml ocaml-ocamldoc ocaml-findlib ocaml-cppo
 
 %description
 ExtLib is a project aiming at providing a complete - yet small - standard
@@ -69,6 +69,9 @@ mkdir -p mkdir -p %buildroot%_libdir/ocaml
 %_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.7.6-alt2
+- rebuilt with ocaml-4.08
+
 * Thu May 16 2019 Anton Farygin <rider@altlinux.ru> 1.7.6-alt1
 - 1.7.6
 

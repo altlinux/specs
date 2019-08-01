@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 5.1
+Version: 5.3
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
@@ -60,6 +60,9 @@ make install
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 5.3-alt1
+- 5.3
+
 * Tue Oct 30 2018 Anton Farygin <rider@altlinux.ru> 5.1-alt1
 - first build for ALT
 

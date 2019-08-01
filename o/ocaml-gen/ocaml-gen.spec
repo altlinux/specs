@@ -2,7 +2,7 @@
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.2
-Release: alt1
+Release: alt2
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
@@ -28,6 +28,7 @@ developing applications that use %name.
 %setup
 
 %build
+sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 make
 
 %install
@@ -56,6 +57,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Sat Aug 03 2019 Anton Farygin <rider@altlinux.ru> 0.5.2-alt2
+- rebuilt with ocaml-4.08
+
 * Sat Jun 01 2019 Anton Farygin <rider@altlinux.ru> 0.5.2-alt1
 - 0.5.2
 

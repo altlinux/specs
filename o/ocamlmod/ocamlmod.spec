@@ -1,6 +1,6 @@
 Name: ocamlmod
 Version: 0.0.9
-Release: alt1
+Release: alt2
 Summary: Generate OCaml modules from source files
 License: LGPL-2.1 with OCaml linking exception
 Group: Development/ML
@@ -44,6 +44,9 @@ make install
 %_bindir/ocamlmod
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.0.9-alt2
+- rebuilt with ocaml-4.08
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 0.0.9-alt1
 - first build for ALT with patches from Mageia
 

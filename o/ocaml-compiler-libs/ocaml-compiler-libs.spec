@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname compiler-libs
 Name: ocaml-%libname
-Version: 0.11.0
-Release: alt2
+Version: 0.12.0
+Release: alt1
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
 Group: Development/ML
@@ -54,6 +54,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%name/dune-package
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.11.0-alt2
 - rebuilt with dune-1.8 
 

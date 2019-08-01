@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-lablgtk
-Version: 2.18.6
-Release: alt3
+Version: 2.18.8
+Release: alt1
 
 Summary: Objective Caml interface to gtk+
 
@@ -22,7 +22,7 @@ BuildRequires: libgnomecanvas-devel
 BuildRequires: libgnomeui-devel
 BuildRequires: librsvg-devel
 BuildRequires: ocaml
-BuildRequires: ocaml-camlp4-devel
+BuildRequires: ocaml-camlp5
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-lablgl-devel
 BuildRequires: ocaml-ocamldoc
@@ -66,7 +66,7 @@ unset MAKEFLAGS
 perl -pi -e "s|-O|$RPM_OPT_FLAGS|" src/Makefile
 make world CAMLOPT="ocamlopt.opt -g"
 make opt CAMLOPT="ocamlopt.opt -g"
-make doc CAMLP4O="camlp4o -I %_libdir/ocaml/camlp4/Camlp4Parsers"
+make doc CAMLP4O="camlp5o -I %_libdir/ocaml/camlp5/Camlp5Parsers"
 
 %install
 export DESTDIR=%buildroot
@@ -135,6 +135,10 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 2.18.8-alt1
+- 2.18.8
+- switch to camlp5 preprocessor
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt3
 - rebuilt with ocaml-4.07.1
 

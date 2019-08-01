@@ -2,7 +2,7 @@
 %define oname   topkg
 Name: ocaml-topkg
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -69,6 +69,9 @@ rm -rf %buildroot%prefix/doc/%oname
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.0.0-alt3
+- rebuilt with ocaml-4.08
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
 - fixed the version repesentation for ocaml findlib
 
