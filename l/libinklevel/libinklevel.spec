@@ -1,8 +1,8 @@
 Name: libinklevel
-Version: 0.8.0
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
-Summary: Library for retrieving the ink level of a printer.
+Summary: Library for retrieving the ink level of a printer
 License: GPL
 Group: System/Libraries
 
@@ -12,7 +12,7 @@ Source1: %name-index.html
 Source2: %name.watch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-BuildPreReq: libieee1284-devel
+BuildPreReq: libieee1284-devel libusb-devel
 
 %package devel
 Summary: Headers for libinklevel
@@ -29,7 +29,6 @@ Headers for building software that uses libinklevel
 %prep
 %setup
 cp -a %SOURCE1 index.html
-cp -at . -- /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
 
 %build
 %configure
@@ -49,6 +48,9 @@ ln -sf /usr/share/license/GPL-2 COPYING
 %_includedir/*.h
 
 %changelog
+* Thu May 23 2019 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
+- 0.9.3 (NB: drops support for parallel port printers)
+
 * Thu May 23 2019 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
 - E2K: fix build by updating config.*
 - spec fixup/cleanup
