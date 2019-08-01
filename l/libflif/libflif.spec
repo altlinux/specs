@@ -1,6 +1,6 @@
 Name: libflif
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Free Lossless Image Format
 
@@ -62,19 +62,13 @@ where the contexts are nodes of decision trees
 which are dynamically learned at encode time.
 
 %package devel
-Summary: Library implementing the FLIF compression algorithm
+Summary: Development files for %name
 License: LGPLv3+ and Apache-2.0
 Group: Development/C++
 Requires: %name = %version-%release
 
 %description devel
-Brotli is a generic-purpose lossless compression algorithm that
-compresses data using a combination of a modern variant of the LZ77
-algorithm, Huffman coding and 2nd order context modeling. It is
-similar in speed with "DEFLATE" but offers more dense compression.
-
-This subpackage contains libraries and header files for developing
-applications that want to make use of libcerror.
+Development files for the %name library.
 
 %prep
 %setup
@@ -121,5 +115,8 @@ cd src
 %_libdir/libflif_dec.so.0
 
 %changelog
+* Tue Jul 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt2
+- fix package description
+
 * Mon May 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - initial build for ALT Sisyphus
