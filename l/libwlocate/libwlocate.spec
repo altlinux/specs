@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
 
 Name:		libwlocate
 Version:	1.1
-Release:	alt1_%rel.%git
+Release:	alt2_%rel.%git
 Summary:	Open WLAN Map interface library
 
 Group:		Development/C
@@ -50,7 +50,6 @@ Library for doing location lookup based on free openwlanmap.org data.
 
 %files -n %{libwlocate}
 %_libdir/*.so.%{major}
-%_libdir/*.so
 
 #------------------------------------------------------------------------------
 
@@ -91,6 +90,9 @@ chmod 0644 COPYING CREDITS README
 
 
 %changelog
+* Thu Aug 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_10.git20130127
+- no .so (closes: #37049)
+
 * Mon Jul 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_10.git20130127
 - fixed devel (closes: #37049)
 
