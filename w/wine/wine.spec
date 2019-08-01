@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.9.0
-%define major 4.12.1
+%define major 4.12
 
 Name: wine
-Version: %major.1
+Version: %major.1.2
 Release: alt1
 Epoch: 1
 
@@ -477,6 +477,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Jul 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.2-alt1
+- add patch with cryptext: Implement CryptExtOpenCER
+
 * Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.1-alt1
 - new version (4.12.1.1) with rpmgs script
 - fixe 64 bit build
