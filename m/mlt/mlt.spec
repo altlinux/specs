@@ -9,6 +9,7 @@
 
 %def_disable debug
 %def_disable vdpau
+%def_enable libvidstab
 
 %define Name MLT
 %define mlt_sover 6
@@ -18,7 +19,7 @@
 
 Name: mlt
 Version: 6.16.0
-Release: alt3
+Release: alt4
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -51,8 +52,10 @@ BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-
 BuildRequires: libswresample-devel
 %endif
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
-BuildRequires: libvidstab-devel
 BuildRequires: libxml2-devel swig ladspa_sdk
+%if_enabled libvidstab
+BuildRequires: libvidstab-devel
+%endif
 %if_enabled vdpau
 BuildRequires: libvdpau-devel
 %endif
@@ -134,8 +137,16 @@ sed -i -e 's|python -c|python3 -c|' src/swig/python/build
 sed -i -e 's|python-config|python3-config|' src/swig/python/build
 sed -i -e 's|python{}.{}|python{}.{}m|' src/swig/python/build
 
+%ifarch %e2k
+sed -i 's,-fno-tree-pre,,' configure
+%endif
+
 %build
 %mIF_ver_lt %_qt5_version 5.9
+%add_optflags -std=c++11
+%endif
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
 export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
@@ -171,7 +182,7 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 install -d %buildroot/%python3_sitelibdir
 install -pm 0644 src/swig/python/%name.py %buildroot/%python3_sitelibdir/
 install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
@@ -206,6 +217,10 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 6.16.0-alt4
+- introduced libvidstab knob (on by default)
+- E2K: explicit -std=c++11; avoid lcc-unsupported option
+
 * Fri Jul 05 2019 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt3
 - build with python3
 
