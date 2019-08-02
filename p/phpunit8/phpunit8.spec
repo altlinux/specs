@@ -1,23 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phpunit8
-Version: 8.0.4
-Release: alt2
-
-Summary: PHPUnit is a programmer-oriented testing framework for PHP.
+Version: 8.3.2
+Release: alt1
+Summary: PHPUnit is a programmer-oriented testing framework for PHP
 License: BSD License
 Group: Development/Other
-
-URL: https://phpunit.de
+Url: https://phpunit.de
 Source: %name-%version.tar
 
 BuildArch: noarch
-
 Requires: php7
 Requires: php7-openssl
 
 %description
-PHPUnit is a programmer-oriented testing framework for PHP.
+%summary.
 It is an instance of the xUnit architecture for unit testing frameworks.
 
 
@@ -37,8 +34,14 @@ install -m 0755 phpunit8.sh %buildroot%_bindir/%name
 %_bindir/%name
 %_datadir/%name/phpunit-8.phar
 
-
 %changelog
+* Fri Aug 02 2019 Alexander Makeenkov <amakeenk@altlinux.org> 8.3.2-alt1
+- New version
+
+* Fri Aug 02 2019 Alexander Makeenkov <amakeenk@altlinux.org> 8.3.1-alt1
+- New version
+- Minor spec fix
+
 * Fri Mar 01 2019 Alexander Makeenkov <amakeenk@altlinux.org> 8.0.4-alt2
 - Fix requires
 
