@@ -1,5 +1,5 @@
 Name:    mint-translations
-Version: 2019.07.10
+Version: 2019.07.28
 Release: alt1
 
 License: GPLv2+ and MIT
@@ -33,6 +33,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Aug 02 2019 Andrey Cherepanov <cas@altlinux.org> 2019.07.28-alt1
+- New version.
+
 * Fri Jul 12 2019 Andrey Cherepanov <cas@altlinux.org> 2019.07.10-alt1
 - New version.
 
