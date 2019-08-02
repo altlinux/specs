@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/XS.pm)
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt4
+Release: alt5
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -71,6 +71,13 @@ BuildRequires: perl(Module/Load/Conditional.pm)
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(JSON/Validator.pm)
 BuildRequires: perl(Test/Exception.pm)
+BuildRequires: perl(Text/Diff.pm)
+BuildRequires: perl(Test/Strict.pm)
+BuildRequires: perl(Mojo/RabbitMQ/Client.pm)
+BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-future
 
 Requires: openqa-common = %EVR
 Requires: openqa-client = %EVR
@@ -78,6 +85,7 @@ Requires: perl(URI.pm)
 Requires: perl(LWP/Protocol/https.pm)
 Requires: optipng
 Requires: dbus
+Requires: perl(YAML/XS.pm)
 
 %description
 openQA is a testing framework that allows you to test GUI applications on one
@@ -174,7 +182,6 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 %setup -n %name-%version
 tar xf %SOURCE1 -C assets
 %patch0 -p1
-rm -f t/22-dashboard.t
 sed -i -e 's|../webfonts/|https://use.fontawesome.com/releases/v5.0.10/webfonts/|g' assets/cache/use.fontawesome.com/releases/v5.0.10/css/all.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
@@ -184,11 +191,10 @@ sed -i -e 's,"$(DESTDIR)"/etc/apache2/vhosts.d,"$(DESTDIR)"%_sysconfdir/httpd2/c
 sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
-rm -f lib/OpenQA/WebAPI/Plugin/AMQP.pm
-rm -f t/23-amqp.t
-rm -f t/34-developer_mode-unit.t
-rm -f t/deploy.t
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
+rm -f t/34-developer_mode-unit.t
+rm -f t/24-worker-overall.t
+rm -f t/24-worker-job.t
 
 %build
 %make_build
@@ -280,6 +286,8 @@ fi
 %_unitdir/openqa-livehandler.service
 %_unitdir/openqa-worker-cacheservice-minion.service
 %_unitdir/openqa-worker-cacheservice.service
+%_unitdir/openqa-enqueue-audit-event-cleanup.service
+%_unitdir/openqa-enqueue-audit-event-cleanup.timer
 # web libs
 %_datadir/openqa/templates
 %_datadir/openqa/public
@@ -298,6 +306,7 @@ fi
 %_datadir/openqa/script/openqa-livehandler
 %_datadir/openqa/script/openqa-workercache
 %_datadir/openqa/script/openqa-clone-custom-git-refspec
+%_datadir/openqa/script/openqa-label-all
 %dir %_localstatedir/openqa/share
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/db
@@ -363,6 +372,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Wed Jul 31 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt5
+- update to current version
+
 * Fri Jul 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt4
 - update to current version
 
