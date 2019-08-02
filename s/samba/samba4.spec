@@ -59,8 +59,8 @@
 %endif
 
 Name:    samba
-Version: 4.10.3
-Release: alt5
+Version: 4.10.5
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1822,6 +1822,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Jul 31 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.5-alt1
+- Update to latest security release
+- Security fixes:
+  + CVE-2019-12435 Samba AD DC Denial of Service in DNS management server (dnsserver)
+  + CVE-2019-12436 Samba AD DC LDAP server crash (paged searches)
+
 * Fri Jul 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.3-alt5
 - Partial fixes for SMBLoris vulnerability on smbd
   + Add smbd read timeout parameter
