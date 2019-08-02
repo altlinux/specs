@@ -4,13 +4,13 @@
 
 Summary: The PyPA recommended tool for installing Python packages
 Name: python-module-pip
-Version: 19.1.1
+Version: 19.2.1
 Release: alt1
 Source0: pip-%version.tar.gz
 License: MIT
 Group: Development/Python
 BuildArch: noarch
-Url: http://www.pip-installer.org
+Url: https://pip.pypa.io
 Obsoletes: python-module-pip-pickles
 %setup_python_module pip
 
@@ -84,12 +84,11 @@ PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
 %endif
 
 %install
-%python3_install
 %python_install
+%python3_install
 
 %files
 %doc *.txt *.rst
-%_bindir/pip
 %_bindir/pip2
 %_bindir/pip2.7
 %python_sitelibdir/pip/
@@ -105,12 +104,16 @@ PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
 
 %files -n python3-module-%modulename
 %doc *.txt *.rst
+%_bindir/pip
 %_bindir/pip3
 %_bindir/pip%{__python3_version}
 %python3_sitelibdir/pip/
 %python3_sitelibdir/pip-*.egg-info/
 
 %changelog
+* Thu Aug 01 2019 Stanislav Levin <slev@altlinux.org> 19.2.1-alt1
+- 19.1.1 -> 19.2.1.
+
 * Mon May 13 2019 Stanislav Levin <slev@altlinux.org> 19.1.1-alt1
 - 19.0.3 -> 19.1.1.
 
