@@ -1,6 +1,6 @@
 Name: sqlmap
-Version: 1.3.4
-Release: alt2
+Version: 1.3.7
+Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
 
@@ -46,17 +46,12 @@ find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/
 install -d -m 755 %buildroot%_datadir/%name
 install -m 755 sqlmap.py %buildroot%_datadir/%name
 install -m 755 sqlmapapi.py %buildroot%_datadir/%name
+cp -pr data %buildroot%_datadir/%name/
 cp -pr extra %buildroot%_datadir/%name/
 cp -pr lib %buildroot%_datadir/%name/
 cp -pr plugins %buildroot%_datadir/%name/
-cp -pr procs %buildroot%_datadir/%name/
-cp -pr shell %buildroot%_datadir/%name/
 cp -pr tamper %buildroot%_datadir/%name/
 cp -pr thirdparty %buildroot%_datadir/%name/
-cp -pr txt %buildroot%_datadir/%name/
-cp -pr udf %buildroot%_datadir/%name/
-cp -pr waf %buildroot%_datadir/%name/
-cp -pr xml %buildroot%_datadir/%name/
 
 install -d -m 755 %buildroot%_bindir
 for app in sqlmap sqlmapapi; do
@@ -82,6 +77,9 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Fri Aug 02 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.7-alt1
+- new version 1.3.7
+
 * Mon Apr 15 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.4-alt2
 - fix shebang removal to support versioned python call
 
