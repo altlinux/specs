@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname astring
 Name:           ocaml-%libname
-Version:        0.8.4
+Version:        0.8.5
 Release:        alt1
 Summary:        Alternative String module for OCaml
 License:        ISC
@@ -56,6 +56,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Thu Sep 03 2020 Anton Farygin <rider@altlinux.ru> 0.8.5-alt1
+- 0.8.5
+
 * Wed Aug 05 2020 Anton Farygin <rider@altlinux.ru> 0.8.4-alt1
 - 0.8.4
 
