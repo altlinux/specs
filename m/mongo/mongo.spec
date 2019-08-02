@@ -1,5 +1,5 @@
 Name: mongo
-Version: 4.0.10
+Version: 4.0.11
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL 1.0
@@ -189,6 +189,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Thu Aug 1 2019 Vladimir Didenko <cow@altlinux.org> 4.0.11-alt1
+- 4.0.11
+
 * Mon Jun 10 2019 Vladimir Didenko <cow@altlinux.org> 4.0.10-alt1
 - 4.0.10
 
