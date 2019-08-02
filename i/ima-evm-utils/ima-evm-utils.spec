@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.1.0.0.5.g8c8f29e
+Version: 1.2.1
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -12,17 +12,11 @@ Url: http://linux-ima.sourceforge.net/
 # Repacked http://sourceforge.net/projects/linux-ima/files/ima-evm-utils/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch01: 0001-autotools-Try-to-find-correct-manpage-stylesheet-pat.patch
-Patch02: 0002-evmctl-use-correct-include-for-xattr.h.patch
-Patch03: 0003-Remove-hardcoding-of-SHA1-in-EVM-signatures.patch
-Patch04: 0004-Add-security.apparmor-to-the-set-of-extended-attribu.patch
-Patch05: 0005-ima-evm-utils-check-the-return-code-from-tpm_pcr_rea.patch
-
 # Automatically added by buildreq on Tue Feb 14 2017
 # optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules xml-common
 BuildRequires: asciidoc docbook-style-xsl libattr-devel libkeyutils-devel libssl-devel python-modules-compiler python-modules-encodings time xsltproc
 
-Requires: libimaevm0 = %EVR
+Requires: libimaevm = %EVR
 
 %description
 The Trusted Computing Group(TCG) run-time Integrity Measurement Architecture
@@ -34,11 +28,11 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 
 (This package contains IMA/EVM utilities.)
 
-%package -n libimaevm0
+%package -n libimaevm
 Summary: IMA/EVM libraries
 Group: System/Libraries
 
-%description -n libimaevm0
+%description -n libimaevm
 The Trusted Computing Group(TCG) run-time Integrity Measurement Architecture
 (IMA) maintains a list of hash values of executables and other sensitive
 system files, as they are read or executed. These are stored in the file
@@ -64,11 +58,6 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 
 %prep
 %setup
-%patch01 -p1
-%patch02 -p1
-%patch03 -p1
-%patch04 -p1
-%patch05 -p1
 
 sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-stylesheets/manpages/docbook.xsl"|' \
 	-i m4/manpage-docbook-xsl.m4
@@ -89,14 +78,17 @@ sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-s
 %_bindir/*
 %_man1dir/*
 
-%files -n libimaevm0
-%_libdir/libimaevm.so.0*
+%files -n libimaevm
+%_libdir/libimaevm.so.*
 
 %files -n libimaevm-devel
 %_includedir/*
 %_libdir/libimaevm.so
 
 %changelog
+* Fri Aug 02 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
+- Updated to v1.2.1.
+
 * Thu Nov 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0.0.5.g8c8f29e-alt1
 - Updated to v1.1-5-g8c8f29e.
 
