@@ -25,14 +25,14 @@
 
 Name: fiaif
 Version: 1.22.1
-Release: alt3
+Release: alt4
 
 Summary: FIAIF is an Intelligent Firewall for iptables based Linux systems
 Summary(ru_RU.UTF-8): FIAIF - интеллектуальный межсетевой экран для Linux-систем с iptables
 
 License: %gpl2plus
 Group: Security/Networking
-URL: http://www.fiaif.net/
+URL: http://freshmeat.sourceforge.net/projects/fiaif
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -55,6 +55,8 @@ Patch8: %name-1.22.1-log_level.patch
 Patch9: %name-1.22.1-btime.patch
 Patch10: %name-1.22.1-cleanup_rules.patch
 Patch11: %name-1.22.1-vlan_devices.patch
+Patch12: %name-1.22.1-alt-bash4.patch
+Patch13: %name-1.22.1-alt-disable_cron_task.patch
 
 Requires: iptables >= 1.2.6a, bash >= 2.04
 BuildRequires(pre): rpm-build-licenses
@@ -140,6 +142,8 @@ FIAIF - скрипт с широкими возможностями настро
 %patch9 -p0
 %patch10 -p0
 %patch11 -p0
+%patch12 -p0
+%patch13 -p0
 
 # Fix path to fiaif main script
 subst 's@/etc/init.d@/etc/rc.d/init.d@' cron/fiaif
@@ -152,12 +156,14 @@ subst 's#CONF_FILES=fiaif.conf#CONF_FILES=fiaif.conf zone.venet#' Makefile
 install -m 0644 %SOURCE2 conf/reserved_networks
 
 %build
-DISPLAY=0:0 LANG=RU_ru.UTF-8   make fiaif.ps
-[ -f fiaif.ps ] && gzip -9 fiaif.ps
+DISPLAY=0:0 LANG=RU_ru.UTF-8  [ -f fiaif.ps ] || make fiaif.ps
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 make install-config DESTDIR=$RPM_BUILD_ROOT
+
+[ -f fiaif.ps ] && gzip -9 fiaif.ps
+
 install -d -- $RPM_BUILD_ROOT{%_sbindir,%_mandir/man8,%_initdir}
 install -- prog/fiaif $RPM_BUILD_ROOT%_initdir/fiaif
 # Creating link /usr/sbin/fiaif -> %_initdir/fiaif
@@ -224,6 +230,10 @@ sed -e 's/LOG_LEVEL=WARNING/LOG_LEVEL=warning/' -i %fiaif_conf/fiaif.conf
 %doc fiaif.ps.gz doc/faq.txt
 
 %changelog
+* Sat Aug 03 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.22.1-alt4
+- Fix work with Bash 4
+- Fix URL
+
 * Wed Mar 14 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.22.1-alt3
 - Fix BuildRequires for new texlive
 
