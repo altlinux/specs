@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-Test-MinimumVersion
 
 Name: perl-Dist-Zilla-Plugin-Test-MinimumVersion
-Version: 2.000008
+Version: 2.000010
 Release: alt1
 
 Summary: Release tests for minimum required versions
@@ -40,10 +40,13 @@ test for the highest Perl version you want to require.
 %perl_vendor_install
 
 %files
-%doc README.mkdn Changes
+%doc README Changes
 %perl_vendor_privlib/Dist/Zilla/Plugin*
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.000010-alt1
+- New version
+
 * Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.000008-alt1
 - Build for M80P
 
