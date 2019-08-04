@@ -1,7 +1,7 @@
 %define major 2018.2
 Name: SimGear
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: Simulator Construction Tools
 
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 Patch2: %name-g++8.patch
+Patch3: simgear-2018.2.2-alt-e2k.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -52,10 +53,14 @@ This package contains header files for SimGear.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
-%__subst "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
+%patch3 -p2
+sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
 
 %build
 %add_optflags %optflags_shared
+%ifarch e2k
+%add_optflags -fno-error-always-inline
+%endif
 %cmake_insource -DENABLE_TESTS=OFF
 %make_build
 
@@ -65,9 +70,12 @@ This package contains header files for SimGear.
 %files -n libsimgear-devel-static
 %_libdir/*.a
 %_includedir/simgear
-%_libdir/cmake/SimGear/
+%_libdir/cmake/%name/
 
 %changelog
+* Sun Aug 04 2019 Michael Shigorin <mike@altlinux.org> 2018.2.2-alt3
+- E2K: initial support (ported from the skipped 2017.2.1-alt1)
+
 * Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2018.2.2-alt2
 - no return statement in the non-void function fixed (according g++8)
 
