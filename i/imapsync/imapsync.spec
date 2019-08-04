@@ -1,5 +1,5 @@
 Name: imapsync
-Version: 1.882
+Version: 1.945
 Release: alt1
 
 Summary: Tool to migrate email between IMAP servers
@@ -42,6 +42,7 @@ BuildRequires:  perl(PAR/Packer.pm) perl(Class/Load.pm)
 BuildRequires:  perl(CGI.pm) perl(Regexp/Common.pm) perl(Try/Tiny.pm)
 BuildRequires:  perl(Unicode/String.pm) perl(URI/Escape.pm)
 BuildRequires:  perl(Test/NoWarnings.pm) perl(Test/Deep.pm) perl(Test/Warn.pm)
+BuildRequires:  perl(File/Tail.pm)
 
 %description
 imapsync is a tool for facilitating incremental recursive IMAP
@@ -66,6 +67,9 @@ optionally be deleted after a successful transfer.
 %_man1dir/%name.*
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.945-alt1
+- New version
+
 * Sat May 12 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.882-alt1
 - New version
 
