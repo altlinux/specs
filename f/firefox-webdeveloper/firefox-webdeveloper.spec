@@ -4,7 +4,7 @@
 
 Name:		%firefox_name-%rname
 Version:	2.0.1
-Release:	alt1
+Release:	alt2
 Summary:	The Web Developer extension for Mozilla Firefox
 
 License:	GPLv3
@@ -14,7 +14,8 @@ Url:		http://chrispederick.com/work/web-developer/
 Source0:	web_developer-%version-fx+sm.xpi
 
 BuildArch:	noarch
-BuildRequires:	rpm-build-firefox unzip
+BuildRequires(pre):	rpm-build-firefox
+Buildrequires:	unzip
 Serial:		1
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
@@ -39,6 +40,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.1-alt2
+- Fix build: update BuildRequires
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.1-alt1
 - New version
 
