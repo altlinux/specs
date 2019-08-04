@@ -3,7 +3,7 @@
 %define real_name Promises
 
 Name: perl-Promises
-Version: 0.99
+Version: 1.02
 Release: alt1
 
 Summary: An implementation of Promises in Perl
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Wed Aug 30 2017
-# optimized out: perl perl-AnyEvent perl-Data-OptList perl-Digest-SHA perl-EV perl-Encode perl-Future perl-Guard perl-IO-Socket-IP perl-Net-SSLeay perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Sereal-Decoder perl-Sereal-Encoder perl-Sub-Install perl-Sub-Uplevel perl-Test-Fatal perl-Try-Tiny perl-URI perl-common-sense perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base ruby ruby-stdlibs
-BuildRequires: perl-IO-Async perl-IO-Socket-SSL perl-IO-Socket-Socks perl-Module-Runtime perl-Mojolicious perl-Sub-Exporter perl-Test-Requires perl-Test-Warn
+# Automatically added by buildreq on Sun Aug 04 2019
+# optimized out: gem-power-assert perl perl-AnyEvent perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Data-OptList perl-Digest-SHA perl-EV perl-Encode perl-Future perl-Guard perl-IO-Compress perl-IO-Socket-IP perl-IO-Socket-SSL perl-JSON-PP perl-Net-SSLeay perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Sereal-Decoder perl-Sereal-Encoder perl-Sub-Install perl-Sub-Uplevel perl-Test-Fatal perl-Try-Tiny perl-URI perl-Unicode-Normalize perl-common-sense perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-IO-Async perl-IO-Socket-Socks perl-Module-Runtime perl-Mojolicious perl-Role-Tiny perl-Sub-Attribute perl-Sub-Exporter perl-Test-Exception perl-Test-Pod perl-Test-Requires perl-Test-Warn
 
 BuildRequires: perl-AnyEvent
 
@@ -47,6 +47,9 @@ can often result in asynchronous programs.
 %perl_vendor_privlib/Promises*
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.02-alt1
+- New version
+
 * Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.99-alt1
 - New version
 
