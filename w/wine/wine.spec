@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.9.0
-%define major 4.12
+%define major 4.13
 
 Name: wine
-Version: %major.1.2
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -110,7 +110,7 @@ BuildRequires: desktop-file-utils
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 Conflicts: wine-vanilla wine-etersoft
 
@@ -141,7 +141,7 @@ and ALT in progress patches.
 Summary: WinAPI test for Wine
 Summary(ru_RU.UTF-8): Тест WinAPI для Wine
 Group: Emulators
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: wine-vanilla-test
 
 %description test
@@ -154,9 +154,9 @@ Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
 # due ExclusiveArch
 #BuildArch: noarch
-Requires: %name = %version-%release
-Requires: %name-programs = %version-%release
-Requires: lib%name-gl = %version-%release
+Requires: %name = %EVR
+Requires: %name-programs = %EVR
+Requires: lib%name-gl = %EVR
 
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
@@ -171,7 +171,7 @@ Wine meta package. Use it for install all wine subpackages.
 %package programs
 Summary: Wine programs
 Group: Emulators
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # due ExclusiveArch
 #BuildArch: noarch
 
@@ -209,7 +209,7 @@ linked with Wine.
 %package -n lib%name-gl
 Summary: DirectX/OpenGL support libraries for Wine
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-vanilla-gl
 
 Requires: libGL
@@ -222,7 +222,7 @@ This package contains the libraries for DirectX/OpenGL support in Wine.
 %package -n lib%name-twain
 Summary: Twain support library for Wine
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-vanilla-twain
 
 %description -n lib%name-twain
@@ -232,7 +232,7 @@ This package contains the library for Twain support.
 %package -n lib%name-devel
 Summary: Headers for lib%name-devel
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Obsoletes: wine-devel
 Provides: wine-devel
 Conflicts: libwine-vanilla-devel
@@ -249,7 +249,7 @@ lib%name-devel содержит файлы для разработки прог�
 %package -n lib%name-devel-static
 Summary: Static libraries for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-vanilla-devel-static
 
 %description -n lib%name-devel-static
@@ -397,6 +397,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
+%_datadir/wine/winebus.inf
 %_datadir/wine/winehid.inf
 %_datadir/wine/l_intl.nls
 %_datadir/wine/fonts/
@@ -477,6 +478,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Aug 04 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.13.1-alt1
+- new version 4.13.1 (with rpmrb script)
+- use EVR instead of version-release
+
 * Wed Jul 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.2-alt1
 - add patch with cryptext: Implement CryptExtOpenCER
 
