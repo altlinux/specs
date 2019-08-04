@@ -1,5 +1,5 @@
 Name: redis
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -26,8 +26,9 @@ Source9: redis.service
 # for check section
 BuildPreReq: tcl >= 8.5
 
-# Automatically added by buildreq on Sun Oct 25 2015
-BuildRequires: git-core xsltproc
+# Automatically added by buildreq on Sun Aug 04 2019
+# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tcl tk
+BuildRequires: gcc-c++ git-core tcl-devel xsltproc
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -159,6 +160,13 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 5.0.5-alt1
+- New version
+  * Fix AOF bug (possible data loss when fsync police is set to 'everysec')
+  * Fix memleak in bitfieldCommand
+  * Fix memleak when rewriting config file
+  * Fix non critical bugs in diskless replication
+
 * Fri May 10 2019 Nikolay A. Fetisov <naf@altlinux.org> 5.0.4-alt1
 - New version
 - Use libc malloc for e2k arch (Closes: 35473)
