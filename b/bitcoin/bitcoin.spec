@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -57,6 +57,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Sun Aug 04 2019 Alexei Takaseev <taf@altlinux.org> 0.18.1-alt1
+- Version 0.18.1
+
 * Fri May 03 2019 Alexei Takaseev <taf@altlinux.org> 0.18.0-alt1
 - Version 0.18.0
 
