@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.12.1
+Version: 3.13.2
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -118,9 +118,6 @@ popd
 %python_install
 
 %check
-# due to https://github.com/pypa/setuptools/issues/1702
-export LANG=C.UTF-8
-
 sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -131,8 +128,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export PIP_FIND_LINKS=%python_sitelibdir_noarch/virtualenv_support
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
-PIP_FIND_LINKS'
+PIP_FIND_LINKS TOX_LIMITED_SHEBANG'
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOX_LIMITED_SHEBANG=1
 
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch
 %buildroot%_bindir/tox --sitepackages -p auto -o -rv -- -m "not internet"
@@ -162,6 +160,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Fri Aug 02 2019 Stanislav Levin <slev@altlinux.org> 3.13.2-alt1
+- 3.12.1 -> 3.13.2.
+
 * Fri May 24 2019 Stanislav Levin <slev@altlinux.org> 3.12.1-alt1
 - 3.11.1 -> 3.12.1.
 
