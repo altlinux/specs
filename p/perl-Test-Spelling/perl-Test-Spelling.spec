@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::Spelling
 
 Name: perl-Test-Spelling
-Version: 0.22
+Version: 0.25
 Release: alt1
 
 Summary: check for spelling errors in POD files
@@ -49,6 +49,9 @@ This module requires the spell program.
 %perl_vendor_privlib/Test/Spelling*
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.25-alt1
+- New version
+
 * Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.22-alt1
 - New version
 
