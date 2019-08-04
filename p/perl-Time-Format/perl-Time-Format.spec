@@ -3,7 +3,7 @@
 %define real_name Time-Format
 
 Name: perl-Time-Format
-Version: 1.12
+Version: 1.15
 Release: alt1
 
 Summary: Easy-to-use date/time formatting
@@ -11,10 +11,8 @@ License: CC0 1.0 (%pubdomain)
 # CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist//Time-Format/
+URL: https://metacpan.org/release//Time-Format/
 Source: %real_name-%version.tar
-Patch0: %name-1.11-alt-test-manip.patch
-Patch1: %name-1.12-alt-TimeFormat_XS_version.patch
 
 BuildArch: noarch
 
@@ -36,10 +34,10 @@ read.
 
 %prep
 %setup -q -n %real_name-%version
-%patch0
-%patch1
 
 %build
+rm -f t/xs_doc.t
+rm -f t/xs_DateTime.t
 %perl_vendor_build
 
 %install
@@ -50,6 +48,9 @@ read.
 %perl_vendor_privlib/Time
 
 %changelog
+* Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.15-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.12-alt1
 - New version
 
