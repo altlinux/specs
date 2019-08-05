@@ -1,8 +1,8 @@
 %define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.10
-Release: alt2
+Version: 0.3.11
+Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -55,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Mon Aug 05 2019 Sergey V Turchin <zerg@altlinux.org> 0.3.11-alt1
+- new version
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.10-alt2
 - NMU: remove rpm-build-ubt from BR:
 
@@ -64,7 +67,7 @@ make -C BUILD check
 * Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt4
 - rebuild with new icu
 
-* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt3%ubt
+* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt3
 - rebuild with new libevent
 
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt2.1
