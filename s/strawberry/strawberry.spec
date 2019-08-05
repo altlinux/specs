@@ -1,6 +1,6 @@
 Name: strawberry
-Version: 0.5.5
-Release: alt2
+Version: 0.6.2
+Release: alt1
 Summary: Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -59,7 +59,7 @@ Features:
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 # Remove most 3rdparty libraries
 # Unbundle taglib next release:
@@ -67,7 +67,6 @@ Features:
 
 mv 3rdparty/SPMediaKeyTap/LICENSE 3rdparty/SPMediaKeyTap/LICENCE-SPMediaKeyTap
 mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
-mv 3rdparty/qocoa/LICENSE.txt 3rdparty/qocoa/LICENCE-qcocoa.txt
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
 %build
@@ -85,7 +84,7 @@ desktop-file-validate %buildroot%_desktopdir/org.strawbs.strawberry.desktop
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawbs.strawberry.appdata.xml
 
 %files
-%doc COPYING 3rdparty/SPMediaKeyTap/LICENCE-SPMediaKeyTap 3rdparty/qocoa/LICENCE-qcocoa.txt 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
+%doc COPYING 3rdparty/SPMediaKeyTap/LICENCE-SPMediaKeyTap 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
 %doc Changelog
 %_bindir/strawberry
 %_bindir/strawberry-tagreader
@@ -96,6 +95,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawbs.s
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Aug 05 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Mon Jul 15 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt2
 - Added BR.
 
