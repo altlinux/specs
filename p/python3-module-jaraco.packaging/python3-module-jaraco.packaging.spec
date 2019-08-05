@@ -1,8 +1,8 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 6.1
-Release: alt2
+Version: 6.2
+Release: alt1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -38,6 +38,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Aug 05 2019 Andrey Cherepanov <cas@altlinux.org> 6.2-alt1
+- New version.
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt2
 - fix packing
 
