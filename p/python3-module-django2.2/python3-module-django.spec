@@ -1,6 +1,6 @@
 %define branch 2.2
-%define version %branch.3
-%define release alt2
+%define version %branch.4
+%define release alt1
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -191,6 +191,14 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon Aug 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.4-alt1
+- 2.2.4
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-14232 Adjusted regex to avoid backtracking issues when truncating HTML
+  + CVE-2019-14233 Prevented excessive HTMLParser recursion in strip_tags() when handling incomplete HTML entities
+  + CVE-2019-14234 Protected JSONField/HStoreField key and index lookups against SQL injection
+  + CVE-2019-14235 Fixed potential memory exhaustion in django.utils.encoding.uri_to_iri()
+
 * Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt2
 - tear circular dependencies python3-module-django2.2 and python3-module-django2.2-tests
 
