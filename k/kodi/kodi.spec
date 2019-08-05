@@ -1,11 +1,13 @@
 Name: kodi
-Version: 18.2
+Version: 18.3
 Release: alt1
 
 Summary: Kodi Media Center
 License: GPL
 Group: Video
 Url: http://kodi.tv
+
+ExclusiveArch: armh aarch64 %ix86 x86_64
 
 Requires: kodi-data = %version-%release
 
@@ -165,6 +167,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Sat Aug 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.3-alt1
+- 18.3 Leia released
+
 * Mon Apr 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.2-alt1
 - 18.2 Leia released
 
