@@ -2,12 +2,13 @@
 
 Name:    python3-module-%modulename
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 
-Summary: cssselect2 is a straightforward implementation of CSS3 Selectors for markup documents
-License: BSD
+Summary: CSS selectors for Python ElementTree
+License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://pypi.org/project/cssselect2/
+URL:     https://pypi.org/project/cssselect2
+# https://github.com/Kozea/cssselect2
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -36,5 +37,8 @@ Source:  %modulename-%version.tar
 %doc *.rst
 
 %changelog
+* Mon Aug 05 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1.1
+- NMU: Little spec refactoring.
+
 * Sat Jun 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.1-alt1
 - Initial build for ALT
