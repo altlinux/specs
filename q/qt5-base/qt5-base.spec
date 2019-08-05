@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.12.4
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -480,7 +480,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 
 %make_build
 %if_disabled bootstrap
-[ -d doc/qtcore ] || %make docs
+[ -d doc/qtcore ] || %make docs ||:
 %endif
 
 %install
@@ -796,6 +796,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Aug 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt2
+- don't fail whan compile docs
+
 * Mon Jun 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
 - new version
 
