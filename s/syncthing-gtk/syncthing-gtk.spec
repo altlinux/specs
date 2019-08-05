@@ -4,7 +4,7 @@ Epoch: 1
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.9.4.3
+Version: 0.9.4.4
 Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
@@ -200,6 +200,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 05 2019 Cronbuild Service <cronbuild@altlinux.org> 1:0.9.4.4-alt1
+- new version 0.9.4.4
+
 * Wed Nov 14 2018 Cronbuild Service <cronbuild@altlinux.org> 1:0.9.4.3-alt1
 - new version 0.9.4.3
 
