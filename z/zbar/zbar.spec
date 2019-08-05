@@ -1,8 +1,11 @@
 %set_automake_version 1.11
+%ifnarch riscv64
+%def_enable qt4
+%endif
 
 Name: zbar
 Version: 0.10
-Release: alt9
+Release: alt10
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -18,7 +21,7 @@ Patch2: python-zbar-import-fix-am.patch
 # optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXv-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-pygobject-devel python-modules python-modules-compiler xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: gcc-c++ libImageMagick-devel libv4l-devel python-module-pygtk-devel
 
-BuildRequires: libqt4-devel
+%{?_enable_qt4:BuildRequires: libqt4-devel}
 
 %description
 Zbar is the utils and library for scanning and decoding bar codes from
@@ -132,6 +135,7 @@ with a minimal memory footprint.
 This package contains a bar code scanning widget for use in GUI
 applications based on PyGTK.
 
+%if_enabled qt4
 %package -n %libname-qt
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget
@@ -177,6 +181,7 @@ with a minimal memory footprint.
 This package contains header files and additional static libraries used for
 developing GUI applications based on Qt4 that include a bar code
 scanning widget.
+%endif
 
 %prep
 %setup
@@ -188,7 +193,7 @@ done
 
 %build
 %autoreconf
-%configure 
+%configure %{!?_enable_qt4:--without-qt}
 
 #	--without-qt
 #	--without-xshm \
@@ -256,6 +261,7 @@ done
 %python_sitelibdir/zbarpygtk.la
 %python_sitelibdir/zbarpygtk.so
 
+%if_enabled qt4
 %files -n %libname-qt
 %_libdir/libzbarqt.so.*
 
@@ -266,8 +272,12 @@ done
 
 %files -n %libname-qt-devel-static
 %_libdir/libzbarqt.a
+%endif
 
 %changelog
+* Mon Aug 05 2019 Nikita Ermakov <arei@altlinux.org> 0.10-alt10
+- NMU: Disable qt4 for RISC-V.
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.10-alt9
 - Rebuilt for ImageMagick.
 
