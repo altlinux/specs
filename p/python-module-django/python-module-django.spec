@@ -1,6 +1,6 @@
 %define branch 1.11
-%define version %branch.22
-%define release alt2
+%define version %branch.23
+%define release alt1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -410,6 +410,14 @@ popd
 %endif
 
 %changelog
+* Mon Aug 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.23-alt1
+- 1.11.23
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-14232 Adjusted regex to avoid backtracking issues when truncating HTML
+  + CVE-2019-14233 Prevented excessive HTMLParser recursion in strip_tags() when handling incomplete HTML entities
+  + CVE-2019-14234 Protected JSONField/HStoreField key and index lookups against SQL injection
+  + CVE-2019-14235 Fixed potential memory exhaustion in django.utils.encoding.uri_to_iri()
+
 * Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.22-alt2
 - revert rename package to python-module-django1.11
 
