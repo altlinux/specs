@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Redis
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Digest/SHA.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IO/Socket/Timeout.pm) perl(IO/String.pm) perl(IPC/Cmd.pm) perl(IPC/Open3.pm) perl(Module/Build/Tiny.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Meta.pm) perl(Test/Deep.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Pod/Coverage.pm) perl(Test/SharedFork.pm) perl(Test/TCP.pm) perl(Try/Tiny.pm)
@@ -5,14 +6,14 @@ BuildRequires: perl(Digest/SHA.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.991
-Release: alt2
+Version: 1.995
+Release: alt1
 Summary: Perl binding for Redis database
 Group: Development/Perl
 License: artistic_2
 URL: https://github.com/PerlRedis/perl-redis
 
-Source0: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/D/DA/DAMS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -27,7 +28,7 @@ information to support almost all commands with same piece of code with a
 little help of `AUTOLOAD'.
 
 %prep
-%setup
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -36,10 +37,13 @@ little help of `AUTOLOAD'.
 %perl_vendor_install
 
 %files
-%doc LICENSE README Changes
+%doc README Changes README.pod
 %perl_vendor_privlib/R*
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.995-alt1
+- automated CPAN update
+
 * Thu Apr 11 2019 Ilfat Aminov <aminov@altlinux.org> 1.991-alt2
 - Build for Sisyphus classic
 
