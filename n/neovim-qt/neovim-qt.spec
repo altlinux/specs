@@ -1,6 +1,6 @@
 Name: neovim-qt
 Version: 0.2.12
-Release: alt2.git78224e71
+Release: alt3.gitbef46156
 
 Summary: Neovim client library and GUI, in Qt5.
 
@@ -10,6 +10,8 @@ Url: https://github.com/equalsraf/neovim-qt
 
 # git://git.altlinux.org/gears/n/neovim.git
 Source: %name-%version-%release.tar
+# https://github.com/equalsraf/neovim-qt
+Patch: neovim-qt-0.2.12-alt-unicode-fixes.patch
 
 BuildRequires(pre): rpm-macros-cmake cmake
 BuildRequires: gcc-c++
@@ -22,6 +24,7 @@ Neovim client library and GUI, in Qt5.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -43,6 +46,10 @@ Neovim client library and GUI, in Qt5.
 %_datadir/pixmaps/nvim-qt.png
 
 %changelog
+* Tue Aug 6 2019 Vladimir Didenko <cow@altlinux.org> 0.2.12-alt3.gitbef46156
+- New version.
+- Add patch for unicode issues.
+
 * Fri Aug 2 2019 Vladimir Didenko <cow@altlinux.org> 0.2.12-alt2.git78224e71
 - New version.
 
