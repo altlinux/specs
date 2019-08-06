@@ -1,5 +1,5 @@
 Name: kmscube
-Version: 0.0.20181211
+Version: 0.0.20190720
 Release: alt1
 
 Summary: Bare metal graphics demo using DRM/KMS 
@@ -32,5 +32,8 @@ OpenGL or OpenGL ES.
 %_bindir/kmscube
 
 %changelog
+* Tue Aug 06 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20190720-alt1
+- updated up to f632b23
+
 * Thu Dec 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20181211-alt1
 - initial
