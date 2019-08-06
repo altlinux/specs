@@ -1,15 +1,22 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global commit 7c8f8e2218e46b1a4aa9538520919747f1184d86
+%global date 20180916
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
+%global debug_package %{nil}
 
 Name:           eglexternalplatform
 Version:        1.1
-Release:        alt1
+Release:        alt1_2
 Summary:        EGL External Platform Interface headers
 Group:		System/Libraries
 
 License:        MIT
 URL:            https://github.com/NVIDIA
-Source0:        %name-%version.tar
+Source0:        %url/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
 BuildArch:      noarch
+Source44: import.info
 
 %description
 %summary
@@ -24,7 +31,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{commit}
 
 
 %build
@@ -46,6 +53,9 @@ install -p -m 0644 eglexternalplatform.pc %{buildroot}%{_datadir}/pkgconfig/
 
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2
+- update by mgaimport
+
 * Fri Jul 12 2019 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
 - new version
 
