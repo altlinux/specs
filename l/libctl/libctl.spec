@@ -23,8 +23,8 @@ BuildRequires: /usr/bin/guile /usr/bin/indent libreadline-devel
 
 Name:           libctl
 Version:        4.3.0
-Release:        alt1_0
-%define somajor 8
+Release:        alt2_0
+%define somajor 7
 Summary:        A guile Library for Scientific Simulations
 License:        GPL-2.0-or-later
 Group:          Development/Other
@@ -109,6 +109,9 @@ cp -r doc/ %{buildroot}%{_docdir}/%{name}/
 %{_docdir}/%{name}/
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt2_0
+- fixed somajor for 4.3.0 (should be 7)
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt1_0
 - new version (closes: #37065)
 
