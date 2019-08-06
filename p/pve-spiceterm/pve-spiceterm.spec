@@ -3,36 +3,42 @@
 
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
-Version: 3.0.5
+Version: 3.1.1
 Release: alt1
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Source0: %sname.tar.xz
 Source1: spice-0.14.1.tar.bz2
+Source2: spice-protocol.tar.xz
 Patch0: allow-to-set-sasl-callbacks.patch
 
 Patch10: spiceterm-alt.patch
+Patch11: pve-spice-protocol.patch
 
 BuildRequires: libgio-devel libjpeg-devel liblz4-devel libogg-devel libopus-devel libpixman-devel
-BuildRequires: libsasl2-devel libssl-devel perl-Pod-Usage spice-protocol zlib-devel libgdk-pixbuf-devel
+BuildRequires: libsasl2-devel libssl-devel perl-Pod-Usage zlib-devel libgdk-pixbuf-devel
+BuildRequires: python-modules python-module-pyparsing python-module-six
 
 %description
 With spiceterm you can start commands and export its standard input and
 output to any SPICE client (simulating a xterm Terminal).
 
 %prep
-%setup -q -n %sname -a1
-ln -s spice-* spice
+%setup -q -n %sname -a1 -a2
+ln -s spice-0* spice
 
 pushd spice
 %patch0 -p1
 popd
-%patch10 -p1
+%patch10 -p1 -b .alt
+%patch11 -p0
+
+rm -f spice/subprojects/spice-common/common/generated_*
 
 %build
 pushd spice
@@ -46,16 +52,19 @@ pushd spice
 %make_build
 popd
 
-%make
+%make -C src
 
 %install
-%make DESTDIR=%buildroot install
+%make -C src VERSION=%version DESTDIR=%buildroot install
 
 %files
 %_bindir/%sname
 %_man1dir/%sname.1*
 
 %changelog
+* Mon Aug 05 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.1.1-alt1
+- 3.1-1
+
 * Wed Nov 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.5-alt1
 - 3.0-5
 
