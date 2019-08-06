@@ -1,5 +1,5 @@
 Name: strawberry
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -26,7 +26,7 @@ BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils lib
 BuildRequires: libgpod-devel
 %endif
 
-Requires: gst-plugins-good1.0
+Requires: gst-plugins-good1.0 vlc-mini
 
 Provides: bundled(qocoa)
 Provides: bundled(utf8-cpp)
@@ -95,6 +95,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawbs.s
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Tue Aug 06 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt1
+- 0.6.3
+- Fixed crash with vlc backend
+
 * Mon Aug 05 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
