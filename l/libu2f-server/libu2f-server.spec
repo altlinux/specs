@@ -1,5 +1,4 @@
 BuildRequires: chrpath
-BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #
@@ -23,7 +22,7 @@ BuildRequires: chrpath
 %define soname  0
 Name:           libu2f-server
 Version:        1.1.0
-Release:        alt1_2.2
+Release:        alt1_2.5
 Summary:        Yubico Universal 2nd Factor (U2F) Server C Library
 License:        BSD-2-Clause
 Group:          Security/Networking
@@ -88,10 +87,6 @@ find %{buildroot} -type f -name "*.la" -delete -print
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
-done
 
 %files -n %{name}%{soname}
 %{_libdir}/%{name}.so.%{soname}
@@ -111,6 +106,9 @@ done
 %{_mandir}/man1/u2f-server.1*
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2.5
+- update by suseimport
+
 * Wed Apr 10 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2.2
 - new version
 
