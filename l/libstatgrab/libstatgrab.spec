@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(IPC/Cmd.pm) perl(T
 %define libnamedevel	lib%{shortname}-devel
 
 Name:		libstatgrab
-Version:	0.91
+Version:	0.92
 Release:	alt1_1
 Summary:	Make system statistics
 License:	LGPLv2+ and GPLv2+
@@ -87,6 +87,7 @@ applications which will use %{name}.
 %setup -q
 %patch0 -p0
 
+
 %build
 # fix build on aarch64
 autoreconf -vfi
@@ -122,6 +123,9 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_1
+- update by mgaimport
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_1
 - new version; new maintainer
 
