@@ -2,7 +2,7 @@
 
 Name: python-module-%pypi_name
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: A tool to generate a static blog from reStructuredText or Markdown input files
 Group: Development/Python
 
@@ -58,7 +58,7 @@ sed -i '1d' pelican/tools/pelican_themes.py
 
 # substitute feedgenerator with it's original django
 sed -i 's|feedgenerator|django.utils.feedgenerator|' pelican/writers.py
-sed -i "s|'feedgenerator >= 1.6', ||" setup.py
+sed -i "s|'feedgenerator >= 1.9', ||" setup.py
 
 %build
 %python_build
@@ -91,6 +91,9 @@ LC_ALL=en_US.UTF-8 python -m unittest discover ||:
 %files -n pelican
 
 %changelog
+* Tue Aug 06 2019 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt2
+- Proper substitution of feedgenerator with it's original django.
+
 * Mon Jul 15 2019 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - New version.
 
