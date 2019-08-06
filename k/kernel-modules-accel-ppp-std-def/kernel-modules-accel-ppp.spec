@@ -1,9 +1,10 @@
 %define module_name             accel-ppp
-%define module_version          1.11.2
-%define module_release          alt2.k
+%define module_version          1.12.0
+%define module_release          alt1
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch	%ix86 x86_64
+
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -31,7 +32,7 @@ Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+Requires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 %description
@@ -63,6 +64,12 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Aug 06 2019 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
+* Mon Jun 17 2019 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt3
+- Add karch define, PreReq -> Requires(pre)
 
 * Fri Aug 11 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt2
 - Fix build with kernels >= 4.10
