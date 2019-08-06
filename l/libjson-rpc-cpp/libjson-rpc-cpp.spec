@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 %define develname libjsonrpccpp-devel
 
 Name:           libjson-rpc-cpp
-Version:        1.1.0
+Version:        1.2.0
 Release:        alt1_1
 Summary:        C++ JSON Library
 License:        Public Domain
@@ -47,7 +47,7 @@ Requires:       %{libname} = %{version}-%{release}
 Provides:       json-rpc-cpp-devel = %{version}-%{release}
 Provides:       libjson-rpc-cpp-devel = %{version}-%{release}
 Obsoletes:      %{_lib}libjson-rpc-cpp-devel >= 1.0.0
-Conflicts:      libjsonrpccpp-devel < 1.0.0
+Conflicts:      libjsonrpccpp-devel libjsonrpccpp0.6-devel
 
 %description -n    %{develname}
 It can also preserve existing comment in unserialization/serialization steps,
@@ -84,6 +84,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1
+- update by mgaimport
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
 - update by mgaimport
 
