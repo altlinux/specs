@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Stomp
-Version: 0.57
+Version: 0.60
 Release: alt1
 
 Summary: Net::Stomp - a Streaming Text Orientated Messaging Protocol Client
@@ -27,10 +27,10 @@ Url: http://search.cpan.org/dist/Net-Stomp/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DAKKAR/Net-Stomp-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAKKAR/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
-BuildRequires: perl-Class-Accessor perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version perl(Test/Fatal.pm) perl(Test/Deep.pm)
+BuildRequires: perl-Class-Accessor perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version perl(Test/Fatal.pm) perl(Test/Deep.pm) perl(Log/Any/Adapter/TAP.pm) perl(Test/NiceDump.pm)
 
 %description
 This module allows you to write a Stomp client.
@@ -45,7 +45,7 @@ Service 1.1 (JMS) message broker packed with many enterprise features.
 For details on the protocol see http://stomp.codehaus.org/Protocol
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -54,10 +54,14 @@ For details on the protocol see http://stomp.codehaus.org/Protocol
 %perl_vendor_install
 
 %files
+%doc CHANGES README examples
 %perl_vendor_privlib/Net*
-%doc CHANGES README 
+%doc CHANGES README
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1
 - automated CPAN update
 
