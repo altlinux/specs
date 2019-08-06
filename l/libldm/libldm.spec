@@ -9,18 +9,13 @@ BuildRequires: /usr/bin/xsltproc perl(JSON/PP.pm) pkgconfig(gio-unix-2.0)
 %define devname libldm%{api}-devel
 
 Name:           libldm
-Version:        0.2.3
-Release:        alt1_7
+Version:        0.2.4
+Release:        alt1_1
 Summary:        A tool to manage Windows dynamic disks
 Group:		System/Libraries
 License:        LGPLv3+ and GPLv3+
 URL:            https://github.com/mdbooth/libldm
-Source0:        %{url}/downloads/%{name}-%{version}.tar.gz
-Patch0:         cast_be64toh.patch
-Patch1:         libldm-gtype.patch
-Patch2:         libldm-security.patch
-Patch3:         fix-build-with-gcc7.patch
-Patch4:         0001-Replace-g_type_class_add_private-with-G_ADD_PRIVATE.patch
+Source0:        https://github.com/mdbooth/libldm/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  glib2-devel >= 2.26.0
 BuildRequires:  pkgconfig(json-glib-1.0) >= 0.14.0
@@ -62,12 +57,11 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup -q -n %{name}-%{name}-%{version}
+
+sed -i -e 's/-Werror //' src/Makefile.*
+gtkdocize
+autoreconf -i
 
 %build
 # fix build on aarch64
@@ -101,6 +95,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_1
+- update by mgaimport
+
 * Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_7
 - fixed build
 
