@@ -2,12 +2,13 @@
 %define libname alcotest
 Name: ocaml-%libname
 Version: 0.8.5
-Release: alt2
+Release: alt3
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
 License: ISC
 Url: https://github.com/mirage/alcotest
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
@@ -38,6 +39,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 dune build -p %libname
@@ -71,6 +73,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.8.5-alt3
+- rebuilt with ocaml-4.08
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.8.5-alt2
 - rebuilt with dune-1.8
 

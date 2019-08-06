@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -74,6 +74,9 @@ find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 %_libdir/ocaml/*/driver-main/*.ml
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Fri Jun 07 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 

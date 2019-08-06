@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-xml-light
 Version: 2.4
-Release: alt6
+Release: alt7
 Summary: Minimal XML parser and printer for OCaml
 
 Group: Development/ML
@@ -57,6 +57,9 @@ ocamlfind install xml-light META *.mli *.cmi *.cma *.a *.cmxa *.cmx
 %_libdir/ocaml/xml-light/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 2.4-alt7
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.4-alt6
 - rebuilt with ocaml-4.07.1
 

@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -10,7 +10,7 @@ Source0: %name-%version-%release.tar
 Provides: jbuilder = %version-%release
 Obsoletes: jbuilder
 
-BuildRequires: ocaml >= 4.06.1
+BuildRequires: ocaml >= 4.08.0
 BuildRequires: ocaml-findlib-devel
 BuildRequires: opam
 
@@ -70,6 +70,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 
 
 %changelog
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Wed Jun 05 2019 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 

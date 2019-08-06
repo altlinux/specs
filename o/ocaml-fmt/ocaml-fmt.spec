@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname fmt
 Name:           ocaml-%libname
-Version:        0.8.5
+Version:        0.8.7
 Release:        alt1
 Summary:        OCaml Format pretty-printer combinators
 License:        ISC
@@ -52,6 +52,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.8.7-alt1
+- 0.8.7
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 0.8.5-alt1
 - first build for ALT
 

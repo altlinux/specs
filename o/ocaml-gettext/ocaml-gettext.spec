@@ -1,23 +1,19 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gettext
+# 0.3.8 currently is not released yet on github, but 0.3.8 published to opam
 Version: 0.3.8
-Release: alt3
+Release: alt4.gd9509df
 Summary: OCaml library for i18n
 Group: Development/ML
 
 License: LGPLv2+ with exceptions
-Url: http://forge.ocamlcore.org/projects/ocaml-gettext
-
+Url: https://github.com/gildor478/ocaml-gettext
 Source: %name-%version.tar
-
-Patch1: ocaml-gettext-0.3.4-use-ocamlopt-g.patch
-# Disable warning 31, so we can compile (with warnings) on OCaml 4.04.
-Patch2: ocaml-gettext-0.3.5-disable-warning-31.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-camlp4-devel
+BuildRequires: ocaml-camomile-devel
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
@@ -51,9 +47,6 @@ developing applications that use %name.
 %prep
 %setup
 
-%patch1 -p1
-%patch2 -p1
-
 %build
 # Parallel builds don't work.
 unset MAKEFLAGS
@@ -61,7 +54,7 @@ autoreconf -fisv
 CFLAGS="$RPM_OPT_FLAGS" \
 ./configure \
   --libdir=%_libdir \
-  --disable-camomile \
+  --enable-tests \
   --with-docbook-stylesheet=%_datadir/sgml/docbook/xsl-stylesheets
 make all
 
@@ -115,6 +108,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.3.8-alt4.gd9509df
+- build from upstream git with fixes for ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt3
 - rebuilt with ocaml-4.07.1
 

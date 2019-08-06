@@ -2,7 +2,7 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL2
@@ -49,6 +49,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_bindir/bisect-ppx-report
 %dir %_libdir/ocaml/%libname
 %_libdir/ocaml/%libname/META
+%_libdir/ocaml/%libname/ppx.exe
 %_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
@@ -73,6 +74,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_libdir/ocaml/%libname/runtime/*.cmxs
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2
+- rebuilt with ocaml-4.08
+
 * Fri Jun 07 2019 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 

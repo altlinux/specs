@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlnet
 Version: 4.1.6
-Release: alt3
+Release: alt4
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
@@ -14,7 +14,6 @@ Source0:%name-%version.tar
 BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-camlp4-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-lablgtk-devel
 BuildRequires: ocaml-labltk
@@ -192,6 +191,9 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 4.1.6-alt4
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt3
 - rebuilt with ocaml-4.07.1
 

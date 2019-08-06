@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.8.0
-Release: alt5
+Version: 1.8.1
+Release: alt1
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -13,7 +13,7 @@ Patch1: findlib-1.6.2-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
-BuildRequires: rpm-build-ocaml >= 1.2 ocaml-camlp4-devel ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
+BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel ocaml-graphics
 
 %package -n ocaml-ocamlfind-mini
@@ -101,6 +101,16 @@ description="dummy backward-compatibility package for mutable strings"
 requires=""
 EOF
 
+# install dummy META library for seq
+mkdir -p %buildroot%_libdir/ocaml/seq
+
+cat >> %buildroot%_libdir/ocaml/seq/META<<'EOF'
+name="seq"
+version="[distributed with OCaml 4.07 or above]"
+description="dummy backward-compatibility package for iterators"
+requires=""
+EOF
+
 %files -n ocaml-ocamlfind-mini
 %doc mini/README
 %_bindir/ocamlfind-mini
@@ -112,7 +122,6 @@ EOF
 %exclude %_bindir/ocamlfind-mini
 %exclude %_bindir/findlib-make-wizard
 %_bindir/ocamlfind
-%exclude %_bindir/safe_camlp4
 %_libdir/ocaml/etc/*
 %_libdir/ocaml/topfind
 %_libdir/ocaml/*
@@ -133,6 +142,14 @@ EOF
 
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+- added dummy META file for seq library
+
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 1.8.0-alt6
+- rebuilt with ocaml 4.08.0
+- built without camlp4
+
 * Tue Oct 30 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt5
 - add dummy META file for uchar library, distributed with ocaml >= 4.02
 

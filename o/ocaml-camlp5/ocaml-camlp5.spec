@@ -1,5 +1,6 @@
-Name: camlp5
-Version: 7.07
+%define module camlp5
+Name: ocaml-camlp5
+Version: 7.08
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -10,8 +11,9 @@ Url: https://camlp5.github.io/
 Source: %name-%version.tar
 Source2: META.src
 Patch1: camlp5-5.08-alt-dynlink.patch
-
-BuildRequires: ocaml >= 4.07.0
+Provides: camlp5 = %EVR
+Obsoletes: camlp5 < %EVR
+BuildRequires: ocaml >= 4.08.1
 
 %description
 Camlp5 is a preprocessor-pretty-printer of OCaml.
@@ -28,23 +30,30 @@ compilation of older packages (e.g. ocamlnet).
 ./configure --transitional --mandir %_mandir
 %make world.opt
 
-sed -e 's,@NAME@,%name,' %SOURCE2 > META
+sed -e 's,@NAME@,%module,' %SOURCE2 > META
 
 %install
 %make_install DESTDIR=%buildroot install
 
-install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%name/
-install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%name/META
+install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%module/
+install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%module/META
 
 %files
-%_bindir/%{name}*
-%_bindir/mk%{name}*
+%_bindir/%{module}*
+%_bindir/mk%{module}*
 %_bindir/ocpp5
-%_libdir/ocaml/%name
-%_libdir/ocaml/site-lib/%name
+%_libdir/ocaml/%module
+%_libdir/ocaml/site-lib/%module
 %_man1dir/*5*.1*
 
 %changelog
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 7.08-alt1
+- 7.08 release
+
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 7.08-alt0.g7abc971d
+- up to 7.08 from upstream git
+- renamed to ocaml-camlp5
+
 * Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 7.07-alt1
 - 7.07
 

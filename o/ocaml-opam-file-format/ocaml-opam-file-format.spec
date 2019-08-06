@@ -1,6 +1,6 @@
 Name: ocaml-opam-file-format
 Version: 2.0.0
-Release: alt3
+Release: alt4
 Summary: Parser and printer for the opam file syntax
 Group: Development/ML
 
@@ -58,6 +58,9 @@ cp -a src/*.mli %buildroot%_libdir/ocaml/%libname/
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 2.0.0-alt4
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt3
 - rebuilt with ocaml-4.07.1
 

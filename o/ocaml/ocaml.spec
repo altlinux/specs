@@ -9,8 +9,8 @@
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.07.1
-Release: alt3
+Version: 4.08.1
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -24,7 +24,7 @@ Source1: %name.desktop
 Source2: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-4.06-alt-mk-reqprov.patch
+Patch2: ocaml-4.08-alt-mk-reqprov.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildRequires(pre): rpm-build-ocaml >= 1.1.1
@@ -119,7 +119,7 @@ from special comments embedded in source files.
 sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
 
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
-./configure -with-pthread -fPIC -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
+./configure -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
 make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" world.opt
 make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" ocamlopt
 make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" opt opt.opt
@@ -128,7 +128,7 @@ install -pD -m644 %SOURCE2 tools/reqprov.ml
 make -C tools reqprov
 
 %install
-make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir
+make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir STUBLIBDIR=%buildroot%_libdir/ocaml/stublibs
 mkdir -p %buildroot%_libdir/ocaml/stublibs
 
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
@@ -189,9 +189,8 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %files runtime
 %_bindir/ocamlrun
 %dir %_libdir/ocaml
-%_libdir/ocaml/ld.conf
+%config %_libdir/ocaml/ld.conf
 %dir %_libdir/ocaml/stublibs
-%_libdir/ocaml/stublibs/dllbigarray.so
 %_libdir/ocaml/stublibs/dllcamlstr.so
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
@@ -219,6 +218,15 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 4.08.1-alt1
+- 4.08.1 release
+
+* Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 4.08.1-alt0.rc3
+- 4.08.1-rc3
+
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 4.08.0-alt1
+- 4.08.0
+
 * Wed Feb 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.07.1-alt3
 - Removed erroneous %%ifarch (ocaml builds dllraw_spacetime_lib.so
   on all architectures with 64 bit pointers).

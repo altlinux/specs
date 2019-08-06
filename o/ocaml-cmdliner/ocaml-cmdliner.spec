@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
-Version: 1.0.2
-Release: alt5
+Version: 1.0.4
+Release: alt1
 Summary: Declarative definition of command line interfaces for OCaml
 
 # In order for this to work as a "global" macro it has to come after the
@@ -15,7 +15,7 @@ Group: Development/ML
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: dune opam
 BuildRequires: ocaml-result-devel
 
 %description
@@ -44,27 +44,14 @@ developing applications that use %name.
 %prep
 %setup
 
-# The makefile requires some cleanup to put things in correct place.
-sed 's,/lib/,/%_lib/,g' -i Makefile
-
-# Enable debuginfo generation.
-sed 's/, package(result)/, package(result), debug/g' -i _tags
-sed 's/ocamlbuild/ocamlbuild -lflag -g/g' -i Makefile
-
-# Use install -p.
-sed 's/INSTALL=install/INSTALL=install -p/g' -i Makefile
-sed -i 's/%%%%VERSION%%%%/%version/g' pkg/META
-
 %build
+sed 's,/lib/,/%_lib/,g' -i Makefile
 make build-byte
 make build-native
 make build-native-dynlink
 
 %install
-make install-common DESTDIR=%buildroot
-make install-byte DESTDIR=%buildroot
-make install-native DESTDIR=%buildroot
-make install-native-dynlink DESTDIR=%buildroot
+make install DESTDIR=%buildroot
 
 # Fix some spurious executable perms?
 chmod -x %buildroot%_libdir/ocaml/%libname/*.cmx
@@ -90,6 +77,9 @@ chmod -x %buildroot%_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1.0.4-alt1
+- 1.0.4
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt5
 - fixed the version repesentation for ocaml findlib
 

@@ -3,7 +3,7 @@
 
 Name: ocaml-react
 Version: 1.2.1
-Release: alt3
+Release: alt4
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
@@ -65,6 +65,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/react/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.2.1-alt4
+- rebuilt with ocaml-4.08
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3
 - fixed the version repesentation for ocaml findlib
 - installation method changed to opam-installer

@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name:           ocaml-gsl
-Version:        1.19.3
-Release:        alt6
+Version:        1.24.0
+Release:        alt1
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
@@ -13,19 +13,16 @@ Provides:	ocaml4-gsl
 Obsoletes:	ocaml4-gsl
 
 Source: %name-%version.tar
-Patch0: ocaml4-gsl-1.18.4-alt-compilation_fix.patch 
+Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Wed Jun 24 2015
-BuildRequires: libgsl-devel ocaml-camlp4 ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
+BuildRequires: libgsl-devel ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc dune opam
+BuildRequires: ocaml-base-devel ocaml-stdio-devel
 
 %package devel
 Summary: Development files for programs which will use the OcamlGSL library
 Summary(ru_RU.UTF-8): Заголовочные файлы для программ, использующих библиотеку OcamlGSL
 Group: Development/ML
-Requires: %name = %version-%release
-Provides:	ocaml-gsl-devel
-Obsoletes:	ocaml-gsl-devel
-Conflicts:	ocaml-gsl-devel
+Requires: %name = %EVR
 
 %description
 This is an interface to GSL (GNU scientific library), for the
@@ -39,52 +36,37 @@ programs which use interface to GSL (GNU scientific library)
 %setup -q
 %patch0 -p1
 
-# Поскольку в дистрибутиве ALT есть только ocamlfind-mini, используем его.
-sed -i s/ocamlfind/ocamlfind-mini/g Makefile
-
 %build
 %make
 
-strip _build/src/dllgsl_stubs.so
-
 %install
-%define ocamlsitelib %_libdir/ocaml/site-lib
-%define ocamlstublib %_libdir/ocaml/stublibs/
-%define docdir %_docdir/%name-%version
-export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib/
-export DESTDIR=%buildroot
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-
-%makeinstall
-
-rm -f %buildroot%ocamlsitelib/gsl/*.annot
-rm -f %buildroot%ocamlsitelib/gsl/*.cmx
-rm -f %buildroot%ocamlsitelib/gsl/*.cmt
-rm -f %buildroot%ocamlsitelib/gsl/*.cmti
-rm -f %buildroot%ocamlsitelib/gsl/*.ml
-rm -f %buildroot%ocamlsitelib/gsl/*.mli
-
-mkdir -p %buildroot%ocamlstublib/
-mv $OCAMLFIND_DESTDIR/stublibs/* %buildroot%ocamlstublib/
-
-mkdir -p %buildroot/%docdir
+dune install \
+         --destdir=%buildroot \
+         --libdir=%_libdir/ocaml \
+         --verbose \
+         --profile release
 
 %files
-%doc COPYING.txt
-%ocamlstublib/*.so
-%ocamlstublib/*.so.owner
-%dir %ocamlsitelib/gsl/
-%ocamlsitelib/gsl/gsl.cma
-%ocamlsitelib/gsl/gsl.cmxs
-%ocamlsitelib/gsl/libgsl_stubs.a
+%doc LICENSE.md README.md
+%dir %_libdir/ocaml/gsl/
+%_libdir/ocaml/gsl/*
+%exclude %_libdir/ocaml/gsl/*.a
+%exclude %_libdir/ocaml/gsl/*.cmxs
+%exclude %_libdir/ocaml/gsl/*.cmxa
+%exclude %_libdir/ocaml/gsl/*.ml*
+%_libdir/ocaml/gsl/libgsl_stubs.a
+%_libdir//ocaml/stublibs/*.so*
 
 %files devel
-%ocamlsitelib/gsl/gsl.a
-%ocamlsitelib/gsl/*.cmxa
-%ocamlsitelib/gsl/*.cmi
-%ocamlsitelib/gsl/META
+%exclude %_libdir/ocaml/gsl/*.a
+%exclude %_libdir/ocaml/gsl/*.cmxs
+%exclude %_libdir/ocaml/gsl/*.cmxa
+%exclude %_libdir/ocaml/gsl/*.ml*
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
+- 1.24.0
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt6
 - rebuilt with ocaml-4.07.1
 

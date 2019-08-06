@@ -1,7 +1,7 @@
 %define pkgname ocamlbuild
 Name: ocaml-%pkgname
-Version: 0.13.1
-Release: alt2
+Version: 0.14.0
+Release: alt1
 Epoch: 1
 
 Summary: The Objective Caml project compilation tool
@@ -10,6 +10,7 @@ Group: Development/ML
 Url: https://github.com/ocaml/ocamlbuild
 
 Source: %name-%version.tar
+Source1: ocaml-ocamlbuild.watch
 
 BuildRequires: ocaml >= 4.07
 
@@ -65,6 +66,9 @@ rm %buildroot%_libdir/ocaml/%pkgname/META
 %_libdir/ocaml/ocamlbuild/*.mli
 
 %changelog
+* Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1:0.14.0-alt1
+- 0.14.0
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1:0.13.1-alt2
 - rebuilt for ocaml-4.07.1
 

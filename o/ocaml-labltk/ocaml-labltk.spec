@@ -1,8 +1,8 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.5
-Release: alt2
+Version: 8.06.6
+Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -56,8 +56,9 @@ browser, written using LablTk.
 %setup -q
 
 %build
+export MAKE='make --no-print-directory' 
 ./configure
-make all
+make all SHAREDCCCOMPOPTS='%optflags -fPIC'
 make opt
 
 %install
@@ -88,6 +89,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 8.06.6-alt1
+- 8.06.6
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 8.06.5-alt2
 - rebuilt for ocaml 4.07.1
 

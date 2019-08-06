@@ -1,19 +1,20 @@
 Name: ocaml-lablgl
 Version: 1.05
-Release: alt7
+Release: alt8
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
 Url: https://forge.ocamlcore.org/projects/lablgl/
 # git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 Provides: %name-runtime = %version-%release
 Obsoletes: %name-runtime < %version-%release
 Provides: lablGL = %version-%release
 Obsoletes: lablGL
 
-BuildRequires: ocaml-camlp4-devel ocaml-labltk libXext-devel libXmu-devel libGLUT-devel tcl-togl-devel
+BuildRequires: ocaml-labltk libXext-devel libXmu-devel libGLUT-devel tcl-togl-devel ocaml-camlp5
 BuildRequires: libXxf86vm-devel
 BuildRequires(pre): rpm-build-tcl
 
@@ -35,6 +36,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 cat > Makefile.config <<EOF
 CAMLC = ocamlc.opt
 CAMLOPT = ocamlopt.opt
@@ -108,6 +110,10 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.05-alt8
+- rebuilt with ocaml-4.08
+- preprocessor changed from camlp4 to camlp5
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt7
 - rebuilt with ocaml-4.07.1
 - force libfreeglut

@@ -3,7 +3,7 @@
 
 Name: ocaml-easy-format
 Version: 1.3.1
-Release: alt3
+Release: alt4
 Summary: High-level and functional interface to the Format module
 License: BSD
 Group: Development/ML
@@ -68,6 +68,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt4
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt3
 - rebuilt for ocaml-4.07.1
 

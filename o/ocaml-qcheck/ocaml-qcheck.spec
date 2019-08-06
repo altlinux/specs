@@ -1,13 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.9
-Release: alt2
+Version: 0.10
+Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
 License: BSD
 Url: https://github.com/c-cube/qcheck/
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
@@ -31,6 +32,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make
@@ -74,6 +76,9 @@ dune runtest
 %_libdir/ocaml/%{libname}*/*/*.cmxs
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.10-alt1
+- 0.10
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.9-alt2
 - rebuilt with dune-1.8
 

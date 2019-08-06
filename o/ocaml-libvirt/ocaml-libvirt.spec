@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt7
+Release: alt8
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -90,6 +90,9 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt8
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt7
 - rebuilt with ocaml-4.07.1
 

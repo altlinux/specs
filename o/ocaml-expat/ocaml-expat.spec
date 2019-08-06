@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-expat
 Version: 1.1.0
-Release: alt4
+Release: alt5
 Summary: OCaml wrapper for the Expat XML parsing library
 License: MIT
 Group: Development/ML
@@ -62,6 +62,9 @@ chrpath --delete $RPM_BUILD_ROOT%_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/expat/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.1.0-alt5
+- rebuilt with ocaml-4.08
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt4
 - rebuilt with ocaml-4.07.1
 

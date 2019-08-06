@@ -1,14 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
 Version: 3.4.0
-Release: alt2
+Release: alt3
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
 Url: http://ocsigen.org/js_of_ocaml/
 Source0: %name-%version.tar
 BuildRequires: ocaml-cmdliner-devel
-BuildRequires: ocaml-camlp4-devel
 BuildRequires: ocaml
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-graphics
@@ -16,6 +15,7 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-lwt-devel >= 2.4.4
 BuildRequires: ocaml-menhir
+BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-tyxml-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-findlib-devel
@@ -115,6 +115,9 @@ done
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Sat Aug 03 2019 Anton Farygin <rider@altlinux.ru> 3.4.0-alt3
+- rebuilt with ocaml 4.08
+
 * Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 3.4.0-alt2
 - added ocambuild to BuildRequires
 

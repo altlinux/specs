@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname uuidm
 Name: ocaml-%libname
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 Summary: Universally unique identifiers (UUIDs) for OCaml
 License: ISC
@@ -53,6 +53,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.9.7-alt1
+- 0.9.7
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 0.9.6-alt1
 - first build for ALT
 

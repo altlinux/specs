@@ -2,7 +2,7 @@
 
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
-Version: 5.2.2
+Version: 5.2.3
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
@@ -58,6 +58,8 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %_libdir/ocaml/%oname/metaquot_405
 %_libdir/ocaml/%oname/metaquot_406
 %_libdir/ocaml/%oname/metaquot_407
+%_libdir/ocaml/%oname/metaquot_408
+%_libdir/ocaml/%oname/metaquot_409
 
 %files devel
 %_libdir/ocaml/%oname/*.cmx
@@ -66,6 +68,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %_libdir/ocaml/%oname/*.ml
 
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 5.2.3-alt1
+- 5.2.3
+
 * Thu Jun 06 2019 Anton Farygin <rider@altlinux.ru> 5.2.2-alt1
 - 5.2.2
 

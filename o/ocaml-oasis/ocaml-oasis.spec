@@ -2,7 +2,7 @@
 
 Name: ocaml-oasis
 Version: 0.4.11
-Release: alt1
+Release: alt2
 Summary: Architecture for building OCaml libraries and applications
 License: LGPL-2.1
 Group: Development/ML
@@ -62,6 +62,9 @@ make install
 %_libdir/ocaml/*/*.mli
 %_libdir/ocaml/*/META
 %changelog
+* Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.4.11-alt2
+- rebuilt with ocaml-4.08
+
 * Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 0.4.11-alt1
 - first build for ALT
 

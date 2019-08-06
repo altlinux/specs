@@ -2,7 +2,7 @@
 %define libname markup
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: BSD Like
@@ -11,7 +11,7 @@ Url: https://github.com/aantron/markup.ml
 Source: %name-%version.tar
 
 BuildRequires: ocaml >= 4.07.1 opam dune >= 1.4.0
-BuildRequires: ocaml-uutf-devel ocaml-lwt-devel
+BuildRequires: ocaml-uutf-devel ocaml-lwt-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -83,6 +83,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml mark
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
 - first build for ALT
 
