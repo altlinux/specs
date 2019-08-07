@@ -3,14 +3,14 @@ Group: System/Fonts/True type
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname lohit-gurmukhi
-%global fontconf0 65-0-%{fontname}.conf
+%global fontconf0 66-%{fontname}.conf
 %global fontconf1 30-%{fontname}.conf
 %global metainfo io.pagure.lohit.gurmukhi.font.metainfo
 
 
 Name:           fonts-ttf-lohit-gurmukhi
 Version:        2.91.2
-Release:        alt1_5
+Release:        alt1_9
 Summary:        Free Gurmukhi truetype font for Punjabi language
 
 License:        OFL
@@ -32,8 +32,6 @@ This package provides a free Gurmukhi script truetype font for Punjabi language.
 
 %prep
 %setup -q -n %{fontname}-%{version}
-# To make it default font for 'or' language.
-mv 66-%{fontname}.conf 65-0-%{fontname}.conf
 
 %build
 make ttf %{?_smp_mflags}
@@ -104,6 +102,9 @@ fi
 %{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.91.2-alt1_9
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.91.2-alt1_5
 - update to new release by fcimport
 
