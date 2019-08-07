@@ -1,14 +1,14 @@
+Group: Development/Other
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global snapshot 20181119
+%global snapshot 20190722
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_1
+Release:    alt1_2
 Summary:    Compiler built-ins
-Group:      Development/Other
 License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb.html
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
@@ -61,6 +61,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.20190722-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20181119-alt1_1
 - update to new release by fcimport
 
