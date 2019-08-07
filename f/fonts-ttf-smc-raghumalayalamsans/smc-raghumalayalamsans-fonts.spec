@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-smc-raghumalayalamsans
 Version:	2.1.2
-Release:	alt1_3
+Release:	alt1_5
 Epoch:		1
 Summary:	Open Type Fonts for Malayalam script 
 License:	GPLv2+
@@ -110,6 +110,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.2-alt1_5
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.2-alt1_3
 - new version
 
