@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: swig waf
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname slv2
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -13,9 +14,8 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_26
+Release:		alt4_29
 License:		GPLv2+
-Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 # Remove dates from html doc files RHBZ#566345
 Patch0:			%{oldname}-no-date-on-docs.patch
@@ -42,8 +42,8 @@ to discover/investigate plugins and related data without loading any shared
 libraries, avoiding the associated risks).
 
 %package devel
+Group: Development/Other
 Summary:	Development libraries and headers for %{oldname}
-Group:		Development/Other
 Requires:	pkgconfig
 Requires:	%{name} = %{version}-%{release}
 Provides: slv2-devel = %{version}-%{release}
@@ -74,6 +74,9 @@ echo "Requires.private: redland" >> slv2.pc.in
 # Fix Python shebangs
 sed -i 's|/usr/bin/.*python$|/usr/bin/python2|' autowaf.py swig/python/*.py wscript */wscript waf
 
+# Quick hack. lv2core seemingly permanently renamed to lv2 at version 1.16
+sed -i 's|lv2core|lv2|g' wscript
+
 %build
 export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
@@ -94,7 +97,7 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldnam
 
 
 %files
- %{_docdir}/%{oldname}/COPYING
+%{_docdir}/%{oldname}/COPYING
 %dir %{_docdir}/%{oldname}
 %{_docdir}/%{oldname}/AUTHORS
 %{_docdir}/%{oldname}/ChangeLog
@@ -115,6 +118,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldnam
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_29
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_26
 - update to new release by fcimport
 
