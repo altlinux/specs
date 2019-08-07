@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/pdflatex texinfo
 %define _localstatedir %{_var}
 Name:           enigma
 Version:        1.21
-Release:        alt1_15.20160222git0027b3b8e694
+Release:        alt1_16.20160222git0027b3b8e694
 Summary:        Game where you control a marble with the mouse
 
 License:        GPLv2+
@@ -69,6 +69,7 @@ Data files (levels, graphics, sound, music) and documentation for Enigma.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+
 rm -r lib-src/zipios++ lib-src/enet/*
 
 %build
@@ -108,6 +109,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/enigma.
 %{_datadir}/enigma
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_16.20160222git0027b3b8e694
+- update to new release by fcimport
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_15.20160222git0027b3b8e694
 - update to new release by fcimport
 
