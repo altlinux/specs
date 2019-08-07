@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname lohit-kannada-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -7,10 +8,9 @@
 
 Name:           fonts-ttf-lohit-kannada
 Version:        2.5.4
-Release:        alt1_2
+Release:        alt1_7
 Summary:        Free Kannada font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            https://pagure.io/lohit
 Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
@@ -86,6 +86,7 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README
@@ -93,6 +94,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_2
 - update to new release by fcimport
 
