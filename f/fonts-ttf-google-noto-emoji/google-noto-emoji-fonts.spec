@@ -1,9 +1,9 @@
 Group: System/Fonts/True type
 %define oldname google-noto-emoji-fonts
-%define fedora 29
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 3ffd20ec7504657aa17c84f9aa475ad09b20c362
+%global commit0 f09acc559b08e5f00c297c986d0e6112ebc88dbf
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-emoji
@@ -16,7 +16,7 @@ Group: System/Fonts/True type
 
 
 Name:           fonts-ttf-google-noto-emoji
-Version:        20180814
+Version:        20190709
 Release:        alt1_2
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
@@ -37,17 +37,18 @@ Source3:        %{fontname}-color.metainfo.xml
 Patch0:         noto-emoji-use-system-pngquant.patch
 Patch1:         noto-emoji-build-all-flags.patch
 Patch2:         noto-emoji-use-gm.patch
-Patch3:         noto-emoji-python2.patch
+Patch3:         noto-emoji-python3.patch
+Patch4:         noto-emoji-port-to-python3.patch
 
 BuildArch:      noarch
 BuildRequires:  gcc
 BuildRequires:  fontpackages-devel
 %if %buildfont
 BuildRequires:  fonttools
-BuildRequires:  python-module-fonttools
+BuildRequires:  python3-module-fonttools
 BuildRequires:  nototools
-BuildRequires:  python-module-nototools
-BuildRequires:  python-devel
+BuildRequires:  python3-module-nototools
+BuildRequires:  python3-devel
 BuildRequires:  GraphicsMagick
 BuildRequires:  pngquant
 BuildRequires:  libzopfli zopfli
@@ -72,11 +73,12 @@ Provides:       google-noto-color-emoji-fonts = 20150617
 This package provides the Google a.'Noto Color Emojia.' colored emoji font.
 
 %prep
-%setup -q -n noto-emoji-%{commit0}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -n noto-emoji-%{commit0}
+%patch0 -p1 -b .noto-emoji-use-system-pngquant
+%patch1 -p1 -b .noto-emoji-build-all-flags
+%patch2 -p1 -b .noto-emoji-use-gm.patch
+%patch3 -p1 -b .noto-emoji-python3.patch
+%patch4 -p1 -b .noto-emoji-port-to-python3.patch
 
 rm -rf third_party/pngquant
 
@@ -156,6 +158,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 20190709-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 20180814-alt1_2
 - new version
 
