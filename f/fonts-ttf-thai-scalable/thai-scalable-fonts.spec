@@ -6,7 +6,8 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mk
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname thai-scalable
-%global fontconf 90-%{fontname}-synthetic
+%global fontconf1 90-%{fontname}-synthetic
+%global fontconf2 65-0-%{fontname}
 
 %global archivename fonts-tlwg
 
@@ -15,15 +16,17 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.6.5
-Release:   alt1_1
+Release:   alt1_6
 Summary:   Thai TrueType fonts
 License:   GPLv2+ and Bitstream Vera
 URL:       http://linux.thai.net/projects/thaifonts-scalable
 Source0:   http://linux.thai.net/pub/ThaiLinux/software/%{archivename}/%{archivename}-%{version}.tar.xz
-Source1:   %{fontconf}-garuda.conf
-Source2:   %{fontconf}-kinnari.conf
-Source3:   %{fontconf}-umpush.conf
-Source4:   %{fontconf}-laksaman.conf
+Source1:   %{fontconf1}-garuda.conf
+Source2:   %{fontconf1}-kinnari.conf
+Source3:   %{fontconf1}-umpush.conf
+Source4:   %{fontconf1}-laksaman.conf
+Source5:   %{fontconf2}-norasi.conf
+Source6:   %{fontconf2}-waree.conf
 
 #Appdata Metainfo
 Source11:  %{fontname}-garuda.metainfo.xml
@@ -58,8 +61,8 @@ Thai scalable fonts included here are:
 
 
 %package -n fonts-ttf-thai-scalable-common
+Group: System/Fonts/True type
 Summary:   Common files of %{oldname}
-Group:     System/Fonts/True type
 
 %description -n fonts-ttf-thai-scalable-common
 %common_desc
@@ -78,8 +81,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Garuda family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-garuda
-%{_fontconfig_templatedir}/%{fontconf}-garuda.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-garuda.conf
+%{_fontconfig_templatedir}/%{fontconf1}-garuda.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-garuda.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Garuda*.ttf
 %{_datadir}/appdata/%{fontname}-garuda.metainfo.xml
@@ -96,8 +99,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Kinnari family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-kinnari
-%{_fontconfig_templatedir}/%{fontconf}-kinnari.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-kinnari.conf
+%{_fontconfig_templatedir}/%{fontconf1}-kinnari.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-kinnari.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Kinnari*.ttf
 %{_datadir}/appdata/%{fontname}-kinnari.metainfo.xml
@@ -130,6 +133,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Norasi family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-norasi
+%{_fontconfig_templatedir}/%{fontconf2}-norasi.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf2}-norasi.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Norasi*.ttf
 %{_datadir}/appdata/%{fontname}-norasi.metainfo.xml
@@ -242,8 +247,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Umpush family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-umpush
-%{_fontconfig_templatedir}/%{fontconf}-umpush.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-umpush.conf
+%{_fontconfig_templatedir}/%{fontconf1}-umpush.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-umpush.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Umpush*.ttf
 %{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
@@ -259,8 +264,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Laksaman family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-laksaman
-%{_fontconfig_templatedir}/%{fontconf}-laksaman.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-laksaman.conf
+%{_fontconfig_templatedir}/%{fontconf1}-laksaman.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-laksaman.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Laksaman*.ttf
 %{_datadir}/appdata/%{fontname}-laksaman.metainfo.xml
@@ -276,6 +281,8 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Waree family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-waree
+%{_fontconfig_templatedir}/%{fontconf2}-waree.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf2}-waree.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Waree*.ttf
 %{_datadir}/appdata/%{fontname}-waree.metainfo.xml
@@ -304,18 +311,26 @@ rm %{buildroot}%{_datadir}/fontconfig/conf.avail/89-tlwg*-synthetic.conf
 
 # split up 90-ttf-thai-tlwg-synthetic.conf
 install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-garuda.conf
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}-garuda.conf
 install -m 0644 -p %{SOURCE2} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-kinnari.conf
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}-kinnari.conf
 install -m 0644 -p %{SOURCE3} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-umpush.conf
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}-umpush.conf
 install -m 0644 -p %{SOURCE4} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-laksaman.conf
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}-laksaman.conf
 
-for fconf in %{fontconf}-garuda.conf \
-             %{fontconf}-kinnari.conf \
-             %{fontconf}-umpush.conf \
-	     %{fontconf}-laksaman.conf ; do
+# install 65-0-thai-scalable-*.conf
+install -m 0644 -p %{SOURCE5} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf2}-norasi.conf
+install -m 0644 -p %{SOURCE6} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf2}-waree.conf
+
+for fconf in %{fontconf1}-garuda.conf \
+             %{fontconf1}-kinnari.conf \
+             %{fontconf1}-umpush.conf \
+	     %{fontconf1}-laksaman.conf \
+	     %{fontconf2}-norasi.conf \
+	     %{fontconf2}-waree.conf; do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -387,6 +402,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_1
 - update to new release by fcimport
 
