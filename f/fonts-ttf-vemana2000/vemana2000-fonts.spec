@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name: fonts-ttf-vemana2000
 Version: 1.1.3
-Release: alt3_11
+Release: alt3_16
 Summary: Unicode compliant OpenType font for Telugu
 
 License: GPLv2+ with exceptions
@@ -82,11 +82,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc ChangeLog COPYRIGHT COPYING AUTHORS README
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_16
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_11
 - update to new release by fcimport
 
