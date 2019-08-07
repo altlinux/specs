@@ -13,7 +13,7 @@ seven weights, supporting Devanagari, Gujarati, Tamil and Latin scripts.
 
 Name:			fonts-ttf-ektype-mukta
 Version:			2.538
-Release:			alt1_3
+Release:			alt1_5
 Summary:		Free Indian truetype/open type fonts
 License:			OFL
 URL:			https://github.com/EkType/Mukta
@@ -186,6 +186,9 @@ appstream-util validate-relax --nonet \
 %doc --no-dereference OFL.txt Copyright.txt 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.538-alt1_5
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.538-alt1_3
 - new version
 
