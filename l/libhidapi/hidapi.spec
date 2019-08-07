@@ -1,23 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/fox-config libusb-compat-devel
 # END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname hidapi
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit d17db57b9d4354752e0af42f5f33007a42ef2906
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:           libhidapi
-Version:        0.8.0
-Release:        alt1_0.10.%{shortcommit}
+Version:        0.9.0
+Release:        alt1_2
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
-Group:          Development/Other
 License:        GPLv3 or BSD
-URL:            http://www.signal11.us/oss/hidapi/
+URL:            https://github.com/libusb/hidapi
 
-Source0:        https://github.com/signal11/hidapi/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
+Source0:        https://github.com/libusb/hidapi/archive/%{oldname}-%{version}.tar.gz
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -47,7 +44,7 @@ This package contains development files for hidapi which provides access to
 USB and Bluetooth HID-class devices.
 
 %prep
-%setup -n %{oldname}-%{version} -qn %{oldname}-%{commit}
+%setup -n %{oldname}-%{version} -qn %{oldname}-%{oldname}-%{version}
 
 %build
 autoreconf -vif
@@ -63,7 +60,7 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 
 
 %files
-%doc AUTHORS.txt README.txt LICENSE*.txt
+%doc AUTHORS.txt README.md LICENSE*.txt
 %{_libdir}/libhidapi-*.so.*
 
 %files devel
@@ -74,6 +71,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_0.10.d17db57
 - update to new release by fcimport
 
