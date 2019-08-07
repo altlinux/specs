@@ -1,55 +1,75 @@
-Summary: Identify resistors
-Name: gresistor
-Version: 0.0.2
-Release: alt1
-License: GPL
 Group: Sciences/Physics
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:             gresistor
+Version:          0.0.2
+Release:          alt1_10
+Summary:          Gnome resistor color code calculator
+
+License:          GPL+
 URL:              https://sourceforge.net/projects/gresistor/
+
 Source0:          http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
-BuildArch: noarch
+BuildArch:        noarch
+BuildRequires:    python-devel desktop-file-utils
 
-# Automatically added by buildreq on Wed Sep 13 2006
-BuildRequires: python-devel python-modules-encodings
-BuildRequires: desktop-file-utils
-Requires: python-module-pygtk-libglade
+Requires:         python-module-pygtk-libglade
+Requires:         tepache
+Source44: import.info
+
 
 %description
-To allow for identification, resistors are usually marked with colored bands. 
-Often referred to as color codes, these markings are indicative of their 
-resistance, tolerance, and temperature coefficient. gResistror is a great 
-program that will help you translate resistor color codes into a readable 
-value. All you have to do is watch the colors on the resistor and then 
-enter them in the program. As you enter, you'll see that the resistor 
-value is changing according to the selected color.
+To allow for identification, resistors are usually marked with
+colored bands. Often refereed to as color codes, these markings
+are indicative of their resistance, tolerance and temperature
+coefficient. gResistor is a great program that will help you
+translate a resistor color codes into a readable value.
+
 
 %prep
-%setup
-#patch1 -p1
+%setup -q
+
+
+# Remove bundled SimpleGladeApp.py
+rm -f SimpleGladeApp.py
+sed -i '/py_modules =/d' setup.py
+
 
 %build
-python setup.py build
+%{__python} setup.py build
+
 
 %install
-python setup.py install -O1 --skip-build --root %buildroot
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--remove-category=gResistor \
-	--add-category=Engineering \
-	--add-category=Electronics \
-	--remove-key=Version \
-	%buildroot%_desktopdir/gresistor.desktop
+%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+
+
+desktop-file-install \
+    --remove-key=Version                        \
+    --remove-key=Encoding                       \
+    --add-category "Science;Engineering"          \
+    --delete-original                           \
+    --dir %{buildroot}%{_datadir}/applications/ \
+    %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+
 
 %files
-%doc README
-%_bindir/%name
-%_datadir/%name/
-%_datadir/applications/%name.desktop
+%{_bindir}/%{name}
+%{_datadir}/%{name}/
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-#python_sitelibdir/SimpleGladeApp.py*
-%python_sitelibdir/*
+%{_datadir}/applications/*%{name}.desktop
+%{python_sitelibdir_noarch}/%{name}-%{version}-py?.?.egg-info
+
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_10
+- update to new release by fcimport
+
 * Thu Jul 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1
 - new version (closes: #37018)
 
