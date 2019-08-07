@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_28
+Release:        alt2_33
 Summary:        Simple roguelike game
 
-Group:          Games/Other
 License:        GPL+
 URL:            http://www.ularn.org
 Source0:        http://downloads.sourceforge.net/ularn/Ularn-1.5ishPL4.tar.gz
@@ -20,11 +20,10 @@ Patch1:         ularn-euid.patch
 Patch2:         ularn-datadir.patch
 Patch3:         ularn-drop-setgid.patch
 
+BuildRequires:  gcc
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  desktop-file-utils
 Requires:       ncompress
-Requires(post): coreutils
-Requires(postun): coreutils
 Source44: import.info
 
 %description
@@ -69,6 +68,7 @@ desktop-file-install \
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/apps/
 install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/apps/
 
+# Note that the game is setgid games, and the score file is group writable.
 %files
 %attr(2711,root,games) %{_bindir}/Ularn
 %{_datadir}/%{name}
@@ -79,6 +79,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_33
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_28
 - update to new release by fcimport
 
