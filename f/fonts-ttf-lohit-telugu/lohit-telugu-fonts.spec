@@ -8,7 +8,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-telugu
 Version:        2.5.5
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Free Telugu font
 
 License:        OFL
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_7
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_5
 - new version
 
