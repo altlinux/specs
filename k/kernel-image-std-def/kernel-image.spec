@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	4.19
-%define kernel_sublevel .60
+%define kernel_sublevel .65
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -444,6 +444,7 @@ make modules_install INSTALL_MOD_PATH=%buildroot
 %ifarch aarch64
 mkdir -p %buildroot/lib/devicetree/$KernelVer
 find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
+mkdir -p %buildroot/%modules_dir/kernel/drivers/staging/media
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -694,12 +695,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/gpu/drm/radeon
 
 %files -n kernel-modules-v4l-%flavour
+%modules_dir/kernel/drivers/media/
+%dir %modules_dir/kernel/drivers/staging/media
+%dir %modules_dir/kernel/drivers/staging
 %modules_dir/kernel/drivers/media
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging
 
 %changelog
+* Tue Aug 06 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.65-alt1
+- v4.19.65
+
+* Mon Aug 05 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.64-alt1
+- v4.19.64  (Fixes: CVE-2019-10207, CVE-2019-11478, CVE-2019-13648, CVE-2019-3900)
+
 * Wed Jul 31 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:4.19.60-alt2
 - Added aarch64 support.
 
