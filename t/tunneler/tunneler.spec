@@ -1,20 +1,24 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 30
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           tunneler
 Version:        1.1.1
-Release:        alt3_17
+Release:        alt3_25
 Summary:        Clone of legendary Tunneler game
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://users.jyu.fi/~tvkalvas/code/tunneler/
 Source0:        http://users.jyu.fi/~tvkalvas/code/tunneler/%{name}-%{version}.tar.gz
 Source1:        tunneler.svg
 Source2:        tunneler.desktop
 Patch0:         tunneler-1.1.1-lm.patch
+Patch1:         tunneler-1.1.1-inline.patch
 
+BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL-devel
 BuildRequires:  autoconf automake
@@ -30,18 +34,19 @@ actually have some searching to do.
 
 %prep
 %setup -q
-%patch0 -p1 -b .lm
+%patch0 -p1
+%patch1 -p1
+
 
 
 %build
-%add_optflags -fgnu89-inline
 autoreconf -i
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 install -d %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
 install -m 644 -p %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
 desktop-file-install %{SOURCE2} \
@@ -50,15 +55,18 @@ desktop-file-install %{SOURCE2} \
 %endif
         --dir=${RPM_BUILD_ROOT}%{_datadir}/applications
 
-
 %files
 %{_bindir}/tunneler
 %{_datadir}/icons/hicolor/scalable/apps/tunneler.svg
 %{_datadir}/applications/*.desktop
-%doc COPYING INSTALL README
+%doc INSTALL README
+%doc --no-dereference COPYING
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_25
+- update to new release by fcimport
+
 * Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt3_17
 - Fixed build with new toolchain.
 
