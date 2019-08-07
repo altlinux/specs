@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-shobhika
 Version:	1.04
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Free Indian truetype/open type fonts
 License:	OFL
 URL:		https://github.com/Sandhi-IITBombay/Shobhika
@@ -101,6 +101,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_6
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_4
 - new version
 
