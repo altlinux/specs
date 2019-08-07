@@ -1,20 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname varconf
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libvarconf
 Version:        1.0.1
-Release:        alt1_11.1
+Release:        alt1_16
 Summary:        Configuration library used by WorldForge clients
 
-Group:          Development/Other
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/varconf
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
+BuildRequires:  gcc-c++
 BuildRequires:  libsigc++2-devel
 Source44: import.info
 Provides: varconf = %{version}-%{release}
@@ -26,9 +24,9 @@ WorldForge components.
 
 
 %package devel
+Group: Development/Other
 Summary: Development files for varconf library
-Group:   Development/Other
-Requires: pkg-config %{oldname} = %{version}-%{release}
+Requires: pkgconfig %{oldname} = %{version}-%{release}
 Provides: varconf-devel = %{version}-%{release}
 
 
@@ -40,13 +38,14 @@ Development libraries and headers for linking against the varconf library.
 %setup -n %{oldname}-%{version} -q
 
 
+
 %build
 %configure
 %make_build
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -57,8 +56,12 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{oldname}-%{version}
 make %{?_smp_mflags} check
 cd tests ; ./conftest < conf.cfg
 
+
+
+
 %files
-%doc AUTHORS COPYING ChangeLog README THANKS TODO
+%doc AUTHORS ChangeLog README THANKS TODO
+%doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}-1.0.so.*
 
 
@@ -69,6 +72,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_16
+- update to new release by fcimport
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1_11.1
 - NMU: rebuilt to regenerate ABI.
 
