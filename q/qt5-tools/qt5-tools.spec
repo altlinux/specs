@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: qt5-tools
 Version: 5.12.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -37,7 +37,9 @@ Patch10: alt-build-qtconfig.patch
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt
+%ifnarch %e2k
 BuildRequires: clang-devel llvm-devel
+%endif
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-xmlpatterns-devel
 #BuildRequires: qt5-webkit-devel
@@ -161,13 +163,13 @@ syncqt.pl-qt5 -version %version
 %build
 %qmake_qt5
 %make_build
-%make_build -C src/qdoc
 %if_disabled bootstrap
 export QT_HASH_SEED=0
 %make docs
 %endif
 
 %install
+>main.filelist
 %install_qt5
 %make INSTALL_ROOT=%buildroot install_docs
 
@@ -216,16 +218,22 @@ for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
   install -p -m644 -D ${icon} %buildroot/%_iconsdir/hicolor/${size}x${size}/apps/linguist-qt5.png
 done
 
+if [ -e %buildroot/%_qt5_bindir/qdoc ] ; then
+cat >>main.filelist <<__EOF__
+%_bindir/qdoc*
+%_qt5_bindir/qdoc*
+__EOF__
+fi
+
 %files common
 %_qt5_datadir/phrasebooks/
 
-%files
+%files -f main.filelist
 %_bindir/lconvert*
 %_bindir/lrelease*
 %_bindir/lupdate*
 %_bindir/pixeltool*
 %_bindir/qcollectiongenerator*
-%_bindir/qdoc*
 %_bindir/qhelpgenerator*
 %_bindir/qtpaths*
 %_bindir/qtdiag*
@@ -237,7 +245,6 @@ done
 %_qt5_bindir/lupdate*
 %_qt5_bindir/pixeltool*
 %_qt5_bindir/qcollectiongenerator*
-%_qt5_bindir/qdoc*
 %_qt5_bindir/qhelpgenerator*
 %_qt5_bindir/qtpaths*
 %_qt5_bindir/qtdiag*
@@ -329,6 +336,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Aug 07 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt2
+- fix build requires for e2k
+
 * Mon Jun 24 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
 - new version
 
