@@ -1,12 +1,12 @@
+Group: Development/Other
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libyubikey
 Version:        1.13
-Release:        alt1_8
+Release:        alt1_11
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
-Group:          Development/Other
 License:        BSD
 URL:            http://opensource.yubico.com/yubico-c
 Source0:        http://opensource.yubico.com/yubico-c/releases/%{name}-%{version}.tar.gz
@@ -18,8 +18,8 @@ This package holds a low-level C software development kit for the Yubico
 authentication device, the Yubikey.
 
 %package devel
+Group: Development/Other
 Summary:        Development files for libyubikey
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
@@ -34,14 +34,16 @@ libyubikey.
 # --disable-rpath doesn't work for the configure script
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 
 %check
 export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
-%{__make} check
+make check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std INSTALL="install -p"
+
+
 
 %files
 %doc AUTHORS NEWS ChangeLog README
@@ -60,6 +62,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_libdir}/libyubikey.so
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_11
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_8
 - update to new release by fcimport
 
