@@ -1,6 +1,7 @@
 
 Name:		coccinelle
-Version:	1.0.6
+# 1.0.7-217-ged1eb8e0
+Version:	1.0.7.0.217.ged1eb8e0
 Release:	alt1
 Summary:	Semantic patching for Linux (spatch)
 
@@ -17,6 +18,7 @@ BuildRequires:	ocaml-ocamldoc
 BuildRequires:	ocaml-menhir
 BuildRequires:	ocaml-pcre-devel
 BuildRequires:	ocaml-num-devel
+BuildRequires:	ocaml-parmap-devel
 BuildRequires:	rpm-build-python python-devel python-modules-multiprocessing
 BuildRequires:	chrpath
 
@@ -54,6 +56,10 @@ rm -rf %buildroot%_libdir/coccinelle/spgen
 rm -rf %buildroot%_mandir/man1/spgen.*
 rm -rf %buildroot%_mandir/man3
 
+# Somebody forgot to install this
+install ./tools/pycocci %buildroot%_bindir/pycocci
+install ./spatch.opt    %buildroot%_bindir/spatch.opt
+
 %check
 export COCCINELLE_HOME=%buildroot%_libdir/coccinelle
 export LD_LIBRARY_PATH=.
@@ -68,7 +74,11 @@ export LD_LIBRARY_PATH=.
 %_libdir/%name/
 %python_sitelibdir/coccilib
 %_mandir/man1/*.1*
+/usr/share/bash-completion/completions/spatch
 
 %changelog
+* Wed Aug 07 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.7.0.217.ged1eb8e0-alt1
+- Update to 1.0.7-217-ged1eb8e0.
+
 * Sun Jun 10 2018 Vitaly Chikunov <vt@altlinux.ru> 1.0.6-alt1
 - Initial build for ALT.
