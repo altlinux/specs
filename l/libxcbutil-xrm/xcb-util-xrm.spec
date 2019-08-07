@@ -1,7 +1,7 @@
 %def_disable static
 %define origname xcb-util-xrm 
 Name: libxcbutil-xrm 
-Version: 1.0
+Version: 1.3
 Release: alt1
 
 Summary: The XCB util modules provides a number of libraries which sit on top of libxcb
@@ -15,6 +15,9 @@ BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: xorg-util-macros
 BuildRequires: doxygen
+BuildRequires: pkgconfig(xcb-aux)
+BuildRequires: pkgconfig(x11)
+
 
 
 %description
@@ -74,6 +77,9 @@ Headers for building software that uses %name
 
 
 %changelog
+* Wed Aug 07 2019 Konstantin Artyushkin <akv@altlinux.org> 1.3-alt1
+- new 1.3 version
+
 * Tue Oct 18 2016 Konstantin Artyushkin <akv@altlinux.org> 1.0-alt1
 - initial build for ALT Linux Sisyphus
 
