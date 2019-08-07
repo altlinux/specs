@@ -1,20 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname mercator
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libmercator
 Version:        0.3.3
-Release:        alt1_10
+Release:        alt1_15
 Summary:        Terrain library for WorldForge client/server
 
-Group:          Development/Other
 License:        GPL+
 URL:            http://worldforge.org/dev/eng/libraries/mercator
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libwfmath-devel >= 0.3.2
 BuildRequires:  doxygen
 Source44: import.info
@@ -27,9 +26,9 @@ library on the client, while a subset of features are useful on the server.
 
 
 %package devel
+Group: Development/Other
 Summary: Development files for mercator library
-Group:   Development/Other
-Requires: %{name} = %{version}-%{release} pkg-config
+Requires: %{name} = %{version}-%{release} pkgconfig
 Provides: mercator-devel = %{version}-%{release}
 
 
@@ -39,6 +38,7 @@ Development libraries and headers for linking against the mercator library.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+
 
 
 %build
@@ -54,8 +54,7 @@ for file in doc/html/*.html ; do
 done
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-
+%makeinstall_std
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-*.la
 
 %check
@@ -63,8 +62,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-*.la
 sed -i -e 's/-DNDEBUG/-DDEBUG/' tests/Makefile
 make %{?_smp_mflags} check
 
+
+
+
 %files
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog README TODO
+%doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}-*.so.*
 
 
@@ -76,6 +79,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_10
 - update to new release by fcimport
 
