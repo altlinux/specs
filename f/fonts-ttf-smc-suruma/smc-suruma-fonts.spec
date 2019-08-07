@@ -6,7 +6,7 @@ Group: System/Fonts/True type
 %global fontconf 67-%{fontname}.conf
 
 Name:		fonts-ttf-smc-suruma
-Version:	3.2.1
+Version:	3.2.2
 Release:	alt1_3
 Epoch:		1
 Summary:	Open Type Fonts for Malayalam script 
@@ -15,12 +15,10 @@ URL:		https://gitlab.com/smc/fonts/suruma
 Source0:	%{url}/-/archive/Version%{version}/suruma-Version%{version}.tar.gz
 Source1:	%{fontname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
-Source3:	%{oldname}-generate.pe
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires:	libappstream-glib
 BuildRequires:	fontforge libfontforge
-BuildRequires:	python3
 Obsoletes:	fonts-ttf-smc-common < 6.1-alt1_9
 Source44: import.info
 
@@ -36,13 +34,9 @@ This concept was also used in the initial version of suruma font.
 %prep
 %setup -q -n suruma-Version%{version}
 
-cp -p %{SOURCE1} .
-cp -p %{SOURCE2} .
-cp -p %{SOURCE3} .
-chmod 755 %{oldname}-generate.pe
 
 %build
-./%{oldname}-generate.pe *.sfd
+make
 
 %install
 
@@ -109,6 +103,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.2.2-alt1_3
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.2.1-alt1_3
 - new version
 
