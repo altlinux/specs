@@ -2,26 +2,33 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.82
-Release: alt1_git_de7aa8f.1
+Version: 1.88
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 
 License: GPLv3
 Group: Development/Tools
-Url: git://github.com/danmar/cppcheck.git
+Url: https://github.com/danmar/cppcheck
 
+# git://github.com/danmar/cppcheck.git
 Source: %name-%version.tar
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
-Patch3: cppcheck-1.82-appPath.patch
+Patch3: cppcheck-1.87-cfgdir.patch
 Patch4: cppcheck-1.72-test_32.patch
+Patch5: 1939.patch
+Patch6: 1943.patch
+Patch7: cppcheck-1.88-tinyxml.patch
+Patch8: cppcheck-1.88-translations.patch
+Patch9: cppcheck-1.88-alt-pcre.patch
 
-BuildRequires(pre): rpm-macros-qt5
-
-# Automatically added by buildreq on Thu Jan 18 2018
-# optimized out: docbook-dtds fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libgpg-error libqt5-core libqt5-gui libqt5-printsupport libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-common xml-common
-BuildRequires: ImageMagick-tools docbook-style-xsl libpcre-devel python-modules-compiler python-modules-encodings qt5-base-devel qt5-tools xsltproc
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-charts-devel
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: docbook-style-xsl libpcre-devel python-modules-compiler python-modules-encodings xsltproc
+BuildRequires: libtinyxml2-devel
 
 %description
 Static analysis of C/C++ code. Checks for: memory leaks, mismatching
@@ -31,7 +38,8 @@ allocation-deallocation, buffer overrun, and many more. The goal is
 %package gui
 Summary: Qt version of %name, %summary
 Group: Development/Tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
+
 %description gui
 %summary
 
@@ -45,35 +53,29 @@ Requires: %name = %version-%release
 %patch4 -p1
 %endif
 
-cat > %name.desktop <<@@@
-[Desktop Entry]
-Type=Application
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p2
 
-Exec=%name-gui
-Icon=%name
-
-Name=CppCheck
-Comment=Static analysis of C/C++ code
-GenericName=Code analyzer
-
-Categories=Development;Qt;
-@@@
-
-for i in 16 24 32 48 64; do
-	convert gui/cppcheck-gui.png ${i}.png
-done
+# Make sure bundled tinyxml is not used
+rm -r externals/tinyxml
 
 %build
-%define dirs SRCDIR=build CFGDIR=%_datadir/%name/cfg HAVE_RULES=yes INCLUDEPATH="%_includedir/pcre"
-%make_build %dirs CPPFLAGS="$(pkg-config --cflags libpcre)"
-cd gui
-%qmake_qt5 %dirs
-lrelease-qt5 gui.pro
-%make_build %dirs
-cd ..
+%add_optflags -I%_includedir/pcre
 
-%make_build man %dirs
-%make_build testrunner
+%cmake \
+	-DHAVE_RULES:BOOL=ON \
+	-DBUILD_GUI:BOOL=ON \
+	-DWITH_QCHART:BOOL=ON \
+	-DBUILD_TESTS:BOOL=ON \
+	-DCFGDIR=%_datadir/cppcheck/cfg/ \
+	%nil
+
+%cmake_build
+
+%make man
 
 # Generate html documentation
 for N in man/*.docbook; do
@@ -81,44 +83,44 @@ for N in man/*.docbook; do
 	/usr/share/xml/docbook/xsl-stylesheets/xhtml/docbook.xsl $N
 done
 
-%check
-%make_build check
-
 %install
-%makeinstall_std %dirs
-
-install -D gui/%name-gui %buildroot%_bindir/%name-gui
+%cmakeinstall_std
 
 install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 
-mkdir -p "%buildroot%_datadir/%name/lang"
-for N in gui/*.qm; do install -D $N %buildroot%_datadir/%name/lang/`basename $N`; done
+# Install htmlreport
+install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-htmlreport
 
-# install -D gui/%name.desktop %buildroot%_desktopdir/%name.desktop
-install -D gui/%name-gui.desktop %buildroot%_desktopdir/%name.desktop
-for i in 64 48 32 24 16; do
-	install -D $i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name-gui.png
+install -d %buildroot%_datadir/%name/addons
+
+for i in addons/*.py addons/y2038/*.py addons/*.json; do
+	install -pD -m 755 $i %buildroot%_datadir/%name/addons/
 done
-install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gui.svg
+
+[ -e %buildroot%_datadir/%name/addons/__init__.py ] && rm -f %buildroot%_datadir/%name/addons/__init__.py
+
+%check
+%cmake_build check
 
 %files
 %doc readme.txt man/*.html
 %_bindir/%name
-
 %_bindir/%name-htmlreport
-%_bindir/*.py
-%_man1dir/%name.1.*
-%_datadir/%name/cfg
+%_man1dir/%name.1*
+%_datadir/%name
+%exclude %_datadir/%name/lang
 
 %files gui
 %doc gui/help/manual.html
 %_bindir/%name-gui
-%exclude %_datadir/%name/cfg
-%_datadir/%name
+%_datadir/%name/lang
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Aug 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.88-alt1
+- Updated to upstream version 1.88.
+
 * Thu Jan 25 2018 Hihin Ruslan <ruslandh@altlinux.ru> 1.82-alt1_git_de7aa8f.1
 - Fix cppcheck-1.82-appPath.patch
 
