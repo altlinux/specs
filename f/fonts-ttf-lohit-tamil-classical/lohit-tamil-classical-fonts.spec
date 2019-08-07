@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname lohit-tamil-classical-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -6,10 +7,9 @@
 
 Name:           fonts-ttf-lohit-tamil-classical
 Version:        2.5.3
-Release:        alt1_7
+Release:        alt1_12
 Summary:        Free Tamil Classical sans-serif font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
@@ -78,12 +78,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_12
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_7
 - update to new release by fcimport
 
