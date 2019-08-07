@@ -5,17 +5,14 @@ Group: System/Fonts/True type
 %global fontname source-serif-pro
 %global fontconf 63-%{fontname}.conf
 
-%global version_roman  2.010
-%global version_italic 1.010
-
 Name:           fonts-otf-adobe-source-serif-pro
-Version:        %{version_roman}.%{version_italic}
+Version:        3.000
 Release:        alt1_1
 Summary:        A set of OpenType fonts designed to complement Source Sans Pro
 
 License:        OFL
 URL:            https://github.com/adobe-fonts/source-serif-pro
-Source0:        https://github.com/adobe-fonts/source-serif-pro/archive/%{version_roman}R-ro/%{version_italic}R-it.tar.gz##/%{oldname}-%{version}.tar.gz
+Source0:        https://github.com/adobe-fonts/source-serif-pro/archive/%{version}R.tar.gz##/%{oldname}-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -29,7 +26,7 @@ Source Serif Pro is a set of OpenType fonts to complement the Source Sans Pro
 family.
 
 %prep
-%setup -q -n source-serif-pro-%{version_roman}R-ro-%{version_italic}R-it
+%setup -q -n source-serif-pro-%{version}R
 sed -i 's/\r//' LICENSE.md
 
 %build
@@ -99,6 +96,9 @@ appstream-util --nonet validate-relax \
 %doc --no-dereference LICENSE.md
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_1
+- update to new release by fcimport
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.010.1.010-alt1_1
 - update to new release by fcimport
 
