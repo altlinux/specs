@@ -1,6 +1,6 @@
 Name: python-module-spidermonkey
 Version: 0.0.10
-Release: alt4.1.2
+Release: alt5
 Summary: JavaScript/python bridge
 License: MIT
 Group: Development/Python
@@ -21,6 +21,11 @@ scripts and functions respectively.
 %setup
 
 %build
+a="$(uname -m)"
+[ -d spidermonkey/Linux-"$a" ] ||
+	ln -s Linux-%{?_is_lp64:x86_64}%{?_is_ilp32:i686} \
+		spidermonkey/Linux-"$a"
+
 %add_optflags -I/usr/include/mozjs
 %python_build
 
@@ -32,6 +37,9 @@ mkdir -p %buildroot
 %files -f INSTALLED_FILES
 
 %changelog
+* Wed Aug 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.0.10-alt5
+- Fixed build on aarch64 and ppc64le.
+
 * Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 0.0.10-alt4.1.2
 - removed xulrunner 
 
