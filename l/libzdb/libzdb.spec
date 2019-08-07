@@ -6,8 +6,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libzdb
-Version:        3.1
-Release:        alt1_8.1
+Version:        3.2
+Release:        alt1_2
 Summary:        Small, easy to use Database Connection Pool Library
 License:        GPLv3+ and MIT
 URL:            http://www.tildeslash.com/libzdb/
@@ -61,6 +61,9 @@ make install DESTDIR=%{buildroot}
 %doc doc/api-docs
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 3.1-alt1_8.1
 - Change BR libpq5.11-devel postgresql11-devel to postgresql-devel
 
