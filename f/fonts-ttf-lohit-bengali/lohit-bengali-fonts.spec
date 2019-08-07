@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname lohit-bengali-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -7,9 +8,8 @@
 
 Name:        fonts-ttf-lohit-bengali
 Version:        2.91.5
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Free Bengali script font
-Group:          System/Fonts/True type
 License:        OFL
 URL:            https://pagure.io/lohit
 Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
@@ -96,6 +96,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.91.5-alt1_8
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.91.5-alt1_5
 - update to new release by fcimport
 
