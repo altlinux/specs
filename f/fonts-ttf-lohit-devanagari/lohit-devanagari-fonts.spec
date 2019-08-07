@@ -9,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-devanagari
 Version:        2.95.4
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Free Devanagari Script Font
 License:        OFL
 URL:            https://pagure.io/lohit
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_9
+- update to new release by fcimport
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_7
 - update to new release by fcimport
 
