@@ -7,11 +7,12 @@ Group: Graphical desktop/Other
 
 Name:           x-cursor-themes-dmz
 Version:        0.4.5
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Style neutral cursors themes
 License:        CC-BY-SA
 URL:            https://packages.debian.org/sid/gnome/dmz-cursor-theme
 Source0:        http://ftp.debian.org/debian/pool/main/d/dmz-cursor-theme/dmz-cursor-theme_%{version}.tar.xz
+Patch0:         dmz-cursor-themes-symbolic-links.patch
 BuildArch:      noarch
 BuildRequires:  xcursorgen
 Source44: import.info
@@ -22,40 +23,13 @@ by Jakub Steiner for the Ximian GNOME Desktop.
 
 %prep
 %setup -q -n dmz-cursor-theme-%{version}
+%patch0 -p1
 
 
 %build
 for color in White Black; do
     cd %{_builddir}/dmz-cursor-theme-%{version}/DMZ-$color/pngs
     ./make.sh
-    cd ../xcursors
-    ln -s left_ptr default
-    ln -s hand pointer
-    ln -s left_ptr_watch progress
-    ln -s watch wait
-    ln -s xterm text
-    ln -s dnd-link alias
-    ln -s crossed_circle not-allowed
-    ln -s hand1 grab
-    ln -s sb_h_double_arrow col-resize
-    ln -s sb_v_double_arrow row-resize
-    ln -s top_side n-resize
-    ln -s right_side e-resize
-    ln -s bottom_side s-resize
-    ln -s left_side w-resize
-    ln -s top_right_corner ne-resize
-    ln -s top_left_corner nw-resize
-    ln -s bottom_left_corner sw-resize
-    ln -s bottom_right_corner se-resize
-    ln -s sb_h_double_arrow ew-resize
-    ln -s sb_v_double_arrow ns-resize
-    ln -s fd_double_arrow nesw-resize
-    ln -s bd_double_arrow nwse-resize
-    ln -s bd_double_arrow size_fdiag
-    ln -s fd_double_arrow size_bdiag
-    ln -s sb_h_double_arrow size_hor
-    ln -s sb_v_double_arrow size_ver
-    ln -s fleur size_all
 done
 
 %install
@@ -72,6 +46,9 @@ done
 %{_datadir}/icons/DMZ-Black/
 
 %changelog
+* Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1_1
 - update to new release by fcimport
 
