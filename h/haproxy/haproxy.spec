@@ -7,8 +7,8 @@
 %def_enable lua
 
 Name: haproxy
-Version: 2.0.1
-Release: alt2
+Version: 2.0.4
+Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -109,6 +109,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Fri Aug 09 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.4-alt1
+- 2.0.4 (Fixes: CVE-2019-14241)
+
 * Tue Jul 23 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt2
 - fix build on mipsel
 
@@ -128,29 +131,29 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 * Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.14-alt1
 - 1.8.14
 
-* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.13-alt2%ubt
+* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.13-alt2
 - rebuild with openssl-1.1
 
-* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.13-alt1%ubt
+* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.13-alt1
 - 1.8.13
 
-* Thu Jun 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.12-alt1%ubt
+* Thu Jun 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.12-alt1
 - 1.8.12
 
-* Tue Jun 26 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.11-alt1%ubt
+* Tue Jun 26 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.11-alt1
 - 1.8.11
 
-* Thu Feb 08 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.4-alt1%ubt
+* Thu Feb 08 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.4-alt1
 - 1.8.4
 
-* Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1%ubt
+* Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 - build with pcre2
 
-* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.9-alt1%ubt
+* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.9-alt1
 - 1.7.9
 
-* Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.8-alt1%ubt
+* Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.8-alt1
 - 1.7.8
 
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.5-alt1
