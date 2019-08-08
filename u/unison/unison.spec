@@ -1,6 +1,6 @@
 Name: unison
 Version: 2.51.2
-Release: alt2
+Release: alt3
 
 Summary: File-synchronization tool
 
@@ -81,6 +81,9 @@ desktop-file-install  \
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Aug 08 2019 Anton Farygin <rider@altlinux.ru> 2.51.2-alt3
+- rebuild with ocaml-4.08
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 2.51.2-alt2
 - added unison-gui package with GTK2 UI (closes: #18455)
 
