@@ -1,11 +1,11 @@
-%set_gcc_version 5
+# set_gcc_version 5
 
 Name: nspec
-Version: 15.5547
+Version: 15.5598
 Release: alt2
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
-License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2016
+License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2019
 Group: Sciences/Other
 URL: http://www.nanoscantech.ru/en/
 Packager: Alexei Mezin <alexvm@altlinux.org>
@@ -13,7 +13,7 @@ Vendor: ALT Linux Team
 
 Source: %name-%version.tar.gz
 
-BuildPreReq: gcc5 gcc5-c++ 
+##BuildPreReq: gcc8 gcc8-c++ 
 BuildRequires(pre): rpm-macros-qt4
 
 
@@ -63,7 +63,7 @@ This plugin adds probe lithography support to Nspec software.
 
 %build
 echo -e "%version-%release\n" >> src/data/nst_build.txt
-%qmake_qt4 "CONFIG += no_external_deps" nst.pro
+%qmake_qt4 "CONFIG += no_external_deps no_ftdi" nst.pro
 %make
 
 cd gwy_proxy/gcc_make
@@ -110,6 +110,17 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Thu Aug 08 2019 Alexei Mezin <alexvm@altlinux.org> 15.5598-alt2
+- Minor fixes in build config files 
+
+* Tue Aug 06 2019 Alexei Mezin <alexvm@altlinux.org> 15.5598-alt1
+- Minor fixes in build config files  
+
+* Tue Aug 06 2019 Alexei Mezin <alexvm@altlinux.org> 15.5597-alt1
+- New version
+- Remove obsolete FTDI support
+
+
 * Sat Jan 06 2018 Alexei Mezin <alexvm@altlinux.org> 15.5547-alt2
 - spec file fixes
 
