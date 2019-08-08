@@ -1,12 +1,13 @@
 Name: clickhouse
-Version: 19.9.5.36
-Release: alt1
+Version: 19.11.5.28
+Release: alt2
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
 Group: Databases
 Source: %name-%version.tar
 Source1: %name-%version-contrib-base64.tar
 Source2: %name-%version-contrib-simdjson.tar
+Source3: %name-%version-contrib-rapidjson.tar
 Patch0: %name-%version-%release.patch
 Url: https://clickhouse.yandex/
 BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
@@ -15,8 +16,12 @@ BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, libr
 BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
 BuildRequires: libpoco-devel, libgtest-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
 BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
-BuildRequires: llvm-devel, clang, libstdc++-devel, perl-JSON-XS, libb64-devel, libhyperscan-devel
-ExclusiveArch: x86_64
+BuildRequires: llvm-devel, gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static
+%ifarch x86_64
+BuildRequires: libhyperscan-devel
+%endif
+
+ExclusiveArch: aarch64 x86_64
 
 %description
 ClickHouse is an open-source column-oriented database management system that
@@ -60,16 +65,15 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2
+%setup -a1 -a2 -a3
 %patch0 -p1
 mv %name-%version-contrib-base64/* contrib/base64/
 mv %name-%version-contrib-simdjson/* contrib/simdjson/
+mv %name-%version-contrib-rapidjson/* contrib/rapidjson/
 
 %build
 %remove_optflags -frecord-gcc-switches
-export CC=clang
-export CXX=clang++
-%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DLLVM_VERSION=7 -DENABLE_JEMALLOC=0
+%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DENABLE_JEMALLOC=0
 %cmake_build VERBOSE=1
 
 %install
@@ -131,6 +135,12 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Tue Aug 06 2019 Anton Farygin <rider@altlinux.ru> 19.11.5.28-alt2
+- 19.11.5.28
+- fixed build on aarch64 and ppc (thanx to Sergey Bolshakov)
+- enabled rapidjson
+- build by gcc
+
 * Mon Jul 22 2019 Anton Farygin <rider@altlinux.ru> 19.9.5.36-alt1
 - new version
 - build without jemalloc
