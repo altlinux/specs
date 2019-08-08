@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
-Version: 1.8.0
-Release: alt5
+Version: 1.9.0
+Release: alt1
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -62,6 +62,9 @@ dune install --destdir %buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/re/*/*.cmxa
 
 %changelog
+* Thu Aug 08 2019 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 1.8.0-alt5
 - fixed built with dune-1.6.4
 

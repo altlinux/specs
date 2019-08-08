@@ -3,7 +3,7 @@
 %define libname tyxml
 Name:           ocaml-%libname
 Version:        4.3.0
-Release:        alt1
+Release:        alt2
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
 License:        LGPL with exeptions
 Group:          Development/ML
@@ -73,6 +73,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname-ppx/internal/*.mli
 
 %changelog
+* Thu Aug 08 2019 Anton Farygin <rider@altlinux.ru> 4.3.0-alt2
+- rebuilt with ocaml-re 1.9.0
+
 * Mon Jan 21 2019 Anton Farygin <rider@altlinux.ru> 4.3.0-alt1
 - 4.3.0
 
