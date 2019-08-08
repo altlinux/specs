@@ -1,7 +1,7 @@
 %define  oname kmip
 
 Name:    python3-module-%oname
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Open source Python implementation of the KMIP specification.
@@ -59,5 +59,8 @@ popd
 %doc *.rst
 
 %changelog
+* Thu Aug 08 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
+- Build new version.
+
 * Wed Jun 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
 - Initial build for Sisyphus.
