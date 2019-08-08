@@ -1,8 +1,6 @@
-# set_gcc_version 5
-
 Name: nspec
 Version: 15.5598
-Release: alt2
+Release: alt3
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
 License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2019
@@ -13,17 +11,16 @@ Vendor: ALT Linux Team
 
 Source: %name-%version.tar.gz
 
-##BuildPreReq: gcc8 gcc8-c++ 
 BuildRequires(pre): rpm-macros-qt4
 
 
 # Automatically added by buildreq on Fri Dec 15 2017
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libgtkglext-devel libpango-devel libpangox-compat libpangox-compat-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-widgets libstdc++-devel libusb-compat pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-devel zlib-devel
 ## QT5 deps
-##BuildRequires: bzlib-devel i586-libxcb kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs selinux-policy
+##BuildRequires: bzlib-devel i586-libxcb kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs
 
 ## QT4 deps
-BuildRequires: gcc-c++ glibc-devel-static libgwyddion-devel libqt4-webkit-devel libusb-compat-devel libusb-devel phonon-devel ruby ruby-stdlibs selinux-policy
+BuildRequires: gcc-c++ glibc-devel-static libgwyddion-devel libqt4-webkit-devel libusb-compat-devel libusb-devel phonon-devel ruby ruby-stdlibs
 
 
 %description
@@ -55,15 +52,23 @@ Group: Sciences/Other
 This plugin adds probe lithography support to Nspec software.
 
 %description -l ru_RU,UTF-8 plugin-lithography
-Пдлагин добавляет поддержку зондовой литографии в программу Nspec.
+Плагин добавляет поддержку зондовой литографии в программу Nspec.
 
 
 %prep
 %setup
 
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' |
+    xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
+
 %build
 echo -e "%version-%release\n" >> src/data/nst_build.txt
+# Build without third party hardware support (spectrometers, CCD cameras, photon counters etc.) and obsolete FTDI chip
 %qmake_qt4 "CONFIG += no_external_deps no_ftdi" nst.pro
+# non-SMP make
 %make
 
 cd gwy_proxy/gcc_make
@@ -110,6 +115,11 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Thu Aug 08 2019 Alexei Mezin <alexvm@altlinux.org> 15.5598-alt3
+- E2K: strip UTF-8 BOM (thanks to Michael Shigorin <mike@altlinux.org>)
+- dropped BR: selinux-policy
+- spec cleanup
+
 * Thu Aug 08 2019 Alexei Mezin <alexvm@altlinux.org> 15.5598-alt2
 - Minor fixes in build config files 
 
