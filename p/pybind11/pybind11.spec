@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
-Version: 2.2.4
-Release: alt3
+Version: 2.3.0
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -9,7 +9,6 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 
 Source0: %name-%version.tar
-Patch0: pybind11-2.2.4-compatibility-with-pytest-4.0-fix-1670.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
@@ -74,7 +73,6 @@ This package contains the Python 3 files.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 for py in python python3; do
@@ -113,6 +111,9 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Aug 08 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.3.0-alt1
+- New version
+
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 2.2.4-alt3
 - Added missing dep on `numpy.testing`.
 
