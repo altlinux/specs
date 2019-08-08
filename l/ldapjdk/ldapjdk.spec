@@ -1,74 +1,43 @@
+%define _unpackaged_files_terminate_build 1
+
+%define _localstatedir  %_var
+%define spname		ldapsp
+%define filtname	ldapfilt
+%define beansname	ldapbeans
+%define jss_version     4.6.0
+
+Name: ldapjdk
 Epoch: 1
+Version: 4.21.0
+Release: alt1
+
+Summary: LDAP SDK
+License: MPLv1.1 or GPLv2+ or LGPLv2+
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
+# Source-git: https://github.com/dogtagpki/ldap-sdk.git
+Url: https://www.dogtagpki.org/wiki/LDAP_SDK
+
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(Carp.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Socket.pm) perl(fastcwd.pl) perl-devel rpm-build-java
-# END SourceDeps(oneline)
+BuildRequires: rpm-build-java
+
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-################################################################################
-Name:             ldapjdk
-################################################################################
+BuildRequires: ant
+# at least dogtag pki requires java 8 at build/runtime
+# pin the Java so far
+BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: javapackages-local
+BuildRequires: javapackages-tools
+BuildRequires: jss >= %jss_version
 
-Summary:          LDAP SDK
-URL:              http://www.dogtagpki.org/
-License:          MPLv1.1 or GPLv2+ or LGPLv2+
-
-BuildArch:        noarch
-
-Version:          4.20.0
-Release:          alt1_2jpp8
-# global           _phase -a1
-
-%global spname		ldapsp
-%global filtname	ldapfilt
-%global beansname	ldapbeans
-
-# To create a tarball from a version tag:
-# $ git archive \
-#     --format=tar.gz \
-#     --prefix ldap-sdk-<version>/ \
-#     -o ldap-sdk-<version>.tar.gz \
-#     <version tag>
-Source: https://github.com/dogtagpki/ldap-sdk/archive/v%{version}%{?_phase}/ldap-sdk-%{version}%{?_phase}.tar.gz
-
-# To create a patch for all changes since a version tag:
-# $ git format-patch \
-#     --stdout \
-#     <version tag> \
-#     > ldap-sdk-VERSION-RELEASE.patch
-# Patch: ldap-sdk-VERSION-RELEASE.patch
-
-################################################################################
-# Build Dependencies
-################################################################################
-
-# autosetup
-BuildRequires:    git
-
-BuildRequires:    ant
-BuildRequires:    java-devel
-%if 0%{?rhel} && 0%{?rhel} <= 7
-BuildRequires:	  jpackage-utils >= 0:1.5
-%else
-BuildRequires:    javapackages-local
-%endif
-BuildRequires:    jss >= 4.5.0
-
-################################################################################
-# Runtime Dependencies
-################################################################################
-
-Requires:         jpackage-utils >= 0:1.5
-Requires:         jss >= 4.5.0
-Source44: import.info
+BuildArch: noarch
 
 Provides: ldapsdk = 1:%version-%release
 Obsoletes: ldapsdk <= 1:4.18-alt1_2jpp6
 
-
+Requires: jss >= %jss_version
 
 %description
 The Mozilla LDAP SDKs enable you to write applications which access,
@@ -79,81 +48,80 @@ manage, and update the information stored in an LDAP directory.
 Group: Development/Documentation
 ################################################################################
 
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}
+Javadoc for %name
 
 ################################################################################
 %prep
 ################################################################################
 
-%setup -q -n ldap-sdk-%{version}%{?_phase}
-
+%setup
+%patch -p1
 
 # Remove all bundled jars, we must build against build-system jars
-rm -f ./java-sdk/ldapjdk/lib/{jss32_stub,jsse,jnet,jaas,jndi}.jar
+rm ./java-sdk/ldapjdk/lib/*
 
 ################################################################################
 %build
 ################################################################################
 
-# Link to build-system BRs
-pwd
-%if 0%{?rhel} && 0%{?rhel} <= 7
-( cd  java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 jsse jaas jndi )
-%else
-( cd  java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 )
-ln -s /usr/lib/jvm-exports/java/{jsse,jaas,jndi}.jar java-sdk/ldapjdk/lib
-%endif
-cd java-sdk
-if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{_jvmdir}/java" ; fi
-sh -x ant dist
+pushd ./java-sdk/ldapjdk/lib
+build-jar-repository -s -p . jss4
+
+ln -s /usr/lib/jvm-exports/java/{jsse,jaas,jndi}.jar ./
+pushd ../../
+%ant -v dist
 
 ################################################################################
 %install
 ################################################################################
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 java-sdk/dist/packages/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 java-sdk/dist/packages/%{spname}.jar $RPM_BUILD_ROOT%{_javadir}/%{spname}.jar
-install -m 644 java-sdk/dist/packages/%{filtname}.jar $RPM_BUILD_ROOT%{_javadir}/%{filtname}.jar
-install -m 644 java-sdk/dist/packages/%{beansname}.jar $RPM_BUILD_ROOT%{_javadir}/%{beansname}.jar
+install -d -m 755 %buildroot%_javadir
+install -m 644 java-sdk/dist/packages/%name.jar %buildroot%_javadir/%name.jar
+install -m 644 java-sdk/dist/packages/%spname.jar %buildroot%_javadir/%spname.jar
+install -m 644 java-sdk/dist/packages/%filtname.jar %buildroot%_javadir/%filtname.jar
+install -m 644 java-sdk/dist/packages/%beansname.jar %buildroot%_javadir/%beansname.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}-1.3.0
+install -d -m 755 %buildroot%_javadir-1.3.0
 
-pushd $RPM_BUILD_ROOT%{_javadir}-1.3.0
-	ln -fs ../java/*%{spname}.jar jndi-ldap.jar
+pushd %buildroot%_javadir-1.3.0
+	ln -fs ../java/*%spname.jar jndi-ldap.jar
 popd
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{name}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "ldapsdk:ldapsdk"
+mkdir -p %buildroot%_mavenpomdir
+sed -i 's/@VERSION@/%{version}/g' %name.pom
+install -pm 644 %name.pom %buildroot%_mavenpomdir/JPP-%name.pom
+%add_maven_depmap JPP-%name.pom %name.jar -a "ldapsdk:ldapsdk"
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -r java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 %buildroot%_javadocdir/%name
+cp -r java-sdk/dist/doc/* %buildroot%_javadocdir/%name
 ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
 %files -f .mfiles
 ################################################################################
 
-%{_javadir}/%{spname}*.jar
-%{_javadir}/%{filtname}*.jar
-%{_javadir}/%{beansname}*.jar
-%{_javadir}-1.3.0/*.jar
+%_javadir/%{spname}*.jar
+%_javadir/%{filtname}*.jar
+%_javadir/%{beansname}*.jar
+%_javadir-1.3.0/*.jar
 %_javadir/ldapsdk.jar
 
 ################################################################################
 %files javadoc
 ################################################################################
 
-%dir %{_javadocdir}/%{name}
-%{_javadocdir}/%{name}/*
+%dir %_javadocdir/%name
+%_javadocdir/%name/*
 
 ################################################################################
 %changelog
+* Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 1:4.21.0-alt1
+- 4.20.0 -> 4.21.0.
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.20.0-alt1_2jpp8
 - new version
 

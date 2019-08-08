@@ -7,12 +7,13 @@
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.4.0
-%define jss_version         4.5.3
+%define tomcatjss_version   7.4.1
+%define jss_version         4.6.0
+%define ldapjdk_version     4.21.0
 
 Name: pki-core
-Version: 10.7.0
-Release: alt2
+Version: 10.7.3
+Release: alt1
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -41,7 +42,7 @@ BuildRequires: selinux-policy-alt
 
 BuildRequires: jackson
 BuildRequires: velocity
-BuildRequires: ldapjdk
+BuildRequires: ldapjdk >= %ldapjdk_version
 BuildRequires: resteasy-atom-provider
 BuildRequires: resteasy-client
 BuildRequires: resteasy-jackson2-provider
@@ -117,6 +118,7 @@ Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
 Obsoletes: pki-util < %EVR
+Requires(post): python3-module-pki-base = %EVR
 
 %description -n pki-base
 The Dogtag PKI Base Package contains the common and client libraries
@@ -424,6 +426,8 @@ chmod -x %buildroot%_datadir/pki/scripts/operations
 touch %buildroot%_sysconfdir/pki/pki.version
 touch %buildroot%_logdir/pki/pki-upgrade-%version.log
 touch %buildroot%_logdir/pki/pki-server-upgrade-%version.log
+mkdir %buildroot%_logdir/pki/server
+mkdir %buildroot%_logdir/pki/server/upgrade
 
 # files for native 'tpsclient'
 # REMINDER:  Remove this comment once 'tpsclient' is rewritten as a Java app
@@ -466,9 +470,12 @@ then
 
 else
     # On RPM upgrade run system upgrade
+    echo "pki-base: Upgrading PKI system configuration"
     echo "Upgrading PKI system configuration at `/bin/date`." >> %_logdir/pki/pki-upgrade-%version.log 2>&1
-    %_sbindir/pki-upgrade --silent >> %_logdir/pki/pki-upgrade-%version.log 2>&1
+    %_sbindir/pki-upgrade --silent -v >> %_logdir/pki/pki-upgrade-%version.log 2>&1
     echo >> %_logdir/pki/pki-upgrade-%version.log 2>&1
+    echo "pki-base: PKI system upgrade status:"
+    %_sbindir/pki-upgrade --status 2>&1 | sed 's/^/pki-base: /'
 fi
 
 %postun -n pki-base
@@ -479,9 +486,12 @@ then
 fi
 
 %post -n pki-server
+echo "pki-server: Upgrading PKI server configuration"
 echo "Upgrading PKI server configuration at `/bin/date`." >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
- %_sbindir/pki-server-upgrade --silent >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
+%_sbindir/pki-server upgrade --silent -v >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 echo >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
+echo "pki-server: PKI server upgrade status:"
+%_sbindir/pki-server upgrade --status 2>&1 | sed 's/^/pki-server: /'
 
 if [ "$1" == "2" ]
 then
@@ -614,6 +624,7 @@ fi
 %_unitdir/pki-tomcatd.target
 %dir %_sysconfdir/systemd/system/pki-tomcatd-nuxwdog.target.wants
 %ghost %_logdir/pki/pki-server-upgrade-%version.log
+%ghost %_logdir/pki/server/
 %_unitdir/pki-tomcatd-nuxwdog@.service
 %_unitdir/pki-tomcatd-nuxwdog.target
 %_javadir/pki/pki-cms.jar
@@ -708,6 +719,12 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 10.7.3-alt1
+- 10.7.0 -> 10.7.3.
+
+* Mon Aug 05 2019 Stanislav Levin <slev@altlinux.org> 10.7.0-alt3
+- Fixed upgrade 10.2.x => 10.7.x.
+
 * Thu Jul 11 2019 Stanislav Levin <slev@altlinux.org> 10.7.0-alt2
 - Pinned supported Java.
 

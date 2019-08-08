@@ -5,8 +5,8 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.7
-Release: alt2
+Version: 0.79.8
+Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -158,6 +158,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 0.79.8-alt1
+- 0.79.7 -> 0.79.8.
+
 * Tue Apr 23 2019 Stanislav Levin <slev@altlinux.org> 0.79.7-alt2
 - Fixed upgrade 0.78->0.79.
 

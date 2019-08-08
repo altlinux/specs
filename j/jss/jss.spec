@@ -4,8 +4,8 @@
 %def_with check
 
 Name: jss
-Version: 4.5.3
-Release: alt2
+Version: 4.6.1
+Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -34,7 +34,6 @@ BuildRequires: slf4j-jdk14
 
 %if_with check
 BuildRequires: ctest
-BuildRequires: hamcrest
 BuildRequires: junit
 BuildRequires: nss-utils
 %endif
@@ -124,6 +123,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1
+- 4.5.3 -> 4.6.1.
+
 * Thu Jul 11 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt2
 - Pinned supported Java.
 
