@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7
-Release: alt1
+Release: alt2
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
 Group: Development/Python
@@ -72,5 +72,8 @@ export TOXENV=%py_nodot,%py_nodot-sw,%py3_nodot,%py3_nodot-sw
 %python3_sitelibdir/crc32c-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.7-alt2
+- Fixed testing against Pytest 5.
+
 * Sun Feb 17 2019 Stanislav Levin <slev@altlinux.org> 1.7-alt1
 - Initial build.

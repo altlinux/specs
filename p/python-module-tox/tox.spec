@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.13.2
-Release: alt1
+Release: alt2
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -129,7 +129,7 @@ export PIP_NO_INDEX=YES
 export PIP_FIND_LINKS=%python_sitelibdir_noarch/virtualenv_support
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
 PIP_FIND_LINKS TOX_LIMITED_SHEBANG'
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python}
 export TOX_LIMITED_SHEBANG=1
 
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch
@@ -144,6 +144,7 @@ commands_pre =\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+export TOXENV=py%{python_version_nodots python3}
 %buildroot%_bindir/tox.py3 --sitepackages -p auto -o -rv -- -m "not internet"
 popd
 
@@ -160,6 +161,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.13.2-alt2
+- Fixed testing against Pytest 5.
+
 * Fri Aug 02 2019 Stanislav Levin <slev@altlinux.org> 3.13.2-alt1
 - 3.12.1 -> 3.13.2.
 

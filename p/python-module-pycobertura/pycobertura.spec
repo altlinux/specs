@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.5
-Release: alt1
+Release: alt2
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
@@ -80,9 +80,12 @@ export LC_ALL=en_US.UTF-8
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
@@ -99,6 +102,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.10.5-alt2
+- Fixed testing against Pytest 5.
+
 * Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 0.10.5-alt1
 - 0.10.0 -> 0.10.5.
 

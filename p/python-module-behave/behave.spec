@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.2.6
-Release: alt2
+Release: alt3
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python
@@ -161,12 +161,15 @@ cp -fR build/docs/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-sed -i -e '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
+-e '/setenv =$/a \
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 -e '/behave --format=/d' \
 tox.ini
 export PIP_NO_INDEX=YES
@@ -205,6 +208,9 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/behave-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 1.2.6-alt3
+- Fixed testing against Pytest 5.
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.2.6-alt2
 - Added missing dep on Pytest.
 

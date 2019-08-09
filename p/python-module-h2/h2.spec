@@ -3,7 +3,7 @@
 %define oname h2
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt2
+Release: alt3
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -13,6 +13,7 @@ Group: Development/Python
 
 # https://github.com/python-hyper/hyper-h2.git
 Source: %name-%version.tar
+Patch0: h2-3.0.1-Update-dependencies.patch
 BuildArch: noarch
 
 BuildRequires: python-dev python-module-setuptools
@@ -40,6 +41,7 @@ choose to use, ensuring that you can speak HTTP/2 regardless of your
 programming paradigm.
 %prep
 %setup
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -82,6 +84,9 @@ popd
 
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 3.0.1-alt3
+- Fixed testing against Pytest 5.
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.1-alt2
 - Enabled python-3 build.
 - Enabled tests.

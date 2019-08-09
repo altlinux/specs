@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 12.0.1
-Release: alt1
+Release: alt2
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -86,6 +86,9 @@ export TOXENV=py%{python_version_nodots python3}
 %python3_sitelibdir/path.py-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 12.0.1-alt2
+- Fixed testing against Pytest 5.
+
 * Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 12.0.1-alt1
 - 11.5.0 -> 12.0.1.
 

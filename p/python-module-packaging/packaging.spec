@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 19.0
-Release: alt1
+Release: alt2
 Summary: Core utilities for Python packages
 License: ASLv2.0 or BSD
 Group: Development/Python
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 # https://github.com/pypa/packaging.git
 Source: %name-%version.tar
+Patch0: packaging-19.0-Fix-testsuite-for-pytest-5.x.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -65,6 +66,7 @@ This package contains pickles for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 cp -fR . ../python3
 
@@ -119,6 +121,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 19.0-alt2
+- Fixed testing against Pytest 5.
+
 * Thu Jun 06 2019 Stanislav Levin <slev@altlinux.org> 19.0-alt1
 - 16.8 -> 19.0.
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Summary: Sort lists naturally
 License: MIT
 Group: Development/Python
@@ -125,9 +125,12 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -rv
@@ -155,6 +158,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/natsort-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 6.0.0-alt2
+- Fixed testing against Pytest 5.
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 3.5.1 -> 6.0.0.
 

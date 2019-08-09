@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Extensible validation for Python dictionaries
 License: ISCL
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/Cerberus/
 
 # https://github.com/pyeve/cerberus.git
 Source: %name-%version.tar
+Patch0: cerberus-1.2-Updates-use-of-pytest.raises-and-fixes-schema-error.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -77,6 +78,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.2-alt2
+- Fixed testing against Pytest 5.
+
 * Sat Jul 14 2018 Terechkov Evgenii <evg@altlinux.org> 1.2-alt1
 - 1.2 (ALT #35154)
 

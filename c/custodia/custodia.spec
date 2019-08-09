@@ -3,7 +3,7 @@
 
 Name: custodia
 Version: 0.6.0
-Release: alt3
+Release: alt4
 
 Summary: A tool for managing secrets
 License: %gpl3plus
@@ -137,6 +137,9 @@ fi
 %_bindir/custodia-cli
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt4
+- Fixed testing against Pytest 5.
+
 * Fri May 24 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt3
 - Fixed update (closes: #36781).
 

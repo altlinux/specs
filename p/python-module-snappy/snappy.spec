@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt2
+Release: alt3
 Summary: Python library for the snappy compression library from Google
 License: BSD
 Group: Development/Python
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt3
+- Fixed testing against Pytest.
+
 * Sun Feb 17 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt2
 - Fixed ImportError.
 - Enabled testing.

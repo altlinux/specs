@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.7.7
-Release: alt1
+Release: alt2
 
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python
@@ -15,6 +15,7 @@ Url: http://pypi.python.org/pypi/flake8
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: flake8-3.7.7-fix-CI-build.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -89,6 +90,7 @@ This is version of the package running with Python 3.
 
 %prep
 %setup
+%patch0 -p1
 
 
 %build
@@ -103,11 +105,14 @@ ln -sf build3 build
 %python3_install
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
+    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
 commands_pre =\
-    \/bin\/cp %_bindir\/coverage \{envbindir\}\/coverage\
+    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -126,6 +131,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 3.7.7-alt2
+- Fixed testing against Pytest 5.
+
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 3.7.7-alt1
 - 3.6.0 -> 3.7.7.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A small and simple INI-file parser
 License: MIT
@@ -14,6 +14,7 @@ Group: Development/Tools
 Url: https://pypi.org/project/iniconfig/
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(setuptools_scm)
@@ -38,6 +39,7 @@ Group: Development/Python3
 
 %prep
 %setup
+%patch -p1
 
 rm -rf ../python3
 cp -a . ../python3
@@ -64,11 +66,14 @@ export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION'
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 tox.py3 --sitepackages -p auto -o -v -r
 
@@ -84,6 +89,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/iniconfig-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
+- Fixed testing against Pytest 5.
+
 * Sat Mar 16 2019 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - Initial build.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
@@ -59,12 +59,16 @@ pushd ../python3
 popd
 
 %check
-sed -i -e '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+-e '/^setenv =/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 %_bindir/tox.py3 --sitepackages -p auto -o -v
@@ -80,6 +84,9 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/parse_type-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.4.2-alt3
+- Fixed testing against Pytest 5.
+
 * Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 0.4.2-alt2
 - Dropped BR on argparse.
 

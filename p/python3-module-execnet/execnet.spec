@@ -17,7 +17,7 @@ a minimal and fast API targetting the following uses: \
 %endif
 
 Name: %fname
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 %if ""==""
@@ -145,6 +145,9 @@ TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
 %endif
 
 %changelog
+* Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
+- 1.6.0 -> 1.6.1.
+
 * Tue May 28 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.0 -> 1.6.0.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt2
+Release: alt3
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
@@ -65,11 +65,14 @@ popd
 %python_install
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -84,6 +87,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/toml-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.10.0-alt3
+- Fixed testing against Pytest 5.
+
 * Fri Mar 15 2019 Stanislav Levin <slev@altlinux.org> 0.10.0-alt2
 - Fixed FTBFS.
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt2
+Release: alt3
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python
@@ -140,12 +140,15 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 # python uwsgi is not packaged yet
 rm tests/wsgi.py
-sed -i -e '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+-e '/setenv =/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 -e '/pytest-travis-fold/d' \
 tox.ini
 export PIP_NO_INDEX=YES
@@ -154,7 +157,7 @@ export TOX_TESTENV_PASSENV='MANHOLE_TEST_TIMEOUT'
 %define py_nodot py%{python_version_nodots python}
 %define py3_nodot py%{python_version_nodots python3}
 export TOXENV=%py_nodot-normal-normal-nocov,%py3_nodot-normal-normal-nocov
-%_bindir/tox.py3 --sitepackages -p auto -o -v
+%_bindir/tox.py3 --sitepackages -v
 
 %files
 %doc *.rst
@@ -177,6 +180,9 @@ export TOXENV=%py_nodot-normal-normal-nocov,%py3_nodot-normal-normal-nocov
 %python3_sitelibdir/*
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt3
+- Fixed testing against Pytest 5.
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
 - Added missing dep on Pytest.
 

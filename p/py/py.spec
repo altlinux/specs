@@ -4,7 +4,7 @@
 
 Name: py
 Version: 1.8.0
-Release: alt3
+Release: alt4
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -120,11 +120,14 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION'
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 tox.py3 --sitepackages -p auto -o -v -r
 
@@ -139,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt4
+- Fixed testing against Pytest 5.
+
 * Tue Jun 04 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt3
 - Fixed Pytest4.x compatibility errors.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -73,12 +73,16 @@ popd
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+-e '/^setenv[ ]*=/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 tox.py3 --sitepackages -p auto -o -v -r
 
 
@@ -93,6 +97,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.12.0-alt2
+- Fixed testing against Pytest 5.
+
 * Thu Jun 06 2019 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
 - 0.11.0 -> 0.12.0.
 

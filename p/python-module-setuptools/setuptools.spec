@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 41.0.1
-Release: alt2
+Release: alt3
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -166,12 +166,16 @@ ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
 # bundled `pip` doesn't support PEP517 well for now
 # https://github.com/pypa/setuptools/issues/1644
 rm pyproject.toml
-sed -i -e '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+-e '/^setenv[ ]*=/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
@@ -213,6 +217,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1:41.0.1-alt3
+- Fixed testing against Pytest 5.
+
 * Mon Jun 03 2019 Stanislav Levin <slev@altlinux.org> 1:41.0.1-alt2
 - Allowed testing against Pytest4.x.
 

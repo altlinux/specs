@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt3.a1.git20150729
+Release: alt4.a1.git20150729
 
 Summary: Hamcrest framework for matcher objects
 License: BSD
@@ -119,8 +119,11 @@ rm -f *requirements.txt
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -144,6 +147,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/*
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 2.0.0-alt4.a1.git20150729
+- Fixed testing against Pytest 5.
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 2.0.0-alt3.a1.git20150729
 - Fixed Pytest4.x compatibility errors.
 - Enabled testing for Python3 package.
