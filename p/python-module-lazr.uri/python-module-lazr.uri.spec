@@ -3,7 +3,7 @@
 
 Name: python-module-lazr.uri
 Version: 1.0.3
-Release: alt2
+Release: alt3
 Summary: A self-contained, easily reusable library for parsing, manipulating, and generating URIs
 Group: Development/Python
 License: lgpl3
@@ -83,8 +83,6 @@ popd
 %endif
 
 %files
-%doc %python_sitelibdir/lazr/uri/NEWS.txt
-%doc %python_sitelibdir/lazr/uri/README.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/lazr/uri/tests
 %doc HACKING.txt README.txt
@@ -95,8 +93,6 @@ popd
 %if_with python3
 
 %files -n python3-module-lazr.uri
-%doc %python3_sitelibdir/lazr/uri/NEWS.txt
-%doc %python3_sitelibdir/lazr/uri/README.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/lazr/uri/tests
 %doc HACKING.txt README.txt
@@ -107,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 09 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.0.3-alt3
+- Repack
+
 * Sat Jul 20 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.0.3-alt2
 - Python3 support added
 
