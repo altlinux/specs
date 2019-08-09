@@ -11,7 +11,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.16
+Version: 8.0.17
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -52,7 +52,7 @@ Source30: mysqlrouter.conf
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.16-alt-chroot.patch
+Patch1: mysql-8.0.17-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.12-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
@@ -772,6 +772,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Aug 08 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.17-alt1
+- new version
+- update patches: chroot, load_defaults
+
 * Thu Jun 13 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.16-alt1
 - new version (DB upgrade function was moved from client program to server)
 - chroot patch updated
