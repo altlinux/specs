@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sway
-Version: 1.1
-Release: alt1.rc3
+Version: 1.2.rc1
+Release: alt1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
 Url: http://swaywm.org/
@@ -11,7 +11,9 @@ Group: Graphical desktop/Other
 # https://github.com/swaywm/sway
 # git://git.altlinux.org/gears/s/sway.git
 Source0: %name-%version.tar
-Source2: startsway
+Source1: startsway
+Source2: Sway_Wallpaper_Gray.png
+
 Patch00: sway-config.patch
 
 BuildRequires: asciidoc-a2x
@@ -39,25 +41,21 @@ Requires: swaybg
 # swayidle, a new idle management daemon, is available separately (sway 1.0)
 Requires: swayidle
 
+Requires: dmenu-wl
 Requires: %name-data
 Requires(post): /sbin/setcap
+
+%description
+Sway is a drop-in replacement for the i3 window manager, but for Wayland
+instead of X11. It works with your existing i3 configuration and
+supports most of i3's features, and a few extras.
 
 %package data
 Summary: i3wm drop-in replacement for Wayland - data files
 Group: Graphical desktop/Other
 BuildArch: noarch
 
-%define common_descr \
-Sway is a drop-in replacement for the i3 window manager, but for Wayland \
-instead of X11. It works with your existing i3 configuration and \
-supports most of i3's features, and a few extras.
-
-%description
-%common_descr
-
 %description data
-%common_descr
-
 This package contains data files.
 
 %prep
@@ -72,7 +70,11 @@ This package contains data files.
 
 %install
 %meson_install
-install -pm0755 -D %SOURCE2 %buildroot%_bindir/
+
+mkdir -p %buildroot/%_sysconfdir/%name/config.d
+
+install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/
+install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 
 rm -rf -- \
 	%buildroot/%_datadir/bash-completion \
@@ -87,6 +89,7 @@ rm -rf -- \
 %doc LICENSE
 %doc README.md
 %dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/config.d
 %dir %_sysconfdir/%name/security.d
 %config(noreplace) %_sysconfdir/%name/config
 %config(noreplace) %_sysconfdir/%name/security.d/00-defaults
@@ -105,6 +108,18 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Fri Aug 09 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.rc1-alt1
+- New version (1.2-rc1)
+
+* Thu Aug 08 2019 Alexey Gladkov <legion@altlinux.ru> 1.1.1-alt2
+- Rewrite startsway script:
+  + Set XDG_* env variables to some default values
+  + Start dbus session (optional)
+- Require dmenu-wl
+
+* Tue Jun 04 2019 Alexey Gladkov <legion@altlinux.ru> 1.1.1-alt1
+- New version (1.1.1)
+
 * Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.1-alt1.rc3
 - New version (1.1-rc3)
 
