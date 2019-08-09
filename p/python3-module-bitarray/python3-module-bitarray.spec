@@ -1,26 +1,21 @@
 %define  modulename bitarray
 
 Name:    python3-module-%modulename
-Version: 0.9.3
+Version: 1.0.1
 Release: alt1
 
 Summary: efficient arrays of booleans for Python
 License: PSF
 Group:   Development/Python3
-URL:     https://github.com/ilanschnell/bitarray
-
+Url:     https://github.com/ilanschnell/bitarray
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 
 Source:  %modulename-%version.tar
 
 %description
-======================================
-bitarray: efficient arrays of booleans
-======================================
-
 This module provides an object type which efficiently represents an array
 of booleans.  Bitarrays are sequence types and behave very much like usual
 lists.  Eight bits are represented by one byte in a contiguous block of
@@ -42,10 +37,12 @@ this module useful.
 %python3_install
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %doc AUTHORS README.rst
 
 %changelog
+* Fri Aug 09 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1-alt1
+- 1.0.1-alt1
+
 * Fri Jun 28 2019 Andrew A. Vasilyev <andy@altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus
