@@ -58,7 +58,7 @@
 Name: systemd
 Epoch: 1
 Version: 242
-Release: alt10
+Release: alt11
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -676,7 +676,11 @@ Static library for libudev.
 	%{?_enable_utmp:-Dutmp=true} \
 	%{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
 	-Ddefault-hierarchy=%hierarchy \
+%ifnarch mipsel
 	-Db_lto=true \
+%else
+	-Db_lto=false \
+%endif
 	-Db_pie=true \
 	-Dversion-tag=v%version-%release \
 	-Dcertificate-root=/etc/pki/tls \
@@ -1842,6 +1846,12 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Aug 09 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt11
+- merge with v242-stable 07f0549ffe3413f0e78b656dd34d64681cbd8f00
+
+* Thu Jul 18 2019 Dmitry Terekhin <jqt4@altlinux.org> 1:242-alt10.0.mips1
+- build w/o lto on mipsel
+
 * Wed Jul 17 2019 Alexey Shabalin <shaba@altlinux.org> 1:242-alt10
 - merge with v242-stable 572385e13566f9ca442ee3b46742159b905b4712:
   + networkd: fix link_up()
