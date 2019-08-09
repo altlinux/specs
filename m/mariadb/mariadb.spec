@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.4.6
-Release: alt4
+Version: 10.4.7
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -118,7 +118,7 @@ Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
 
 Patch101: rocksdb-5.4.13-alt-add-libatomic-if-needed.patch
-Patch102: mariadb-10.4.6-alt-link-with-latomic-if-needed.patch
+Patch102: mariadb-10.4.7-alt-link-with-latomic-if-needed.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -1014,6 +1014,15 @@ fi
 %endif
 
 %changelog
+* Fri Aug 09 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.7-alt1
+- 10.4.7
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-2805
+  + CVE-2019-2740
+  + CVE-2019-2739
+  + CVE-2019-2737
+  + CVE-2019-2758
+
 * Wed Jul 17 2019 Alexey Shabalin <shaba@altlinux.org> 10.4.6-alt4
 - fix execute prestart chroot build
 
