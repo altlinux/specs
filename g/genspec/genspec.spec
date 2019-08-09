@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.9
+Version:  1.3.10
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Fri Jul 26 2019 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
+- Update ruby template according to Ruby Policy 2.0.
+
 * Sun Feb 03 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.9-alt1
 - Fix name translation again
 
