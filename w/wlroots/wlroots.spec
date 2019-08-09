@@ -8,12 +8,13 @@
 %def_enable xwayland
 %def_disable xcb_errors
 %def_enable examples
+%def_enable freerdp
 
 %def_enable check
 
 Name: wlroots
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -26,6 +27,8 @@ Source: %url/archive/%name-%version.tar.gz
 # VCS: https://github.com/swaywm/wlroots.git
 Source: %name-%version.tar
 %endif
+
+Patch0: wlroots-fix-build.patch
 
 BuildRequires(pre): meson
 BuildRequires: ctags
@@ -41,6 +44,7 @@ BuildRequires: pkgconfig(systemd)
 %{?_enable_xcb_icccm:BuildRequires: pkgconfig(xcb-icccm)}
 %{?_enable_xcb_errors:BuildRequires: pkgconfig(xcb-errors)}
 %{?_enable_examples:BuildRequires: libwayland-cursor-devel}
+%{?_enable_freerdp:BuildRequires: pkgconfig(freerdp2)}
 
 %description
 %summary
@@ -62,6 +66,7 @@ This package provides development files for %name library.
 
 %prep
 %setup -n %name-%version
+%patch0 -p2
 
 %build
 %meson
@@ -84,6 +89,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 09 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.0-alt2
+- Add freerdp support
+- Fix build error
+
 * Fri May 24 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.0-alt1
 - New version (0.6.0)
 
