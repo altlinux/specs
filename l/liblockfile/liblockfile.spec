@@ -1,55 +1,58 @@
 Name: liblockfile
-Version: 1.09
+Version: 1.16
 Release: alt1
 
-Summary: NFS-safe locking library, includes dotlockfile program
-License: LGPL v2+ (library), GPL v2+ (dotlockfile)
-URL: http://www.t2-project.org/packages/liblockfile.html
+Summary: An NFS-safe locking library
+License: LGPLv2+
 Group: System/Libraries
+URL: https://github.com/miquels/liblockfile/
 
-#http://ftp.debian.org/debian/pool/main/libl/liblockfile/%{name}_%version.orig.tar.gz
-Source: %name-%version.tar
+# git://git.altlinux.org/gears/l/liblockfile.git
+Source: %name-%version-%release.tar
 
 %description
-Liblockfile is a shared library with NFS-safe locking functions. It
-includes the command-line utility ``dotlockfile''.
+This package contains liblockfile - a shared library with NFS-safe
+locking functions.
 
 %package devel
-Summary: Header files for liblockfile library
-License: LGPL v2+
+Summary: The library and header files for building liblockfile-aware applications
+License: LGPLv2+
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
-This is a development package for liblockfile. It includes headers and
-documentation.
+This is a development package for liblockfile.
+It includes the development library, header files, and documentation.
+
+%package -n dotlockfile
+Summary: An utility to manage lockfiles
+License: GPLv2+
+Group: File tools
+
+%description -n dotlockfile
+This package contains dotlockfile - a liblockfile-based utility
+to manage lockfiles.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %build
-%autoreconf
-%configure \
-	--enable-shared \
-	--with-mailgroup
-
-%make
+%configure --enable-shared
+%make_build
 
 %install
-install -d %buildroot{%_libdir,%_bindir,%_includedir,%_mandir/man{1,3}}
+mkdir -p %buildroot{%_bindir,%_libdir,%_includedir,%_man1dir,%_man3dir}
+install -pm644 liblockfile.so %buildroot%_libdir/liblockfile.so.1
+ln -s liblockfile.so.1 %buildroot%_libdir/liblockfile.so
+install -pm644 lockfile.h maillock.h %buildroot%_includedir/
+install -pm755 dotlockfile %buildroot%_bindir/
+install -pm644 *.1 %buildroot%_man1dir/
+install -pm644 *.3 %buildroot%_man3dir/
 
-%make_install install \
-	MAILGROUP=%(id -gn) \
-	ROOT=%buildroot
-
-ln -sf $(basename %buildroot%_libdir/liblockfile.so.1.*) %buildroot%_libdir/liblockfile.so.1
+%define _unpackaged_files_terminate_build 1
 
 %files
 %doc COPYRIGHT README
-%_bindir/dotlockfile
-%_libdir/liblockfile.so.*.*
-%ghost %_libdir/liblockfile.so.1
-%_man1dir/dotlockfile.1*
+%_libdir/liblockfile.so.*
 
 %files devel
 %_libdir/liblockfile.so
@@ -58,7 +61,16 @@ ln -sf $(basename %buildroot%_libdir/liblockfile.so.1.*) %buildroot%_libdir/libl
 %_man3dir/lockfile_create.3*
 %_man3dir/maillock.3*
 
+%files -n dotlockfile
+%_bindir/dotlockfile
+%_man1dir/dotlockfile.1*
+
 %changelog
+* Fri Aug 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.16-alt1
+- 1.09 -> 1.16.
+- Rewritten spec file.
+- Moved dotlockfile to a separate subpackage.
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.09-alt1
 - Version 1.09
 
