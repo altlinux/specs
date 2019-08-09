@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.6.6
+Version: 0.7.2
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -7,35 +7,47 @@ URL: https://github.com/Alexays/Waybar.git
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
+Patch0: waybar-config.patch
+
 BuildRequires(pre): rpm-build-xdg
-# Automatically added by buildreq on Thu Jan 03 2019
+
+BuildRequires: cmake meson
 BuildRequires: gcc-c++
 BuildRequires: jsoncpp-devel
-BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libfmt-devel
 BuildRequires: libgtkmm3-devel
 BuildRequires: libinput-devel
-BuildRequires: libnl-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libudev-devel
-BuildRequires: libstdc++-devel-static
-BuildRequires: libwayland-cursor-devel
+BuildRequires: libsigc++2-devel
 BuildRequires: libspdlog-devel
-BuildRequires: meson
-BuildRequires: cmake
+BuildRequires: libstdc++-devel-static
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-cursor-devel
 BuildRequires: wayland-protocols
+
+# sni module
+BuildRequires: libdbusmenu-gtk3-devel
+BuildRequires: libgio-devel
+
+# pulseaudio module
+BuildRequires: libpulseaudio-devel
+
+# backlight
+BuildRequires: libudev-devel
+
+# network module
+BuildRequires: libnl-devel
+
+# mpd module
+# BuildRequires: libmpdclient-devel
 
 %description
 %summary.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-sed -i \
-	-e "s/^if find_program('sway'/if find_program('true'/" \
-	meson.build
-
 %meson
 %meson_build
 
@@ -50,6 +62,9 @@ sed -i \
 %_xdgconfigdir/%name
 
 %changelog
+* Thu Aug 08 2019 Alexey Gladkov <legion@altlinux.ru> 0.7.2-alt1
+- New version (0.7.2)
+
 * Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.6-alt1
 - 0.6.6
 
