@@ -1,7 +1,7 @@
 %define rname pyscard
 
 Name:           python-module-%rname
-Version:        1.9.8
+Version:        1.9.9
 Release:        alt1
 Summary:        A framework for building smart card aware applications in Python
 
@@ -52,6 +52,9 @@ chmod 755 %buildroot%python_sitelibdir/smartcard/scard/_scard.so
 %python_sitelibdir/*
 
 %changelog
+* Sat Aug 10 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.9-alt1
+- New version.
+
 * Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.8-alt1
 - New version.
 
