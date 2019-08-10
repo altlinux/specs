@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .65
@@ -529,6 +529,9 @@ KbuildFiles="
 %ifarch aarch64 ppc64le
 	arch/%arch_dir/kernel/module.lds
 %endif
+%ifarch %power64 %mips
+	scripts/ld-version.sh
+%endif
 "
 for f in $KbuildFiles; do
 	[ -e "$f" ] || continue
@@ -704,6 +707,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging
 
 %changelog
+* Fri Aug 09 2019 Vitaly Chikunov <vt@altlinux.org> 1:4.19.65-alt2
+- Support building external modules on ppc64.
+
 * Tue Aug 06 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.65-alt1
 - v4.19.65
 
