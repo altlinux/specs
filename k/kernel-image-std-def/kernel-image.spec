@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt3
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .65
@@ -521,6 +521,7 @@ KbuildFiles="
 	scripts/subarch.include
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
+	scripts/ld-version.sh
 	tools/objtool/objtool
 	.config
 	.kernelrelease
@@ -528,9 +529,6 @@ KbuildFiles="
 	System.map
 %ifarch aarch64 ppc64le
 	arch/%arch_dir/kernel/module.lds
-%endif
-%ifarch %power64 %mips
-	scripts/ld-version.sh
 %endif
 "
 for f in $KbuildFiles; do
@@ -707,6 +705,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging
 
 %changelog
+* Fri Aug 09 2019 Vitaly Chikunov <vt@altlinux.org> 1:4.19.65-alt3
+- Pack scripts/ld-version.sh.
+
 * Fri Aug 09 2019 Vitaly Chikunov <vt@altlinux.org> 1:4.19.65-alt2
 - Support building external modules on ppc64.
 
