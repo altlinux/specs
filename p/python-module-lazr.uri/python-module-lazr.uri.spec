@@ -3,28 +3,25 @@
 
 Name: python-module-lazr.uri
 Version: 1.0.3
-Release: alt3
+Release: alt4
 Summary: A self-contained, easily reusable library for parsing, manipulating, and generating URIs
-Group: Development/Python
 License: lgpl3
+Group: Development/Python
 Url: https://launchpad.net/lazr.restfulclient
-
-Source: %name-%version.tar
 Packager: Anatoly Kitaikin <cetus@altlinux.ru>
-
-BuildPreReq: rpm-build-licenses
-
 BuildArch: noarch
 
-BuildRequires: rpm-build-python
+Source: %name-%version.tar
 
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-%endif
+%add_python_req_skip lazr
 
 %py_provides lazr.uri
 
-%add_python_req_skip lazr
+BuildPreReq: rpm-build-licenses
+BuildPreReq: rpm-build-python
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+%endif
 
 %description
 %summary
@@ -53,6 +50,7 @@ This project is also part of https://launchpad.net/lazr.
 %package -n python3-module-lazr.uri-tests
 Summary: lazr.uri tests
 Group: Development/Python3
+Requires: python3-module-lazr.uri = %version-%release
 
 %description -n python3-module-lazr.uri-tests
 %summary
@@ -103,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 10 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.0.3-alt4
+- Requirements fix
+
 * Fri Aug 09 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.0.3-alt3
 - Repack
 
