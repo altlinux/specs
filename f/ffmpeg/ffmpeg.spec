@@ -101,8 +101,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.1.4
-Release:	alt2
+Version:	4.2
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -776,6 +776,9 @@ xz Changelog
 %endif
 
 %changelog
+* Sat Aug 10 2019 Anton Farygin <rider@altlinux.ru> 2:4.2-alt1
+- 4.1.4 -> 4.2
+
 * Wed Jul 31 2019 Nikita Ermakov <arei@altlinux.org> 2:4.1.4-alt2
 - NMU: Remove duplicates of libbluray-devel and libass-devel from BR.
 
