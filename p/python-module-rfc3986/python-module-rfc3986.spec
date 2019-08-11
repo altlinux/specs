@@ -5,7 +5,7 @@
 
 Name: python-module-%pypi_name
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: Validating URI References per RFC 3986
 Group: Development/Python
 License: ASL 2.0
@@ -58,12 +58,15 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -79,6 +82,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/rfc3986-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt2
+- Fixed testing against Pytest 5.
+
 * Sat Apr 27 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 0.4.1 -> 1.3.1.
 - Enabled testing.

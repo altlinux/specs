@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
@@ -67,12 +67,15 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -90,6 +93,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_forked-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
+- Fixed testing against Pytest 5.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - 1.0.1 -> 1.0.2.
 

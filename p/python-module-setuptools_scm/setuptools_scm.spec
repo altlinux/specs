@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.3.3
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
@@ -87,12 +87,15 @@ popd
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TESTS_NO_NETWORK=1
-sed -i '/\[testenv\]$/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
 export TOXENV=py%{python_version_nodots python}-test,\
@@ -108,6 +111,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.3.3-alt2
+- Fixed testing against Pytest 5.
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 3.3.3-alt1
 - 2.1.0 -> 3.3.3.
 

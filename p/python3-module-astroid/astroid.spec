@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.5
-Release: alt1
+Release: alt2
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -14,6 +14,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/astroid
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-runner
@@ -45,6 +46,7 @@ partial trees by inspecting living objects.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -74,6 +76,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 2.2.5-alt2
+- Fixed testing against Pytest 5.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 2.2.5-alt1
 - 2.1.0 -> 2.2.5.
 

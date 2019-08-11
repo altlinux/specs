@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.7.1
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -78,12 +78,16 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+-e '/^setenv[ ]*=$/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 
 grep -qs "'hunter',$" setup.py || exit 1
 sed -i '/\x27hunter\x27,$/d' setup.py
@@ -110,6 +114,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 2.7.1-alt2
+- Fixed testing against Pytest 5.
+
 * Fri May 03 2019 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1
 - 2.6.1 -> 2.7.1.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.1
+Release: alt2
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/click-plugins
 
 # https://github.com/click-contrib/click-plugins.git
 Source: %name-%version.tar
+Patch0: click-plugins-1.0.2-Click-7-changes-how-command-names-are-generated.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -54,6 +55,7 @@ This package contains examples for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -102,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
+- Fixed testing against Click 7.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -102,15 +102,18 @@ popd
 %check
 # no used deps
 sed -i -e '/mock/d' \
--e '/pytest-pep8/d' \
+-e '/pycodestyle/d' \
 -e '/coverage/d' \
 -e '/pytest-cache/d' requirements-testing.txt
 
 sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test \{envbindir\}\/py.test\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 
 export PIP_NO_INDEX=YES
@@ -130,6 +133,10 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/pytest_bdd-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 3.1.0 -> 3.1.1.
+- Fixed testing against Pytest 5.
+
 * Tue Mar 26 2019 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.0 -> 3.1.0.
 

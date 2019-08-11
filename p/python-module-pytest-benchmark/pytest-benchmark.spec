@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.2.2
-Release: alt1
+Release: alt2
 Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -137,12 +137,16 @@ cp -a docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
+-e '/^setenv[ ]*=$/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python}-nocov,\
 py%{python_version_nodots python3}-nocov
@@ -171,6 +175,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %endif
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt2
+- Fixed testing against Pytest 5.
+
 * Wed May 29 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt1
 - 3.1.1 -> 3.2.2.
 

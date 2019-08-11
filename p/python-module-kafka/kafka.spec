@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.4.4
-Release: alt2
+Release: alt3
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
@@ -146,12 +146,16 @@ sed -i '1{/#!/d}' example.py
 chmod -x example.py
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
+-e '/setenv =$/a\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+tox.ini
 export PIP_NO_INDEX=YES
 
 # set the CRC32C_SW_MODE environment variable before loading the package to
@@ -185,6 +189,9 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt3
+- Fixed testing against Pytest 5.
+
 * Mon Jun 03 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt2
 - Allowed testing against Pytest4.x.
 

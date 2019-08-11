@@ -3,65 +3,64 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 4.6.4
+Name: python3-module-%oname
+Version: 5.0.1
 Release: alt1
 
 Summary: Python test framework
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/pytest.git
 Url: https://pypi.python.org/pypi/pytest
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: python2.7(setuptools_scm)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python2.7(tox)
+BuildRequires: python3(tox)
 
-BuildRequires: python2.7(argcomplete)
-BuildRequires: python2.7(atomicwrites)
-BuildRequires: python2.7(attr)
-BuildRequires: python2.7(decorator)
-BuildRequires: python2.7(funcsigs)
-BuildRequires: python2.7(hypothesis)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(more_itertools)
-BuildRequires: python2.7(nose)
-BuildRequires: python2.7(numpy)
-BuildRequires: python2.7(py)
-BuildRequires: python2.7(packaging)
-BuildRequires: python2.7(pathlib2)
-BuildRequires: python2.7(pexpect)
-BuildRequires: python2.7(pluggy)
-BuildRequires: python2.7(requests)
-BuildRequires: python2.7(six)
-BuildRequires: python2.7(wcwidth)
-
+BuildRequires: python3(argcomplete)
+BuildRequires: python3(atomicwrites)
+BuildRequires: python3(attr)
+BuildRequires: python3(decorator)
+BuildRequires: python3(funcsigs)
+BuildRequires: python3(hypothesis)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(mock)
+BuildRequires: python3(more_itertools)
+BuildRequires: python3(nose)
+BuildRequires: python3(numpy)
+BuildRequires: python3(py)
+BuildRequires: python3(packaging)
+BuildRequires: python3(pathlib2)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(pluggy)
+BuildRequires: python3(requests)
+BuildRequires: python3(unittest2)
+BuildRequires: python3(wcwidth)
 %endif
 
-%py_requires funcsigs
-%py_requires pathlib2
-%py_requires py
-%py_requires wcwidth
-
 BuildArch: noarch
+
+%py3_requires py
+%py3_requires wcwidth
 
 %description
 The pytest framework makes it easy to write small tests, yet
 scales to support complex functional testing for applications and libraries.
 
-%package -n pytest
+%package -n pytest3
 Summary: Additional executable for pytest
-Group: Development/Python
-Requires: python-module-%oname = %EVR
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 # It simply has executables with the same filename:
-Conflicts: python-module-logilab-common < 1.0.2-alt2.hg20150708
+Conflicts: python3-module-logilab-common < 1.0.2-alt2.hg20150708
 
-%description -n pytest
+%description -n pytest3
 The pytest framework makes it easy to write small tests, yet
 scales to support complex functional testing for applications and libraries.
 
@@ -89,34 +88,36 @@ testing/{test_pdb.py,test_terminal.py,test_unittest.py}
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
+
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
-%python_install
+%python3_install
+mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
+mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-%define python2_nodots py%{python_version_nodots python}
-export TOXENV=%python2_nodots,%python2_nodots-pexpect
-tox --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -v
 
 %files
 %doc AUTHORS LICENSE *.rst
-%_bindir/py.test
-%python_sitelibdir/pytest.py*
-%python_sitelibdir/_pytest/
-%python_sitelibdir/pytest-*.egg-info/
+%_bindir/py.test3
+%python3_sitelibdir/pytest.py
+%python3_sitelibdir/_pytest/
+%python3_sitelibdir/__pycache__/
+%python3_sitelibdir/pytest-*.egg-info/
 
-%files -n pytest
-%_bindir/pytest
+%files -n pytest3
+%_bindir/pytest3
 
 %changelog
-* Mon Aug 05 2019 Stanislav Levin <slev@altlinux.org> 4.6.4-alt1
-- 4.6.2 -> 4.6.4.
-- Moved Python3 package out to its own one.
+* Mon Aug 05 2019 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 4.6.2 -> 5.0.1.
 
 * Wed Jun 05 2019 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1
 - 4.5.0 -> 4.6.2

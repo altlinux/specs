@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 19.9.0
-Release: alt1
+Release: alt2
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: http://pypi.python.org/pypi/gunicorn
 
 # https://github.com/benoitc/gunicorn.git
 Source: %name-%version.tar
+Patch0: gunicorn-19.9.0-Fix-pytest-5.0.0-compatibility.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -72,6 +73,7 @@ This package contains pickles for gunicorn.
 
 %prep
 %setup
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -141,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 19.9.0-alt2
+- Fixed testing against Pytest 5.
+
 * Sun Apr 28 2019 Anton Midyukov <antohami@altlinux.org> 19.9.0-alt1
 - Updated to upstream version 19.9.0.
 

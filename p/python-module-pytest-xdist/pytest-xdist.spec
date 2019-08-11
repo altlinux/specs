@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.27.0
-Release: alt1
+Release: alt2
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
 License: MIT
@@ -14,6 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest-xdist
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -68,6 +69,7 @@ Group: Development/Python3
 
 %prep
 %setup
+%patch -p1
 
 # adjust timeouts for aarch64/beehive
 # the default one is 10sec
@@ -98,12 +100,15 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -121,6 +126,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.27.0-alt2
+- Fixed testing against Pytest 5.
+
 * Tue Mar 26 2019 Stanislav Levin <slev@altlinux.org> 1.27.0-alt1
 - 1.26.1 -> 1.27.0.
 

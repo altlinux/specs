@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python Atomic file writes on POSIX
 License: MIT
@@ -59,11 +59,14 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python}-test,py%{python_version_nodots python3}-test
@@ -80,6 +83,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
+- Fixed testing against Pytest 5.
+
 * Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.1 -> 1.3.0.
 
