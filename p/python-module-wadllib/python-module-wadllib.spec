@@ -3,7 +3,7 @@
 
 Name: python-module-wadllib
 Version: 1.3.3
-Release: alt3
+Release: alt4
 Summary: Python library for navigating WADL files
 License: lgpl3
 Group: Development/Python
@@ -18,7 +18,7 @@ Requires: python%_python_version(lazr.uri)
 
 BuildPreReq: rpm-build-licenses
 %if_with python3
-BuildPreReq: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 %endif
 
 %description
@@ -32,6 +32,7 @@ This project is also part of https://launchpad.net/lazr.
 %package tests
 Summary: wadllib tests
 Group: Development/Python
+Requires: %name = %version-%release
 
 %description -n python-module-wadllib-tests
 %summary
@@ -48,6 +49,7 @@ Group: Development/Python3
 %package -n python3-module-wadllib-tests
 Summary: wadllib tests
 Group: Development/Python3
+Requires: python3-module-wadllib = %version-%release
 
 %description -n python3-module-wadllib-tests
 %summary
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 11 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.3.3-alt4
+- Requirements fix
+
 * Fri Aug 09 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.3.3-alt3
 - Repack
 
