@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define oname dulwich
 Name: python3-module-%oname
-Version: 0.16.3
-Release: alt1.1
+Version: 0.19.11
+Release: alt1
 Summary: Python Git Library
 License: GPLv2+
 Group: Development/Python3
@@ -55,15 +55,20 @@ done
 popd
 
 %files
-%doc AUTHORS COPYING NEWS docs/*.txt docs/tutorial PKG-INFO README.md examples
+%doc AUTHORS COPYING NEWS docs/*.txt docs/tutorial PKG-INFO README* examples
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/contrib
 
 %files tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/contrib
 
 %changelog
+* Mon Aug 12 2019 Anatoly Kitaikin <cetus@altlinux.org> 0.19.11-alt1
+- Release 0.19.11
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.3-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
