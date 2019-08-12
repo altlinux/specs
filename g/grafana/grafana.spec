@@ -12,8 +12,8 @@
 
 
 Name:		grafana
-Version:	6.2.5
-Release:	alt2
+Version:	6.3.2
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -104,15 +104,18 @@ popd
 rm -rf -- %buildroot/usr/src
 rm -f -- %buildroot%_bindir/govendor
 rm -f -- %buildroot%_bindir/release_publisher
-# TODO: package alert_webhook_listener
+rm -f -- %buildroot%_bindir/slow_proxy
+#TODO: package alert_webhook_listener
 rm -f -- %buildroot%_bindir/alert_webhook_listener
 
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
 install -p -D -m 640 conf/ldap.toml %buildroot%_sysconfdir/%name/ldap.toml
-mkdir -p %buildroot%_sysconfdir/%name/provisioning/{dashboards,datasources}
+mkdir -p %buildroot%_sysconfdir/%name/provisioning/{dashboards,datasources,notifiers}
 install -p -D -m 640 conf/provisioning/dashboards/sample.yaml %buildroot%_sysconfdir/%name/provisioning/dashboards/sample.yaml
 install -p -D -m 640 conf/provisioning/datasources/sample.yaml %buildroot%_sysconfdir/%name/provisioning/datasources/sample.yaml
+install -p -D -m 640 conf/provisioning/notifiers/sample.yaml %buildroot%_sysconfdir/%name/provisioning/notifiers/sample.yaml
+
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
 install -d -m 755 %buildroot%_sharedstatedir/%name
@@ -151,6 +154,7 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/dashboards
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/datasources
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/notifiers
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.ini
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
@@ -161,6 +165,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue Aug 13 2019 Alexey Shabalin <shaba@altlinux.org> 6.3.2-alt1
+- 6.3.2
+
 * Fri Jul 19 2019 Alexey Shabalin <shaba@altlinux.org> 6.2.5-alt2
 - build for all arches
 
