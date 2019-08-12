@@ -1,6 +1,6 @@
 Name:     brisk-menu
-Version:  0.5.0
-Release:  alt2.gitc809be3
+Version:  0.6.0
+Release:  alt1
 
 Summary:  An efficient menu for the MATE Desktop
 License:  GPLv2
@@ -10,7 +10,6 @@ Url:      https://github.com/getsolus/brisk-menu
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
-Patch:    %name-upstream-fixes.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -30,7 +29,6 @@ without the bloat and performance issues.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -50,6 +48,9 @@ echo "%_datadir/locale/es_419/LC_MESSAGES/brisk-menu.mo" >> %name.lang
 %_iconsdir/hicolor/scalable/actions/brisk_system-log-out-symbolic.svg
 
 %changelog
+* Fri Aug 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
+- New version.
+
 * Wed Jun 05 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt2.gitc809be3
 - Add mate-menu-editor to requirements.
 
