@@ -1,6 +1,6 @@
 Name: python-module-gcrypt
 Version: 0.1.0
-Release: alt2.qa3
+Release: alt2.qa4
 %setup_python_module gcrypt
 
 Summary: Python bindings for libgcrypt library
@@ -21,6 +21,9 @@ libgcrypt-py is a Python wrapper around the libgcrypt library.
 %prep
 %setup -n libgcrypt-py-%version
 
+# hide process_error symbol -- otherwise it becomes undefined
+sed -i 's,\(^inline void process_error\),static \1,' _Gcrypt/pkmodule.c
+
 %build
 %python_build
 
@@ -31,6 +34,9 @@ touch %buildroot%python_sitelibdir/_Gcrypt/__init__.py
 %python_sitelibdir/*
 
 %changelog
+* Mon Aug 12 2019 Ivan A. Melnikov <iv@altlinux.org> 0.1.0-alt2.qa4
+- Hide process_error symbol.
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.0-alt2.qa3
 - NMU: cleaned up specfile, rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
 
