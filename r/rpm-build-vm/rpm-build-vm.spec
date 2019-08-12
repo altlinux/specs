@@ -7,7 +7,7 @@
 
 Name: rpm-build-vm
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -88,6 +88,9 @@ chmod a+twx /run/dbus
 control mount unprivileged
 
 %changelog
+* Mon Aug 12 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt2
+- Improvements for ppc64le.
+
 * Mon Aug 05 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt1
 - Initial version.
 
