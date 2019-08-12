@@ -2,7 +2,7 @@
 
 Name: ima-evm-utils
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: IMA/EVM support utilities
 Group: System/Configuration/Other
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Tue Feb 14 2017
 # optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules xml-common
 BuildRequires: asciidoc docbook-style-xsl libattr-devel libkeyutils-devel libssl-devel python-modules-compiler python-modules-encodings time xsltproc
+
+# For tests
+BuildRequires: rpm-build-vm openssl attr e2fsprogs xxd
 
 Requires: libimaevm = %EVR
 
@@ -66,12 +69,15 @@ sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-s
 %autoreconf
 %configure \
 	--disable-static \
-	--with-xml-catalog=/usr/share/xml/docbook/catalog \
-	#
+	--with-xml-catalog=/usr/share/xml/docbook/catalog
 %make_build
 
 %install
 %makeinstall_std doc_DATA=
+
+%check
+# ext4 is required to run tests becasue of xattrs
+vm-run --overlay=ext4 make check
 
 %files
 %doc ChangeLog README AUTHORS COPYING examples/*.sh
@@ -86,6 +92,9 @@ sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-s
 %_libdir/libimaevm.so
 
 %changelog
+* Mon Aug 12 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
+- Run tests in rpm-build-vm
+
 * Fri Aug 02 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
 - Updated to v1.2.1.
 
