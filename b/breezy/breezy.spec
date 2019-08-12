@@ -1,11 +1,11 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 %def_without check
-%def_without python3
+%def_with    python3
 
 Name: breezy
 Version: 3.0.1
-Release: alt1
+Release: alt3
 
 Summary: Breezy is a fork of decentralized revision control system Bazaar
 License: %gpl2plus
@@ -16,12 +16,9 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 
 Source: %name-%version.tar
 
-Patch0: %name-%version.patch
+Patch0: %name-%version-alt.patch
 
-Conflicts: %name-doc < %version
-Conflicts: bzr-git-remote
-
-BuildRequires(pre): rpm-build-licenses
+BuildPreReq: rpm-build-licenses
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -69,6 +66,9 @@ BuildRequires: python3-module-six
 
 %endif
 
+Conflicts: %name-doc < %version-%release
+Conflicts: bzr-git-remote
+
 %description
 Breezy (or brz) is a distributed version control system that is powerful, friendly, and scalable.
 Breezy is a fork of the Bazaar version control system.
@@ -113,7 +113,7 @@ package contain documentation and examples for using Bazaar.
 
 %prep
 %setup
-#patch0 -p1
+%patch0 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -127,7 +127,6 @@ package contain documentation and examples for using Bazaar.
 %endif
 
 %install
-#define _compress_method none
 
 %if_with python3
 %python3_install --install-data=%_datadir
@@ -156,12 +155,14 @@ cp -a breezy/locale %buildroot%_datadir
 %if_with python3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/breezy/tests
+%exclude %python3_sitelibdir/breezy/git/tests
 %exclude %python3_sitelibdir/breezy/plugins/*/tests
 %exclude %python3_sitelibdir/breezy/util/tests
 
 %else
 %python_sitelibdir/*
 %exclude %python_sitelibdir/breezy/tests
+%exclude %python_sitelibdir/breezy/git/tests
 %exclude %python_sitelibdir/breezy/plugins/*/tests
 %exclude %python_sitelibdir/breezy/util/tests
 
@@ -170,12 +171,12 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir
 %exclude %breezy_docdir/doc
 %exclude %breezy_docdir/contrib
-#%%_datadir/locale/*/LC_MESSAGES/brz.mo
 
 %if_with python3
 
 %files -n python3-module-breezy-tests
 %python3_sitelibdir/breezy/tests
+%python3_sitelibdir/breezy/git/tests
 %python3_sitelibdir/breezy/plugins/*/tests
 %python3_sitelibdir/breezy/util/tests
 
@@ -183,6 +184,7 @@ cp -a breezy/locale %buildroot%_datadir
 
 %files -n python-module-breezy-tests
 %python_sitelibdir/breezy/tests
+%python_sitelibdir/breezy/git/tests
 %python_sitelibdir/breezy/plugins/*/tests
 %python_sitelibdir/breezy/util/tests
 
@@ -194,9 +196,14 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/contrib
 
 %changelog
+* Mon Aug 12 2019 Anatoly Kitaikin <cetus@altlinux.org> 3.0.1-alt3
+- Git plugin path fix
+
+* Tue Jul 09 2019 Anatoly Kitaikin <cetus@altlinux.org> 3.0.1-alt2
+- Rebuilt with python3
+
 * Wed Jun 19 2019 Anatoly Kitaykin <cetus@altlinux.org> 3.0.1-alt1
 - Release 3.0.1
 
 * Fri Apr 26 2019 Anatoly Kitaykin <cetus@altlinux.org> 3.0.0-alt1
 - Initial build
-
