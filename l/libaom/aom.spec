@@ -7,7 +7,7 @@
 
 Name: lib%oname
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: AV1 Codec Library
 
 Group: System/Libraries
@@ -55,6 +55,9 @@ The %name-docs package contains documentation files for %name.
 %setup
 %patch1 -p1
 
+# Override old version from changelog
+echo -n %version > version
+
 %build
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -62,7 +65,8 @@ The %name-docs package contains documentation files for %name.
 	-DAOM_TARGET_CPU:STRING=generic \
 	-DENABLE_DOCS:BOOL=ON \
 	-DENABLE_EXAMPLES:BOOL=ON \
-	-DENABLE_TOOLS:BOOL=ON
+	-DENABLE_TOOLS:BOOL=ON \
+	%nil
 
 %cmake_build
 
@@ -92,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/BUILD/third_party/googletest/sr
 %doc BUILD/docs/html
 
 %changelog
+* Mon Aug 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
+- Fixed version detection (Closes: #37096).
+
 * Thu Feb 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Updated to upstream version 1.0.0.
 
