@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus-%oname
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 Summary: Prometheus blackbox prober exporter
 
 Group: Development/Other
@@ -72,6 +72,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Tue Aug 13 2019 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 
