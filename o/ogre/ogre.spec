@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt1.2
+Release: alt1.2.qa1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -15,9 +15,6 @@ BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel lib
 #BuildRequires:  glew-devel 
 BuildRequires: libharfbuzz-devel libGLES-devel libpoco-devel
 BuildRequires: libglsl-optimizer-devel libGLEW-devel hlsl2glsl
-%ifarch %ix86 x86_64
-BuildRequires: libcg-devel
-%endif
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -144,6 +141,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Tue Aug 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.9.0-alt1.2.qa1
+- Rebuilt without libcg.
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1.2
 - NMU: aarch64 build
 
