@@ -1,7 +1,7 @@
 %define pg_ver 11
 
 Name: postgis
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -113,6 +113,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt1
+- New version.
+
 * Tue Mar 19 2019 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt1
 - New version.
 - Require postgresql11 (ALT #36240).
