@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.27.0
-Release: alt2
+Version: 1.29.0
+Release: alt1
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
 License: MIT
@@ -55,6 +55,7 @@ modes:                                                                   \
 
 BuildArch: noarch
 %py_provides %oname
+%py_provides pytest_xdist
 %py_requires pytest-forked
 
 %description %overview
@@ -62,6 +63,7 @@ BuildArch: noarch
 Summary: py.test xdist plugin for distributed testing and loop-on-failing modes
 Group: Development/Python3
 %py3_provides %oname
+%py3_provides pytest_xdist
 %py3_requires pytest-forked
 
 %description -n python3-module-%oname
@@ -126,6 +128,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Tue Aug 13 2019 Stanislav Levin <slev@altlinux.org> 1.29.0-alt1
+- 1.27.0 -> 1.29.0.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.27.0-alt2
 - Fixed testing against Pytest 5.
 
