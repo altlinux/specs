@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 16.6.0
+Version: 16.7.2
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -104,20 +104,20 @@ popd
 %python_install
 
 %check
-# we don't package pytest 4.x yet
+# we have packaged pytest 4 and 5
 grep -qsF 'pytest >= 4.0.0, <5' setup.cfg || exit 1
 sed -i 's/pytest >= 4.0.0, <5/pytest/g' setup.cfg
 
-# another one workaround for pytest 3.x
-grep -rlF 'monkeypatch.chdir(tmp_path)' | \
-xargs sed -i 's/monkeypatch.chdir(tmp_path)/monkeypatch.chdir(str(tmp_path))/g'
-
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 commands_pre =\
-    \/bin\/cp %_bindir\/coverage \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' \
+-e '/^setenv[ ]*=.*$/a\
+    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
+    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3' \
+tox.ini
 
 export PIP_NO_INDEX=YES
 export PIP_FIND_LINKS=`pwd`/build/lib/virtualenv_support
@@ -142,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/__pycache__/virtualenv.*
 
 %changelog
+* Tue Aug 13 2019 Stanislav Levin <slev@altlinux.org> 16.7.2-alt1
+- 16.6.0 -> 16.7.2.
+
 * Thu May 16 2019 Stanislav Levin <slev@altlinux.org> 16.6.0-alt1
 - 16.5.0 -> 16.6.0.
 
