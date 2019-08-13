@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 14.6
+Version: 14.7
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -22,11 +22,14 @@ Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name.watch
 Patch1:	 %name-fix-pathes.patch
 Patch2:  %name-alt-fix-missing-global-variables.patch
+Patch3:  %name-fix-mariadb-includes-path.patch
+Patch4:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: libMySQL-devel
+BuildRequires: libmariadb-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: libpcre-devel
 
 %description
 Free financial accounting system.
@@ -35,6 +38,8 @@ Free financial accounting system.
 %setup -q -c
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
+%patch4 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/uk_ru
 
 %build
@@ -60,6 +65,11 @@ cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 14.7-alt1
+- new version 14.7
+- fix path of MariaDB includes and its library name
+- add development requires (libmariadb-devel and libpcre-devel)
+
 * Sat Jun 22 2019 Cronbuild Service <cronbuild@altlinux.org> 14.6-alt1
 - new version 14.6
 
