@@ -1,6 +1,6 @@
 Name: qlipper
-Version: 5.1.1
-Release: alt5
+Version: 5.1.2
+Release: alt1
 
 Summary: Lightweight clipboard history
 License: GPLv3+
@@ -57,6 +57,9 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/qlipper-startup.desktop
 
 %changelog
+* Tue Aug 13 2019 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt1
+- new version 5.1.2
+
 * Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 5.1.1-alt5
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - Drop remainders of %%ubt use
