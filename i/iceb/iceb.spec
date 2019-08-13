@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 19.6
+Version: 19.7
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -14,15 +14,23 @@ Url:     http://iceb.net.ua
 
 Source:  %name-%version.tar
 Source1: %name.watch
+Patch1:  %name-fix-mariadb-includes-path.patch
+Patch2:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ glib2-devel libMySQL-devel libncursesw-devel
+BuildRequires: gcc-c++
+BuildRequires: glib2-devel
+BuildRequires: libmariadb-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libpcre-devel
 
 %description
 Free financial accounting system.
 
 %prep
 %setup -q -c
+%patch1 -p2
+%patch2 -p2
 
 %build
 %cmake
@@ -52,6 +60,11 @@ cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_pixmapsdir/*.png
 
 %changelog
+* Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 19.7-alt1
+- new version 19.7
+- fix path of MariaDB includes and its library name
+- add development requires (libmariadb-devel and libpcre-devel)
+
 * Sat Jun 22 2019 Cronbuild Service <cronbuild@altlinux.org> 19.6-alt1
 - new version 19.6
 
