@@ -2,10 +2,10 @@
 
 %define oname pyparsing
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 2.2.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Python parsing module
@@ -13,17 +13,17 @@ Summary: Python parsing module
 License: MIT
 Group: Development/Python
 URL: https://pypi.org/project/pyparsing
-Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+
+%if_with check
+BuildRequires: python2.7(coverage)
+BuildRequires: python3(coverage)
+BuildRequires: python3(tox)
 %endif
 
-# http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 %description
 The parsing module is an alternative approach to creating and executing
@@ -42,41 +42,60 @@ regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
 %prep
-%setup -n %oname-%version
+%setup
+# don't pin deps and remove extra
+sed -i \
+-e 's/==/>=/g' \
+-e '/tox/d' \
+requirements-dev.txt
 
-%if_with python3
-cp -fR . ../python3
-%endif
+cp -a . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
+
+%check
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
+    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
+commands_pre =\
+    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
-%doc CHANGES examples docs/*
-%doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
-%python_sitelibdir/*
+%doc CHANGES README.rst
+%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
+%python_sitelibdir/%oname.py
+%python_sitelibdir/%oname.py[oc]
 
 %files -n python3-module-%oname
-%doc CHANGES examples docs/*
-%doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
-%python3_sitelibdir/*
+%doc CHANGES README.rst
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%oname.cpython-*.py*
 
 %changelog
+* Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
+- 2.2.0 -> 2.4.2.
+- Enabled testing.
+
 * Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
 - Updated to upstream version 2.2.0.
 
