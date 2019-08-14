@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.111
+Version: 0.112
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -22,9 +22,11 @@ Summary: RPM macros to build kernel packages
 Group: Development/Kernel
 Conflicts: rpm-build < 4.0.4-alt1
 
+%ifnarch %ix86 x86_64 ppc64le aarch64
+Provides: kernel-headers-modules-std-def
+%endif
 %ifnarch %ix86 x86_64 ppc64le
 Provides: kernel-headers-modules-un-def
-Provides: kernel-headers-modules-std-def
 Provides: kernel-headers-modules-std-debug
 %endif
 %ifnarch %ix86 x86_64
@@ -80,6 +82,14 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/query-kEVR.sh
 
 %changelog
+* Wed Aug 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.112-alt1
+- rpm-build-kernel: removed P: kernel-headers-modules-std-def on aarch64.
+- km-create-tag:
+  + added aarch64 and ppc64le to default karch;
+  + changed -a/--arches argument handling to accumulate parameters;
+  + added support of .gear/km-karch config file to map kernel flavour to
+  module's @karch@ specsubst variable.
+
 * Fri Jul 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.111-alt1
 - rpm-build-kernel:
   + removed P: kernel-headers-modules-std-def on ppc64le;
