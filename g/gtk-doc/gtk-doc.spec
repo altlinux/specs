@@ -1,10 +1,10 @@
 %def_disable snapshot
 %def_with mkpdf
-%def_disable check
+%def_enable check
 
 Name: gtk-doc
-Version: 1.29
-Release: alt2
+Version: 1.32
+Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -21,7 +21,6 @@ Requires: docbook-dtds >= 4.3-alt1
 Requires: docbook-style-xsl
 Requires: libxml2 >= 2.3.6
 Requires: xsltproc
-%{?_with_mkpdf:Requires: highlight}
 # for SGML
 Requires: openjade >= 1.3.1
 Requires: docbook-style-dsssl
@@ -39,15 +38,15 @@ Provides: python3(gtkdoc)
 %add_python3_path %_datadir/%name/python/gtkdoc
 
 BuildRequires(pre): rpm-build-python3 rpm-build-licenses
-BuildRequires: python3-devel >= %python_ver
+BuildRequires: python3-devel >= %python_ver python3-module-Pygments
 BuildRequires: docbook-dtds xml-common xml-utils
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl bc
-%{?_with_mkpdf:BuildRequires: yelp-tools highlight dblatex >= %dblatex_ver}
+%{?_with_mkpdf:BuildRequires: yelp-tools dblatex >= %dblatex_ver}
 # for SGML
 BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
-%{?_enable_check:BuildRequires: glib2-devel python-module-mock}
+%{?_enable_check:BuildRequires: glib2-devel python3-module-mock python3-module-parameterized python3-module-anytree}
 
 %description
 %name is a tool for generating API reference documentation.
@@ -83,7 +82,7 @@ subst 's/libdir/datadir/' buildsystems/cmake/Makefile.am
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
-rm -f examples/*~
+
 
 %build
 %autoreconf
@@ -94,8 +93,7 @@ export ac_cv_path_XSLTPROC=%_bindir/xsltproc
 %{?_with_mkpdf:export ac_cv_path_DBLATEX=%_bindir/dblatex}
 %configure \
     --with-xml-catalog=%_sysconfdir/xml/catalog \
-    --docdir=%pkgdocdir \
-    %{?_with_mkpdf:--with-highlight=highlight}
+    --docdir=%pkgdocdir
 %make_build
 
 %install
@@ -149,6 +147,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu Aug 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.32-alt1
+- 1.32
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.29-alt2
 - fixed BR (ALT #35673)
 
