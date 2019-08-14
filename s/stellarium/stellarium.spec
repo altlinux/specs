@@ -1,6 +1,6 @@
 Name: stellarium
-Version: 0.18.3
-Release: alt2
+Version: 0.19.1
+Release: alt1
 
 Summary: Astronomical Sky Simulator
 License: GPLv2
@@ -60,6 +60,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.19.1-alt1
+- Build new version.
+
 * Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 0.18.3-alt2
 - E2K: drop Unicode BoM symbols from source files
 - Minor spec cleanup
