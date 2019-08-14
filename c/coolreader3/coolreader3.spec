@@ -1,7 +1,7 @@
 %define real_name    cr3
 
 Name:     coolreader3
-Version:  3.2.29
+Version:  3.2.32
 Release:  alt2
 
 Summary: E-Book reader
@@ -82,6 +82,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.32-alt2
+- Build new version.
+
 * Wed May 22 2019 Michael Shigorin <mike@altlinux.org> 3.2.29-alt2
 - E2K: strip UTF-8 BOM to fix build with lcc < 1.24
 
