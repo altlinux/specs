@@ -7,8 +7,8 @@ complete RFC-959 FTP server implementation available for Python programming \
 language.
 
 Name: %fname-docs
-Version: 1.5.4
-Release: alt3
+Version: 1.5.5
+Release: alt1
 
 %if "-docs"==""
 Summary: Python FTP server library
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.5.5-alt1
+- Build new version.
+
 * Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt3
 - Updated runtime dependencies.
 
