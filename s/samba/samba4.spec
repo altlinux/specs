@@ -59,8 +59,8 @@
 %endif
 
 Name:    samba
-Version: 4.10.5
-Release: alt1
+Version: 4.10.6
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -158,7 +158,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 1.5.4
+%define ldb_version 1.5.5
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python-module-pyldb-devel
 BuildRequires: python3-module-pyldb-devel
@@ -1822,6 +1822,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Aug 14 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.6-alt2
+- Change lstat to stat check in directory_create_or_exist for compatibility
+  with oldstyle /var/run due it symlink in modern linux installations
+
+* Mon Aug 12 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.6-alt1
+- Update to latest summer release
+
 * Wed Jul 31 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.5-alt1
 - Update to latest security release
 - Security fixes:
