@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 Summary: Draws Python object reference graphs with graphviz
 License: MIT
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt1
+- Build new version.
+
 * Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Build new version.
 
