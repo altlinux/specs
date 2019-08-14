@@ -1,5 +1,5 @@
 Name: midish
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 Summary: MIDI sequencer/filter
 Group: Sound
@@ -32,10 +32,9 @@ Important features:
 %setup -n %name
 
 %build
-./configure --prefix=/usr \
-    --enable-rmidish \
+./configure --prefix=/usr
 
-make
+%make_build
 
 %install
 %makeinstall_std
@@ -49,6 +48,9 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Build new version.
+
 * Mon Feb 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
 - Build new version.
 
