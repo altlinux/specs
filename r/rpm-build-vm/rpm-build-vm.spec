@@ -7,12 +7,13 @@
 
 Name: rpm-build-vm
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
 Group: Development/Other
 Source0: %name-%version.tar
+ExclusiveArch: %ix86 x86_64 ppc64le aarch64
 
 # /proc is required for qemu 9p to work, otherwise you'll get
 # confusing ENOENT when creating a file. This is because
@@ -88,6 +89,9 @@ chmod a+twx /run/dbus
 control mount unprivileged
 
 %changelog
+* Thu Aug 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt3
+- Add ExclusiveArch for only supported arches.
+
 * Mon Aug 12 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt2
 - Improvements for ppc64le.
 
