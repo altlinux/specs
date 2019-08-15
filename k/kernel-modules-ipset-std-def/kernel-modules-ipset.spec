@@ -1,9 +1,9 @@
 %define module_name	ipset
 %define module_version	7.3
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		std-def
-%define karch x86_64 i586 ppc64le aarch64
+%define karch %ix86 x86_64 aarch64 ppc64le
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -15,7 +15,7 @@ Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
-ExclusiveArch: x86_64 i586 ppc64le aarch64
+ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
