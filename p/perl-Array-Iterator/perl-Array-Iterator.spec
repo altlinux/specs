@@ -1,4 +1,4 @@
-%define module_version 0.11
+%define _unpackaged_files_terminate_build 1
 %define module_name Array-Iterator
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(blib.pm) perl-devel
@@ -7,14 +7,14 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(blib.pm) perl
 %define upstream_version 0.11
 
 Name:       perl-%{upstream_name}
-Version:    0.11
-Release:    alt3
+Version:    0.12
+Release:    alt1
 
 Summary:    A subclass of Array::Iterator to allow forwards and backwards iteration
 License:    perl
 Group:      Development/Perl
 URL:        http://search.cpan.org/dist/Array-Iterator/
-Source0:    http://cpan.org.ua/authors/id/S/SH/SHARYANTO/%{module_name}-%{module_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/P/PE/PERLANCAR/%{module_name}-%{version}.tar.gz
 
 BuildRequires: perl(Capture/Tiny.pm)
 BuildRequires: perl(Module/Build.pm)
@@ -32,7 +32,7 @@ only intends to provide a clear and simple means of generic iteration,
 nothing more (yet).
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 # %%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
@@ -50,11 +50,14 @@ make test
 %makeinstall_std
 
 %files
-%doc README Changes LICENSE
+%doc README Changes
 %perl_vendor_privlib/*
 
 
 %changelog
+* Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3
 - to Sisyphus as dep for Devel-PerlySense
 
