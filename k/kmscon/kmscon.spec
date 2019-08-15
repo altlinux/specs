@@ -1,6 +1,6 @@
 Name: kmscon
 Version: 8
-Release: alt3.40.g01dd0a2
+Release: alt4.40.g01dd0a2
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -51,12 +51,6 @@ install -pm 0644 docs/kmsconvt@.service %buildroot%_unitdir
 %check
 %make check
 
-%post
-%post_service %name.service
-
-%preun
-%preun_service %name.service
-
 %files
 %doc COPYING NEWS README
 %_bindir/%name
@@ -68,6 +62,9 @@ install -pm 0644 docs/kmsconvt@.service %buildroot%_unitdir
 %_man1dir/%name.1*
 
 %changelog
+* Thu Aug 15 2019 Alexey Shabalin <shaba@altlinux.org> 8-alt4.40.g01dd0a2
+- disable post/preun scripts
+
 * Thu Aug 01 2019 Alexey Shabalin <shaba@altlinux.org> 8-alt3.40.g01dd0a2
 - Update to git snapshot 01dd0a2
 
