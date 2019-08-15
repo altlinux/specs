@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        68.0.1
+Version:        68.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -43,7 +43,6 @@ Patch005: 0005-FEDORA-build-arm.patch
 Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch009: 0009-ALT-Include-linux-sockios.h-header.patch
 Patch010: 0010-ALT-Fix-aarch64-build.patch
 ### End Patches
 
@@ -161,7 +160,6 @@ to run Firefox natively on Wayland.
 %patch006 -p1
 %patch007 -p1
 %patch008 -p1
-%patch009 -p1
 %patch010 -p1
 ### Finish apply patches
 
@@ -389,6 +387,11 @@ done
 %_datadir/applications/firefox-wayland.desktop
 
 %changelog
+* Thu Aug 15 2019 Andrey Cherepanov <cas@altlinux.org> 68.0.2-alt1
+- New ESR version (68.0.2).
+- Fixed:
+  + CVE-2019-11733 Stored passwords in 'Saved Logins' can be copied without master password entry
+
 * Fri Jul 19 2019 Andrey Cherepanov <cas@altlinux.org> 68.0.1-alt1
 - New ESR version (68.0.1).
 - Fixed:
