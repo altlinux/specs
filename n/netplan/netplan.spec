@@ -1,6 +1,6 @@
 Name:    netplan
 Version: 0.97
-Release: alt1
+Release: alt2
 
 Summary: Backend-agnostic network configuration in YAML
 License: GPL-3.0
@@ -19,8 +19,6 @@ BuildRequires:  pkgconfig(uuid)
 BuildRequires:  %_bindir/pandoc
 
 Requires:       iproute2
-Requires:       systemd
-Requires:       systemd-networkd
 
 %add_python3_path %_datadir/%name
 
@@ -52,5 +50,8 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Thu Aug 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.97-alt2
+- Remove Requires to systemd and systemd-networkd, it could use NetworkManager
+
 * Fri Jul 26 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.97-alt1
 - Initial build for Sisyphus
