@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Autoformat
 Name: perl-%dist
-Version: 1.74
+Version: 1.75
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Summary: Automatic text wrapping and reformatting
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/Text-Autoformat-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ user to adjust inter-word and inter-paragraph spacing, justify text, and impose
 various capitalization schemes.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +39,9 @@ various capitalization schemes.
 %perl_vendor_privlib/Text
 
 %changelog
+* Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.75-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.74-alt1
 - automated CPAN update
 
