@@ -1,6 +1,6 @@
 Name: clickhouse
-Version: 19.11.5.28
-Release: alt2
+Version: 19.13.2.19
+Release: alt1
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
 Group: Databases
@@ -16,7 +16,8 @@ BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, libr
 BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
 BuildRequires: libpoco-devel, libgtest-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
 BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
-BuildRequires: llvm-devel, gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static
+BuildRequires: llvm-devel, gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static, boost-lockfree-devel
+BuildRequires: libprotobuf-devel
 %ifarch x86_64
 BuildRequires: libhyperscan-devel
 %endif
@@ -135,6 +136,15 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Wed Aug 14 2019 Anton Farygin <rider@altlinux.ru> 19.13.2.19-alt1
+- 19.13.2.19
+
+* Mon Aug 12 2019 Anton Farygin <rider@altlinux.ru> 19.13.1.11-alt1
+- 19.13.1.11
+
+* Wed Aug 07 2019 Anton Farygin <rider@altlinux.ru> 19.11.6.31-alt1
+- 19.11.6.31-alt1
+
 * Tue Aug 06 2019 Anton Farygin <rider@altlinux.ru> 19.11.5.28-alt2
 - 19.11.5.28
 - fixed build on aarch64 and ppc (thanx to Sergey Bolshakov)
