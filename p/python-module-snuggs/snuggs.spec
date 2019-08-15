@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname snuggs
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt3.1
+Version: 1.4.6
+Release: alt1
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
 Group: Development/Python
@@ -13,81 +13,74 @@ Url: https://pypi.python.org/pypi/snuggs
 
 # https://github.com/mapbox/snuggs.git
 Source: %name-%version.tar
+Patch: snuggs-1.4.6-Skip-some-broken-assertions.patch
 BuildArch: noarch
 
-BuildRequires: python-module-numpy-testing python-module-pyparsing python-module-setuptools
-BuildRequires: python2.7(click)
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-numpy-testing python3-module-pyparsing python3-module-setuptools
-BuildRequires: python3(click)
-BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
-%py_requires click numpy pyparsing
+%if_with check
+BuildRequires: python2.7(hypothesis)
+BuildRequires: python2.7(numpy)
+BuildRequires: python2.7(pyparsing)
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(hypothesis)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pyparsing)
+BuildRequires: python3(pytest)
+%endif
 
 %description
 Snuggs are s-expressions for Numpy.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Snuggs are s-expressions for Numpy
 Group: Development/Python3
-%py3_provides %oname
-%py3_requires click numpy pyparsing
 
 %description -n python3-module-%oname
 Snuggs are s-expressions for Numpy.
-%endif
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+cp -a . ../python3
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test -v
 py.test -vv
-%if_with python3
 pushd ../python3
-python3 setup.py test -v
 py.test3 -vv
 popd
-%endif
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
+%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
+%python_sitelibdir/%oname/__init__.py
+%python_sitelibdir/%oname/__init__.py[oc]
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname/__init__.py
+%python3_sitelibdir/%oname/__pycache__/__init__.cpython-*.py*
 
 %changelog
+* Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 1.4.6-alt1
+- 1.4.1 -> 1.4.6.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt3.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

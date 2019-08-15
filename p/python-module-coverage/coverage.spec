@@ -6,7 +6,7 @@
 %def_with doc
 
 Name: python-module-%oname
-Version: 4.5.3
+Version: 4.5.4
 Release: alt1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
@@ -165,6 +165,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 4.5.4-alt1
+- 4.5.3 -> 4.5.4.
+
 * Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1
 - 4.5.1 -> 4.5.3.
 - Enabled testing for Python3 package.
