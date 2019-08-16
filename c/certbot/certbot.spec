@@ -1,9 +1,9 @@
-# TODO: augeas botocore
+# TODO: botocore
 
 %def_with plugins
 
 Name: certbot
-Version: 0.35.1
+Version: 0.37.1
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -88,6 +88,8 @@ Group: Networking/Other
 Summary: Certbot Apache plugin
 AutoProv: no
 Requires: %name = %EVR
+# ALT bug 37004
+Requires: python-module-augeas
 
 %description apache
 Certbot Apache plugin.
@@ -141,8 +143,8 @@ cd certbot-apache
 %python_build
 cd ../certbot-nginx
 %python_build
-cd ../certbot-postfix
-%python_build
+#cd ../certbot-postfix
+#%python_build
 cd ../certbot-dns-route53
 %python_build
 cd ../certbot-dns-rfc2136
@@ -156,8 +158,8 @@ cd certbot-apache
 %python_install --install-purelib=%certbotdir
 cd ../certbot-nginx
 %python_install --install-purelib=%certbotdir
-cd ../certbot-postfix
-%python_install --install-purelib=%certbotdir
+#cd ../certbot-postfix
+#%python_install --install-purelib=%certbotdir
 cd ../certbot-dns-route53
 %python_install --install-purelib=%certbotdir
 cd ../certbot-dns-rfc2136
@@ -218,10 +220,10 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %certbotdir/certbot_apache/
 %certbotdir/certbot_apache-%{version}*.egg-info
 
-%files postfix
-%doc LICENSE.txt
-%certbotdir/certbot_postfix/
-%certbotdir/certbot_postfix-*.egg-info
+#files postfix
+#doc LICENSE.txt
+#certbotdir/certbot_postfix/
+#certbotdir/certbot_postfix-*.egg-info
 
 %files dns_rfc2136
 %doc LICENSE.txt
@@ -235,6 +237,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Fri Aug 16 2019 Vitaly Lipatov <lav@altlinux.ru> 0.37.1-alt1
+- new version 0.37.1 (with rpmrb script)
+
 * Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 0.35.1-alt1
 - new version 0.35.1 (with rpmrb script)
 
