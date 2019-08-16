@@ -1,9 +1,9 @@
 %define module_name	lkrg
 %define module_version	0.7
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-pae
-%define karch		i586
+%define karch		%ix86
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 %setup_kernel_module %flavour
@@ -47,7 +47,7 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
 
 %build
-%make_build -C %_usrsrc/linux-%kversion-%flavour modules SUBDIRS=`pwd`
+%make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
 
 %install
 install -d %buildroot%module_dir
@@ -60,6 +60,11 @@ install p_lkrg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Aug 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt2
+- Built with gear km-karch scheme.
+- std-def flavour: built for aarch64.
+- spec: replaced 'SUBDIRS' with 'M='.
 
 * Mon Jul 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1
 - Initial build for ALT Sisyphus.
