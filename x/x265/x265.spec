@@ -1,6 +1,6 @@
-%define soversion 160
+%define soversion 176
 Name: x265
-Version: 2.8
+Version: 3.1.2
 Release: alt1
 
 Summary: H.265/HEVC encoder
@@ -64,6 +64,9 @@ cmake -DCMAKE_CXX_FLAGS='%optflags' -DCMAKE_INSTALL_PREFIX=%prefix -DLIB_INSTALL
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 09 2019 Anton Farygin <rider@altlinux.ru> 3.1.2-alt1
+- 3.1.2
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 2.8-alt1
 - 2.8 
 
