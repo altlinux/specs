@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
 Version: 1.1.0.3.0.255.ge3af41d.p1
-Release: alt1
+Release: alt1.1
 
 License: BSD-style
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -38,6 +38,10 @@ GOST file digesting utilites.
 %patch1 -p1
 
 %build
+%ifarch %e2k
+# lcc 1.23.12: test_curves.c: if ((test = (e)))
+%add_optflags -Wno-error=assign-where-compare-meant
+%endif
 %cmake \
 	#
 
@@ -65,6 +69,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Fri Aug 16 2019 Michael Shigorin <mike@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt1.1
+- E2K: workaround tests ftbfs
+
 * Thu Jul 04 2019 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt1
 - Allow to set an IV for MAC using EVP_MD_CTRL_SET_IV (patch).
 - Added ECB mode GOST28147-89 cipher (patch).
