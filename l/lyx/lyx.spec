@@ -1,5 +1,5 @@
 Name: lyx
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
@@ -126,6 +126,9 @@ python configure.py
 %files -n lyx-tex
 
 %changelog
+* Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.3.3-alt1
+- Updated to 2.3.3.
+
 * Thu Mar 28 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.3.2-alt1
 - Fixed package version.
 
