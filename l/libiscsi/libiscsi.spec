@@ -1,6 +1,6 @@
 Name: libiscsi
-Version: 1.18.0
-Release: alt3
+Version: 1.19.0
+Release: alt1
 
 Summary: iSCSI client library
 License: LGPLv2.1+
@@ -8,7 +8,6 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
-Patch: %name-%version.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
@@ -39,7 +38,6 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -64,6 +62,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Sep 12 2019 Alexey Shabalin <shaba@altlinux.org> 1.19.0-alt1
+- new version 1.19.0
+
 * Wed Dec 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.0-alt3
 - Fixed FTBFS (Disabled Werror).
 
