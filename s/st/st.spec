@@ -1,5 +1,5 @@
 Name: st
-Version: 0.7
+Version: 0.8.2
 Release: alt1
 Summary: A simple terminal implementation for X
 License: MIT
@@ -35,18 +35,10 @@ customized configurations.
 
 %prep
 %setup
-sed -i.backup -e 's|-Os|%optflags|' config.mk
-cmp -s config.mk{,.backup} && false
-
-sed -i.backup -e "s!^\(LDFLAGS.*$\)!\1 %{?__global_ldflags}!" config.mk
-cmp -s config.mk{,.backup} && false
-
-# terminfo entries are provided by ncurses-base
-sed -i.backup -e "/@tic/d" Makefile
-cmp -s Makefile{,.backup} && false
+sed -e "/\<tic\>/d" -i Makefile
 
 %build
-%make_build
+%make_build CC="cc -std=c99" CFLAGS="%optflags"
 
 %install
 %makeinstall_std PREFIX=%prefix
@@ -85,5 +77,8 @@ EOF
 %_man1dir/st-user.1*
 
 %changelog
+* Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.2-alt1
+- Updated to 0.8.2.
+
 * Mon Sep 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7-alt1
 - Initial build.
