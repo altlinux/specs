@@ -18,7 +18,7 @@
 
 Name: calligraplan
 Version: 3.1.0
-Release: alt6
+Release: alt7
 Epoch: 0
 %K5init
 
@@ -35,6 +35,7 @@ Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.t
 # Upstream patches
 Patch1: 0001-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch2: 0002-Fix-compile-on-CI.patch
+Patch3: 0003-Port-to-KCalCore-API-changes.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -168,6 +169,7 @@ Requires: %oname-common = %EVR
 %setup
 %patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -264,6 +266,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Fri Aug 23 2019 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt7
+- fix build with new kcalcore
+
 * Thu Aug 15 2019 Oleg Solovyov <mcpain@altlinux.org> 0:3.1.0-alt6
 - Fixed build
 
