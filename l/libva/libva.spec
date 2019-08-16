@@ -4,8 +4,8 @@
 %def_enable x11
 
 Name: libva
-Version: 2.4.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -74,6 +74,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 16 2019 Anton Farygin <rider@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 
