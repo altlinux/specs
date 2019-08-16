@@ -1,6 +1,6 @@
 Name: wmfire
 Version: 1.2.4
-Release: alt5
+Release: alt6
 
 Summary: WindowMaker dock-app showing CPU load as a flame
 License: GPL
@@ -13,6 +13,7 @@ Source2: %name.desktop
 Source100: %name.watch
 Patch0: wmfire-1.2.3-stringh.patch
 Patch1: wmfire-1.2.4-no_display.patch
+Patch2: wmfire-1.2.4-inline_c99.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.UTF-8): Аплет WindowMaker, отображающий загрузку в виде пламени
@@ -55,14 +56,13 @@ wmfire - цікавий аплет для WindowMaker, який відображ
 %setup -a1
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %build
 export LDFLAGS="$LDFLAGS -lgdk-x11-2.0"
 export CFLAGS="$CFLAGS %optflags \
 	-funroll-loops \
-%ifnarch e2k
 	-fexpensive-optimizations \
-%endif
 	-fomit-frame-pointer \
 	-I%_includedir/libgtop-2.0"
 %autoreconf
@@ -86,6 +86,9 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Fri Aug 16 2019 Michael Shigorin <mike@altlinux.org> 1.2.4-alt6
+- fixed e2k ftbfs with gentoo c99 patch (see gentoo#686136)
+
 * Mon Oct 23 2017 Michael Shigorin <mike@altlinux.org> 1.2.4-alt5
 - rebuilt against current libgtop
 
