@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 19.07.0
-Release: alt3
+Version: 19.08.0
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -74,6 +74,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Fri Aug 16 2019 Andrey Cherepanov <cas@altlinux.org> 19.08.0-alt1
+- New version.
+
 * Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 19.07.0-alt3
 - E2K: strip UTF-8 BOM for lcc < 1.24; explicit -std=c++11
 
