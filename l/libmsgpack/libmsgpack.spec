@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: Binary-based efficient object serialization library
 
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/msgpack/msgpack-c/releases/download/cpp-%version/%oname-%version.tar.gz
 Source: %name-%version.tar
-Patch: msgpack-fix-int-float-test.patch
+Patch: msgpack-3.2.0-alt-fix-vrefbuffer-use-on-ppc64le.patch
 
 BuildRequires: cmake zlib-devel
 BuildRequires: gcc-c++ >= 4.8
@@ -42,8 +42,8 @@ Libraries and header files for %name
 
 %prep
 %setup
-#patch0 -p1 -b .fix-int-float-test
-%__subst "s|/lib|/%_lib|g" CMakeLists.txt
+%patch0 -p2
+subst "s|/lib|/%_lib|g" CMakeLists.txt
 
 %build
 %cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON
@@ -68,6 +68,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack/
 
 %changelog
+* Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.0-alt2
+- Fixed use of vrefbuffer.hpp header on ppc64le.
+
 * Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version 3.2.0 (with rpmrb script)
 
