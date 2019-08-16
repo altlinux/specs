@@ -3,7 +3,7 @@
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt1
+Release: alt2
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -14,7 +14,7 @@ Url:  https://www.openwall.com/lkrg/
 # repacked https://www.openwall.com/lkrg/lkrg-%version.tar.gz
 Source: %module_name-%version.tar
 
-ExclusiveArch: i586 x86_64
+ExclusiveArch: i586 x86_64 aarch64
 BuildRequires(pre): kernel-build-tools
 BuildArch: noarch
 
@@ -42,6 +42,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Aug 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt2
+- Built for aarch64.
+
 * Mon Jul 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1
 - Initial build for ALT Sisyphus.
 
