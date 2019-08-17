@@ -1,7 +1,7 @@
 %define oname thread
 
 Name: tcl-thread
-Version: 2.8.0
+Version: 2.8.2
 Release: alt1
 
 Summary: A tcl extension implementing memory channels
@@ -9,7 +9,9 @@ License: BSD
 Group: Development/Tcl
 Url: http://tcl.sourceforge.net/
 
-Source: %name-%version-%release.tar
+# repacked thread%version.tar.gz from https://sourceforge.net/projects/tcl/files/
+Source: %oname%version.tar
+Patch1: 0001-Alt-TEA.patch
 
 Requires: tcl >= 8.5.0-alt0.1
 
@@ -38,7 +40,8 @@ synchronization primitives, like mutexes and condition variables.
 This package contains development files.
 
 %prep
-%setup
+%setup -q -n %oname%version
+%patch1 -p1
 sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
 
 %build
@@ -57,6 +60,9 @@ sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
 %_includedir/*.h
 
 %changelog
+* Sat Aug 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.2-alt1
+- 2.8.2.
+
 * Sun Apr 30 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.0-alt1
 - 2.8.0 released
 
