@@ -1,14 +1,24 @@
+%define oname tcltls
+
 Name: tcl-tls
-Version: 1.7.12
-Release: alt2.1
+Version: 1.7.18
+Release: alt1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
 License: BSD
 Group: Development/Tcl
 Url: https://core.tcl.tk/tcltls/
 
-# git://git.altlinux.org/gears/t/tcl-tls.git
-Source: %name-%version-%release.tar
+# repacked https://core.tcl-lang.org/tcltls/uv/tcltls-%version.tar.gz
+Source: %oname-%version.tar
+
+# Debian patches
+# hasher chroot
+Patch1: hostname-tests.patch
+
+# ALT patches
+Patch10: 0001-ALT-TEA.patch
+Patch11: 0002-ALT-tests-auto_path.patch
 
 BuildPreReq:  rpm-build-tcl >= 0.5-alt1
 BuildRequires: libssl-devel tcl-devel >= 8.6.7-alt2
@@ -20,7 +30,10 @@ Both client and server-side sockets are possible, and this code should work
 on any platform as it uses a generic mechanism for layering on SSL and Tcl.
 
 %prep
-%setup -n %name-%version-%release
+%setup -q -n %oname-%version
+%patch1 -p1
+%patch10 -p2
+%patch11 -p2
 sed -i 's/@lib@/%_lib/g' pkgIndex.tcl.in
 
 %build
@@ -34,8 +47,8 @@ make
 %install
 %makeinstall
 
-mkdir -p %buildroot%_includedir
-install -m0644 tls.h %buildroot%_includedir
+%check
+make test AUTO_PATH=%buildroot%_tcllibdir/tcltls%version
 
 %files
 %doc ChangeLog README.txt license.terms tls.htm
@@ -44,6 +57,10 @@ install -m0644 tls.h %buildroot%_includedir
 %_tcldatadir/tcltls%version
 
 %changelog
+* Sat Aug 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.18-alt1
+- 1.7.18.
+- Enabled tests.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.12-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
