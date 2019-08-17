@@ -3,21 +3,25 @@
 
 Name: tcl-incrtk4
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: [incr Tk] is a framework for building mega-widgets
 License: BSD
 Group: Development/Tcl
 Url: http://incrtcl.sourceforge.net/
 
-# http://git.altlinux.org/gears/t/tcl-incrtcl4.git
-Source: %name-%version-%release.tar
+# repacked %oname%version.tar.gz from https://sourceforge.net/projects/incrtcl/files/
+Source: %oname%version.tar
+Patch1: 0001-ALT-TEA.patch
+Patch2: 0002-ALT-soname.patch
 
 BuildRequires: rpm-build-tcl >= 0.4-alt1 tk-devel >= 8.6.6
 BuildRequires: tcl-incrtcl4-devel
 Provides: tcl-incrtk = %EVR
 Obsoletes: tcl-incrtk < 4.0.0
 Conflicts: tcl-iwidgets <= 4.0.2-alt3
+
+Requires: tcl-incrtcl4 tk
 
 %package devel
 Summary: Header files and C programming manual for [Incr Tk]
@@ -37,7 +41,11 @@ default widget behaviors.
 This package includes header files and C programming manual for [incr Tk].
 
 %prep
-%setup
+%setup -q -n %oname%version
+# remove unneeded stuff
+rm -r win/
+%patch1 -p1
+%patch2 -p1
 %teapatch
 sed -i 's/\$dir \"/\$dir .. .. .. %_lib tcl \"/' pkgIndex.tcl.in
 
@@ -49,9 +57,6 @@ sed -i 's/\$dir \"/\$dir .. .. .. %_lib tcl \"/' pkgIndex.tcl.in
 %install
 %makeinstall_std
 
-%check
-make test
-
 %files
 %_tcllibdir/lib%oname%version.so
 %_tcldatadir/itk%version
@@ -61,6 +66,10 @@ make test
 %_includedir/*.h
 
 %changelog
+* Sat Aug 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.0-alt2
+- Added missing dependencies to tcl-incrtcl4 and tk.
+- Disabled tests cause they required X11 runtime.
+
 * Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
