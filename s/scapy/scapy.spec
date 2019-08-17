@@ -1,7 +1,7 @@
 %define module_name scapy
 
 Name: scapy
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Scapy is a powerful interactive packet manipulation program written in Python
@@ -58,6 +58,9 @@ rm -rf %buildroot%python_sitelibdir/%name/arch/windows
 %python_sitelibdir/%name-*egg-info
 
 %changelog
+* Fri Aug 16 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- new version 2.4.2 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0 (with rpmrb script)
 
