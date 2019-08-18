@@ -7,13 +7,16 @@
 
 Name: rpm-build-vm
 Version: 1.0
-Release: alt3
+Release: alt4
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
 Group: Development/Other
-Source0: %name-%version.tar
-ExclusiveArch: %ix86 x86_64 ppc64le aarch64
+
+%ifarch %ix86 x86_64 ppc64le aarch64
+# QEMU supported arches
+
+Source: %name-%version.tar
 
 # /proc is required for qemu 9p to work, otherwise you'll get
 # confusing ENOENT when creating a file. This is because
@@ -39,12 +42,12 @@ Requires: make-initrd
 Requires: mount
 
 %description
-RPM helper to run QEMU inside of hasher. This is mainly intended
-for %%check section to test softwares under better emulated root
+RPM helper to run QEMU inside hasher. This is mainly intended
+for %%check section to test software under better emulated root
 than fakeroot.
 
 %prep
-%setup -q
+%setup
 
 %install
 install -D -p -m 0755 vm-run      %buildroot%_bindir/vm-run
@@ -88,7 +91,29 @@ chmod a+twx /run/dbus
 # u&mount should to be readable
 control mount unprivileged
 
+%else
+# QEMU-unsupported arches: package a stub
+
+%description
+A stub package instead of RPM helper to run QEMU inside hasher
+on supported architectures (this one is unsupported).
+
+%prep
+
+%install
+mkdir -p %buildroot%_bindir
+ln -sr %buildroot{/bin/true,%_bindir/vm-run}
+
+%files
+%_bindir/vm-run
+
+%endif
+
 %changelog
+* Sun Aug 18 2019 Michael Shigorin <mike@altlinux.org> 1.0-alt4
+- Rework to provide a stub package on qemu-unsupported arches
+  (that can be added into BuildRequires: unconditionally).
+
 * Thu Aug 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt3
 - Add ExclusiveArch for only supported arches.
 

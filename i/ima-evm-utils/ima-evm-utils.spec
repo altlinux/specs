@@ -2,13 +2,13 @@
 
 Name: ima-evm-utils
 Version: 1.2.1
-Release: alt3
+Release: alt4
 
 Summary: IMA/EVM support utilities
-Group: System/Configuration/Other
 License: GPLv2
-Url: http://linux-ima.sourceforge.net/
+Group: System/Configuration/Other
 
+Url: http://linux-ima.sourceforge.net/
 # Repacked http://sourceforge.net/projects/linux-ima/files/ima-evm-utils/%name-%version.tar.gz
 Source: %name-%version.tar
 
@@ -16,10 +16,8 @@ Source: %name-%version.tar
 # optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules xml-common
 BuildRequires: asciidoc docbook-style-xsl libattr-devel libkeyutils-devel libssl-devel python-modules-compiler python-modules-encodings time xsltproc
 
-%ifarch %ix86 x86_64 ppc64le aarch64
 # For tests
-BuildRequires: rpm-build-vm openssl attr e2fsprogs xxd
-%endif
+%{?!_without_check:%{?!_disable_check:BuildRequires: openssl attr e2fsprogs xxd rpm-build-vm >= 1.0-alt4}}
 
 Requires: libimaevm = %EVR
 
@@ -77,11 +75,9 @@ sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-s
 %install
 %makeinstall_std doc_DATA=
 
-%ifarch %ix86 x86_64 ppc64le aarch64
 %check
 # ext4 is required to run tests becasue of xattrs
 vm-run --overlay=ext4 make check
-%endif
 
 %files
 %doc ChangeLog README AUTHORS COPYING examples/*.sh
@@ -96,6 +92,9 @@ vm-run --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Sun Aug 18 2019 Michael Shigorin <mike@altlinux.org> 1.2.1-alt4
+- Rework rpm-build-vm use to avoid archdep BR:.
+
 * Sun Aug 18 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt3
 - ifarch tests and rpm-build-vm to only working arches.
 
