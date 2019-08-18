@@ -1,6 +1,6 @@
 Name: ocaml-lablgl
-Version: 1.05
-Release: alt8
+Version: 1.06
+Release: alt1
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
@@ -110,6 +110,9 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Fri Aug 16 2019 Anton Farygin <rider@altlinux.ru> 1.06-alt1
+- 1.06
+
 * Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.05-alt8
 - rebuilt with ocaml-4.08
 - preprocessor changed from camlp4 to camlp5
