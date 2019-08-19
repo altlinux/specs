@@ -2,7 +2,7 @@
 
 Name: ima-evm-utils
 Version: 1.2.1
-Release: alt4
+Release: alt5
 
 Summary: IMA/EVM support utilities
 License: GPLv2
@@ -92,6 +92,9 @@ vm-run --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Mon Aug 19 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt5
+- Enable Large File Support.
+
 * Sun Aug 18 2019 Michael Shigorin <mike@altlinux.org> 1.2.1-alt4
 - Rework rpm-build-vm use to avoid archdep BR:.
 

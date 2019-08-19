@@ -6,17 +6,18 @@
 #
 
 Name: rpm-build-vm
-Version: 1.0
-Release: alt4
+Version: 1.1
+Release: alt1
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
 Group: Development/Other
 
-%ifarch %ix86 x86_64 ppc64le aarch64
-# QEMU supported arches
-
 Source: %name-%version.tar
+
+%ifarch %ix86 x86_64 ppc64le aarch64
+# = QEMU supported arches =
+# Other arches will get a stub which will always return success
 
 # /proc is required for qemu 9p to work, otherwise you'll get
 # confusing ENOENT when creating a file. This is because
@@ -46,6 +47,8 @@ RPM helper to run QEMU inside hasher. This is mainly intended
 for %%check section to test software under better emulated root
 than fakeroot.
 
+This is similar to multiple vm scripts, virtme, vido, and eudyptula-boot.
+
 %prep
 %setup
 
@@ -60,10 +63,6 @@ install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
 %_sbindir/vm-init
 %_libexecdir/%name/sbin/init-bin
 %_libexecdir/%name/config.mk
-
-%pre
-# Only allow to install inside of hasher.
-[ -d /.host -a -d /.in -a -d /.out ]
 
 %post
 # We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
@@ -92,24 +91,35 @@ chmod a+twx /run/dbus
 control mount unprivileged
 
 %else
-# QEMU-unsupported arches: package a stub
+# = QEMU un-supported arches =
 
 %description
 A stub package instead of RPM helper to run QEMU inside hasher
-on supported architectures (this one is unsupported).
+on supported architectures (this one (%_arch) is unsupported).
 
 %prep
+%setup
 
 %install
-mkdir -p %buildroot%_bindir
-ln -sr %buildroot{/bin/true,%_bindir/vm-run}
+install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 
 %files
 %_bindir/vm-run
 
+# endif for QEMU un-supported arches
 %endif
 
+%pre
+# Only allow to install inside of hasher.
+[ -d /.host -a -d /.in -a -d /.out ]
+
 %changelog
+* Mon Aug 19 2019 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
+- Do not use `qemu' binary on x86 due to qemu repackage.
+
+* Mon Aug 19 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt5
+- Make stub vm-run output a warning message
+
 * Sun Aug 18 2019 Michael Shigorin <mike@altlinux.org> 1.0-alt4
 - Rework to provide a stub package on qemu-unsupported arches
   (that can be added into BuildRequires: unconditionally).
