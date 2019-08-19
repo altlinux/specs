@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.3.3
+Version: 2.4.1
 Release: alt1
 Epoch: 1
 
@@ -281,7 +281,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %attr(700,root,root) /sbin/mount.nfs
 /sbin/mount.nfs4
 /sbin/umount.*
-/sbin/osd_login
 %_bindir/showmount
 %_sbindir/rpcdebug
 
@@ -299,6 +298,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Aug 19 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.4.1-alt1
+- 2.4.1 released
+
 * Thu Feb 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.3-alt1
 - 2.3.3 released
 
