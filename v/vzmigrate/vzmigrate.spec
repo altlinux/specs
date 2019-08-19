@@ -1,6 +1,6 @@
 Name:     vzmigrate
 Version:  7.0.123
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -15,7 +15,7 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64
 
 # these reqs are for vz helper scripts
-Requires: ploop >= 7.0.1
+Requires: ploop >= 7.0.160
 Requires: network-config-subsystem
 Requires: libvzctl
 Requires: libvztt
@@ -23,10 +23,10 @@ Requires: libvztt
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel libuuid-devel
 BuildRequires: systemd-devel libudev-devel
-BuildRequires: libvzctl-devel >= 7.0.411
+BuildRequires: libvzctl-devel >= 7.0.535
 BuildRequires: libvzsock-devel
 BuildRequires: libssl-devel openssl libkrb5-devel
-BuildRequires: libploop-devel >= 7.0.1
+BuildRequires: libploop-devel >= 7.0.160
 BuildRequires: libvztt-devel
 BuildRequires: libzstd-devel
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
@@ -75,9 +75,13 @@ make install \
 %_man8dir/*
 %_datadir/%name/
 %_datadir/pmigrate/
-%config(noreplace) %_sysconfdir/logrotate.d/%name
+%config(noreplace) %_logrotatedir/%name
 %doc *.md
 
 %changelog
+* Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.123-alt2
+- more specific requirements
+- revert define macros patch
+
 * Fri Aug 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.123-alt1
 - Initial build for Sisyphus

@@ -1,6 +1,6 @@
 Name:     libvzsock
 Version:  7.0.3
-Release:  alt1
+Release:  alt2
 
 Summary:  libvzsock is a helper library for networking connections code generalization.
 License:  LGPLv2.1+
@@ -50,5 +50,8 @@ make CFLAGS="$RPM_OPT_FLAGS"
 %_includedir/vz/*.h
 
 %changelog
+* Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt2
+- preserve debug info
+
 * Thu Aug 01 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt1
 - Initial build for Sisyphus

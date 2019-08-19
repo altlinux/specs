@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.191
+Version: 7.0.207
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -15,14 +15,14 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64
 
 # these reqs are for vz helper scripts
-Requires: ploop >= 7.0.1
+Requires: ploop >= 7.0.160
 Requires: network-config-subsystem
 Requires: libvzctl
 
 BuildRequires: glibc-devel libuuid-devel
 BuildRequires: systemd-devel libudev-devel
-BuildRequires: libvzctl-devel >= 7.0.411
-BuildRequires: libploop-devel >= 7.0.1
+BuildRequires: libvzctl-devel >= 7.0.535
+BuildRequires: libploop-devel >= 7.0.160
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 
 %define _libexecdir /usr/libexec
@@ -127,6 +127,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.207-alt1
+- Update to 7.0.207
+
 * Sun Nov 04 2018 Alexey Shabalin <shaba@altlinux.org> 7.0.191-alt1
 - Update to 7.0.191
 
