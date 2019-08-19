@@ -1,5 +1,5 @@
 Name: skiboot
-Version: 6.3.1
+Version: 6.3.3
 Release: alt1
 Summary: OPAL Processor Recovery Diagnostics Daemon
 
@@ -76,8 +76,8 @@ make -C external/pflash install DESTDIR=%buildroot prefix=/usr
 mkdir -p %buildroot%_unitdir
 install -m 644 -p external/opal-prd/opal-prd.service %buildroot%_unitdir/opal-prd.service
 
-mkdir -p %buildroot%_datadir/qemu
-install -m 644 -p skiboot.lid %buildroot%_datadir/qemu/skiboot.lid
+mkdir -p %buildroot%_datadir/%name
+install -m 644 -p skiboot.lid %buildroot%_datadir/%name/skiboot.lid
 
 %post
 %post_service opal-prd
@@ -102,8 +102,13 @@ install -m 644 -p skiboot.lid %buildroot%_datadir/qemu/skiboot.lid
 
 %files -n opal-firmware
 %doc README.md LICENCE
-%_datadir/qemu/
+%_datadir/%name/
 
 %changelog
+* Mon Aug 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.3-alt1
+- Updated to 6.3.3.
+- opal-firmware: move firmware to /usr/share/skiboot to avoid conflict
+  with qemu package.
+
 * Thu Jul 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt1
 - Initial build.
