@@ -22,7 +22,7 @@
 
 Name: evolution
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -83,6 +83,7 @@ BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver libcryptui-devel
 BuildRequires: libkrb5-devel
+BuildRequires: highlight
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_ytnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
@@ -173,6 +174,7 @@ the functionality of the installed Evolution.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 # reenable RPATH* to link against private libraries
 %cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
@@ -267,6 +269,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Aug 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1.1
+- fixed buildrequires
+
 * Mon Jul 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
 - 3.32.4
 
