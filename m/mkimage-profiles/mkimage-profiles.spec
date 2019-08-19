@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.11.1
+Version: 1.3.12
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Aug 19 2019 Michael Shigorin <mike@altlinux.org> 1.3.12-alt1
+- ppc64le support (glebfm@)
+- build-vm hacked to build tarballs too (iv@ et al)
+- p8.mk: dropped; along with other cleanups/fixups (antohami)
+
 * Tue Jul 09 2019 Michael Shigorin <mike@altlinux.org> 1.3.11.1-alt1
 - x11: reverted vulkan changes (need more testing)
 
