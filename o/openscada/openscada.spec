@@ -39,7 +39,11 @@
 %def_enable MMS
 # FT3 bad_elf_symbols detected: _ZN3FT35TProt8optDescrB5cxx11Ev
 %def_disable FT3
+%ifarch aarch64 %arm
 %def_enable GPIO
+%else
+%force_disable GPIO
+%endif
 
 #=====  Archive modules =====
 %def_enable FSArch
@@ -78,7 +82,7 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.9.0
-Release: alt5
+Release: alt6
 Source: openscada-%version.tar
 Source1: openscada-res.tar.xz
 Patch: added_lsb_header.patch
@@ -118,38 +122,38 @@ BuildRequires: qt5-base-devel qt5-sensors-devel zlib-devel
 BuildRequires: libqt4-devel libqt4-sensors-devel
 %endif
 
-%{?_enabled_DBArch:Requires: %name-Archive.DBArch = %EVR}
-%{?_enabled_FSArch:Requires: %name-Archive.FSArch = %EVR}
-%{?_enabled_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
-%{?_enabled_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
-%{?_enabled_DCON:Requires: %name-DAQ.DCON = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
-%{?_enabled_ModBus:Requires: %name-DAQ.ModBus = %EVR}
-%{?_enabled_OPC_UA:Requires: %name-DAQ.OPC_UA = %EVR}
-%{?_enabled_SNMP:Requires: %name-DAQ.SNMP = %EVR}
-%{?_enabled_Siemens:Requires: %name-DAQ.Siemens = %EVR}
-%{?_enabled_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
-%{?_enabled_System:Requires: %name-DAQ.System = %EVR}
-%{?_enabled_GPIO:Requires: %name-DAQ.GPIO = %EVR}
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_MySQL:Requires: %name-DB.MySQL = %EVR}
-%{?_enabled_Sockets:Requires: %name-Transport.Sockets = %EVR}
-%{?_enabled_SSL:Requires: %name-Transport.SSL = %EVR}
-%{?_enabled_Serial:Requires: %name-Transport.Serial = %EVR}
-%{?_enabled_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
-%{?_enabled_HTTP:Requires: %name-Protocol.HTTP = %EVR}
-%{?_enabled_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
-%{?_enabled_QTStarter:Requires: %name-UI.QTStarter = %EVR}
-%{?_enabled_QTCfg:Requires: %name-UI.QTCfg = %EVR}
-%{?_enabled_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
-%{?_enabled_Vision:Requires: %name-UI.Vision = %EVR}
-%{?_enabled_WebVision:Requires: %name-UI.WebVision = %EVR}
-%{?_enabled_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
-%{?_enabled_WebUser:Requires: %name-UI.WebUser = %EVR}
-%{?_enabled_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
-%{?_enabled_FLibMath:Requires: %name-Special.FLibMath = %EVR}
+%{?_enable_DBArch:Requires: %name-Archive.DBArch = %EVR}
+%{?_enable_FSArch:Requires: %name-Archive.FSArch = %EVR}
+%{?_enable_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
+%{?_enable_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
+%{?_enable_DCON:Requires: %name-DAQ.DCON = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
+%{?_enable_ModBus:Requires: %name-DAQ.ModBus = %EVR}
+%{?_enable_OPC_UA:Requires: %name-DAQ.OPC_UA = %EVR}
+%{?_enable_SNMP:Requires: %name-DAQ.SNMP = %EVR}
+%{?_enable_Siemens:Requires: %name-DAQ.Siemens = %EVR}
+%{?_enable_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
+%{?_enable_System:Requires: %name-DAQ.System = %EVR}
+%{?_enable_GPIO:Requires: %name-DAQ.GPIO = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_MySQL:Requires: %name-DB.MySQL = %EVR}
+%{?_enable_Sockets:Requires: %name-Transport.Sockets = %EVR}
+%{?_enable_SSL:Requires: %name-Transport.SSL = %EVR}
+%{?_enable_Serial:Requires: %name-Transport.Serial = %EVR}
+%{?_enable_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
+%{?_enable_HTTP:Requires: %name-Protocol.HTTP = %EVR}
+%{?_enable_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
+%{?_enable_QTStarter:Requires: %name-UI.QTStarter = %EVR}
+%{?_enable_QTCfg:Requires: %name-UI.QTCfg = %EVR}
+%{?_enable_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
+%{?_enable_Vision:Requires: %name-UI.Vision = %EVR}
+%{?_enable_WebVision:Requires: %name-UI.WebVision = %EVR}
+%{?_enable_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
+%{?_enable_WebUser:Requires: %name-UI.WebUser = %EVR}
+%{?_enable_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_FLibMath:Requires: %name-Special.FLibMath = %EVR}
 
 %description
 Open SCADA system. Typical installation.
@@ -251,11 +255,11 @@ Summary(ru_RU.UTF8): Основные библиотеки OpenSCADA для сб
 Summary(uk_UA.UTF8): Основні бібліотеки OpenSCADA для збору даних та іншого у БД SQLite
 Summary(de_DE.UTF8): Hauptbibliothek OpenSCADA für die Datenerhebung und die anderen in der Datenbank SQLite
 Group: Engineering
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
-%{?_enabled_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
+%{?_enable_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
 BuildArch: noarch
 %description LibDB.Main
 The %{name}-LibDB.Main package includes main OpenSCADA libraries into SQLite DB.
@@ -276,10 +280,10 @@ Summary(ru_RU.UTF8): Библиотеки визуальных компонет�
 Summary(uk_UA.UTF8): Бібліотеки візуальних компонентів у БД SQLite
 Summary(de_DE.UTF8): Visuelle Komponente in einer Bibliothek Datenbank SQLite
 Group: Engineering
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
-%{?_enabled_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
 BuildArch: noarch
 %description LibDB.VCA
 The %{name}-LibDB.VCA package includes visual components libraries into SQLite DB.
@@ -303,22 +307,22 @@ Group: Engineering
 BuildArch: noarch
 Requires: %name-LibDB.Main = %EVR
 Requires: %name-LibDB.VCA = %EVR
-%{?_enabled_Sockets:Requires: %name-Transport.Sockets = %EVR}
-%{?_enabled_SSL:Requires: %name-Transport.SSL = %EVR}
-%{?_enabled_Serial:Requires: %name-Transport.Serial = %EVR}
-%{?_enabled_HTTP:Requires: %name-Protocol.HTTP = %EVR}
-%{?_enabled_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
-%{?_enabled_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
-%{?_enabled_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
-%{?_enabled_ModBus:Requires: %name-DAQ.ModBus = %EVR}
-%{?_enabled_System:Requires: %name-DAQ.System = %EVR}
-%{?_enabled_FSArch:Requires: %name-Archive.FSArch = %EVR}
-%{?_enabled_QTStarter:Requires: %name-UI.QTStarter = %EVR}
-%{?_enabled_QTCfg:Requires: %name-UI.QTCfg = %EVR}
-%{?_enabled_Vision:Requires: %name-UI.Vision = %EVR}
-%{?_enabled_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
-%{?_enabled_WebVision:Requires: %name-UI.WebVision = %EVR}
-%{?_enabled_FLibMath:Requires: %name-Special.FLibMath = %EVR}
+%{?_enable_Sockets:Requires: %name-Transport.Sockets = %EVR}
+%{?_enable_SSL:Requires: %name-Transport.SSL = %EVR}
+%{?_enable_Serial:Requires: %name-Transport.Serial = %EVR}
+%{?_enable_HTTP:Requires: %name-Protocol.HTTP = %EVR}
+%{?_enable_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
+%{?_enable_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
+%{?_enable_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
+%{?_enable_ModBus:Requires: %name-DAQ.ModBus = %EVR}
+%{?_enable_System:Requires: %name-DAQ.System = %EVR}
+%{?_enable_FSArch:Requires: %name-Archive.FSArch = %EVR}
+%{?_enable_QTStarter:Requires: %name-UI.QTStarter = %EVR}
+%{?_enable_QTCfg:Requires: %name-UI.QTCfg = %EVR}
+%{?_enable_Vision:Requires: %name-UI.Vision = %EVR}
+%{?_enable_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
+%{?_enable_WebVision:Requires: %name-UI.WebVision = %EVR}
+%{?_enable_FLibMath:Requires: %name-Special.FLibMath = %EVR}
 %description Model.AGLKS
 The %{name}-Model.AGLKS package includes model "AGLKS" data bases and config.
 The Model is used for OpenSCADA demo and allowed for English, Ukrainian and Russian languages.
@@ -378,26 +382,26 @@ Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - ПЛК
 Summary(de_DE.UTF8): OpenSCADA - SPS virtuelles Paket
 Group: Engineering
 BuildArch: noarch
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_Serial:Requires: %name-Transport.Serial = %EVR}
-%{?_enabled_Sockets:Requires: %name-Transport.Sockets = %EVR}
-%{?_enabled_SSL:Requires: %name-Transport.SSL = %EVR}
-%{?_enabled_HTTP:Requires: %name-Protocol.HTTP = %EVR}
-%{?_enabled_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
-%{?_enabled_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
-%{?_enabled_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
-%{?_enabled_ModBus:Requires: %name-DAQ.ModBus = %EVR}
-%{?_enabled_System:Requires: %name-DAQ.System = %EVR}
-%{?_enabled_DCON:Requires: %name-DAQ.DCON = %EVR}
-%{?_enabled_FSArch:Requires: %name-Archive.FSArch = %EVR}
-%{?_enabled_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
-%{?_enabled_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
-%{?_enabled_WebVision:Requires: %name-UI.WebVision = %EVR}
-%{?_enabled_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
-%{?_enabled_FLibMath:Requires: %name-Special.FLibMath = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_Serial:Requires: %name-Transport.Serial = %EVR}
+%{?_enable_Sockets:Requires: %name-Transport.Sockets = %EVR}
+%{?_enable_SSL:Requires: %name-Transport.SSL = %EVR}
+%{?_enable_HTTP:Requires: %name-Protocol.HTTP = %EVR}
+%{?_enable_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
+%{?_enable_UserProtocol:Requires: %name-Protocol.UserProtocol = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
+%{?_enable_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
+%{?_enable_ModBus:Requires: %name-DAQ.ModBus = %EVR}
+%{?_enable_System:Requires: %name-DAQ.System = %EVR}
+%{?_enable_DCON:Requires: %name-DAQ.DCON = %EVR}
+%{?_enable_FSArch:Requires: %name-Archive.FSArch = %EVR}
+%{?_enable_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
+%{?_enable_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
+%{?_enable_WebVision:Requires: %name-UI.WebVision = %EVR}
+%{?_enable_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
+%{?_enable_FLibMath:Requires: %name-Special.FLibMath = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
 Conflicts: %name-server
 %description plc
 The %name-plc is virtual package for PLC.
@@ -415,34 +419,34 @@ Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - сервер
 Summary(de_DE.UTF8): OpenSCADA - Server virtuelles Paket
 Group: Engineering
 BuildArch: noarch
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_MySQL:Requires: %name-DB.MySQL = %EVR}
-%{?_enabled_FireBird:Requires: %name-DB.FireBird = %EVR}
-%{?_enabled_PostgreSQL:Requires: %name-DB.PostgreSQL = %EVR}
-%{?_enabled_System:Requires: %name-DAQ.System = %EVR}
-%{?_enabled_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
-%{?_enabled_SNMP:Requires: %name-DAQ.SNMP = %EVR}
-%{?_enabled_Siemens:Requires: %name-DAQ.Siemens = %EVR}
-%{?_enabled_ModBus:Requires: %name-DAQ.ModBus = %EVR}
-%{?_enabled_DCON:Requires: %name-DAQ.DCON = %EVR}
-%{?_enabled_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
-%{?_enabled_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
-%{?_enabled_FSArch:Requires: %name-Archive.FSArch = %EVR}
-%{?_enabled_DBArch:Requires: %name-Archive.DBArch = %EVR}
-%{?_enabled_Sockets:Requires: %name-Transport.Sockets = %EVR}
-%{?_enabled_SSL:Requires: %name-Transport.SSL = %EVR}
-%{?_enabled_Serial:Requires: %name-Transport.Serial = %EVR}
-%{?_enabled_HTTP:Requires: %name-Protocol.HTTP = %EVR}
-%{?_enabled_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
-%{?_enabled_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
-%{?_enabled_WebCfg:Requires: %name-UI.WebCfg = %EVR}
-%{?_enabled_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
-%{?_enabled_WebVision:Requires: %name-UI.WebVision = %EVR}
-%{?_enabled_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
-%{?_enabled_FLibMath:Requires: %name-Special.FLibMath = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_MySQL:Requires: %name-DB.MySQL = %EVR}
+%{?_enable_FireBird:Requires: %name-DB.FireBird = %EVR}
+%{?_enable_PostgreSQL:Requires: %name-DB.PostgreSQL = %EVR}
+%{?_enable_System:Requires: %name-DAQ.System = %EVR}
+%{?_enable_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
+%{?_enable_SNMP:Requires: %name-DAQ.SNMP = %EVR}
+%{?_enable_Siemens:Requires: %name-DAQ.Siemens = %EVR}
+%{?_enable_ModBus:Requires: %name-DAQ.ModBus = %EVR}
+%{?_enable_DCON:Requires: %name-DAQ.DCON = %EVR}
+%{?_enable_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
+%{?_enable_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
+%{?_enable_FSArch:Requires: %name-Archive.FSArch = %EVR}
+%{?_enable_DBArch:Requires: %name-Archive.DBArch = %EVR}
+%{?_enable_Sockets:Requires: %name-Transport.Sockets = %EVR}
+%{?_enable_SSL:Requires: %name-Transport.SSL = %EVR}
+%{?_enable_Serial:Requires: %name-Transport.Serial = %EVR}
+%{?_enable_HTTP:Requires: %name-Protocol.HTTP = %EVR}
+%{?_enable_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
+%{?_enable_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
+%{?_enable_WebCfg:Requires: %name-UI.WebCfg = %EVR}
+%{?_enable_WebCfgD:Requires: %name-UI.WebCfgD = %EVR}
+%{?_enable_WebVision:Requires: %name-UI.WebVision = %EVR}
+%{?_enable_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
+%{?_enable_FLibMath:Requires: %name-Special.FLibMath = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
 Conflicts: %name-plc
 %description server
 The %name-server is virtual package for SCADA-server.
@@ -460,31 +464,31 @@ Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - візуал�
 Summary(de_DE.UTF8): OpenSCADA - visuelle Station virtuelles Paket
 Group: Engineering
 BuildArch: noarch
-%{?_enabled_SQLite:Requires: %name-DB.SQLite = %EVR}
-%{?_enabled_MySQL:Requires: %name-DB.MySQL = %EVR}
-%{?_enabled_System:Requires: %name-DAQ.System = %EVR}
-%{?_enabled_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
-%{?_enabled_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
-%{?_enabled_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
-%{?_enabled_SNMP:Requires: %name-DAQ.SNMP = %EVR}
-%{?_enabled_Siemens:Requires: %name-DAQ.Siemens = %EVR}
-%{?_enabled_ModBus:Requires: %name-DAQ.ModBus = %EVR}
-%{?_enabled_DCON:Requires: %name-DAQ.DCON = %EVR}
-%{?_enabled_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
-%{?_enabled_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
-%{?_enabled_FSArch:Requires: %name-Archive.FSArch = %EVR}
-%{?_enabled_DBArch:Requires: %name-Archive.DBArch = %EVR}
-%{?_enabled_Sockets:Requires: %name-Transport.Sockets = %EVR}
-%{?_enabled_SSL:Requires: %name-Transport.SSL = %EVR}
-%{?_enabled_Serial:Requires: %name-Transport.Serial = %EVR}
-%{?_enabled_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
-%{?_enabled_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
-%{?_enabled_Vision:Requires: %name-UI.Vision = %EVR}
-%{?_enabled_QTStarter:Requires: %name-UI.QTStarter = %EVR}
-%{?_enabled_QTCfg:Requires: %name-UI.QTCfg = %EVR}
-%{?_enabled_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
-%{?_enabled_FLibMath:Requires: %name-Special.FLibMath = %EVR}
-%{?_enabled_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
+%{?_enable_SQLite:Requires: %name-DB.SQLite = %EVR}
+%{?_enable_MySQL:Requires: %name-DB.MySQL = %EVR}
+%{?_enable_System:Requires: %name-DAQ.System = %EVR}
+%{?_enable_BlockCalc:Requires: %name-DAQ.BlockCalc = %EVR}
+%{?_enable_JavaLikeCalc:Requires: %name-DAQ.JavaLikeCalc = %EVR}
+%{?_enable_LogicLev:Requires: %name-DAQ.LogicLev = %EVR}
+%{?_enable_SNMP:Requires: %name-DAQ.SNMP = %EVR}
+%{?_enable_Siemens:Requires: %name-DAQ.Siemens = %EVR}
+%{?_enable_ModBus:Requires: %name-DAQ.ModBus = %EVR}
+%{?_enable_DCON:Requires: %name-DAQ.DCON = %EVR}
+%{?_enable_DAQGate:Requires: %name-DAQ.DAQGate = %EVR}
+%{?_enable_SoundCard:Requires: %name-DAQ.SoundCard = %EVR}
+%{?_enable_FSArch:Requires: %name-Archive.FSArch = %EVR}
+%{?_enable_DBArch:Requires: %name-Archive.DBArch = %EVR}
+%{?_enable_Sockets:Requires: %name-Transport.Sockets = %EVR}
+%{?_enable_SSL:Requires: %name-Transport.SSL = %EVR}
+%{?_enable_Serial:Requires: %name-Transport.Serial = %EVR}
+%{?_enable_SelfSystem:Requires: %name-Protocol.SelfSystem = %EVR}
+%{?_enable_VCAEngine:Requires: %name-UI.VCAEngine = %EVR}
+%{?_enable_Vision:Requires: %name-UI.Vision = %EVR}
+%{?_enable_QTStarter:Requires: %name-UI.QTStarter = %EVR}
+%{?_enable_QTCfg:Requires: %name-UI.QTCfg = %EVR}
+%{?_enable_FLibComplex1:Requires: %name-Special.FLibComplex1 = %EVR}
+%{?_enable_FLibMath:Requires: %name-Special.FLibMath = %EVR}
+%{?_enable_FLibSYS:Requires: %name-Special.FLibSYS = %EVR}
 %description visStation
 The %name-visStation is virtual package for visual station (SCADA).
 %description visStation -l ru_RU.UTF8
@@ -1689,6 +1693,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Tue Aug 20 2019 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt6
+- fixed macros
+
 * Wed Jun 05 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt5
 - fixed knobs, wholesale
 
