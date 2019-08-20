@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.12.7
+Version: 0.12.8
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -9,8 +9,6 @@ Group:   System/Configuration/Packaging
 URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/Software
 Source0: appstream-%{version}.tar
 # VCS:   https://github.com/ximion/appstream
-
-Patch1: 0001-Find-LMDB-even-if-no-pkg-config-file-was-installed.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ctest
@@ -73,7 +71,6 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %meson  -Dqt=true \
@@ -134,6 +131,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Aug 20 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.8-alt1
+- New version.
+
 * Sun Jun 23 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.7-alt1
 - New version.
 
