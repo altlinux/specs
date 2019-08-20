@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
 Version: 2.8.12.3
-Release: alt6.git.ead9b38
+Release: alt7.git.e43a6d9
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -77,7 +77,6 @@ sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 #   https://github.com/pkulchenko/ZeroBraneStudio/blob/master/build/build-win32.sh#L300
 sed -i 's/\(m_wxlState = wxLuaState(wxlState.GetLuaState(), wxLUASTATE_GETSTATE|wxLUASTATE_ROOTSTATE);\)/\/\/ removed by ZBS build process \/\/ \1/' modules/wxlua/wxlcallb.cpp
 sed -i 's/LUA_VERSION_NUM < 502/0/' modules/wxlua/wxlcallb.cpp
-sed -i '/Unable to call an unknown method/{N;s/.*/    \/\/ removed by ZBS build process/}' modules/wxlua/wxlbind.cpp
 
 # prepare external wxstedit
 mkdir -p modules/wxstedit
@@ -143,6 +142,9 @@ mv %buildroot%_datadir/%name/samples docs2distribute/
 %endif
 
 %changelog
+* Mon Jun 24 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt7.git.e43a6d9
+- new version, compatible with wxWidgets 3.1.2 (closes: 36870)
+
 * Fri Jun 07 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt6.git.ead9b38
 - some fixes for ZeroBraneStudio
 
