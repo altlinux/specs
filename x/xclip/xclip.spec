@@ -1,15 +1,15 @@
 Name: xclip
-Version: 0.12
-Release: alt2
+Version: 0.13
+Release: alt1
 
-Packager: Victor Forsyuk <force@altlinux.org>
+Packager: Nikita Ermakov <arei@altlinux.org>
 
 Summary: Provides an interface to X selections from the command line
 License: GPLv2+
 Group: System/XFree86
 
-Url: http://sourceforge.net/projects/xclip
-Source: http://dl.sf.net/xclip/xclip-%version.tar.gz
+Url: https://github.com/astrand/xclip
+Source: %name-%version.tar
 Patch1: xclip-0.12-setsid.patch
 
 # Automatically added by buildreq on Sun Nov 15 2009
@@ -28,6 +28,7 @@ forwarding has already been setup.
 %patch1 -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -35,11 +36,15 @@ forwarding has already been setup.
 make DESTDIR=%buildroot install install.man
 
 %files
-%doc README
+%doc README INSTALL
 %_man1dir/*
 %_bindir/*
 
 %changelog
+* Tue Aug 20 2019 Nikita Ermakov <arei@altlinux.org> 0.13-alt1
+- Sync with an upstream (ALT bug #36554).
+- Minor fixes to the spec file.
+
 * Tue Jul 09 2019 Nikita Ermakov <arei@altlinux.org> 0.12-alt2
 - NMU: Introduce -nonl option.
 
