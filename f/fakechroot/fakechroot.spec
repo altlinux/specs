@@ -1,5 +1,5 @@
 Name: fakechroot
-Version: 2.19
+Version: 2.20.1
 Release: alt1
 Summary: Gives a fake chroot environment
 Group: Development/Tools
@@ -7,8 +7,6 @@ License: LGPLv2+
 Url: https://github.com/dex4er/fakechroot
 # Repacked %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
-
-Obsoletes: %name-libs < %EVR
 
 # Automatically added by buildreq on Wed Aug 31 2016
 # optimized out: gnu-config perl perl-podlators python-base python3
@@ -28,6 +26,7 @@ privileges.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--disable-silent-rules \
@@ -61,6 +60,12 @@ find %buildroot%_libdir -name '*.la' -delete -print
 %_mandir/man1/%name.1*
 
 %changelog
+* Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.20.1-alt1
+- Updated to 2.20.1.
+
+* Fri Aug 18 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.19-alt2
+- Added support of LFS-compatible fts functions.
+
 * Wed Feb 22 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.19-alt1
 - Updated to 2.19.
 
