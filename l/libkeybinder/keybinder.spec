@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable static
 %define sname keybinder
-%define luaver 5.1
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt5.git20120617.qa1
-
+Release: alt6.git20120617
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
 Group: System/Libraries
-Url: http://kaizer.se/wiki/keybinder/
+Url: https://github.com/engla/keybinder
 
-BuildRequires: libgtk+2-devel xorg-server-common python-devel liblua5.1-devel
+BuildRequires: libgtk+2-devel xorg-server-common python-devel
 BuildRequires: python-module-pygtk-devel libXext-devel
 BuildRequires: gobject-introspection-devel
-BuildPreReq: gtk-doc
+BuildRequires: gtk-doc
+
 # https://github.com/engla/keybinder.git
 Source: %name-%version.tar
 
@@ -31,7 +32,7 @@ The library contains:
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -39,7 +40,7 @@ GObject introspection data for the %name library
 %package devel
 Summary: Headers for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Headers for building software that uses %name
@@ -48,7 +49,7 @@ Headers for building software that uses %name
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -57,7 +58,7 @@ GObject introspection devel data for the %name library
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Static libs for building statically linked software that uses %name
@@ -66,27 +67,23 @@ Static libs for building statically linked software that uses %name
 %package -n python-module-keybinder
 Summary: Python binding to %name
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python-module-%sname
 Python binding to %name
-
-%package -n lua5-%name
-Summary: Lua5 binding to %name
-Group: Development/Other
-Requires: %name = %version-%release
-
-%description -n lua5-%name
-Lua5 binding to %name
 
 %prep
 %setup
 
 %build
 %autoreconf -I m4
-%configure %{subst_enable static} \
-	--enable-gtk-doc \
-	--with-html-dir=%_docdir
+%configure \
+	%{subst_enable static} \
+	--disable-gtk-doc \
+	--with-html-dir=%_docdir \
+	--disable-lua \
+	%nil
+
 %make_build V=1
 
 %install
@@ -100,7 +97,6 @@ Lua5 binding to %name
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%doc %_docdir/%sname
 
 %if_enabled static
 %files devel-static
@@ -116,11 +112,10 @@ Lua5 binding to %name
 %files gir-devel
 %_girdir/*
 
-#files -n lua5-%name
-#_libdir/lua/%luaver/*.so
-
-
 %changelog
+* Tue Aug 20 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt6.git20120617
+- Disabled generation of documentation.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt5.git20120617.qa1
 - NMU: applied repocop patch
 
