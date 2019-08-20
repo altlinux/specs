@@ -1,5 +1,5 @@
 Name: waypipe
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Network transparency agent for Wayland
@@ -18,7 +18,7 @@ Source: %name-%version-%release.tar
 %def_with with_video
 %def_with with_dmabuf
 %def_with with_lz4
-%def_without with_zstd
+%def_with with_zstd
 %def_with with_vaapi
 
 %define meson_subst_bool() %{expand:%%{?_enable_%{1}:-D%{1}=true}%%{?_disable_%{1}:-D%{1}=false}}
@@ -73,6 +73,10 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Tue Aug 20 2019 Arseny Maslennikov <arseny@altlinux.org> 0.6.0-alt1
+- 0.4.0 -> 0.6.0.
+- Built with libzstd.
+
 * Tue Jul 30 2019 Arseny Maslennikov <arseny@altlinux.org> 0.4.0-alt1
 - 0.3.0-29-gb9821d4 -> 0.4.0.
 
