@@ -1,5 +1,5 @@
 Name: blogc
-Version: 0.12.0
+Version: 0.17.0
 Release: alt1
 License: BSD
 Group: Text tools
@@ -7,7 +7,7 @@ Summary: A blog compiler
 Url: https://github.com/blogc/blogc
 
 # Repacked %url/archive/%version/%name-%version.tar.gz
-Source0: blogc-0.12.0.tar
+Source0: %name-%version.tar
 
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: perl pkg-config python-base
@@ -69,5 +69,8 @@ make check
 %_bindir/blogc-runserver
 
 %changelog
+* Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.17.0-alt1
+- Updated to 0.17.0.
+
 * Thu Mar 02 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.0-alt1
 - Initial build.
