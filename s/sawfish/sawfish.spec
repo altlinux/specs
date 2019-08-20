@@ -8,12 +8,12 @@
 
 Name: sawfish
 Version: 1.12.90
-Release: alt1
+Release: alt2
 
 Summary: An extensible window manager for the X Window System
 Group: Graphical desktop/Sawfish
 License: GPLv2
-Url: http://sawfish.wikia.com/
+Url: https://sawfish.wikia.com/
 
 Provides: %_x11sysconfdir/sawfish/site-init.d
 Provides: %_datadir/sawfish/site-lisp
@@ -52,7 +52,7 @@ using a GTK+ interface.  Sawfish is mostly GNOME compliant.
 Summary: GNOME integration package
 Group: Graphical desktop/GNOME
 BuildArch: noarch
-PreReq: %name = %version-%release
+PreReq: %name = %EVR
 PreReq: gnome-filesystem
 Requires: gnome-session
 Provides: gnome-wm
@@ -64,7 +64,7 @@ Sawfish GNOME integration package.
 Summary: GUI for creating sawfish window manager themes
 Group: Graphical desktop/Sawfish
 Requires: rep-gtk-libglade
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description themer
 The sawfish-themer package contains an optional theme builder for the
@@ -74,7 +74,8 @@ be created and edited in a graphical environment.
 %package devel
 Summary: Development files for sawfish
 Group: Development/Other
-Requires: %name = %version-%release, rpm-build-%name = %version-%release
+Requires: %name = %EVR
+Requires: rpm-build-%name = %EVR
 
 %description devel
 Header files for sawfish development.
@@ -83,8 +84,8 @@ Header files for sawfish development.
 Summary: RPM macros for sawfish-related packages
 Group: Development/Other
 BuildArch: noarch
-Conflicts: %name < %version-%release
-Conflicts: %name > %version-%release
+Conflicts: %name < %EVR
+Conflicts: %name > %EVR
 
 %description -n rpm-build-%name
 RPM macros for sawfish-related packages.
@@ -204,6 +205,9 @@ EOF
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Tue Aug 20 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt2
+- Fixed build with new pango.
+
 * Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt1
 - Updated to upstream version 1.12.90.
 
