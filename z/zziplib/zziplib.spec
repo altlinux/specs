@@ -3,7 +3,7 @@
 
 Name: zziplib
 Version: 0.13.69
-Release: alt1
+Release: alt2
 
 Summary: Lightweight library to easily extract data from zip files
 License: LGPL/MPL
@@ -81,6 +81,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' */libtool
 %_bindir/*
 
 %changelog
+* Wed Aug 21 2019 Anton Farygin <rider@altlinux.ru> 0.13.69-alt2
+- added upstream fixes for security issues (fixes: CVE-2018-16548, CVE-2018-17828)
+
 * Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 0.13.69-alt1
 - 0.13.69
 
