@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
@@ -262,6 +262,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Wed Aug 21 2019 Alexei Takaseev <taf@altlinux.org> 1.9.3-alt1
+- 1.9.3
+
 * Tue Jul 02 2019 Alexei Takaseev <taf@altlinux.org> 1.9.2-alt1
 - 1.9.2
 
