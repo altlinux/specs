@@ -3,9 +3,13 @@
 %define default_loroot %_libdir/LibreOffice
 %define loolparent %_localstatedir
 
+%ifarch ppc64le
+%define __nprocs 32
+%endif
+
 Name: libreoffice-online
 Version: 6.0.2.3
-Release: alt3
+Release: alt3.1
 
 Summary: LibreOffice Online WebSocket Daemon
 
@@ -213,6 +217,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
+* Wed Aug 21 2019 Alexei Takaseev <taf@altlinux.org> 6.0.2.3-alt3.1
+- Fix build (race-condition on ppc64le)
+
 * Tue Feb 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2.3-alt3
 - NMU: fixed build.
 
