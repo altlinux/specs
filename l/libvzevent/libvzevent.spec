@@ -6,14 +6,15 @@
 Name: libvzevent
 Summary: Virtuozzo event library
 Version: 7.0.7
-Release: alt2
+Release: alt3
 License: LGPLv2.1
 Group: System/Libraries
+# git-vsc: https://src.openvz.org/scm/ovz/libvzevent.git
+Url: https://openvz.org/
+
 Source: %name-%version.tar
 Source2: vzevent.tmpfiles
 Patch: %name-%version.patch
-
-# git-vsc: https://src.openvz.org/scm/ovz/libvzevent.git
 
 %description
 libvzevent is an event library. It is a component of OpenVZ.
@@ -37,6 +38,7 @@ Virtuozzo event development library
 %install
 %makeinstall_std -C src LIBDIR=%_libdir LIBVER=%_libver_major LIBVER_MINOR=%_libver_minor
 install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/vzevents.conf
+rm -f %buildroot%_libdir/%name.a
 
 %files
 %_libdir/libvzevent.so.*
@@ -48,6 +50,9 @@ install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/vzevents.conf
 %_includedir/vz/*.h
 
 %changelog
+* Wed Aug 21 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.7-alt3
+- remove static lib
+
 * Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.7-alt2
 - preserve debug info
 
