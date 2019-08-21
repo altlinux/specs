@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190726
+Version: 20190821
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,32 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Aug 21 2019 Cronbuild Service <cronbuild@altlinux.org> 20190821-alt1
+- upstream changes (GIT c0fb3d9):
+  + check_whence: Add copy-firmware.sh to the list of ignored files (thx Josh Boyer)
+  + rtl_bt: Update RTL8822C BT FW to V0x098A_94A4 (thx Max Chou)
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.2000.1886 (thx Ido Schimmel)
+  + rtw88: add a README file (thx Yan-Hsuan Chuang)
+  + rtw88: RTL8822C: add WoW firmware v7.3 (thx Yan-Hsuan Chuang)
+  + rtw88: RTL8822C: update rtw8822c_fw.bin to v7.3 (thx Yan-Hsuan Chuang)
+  + ath10k: QCA9984 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.9.0.2-00046 (thx Kalle Valo)
+  + ath10k: QCA988X hw2.0: update firmware-5.bin to 10.2.4-1.0-00045 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to
+    10.4-3.9.0.2-00040 (thx Kalle Valo)
+  + ath10k: QCA9887 hw1.0: update firmware-5.bin to 10.2.4-1.0-00045 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-6.bin to
+    WLAN.RM.4.4.1-00140-QCARMSWPZ-1 (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + cxgb4: update firmware to revision 1.24.3.0 (thx Vishal Kulkarni)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.10.A.38 (thx Louis Peens)
+
 * Wed Jul 31 2019 Cronbuild Service <cronbuild@altlinux.org> 20190726-alt1
 - upstream changes (GIT dff98c6):
   + nvidia: add missing entries in WHENCE (thx Ben Skeggs)
