@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/pytest-pylint/
 
 # https://github.com/carsongee/pytest-pylint.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-pytest-runner
@@ -33,6 +34,8 @@ BuildRequires: python3-module-pytest-pep8
 BuildRequires: python3-module-tox
 %endif
 
+%py_provides %oname
+
 %description
 Run pylint with pytest and have configurable rule types (i.e.
 Convention, Warn, and Error) fail the build. You can also specify a
@@ -41,6 +44,7 @@ pylintrc file.
 %package -n python3-module-%oname
 Summary: pytest plugin to check source code with pylint
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 Run pylint with pytest and have configurable rule types (i.e.
@@ -49,6 +53,7 @@ pylintrc file.
 
 %prep
 %setup
+%patch -p1
 
 rm -rf ../python3
 cp -fR . ../python3
@@ -68,12 +73,15 @@ pushd ../python3
 popd
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
+sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
+    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
 commands_pre =\
-    cp %_bindir\/coverage \{envbindir\}\/coverage\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
@@ -90,6 +98,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt2
+- Fixed testing against Pytest 5.1.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt1
 - 0.12.3 -> 0.14.0.
 

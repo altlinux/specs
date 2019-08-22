@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.2
-Release: alt1
+Release: alt2
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -59,6 +59,13 @@ sed -i \
 -e '/requirements\/requirements-optionals\.txt/d' \
 tox.ini
 
+# don't pin pytest at max version
+grep -qs 'pytest>=5\..*,<[0-9]\+\.[0-9]\+' \
+requirements/requirements-testing.txt || exit 1
+sed -i \
+-e 's/\(pytest>=5\..*\),<[0-9]\+\.[0-9]\+/\1/g' \
+requirements/requirements-testing.txt
+
 %build
 %python3_build_debug
 
@@ -85,6 +92,9 @@ tox.py3 --sitepackages -v
 
 
 %changelog
+* Mon Aug 19 2019 Stanislav Levin <slev@altlinux.org> 3.10.2-alt2
+- Allowed testing against Pytest5.1+.
+
 * Fri Aug 16 2019 Stanislav Levin <slev@altlinux.org> 3.10.2-alt1
 - 3.5.3 -> 3.10.2.
 - Enabled testing.

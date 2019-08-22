@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
+Version: 5.1.1
 Release: alt1
 
 Summary: Python test framework
@@ -40,8 +40,8 @@ BuildRequires: python3(pathlib2)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(pluggy)
 BuildRequires: python3(requests)
-BuildRequires: python3(unittest2)
 BuildRequires: python3(wcwidth)
+BuildRequires: python3(xmlschema)
 %endif
 
 BuildArch: noarch
@@ -116,6 +116,12 @@ tox.py3 --sitepackages -v
 %_bindir/pytest3
 
 %changelog
+* Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
+- 5.1.0 -> 5.1.1.
+
+* Fri Aug 16 2019 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.1 -> 5.1.0.
+
 * Mon Aug 05 2019 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
 - 4.6.2 -> 5.0.1.
 

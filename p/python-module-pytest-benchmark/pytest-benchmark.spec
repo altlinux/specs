@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.2.2
-Release: alt2
+Release: alt3
 Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -83,6 +83,9 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch -p1
+
+grep -qsF ' seconds ======*' tests/test_benchmark.py || exit 1
+sed -i 's/\( seconds\)\( =====*\)/\2/g' tests/test_benchmark.py
 
 # unpin or remove unpackaged testing deps
 grep -qsF 'pytest-instafail' tox.ini || exit 1
@@ -175,6 +178,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %endif
 
 %changelog
+* Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt3
+- Fixed testing against Pytest 5.1.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt2
 - Fixed testing against Pytest 5.
 
