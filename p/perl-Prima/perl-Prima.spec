@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 ##define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MPrima::Const'
 BuildRequires: perl(Text/Bidi.pm)
 Group: Development/Perl
@@ -37,7 +38,7 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 %{bcond_without perl_Prima_enables_xft}
 
 Name:           perl-Prima
-Version:        1.55
+Version:        1.56
 Release:        alt1
 Summary:        Perl graphic toolkit
 # img/codec_jpeg.c:     EXIF parser is based on io-jpeg.c from gdk-pixbuf
@@ -185,7 +186,7 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %endif
 
 %files
-%doc Copying LICENSE examples
+%doc Copying examples
 # "examples" directory is installed into perl_vendorarch
 %doc Changes README.md
 %{_bindir}/*
@@ -201,6 +202,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Prima/Test.*
 
 %changelog
+* Thu Aug 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
+- automated CPAN update
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
 - automated CPAN update
 
