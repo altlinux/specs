@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 19.13.2.19
+Version: 19.13.3.26
 Release: alt1
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
@@ -136,6 +136,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Thu Aug 22 2019 Anton Farygin <rider@altlinux.ru> 19.13.3.26-alt1
+- 19.13.3.26
+
 * Wed Aug 14 2019 Anton Farygin <rider@altlinux.ru> 19.13.2.19-alt1
 - 19.13.2.19
 
