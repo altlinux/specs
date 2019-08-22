@@ -1,10 +1,10 @@
-%def_disable tests
+
+%def_disable check
 
 Name: bash-completion
 Epoch: 1
-
-Version: 2.8
-Release: alt3
+Version: 2.9
+Release: alt1
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -19,7 +19,7 @@ Source1: rpm-cache.filetrigger
 Patch1: %name-alt-iptables.patch
 Patch9: %name-alt-specific.patch
 
-%if_enabled tests
+%if_enabled check
 BuildRequires: dejagnu tcllib screen
 %endif
 
@@ -27,6 +27,7 @@ Requires: bash >= 4.1
 BuildArch: noarch
 
 %add_findreq_skiplist %_datadir/%name/completions/*.py
+%add_findreq_skiplist %_datadir/%name/helpers/*
 %add_findreq_skiplist %_datadir/pkgconfig/bash-completion.pc
 
 %description
@@ -44,10 +45,7 @@ of the programmable completion feature of bash 2.04 and later.
 %make
 
 %check
-#FIXME
-%if_enabled tests
 make -C test check
-%endif
 
 %install
 %makeinstall_std
@@ -62,10 +60,11 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_rpmlibdir/*
 %_datadir/%name
 %_datadir/pkgconfig/bash-completion.pc
-%exclude %_datadir/%name/completions/mount
-%exclude %_datadir/%name/completions/umount
 
 %changelog
+* Wed Aug 21 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.9-alt1
+- 2.9
+
 * Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.8-alt3
 - package pkgconfig file
 
