@@ -17,7 +17,7 @@ a minimal and fast API targetting the following uses: \
 %endif
 
 Name: %fname-docs
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 %if "-docs"==""
@@ -31,7 +31,7 @@ Group: Development/Documentation
 License: MIT
 Url: https://pypi.python.org/pypi/execnet/
 Source: %name-%version.tar
-Patch1: fix-test_popen_nice-test.patch
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 %if "-docs"==""
@@ -94,16 +94,21 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%patch1 -p2
+%patch -p1
 %if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 %endif
 
 %build
+# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
+# its used as the primary source for the version number in which
+# case it will be a unparsed string
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %if "-docs"==""
 %python3_install
 %else
@@ -115,6 +120,7 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -145,6 +151,9 @@ TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
 %endif
 
 %changelog
+* Wed Aug 21 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.1 -> 1.7.0.
+
 * Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
 - 1.6.0 -> 1.6.1.
 
