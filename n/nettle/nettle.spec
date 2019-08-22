@@ -1,10 +1,10 @@
-%define libnettle_soname 6
-%define libhogweed_soname 4
+%define libnettle_soname 7
+%define libhogweed_soname 5
 
 %define _unpackaged_files_terminate_build 1
 
 Name: nettle
-Version: 3.4.1
+Version: 3.5.1
 Release: alt1
 Summary: A low-level cryptographic library
 
@@ -104,6 +104,10 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Wed Jul 31 2019 Mikhail Efremov <sem@altlinux.org> 3.5.1-alt1
+- Updated patches.
+- Updated to 3.5.1.
+
 * Thu Dec 06 2018 Mikhail Efremov <sem@altlinux.org> 3.4.1-alt1
 - Updated to 3.4.1 (fixes: CVE-2018-16869).
 
