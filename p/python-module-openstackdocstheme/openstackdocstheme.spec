@@ -2,7 +2,7 @@
 %def_with   python3
 
 Name:       python-module-%oname
-Version:    1.30.0
+Version:    1.31.1
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -19,8 +19,6 @@ Source:     %name-%version.tar
 BuildArch:  noarch
 
 BuildRequires: python-module-pbr
-# for building docs
-BuildRequires: python-module-dulwich
 
 %if_with python3
 BuildRequires: python3-module-pbr
@@ -42,15 +40,6 @@ OpenStack Sphinx Theme
 Theme and extension support for Sphinx documentation that is published to
 docs.openstack.org. Intended for use by OpenStack projects.
 
-%package -n python-module-%oname-docs
-Summary:  Sphinx theme for RST-sourced documentation published to docs.openstack.org
-Group: Development/Documentation
-
-%description -n python-module-%oname-docs
-OpenStack Sphinx Theme
-
-Theme and extension support for Sphinx documentation that is published to
-
 %prep
 %setup
 
@@ -68,8 +57,6 @@ pushd ../python3
 %python3_build
 popd
 %endif
-
-python setup.py build_sphinx
 
 %install
 %if_with python3
@@ -99,10 +86,11 @@ cp -r %oname/theme/* \
 %python3_sitelibdir_noarch/*.egg-info
 %endif
 
-%files -n python-module-%oname-docs
-%doc doc/build/html
-
 %changelog
+* Fri Aug 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.31.1-alt1
+- Build new version.
+- Remove docs.
+
 * Thu Jun 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.0-alt1
 - Build new version.
 
