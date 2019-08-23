@@ -1,6 +1,6 @@
 %define branch 2.2
 %define version %branch.4
-%define release alt1
+%define release alt2
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -26,6 +26,7 @@ Provides: %pkg_name = %EVR
 %py3_provides django.utils.six.moves.urllib.parse
 %py3_provides django.utils.six.moves.urllib.request
 Conflicts: python3-module-django1.11
+Conflicts: python-module-django1.11
 
 %add_python3_req_skip django.test.signals
 
@@ -191,6 +192,10 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Aug 23 2019 Alexey Appolonov <alexey@altlinux.org> 2.2.4-alt2
+- Build with flagged conflict with python-module-django1.11
+  (due to file '/etc/bash_completion.d/django.sh').
+
 * Mon Aug 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.4-alt1
 - 2.2.4
 - Fixes for the following security vulnerabilities:
