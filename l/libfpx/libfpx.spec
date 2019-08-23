@@ -1,11 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 # based on PLD libfpx $Revision: 1.35 $, $Date: 2003/11/12 18:36:15 $
+
 Name: libfpx
 Version: 1.3.1
-Release: alt1.9
+Release: alt1.10
 Summary: FlashPIX OpenSource Toolkit
 License: distributable (see COPYING)
 Group: System/Libraries
 Url: http://www.i3a.org/i_flashpix.html
+
 # This package is currently maintained by the ImageMagick Studio LLC,
 # http://www.imagemagick.org/. It is available from
 # ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/ as well as via
@@ -13,9 +17,10 @@ Url: http://www.i3a.org/i_flashpix.html
 # with the original distribution is available in ImageMagick CVS.
 # ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/%name-%version.tar.xz
 Source: %name-%version.tar
-BuildRequires: gcc-c++
 
 Patch: libfpx-1.2.0.9-linkage.patch
+
+BuildRequires: gcc-c++
 
 %description
 This package is the Flashpix OpenSource Toolkit and is based on source
@@ -25,7 +30,7 @@ Company.
 %package devel
 Summary: FlashPIX header file and documentation
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 FlashPIX header files and programmer's documentation.
@@ -55,6 +60,12 @@ FlashPIX header files and programmer's documentation.
 %doc doc/*.pdf doc/readme.txt
 
 %changelog
+* Thu Aug 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1.10
+- Updated to upstream version 1.3.1-10
+- Fixes:
+  + CVE-2017-12921 NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty
+  + CVE-2017-12925 Double free vulnerability in DfFromLB
+
 * Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1.9
 - Updated to upstream version 1.3.1-9
 
