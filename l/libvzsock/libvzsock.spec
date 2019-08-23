@@ -1,16 +1,17 @@
 Name:     libvzsock
 Version:  7.0.3
-Release:  alt2
+Release:  alt3
 
 Summary:  libvzsock is a helper library for networking connections code generalization.
 License:  LGPLv2.1+
 Group:    Other
-Url:      https://src.openvz.org/scm/ovz/libvzsock.git
+# git-vsc https://src.openvz.org/scm/ovz/libvzsock.git
+Url:      https://openvz.org/
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source:   %name-%version.tar
-Patch: %name-%version.patch
+Patch:    %name-%version.patch
 
 ExclusiveArch: x86_64
 
@@ -38,18 +39,22 @@ make CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 %makeinstall_std
+rm -f %buildroot%_libdir/%name.a
 
 %files
 %_libdir/*.so.*
 %_datadir/%name
 
 %files devel
-%_libdir/libvzsock.so
-%_libdir/libvzsock.a
+%_libdir/%name.so
 %dir %_includedir/vz
 %_includedir/vz/*.h
 
 %changelog
+* Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt3
+- fix lib permission
+- remove static lib
+
 * Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt2
 - preserve debug info
 
