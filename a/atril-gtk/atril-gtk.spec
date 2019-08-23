@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.22.1
+Version:        1.23.1
 Release:        alt1
 Summary:        Document viewer
 
@@ -192,6 +192,10 @@ rm -f %buildroot%{_libdir}/*.a
 # don't ship icon caches
 rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 
+# Python3 module dogtail needed for tests
+#check
+#make check
+
 %files -f %_name.lang
 %{_bindir}/*
 %{_datadir}/atril/
@@ -274,6 +278,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Fri Aug 23 2019 Mikhail Efremov <sem@altlinux.org> 1.23.1-alt1
+- Updated to 1.23.1.
+
 * Wed May 15 2019 Mikhail Efremov <sem@altlinux.org> 1.22.1-alt1
 - Updated to 1.22.1.
 
