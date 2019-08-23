@@ -1,5 +1,5 @@
 %define vrs	3.1
-%define tstamp 	20181209
+%define tstamp 	20190324
 #def_enable Werror
 
 Name: libedit3
@@ -70,6 +70,9 @@ cd -
 %_man7dir/*
 
 %changelog
+* Fri Aug 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20190324-alt1
+- Updated to 20190324-3.1.
+
 * Mon Mar 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20181209-alt1
 - Updated to 20181209-3.1.
 
