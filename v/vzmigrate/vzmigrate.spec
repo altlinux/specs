@@ -1,6 +1,6 @@
 Name:     vzmigrate
-Version:  7.0.123
-Release:  alt2
+Version:  7.0.124
+Release:  alt1
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -53,7 +53,7 @@ BuildRequires: boost-asio-devel boost-devel boost-devel-headers
 
 %build
 #make_build CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
-%make_build -k
+%make_build
 
 %install
 make install \
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt1
+- 7.0.124
+
 * Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.123-alt2
 - more specific requirements
 - revert define macros patch
