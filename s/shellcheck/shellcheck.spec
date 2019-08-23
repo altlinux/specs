@@ -3,14 +3,14 @@
 %def_disable getsource
 
 Name: shellcheck
-Version: 0.4.6
+Version: 0.7.0
 Release: alt1
 License: %gpl3only
 Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: ghc7.6.1 ghc7.6.1-cabal-install
+BuildRequires: /proc ghc8.6.4 ghc8.6.4-cabal-install
 
 %if_disabled getsource
 Source: %name-%version.tar
@@ -40,14 +40,15 @@ circumstances.
 rm -rf $HOME/.cabal
 mkdir shellcheck-%version
 ln -s -r -f shellcheck-%version $HOME/.cabal
-cabal update
-cabal fetch shellcheck-%version
+cabal new-update
+cabal fetch ShellCheck-%version
+echo '' | cabal new-repl -w ghc-8.6.4 --build-dep fail
 tar -cf shellcheck-%version.tar shellcheck-%version
 exit 1
 %else
 rm -rf $HOME/.cabal
 ln -s -r -f . $HOME/.cabal
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; cabal install -j$NPROCS shellcheck-%version
+cabal new-install %_smp_mflags ShellCheck-%version
 %endif
 
 %install
@@ -58,6 +59,9 @@ cp bin/shellcheck %buildroot%_bindir
 %_bindir/shellcheck
 
 %changelog
+* Fri Aug 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Thu May 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.6-alt1
 - Updated to 0.4.6.
 
