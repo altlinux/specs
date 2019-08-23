@@ -7,8 +7,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.31.2
-Release: alt2
+Version: 1.32.0
+Release: alt1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
@@ -29,8 +29,11 @@ BuildRequires: python-module-pbr
 %if_with check
 BuildRequires: python-module-fixtures
 BuildRequires: python-module-oslotest
-BuildRequires: python-module-testtools python-module-testscenarios python-module-testrepository
-BuildRequires: python-module-subunit python-module-subunit-tests
+BuildRequires: python-module-testtools
+BuildRequires: python-module-testscenarios
+BuildRequires: python-module-testrepository
+BuildRequires: python-module-subunit
+BuildRequires: python-module-subunit-tests
 BuildRequires: python-module-extras
 BuildRequires: python-module-jsonschema
 BuildRequires: python-module-glanceclient
@@ -50,8 +53,11 @@ BuildRequires: python3-module-yaml >= 3.1.0
 BuildRequires: python3-module-appdirs >= 1.3.0
 BuildRequires: python3-module-keystoneauth1 >= 2.1.0
 BuildRequires: python3-module-requestsexceptions >= 1.1.1
-BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
-BuildRequires: python3-module-subunit python3-module-subunit-tests
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-testscenarios
+BuildRequires: python3-module-testrepository
+BuildRequires: python3-module-subunit
+BuildRequires: python3-module-subunit-tests
 BuildRequires: python3-module-extras
 %endif
 
@@ -169,6 +175,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt1
+- Automatically updated to 1.32.0
+
 * Fri May 03 2019 Ivan A. Melnikov <iv@altlinux.org> 1.31.2-alt2
 - enable tests on %%ix86 and x86_64
 - remove test packages from BR when tests are disabled

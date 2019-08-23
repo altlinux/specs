@@ -1,8 +1,8 @@
 %define oname openstacksdk
 
 Name: python-module-%oname
-Version: 0.17.2
-Release: alt2
+Version: 0.27.0
+Release: alt1
 Summary: An SDK for building applications to work with OpenStack
 
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-stevedore >= 1.17.1
 #BuildRequires: python-module-os-client-config >= 1.22.0
 #BuildRequires: python-module-os-service-types >= 1.2.0
-BuildRequires: python-module-keystoneauth1
+BuildRequires: python-module-keystoneauth1 >= 3.13.0
 BuildRequires: python-module-deprecation >= 1.0
 
 # for build doc
@@ -38,7 +38,7 @@ BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.17.1
 #BuildRequires: python3-module-os-client-config >= 1.22.0
 #BuildRequires: python3-module-os-service-types >= 1.2.0
-BuildRequires: python3-module-keystoneauth1
+BuildRequires: python3-module-keystoneauth1 >= 3.13.0
 BuildRequires: python3-module-deprecation >= 1.0
 
 %description
@@ -149,6 +149,9 @@ popd
 %exclude %python3_sitelibdir/*/tests/functional/examples
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.27.0-alt1
+- Automatically updated to 0.27.0
+
 * Wed Jan 30 2019 Alexey Shabalin <shaba@altlinux.org> 0.17.2-alt2
 - package configs: defaults.json, schema.json, vendor-schema.json
 

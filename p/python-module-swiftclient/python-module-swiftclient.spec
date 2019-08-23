@@ -1,7 +1,7 @@
 %define oname swiftclient
 
 Name: python-module-%oname
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 Summary: Client Library for OpenStack Object Storage API
 License: ASL 2.0
@@ -11,14 +11,14 @@ Group: Development/Python
 
 BuildArch: noarch
 
-Requires: python-module-futures
-Requires: python-module-requests
+Requires: python-module-futures >= 3.0.0
+Requires: python-module-requests >= 1.1.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-futures >= 3.0.0
-BuildRequires: python-module-requests >= 1.1
+BuildRequires: python-module-requests >= 1.1.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-keystoneclient >= 0.7.0
 
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-requests >= 1.1
+BuildRequires: python3-module-requests >= 1.1.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-keystoneclient >= 0.7.0
 
@@ -60,7 +60,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Client Library for OpenStack Object Storage API
 Group: Development/Python3
-Requires: python3-module-requests
+Requires: python3-module-requests >= 1.1.0
 
 %description -n python3-module-%oname
 Client library and command line utility for interacting with Openstack
@@ -143,6 +143,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

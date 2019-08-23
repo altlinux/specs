@@ -1,7 +1,7 @@
 %define oname oslo.rootwrap
 
 Name: python-module-%oname
-Version: 5.14.1
+Version: 5.16.0
 Release: alt1
 Summary: Oslo Rootwrap
 
@@ -134,6 +134,9 @@ popd
 %doc html
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 5.16.0-alt1
+- Automatically updated to 5.16.0
+
 * Sat Dec 08 2018 Alexey Shabalin <shaba@altlinux.org> 5.14.1-alt1
 - 5.14.1
 

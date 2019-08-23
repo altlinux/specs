@@ -1,7 +1,7 @@
 %global oname aodh
 
 Name: openstack-%oname
-Version: 7.0.0
+Version: 8.0.0
 Release: alt1
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
@@ -29,7 +29,9 @@ Requires: python3-module-PasteDeploy
 Requires(pre):    shadow-utils
 
 BuildRequires: crudini
-BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
+BuildRequires: webserver-common
+BuildRequires: rpm-build-webserver-common
+BuildRequires: rpm-macros-apache2
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
@@ -435,6 +437,9 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt1
+- Automatically updated to 8.0.0
+
 * Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
 - 7.0.0 Rocky release
 - switch to python3

@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.40.1
+Version: 5.0.1
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
@@ -24,7 +24,8 @@ BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-migrate >= 0.11.0 python-module-migrate-tests
+BuildRequires: python-module-migrate >= 0.11.0
+BuildRequires: python-module-migrate-tests
 BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-six >= 1.10.0
 
@@ -37,12 +38,13 @@ BuildRequires: python-module-oslo.context >= 2.9.0
 BuildRequires: python-module-eventlet
 BuildRequires: python-module-oslotest
 
-BuildRequires: python-module-testresources python-module-testscenarios
+BuildRequires: python-module-testresources >= 2.0.0
+BuildRequires: python-module-testscenarios >= 0.4
 
 Requires: python-module-SQLAlchemy
-Requires: python-module-oslo.i18n
+Requires: python-module-oslo.i18n >= 3.15.3
 Requires: python-module-migrate
-Requires: python-module-stevedore
+Requires: python-module-stevedore >= 1.20.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -57,13 +59,15 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.9.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-migrate python3-module-migrate-tests
+BuildRequires: python3-module-migrate
+BuildRequires: python3-module-migrate-tests
 BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-oslotest
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-six >= 1.10.0
 
-BuildRequires: python3-module-testresources python3-module-testscenarios
+BuildRequires: python3-module-testresources >= 2.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
 %endif
 
 %description
@@ -92,9 +96,9 @@ Summary:    OpenStack common configuration library
 Group: Development/Python3
 Provides: python3-module-oslo-db = %EVR
 
-Requires: python3-module-oslo.i18n
+Requires: python3-module-oslo.i18n >= 3.15.3
 Requires: python3-module-migrate
-Requires: python3-module-stevedore
+Requires: python3-module-stevedore >= 1.20.0
 Requires: python3-module-SQLAlchemy
 Requires: python3-module-iso8601
 
@@ -166,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1
+
 * Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 4.40.1-alt1
 - 4.40.1
 

@@ -1,7 +1,7 @@
 %define oname glanceclient
 
 Name:    python-module-%oname
-Version: 2.13.0
+Version: 2.16.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Glance
 
@@ -14,7 +14,7 @@ Patch:   workaround-requests.patch
 
 BuildArch: noarch
 
-Requires: python-module-requests >= 2.12.0
+Requires: python-module-requests >= 2.14.2
 %py_requires urllib3
 
 BuildRequires: python-devel
@@ -32,7 +32,8 @@ BuildRequires: python-module-wrapt >= 1.7.0
 BuildRequires: python-module-OpenSSL >= 17.1.0
 
 BuildRequires: python-module-mock >= 2.0
-BuildRequires: python-module-subunit python-module-subunit-tests
+BuildRequires: python-module-subunit
+BuildRequires: python-module-subunit-tests
 BuildRequires: python-module-os-client-config >= 1.28.0
 BuildRequires: python-module-testrepository >= 0.0.18
 BuildRequires: python-module-testtools >= 2.2.0
@@ -164,6 +165,9 @@ install -p -D -m 644 man/glance.1 %buildroot%_man1dir/glance.1
 %doc doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.16.0-alt1
+- Automatically updated to 2.16.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt1
 - 2.13.0
 

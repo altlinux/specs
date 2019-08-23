@@ -1,7 +1,7 @@
 %define oname oslo.privsep
 
 Name: python-module-%oname
-Version: 1.29.2
+Version: 1.33.1
 Release: alt1
 Summary: OpenStack library for privilege separation
 Group: Development/Python
@@ -14,15 +14,15 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-eventlet >= 0.18.3
+BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-greenlet >= 0.4.10
 BuildRequires: python-module-msgpack >= 0.5.0
-BuildRequires: python-module-enum34
+BuildRequires: python-module-enum34 >= 1.0.4
 BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-cffi
+BuildRequires: python-module-cffi >= 1.7.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-reno
@@ -32,14 +32,14 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-eventlet >= 0.18.3
+BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-msgpack >= 0.5.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-cffi
+BuildRequires: python3-module-cffi >= 1.7.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-reno
@@ -134,6 +134,9 @@ popd
 %doc html
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.33.1-alt1
+- Automatically updated to 1.33.1
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.29.2-alt1
 - 1.29.2
 

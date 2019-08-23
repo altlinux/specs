@@ -1,7 +1,7 @@
 %define oname castellan
 
 Name: python-module-%oname
-Version: 0.19.0
+Version: 1.2.2
 Release: alt1
 Summary: Generic Key Manager interface for OpenStack
 License: ASLv2.0
@@ -14,13 +14,14 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-sphinx python-module-sphinx-pickles
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinx-pickles
 BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-reno >= 2.5.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-cryptography >= 2.1
-BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.config >= 6.4.0
 BuildRequires: python-module-oslo.context >= 2.19.2
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.log >= 3.36.0
@@ -31,11 +32,11 @@ BuildRequires: python-module-keystoneauth1 >= 3.4.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-cryptography >= 2.1
-BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.config >= 6.4.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
@@ -121,6 +122,9 @@ popd
 #%doc  doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Automatically updated to 1.2.2
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
 - 0.19.0
 

@@ -1,7 +1,7 @@
 %define oname manilaclient
 
 Name:       python-module-%oname
-Version:    1.24.1
+Version:    1.27.0
 Release:    alt1
 Summary:    Client Library for OpenStack Manila shared file system service API
 License:    ASL 2.0
@@ -28,11 +28,13 @@ BuildRequires: python-module-keystoneclient >= 3.8.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-docutils >= 0.11
 
-# BuildRequires: python-module-openstackclient >= 3.12.0
+#
+BuildRequires: python-module-openstackclient >= 3.12.0
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-reno >= 2.5.0
 BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-sphinxcontrib-programoutput
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -54,6 +56,7 @@ BuildRequires: python3-module-docutils >= 0.11
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-sphinxcontrib-programoutput
 
 %description
 There is a Python library for accessing the API (manilaclient module),
@@ -151,6 +154,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.27.0-alt1
+- Automatically updated to 1.27.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.24.1-alt1
 - 1.24.1
 

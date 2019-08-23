@@ -1,7 +1,7 @@
 %define oname troveclient
 
 Name:    python-module-%oname
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 Summary: Client library for OpenStack DBaaS API
 Group:   Development/Python
@@ -154,6 +154,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.17.0-alt1
+- Automatically updated to 2.17.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 2.16.0-alt1
 - 2.16.0
 

@@ -2,7 +2,7 @@
 
 
 Name:       python-module-%oname
-Version:    3.17.0
+Version:    3.19.0
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
@@ -48,7 +48,7 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-stevedore >= 1.20.1
+BuildRequires: python3-module-stevedore >= 1.20.0
 
 # doc
 BuildRequires: python3-module-sphinx
@@ -146,6 +146,9 @@ rm -f doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 3.19.0-alt1
+- Automatically updated to 3.19.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 3.17.0-alt1
 - Updated to 3.17.0.
 

@@ -1,7 +1,7 @@
 %define oname oslo.utils
 
 Name: python-module-%oname
-Version: 3.36.4
+Version: 3.40.3
 Release: alt1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python
@@ -43,7 +43,7 @@ BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-netifaces >= 0.10.4
 BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-pytz >= 2013.6
-BuildRequires: python3-module-debtcollector
+BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-pyparsing >= 2.1.0
 
 BuildRequires: python3-module-sphinx
@@ -135,6 +135,9 @@ popd
 %doc build/sphinx/html LICENSE
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.40.3-alt1
+- Automatically updated to 3.40.3
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

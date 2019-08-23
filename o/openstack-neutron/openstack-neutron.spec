@@ -1,7 +1,7 @@
 %define oname neutron
 
 Name: openstack-%oname
-Version: 13.0.3
+Version: 14.0.2
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -50,7 +50,7 @@ BuildArch: noarch
 
 Requires: python3-module-neutron = %EVR
 Requires: python3-module-PasteDeploy
-Requires: python3-module-oslo.rootwrap
+Requires: python3-module-oslo.rootwrap >= 5.8.0
 
 Requires(pre): shadow-utils
 
@@ -58,23 +58,26 @@ Conflicts: %name-ml2 < %EVR
 
 
 BuildRequires: crudini
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0
+
+BuildRequires: /proc
+
+# doc
+BuildRequires: python-module-weakrefmethod
+BuildRequires: python-module-pbr >= 4.0.0
 BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-paste >= 2.0.2
 BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-routes >= 2.3.1
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-pecan >= 1.1.1
+BuildRequires: python-module-pecan >= 1.3.2
 BuildRequires: python-module-httplib2 >= 0.9.1
 BuildRequires: python-module-requests >= 2.14.2
 BuildRequires: python-module-jinja2 >= 2.10
 BuildRequires: python-module-keystonemiddleware >= 4.17.0
 BuildRequires: python-module-netaddr >= 0.7.18
 BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-neutron-lib >= 1.18.0
+BuildRequires: python-module-neutron-lib >= 1.25.0
 BuildRequires: python-module-neutronclient >= 6.7.0
 BuildRequires: python-module-tenacity >= 3.2.1
 BuildRequires: python-module-ryu >= 4.24
@@ -84,33 +87,32 @@ BuildRequires: python-module-keystoneauth1 >= 3.4.0
 BuildRequires: python-module-alembic >= 0.8.10
 BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-oslo.cache >= 1.26.0
-BuildRequires: python-module-oslo.concurrency >= 3.25.0
-BuildRequires: python-module-oslo.config >= 5.1.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.context >= 2.19.2
-BuildRequires: python-module-oslo.db >= 4.27.0 python-module-oslo.db-tests
+BuildRequires: python-module-oslo.db >= 4.37.0
+BuildRequires: python-module-oslo.db-tests
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-oslo.messaging >= 5.29.0
 BuildRequires: python-module-oslo.middleware >= 3.31.0
 BuildRequires: python-module-oslo.policy >= 1.30.0
-BuildRequires: python-module-oslo.reports >= 0.6.0
-BuildRequires: python-module-oslo.privsep >= 1.23.0
+BuildRequires: python-module-oslo.reports >= 1.18.0
+BuildRequires: python-module-oslo.privsep >= 1.32.0
 BuildRequires: python-module-oslo.rootwrap >= 5.8.0
 BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-oslo.service >= 1.24.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.31.2
+BuildRequires: python-module-oslo.versionedobjects >= 1.35.1
 BuildRequires: python-module-osprofiler >= 1.4.0
 BuildRequires: python-module-openvswitch >= 2.8.0
 BuildRequires: python-module-ovsdbapp >= 0.9.1
 BuildRequires: python-module-psutil >= 3.2.2
-BuildRequires: python-module-pyroute2 >= 0.4.21
-BuildRequires: python-module-weakrefmethod >= 1.0.2
 BuildRequires: python-module-novaclient >= 9.1.0
 BuildRequires: python-module-designateclient >= 2.7.0
 BuildRequires: python-module-os-xenapi >= 0.3.1
+BuildRequires: python-module-os-xenapi >= 0.3.1
 
-# doc
 BuildRequires: python-module-sphinx >= 1.6.2
 BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-oslotest >= 3.2.0
@@ -119,21 +121,21 @@ BuildRequires: python-module-reno >= 2.5.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-pbr >= 4.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-paste >= 2.0.2
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-routes >= 2.3.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-pecan >= 1.1.1
+BuildRequires: python3-module-pecan >= 1.3.2
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-jinja2 >= 2.10
 BuildRequires: python3-module-keystonemiddleware >= 4.17.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-netifaces >= 0.10.4
-BuildRequires: python3-module-neutron-lib >= 1.18.0
+BuildRequires: python3-module-neutron-lib >= 1.25.0
 BuildRequires: python3-module-neutronclient >= 6.7.0
 BuildRequires: python3-module-tenacity >= 3.2.1
 BuildRequires: python3-module-ryu >= 4.24
@@ -143,27 +145,28 @@ BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-alembic >= 0.8.10
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslo.cache >= 1.26.0
-BuildRequires: python3-module-oslo.concurrency >= 3.25.0
-BuildRequires: python3-module-oslo.config >= 5.1.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
-BuildRequires: python3-module-oslo.db >= 4.27.0 python3-module-oslo.db-tests
+BuildRequires: python3-module-oslo.db >= 4.37.0
+BuildRequires: python3-module-oslo.db-tests
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
 BuildRequires: python3-module-oslo.policy >= 1.30.0
-BuildRequires: python3-module-oslo.reports >= 0.6.0
-BuildRequires: python3-module-oslo.privsep >= 1.23.0
+BuildRequires: python3-module-oslo.reports >= 1.18.0
+BuildRequires: python3-module-oslo.privsep >= 1.32.0
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.service >= 1.24.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-oslo.versionedobjects >= 1.31.2
+BuildRequires: python3-module-oslo.versionedobjects >= 1.35.1
 BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-openvswitch >= 2.8.0
 BuildRequires: python3-module-ovsdbapp >= 0.9.1
 BuildRequires: python3-module-psutil >= 3.2.2
-BuildRequires: python3-module-pyroute2 >= 0.4.21
+BuildRequires: python3-module-pyroute2 >= 0.5.3
 BuildRequires: python3-module-novaclient >= 9.1.0
 BuildRequires: python3-module-designateclient >= 2.7.0
 BuildRequires: python3-module-os-xenapi >= 0.3.1
@@ -184,35 +187,6 @@ other OpenStack services (e.g., virtual NICs from Nova VMs). The
 Neutron API supports extensions to provide advanced network
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
-%package -n python-module-%oname
-Summary: Neutron Python libraries
-Group: Development/Python
-
-Provides: python-module-quantum = %EVR
-Obsoletes: python-module-quantum < 2013.2-0.4.b3
-
-Requires: python-module-PasteDeploy >= 1.5.0
-Requires: python-module-keystoneauth1 >= 3.4.0
-Requires: python-module-keystonemiddleware >= 4.17.0
-Requires: python-module-oslo.config >= 5.1.0
-Requires: python-module-neutronclient >= 6.7.0
-Requires: python-module-novaclient >= 9.1.0
-Requires: python-module-weakrefmethod
-Requires: sudo conntrack-tools
-
-%description -n python-module-%oname
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the neutron Python library.
-
-%package -n python-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python
-
-%description -n python-module-%oname-tests
-This package contains tests for %oname.
-
 %package -n python3-module-%oname
 Summary: Neutron Python3 libraries
 Group: Development/Python3
@@ -220,7 +194,7 @@ Group: Development/Python3
 Requires: python3-module-PasteDeploy >= 1.5.0
 Requires: python3-module-keystoneauth1 >= 3.4.0
 Requires: python3-module-keystonemiddleware >= 4.17.0
-Requires: python3-module-oslo.config >= 5.1.0
+Requires: python3-module-oslo.config >= 5.2.0
 Requires: python3-module-neutronclient >= 6.7.0
 Requires: python3-module-novaclient >= 9.1.0
 Requires: sudo conntrack-tools
@@ -363,35 +337,21 @@ find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
 export PBR_VERSION=%version
 export SKIP_PIP_INSTALL=1
 
-%python_build
-
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b man doc/source doc/build/man
-sphinx-build -b html doc/source doc/build/html
+# so tired of pyroute2
+#sphinx-build -b man doc/source doc/build/man
+#sphinx-build -b html doc/source doc/build/html
 
 PYTHONPATH=. tools/generate_config_file_samples.sh
 
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install --prefix=%_prefix --install-data=/
-
-for f in $(ls -1 %buildroot%_bindir)
-    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
-done
-
-pushd ../python3
 %python3_install --prefix=%_prefix --install-data=/
-popd
 
 
 # Remove unused files
@@ -563,7 +523,6 @@ fi
 %dir %_sysconfdir/neutron/neutron-metadata-agent.conf.d/
 %dir %_sysconfdir/neutron/neutron-linuxbridge-agent.conf.d/
 %dir %_sysconfdir/neutron/neutron-openvswitch-agent.conf.d/
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/policy.json
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/neutron.conf
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/neutron.conf.d/010-neutron.conf
@@ -585,23 +544,10 @@ fi
 %exclude %_sysconfdir/neutron/rootwrap.d/dhcp.filters
 %exclude %_sysconfdir/neutron/rootwrap.d/l3.filters
 
-%files -n python-module-%oname
-%doc LICENSE
-%doc README.rst
-%_bindir/*.py2
-%exclude %_bindir/neutron-rootwrap-xen-dom0.py2
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/*/tests/contrib
-
 %files -n python3-module-%oname
 %doc LICENSE
 %doc README.rst
 %_bindir/*
-%exclude %_bindir/*.py2
 %exclude %_bindir/neutron-enable-bridge-firewall.sh
 %exclude %_bindir/neutron-rootwrap-xen-dom0
 %python3_sitelibdir/*
@@ -660,6 +606,10 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:14.0.2-alt1
+- Updated to 14.0.2
+- Removed python2 modules.
+
 * Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:13.0.3-alt1
 - 13.0.3
 

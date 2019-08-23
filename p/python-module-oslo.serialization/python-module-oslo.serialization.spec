@@ -1,7 +1,7 @@
 %define oname oslo.serialization
 
 Name: python-module-%oname
-Version: 2.27.0
+Version: 2.29.1
 Release: alt1
 Summary: OpenStack oslo.serialization library
 Group: Development/Python
@@ -123,6 +123,9 @@ popd
 %doc html
 
 %changelog
+* Fri Aug 23 2019 Grigory Ustinov <grenka@altlinux.org> 2.29.1-alt1
+- new version 2.29.1
+
 * Thu Dec 13 2018 Alexey Shabalin <shaba@altlinux.org> 2.27.0-alt1
 - Build new version.
 

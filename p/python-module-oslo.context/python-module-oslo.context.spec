@@ -1,7 +1,7 @@
 %define oname oslo.context
 
 Name: python-module-%oname
-Version: 2.21.0
+Version: 2.23.0
 Release: alt1
 Summary: OpenStack oslo.context library
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %doc html
 
 %changelog
+* Fri Sep 20 2019 Grigory Ustinov <grenka@altlinux.org> 2.23.0-alt1
+- new version 2.23.0
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 2.21.0-alt1
 - 2.21.0
 

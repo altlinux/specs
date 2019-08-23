@@ -1,7 +1,7 @@
 %global oname ovsdbapp
 
 Name: python-module-%oname
-Version: 0.12.2
+Version: 0.15.0
 Release: alt1
 Summary: A library for creating OVSDB applications
 
@@ -128,5 +128,8 @@ popd
 %doc doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt1
+- Automatically updated to 0.15.0
+
 * Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.12.2-alt1
 - Initial build.

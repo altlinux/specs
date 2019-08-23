@@ -1,7 +1,7 @@
 %define oname neutronclient
 
 Name: python-module-%oname
-Version: 6.9.1
+Version: 6.12.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Neutron
 Group: Development/Python
@@ -159,6 +159,9 @@ rm -rf %buildroot%python3_sitelibdir/*/tests/functional/hooks
 #%doc doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 6.12.0-alt1
+- Automatically updated to 6.12.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 6.9.1-alt1
 - 6.9.1
 

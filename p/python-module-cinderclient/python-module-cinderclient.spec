@@ -2,7 +2,7 @@
 
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.2.1
 Release: alt1
 Epoch: 1
 Summary: Python API and CLI for OpenStack Cinder
@@ -138,6 +138,9 @@ install -p -D -m 644 tools/cinder.bash_completion %buildroot%_sysconfdir/bash_co
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:4.2.1-alt1
+- Automatically updated to 4.2.1
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1:4.0.1-alt1
 - 4.0.1
 

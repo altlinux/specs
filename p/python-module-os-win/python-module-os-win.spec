@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.2.0
 Release: alt1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python
@@ -22,9 +22,9 @@ BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-reno >= 2.5.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-oslo.concurrency >= 3.25.0
-BuildRequires: python-module-oslo.config >= 5.1.0
-BuildRequires: python-module-oslo.log >= 3.26.0
+BuildRequires: python-module-oslo.concurrency >= 3.26.0
+BuildRequires: python-module-oslo.config >= 5.2.0
+BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 
@@ -39,9 +39,9 @@ BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslo.concurrency >= 3.25.0
-BuildRequires: python3-module-oslo.config >= 5.1.0
-BuildRequires: python3-module-oslo.log >= 3.26.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 %endif
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
