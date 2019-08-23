@@ -12,12 +12,14 @@
 
 Name: vztt
 Version: 7.0.65
-Release: alt1
+Release: alt2
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
 License: GPLv2
 Group: System/Configuration/Other
+# git-vsc https://src.openvz.org/scm/ovzl/vztt.git
+Url: https://openvz.org/
 
 ExclusiveArch: x86_64
 
@@ -55,7 +57,7 @@ License: GPLv2 or LGPLv2.1
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
-OpenVZ EZ template management static library and include files
+OpenVZ EZ template management library and include files
 
 %prep
 %setup
@@ -73,6 +75,7 @@ echo "/var/log/vztt.log {
         compress
         missingok
 }" > %buildroot%_logrotatedir/vztt
+rm -f %buildroot%_libdir/lib%name.a
 
 %files
 %_sbindir/vzpkg
@@ -94,9 +97,12 @@ echo "/var/log/vztt.log {
 %files -n lib%name-devel
 %_includedir/vz/*.h
 %_libdir/lib%name.so
-%_libdir/lib%name.a
 
 %changelog
+* Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt2
+- remove static lib
+- package_manager file should not be empty
+
 * Mon Aug 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt1
 - 7.0.65
 
