@@ -6,7 +6,7 @@
 %define flavour %base_flavour-%sub_flavour
 
 #     rh7-3.10.0-957.21.3.vz7.106.6
-%define orelease 957.21.3.vz7.106.6
+%define orelease 957.21.3.vz7.106.7
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -105,7 +105,7 @@ BuildRequires: patch >= 2.6.1-alt1
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
 %{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 libnewt-devel perl-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
-BuildRequires: qemu-system glibc-devel-static
+%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-x86-core glibc-devel-static}}
 
 Requires: bootloader-utils >= 0.4.21
 Requires: module-init-tools >= 3.1
@@ -491,19 +491,39 @@ mkdir test
 cd test
 gcc -static -xc -o init - <<EOF
 #include <unistd.h>
+#include <stdio.h>
+#include <err.h>
+#include <sys/mount.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/reboot.h>
-int main()
+void main()
 {
-	write(2, "Boot successful!\n", 17);
+	if (mkdir("/proc", 0666))
+		warn("mkdir /proc");
+	else if (mount("proc", "/proc", "proc", 0, NULL))
+		warn("mount /proc");
+	else if (access("/proc/user_beancounters", R_OK))
+		warn("access /proc/user_beancounters");
+	else
+		puts("Boot successful!");
 	reboot(RB_POWER_OFF);
-	sleep(10);
 }
 EOF
 echo "init" | cpio -H newc -o | gzip > initrd.img
-timeout 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease \
-	-nographic -append "console=ttyS0 panic=1" -initrd initrd.img > boot.log
-fgrep -q ' Power down.' boot.log || ( cat boot.log && false )
-
+time -p \
+timeout 600 qemu-system-x86_64 -bios bios.bin \
+	-nographic -no-reboot -m 256M \
+	-kernel %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease \
+	-initrd initrd.img \
+	-append "console=ttyS0 panic=-1" > boot.log &&
+grep -q "^Boot successful" boot.log &&
+grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
+	cat >&2 boot.log
+	echo >&2 'Marker not found'
+	exit 1
+}
+grep beancounter boot.log
 
 %files
 /boot/*
@@ -574,6 +594,11 @@ fgrep -q ' Power down.' boot.log || ( cat boot.log && false )
 
 
 %changelog
+* Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt1.957.21.3.vz7.106.7
+- Import rh7-3.10.0-957.21.3.vz7.106.7
+- Fix qemu run after qemu package update.
+- Update boot test.
+
 * Thu Aug 01 2019 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt1.957.21.3.vz7.106.6
 - Build 3.10.0-957.21.3.vz7.106.6
 
