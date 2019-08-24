@@ -1,9 +1,10 @@
 %define flavour			xenomai
 Name: kernel-image-%flavour
-Release: alt3
+Release: alt1
 
 %define kernel_base_version	4.14
-%define kernel_sublevel		.128
+# ipipe-core-4.14.134-x86-8
+%define kernel_sublevel		.134
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -37,14 +38,22 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Summary: The Linux kernel %version with Xenomai real-time Cobalt core and I-pipe
 License: GPL
 Group: System/Kernel and hardware
-Url: http://www.kernel.org/
+Url: https://xenomai.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: stable-%version.patch
-Patch1: ipipe-core-%version-x86-5.patch
+Patch1: ipipe-core-%version-x86-8.patch
 Patch2: alt-%version-%release.patch
 
 ExclusiveArch: x86_64
+
+%define qemu_pkg %_arch
+%ifarch %ix86 x86_64
+ %define qemu_pkg x86
+%endif
+%ifarch ppc64le
+ %define qemu_pkg ppc
+%endif
 
 ExclusiveOS: Linux
 
@@ -61,7 +70,7 @@ BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel 
 # for check
-BuildRequires: qemu-system-x86-core glibc-devel-static
+%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core glibc-devel-static}}
 
 %if_enabled docs
 BuildRequires: python-module-sphinx perl-Pod-Usage 
@@ -330,13 +339,13 @@ cp -a net/mac80211/sta_info.h \
 KbuildFiles="
 	Makefile
 	Module.symvers
+	arch/%base_arch/Makefile
+%ifarch x86_64
 	arch/x86/Makefile
 	arch/x86/Makefile_32
 	arch/x86/Makefile_32.cpu
-%ifarch x86_64
 	arch/x86/Makefile_64
 %endif
-
 	scripts/pnmtologo
 	scripts/mod/modpost
 	scripts/mkmakefile
@@ -362,12 +371,16 @@ KbuildFiles="
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
 	scripts/recordmcount.pl
+	scripts/recordmcount.h
+	scripts/recordmcount.c
+	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
+	scripts/subarch.include
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
+	scripts/ld-version.sh
 	tools/objtool/objtool
-
 
 	.config
 	.kernelrelease
@@ -389,6 +402,8 @@ ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
 
 # Provide kernel headers for userspace
 make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
+
+find %buildroot%kheaders_dir -name ..install.cmd -delete
 
 #provide symlink to autoconf.h for back compat
 pushd %buildroot%old_kbuild_dir/include/linux
@@ -419,15 +434,33 @@ int main()
 }
 __EOF__
 echo init | cpio -H newc -o | gzip -9n > initrd.img
-timeout --foreground 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log &&
+QEMU=qemu-system-%_arch
+QEMU_OPTS="-nographic -no-reboot -m 256M -initrd initrd.img"
+CONSOLE=ttyS0
+%ifarch %ix86
+ QEMU=qemu-system-i386
+%endif
+%ifarch aarch64
+ QEMU=qemu-system-aarch64
+ QEMU_OPTS+=" -machine virt -cpu max"
+ CONSOLE=ttyAMA0
+%endif
+%ifarch ppc64le
+ QEMU=qemu-system-ppc64
+ QEMU_OPTS+="-cpu power8,compat=power7"
+ CONSOLE=hvc0
+%endif
+timeout --foreground 600 $QEMU $QEMU_OPTS -kernel %buildroot/boot/vmlinuz-$KernelVer -append "console=$CONSOLE panic=-1" > boot.log &&
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
 	echo >&2 'Marker not found'
 	exit 1
 }
-grep I-pipe boot.log
-grep Xenomai boot.log
+grep -i -e I-pipe -e Xenomai boot.log
+grep -q "head domain Xenomai registered" boot.log
+grep -q "Cobalt v[0-9.]\+" boot.log
+! grep -q "init failed" boot.log
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
@@ -452,6 +485,13 @@ grep Xenomai boot.log
 %modules_dir/build
 
 %changelog
+* Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt1
+- Update to ipipe-core-4.14.134-x86-8.
+- Fix qemu run.
+
+* Fri Jun 28 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.128-alt4
+- Clean up ..install.cmd files (reported by repocop).
+
 * Wed Jun 26 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.128-alt3
 - Add filesystems required for fstab to finish system boot
 
