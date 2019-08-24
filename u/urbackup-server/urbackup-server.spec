@@ -1,6 +1,6 @@
 
 Name: urbackup-server
-Version: 2.3.8
+Version: 2.4.7
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
@@ -8,11 +8,16 @@ License: AGPL-3.0+
 Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Patch1: urbackup-server-fix-link-sqlite3.patch
+Patch3: urbackup-server-2.4.7-config.patch
+Patch4: urbackup-server-2.3.8-no-update.patch
+
+Requires: guestfs-tools
 
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libfuse-devel
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel
 BuildRequires: libcryptopp-devel
 BuildRequires: liblmdb-devel
 BuildRequires: libsqlite3-devel
@@ -26,8 +31,13 @@ are stored to disks in a efficient way (deduplication)
 on either Windows or Linux servers.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version.0
 %patch1 -p1
+#%patch3 -p1
+%patch4 -p1
+
+sed -i "s@/var/urbackup@%_localstatedir/urbackup@g" docs/urbackupsrv.1
+sed -i "s@/etc/default/urbackupsrv@%_sysconfdir/sysconfig/%name@g" %name.service
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -51,8 +61,6 @@ mkdir -p %buildroot{%_unitdir,%_man1dir,%_logrotatedir,%_logdir,%_localstatedir/
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%prefix/lib/firewalld/services
-
-sed -i "s@/etc/default/urbackupsrv@%_sysconfdir/sysconfig/%name@g" %name.service
 
 install -m 644 defaults_server %buildroot%_sysconfdir/sysconfig/%name
 install -m 640 urbackup-server-firewalld.xml %buildroot%prefix/lib/firewalld/services/%name.xml
@@ -89,5 +97,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %attr(0644,root,root) %_unitdir/%name.service
 
 %changelog
+* Sun Aug 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.7-alt1
+- update default config(patch3)
+- disable autoudate service(patch4)
+
 * Sun Jul 14 2019 Alexey Shabalin <shaba@altlinux.org> 2.3.8-alt1
 - Initial build
