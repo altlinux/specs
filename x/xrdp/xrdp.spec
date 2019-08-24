@@ -1,6 +1,6 @@
 Name: 	 xrdp
-Version: 0.9.10
-Release: alt2
+Version: 0.9.11
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -23,7 +23,6 @@ Source6: xorgxrdp.tar
 Patch2: asm-xorgxrdp.diff
 Patch3: make-fixes.diff
 Patch5: misc-fixes.diff
-Patch7: shutup-daemon.diff
 Patch10: lfs.diff
 
 # Other patches
@@ -87,7 +86,6 @@ tar xf %SOURCE6
 #patch2 -p1
 %patch3 -p1
 %patch5 -p1
-%patch7 -p1
 %patch10 -p1
 %patch12 -p1
 %patch13 -p1
@@ -230,6 +228,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sat Aug 24 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt1
+- New version.
+
 * Tue May 28 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt2
 - Add sample configuration for Windows XP to xrdp.ini.
 
