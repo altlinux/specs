@@ -1,8 +1,8 @@
-%define libcontrolppver 0.21
+%define libcontrolppver 0.22
 
 Name: control++
-Version: 0.19.0
-Release: alt2
+Version: 0.20.0
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -17,15 +17,13 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++
 BuildRequires: libcontrol++-devel >= %libcontrolppver
 
-ExcludeArch: aarch64
-
 %description
 control++ is a simple system configuration tool
 that allows administrator to change system ulimits,
 set permission modes and, in perspective,
 perform other administrative operations.
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %prep
 %setup
@@ -58,7 +56,15 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_localstatedir/%name
 %_defaultdocdir/%name
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 %changelog
+* Sat Aug 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.20.0-alt1
+- Recursive formation of the modes for directories is optimized
+  (performance gain up to 100%);
+- Most of the printing is done with the use of new and previously existed
+  abilities of TPrinter class.
+
 * Wed Jul 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt2
 - Enhanced manual.
 

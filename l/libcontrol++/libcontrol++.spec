@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -26,7 +26,7 @@ that allows administrator to change system ulimits,
 set permission modes and, in perspective,
 perform other administrative operations.
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # libcontrol++-devel
 
 %package -n libcontrol++-devel
@@ -40,7 +40,7 @@ BuildArch: noarch
 Development package for libcontrol++.
 %libcontrol++_desc
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %prep
 %setup
@@ -64,7 +64,18 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %files -n libcontrol++-devel
 %_includedir/libcontrol++/
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 %changelog
+* Sat Aug 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
+- Ability to store only the pointer to TFileMode attributes, and not copy
+  the data (performance gain up to 100%);
+- New abilities of TPrinter (printing various special messages,
+  handling indentation levels, etc.);
+- All the printing inside TPrinter is done through one and only point
+  of 'cout'-reference;
+- Small fixes and optimizations.
+
 * Tue Apr 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
 - Enhanced TConf class;
 - Ability to give instant feedback for an operation.
