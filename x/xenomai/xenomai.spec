@@ -2,8 +2,9 @@
 
 Summary: Real-Time Framework for Linux (Cobalt)
 Name: xenomai
-Version: 3.0.8
-Release: alt3
+#         v3.0.9-9-ge71785fe0
+Version: 3.0.9.0.9.ge71785fe0
+Release: alt1
 Source0: %{name}-%{version}.tar
 License: GPL
 Group: Networking/Other
@@ -116,6 +117,9 @@ done
 %_usrsrc/xenomai-kernel-source
 
 %changelog
+* Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.9.0.9.ge71785fe0-alt1
+- Update to v3.0.9-9-ge71785fe0.
+
 * Fri Jun 28 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt3
 - Add udev rules and groupadd.
 
@@ -123,7 +127,7 @@ done
 - Make proper -devel package.
 
 * Fri Jun 21 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.8-alt1
-- Update to 3.0.8
+- Update to 3.0.8.
 - Add xenomai-kernel-source package
 
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.8-alt1.qa1
