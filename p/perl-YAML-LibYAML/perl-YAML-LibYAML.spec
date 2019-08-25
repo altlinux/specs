@@ -22,7 +22,7 @@ BuildRequires: perl-Filter
 
 Name:           perl-YAML-LibYAML
 Epoch:          1
-Version:        0.79
+Version:        0.80
 Release:        alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
@@ -113,6 +113,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Sun Aug 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.80-alt1
+- automated CPAN update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.79-alt1
 - automated CPAN update
 
