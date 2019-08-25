@@ -8,7 +8,7 @@ BuildRequires: perl(experimental.pm) perl(lib/abs.pm) perl(parent.pm) perl(prefo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.9906
+Version: 0.9908
 Release: alt1
 Summary: a tool to scan your Perl code for its prerequisites
 Group: Development/Perl
@@ -81,6 +81,9 @@ rm -f t/unless.t
 %_bindir/*
 
 %changelog
+* Sun Aug 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.9908-alt1
+- automated CPAN update
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.9906-alt1
 - automated CPAN update
 
