@@ -1,17 +1,19 @@
 
 Name: urbackup-client
-Version: 2.3.4
+Version: 2.4.6.0
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
 Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
+Source2: %name-snapshot.cfg
 Patch1: urbackup-client-fix-link-sqlite3.patch
 Patch2: urbackup-client-scripts.patch
 
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel
 BuildRequires: libcryptopp-devel
 BuildRequires: libsqlite3-devel
 
@@ -23,9 +25,11 @@ are stored to disks in a efficient way (deduplication)
 on either Windows or Linux servers.
 
 %prep
-%setup -n %name-%version.0
+%setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+
+sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@g" urbackupclientbackend-redhat.service
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -46,11 +50,16 @@ mkdir -p %buildroot{%_unitdir,%_man1dir,%_logdir,%_localstatedir/urbackup}
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initdir
 
-sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@g" urbackupclientbackend-redhat.service
-
 install -m 644 defaults_client %buildroot%_sysconfdir/sysconfig/urbackupclient
 install -m 644 urbackupclientbackend-redhat.service %buildroot%_unitdir/%name.service
 install -m 644 docs/urbackupclientbackend.1 %buildroot%_man1dir/urbackupclientbackend.1
+
+for f in linux_snapshot/*_snapshot; do
+    [ -f "$f" ]
+    install -m 755 "$f" "%buildroot%_datadir/urbackup/scripts/"
+done
+
+install -m 644 %SOURCE2 %buildroot%_sysconfdir/urbackup/snapshot.cfg
 touch %buildroot%_logdir/urbackupclient.log
 
 %post
@@ -63,7 +72,7 @@ touch %buildroot%_logdir/urbackupclient.log
 %doc AUTHORS COPYING ChangeLog README
 %config(noreplace) %_sysconfdir/sysconfig/urbackupclient
 %dir %_sysconfdir/urbackup
-%config(noreplace) %_sysconfdir/urbackup/*.conf
+%config(noreplace) %_sysconfdir/urbackup/*
 %_bindir/urbackupclientctl
 %_sbindir/urbackupclientbackend
 %_unitdir/%name.service
@@ -73,5 +82,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Sun Aug 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.6.0-alt1
+- 2.4.6
+- add snapshot scripts
+
 * Sun Jul 14 2019 Alexey Shabalin <shaba@altlinux.org> 2.3.4-alt1
 - Initial build
