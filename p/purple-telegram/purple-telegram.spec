@@ -1,5 +1,5 @@
 Name: purple-telegram
-Version: 1.3.1
+Version: 1.4.1
 Release: alt1
 
 Summary: Libpurple protocol plugin for Telegram support
@@ -11,10 +11,12 @@ URL: https://github.com/majn/telegram-purple.git
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Source: %name-%version.tar
+Source1: ru_RU.po
 
 # Automatically added by buildreq on Sun Apr 24 2016
 # optimized out: glib2-devel libgpg-error libgpg-error-devel pkg-config python-base python-modules
 BuildRequires: libgcrypt-devel libpurple-devel libwebp-devel zlib-devel
+BuildRequires: libpng-devel
 
 %description
 Adds support for Telegram to Pidgin, Adium, Finch
@@ -22,6 +24,7 @@ and other Libpurple based messengers.
 
 %prep
 %setup
+cp %SOURCE1 po
 
 %build
 # Here we manually create commit.h to avoid git commands
@@ -44,11 +47,14 @@ find . -name "Makefile*" | xargs sed -i "s/-Werror //g"
 %files -f telegram-purple.lang
 %doc README* CHANGELOG*
 %_libdir/purple-2/telegram-purple.so
-%dir %_sysconfdir/telegram-purple/
-%config %_sysconfdir/telegram-purple/*
+%_datadir/appdata/telegram-purple.metainfo.xml
 %_pixmapsdir/pidgin/protocols/*/telegram.png
 
 %changelog
+* Mon Aug 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+- Updated russian localization.
+
 * Fri Jan 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Build new version (Closes: #33384).
 
