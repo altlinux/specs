@@ -1,6 +1,6 @@
 Name: unarj
 Version: 2.65
-Release: alt3
+Release: alt4
 
 Summary: An uncompressor for .arj format archive files
 Group: Archiving/Compression
@@ -41,6 +41,9 @@ install -p -m755 -D %name $RPM_BUILD_ROOT%_bindir/%name
 %doc {%name,technote}.txt
 
 %changelog
+* Mon Aug 26 2019 Anton Farygin <rider@altlinux.ru> 2.65-alt4
+- added  fixed CVE's ID to the changelog
+
 * Mon Jun 15 2009 Alexey Voinov <voins@altlinux.ru> 2.65-alt3
 - url fixed
 
@@ -54,8 +57,8 @@ install -p -m755 -D %name $RPM_BUILD_ROOT%_bindir/%name
   * Added additional header data checks
   * Added chapter and encryption information
 - added SuSE patches (mjancar suse cz):
-- CAN-2004-0947: buffer overflow
-- CAN-2004-1027: directory traversal
+- CAN-2004-0947: buffer overflow (Fixes: CVE-2004-0947)
+- CAN-2004-1027: directory traversal (Fixes: CVE-2004-1027)
 - version notice patch regarding these fixes
 
 * Mon Sep 30 2002 Stanislav Ievlev <inger@altlinux.ru> 2.63a-alt1
