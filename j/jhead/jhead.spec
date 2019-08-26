@@ -1,6 +1,6 @@
 Name: jhead
 Version: 3.03
-Release: alt1
+Release: alt2
 
 Summary: Tool for handling EXIF data in JPEG image files
 License: Public Domain
@@ -8,6 +8,9 @@ Group: Graphics
 
 URL: http://www.sentex.net/~mwandel/jhead
 Source: %url/%name-%version.tar.gz
+
+Patch1: CVE-2019-1010301.patch
+Patch2: CVE-2019-1010302.patch
 
 # Without jpegtran from libjpeg-utils rotation feature will not work.
 # Exif thumbnail regeneration relies on 'mogrify' program from ImageMagick.
@@ -21,6 +24,8 @@ deleting integral thumbnails that digital cameras put into the Exif header.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 subst 's/-O./%optflags/' makefile
@@ -36,6 +41,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Mon Aug 26 2019 Grigory Ustinov <grenka@altlinux.org> 3.03-alt2
+- Fixed some CVE's (Fixes: CVE-2019-1010301, CVE-2019-1010302).
+
 * Sat Jan 05 2019 Grigory Ustinov <grenka@altlinux.org> 3.03-alt1
 - Build new version.
 
