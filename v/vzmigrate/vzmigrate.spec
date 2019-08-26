@@ -1,6 +1,6 @@
 Name:     vzmigrate
 Version:  7.0.124
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Mon Aug 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt2
+- fix build with static vzsock
+
 * Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt1
 - 7.0.124
 
