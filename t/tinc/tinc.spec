@@ -1,5 +1,5 @@
 Name: tinc
-Version: 1.0.35
+Version: 1.0.36
 Release: alt1
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
@@ -122,6 +122,9 @@ install -pD -m755 -- %SOURCE3 %buildroot%_controldir/%name
 %_unitdir/%{name}*.service
 
 %changelog
+* Mon Aug 26 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.0.36-alt1
+- New version
+
 * Thu Oct 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.0.35-alt1
 - New version
  * Prevent oracle attacks (CVE-2018-16737, CVE-2018-16738)
