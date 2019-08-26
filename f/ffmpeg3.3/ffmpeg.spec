@@ -76,7 +76,7 @@
 Name:		ffmpeg3.3
 Epoch:		2
 Version:	3.3.9
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -377,9 +377,16 @@ xz Changelog
 %_libdir/libswscale.so.4*
 
 %changelog
+* Mon Aug 26 2019 Anton Farygin <rider@altlinux.ru> 2:3.3.9-alt2
+- added information about closed CVE's to the changelog
+
 * Tue Dec 18 2018 Anton Farygin <rider@altlinux.ru> 2:3.3.9-alt1
 - up to 3.3.9 (compatability package)
 - build without librtmp
+- fixes:
+  * CVE-2018-14394 by commit 3a2d21
+  * CVE-2018-14395 by commit fa19fb
+  * CVE-2018-1999010 by commit cced03
 
 * Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 2:3.3.6-alt4
 - build as compat library without devel packages and tools
