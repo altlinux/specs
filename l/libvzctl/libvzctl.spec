@@ -1,8 +1,8 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.535
-Release: alt2
+Version: 7.0.536
+Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -67,6 +67,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Mon Aug 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.536-alt1
+- 7.0.536
+
 * Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.535-alt2
 - fixed alt scripts
 - fixed arping full path
