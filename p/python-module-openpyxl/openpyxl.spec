@@ -3,16 +3,17 @@
 %def_with python3
 
 Name:    python-module-%oname
-Version: 2.4.1
-Release: alt2.1
+Version: 2.6.2
+Release: alt1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
 Group:   Development/Python
 Url:     http://openpyxl.readthedocs.io
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0: https://pypi.python.org/packages/dc/f2/c57f9f00f8ae5e1a73cb096dbf600433724f037ffcbd51c456f89da5efd9/%{oname}-%{version}.tar.gz
-Patch1: %oname-%version-alt-python3-compat.patch
+#https://bitbucket.org/openpyxl/openpyxl/get/2.6.1.tar.gz
+Source0: %{oname}-%{version}.tar.gz
+
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ BuildRequires: python-module-memory_profiler
 BuildRequires: python-module-et_xmlfile
 BuildRequires: python-module-numpy
 BuildRequires: python-module-pandas
+BuildRequires: python-module-Pillow
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -35,6 +37,7 @@ BuildRequires: python3-module-memory_profiler
 BuildRequires: python3-module-et_xmlfile
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-pandas
+BuildRequires: python3-module-Pillow
 %endif
 
 %py_provides %oname
@@ -59,7 +62,6 @@ Python the Office Open XML format.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -84,10 +86,10 @@ popd
 %endif
 
 %check
-python setup.py test
+py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
+py.test3
 popd
 %endif
 
@@ -102,6 +104,11 @@ popd
 %endif
 
 %changelog
+* Mon Aug 26 2019 Georgy A Bystrenin <gkot@altlinux.org> 2.6.2-alt1
+- New version 2.6.2
+- Add test
+- Fix spec for a new way to run test
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
