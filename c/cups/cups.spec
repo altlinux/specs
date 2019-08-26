@@ -1,5 +1,5 @@
 Name: cups
-Version: 2.2.11
+Version: 2.2.12
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -79,21 +79,15 @@ Patch125: Ubuntu-logfiles_adm_readable.patch
 Patch126: Ubuntu-default_log_settings.patch
 Patch127: Ubuntu-confdirperms.patch
 Patch128: Ubuntu-show-compile-command-lines.patch
-Patch129: Ubuntu-log-debug-history-nearly-unlimited.patch
-Patch130: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
-Patch131: Ubuntu-set-default-error-policy-retry-job.patch
-Patch132: Ubuntu-man-cups-lpd-drop-dangling-references.patch
-Patch133: Ubuntu-debianize_cups-config.patch
-Patch134: Ubuntu-0034-Build-mantohtml-with-the-build-architecture-compiler.patch
-Patch135: Ubuntu-0035-The-lp-and-lpr-commands-now-provide-better-error-mes.patch
-Patch136: Ubuntu-0036-Protect-against-continuing-to-read-from-a-file-at-EO.patch
-Patch137: Ubuntu-0037-Use-the-same-requested-attributes-values-for-all-IPP.patch
-Patch138: Ubuntu-0038-Add-a-USB-quirk-rule-for-the-Lexmark-E120n-Issue-547.patch
-Patch139: Ubuntu-0039-Updated-the-USB-quirks-rule-for-Zebra-label-printers.patch
-Patch140: Ubuntu-0040-Fix-compile-error-on-Linux-Issue-5483.patch
-Patch141: Ubuntu-0041-Stop-parsing-the-Emulators-keywords-in-PPD-files-Iss.patch
-Patch142: Ubuntu-0042-Fix-potential-unaligned-accesses-in-the-string-pool-.patch
-Patch143: Ubuntu-manpage-translations.patch
+Patch129: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
+Patch130: Ubuntu-set-default-error-policy-retry-job.patch
+Patch131: Ubuntu-man-cups-lpd-drop-dangling-references.patch
+Patch132: Ubuntu-debianize_cups-config.patch
+Patch133: Ubuntu-0034-Build-mantohtml-with-the-build-architecture-compiler.patch
+Patch134: Ubuntu-0035-The-lp-and-lpr-commands-now-provide-better-error-mes.patch
+Patch135: Ubuntu-manpage-translations.patch
+Patch136: Ubuntu-systemd-service-for-cupsd-after-sssd.patch
+Patch137: Ubuntu-set-dirty-clean-interval-to-zero.patch
 
 ## ALT patches
 Patch500: ALT-1.6.1-hardening.patch
@@ -226,21 +220,15 @@ services using the main CUPS library "libcups".
 %patch126 -p1
 %patch127 -p1
 %patch128 -p1
-%patch129 -p1
-#patch130 -p1
-%patch131 -p1
-##patch132 -p1
-#patch133 -p1
-%patch134 -p1
-%patch135 -p1
-%patch136 -p1
-#patch137 -p1
-##patch138 -p1
-#patch139 -p1
-#patch140 -p1
-#patch141 -p1
-#patch142 -p1
-##patch143 -p1
+#patch129 -p1
+%patch130 -p1
+##patch131 -p1
+#patch132 -p1
+%patch133 -p1
+#patch134 -p1
+##patch135 -p1
+##patch136 -p1
+%patch137 -p1
 
 ## ALT apply patches
 ##patch500 -p1
@@ -400,6 +388,11 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Mon Aug 26 2019 Fr. Br. George <george@altlinux.ru> 2.2.12-alt1
+- Autobuild version bump to 2.2.12
+- Update patches
+- Fix LSPP patch
+
 * Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2.2.11-alt1
 - Autobuild version bump to 2.2.11
 - Update patches
