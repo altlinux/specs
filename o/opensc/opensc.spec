@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.19.0
-Release: alt3
+Release: alt4
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -13,6 +13,7 @@ Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
 Patch:  %name-%version-alt.patch
+Patch1: opensc-cve-2019-6502.patch
 
 BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan-devel libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
 
@@ -66,6 +67,7 @@ OpenSC module for PAM.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -116,6 +118,9 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %endif
 
 %changelog
+* Tue Aug 27 2019 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt4
+- Added patch closing a small memory leak issue (fixes CVE-2019-6502).
+
 * Mon Dec 10 2018 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt3
 - New release version 0.19.0.
 
