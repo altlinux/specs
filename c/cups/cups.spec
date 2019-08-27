@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.2.12
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -103,6 +103,16 @@ Patch509: ALT-1.7.2-local_ipv6.patch
 Patch510: ALT-config-nolibs.patch
 Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
+# ALT SE related patches
+Patch552: ALT-ipp-alt-extension-copy-document.patch
+Patch553: ALT-lspp-context+no-filename.patch
+Patch555: ALT-2.1.0-check-PPD-SE.patch
+Patch556: ALT-lspp-context-via-tcp.patch
+Patch557: ALT-lspp-set-context-via-ipp.patch
+Patch558: ALT-lspp-in-alt-job-ft.patch
+Patch559: ALT-mime-pjl-pdf.patch
+Patch560: ALT-SE-ippcalls.patch
+
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -244,6 +254,17 @@ services using the main CUPS library "libcups".
 %patch510 -p1
 %patch511 -p1
 %patch512 -p2
+
+# ALT SE related patches
+%patch552 -p1
+%patch553 -p1
+%patch555
+%patch556 -p1
+%patch557 -p1
+%patch558 -p1
+%patch559 -p1
+%patch560 -p2
+
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
@@ -388,6 +409,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Tue Aug 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.2.12-alt2
+- ALT SE related patches added
+
 * Mon Aug 26 2019 Fr. Br. George <george@altlinux.ru> 2.2.12-alt1
 - Autobuild version bump to 2.2.12
 - Update patches
