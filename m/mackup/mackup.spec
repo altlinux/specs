@@ -2,7 +2,7 @@
 
 Name: mackup
 Version: 0.8.27
-Release: alt1
+Release: alt2
 Summary: Keep your application settings in sync
 License: GNU GPL v3.0
 Group: Other
@@ -11,8 +11,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools
+Requires: python3-module-%name
 
 %description
 What does it do:
@@ -24,6 +23,13 @@ freshly new installed workstation (no cache, temporary and locally specificfiles
 are transfered). Mackup makes setting up the environment easy and simple, saving
 time for your family, great ideas, and all the cool stuff you like.
 
+%package -n python3-module-%name
+Summary: Keep your application settings in sync
+Group: Other
+BuildArch: noarch
+
+%description -n python3-module-%name
+This package contains python module for %name
 
 %prep
 %setup
@@ -33,14 +39,23 @@ time for your family, great ideas, and all the cool stuff you like.
 
 %install
 %python3_install
-sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\/usr\/lib\/python3\/site-packages\/mackup\/applications\/mackup.cfg/" %buildroot/%python3_sitelibdir/%name/constants.py
+mkdir -p %buildroot/%_sysconfdir/%name
+sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\%_sysconfdir\/%name\/mackup.cfg/" %buildroot/%python3_sitelibdir/%name/constants.py
+mv %buildroot/%python3_sitelibdir/%name/applications/mackup.cfg %buildroot/%_sysconfdir/%name
 
 %files
 %_bindir/%name
+%config(noreplace) %_sysconfdir/%name/mackup.cfg
+
+%files -n python3-module-%name
 %python3_sitelibdir/%{name}*
-%config(noreplace) %python3_sitelibdir/%name/applications/mackup.cfg
 
 %changelog
+* Tue Aug 27 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.27-alt2
+- build python3-module-mackup package
+- move mackup.cfg in /etc/mackup
+- remove unnecessary build requires
+
 * Mon Aug 26 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.27-alt1
 - New version
 
