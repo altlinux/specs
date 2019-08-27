@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.207
-Release: alt4
+Release: alt5
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPL
@@ -108,6 +108,7 @@ exit 0
 %attr(700,root,root) %lockdir
 %spooldir
 %bashcompldir/*
+%_target_libdir_noarch/dracut/modules.d/*
 %_sbindir/*
 %_unitdir/*.service
 #%_initdir/*
@@ -124,6 +125,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Tue Aug 27 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.207-alt5
+- spec cleanup
+
 * Tue Aug 27 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.207-alt4
 - network and service changes for ALT
 
