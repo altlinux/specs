@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.207
-Release: alt3
+Release: alt4
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPL
@@ -124,6 +124,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Tue Aug 27 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.207-alt4
+- network and service changes for ALT
+
 * Mon Aug 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.207-alt3
 - change prlctl to vzlist/vzctl
 
