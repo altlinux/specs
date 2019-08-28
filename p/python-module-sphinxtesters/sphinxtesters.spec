@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
+Version: 0.2.3
 Release: alt1
 Summary: Utilities for testing Sphinx extensions
 License: BSD
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 28 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt1
+- Build new version.
+
 * Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1
 - Build new version.
 
