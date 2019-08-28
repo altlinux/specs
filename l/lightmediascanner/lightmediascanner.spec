@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable daemon
 %def_disable magic
 
 Name: lightmediascanner
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Light Media Scanner
@@ -13,14 +13,17 @@ Url: http://lms.garage.maemo.org/
 
 #VCS: git://git.profusion.mobi/lightmediascanner.git
 %if_enabled snapshot
+#VCS: https://github.com/profusion/lightmediascanner.git
 Source: %name-%version.tar
 %else
-Source: http://packages.profusion.mobi/%name/%name-%version.tar.bz2
+Source: https://github.com/profusion/%name/archive/release_%version/%name-%version.tar.gz
 %endif
 
 Requires: lib%name = %version-%release
 
 BuildRequires: libgio-devel libflac-devel libmpeg4ip-devel libsqlite3-devel libvorbis-devel
+BuildRequires: libavcodec-devel libavformat-devel
+
 %{?_enable_magic:BuildRequires: libmagic-devel}
 
 %description
@@ -44,7 +47,7 @@ Requires: lib%name = %version-%release
 This package provides headers and development libraries for LMS.
 
 %prep
-%setup
+%setup -n %name-release_%version
 
 %build
 %autoreconf
@@ -75,6 +78,9 @@ This package provides headers and development libraries for LMS.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Aug 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Mon Feb 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - release_0.5.1-18-gadfddb3 snapshot
 
