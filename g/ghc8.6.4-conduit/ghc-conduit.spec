@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.3.1.1
+Version: 1.3.1.2
 Release: alt1
 License: MIT
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -54,5 +54,8 @@ documentation, please see: <http://www.stackage.org/package/conduit>.
 %files -f %name-files.all
 
 %changelog
+* Tue Dec 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.1.2-alt1
+- Build new version.
+
 * Wed Aug 28 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.1.1-alt1
 - Build new version for ghc8.6.4.
