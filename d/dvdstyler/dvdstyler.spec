@@ -1,5 +1,5 @@
 Name: dvdstyler
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
@@ -92,6 +92,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Wed Aug 28 2019 Anton Farygin <rider@altlinux.ru> 3.1.2-alt1
+- 3.1.2
+
 * Tue Jul 23 2019 Anton Farygin <rider@altlinux.ru> 3.1.1-alt1
 - 3.1.1
 
