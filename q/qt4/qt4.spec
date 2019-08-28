@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt16
+%define rlz alt17
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -108,7 +108,13 @@ Patch216: qt-everywhere-opensource-src-4.8.6-QTBUG-34614.patch
 Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 Patch218: qt-everywhere-opensource-src-4.8.7-alsa-1.1.patch
 Patch219: qt-everywhere-opensource-src-4.8.7-gcc6.patch
-# MDV
+# Debian
+Patch301: CVE-2018-15518.patch
+Patch302: CVE-2018-19869.patch
+Patch303: CVE-2018-19870.patch
+Patch304: CVE-2018-19871.patch
+Patch305: CVE-2018-19872.patch
+Patch306: CVE-2018-19873.patch
 # ALT
 Patch501: qt-4.8.5-alt-honor-SUSv3-locales.patch
 Patch502: qt-4.7.2-alt-ca-certificates-path.patch
@@ -713,7 +719,13 @@ Install this package if you want to create RPM packages that use %name
 %patch217 -p1
 %patch218 -p1
 %patch219 -p1
-# MDV
+# Debian
+%patch301 -p1
+%patch302 -p1
+%patch303 -p1
+%patch304 -p1
+%patch305 -p1
+%patch306 -p1
 # ALT
 %patch501 -p1
 %patch502 -p1
@@ -890,9 +902,6 @@ rm -f ./translations/*_untranslated.qm
 %if_enabled debug
 %set_strip_method none
 %endif
-# uninstall %%optflags
-subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS	= -pipe|" mkspecs/*/qmake.conf
-subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS	= -pipe|" mkspecs/common/g++.conf
 
 export QTDIR=%qtdir
 export QT_DIR="$PWD"
@@ -1012,6 +1021,9 @@ ln -s ../../../%_includedir/%name %buildroot/%qtdir/include
 
 # Ship qmake stuff
 ln -s ../../../%_datadir/%name/mkspecs %buildroot/%qtdir/mkspecs
+# uninstall optflags
+subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS	= -pipe|" %buildroot/%qtdir/mkspecs/*/qmake.conf
+subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS	= -pipe|" %buildroot/%qtdir/mkspecs/common/g++.conf
 # fix lib*.so placement
 subst "s|^\s*QMAKE_LIBDIR_QT\s*=.*$|QMAKE_LIBDIR_QT		= %qtdir/lib|" %buildroot/%qtdir/mkspecs/*/qmake.conf
 subst "s|^\s*QMAKE_LIBDIR_QT\s*=.*$|QMAKE_LIBDIR_QT		= %qtdir/lib|" %buildroot/%qtdir/mkspecs/common/g++.conf
@@ -1460,6 +1472,11 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed Aug 28 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt17
+- Security fixes:
+  CVE-2018-15518, CVE-2018-19869, CVE-2018-19870, CVE-2018-19871,
+  CVE-2018-19872, CVE-2018-19873
+
 * Mon Apr 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt16
 - fix requires
 
