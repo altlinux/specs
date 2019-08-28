@@ -3,7 +3,7 @@ Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
 Version: 0.41
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
@@ -79,7 +79,7 @@ rm -f %buildroot/%_libdir/*.la
 
 # install unit and sysconfig files
 install -d %buildroot%_unitdir
-install -m 644 cgconfig.service %buildroot%_unitdir/
+install -m 644 dist/cgconfig.service %buildroot%_unitdir/
 install -m 644 cgred.service %buildroot%_unitdir/
 
 %pre -n cgroup
@@ -125,6 +125,11 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Wed Aug 28 2019 Alexey Shabalin <shaba@altlinux.org> 0.41-alt3
+- backport several upstream fixes (Fixes: CVE-2018-14348)
+- set Delegate property for cgconfig service to make sure complete
+  cgroup hierarchy is always created by systemd
+
 * Sat Feb 10 2018 Mikhail Efremov <sem@altlinux.org> 0.41-alt2
 - Fix parallel build.
 
