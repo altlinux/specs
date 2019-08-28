@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.12.1
+Version: 1.13
 Release: alt1
 
 Summary: A variety of alternative parser combinator libraries.
@@ -41,6 +41,9 @@ for better deserialisation of Haskell values from Strings.
 %files -f %name-files.all
 
 %changelog
+* Wed Aug 28 2019 Grigory Ustinov <grenka@altlinux.org> 1.13-alt1
+- Build new version.
+
 * Tue Jul 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt1
 - Build new version for ghc8.6.4.
 
