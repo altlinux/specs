@@ -2,7 +2,7 @@
 
 Name: mackup
 Version: 0.8.27
-Release: alt3
+Release: alt4
 Summary: Keep your application settings in sync
 License: GNU GPL v3.0
 Group: Other
@@ -39,18 +39,19 @@ This package contains python module for %name
 
 %install
 %python3_install
-mkdir -p %buildroot/%_sysconfdir/%name
-sed -i "/MACKUP_CONFIG_FILE/s/.mackup.cfg/\%_sysconfdir\/%name\/mackup.cfg/" %buildroot/%python3_sitelibdir/%name/constants.py
-cp %buildroot/%python3_sitelibdir/%name/applications/mackup.cfg %buildroot/%_sysconfdir/%name
 
 %files
 %_bindir/%name
-%config(noreplace) %_sysconfdir/%name/mackup.cfg
+%doc LICENSE README.md
 
 %files -n python3-module-%name
 %python3_sitelibdir/%{name}*
 
 %changelog
+* Wed Aug 28 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.27-alt4
+- use local cfg file instead global
+- pack license and readme files
+
 * Wed Aug 28 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.27-alt3
 - use cp instead mv for mackup.cfg
 
