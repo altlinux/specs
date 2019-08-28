@@ -1,27 +1,33 @@
 %global pypi_name testresources
+%def_disable check
 
 Name:           python-module-%{pypi_name}
-Version:        0.2.7
-Release:        alt2
+Version:        2.0.1
+Release:        alt1
 Summary:        Testresources, a pyunit extension for managing expensive test resources
 
-Group:		Development/Python
+Group:          Development/Python
 License:        ASL 2.0 and BSD and GPLv2+
 # file testresources/tests/TestUtil.py is GPLv2+
 URL:            https://launchpad.net/testresources
 Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
- 
+
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-mimeparse python-module-pbr
-BuildRequires: python-module-testtools python-module-fixtures
+BuildRequires: python-module-mimeparse
+BuildRequires: python-module-pbr >= 1.8
+BuildRequires: python-module-testtools
+BuildRequires: python-module-fixtures
 BuildRequires: python-module-unittest2
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-html5lib python3-module-mimeparse
-BuildPreReq: python3-module-pbr python3-module-unittest2
-BuildPreReq: python3-module-testtools python3-module-fixtures
+BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-mimeparse
+BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-unittest2
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-fixtures
 
 
 %description
@@ -30,7 +36,7 @@ of resources by test cases.
 
 %package -n python3-module-%{pypi_name}
 Summary:        Testresources, a pyunit extension for managing expensive test resources
-Group:		Development/Python
+Group:          Development/Python
 BuildArch:      noarch
 
 %description -n python3-module-%{pypi_name}
@@ -63,17 +69,20 @@ popd
 %{__python} setup.py test
 
 %files
-%doc README NEWS doc
+%doc README.rst NEWS doc
 %{python_sitelibdir}/%{pypi_name}
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %files -n python3-module-%{pypi_name}
-%doc README NEWS doc
+%doc README.rst NEWS doc
 %{python3_sitelibdir}/%{pypi_name}
 %{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
 
 %changelog
+* Wed Aug 28 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.7-alt2
 - rebuild with python3.6
 
