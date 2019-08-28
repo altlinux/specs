@@ -2,7 +2,7 @@
 
 Name:        python3-module-%oname
 Version:     0.6
-Release:     alt2.git.e06808f
+Release:     alt3.git.e06808f
 
 Summary:     Python library to read Squashfs image files. 
 License:     %gpl3only/%lgpl21only
@@ -11,6 +11,9 @@ Url:         https://github.com/matteomattei/PySquashfsImage
 BuildArch:   noarch
 
 Source:      %name-%version.tar
+
+Patch1: %oname-alt-fix-lreg-type-entries-processing.patch
+Patch2: %oname-alt-update-pathname.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-licenses
 BuildPreReq:        python3-module-setuptools python3-devel
@@ -23,6 +26,8 @@ encapsulated binaries. It is compatible with Python2 and Python3.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 %python3_build
@@ -35,6 +40,9 @@ encapsulated binaries. It is compatible with Python2 and Python3.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt3.git.e06808f
+- Fixed processing lreg entries.
+
 * Tue Aug 27 2019 Ivan Razzhivin <underwit@altlinux.org> 0.6-alt2.git.e06808f
 - build from git
 
