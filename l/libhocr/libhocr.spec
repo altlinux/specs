@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libhocr-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
@@ -18,7 +18,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_30
+Release:	alt3_30
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -184,6 +184,9 @@ done
 
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt3_30
+- fixed self-br thanks to rider@
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_30
 - update to new release by fcimport
 
