@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Cairo-GObject
-Version: 1.004
-Release: alt1.2
+Version: 1.005
+Release: alt1
 
 Summary: Integrate Cairo into the Glib type system
 Group: Development/Perl
@@ -24,11 +25,15 @@ BuildRequires: libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib
 %perl_vendor_install
 
 %files
+%doc NEWS README LICENSE examples
 %perl_vendor_autolib/Cairo/GObject*
 %perl_vendor_archlib/Cairo/GObject*
-%doc LICENSE NEWS README
+%doc README
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1.2
 - rebuild with new perl 5.28.1
 
