@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q3.1
+Version: 2019.Q3.5
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -36,9 +36,10 @@ Source1: pal.tar.xz
 Source2: llpc.tar.xz
 Source3: spvgen.tar.xz
 Source4: llvm.tar.xz
-Source5: amd_icd.json
+Source5: metrohash.tar.xz
+Source6: amd_icd.json
 
-Patch: spvgen-alt-shared.patch
+Patch1: spvgen-alt-shared.patch
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -50,9 +51,9 @@ platforms, including support for recently released GPUs and compatibility with
 AMD developer tools.
 
 %prep
-%setup -n xgl -b0 -b1 -b2 -b3 -b4
+%setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5
 pushd %_builddir/spvgen
-%patch -p2
+%patch1 -p2
 popd
 
 %build
@@ -67,6 +68,7 @@ export GCC_VERSION=7 \
 %if_with wayland
 	-DBUILD_WAYLAND_SUPPORT=ON \
 %endif
+        -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 %cmake_build
@@ -77,7 +79,7 @@ mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
 touch %buildroot%_sysconfdir/amd/amdPalSettings.cfg
 
 install -p -m644 %_builddir/xgl/BUILD/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
-install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
+install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 
 %files
 %_libdir/*.so
@@ -86,6 +88,17 @@ install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Thu Aug 29 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q3.5-alt1
+- added modified metrohash library.
+- 2019-8-26 update:
+  + llpc: 4fa48ef1cf0f81eafdb56df91c2f2180d4865101
+  + llvm: 9bc5dd4450a6361faf5c5661056a7ee494fad830
+  + metrohash: 2b6fee002db6cc92345b02aeee963ebaaf4c0e2f
+  + pal: 68b57dba33a4d922e8f1ef1b3781c2f659ffbd1c
+  + spvgen: 68b57dba33a4d922e8f1ef1b3781c2f659ffbd1c
+  + xgl: 331558e93794068a786bf699d3fe23bb11bac021
+- icd.json: bump vulkan api version.
+
 * Wed Jul 03 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q3.1-alt1
 - 2019-6-30 update:
   + llpc: aa8a9d7f2b7ad7b81b70e7959e99e3f31f85c211
@@ -93,7 +106,7 @@ install -p -m644 %SOURCE5 %buildroot%_vkdir/amd_icd.json
   + pal:6c8eaa257e6216437fdfe3f17d418eccfe42e0bd
   + spvgen: 53245b96b7a647743f50b9d841751f9755002661
   + xgl: eee58c8e482ac4a6fdc40452cb4ad744395d0f74
-- icd.json: bump vulkan api version
+- icd.json: bump vulkan api version.
 
 * Mon May 13 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q2.3-alt2
 - spvgen: fix build.
