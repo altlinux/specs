@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-devel libsocket libtinfo-devel
+BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsocket libtinfo-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt4_15
+Release: alt5_15
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -117,6 +117,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt5_15
+- fixed self-br thanks to rider@
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt4_15
 - set doc to noarch
 
