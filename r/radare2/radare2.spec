@@ -1,7 +1,7 @@
 Summary: A reverse engineering framework
 Name: radare2
 Version: 3.7.0
-Release: alt1
+Release: alt2
 License: %lgpl3plus
 Group: Development/Tools
 Url: http://radare.org/
@@ -52,6 +52,9 @@ rm -f %buildroot/%_libdir/libr_shlr.a
 rm %buildroot/%_bindir/r2pm
 # Copy r_jemalloc to the include directory
 cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
+# Create symbolic link to the radare2.
+# Some programs (e.g. rahash2) looking for r2 instead of radare2.
+ln -s radare2 %buildroot/usr/bin/r2
 
 %files devel
 %_libdir/pkgconfig/*.pc
@@ -69,6 +72,9 @@ cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 %_datadir/zsh
 
 %changelog
+* Thu Aug 29 2019 Nikita Ermakov <arei@altlinux.org> 3.7.0-alt2
+- Create symbolic link to the radare2.
+
 * Thu Aug 01 2019 Nikita Ermakov <arei@altlinux.org> 3.7.0-alt1
 - Update to 3.7.0.
 
