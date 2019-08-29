@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Glib
 Name: perl-%dist
-Version: 1.329
-Release: alt2
+Version: 1.3291
+Release: alt1
 
 Summary: Perl module for the glib-2.x library
 License: LGPL
@@ -56,7 +56,7 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 %perl_vendor_install
 
 %files
-%doc	AUTHORS NEWS README ChangeLog.pre-git copyright.pod
+%doc	AUTHORS README ChangeLog.pre-git copyright.pod
 	%perl_vendor_archlib/Glib.pm
 %dir	%perl_vendor_archlib/Glib
 %dir	%perl_vendor_archlib/Glib/Object
@@ -72,6 +72,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.3291-alt1
+- automated CPAN update
+
 * Tue Mar 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.329-alt2
 - fixed build (closes: #36309)
 
