@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -8,14 +9,14 @@ BuildRequires: perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    1.00
+Release:    alt1
 
 Summary:    Retrieve Solaris platform metadata
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Devel/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BA/BARBIE/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(IO/File.pm)
@@ -38,7 +39,7 @@ However, it is hoped that this distribution will find more uses far beyond
 the usage for CPAN Testers.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -52,10 +53,13 @@ the usage for CPAN Testers.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README examples
+%doc Changes META.json META.yml README examples
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2
 - update by mgaimport
 
