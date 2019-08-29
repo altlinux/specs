@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Gtk3
-Version: 0.035
+Version: 0.036
 Release: alt1
 
 Summary: Perl interface to the 3.x series of the gtk+ toolkit
@@ -29,9 +29,12 @@ Requires: libgtk+3-gir
 
 %files
 %perl_vendor_privlib/Gtk3*
-%doc LICENSE NEWS README
+%doc README
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
+- new version
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.035-alt1
 - new version
 
