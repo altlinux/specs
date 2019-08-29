@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Summary: Python test framework
 License: MIT
@@ -21,6 +21,7 @@ BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: /dev/pts
+BuildRequires: /dev/shm
 BuildRequires: python3(tox)
 
 BuildRequires: python3(argcomplete)
@@ -116,6 +117,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest3
 
 %changelog
+* Thu Aug 29 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
+- Fixed FTBFS ('/dev/shm').
+
 * Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
 - 5.1.0 -> 5.1.1.
 
