@@ -3,7 +3,7 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
@@ -28,7 +28,7 @@ BuildPreReq: libXt-devel
 
 # alternatives
 %define weight 20
-PreReq: alternatives >= 0.2.0
+Requires(pre,postun): alternatives >= 0.2.0
 BuildPreReq: alternatives >= 0.2.0
 
 Provides: webclient, links
@@ -133,6 +133,10 @@ chmod +x %buildroot%_bindir/x%name
 # - consider system publicsuffix like debian
 
 %changelog
+* Thu Aug 29 2019 Michael Shigorin <mike@altlinux.org> 2.20-alt1
+- new version (watch file uupdate)
+- fixes DNS prefetch security problem present from 2.15 to 2.19
+
 * Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.19-alt1
 - new version (watch file uupdate) (closes: #36495)
 - don't enable javascript explicitly (ftbfs)
