@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python-module-%pypi_name
 Version:    5.4.2
-Release:    alt1
+Release:    alt2
 
 Summary:    Python Build Reasonableness
 
@@ -25,7 +25,6 @@ URL:        http://pypi.python.org/pypi/pbr
 Source: %name-%version.tar
 
 BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
-BuildRequires: python-module-pbr
 BuildRequires: python-module-html5lib python-module-mimeparse
 BuildRequires: python-module-alabaster python-module-docutils python-module-subunit-tests python-module-oslosphinx
 BuildRequires: python-module-sphinxcontrib-apidoc
@@ -145,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 29 2019 Anton Farygin <rider@altlinux.ru> 5.4.2-alt2
+- removed buildrequires on himself
+
 * Tue Aug 06 2019 Grigory Ustinov <grenka@altlinux.org> 5.4.2-alt1
 - Build new version.
 
