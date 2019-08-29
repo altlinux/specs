@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.25.21
-Release: alt2
+Version: 1.25.22
+Release: alt1
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -155,6 +155,9 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Thu Aug 29 2019 Michael Shigorin <mike@altlinux.org> 1.25.22-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 29 2019 Michael Shigorin <mike@altlinux.org> 1.25.21-alt2
 - updated -full subpackage dependencies (closes: #37146)
 
