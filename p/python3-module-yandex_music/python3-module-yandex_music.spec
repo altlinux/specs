@@ -2,7 +2,7 @@
 %define oname yandex_music
 
 Name: python3-module-%oname
-Version: 0.0.9
+Version: 0.0.10
 Release: alt1
 Summary: Unofficial library for Yandex.Music API
 License: LGPLv3
@@ -37,6 +37,9 @@ cp -R examples/* %buildroot%python3_sitelibdir/%oname/examples
 %doc LICENSE README.*
 
 %changelog
+* Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.10-alt1
+- New version
+
 * Sat Aug 24 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.9-alt1
 - New version
 
