@@ -1,13 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libfplll-devel libgmp-devel mpir-devel
-# END SourceDeps(oneline)
 Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires: libgmp-devel mpir-devel
+# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfplll
 Version:        5.2.1
-Release:        alt1_1
+Release:        alt1_4
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/fplll/fplll
@@ -118,6 +118,9 @@ make check
 
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_4
+- fixed self-BR (thanks to rider@)
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_1
 - update to new release by fcimport
 
