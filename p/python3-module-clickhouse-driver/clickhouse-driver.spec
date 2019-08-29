@@ -3,9 +3,8 @@
 
 
 Name:       python3-module-%oname
-Version:    0.0.20
+Version:    0.1.0
 Release:    alt1
-BuildArch:  noarch
 
 License:    %mit
 Group:      Development/Python3
@@ -18,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-sphinx
+
+Requires: python3-module-clickhouse-cityhash
 
 
 %description
@@ -49,8 +50,8 @@ Package contains tests for %name.
 %build
 %python3_build
 
-export PYTHONPATH=$PWD
-%make -C docs/ man
+# export PYTHONPATH=$PWD
+# %%make -C docs/ man
 
 %install
 %python3_install
@@ -62,13 +63,16 @@ cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_driver/
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/clickhouse_driver/tests/
 
-%files docs
-%doc docs/*/man/*
+# %%files docs
+# %%doc docs/*/man/*
 
 %files tests
 %python3_sitelibdir/clickhouse_driver/tests/
 
 
 %changelog
+* Thu Aug 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt1
+- Version updated to 0.1.0
+
 * Wed Jun 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.20-alt1
 - Initial build for Sisyphus
