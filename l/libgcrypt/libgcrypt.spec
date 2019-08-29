@@ -6,8 +6,8 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.8.4
-Release: alt3
+Version: 1.8.5
+Release: alt1
 
 %define soname %{name}%{soversion}
 
@@ -159,6 +159,7 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %_libdir/*.so
 %_datadir/aclocal/*
 %_infodir/*
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files devel-static
@@ -166,6 +167,11 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Thu Aug 29 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt1
+- Freshed up to version 1.8.5 (fixes CVE-2019-13627).
+- Upstream: Improve ECDSA unblinding.
+- Upstream: Provide a pkg-config file for libgcrypt.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
 - NMU: remove rpm-build-ubt from BR:
 
