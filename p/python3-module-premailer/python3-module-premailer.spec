@@ -2,26 +2,22 @@
 %define oname premailer
 
 Name: python3-module-%oname
-Version: 3.4.1
+Version: 3.6.1
 Release: alt1
-
 Summary: Turns CSS blocks into style attributes
 License: BSD 3
 Group: Development/Python3
-
-URL: https://github.com/peterbe/premailer
+Url: https://github.com/peterbe/premailer
 Source: %name-%version.tar
 
 BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
 
 %description
-Premailer is a Python library based on libxml which can analyze a HTML document and extract
-its CSS style sheets and then for all CSS seletors defined, it finds the DOM nodes and puts
-style attributes in instead.
+Premailer is a Python library based on libxml which can analyze a HTML document
+and extract its CSS style sheets and then for all CSS seletors defined, it finds
+the DOM nodes and puts style attributes in instead.
 
 
 %prep
@@ -38,6 +34,9 @@ style attributes in instead.
 %doc LICENSE README.*
 
 %changelog
+* Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.1-alt1
+- New version
+
 * Sun May 26 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.4.1-alt1
 - New version
 
