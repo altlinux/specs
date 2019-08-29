@@ -16,7 +16,7 @@
 
 Name: perl-Archive-Any
 Version: 0.0946
-Release: alt1
+Release: alt2
 
 Summary: Single interface to deal with file archives.
 
@@ -29,7 +29,7 @@ Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-Archive-Tar
 # Automatically added by buildreq on Wed Sep 03 2008 (-bi)
-BuildRequires: perl-Archive-Any perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn perl-version
+BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn perl-version perl(Module/Find.pm) perl(File/MMagic.pm) perl(MIME/Types.pm) perl(Archive/Zip.pm)
 
 %description
 This module is a single interface for manipulating different archive formats.
@@ -50,6 +50,9 @@ Tarballs, zip files, etc.
 %perl_vendor_privlib/Archive*
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.0946-alt2
+- fixed self-br thanks to rider@
+
 * Sat Apr 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.0946-alt1
 - automated CPAN update
 
