@@ -1,5 +1,4 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libpcapnav-devel
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
@@ -7,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libpcapnav
 Version:        0.8
-Release:        alt1_16
+Release:        alt2_16
 Summary:        Wrapper library for libpcap offering navigation inside of a tracefile
 
 Group:          System/Libraries
@@ -62,6 +61,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gtk-doc/html/pcapnav/
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_16
+- fixed self-br thanks to rider@
+
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_16
 - update to new release by fcimport
 
