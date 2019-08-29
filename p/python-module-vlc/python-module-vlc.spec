@@ -1,7 +1,7 @@
 %define oname vlc
 
 Name: python-module-%oname
-Version: 3.0.6109
+Version: 3.0.7110
 Release: alt1
 
 Summary: Binding for the native libvlc API.
@@ -63,6 +63,9 @@ popd
 
 
 %changelog
+* Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.7110-alt1
+- New version
+
 * Sun Jul 21 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.6109-alt1
 - New version
 
