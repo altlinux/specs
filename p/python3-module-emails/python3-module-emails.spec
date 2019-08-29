@@ -2,22 +2,17 @@
 %define oname emails
 
 Name: python3-module-%oname
-Version: 0.5.15
+Version: 0.6
 Release: alt1
-
 Summary: Modern python library for emails
 License: Apache 2.0
 Group: Development/Python3
-
-URL: https://github.com/lavr/python-emails
+Url: https://github.com/lavr/python-emails
 Source: %name-%version.tar
 
 BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
-
 Requires: python3-module-premailer
 
 %description
@@ -46,6 +41,9 @@ Features
 %doc LICENSE README.*
 
 %changelog
+* Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.6-alt1
+- New version
+
 * Sat Mar 30 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.15-alt1
 - Initial build for ALT
 
