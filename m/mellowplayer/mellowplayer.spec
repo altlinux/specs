@@ -2,12 +2,13 @@
 
 Name: mellowplayer
 Version: 3.5.5
-Release: alt1
+Release: alt2
 Summary: Cloud music integration for your desktop
 License: GNU GPLv2
 Group: Sound
 Url: https://gitlab.com/ColinDuquesnoy/MellowPlayer
 Source: %name-%version.tar
+Patch1: mellowplayer-3.5.5-desktop-additional-categories-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -29,6 +30,7 @@ notifications and more).
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake
@@ -48,6 +50,9 @@ cp -p %buildroot%_bindir/MellowPlayer %buildroot%_bindir/%name
 %doc LICENSE
 
 %changelog
+* Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.5-alt2
+- Add additional category in desktop file
+
 * Sat Aug 10 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.5-alt1
 - Initial build for ALT
 
