@@ -2,7 +2,7 @@
 %define dist CPAN-Meta
 Name: perl-%dist
 Version: 2.150010
-Release: alt2
+Release: alt3
 
 Summary: The distribution metadata for a CPAN dist
 License: GPL or Artistic
@@ -13,8 +13,10 @@ Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-%{version}.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-CPAN-Meta-Requirements perl-Parse-CPAN-Meta perl-Test-Script
+BuildRequires: perl-CPAN-Meta-Requirements perl-Test-Script perl(Encode.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/PP.pm)
+%if_without bootstrap
+#BuildRequires: perl-Parse-CPAN-Meta
+%endif
 
 %description
 Software distributions released to the CPAN include a META.json or,
@@ -54,6 +56,9 @@ using JSON::PP and/or CPAN::Meta::YAML.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 2.150010-alt3
+- fixed self-br thanks to rider@
+
 * Sat Sep 24 2016 Igor Vlasenko <viy@altlinux.ru> 2.150010-alt2
 - added perl-Parse-CPAN-Meta subpackage (closes: #32523)
 
