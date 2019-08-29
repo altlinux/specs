@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 Name:		arduino
 Epoch:		1
 Version:	1.8.5
-Release:	alt2_7jpp8
+Release:	alt2_8jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
 URL:		http://www.arduino.cc/
@@ -306,6 +306,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/metainfo/*.app
 %{_datadir}/%{name}/arduino-builder
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_8jpp8
+- fixed avrdude path (closes: #37154)
+
 * Fri Jul 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_7jpp8
 - fc update & java 8 build
 
