@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190821
+Version: 20190824
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Aug 29 2019 Cronbuild Service <cronbuild@altlinux.org> 20190824-alt1
+- upstream changes (GIT 7307a29):
+  + brcm: Add 43455 based AP6255 NVRAM for the Minix Neo Z83-4
+    Mini PC (thx Hans de Goede)
+  + brcm: Add 43340 based AP6234 NVRAM for the PoV TAB-P1006W-232
+    tablet (thx Hans de Goede)
+  + iwlwifi: update FWs to core45-152 release (thx Luca Coelho)
+
 * Wed Aug 21 2019 Cronbuild Service <cronbuild@altlinux.org> 20190821-alt1
 - upstream changes (GIT c0fb3d9):
   + check_whence: Add copy-firmware.sh to the list of ignored files (thx Josh Boyer)
