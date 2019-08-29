@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Apache-Test
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: Test.pm wrapper with helpers for testing Apache
@@ -56,6 +56,9 @@ rm -f %buildroot%perl_vendor_privlib/Apache/TestConfigData.pm
 %perl_vendor_privlib/Apache/
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
+- automated CPAN update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - automated CPAN update
 
