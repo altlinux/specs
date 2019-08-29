@@ -1,16 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libirman-devel
-# END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libirman
 Epoch:          1
 Version:        0.5.2
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Library for IRMAN hardware
 
-Group:          System/Libraries
 
 #The files which make up the library are covered under the GNU Library
 #General Public License, which is in the file COPYING.lib.
@@ -33,8 +30,8 @@ emulate the irman protocol.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    devel
@@ -73,6 +70,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 rm  $RPM_BUILD_ROOT%{_docdir}/libirman/TECHNICAL
 
 
+
+
+
 %files
 %doc COPYING* README TODO NEWS
 %config(noreplace) %{_sysconfdir}/irman.conf
@@ -92,6 +92,9 @@ rm  $RPM_BUILD_ROOT%{_docdir}/libirman/TECHNICAL
 
 
 %changelog
+* Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_10
+- fixed self-BR (closes: #37157)
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_8
 - update to new release by fcimport
 
