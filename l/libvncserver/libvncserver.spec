@@ -9,7 +9,7 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -136,11 +136,14 @@ sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' *.pc.cmakein
 
 
 %changelog
+* Fri Aug 30 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.12-alt2
+- fix changelog
+
 * Thu Aug 29 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.12-alt1
 - new version
 
 * Tue Aug 27 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.11-alt4
-- security fixes: CVE-2018-7225
+- security (Fixes: CVE-2018-7225)
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.11-alt3
 - NMU: remove rpm-build-ubt from BR:
