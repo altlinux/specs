@@ -4,22 +4,22 @@
 
 Name: libgumbo
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: An HTML5 parsing library
 License: %asl-2.0
 Group: System/Libraries
-URL: https://github.com/google/gumbo-parser
 
+Url: https://github.com/google/gumbo-parser
 # Upstream: https://github.com/google/gumbo-parser
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-
+BuildRequires: gcc-c++
 
 %{?_with_python:BuildRequires: python3-devel python3-module-setuptools}
-%{?!_without_check:%{?!_disable_check:BuildRequires: gcc-c++ libgtest-devel}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: libgtest-devel}}
 
 %{?_with_docs:BuildRequires: doxygen}
 
@@ -120,6 +120,9 @@ make check
 %endif
 
 %changelog
+* Sat Aug 31 2019 Michael Shigorin <mike@altlinux.org> 0.10.1-alt2
+- Fixed build without check (gcc-c++ is requisite).
+
 * Tue Jul 30 2019 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1
 - Patches from Debain.
 - Patch from upstream.
