@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -58,6 +58,9 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Fri Aug 30 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.2-alt1
+- new version 7.0.2 (with rpmrb script)
+
 * Wed Jun 12 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.1-alt1
 - new version 7.0.1 (with rpmrb script)
 
