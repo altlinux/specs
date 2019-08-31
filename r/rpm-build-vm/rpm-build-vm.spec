@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -90,6 +90,12 @@ chmod a+twx /run/dbus
 # u&mount should to be readable
 control mount unprivileged
 
+# For --overlay=
+chmod a+twx /mnt
+
+# Allow user creation
+chmod a+r /etc/login.defs
+
 %else
 # = QEMU un-supported arches =
 
@@ -114,6 +120,9 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Sat Aug 31 2019 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
+- Improvements corresponding to v1.2.
+
 * Mon Aug 19 2019 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
 - Do not use `qemu' binary on x86 due to qemu repackage.
 
