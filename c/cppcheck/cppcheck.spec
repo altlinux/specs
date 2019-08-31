@@ -3,14 +3,13 @@
 
 Name: cppcheck
 Version: 1.88
-Release: alt1
+Release: alt2
 
 Summary: A tool for static C/C++ code analysis
-
 License: GPLv3
 Group: Development/Tools
-Url: https://github.com/danmar/cppcheck
 
+Url: https://github.com/danmar/cppcheck
 # git://github.com/danmar/cppcheck.git
 Source: %name-%version.tar
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
@@ -58,6 +57,12 @@ Requires: %name = %EVR
 %patch7 -p1
 %patch8 -p1
 %patch9 -p2
+
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
+	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 # Make sure bundled tinyxml is not used
 rm -r externals/tinyxml
@@ -118,6 +123,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Aug 31 2019 Michael Shigorin <mike@altlinux.org> 1.88-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Wed Aug 07 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.88-alt1
 - Updated to upstream version 1.88.
 
