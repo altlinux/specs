@@ -1,52 +1,68 @@
 %define        pkgname rmagick
 
 Name:          ruby-%pkgname
-Version:       3.0.0
-Release:       alt2
+Version:       4.0.0
+Release:       alt1
 Summary:       ImageMagick for Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://rmagick.github.io/
-# VCS:         https://github.com/rmagick/rmagick.git
-Source:        %name-%version.tar
+%vcs           https://github.com/rmagick/rmagick.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 RMagick is an interface between the Ruby programming language and the
 ImageMagick image processing library.
 
+
 %package       doc
-Summary:       ImageMagick for Ruby documentation
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-%summary.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %package       devel
-Summary:       ImageMagick for Ruby development files
-Group:         Development/Ruby
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   devel
-%summary.
+Development headers for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
+
+%check
+%ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
-%ruby_gemlibdir
 %ruby_gemextdir
+%ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
@@ -54,7 +70,12 @@ BuildArch:     noarch
 %files         devel
 %ruby_includedir/*
 
+
 %changelog
+* Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 4.0.0-alt1
+^ Ruby Policy 2.0
+^ v4.0.0
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt2
 - cleanup spec
 

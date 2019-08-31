@@ -1,26 +1,30 @@
 %define        pkgname facter
 
 Name: 	       ruby-%pkgname
-Version:       2.5.1
-Release:       alt3
+Version:       2.5.2
+Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 Group:         Development/Ruby
 License:       Apache-2.0
 Url:           https://tickets.puppetlabs.com/browse/FACT
-# VCS:         https://github.com/puppetlabs/facter
+%vcs           https://github.com/puppetlabs/facter
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source:        %pkgname-%version.tar
-Patch1:        %name-alt-support.patch
-
-Requires:      coreutils dmidecode net-tools pciutils bind-utils
-%add_findreq_skiplist *.erb
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libcpp-hocon-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: libleatherman-devel
 BuildRequires: boost-program_options-devel
+
+Requires:      coreutils
+Requires:      dmidecode
+Requires:      net-tools
+Requires:      pciutils
+Requires:      bind-utils
+%add_findreq_skiplist *.erb
+%add_findreq_skiplist %ruby_gemslibdir/*
 
 %description
 A cross-platform Ruby library for retrieving facts from
@@ -35,16 +39,17 @@ to include additional mechanisms for retrieving facts.
 
 
 %package       doc
-Summary:       Documentation files for %name
-Group:         Documentation
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{name}.
+Documentation files for %gemname gem.
 
 
 %package       -n facter
-Summary:       Terminal executable called 'facter'
+Summary:       Console executable called 'facter'
 Group:         System/Base
 BuildArch:     noarch
 
@@ -58,19 +63,16 @@ addresses, and SSH keys.
 
 
 %prep
-%setup -n %pkgname-%version
-# patches
-%patch1 -p1
-sed "s|read_timeout|timeout|" -i lib/facter/ec2/rest.rb
+%setup
 
 %build
-%gem_build
+%ruby_build --ignore=acceptance
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -83,7 +85,12 @@ sed "s|read_timeout|timeout|" -i lib/facter/ec2/rest.rb
 %files         -n facter
 %_bindir/*
 
+
 %changelog
+* Wed Jul 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt1
+- Bump to 2.5.2 with ALT support
+- Fix spec
+
 * Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt3
 - Use Ruby Policy 2.0.
 

@@ -2,8 +2,8 @@
 %define        gemname unf_ext
 
 Name: 	       ruby-%gemname
-Version:       0.0.7.5
-Release:       alt2
+Version:       0.0.7.6
+Release:       alt1
 Summary:       Unicode Normalization Form support library for CRuby
 License:       MIT
 Group:         Development/Ruby
@@ -22,26 +22,32 @@ BuildRequires: gcc-c++
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
 Provides:      ruby-%pkgname-doc
 Obsoletes:     ruby-%pkgname-doc
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
+
 
 %files
 %doc README*
@@ -54,6 +60,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Aug 13 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.7.6-alt1
+^ v0.0.7.6
+! spec
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.7.5-alt2
 - Use Ruby Policy 2.0
 

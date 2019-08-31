@@ -2,22 +2,23 @@
 
 Name:          ruby-%pkgname
 Version:       0.10.0
-Release:       alt1
+Release:       alt1.1
 Epoch:         1
 Summary:       OpenGL Interface for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/larskanis/opengl
-# VCS:         https://github.com/larskanis/opengl.git
+%vcs           https://github.com/larskanis/opengl.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libGL-devel
 BuildRequires: libX11-devel
 BuildRequires: libfreeglut-devel
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-hoe
-BuildRequires: rake-compiler
+BuildRequires: gem(hoe)
+BuildRequires: gem(rake-compiler)
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 ruby-opengl consists of Ruby extension modules that are bindings for
@@ -27,6 +28,7 @@ for -- and uses the code from -- Yoshi's ruby-opengl.
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 Provides:      ruby-%pkgname-doc
@@ -35,27 +37,34 @@ Obsoletes:     ruby-%pkgname-doc
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %package       -n gem-%pkgname-devel
-Summary:       Development files for %gemname gem
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-%pkgname-devel
-Development files for %gemname gem.
+Development headers for %gemname gem.
+
+%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -70,6 +79,9 @@ Development files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1.1
+! spec
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1
 - Use Ruby Policy 2.0
 - Bump to 0.10.0

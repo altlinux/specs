@@ -1,26 +1,21 @@
-%define  pkgname gettext-setup
+%define        pkgname gettext-setup
  
-Name: 	 ruby-%pkgname
-Version: 0.30
-Release: alt2
+Name: 	       ruby-%pkgname
+Version:       0.30
+Release:       alt3
  
-Summary: A gem that configures gettext for internationalization
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/puppetlabs/gettext-setup-gem
+Summary:       A gem that configures gettext for internationalization
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/puppetlabs/gettext-setup-gem
+%vcs           https://github.com/puppetlabs/gettext-setup-gem.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
  
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
- 
-Source:  %pkgname-%version.tar
-Patch1: update-fast-gettext-to-1.7.patch
- 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%gem_replace_version fast_gettext ~> 1.7
 
-Requires: ruby-gettext
-Requires: ruby-locale
- 
 %description
 This is a simple gem to set up i18n for Ruby projects (including Sinatra
 web apps) using gettext and fast gettext.
@@ -30,56 +25,41 @@ different locale in their browser preferences, and we support the user's
 preferred locale, strings and data formatting will be customized for
 that locale.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Documentation
+BuildArch:     noarch
  
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %pkgname-%version
-%patch1 -p 1
-# Adapt gemspec for package
-subst 's,\(spec.version.*=\).*,\1 %version,' %pkgname.gemspec
-subst 's,\(spec.files.*=\).*,\1 Dir["%ruby_sitelibdir/%pkgname*"],' %pkgname.gemspec
-subst '/spec.test_files/d' %pkgname.gemspec
-
-# Fix path
-subst 's,metadata_pot/,gettext-setup/,' lib/generate_metadata_pot.rb
-%update_setup_rb
-# Fix missing trailing new line symbol
-echo >> lib/gettext-setup.rb
+%setup
  
 %build
-%ruby_config
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
  
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
 
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
- 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
  
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%ruby_libdir/gems/*/specifications/*.gemspec
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
- 
+%files         doc
+%ruby_gemdocdir
+
+
 %changelog
+* Fri Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 0.30-alt3
+- Use Ruby Policy 2.0
+
 * Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 0.30-alt2
 - Update fastgettext to 1.7
 

@@ -1,20 +1,19 @@
 %define        pkgname ffi
 
 Name:          ruby-%pkgname
-Version:       1.10.0
+Version:       1.11.1
 Release:       alt1
 Summary:       Ruby foreign function interface
 Group:         Development/Ruby
 License:       BSD
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Url:           https://github.com/ffi/ffi/wiki
-# VCS:         https://github.com/ffi/ffi.git
+%vcs           https://github.com/ffi/ffi.git
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
 BuildRequires: vim
-BuildRequires: ruby-pry
 BuildRequires: gem(rspec)
 BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
@@ -29,33 +28,42 @@ extension using Ruby-FFI.
 
 
 %package       devel
-Summary:       Developement files for %name
-Group:         Development/Ruby
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   devel
-Developement files for %name.
+Development headers for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
 
 
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %name
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install -m lust
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -66,9 +74,13 @@ Documentation files for %name
 %ruby_gemdocdir
 
 %files         devel
-%ruby_includedir/ffi
+%ruby_includedir/ffi*
 
 %changelog
+* Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.11.1-alt1
+^ v1.11.1
+! spec
+
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
 - Bump to 1.10.0;
 - Use Ruby Policy 2.0.

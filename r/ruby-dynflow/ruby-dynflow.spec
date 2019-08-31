@@ -2,17 +2,18 @@
 
 Name:          ruby-%pkgname
 Version:       1.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/Dynflow/dynflow
+%vcs           https://github.com/Dynflow/dynflow.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
+
 %gem_replace_version concurrent-ruby-edge ~> 0.5
 
 %description
@@ -21,28 +22,31 @@ BuildRequires(pre): rpm-build-ruby
 %description -l ru_RU.UTF8
 Движок для управления динамического рабочего потока.
 
+
 %package       doc
 Summary:       Documentation files for %gemname gem
-Group:         Documentation
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
 
-%description doc -l ru_RU.UTF8
-Файлы сведений для %name
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build --ignore=pages
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -52,7 +56,11 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1.1
+- Fix spec
+
 * Tue Jun 04 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1
 - Use Ruby Policy 2.0
 - Bump to 1.2.3

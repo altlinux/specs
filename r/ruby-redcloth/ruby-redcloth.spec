@@ -4,12 +4,12 @@
 
 Name:          ruby-%pkgname
 Version:       4.3.2
-Release:       alt2
+Release:       alt2.1
 Summary:       Textile parser for Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://redcloth.org/
-# VCS:         https://github.com/jgarber/redcloth.git
+%vcs           https://github.com/jgarber/redcloth.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildArch:     noarch
@@ -22,32 +22,43 @@ A very simple text format. Another stab at making readable text that can
 be converted to HTML.
 
 
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %gemname gem
+Documentation files for %gemname gem.
 
-
-%package       -n %pkgname
-Summary:       RedCloth executables for %gemname gem
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   -n %pkgname
-%summary.
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build --use=RedCloth --alias=redcloth
+%ruby_build --use=RedCloth --alias=redcloth
 
 %install
-%gem_install
+%ruby_install
+
+%check
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -59,7 +70,11 @@ BuildArch:     noarch
 %files         -n %pkgname
 %_bindir/%pkgname
 
+
 %changelog
+* Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.2-alt2.1
+- Fix spec
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.2-alt2
 - Use Ruby Policy 2.0
 - Fix 4.3.2 gem version

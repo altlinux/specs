@@ -1,19 +1,18 @@
-Name: ruby-mechanize
-Version: 0.9.3
-Release: alt1.4
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname mechanize
 
-Summary: WWW::Mechanize, a handy web browsing ruby object
-License: GPLv2
-Group: Development/Ruby
-Url: http://rubyforge.org/projects/mechanize/
+Name:          ruby-%pkgname
+Version:       2.7.6
+Release:       alt1
+Summary:       WWW::Mechanize, a handy web browsing ruby object
+License:       GPLv2
+Group:         Development/Ruby
+Url:           https://github.com/sparklemotion/mechanize
+%vcs           https://github.com/sparklemotion/mechanize.git
+Source:        %name-%version.tar
 
-Source: mechanize-%version.tgz
-Patch: mechanize-0.9.3-no-iconv.patch
-
-BuildArch: noarch
-
-# Automatically added by buildreq on Fri Dec 11 2009 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+BuildArch:     noarch
+BuildRequires(pre): rpm-build-ruby
 
 %description
 The Mechanize library is used for automating interaction with websites.
@@ -22,37 +21,46 @@ can follow links, and submit forms.  Form fields can be populated and
 submitted.  Mechanize also keeps track of the sites that you have visited as
 a history.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name.
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -q -n mechanize-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
+
+%check
+%ruby_test
 
 %files
-%doc CHANGELOG.rdoc EXAMPLES.rdoc FAQ.rdoc GUIDE.rdoc LICENSE.rdoc README.rdoc
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc examples
-%ruby_ri_sitedir/Net
-%ruby_ri_sitedir/WWW
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 2.7.6-alt1
+- Bump to 2.7.66
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1.4
 - Rebuild with new Ruby autorequirements.
 

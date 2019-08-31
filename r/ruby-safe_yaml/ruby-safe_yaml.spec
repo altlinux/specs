@@ -1,20 +1,19 @@
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname safe_yaml
 
-Name:    ruby-safe_yaml
-Version: 1.0.4
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       1.0.5
+Release:       alt1
+Summary:       Parse YAML safely
+Group:         Development/Ruby
+License:       MIT
+URL: 	       https://github.com/dtao/safe_yaml
+%vcs           https://github.com/dtao/safe_yaml.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Parse YAML safely
-Group:   Development/Ruby
-License: MIT
-URL: 	 https://github.com/tenderlove/rexical
-
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-ruby 
-BuildRequires: ruby-test-unit
-BuildRequires: ruby-tool-setup
-
-Source: %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
+Source:        %name-%version.tar
 
 %description
 The SafeYAML gem provides an alternative implementation of
@@ -22,43 +21,62 @@ YAML.load suitable for accepting user input in Ruby applications.
 Unlike Ruby's built-in implementation of YAML.load, SafeYAML's
 version will not expose apps to arbitrary code execution exploits.
 
-%package doc
-Summary:   Documentation for %name
-Group:     Development/Documentation
-Requires:  %name = %version-%release
-BuildArch: noarch
 
-%description doc
-Documentation for %{name}.
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
-
-%check
-%ruby_test_unit -Ilib:ext:test tests
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+
+%check
+%ruby_test
 
 %files
-%doc README.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc CHANGES.md
-%ruby_ri_sitedir/SafeYAML/*
-%ruby_ri_sitedir/YAML/*
+%files         -n %pkgname
+%_bindir/%{pkgname}*
+
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt1
+- Bump to 1.0.5
+- Use Ruby Policy 2.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1.1
 - Rebuild with new Ruby autorequirements.
 

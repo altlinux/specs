@@ -1,52 +1,69 @@
-%define  pkgname pry
+%define        pkgname pry
 
-Name: 	 ruby-%pkgname
-Version: 0.12.2
-Release: alt1
+Name: 	       ruby-%pkgname
+Version:       0.12.2
+Release:       alt2
+Summary:       An IRB alternative and runtime developer console
+License:       MIT
+Group:         Development/Ruby
+Url:           http://pryrepl.org/
+%vcs           https://github.com/pry/pry.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: An IRB alternative and runtime developer console
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/pry/pry
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-Requires: ruby-slop3
+BuildRequires: gem(rake) >= 10.0
+BuildRequires: gem(yard) 
+BuildRequires: gem(rspec) >= 3.8.0
+BuildRequires: gem(rspec-expectations) = 3.8.2
+BuildRequires: gem(simplecov) >= 0.16
+BuildRequires: gem(rubocop) = 0.66.0
 
 %description
 Pry is a powerful alternative to the standard IRB shell for Ruby. It is written
 from scratch to provide a number of advanced features.
 
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-install -Dm755 bin/%pkgname %buildroot%_bindir/%pkgname
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
 %_bindir/%pkgname
+%ruby_gemlibdir
+%ruby_gemspec
+
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Tue Jul 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt2
+- Use Ruby Policy 2.0
+
 * Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt1
 - Bump to 0.12.2.
 

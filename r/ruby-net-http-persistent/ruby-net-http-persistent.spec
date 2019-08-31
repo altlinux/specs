@@ -1,62 +1,72 @@
-%define  pkgname net-http-persistent
+%define        pkgname net-http-persistent
 
-Name:    ruby-%pkgname
-Version: 3.0.0
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       3.0.1
+Release:       alt1
+Summary:       Thread-safe persistent connections with Net::HTTP
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/drbrain/net-http-persistent
+%vcs           https://github.com/drbrain/net-http-persistent.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Thread-safe persistent connections with Net::HTTP
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/drbrain/net-http-persistent
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-hoe
+BuildRequires: gem(hoe)
 
 %description
-%summary
+Manages persistent connections using Net::HTTP plus a speed fix for Ruby 1.8.
+It's thread-safe too!
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+Using persistent HTTP connections can dramatically increase the speed of HTTP.
+Creating a new HTTP connection for every request involves an extra TCP
+round-trip and causes TCP congestion avoidance negotiation to start over.
 
-BuildArch: noarch
+Net::HTTP supports persistent connections with some API methods but does not
+handle reconnection gracefully. Net::HTTP::Persistent supports reconnection and
+retry according to RFC 2616.
 
-%description doc
-Documentation files for %{name}.
+
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
-rake debug_gem > %pkgname.gemspec
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
+- Bump to 3.0.1
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

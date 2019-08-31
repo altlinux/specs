@@ -1,24 +1,17 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%def_without tests
+%define        pkgname locale
 
-%define pkgname ruby-locale
+Name:          ruby-%pkgname
+Version:       2.1.3
+Release:       alt0.1
+Summary:       Pure ruby library which provides basic APIs for localization
+Group:         Development/Ruby
+License:       MIT
+Url:           https://github.com/ruby-gettext/locale
+%vcs           https://github.com/ruby-gettext/locale.git
+BuildArch:     noarch
 
-Name: %pkgname
-Version: 2.1.2
-Release: alt4.1
-
-Summary: Pure ruby library which provides basic APIs for localization
-Group: Development/Ruby
-License: MIT/Ruby
-Url: http://rubyforge.org/projects/locale/
-
-BuildArch: noarch
-
-Source: %pkgname-%version.tar
-Patch1: ruby-locale-2.0.6-alt-Do-not-call-locale-charmap-if-LC_-variables-unset.patch
-Patch2: ruby-locale-2.0.6-alt-Fix-Array-vs-String-clash.patch
-
-BuildRequires: rpm-build-ruby ruby-stdlibs ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-ruby
 
 %description
 Ruby-Locale is the pure ruby library which provides basic and general
@@ -28,46 +21,46 @@ It aims to support all environments which ruby works and all kind of
 programs (GUI, WWW, library, etc), and becomes the hub of other
 i18n/l10n libs/apps to handle major locale ID standards.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-%description doc
-Documentation files for %name
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%patch1 -p1
-%patch2 -p1
-%update_setup_rb
-
-rm -f test/test_driver_jruby.rb
-rm -f test/test_driver_win32.rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
 
 %check
-%if_with tests
-%ruby_test_unit -Ilib:test test
-%endif
+%ruby_test
 
 %files
-%doc README.rdoc
-%ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/locale/driver/win32*.rb
-%rubygem_specdir/*
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%doc samples ChangeLog
-%ruby_ri_sitedir/Locale*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Thu Jul 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.3-alt0.1
+- Bump to 2.1.3 pre
+- Use Ruby Policy 2.0
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt4.1
 - Rebuild for new Ruby autorequirements.
 

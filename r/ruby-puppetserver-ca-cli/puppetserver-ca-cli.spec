@@ -1,50 +1,84 @@
-%define _unpackaged_files_terminate_build 1
-%define  pkgname puppetserver-ca-cli
+%define        _unpackaged_files_terminate_build 1
+%define        pkgname puppetserver-ca
+%define        gemname puppetserver-ca
 
-Name:    ruby-%pkgname
-Version: 1.4.0
-Release: alt1
+Name:          ruby-%pkgname-cli
+Version:       1.4.0
+Release:       alt2
+Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA
+License:       Apache-2.0
+Group:         Development/Ruby
+Url:           https://github.com/puppetlabs/puppetserver-ca-cli
+%vcs           https://github.com/puppetlabs/puppetserver-ca-cli.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: A simple Ruby CLI tool to interact with the Puppet Server's included CA
-License: Apache-2.0
-Group:   Development/Ruby
-Url:     https://github.com/puppetlabs/puppetserver-ca-cli
-
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: libruby-devel
-
-Requires: ruby-bundler
-
+BuildRequires: gem(bundler)
 
 %description
 This gem provides the functionality behind the Puppet Server CA interactions.
 The actual CLI executable lives within the Puppet Server project.
 
+
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+Obsoletes:     ruby-%pkgname-cli-doc
+Provides:      ruby-%pkgname-cli-doc
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%ruby_build --use=%gemname --alias=%pkgname-cli
 
 %install
 %ruby_install
 
-%files
-%doc README* LICENSE
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%check
+%ruby_test
 
-%exclude %_bindir/*
+%files
+%doc README*
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n %pkgname
+%_bindir/%{pkgname}*
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
 
 
 %changelog
+* Tue Aug 27 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt2
+^ Ruby Policy 2.0
+
 * Mon Aug 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.0-alt1
 - Version updated to 1.4.0
 

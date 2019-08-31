@@ -1,61 +1,64 @@
-%define  pkgname azure
+%define        pkgname azure
 
-Name: 	 ruby-%pkgname
-Version: 0.7.10
-Release: alt2.1
-
-Summary: Microsoft Azure Client Library for Ruby
-License: MIT/Ruby
-Group:   Development/Ruby
-Url:     https://github.com/azure/azure-sdk-for-ruby
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
+Name: 	       ruby-%pkgname
+Version:       0.7.10
+Release:       alt3
+Summary:       Microsoft Azure Client Library for Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/azure/azure-sdk-for-ruby
+%vcs           https://github.com/Azure/azure-sdk-for-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Official Ruby client library to consume Microsoft Azure services.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%_bindir/pfxer
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt3
+- Use Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.10-alt2.1
 - Rebuild with new Ruby autorequirements.
 

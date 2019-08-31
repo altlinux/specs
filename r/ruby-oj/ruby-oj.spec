@@ -1,17 +1,18 @@
 %define        pkgname oj
 
-Name: 	       ruby-%pkgname
-Version:       3.7.12
+Name:          ruby-%pkgname
+Version:       3.9.0
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
 Group:         Development/Ruby
 Url:           http://www.ohler.com/oj/
-# VCS:         https://github.com/ohler55/oj.git
-Packager:      Andrey Cherepanov <cas@altlinux.org>
+%vcs           https://github.com/ohler55/oj.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -20,21 +21,31 @@ Version 3.0 is out! 3.0 provides better json gem and Rails compatibility.
 It also provides additional optimization options.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
-Group:         Development/Ruby
-BuildArch:     noarch
-
-%description   devel
-Development files for %gemname gem.
-
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
+%package       devel
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   devel
+Development headers for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
+
 
 %prep
 %setup
@@ -60,6 +71,10 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Aug 27 2019 Pavel Skrylev <majioa@altlinux.org> 3.9.0-alt1
+^ v3.9.0
+! spec
+
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.12-alt1
 - New version.
 

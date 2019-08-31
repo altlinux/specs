@@ -2,21 +2,21 @@
 
 Name:          %pkgname
 Version:       0.7.3
-Release:       alt2
+Release:       alt3
 Summary:       Ronn builds manuals from Markdown to roff format
 License:       MIT
 Group:         Development/Documentation
 Url:           https://github.com/rtomayko/ronn/
-# VCS:         https://github.com/rtomayko/ronn.git
+%vcs           https://github.com/rtomayko/ronn.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-hpricot
-BuildRequires: rdiscount
-BuildRequires: mustache
+BuildRequires: gem(ronn)
+BuildRequires: gem(hpricot)
+BuildRequires: gem(rdiscount)
+BuildRequires: gem(mustache)
 
 %description
 Ronn builds manuals. It converts simple, human readable textfiles to
@@ -49,13 +49,13 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -70,7 +70,12 @@ Documentation files for %gemname gem.
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
+
 %changelog
+* Thu Jul 25 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
+! spec
++ ronn gem build dependency
+
 * Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
 - Use Ruby Policy 2.0
 

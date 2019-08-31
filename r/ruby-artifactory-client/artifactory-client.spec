@@ -3,7 +3,7 @@
 
 Name:          ruby-%pkgname
 Version:       3.0.1
-Release:       alt1
+Release:       alt2
 Summary:       A simple, lightweight Ruby client for interacting with the Artifactory API.
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -38,7 +38,7 @@ Documentation files for %gemname.
 %setup
 
 %build
-%gem_build
+%gem_build --use=%gemname --alias=%pkgname
 
 %install
 %gem_install
@@ -56,6 +56,9 @@ Documentation files for %gemname.
 
 
 %changelog
+* Mon Jun 24 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt2
+- Fix spec
+
 * Thu Jun 13 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
 - Bump to 3.0.1
 - Use Ruby Policy 2.0

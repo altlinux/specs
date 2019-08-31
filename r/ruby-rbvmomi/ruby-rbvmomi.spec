@@ -1,14 +1,14 @@
 %define        pkgname rbvmomi
 
 Name:          ruby-%pkgname
-Version:       1.13.0
-Release:       alt2
+Version:       2.1.2
+Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API.
 Summary(ru_RU.UTF8): Ruby интерфейс к API VMware vSphere.
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/vmware/rbvmomi
-# VCS:         https://github.com/vmware/rbvmomi.git
+%vcs           https://github.com/vmware/rbvmomi.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -76,6 +76,9 @@ Executable file for %gemname gem.
 %_bindir/*
 
 %changelog
+* Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
+- Bump to 2.1.2
+
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt2
 - Use Ruby Policy 2.0
 - Fix #36334

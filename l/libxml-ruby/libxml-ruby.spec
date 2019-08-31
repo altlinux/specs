@@ -3,17 +3,19 @@
 
 Name:          %pkgname
 Version:       3.1.0
-Release:       alt2
+Release:       alt2.1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
 Group:         Development/Ruby
 License:       MIT
-URL:           http://xml4r.github.io/%name/
-# VCS:         https://github.com/xml4r/libxml-ruby.git
-Source:        %name-%version.tar
+URL:           http://xml4r.github.io/libxml-ruby
+%vcs           https://github.com/xml4r/libxml-ruby.git
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2
@@ -44,19 +46,20 @@ Development files for %gemname gem.
 %setup
 
 %build
-%gem_build --join=lib:bin
+%ruby_build --join=lib:bin
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
+%_logdir/%pkgname
 
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
@@ -64,7 +67,11 @@ Development files for %gemname gem.
 %files         -n gem-%pkgname-devel
 %ruby_includedir/*
 
+
 %changelog
+* Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2.1
+! spec
+
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2
 - Use Ruby Policy 2.0
 

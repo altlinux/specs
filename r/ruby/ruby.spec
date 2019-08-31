@@ -8,36 +8,50 @@
 %define vendordir %libdir/vendor_%name
 %define lname lib%name
 
-Name:     ruby
-Version:  2.5.5
-Release:  alt3
-Summary:  An Interpreted Object-Oriented Scripting Language
-License:  BSD 2-clause Simplified License/Ruby
-Group:    Development/Ruby
-URL:      http://www.%name-lang.org/
-Source0:  %name-%version.tar
-Source3:  fakeruby.sh
-Source4:  miniruby.sh
-Requires: %lname = %version-%release
-Requires: ruby-stdlibs = %version-%release
-Requires: gem irb erb ri rdoc rake bundle
+Name:          ruby
+Version:       2.5.5
+Release:       alt4
+Summary:       An Interpreted Object-Oriented Scripting Language
+License:       BSD 2-clause Simplified License/Ruby
+Group:         Development/Ruby
+Url:           http://www.%name-lang.org/
+%vcs           https://github.com/ruby/ruby.git
 
+Source0:       %name-%version.tar
+Source3:       fakeruby.sh
+Source4:       miniruby.sh
+BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
+BuildRequires: doxygen
+BuildRequires: groff-base
+BuildRequires: libdb4-devel
+BuildRequires: libffi-devel
+BuildRequires: libgdbm-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libreadline-devel
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
+BuildRequires: libyaml-devel
+BuildRequires: valgrind-devel
+BuildRequires: gcc-c++
+%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
+%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
+
+%gem_replace_version rake ~> 12.3
+%gem_replace_version rspec ~> 3.8
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findreq_skiplist %libdir/*
+Requires:      %lname = %version-%release
+Requires:      ruby-stdlibs = %version-%release
+Requires:      gem irb erb ri rdoc rake bundle
 %define obsolete() \
-Provides: %1 = %version-%release \
-Obsoletes: %1
+Provides:      %1 = %version-%release \
+Obsoletes:     %1
 %define mobsolete() \
 %(for m in %*; do \
 echo "Provides: %name-module-$m = %version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
-BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
-BuildRequires: doxygen groff-base libdb4-devel libffi-devel
-BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
-BuildRequires: zlib-devel libyaml-devel gcc-c++
-BuildRequires: valgrind-devel
-%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
-%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
 
 %description
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -48,12 +62,12 @@ extensible.
 This package contains interpreter of object-oriented scripting language Ruby.
 
 
-%package -n %lname
-Summary: Ruby shared libraries
-Group: System/Libraries
-Provides: ruby(enumerator)
+%package       -n %lname
+Summary:       Ruby shared libraries
+Group:         System/Libraries
+Provides:      ruby(enumerator)
 
-%description -n %lname
+%description   -n %lname
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing system
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
@@ -61,13 +75,13 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains Ruby shared libraries.
 
 
-%package -n %lname-devel
-Summary: Files for compiling extension modules for Ruby
-Group: Development/C
+%package       -n %lname-devel
+Summary:       Files for compiling extension modules for Ruby
+Group:         Development/C
+Requires:      rpm-build-%name >= 1.0.0
 %{?_enable_shared:Requires: %lname = %version-%release}
-Requires: rpm-build-%name >= 1.0.0
 
-%description -n %lname-devel
+%description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing system
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
@@ -75,42 +89,46 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains files, necessary to make extension library for Ruby.
 
 
-%package -n %lname-devel-static
-Summary: Files for compiling extension modules for Ruby
-Group: Development/C
-Requires: %lname-devel = %version-%release
+%package       -n %lname-devel-static
+Summary:       Files for compiling extension modules for Ruby
+Group:         Development/C
+Requires:      %lname-devel = %version-%release
 
-%description -n %lname-devel-static
+%description   -n %lname-devel-static
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing system
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
 This package contains static Ruby library needed for embedding Ruby.
 
-%package -n %name-stdlibs
-Summary: Standard Ruby libraries
-Group: Development/Ruby
-Requires: %lname = %version-%release
-Requires: libyaml2 libgdbm libssl1.1 libcrypto1.1
-Requires: gem(rubygems-update) >= 3.0.1
-Requires: gem(did_you_mean) >= 1.3.0
-Requires: gem(minitest) >= 5.11.3
-Requires: gem(net-telnet) >= 0.2
-Requires: gem(power_assert) >= 1.1.4
-Requires: gem(rake) >= 12.3.2
-Requires: gem(test-unit) >= 3.2.9
-Requires: gem(xmlrpc) >= 0.3.0
-Requires: gem(rdoc) >= 6.1.1
-Provides: %name-libs = %version-%release
-Provides: %name-racc-runtime = %version
-Provides: ruby(%ruby_version)
-Provides: ruby(thread)
-%mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
-%mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
-%mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
-%mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
 
-%description -n %name-stdlibs
+%package       -n %name-stdlibs
+Summary:       Standard Ruby libraries
+Group:         Development/Ruby
+Requires:      %lname = %version-%release
+Requires:      libyaml2
+Requires:      libgdbm
+Requires:      libssl1.1
+Requires:      libcrypto1.1
+Requires:      gem(rubygems-update) >= 3.0.1
+Requires:      gem(did_you_mean) >= 1.3.0
+Requires:      gem(minitest) >= 5.11.3
+Requires:      gem(net-telnet) >= 0.2
+Requires:      gem(power_assert) >= 1.1.4
+Requires:      gem(rake) >= 12.3.2
+Requires:      gem(test-unit) >= 3.2.9
+Requires:      gem(xmlrpc) >= 0.3.0
+Requires:      gem(rdoc) >= 6.1.1
+Provides:      %name-libs = %version-%release
+Provides:      %name-racc-runtime = %version
+Provides:      ruby(%ruby_version)
+Provides:      ruby(thread)
+%mobsolete     English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
+%mobsolete     erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
+%mobsolete     optparse patterns pty readline rexml rss sdbm shell socket stringio
+%mobsolete     strscan syslog tracer uri wait webrick xmlrpc yaml zlib
+
+%description   -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing
 system management tasks (as in Perl). It is simple, straight-forward, and
@@ -119,51 +137,54 @@ extensible.
 This package contains standard Ruby runtime libraries.
 
 
-%package -n gem
-Summary:   Ruby gem executable and framefork
-Group:     Development/Ruby
-BuildArch: noarch
-Requires:  %name-stdlibs = %version
-Provides:  %_bindir/gem
-Provides:  %{name}gems = 3.0.1
-Provides:  %name-tools
-Obsoletes: %name-tools
+%package       -n gem
+Summary:       Ruby gem executable and framefork
+Group:         Development/Ruby
+BuildArch:     noarch
+Requires:      %name-stdlibs = %version
+Provides:      %_bindir/gem
+Provides:      %{name}gems = 3.0.1
+Provides:      %name-tools
+Obsoletes:     %name-tools
 
-%description -n gem
+%description   -n gem
 Ruby gem executable and framework.
 
-%package -n erb
-Summary:   ERB template library
-Group:     Development/Ruby
-BuildArch: noarch
-Requires:  %name-stdlibs = %version
-Provides:  %_bindir/erb
-Obsoletes: %name-tools
 
-%description -n erb
+%package       -n erb
+Summary:       ERB template library
+Group:         Development/Ruby
+BuildArch:     noarch
+Requires:      %name-stdlibs = %version
+Provides:      %_bindir/erb
+Obsoletes:     %name-tools
+
+%description   -n erb
 ERB template library executable and manual.
 
-%package -n irb
-Summary:   Interactive Ruby Shell
-Group:     Development/Ruby
-BuildArch: noarch
-Requires:  %name-stdlibs = %version
-Provides:  %_bindir/irb
-Obsoletes: %name-tools
-%obsolete  %name-tool-irb
 
-%description -n irb
+%package       -n irb
+Summary:       Interactive Ruby Shell
+Group:         Development/Ruby
+BuildArch:     noarch
+Requires:      %name-stdlibs = %version
+Provides:      %_bindir/irb
+Obsoletes:     %name-tools
+%obsolete      %name-tool-irb
+
+%description   -n irb
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
-%package -n ri-doc
-Summary: Ruby ri executable man page
-Group: Development/Documentation
-BuildArch: noarch
-Requires:   %_bindir/ri
-Requires:   %name = %version
+%package       -n ri-doc
+Summary:       Ruby ri executable man page
+Group:         Development/Documentation
+BuildArch:     noarch
+Requires:      %_bindir/ri
+Requires:      %name = %version
 
-%description -n ri-doc
+%description   -n ri-doc
 Ruby ri executable man page
+
 
 %package       doc
 Summary:       Ruby ri documentation
@@ -178,23 +199,33 @@ Requires:      ruby = %version-%release
 
 %description   doc
 Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing system
-management tasks (as in Perl). It is simple, straight-forward, and extensible.
+programming. It has many features for processing text files and performing
+system management tasks (as in Perl). It is simple, straight-forward, and
+extensible.
 
 This package contains Ruby documentation in ri format.
 
 
-%if_without bootstrap
-%package miniruby-src
-Summary: Preprocessed miniruby sources
-Group: Development/Ruby
-BuildArch: noarch
+%package       -n ruby-mspec
+Summary:       RSpec-like test runner for the Ruby Spec Suite
+Group:         Development/Ruby
 
-%description miniruby-src
+%description   -n ruby-mspec
+irb is the REPL(read-eval&print loop) environment for Ruby programs.
+
+
+%if_without bootstrap
+%package       miniruby-src
+Summary:       Preprocessed miniruby sources
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   miniruby-src
 Contains generated files for preprocessed miniruby sources in patch
 format. This files are required for ruby bootstrapping, especially
 on different arches.
 %endif
+
 
 %prep
 %setup -q
@@ -213,7 +244,6 @@ cp -a /usr/share/gnu-config/config.* tool
 %build
 %define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
 %autoreconf
-%__setup_rb config --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib
 my_configure() {
     %configure \
         %{subst_enable shared} \
@@ -267,6 +297,8 @@ popd
 %endif #_with_bootstrap
 
 %make_build
+%ruby_setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib
+%ruby_setup_rb document
 
 %install
 %makeinstall_std
@@ -287,13 +319,12 @@ install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby
 export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch
 export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%ruby_arch
 
-%add_findreq_skiplist %libdir/gems/*/gems/*/bin/*
-%add_findreq_skiplist %libdir/*
-
 %if_without bootstrap
 mkdir -p %buildroot%_datadir/%name-%version-miniruby
 mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %endif
+
+%ruby_install
 
 # Make empty dir for ri documentation
 mkdir -p %buildroot%_datadir/ri/site/%version
@@ -301,7 +332,7 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 
 %check
 %make_build test
-%gem_test
+%ruby_test
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -314,28 +345,28 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %_man1dir/%name.*
 %dir %_datadir/ri
 
-%files -n %lname
+%files         -n %lname
 %{?_enable_shared:%_libdir/*.so.*}
 
-%files -n %lname-devel
+%files         -n %lname-devel
 %_pkgconfigdir/*
 %includedir/*
 %{?_enable_shared:%_libdir/*.so}
 
-%files -n %lname-devel-static
+%files         -n %lname-devel-static
 %_libdir/*.a
 
-%files stdlibs
+%files         stdlibs
 %libdir
 
-%files -n gem
+%files         -n gem
 %_bindir/gem
 
-%files -n erb
+%files         -n erb
 %_bindir/erb
 %_man1dir/erb.*
 
-%files -n irb
+%files         -n irb
 %lang(ja) %doc doc/irb/*.ja
 %_bindir/irb
 %_man1dir/irb.*
@@ -344,8 +375,13 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %dir %ridir/%ruby_version/site
 %ridir/*
 
-%files -n ri-doc
+%files         -n ri-doc
 %_man1dir/ri.*
+
+%files         -n ruby-mspec
+%_bindir/mspec*
+%_bindir/mkspec*
+%_libdir/mspec
 
 %if_without bootstrap
 %files miniruby-src
@@ -353,6 +389,10 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Wed Aug 14 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt4
++ ruby-mspec package
+! spec: syntax, gem dependencies
+
 * Mon Jun 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.5.5-alt3
 - Fixed build on ppc64le architecture.
 - spec: bootstrap: fixed miniruby version.
