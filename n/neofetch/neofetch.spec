@@ -1,14 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: neofetch
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
-
 Summary: A command-line system information tool
 License: MIT
 Group: Monitoring
-
-URL: https://github.com/dylanaraps/neofetch
+Url: https://github.com/dylanaraps/neofetch
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -32,6 +30,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Sat Aug 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 6.1.0-alt1
+- New version
+
 * Sun Mar 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 6.0.0-alt1
 - Initial build for ALT
 
