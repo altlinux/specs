@@ -1,29 +1,32 @@
-Packager:	Alex Negulescu <alecs@altlinux.org>
-Summary:	Advanced Linux Sound Architecture (ALSA) graphical mixer
-Name:		alsamixergui
-Version:	0.9.0
-Release:	alt4
-License:	GPL
-Group:		Sound
-URL:		http://www.iua.upf.es/~mdeboer/projects/alsamixergui/
-Source0:	alsamixergui-0.9.0rc1-2.tar.bz2
-Patch0:		alsamixergui-0.9.0rc1-fixes.patch
-Patch1:		alsamixer-0.9.0rc1-2-fltk.patch
-Patch2:		alsamixer-0.9.0rc1-2-fltk2.patch
-Patch3:		alsamixergui-0.9.0rc1-memleak.patch
-Patch4:		alsamisergui-fix-compile-gcc-3.4.patch
-Patch5:		alsamixergui-0.9.0rc1-lock.patch
+Name: alsamixergui
+Version: 0.9.0
+Release: alt5
+
+Summary: Advanced Linux Sound Architecture (ALSA) graphical mixer
+License: GPL
+Group: Sound
+
+Url: http://www.iua.upf.es/~mdeboer/projects/alsamixergui/
+Source0: alsamixergui-0.9.0rc1-2.tar.bz2
+Patch0: alsamixergui-0.9.0rc1-fixes.patch
+Patch1: alsamixer-0.9.0rc1-2-fltk.patch
+Patch2: alsamixer-0.9.0rc1-2-fltk2.patch
+Patch3: alsamixergui-0.9.0rc1-memleak.patch
+Patch4: alsamisergui-fix-compile-gcc-3.4.patch
+Patch5: alsamixergui-0.9.0rc1-lock.patch
+Packager: Alex Negulescu <alecs@altlinux.org>
+
 BuildRequires: gcc-c++ libX11-devel libalsa-devel libfltk-devel
 
 %description
 Alsamixergui is a FLTK based frontend for alsamixer. It is written
 directly on top of the alsamixer source, leaving the original source
 intact, only adding a couple of ifdefs, and some calls to the gui
-part, so it provides exactly the same functionality, but with a 
+part, so it provides exactly the same functionality, but with a
 graphical userinterface.
 
 %prep
-%setup -q -n %name-%{version}rc1-2
+%setup -n %name-%{version}rc1-2
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
@@ -32,12 +35,11 @@ graphical userinterface.
 %patch5 -p0
 
 %build
-autoconf
+%autoreconf
 %configure
 %make all
 
 %install
-rm -rf %buildroot
 %makeinstall
 # XDG menu
 install -d %buildroot%_datadir/applnk/Multimedia
@@ -52,16 +54,16 @@ Type=Application
 Categories=Audio;Mixer;
 EOF
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS README
 %_bindir/%name
 %_datadir/applnk/Multimedia/%name.desktop
 
 %changelog
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt5
+- fixed build on %%e2k (and maybe others) with mere autoreconf
+- spec cleanup
+
 * Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt4
 - Rebuild with libfltk13.
 
@@ -106,7 +108,6 @@ rm -rf %buildroot
 + Revision: 30393
 - sync with 0.9.0-0.12rc1_3mdv2007.1 src rpm
   o add xdg menu stuff
-
 
 * Fri Sep 29 2006 Oden Eriksson <oeriksson@mandriva.com> 0.9.0-0.11rc1_3
 - sync with mille-xterm
