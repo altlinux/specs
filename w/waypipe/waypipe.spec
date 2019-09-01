@@ -1,5 +1,5 @@
 Name: waypipe
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Network transparency agent for Wayland
@@ -73,6 +73,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Sun Sep 01 2019 Arseny Maslennikov <arseny@altlinux.org> 0.6.1-alt1
+- 0.6.0 -> 0.6.1.
+
 * Tue Aug 20 2019 Arseny Maslennikov <arseny@altlinux.org> 0.6.0-alt1
 - 0.4.0 -> 0.6.0.
 - Built with libzstd.
