@@ -1,21 +1,20 @@
 # TODO
 %define _qt5_mkspecs %_libdir/qt5/mkspecs
-
 %define libname libqtav
+
 Name: QtAV
 Version: 1.12.0
-Release: alt3
+Release: alt5
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
 Group: System/Libraries
-Url: http://qtav.org/
 
+Url: http://qtav.org/
 # Source-git: https://github.com/wang-bin/QtAV.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-qt5
-
 BuildRequires: gcc-c++
 
 # Automatically added by buildreq on Mon Dec 12 2016
@@ -79,6 +78,11 @@ Development files for %name qml.
 
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' |
+	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 # broken build with gnu++14 (gcc6's default)
@@ -118,6 +122,9 @@ rm -f examples/simpletranscode/Makefile
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 1.12.0-alt5
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Tue Feb 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt3
 - rebuild with libass9
 
