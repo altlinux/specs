@@ -1,24 +1,20 @@
 Name: asc
 Version: 2.6.1.0
-Release: alt2
-
-License: GPLv2+
-Group: Games/Strategy
-Url: http://www.asc-hq.org/
+Release: alt3
 
 Summary: ASC - a battle isle clone
+License: GPLv2+
+Group: Games/Strategy
 
+Url: http://www.asc-hq.org/
 # repacked 'https://heanet.dl.sourceforge.net/project/asc-hq/ASC Source/2.6.0/asc-%%version.tar.bz2'
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: asc-%version.tar
-
 Source1: frontiers.ogg
 Source2: machine_wars.ogg
 Source3: time_to_strike.ogg
-
 Source10: %name.desktop
 Source11: %name.png
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: boost-program_options-devel bzlib-devel gcc-c++
 BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel
@@ -31,13 +27,17 @@ ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series.
 
 %prep
 %setup
-cp %SOURCE1 %SOURCE2 %SOURCE3 data/music/
+cp -a %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 # see https://slackbuilds.org/slackbuilds/14.2/games/d2x-rebirth/libphysfs-3.0.1.patch
-%__subst "s|__EXPORT__|PHYSFS_DECL|" source/libs/paragui/src/core/physfsrwops.h
+sed -i "s|__EXPORT__|PHYSFS_DECL|" source/libs/paragui/src/core/physfsrwops.h
 
 %build
 %autoreconf
 %add_optflags -fpermissive
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 %configure
 %make_build
 
@@ -63,6 +63,10 @@ install -p -m 644 %SOURCE11 \
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 2.6.1.0-alt3
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 2.6.1.0-alt2
 - fix build with libphysfs-3.0.1 (ALT bug 36549)
 - cleanup BR
