@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           ladspa-caps-plugins
 Version:        0.9.24
-Release:        alt3_6
+Release:        alt4_6
 Summary:        The C* Audio Plugin Suite
 License:        GPLv3+
 Group:          Sound
@@ -11,6 +11,7 @@ Source0:        http://quitte.de/dsp/caps_%{version}.tar.bz2
 Patch0:         caps-0.9.10-nostrip.patch
 Patch1:         caps-0.9.24-gcc6.patch
 Patch2:         caps-pow-exp.patch
+Patch3:         caps-0.9.24-alt-e2k.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ladspa_sdk
 Requires:       ladspa_sdk
@@ -33,12 +34,20 @@ equalization and others.
 %patch0 -p1 -z .nostrip
 %patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+# mcst#4314
+%patch3 -p1
+%endif
 # use the system version of ladspa.h
 rm ladspa.h
 
 
 %build
-%make_build OPTS="$RPM_OPT_FLAGS -fPIC" LDFLAGS="$RPM_LD_FLAGS -shared"
+%ifarch %e2k
+# mcst#4314
+%add_optflags -D__builtin_cosf=cosf -D__builtin_sinf=sinf
+%endif
+%make_build OPTS="%optflags -fPIC" LDFLAGS="-shared"
 
 
 %install
@@ -53,6 +62,9 @@ rm ladspa.h
 
 
 %changelog
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 0.9.24-alt4_6
+- E2K: ftbfs workaround (mcst#4314)
+
 * Fri May 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.24-alt3_6
 - use fc patch instead of caps-0.9.24-alt-compat.patch
 
