@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.4.4
-Release: alt3
+Version: 1.4.6
+Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
@@ -189,6 +189,10 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 %python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Sep 02 2019 Ivan A. Melnikov <iv@altlinux.org> 1.4.6-alt1
+- 1.4.6
+- Fixed build on mipsel.
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.4.4-alt3
 - Fixed testing against Pytest 5.
 
