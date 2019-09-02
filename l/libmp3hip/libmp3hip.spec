@@ -1,13 +1,14 @@
 Name: libmp3hip
 Version: 0.1.2.1
-Release: alt1
-Summary: A LGPLed mpeg audio decoding library.
+Release: alt2
+
+Summary: A LGPLed mpeg audio decoding library
 License: LGPLv2+
 Group: System/Libraries
-Url: https://launchpad.net/ubuntu/+source/libmp3hip/0.1.2.1
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: https://launchpad.net/ubuntu/+source/libmp3hip/0.1.2.1
 Source: %name-%version.tar
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: python-devel
@@ -21,7 +22,7 @@ support to your app using this library it should be a snap to add Ogg
 Vorbis support as well.
 
 This isn't as fast as mpg123 will be for decoding as none of it is in
-assmbler.
+assembler.
 
 %package devel
 Summary: Development files of libmp3hip
@@ -37,7 +38,7 @@ support to your app using this library it should be a snap to add Ogg
 Vorbis support as well.
 
 This isn't as fast as mpg123 will be for decoding as none of it is in
-assmbler.
+assembler.
 
 This package contains development files of libmp3hip.
 
@@ -55,12 +56,15 @@ support to your app using this library it should be a snap to add Ogg
 Vorbis support as well.
 
 This isn't as fast as mpg123 will be for decoding as none of it is in
-assmbler.
+assembler.
 
 This package contains python module of libmp3hip.
 
 %prep
 %setup
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
+sed -i 's,-O20,-O%_optlevel,g' configure*
+sed -i 's,-all-static,,' examples/Makefile*
 
 %build
 ./autogen.sh
@@ -94,6 +98,11 @@ install -p -m644 AUTHORS README TODO %buildroot%_docdir/%name-0.1/
 %python_sitelibdir/*
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 0.1.2.1-alt2
+- Update gnu-config files for the new arches
+- Fix superfluous optimization level
+- Avoid static (mis)linking of the example binary
+
 * Sun Dec 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2.1-alt1
 - Initial build for Sisyphus
 
