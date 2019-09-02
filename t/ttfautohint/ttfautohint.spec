@@ -7,7 +7,7 @@ BuildRequires: chrpath
 %define _localstatedir %{_var}
 Name:           ttfautohint
 Version:        1.8.2
-Release:        alt1_2
+Release:        alt2_2
 Summary:        Automated hinting utility for TrueType fonts
 License:        FTL or GPLv2
 URL:            http://www.freetype.org/ttfautohint
@@ -73,6 +73,11 @@ platforms which don't use FreeType.
 %patch0 -p1
 
 %build
+%ifarch %e2k
+# lcc 1.23.12 doesn't do __builtin_mul_overflow_p
+# unlike gnulib expects from "gcc5"...
+%add_optflags -D__ICC
+%endif
 %configure --disable-silent-rules --disable-static
 %make_build
 
@@ -110,6 +115,9 @@ done
 %{_libdir}/pkgconfig/ttfautohint.pc
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1.8.2-alt2_2
+- E2K: gnulib ftbfs workaround
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_2
 - new version
 
