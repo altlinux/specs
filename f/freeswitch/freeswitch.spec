@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.8.5
-Release: alt2
+Version: 1.8.7
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -600,6 +600,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Aug 29 2019 Anton Farygin <rider@altlinux.ru> 1:1.8.7-alt1
+- 1.8.7
+- fixed build on ppc64 (thanks to glebfm@)
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2
 - NMU: remove rpm-build-ubt from BR:
 
