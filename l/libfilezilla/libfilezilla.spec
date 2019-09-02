@@ -3,8 +3,8 @@
 %define soname 0
 
 Name: libfilezilla
-Version: 0.17.1
-Release: alt2
+Version: 0.18.1
+Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
 Group: System/Libraries
@@ -96,6 +96,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Sep 02 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.1-alt1
+- Updated to upstream version 0.18.1.
+
 * Wed Jul 24 2019 Ivan A. Melnikov <iv@altlinux.org> 0.17.1-alt2
 - Fix build on mipsel.
 
