@@ -4,18 +4,20 @@
 
 Name:    ardour
 Version: 5.12
-Release: alt1.1
+Release: alt3
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
 Group:   Sound
+
 Url:     http://ardour.org
-
-Packager: Grigory Ustinov <grenka@altlinux.ru>
-
 Source:  %name-%version.tar
 Source1: ardour3.desktop
 #Source2: ardour3-3.2-ru.po
+Packager: Grigory Ustinov <grenka@altlinux.org>
+
+# FIXME: bunch of undefined symbols in libevoral.so.0.0.0
+ExcludeArch: ppc64le
 
 BuildRequires: boost-devel
 BuildRequires: cppunit-devel >= 1.12.0
@@ -94,6 +96,10 @@ See the online user manual at http://en.flossmanuals.net/ardour/index/
     --libdir=%_libdir \
     --configdir=%_sysconfdir \
     --program-name=Ardour \
+%ifarch %e2k
+    --cxx11 \
+    --keepflags \
+%endif
     --nls \
     --docs
 
@@ -125,6 +131,12 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_iconsdir/ardour3.png
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 5.12-alt3
+- ExcludeArch: ppc64le for now (undefined symbols)
+
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 5.12-alt2
+- E2K: fix stupid waf build
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.12-alt1.1
 - NMU: rebuild with libaubio5
 
