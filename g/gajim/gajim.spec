@@ -1,7 +1,7 @@
 %global appid org.gajim.Gajim
 Name: gajim
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -14,6 +14,13 @@ Patch0001: 0001-Prefer-X11-to-Wayland-GDK-backend.patch
 Patch0002: 0002-setup.cfg-bump-nbxmpp-version.patch
 
 Requires: libgtk+3-gir
+%py3_requires cssutils
+%py3_requires keyring
+%py3_requires precis_i18n
+%py3_requires nbxmpp
+%py3_requires precis_i18n
+%py3_requires OpenSSL
+%py3_requires cairo
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
@@ -61,6 +68,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat Aug 31 2019 Alexey Shabalin <shaba@altlinux.org> 1.1.3-alt2
+- update Requires
+
 * Sun Aug 18 2019 Alexey Shabalin <shaba@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
