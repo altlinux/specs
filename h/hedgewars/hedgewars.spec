@@ -1,9 +1,11 @@
+%def_with server
+
 Name:       hedgewars
 Version:    0.9.25
-Release:    alt2
+Release:    alt3
 
 Summary:    Game with heavily armed fighting hedgehogs
-Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых воющих ёжиков
+Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
 
 License:    GPLv2
 Group:      Games/Strategy
@@ -17,12 +19,23 @@ Patch:      fix_non_inline_ShiftWorld.patch
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 
+
+# Automatically added by buildreq on Fri Aug 30 2019
 BuildRequires: cmake fpc-units-gtk2 fpc-units-misc fpc-units-net
-BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
-BuildRequires: libavformat-devel libffi-devel libfreeglut-devel libgmp-devel
-BuildRequires: liblua5.1-compat-devel libphysfs-devel phonon-devel qt5-tools-devel
-BuildRequires: desktop-file-utils chrpath libswresample-devel
-BuildRequires: clang ghc7.6.1 libGLEW-devel ghc7.6.1-transformers ghc7.6.1-parsec
+%{?_with_server:
+BuildRequires: ghc8.6.4-common ghc8.6.4-entropy ghc8.6.4-hslogger
+BuildRequires: ghc8.6.4-random ghc8.6.4-regex-tdfa ghc8.6.4-sandi ghc8.6.4-sha
+BuildRequires: ghc8.6.4-utf8-string ghc8.6.4-zlib
+}
+BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
+BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
+BuildRequires: libffi-devel libfreeglut-devel libgmp-devel liblua5.1-compat-devel
+BuildRequires: libphysfs-devel libqt4-webkit-devel libqt5-quickshapes
+BuildRequires: libswresample-devel phonon-devel qt5-tools-devel
+BuildRequires: desktop-file-utils chrpath
+%ifarch %ix86
+BuildRequires: clang
+%endif
 
 ExclusiveArch: x86_64 %ix86
 
@@ -90,9 +103,11 @@ rm -r misc/liblua
 
 %build
 %remove_optflags -frecord-gcc-switches
-%cmake_insource -DNOSERVER=1 -DPHYSFS_SYSTEM=1 \
+%cmake_insource -DPHYSFS_SYSTEM=1 \
 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
--DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu"
+-DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu" \
+%{?_with_server: -DNOSERVER=0}
+
 %make_build VERBOSE=true
 
 %install
@@ -131,6 +146,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Mon Sep 02 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt3
+- Build with server support (Closes: #36923).
+
 * Mon Apr 15 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt2
 - Reloaded upstream tarball (after several fixes they uploaded new one on
   previous place)
