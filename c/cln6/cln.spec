@@ -4,7 +4,7 @@
 
 Name: %oname%abiversion
 Version: 1.3.3
-Release: alt2
+Release: alt3
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -123,6 +123,10 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1.3.3-alt3
+- fixed build on e2k (patch sent upstream)
+  + NB: there's official aarch64/riscv64 support in current version
+
 * Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt2
 - fixed build on AArch64
 
