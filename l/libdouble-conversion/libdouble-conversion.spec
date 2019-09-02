@@ -2,14 +2,15 @@
 
 %define oname double-conversion
 
-Summary: Library providing binary-decimal and decimal-binary routines for IEEE doubles
 Name: lib%oname
 Version: 3.0.0
-Release: alt3
+Release: alt4
+
+Summary: Library providing binary-decimal and decimal-binary routines for IEEE doubles
 License: BSD
 Group: System/Libraries
-Url: https://github.com/floitsch/double-conversion
 
+Url: https://github.com/floitsch/double-conversion
 Source: %name-%version.tar
 
 BuildRequires: cmake ctest
@@ -32,6 +33,9 @@ library.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's,defined(__riscv),& || defined(__e2k__),' double-conversion/utils.h
+%endif
 
 %build
 %cmake_insource \
@@ -58,6 +62,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%oname
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 3.0.0-alt4
+- Added e2k support (patch suggested upstream)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
