@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.1.1
-Release: alt2
+Version: 5.1.2
+Release: alt1
 
 Summary: Python test framework
 License: MIT
@@ -117,6 +117,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest3
 
 %changelog
+* Mon Sep 02 2019 Stanislav Levin <slev@altlinux.org> 5.1.2-alt1
+- 5.1.1 -> 5.1.2.
+
 * Thu Aug 29 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
 - Fixed FTBFS ('/dev/shm').
 
