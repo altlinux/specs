@@ -1,17 +1,23 @@
+%define        gemname alexandria-book-collection-manager
+
 Name:          alexandria
 Version:       0.7.3
-Release:       alt3
+Release:       alt4
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
 Group:         Development/Ruby
 Url:           https://github.com/mvz/alexandria-book-collection-manager
-#VCS:          https://github.com/mvz/alexandria-book-collection-manager.git
+%vcs           https://github.com/mvz/alexandria-book-collection-manager.git
 BuildArch:     noarch
 Packager:      Vitaly Lipatov <lav@altlinux.ru>
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: GConf intltool libGConf2-devel
+BuildRequires: gem(rake)
+BuildRequires: gem(rspec)
+BuildRequires: GConf
+BuildRequires: intltool
+BuildRequires: libGConf2-devel
 
 %gem_replace_version image_size ~> 2.0.0
 %gem_replace_version gtk3 ~> 3.3.2
@@ -30,6 +36,7 @@ Alexandria:
 
 %package       -n gem-alexandria-book-collection-manager
 Summary:       HTML, XML, SAX, and Reader parser
+Summary(ru_RU.UTF-8): Библиотека для самоцвета %gemname
 Group:         Development/Other
 BuildArch:     noarch
 
@@ -40,22 +47,26 @@ This package contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-alexandria-book-collection-manager-doc
-Summary:       Documentation for Alexandria
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-alexandria-book-collection-manager-doc
-Documentation for Alexandria.
+Documentation files for %gemname gem.
+
+%description   -n gem-alexandria-book-collection-manager-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build --pre=pre_install --mode=lust --use=alexandria-book-collection-manager --alias=alexandria
+%ruby_build --pre=pre_install --use=alexandria-book-collection-manager --alias=alexandria
 
 %install
-%gem_install
+%ruby_install
 
 mkdir -p %buildroot%_desktopdir/ %buildroot%_datadir/sounds/%name/
 install -D -m 0644 schemas/%name.schemas %buildroot/%_sysconfdir/gconf/schemas/%name.schemas
@@ -65,7 +76,7 @@ install -D -m 0644 misc/sounds/* %buildroot%_datadir/sounds/%name/
 %find_lang %name --with-gnome
 
 %check
-%gem_test
+%ruby_test
 
 %post
 %gconf2_install %name
@@ -92,6 +103,9 @@ fi
 
 
 %changelog
+* Mon Sep 02 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4
+! spec
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
 - cleanup spec
 

@@ -2,7 +2,7 @@
 
 Name: 	       ruby-%pkgname
 Version:       0.12.2
-Release:       alt2
+Release:       alt3
 Summary:       An IRB alternative and runtime developer console
 License:       MIT
 Group:         Development/Ruby
@@ -18,7 +18,7 @@ BuildRequires: gem(yard)
 BuildRequires: gem(rspec) >= 3.8.0
 BuildRequires: gem(rspec-expectations) = 3.8.2
 BuildRequires: gem(simplecov) >= 0.16
-BuildRequires: gem(rubocop) = 0.66.0
+BuildRequires: gem(rubocop) >= 0.74
 
 %description
 Pry is a powerful alternative to the standard IRB shell for Ruby. It is written
@@ -42,7 +42,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --ignore=fixtures
 
 %install
 %ruby_install
@@ -61,6 +61,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Sep 02 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt3
+! spec, build depedencies
+
 * Tue Jul 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt2
 - Use Ruby Policy 2.0
 
