@@ -2,12 +2,12 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.2.90
+%define emacs_version 26.3
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.3.5.26.2
+%define tramp_version 2.3.5.26.3
 %define speedbar_version 1.0
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
@@ -20,8 +20,8 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.2.90
-Release: alt10
+Version: 26.3
+Release: alt11
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1529,6 +1529,10 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Tue Sep  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.3-alt11
+- 26.3
+- Fix for ALT#37107 (recode emacs21-rus-win-keyboard-alt2.el to utf8 and fix quoting)
+
 * Wed Jul  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.2.90-alt10
 - 26.2.90
 
