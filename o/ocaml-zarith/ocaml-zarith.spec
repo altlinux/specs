@@ -6,7 +6,7 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.8
+Version: 1.9.1
 Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
@@ -92,6 +92,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname/*.h
 
 %changelog
+* Tue Sep 03 2019 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
+- 1.9.1
+
 * Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.8-alt1
 - 1.8
 
