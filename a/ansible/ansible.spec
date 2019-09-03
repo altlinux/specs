@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.7.10
+Version: 2.8.4
 Release: alt1
 
 Group: System/Libraries
@@ -57,6 +57,12 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Sep  3 2019 Terechkov Evgenii <evg@altlinux.org> 2.8.4-alt1
+- 2.8.4 (ALT#36899)
+
+* Fri Jun 14 2019 Terechkov Evgenii <evg@altlinux.org> 2.7.11-alt1
+- 2.7.11
+
 * Tue Apr 30 2019 Terechkov Evgenii <evg@altlinux.org> 2.7.10-alt1
 - 2.7.10
 - Add python-module-docutils in BR: to build on e2k (patch by mike@)
