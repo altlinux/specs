@@ -3,7 +3,7 @@
 
 Name: cups-filters
 Version: 1.25.4
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -21,10 +21,9 @@ Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version
 Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
-Patch2: %name-braille-indexv4-path.patch
-Patch3: %name-pjl-as-ps.patch
-Patch4: %name-1.22.0-pftoopvp-gcc8.patch
-Patch5: %name-1.22.0-poppler-0.74.patch
+Patch1: %name-braille-indexv4-path.patch
+Patch2: %name-pjl-as-ps.patch
+Patch3: %name-1.25.4-libqpdf26.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -102,6 +101,7 @@ serial backend for cups
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 %patch2 -p2
 %patch3 -p2
 
@@ -186,6 +186,10 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Sep 03 2019 Anton Farygin <rider@altlinux.ru> 1.25.4-alt2
+- fixed build with qpdf-9.0.0
+- cleanup patches
+
 * Sun Sep 01 2019 Anton Farygin <rider@altlinux.ru> 1.25.4-alt1
 - new version 1.25.4
 
