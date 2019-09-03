@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gapi
-Version: 0.3.13
+Version: 0.3.14
 Release: alt1
 Summary: A simple OCaml client for Google Services
 License: MIT
@@ -86,6 +86,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml gapi
 %_libdir/ocaml/gapi-ocaml/*.mli
 
 %changelog
+* Tue Sep 03 2019 Anton Farygin <rider@altlinux.ru> 0.3.14-alt1
+- 0.3.14
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.3.13-alt1
 - 0.3.13
 
