@@ -86,7 +86,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_5
+Release:	alt2_5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -2031,7 +2031,7 @@ TeX-related libraries) that are missing from the texlive-basic package.
 Summary:	Tex Live ConTeXt Package
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
-Requires:	ruby ruby-tools
+Requires:	erb ruby
 Conflicts: tetex-context < 2.01
 AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
@@ -3093,8 +3093,6 @@ export TEXMFCACHE=%{texmfvardir}
 %{_bindir}/fmtutil-sys --all >> $LOGFILE 2>&1 ||:
 EOF
 chmod 755 %buildroot/%_rpmlibdir/texlive-5-config.filetrigger
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{texmfdistdir}/ls-R %{texmflocaldir}/ls-R
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -3123,6 +3121,9 @@ EOF
 
 
 %changelog
+* Tue Sep 03 2019 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_5
+- rebuild formats with new texlive
+
 * Wed Oct 17 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1_5
 - new version
 
