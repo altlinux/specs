@@ -1,7 +1,7 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 3.7.0
-Release: alt2
+Version: 3.8.0
+Release: alt1
 License: %lgpl3plus
 Group: Development/Tools
 Url: http://radare.org/
@@ -72,6 +72,9 @@ ln -s radare2 %buildroot/usr/bin/r2
 %_datadir/zsh
 
 %changelog
+* Tue Sep  3 2019 Nikita Ermakov <arei@altlinux.org> 3.8.0-alt1
+- Update to 3.8.0.
+
 * Thu Aug 29 2019 Nikita Ermakov <arei@altlinux.org> 3.7.0-alt2
 - Create symbolic link to the radare2.
 
