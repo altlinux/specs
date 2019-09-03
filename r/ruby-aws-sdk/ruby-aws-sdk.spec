@@ -2,7 +2,7 @@
 %define        gemname aws-sdk
 
 Name: 	       ruby-%pkgname
-Version:       2.11.317
+Version:       2.11.345
 Release:       alt1
 Summary:       The official AWS SDK for Ruby
 License:       Apache-2.0
@@ -13,19 +13,19 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-#BuildRequires: gem(rake)
-#BuildRequires: gem(rspec) >= 3.0
-#BuildRequires: gem(yard)
-#BuildRequires: gem(simplecov)
-#BuildRequires: gem(kramdown)
-#BuildRequires: gem(benchmark-ips) >= 2.0
-#BuildRequires: gem(rake-compiler)
-#BuildRequires: gem(ruby-ll) >= 2.1
-#BuildRequires: gem(ast)
-#BuildRequires: gem(ox)
-#BuildRequires: gem(nokogiri)
-#BuildRequires: ragel
-#BuildRequires: /usr/bin/ruby-ll
+BuildRequires: gem(rake)
+BuildRequires: gem(rspec) >= 3.0
+BuildRequires: gem(yard)
+BuildRequires: gem(simplecov)
+BuildRequires: gem(kramdown)
+BuildRequires: gem(benchmark-ips) >= 2.0
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(ruby-ll) >= 2.1
+BuildRequires: gem(ast)
+BuildRequires: gem(ox)
+BuildRequires: gem(nokogiri)
+BuildRequires: ragel
+BuildRequires: /usr/bin/ruby-ll
 
 %gem_replace_version nokogiri >= 1.10
 %gem_replace_version yard >= 0.9
@@ -49,6 +49,9 @@ interfaces and API clients for AWS services.
 Summary:       AWS SDK for Ruby - Core
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Obsoletes:     aws-sdk-core
+Provides:      aws-sdk-core
 
 %description   -n gem-%pkgname-core
 Provides API clients for AWS. This gem is part of the official AWS SDK
@@ -148,6 +151,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.345-alt1
+^ v2.11.345
+! spec
++ obsoletes/provides for aws-sdk-core
+
 * Wed Aug 07 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.317-alt1
 ^ v2.11.317
 ^ Ruby Policy 2.0
