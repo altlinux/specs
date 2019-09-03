@@ -6,14 +6,13 @@
 
 Name: dovecot
 Version: 2.3.7.2
-Release: alt1
+Release: alt2
+
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
-Url: http://www.dovecot.org/
 
-Obsoletes: dovecot1.0
-Obsoletes: dovecot1.2
+Url: http://www.dovecot.org/
 
 # Repacked https://dovecot.org/releases/2.3/dovecot-%version.tar.gz
 Source0: %name-%version.tar
@@ -38,6 +37,9 @@ PreReq: mailboxes-control
 # optimized out: libcom_err-devel libkrb5-devel libpq-devel libstdc++-devel pkg-config
 BuildRequires: bzlib-devel gcc-c++ libldap-devel libmysqlclient-devel libpam-devel libsasl2-devel libsqlite3-devel libssl-devel openssl postgresql-devel zlib-devel
 BuildRequires: libkrb5-devel
+
+Obsoletes: dovecot1.0
+Obsoletes: dovecot1.2
 
 %description
 Dovecot is an IMAP/POP3 server for Linux/UNIX-like systems, written with
@@ -71,7 +73,12 @@ Libraries and headers for Dovecot
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
 
-gzip -9 ChangeLog
+%ifarch %e2k
+# lcc 1.23.12 won't do that
+sed -i 's, ATTR_RETURNS_NONNULL,,' src/lib/mempool.h
+%endif
+
+xz -9 ChangeLog
 
 %build
 %add_optflags -D_DEFAULT_SOURCE=1
@@ -94,19 +101,19 @@ export ACLOCAL='aclocal -I .'
 # setup right ssl directory
 sed -i 's|/etc/ssl|%_ssldir|' doc/mkcert.sh doc/example-config/conf.d/10-ssl.conf
 
-cp %SOURCE4 src/lib
+cp -a %SOURCE4 src/lib
 %make_build
 
 %install
 %makeinstall_std
 
-install -D -m 0600 %SOURCE1 %buildroot%_sysconfdir/pam.d/dovecot
-install -D -m 0755 %SOURCE2 %buildroot%_initdir/%name
+install -Dp -m 0600 %SOURCE1 %buildroot%_sysconfdir/pam.d/dovecot
+install -Dp -m 0755 %SOURCE2 %buildroot%_initdir/%name
 
 # generate ghost .pem files
 touch empty
-install -D -m600 empty %buildroot%_ssldir/certs/dovecot.pem
-install -D -m600 empty %buildroot%_ssldir/private/dovecot.pem
+install -Dp -m600 empty %buildroot%_ssldir/certs/dovecot.pem
+install -Dp -m600 empty %buildroot%_ssldir/private/dovecot.pem
 
 mkdir -p %buildroot/var/run/dovecot/{login,empty}
 chmod 755 %buildroot/var/run/dovecot
@@ -195,6 +202,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Sep 03 2019 Michael Shigorin <mike@altlinux.org> 2.3.7.2-alt2
+- E2K: fixed build with sed equivalent of george@'s patch.
+- Care a bit more about timestamps et al.
+
 * Wed Aug 28 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.7.2-alt1
 - Updated to 2.3.7.2 (fixes CVE-2019-11500).
 
