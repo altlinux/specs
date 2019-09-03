@@ -3,7 +3,7 @@
 
 Name: libpsl
 Version: 0.21.0
-Release: alt1
+Release: alt2
 
 Summary: C library for the Public Suffix List
 License: %mit
@@ -155,6 +155,10 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Tue Sep 03 2019 Mikhail Efremov <sem@altlinux.org> 0.21.0-alt2
+- Patch from upstream:
+  + gtk-doc: do not include tree_index.sgml.
+
 * Wed Apr 17 2019 Mikhail Efremov <sem@altlinux.org> 0.21.0-alt1
 - BR: python -> python3.
 - psl-make-dafsa: Use python3.
