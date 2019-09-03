@@ -1,6 +1,6 @@
 Name: acpid
 Version: 2.0.31
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: ACPI kernel daemon and control utility
 License: GPL
@@ -78,6 +78,10 @@ __EOF__
 %config(noreplace) %_sysconfdir/acpi/events/power
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1:2.0.31-alt2
+- init: start acpid later than udevd-final (10->34 compared to 32)
+  to avoid catching stray power button events during startup
+
 * Tue May 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.31-alt1
 - 2.0.31
 
