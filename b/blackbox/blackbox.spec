@@ -1,6 +1,6 @@
 Name: blackbox
 Version: 0.70.1
-Release: alt3
+Release: alt4
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
@@ -129,6 +129,9 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 %_pkgconfigdir/libbt.pc
 
 %changelog
+* Wed Sep 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.70.1-alt4
+- fixed man alternatives
+
 * Tue Mar 12 2013 Igor Zubkov <icesik@altlinux.org> 0.70.1-alt3
 - buildreq
 
