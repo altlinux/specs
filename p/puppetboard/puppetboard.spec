@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 0.3.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -82,7 +82,7 @@ getent passwd puppetboard > /dev/null || \
 %_sbindir/a2enmod wsgi-py3
 
 %files
-%doc *.rst
+%doc *.md
 %config(noreplace) %wsgi_dir/settings.py
 %config(noreplace) %wsgi_dir/wsgi.py
 %config(noreplace) %apache2_sites_available/%name.conf
@@ -93,5 +93,8 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Wed Sep 04 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version.
+
 * Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus (based on SUSE spec file).
