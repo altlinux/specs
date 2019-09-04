@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190824
+Version: 20190904
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,13 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Sep 04 2019 Cronbuild Service <cronbuild@altlinux.org> 20190904-alt1
+- upstream changes (GIT 6ddb9d9):
+  + nvidia: Add XUSB firmware for Tegra186 (thx Thierry Reding)
+  + rtl_bt: Update RTL8723D BT FW to 0x828A_96F1 (thx Max Chou)
+  + rtl_nic: add firmware rtl8125a-3 (thx Heiner Kallweit)
+  + Add firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+
 * Thu Aug 29 2019 Cronbuild Service <cronbuild@altlinux.org> 20190824-alt1
 - upstream changes (GIT 7307a29):
   + brcm: Add 43455 based AP6255 NVRAM for the Minix Neo Z83-4
