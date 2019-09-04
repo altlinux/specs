@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.27
+Version: 9.27.9
 Release: alt1
 
 %define ijsver	0.35
@@ -25,35 +25,36 @@ Patch1: FC-cve-2019-6116.patch
 Patch2: FC-subclassing-devices-fix-put_image-method.patch
 Patch3: FC-cve-2019-3835.patch
 Patch4: FC-cve-2019-3838.patch
-Patch5: FC-9.23-100-run-dvipdf-securely.patch
+Patch5: FC-cve-2019-10216.patch
+Patch6: FC-9.23-100-run-dvipdf-securely.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch102: Ubuntu-2002_gs_man_fix_debian.patch
-Patch103: Ubuntu-2003_support_multiarch.patch
-Patch104: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch105: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch106: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch107: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch108: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
-Patch109: Ubuntu-2010_add_build_timestamp_setting.patch
-Patch110: Ubuntu-020181126-96c381c-ps2write-move-the-page-level-save-restore-wrapper.patch
-Patch111: Ubuntu-020181205-fae21f16-subclassing-devices-fix-put-image-method.patch
-Patch112: Ubuntu-CVE-2019-6116.patch
-Patch113: Ubuntu-lp1815339.patch
-Patch114: Ubuntu-lp1815339-2.patch
-Patch115: Ubuntu-CVE-2019-3835-pre1.patch
-Patch116: Ubuntu-CVE-2019-3835-pre2.patch
-Patch117: Ubuntu-CVE-2019-3835-1.patch
-Patch118: Ubuntu-CVE-2019-3835-2.patch
-Patch119: Ubuntu-CVE-2019-3838-1.patch
-Patch120: Ubuntu-CVE-2019-3838-2.patch
-Patch121: Ubuntu-CVE-2019-3839-1.patch
-Patch122: Ubuntu-CVE-2019-3839-2.patch
+Patch101: Ubuntu-020190410~06c9207.patch
+Patch102: Ubuntu-020190802~5b85ddd.patch
+Patch103: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch104: Ubuntu-2002_gs_man_fix_debian.patch
+Patch105: Ubuntu-2003_support_multiarch.patch
+Patch106: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch107: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch108: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch109: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch110: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch111: Ubuntu-2009_use_system_javascript.patch
+Patch112: Ubuntu-2010_add_build_timestamp_setting.patch
+Patch113: Ubuntu-2011_avoid_remote_font.patch
+Patch114: Ubuntu-2012_avoid_googletagmanager.patch
+Patch115: Ubuntu-020190822~863d77f_cups_pwgraster_output_device_produce_more_debug_output.patch
+Patch116: Ubuntu-020190823~2d6bb6e_cups_pwgraster_output_device_reduced_page_size_comparison_tolerances.patch
+Patch117: Ubuntu-020190824~3e09ced_cups_pwgraster_output_device_improved_page_size_matching_with_ppd.patch
+Patch118: Ubuntu-020190825~3283e6d_cups_pwgraster_output_device_small_fix_on_size_matching_improvements.patch
+Patch119: Ubuntu-020190825~30575d5_cups_pwgraster_output_device_prefer_the_page_size_requested_by_user.patch
+Patch120: Ubuntu-020190825~4e220de_cups_pwgraster_output_device_do_not_output_luts_with_cups_debug_set.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
+Patch600: CVE-2019-14811_2_3.patch
+Patch601: CVE-2019-14817.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -194,35 +195,36 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 ##patch2 -p1
 #patch3 -p1
 #patch4 -p1
-%patch5 -p1
+#patch5 -p1
+%patch6 -p1
 
 ## Ubuntu apply patches
-%patch101 -p1
+#patch101 -p1
 #patch102 -p1
-#patch103 -p1
-%patch104 -p1
+%patch103 -p1
+#patch104 -p1
 #patch105 -p1
-#patch106 -p1
+%patch106 -p1
 #patch107 -p1
 #patch108 -p1
-%patch109 -p1
+#patch109 -p1
 #patch110 -p1
-#patch111 -p1
-#patch112 -p1
-#patch113 -p1
-#patch114 -p1
-#patch115 -p1
-#patch116 -p1
-#patch117 -p1
-#patch118 -p1
-#patch119 -p1
-#patch120 -p1
-#patch121 -p1
-#patch122 -p1
+%patch111 -p1
+##patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+%patch118 -p1
+%patch119 -p1
+%patch120 -p1
 
 ## ALT apply patches
 %patch500 -p1
 %patch501 -p1
+%patch600 -p1
+%patch601 -p1
 
 %build
 export CFLAGS=-DA4
@@ -230,6 +232,7 @@ export CFLAGS=-DA4
 cd ijs; %autoreconf; cd -
 
 %configure --enable-dynamic \
+	   --enable-gpdl \
 	   --with-system-libtiff \
            --with-ijs \
 	   --with-drivers=ALL \
@@ -249,8 +252,8 @@ cd ijs; %configure --enable-shared --disable-static; cd -
 %make_build so || :
 sed 's#-o ./bin/gpdl#-shared -Wl,-soname=libgpdl.so.9 -o ./sobin/libgpdl.so.%{version}#
 s#./[^/]*obj/realmain.o ##' < obj/gpdlldt.tr > soobj/gpdlldt.tr
-%endif
 sh soobj/gpdlldt.tr
+%endif
 
 %make_build so
 
@@ -350,6 +353,11 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Wed Sep 04 2019 Fr. Br. George <george@altlinux.ru> 9.27.9-alt1
+- Update to 9.28rc1
+- Update patches
+- Fix CVE-2019-1481[1237]
+
 * Mon May 06 2019 Fr. Br. George <george@altlinux.ru> 9.27-alt1
 - Autobuild version bump to 9.27
 - Update patchset
