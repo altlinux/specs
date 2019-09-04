@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.21
+Version: 7.2.22
 Release: alt1
 
 %define php7_name      %name
@@ -436,8 +436,11 @@ chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
 %doc tests run-tests.php 
 
 %changelog
+* Wed Sep 04 2019 Anton Farygin <rider@altlinux.ru> 7.2.22-alt1
+- 7.2.22
+
 * Sat Aug 03 2019 Anton Farygin <rider@altlinux.ru> 7.2.21-alt1
-- 7.2.21
+- 7.2.21 (Fixes: CVE-2019-11042, CVE-2019-11041)
 
 * Thu Jul 11 2019 Michael Shigorin <mike@altlinux.org> 7.2.19-alt1.1
 - move autoreconf from %%prep to %%build
