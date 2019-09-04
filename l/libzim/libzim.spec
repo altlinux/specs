@@ -1,5 +1,5 @@
 Name:    libzim
-Version: 5.1.0
+Version: 6.0.0
 Release: alt1
 Summary: Library for reading/writing ZIM files
 
@@ -63,6 +63,9 @@ developing applications that use %{name}.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Sep 04 2019 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Thu Aug 22 2019 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version.
 
