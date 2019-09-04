@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.43
-Release: alt1
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -21,6 +21,7 @@ Url: http://www.jwz.org/xscreensaver
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: xscreensaver-5.40-do-not-claim-on-old-version.patch
+Patch2: xscreensaver-5.43-lcc-is-not-gcc.patch
 
 Source1: %name-%version-ad.tar
 
@@ -188,6 +189,9 @@ This package contains xscreensaver configuration frontend.
 %setup
 %patch -p1
 %patch1 -p2
+%ifarch %e2k
+%patch2 -p2
+%endif
 cp %SOURCE6 po/ru.po
 
 %build
@@ -320,6 +324,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Wed Sep 04 2019 Grigory Ustinov <grenka@altlinux.org> 5.43-alt2
+- Fix build on e2k arches.
+
 * Fri Jul 12 2019 Grigory Ustinov <grenka@altlinux.org> 5.43-alt1
 - Build new version (new hacks gravitywell, deepstars).
 
