@@ -1,6 +1,5 @@
 # build defines
 %define _unpackaged_files_terminate_build 1
-%def_with lint
 
 %ifarch %ix86
 %def_with only_client
@@ -8,8 +7,12 @@
 %def_without only_client
 %endif
 
+%if_without only_client
 %def_with fastlint
 %def_with fasttest
+%def_with lint
+%endif
+
 %if_with lint
     %define linter_options --enable-pylint --with-jslint
 %else
@@ -25,12 +28,12 @@
 
 # versions defines
 %define bind_version 9.11
-%define bind_dyndb_ldap_version 11.0
+%define bind_dyndb_ldap_version 11.1-alt7
 %define certmonger_version 0.79.7
-%define ds_version 1.4.1.1
+%define ds_version 1.4.1.6
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
-%define pki_version 10.6.7
+%define pki_version 10.7.3
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
 %define slapi_nis_version 0.56.3
@@ -39,7 +42,7 @@
 
 Name: freeipa
 Version: 4.7.2
-Release: alt3
+Release: alt4
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -631,15 +634,6 @@ if [ $1 = 0 ]; then
     /bin/systemctl reload-or-try-restart oddjobd ||:
 fi
 
-%triggerpostun server-common -- freeipa-server-common <= 4.6.1
-if python3 -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1; then
-        a2dismod ipa-nss >/dev/null 2>&1 ||:
-
-        if systemctl is-enabled httpd2.service >/dev/null 2>&1; then
-                systemctl try-restart httpd2.service >/dev/null 2>&1 ||:
-        fi
-fi
-
 %pre server
 # Stop ipa_kpasswd if it exists before upgrading so we don't have a
 # zombie process when we're done.
@@ -997,6 +991,9 @@ fi
 %python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 4.7.2-alt4
+- ALT: Fixed upgrade 4.3.3 -> 4.7.2.
+
 * Mon Jul 15 2019 Stanislav Levin <slev@altlinux.org> 4.7.2-alt3
 - Added support for CI testing (ALT).
 
