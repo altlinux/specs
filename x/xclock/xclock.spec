@@ -1,5 +1,5 @@
 Name: xclock
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: analog / digital clock for X
 Group: System/X11
@@ -37,6 +37,9 @@ continuously updated at a frequency which may be specified by the user.
 %_mandir/man1/xclock.*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.0.9-alt1
+- Autobuild version bump to 1.0.9
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.8-alt1
 - Autobuild version bump to 1.0.8
 
