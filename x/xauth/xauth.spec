@@ -1,5 +1,5 @@
 Name: xauth
-Version: 1.0.10
+Version: 1.1
 Release: alt1
 Epoch: 1
 Summary: X authority file utility
@@ -7,8 +7,8 @@ License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
+Patch: %name-1.0.10-alt1.patch
 
 BuildRequires: libXau-devel libXext-devel libXmu-devel xorg-xtrans-devel xorg-util-macros
 
@@ -40,10 +40,14 @@ does that.
 %make DESTDIR=%buildroot install
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1:1.1-alt1
+- Autobuild version bump to 1.1
+
 * Thu Aug 03 2017 Fr. Br. George <george@altlinux.ru> 1:1.0.10-alt1
 - Autobuild version bump to 1.0.10
 - Introduce *:0 for FamilyWild
