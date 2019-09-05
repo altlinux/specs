@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    19.03.1
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -121,7 +121,7 @@ install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/syntax/dockerfile.vim %
 
 # install udev rules
 install -d %{buildroot}%{_sysconfdir}/udev/rules.d
-install -p %{build_dir_engine}/contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
+install -m 644 -p %{build_dir_engine}/contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
 
 # install storage dir
 install -d %{buildroot}%{_sharedstatedir}/%{repo_engine}
@@ -174,6 +174,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Sep 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 19.03.1-alt2
+- Make udev rules not executable
+
 * Wed Aug 7 2019 Vladimir Didenko <cow@altlinux.org> 19.03.1-alt1
 - 19.03.1 (fixes CVE-2019-14271)
 
