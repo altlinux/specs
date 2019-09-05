@@ -1,14 +1,14 @@
 Name: sessreg
-Version: 1.0.7
-Release: alt2
+Version: 1.1.2
+Release: alt1
 Summary: manage utmp/wtmp entries for non-init clients
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
+Patch: %name-1.0.7-alt2.patch
 
 BuildRequires: xorg-xproto-devel xorg-util-macros
 
@@ -16,7 +16,7 @@ BuildRequires: xorg-xproto-devel xorg-util-macros
 Sessreg is a simple program for managing utmp/wtmp entries for xdm sessions
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -29,10 +29,14 @@ Sessreg is a simple program for managing utmp/wtmp entries for xdm sessions
 %make DESTDIR=%buildroot install
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Fri Apr 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0.7-alt2
 - build fixed
 
