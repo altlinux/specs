@@ -1,6 +1,6 @@
 Name: xrandr
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 Summary: primitive command line interface to RandR extension
 License: MIT/X11
 Group: System/X11
@@ -40,6 +40,9 @@ entation of the screen, and can be one of "normal inverted left right 0
 %_man1dir/*.1*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.5.0-alt2
 - Merge with current git to support RandR 1.5
 
