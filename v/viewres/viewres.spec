@@ -1,5 +1,5 @@
 Name: viewres
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: graphical class browser for Xt
 Group: System/X11
@@ -30,12 +30,15 @@ of the Athena Widget Set.
 %make install DESTDIR=%buildroot
 
 %files
-%doc README
+%doc README*
 %_bindir/viewres
 %_x11appconfdir/Viewres*
 %_mandir/man1/viewres.*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
