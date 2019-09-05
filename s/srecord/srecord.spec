@@ -1,10 +1,11 @@
 Summary: srecord programs
 Name: srecord
 Version: 1.64
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Tools
 Source: http://srecord.sourceforge.net/%name-%version.tar.gz
+Patch0: srecord_rm_pdf_docs.patch
 URL: http://srecord.sourceforge.net/
 BuildPrereq: boost-devel, diffutils, ghostscript, groff, libgcrypt-devel
 BuildPrereq: libtool, sharutils
@@ -45,6 +46,8 @@ that manipulate EPROM load files.
 %prep
 %setup -q
 
+%patch0 -p1
+
 %build
 %configure
 %make_build
@@ -58,7 +61,7 @@ that manipulate EPROM load files.
 
 %files
 %doc LICENSE BUILDING README
-%_datadir/doc/srecord/*
+# %_datadir/doc/srecord/*
 %_bindir/srec_cat
 %_bindir/srec_cmp
 %_bindir/srec_info
@@ -77,6 +80,9 @@ that manipulate EPROM load files.
 %_man3dir/*
 
 %changelog
+* Thu Sep 05 2019 Grigory Milev <week@altlinux.ru> 1.64-alt2
+- remove pdf docs
+
 * Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.64-alt1
 - Build new version.
 
