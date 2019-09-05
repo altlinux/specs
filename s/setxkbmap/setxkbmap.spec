@@ -1,5 +1,5 @@
 Name: setxkbmap
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: set the keyboard using the X Keyboard Extension
 License: MIT/X11
@@ -27,10 +27,14 @@ the options specified on the command line.
 %make DESTDIR=%buildroot install
 
 %files
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.3.2-alt1
+- Autobuild version bump to 1.3.2
+
 * Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Autobuild version bump to 1.3.1
 
