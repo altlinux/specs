@@ -1,6 +1,6 @@
 Name: xman
-Version: 1.1.4
-Release: alt3.1
+Version: 1.1.5
+Release: alt1
 Summary: Manual page display program for the X Window System
 Group: System/X11
 Source: %name-%version.tar.bz2
@@ -33,12 +33,16 @@ done
 %make install DESTDIR=%buildroot
 
 %files
+%doc README*
 %_bindir/xman
 %_datadir/X11/xman.help
 %_x11appconfdir/Xman
 %_mandir/man1/xman.*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt3.1
 - NMU: added URL
 
