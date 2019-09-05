@@ -1,5 +1,5 @@
 Name: xwininfo
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: window information utility for X
@@ -30,11 +30,14 @@ information is displayed depending on which options are selected.
 %make DESTDIR=%buildroot install
 
 %files
-%doc README
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
 - Autobuild version bump to 1.1.4
 
