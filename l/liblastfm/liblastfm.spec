@@ -4,7 +4,7 @@
 %define liblastfm_common liblastfm-common%sover
 Name: liblastfm
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Liblastfm is a collection of libraries to help you integrate Last.fm services
@@ -57,7 +57,11 @@ Install this package if you want do compile applications using the %name library
 
 
 %prep
-%setup -q
+%setup
+%ifarch %e2k
+# unsupported as of lcc 1.23.12
+sed -i 's,-fno-operator-names,,' CMakeLists.txt
+%endif
 
 %build
 %Kbuild \
@@ -84,6 +88,9 @@ Install this package if you want do compile applications using the %name library
 %_includedir/*
 
 %changelog
+* Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1.0.9-alt2
+- E2K: avoid lcc-unsupported option
+
 * Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.9-alt1
 - new version
 
