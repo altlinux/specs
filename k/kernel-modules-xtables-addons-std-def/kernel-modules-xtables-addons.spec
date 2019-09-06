@@ -1,6 +1,6 @@
 %define module_name	xtables-addons
 %define module_version	3.3
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		std-def
 %define karch %ix86 x86_64 aarch64 ppc64le
@@ -58,7 +58,7 @@ tar xjf %kernel_src/kernel-source-%module_name-%module_version.tar.*
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-%make -C %_usrsrc/linux-%kversion-%flavour TEMP_DIR=$(pwd) V=1 SUBDIRS=$(pwd) XA_ABSTOPSRCDIR=`pwd` modules
+%make -C %_usrsrc/linux-%kversion-%flavour TEMP_DIR=$(pwd) V=1 M=$(pwd) XA_ABSTOPSRCDIR=`pwd` modules
 
 %install
 mkdir -p %buildroot/%module_dir/
@@ -73,6 +73,9 @@ rm -f %buildroot/%module_dir/xt_TEE.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Aug 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 3.3-alt3
+- fix build with upcoming kernel 5.3
 
 * Tue Jun 18 2019 Anton Farygin <rider@altlinux.ru> 3.3-alt1
 - new version
