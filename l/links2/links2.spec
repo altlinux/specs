@@ -3,7 +3,7 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.20
+Version: 2.20.1
 Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
@@ -133,6 +133,9 @@ chmod +x %buildroot%_bindir/x%name
 # - consider system publicsuffix like debian
 
 %changelog
+* Fri Sep 06 2019 Michael Shigorin <mike@altlinux.org> 2.20.1-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 29 2019 Michael Shigorin <mike@altlinux.org> 2.20-alt1
 - new version (watch file uupdate)
 - fixes DNS prefetch security problem present from 2.15 to 2.19
