@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron
-Version: 5.0.6
+Version: 5.0.10
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -60,6 +60,9 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Wed Sep 04 2019 Vitaly Lipatov <lav@altlinux.ru> 5.0.10-alt1
+- new version 5.0.10 (with rpmrb script)
+
 * Mon Jul 08 2019 Vitaly Lipatov <lav@altlinux.ru> 5.0.6-alt1
 - new version 5.0.6 (with rpmrb script)
 
