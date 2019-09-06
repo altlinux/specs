@@ -11,7 +11,7 @@
 
 Name:		fzf
 Version:	0.18.0
-Release:	alt1
+Release:	alt2
 Summary:	A general-purpose command-line fuzzy finder.
 
 Group:		Development/Tools
@@ -78,6 +78,8 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
+# Don't try to download dependencies from network
+rm -f go.mod
 %golang_prepare
 rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
 cp -alv -- vendor/* "$BUILDDIR/src"
@@ -132,6 +134,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Fri Sep 6 2019 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt2
+- Fix build with golang 1.13
+
 * Mon Apr 8 2019 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt1
 - New version
 
