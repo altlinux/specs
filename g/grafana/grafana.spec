@@ -13,7 +13,7 @@
 
 Name:		grafana
 Version:	6.3.5
-Release:	alt1
+Release:	alt2
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -78,9 +78,6 @@ export BRANCH=altlinux
 
 npm rebuild
 npm run build
-
-go env -w GOPROXY=direct
-go env -w GOSUMDB=off
 
 #%%golang_build pkg/cmd/*
 GO111MODULE=off CGO_ENABLED=1 go install -ldflags " -s -w  \
@@ -163,11 +160,14 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
 #%config(noreplace) %_logrotatedir/%name
 %dir %attr(0770, root, %name) %_logdir/%name
-%dir %attr(0775, root, %name) %_runtimedir/%name
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 %_datadir/%name
 
 %changelog
+* Sat Sep 07 2019 Alexey Shabalin <shaba@altlinux.org> 6.3.5-alt2
+- fixed perm of /run/grafana in tmpfiles config
+- not package /run/grafana
+
 * Thu Sep 05 2019 Alexey Shabalin <shaba@altlinux.org> 6.3.5-alt1
 - 6.3.5
 
