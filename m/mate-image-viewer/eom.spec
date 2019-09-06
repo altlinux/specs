@@ -2,7 +2,7 @@
 
 Name: mate-image-viewer
 Version: 1.22.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Eye of MATE image viewer
 License: GPLv2+ and LGPLv2+
@@ -67,6 +67,9 @@ Development files for eom
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Fri Sep 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt2
+- updated russian translation
+
 * Tue Apr 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 
