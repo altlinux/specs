@@ -5,7 +5,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt24
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_rt_release
+Release: alt3.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -241,9 +241,6 @@ FORBID="TRANSPARENT_HUGEPAGE
 	KVM_MPIC
 	RT_GROUP_SCHED
 	CPUMASK_OFFSTACK"
-# for opt in $FORBID; do
-#	scripts/config -d $opt
-# done
 
 # Clean up and settle everything
 %make_build olddefconfig
@@ -486,6 +483,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Sep 07 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt3.rt24
+- Add more performance (disable NO HZ) and tracing options.
+
 * Fri Sep 06 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt2.rt24
 - Enable EFI handover support.
 
