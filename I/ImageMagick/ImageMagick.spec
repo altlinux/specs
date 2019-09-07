@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	49
+%define drelease	63
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -251,6 +251,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Sep 06 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.63-alt1
+- new version 6.9.10.63
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 6.9.10.49-alt2
 - NMU: remove rpm-build-ubt from BR:
 
