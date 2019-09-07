@@ -2,7 +2,7 @@
 %def_enable python
 
 Name: fontforge
-Version: 20190413
+Version: 20190801
 Release: alt1
 
 Summary: FontForge -- font editor
@@ -98,7 +98,7 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 %make_build || :
 # try again
 # looks like gnulib bug? (see https://bugzilla.altlinux.org/show_bug.cgi?id=36059)
-%__subst '24i#include "config.h"' lib/math.h
+#__subst '24i#include "config.h"' lib/math.h
 %make_build
 
 %install
@@ -114,6 +114,9 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.*
 %_datadir/mime/packages/*
+%_datadir/pixmaps/*
+%_datadir/metainfo/*
+%_datadir/appdata/*
 
 %files -n lib%name
 %_libdir/libgunicode.so.*
@@ -143,6 +146,9 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 
 
 %changelog
+* Sat Sep 07 2019 Vitaly Lipatov <lav@altlinux.ru> 20190801-alt1
+- new version 20190801 (with rpmrb script)
+
 * Wed Jun 12 2019 Vitaly Lipatov <lav@altlinux.ru> 20190413-alt1
 - new version 20190413 (with rpmrb script)
 
