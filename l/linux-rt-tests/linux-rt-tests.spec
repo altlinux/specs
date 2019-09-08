@@ -1,7 +1,7 @@
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
 Version:  1.5
-Release:  alt1
+Release:  alt2
 
 Summary:  Programs that test various rt-linux features
 License:  GPL-2.0-or-later
@@ -11,11 +11,11 @@ Url:      https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rt
 
 ExclusiveArch: %ix86 x86_64
 Source:   %name-%version.tar
-BuildRequires: libnuma-devel
+BuildRequires: libnuma-devel rpm-build-python3
 
 %description
-rt-tests is a test suite, that contains programs (such as cyclictest) to test
-various Real Time Linux features.
+rt-tests is a test suite, that contains programs (such as cyclictest,
+hwlatdetect, hackbench) to test various Real Time Linux features.
 
 %prep
 %setup
@@ -26,11 +26,34 @@ various Real Time Linux features.
 %install
 %makeinstall_std prefix=/usr
 
+rm -f %buildroot/usr/bin/hwlatdetect \
+      %buildroot/usr/lib/python3/site-packages/hwlatdetect.py
+install -D src/hwlatdetect/hwlatdetect.py %buildroot/usr/sbin/hwlatdetect
+
 %files
-%_bindir/*
-%_man8dir/*
-%doc COPYING MAINTAINERS README.markdown
+%_bindir/cyclicdeadline
+%_bindir/cyclictest
+%_bindir/deadline_test
+%_bindir/determine_maximum_mpps.sh
+%_bindir/get_cpuinfo_mhz.sh
+%_bindir/hackbench
+%_bindir/pi_stress
+%_bindir/pip_stress
+%_bindir/pmqtest
+%_bindir/ptsematest
+%_bindir/queuelat
+%_bindir/rt-migrate-test
+%_bindir/signaltest
+%_bindir/sigwaittest
+%_bindir/ssdd
+%_bindir/svsematest
+%_sbindir/hwlatdetect
+%_man8dir/*.8*
+%doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 
 %changelog
+* Sun Sep 08 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt2
+- Add hwlatdetect (required python3).
+
 * Fri Sep 06 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
 - First build of rt-tests.
