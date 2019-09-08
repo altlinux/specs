@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 4.6.6
+Version: 4.6.7
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -147,6 +147,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Sat Sep 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6.7-alt1
+- new version 4.6.7 (with rpmrb script)
+
 * Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6.6-alt1
 - new version 4.6.6 (with rpmrb script)
 
