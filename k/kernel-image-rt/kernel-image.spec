@@ -5,7 +5,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt24
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt3.%kernel_rt_release
+Release: alt4.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -234,11 +234,8 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 # https://wiki.linuxfoundation.org/realtime/documentation/known_limitations
 FORBID="TRANSPARENT_HUGEPAGE
 	OPROFILE
-	XEN
 	X86_POWERNOW_K8
 	BCACHE
-	HIGHMEM
-	KVM_MPIC
 	RT_GROUP_SCHED
 	CPUMASK_OFFSTACK"
 
@@ -483,6 +480,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Sep 08 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt4.rt24
+- Add two OSADL patches for debug purposes:
+  + tracing: Add latency histograms
+  + Provide individual CPU usage measurement based on idle time
+- Enable performance scaling governor by default and disable powersave.
+- Disable multiple debug options.
+
 * Sat Sep 07 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt3.rt24
 - Add more performance (disable NO HZ) and tracing options.
 
