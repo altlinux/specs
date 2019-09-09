@@ -34,7 +34,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.12.4
-Release: alt3
+Release: alt4
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -61,9 +61,10 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
-Patch1006: e2k-qt-5.12.2.patch
+Patch1006: e2k-qt-5.12.4.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 Patch1008: alt-mkspecs-features.patch
+Patch1009: alt-false-detect-groupswitchmodifier.patch
 
 # macros
 %define _qt5 %gname
@@ -387,6 +388,7 @@ EGL integration library for the Qt%major toolkit
 %endif
 %patch1007 -p1
 %patch1008 -p1
+%patch1009 -p1
 bin/syncqt.pl -version %version
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -803,6 +805,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Sep 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt4
+- add fix against QTBUG-49771 (thanks darktemplar@alt)
+
 * Mon Aug 05 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt3
 - fix to build with old libharfbuzz
 
