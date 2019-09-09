@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.6.5
+Version: 1.7.0
 Release: alt1
 
 Summary: Apache Portable Runtime
@@ -120,6 +120,9 @@ make check
 %endif
 
 %changelog
+* Mon Sep 09 2019 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
 - New version.
 
