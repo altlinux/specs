@@ -4,7 +4,7 @@
 
 Name: %name
 Version: 3.4.0
-Release: alt2
+Release: alt3
 
 Group: Education
 License: BSD-3-Clause
@@ -86,7 +86,7 @@ install -D -m755 %name %buildroot%_bindir/%name
 install -D -m755 app.asar %buildroot%scratch_installdir/app.asar
 install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 mkdir -p %buildroot%_libdir/electron4/resources/static/
-cp -a dist/renderer/static/* %buildroot%_libdir/electron4/resources/static/
+cp -a static/* %buildroot%_libdir/electron4/resources/static/
 
 %files
 %doc LICENSE TRADEMARK README.md
@@ -99,6 +99,9 @@ cp -a dist/renderer/static/* %buildroot%_libdir/electron4/resources/static/
 %exclude %dir %_libdir/electron4/resources
 
 %changelog
+* Mon Sep 09 2019 Pavel Moseev <mars@altlinux.org> 3.4.0-alt3
+- change path to media files
+
 * Fri Sep 06 2019 Pavel Moseev <mars@altlinux.org> 3.4.0-alt2
 - fix location of additional media files
 
