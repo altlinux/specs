@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.10
+Version: 2.10.1
 Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
@@ -138,6 +138,9 @@ make test
 %endif
 
 %changelog
+* Mon Sep 09 2019 Anton Farygin <rider@altlinux.ru> 2.10.1-alt1
+- 2.10.1 (Fixes: CVE-2019-10906)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10-alt1
 - Updated to upstream version 2.10.
 
