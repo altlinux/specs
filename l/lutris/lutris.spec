@@ -1,6 +1,6 @@
 %global appid net.lutris.Lutris
 Name: lutris
-Version: 0.5.2.2
+Version: 0.5.3
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-3.0
@@ -52,5 +52,8 @@ or emulated console games and browser games.
 %_datadir/metainfo/%appid.appdata.xml
 
 %changelog
+* Mon Sep 09 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.3-alt1
+- New version (0.5.3) with rpmgs script.
+
 * Fri Aug 30 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.2.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for this spec) (ALT #37168).
