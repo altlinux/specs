@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20190514
-%define orig_rev %nil
+%define orig_timestamp 20190618
+%define orig_rev .1
 
 Name: firmware-intel-ucode
-Version: 9
+Version: 10
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,17 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Sep 09 2019 L.A. Kostis <lakostis@altlinux.ru> 2:10-alt1.20190618.1
+- Sync with Debian 3.20190618.1:
+  + New upstream microcode datafile 20190618
+  + SECURITY UPDATE
+    Implements MDS mitigation (RIDL, Fallout, Zombieload), INTEL-SA-00223
+    CVE-2018-12126, CVE-2018-12127, CVE-2018-12130, CVE-2019-11091
+    for Sandybridge server and Core-X processors
+  + Updated Microcodes:
+    sig 0x000206d6, pf_mask 0x6d, 2019-05-21, rev 0x061f, size 18432
+    sig 0x000206d7, pf_mask 0x6d, 2019-05-21, rev 0x0718, size 19456
+
 * Mon May 20 2019 L.A. Kostis <lakostis@altlinux.ru> 2:9-alt1.20190514
 - Sync with Debian 3.20190514.1:
   + New upstream microcode datafile 20190514
