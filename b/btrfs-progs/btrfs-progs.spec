@@ -1,5 +1,5 @@
 Name: btrfs-progs
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -79,6 +79,9 @@ ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 %_includedir/*
 
 %changelog
+* Sun Sep 08 2019 Anton Farygin <rider@altlinux.ru> 5.2.2-alt1
+- 5.2.2
+
 * Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 5.2.1-alt1
 - 5.2.1
 
