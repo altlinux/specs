@@ -1,26 +1,16 @@
 Summary: srecord programs
 Name: srecord
 Version: 1.64
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/Tools
 Source: http://srecord.sourceforge.net/%name-%version.tar.gz
 Patch0: srecord_rm_pdf_docs.patch
 URL: http://srecord.sourceforge.net/
-BuildPrereq: boost-devel, diffutils, ghostscript, groff, libgcrypt-devel
-BuildPrereq: libtool, sharutils
 
-# Automatically added by buildreq on Mon Jan 28 2013
-# optimized out: fontconfig fonts-ttf-gnu-freefont-mono fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif fonts-type1-urw ghostscript-classic ghostscript-common groff-base libgpg-error libgpg-error-devel libstdc++-devel
-BuildRequires: boost-devel-headers cups-filters ghostscript-utils groff-ps libgcrypt-devel ruby ruby-stdlibs
-BuildRequires: fonts-otf-oldstandard fonts-otf-stix fonts-ttf-armenian fonts-ttf-baekmuk-batang fonts-ttf-baekmuk-dotum
-BuildRequires: fonts-ttf-baekmuk-gulim fonts-ttf-baekmuk-hline fonts-ttf-bengali fonts-ttf-chinese-big5 fonts-ttf-chinese-gb2312
-BuildRequires: fonts-ttf-church fonts-ttf-dejavu fonts-ttf-dejavu-lgc fonts-ttf-devanagari fonts-ttf-freefont fonts-ttf-georgian
-BuildRequires: fonts-ttf-gost fonts-ttf-gw fonts-ttf-junicode fonts-ttf-kannada fonts-ttf-latex-xft
-BuildRequires: fonts-ttf-liberation fonts-ttf-malayalam fonts-ttf-ms fonts-ttf-oldstandard fonts-ttf-sazanami-gothic
-BuildRequires: fonts-ttf-sazanami-mincho fonts-ttf-sil-gentium fonts-ttf-syriac fonts-ttf-tamil fonts-ttf-tempora fonts-ttf-urdu
-BuildRequires: fonts-ttf-vera fonts-ttf-xorg fonts-ttf-znamen fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic
-BuildRequires: fonts-type1-xorg gcc-c++
+# Automatically added by buildreq on Mon Sep 09 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libgpg-error-devel libstdc++-devel python-base python-modules sh4
+BuildRequires: boost-devel-headers gcc-c++ groff-base libgcrypt-devel
 
 %description
 The srecord package is a collection of powerful tools for manipulating EPROM
@@ -80,6 +70,9 @@ that manipulate EPROM load files.
 %_man3dir/*
 
 %changelog
+* Mon Sep 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.64-alt3
+- Update BR list.
+
 * Thu Sep 05 2019 Grigory Milev <week@altlinux.ru> 1.64-alt2
 - remove pdf docs
 
