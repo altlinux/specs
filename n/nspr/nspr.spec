@@ -1,7 +1,7 @@
 Summary:	Netscape Portable Runtime (NSPR)
 Name:		nspr
-Version:	4.21
-Release:	alt2
+Version:	4.22
+Release:	alt1
 Epoch:		1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -105,6 +105,9 @@ sed -e "s,@libdir@,%_libdir,g" \
 %_libdir/*.a
 
 %changelog
+* Tue Sep 10 2019 Alexey Gladkov <legion@altlinux.ru> 1:4.22-alt1
+- New stable release 4.22.
+
 * Tue May 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.21-alt2
 - Use %%_is_lp64 to determine if arch is 64-bit.
 
