@@ -1,8 +1,8 @@
-%define nspr_version 4.21-alt1
+%define nspr_version 4.22-alt1
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.45.0
+Version:	3.46.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -271,6 +271,14 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Tue Sep 10 2019 Alexey Gladkov <legion@altlinux.ru> 3.46.0-alt1
+- New version (3.46).
+- Certificate Authority Changes:
+  + Remove CN = Swisscom Root CA 2
+  + Remove CN = Class 2 Primary CA
+  + Remove CN = Class 2 Primary CA
+  + Remove CN = Deutsche Telekom Root CA 2
+
 * Thu Jul 11 2019 Alexey Gladkov <legion@altlinux.ru> 3.45.0-alt1
 - New version (3.45).
 
