@@ -1,8 +1,8 @@
 %def_without telepathy
 
 Name: remmina
-Version: 1.3.4
-Release: alt2
+Version: 1.3.6
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -14,7 +14,8 @@ Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
 
-BuildRequires: cmake
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: gettext pkgconfig(libpcre)
 BuildRequires: intltool
@@ -36,6 +37,7 @@ BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libsodium)
 
 %add_findreq_skiplist %_datadir/%name/external_tools/*
 
@@ -163,7 +165,7 @@ Requires: xorg-xephyr
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
 system administrators and travelers, who need to work with lots of remote
 computers in front of either large monitors or tiny net-books.
- 
+
 This package contains the XDMCP plugin for the Remmina remote desktop
 client.
 
@@ -176,7 +178,7 @@ Requires: %name = %EVR
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
 system administrators and travelers, who need to work with lots of remote
 computers in front of either large monitors or tiny net-books.
- 
+
 This package contains the SPICE plugin for the Remmina remote desktop
 client.
 
@@ -294,6 +296,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Sep 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.6-alt1
+- 1.3.6
+
 * Tue Apr 30 2019 Pavel Moseev <mars@altlinux.org> 1.3.4-alt2
 - update translation
 
