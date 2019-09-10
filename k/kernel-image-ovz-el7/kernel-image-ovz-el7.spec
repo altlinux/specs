@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-957.21.3.vz7.106.6
-%define orelease 957.21.3.vz7.106.7
+#     rh7-3.10.0-957.27.2.vz7.107.4
+%define orelease 957.27.2.vz7.107.4
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -594,6 +594,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Sep 10 2019 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt1.957.27.2.vz7.107.4
+- Build 3.10.0-alt1.957.27.2.vz7.107.4
+
 * Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt1.957.21.3.vz7.106.7
 - Import rh7-3.10.0-957.21.3.vz7.106.7
 - Fix qemu run after qemu package update.
