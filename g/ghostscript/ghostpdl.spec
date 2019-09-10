@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.28
-Release: alt0.rc1
+Release: alt0.rc1.1
 
 %define ijsver	0.35
 %global origver %version
@@ -353,6 +353,14 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Tue Sep 10 2019 Fr. Br. George <george@altlinux.ru> 9.28-alt0.rc1.1
+- Fix changelog according to altlinux.org/Vulnerability_Policy
+- Fixes:
+ + CVE-2019-14811
+ + CVE-2019-14812
+ + CVE-2019-14813
+ + CVE-2019-14817
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 9.28-alt0.rc1
 - Fix version
 
