@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -10,7 +10,7 @@
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 %define libwnck_ver 3.4.6
 %define dconf_ver 0.13.4
 %define gnome_menus_ver 3.5.5
-%define eds_ver 3.5.91
+%define eds_ver 3.34.0
 %define cairo_ver 1.0
 %define tp_glib_ver 0.14
 %define gweather_ver 3.17.1
@@ -206,6 +206,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1.1
 - fixed BR.
 

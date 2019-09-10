@@ -3,8 +3,8 @@
 
 %def_disable snapshot
 
-%define ver_major 3.32
-%define api_ver 4
+%define ver_major 3.34
+%define api_ver 5
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
@@ -14,7 +14,7 @@
 %def_disable egl_device
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -44,7 +44,7 @@ Source: %name-%version.tar
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
-%define glib_ver 2.56.0
+%define glib_ver 2.62
 %define pango_ver 1.2.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
@@ -52,15 +52,17 @@ Source: %name-%version.tar
 %define wayland_protocols_ver 1.7
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
-%define gsds_ver 3.31.0
+%define gsds_ver 3.33.0
 %define gudev_ver 232
 %define pipewire_ver 0.2.2
+%define sysprof_ver 3.33.92
 
 Requires: lib%name = %EVR
 Requires: zenity
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildRequires(pre): meson rpm-build-gir
+BuildRequires: /proc
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -76,9 +78,11 @@ BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
-BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
+BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver
+BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel
 BuildRequires: libwacom-devel
 BuildRequires: gnome-settings-daemon-devel
+BuildRequires: sysprof-devel >= %sysprof_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
@@ -177,7 +181,7 @@ the functionality of the installed Mutter.
 %pkglibdir/lib%name-cogl-pango-%api_ver.so.*
 %pkglibdir/lib%name-cogl-path-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
-%pkglibdir/lib%name-cogl-gles2-%api_ver.so.*
+#%pkglibdir/lib%name-cogl-gles2-%api_ver.so.*
 
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
@@ -207,6 +211,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.0-alt1
+- 3.34.0
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.32.2-alt1
 - 3.32.2
 

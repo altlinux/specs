@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %def_enable python
 %def_enable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define gtksourceview_ver 4.0.2
-%define gedit_ver 3.28.0
+%define gedit_ver 3.34.0
 %define peas_ver 1.14
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -38,7 +38,7 @@ AutoReqProv: nopython
 %define __python %nil
 
 # From configure.ac
-BuildRequires(pre): rpm-build-gir rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gir rpm-build-gnome
 BuildRequires: gnome-common libappstream-glib-devel
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -71,16 +71,11 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %setup
 
 %build
-%autoreconf
-%configure \
-    --disable-static \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome --output=%name.lang gedit %name
 
 %files -f %name.lang
@@ -92,9 +87,12 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.wordcompletion.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
 %_datadir/metainfo/gedit-*.metainfo.xml
-%exclude %gedit_pluginsdir/*.la
+
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed May 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

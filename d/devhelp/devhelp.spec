@@ -1,4 +1,4 @@
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
@@ -138,6 +138,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

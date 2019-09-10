@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -78,10 +78,10 @@ Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
-Requires: gnome-session >= 3.7.1
+Requires: gnome-session >= 3.33.92
 Requires: gnome-session-wayland
 
-BuildRequires: rpm-build-gnome rpm-build-gir
+BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-macros-pam0
 BuildRequires: gcc-c++ desktop-file-utils gnome-common yelp-tools
 BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
@@ -283,8 +283,6 @@ dbus-run-session %make check
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/gnome-session/sessions/gnome-login.session
 %_datadir/dconf/profile/%name
-%_pixmapsdir/*
-%_datadir/icons/*/*/*/*.*
 %dir %_localstatedir/log/gdm
 %attr(775, gdm, gdm) %dir %_localstatedir/cache/gdm
 %attr(1770, gdm, gdm) %dir %_localstatedir/lib/gdm
@@ -319,6 +317,9 @@ dbus-run-session %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

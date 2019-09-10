@@ -15,7 +15,7 @@
 
 Name: evince
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: A document viewer
 Group: Office
@@ -214,6 +214,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt3
+- rebuilt against libgnome-desktop-3.so.18
+
 * Thu May 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt2
 - updated to 3.32.0-22-g0fecf871
 

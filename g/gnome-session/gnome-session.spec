@@ -1,6 +1,7 @@
 %def_disable snapshot
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -58,7 +59,7 @@ BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite
 BuildRequires: libGL-devel libGLES-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
 BuildRequires: docbook-dtds docbook-style-xsl
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libpolkit-devel}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
 %{?_enable_man:BuildRequires: xmlto}
 # since 3.22.2
@@ -120,6 +121,7 @@ export PATH=$PATH:/sbin
 %_libexecdir/%name-check-accelerated
 %_libexecdir/%name-check-accelerated-gl-helper
 %_libexecdir/%name-check-accelerated-gles-helper
+%_libexecdir/%name-ctl
 %_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
@@ -136,6 +138,26 @@ export PATH=$PATH:/sbin
 %_man1dir/%name.*
 %doc AUTHORS NEWS README
 
+%_userunitdir/%name-failed.service
+%_userunitdir/%name-failed.target
+%_userunitdir/%name-initialized.target
+%_userunitdir/%name-manager.target
+%_userunitdir/%name-manager@.service
+%_userunitdir/%name-monitor.service
+%_userunitdir/%name-pre.target
+%_userunitdir/%name-restart-dbus.service
+%_userunitdir/%name-shutdown.target
+%_userunitdir/%name-signal-init.service
+%_userunitdir/%name-stable.target
+%_userunitdir/%name-stable.timer
+%_userunitdir/%name-wayland.target
+%_userunitdir/%name-wayland@.target
+%_userunitdir/%name-x11-services.target
+%_userunitdir/%name-x11.target
+%_userunitdir/%name-x11@.target
+%_userunitdir/%name.target
+%_userunitdir/%name@.target
+
 %if_enabled session_selector
 %files selector
 %_bindir/%name-custom-session
@@ -150,6 +172,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

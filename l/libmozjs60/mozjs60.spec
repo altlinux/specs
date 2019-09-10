@@ -14,12 +14,12 @@
 %endif
 
 
-%if "%(rpmvercmp '%{get_version libicu-devel}' '6.0.0')" < "0"
+%if "%(rpmvercmp '%{get_version libicu-devel}' '5.9.1')" < "0"
 %def_disable system_icu
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.1.0
+Version: %ver_major.8.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -31,6 +31,7 @@ Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Rele
 Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%version.tar.bz2
 #Source: https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
 
+BuildRequires: /dev/shm
 BuildRequires: gcc-c++ libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
 BuildRequires: python-module-distribute
@@ -163,6 +164,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Wed Aug 28 2019 Yuri N. Sedunov <aris@altlinux.org> 60.8.0-alt1
+- 60.8.0
+
 * Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 60.1.0-alt1
 - first build for Sisyphus
 

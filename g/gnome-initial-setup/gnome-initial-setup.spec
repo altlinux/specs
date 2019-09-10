@@ -1,4 +1,6 @@
-%define ver_major 3.32
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
+
+%define ver_major 3.34
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -7,7 +9,7 @@
 %def_enable cheese
 
 Name: gnome-initial-setup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -28,7 +30,7 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 Requires: gnome-shell >= %ver_major gdm dconf geoclue2 >= %geoclue_ver
 Requires: ibus gnome-keyring gnome-getting-started-docs
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
@@ -78,15 +80,18 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
 %_sysconfdir/xdg/autostart/%name-first-login.desktop
 %_datadir/gdm/greeter/applications/%name.desktop
-%_datadir/gdm/greeter/applications/setup-shell.desktop
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/gnome-shell/modes/initial-setup.json
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
+%_userunitdir/*
 %attr(1770, %name, %name) %dir %_localstatedir/lib/%name
 %attr(1777, root, %name) %dir %_localstatedir/run/%name
 %doc README NEWS
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

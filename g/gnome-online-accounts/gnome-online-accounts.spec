@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -25,7 +25,7 @@
 
 Name: gnome-online-accounts
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -42,7 +42,7 @@ Requires: lib%name = %version-%release
 
 %{?_enable_kerberos:Requires: realmd}
 
-%define glib_ver 2.40
+%define glib_ver 2.52
 %define gtk_ver 3.20.0
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
@@ -199,6 +199,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sat Jun 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1.1
 - mike@: webkit knob (on by default)
 

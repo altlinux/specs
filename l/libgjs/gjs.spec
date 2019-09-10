@@ -1,16 +1,17 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.56
+%define ver_major 1.58
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 60
+%define mozjs_ver 60.8.0
 
 %def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -28,14 +29,15 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.54.0
+%define glib_ver 2.58.0
 %define gi_ver 1.53.4
 
 Requires: gobject-introspection
+Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
 
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gnome-common gcc-c++ libffi-devel libcairo-devel
-BuildRequires: libmozjs%mozjs_ver_major-devel
+BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
@@ -111,12 +113,16 @@ the functionality of the installed Gjs library package.
 %_libdir/%_name/libwarnlib.so
 %_libexecdir/%_name/installed-tests/
 %_datadir/installed-tests/%_name/
+%_datadir/glib-2.0/schemas/org.gnome.GjsTest.gschema.xml
 
 %exclude %_libdir/%_name/*.la
 %endif
 
 
 %changelog
+* Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
+- 1.58.0
+
 * Wed May 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.56.2-alt1
 - 1.56.2
 

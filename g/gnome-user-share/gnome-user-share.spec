@@ -1,10 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.32
+%define ver_major 3.34
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
+%def_enable nautilus
+
 Name: gnome-user-share
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -20,10 +22,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: apache2 >= 2.2
 Requires: apache2-mod_dnssd >= 0.6
 
-BuildRequires: gnome-common yelp-tools desktop-file-utils
+BuildRequires(pre): meson
+BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
-BuildRequires: libnautilus-devel >= %nautilus_ver libselinux-devel libgudev-devel
+BuildRequires: libselinux-devel libgudev-devel
 BuildRequires: apache2 apache2-mod_dnssd pkgconfig(systemd)
+%{?_enable_nautilus:BuildRequires: libnautilus-devel >= %nautilus_ver}
 
 %description
 gnome-user-share is a small package that binds together various free
@@ -44,29 +48,31 @@ mDNSResolver running.
 %setup
 
 %build
-%autoreconf
-%configure  --with-httpd=%httpd \
-	--with-modules-path=%modules_path
-%make_build
+%meson -Dhttpd=%httpd \
+       -Dmodules-path=%modules_path \
+       %{?_enable_nautilus:-Dnautilus_extension=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f gnome-user-share.lang
 %_libexecdir/%name-webdav
 %_desktopdir/%name-webdav.desktop
 %_datadir/%name/
-%_libdir/nautilus/extensions-3.0/libnautilus-share-extension.so
+%{?_enable_nautilus:%_libdir/nautilus/extensions-3.0/libnautilus-share-extension.so}
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.desktop.file-sharing.gschema.xml
 %_prefix/lib/systemd/user/%name-webdav.service
 %doc README NEWS
 
-%exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0 (ported to Meson build system)
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0.1-alt1
 - 3.32.0.1
 

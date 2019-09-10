@@ -1,12 +1,12 @@
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Disk management application
 License: LGPLv2+
@@ -17,7 +17,6 @@ Requires: udisks2 cryptsetup
 Requires: gnome-icon-theme-symbolic
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.32.1-alt-build.patch
 
 %define udisks_ver 2.7.6
 %define glib_ver 2.31.0
@@ -50,7 +49,6 @@ RAID, SMART monitoring, etc
 
 %prep
 %setup
-%patch
 
 %build
 %meson \
@@ -82,6 +80,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Apr 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1.1
 - fixed build
 

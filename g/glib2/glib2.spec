@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.60
+%define ver_major 2.62
 %define api_ver 2.0
 %define pcre_ver 8.31
 %define gio_module_dir %_libdir/gio/modules
@@ -21,7 +21,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -48,7 +48,7 @@ Source11: glib2.csh
 Patch: glib-2.59.3-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
-Patch2: glib-2.53.7-alt-add-xvt.patch
+Patch2: glib-2.61.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 
@@ -71,6 +71,11 @@ Obsoletes: %name-core < %version
 #%define __python %nil
 %add_python3_path %_datadir/glib-2.0/codegen
 %allow_python3_import_path %_datadir/glib-2.0/codegen
+%if_enabled installed_tests
+%add_python3_path %_libexecdir/installed-tests/glib
+%allow_python3_import_path %_libexecdir/installed-tests/glib
+%endif
+
 
 %if_with sys_pcre
 BuildRequires: libpcre-devel >= %pcre_ver
@@ -218,7 +223,7 @@ the functionality of the installed glib2/libgio packages.
 %setup -n glib-%version
 %patch -p1 -b .compat_map
 %patch1
-%patch2 -p1
+%patch2 -p1 -b .xvt
 %patch3 -p1
 %patch4
 
@@ -430,6 +435,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Sep 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.0-alt1
+- 2.62.0
+
 * Tue Sep 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.7-alt1
 - 2.60.7
 

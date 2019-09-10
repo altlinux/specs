@@ -13,7 +13,7 @@
 
 Name: abiword
 Version: %ver_major.2
-Release: alt5
+Release: alt6
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -205,6 +205,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt6
+- rebuilt against libebook-contacts-1.2.so.3 (eds-3.34)
+
 * Tue Jun 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt5
 - updated to snapshot from ABI-3-0-0-STABLE branch 
   (in particular fixed flicker and caret problems)

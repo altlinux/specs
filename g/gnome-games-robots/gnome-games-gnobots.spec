@@ -3,7 +3,7 @@
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -29,7 +29,7 @@ BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel libgnome-games-support-devel
+BuildRequires: libgsound-devel libgnome-games-support-devel
 
 %description
 GNOME Robots is a development of the original Gnome Robots game which
@@ -58,6 +58,9 @@ systems.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Sep 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

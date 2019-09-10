@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.24
+%define ver_major 2.26
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -20,10 +20,12 @@
 # To avoid it set GIGACAGE_ENABLED=0
 %def_enable gigacage
 
+%def_enable bubblewrap_sandbox
+
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -33,13 +35,14 @@ Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
+# Source/cmake/BubblewrapSandboxChecks.cmake
+# https://gitlab.kitware.com/cmake/cmake/issues/18044
+Patch: webkitgtk-2.25.92-alt-bwrap_check.patch
 
-Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
-Requires: hyphen-en hyphen-ru
+%define bwrap_ver 0.3.1
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake rpm-build-licenses rpm-build-gir
 BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
-BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
@@ -59,13 +62,12 @@ BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwo
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
 BuildRequires: ruby ruby-stdlibs libruby-devel
-BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
+BuildRequires: libGL-devel libGLES-devel libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
 BuildRequires: geoclue2-devel libgeoclue2-devel
 BuildRequires: libenchant-devel libhyphen-devel
 BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
-BuildRequires: libgtk+2-devel libpixman-devel libexpat-devel
-
+BuildRequires: libpixman-devel libexpat-devel
 BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
@@ -74,6 +76,9 @@ BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
 BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
+# since 2.25.x
+BuildRequires: libwpebackend-fdo-devel
+%{?_enable_bubblewrap_sandbox:BuildRequires: bubblewrap >= %bwrap_ver xdg-dbus-proxy libseccomp-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -86,6 +91,11 @@ Summary: WebKit2 is a new API layer for WebKit
 Group: System/Libraries
 Provides: %name = %version-%release
 Requires: libjavascriptcoregtk4 = %version-%release
+Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
+Requires: hyphen-en hyphen-ru
+%{?_enable_bubblewrap_sandbox:Requires: bubblewrap >= %bwrap_ver xdg-dbus-proxy}
+
+
 
 %description -n libwebkit2gtk
 WebKit2 is a new API layer for WebKit designed from the ground up to support a split process model,
@@ -197,6 +207,8 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch -b .bwrap
+
 # Remove bundled libraries
 rm -rf Source/ThirdParty/gtest/
 rm -rf Source/ThirdParty/qunit/
@@ -229,7 +241,14 @@ export GIGACAGE_ENABLED=0
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
-%{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF}
+%{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF} \
+%if_disabled bubblewrap_sandbox
+-DENABLE_BUBBLEWRAP_SANDBOX=OFF \
+%else
+-DBWRAP=%_bindir/bwrap \
+%endif
+%nil
+
 #-DENABLE_TOUCH_EVENTS:BOOL=ON \
 #-DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
 #-DENABLE_TOUCH_SLIDER:BOOL=ON \
@@ -261,7 +280,6 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
 %pkglibexecdir/WebKitPluginProcess
-%pkglibexecdir/WebKitPluginProcess2
 %pkglibexecdir/WebKitWebProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
@@ -313,6 +331,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
+- 2.26.0
+
 * Wed Aug 28 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.4-alt1
 - 2.24.4
 

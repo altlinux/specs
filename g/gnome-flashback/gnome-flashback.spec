@@ -1,6 +1,7 @@
 %def_disable snapshot
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -23,10 +24,11 @@ Source: %name-%version.tar
 %define gtk_ver 3.22.0
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
-%define gsds_ver 3.12.0
+%define gsds_ver 3.32.0
 
 Requires(pre): xinitrc
-Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
+Requires: gnome-session >= 3.33.90 gnome-settings-daemon
+Requires: gnome-panel >= %ver_major gnome-applets >= %ver_major metacity3.0 >= %ver_major
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
@@ -47,7 +49,7 @@ Requires: ibus xkeyboard-config
 # since 3.20
 Conflicts: notification-daemon < 3.20
 
-BuildRequires(pre): rpm-build-gnome rpm-build-xdg
+BuildRequires(pre): rpm-build-gnome rpm-build-xdg pkgconfig(systemd)
 BuildRequires: gnome-common
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -110,7 +112,6 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_libexecdir/%name-compiz
 %_libexecdir/%name-metacity
 %_desktopdir/%name.desktop
-%_desktopdir/%name-init.desktop
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings.directory
 %_datadir/gnome-session/sessions/%name-compiz.session
@@ -123,6 +124,11 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
 %_xdgconfigdir/autostart/%name-screensaver.desktop
+%_userunitdir/%name.service
+%_userunitdir/%name.target
+%_userunitdir/gnome-session-x11@%name-compiz.target
+%_userunitdir/gnome-session-x11@%name-metacity.target
+
 %doc AUTHORS NEWS README
 
 %if_with compiz
@@ -132,6 +138,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

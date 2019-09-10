@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name folks
-%define ver_major 0.12
+%define ver_major 0.13
 %define api_ver 0.6
 
 %def_disable libsocialweb
@@ -29,7 +29,7 @@ Source: %_name-%version.tar
 %define glib_ver 2.44.0
 %define tp_glib_ver 0.19.9
 %define vala_ver 0.22.1
-%define eds_ver 3.13.90
+%define eds_ver 3.33.2
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.15
@@ -168,6 +168,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
 - 0.12.1 (ported to Meson build system)
 

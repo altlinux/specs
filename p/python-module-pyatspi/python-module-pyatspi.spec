@@ -1,8 +1,10 @@
 %define _name pyatspi
-%define ver_major 2.32
+%define ver_major 2.34
+
+%def_with python2
 
 Name: python-module-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -14,10 +16,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-build-gir
-BuildRequires: python-devel python-module-pygobject3-devel >= 3.9.90
-BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.9.90
+%define pygobject_ver 3.9.90
+
+BuildRequires(pre): %{?_with_python2:rpm-build-python} rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
 BuildRequires: libX11-devel libICE-devel libSM-devel
+%{?_with_python2:BuildRequires: python-devel python-module-pygobject3-devel >= %pygobject_ver}
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -49,38 +53,47 @@ This package provides Python3 bindings for at-spi library.
 
 %prep
 %setup -n %_name-%version
-%setup -D -c -n %_name-%version
-mv %_name-%version py3build
+%{?_with_python2:%setup -D -c -n %_name-%version
+mv %_name-%version py2build}
 
 %build
-export PYTHON=%__python
-%configure --with-python=python2
-%make_build
-
-pushd py3build
-export PYTHON=python3
-%autoreconf
+export PYTHON=%__python3
 %configure --with-python=python3
 %make_build
+
+%if_with python2
+pushd py2build
+export PYTHON=%__python
+%autoreconf
+%configure --with-python=python2
+%make_build
 popd
+%endif
 
 %install
 %makeinstall_std
 
-pushd py3build
+%if_with python2
+pushd py2build
 %makeinstall_std
 popd
+%endif
 
 %files
+%if_with python2
 #%_bindir/magFocusTracker.py
 %python_sitelibdir/%_name/
 %doc AUTHORS README NEWS
+%endif
 
 %files -n python3-module-%_name
 %python3_sitelibdir/%_name/
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
 - 2.32.1
 

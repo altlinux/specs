@@ -1,4 +1,4 @@
-%define ver_major 2.32
+%define ver_major 2.34
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -134,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1.1
 - fixed build without docs
 

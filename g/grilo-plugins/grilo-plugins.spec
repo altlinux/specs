@@ -6,7 +6,7 @@
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -20,8 +20,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: grilo-tools >= %ver_major
-Requires: tracker
+%define tracker_ver 2.3.0
+
+Requires: grilo-tools >= %version
+Requires: tracker >= %tracker_ver
 
 BuildRequires(pre): meson
 BuildRequires: gperf
@@ -38,7 +40,7 @@ BuildRequires: libgom-devel >= 0.3.2
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
-BuildRequires: tracker-devel
+BuildRequires: tracker-devel >= %tracker_ver
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
@@ -122,13 +124,16 @@ This package contains the pkg-config file for Grilo plugins package.
 %dir %_datadir/%name
 %_datadir/%name/grl-lua-factory/
 %endif
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files devel
 %_pkgconfigdir/%name-%api_ver.pc
 
 
 %changelog
+* Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
+- 0.3.10
+
 * Mon Jul 15 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt1
 - 0.3.9
 

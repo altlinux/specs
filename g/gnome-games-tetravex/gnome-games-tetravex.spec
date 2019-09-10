@@ -3,7 +3,7 @@
 %define _name tetravex
 %define __name gnome-%_name
 %define xdg_name org.gnome.Tetravex
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -56,6 +56,9 @@ times are stored in a system-wide scoreboard.
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

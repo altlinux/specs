@@ -3,13 +3,13 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -42,7 +42,7 @@ Source: %name-%version.tar
 Requires: gnome-keyring
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: gobject-introspection-devel >= 0.9.6
 BuildRequires: libvala-devel >= 0.28.0.16
 BuildRequires: vala-tools
@@ -131,6 +131,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

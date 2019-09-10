@@ -5,8 +5,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.32
-%define ver_base 3.32
+%define ver_major 3.34
+%define ver_base 3.34
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,8 +21,8 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -38,6 +38,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define evo_plugin_dir %_libdir/evolution/plugins
 %define evo_module_dir %_libdir/evolution/modules
 %add_findprov_lib_path %_libdir/%name/%ver_base
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/%name/installed-tests}
 
 Provides: camel
 
@@ -45,7 +46,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.32.4
+%define eds_ver 3.34.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -66,6 +67,7 @@ Requires: gnome-icon-theme
 Requires: gnome-settings-daemon
 Requires: highlight
 
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++ flex  gnome-common
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -92,7 +94,7 @@ BuildRequires: highlight
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
 BuildRequires: libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
-BuildRequires: zlib-devel libxml2-devel libgtkspell3-devel
+BuildRequires: zlib-devel libxml2-devel libgspell-devel
 
 %description
 Evolution is the GNOME mailer, calendar, contact manager and
@@ -211,7 +213,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_libdir/evolution-data-server/ui-modules/module-evolution-alarm-notify.so
 %_libexecdir/%name/evolution-backup
 %_libexecdir/%name/killev
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README*
 
 %exclude %evo_module_dir/module-bogofilter.so
 %exclude %evo_module_dir/module-spamassassin.so
@@ -269,6 +271,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Aug 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1.1
 - fixed buildrequires
 

@@ -1,4 +1,4 @@
-%define ver_major 3.30
+%define ver_major 3.34
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %def_enable facebook
@@ -81,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

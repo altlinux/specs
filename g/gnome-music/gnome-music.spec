@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_typelib_req_skiplist typelib(Gd)
+%add_typelib_req_skiplist typelib(Gd) typelib(Gfm)
 
 %define tracker_ver 2.0
 %define gtk_ver 3.20.0
@@ -40,10 +40,6 @@ Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
 
 # gnomemusic/widgets/songwidget.py:from gi.repository.Dazzle import BoldingLabel  # noqa: F401
 Requires: typelib(Dazzle)
-
-# 3.30
-#python3(gi.repository.Dazzle) < 0
-#python3(gi.repository.Gd) < 0
 
 %add_python3_req_skip gi.repository.Dazzle gi.repository.Gd
 
@@ -73,7 +69,6 @@ Music playing application for GNOME3.
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %name %xdg_name
 
 %files -f %name.lang
@@ -89,6 +84,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

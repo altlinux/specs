@@ -8,7 +8,7 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt9
+Release: alt10
 
 Summary: GNOME Screensaver
 License: GPLv2+
@@ -46,7 +46,7 @@ BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
 BuildRequires: libXxf86vm-devel libSM-devel
-BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
+BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-proto-devel
 %{?_enable_docbook:BuildRequires: xmlto}
 %{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver}
 
@@ -91,6 +91,9 @@ subst 's/\(libsystemd\)-login/\1/' configure.ac
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt10
+- rebuilt against libgnome-desktop-3.so.18
+
 * Sun Feb 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt9
 - rebuilt against libgnome-desktop-3.so.17
 

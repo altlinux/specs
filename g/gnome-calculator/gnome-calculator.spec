@@ -1,10 +1,11 @@
 %def_disable snapshot
-%define ver_major 3.32
+%define ver_major 3.34
+%define api_ver 1
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -20,14 +21,16 @@ Source: %name-%version.tar
 
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
+Requires: libgcalc = %EVR
 
 BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
 BuildRequires: vala-tools >= 0.24
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= 3.20.0
-BuildRequires: libgio-devel >= 2.48.0 libxml2-devel
+BuildRequires: libgio-devel >= 2.50.0 libgee0.8-devel libxml2-devel
 BuildRequires: libmpfr-devel libgtksourceview4-devel >= 4.0.2
 BuildRequires: libsoup-devel >= 2.42 libmpc-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgee0.8-gir-devel libsoup-gir-devel
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -38,9 +41,41 @@ of Professor Richard Brent.
 
 A single graphics driver for GTK included with this package.
 
+
+%package -n libgcalc
+Summary: GNOME Calculator Library
+Group: System/Libraries
+
+%description -n libgcalc
+This package contains shared GNOME Calculator library.
+
+%package -n libgcalc-devel
+Summary: Development files for libgcalc
+Group: Development/C
+Requires: libgcalc = %EVR
+
+%description -n libgcalc-devel
+This package development files for GNOME Calculator library.
+
+%package -n libgcalc-gir
+Summary: GObject introspection data for the GNOME Calculator library.
+Group: System/Libraries
+Requires: libgcalc = %EVR
+
+%description -n libgcalc-gir
+GObject introspection data for the GNOME Calculator library.
+
+%package -n libgcalc-gir-devel
+Summary: GObject introspection devel data for the GNOME Calculator library.
+Group: Development/Other
+Requires: libgcalc-devel = %EVR
+Requires: libgcalc-gir = %EVR
+
+%description -n libgcalc-gir-devel
+GObject introspection devel data for the GNOME Calculator library.
+
 %prep
 %setup
-find ./ -name "*.stamp" -delete
 
 %build
 %meson
@@ -64,8 +99,28 @@ find ./ -name "*.stamp" -delete
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
+%files -n libgcalc
+%_libdir/libgcalc-%api_ver.so.*
+
+%files -n libgcalc-devel
+%_includedir/gcalc-%api_ver/gcalc/
+%_libdir/libgcalc-%api_ver.so
+%_pkgconfigdir/gcalc-%api_ver.pc
+%_vapidir/gcalc-%api_ver.deps
+%_vapidir/gcalc-%api_ver.vapi
+
+%files -n libgcalc-gir
+%_typelibdir/GCalc-%api_ver.typelib
+
+%files -n libgcalc-gir-devel
+%_girdir/GCalc-%api_ver.gir
+
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+- new libgcalc* subpackages
+
 * Wed Jun 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

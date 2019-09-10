@@ -7,9 +7,10 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
-%define ver_base 3.32
+%define ver_major 3.34
+%define ver_base 3.34
 %define ver_lib 1.2
+%define ver_libecal 2.0
 
 %def_disable debug
 %def_disable static
@@ -29,7 +30,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -53,7 +54,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define secret_ver 0.5
 %define sqlite_ver 3.7.17
 %define gweather_ver 3.10.0
-%define ical_ver 0.43
+%define ical_ver 3.0.5
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
@@ -71,7 +72,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libgweather-devel >= %gweather_ver
-BuildRequires: libical-devel >= %ical_ver
+BuildRequires: libical-glib-devel >= %ical_ver
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver
@@ -79,7 +80,9 @@ BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libn
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
 %{?_enable_google:BuildRequires: libwebkit2gtk-devel >= %webkit_ver libjson-glib-devel}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgtk+3-gir-devel}
+%{?_enable_introspection:
+BuildRequires: gobject-introspection-devel libsoup-gir-devel
+BuildRequires:libgtk+3-gir-devel libical-glib-gir-devel}
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
@@ -167,7 +170,6 @@ the functionality of the installed EDS libraries.
 %cmake \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
-	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
 	-DCAMEL_LOCK_HELPER_GROUP:STRING=mail \
 	-DSENDMAIL_PATH:STRING=%_sbindir/sendmail \
 	-DENABLE_FILE_LOCKING:STRING=fcntl \
@@ -186,12 +188,13 @@ the functionality of the installed EDS libraries.
 	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
 	%{?_enable_vala:-DENABLE_VALA_BINDINGS:BOOL=ON} \
 	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
+%nil
 %cmake_build
 
 %install
 %cmakeinstall_std
 # if unstable
-ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
+ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
@@ -242,6 +245,10 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_typelibdir/EDataServer-%ver_lib.typelib
 %_typelibdir/EDataServerUI-%ver_lib.typelib
 %_typelibdir/EBook-%ver_lib.typelib
+%_typelibdir/EBackend-%ver_lib.typelib
+%_typelibdir/ECal-%ver_libecal.typelib
+%_typelibdir/EDataBook-%ver_lib.typelib
+%_typelibdir/EDataCal-%ver_libecal.typelib
 
 %files gir-devel
 #%_girdir/ECalendar-%ver_lib.gir
@@ -250,6 +257,10 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_girdir/EDataServer-%ver_lib.gir
 %_girdir/EDataServerUI-%ver_lib.gir
 %_girdir/EBook-%ver_lib.gir
+%_girdir/EBackend-%ver_lib.gir
+%_girdir/ECal-%ver_libecal.gir
+%_girdir/EDataBook-%ver_lib.gir
+%_girdir/EDataCal-%ver_libecal.gir
 %endif
 
 %if_enabled vala
@@ -265,6 +276,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Jul 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
 - 3.32.4
 

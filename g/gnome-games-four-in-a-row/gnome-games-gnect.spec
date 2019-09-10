@@ -2,7 +2,7 @@
 
 %define _name four-in-a-row
 %define xdg_name org.gnome.Four-in-a-row
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -26,7 +26,7 @@ Provides:  gnome-games-gnect = %version-%release
 BuildRequires(pre): meson
 BuildRequires: vala-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel libcanberra-vala zlib-devel gsettings-desktop-schemas-devel
+BuildRequires: libgsound-devel zlib-devel gsettings-desktop-schemas-devel
 
 %description
 Gnect is a four-in-a-row game for the GNOME Project. The object of the
@@ -55,6 +55,9 @@ line can be horizontal, vertical or diagonal.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
