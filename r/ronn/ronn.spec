@@ -2,7 +2,7 @@
 
 Name:          %pkgname
 Version:       0.7.3
-Release:       alt3
+Release:       alt4
 Summary:       Ronn builds manuals from Markdown to roff format
 License:       MIT
 Group:         Development/Documentation
@@ -72,9 +72,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4
+- ! spec according to changelog rules
+
 * Thu Jul 25 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
-! spec
-+ ronn gem build dependency
+- ! spec
+- + ronn gem build dependency
 
 * Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
 - Use Ruby Policy 2.0

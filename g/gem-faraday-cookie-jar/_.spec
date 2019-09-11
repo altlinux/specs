@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       0.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Cookie jar middleware for Faraday
 License:       MIT
 Group:         Development/Ruby
@@ -59,5 +59,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.6-alt1.1
+- ! spec according to changelog rules
+
 * Tue Aug 13 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.6-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

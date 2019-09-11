@@ -2,7 +2,7 @@
 %define        pkgname wisper
 
 Name:          gem-%pkgname
-Version:       2.0.0
+Version:       2.0.1
 Release:       alt1
 Summary:       A micro library providing Ruby objects with Publish-Subscribe capabilities
 License:       MIT
@@ -65,5 +65,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
+- ^ v2.0.1
+- ! spec according to changelog rules
+
 * Fri Aug 09 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

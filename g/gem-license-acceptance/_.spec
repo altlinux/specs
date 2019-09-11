@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.13
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef Software libraries for accepting usage license
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -64,5 +64,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.13-alt1.1
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.13-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

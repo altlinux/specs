@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       additional Unicode aware functions for Ruby 1.9
 License:       Embedded
 Group:         Development/Ruby
@@ -60,5 +60,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.1
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

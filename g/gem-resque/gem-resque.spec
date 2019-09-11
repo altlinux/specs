@@ -2,17 +2,19 @@
 
 Name:          gem-%pkgname
 Version:       2.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later
 License:       MIT
 Group:         Development/Ruby
 Url:           http://resque.github.io/
-# VCS:         https://github.com/resque/resque.git
+%vcs           https://github.com/resque/resque.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Resque (pronounced like "rescue") is a Redis-backed library for creating
@@ -70,13 +72,13 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -90,5 +92,8 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1.1
+- ! spec
+
 * Thu Apr 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus, packaged as a gem, using Ruby Policy 2.0

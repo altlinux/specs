@@ -2,7 +2,7 @@
 
 Name:          %pkgname
 Version:       2.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       ruby2ruby provides a means of generating pure ruby code easily from RubyParser compatible Sexps
 License:       MIT
 Group:         Development/Ruby
@@ -74,10 +74,13 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt1.1
+- ! spec according to changelog rules
+
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt1
-^ v2.4.3
-! spec
-+ rpm "r2r_show" build
+- ^ v2.4.3
+- ! spec
+- + rpm "r2r_show" build
 
 * Sat Mar 23 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.2-alt2
 - Use Ruby Policy 2.0

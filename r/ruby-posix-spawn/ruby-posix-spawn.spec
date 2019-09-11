@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.3.13
-Release:       alt2.1
+Release:       alt2.2
 Summary:       Ruby process spawning library
 License:       MIT
 Group:         Development/Ruby
@@ -12,8 +12,8 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Patch:         upstream-fix-build-on-i586.patch
-
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -79,8 +79,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.2
+- ! spec according to changelog rules
+
 * Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.1
-! spec
+- ! spec
 
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2
 - Use Ruby Policy 2.0

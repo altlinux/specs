@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       2.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby Optimized XML Parser
 License:       MIT
 Group:         Development/Ruby
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -68,9 +69,12 @@ Development files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.0-alt1.1
+- ! spec according to changelog rules
+
 * Tue Aug 27 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.0-alt1
-^ v2.11.0
-! spec
+- ^ v2.11.0
+- ! spec
 
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.10.0-alt2
 - Use Ruby Policy 2.0

@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.6.0
-Release:       alt2.1
+Release:       alt2.2
 Summary:       EventMachine MongoDB Driver (based off of RMongo)
 License:       MIT
 Group:         Development/Ruby
@@ -63,8 +63,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2.2
+- ! spec according to changelog rules
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2.1
-! spec
+- ! spec
 
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2
 - Use Ruby Policy 2.0.

@@ -6,7 +6,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.8.4
-Release: alt3.1
+Release: alt3.2
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -676,8 +676,11 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 5.8.4-alt3.2
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 5.8.4-alt3.1
-! spec to fix dependency gem version
+- ! spec to fix dependency gem version
 
 * Wed Jul 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.4-alt3
 - revert "remove support tab"

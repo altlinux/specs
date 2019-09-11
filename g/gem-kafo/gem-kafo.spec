@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       3.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A gem for making installations based on puppet user friendly 
 License:       GPLv3+
 Group:         Development/Ruby
@@ -87,5 +87,8 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
+- ! spec according to changelog rules
+
 * Thu Jun 20 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
-+ package gem with usage Ruby Policy 2.0
+- + package gem with usage Ruby Policy 2.0

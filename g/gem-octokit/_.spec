@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       4.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby toolkit for the GitHub API
 License:       MIT
 Group:         Development/Ruby
@@ -71,5 +71,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 4.14.0-alt1.1
+- ! spec according to changelog rules
+
 * Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 4.14.0-alt1
-+ packaged gem with the Ruby Policy 2.0 usage
+- + packaged gem with the Ruby Policy 2.0 usage

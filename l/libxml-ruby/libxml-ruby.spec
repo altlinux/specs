@@ -3,7 +3,7 @@
 
 Name:          %pkgname
 Version:       3.1.0
-Release:       alt2.1
+Release:       alt2.2
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
 Group:         Development/Ruby
 License:       MIT
@@ -69,8 +69,11 @@ Development files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2.2
+- ! spec according to changelog rules
+
 * Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2.1
-! spec
+- ! spec
 
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2
 - Use Ruby Policy 2.0

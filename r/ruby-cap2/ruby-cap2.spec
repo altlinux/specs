@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.2.2
-Release:       alt2
+Release:       alt2.1
 Summary:       A Ruby library for managing Linux process and file capabilities
 License:       MIT
 Group:         Development/Ruby
@@ -75,9 +75,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.2.2-alt2.1
+- ! spec according to changelog rules
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.2.2-alt2
-^ Ruby Policy 2.0
-! spec
+- ^ Ruby Policy 2.0
+- ! spec
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1.2
 - Rebuild with new Ruby autorequirements.

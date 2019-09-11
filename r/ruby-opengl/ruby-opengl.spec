@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Epoch:         1
 Summary:       OpenGL Interface for Ruby
 License:       MIT
@@ -18,6 +18,7 @@ BuildRequires: libX11-devel
 BuildRequires: libfreeglut-devel
 BuildRequires: gem(hoe)
 BuildRequires: gem(rake-compiler)
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -78,9 +79,13 @@ Development headers for %gemname gem.
 %files         -n gem-%pkgname-devel
 %ruby_includedir/*
 
+
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1.2
+- ! spec according to changelog rules
+
 * Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1.1
-! spec
+- ! spec
 
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1
 - Use Ruby Policy 2.0

@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Middleware that will make Rack-based apps CORS compatible
 License:       MIT
 Group:         Development/Ruby
@@ -67,5 +67,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.3-alt1.1
+- ! spec according to changelog rules
+
 * Wed Aug 21 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.3-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

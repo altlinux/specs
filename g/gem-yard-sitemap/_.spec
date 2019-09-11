@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A YARD plugin to build a sitemap.xml for generated HTML documentation
 License:       MIT
 Group:         Development/Ruby
@@ -55,5 +55,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
+- ! spec according to changelog rules
+
 * Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
-+ packaged gem with the Ruby Policy 2.0 usage
+- + packaged gem with the Ruby Policy 2.0 usage

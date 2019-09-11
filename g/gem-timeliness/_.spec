@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       0.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast date/time parsing for the control freak
 License:       MIT
 Group:         Development/Ruby
@@ -73,5 +73,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.4.3-alt1.1
+- ! spec according to changelog rules
+
 * Sat Aug 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.4.3-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

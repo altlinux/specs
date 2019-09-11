@@ -1,60 +1,83 @@
-Name:    sprockets
-Version: 3.7.2
-Release: alt1
-Epoch:   1
+%define        pkgname sprockets
 
-Summary: Rack-based asset packaging system
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/rails/sprockets
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
+Name:          %pkgname
+Epoch:         1
+Version:       3.7.2
+Release:       alt2
+Summary:       Rack-based asset packaging system
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/rails/sprockets
+%vcs           https://github.com/rails/sprockets.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:  %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary
+Sprockets is a Ruby library for compiling and serving web assets. It features
+declarative dependency management for JavaScript and CSS assets, as well as
+a powerful preprocessor pipeline that allows you to write assets in languages
+like CoffeeScript, Sass and SCSS.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-%pkgname
+Summary:       Library files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы библиотеки для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   -n gem-%pkgname
+Library files for %gemname gem.
+
+%description   -n gem-%pkgname -l ru_RU.UTF8
+Файлы библиотеки для самоцвета %gemname.
+
+
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
+
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -q
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/%name
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%_bindir/%{pkgname}*
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-%pkgname
+%ruby_gemspec
+%ruby_gemlibdir
+
+%files         -n gem-%pkgname-doc
+%ruby_gemdocdir
+
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:3.7.2-alt2
+- ^ Ruby Policy 2.0
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.7.2-alt1
 - Build stable version.
 
