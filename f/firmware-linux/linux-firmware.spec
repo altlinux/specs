@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190904
+Version: 20190909
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Sep 11 2019 Cronbuild Service <cronbuild@altlinux.org> 20190909-alt1
+- upstream changes (GIT 6c6918a):
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+
 * Wed Sep 04 2019 Cronbuild Service <cronbuild@altlinux.org> 20190904-alt1
 - upstream changes (GIT 6ddb9d9):
   + nvidia: Add XUSB firmware for Tegra186 (thx Thierry Reding)
