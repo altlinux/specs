@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: libsoup
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -175,8 +175,8 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
     %{?_enable_debug:--buildtype=debug} \
     %{?_enable_static:--default-library=both} \
     %{?_enable_gnome:-Dgnome=true} \
-    %{?_enable_gtk_doc:-Ddoc=true} \
-    %{?_enable_snapshot:-Ddoc=true} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_snapshot:-Dgtk_doc=true} \
     %{?_enable_introspection:-Dintrospection=true} \
     %{?_enable_gssapi:-Dgssapi=true}
 %meson_build
@@ -208,8 +208,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%name-gnome-%api_ver.so
 %_pkgconfigdir/%name-gnome-%api_ver.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -231,6 +233,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.66.3-alt1
+- 2.66.3
+
 * Wed May 15 2019 Yuri N. Sedunov <aris@altlinux.org> 2.66.2-alt1
 - 2.66.2
 
