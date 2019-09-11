@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Unicode-EastAsianWidth
 Name: perl-%dist
-Version: 1.40
+Version: 12.0
 Release: alt1
 
 Summary: East Asian Width properties
@@ -32,6 +33,9 @@ with width status of East Asian characters, as specified in
 %perl_vendor_privlib/Unicode/
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 12.0-alt1
+- new version
+
 * Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
