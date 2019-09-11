@@ -1,7 +1,7 @@
 %def_without pam
 
 Name: moodle
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -227,6 +227,9 @@ s@%%(\{moodle_datadir\}|moodle_datadir([[:space:]/'\"=]))@%moodle_datadir\2@g
 %endif
 
 %changelog
+* Sat Sep 07 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.2-alt1
+- New version.
+
 * Fri Jul 12 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version.
 
