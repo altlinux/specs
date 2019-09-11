@@ -5,8 +5,8 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.21
-%define nss_version 3.45.0
+%define nspr_version 4.22
+%define nss_version 3.46.0
 %define rust_version  1.35.0
 %define cargo_version 1.35.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        68.0.1
+Version:        69.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -42,8 +42,7 @@ Patch005: 0005-FEDORA-build-arm.patch
 Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch009: 0009-ALT-Include-linux-sockios.h-header.patch
-Patch010: 0010-ALT-Fix-aarch64-build.patch
+Patch009: 0009-ALT-Fix-aarch64-build.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -92,6 +91,7 @@ BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
+BuildRequires: libdrm-devel
 
 # Python requires
 BuildRequires: /dev/shm
@@ -171,7 +171,6 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch007 -p1
 %patch008 -p1
 %patch009 -p1
-%patch010 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -395,6 +394,30 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Sep 11 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt1
+- New release (69.0).
+- Fixed:
+  + CVE-2019-11751: Malicious code execution through command line parameters
+  + CVE-2019-11746: Use-after-free while manipulating video
+  + CVE-2019-11744: XSS by breaking out of title and textarea elements using innerHTML
+  + CVE-2019-11742: Same-origin policy violation with SVG filters and canvas to steal cross-origin images
+  + CVE-2019-11736: File manipulation and privilege escalation in Mozilla Maintenance Service
+  + CVE-2019-11753: Privilege escalation with Mozilla Maintenance Service in custom Firefox installation location
+  + CVE-2019-11752: Use-after-free while extracting a key value in IndexedDB
+  + CVE-2019-9812: Sandbox escape through Firefox Sync
+  + CVE-2019-11741: Isolate addons.mozilla.org and accounts.firefox.com
+  + CVE-2019-11743: Cross-origin access to unload event attributes
+  + CVE-2019-11748: Persistence of WebRTC permissions in a third party context
+  + CVE-2019-11749: Camera information available without prompting using getUserMedia
+  + CVE-2019-5849: Out-of-bounds read in Skia
+  + CVE-2019-11750: Type confusion in Spidermonkey
+  + CVE-2019-11737: Content security policy directives ignore port and path if host is a wildcard
+  + CVE-2019-11738: Content security policy bypass through hash-based sources in directives
+  + CVE-2019-11747: 'Forget about this site' removes sites from pre-loaded HSTS list
+  + CVE-2019-11734: Memory safety bugs fixed in Firefox 69
+  + CVE-2019-11735: Memory safety bugs fixed in Firefox 69 and Firefox ESR 68.1
+  + CVE-2019-11740: Memory safety bugs fixed in Firefox 69, Firefox ESR 68.1, and Firefox ESR 60.9
+
 * Thu Aug 01 2019 Alexey Gladkov <legion@altlinux.ru> 68.0.1-alt1
 - New release (68.0.1).
 
