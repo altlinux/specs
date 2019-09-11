@@ -20,8 +20,8 @@
 %define nv_version 430
 %define nv_release 40
 %define nv_minor %nil
-%define pkg_rel alt216
-%define set_gl_nvidia_ver 1.1.1
+%define pkg_rel alt217
+%define set_gl_nvidia_ver 1.2.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -310,6 +310,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Sep 11 2019 Sergey V Turchin <zerg@altlinux.org> 430.40-alt217
+- preset nvidia 3D-controllers
+
 * Thu Aug 15 2019 Sergey V Turchin <zerg@altlinux.org> 430.40-alt216
 - new version
 
