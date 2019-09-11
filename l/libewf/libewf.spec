@@ -1,6 +1,6 @@
 Name: libewf
-Version: 20140608
-Release: alt1.qa1.1
+Version: 20171104
+Release: alt1
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -11,10 +11,9 @@ License: BSD
 # Source-url: https://googledrive.com/host/0B3fBvzttpiiSMTdoaVExWWNsRjg/libewf-20140406.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Jan 10 2008
 BuildRequires: gcc-c++ libssl-devel libuuid-devel zlib-devel
 
-BuildPreReq: libfuse-devel python-devel flex
+BuildPreReq: libfuse-devel python3-devel flex
 
 %description
 libewf is library for support of the Expert Witness Compression Format (EWF).
@@ -32,18 +31,18 @@ Requires: libewf = %version-%release
 %description devel
 Header files and libraries for developing applications which will use libewf.
 
-%package -n python-module-pyewf
-Summary: Python bindings for libewf
-Group: Development/Python
+%package -n python3-module-pyewf
+Summary: python3 bindings for libewf
+Group: Development/Python3
 Requires: libewf = %version-%release
 
-%description -n python-module-pyewf
+%description -n python3-module-pyewf
 libewf is library for support of the Expert Witness Compression Format (EWF).
 libewf allows you to read media information of EWF files in the SMART (EWF-S01)
 format and the EnCase (EWF-E01) format. libewf allows to read files created by
 EnCase 1 to 5, linen and FTK Imager.
 
-This package contains python bindings for libewf.
+This package contains python3 bindings for libewf.
 
 %prep
 %setup
@@ -54,7 +53,7 @@ This package contains python bindings for libewf.
 	--disable-static \
 	--disable-rpath \
 	--enable-wide-character-type \
-	--enable-python
+	--enable-python3
 %make_build
 
 %install
@@ -76,10 +75,14 @@ find %buildroot -name '*.la' -delete
 %_man3dir/*
 %_pkgconfigdir/libewf.pc
 
-%files -n python-module-pyewf
-%python_sitelibdir/*.so
+%files -n python3-module-pyewf
+%python3_sitelibdir/*.so
 
 %changelog
+* Wed Sep 11 2019 Grigory Ustinov <grenka@altlinux.org> 20171104-alt1
+- Build new version.
+- Transfer to python3.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 20140608-alt1.qa1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
@@ -119,27 +122,3 @@ find %buildroot -name '*.la' -delete
 
 * Thu Jan 10 2008 Vitaly Lipatov <lav@altlinux.ru> 20070512-alt1
 - initial build for ALT Linux Sisyphus
-
-* Mon Jan 15 2007 Joachim Metz <forensics@hoffmannbv.nl> 20070115-1
-- Added ewfacquirestream to package
-
-* Fri Dec 29 2006 Joachim Metz <forensics@hoffmannbv.nl> 20061229-1
-- Added exclusion of new expirimental addtitions
-
-* Tue Dec 26 2006 Christophe Grenier <grenier@cgsecurity.org> 20061223-2
-- Made small correction to the spec file, removed abundant Requires line
-
-* Sat Dec 23 2006 Joachim Metz <forensics@hoffmannbv.nl> 20061223-1
-- Made small corrections to the spec file input by Christophe Grenier
-- Added --libdir to ./configure to correct for %%_libdir64
-
-* Sat Dec 19 2006 Joachim Metz <forensics@hoffmannbv.nl> 20061219-1
-- Made small corrections to the spec file input by Christophe Grenier
-- The library source package no longer contains a release number
-
-* Sat Dec 16 2006 Christophe Grenier <grenier@cgsecurity.org> 20061213-2
-- Fixed the spec file
-
-* Sat Dec 9 2006 Joachim Metz <forensics@hoffmannbv.nl> 20061213-1
-- Initial version
-
