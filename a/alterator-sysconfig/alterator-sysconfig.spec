@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Sep 11 2019 Lenar Shakirov <snejok@altlinux.ru> 1.2.7-alt1
+- Add NO_PROXY edit box (ALT #27753)
+
 * Tue Sep 10 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.6-alt1
 - Remove unsupported tt_RU locale.
 
