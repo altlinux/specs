@@ -9,7 +9,7 @@
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.8.4
+Version: 1.8.8
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -155,6 +155,10 @@ or business messaging needs.
 cp %SOURCE2 Telegram/
 cp %SOURCE3 .
 ./gen_source_list.sh
+
+# some hack with precompiled headers (cmake TODO)
+cat Telegram/SourceFiles/mtproto/mtp_pch.h >>Telegram/SourceFiles/stdafx.h
+
 # MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
 # remove fonts from resources
@@ -211,6 +215,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Wed Sep 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.8-alt1
+- new version 1.8.8 (with rpmrb script)
+
 * Fri Sep 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
 - new version (1.8.4) with rpmgs script
 
