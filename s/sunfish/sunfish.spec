@@ -1,6 +1,6 @@
 Name:    sunfish
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: A Python Chess Engine in 111 lines of code
 
@@ -38,6 +38,10 @@ install -Dm755 %name.py %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Sep 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.2-alt1
+- Build new version.
+- Transfer for python3.
+
 * Thu Nov 02 2017 Grigory Ustinov <grenka@altlinux.org> 0.1-alt2
 - Change summary and upstream.
 
