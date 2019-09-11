@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.25.4
-Release: alt2
+Version: 1.25.5
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -23,7 +23,6 @@ Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-braille-indexv4-path.patch
 Patch2: %name-pjl-as-ps.patch
-Patch3: %name-1.25.4-libqpdf26.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -55,6 +54,8 @@ BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libgio-devel
 BuildRequires: libavahi-devel libavahi-glib-devel
+# for tests
+BuildRequires: fonts-ttf-dejavu
 
 # Make sure we get postscriptdriver tags.
 BuildRequires: python-module-cups
@@ -103,10 +104,8 @@ serial backend for cups
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
 
 %build
-# work-around Rpath
 ./autogen.sh
 
 # --with-pdftops=pdftops - use Poppler instead of Ghostscript (see README)
@@ -116,14 +115,18 @@ serial backend for cups
 	   --without-php \
 	   --with-rcdir=no \
 	   --enable-driverless \
+	   --enable-pclm \
 	   --enable-auto-setup-driverless \
 	   --with-gs-path=/usr/bin/gs \
 	   --enable-opvp \
 	   --enable-dbus \
+	   --with-test-font-path=/usr/share/fonts/ttf/dejavu/DejaVuSans.ttf \
 	   --with-pdftops=hybrid
 
 %make
 
+%check
+make check
 
 %install
 %make install DESTDIR=%buildroot
@@ -186,6 +189,11 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Sep 10 2019 Anton Farygin <rider@altlinux.ru> 1.25.5-alt1
+- new version 1.25.5
+- enabled tests
+- built with pclm support
+
 * Tue Sep 03 2019 Anton Farygin <rider@altlinux.ru> 1.25.4-alt2
 - fixed build with qpdf-9.0.0
 - cleanup patches
