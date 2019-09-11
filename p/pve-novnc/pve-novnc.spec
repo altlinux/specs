@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 License: MPL 2.0
 Group: Networking/WWW
@@ -45,6 +45,9 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Wed Sep 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
+- 1.1.0-1
+
 * Fri Mar 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
 - 1.0.0-3
 
