@@ -2,9 +2,9 @@
 %define module_version	3.5
 %define module_release	alt1
 
-%define flavour		std-def
+%define flavour		un-def
 %define karch %ix86 x86_64 aarch64 ppc64le
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires(pre): rpm-build-kernel
 %setup_kernel_module %flavour
 
