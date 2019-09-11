@@ -1,20 +1,19 @@
 Name: gprolog
-Version: 1.4.4
-Release: alt2
+Version: 1.4.5
+Release: alt1
 Summary: GNU Prolog is a free Prolog compiler
 
 Group: Development/Other
 License: GPLv2
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.gprolog.org
-Source: http://www.gprolog.org/gprolog-%version.tar.gz
+Source: %name-%version.tar.gz
 Patch1: gprolog-1.4.0-test.patch
 Patch2: gprolog-1.3.0-linedit.patch
 
 Obsoletes: gprolog-examples < 1.4.0
 Provides: gprolog-examples = %version-%release
 
-#ExclusiveArch: x86_64 %ix86 ppc alpha
+ExclusiveArch: x86_64 %ix86
 
 %description
 GNU Prolog is a native Prolog compiler with constraint solving over
@@ -116,6 +115,9 @@ rm -rf SWI WAMCC XSB YAP
 %doc src/dist-doc/*
 
 %changelog
+* Mon Sep 09 2019 Fr. Br. George <george@altlinux.ru> 1.4.5-alt1
+- Autobuild version bump to 1.4.5
+
 * Mon Mar 03 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.4-alt2
 - add Obsoletes/Provides for gprolog-examples
 
