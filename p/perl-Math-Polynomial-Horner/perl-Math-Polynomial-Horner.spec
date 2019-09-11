@@ -1,27 +1,26 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B/Concise.pm) perl(Exporter.pm) perl(Math/BigRat.pm) perl(Math/Polynomial.pm) perl(Pod/Simple/HTML.pm) perl(Scalar/Util.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 3
 %define module_name Math-Polynomial-Horner
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3
-Release: alt2
+Version: 4
+Release: alt1
 Summary: Stringizing Math::Polyomial objects in Horner form.
 Group: Development/Perl
 License: gpl
 URL: http://user42.tuxfamily.org/math-polynomial-horner/index.html
 
-Source0: http://cpan.org.ua/authors/id/K/KR/KRYDE/%module_name-%module_version.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KR/KRYDE/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes COPYING
+%doc Changes
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1
+- automated CPAN update
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 3-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
