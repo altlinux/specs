@@ -2,7 +2,7 @@
 %define sname minion
 
 Name: perl-Minion
-Version: 9.12
+Version: 9.13
 Release: alt1
 Summary: Job queue
 License: Artistic-2.0
@@ -47,6 +47,9 @@ everything else you can imagine that's not super fast.
 %doc README.md Changes
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 9.13-alt1
+- automated CPAN update
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 9.12-alt1
 - automated CPAN update
 
