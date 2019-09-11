@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Metadata
 Name: perl-%dist
-Version: 1.000036
+Version: 1.000037
 Release: alt1
 
 Summary: Gather package and POD information from perl module files
@@ -34,6 +34,9 @@ without executing unsafe code.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.000037-alt1
+- automated CPAN update
+
 * Tue Apr 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.000036-alt1
 - automated CPAN update
 
