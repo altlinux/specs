@@ -9,7 +9,7 @@ BuildRequires: perl(App/Ack.pm) perl(Cache/Cache.pm) perl(Cache/FileCache.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.0219
+Version: 0.0221
 Release: alt1
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
@@ -41,7 +41,7 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE doc
+%doc README Changes doc
 %perl_vendor_privlib/D*
 
 %files scripts
@@ -49,6 +49,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.0221-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.0219-alt1
 - automated CPAN update
 
