@@ -1,5 +1,5 @@
 Name:     brisk-menu
-Version:  0.6.0
+Version:  0.6.1
 Release:  alt1
 
 Summary:  An efficient menu for the MATE Desktop
@@ -10,6 +10,7 @@ Url:      https://github.com/getsolus/brisk-menu
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Source1:  translations.tar
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -29,6 +30,7 @@ without the bloat and performance issues.
 
 %prep
 %setup
+tar xf %SOURCE1
 
 %build
 %meson
@@ -37,7 +39,6 @@ without the bloat and performance issues.
 %install
 %meson_install
 %find_lang %name
-echo "%_datadir/locale/es_419/LC_MESSAGES/brisk-menu.mo" >> %name.lang
 
 %files -f %name.lang
 %doc AUTHORS README.md
@@ -48,6 +49,10 @@ echo "%_datadir/locale/es_419/LC_MESSAGES/brisk-menu.mo" >> %name.lang
 %_iconsdir/hicolor/scalable/actions/brisk_system-log-out-symbolic.svg
 
 %changelog
+* Tue Sep 10 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- New version.
+- Add translations from https://github.com/getsolus/brisk-menu-translations.git.
+
 * Fri Aug 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - New version.
 
