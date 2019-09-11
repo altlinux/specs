@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Daemon
 Name: perl-%dist
-Version: 6.05
+Version: 6.06
 Release: alt1
 
 Summary: a simple http server class
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -38,6 +38,9 @@ too.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1
+- automated CPAN update
+
 * Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 6.05-alt1
 - automated CPAN update
 
