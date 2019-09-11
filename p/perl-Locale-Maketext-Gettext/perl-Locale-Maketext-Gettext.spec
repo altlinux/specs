@@ -1,7 +1,7 @@
 %define dist Locale-Maketext-Gettext
 Name: perl-%dist
-Version: 1.28
-Release: alt1.1
+Version: 1.29
+Release: alt1
 
 Summary: Joins the gettext and Maketext frameworks
 License: %perl_license
@@ -10,7 +10,7 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/I/IM/IMACAT/Locale-Maketext-Gettext-1.28.tar.gz
-Source: %dist-%version.tar
+Source0: http://www.cpan.org/authors/id/I/IM/IMACAT/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,7 +43,7 @@ changed from Locale::Maketext to Locale::Maketext::Gettext.  That's
 all.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -52,12 +52,15 @@ all.
 %perl_vendor_install
 
 %files
-%doc BUGS Changes README THANKS TODO
+%doc BUGS Changes README Artistic
 %_bindir/*
 %perl_vendor_privlib/Locale/
 %_man1dir/*
 
 %changelog
+* Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
