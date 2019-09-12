@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-ru
-Version:	68.0
+Version:	69.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 Summary(ru_RU.UTF-8): Русский языковой пакет для Firefox
@@ -88,6 +88,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %firefox_prefix/distribution/searchplugins/locale/ru
 
 %changelog
+* Thu Sep 12 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt1
+- New version (69.0).
+
 * Mon Jul 15 2019 Alexey Gladkov <legion@altlinux.ru> 68.0-alt1
 - New version (68.0).
 
