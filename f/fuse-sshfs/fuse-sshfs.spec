@@ -1,15 +1,17 @@
 Name: fuse-sshfs
-Version: 2.5
+Version: 3.5.2
 Release: alt1
 
 Summary: SSH filesystem using FUSE
-License: GPLv2
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
-Url: http://fuse.sourceforge.net/sshfs.html
+Url: https://github.com/libfuse/sshfs
 
-Source: http://dl.sourceforge.net/sourceforge/fuse/sshfs-fuse-%version.tar
+# repacked https://github.com/libfuse/sshfs/releases/download/sshfs-%version/sshfs-%version.tar.xz
+Source: sshfs-%version.tar
+Patch1: 0001-ALT-python3-docutils-rst2man.patch
 
-Requires: fuse >= 2.3
+BuildRequires: libfuse3-devel >= 3.1.0 meson python3-module-docutils
 Requires: openssh-clients
 
 Provides: sshfs-fuse = %version sshfs = %version
@@ -35,22 +37,28 @@ that codebase, so he rewrote it. Features of this implementation are:
 * Reconnect on failure
 
 %prep
-%setup -q -n sshfs-fuse-%version
+%setup -q -n sshfs-%version
+%patch1 -p2
 
 %build
-%autoreconf
-%configure --disable-sshnodelay
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
 
 %files
-%doc AUTHORS FAQ.txt NEWS README
+%doc AUTHORS README.rst
 %_bindir/sshfs
+%_sbindir/mount.sshfs
+%_sbindir/mount.fuse.sshfs
 %_man1dir/sshfs.*
 
 %changelog
+* Thu Sep 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.2-alt1
+- 3.5.2.
+- Refreshed Url for new upstream.
+
 * Thu Oct  9 2014 Terechkov Evgenii <evg@altlinux.org> 2.5-alt1
 - 2.4 -> 2.5
 
