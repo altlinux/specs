@@ -12,7 +12,7 @@
 
 Name: vztt
 Version: 7.0.65
-Release: alt2
+Release: alt3
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -99,6 +99,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt3
+- add distribution name to config in template converter
+
 * Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt2
 - remove static lib
 - package_manager file should not be empty
