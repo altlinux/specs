@@ -2,7 +2,7 @@
 %define        pkgname strings
 
 Name:          gem-%pkgname
-Version:       0.1.5
+Version:       0.1.6
 Release:       alt1
 Summary:       A set of useful functions for transforming strings
 License:       MIT
@@ -57,5 +57,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.6-alt1
+- ^ v0.1.6
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.5-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

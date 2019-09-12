@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.34.2
-Release:       alt1
+Release:       alt1.1
 Summary:       A lightweight Ruby client for the Docker Remote API
 License:       MIT
 Group:         Development/Ruby
@@ -55,5 +55,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.34.2-alt1.1
+- ! spec according to changelog rules
+
 * Sat Aug 10 2019 Pavel Skrylev <majioa@altlinux.org> 1.34.2-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

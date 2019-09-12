@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.5.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string
 Summary(ru_RU.UTF-8): Воплощение алгоритма расстояний Яро-Винклера на Си и Рубине, который поддерживает строки UTF-8
 License:       MIT
@@ -77,9 +77,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.3-alt1.1
+- ! spec according to changelog rules
+
 * Mon Jun 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.3-alt1
-^ v1.5.3
-! spec
+- ^ v1.5.3
+- ! spec
 
 * Tue Apr 30 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.2-alt2
 - remove noarch from devel package

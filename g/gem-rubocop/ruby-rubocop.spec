@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       0.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby static code analyzer and formatter.
 License:       MIT
 Group:         Development/Ruby
@@ -12,7 +12,6 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bundler)
 BuildRequires: gem(bump)
@@ -70,9 +69,12 @@ Executable file for rubocop.
 %_bindir/*
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.74.0-alt1.1
+- ! spec according to changelog rules
+
 * Sat Aug 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.74.0-alt1
-^ v0.74.0
-! spec
+- ^ v0.74.0
+- ! spec
 
 * Thu Apr 04 2019 Pavel Skrylev <majioa@altlinux.org> 0.66.0-alt1
 - Bump to 0.66.0

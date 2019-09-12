@@ -2,14 +2,14 @@
 
 Name:          alexandria
 Version:       0.7.3
-Release:       alt4
+Release:       alt4.1
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
 Group:         Development/Ruby
 Url:           https://github.com/mvz/alexandria-book-collection-manager
 %vcs           https://github.com/mvz/alexandria-book-collection-manager.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Packager:      Vitaly Lipatov <lav@altlinux.ru>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
@@ -103,8 +103,11 @@ fi
 
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4.1
+- ! spec according to changelog rules, plus some others
+
 * Mon Sep 02 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4
-! spec
+- ! spec
 
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
 - cleanup spec
@@ -160,4 +163,3 @@ fi
 
 * Sat Dec 18 2004 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - first build for ALT Linux Sisyphus
-

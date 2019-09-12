@@ -2,7 +2,7 @@
 %define        pkgname train
 
 Name:          gem-%pkgname
-Version:       3.0.1
+Version:       3.1.1
 Release:       alt1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 License:       MIT
@@ -14,6 +14,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %gem_replace_version google-api-client ~> 0.23
 %gem_replace_version googleauth ~> 0.6
@@ -100,7 +101,7 @@ Documentation files for %gemname-core gem.
 
 %files         core
 %doc README*
-%ruby_gemspecdir//%pkgname-core-%version.gemspec
+%ruby_gemspecdir/%pkgname-core-%version.gemspec
 %ruby_gemslibdir/%pkgname-core-%version
 
 %files         core-doc
@@ -108,5 +109,9 @@ Documentation files for %gemname-core gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt1
+- ^ v3.1.1
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
-+ packaged gems with usage Ruby Policy 2.0
+- + packaged gems with usage Ruby Policy 2.0

@@ -1,5 +1,5 @@
 Name: 	       ruby-gnome2
-Version:       3.3.7
+Version:       3.3.8
 Release:       alt1
 Summary:       Ruby bindings for GNOME
 License:       MIT
@@ -1129,10 +1129,14 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt1
+- ^ v3.3.8
+- ! spec according to changelog rules
+
 * Tue Aug 20 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
-^ v3.3.7
-+ libthai-devel, and libdatrie-devel build reqs
-+ wnck3, and libsecret gems
+- ^ v3.3.7
+- + libthai-devel, and libdatrie-devel build reqs
+- + wnck3, and libsecret gems
 
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.6-alt2
 - ignore ruby-gnome2 gemfile

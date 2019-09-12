@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       2.0.2
-Release:       alt1
+Release:       alt2
 Summary:       Manage your Ruby application's gem dependencies
 License:       MIT
 Group:         Development/Ruby
@@ -62,7 +62,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --ignore=templates
 
 %install
 %ruby_install
@@ -83,10 +83,14 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt2
+- ! spec according changelog policy
+- + ignore templates gemfile
+
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt1
-^ v2.0.2
-! spec
-- findreq build error
+- ^ v2.0.2
+- ! spec
+- - findreq build error
 
 * Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt2
 - Use Ruby Policy 2.0.

@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       2.1.1
-Release:       alt1
+Release:       alt2
 Summary:       CoffeeScript js sources
 License:       MIT
 Group:         Development/Ruby
@@ -60,5 +60,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt2
+- ! spec according to changelog rules
+
 * Fri Aug 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

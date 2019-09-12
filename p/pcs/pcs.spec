@@ -3,7 +3,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.10.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPLv2
 Group:         Other
@@ -148,10 +148,13 @@ rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
 
 
 %changelog
+* Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.3-alt1.1
+- ! spec according to changelog rules
+
 * Sun Aug 25 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.3-alt1
-^ Ruby Policy 2.0
-^ v0.10.3
-! names of subpackages according to the language they were written in
+- ^ Ruby Policy 2.0
+- ^ v0.10.3
+- ! names of subpackages according to the language they were written in
 
 * Mon Aug 12 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.10.2-alt1
 - New version.

@@ -1,7 +1,7 @@
 %define        pkgname oj
 
 Name:          ruby-%pkgname
-Version:       3.9.0
+Version:       3.9.1
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -51,13 +52,13 @@ Development headers for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -71,9 +72,13 @@ Development headers for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.9.1-alt1
+- ^ v3.9.1
+- ! spec according to changelog rules
+
 * Tue Aug 27 2019 Pavel Skrylev <majioa@altlinux.org> 3.9.0-alt1
-^ v3.9.0
-! spec
+- ^ v3.9.0
+- ! spec
 
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.12-alt1
 - New version.

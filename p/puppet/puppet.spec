@@ -5,7 +5,7 @@
 
 Name:          %pkgname
 Version:       %core_version
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       ASL 2.0
@@ -196,10 +196,13 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 
 
 %changelog
+* Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.2
+- ! spec according the changelog policy
+
 * Mon Aug 19 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.1
-^ v6.9.0
-+ links to required dirs in spec
-! spec
+- ^ v6.9.0
+- + links to required dirs in spec
+- ! spec
 
 * Fri Aug 16 2019 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt1
 - New version.

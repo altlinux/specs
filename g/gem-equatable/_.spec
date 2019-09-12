@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       0.6.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Allows ruby objects to implement equality comparison and inspection methods
 License:       MIT
 Group:         Development/Ruby
@@ -64,5 +64,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt1.1
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

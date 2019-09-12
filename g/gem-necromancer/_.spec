@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       0.5.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Conversion from one object type to another
 License:       MIT
 Group:         Development/Ruby
@@ -58,5 +58,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1.1
+- ! spec according to changelog rules
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

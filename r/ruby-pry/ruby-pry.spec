@@ -2,7 +2,7 @@
 
 Name: 	       ruby-%pkgname
 Version:       0.12.2
-Release:       alt3
+Release:       alt3.1
 Summary:       An IRB alternative and runtime developer console
 License:       MIT
 Group:         Development/Ruby
@@ -61,8 +61,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt3.1
+- ! spec according to changelog rules
+
 * Mon Sep 02 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt3
-! spec, build depedencies
+- ! spec, build depedencies
 
 * Tue Jul 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt2
 - Use Ruby Policy 2.0

@@ -1,16 +1,16 @@
-%def_without bootstrap
-%def_enable shared
-%def_enable rubygems
-%define ruby_version 2.5.0
-%define libdir %_prefix/lib/%name
-%define includedir %_includedir
-%define ridir %_datadir/ri
-%define vendordir %libdir/vendor_%name
-%define lname lib%name
+%def_without   bootstrap
+%def_enable    shared
+%def_enable    rubygems
+%define        ruby_version 2.5.0
+%define        libdir %_prefix/lib/%name
+%define        includedir %_includedir
+%define        ridir %_datadir/ri
+%define        vendordir %libdir/vendor_%name
+%define        lname lib%name
 
 Name:          ruby
 Version:       2.5.5
-Release:       alt4
+Release:       alt4.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD 2-clause Simplified License/Ruby
 Group:         Development/Ruby
@@ -389,9 +389,12 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt4.1
+- ! spec according to changelog rules
+
 * Wed Aug 14 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt4
-+ ruby-mspec package
-! spec: syntax, gem dependencies
+- + ruby-mspec package
+- ! spec: syntax, gem dependencies
 
 * Mon Jun 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.5.5-alt3
 - Fixed build on ppc64le architecture.

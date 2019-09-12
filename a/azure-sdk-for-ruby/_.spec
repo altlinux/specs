@@ -4,7 +4,7 @@
 
 Name:          %pkgname
 Version:       20190809
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby SDK for Azure Resource Manager
 License:       MIT
 Group:         Development/Ruby
@@ -4059,5 +4059,8 @@ Documentation files for %gemname gem.
 %ruby_gemsdocdir/ms_rest-0.7.4
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 20190809-alt1.1
+- ! spec according to changelog rules
+
 * Tue Aug 13 2019 Pavel Skrylev <majioa@altlinux.org> 20190809-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

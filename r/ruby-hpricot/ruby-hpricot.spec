@@ -3,7 +3,7 @@
 
 Name:          ruby-%pkgname
 Version:       0.8.6
-Release:       alt4.1
+Release:       alt4.2
 Summary:       A Fast, Enjoyable HTML Parser for Ruby
 Group:         Development/Ruby
 License:       MIT
@@ -76,8 +76,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt4.2
+- ! spec according changelog policy
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt4.1
-! spec
+- ! spec
 
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.6-alt4
 - Clean up the spec from the dog-nail

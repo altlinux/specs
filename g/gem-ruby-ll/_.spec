@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       2.1.2
-Release:       alt1
+Release:       alt1.1
 Summary:       An LL(1) parser generator for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -111,5 +111,8 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1.1
+- ! spec according to changelog rules
+
 * Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
-+ packaged as a gem with usage Ruby Policy 2.0
+- + packaged as a gem with usage Ruby Policy 2.0

@@ -2,18 +2,20 @@
 
 Name:          ruby-%pkgname
 Version:       5.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
 Url:           https://rubyonrails.org/
-# VCS:         https://github.com/rails/rails.git
+%vcs           https://github.com/rails/rails.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%gem_replace_version sprockets-rails ~> 3.0
 
 %description
 Ruby on Rails metapackage gem.
@@ -259,13 +261,13 @@ Obsoletes:     ruby-railties-doc
 %setup
 
 %build
-%gem_build --use=railties --join=lib:bin --use=
+%ruby_build --use=railties --join=lib:bin
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspecdir/rails-%version.gemspec
@@ -343,7 +345,11 @@ Obsoletes:     ruby-railties-doc
 %files         -n gem-railties-doc
 %ruby_gemsdocdir/railties-%version
 
+
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1.1
+- ! spec to fix dependency
+
 * Tue Apr 02 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1
 - Bump to 5.2.3
 

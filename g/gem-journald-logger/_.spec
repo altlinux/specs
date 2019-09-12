@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       2.0.4
-Release:       alt1
+Release:       alt1.1
 Summary:       systemd-journal native logger
 License:       MIT
 Group:         Development/Ruby
@@ -56,5 +56,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.4-alt1.1
+- ! spec according to changelog rules
+
 * Wed Aug 21 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.4-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

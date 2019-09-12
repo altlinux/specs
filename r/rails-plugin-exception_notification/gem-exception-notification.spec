@@ -3,7 +3,7 @@
 %define        gemname exception_notification
 
 Name:          rails-plugin-%gemname
-Version:       4.3.0
+Version:       4.4.0
 Release:       alt1
 Summary:       Exception Notifier Plugin for Rails
 License:       MIT
@@ -17,6 +17,8 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rails)
 BuildRequires: gem(resque)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 The Exception Notifier plugin provides a mailer object and a default
@@ -59,10 +61,14 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 4.4.0-alt1
+- ^ v4.4.0
+- ! spec according to changelog rules, plus some others
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.0-alt1
-! gemified
-^ v4.3.0
-^ Ruby Policy 2.0
+- ! gemified
+- ^ v4.3.0
+- ^ Ruby Policy 2.0
 
 * Sat Oct 17 2009 Alexey I. Froloff <raorn@altlinux.org> 0.git.16.ge8b603e-alt1
 - Built for Sisyphus

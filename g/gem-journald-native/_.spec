@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.11
-Release:       alt1
+Release:       alt1.1
 Summary:       systemd-journal logging interface wrapper for ruby
 License:       MIT
 Group:         Development/Ruby
@@ -14,6 +14,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libsystemd-devel
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -72,5 +73,8 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.11-alt1.1
+- ! spec according to changelog rules
+
 * Wed Aug 21 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.11-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

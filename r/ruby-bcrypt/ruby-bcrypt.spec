@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       3.1.13
-Release:       alt1
+Release:       alt1.1
 Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords
 License:       MIT
 Group:         Development/Ruby
@@ -75,9 +75,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.13-alt1.1
+- ! spec according to changelog rules
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.13-alt1
-! spec
-^ v3.1.13
+- ! spec
+- ^ v3.1.13
 
 * Thu Apr 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.12-alt2
 - Use Ruby Policy 2.0

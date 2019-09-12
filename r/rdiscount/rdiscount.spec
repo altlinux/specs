@@ -2,7 +2,7 @@
 
 Name:          %pkgname
 Version:       2.2.0.1
-Release:       alt4
+Release:       alt4.1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -13,6 +13,8 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(ronn)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Discount is an implementation of John Gruber's Markdown markup language
@@ -91,9 +93,12 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.1
+- ! spec according to changelog rules
+
 * Thu Jul 25 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4
-! spec
-+ ronn gem build dependency
+- ! spec
+- + ronn gem build dependency
 
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt3
 - Clean up the spec from the dog-nail

@@ -2,7 +2,7 @@
 
 Name: 	       ruby-%pkgname
 Version:       3.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A backend for Hiera that provides per-value asymmetric encryption of sensitive data
 License:       MIT
 Group:         Development/Ruby
@@ -73,9 +73,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
+- ! spec according to changelog rules
+
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
-^ 3.0.0
-! spec
+- ^ 3.0.0
+- ! spec
 
 * Wed Apr 10 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt2
 - Use new ruby packaging policy

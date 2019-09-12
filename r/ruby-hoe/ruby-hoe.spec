@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       3.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles
 License:       MIT
 Group:         Development/Ruby
@@ -10,12 +10,16 @@ Url:           https://github.com/seattlerb/hoe
 %vcs           https://github.com/seattlerb/hoe.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
-%summary
+Hoe is a rake/rubygems helper for project Rakefiles. It helps you manage,
+maintain, and release your project and includes a dynamic plug-in system
+allowing for easy extensibility. Hoe ships with plug-ins for all your usual
+project tasks including rdoc generation, testing, packaging, deployment, and
+announcement.
 
 
 %package       -n gem-%pkgname-doc
@@ -53,9 +57,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.18.0-alt1.1
+- ! spec according to changelog rules
+
 * Mon Jul 29 2019 Pavel Skrylev <majioa@altlinux.org> 3.18.0-alt1
-! v3.18.0
-! spec
+- ! v3.18.0
+- ! spec
 
 * Thu Apr 25 2019 Pavel Skrylev <majioa@altlinux.org> 3.17.2-alt1
 - Bump to 3.17.2

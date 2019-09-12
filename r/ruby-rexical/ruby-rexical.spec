@@ -2,7 +2,7 @@
 
 Name:          ruby-%pkgname
 Version:       1.0.7
-Release:       alt1
+Release:       alt1.1
 Summary:       Lexical scanner generator for ruby
 Group:         Development/Ruby
 License:       LGPL
@@ -53,10 +53,13 @@ mv %buildroot%_bindir/rex %buildroot%_bindir/rex.rb
 
 
 %changelog
+* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.7-alt1.1
+- ! spec according to changelog rules
+
 * Mon Aug 12 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.7-alt1
-^ v1.0.7
-! spec
-! rename executable rex to rex.rb
+- ^ v1.0.7
+- ! spec
+- ! rename executable rex to rex.rb
 
 * Mon Feb 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt4.gitd8af06b89
 - Use Ruby Policy 2.0;
