@@ -3,7 +3,7 @@
 %define real_name Consul
 
 Name: perl-Consul
-Version: 0.025
+Version: 0.026
 Release: alt1
 
 Summary:  Perl client library for Consul
@@ -14,7 +14,7 @@ Group: Development/Perl
 URL: http://search.cpan.org/dist/Consul/
 #URL: https://github.com/robn/Consul
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -53,6 +53,9 @@ this module provides.
 %perl_vendor_privlib/Consul*
 
 %changelog
+* Thu Sep 12 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.026-alt1
+- New version
+
 * Thu Apr 18 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.025-alt1
 - New version
 
