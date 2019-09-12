@@ -1,24 +1,18 @@
 %def_with mdns
 %def_with python
 
-%ifndef _qt3dir
-%define _qt3dir %_libdir/qt3
-%endif
-
 %define avahi_user _avahi
 %define autoipd_user _autoipd
 %define avahi_group_priv netadmin
-%define systemdsystemunitdir /lib/systemd/system
 
 Name: avahi
-Version: 0.6.32
+Version: 0.7
 Release: alt1
 
 Summary: Local network service discovery
 License: LGPL
 Group: System/Servers
 Url: http://www.avahi.org/
-Packager: Sergey Bolshakov <sbolshakov@altlinux.ru>
 
 Source: %name-%version-%release.tar
 
@@ -31,9 +25,8 @@ Obsoletes: mdnsresponder
 %endif
 
 BuildRequires: doxygen gcc-c++ glib2-devel graphviz intltool libcap-devel libdaemon-devel >= 0.13-alt2
-BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+2-devel
-BuildRequires: libgtk+3-devel libqt3-devel libtqt-devel libqt4-devel xmltoman
-%{?_with_python:BuildRequires: python-devel python-module-pygtk python-module-dbus}
+BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+2-devel libgtk+3-devel xmltoman
+%{?_with_python:BuildRequires: python-devel python-module-pygtk python-module-dbus pkgconfig(pygobject-3.0)}
 BuildRequires: desktop-file-utils
 
 %description
@@ -103,42 +96,6 @@ Group: Development/C
 Requires: lib%name-devel = %version-%release
 Requires: lib%name-glib-devel = %version-%release
 Requires: lib%name-gobject = %version-%release
-
-%package -n lib%name-qt3
-Summary: Qt3 libraries for avahi
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%package -n lib%name-qt3-devel
-Summary: Libraries and header files for avahi Qt3 development
-Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt3 = %version-%release
-Requires: libqt3-devel
-
-%package -n lib%name-tqt
-Summary: Trinity Qt wrapper libraries for avahi
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%package -n lib%name-tqt-devel
-Summary: Libraries and header files for avahi Trinity Qt development
-Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-tqt = %version-%release
-Requires: libtqt-devel
-
-%package -n lib%name-qt4
-Summary: Qt4 libraries for avahi
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%package -n lib%name-qt4-devel
-Summary: Libraries and header files for avahi Qt4 development
-Group: Development/KDE and QT
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt4 = %version-%release
-Requires: libqt4-devel
 
 %package -n lib%name-ui
 Summary: UI libraries for avahi
@@ -253,27 +210,6 @@ GObject'ified version of avahi API
 Header files and libraries necessary for developing
 programs using avahi with GObject/glib.
 
-%description -n lib%name-qt3
-Libraries for easy use of avahi from Qt3 applications.
-
-%description -n lib%name-qt3-devel
-Header files and libraries necessary for developing
-programs using avahi with Qt3.
-
-%description -n lib%name-tqt
-Libraries for easy use of avahi from Trinity Qt applications.
-
-%description -n lib%name-tqt-devel
-Header files and libraries necessary for developing
-programs using avahi with Trinity Qt3.
-
-%description -n lib%name-qt4
-Libraries for easy use of avahi from Qt4 applications.
-
-%description -n lib%name-qt4-devel
-Header files and libraries necessary for developing
-programs using avahi with Qt4.
-
 %description -n lib%name-ui
 Libraries for easy use of avahi from UI applications.
 
@@ -323,6 +259,8 @@ touch config.rpath
     --disable-mono \
     --disable-monodoc \
     --disable-compat-howl \
+    --disable-qt3 \
+    --disable-qt4 \
     --disable-static \
 %if_with python
     --enable-python \
@@ -336,7 +274,7 @@ touch config.rpath
 %if_with mdns
     --enable-compat-libdns_sd \
 %endif
-    --with-systemdsystemunitdir=%systemdsystemunitdir \
+    --with-systemdsystemunitdir=%_unitdir \
     --with-avahi-user=%avahi_user \
     --with-avahi-group=%avahi_user \
     --with-avahi-priv-access-group=%avahi_group_priv \
@@ -352,9 +290,7 @@ touch config.rpath
     install
 
 mkdir -p %buildroot%_var/resolv/var/avahi \
-    %buildroot%_var/run/avahi-daemon \
-    %buildroot%_localstatedir/autoipd \
-    %buildroot%_var/run/autoipd
+	%buildroot%_localstatedir/autoipd
 
 ln -s resolv/var/avahi %buildroot%_var/avahi
 
@@ -406,8 +342,8 @@ fi
 
 %_initdir/avahi-daemon
 
-%systemdsystemunitdir/avahi-daemon.service
-%systemdsystemunitdir/avahi-daemon.socket
+%_unitdir/avahi-daemon.service
+%_unitdir/avahi-daemon.socket
 
 %dir %_sysconfdir/avahi
 
@@ -435,7 +371,6 @@ fi
 
 %_var/avahi
 %attr(0771, root, _avahi) %dir /var/resolv/var/avahi
-%attr(0770, root, _avahi) %dir %_var/run/avahi-daemon
 
 %files autoipd
 %dir %_sysconfdir/avahi
@@ -443,11 +378,10 @@ fi
 %_sbindir/avahi-autoipd
 %_man8dir/avahi-autoipd.*
 %attr(0770, root, %autoipd_user) %dir %_localstatedir/autoipd
-%attr(0770, root, %autoipd_user) %dir %_var/run/autoipd
 
 %files dnsconfd
 %_initdir/avahi-dnsconfd
-%systemdsystemunitdir/avahi-dnsconfd.service
+%_unitdir/avahi-dnsconfd.service
 %config(noreplace) %_sysconfdir/avahi/avahi-dnsconfd.action
 %_sbindir/avahi-dnsconfd
 %_man8dir/avahi-dnsconfd.*
@@ -547,30 +481,6 @@ fi
 %_includedir/avahi-gobject
 %_pkgconfigdir/avahi-gobject.pc
 
-%files -n lib%name-qt3
-%_libdir/libavahi-qt3.so.*
-
-%files -n lib%name-qt3-devel
-%_libdir/libavahi-qt3.so
-%_pkgconfigdir/avahi-qt3.pc
-%_includedir/avahi-qt3
-
-%files -n lib%name-tqt
-%_libdir/libavahi-tqt.so.*
-
-%files -n lib%name-tqt-devel
-%_libdir/libavahi-tqt.so
-%_pkgconfigdir/avahi-tqt.pc
-%_includedir/avahi-tqt
-
-%files -n lib%name-qt4
-%_libdir/libavahi-qt4.so.*
-
-%files -n lib%name-qt4-devel
-%_libdir/libavahi-qt4.so
-%_pkgconfigdir/avahi-qt4.pc
-%_includedir/avahi-qt4
-
 %files -n lib%name-ui
 %_libdir/libavahi-ui.so.*
 
@@ -594,6 +504,10 @@ fi
 %endif		    
 
 %changelog
+* Thu Sep 12 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt1
+- 0.7 released (fixes: CVE-2017-6519, CVE-2018-100084)
+- qt bindings droppped
+
 * Wed Jul 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.32-alt1
 - 0.6.32
 
