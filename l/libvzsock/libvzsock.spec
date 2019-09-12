@@ -1,6 +1,6 @@
 Name:     libvzsock
 Version:  7.0.3
-Release:  alt3
+Release:  alt4
 
 Summary:  libvzsock is a helper library for networking connections code generalization.
 License:  LGPLv2.1+
@@ -47,10 +47,13 @@ rm -f %buildroot%_libdir/%name.a
 
 %files devel
 %_libdir/%name.so
-%dir %_includedir/vz
+# dir %_includedir/vz
 %_includedir/vz/*.h
 
 %changelog
+* Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt4
+- spec cleanup
+
 * Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.3-alt3
 - fix lib permission
 - remove static lib
