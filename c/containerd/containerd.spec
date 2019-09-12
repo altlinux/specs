@@ -1,5 +1,5 @@
 %global import_path github.com/containerd/containerd
-%global commit bb71b10fd8f58240ca47fbb579b9d1028eea7c84
+%global commit d50db0a42053864a270f648048f9a8b4f24eced3
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.2.7
+Version:	1.2.9
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -83,6 +83,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Thu Sep 12 2019 Vladimir Didenko <cow@altlinux.org> 1.2.9-alt1
+- 1.2.9
+
 * Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 1.2.7-alt1
 - 1.2.7
 
