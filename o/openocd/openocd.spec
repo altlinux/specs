@@ -1,12 +1,12 @@
 Name: openocd
 Version: 0.10.0
-Release: alt0_rc1
+Release: alt1.git.930.g09eb941cb
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
 License: GPLv2
 Url: http://sourceforge.net/projects/openocd
-Source: %name-%version-rc1.tar
+Source: %name.tar
 Source10: libjaylink.tar
 
 BuildRequires: chrpath libftdi1-devel jimtcl-devel libhidapi-devel libusb-compat-devel texinfo
@@ -21,7 +21,7 @@ Install OpenOCD if you are looking for an open source solution for
 hardware debugging.
 
 %prep
-%setup -n %name-%version-rc1
+%setup -n %name
 tar -xf %SOURCE10 -C src/jtag/drivers
 
 %build
@@ -88,6 +88,9 @@ install -m644 \
 %_mandir/man1/*
 
 %changelog
+* Wed Sep 11 2019 Ildar Mulyukov <ildar@altlinux.ru> 0.10.0-alt1.git.930.g09eb941cb
+- new version (git HEAD)
+
 * Thu Jan 05 2017 Ildar Mulyukov <ildar@altlinux.ru> 0.10.0-alt0_rc1
 - new version
 - minor cleanups and additions
