@@ -2,7 +2,7 @@
 
 Name: libvterm
 Version: 0+bzr%snapshot
-Release: alt1
+Release: alt2
 
 Summary: an abstract C99 library which implements a VT220 or xterm-like terminal emulator
 
@@ -11,8 +11,9 @@ Group: System/Libraries
 Url: http://www.leonerd.org.uk/code/libvterm/
 
 # git://git.altlinux.org/gears/l/libvterm.git
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 Source1: %name.watch
+Patch1: 0001-ALT-Fix-CVE-2018-20786.patch
 
 %package devel
 Summary: Development files needed for %name
@@ -44,6 +45,7 @@ This package contains %name tools.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %make_build PREFIX=%_prefix LIBDIR=%_libdir CFLAGS="%optflags"
@@ -69,6 +71,9 @@ make test
 %_bindir/*
 
 %changelog
+* Thu Sep 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0+bzr726-alt2
+- Fixes CVE-2018-20786.
+
 * Thu Apr 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0+bzr726-alt1
 - Updated to 0+bzr726 snapshot.
 
