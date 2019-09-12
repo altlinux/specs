@@ -4,7 +4,7 @@
 
 Name: apr%aprver
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
@@ -84,6 +84,9 @@ LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
 	--disable-accept4 \
 	--disable-sock_cloexec \
 	--with-devrandom \
+%ifarch %mips32
+        --disable-nonportable-atomics \
+%endif
 	%{subst_enable static}
 %make_build
 
@@ -120,6 +123,10 @@ make check
 %endif
 
 %changelog
+* Thu Sep 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1.7.0-alt2
+- disable nonportable atomics on mipsel
+  (see https://bz.apache.org/bugzilla/show_bug.cgi?id=63566)
+
 * Mon Sep 09 2019 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
