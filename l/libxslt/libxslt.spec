@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.33
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -175,6 +175,12 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Thu Sep 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.33-alt2
+- Fixes:
+  + CVE-2019-11068 security framework bypass;
+  + CVE-2019-13117 uninitialized read of xsl:number token;
+  + CVE-2019-13118 uninitialized read with UTF-8 grouping chars.
+
 * Tue Apr 09 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.33-alt1
 - Update to 1.1.33 (ALT#36574).
 
