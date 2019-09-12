@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.2.3
-Release: alt2
+Version: 4.2.4
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -197,6 +197,9 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Thu Sep 12 2019 Vladimir Didenko <cow@altlinux.org> 4.2.4-alt1
+- 4.2.4
+
 * Wed Aug 21 2019 Anton Midyukov <antohami@altlinux.org> 4.2.3-alt2
 - Add missing Requires: typelib(Soup)
 
