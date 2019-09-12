@@ -1,6 +1,7 @@
 %define pypi_name pelican
 
-%def_with bootstrap
+%def_without bootstrap
+%def_with standalone_feedgenerator
 
 %define full_desc \
 Pelican is a static site generator, written in Python_.\
@@ -18,7 +19,7 @@ Pelican is a static site generator, written in Python_.\
 
 Name: python3-module-%{pypi_name}
 Version: 4.1.0
-Release: alt3
+Release: alt4
 Summary: %{short_desc}
 Group: Development/Python3
 
@@ -29,7 +30,6 @@ Source: %{pypi_name}-%{version}.tar
 
 BuildArch: noarch
 
-BuildPreReq: python3-module-django
 BuildRequires: python3-devel
 BuildRequires: python3-module-blinker
 BuildRequires: python3-module-dateutil
@@ -38,6 +38,7 @@ BuildRequires: python3-module-pytz
 BuildRequires: python3-module-unidecode
 BuildRequires: python3-module-mock
 %if_without bootstrap
+BuildRequires: python3-module-%{pypi_name}
 BuildRequires: python3-module-nose
 %endif
 
@@ -54,9 +55,11 @@ Summary: %{short_desc}
 Group: Publishing
 
 Requires: python3-module-%{pypi_name}
+%if_with standalone_feedgenerator
+Requires: python3-module-feedgenerator
+%endif
 Requires: python3-module-markdown
 Requires: python3-module-unidecode
-Requires: python3-module-Pygments-tests
 
 %description -n pelican
 %{full_desc}
@@ -76,8 +79,10 @@ sed -i '1d' pelican/tools/templates/pelicanconf.py.jinja2
 sed -i '1d' pelican/tools/templates/publishconf.py.jinja2
 
 # substitute feedgenerator with it's original django
+%if_without standalone_feedgenerator
 sed -i 's|feedgenerator|django.utils.feedgenerator|' pelican/writers.py
 sed -i "s|'feedgenerator >= 1.9', ||" setup.py
+%endif
 
 %build
 %{python3_build}
@@ -115,6 +120,10 @@ nosetests-3 -sv --with-coverage --cover-package=pelican pelican
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Sep 12 2019 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt4
+- Proper build with python3 (with docs);
+- Use of standalone feedgenerator.
+
 * Tue Aug 22 2019 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt3
 - First build with python3 (no docs).
 
