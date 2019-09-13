@@ -11,12 +11,12 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      2d0083d657f82c47044c8d3948ba434b622fe2fd
+%global commit      6a30dfca03664a0b6bf0646a7d389ee7d0318e6e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    19.03.1
-Release: alt2
+Version:    19.03.2
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -174,6 +174,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Sep 12 2019 Vladimir Didenko <cow@altlinux.org> 19.03.2-alt1
+- 19.03.2
+
 * Thu Sep 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 19.03.1-alt2
 - Make udev rules not executable
 
