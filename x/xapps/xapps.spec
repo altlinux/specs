@@ -1,7 +1,7 @@
 %define translations_name xapp
 
 Name: xapps
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -155,6 +155,9 @@ Python3 Xapp overrides Library
 %python3_sitelibdir/gi/overrides/__pycache__/*
 
 %changelog
+* Thu Sep 12 2019 Vladimir Didenko <cow@altlinux.org> 1.4.9-alt1
+- 1.4.9
+
 * Wed Jul 10 2019 Vladimir Didenko <cow@altlinux.org> 1.4.8-alt1
 - 1.4.8
 
