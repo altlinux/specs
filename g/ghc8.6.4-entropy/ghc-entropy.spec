@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.4.1.4
+Version: 0.4.1.5
 Release: alt1
 License: BSD3
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -18,7 +18,6 @@ Patch: %name-%version-%release.patch
 Summary: A platform independent entropy source
 
 BuildRequires: ghc8.6.4 ghc8.6.4-doc
-
 
 %description
 A mostly platform independent (not GHCJS) method to obtain
@@ -41,5 +40,8 @@ sound) PRNGs should see the 'DRBG' package too.
 %files -f %name-files.all
 
 %changelog
+* Fri Sep 13 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.1.5-alt1
+- Build new version.
+
 * Fri Aug 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.1.4-alt1
 - Build new version for ghc8.6.4.
