@@ -2,7 +2,7 @@
 
 Name:    vnstat
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: console-based network traffic monitor
 Summary(ru_RU.UTF-8): консольная утилита для подсчёта трафика
@@ -164,6 +164,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Fri Sep 13 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.4-alt2
+- Fix network interface detection in vnstat-update helper script
+
 * Mon Aug 26 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.4-alt1
 - New version
 
