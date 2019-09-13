@@ -12,8 +12,8 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python-module-%pypi_name
-Version:    5.4.2
-Release:    alt2
+Version:    5.4.3
+Release:    alt1
 
 Summary:    Python Build Reasonableness
 
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 13 2019 Grigory Ustinov <grenka@altlinux.org> 5.4.3-alt1
+- Build new version.
+
 * Thu Aug 29 2019 Anton Farygin <rider@altlinux.ru> 5.4.2-alt2
 - removed buildrequires on himself
 
