@@ -1,5 +1,5 @@
 Name: scons
-Version: 3.0.1
+Version: 3.1.1
 Release: alt1
 
 Summary: an Open Source software construction tool
@@ -10,16 +10,12 @@ Group: Development/Python
 Url: http://www.scons.org
 
 BuildArch: noarch
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-python3
 
-Source: http://dl.sf.net/scons/%name-src-%version.tar.gz
-#Patch: %name-%version-%release.patch
+Source: %name-src-%version.tar
 
 Obsoletes: scons-doc < %version-%release
 Provides: scons-doc = %version-%release
-Requires: python-module-setuptools
-
-%add_python_req_skip builtins
 
 %description
 SCons is an Open Source software construction tool--that is, a build
@@ -53,16 +49,13 @@ Carpentry в августе 2000г.
 
 %prep
 %setup -n %name-src-%version
-#%patch -p1
-sed -i 's|/usr/bin/env python|/usr/bin/python|' script/*
+sed -i 's|/usr/bin/env python|/usr/bin/python3|' script/*
 
 %build
-python setup.py build
-export SCONS_LIB_DIR=%_builddir/%name-src-%version/src/engine
+%python3_build
 
 %install
-python setup.py install -O1 --skip-build \
-    --root=%buildroot \
+%python3_install \
     --no-version-script \
     --standard-lib \
     --install-scripts=%_bindir \
@@ -72,11 +65,18 @@ python setup.py install -O1 --skip-build \
 %doc LICENSE.txt CHANGES.txt README.txt RELEASE.txt
 %_man1dir/*
 %_bindir/*
-%python_sitelibdir_noarch/SCons
-%python_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/SCons
+%python3_sitelibdir_noarch/*.egg-info
 %_mandir/man?/*
 
 %changelog
+* Thu Aug 29 2019 Vladimir Didenko <cow@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
+* Fri Jul 5 2019 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt1
+- 3.0.5
+- switch to Python 3
+
 * Mon Jan 29 2018 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - 3.0.1
 

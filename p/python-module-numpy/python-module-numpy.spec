@@ -15,7 +15,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -132,7 +132,6 @@ This package contains tests NumPy.
 %package -n lib%oname-py3
 Summary: Shared libraries of NumPy (Python 3)
 Group: System/Libraries
-%add_python3_req_skip numscons
 %if "%_lib" == "lib64"
 Provides: libnpymath3.so.%py3somver()(64bit)
 %else
@@ -155,8 +154,6 @@ Group: Development/Python3
 Requires: lib%oname-py3 = %EVR
 Requires: python3-module-%oname = %EVR
 Requires: python3-devel
-# numpydoc
-%add_python3_req_skip numscons
 
 %description -n lib%oname-py3-devel
 NumPy is a general-purpose array-processing package designed to
@@ -220,7 +217,6 @@ This package contains tests NumPy.
 %package -n lib%oname
 Summary: Shared libraries of NumPy
 Group: System/Libraries
-%add_python_req_skip numscons
 %if "%_lib" == "lib64"
 Provides: libnpymath.so.%somver()(64bit)
 %else
@@ -245,9 +241,6 @@ Requires: %name = %EVR
 Requires: python-module-numpydoc
 Requires: %name-addons = %EVR
 Requires: python-devel
-%py_requires SCons
-# numpydoc
-%add_python_req_skip numscons
 
 %description -n lib%oname-devel
 NumPy is a general-purpose array-processing package designed to
@@ -628,8 +621,6 @@ install -p -m644 %oname/core/src/private/npy_config.h \
 
 rm -f \
 	$(find %buildroot%python_sitelibdir/%oname/ -name setup.py) \
-	$(find %buildroot%python_sitelibdir/%oname/ -name setupscons.py) \
-	%buildroot%python_sitelibdir/%oname/core/scons_support.py \
 	%buildroot%python_sitelibdir/%oname/f2py/docs/usersguide/setup_example.py
 
 ln -s f2py%_python_version %buildroot%_bindir/f2py
@@ -652,8 +643,6 @@ install -p -m644 %oname/core/src/private/npy_config.h \
 
 rm -f \
 	$(find %buildroot%python3_sitelibdir/%oname/ -name setup.py) \
-	$(find %buildroot%python3_sitelibdir/%oname/ -name setupscons.py) \
-	%buildroot%python3_sitelibdir/%oname/core/scons_support.py \
 	%buildroot%python3_sitelibdir/%oname/f2py/docs/usersguide/setup_example.py
 
 #fixes
@@ -955,6 +944,9 @@ fi
 %endif
 
 %changelog
+* Fri Sep 13 2019 Vladimir Didenko <cow@altlinux.org> 1:1.15.4-alt3
+- Remove dependency on scons (it is not required anymore)
+
 * Tue Jun 11 2019 Stanislav Levin <slev@altlinux.org> 1:1.15.4-alt2
 - Dropped dependency on testing/test packages in the main one.
 

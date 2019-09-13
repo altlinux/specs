@@ -4,8 +4,8 @@
 %def_with bootstrap
 
 Name:           python-module-%oname
-Version:        0.9.2
-Release:        alt1.2
+Version:        0.11.0
+Release:        alt1
 Summary:        Python bindings for the Apache Thrift RPC system
 License:        Apache-2.0
 Group:          Development/Python
@@ -16,6 +16,11 @@ BuildRequires:  python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel python-tools-2to3
+%endif
+
+%add_python_req_skip SCons
+%if_with bootstrap
+%add_python_req_skip SCons.Builder
 %endif
 
 %description
@@ -31,10 +36,6 @@ the generated code for the reflection structures.
 %package -n python3-module-%oname
 Summary: Python bindings for the Apache Thrift RPC system
 Group: Development/Python3
-%add_python3_req_skip SCons
-%if_with bootstrap
-%add_python3_req_skip SCons.Builder
-%endif
 
 %description -n python3-module-%oname
 Thrift Python Software Library
@@ -87,6 +88,10 @@ popd
 %endif
 
 %changelog
+* Fri Sep 13 2019 Vladimir Didenko <cow@altlinux.org> 0.11.0-alt1
+- Version 0.11.0
+- Don't require scons for Python 2 version
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt1.2
 - rebuild with python3.6
 
