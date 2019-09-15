@@ -1,5 +1,5 @@
 Name: dm-secdel
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: dm-linear with secure deletion on discard
@@ -52,6 +52,11 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.5-alt1
+- Compatibility with kernels up to 5.2.
+- Add audit record.
+- Multi-pass erase with specified patterns.
+
 * Sat Oct 13 2018 Vitaly Chikunov <vt@altlinux.org> 1.0.4-alt1
 - Compatibility with kernel 4.18
 
