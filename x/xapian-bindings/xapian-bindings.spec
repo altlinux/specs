@@ -5,7 +5,7 @@
 
 Name: xapian-bindings
 Version: 1.4.5
-Release: alt3
+Release: alt4
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -125,7 +125,7 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %files -n ruby-xapian
 %doc README ruby/docs/*
 %ruby_sitearchdir/_xapian.so
-%ruby_sitelibdir/xapian.rb
+%ruby__sitelibdir/xapian.rb
 %endif
 
 # TODO:
@@ -137,6 +137,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.5-alt4
+- Fix packaging of ruby module.
+
 * Tue Mar 05 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.5-alt3
 - Enable building of ruby module
 
