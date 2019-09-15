@@ -1,7 +1,7 @@
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
 Version:  1.5
-Release:  alt2
+Release:  alt3
 
 Summary:  Programs that test various rt-linux features
 License:  GPL-2.0-or-later
@@ -9,7 +9,6 @@ Group:    System/Kernel and hardware
 # git://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git
 Url:      https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rt-tests
 
-ExclusiveArch: %ix86 x86_64
 Source:   %name-%version.tar
 BuildRequires: libnuma-devel rpm-build-python3
 
@@ -52,6 +51,9 @@ install -D src/hwlatdetect/hwlatdetect.py %buildroot/usr/sbin/hwlatdetect
 %doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 
 %changelog
+* Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt3
+- Make it compile on other arches.
+
 * Sun Sep 08 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt2
 - Add hwlatdetect (required python3).
 
