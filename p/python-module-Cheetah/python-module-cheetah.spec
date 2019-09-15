@@ -4,8 +4,8 @@
 
 Summary: Template engine and code-generator
 Name: python-module-%origname
-Version: 3.1.0
-Release: alt1.1
+Version: 3.2.3
+Release: alt2
 Source0: Cheetah-%version.tar
 License: MIT
 Group: Development/Python
@@ -14,7 +14,7 @@ URL: http://cheetahtemplate.org/
 #BuildArch: noarch
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+# optimized out: elfutils python-base python-devel python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-markdown python-module-setuptools time
 BuildRequires: python-module-sphinx
@@ -23,7 +23,7 @@ BuildRequires: python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-distribute python3-module-setuptools
-BuildPreReq: python3-module-markdown python-tools-2to3
+BuildPreReq: python3-module-markdown
 BuildPreReq: python3-module-sphinx
 %endif
 
@@ -87,7 +87,6 @@ cp -a . ../python3
 
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -100,7 +99,6 @@ cp -fR docs/_build/html/* man/
 %install
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_install
 popd
 pushd %buildroot%_bindir
@@ -132,6 +130,12 @@ popd
 
 
 %changelog
+* Tue Sep 3 2019 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt2
+- Don't use 2to3 conversion because it breaks python3 package
+
+* Tue Sep 3 2019 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt1
+- Version 3.2.3
+
 * Tue Mar 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

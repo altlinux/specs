@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.0.11
+Version: 4.2.0
 Release: alt1
 
 Summary: mongo client shell and tools
@@ -68,11 +68,14 @@ install -d %{buildroot}%{_mandir}/man1
 install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 
 %files
-%doc Godeps README.md CONTRIBUTING.md THIRD-PARTY-NOTICES LICENSE.md
+%doc README.md CONTRIBUTING.md THIRD-PARTY-NOTICES LICENSE.md
 %_bindir/*
 %{_mandir}/man1/*
 
 %changelog
+* Wed Sep 11 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Thu Aug 1 2019 Vladimir Didenko <cow@altlinux.org> 4.0.11-alt1
 - 4.0.11
 

@@ -1,5 +1,5 @@
 Name: mongo
-Version: 4.0.11
+Version: 4.2.0
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL 1.0
@@ -9,19 +9,17 @@ Group: Development/Databases
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
 ExclusiveArch: x86_64 aarch64
 
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
 
-Patch1:         mongodb-2.4.5-no-term.patch
-
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons
+BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources scons
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
 BuildRequires: libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json
-BuildRequires: python-module-Cheetah python-module-typing python-module-yaml
+BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel
 
 %description
@@ -59,25 +57,17 @@ in order to complete these operations. From the perspective of the
 application, a mongos instance behaves identically to any other
 MongoDB instance.
 
-
 %prep
 %setup
-%patch1 -p1
 
 # CRLF -> LF
 sed -i 's/\r//' README
 
-# Disable optimization for s2 library
-# https://jira.mongodb.org/browse/SERVER-17511
-sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  src/third_party/s2/SConscript
-
 %build
-# NOTE: Build flags must be EXACTLY the same in the install step!
-# If you fail to do this, mongodb will be built twice...
 %ifarch aarch64
 %define ccflags_arch_opts "-march=armv8-a+crc"
 %endif
-%define common_opts \\\
+%define build_opts \\\
        -j %__nprocs \\\
        --use-system-tcmalloc \\\
        --use-system-pcre \\\
@@ -86,19 +76,23 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
        --use-system-zlib \\\
        --use-system-stemmer \\\
        --use-system-yaml \\\
-       --prefix=%buildroot%_prefix \\\
        --nostrip \\\
        --use-sasl-client \\\
        --wiredtiger=on \\\
-       --ssl \\\
-       --disable-warnings-as-errors \\\
+       --ssl=on \\\
        MONGO_VERSION="%{version}-%{release}" \\\
+       --disable-warnings-as-errors \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-scons core tools %common_opts
+scons %build_opts --install-mode=legacy core
 
 %install
-scons install %common_opts
+
+# cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
+# specify location to install binaries (at least I wasn't able to find it).
+install -p -D -m 755 build/opt/mongo/mongod %buildroot%_bindir/mongod
+install -p -D -m 755 build/opt/mongo/mongos %buildroot%_bindir/mongos
+install -p -D -m 755 build/opt/mongo/mongo %buildroot%_bindir/mongo
 
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_runtimedir/%name
@@ -147,7 +141,6 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %doc README LICENSE-Community.txt
 
 %_bindir/mongo
-%exclude %_bindir/install_compass
 
 %_man1dir/mongo.1*
 
@@ -189,6 +182,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Sep 11 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Thu Aug 1 2019 Vladimir Didenko <cow@altlinux.org> 4.0.11-alt1
 - 4.0.11
 
