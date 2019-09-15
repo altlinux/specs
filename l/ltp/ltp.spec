@@ -1,6 +1,6 @@
 Name: ltp
 Version: 20190828
-Release: alt1
+Release: alt2
 
 Summary: Linux Test Project
 License: GPL-2.0-or-later
@@ -21,6 +21,7 @@ source contributors are encouraged to join.
 Testing Linux, one syscall at a time.
 
 %add_verify_elf_skiplist /usr/lib/ltp/testcases/*
+%add_findreq_skiplist /usr/lib/ltp/testcases/*
 
 %prep
 %setup
@@ -37,5 +38,8 @@ Testing Linux, one syscall at a time.
 /usr/lib/ltp
 
 %changelog
+* Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 20190828-alt2
+- Reduce amount of requires for tests.
+
 * Tue Sep 03 2019 Vitaly Chikunov <vt@altlinux.org> 20190828-alt1
 - Initial build of LTP.
