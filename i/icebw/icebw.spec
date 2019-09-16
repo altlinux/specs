@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 14.7
+Version: 14.8
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -22,7 +22,6 @@ Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name.watch
 Patch1:	 %name-fix-pathes.patch
 Patch2:  %name-alt-fix-missing-global-variables.patch
-Patch3:  %name-fix-mariadb-includes-path.patch
 Patch4:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
@@ -38,7 +37,6 @@ Free financial accounting system.
 %setup -q -c
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
 %patch4 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/uk_ru
 
@@ -65,6 +63,9 @@ cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Mon Sep 16 2019 Andrey Cherepanov <cas@altlinux.org> 14.8-alt1
+- new version 14.8
+
 * Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 14.7-alt1
 - new version 14.7
 - fix path of MariaDB includes and its library name
