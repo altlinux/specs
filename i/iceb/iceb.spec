@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 19.7
+Version: 19.8
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -14,7 +14,6 @@ Url:     http://iceb.net.ua
 
 Source:  %name-%version.tar
 Source1: %name.watch
-Patch1:  %name-fix-mariadb-includes-path.patch
 Patch2:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
@@ -29,7 +28,6 @@ Free financial accounting system.
 
 %prep
 %setup -q -c
-%patch1 -p2
 %patch2 -p2
 
 %build
@@ -60,6 +58,9 @@ cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_pixmapsdir/*.png
 
 %changelog
+* Sat Sep 07 2019 Andrey Cherepanov <cas@altlinux.org> 19.8-alt1
+- new version 19.8
+
 * Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 19.7-alt1
 - new version 19.7
 - fix path of MariaDB includes and its library name
