@@ -1,8 +1,8 @@
 %define        pkgname nio4r
 
 Name:          ruby-%pkgname
-Version:       2.3.1
-Release:       alt2
+Version:       2.5.1
+Release:       alt1
 Summary:       New I/O for Ruby: Cross-platform asynchronous I/O primitives for scalable network clients and servers
 License:       MIT
 Group:         Development/Ruby
@@ -24,6 +24,7 @@ for various types of readiness, e.g. ready for reading or writing.
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 Provides:      ruby-%pkgname-doc
@@ -32,27 +33,34 @@ Obsoletes:     ruby-%pkgname-doc
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %package       -n gem-%pkgname-devel
 Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-%pkgname-devel
 Development files for %gemname gem.
 
+%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -66,9 +74,13 @@ Development files for %gemname gem.
 %files         -n gem-%pkgname-devel
 %ruby_includedir/*
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
+- ^ v2.5.1
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt2
-- Use Ruby Policy 2.0
+- ^ Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1.1
 - Rebuild with new Ruby autorequirements.

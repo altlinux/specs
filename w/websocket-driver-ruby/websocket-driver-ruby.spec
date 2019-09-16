@@ -2,8 +2,8 @@
 %define        gemname websocket-driver
 
 Name:          %pkgname-ruby
-Version:       0.7.0
-Release:       alt2
+Version:       0.7.1
+Release:       alt1
 Summary:       WebSocket protocol handler with pluggable I/O
 License:       MIT
 Group:         Development/Ruby
@@ -24,6 +24,7 @@ Think of it as a complete WebSocket system with pluggable I/O.
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 Obsoletes:     %pkgname-ruby-doc
@@ -32,17 +33,21 @@ Provides:      %pkgname-ruby-doc
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %prep
 %setup
 
 %build
-%gem_build --alias=websocket-driver:websocket-driver-ruby --join=bin:lib
+%ruby_build --alias=websocket-driver:websocket-driver-ruby --join=bin:lib
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -54,8 +59,11 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt1
+- ^ v0.7.1
+
 * Wed Apr 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.0-alt2
-- Use Ruby Policy 2.0
+- ^ Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1.1
 - Rebuild with new Ruby autorequirements.

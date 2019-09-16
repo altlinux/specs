@@ -1,21 +1,20 @@
-%define  pkgname friendly_id
+%define        pkgname friendly_id
+%define        gemname friendly_id
 
-Name:    ruby-%pkgname
-Version: 5.2.4
-Release: alt1
+Name:          ruby-%pkgname
+Version:       5.2.5
+Release:       alt1
+Summary:       FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for ActiveRecord.
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/norman/friendly_id
+%vcs           https://github.com/norman/friendly_id.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for ActiveRecord.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/norman/friendly_id
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for
@@ -44,43 +43,44 @@ FriendlyId есть "Землекоп швейцарской армии", поз
 
     http://example.com/states/4323454
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-BuildArch: noarch
+%description   doc
+Documentation files for %gemname gem.
 
-%description doc
-Documentation files for %{name}.
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
-%description doc -l ru_RU.UTF8
-Файлы сведений для %name
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.5-alt1
+- ^ v5.2.5
+- ^ Ruby Policy 2.0
+
 * Mon Sep 24 2018 Pavel Skrylev <majioa@altlinux.org> 5.2.4-alt1
 - Initial gemified build for Sisyphus

@@ -1,7 +1,7 @@
 %define        pkgname ancestry
 
 Name:          ruby-%pkgname
-Version:       3.0.5
+Version:       3.0.7
 Release:       alt1
 Summary:       Organise ActiveRecord model into a tree structure
 License:       MIT
@@ -21,7 +21,8 @@ BuildRequires(pre): rpm-build-ruby
 Упорядочивание модели ActiveRecord в виде древовидной структуры
 
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
@@ -29,38 +30,43 @@ BuildArch:     noarch
 Documentation files for %gemname gem.
 
 %description   doc -l ru_RU.UTF8
-Файлы сведений для буси %gemname
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
-%ruby_gemlibdir
 %ruby_gemspec
+%ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.7-alt1
+- ^ v3.0.7
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.5-alt1
-- Bump to 3.0.5
-- Use Ruby Policy 2.0
+- ^ v3.0.5
+- ^ Ruby Policy 2.0
 
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.3-alt1
-- Bimp to 3.0.3
+- ^ v3.0.3
 
 * Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.2-alt2
-- Gemify the package.
+- ! gemify the package.
 
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
-- Initial build for Sisyphus
+- + initial build for Sisyphus

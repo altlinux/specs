@@ -1,7 +1,7 @@
 %define        pkgname addressable
 
 Name:          ruby-%pkgname
-Version:       2.6.0
+Version:       2.7.0
 Release:       alt1
 Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library
 Summary(ru_RU.UTF-8): "Адресуемый" есть заменою воплощения URI, который является частью стандартной библиотеки рубина
@@ -40,28 +40,30 @@ Documentation for %{name}.
 
 %prep
 %setup
-sed "s|File.join(File.dirname(__FILE__), '../../..', 'data/unicode.data')|'%_datadir/%name/unicode.data'|" -i lib/addressable/idna/pure.rb
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
-install -D data/unicode.data %buildroot%_datadir/%name/unicode.data
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
 %ruby_gemlibdir
 %ruby_gemspec
-%_datadir/%name
 
-%files doc
+%files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
+- ^ v2.7.0
+- ^ Ruby Policy 2.0
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
 - Bump to 2.6.0
 

@@ -1,13 +1,13 @@
 %define        pkgname parser
 
 Name:          gem-%pkgname
-Version:       2.6.2.0
+Version:       2.6.4.1
 Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/whitequark/parser
-# VCS:         https://github.com/whitequark/parser.git
+%vcs           https://github.com/whitequark/parser.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 Source:        %name-%version.tar
@@ -46,13 +46,13 @@ Executable file for %pkgname.
 %setup
 
 %build
-%gem_build --use=parser --alias=parse
+%ruby_build --use=parser --alias=parse
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -64,9 +64,13 @@ Executable file for %pkgname.
 %files         -n ruby-parse
 %_bindir/*
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.4.1-alt1
+- ^ v2.6.4.1
+
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.2.0-alt1
-- Bump to 2.6.2.0
+- ^ v2.6.2.0
 
 * Wed Feb 27 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0.0-alt1
-- Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+- + initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0

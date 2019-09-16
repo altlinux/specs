@@ -1,13 +1,13 @@
 %define        pkgname capybara
 
 Name:          ruby-%pkgname
-Version:       3.16.1
+Version:       3.29.0
 Release:       alt1
 Summary:       Acceptance test framework for web applications
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/teamcapybara/capybara
-# VCS:         https://github.com/teamcapybara/capybara.git
+%vcs           https://github.com/teamcapybara/capybara.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -29,13 +29,13 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -45,10 +45,14 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.29.0-alt1
+- ^ v3.29.0
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 3.16.1-alt1
-- Bump to 3.16.1
-- Use Ruby Policy 2.0
+- ^ v3.16.1
+- ^ Ruby Policy 2.0
 
 * Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.10.0-alt1
 - new version 3.10.0

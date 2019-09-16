@@ -1,18 +1,17 @@
 %define        pkgname apipie-rails
 
 Name:          ruby-%pkgname
-Version:       0.5.15
+Version:       0.5.16
 Release:       alt1
 Summary:       Ruby on Rails API documentation tool
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/Apipie/apipie-rails
-# VCS:         https://github.com/Apipie/apipie-rails.git
+%vcs           https://github.com/Apipie/apipie-rails.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 
 %description
@@ -34,6 +33,7 @@ data in JSON.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
@@ -41,19 +41,20 @@ BuildArch:     noarch
 Documentation files for %gemname gem.
 
 %description   doc -l ru_RU.UTF8
-Файлы сведений для %name
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -63,13 +64,17 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.16-alt1
+- ^ v0.5.16
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 0.5.15-alt1
-- Bump to 0.5.15
-- Use Ruby Policy 2.0
+- ^ v0.5.15
+- ^ Ruby Policy 2.0
 
 * Wed Oct 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.5.13-alt1
-- Bump to 0.5.13
+- ^ v0.5.13
 
 * Wed Oct 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.12-alt1
 - New version.

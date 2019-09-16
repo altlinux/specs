@@ -1,20 +1,22 @@
 %define        pkgname net-scp
 
 Name:          ruby-%pkgname
-Version:       1.2.1
-Release:       alt2
+Version:       2.0.0
+Release:       alt1
 Summary:       A pure Ruby implementation of the SCP client protocol
 Group:         Development/Ruby
 License:       MIT
 Url:           https://github.com/net-ssh/net-scp
-# VCS:         https://github.com/net-ssh/net-scp.git
+%vcs           https://github.com/net-ssh/net-scp.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(net-ssh)
 BuildRequires: gem(test-unit)
-BuildRequires: ruby-mocha
+BuildRequires: gem(mocha)
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Net::SCP is a pure-Ruby implementation of the SCP protocol. This operates over
@@ -22,36 +24,46 @@ SSH (and requires the Net::SSH library), and allows files and directory trees
 to copied to and from a remote server.
 
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %name
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
-%ruby_gemlibdir
+%doc README*
 %ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
+%files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- ^ v2.0.0
+
 * Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt2
-- Use Ruby Policy 2.0.
+- ^ Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1.1
 - Rebuild with new Ruby autorequirements.
