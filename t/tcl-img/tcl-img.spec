@@ -2,20 +2,24 @@
 %define major 1.4
 
 Name: tcl-img
-Version: 1.4.2
-Release: alt2
+Version: 1.4.9
+Release: alt1
 
 Summary: Tcl Image Formats (Img)
-License: BSD
+License: TCL
 Group: Development/Tcl
-Url: http://tkimg.sf.net
+Url: https://sourceforge.net/projects/tkimg/
 
 Provides: %teaname = %version-%release
 Obsoletes: %teaname
 Conflicts: tcl < 8.6.7-alt2
 
-# git://git.altlinux.org/gears/t/tcl-img.git
-Source0: %name-%version-%release.tar
+# repacked https://sourceforge.net/projects/tkimg/files/tkimg/1.4/ "tkimg %version" Img-%version-Sources.tar.gz
+Source0: tkimg-%version.tar
+Patch1: 0001-ALT-TEA.patch
+Patch2: 0002-DEBIAN-system-zlib.patch
+Patch3: 0003-DEBIAN-system-libjpeg.patch
+Patch4: 0004-DEBIAN-system-libpng.patch
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
@@ -26,28 +30,43 @@ BuildRequires: tcllib
 BMP, XBM, XPM, GIF, PNG, JPEG, postscript and others.
 
 %prep
-%setup
+%setup -q -n tkimg-%version
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 find . -name config.cache -delete
 
 %build
 export TCL_SRC_DIR=%_includedir/tcl
 export TK_SRC_DIR=%_includedir/tk
 %autoreconf
-%configure --with-tcl=%_libdir --with-tk=%_libdir
+%configure \
+	   --with-tcl=%_libdir \
+	   --with-tk=%_libdir \
+	   --enable-threads \
+	   #
 %make_build
 
-gzip -9 ChangeLog
+xz ChangeLog
 
 %install
 %make_install DESTDIR=%buildroot install
 
 %files
-%doc ANNOUNCE ChangeLog.gz README doc/*.css doc/*.htm
+%doc ANNOUNCE ChangeLog* README doc/*.css doc/*.htm license.terms
 %_tcllibdir/Img%version/*.so
 %_tcllibdir/Img%version/pkgIndex.tcl
 %_mandir/mann/*
 
 %changelog
+* Mon Sep 16 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.9-alt1
+- 1.4.9.
+- Explicitly enabled threads in configure.
+- Packaged license.terms file.
+- Refreshed Url.
+- Fixed license field.
+
 * Thu Feb 28 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.2-alt2
 - rebuilt against libpng16
 
