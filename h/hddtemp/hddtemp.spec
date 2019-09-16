@@ -3,26 +3,26 @@
 
 Name: hddtemp
 Version: 0.3
-Release: alt13.beta%beta
+Release: alt14.beta%beta
 Epoch: 20110629
-
-Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: Hard Drive Temperature Monitoring
 License: GPLv2+
 Group: Monitoring
 
 Url: http://www.guzu.net/linux/hddtemp.php
-Source0: http://download.savannah.nongnu.org/releases/hddtemp/hddtemp-%fullver.tar.bz2
+Source0: http://download.savannah.nongnu.org/releases/hddtemp/hddtemp-%fullver.tar
 Source1: http://download.savannah.nongnu.org/releases/hddtemp/hddtemp.db
 Source2: hddtemp.control
 Source3: hddtemp.init
 Source4: hddtemp.sysconfig
 Source5: hddtemp.db-alt
+Source6: hddtemp.service
 
 Patch1: hddtemp-0.3beta15-guessedvalue.patch
 Patch2: hddtemp-0.3beta15-compile.patch
 Patch3: hddtemp-fedora-user-context-type.patch
+Patch4: hddtemp-0.3beta15-doublefork.patch
 
 %description
 hddtemp is a tool that gives you the temperature of your IDE,
@@ -33,6 +33,7 @@ SATA or SCSI hard drive by reading S.M.A.R.T. information.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p2
 
 %build
 %autoreconf
@@ -44,6 +45,7 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/misc/hddtemp.db
 install -pDm755 %SOURCE2 %buildroot%_controldir/hddtemp
 install -pDm755 %SOURCE3 %buildroot%_initdir/hddtemp
 install -pDm755 %SOURCE4 %buildroot%_sysconfdir/sysconfig/hddtemp
+install -pDm644 %SOURCE6 %buildroot%_unitdir/hddtemp.service
 install -d %buildroot%_man8dir
 
 %makeinstall_std
@@ -65,6 +67,7 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 %doc README TODO contribs
 %_sbindir/hddtemp
 %_initdir/hddtemp
+%_unitdir/hddtemp.service
 %_man8dir/*
 %_datadir/misc/hddtemp.db
 %config(noreplace) %_sysconfdir/control.d/facilities/hddtemp
@@ -74,6 +77,9 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Mon Sep 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 20110629:0.3-alt14.beta15
+- systemd service file added
+
 * Tue Feb 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20110629:0.3-alt13.beta15
 - NMU: fixed build on i586.
 
