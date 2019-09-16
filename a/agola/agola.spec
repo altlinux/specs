@@ -1,5 +1,5 @@
 %global import_path github.com/agola-io/agola
-%global commit ea3e0d1d7c41a72e8eb5820d3a6048edf0b6ae7a
+%global commit 6ca985c641e513183341b063f4e9ca4e2e9351a3
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,7 +12,7 @@
 
 
 Name:		agola
-Version:	0.1.1
+Version:	0.2.0
 Release:	alt1
 Summary:	CI/CD redefined
 
@@ -41,6 +41,7 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GO111MODULE=off
 
 %golang_prepare
 
@@ -70,5 +71,8 @@ install -p -m 755 bin/agola-toolbox %buildroot%_bindir/agola-toolbox
 %_bindir/*
 
 %changelog
+* Mon Sep 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sun Jul 21 2019 Alexey Shabalin <shaba@altlinux.org> 0.1.1-alt1
 - First build for ALTLinux.
