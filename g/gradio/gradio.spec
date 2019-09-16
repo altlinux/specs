@@ -1,5 +1,5 @@
 Name: gradio
-Version: 7.2
+Version: 7.3
 Release: alt1
 Summary: GTK3 app for finding and listening to internet radio stations
 License: GPL-3.0+
@@ -30,7 +30,7 @@ website for its database backend.
 %files
 %doc README.md
 %_bindir/gradio
-%_datadir/appdata/de.haeckerfelix.gradio.appdata.xml
+%_datadir/metainfo/de.haeckerfelix.gradio.appdata.xml
 %_datadir/dbus-1/services/de.haeckerfelix.gradio.service
 %_datadir/glib-2.0/schemas/de.haeckerfelix.gradio.gschema.xml
 %_datadir/gnome-shell/search-providers/de.haeckerfelix.gradio.search-provider.ini
@@ -61,6 +61,9 @@ website for its database backend.
 %_iconsdir/hicolor/symbolic/apps/de.haeckerfelix.gradio-symbolic.svg
 
 %changelog
+* Mon Sep 16 2019 Grigory Ustinov <grenka@altlinux.org> 7.3-alt1
+- Build new version.
+
 * Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 7.2-alt1
 - Build new version.
 
