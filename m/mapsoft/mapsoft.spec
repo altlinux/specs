@@ -1,6 +1,6 @@
 Name: mapsoft
-Version: 20190213
-Release: alt2
+Version: 20190916
+Release: alt1
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
 Group: Sciences/Geosciences
@@ -50,6 +50,7 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_bindir/mapsoft_mapview
 %_mandir/man1/mapsoft_convert.*
 %_mandir/man1/mapsoft_mapview.*
+%_desktopdir/mapsoft_mapview.*
 
 %files tools
 %_bindir/convs_*
@@ -69,6 +70,12 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_mandir/man1/mapsoft_vmap.*
 
 %changelog
+* Mon Sep 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190916-alt1
+- Fix build with new scons/python
+- mapsoft_geofig: --raw option
+- mapsoft_mapview: add desktop file
+- mapsoft_vmap: fix error in label creation introduced in 2018-06-16
+
 * Fri Feb 15 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190213-alt2
 - rebuild with libproj 5.2.0
 
