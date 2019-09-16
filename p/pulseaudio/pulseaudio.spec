@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 12.2
-Release: alt3
+Version: 13.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -194,7 +194,6 @@ touch config.rpath
     --with-access-group=audio \
     --enable-per-user-esound-socket \
     --enable-adrian-aec \
-    --disable-bluez4 \
     --disable-static \
     #
 
@@ -205,17 +204,17 @@ touch config.rpath
 install -pm0644 -D pulseaudio.sysconfig %buildroot%_sysconfdir/sysconfig/pulseaudio
 install -pm0755 -D pulseaudio.init %buildroot%_initdir/pulseaudio
 ln -s esdcompat %buildroot%_bindir/esd
-mkdir -p %buildroot%_localstatedir/pulse %buildroot%_runtimedir/pulse
+mkdir -p %buildroot%_localstatedir/pulse
 find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-12.0
+%define pulselibdir %_libdir/pulse-13.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
 %_sbindir/groupadd -r -f pulse &> /dev/null
-%_sbindir/useradd -r -g pulse -G audio -d %_runtimedir/pulse -s /dev/null \
+%_sbindir/useradd -r -g pulse -G audio -d /run/pulse -s /dev/null \
 	-c "Pulseaudio daemon" -M -n pulse &>/dev/null ||:
 
 %files
@@ -239,7 +238,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-12.0.so
+%_libdir/pulseaudio/libpulsecore-13.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -270,7 +269,6 @@ find %buildroot%_libdir -name \*.la -delete
 %config(noreplace) %_sysconfdir/pulse/system.pa
 
 %attr(0770,root,pulse) %dir %_localstatedir/pulse
-%attr(0771,root,pulse) %dir %_runtimedir/pulse
 
 %files utils
 %_bindir/pacat
@@ -321,7 +319,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-12.0.so
+%_libdir/pulseaudio/libpulsecommon-13.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -335,6 +333,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Mon Sep 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt1
+- 13.0 released
+
 * Thu Jun 27 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.2-alt3
 - qpaeq actually uses Qt5, fix python reqs
 
