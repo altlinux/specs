@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.2.10
+Version: 1.3.1
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -55,6 +55,7 @@ BuildRequires: vala-tools
 BuildRequires: help2man
 BuildRequires: libxmlb-devel
 BuildRequires: bash-completion
+BuildRequires: libtpm2-tss-devel
 BuildRequires: cmake
 
 %if_enabled dell
@@ -161,6 +162,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %files -f %name.lang
 %doc README.md AUTHORS COPYING
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
+%config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
 %dir %_libexecdir/fwupd
 %dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
@@ -195,6 +197,8 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/fwupd/firmware-packager
 %_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
+%_unitdir/fwupd-refresh.timer
+%_unitdir/fwupd-refresh.service
 %_unitdir/system-update.target.wants/
 /lib/systemd/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
@@ -223,6 +227,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hid.so
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hub.so
 %_libdir/fwupd-plugins-3/libfu_plugin_superio.so
+%_libdir/fwupd-plugins-3/libfu_plugin_solokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_prometheus.so
 %if_enabled dell
@@ -237,6 +242,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %if_enabled uefi
 %_libdir/fwupd-plugins-3/libfu_plugin_nvme.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi.so
+%_libdir/fwupd-plugins-3/libfu_plugin_uefi_recovery.so
 %_libdir/fwupd-plugins-3/libfu_plugin_redfish.so
 %config(noreplace)%_sysconfdir/fwupd/uefi.conf
 %config(noreplace)%_sysconfdir/fwupd/redfish.conf
@@ -270,6 +276,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Sep 16 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.2.10-alt1
 - 1.2.10
 
