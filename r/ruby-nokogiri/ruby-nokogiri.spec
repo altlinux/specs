@@ -1,8 +1,8 @@
 %define        pkgname nokogiri
 
 Name:          ruby-%pkgname
-Version:       1.10.3
-Release:       alt2
+Version:       1.10.4
+Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:         Development/Ruby
 License:       MIT
@@ -84,6 +84,9 @@ Documentation for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.4-alt1
+- ^ v1.10.4
+
 * Tue Jun 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.3-alt2
 - Fix spec
 

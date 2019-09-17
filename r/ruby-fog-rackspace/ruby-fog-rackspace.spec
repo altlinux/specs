@@ -1,62 +1,63 @@
-%define  pkgname fog-rackspace
+%define        pkgname fog-rackspace
 
-Name:    ruby-%pkgname
-Version: 0.1.5
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       0.1.6
+Release:       alt1
+Summary:       Rackspace provider gem for Fog ecosystem
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/fog/fog-rackspace
+%vcs           https://github.com/fog/fog-rackspace.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Rackspace provider gem for Fog ecosystem
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/fog/fog-rackspace
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-Patch:   alt-fix-import-fog.patch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary
+%summary.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%patch -p1
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.6-alt1
+- ^ v0.1.6
+- ^ Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.5-alt1.1
 - Rebuild with new Ruby autorequirements.
 

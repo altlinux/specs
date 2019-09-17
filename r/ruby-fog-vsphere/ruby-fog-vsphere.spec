@@ -1,7 +1,7 @@
 %define        pkgname fog-vsphere
 
 Name:          ruby-%pkgname
-Version:       3.1.0
+Version:       3.2.1
 Release:       alt1
 Summary:       Fog for vSphere
 License:       MIT
@@ -21,6 +21,7 @@ services library to communicate with vSphere.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
@@ -28,8 +29,7 @@ BuildArch:     noarch
 Documentation files for %gemname gem.
 
 %description   doc -l ru_RU.UTF8
-Файлы сведений для %gemname самоцвета
-
+Файлы сведений для самоцвета %gemname.
 
 %prep
 %setup
@@ -51,12 +51,15 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt1
+- ^ v3.2.1
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
-- Bump to 3.1.0
-- Use Ruby Policy 2.0
+- ^ v3.1.0
+- ^ Ruby Policy 2.0
 
 * Mon Jan 21 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
-- Bump to 2.5.0.
+- ^ v2.5.0.
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1.1
 - Rebuild with new Ruby autorequirements.

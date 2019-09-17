@@ -1,28 +1,27 @@
-%define  pkgname rabl
+%define        pkgname rabl
 
-Name:    ruby-%pkgname
-Version: 0.13.1
-Release: alt1
+Name:          ruby-%pkgname
+Version:       0.14.2
+Release:       alt1
+Summary:       General ruby templating with json, bson, xml, plist and msgpack support
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/nesquena/rabl
+%vcs           https://github.com/nesquena/rabl.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: General ruby templating with json, bson, xml, plist and msgpack support
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/nesquena/rabl
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 RABL (Ruby API Builder Language) is a Rails and Padrino ruby templating system
-for generating JSON, XML, MessagePack, PList and BSON. When using the ActiveRecord
-'to_json' method, I find myself wanting a more expressive and powerful solution
-for generating APIs. This is especially true when the JSON representation is
-complex or doesn't match the exact schema defined within the database.
+for generating JSON, XML, MessagePack, PList and BSON. When using the
+ActiveRecord 'to_json' method, I find myself wanting a more expressive and
+powerful solution for generating APIs. This is especially true when the JSON
+representation is complex or doesn't match the exact schema defined within
+the database.
 
 In particular, I want to easily:
 
@@ -45,48 +44,52 @@ which can help clear up any confusion about this project.
 
 %description -l ru_RU.UTF8
 RABL есть шаблонная система для Рубина и Падрины для генерирования структур в
-форматах JSON, XML, MessagePack, PList и BSON. При использовании метода 'to_json'
-в Рельсах, было обнаружено, что требуется более яркое и мощное решение для
-генерирования API. Это особенно верно в случае, когда представленый JSON сложен или
-не точно отражает схеме определённой внутри базы данных.
+форматах JSON, XML, MessagePack, PList и BSON. При использовании метода
+'to_json' в Рельсах, было обнаружено, что требуется более яркое и мощное
+решение для созидания API. Это особенно верно в случае, когда
+представленый JSON сложен или не точно отражает схеме определённой внутри базы
+данных.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
 
-%description doc -l ru_RU.UTF8
-Файлы сведений для %name
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.14.2-alt1
+- ^ v0.14.2
+- ^ Ruby Policy 2.0
+- ! spec
+
 * Mon Sep 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.13.1-alt1
 - Initial gemified build for Sisyphus

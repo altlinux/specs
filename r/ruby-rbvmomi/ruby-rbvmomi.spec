@@ -1,7 +1,7 @@
 %define        pkgname rbvmomi
 
 Name:          ruby-%pkgname
-Version:       2.1.2
+Version:       2.2.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API.
 Summary(ru_RU.UTF8): Ruby интерфейс к API VMware vSphere.
@@ -30,6 +30,7 @@ RbVmomi есть руби-интерфейс к API vSphere, подобный п
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
@@ -37,11 +38,12 @@ BuildArch:     noarch
 Documentation files for %gemname gem.
 
 %description   doc -l ru_RU.UTF8
-Файлы сведений для %gemname самоцвета
+Файлы сведений для %gemname самоцвета.
 
 
 %package       -n rbvmomish
 Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
@@ -49,20 +51,20 @@ BuildArch:     noarch
 Executable file for %gemname gem.
 
 %description   -n rbvmomish -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета
+Исполнямка для %gemname самоцвета.
 
 
 %prep
 %setup
 
 %build
-%gem_build --use=rbvmomi --alias=rbvmomish
+%ruby_build --use=rbvmomi --alias=rbvmomish
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -75,13 +77,18 @@ Executable file for %gemname gem.
 %files         -n rbvmomish
 %_bindir/*
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt1
+- ^ v2.2.0
+- ! spec
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
-- Bump to 2.1.2
+- ^ v2.1.2
 
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt2
-- Use Ruby Policy 2.0
-- Fix #36334
+- ^ Ruby Policy 2.0
+- - bug closes(#36334)
 
 * Thu Aug 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt1
 - Initial build for Sisyphus

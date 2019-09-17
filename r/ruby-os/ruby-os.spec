@@ -1,60 +1,64 @@
 %define  pkgname os
 
-Name:    ruby-%pkgname
-Version: 1.0.0
-Release: alt1.1
+Name:          ruby-%pkgname
+Version:       1.0.1
+Release:       alt1
+Summary:       The OS gem allows for some easy telling if you're on windows or not
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/rdp/os
+%vcs           https://github.com/rdp/os.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: The OS gem allows for some easy telling if you're on windows or not
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/rdp/os
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary
+The OS gem allows for some easy telling if youre on windows or not. OS.windows?
+As well as some other helper utilities.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
+- ^ v1.0.1
+- ^ Ruby Policy 2.0
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
 - Rebuild for new Ruby autorequirements.
 

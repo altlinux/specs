@@ -1,61 +1,63 @@
-%define  pkgname multipart-post
+%define        pkgname multipart-post
 
-Name: 	 ruby-%pkgname
-Version: 2.0.0 
-Release: alt1.1
+Name: 	       ruby-%pkgname
+Version:       2.1.1
+Release:       alt1
+Summary:       Adds multipart POST capability to net/http
+License:       None
+Group:         Development/Ruby
+Url:           https://github.com/nicksieger/multipart-post
+%vcs           https://github.com/nicksieger/multipart-post.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Adds multipart POST capability to net/http 
-License: None
-Group:   Development/Ruby
-Url:     https://github.com/nicksieger/multipart-post
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 Adds a streamy multipart form post capability to Net::HTTP. Also supports other
 methods besides POST.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt1
+- ^ v2.1.1
+- ^ Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

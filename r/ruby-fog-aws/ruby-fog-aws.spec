@@ -1,9 +1,9 @@
 %define        pkgname fog-aws
 
 Name:          ruby-%pkgname
-Version:       3.5.0
-Release:       alt1
 Epoch:         1
+Version:       3.5.2
+Release:       alt1
 Summary:       Module for the 'fog' gem to support Amazon Web Services
 License:       MIT
 Group:         Development/Ruby
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-ruby
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
@@ -35,13 +36,13 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -53,9 +54,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1:3.5.2-alt1
+- ^ v3.5.2
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 1:3.5.0-alt1
-- Bump to 3.5.0
-- Use Ruby Policy 2.0
+- ^ v3.5.0
+- ^ Ruby Policy 2.0
 
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.0.1-alt1
 - Use old version for fog-core.

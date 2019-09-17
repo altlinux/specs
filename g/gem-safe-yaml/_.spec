@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.5
-Release:       alt1
+Release:       alt2
 Summary:       Parse YAML safely
 License:       MIT
 Group:         Development/Ruby
@@ -14,6 +14,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+Obsoletes:     ruby-%gemname
+Provides:      ruby-%gemname
 
 %description
 %summary.
@@ -23,6 +25,9 @@ Summary:       Executable file for %gemname gem
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Obsoletes:     %gemname
+Provides:      %gemname
 
 %description   -n %pkgname
 Executable file for %gemname gem.
@@ -36,6 +41,9 @@ Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
+Obsoletes:     ruby-%gemname-doc
+Provides:      ruby-%gemname-doc
 
 %description   doc
 Documentation files for %gemname gem.
@@ -69,5 +77,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt2
+- + obsoleting ruby-self_yaml package
+
 * Thu Jul 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

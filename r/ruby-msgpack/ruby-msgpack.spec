@@ -1,7 +1,7 @@
 %define        pkgname msgpack
 
 Name: 	       ruby-%pkgname
-Version:       1.2.9
+Version:       1.3.1
 Release:       alt1
 Summary:       MessagePack implementation for Ruby
 License:       Apache-2.0
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 MessagePack is an efficient binary serialization format. It lets you exchange
@@ -27,35 +28,43 @@ is a perfect replacement.
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-%pkgname-doc
-Obsoletes:     ruby-%pkgname-doc
+Provides:      %pkgname-doc
+Obsoletes:     %pkgname-doc
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %package       -n gem-%pkgname-devel
-Summary:       Development files for %gemname gem
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-%pkgname-devel
-Development files for %gemname gem.
+Development headers for %gemname gem.
+
+%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -69,7 +78,12 @@ Development files for %gemname gem.
 %files         -n gem-%pkgname-devel
 %ruby_includedir/*
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
+- ^ v1.3.1
+- ! spec
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.9-alt1
 - Use Ruby Policy 2.0
 - Bump to 1.2.9

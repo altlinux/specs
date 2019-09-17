@@ -1,7 +1,7 @@
 %define        pkgname patternfly-sass
 
 Name:          gem-%pkgname
-Version:       3.59.1
+Version:       3.59.4
 Release:       alt1
 Summary:       Red Hat's Patternfly, converted to Sass and ready to drop into Rails
 License:       Apache-2.0
@@ -14,8 +14,8 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%gem_replace_version font-awesome-sass ~> 5.0
-%gem_replace_version sass ~> 3.4
+#%gem_replace_version font-awesome-sass ~> 5.0
+#%gem_replace_version sass ~> 3.4
 
 %description
 This reference implementation of PatternFly is based on Bootstrap v3. Think of
@@ -27,24 +27,28 @@ information? See the RCUE Quick Start Guide.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
 
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -54,5 +58,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.59.4-alt1
+- ^ v3.59.4
+- ! spec
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.59.1-alt1
-- Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+- + initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

@@ -1,17 +1,17 @@
-%define  pkgname sequel
+%define        pkgname sequel
 
 Name:          ruby-%pkgname
-Version:       5.19.0
+Version:       5.24.0
 Release:       alt1
 Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           http://sequel.jeremyevans.net
-# VCS:         https://github.com/jeremyevans/sequel.git
-BuildArch:     noarch
+%vcs           https://github.com/jeremyevans/sequel.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:        %name-%version.tar
+BuildArch:     noarch
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
@@ -27,39 +27,65 @@ Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby.
 - Sequel currently has adapters for ADO, Amalgalite, IBM_DB, JDBC, MySQL,
   Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, SQLite3, and TinyTDS.
 
+
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %name
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build --join=lib:bin
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/*
 %ruby_gemspec
 %ruby_gemlibdir
+
+%files         -n %pkgname
+%_bindir/%{pkgname}*
 
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 5.24.0-alt1
+- ^ v5.24.0
+- ! spec
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 5.19.0-alt1
-- Use Ruby Policy 2.0
-- Bump to 5.19.0
+- ^ Ruby Policy 2.0
+- ^ v5.19.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1.1
 - Rebuild with new Ruby autorequirements.

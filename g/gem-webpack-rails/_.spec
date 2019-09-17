@@ -1,22 +1,24 @@
-%define        pkgname childprocess
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname webpack-rails
 
-Name:          ruby-%pkgname
-Version:       2.0.0
+Name:          gem-%pkgname
+Version:       0.9.11
 Release:       alt1
-Summary:       Cross-platform Ruby library for managing child processes.
+Summary:       Integrate webpack with your Ruby on Rails application
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/enkessler/childprocess
-%vcs           https://github.com/enkessler/childprocess
+Url:           https://github.com/mipearson/webpack-rails
+%vcs           https://github.com/mipearson/webpack-rails.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary
+%summary.
 
 
 %package       doc
@@ -54,11 +56,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
-- ^ v2.0.0
-
-* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1.1
-- Rebuild with new Ruby autorequirements.
-
-* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1
-- Initial build for Sisyphus
+* Wed Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.11-alt1
+- + packaged gem with usage Ruby Policy 2.0

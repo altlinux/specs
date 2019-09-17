@@ -1,18 +1,17 @@
-
 %define        pkgname progressbar
 
 Name:          ruby-%pkgname
-Version:       1.10.0
-Release:       alt2
+Version:       1.10.1
+Release:       alt1
 Summary:       Ruby/ProgressBar is a text progress bar library for Ruby.
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/jfelchner/ruby-progressbar
-# VCS:         https://github.com/jfelchner/ruby-progressbar.git
+%vcs           https://github.com/jfelchner/ruby-progressbar.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %description
@@ -34,34 +33,42 @@ BuildArch:     noarch
 
 
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{name}.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %package       -n gem-ruby-%pkgname-doc
 Summary:       Documentation files for %name
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   -n gem-ruby-%pkgname-doc
 Documentation files for %{name}.
 
+%description   -n gem-ruby-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -79,8 +86,12 @@ Documentation files for %{name}.
 
 
 %changelog
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt1
+- ^ v1.10.1
+- ! spec
+
 * Thu Feb 28 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt2
-- Use Ruby Policy 2.0.
+- ^ Ruby Policy 2.0
 
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt1
 - New version.
