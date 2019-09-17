@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.3
+Release: alt0.12.4
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -82,9 +82,12 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Tue Sep 17 2019 Ivan A. Melnikov <iv@altlinux.org> 0.12-alt0.12.4
+- fix double dereference (closes: #36113)
+
 * Wed Sep 11 2019 Denis Medvedev <nbr@altlinux.org> 0.12-alt0.12.3
 - (Fixes: CVE-2012-4545)
- 
+
 * Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.2
 - rebuild with OpenSSL 1.1
 
