@@ -1,6 +1,6 @@
 Name: sleuthkit
 Version: 4.6.7
-Release: alt1
+Release: alt2
 
 Summary: The Sleuth Kit
 
@@ -13,7 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/sleuthkit/sleuthkit/releases/download/sleuthkit-%version/sleuthkit-%version.tar.gz
 Source: %name-%version.tar
 Source1: mac-robber-1.02.tar.bz2
-Patch: sleuthkit-unbundle.diff
+# https://github.com/sleuthkit/sleuthkit/issues/642
+Patch: sleuthkit-adapt-for-new-libewf.diff
 
 # Automatically added by buildreq on Sun Aug 04 2013
 # optimized out: bouncycastle bouncycastle-mail cppunit ecj gcc-java gnu-config libgcj4.7-jar libstdc++-devel python3-base zlib-devel
@@ -51,6 +52,7 @@ Header files and libraries for developing applications which will use libewf.
 
 %prep
 %setup -q -n %name-%version -a1
+%patch -p2
 find -name Makefile.am | xargs subst "s| -static||g"
 
 %build
@@ -147,6 +149,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Mon Sep 16 2019 Grigory Ustinov <grenka@altlinux.org> 4.6.7-alt2
+- NMU: Rebuild with new libewf with a patch.
+
 * Sat Sep 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6.7-alt1
 - new version 4.6.7 (with rpmrb script)
 
