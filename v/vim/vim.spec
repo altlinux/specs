@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.1
-Version: %branch.1517
+Version: %branch.2047
 Release: alt1
 Epoch: 4
 
@@ -1065,6 +1065,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue Sep 17 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.2047-alt1
+- Updated to 8.1.2047.
+
 * Tue Jun 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.1517-alt1
 - Updated to 8.1.1517 (fixes: CVE-2019-12735) (ALT#36882).
 
