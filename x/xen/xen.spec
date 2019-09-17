@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_with efi
 %def_enable xsmpolicy
 %def_enable vtpm
@@ -11,7 +13,7 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.10.3
+Version: 4.12.1
 Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
@@ -23,9 +25,10 @@ URL: http://www.xenproject.org/
 Source0: %name-%version%pre.tar
 Source1: qemu-xen-%qemu_ver.tar
 Source2: qemu-xen-traditional-%qemu_ver.tar
-Source3: mini-os-%version%pre.tar
-Source4: %name.logrotate
-Source5: %name-qemu-dom0
+Source3: qemu-ui-keycodemapdb.tar
+Source4: mini-os-%version%pre.tar
+Source5: %name.logrotate
+Source6: %name-qemu-dom0
 
 # used by stubdoms
 Source10: newlib-1.16.0.tar.gz
@@ -315,12 +318,15 @@ HVM guest. This boosts performance and makes your system more secure.
 
 
 %prep
-%setup -q -n %name-%version%pre -a1 -a2 -a3
+%setup -q -n %name-%version%pre -a1 -a2 -a3 -a4
 
 mkdir extras
+rmdir qemu-xen-%version/ui/keycodemapdb
+
 ln -s ../qemu-xen-%version tools/qemu-xen
 ln -s ../qemu-xen-traditional-%version tools/qemu-xen-traditional
 ln -s ../mini-os-%version extras/mini-os
+ln -s ../../qemu-ui-keycodemapdb qemu-xen-%version/ui/keycodemapdb
 
 %patch0 -p1
 %patch1 -p1
@@ -380,6 +386,7 @@ export GIT=$(which true)
 	--libdir=%_libdir \
 	--enable-xen \
 	--with-system-seabios=%_datadir/seabios/bios-256k.bin \
+	--with-system-ipxe=%_datadir/ipxe/pxe-rtl8139.rom \
 	--with-systemd=%_unitdir \
 	--with-xenstored=xenstored \
 	--without-systemd-modules-load \
@@ -449,7 +456,7 @@ rm -f %buildroot%_libdir/*.a
 ############ fixup files in /etc ############
 
 # logrotate
-install -pD -m 0644 %SOURCE4 %buildroot%_logrotatedir/%name
+install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 install -pD -m 0644 %SOURCE49 %buildroot%_tmpfilesdir/%name.conf
 
 ############ create dirs in /var ############
@@ -486,7 +493,7 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/gmp
 %endif
 
-install -pD -m 0755 %SOURCE5 %buildroot%_initddir/%name-qemu-dom0
+install -pD -m 0755 %SOURCE6 %buildroot%_initddir/%name-qemu-dom0
 mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/%name-qemu-dom0.service
 
 ############ all done now ############
@@ -584,14 +591,14 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-set-bool
 %_sbindir/flask-setenforce
 %_sbindir/xen-diag
+%_sbindir/xen-kdd
 %_sbindir/xen-livepatch
-%_sbindir/xen-ringwatch
 %_sbindir/xen-tmem-list-parse
 %_sbindir/xenbaked
 %_sbindir/xenconsoled
 %_sbindir/xencov
 %_sbindir/xenlockprof
-%_sbindir/xenmon.py
+%_sbindir/xenmon
 %_sbindir/xenperf
 %_sbindir/xenpm
 %_sbindir/xenpmd
@@ -633,7 +640,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_bindir/xenalyze
 
 %_sbindir/gdbsx
-%_sbindir/kdd
 %_sbindir/xen-hptool
 %_sbindir/xen-hvmcrash
 %_sbindir/xen-hvmctx
@@ -650,8 +656,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %files -n lib%name
 %_libdir/*.so.*
-%_libdir/fs
-
+%_libdir/xenfsimage
+%_libdir/python2.7/site-packages/xenfsimage.so
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -685,11 +691,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %dir %_libexecdir/%name
 
 %dir %_libexecdir/%name/bin
+%_libexecdir/%name/bin/depriv-fd-checker
 %_libexecdir/%name/bin/ivshmem-client
 %_libexecdir/%name/bin/ivshmem-server
 %_libexecdir/%name/bin/qemu-img
 %_libexecdir/%name/bin/qemu-io
 %_libexecdir/%name/bin/qemu-nbd
+%_libexecdir/%name/bin/qemu-pr-helper
 %_libexecdir/%name/bin/qemu-system-i386
 %_libexecdir/%name/bin/virtfs-proxy-helper
 
@@ -700,7 +708,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %python_sitelibdir/xen-*.egg-info
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
-%python_sitelibdir/fsimage.so
 
 %ifarch %ix86 %x86_64
 %dir %_libexecdir/%name/boot
@@ -714,9 +721,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %attr(0700,root,root) %_logdir/%name
 
-%_sbindir/xen-bugtool
-
-%dir %_libexecdir/%name/bin
 %_libexecdir/%name/bin/pygrub
 %_libexecdir/%name/bin/convert-legacy-stream
 %_libexecdir/%name/bin/verify-stream-v2
@@ -790,8 +794,11 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Thu Aug 29 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt1
+- 4.12.1 release
+
 * Sun Mar 17 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.3-alt1
-- 4.10.1 release
+- 4.10.3 release
 - upstream updates upto 7842419a6b
 
 * Sun Dec 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.2-alt1
