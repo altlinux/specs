@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -218,6 +218,11 @@ _EOF_
 
 
 %changelog
+* Mon Sep 16 2019 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1
+- 3.0.4
+- fixes:
+    * Gryphon dissector infinite loop. CVE-2019-16319
+
 * Mon Jul 22 2019 Anton Farygin <rider@altlinux.ru> 3.0.3-alt1
 - 3.0.3
 - fixes:
