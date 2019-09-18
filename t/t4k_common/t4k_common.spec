@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libSDL_ttf-devel
 # END SourceDeps(oneline)
@@ -5,13 +6,13 @@ BuildRequires: gcc-c++ libSDL_ttf-devel
 %define _localstatedir %{_var}
 Name: t4k_common
 Version: 0.1.1
-Release: alt2_17
+Release: alt2_22
 URL: http://tux4kids.alioth.debian.org/
 Summary: Library for Tux4Kids applications
 License: GPLv3+
 Source0: https://alioth.debian.org/frs/download.php/3540/%{name}-%{version}.tar.gz
-Patch0: t4k_common-0.1.1-libpng15.patch
-Group: System/Libraries
+Patch0: t4k_common-0.1.1.patch
+BuildRequires:  gcc
 BuildRequires: libSDL-devel libSDL_mixer-devel libSDL_image-devel
 BuildRequires: libSDL_pango-devel libSDL_net-devel librsvg-devel librsvg-gir-devel libcairo-devel
 BuildRequires: libpng-devel libxml2-devel doxygen
@@ -19,10 +20,10 @@ Provides: bundled(liblinebreak)
 Source44: import.info
 
 %package devel
-Summary: Development files for the Tux4Kids library
 Group: Development/Other
+Summary: Development files for the Tux4Kids library
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description
 library of code shared by TuxMath, TuxType, and
@@ -37,7 +38,7 @@ These are the development files.
 %prep
 %setup -q
 
-%patch0 -p0
+%patch0 -p1
 
 %build
 %configure
@@ -52,6 +53,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 rm -f $RPM_BUILD_ROOT%{_includedir}/t4k_scandir.h
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
 
+
+
 %files
 %doc COPYING README
 %{_libdir}/lib%{name}.so.*
@@ -64,6 +67,9 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/t4k_common.pc
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_22
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_17
 - update to new release by fcimport
 
