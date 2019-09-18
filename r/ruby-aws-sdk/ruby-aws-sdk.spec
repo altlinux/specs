@@ -2,7 +2,7 @@
 %define        gemname aws-sdk
 
 Name: 	       ruby-%pkgname
-Version:       2.11.351
+Version:       2.11.354
 Release:       alt1
 Summary:       The official AWS SDK for Ruby
 License:       Apache-2.0
@@ -52,6 +52,8 @@ BuildArch:     noarch
 
 Obsoletes:     aws-sdk-core
 Provides:      aws-sdk-core
+Obsoletes:     ruby-aws-sdk-core
+Provides:      ruby-aws-sdk-core
 
 %description   -n gem-%pkgname-core
 Provides API clients for AWS. This gem is part of the official AWS SDK
@@ -151,6 +153,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 17 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.354-alt1
+- ^ v2.11.354
+- + obsoletes/provides on ruby-aws-sdk-code for gem-aws-sdk-code
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.351-alt1
 - ^ v2.11.351
 - ! spec according to changelog rules
