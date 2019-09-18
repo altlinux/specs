@@ -1,6 +1,6 @@
 Name:     rteval
 Version:  2.14.0.27.g5ed68ae
-Release:  alt1
+Release:  alt2
 
 Summary:  Evaluate the performance of a realtime Linux kernel
 License:  GPL-2.0-or-later
@@ -20,6 +20,10 @@ Requires: kernel-source-4.9
 # something to build the kernel
 Requires: gcc gcc-c++ make binutils util-linux e2fsprogs bc perl flex
 Requires: lzma-utils libelf-devel
+#
+Requires: python-dmidecode
+# sos contains python module for --sysreport
+Requires: sos
 
 Source:   %name-%version.tar
 BuildArch: noarch
@@ -44,6 +48,8 @@ collected during the run and the statistical analysis of the run.
 
 %install
 make DESTDIR=%buildroot install_rteval
+# relocate rteval as it's for root only
+mv %buildroot%_bindir %buildroot%_sbindir
 
 %check
 # vm-run --mem=4G --overlay=tmpfs:/usr/src/RPM/BUILD make runit
@@ -51,12 +57,16 @@ make DESTDIR=%buildroot install_rteval
 %files
 %doc COPYING README doc/rteval.txt
 %_sysconfdir/rteval.conf
-%_bindir/rteval
+%_sbindir/rteval
 %python_sitelibdir_noarch/%name-*
 %python_sitelibdir_noarch/%name
 %_datadir/%name
 %_man8dir/*
 
 %changelog
+* Wed Sep 18 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt2
+- Add more Requires to streamline user experience.
+- Relocate rteval to /usr/sbin
+
 * Tue Sep 17 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt1
 - Initial build of v2.14-27-g5ed68ae.
