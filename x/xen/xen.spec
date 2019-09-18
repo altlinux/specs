@@ -7,14 +7,10 @@
 %def_enable monitors
 %def_enable xenapi
 
-%ifndef x86_64
-%define x86_64 x86_64
-%endif
-
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.12.1
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -62,7 +58,7 @@ Patch55: qemu-traditional-lost-parenthesis.patch
 Patch56: qemu-xen-non-static-memfd_create.patch
 
 
-ExclusiveArch: %ix86 %x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 Requires: bridge-utils
 Requires: python-module-lxml
@@ -76,7 +72,7 @@ Requires: chkconfig
 %endif
 
 # xen only supports efi boot images on x86_64
-%ifnarch %x86_64
+%ifnarch x86_64
 %def_without efi
 %endif
 
@@ -85,7 +81,7 @@ Requires: chkconfig
 %def_disable xsmpolicy
 %endif
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %def_enable stubdom
 %else
 %def_disable stubdom
@@ -119,7 +115,7 @@ BuildRequires: libyajl-devel
 %{?_enable_ocamltools:BuildRequires: ocaml ocaml-ocamlbuild ocaml-ocamldoc ocaml-findlib}
 %{?_enable_xenapi:BuildRequires: libxml2-devel}
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 # for the VMX "bios"
 BuildRequires: dev86
 # efi image needs an ld that has -mi386pep option
@@ -296,7 +292,7 @@ manage Xen virtual machines.
 %endif
 
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %package stubdoms
 Summary: Xen Hypervisor Stub Domains
 Group: Emulators
@@ -386,7 +382,9 @@ export GIT=$(which true)
 	--libdir=%_libdir \
 	--enable-xen \
 	--with-system-seabios=%_datadir/seabios/bios-256k.bin \
+%ifarch %ix86 x86_64
 	--with-system-ipxe=%_datadir/ipxe/pxe-rtl8139.rom \
+%endif
 	--with-systemd=%_unitdir \
 	--with-xenstored=xenstored \
 	--without-systemd-modules-load \
@@ -453,16 +451,10 @@ rm -f %buildroot/%_sysconfdir/%name/README*
 # adhere to Static Library Packaging Guidelines
 rm -f %buildroot%_libdir/*.a
 
-############ fixup files in /etc ############
-
-# logrotate
 install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 install -pD -m 0644 %SOURCE49 %buildroot%_tmpfilesdir/%name.conf
 
-############ create dirs in /var ############
-#install -d -m 0700 %buildroot%_localstatedir/%name/save
 install -d -m 0700 %buildroot%_localstatedir/xenstored
-#install -d -m 0700 %buildroot%_logdir/%name/console
 
 ############ assemble license files ############
 # avoid licensedir to avoid recursion, also stubdom/ioemu and dist
@@ -477,7 +469,7 @@ while read f; do
 	install -pD -m 0644 {,%buildroot%_docdir/%name-%version/licenses/}$f
 done
 
-%ifarch %x86_64
+%ifarch x86_64
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32
 rm -fr %buildroot%_docdir/%name-%version/licenses/tools/firmware/xen-dir
@@ -571,6 +563,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/bin/xenctx
 %_libexecdir/%name/bin/xenpvnetboot
 
+%_bindir/xenalyze
 %_bindir/xencov_split
 %_bindir/xenstore
 %_bindir/xenstore-chmod
@@ -591,7 +584,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-set-bool
 %_sbindir/flask-setenforce
 %_sbindir/xen-diag
-%_sbindir/xen-kdd
 %_sbindir/xen-livepatch
 %_sbindir/xen-tmem-list-parse
 %_sbindir/xenbaked
@@ -628,7 +620,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_man8dir/xentrace.*
 %_man7dir/xl-numa-placement.7.xz
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %_libexecdir/%name/bin/lsevtchn
 %_libexecdir/%name/bin/readnotes
 %_libexecdir/%name/bin/xenpaging
@@ -637,16 +629,15 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_bindir/qemu-nbd-xen
 %_bindir/xen-cpuid
 %_bindir/xen-detect
-%_bindir/xenalyze
 
 %_sbindir/gdbsx
 %_sbindir/xen-hptool
 %_sbindir/xen-hvmcrash
 %_sbindir/xen-hvmctx
+%_sbindir/xen-kdd
 %_sbindir/xen-lowmemd
 %_sbindir/xen-mfndump
 %endif
-
 
 # Xen logfiles
 %dir %attr(0700,root,root) %_localstatedir/xen
@@ -709,13 +700,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %dir %_libexecdir/%name/boot
 %_libexecdir/%name/boot/hvmloader
 %_libexecdir/%name/bin/qemu-dm
 %endif
 
-%ifarch %x86_64
+%ifarch x86_64
 %_libexecdir/%name/boot/xen-shim
 %endif
 
@@ -727,7 +718,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %_datadir/qemu-%name
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %_datadir/%name
 %endif
 
@@ -776,7 +767,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %endif
 
 
-%ifarch %ix86 %x86_64
+%ifarch %ix86 x86_64
 %files stubdoms
 %dir %_libexecdir/%name
 %dir %_libexecdir/%name/bin
@@ -794,6 +785,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Wed Sep 18 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt2
+- enable build for aarch64 architecture
+
 * Thu Aug 29 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt1
 - 4.12.1 release
 
