@@ -5,8 +5,8 @@ Group: System/Fonts/True type
 %global fontname source-sans-pro
 %global fontconf 63-%{fontname}.conf
 
-%global roman_version 2.020
-%global italic_version 1.075
+%global roman_version 2.045
+%global italic_version 1.095
 %global github_tag %{roman_version}R-ro/%{italic_version}R-it
 %global source_dir %{fontname}-%(tr "/" "-" <<<%{github_tag})
 
@@ -16,9 +16,9 @@ Release:        alt1_1
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
-URL:            https://github.com/adobe-fonts/source-sans-pro
-#unable to build from source: source format is unbuildable with free software
-Source0:        https://github.com/adobe-fonts/source-sans-pro/archive/%{github_tag}/%{oldname}-%{version}.tar.gz
+URL:            https://github.com/adobe-fonts/source-sans-pro/
+# Can't build fonts without nonfree softwares
+Source0:        %{url}/archive/%{github_tag}/%{oldname}-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -49,20 +49,15 @@ rm LICENSE.txt.orig
 
 
 %install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p OTF/*.otf %{buildroot}%{_fontdir}
+install -dm 0755 $RPM_BUILD_ROOT%{_fontdir}
+install -pm 0644 OTF/*.otf $RPM_BUILD_ROOT%{_fontdir}
 
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+install -dm 0755 $RPM_BUILD_ROOT%{_fontconfig_templatedir} $RPM_BUILD_ROOT%{_fontconfig_confdir}
+install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
+ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dpm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -102,13 +97,17 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 2.045-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_1
 - update to new release by fcimport
 
