@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
@@ -6,19 +5,19 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Data-DPath
-%define upstream_version 0.57
+%define upstream_version 0.58
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.58
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
@@ -28,7 +27,6 @@ BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(IO/Handle.pm)
 BuildRequires: perl(IPC/Open3.pm)
 BuildRequires: perl(Iterator/Util.pm)
-BuildRequires: perl(List/MoreUtils.pm)
 BuildRequires: perl(List/Util.pm)
 BuildRequires: perl(POSIX.pm)
 BuildRequires: perl(Safe.pm)
@@ -42,6 +40,7 @@ BuildRequires: perl(blib.pm)
 BuildRequires: perl(constant.pm)
 BuildRequires: perl(if.pm)
 BuildRequires: perl(strict.pm)
+BuildRequires: perl(utf8.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
 Source44: import.info
@@ -50,7 +49,7 @@ Source44: import.info
 no description found
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -64,10 +63,13 @@ no description found
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README todo.org
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1_1
+- update by mgaimport
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - automated CPAN update
 
