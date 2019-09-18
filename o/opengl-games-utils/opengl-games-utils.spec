@@ -1,17 +1,17 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_10
+Release:        alt2_16
 Summary:        Utilities to check proper 3d support before launching 3d games
-Group:          Games/Other
 License:        Public Domain
 URL:            http://fedoraproject.org/wiki/SIGs/Games
 Source0:        opengl-game-wrapper.sh
 Source1:        opengl-game-functions.sh
 Source2:        README
 BuildArch:      noarch
-Requires:       zenity xdriinfo glxinfo
+Requires:       zenity glxgears glxinfo
 Source44: import.info
 
 %description
@@ -36,6 +36,10 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 755 %{SOURCE0} $RPM_BUILD_ROOT%{_bindir}
 install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
+if [ "%{_prefix}" != "/usr" ]; then
+  sed -i "s/\/usr/\%{_prefix}/g" $RPM_BUILD_ROOT%{_bindir}/opengl-game-wrapper.sh
+fi
+
 
 %files
 %doc README
@@ -44,6 +48,9 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_10
 - update to new release by fcimport
 
