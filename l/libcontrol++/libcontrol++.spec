@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -67,6 +67,10 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Sep 18 2019 Alexey Appolonov <alexey@altlinux.org> 0.23.0-alt1
+- New abilities of TPrinter (switching off any activity of TPrinter object,
+  restoring 'silent' flag).
+
 * Sat Aug 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
 - Ability to store only the pointer to TFileMode attributes, and not copy
   the data (performance gain up to 100%);
