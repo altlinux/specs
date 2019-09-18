@@ -1,5 +1,5 @@
 Name:		codespell
-Version:	1.14.0
+Version:	1.16.0.0.5.g8b321f0
 Release:	alt1
 Summary:	Check code for common misspellings
 Group:		Development/Tools
@@ -36,5 +36,8 @@ install -D -m644 %{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 18 2019 Vitaly Chikunov <vt@altlinux.org> 1.16.0.0.5.g8b321f0-alt1
+- Build v1.16.0-5-g8b321f0
+
 * Thu Oct 04 2018 Vitaly Chikunov <vt@altlinux.ru> 1.14.0-alt1
 - First packaging for ALT
