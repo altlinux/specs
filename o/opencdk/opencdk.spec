@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 Summary:	Open Crypto Development Kit
 Name:		opencdk
 Version:	0.6.6
-Release:	alt1_13
+Release:	alt1_15
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://www.gnutls.org/
@@ -76,6 +76,7 @@ compile any applications/libraries that use %{name}.
 %setup -q
 %patch0 -p1
 
+
 %build
 # fix build on aarch64
 autoreconf -vfi
@@ -85,7 +86,8 @@ autoreconf -vfi
 
 %install
 %makeinstall_std
-rm -f %{buildroot}%{_libdir}/*.la
+
+find %{buildroot} -name '*.la' -delete
 
 install -D -m 644 src/opencdk.m4 %{buildroot}%{_datadir}/aclocal/opencdk.m4
 
@@ -107,6 +109,9 @@ echo #multiarch_binaries %{buildroot}%{_bindir}/*-config
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_15
+- update by mgaimport
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_13
 - update by mgaimport
 
