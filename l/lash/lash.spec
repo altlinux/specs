@@ -1,19 +1,17 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ texinfo
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ python-devel texinfo
 # END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_35
+Release:      alt1_40
 License:      GPLv2+
-Group:        System/Libraries
 URL:          http://www.nongnu.org/lash/
 Source0:      http://download.savannah.gnu.org/releases/lash/lash-%{version}.tar.gz
 Source1:      %{name}-panel.desktop
@@ -32,7 +30,6 @@ BuildRequires: gcc
 BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
 BuildRequires: libjack-devel
 BuildRequires: libxml2-devel
-BuildRequires: python-devel
 BuildRequires: readline-devel
 BuildRequires: swig
 BuildRequires: texi2html
@@ -50,8 +47,8 @@ multiple interconneced applications, restoring program state (i.e. loaded
 patches) and the connections between them.
 
 %package -n liblash-devel
+Group: Development/Other
 Summary:      Development files for LASH
-Group:        Development/Other
 Requires:     liblash = %{?epoch:%epoch:}%{version}-%{release}
 Provides: lash-devel = %EVR
 
@@ -65,16 +62,6 @@ Summary:        Shared libraries for using %{name}
 %description    -n liblash
 The %{name}-libs package contains lash shared libraries.
 
-%package -n python-module-lash
-%{?python_provide:%python_provide python2-lash}
-Summary:      Python wrapper for LASH
-Group:        System/Libraries
-Requires:     liblash = %{?epoch:%epoch:}%{version}-%{release}
-
-%description -n python-module-lash
-Contains Python language bindings for developing Python applications that use
-LASH.
-
 %prep
 %setup -q
 %patch0 -p0
@@ -86,11 +73,10 @@ LASH.
 %if 0%{?rhel} && 0%{?rhel} <= 7
 sed -i 's|1.3.31|2.0.0|g' configure*
 %else
-sed -i 's|1.3.31|3.0.0|g' configure*
+sed -i 's|1.3.31|4.0.0|g' configure*
 %endif
 
 %build
-export am_cv_python_pythondir=%{python_sitelibdir}
 CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" %configure --disable-static --disable-serv-inst
 %make_build
 
@@ -100,10 +86,6 @@ mkdir -p %{buildroot}%{_sysconfdir}
 make DESTDIR=%{buildroot} install
 rm -f %{buildroot}%{_infodir}/dir
 rm -f %{buildroot}%{_libdir}/liblash.la
-rm -f %{buildroot}%{python_sitelibdir}/_lash.la
-
-# Fix permission
-chmod -x %{buildroot}%{python_sitelibdir}/lash.py
 
 # Move icons to the right place
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
@@ -124,7 +106,6 @@ chrpath --delete %{buildroot}%{_bindir}/lashd
 chrpath --delete %{buildroot}%{_bindir}/lash_synth
 chrpath --delete %{buildroot}%{_bindir}/lash_panel
 chrpath --delete %{buildroot}%{_bindir}/lash_save_button
-chrpath --delete %{buildroot}%{python_sitelibdir}/_lash.so
 
 # Move the dtd file to our Fedora Friendly place
 mkdir -p %{buildroot}%{_datadir}/xml/lash/dtds
@@ -144,6 +125,8 @@ if [ ! -d docs/lash-manual-html-split/lash-manual/ ]; then
   mkdir -p docs/lash-manual-html-split/lash-manual/
   cp -p docs/lash-manual-html-split/*.html docs/lash-manual-html-split/lash-manual/
 fi
+
+
 
 %files
 %doc AUTHORS ChangeLog NEWS README docs/lash-manual-html-split/lash-manual icons/lash.xcf
@@ -166,11 +149,10 @@ fi
 %{_libdir}/liblash.so.1
 %{_libdir}/liblash.so.1.*
 
-%files -n python-module-lash
-%{python_sitelibdir}/_lash.so
-%{python_sitelibdir}/lash.py*
-
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_40
+- update to new release by fcimport
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_35
 - rebuild with readline7
 
