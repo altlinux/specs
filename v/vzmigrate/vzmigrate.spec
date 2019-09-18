@@ -1,6 +1,6 @@
 Name:     vzmigrate
 Version:  7.0.124
-Release:  alt3
+Release:  alt4
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Wed Sep 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt4
+- fix double slashes in symlinks
+
 * Tue Sep 17 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt3
 - remove deprecated cipher and message
 
