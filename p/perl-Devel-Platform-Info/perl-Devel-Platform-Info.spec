@@ -1,22 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Devel-Platform-Info
-%define upstream_version 0.16
+%define upstream_version 1.00
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.00
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Retrieve Solaris platform metadata
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/B/BA/BARBIE/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Devel/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(IO/File.pm)
@@ -39,10 +40,10 @@ However, it is hoped that this distribution will find more uses far beyond
 the usage for CPAN Testers.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -53,10 +54,13 @@ the usage for CPAN Testers.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README examples
+%doc Changes LICENSE META.json META.yml  README examples
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
+- update by mgaimport
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
