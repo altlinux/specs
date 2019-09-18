@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.160
+Version: 7.0.161
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -78,6 +78,7 @@ make \
 %_man8dir/*
 %_logrotatedir/%name
 %_modulesloaddir/%name.conf
+%_sysconfdir/bash_completion.d/ploop
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -98,6 +99,9 @@ make \
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.161-alt1
+- 7.0.161
+
 * Fri Aug 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.160-alt1
 - 7.0.160
 
