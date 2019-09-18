@@ -8,13 +8,13 @@
 
 Summary: A library to bind RPM constant values
 Name: rpmconstant
-Version: 0.1.4
-Release: alt2_7
+Version: 0.1.5
+Release: alt1_1
 Source0: http://rpm4.zarb.org/download/%{name}-%{version}.tar.gz
 License: LGPLv2.1
 Group: Development/C
 Url: https://github.com/gitpan/rpmconstant
-BuildRequires: libpopt-devel 
+BuildRequires: pkgconfig(popt) 
 BuildRequires: librpm-devel
 Source44: import.info
 
@@ -51,6 +51,7 @@ You need this package to build applications using librpmconstant.
 %prep
 %setup -q
 
+
 %build
 mv rpmconstanttbl.c rpmconstanttbl.c.old # Ensure this file is regenated
 %configure --disable-static
@@ -75,6 +76,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.5-alt1_1
+- update by mgaimport
+
 * Wed Mar 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt2_7
 - set url to https://github.com/gitpan/rpmconstant (closes: #34723)
 
