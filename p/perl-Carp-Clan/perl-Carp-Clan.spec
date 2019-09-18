@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Carp-Clan
 Name: perl-%dist
-Version: 6.07
+Version: 6.08
 Release: alt1
 
 Summary: Report errors from perspective of caller of a "clan" of modules
@@ -42,6 +42,9 @@ which shall never be blamed for any error.
 #%doc	%perl_vendor_privlib/Carp/Clan.pod
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 6.08-alt1
+- automated CPAN update
+
 * Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
 - automated CPAN update
 
