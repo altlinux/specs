@@ -8,7 +8,7 @@
 
 Name: bluez
 Version: 5.50
-Release: alt1
+Release: alt1.2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -22,8 +22,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 # fc
 Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-session.patch
+# fix build w/ recent glibc
+Patch11: 0001-tools-Fix-build-after-y2038-changes-in-glibc.patch
+# https://github.com/EHfive/pulseaudio-modules-bt/issues/14#issuecomment-462039332
+Patch12: 0001-policy-Add-logic-to-connect-a-Sink.patch
 
-Obsoletes: bluez-alsa < 5.0
 Obsoletes: obex-data-server < 0.4.6-alt3
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
@@ -76,6 +79,8 @@ https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/
 %setup
 %patch -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %autoreconf
@@ -176,6 +181,16 @@ chkconfig bluetoothd on
 %endif
 
 %changelog
+* Wed Sep 18 2019 L.A. Kostis <lakostis@altlinux.ru> 5.50-alt1.2
+- Added patch:
+  + 0001-policy-Add-logic-to-connect-a-Sink.patch (fixing issue when a2dp wasn't
+    selected properly)
+
+* Mon Sep 16 2019 L.A. Kostis <lakostis@altlinux.ru> 5.50-alt1.1
+- Remove conflicting obsoletes with bluez-alsa.
+- Added patch:
+  + 0001-tools-Fix-build-after-y2038-changes-in-glibc.patch
+
 * Fri Jun 22 2018 L.A. Kostis <lakostis@altlinux.ru> 5.50-alt1
 - 5.50.
 
