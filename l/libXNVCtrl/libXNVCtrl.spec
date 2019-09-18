@@ -1,23 +1,24 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libXNVCtrl
-Version:        352.21
-Release:        alt1_11
+Version:        435.17
+Release:        alt1_1
 Summary:        Library providing the NV-CONTROL API
 License:        GPLv2+
-URL:            ftp://download.nvidia.com/XFree86/nvidia-settings/
-Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-%{version}.tar.bz2
+URL:            https://download.nvidia.com/XFree86/nvidia-settings/
+Source0:        %{url}/nvidia-settings-%{version}.tar.bz2
 Patch0:         libxnvctrl_so_0.patch
-Patch1:         libxnvctrl_optflags.patch
 
 BuildRequires: gcc
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: coreutils
+
+# Obsoletes older package provided in the NVIDIA CUDA repository
+Obsoletes: nvidia-%{name} < 3:%{version}-100
+Provides: nvidia-%{name} = 3:%{version}-100
 Source44: import.info
 
 %description
@@ -41,16 +42,18 @@ developing applications that use %{name}.
 %prep
 %setup -q -n nvidia-settings-%{version}
 %patch0 -p1
-%patch1 -p1
+
 
 
 %build
+
 %make_build \
    CC="gcc" \
    NV_VERBOSE=1 \
-   OPTFLAGS="%{optflags}" \
-   LDFLAGS="%{build_ldflags}" \
-   -C src/%{name}
+   DO_STRIP=0 \
+   STRIP_CMD=/dev/true \
+   -C src/%{name} \
+   libXNVCtrl.so
 
 
 %install
@@ -70,7 +73,7 @@ popd
 
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/%{name}.so.0*
 
 %files devel
@@ -80,6 +83,9 @@ popd
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 435.17-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_11
 - fc merge
 
