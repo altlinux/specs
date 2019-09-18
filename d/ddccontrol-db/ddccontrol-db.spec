@@ -1,3 +1,4 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
@@ -5,12 +6,11 @@ BuildRequires: /usr/bin/perl
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20180602
+Version:          20190825
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
-Group:            System/Base
 Summary:          DDC/CI control database for ddccontrol
 Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190825-alt1_1
+- update to new release by fcimport
+
 * Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 20180602-alt1_1
 - update to new release by fcimport
 
