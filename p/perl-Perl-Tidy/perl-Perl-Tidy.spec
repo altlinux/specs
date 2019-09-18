@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20190601
+Version: 20190915
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -41,6 +41,9 @@ write scripts in html format.
 %_man1dir/*
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190915-alt1
+- automated CPAN update
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 20190601-alt1
 - automated CPAN update
 
