@@ -1,62 +1,76 @@
-Name:    ruby-openid
-Version: 2.8.0
-Release: alt1.1
+%define        pkgname openid
+%define        gemname ruby-openid
 
-Summary: OpenID library for Ruby
-License: MIT/Ruby and Apache 2.0
-Group:   Development/Ruby
-Url:     https://github.com/openid/ruby-openid
+Name:          ruby-%pkgname
+Version:       2.9.1
+Release:       alt1
+Summary:       OpenID library for Ruby
+License:       MIT/Apache 2.0
+Group:         Development/Ruby
+Url:           https://github.com/openid/ruby-openid
+%vcs           https://github.com/openid/ruby-openid.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-# For tests
-BuildRequires: ruby-bundler
+BuildRequires: gem(bundler)
 
-%filter_from_requires /^ruby(hmac-sha/d
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 A Ruby library for verifying and serving OpenID identities.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+* Easy to use API for verifying OpenID identites - OpenID::Consumer
+* Support for serving OpenID identites - OpenID::Server
+* Does not depend on underlying web framework
+* Supports multiple storage mechanisms (Filesystem, ActiveRecord, Memory)
+* Example code to help you get started, including:
+  + Ruby on Rails based consumer and server
+  + OpenIDLoginGenerator for quickly getting creating a rails app that uses OpenID for authentication
+  + ActiveRecordOpenIDStore plugin
+* Comprehensive test suite
+* Supports both OpenID 1 and OpenID 2 transparently
 
-BuildArch: noarch
 
-%description doc
-Documentation files for %{name}.
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version --alias=openid --ignore=rails_openid
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-LANG=en_US.UTF-8 %ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Wed Sep 18 2019 Pavel Skrylev <majioa@altlinux.org> 2.9.1-alt1
+- ^ v2.9.1
+- ^ Ruby Policy 2.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
