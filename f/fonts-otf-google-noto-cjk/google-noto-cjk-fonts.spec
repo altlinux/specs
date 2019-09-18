@@ -19,7 +19,7 @@ supported for compatibility with CJK standards. \
 
 Name:           fonts-otf-google-noto-cjk
 Version:        20190416
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Google Noto Sans CJK Fonts
 
 License:        OFL
@@ -518,6 +518,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf2} \
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_4
 - update to new release by fcimport
 
