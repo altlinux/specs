@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libnl3
-Version: 3.4.0
-Release: alt2
+Version: 3.5.0
+Release: alt1
 
 Summary: library for applications dealing with netlink sockets
 License: LGPL
 Group: System/Libraries
 Url: http://www.infradead.org/~tgr/libnl/
 BuildRequires: glibc-kernheaders flex
-# git://git.infradead.org/users/tgr/libnl.git
 # For tests
 BuildRequires: libcheck-devel
 
+# https://github.com/thom311/libnl 
 Source: %name-%version.tar
 
 %description
@@ -78,6 +78,9 @@ make check
 %exclude %_libdir/libnl/cli/qdisc/*.la
 
 %changelog
+* Wed Sep 18 2019 Anton Farygin <rider@altlinux.ru> 3.5.0-alt1
+- 3.5.0
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 3.4.0-alt2
 - merge with sem@:
   * enabled tests
