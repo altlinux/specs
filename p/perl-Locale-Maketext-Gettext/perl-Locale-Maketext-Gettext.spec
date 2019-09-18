@@ -1,6 +1,6 @@
 %define dist Locale-Maketext-Gettext
 Name: perl-%dist
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: Joins the gettext and Maketext frameworks
@@ -58,6 +58,9 @@ all.
 %_man1dir/*
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
