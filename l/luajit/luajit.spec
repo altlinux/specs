@@ -1,6 +1,8 @@
+%global lua_version 5.1
+
 Name: luajit
 Version: 2.1
-Release: alt9
+Release: alt10
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -23,6 +25,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %package -n lib%name
 Summary: library for luajit
 Group: Development/Other
+Provides: lua(abi) = %lua_version
 
 %description -n lib%name
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -63,8 +66,8 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %install
 %makeinstall_std PREFIX=%_prefix \
 		 MULTILIB=%_lib \
-		 INSTALL_LMOD=%buildroot%_datadir/lua/5.1 \
-		 INSTALL_CMOD=%buildroot%_libdir/lua/5.1 \
+		 INSTALL_LMOD=%buildroot%_datadir/lua/%lua_version \
+		 INSTALL_CMOD=%buildroot%_libdir/lua/%lua_version \
 		 LDCONFIG=true \
 		 INSTALL_LIB=%buildroot%_libdir \
 		 Q=
@@ -90,6 +93,12 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.org> 2.1-alt10
+- add lua(abi) = 5.1 to provides
+
+* Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 2.1-alt9
+- specify build arches
+
 * Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 2.1-alt9
 - specify build arches
 

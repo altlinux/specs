@@ -1,7 +1,10 @@
 %def_with lua_compat
+
+%global abi_version 5.1
+
 Name: lua5.1
 Version: 5.1.5
-Release: alt15
+Release: alt16
 
 Summary: Embeddable programming language
 License: MIT
@@ -39,6 +42,7 @@ Group: System/Libraries
 # for smooth upgrade against lua5.1-alt-compat
 Provides: %_libdir/lua/5.1
 Provides: %_datadir/lua/5.1
+Provides: lua(abi) = %abi_version
 Requires: lib%{name}-preinstall = %EVR
 Requires(pre): lib%{name}-preinstall = %EVR
 Conflicts: lua5.1-alt-compat < 1.0.1
@@ -172,7 +176,7 @@ gcc -shared -o liblua%soffix -Wl,-soname=liblua%soffix -Wl,--version-script=libl
 gcc -o lua %optflags lua.c ./liblua%soffix -lreadline
 gcc -o luac %optflags luac.c print.c ./liblua%soffix
 
-LD_LIBRARY_PATH=$PWD ./lua ../test/hello.lua 
+LD_LIBRARY_PATH=$PWD ./lua ../test/hello.lua
 
 %install
 %define pkgdocdir %_docdir/lua-5.1
@@ -268,6 +272,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.org> 5.1.5-alt16
+- add lua(abi) = 5.1 to provides
+
 * Tue Mar 27 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt15
 - added Requires: libreadline-devel to devel (not found by autoreq)
 
