@@ -14,7 +14,7 @@ TrueType format. They consist of three collections: "decorative", "straight",\
 Summary:       A Collection of High Quality TrueType Fonts
 Name:          fonts-ttf-larabie
 Version:       0
-Release:       alt1_0.14.20011216
+Release:       alt1_0.15.20011216
 License:       Larabie Fonts License
 Group:         System/Fonts/True type
 URL:           http://www.larabiefonts.com/
@@ -194,6 +194,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/uncommon
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.15.20011216
+- update to new release by fcimport
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.14.20011216
 - update to new release by fcimport
 
