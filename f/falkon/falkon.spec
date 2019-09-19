@@ -12,7 +12,7 @@
 
 Name: falkon
 Version: 3.1.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -58,6 +58,7 @@ Provides: %name = %version-%release
 Provides: %name-kde = %version-%release
 Provides:  qupzilla-kde5 = %version-%release
 Obsoletes: qupzilla-kde5 < %version-%release
+Obsoletes: rekonq < 2.5
 %description kde5
 Falkon KDE integration.
 
@@ -125,6 +126,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Thu Sep 19 2019 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2
+- obsolete rekonq
+
 * Thu Mar 28 2019 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
 - new version
 - obsolete qupzilla
