@@ -3,8 +3,8 @@
 %define libkf5torrent libkf5torrent%sover
 
 Name: kde5-libktorrent
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -73,6 +73,9 @@ This package contains the development files for %name.
 %_K5link/lib*.so
 
 %changelog
+* Thu Sep 19 2019 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - dont use ubt macro
 
