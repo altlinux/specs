@@ -8,8 +8,8 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define target avr
 
 Name:           %{target}-gcc
-Version:        7.4.0
-Release:        alt1_5
+Version:        9.2.0
+Release:        alt1_1
 Epoch:          1
 Summary:        Cross Compiling GNU GCC targeted at %{target}
 License:        GPLv2+
@@ -49,7 +49,7 @@ platform.
 [ -d gcc-%{version} ] || mv gcc-4.7-* gcc-%{version}
 
 pushd gcc-%{version}
-%patch0 -p0
+%patch0 -p2 -b .mint8
 
 contrib/gcc_update --touch
 popd
@@ -135,6 +135,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 
 
 %changelog
+* Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1:9.2.0-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1:7.4.0-alt1_5
 - update to new release by fcimport
 
