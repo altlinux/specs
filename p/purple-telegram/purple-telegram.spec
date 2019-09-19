@@ -1,5 +1,5 @@
 Name: purple-telegram
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Libpurple protocol plugin for Telegram support
@@ -11,7 +11,6 @@ URL: https://github.com/majn/telegram-purple.git
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Source: %name-%version.tar
-Source1: ru_RU.po
 
 # Automatically added by buildreq on Sun Apr 24 2016
 # optimized out: glib2-devel libgpg-error libgpg-error-devel pkg-config python-base python-modules
@@ -24,7 +23,6 @@ and other Libpurple based messengers.
 
 %prep
 %setup
-cp %SOURCE1 po
 
 %build
 # Here we manually create commit.h to avoid git commands
@@ -51,6 +49,9 @@ find . -name "Makefile*" | xargs sed -i "s/-Werror //g"
 %_pixmapsdir/pidgin/protocols/*/telegram.png
 
 %changelog
+* Thu Sep 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Build new version.
+
 * Mon Aug 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Build new version.
 - Updated russian localization.
