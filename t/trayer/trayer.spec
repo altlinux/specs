@@ -1,14 +1,13 @@
 Name: trayer
-Version: 1.1.5
+Version: 1.1.8
 Release: alt1
-License: BSD
+License: MIT and GPL-2.0-only and LGPL-2.0-or-later
 
 Group: Graphical desktop/Other
 
 Summary: lightweight GTK2-based systray for UNIX desktop
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
+# repacked https://github.com/sargon/trayer-srg/archive/trayer-%version.tar.gz
 Source: %name-%version.tar
 
 Url: https://github.com/sargon/trayer-srg
@@ -28,17 +27,26 @@ about it on its homepage: http://fbpanel.sourceforge.net/
 
 %prep
 %setup
+
 %build
+./configure --prefix=%prefix
+export CFLAGS="%optflags"
 %make_build
+
 %install
 %make_install PREFIX=%buildroot/usr install
 install -D -m644 man/trayer.1 %buildroot%_man1dir/%name.1
+
 %files
 %_bindir/trayer
 %_man1dir/*.1.*
 %doc COPYING README
 
 %changelog
+* Thu Sep 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.8-alt1
+- 1.1.8.
+- Fixed License field.
+
 * Sat Apr 20 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 - use trayer-srg fork
