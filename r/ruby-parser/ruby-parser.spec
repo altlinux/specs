@@ -3,7 +3,7 @@
 
 Name:          %pkgname
 Version:       3.13.1
-Release:       alt1
+Release:       alt2
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby
 License:       MIT
 Group:         Development/Ruby
@@ -63,6 +63,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.13.1-alt2
+- ! ref to v3.13.1
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.13.1-alt1
 - ^ v3.13.1
 - ! spec
