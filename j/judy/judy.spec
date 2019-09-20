@@ -1,6 +1,6 @@
 Name: judy
 Version: 1.0.5
-Release: alt3
+Release: alt4
 
 Summary: Judy is a C library that implements a dynamic array
 License: LGPLv2.1
@@ -69,6 +69,8 @@ This package contains development documentation of Judy.
 %patch1 -p0
 %patch2 -p1
 %patch4 -p1
+# now actually apply patch4
+patch -p1 < debian/patches/04_fix_undefined_bahavior_during_aggressive_loop_optimizations.patch
 rm -fR autom4te.cache
 
 %build
@@ -99,6 +101,9 @@ install -m644 tool/jhton %buildroot%_bindir
 %doc examples
 
 %changelog
+* Fri Sep 20 2019 Michael Shigorin <mike@altlinux.org> 1.0.5-alt4
+- Actually applied patch4 as well, thx at@ (closes: #37243)
+
 * Mon Mar 11 2019 Michael Shigorin <mike@altlinux.org> 1.0.5-alt3
 - Replaced the source tarball with pristine one (sans s/J/j/)
   thus dropping ALT patches applied within it
