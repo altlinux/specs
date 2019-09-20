@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Image-Sane
 
 Name: perl-Image-Sane
-Version: 0.14
-Release: alt4.1
+Version: 4
+Release: alt1
 
 Summary: Perl extension for the SANE (Scanner Access Now Easy) Project
 
@@ -13,6 +14,7 @@ Url: %CPAN %module_name
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://mirror.yandex.ru/mirrors/cpan/authors/id/R/RA/RATCLIFFE/%module_name-%version.tar
+Patch: Image-Sane-4-fix-586-flags.patch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsane-devel perl(English.pm) perl(Exception/Class.pm) perl(Exporter.pm) perl(ExtUtils/Depends.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/PkgConfig.pm) perl(Readonly.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(XSLoader.pm) perl(base.pm)
@@ -29,6 +31,7 @@ yet remaining very close in spirit to original API.
 Find out more about SANE at http://www.sane-project.org.
 %prep
 %setup -n %module_name-%version
+%patch -p2
 
 %build
 %perl_vendor_build
@@ -42,6 +45,9 @@ Find out more about SANE at http://www.sane-project.org.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Sep 20 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt4.1
 - rebuild with new perl 5.28.1
 
