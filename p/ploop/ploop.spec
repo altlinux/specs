@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.162
-Release: alt1
+Release: alt2
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -99,6 +99,9 @@ make \
 %python_sitelibdir/*
 
 %changelog
+* Fri Sep 20 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.162-alt2
+- fix e4defrag command line arguments
+
 * Fri Sep 20 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.162-alt1
 - 7.0.162
 
