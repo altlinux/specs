@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.5
-Release: alt6
+Release: alt7.c29f478ab
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -104,7 +104,7 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch2 -p1
+#patch2 -p1
 
 %ifarch %e2k
 # until lcc-1.24: strip UTF-8 BOM
@@ -171,6 +171,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Fri Sep 20 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.5-alt7.c29f478ab
+- update to c29f478abf03dc5ac0fd9cd21d0feb589a91d7eb
+
 * Mon Jul 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.5-alt6
 - fix build with poppler 0.76
 
