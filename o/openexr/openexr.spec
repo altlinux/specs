@@ -3,7 +3,7 @@
 %define rname OpenEXR
 Name: openexr
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 %define common %name%libsover-common
 %define libilmimf libilmimf%libsover
@@ -74,6 +74,10 @@ developing applications with %rname
 %setup -q -n %name-%version
 %patch1 -p2
 %patch2 -p2
+%ifarch %e2k
+# e2k has MMX/SSE but 2.2.0+'s asm needs to be ported
+%add_optflags -U__SSE2__ -U__SSE4_1__
+%endif
 
 %build
 %configure \
@@ -108,6 +112,9 @@ developing applications with %rname
 
 
 %changelog
+* Sat Sep 21 2019 Michael Shigorin <mike@altlinux.org> 2.3.0-alt2
+- E2K: avoid SIMD for now (SSE asm needs to be ported)
+
 * Fri Sep 20 2019 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt1
 - new version
 
