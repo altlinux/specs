@@ -1,7 +1,7 @@
 Name: lft
-Version: 3.35
+Version: 3.8
 Release: alt1
-Serial: 1
+Serial: 2
 
 Summary: Alternative traceroute tool for network (reverse) engineers
 License: VOSTROM Public License for Open Source
@@ -60,6 +60,10 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/%name
 %doc CHANGELOG COPYING README TODO
 
 %changelog
+* Mon Sep 23 2019 Terechkov Evgenii <evg@altlinux.org> 2:3.8-alt1
+- 3.8 (ALT#37027)
+- Had to increase Serial: as 3.8 is less than 3.35 for RPM
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1:3.35-alt1
 - 3.35
 
