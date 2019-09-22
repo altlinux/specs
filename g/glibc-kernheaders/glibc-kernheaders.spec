@@ -1,4 +1,4 @@
-%define kernel_base_version 5.2
+%define kernel_base_version 5.3
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -54,7 +54,7 @@ Patch19: 0019-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
 Patch20: 0020-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
 Patch21: 0021-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
 
-BuildRequires: rpm-build-kernel
+BuildRequires: rpm-build-kernel rsync
 BuildRequires: %kernel_source = 1.0.0
 
 %if 0%{!?mips:1}
@@ -195,7 +195,7 @@ cd %kernel_source
 %patch21 -p1
 
 # No exceptions, please!
-sed -i 's/^no-export-headers/#&/' include/uapi/linux/Kbuild
+sed -i 's/^no-export-headers/#&/' include/uapi/Kbuild
 
 %build
 mkdir -p headers
@@ -330,6 +330,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Sep 15 2019 Dmitry V. Levin <ldv@altlinux.org> 5.3-alt1
+- v5.2 -> v5.3.
+
 * Sun Jul 07 2019 Dmitry V. Levin <ldv@altlinux.org> 5.2-alt1
 - v5.1 -> v5.2.
 
