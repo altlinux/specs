@@ -1,6 +1,6 @@
 Name: openbabel
 Version: 2.4.1
-Release: alt4
+Release: alt5
 
 Summary: Chemistry software file format converter
 License: GPL
@@ -16,9 +16,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: cmake-modules fontconfig libcloog-isl4 libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server pkg-config python-base zlib-devel
-BuildRequires: cmake eigen2 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
+BuildRequires: cmake gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
 
-BuildPreReq: python-devel eigen2
+BuildPreReq: python-devel eigen3
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
 Summary(uk_UA.UTF-8): Конвертор біохімічних форматів даних
@@ -85,7 +85,7 @@ Python bindings for Open Babel.
 echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
-%add_optflags -I%_includedir/eigen2
+%add_optflags -I%_includedir/eigen3
 %cmake_insource
 %make_build VERBOSE=1
 
@@ -126,9 +126,12 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %endif
 
 # TODO:
-# - BR: eigen3 (FTBFS as of 20140413)
+# - consider building with external libinchi and fedora patches
 
 %changelog
+* Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 2.4.1-alt5
+- built against eigen3
+
 * Tue Apr 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.1-alt4
 - Fixed build on aarch64 and ppc64le (-Wnarrowing).
 
