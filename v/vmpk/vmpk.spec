@@ -1,5 +1,5 @@
 Name:           vmpk
-Version:        0.7.1
+Version:        0.7.2
 Release:        alt1
 
 # repacked tarball http://sf.net/vmpk/%name-%version.tar.bz2
@@ -16,7 +16,7 @@ Packager:       Vladimir D. Seleznev <vseleznv@altlinux.org>
 BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Sat Jul 30 2016
 # optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libdrumstick-rt1 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-tools
-BuildRequires: cmake drumstick-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+BuildRequires: cmake drumstick-devel >= 1.1.3 qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: xz
 
 %description
@@ -57,6 +57,9 @@ xz ChangeLog NEWS
 
 
 %changelog
+* Sun Sep 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt1
+- 0.7.2.
+
 * Tue Feb 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.1-alt1
 - 0.7.1.
 
