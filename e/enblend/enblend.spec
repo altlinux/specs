@@ -1,6 +1,6 @@
 Name: enblend
 Version: 4.2
-Release: alt3
+Release: alt4
 
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 License: GPLv2+
@@ -21,7 +21,12 @@ BuildRequires: gnuplot texinfo fonts-ttf-freefont ghostscript perl transfig tidy
 BuildRequires: libgsl-devel
 # since 4.2
 BuildRequires: perl-TimeDate perl-Readonly
-BuildRequires: librsvg-utils /usr/bin/convert graphviz hevea
+BuildRequires: librsvg-utils /usr/bin/convert graphviz
+%ifarch %e2k
+BuildRequires: /usr/bin/latex /usr/bin/pdflatex texlive texlive-collection-basic
+%else
+BuildRequires: hevea
+%endif
 
 %description
 enblend overlays multiple TIFF images using the Burt & Adelson
@@ -46,6 +51,9 @@ the input images invisible and very suitable to make panoramas.
 
 
 %changelog
+* Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 4.2-alt4
+- E2K: avoid BR: hevea for now
+
 * Wed Sep 13 2017 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt3
 - rebuilt against libgsl.so.23/boost-1.65
 
