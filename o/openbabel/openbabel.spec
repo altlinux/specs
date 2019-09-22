@@ -1,6 +1,6 @@
 Name: openbabel
 Version: 2.4.1
-Release: alt5
+Release: alt6
 
 Summary: Chemistry software file format converter
 License: GPL
@@ -16,9 +16,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: cmake-modules fontconfig libcloog-isl4 libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server pkg-config python-base zlib-devel
-BuildRequires: cmake gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
-
-BuildPreReq: python-devel eigen3
+BuildRequires: cmake eigen3 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
 Summary(uk_UA.UTF-8): Конвертор біохімічних форматів даних
@@ -86,6 +84,10 @@ echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
 %add_optflags -I%_includedir/eigen3
+%ifarch %e2k
+# see also mcst#3675; there *is* -fPIC there
+%add_optflags -Wl,--no-warn-shared-textrel
+%endif
 %cmake_insource
 %make_build VERBOSE=1
 
@@ -129,6 +131,10 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 # - consider building with external libinchi and fedora patches
 
 %changelog
+* Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 2.4.1-alt6
+- E2K: link-time workaround for mcst#3675
+- minor spec cleanup
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 2.4.1-alt5
 - built against eigen3
 
