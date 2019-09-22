@@ -1,22 +1,21 @@
-%define modulename funcparserlib
+%define  modulename funcparserlib
 
-Name: python-module-%modulename
-Version: 0.3.4
-Release: alt2.1
+Name:    python-module-%modulename
+Version: 0.3.6
+Release: alt1
 
-%setup_python_module %modulename
-
-Summary: Recursive descent parsing library for Python based on functional combinators
+Summary: Recurisve descent parsing library for Python based on functional combinators
 License: MIT
-Group: Development/Python
+Group:   Development/Python
 
-Url: http://code.google.com/p/funcparserlib/
-Packager: Kirill Maslinsky <kirill@altlinux.org>
+URL:     https://github.com/vlasovskikh/funcparserlib
+
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-dev python-module-setuptools
+
 BuildArch: noarch
 
-Source: %name-%version.tar
-
-#BuildPreReq: %py_dependencies setuptools
+Source:  %modulename-%version.tar
 
 %description
 Parser combinators are just higher-order functions that take parsers as their
@@ -25,7 +24,7 @@ arguments and return them as result values. Parser combinators are:
     * First-class values
     * Extremely composable
     * Tend to make the code quite compact
-    * Resemble the readable notation of xBNF grammars 
+    * Resemble the readable notation of xBNF grammars
 
 Parsers made with funcparserlib are pure-Python LL(*) parsers. It means that
 it's very easy to write them without thinking about look-aheads and all that
@@ -37,10 +36,10 @@ DSLs (domain specific languages).
 
 The library itself is very small. Its source code is only 0.5 KLOC, with lots
 of comments included. It features the longest parsed prefix error reporting, as
-well as a tiny lexer generator for token position tracking. 
+well as a tiny lexer generator for token position tracking.
 
 %prep
-%setup
+%setup -n %modulename-%version
 
 %build
 %python_build
@@ -48,18 +47,15 @@ well as a tiny lexer generator for token position tracking.
 %install
 %python_install
 
-%check
-pushd doc
-ln -s ../src/funcparserlib
-make
-popd
-
 %files
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
-%doc doc/{Brackets,FAQ,Tutorial,Illustrated}.md README CHANGES LICENSE examples/
+%doc README CHANGES
 
 %changelog
+* Mon Sep 23 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.6-alt1
+- Build new version for python3.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.4-alt2.1
 - Rebuild with Python-2.7
 
@@ -68,4 +64,3 @@ popd
 
 * Wed May 19 2010 Kirill Maslinsky <kirill@altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus
-
