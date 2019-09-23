@@ -1,11 +1,13 @@
-Summary: X Render Extension Test Tool
 Name: rendercheck
 Version: 1.5
-Release: alt1
+Release: alt2
+
+Summary: X Render Extension Test Tool
 License: BSD
 Group: System/X11
-Source: %name-%version.tar.bz2
+
 Url: http://cgit.freedesktop.org/xorg/app/rendercheck
+Source: %name-%version.tar.bz2
 
 BuildRequires: xorg-util-macros
 
@@ -30,14 +32,15 @@ source.
 
 %prep
 %setup
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 
 %build
-./autogen.sh
+%autoreconf
 %configure
 %make
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc README INSTALL COPYING doc/* AUTHORS NEWS
@@ -45,6 +48,10 @@ source.
 %_man1dir/*
 
 %changelog
+* Mon Sep 23 2019 Michael Shigorin <mike@altlinux.org> 1.5-alt2
+- Fix build on new arches
+- Minor spec cleanup
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.5-alt1
 - Autobuild version bump to 1.5
 
