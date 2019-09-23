@@ -1,19 +1,21 @@
 #%define rel -beta4
 %define rel %nil
 %define oname audacious
+
+%def_enable pulse
+%def_disable jack
+
 Name: audacious-plugins
 Version: 3.10.1
-Release: alt1
+Release: alt2
 
 Summary: Plugins for Audacious
-
 License: GPL
 Group: Sound
+
 Url: http://audacious-media-player.org/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: %oname = %version
 
@@ -25,7 +27,8 @@ BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsox
 
 %description
 Base plugins for Audacious.
-It includes some great other features like various output plugins, last.fm plugins, LIRC support.
+It includes some great other features like various output plugins,
+last.fm plugins, LIRC support.
 This package contains the base I/O plugins:
   * Audio CD reading
   * MPEG support (mp3)
@@ -41,27 +44,39 @@ This package contains the base I/O plugins:
 
 %prep
 %setup -n %name-%version%rel
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %configure \
-	--enable-amidiplug --enable-sid \
-	--disable-jack \
+	--enable-amidiplug \
+	--enable-sid \
+	%{subst_enable pulse} \
+	%{subst_enable jack} \
 %ifnarch x86_64
 	--disable-sse2 \
 %endif
-	 --enable-pulse
+	#
 %make_build
 
 %install
 %makeinstall_std
-%find_lang audacious-plugins
+%find_lang %name
 
-%files -f audacious-plugins.lang
+%files -f %name.lang
 %_datadir/%oname/
 %dir %_libdir/%oname/
 %_libdir/%oname/*
 
 %changelog
+* Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 3.10.1-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+- formalized jack, pulse knobs (cf. gst-plugins-good1.0, libao)
+  leaving the defaults where they were
+
 * Wed Dec 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10.1-alt1
 - new version 3.10.1 (with rpmrb script)
 
