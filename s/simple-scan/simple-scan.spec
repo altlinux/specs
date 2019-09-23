@@ -1,10 +1,11 @@
-%define ver_major 3.32
+%def_enable snapshot
+%define ver_major 3.34
 %define xdg_name org.gnome.SimpleScan
 
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -12,7 +13,11 @@ License: GPLv3+
 Group: Graphics
 Url: http://launchpad.net/%name
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: sane xdg-utils gnome-icon-theme colord
 %{?_enable_packagekit:Requires: packagekit}
@@ -54,6 +59,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- updated to 3.34.0-6-g14fe1c4
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2.1-alt1
 - 3.32.2.1
 

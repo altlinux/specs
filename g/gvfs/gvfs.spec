@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 1.40
+%define ver_major 1.42
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -71,8 +71,10 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define nfs_ver 1.9.7
 %define gdata_ver 0.17.3
 %define libusb_ver 1.0.21
+%define gsds_ver 3.33.0
 
 Requires: dconf
+Requires: gsettings-desktop-schemas >= %gsds_ver
 %{?_enable_fuse:Requires: fuse-gvfs}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
@@ -80,6 +82,7 @@ Requires: dconf
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 
 BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libdbus-devel gtk-doc
 BuildRequires: openssh-clients
 # hotplug backend
@@ -92,7 +95,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_dnssd:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_bluray:BuildRequires: libbluray-devel}
 %{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
-%{?_enable_fuse:BuildPreReq: libfuse-devel}
+%{?_enable_fuse:BuildPreReq: libfuse3-devel}
 %{?_enable_gcr:BuildRequires: gcr-libs-devel}
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
@@ -127,7 +130,7 @@ Requires: %name = %version-%release
 Summary: gvfs fuse gateway
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
-Requires: %{get_dep fuse}
+Requires: %{get_dep fuse3}
 
 %package backend-smb
 Summary: Samba backend for gvfs
@@ -528,6 +531,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
+- 1.42.0
+
 * Sun Aug 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.40.2-alt1
 - updated to 1.40.2-2-g4fd68eb2 (fixed CVE-2019-12447,
   CVE-2019-12448, CVE-2019-12449, CVE-2019-12795)

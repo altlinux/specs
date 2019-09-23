@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.SwellFoop
 
 Name: gnome-games-%_name
@@ -53,6 +53,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

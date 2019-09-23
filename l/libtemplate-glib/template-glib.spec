@@ -3,7 +3,7 @@
 %define _name template-glib
 # probably meson bug
 %define libname libtemplate_glib
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 1.0
 
 %def_enable introspection
@@ -24,7 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %name-%version.tar
 %endif
 
-BuildRequires: meson >= 0.38.1 bison flex gtk-doc vala-tools
+BuildRequires(pre): meson
+BuildRequires: bison flex gtk-doc vala-tools
 BuildRequires: libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
@@ -111,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Mar 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

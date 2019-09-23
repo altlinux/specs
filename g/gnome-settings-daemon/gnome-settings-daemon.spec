@@ -1,9 +1,10 @@
-%set_verify_elf_method unresolved=relaxed
+#%%set_verify_elf_method unresolved=relaxed
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -17,7 +18,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -31,12 +32,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.54.0
+%define glib_ver 2.56.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.29.90.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.23.3
+%define gsds_ver 3.33.0
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
@@ -57,7 +58,7 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
 Requires: iio-sensor-proxy
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -78,7 +79,7 @@ BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
-BuildRequires: libnm-devel >= %nm_ver
+BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel gcr-libs-devel
 
 # for check
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
@@ -127,18 +128,14 @@ The %name-tests package provides programms for testing GSD plugins.
 %files -f %name.lang
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/libgsd.so
-#%_libexecdir/gsd-a11y-keyboard
 %_libexecdir/gsd-a11y-settings
 %_libexecdir/gsd-backlight-helper
-%_libexecdir/gsd-clipboard
 %_libexecdir/gsd-color
 %_libexecdir/gsd-datetime
 %_libexecdir/gsd-dummy
 %_libexecdir/gsd-housekeeping
 %_libexecdir/gsd-keyboard
-%_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-media-keys
-%_libexecdir/gsd-mouse
 %_libexecdir/gsd-power
 %_libexecdir/gsd-print-notifications
 %_libexecdir/gsd-printer
@@ -150,7 +147,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-wacom
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
+%_libexecdir/gsd-wwan
 %_libexecdir/gsd-xsettings
+%_userunitdir/*
 %_datadir/%name/
 %_sysconfdir/xdg/autostart/*.desktop
 %config %_datadir/glib-2.0/schemas/*
@@ -187,6 +186,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Jun 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

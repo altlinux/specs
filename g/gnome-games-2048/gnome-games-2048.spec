@@ -3,7 +3,7 @@
 
 %define _name 2048
 %define __name gnome-%_name
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.TwentyFortyEight
 
 Name: gnome-games-%_name
@@ -48,12 +48,14 @@ Move the tiles until you obtain the 2048 tile.
 %files -f gnome-%_name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
-%_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

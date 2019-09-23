@@ -3,7 +3,7 @@
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -25,10 +25,10 @@ Provides:  gnome-games-gnibbles = %version-%release
 %define gtk_ver 3.4.0
 %define clutter_ver 1.14.4
 
-BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel libclutter-devel >= %clutter_ver libclutter-gtk3-devel
+BuildRequires: libgsound-devel libclutter-devel >= %clutter_ver libclutter-gtk3-devel
 BuildRequires: libgnome-games-support-devel
 
 %description
@@ -41,29 +41,28 @@ it.
 %setup -n %__name-%version
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %attr(2711,root,games) %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name
-%_iconsdir/hicolor/*x*/apps/%__name.png
-%_iconsdir/hicolor/scalable/apps/%__name.svg
-%_iconsdir/hicolor/symbolic/apps/%__name-symbolic.svg
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0 (ported to Meson build system)
+
 * Tue Aug 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

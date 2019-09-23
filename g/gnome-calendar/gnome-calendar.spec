@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -26,9 +26,10 @@ BuildRequires(pre): rpm-build-licenses rpm-build-gnome meson
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
 %define ical_ver 1.0.1
-%define eds_ver 3.18.0
+%define eds_ver 3.33.2
 %define gsds_ver 3.21.2
 %define gweather_ver 3.27.2
+%define dazzle_ver 3.33.1
 
 BuildPreReq: yelp-tools libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -37,7 +38,7 @@ BuildRequires: libgnome-online-accounts-devel vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libdazzle-devel libgweather-devel >= %gweather_ver
+BuildRequires: libdazzle-devel >= %dazzle_ver libgweather-devel >= %gweather_ver
 BuildRequires: libgeoclue2-devel libgeocode-glib-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
@@ -86,6 +87,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Fri May 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

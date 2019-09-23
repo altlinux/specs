@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define plugins_ver 13
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
@@ -19,6 +19,7 @@
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
+%def_enable shell_extensions
 # dropped since 3.27.90
 %def_disable rpm
 %def_disable rpm_ostree
@@ -32,7 +33,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -123,6 +124,7 @@ GNOME Software.
 	%{?_enable_ostree:-Dostree=true} \
 	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
+	%{?_disable_shell_extensions:-Dshell_extensions=false} \
 	%{?_disable_valgrind:-Dvalgrind=false} \
 	%{?_disable_tests:-Dtests=false} \
 	%{?_disable_external_appstream:-Dexternal_appstream=false}
@@ -172,6 +174,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Thu Jul 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
 - 3.32.4
 

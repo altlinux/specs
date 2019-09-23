@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name iagno
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Reversi
 
 Name: gnome-games-%_name
@@ -26,7 +26,7 @@ BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel libcanberra-vala
+BuildRequires: libgsound-devel
 
 %description
 Iagno is a computer version of the game Reversi, more popularly called
@@ -55,6 +55,9 @@ Othello.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

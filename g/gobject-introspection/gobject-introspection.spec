@@ -1,11 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 1.60
+%define ver_major 1.62
 %def_enable doctool
 %def_enable check
+%def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -28,10 +29,10 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.60.0
+%define glib_ver 2.62.0
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: autoconf-archive libgio-devel >= %glib_ver
+BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
+BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
 BuildRequires: python3-devel
 %{?_enable_doctool:BuildRequires: python3-module-mako python3-module-markdown}
@@ -83,19 +84,19 @@ gobject-introspection.
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-gtk-doc \
-	%{subst_enable doctool} \
-	--with-python=python3
-%make_build
+%meson \
+	-Dgtk-doc=true \
+	%{?_enable_doctool:-Ddoctool=true} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	-Dpython=%__python3
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/lib*.so.*
@@ -113,6 +114,7 @@ gobject-introspection.
 %_typelibdir/freetype2-2.0.typelib
 %_typelibdir/libxml2-2.0.typelib
 %_typelibdir/win32-1.0.typelib
+%_typelibdir/Vulkan-1.0.typelib
 
 %files x11
 %_typelibdir/xfixes-4.0.typelib
@@ -132,10 +134,15 @@ gobject-introspection.
 %_datadir/aclocal/*.m4
 %_man1dir/*.1*
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.62.0-alt1
+- 1.62.0 (ported to Meson build system)
+
 * Sat Jun 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.60.2-alt1
 - 1.60.2
 

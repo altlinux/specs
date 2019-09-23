@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Books
 
 Name: gnome-books
@@ -93,6 +93,9 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

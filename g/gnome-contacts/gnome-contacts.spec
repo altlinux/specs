@@ -1,14 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major
+Release: alt1
 
 Summary: Contacts manager for GNOME
 License: GPLv2+
@@ -21,14 +21,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Patch: %name-3.32.1-up-libhandy.patch
-
 %define glib_ver 2.44
 %define gtk_ver 3.24
 %define vala_ver 0.17.2
 %define tp_glib_ver 0.17.5
-%define folks_ver 0.12.1
-%define eds_ver 3.13.90
+%define folks_ver 0.13.1
+%define eds_ver 3.33.2
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
 
@@ -50,7 +48,6 @@ BuildRequires: libfolks-vala
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson %{?_without_cheese:-Dcheese=false}
@@ -75,6 +72,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34-alt1
+- 3.34
+
 * Thu Jun 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt2
 - fixed build against libhandy-0.0.10
 

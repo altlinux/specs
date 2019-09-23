@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
@@ -31,7 +31,7 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.32.0
+%define gnome_panel_ver 3.34.0
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -527,6 +527,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0 (removed modem-lights applet)
 

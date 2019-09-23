@@ -1,18 +1,19 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
-%def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
+%def_enable man
 %def_enable introspection
+%def_disable check
 
 Name: cheese
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -45,9 +46,11 @@ Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
+BuildRequires(pre): meson
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
+BuildRequires: libdbus-devel
 BuildPreReq: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildPreReq: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildPreReq: gstreamer%gst_api_ver-utils >= %gst_ver
@@ -55,16 +58,15 @@ BuildPreReq: gst-plugins-good%gst_api_ver >= %gst_ver
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: vala-tools >= %vala_ver
 BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
-BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils libappstream-glib-devel
-BuildRequires: librsvg-devel libcanberra-gtk3-devel
+BuildRequires: yelp-tools gtk-doc desktop-file-utils libappstream-glib-devel
+BuildRequires: librsvg-devel libcanberra-gtk3-devel libcanberra-vala
 BuildRequires: libgudev-devel libclutter-gtk3-devel
 BuildRequires: libX11-devel libXtst-devel libXext-devel
 BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
 #BuildRequires: nautilus-sendto-devel
 BuildRequires: libappstream-glib-devel
 %{?_enable_introspection:BuildRequires: libgdk-pixbuf-gir-devel libcogl-gir-devel libclutter-gir-devel libgstreamer%gst_api_ver-gir-devel}
-# for check
-BuildRequires: /proc dbus-tools-gui
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui}
 
 %description
 Cheese is a Photobooth-inspired GNOME application for taking pictures
@@ -122,21 +124,19 @@ GObject introspection devel data for the Cheese library.
 %setup
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	--disable-schemas-compile \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-
-%make_build
+%meson \
+	%{?_disable_gtk_doc:-Dgtk_doc=false} \
+	%{?_disable_man:Dman=false}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %check
-#xvfb-run %make check
+LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -145,7 +145,7 @@ GObject introspection devel data for the Cheese library.
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/*
-%_man1dir/%name.1.*
+%{?_enable_man:%_man1dir/%name.1.*}
 %doc AUTHORS NEWS README
 
 %files -n lib%name
@@ -156,8 +156,10 @@ GObject introspection devel data for the Cheese library.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -168,6 +170,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0 (ported to Meson build system)
+
 * Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

@@ -1,9 +1,9 @@
 %def_disable snapshot
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Games
 
 Name: gnome-games
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -26,8 +26,8 @@ BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(librsvg-2.0) >= 2.44
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(manette-0.2) >= 0.2.0
-BuildRequires: pkgconfig(retro-gtk-0.14) >= 0.15.3
+BuildRequires: pkgconfig(manette-0.2) >= 0.2.3
+BuildRequires: pkgconfig(retro-gtk-0.14) >= 0.18.0
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tracker-sparql-2.0)
 BuildRequires: libhandy-devel >= 0.0.8
@@ -71,6 +71,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Apr 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

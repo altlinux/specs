@@ -4,11 +4,11 @@
 %def_disable snapshot
 %def_enable check
 %{?_enable_snapshot:%def_with bootstrap}
-%define ver_major 0.44
-%define api_ver 0.44
+%define ver_major 0.46
+%define api_ver 0.46
 
 Name: vala
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -28,11 +28,12 @@ Patch1: %name-0.39.7-alt-fixes.patch
 
 Requires(pre): rpm-build-vala vapi-common = %version-%release
 
-BuildRequires: flex libgio-devel >= 2.40.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
+BuildRequires: flex libgio-devel >= 2.48.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
 BuildRequires: /proc rpm-build-vala
 # since 0.37
 BuildRequires: libgraphviz-devel
 %if_without bootstrap
+# VALAC_BOOTSTRAP_REQUIRED
 BuildRequires: vala >= 0.39.5.8
 %endif
 
@@ -244,15 +245,15 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_bindir/valadoc
 %_bindir/valadoc-%api_ver
 %_libdir/libvaladoc-%api_ver.so.*
-%dir %_libdir/valadoc
-%dir %_libdir/valadoc/doclets
-%_libdir/valadoc/doclets/devhelp/
-%_libdir/valadoc/doclets/gtkdoc/
-%_libdir/valadoc/doclets/html/
+%dir %_libdir/valadoc-%api_ver
+%dir %_libdir/valadoc-%api_ver/doclets
+%_libdir/valadoc-%api_ver/doclets/devhelp/
+%_libdir/valadoc-%api_ver/doclets/gtkdoc/
+%_libdir/valadoc-%api_ver/doclets/html/
 %_man1dir/valadoc*.1.*
-%_datadir/valadoc/
+%_datadir/valadoc-%api_ver/
 
-%exclude %_libdir/valadoc/*/*/*.la
+%exclude %_libdir/valadoc-%api_ver/*/*/*.la
 
 %files -n valadoc-devel
 %_includedir/valadoc-%api_ver/
@@ -263,6 +264,12 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Sat Sep 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.46.1-alt1
+- 0.46.1
+
+* Thu Sep 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- 0.46.0
+
 * Mon Aug 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.44.7-alt1
 - 0.44.7
 

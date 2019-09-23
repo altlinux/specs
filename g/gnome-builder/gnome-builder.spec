@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
@@ -13,7 +13,7 @@
 %def_with jedi
 
 Name: gnome-builder
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -32,19 +32,20 @@ Source: %name-%version.tar
 %define glib_ver 2.53.2
 %define gtk_ver 3.22.1
 %define gtksourceview_ver 4.0.2
-%define git2_ver 0.25.0
+%define git2_ver 0.28.0.1
 %define devhelp_ver 3.30.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
-%define sysprof_ver 3.32.0
+%define sysprof_ver 3.34.0
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.32.2
-%define template_glib_ver 3.32.0
+%define dazzle_ver 3.34.0
+%define template_glib_ver 3.34.0
+%define soup_ver 2.52
 
 # use python3
 AutoReqProv: nopython
@@ -69,11 +70,11 @@ BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
-BuildRequires: libjson-glib-devel >= %json_glib_ver
+BuildRequires: libjson-glib-devel >= %json_glib_ver libpcre2-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libvte3-gir-devel
 BuildRequires: libgtksourceview4-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
-BuildRequires: libjson-glib-gir-devel
+BuildRequires: libjson-glib-gir-devel libsoup-devel >= %soup_ver
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
 BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver libjsonrpc-glib-devel
@@ -116,13 +117,14 @@ This package provides noarch data needed for Gnome Builder to work.
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-clang
+%_libexecdir/%name-git
+%_libexecdir/%name-vala
 %dir %_libdir/%name
 
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
 
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/Ide-%ver_major.metadata
 %_libdir/%name/plugins/__pycache__
 %_libdir/%name/plugins/cargo.plugin
 %_libdir/%name/plugins/cargo_plugin.py
@@ -212,6 +214,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Tue Jul 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
 - 3.32.4
 

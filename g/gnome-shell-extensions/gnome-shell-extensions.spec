@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -142,6 +142,8 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/windowPicker.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/workspaceIndicator.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
 
 # screenshot-window-sizer
@@ -151,9 +153,18 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
+# horizontal-workspaces
+%dir %_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain
+%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/stylesheet.css
+
 %doc NEWS README.md
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Jul 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt3
 - requires typelib(GMenu) if classic_mode enabled (ALT #36997)
 

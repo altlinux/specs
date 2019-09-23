@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.32
+%define ver_major 3.34
 %define gst_api_ver 1.0
 %def_enable gtk_doc
 %def_disable check
@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -39,7 +39,7 @@ AutoReqProv: nopython
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
-%define eds_ver 3.17.2
+%define eds_ver 3.34.0
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
@@ -54,6 +54,9 @@ AutoReqProv: nopython
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.2
+%define gsds_ver 3.34.0
+%define libsecret_ver 0.18
+%define croco_ver 0.6.8
 
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
@@ -108,7 +111,8 @@ Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-xdg
-BuildRequires: gcc-c++ gnome-common intltool gtk-doc sassc
+BuildRequires: gcc-c++ gtk-doc xsltproc asciidoc-a2x sassc
+BuildRequires: bash-completion
 BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
@@ -124,7 +128,7 @@ BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libstartup-notification-devel >= %sn_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-BuildRequires: libcroco-devel
+BuildRequires: libcroco-devel >= %croco_ver
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth
@@ -139,12 +143,13 @@ BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-devel >= %nm_ver libnm-gir-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
-BuildRequires: gsettings-desktop-schemas-devel >= 3.21.3
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
-BuildRequires: libsystemd-devel
+BuildRequires: pkgconfig(systemd)
 BuildRequires: libibus-devel >= %ibus_ver
-BuildRequires: gcr-libs-gir-devel libpolkit-gir-devel
+BuildRequires: gcr-libs-gir-devel libsecret-devel >= %libsecret_ver libpolkit-gir-devel
+BuildRequires: libgnome-autoar-devel
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
 %description
@@ -211,6 +216,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %{?_enable_browser_plugin:%browser_plugins_path/libgnome-shell-browser-plugin.so}
 
 %files data -f %name.lang
+%_datadir/bash-completion/completions/gnome-extensions
 %_xdgconfigdir/autostart/%name-overrides-migration.desktop
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-extension-prefs.desktop
@@ -232,9 +238,12 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
-%_userunitdir/%name-wayland.target
 %_userunitdir/%name-x11.target
-%_userunitdir/%name.service
+%_userunitdir/%name-wayland.target
+%_userunitdir/%name-x11.service
+%_userunitdir/%name-wayland.service
+%_userunitdir/%name-disable-extensions.service
+
 %_man1dir/*
 %doc README* NEWS
 
@@ -245,6 +254,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

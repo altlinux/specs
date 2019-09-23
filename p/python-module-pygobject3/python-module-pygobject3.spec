@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -202,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Jun 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

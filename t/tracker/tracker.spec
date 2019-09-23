@@ -1,17 +1,18 @@
 %def_disable snapshot
-%define ver_major 2.2
+%define ver_major 2.3
 %define api_ver 2.0
 %define gst_api_ver 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_without bootstrap
+%def_with bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable network_manager
 %def_enable stemmer
 %def_disable docs
+%def_enable functional_tests
 
 # Unicode support library? (unistring|icu)
 %define unicode_support icu
@@ -19,7 +20,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -53,6 +54,10 @@ Requires: lib%name = %version-%release
 Requires: libsqlite3 >= %sqlite_ver
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
+%{?_enable_functional_tests:
+BuildRequires(pre): rpm-build-python3
+%add_python3_path %_libdir/%name-%api_ver/trackertestutils
+}
 BuildRequires: gcc-c++ gnome-common
 BuildRequires: gtk-doc docbook-utils python3
 BuildRequires: libxml2-devel libicu-devel libuuid-devel
@@ -145,8 +150,19 @@ Included utilities for Tracker:
   * tracker-sparql: allows  the caller to run an RDF query on the database.
   * tracker-tag: tool to manage tags on files.
 
+%package tests
+Summary: Tests for Tracker search tool
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Tracker.
+
 %prep
 %setup
+#fixed install_rpath for tracker, tracker-store binaries
+sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.build
 
 %build
 %meson \
@@ -154,14 +170,14 @@ Included utilities for Tracker:
 	%{?_enable_network_manager:-Dnetwork_manager=enabled} \
 	%{?_enable_stemmer:-Dstemmer=enabled} \
 	%{?_enable_docs:-Ddocs=true} \
+	%{?_disable_functional_tests:-Dfunctional_tests=false} \
 	-Dsystemd_user_services='%_prefix/lib/systemd/user'
-
+%nil
 %meson_build
 
 %install
 %meson_install
 %find_lang %name
-
 
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README*
@@ -220,8 +236,15 @@ Included utilities for Tracker:
 %_girdir/TrackerMiner-%api_ver.gir
 %endif
 
+%if_enabled functional_tests
+%files tests
+%_libdir/%name-%api_ver/trackertestutils/
+%endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Fri May 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 

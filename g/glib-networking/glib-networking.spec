@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.60
+%define ver_major 2.62
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 Requires: ca-certificates
 
-%define glib_ver 2.56.1
+%define glib_ver 2.60.0
 %define gnutls_ver 2.12.8
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
@@ -111,6 +111,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.0-alt1
+- 2.62.0
+
 * Sun Jun 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.60.3-alt1
 - 2.60.3
 

@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.44
+%define ver_major 2.46
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.15
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -31,7 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define croco_ver 0.6.7
 %define vala_ver 0.18
 %define freetype_ver 2.9
-%define rust_ver 1.27
+%define rust_ver 1.34
 
 Requires(pre): libcroco >= %croco_ver
 
@@ -88,14 +88,6 @@ Requires: %bname = %EVR
 %description utils
 This package contains small utilities to manipulate SVG files found in
 %bname package.
-
-%package utils-gtk3
-Summary: Utility to view SVG files
-Group: Graphics
-Requires: %bname = %EVR
-
-%description utils-gtk3
-This package provides simple GTK+3 based SVG viewer.
 
 %package -n libgtk-engine-svg
 Summary: A GTK+ engine for graphical themes that use SVG images.
@@ -171,11 +163,7 @@ GObject introspection devel data for the %name library
 
 %files utils
 %_bindir/*
-%exclude %_bindir/rsvg-view-3
 %_man1dir/*
-
-%files utils-gtk3
-%_bindir/rsvg-view-3
 
 %if_enabled introspection
 %files gir
@@ -188,6 +176,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.46.0-alt1
+- 2.46.0
+
 * Tue Sep 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.44.15-alt1
 - 2.44.15
 

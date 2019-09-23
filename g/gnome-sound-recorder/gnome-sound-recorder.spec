@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -64,7 +64,7 @@ The GNOME application for record and play sound files.
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/%name/
+%_datadir/%xdg_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
@@ -73,6 +73,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Sat Sep 21 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Tue Jun 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

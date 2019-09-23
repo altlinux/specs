@@ -1,8 +1,8 @@
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Thu Jun 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.3-alt1
 - 3.32.3
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Totem
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
@@ -31,14 +31,17 @@
 %def_enable gtk_doc
 # in 3.31.91 nautilus properties page moved to nautilus module
 %def_disable nautilus
-%def_enable lirc
 %def_disable tracker
 %def_enable python
 %def_disable coherence_upnp
 %def_disable jamendo
+# removed since 3.33.0
+%def_disable lirc
+%def_disable brasero
+
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -326,19 +329,20 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %files plugins
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/dbus/
-%_libdir/%name/plugins/screensaver/
-%_libdir/%name/plugins/skipto/
-%_libdir/%name/plugins/properties/
-%_libdir/%name/plugins/media-player-keys/
-%_libdir/%name/plugins/pythonconsole/
-%_libdir/%name/plugins/opensubtitles/
-%_libdir/%name/plugins/screenshot/
-%_libdir/%name/plugins/save-file/
-%_libdir/%name/plugins/im-status/
 %_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
+%_libdir/%name/plugins/dbus/
+%_libdir/%name/plugins/im-status/
+%_libdir/%name/plugins/media-player-keys/
+%_libdir/%name/plugins/open-directory/
+%_libdir/%name/plugins/opensubtitles/
+%_libdir/%name/plugins/properties/
+%_libdir/%name/plugins/pythonconsole/
 %_libdir/%name/plugins/recent/
+%_libdir/%name/plugins/save-file/
+%_libdir/%name/plugins/screensaver/
+%_libdir/%name/plugins/screenshot/
+%_libdir/%name/plugins/skipto/
 %_libdir/%name/plugins/variable-rate/
 %_libdir/%name/plugins/vimeo/
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
@@ -383,8 +387,10 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_libdir/%name/plugins/coherence_upnp/
 %endif
 
+%if_enabled brasero
 %files plugins-brasero
 %_libdir/%name/plugins/brasero-disc-recorder/
+%endif
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -396,6 +402,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Fri Jul 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

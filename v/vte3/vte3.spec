@@ -1,18 +1,16 @@
 %def_disable snapshot
 
 %define _name vte
-%define ver_major 0.56
+%define ver_major 0.58
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
-%def_enable glade
-%def_enable pcre2
 %def_enable check
 
 Summary: Terminal emulator widget for use with GTK+
@@ -28,26 +26,24 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-# https://gitlab.gnome.org/GNOME/vte/issues/37
-# https://gitlab.gnome.org/dreamcat4/vte/raw/master/src/vte.sh
-Patch: vte-0.54.0-dreamcat4-vte.sh_preserve_custom_user_prompts.patch
-
 %define gtk3_ver 3.8.0
 %define glib_ver 2.40.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ gperf
 BuildRequires: libncurses-devel libcairo-devel
-BuildRequires: intltool >= 0.35.0
 BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
+BuildRequires: libfribidi-devel
+BuildRequires: libpcre2-devel
 BuildRequires: vala-tools libvala-devel
-%{?_enable_pcre2:BuildRequires: libpcre2-devel}
+
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
@@ -125,26 +121,20 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -n %_name-%version
-#%%patch -b .prompt
 
 %build
-%autoreconf
-%{?_enable_glade:export enable_glade_catalogue=yes}
-%configure \
-	--enable-shared \
-	%{subst_enable static} \
-	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_disable_glade:--disable-glade}
-%make_build
+%meson \
+	%{?_disable introspection:-Dgir=false} \
+	%{?_enable_gtk_doc:-Ddocs=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 # fix permissions
 chmod 755 %buildroot%_sysconfdir/profile.d/vte.sh
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS NEWS %buildroot%pkgdocdir/
+install -p -m644 AUTHORS NEWS README.md %buildroot%pkgdocdir/
 install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 
 # Remove unpackaged files
@@ -153,7 +143,8 @@ find %buildroot -type f -name '*.la' -delete
 %find_lang %_name-%api_ver --output=%name.lang
 
 %check
-%make check
+LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/*
@@ -162,6 +153,7 @@ find %buildroot -type f -name '*.la' -delete
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
 %pkgdocdir/NEWS
+%pkgdocdir/README.md
 %_libdir/*.so.*
 %_sysconfdir/profile.d/vte.sh
 
@@ -170,7 +162,7 @@ find %buildroot -type f -name '*.la' -delete
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/vte-%api_ver.vapi
+%_vapidir/vte-%api_ver.*
 %if_enabled glade
 %_datadir/glade/catalogs/vte-%api_ver.xml
 %_datadir/glade/pixmaps/hicolor/*x*/actions/widget-vte-terminal.png
@@ -193,6 +185,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Tue May 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.56.3-alt1
 - 0.56.3
 

@@ -1,5 +1,5 @@
 %define xdg_name org.gnome.clocks
-%define ver_major 3.32
+%define ver_major 3.34
 
 Name: gnome-clocks
 Version: %ver_major.0
@@ -44,16 +44,18 @@ Clock application designed for GNOME 3
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/%name/
 %_datadir/applications/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README NEWS
+%doc README* NEWS
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

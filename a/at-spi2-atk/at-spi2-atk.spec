@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.32
+%define ver_major 2.34
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -23,8 +23,8 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.32
-%define core_ver 2.32.0
-%define atk_ver 2.32.0
+%define core_ver 2.34.0
+%define atk_ver 2.34.0
 
 Requires: at-spi2-core >= %core_ver
 
@@ -84,6 +84,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 

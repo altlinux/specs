@@ -5,7 +5,7 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: EOG plugins
@@ -63,8 +63,6 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 %autoreconf
 export ac_cv_path_POSTR=%_bindir/postr
 %configure
-#    --disable-schemas-compile
-
 %make_build
 
 %install
@@ -103,6 +101,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
+- 3.26.4
+
 * Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

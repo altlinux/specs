@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -18,7 +18,7 @@ License: BSD-like
 Url: https://github.com/Keruspe/GPaste
 
 %if_disabled snapshot
-Source: http://www.imagination-land.org/files/%name/%_name-%version.tar.gz
+Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -162,6 +162,9 @@ subst 's/1\.15/1.14/' configure.ac
 
 
 %changelog
+* Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

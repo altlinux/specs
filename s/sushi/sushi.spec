@@ -1,12 +1,14 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.32
+%define ver_major 3.34
+%define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
+
 %def_enable introspection
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -24,12 +26,12 @@ Requires: %lo_bin
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtksourceview3-devel libgjs-devel libharfbuzz-devel
+BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
-BuildRequires: libevince-devel libmusicbrainz5-devel libwebkit2gtk-devel
+BuildRequires: libevince-devel libmusicbrainz5-devel libwebkit2gtk-devel libepoxy-devel
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
-BuildRequires: libgtksourceview3-gir-devel libcogl-gir-devel libclutter-gir-devel libevince-gir-devel
+BuildRequires: libgtksourceview4-gir-devel libcogl-gir-devel libclutter-gir-devel libevince-gir-devel
 BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 %endif
 
@@ -75,8 +77,6 @@ GObject introspection devel data for the Sushi library.
 
 %prep
 %setup
-#src/libsushi/sushi-pdf-loader.c:  libreoffice_path[0] = "/usr/bin/libreoffice";
-sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 
 %build
 %meson
@@ -95,9 +95,13 @@ sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 %_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
 %_datadir/%name/
 %_datadir/dbus-1/services/*
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Jun 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

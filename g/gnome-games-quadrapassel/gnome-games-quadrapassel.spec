@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
@@ -27,7 +27,7 @@ BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: librsvg-devel libclutter-gtk3-devel libcanberra-gtk3-devel libcanberra-vala
-BuildRequires: libmanette-devel
+BuildRequires: libmanette-devel libgsound-devel
 
 %description
 GNOME version of the popular russian game Tetris.
@@ -56,6 +56,9 @@ GNOME version of the popular russian game Tetris.
 
 
 %changelog
+* Sat Sep 21 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

@@ -3,13 +3,13 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -29,15 +29,17 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define webkit_ver 2.24.0
+%define glib_ver 2.61.2
+%define webkit_ver 2.25.1
 %define gtk_ver 3.24.0
+%define nettle_ver 3.4
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
 %define soup_ver 2.48.0
 %define secret_ver 0.14
 %define gcr_ver 3.5.5
 %define dazzle_ver 3.32.0
-%define handy_ver 0.0.9
+%define handy_ver 0.0.10
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
@@ -52,7 +54,7 @@ BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libdazzle-devel >= %dazzle_ver
 BuildRequires: libnotify-devel libsqlite3-devel
-BuildRequires: libnettle-devel
+BuildRequires: libnettle-devel >= %nettle_ver
 BuildRequires: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 BuildRequires: libicu-devel libjson-glib-devel
@@ -92,8 +94,8 @@ This package contains common noarch files needed for Epiphany.
 %_libexecdir/%name-search-provider
 %dir %_libdir/%name
 %_libdir/%name/*.so
-%dir %_libdir/%name/web-extensions
-%_libdir/%name/web-extensions/libephywebextension.so
+%dir %_libdir/%name/web-process-extensions
+%_libdir/%name/web-process-extensions/libephywebprocessextension.so
 %doc NEWS README* TODO
 
 %files data -f %name.lang
@@ -103,11 +105,14 @@ This package contains common noarch files needed for Epiphany.
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
 %_man1dir/*
-%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
+%_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.5-alt1
 - 3.32.5
 

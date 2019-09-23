@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.32
+%define ver_major 0.34
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
@@ -174,6 +174,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
+- 0.34.0
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
 - 0.32.0
 

@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -27,14 +27,14 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 
 %define gtk_ver 3.22.0
-%define glib_ver 2.44.0
+%define glib_ver 2.54.0
 %define desktop_ver 3.30.1
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.31.90
+%define gsds_ver 3.33.0
 %define nm_ver 1.2
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.31.90
+%define sett_daemon_ver 3.33.90
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -175,6 +175,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0.1-alt1
+- 3.34.0.1
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

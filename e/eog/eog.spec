@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.32
+%define ver_major 3.34
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
@@ -10,7 +10,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -111,12 +111,11 @@ the functionality of the EOG GUI.
     -Dxmp=true \
     -Dlibjpeg=true \
     -Dlibrsvg=true \
-    -Denable-schemas-compile=false \
     %{?_enable_introspection:-Dintrospection=true} \
     %{?_enable_color_management:-Dcms=true} \
     %{?_enable_installed_tests:-Dinstalled-tests=true} \
     %{?_enable_gtk_doc:-Dgtk_doc=true}
-
+%nil
 %meson_build
 
 %install
@@ -167,6 +166,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

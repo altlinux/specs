@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 1.22
+%define ver_major 1.24
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -9,12 +9,16 @@
 %def_disable gjs
 # not ready for lua-5.3
 %def_disable lua
-%def_enable vala
+%def_enable python2
+%def_enable introspection
+%def_disable vala
 %def_enable gtk_doc
+%def_enable glade_catalog
+%def_disable check
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt3.1
+Release: alt1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -26,24 +30,23 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-# our python3 --ldflags break build
-Patch: libpeas-1.8.0-alt-python3_build.patch
-Patch1: libpeas-1.22.0-alt-automake.patch
 
-BuildRequires: gnome-common intltool gtk-doc
-BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
-BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
-# for python support
-BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.1
+BuildRequires(pre): meson
+BuildRequires: gnome-common gtk-doc
+BuildRequires: libgio-devel >= 2.38.0 libgtk+3-devel >= 3.0.0
 # for python3 support
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
-BuildRequires: libgladeui2.0-devel
-
-# for Javascript support
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel}
+%{?_enable_python2:
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.1}
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
 %{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
+%{?_enable_glade_catalog:BuildRequires: libgladeui2.0-devel xmllint}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 %name is a convenience library making adding plug-ins support
@@ -141,22 +144,25 @@ This package contains %name demonstration programs
 
 %prep
 %setup
-%patch -b .python3
-%patch1 -b .sh
-
-[ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_enable_python2:-Dpython2=true} \
+	%{?_enable_vala:-Dvapi=true} \
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_disable_glade_catalog:-Dglade_catalog=flase}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+%find_lang --output=%name.lang %name-%api_ver
 
-%find_lang %name
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
+
 
 %files -f %name.lang
 %_libdir/%{name}*-%api_ver.so.*
@@ -165,8 +171,10 @@ This package contains %name demonstration programs
 %_datadir/icons/hicolor/*/*/*
 %doc AUTHORS README
 
+%if_enabled python2
 %files python-loader
-%_libdir/%name-%api_ver/loaders/libpythonloader.so
+%_libdir/%name-%api_ver/loaders/libpython2loader.so
+%endif
 
 %files python3-loader
 %_libdir/%name-%api_ver/loaders/libpython3loader.so
@@ -189,26 +197,31 @@ This package contains %name demonstration programs
 %files devel
 %_libdir/%{name}*-%api_ver.so
 %_includedir/%name-%api_ver/
-%_libdir/pkgconfig/*.pc
-%_datadir/glade/catalogs/%name-gtk.xml
+%_pkgconfigdir/*.pc
+%{?_enable_glade_catalog:%_datadir/glade/catalogs/%name-gtk.xml}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files demo
 %_bindir/peas-demo
 %_libdir/peas-demo/
 
+%if_enabled introspection
 %files gir
 %_typelibdir/*
 
 %files gir-devel
 %_girdir/*
-
-%exclude %_libdir/%name-%api_ver/loaders/*.la
+%endif
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0 (ported to Meson build system)
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt3.1
 - rebuilt with improved automake-1.16.1
 

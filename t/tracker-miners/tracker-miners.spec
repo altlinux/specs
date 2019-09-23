@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 2.2
+%define ver_major 2.3
 %define ver_api 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -65,8 +65,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 
 BuildRequires(pre): meson rpm-build-xdg
-BuildRequires: intltool
 BuildRequires: tracker-devel >= %ver_major
+BuildRequires: intltool
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
 BuildRequires: libenca-devel libseccomp-devel libdbus-devel pkgconfig(systemd)
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
@@ -99,6 +99,10 @@ This package provides miners for TRacker.
 
 %prep
 %setup
+
+#fixed install_rpath for modules
+find src/ -name "meson.build" -print0 | xargs -r0 \
+sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %build
 %meson \
@@ -167,6 +171,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Fri May 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 

@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
+%define ver_major 3.34
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -11,7 +11,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -182,8 +182,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{?_enable_plugins:%python3_sitelibdir/gi/overrides/Gedit.py*}
 %{?_enable_plugins:%python3_sitelibdir/gi/overrides/__pycache__/}
 
-%exclude %_libexecdir/%name/gedit-bugreport.sh
-
 %files data -f %name.lang
 %pkgdatadir/
 %_desktopdir/%xdg_name.desktop
@@ -214,6 +212,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed May 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 

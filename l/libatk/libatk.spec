@@ -1,12 +1,12 @@
 %define _name atk
-%define ver_major 2.32
+%define ver_major 2.34
 %def_disable static
 %def_disable docs
 %def_enable introspection
 %def_disable check
 
 Name: libatk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Accessibility features for Gtk+
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Accessibility
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: atk-compat.map
 Source2: atk-compat.lds
-Patch: atk-2.31.90-alt-compat-version-script.patch
+Patch: atk-2.34.0-alt-compat-version-script.patch
 
 Requires: %name-locales = %version
 
@@ -154,6 +154,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
+- 2.34.1
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 

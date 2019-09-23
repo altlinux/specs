@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 4.2
+%define ver_major 4.4
 %define api_ver 4
 
 %def_disable static
@@ -15,7 +15,7 @@
 
 Name: lib%{_name}4
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -28,15 +28,18 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define gtk_ver 3.22.0
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.8.0
+%define fribidi_ver 0.19.7
 
-BuildRequires(pre): rpm-build-gnome rpm-macros-valgrind
-# From configure.ac
-BuildRequires: gcc-c++ autoconf-archive gtk-doc itstool
+BuildRequires(pre): meson rpm-build-gnome rpm-macros-valgrind
+
+# From meson.build
+BuildRequires: gcc-c++ gtk-doc itstool
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
 %{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}}
 
@@ -102,21 +105,21 @@ the functionality of the installed GtkSourceView library.
 %setup -n %_name-%version
 
 %build
-%configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	%{subst_enable valgrind}
-
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk-doc=true} \
+	%{?_disable_introspection:-Dgir=false} \
+	%{?_disable_vala:-Dvapi=false} \
+	%{?_enable_installed_tests:-Dinstall_tests=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %_name-%api_ver
 
 %check
-xvfb-run %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files -f %_name-%api_ver.lang
 %_libdir/lib%_name-%api_ver.so.*
@@ -133,8 +136,10 @@ xvfb-run %make check
 %endif
 %doc HACKING
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -152,6 +157,9 @@ xvfb-run %make check
 
 
 %changelog
+* Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Mon Jun 03 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1.1
 - made valgrind tests optional
 
