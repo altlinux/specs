@@ -1,7 +1,7 @@
 %define  oname radon
 
 Name:    python3-module-%oname
-Version: 3.0.3
+Version: 4.0.0
 Release: alt1
 
 Summary: Various code metrics for Python code
@@ -48,6 +48,9 @@ mv %buildroot%_bindir/radon %buildroot%_bindir/radon3
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Sep 23 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Build new version.
+
 * Mon May 20 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
 - Build new version.
 
