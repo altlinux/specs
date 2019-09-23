@@ -1,7 +1,8 @@
 
 %define _libexecdir /usr/libexec
 %define confdir /etc/vztt
-%define vzconfdir /var/lib/vz/template/conf/vztt
+%define vztempldir /var/lib/vz/template
+%define vzconfdir %vztempldir/conf/%name
 %define vztt_conf %confdir/vztt.conf
 %define nojquota_conf %confdir/nojquota.conf
 %define url_map %vzconfdir/url.map
@@ -12,7 +13,7 @@
 
 Name: vztt
 Version: 7.0.65
-Release: alt3
+Release: alt4
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -83,6 +84,8 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/%name/myinit
 %_man8dir/vzpkg.8.*
 %dir %confdir
+%dir %vztempldir
+%dir %vztempldir/conf
 %dir %vzconfdir
 %config(noreplace) %vztt_conf
 %config(noreplace) %nojquota_conf
@@ -99,6 +102,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt4
+- spec cleanup
+
 * Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt3
 - add distribution name to config in template converter
 
