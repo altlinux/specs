@@ -2,7 +2,7 @@
 
 Name: openssl1.1
 Version: 1.1.1d
-Release: alt1
+Release: alt1.1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -52,12 +52,12 @@ Patch145: openssl-rh-weak-ciphers.patch
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
 
-BuildRequires: /usr/bin/pod2man bc zlib-devel
+BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools
 %if_enabled tsget
 BuildRequires: perl-WWW-Curl
 %endif
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: perl-Module-Load-Conditional perl-devel perl-Math-BigInt perl-PathTools}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: perl-Module-Load-Conditional perl-devel perl-Math-BigInt}}
 
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
@@ -464,6 +464,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Sat Sep 21 2019 Michael Shigorin <mike@altlinux.org> 1.1.1d-alt1.1
+- Fixed build --without check.
+
 * Thu Sep 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1d-alt1
 - Updated to 1.1.1d (fixes CVE-2019-1543, CVE-2019-1549, CVE-2019-1563,
   CVE-2019-1547, CVE-2019-1552).
