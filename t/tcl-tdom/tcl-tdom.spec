@@ -1,36 +1,30 @@
 Name: tcl-tdom
-Version: 0.8.3
-Release: alt0.2
+Version: 0.9.1
+Release: alt1
 
 Summary: A XML/DOM/XPath/XSLT implementation for Tcl
 License: MPL
 Group: Development/Tcl
 Url: http://www.tdom.org
 
-# http://git.altlinux.org/gears/t/tcl-tdom.git
-Source: %name-%version-%release.tar
+# repacked http://tdom.org/downloads/tdom-%version-src.tgz
+Source: tdom-%version.tar
+Patch1: 0001-ALT-use-external-libexpat.patch
+Patch2: 0002-ALT-install-test-targets-fixed.patch
+Patch3: 0003-ALT-TEA.patch
 
-BuildRequires: tcl-devel >= 8.4.0-alt1 libexpat-devel
-
-%package devel
-Summary: A XML/DOM/XPath/XSLT implementation for Tcl - development files
-Group: Development/C
+BuildRequires: tcl-devel libexpat-devel libgumbo-devel
 
 %description
 This package contains a freely distributable extension to Tcl
 implementing memory channels, i.e. channels storing the data
 placed into them in memory, not on disk.
 
-%description devel
-This package contains a freely distributable extension to Tcl
-implementing memory channels, i.e. channels storing the data
-placed into them in memory, not on disk.
-
-This package contains development files.
-
 %prep
-%setup
-%teapatch
+%setup -n tdom-%version
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -45,15 +39,17 @@ make test
 
 %files
 %_tcllibdir/libtdom%version.so
+%_tcllibdir/tdom%version
 %_tcldatadir/tdom%version
 %_mandir/mann/*
 
-%files devel
-%_includedir/tdom.h
-%_tcllibdir/libtdomstub%version.a
-%_libdir/tdomConfig.sh
-
 %changelog
+* Mon Sep 23 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
+- 0.9.1.
+- Moved pkgIndex.tcl to arch-depended location cause tdom is arch-depended
+  extension.
+- Dropped devel subpackage.
+
 * Tue Jul 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.3-alt0.2
 - Fixed FTBFS
 - Fixed:
