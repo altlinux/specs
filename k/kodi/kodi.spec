@@ -1,5 +1,5 @@
 Name: kodi
-Version: 18.3
+Version: 18.4
 Release: alt1
 
 Summary: Kodi Media Center
@@ -167,6 +167,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Mon Sep 23 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.4-alt1
+- 18.4 Leia released
+
 * Sat Aug 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.3-alt1
 - 18.3 Leia released
 
