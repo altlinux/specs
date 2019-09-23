@@ -2,20 +2,19 @@
 
 Name: hping3
 Version: 0.0.%snap
-Release: alt5.qa2
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt6
 
 Summary: TCP/IP stack auditing and much more
 License: GPLv2
 Group: Security/Networking
 
-URL: http://www.hping.org
+Url: http://www.hping.org
 Source: %url/hping3-%snap.tar.gz
 Patch1: hping3-20051105-cflags.patch
 Patch2: hping3-bytesex.patch
 Patch3: hping3-20051105-pcap.patch
 Patch4: hping3-20051105-willalwaysoverflow.patch
+Packager: Victor Forsyuk <force@altlinux.org>
 
 # Automatically added by buildreq on Sat Jan 10 2009
 BuildRequires: libpcap-devel tcl-devel
@@ -36,9 +35,9 @@ Since version 3, hping implements scripting capabilties.
 
 %build
 # Teach configure to recognize tcl 8.5 :)
-%__subst 's/"8.4"/"8.5"/' configure
+sed -i 's/"8.4"/"8.5"/' configure
 # Fix man page
-%__subst 's/hping2/hping3/g; s/HPING2 /HPING3 /;' docs/hping3.8
+sed -i 's/hping2/hping3/g; s/HPING2 /HPING3 /;' docs/hping3.8
 ./configure
 %make_build CFLAGS="%optflags -D_FORTIFY_SOURCE=2"
 
@@ -53,6 +52,9 @@ install -pD -m644 docs/hping3.8 %buildroot%_man8dir/hping3.8
 %doc docs/A* docs/HPING2-HOWTO.txt docs/[M-Z]* docs/hping2rc.example
 
 %changelog
+* Mon Sep 23 2019 Michael Shigorin <mike@altlinux.org> 0.0.20051105-alt6
+- E2K: fix ftbfs
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.20051105-alt5.qa2
 - NMU: rebuild against Tcl/Tk 8.6
 
