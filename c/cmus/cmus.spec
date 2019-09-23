@@ -1,36 +1,28 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
-# $Id: cmus.spec,v 1.34 2006/08/20 13:58:03 eugene Exp $
 
 %define name cmus
-%define version 2.7.1
+%define version 2.8.0
 %define rcname rc0
 %define release alt1
 %define debug 0
 
 Name: %name
 Version: %version
-Release: alt1.1
+Release: alt1
 Summary: CMus - C* Music Player
 License: GPL
 Group: Sound
-Url: http://cmus.sourceforge.net/
-
-Packager: Eugene Vlasov <eugvv@altlinux.ru>
+Url: https://cmus.github.io
 
 AutoReq: yes, nopython
 
 Source0: %name-%version.tar
 Source2: cmus.desktop
 
-# Patch0: cmus-vorbis_includes.patch
-# Temporary disable build with ncursesw - removed. Now cmus use ncurses if
-# ncursesw not available
-# Patch1: %name-with_ncurses.patch
-# Patch2: cmus.git-5feece0be8491287625b105af35d0091cbb05aa6.patch
-
 # User interface
 BuildRequires(build): libtinfo-devel
 BuildRequires(build): libncursesw-devel
+BuildRequires(build): libsystemd-devel
 # Output
 BuildRequires(build): libalsa-devel
 BuildRequires(build): libao-devel
@@ -100,6 +92,7 @@ Features
       example)
     o UTF-8 support
     o Can be controlled via UNIX socket using cmus-remote command
+    o Dbus/MPRIS support
 
 %description -l ru_RU.UTF-8
 CMus - маленький и быстрый музыкальный проигрыватель, использующий
@@ -145,6 +138,7 @@ CMus - маленький и быстрый музыкальный проигр�
       редактора тегов)
     o Поддержка UTF-8
     o Может управлятся через сокет UNIX (используя команду cmus-remote)
+    o Поддерживает спецификацию MPRIS
 
 %package in-flac
 Summary: FLAC plugin for CMus
@@ -162,7 +156,6 @@ CMus - маленький и быстрый музыкальный проигр�
 библиотеку ncurses.
 
 Этот пакет содержит расширение для воспроизведения FLAC.
-
 
 %package in-vorbis
 Summary: Ogg/Vorbis plugin for CMus
@@ -197,7 +190,6 @@ CMus - маленький и быстрый музыкальный проигр�
 библиотеку ncurses.
 
 Этот пакет содержит расширение для воспроизведения Ogg/Opus.
-
 
 %package in-modplug
 Summary: libmodplug plugin for CMus (.mod, .x3m, ...)
@@ -378,7 +370,6 @@ CMus - маленький и быстрый музыкальный проигр�
 
 Этот пакет содержит расширение для воспроизведения через ALSA.
 
-
 %package out-pulse
 Summary: PulseAudio output plugin for CMus
 Group: Sound
@@ -394,7 +385,6 @@ This package contains PulseAudio output plugin.
 CMus - маленький и быстрый музыкальный проигрыватель, использующий библиотеку ncurses.
 
 Этот пакет содержит расширение для воспроизведения через PulseAudio.
-
 
 %package out-ao
 Summary: libao output plugin for CMus
@@ -423,12 +413,8 @@ CMus is a small and fast music player using the ncurses library.
 
 This package contains plugin for Jack Audio Connection Kit support.
 
-
 %prep
-%setup -q -n %name-%version
-# %patch0 -p1
-# %patch1 -p1
-#%patch2 -p1
+%setup -n %name-%version
 
 %build
 CFLAGS="${CFLAGS:--pipe -Wall -O2 -g}" ; export CFLAGS
@@ -438,6 +424,7 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         DEBUG=2 \
 %endif
         prefix=%prefix \
+        CONFIG_MPRIS=y \
         CONFIG_FLAC=y \
         CONFIG_MAD=y \
         CONFIG_MODPLUG=y \
@@ -462,27 +449,15 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_CDIO=y \
         CONFIG_JACK=y
 %make_build
-# make man
-# make html
-
 
 %install
 make DESTDIR=%buildroot install
 
-# Menu entry
-# %__mkdir_p %buildroot%_menudir
-# cat > %buildroot%_menudir/%name <<EOF
-# ?package(cmus):\
-#  	command="%_bindir/%name" needs="text" icon="sound_section.png" \
-#   	section="Multimedia/Sound" title="CMus" \
-#         longtitle="CMus - C* Music Player"
-# EOF
 install -d %buildroot%_desktopdir
 install -m 644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 mkdir examples
 mv cmus-status-display examples
-
 
 %files
 %_bindir/cmus*
@@ -492,7 +467,6 @@ mv cmus-status-display examples
 %_libexecdir/%name/ip/mad.so
 %_libexecdir/%name/ip/wav.so
 %_libexecdir/%name/op/oss.so
-# %_menudir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name
 %exclude %_datadir/doc/%name
@@ -501,42 +475,32 @@ mv cmus-status-display examples
 %_man1dir/cmus-remote.1.*
 %_man7dir/cmus-tutorial.7.*
 
-
 %files in-flac
 %_libexecdir/%name/ip/flac.so
-
 
 %files in-vorbis
 %_libexecdir/%name/ip/vorbis.so
 
-
 %files in-opus
 %_libexecdir/%name/ip/opus.so
-
 
 %files in-modplug
 %_libexecdir/%name/ip/modplug.so
 
-
 %files in-mpc
 %_libexecdir/%name/ip/mpc.so
-
 
 %files in-mikmod
 %_libexecdir/%name/ip/mikmod.so
 
-
 %files in-mp4
 %_libexecdir/%name/ip/mp4.so
-
 
 %files in-aac
 %_libexecdir/%name/ip/aac.so
 
-
 %files in-wavpack
 %_libexecdir/%name/ip/wavpack.so
-
 
 %files in-cdio
 %_libexecdir/%name/ip/cdio.so
@@ -547,14 +511,11 @@ mv cmus-status-display examples
 %files in-vtx
 %_libexecdir/%name/ip/vtx.so
 
-
 %files out-alsa
 %_libexecdir/%name/op/alsa.so
 
-
 %files out-pulse
 %_libexecdir/%name/op/pulse.so
-
 
 %files out-ao
 %_libexecdir/%name/op/ao.so
@@ -562,8 +523,14 @@ mv cmus-status-display examples
 %files out-jack
 %_libexecdir/%name/op/jack.so
 
-
 %changelog
+* Mon Sep 23 2019 Terechkov Evgenii <evg@altlinux.org> 2.8.0-alt1
+- 2.8.0 final release (N.B.: cmus not actively maintained now)
+- Update Url: tag
+- Build with MPRIS/Dbus support
+- Spec cleanup
+- Drop (non)packager
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1.1
 - rebuild against libcdio.so.18
 
