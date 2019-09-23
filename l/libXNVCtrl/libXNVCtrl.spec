@@ -4,7 +4,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libXNVCtrl
 Version:        435.17
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Library providing the NV-CONTROL API
 License:        GPLv2+
 URL:            https://download.nvidia.com/XFree86/nvidia-settings/
@@ -76,13 +76,17 @@ popd
 %doc --no-dereference COPYING
 %{_libdir}/%{name}.so.0*
 
+%if_enabled devel
 %files devel
 %doc doc/NV-CONTROL-API.txt doc/FRAMELOCK.txt
 %{_includedir}/NVCtrl
 %{_libdir}/%{name}.so
-
+%endif
 
 %changelog
+* Mon Sep 23 2019 Igor Vlasenko <viy@altlinux.ru> 435.17-alt2_1
+- compat (no devel) package
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 435.17-alt1_1
 - update to new release by fcimport
 
