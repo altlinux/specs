@@ -5,7 +5,7 @@
 %define libdrumstick_rt libdrumstick-rt%sover
 
 Name: drumstick
-Version: 1.1.0
+Version: 1.1.3
 Release: alt1
 
 Group: System/Libraries
@@ -111,23 +111,22 @@ popd
 %_iconsdir/hicolor/*/apps/drumstick.*
 
 %files -n %libdrumstick_file
-%_libdir/libdrumstick-file.so.%sover
 %_libdir/libdrumstick-file.so.*
+
 %files -n %libdrumstick_alsa
-%_libdir/libdrumstick-alsa.so.%sover
 %_libdir/libdrumstick-alsa.so.*
 %_libdir/drumstick/libdrumstick-rt-alsa-*.so
+
 %files -n %libdrumstick_rt
-%_libdir/libdrumstick-rt.so.%sover
 %_libdir/libdrumstick-rt.so.*
 %_libdir/drumstick/libdrumstick-rt-net-*.so
 %_libdir/drumstick/libdrumstick-rt-oss-*.so
-%_libdir/drumstick/libdrumstick-rt-synth.so
 
 %files devel
 %doc BUILD*/doc/html
 %_libdir/libdrumstick-*.so
 %_libdir/pkgconfig/drumstick-*.pc
+%_datadir/%name/cmake/*.cmake
 %_includedir/drumstick/
 %_includedir/drumstick.h
 
@@ -163,6 +162,9 @@ popd
 %_man1dir/drumstick-vpiano.*
 
 %changelog
+* Mon Sep 23 2019 Oleg Solovyov <mcpain@altlinux.org> 1.1.3-alt1
+- update to 1.1.3
+
 * Fri Nov 03 2017 Oleg Solovyov <mcpain@altlinux.org> 1.1.0-alt1
 - update to 1.1.0
 
