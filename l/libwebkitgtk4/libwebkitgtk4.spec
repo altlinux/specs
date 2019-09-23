@@ -9,6 +9,12 @@
 
 %define oname webkit
 %define _name webkitgtk
+%define bwrap_bin %_bindir/bwrap
+
+# wpebackend-fdo-1.4
+#Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp:
+#wpe_loader_init("libWPEBackend-fdo-1.0.so");
+%define wpebackend_fdo_sover 1
 
 %def_disable gtkdoc
 %def_enable gold
@@ -25,7 +31,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -37,7 +43,7 @@ Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
 # Source/cmake/BubblewrapSandboxChecks.cmake
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
-Patch: webkitgtk-2.25.92-alt-bwrap_check.patch
+Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 
 %define bwrap_ver 0.3.1
 
@@ -94,8 +100,6 @@ Requires: libjavascriptcoregtk4 = %version-%release
 Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 %{?_enable_bubblewrap_sandbox:Requires: bubblewrap >= %bwrap_ver xdg-dbus-proxy}
-
-
 
 %description -n libwebkit2gtk
 WebKit2 is a new API layer for WebKit designed from the ground up to support a split process model,
@@ -209,6 +213,10 @@ GObject introspection devel data for the JavaScriptCore library
 %setup -n %_name-%version
 %patch -b .bwrap
 
+# fix libWPEBackend-fdo soname
+sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
+	Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp
+
 # Remove bundled libraries
 rm -rf Source/ThirdParty/gtest/
 rm -rf Source/ThirdParty/qunit/
@@ -245,7 +253,7 @@ export GIGACAGE_ENABLED=0
 %if_disabled bubblewrap_sandbox
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
 %else
--DBWRAP=%_bindir/bwrap \
+-DBWRAP_BIN=%bwrap_bin \
 %endif
 %nil
 
@@ -331,6 +339,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
+- 2.26.1
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
 - 2.26.0
 
