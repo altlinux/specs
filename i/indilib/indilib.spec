@@ -3,7 +3,7 @@
 
 Name: indilib
 Version: 1.7.5
-Release: alt2
+Release: alt3
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -75,6 +75,11 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %prep
 %setup -q -n lib%{shortname}_%version
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' |
+	xargs sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 pushd libindi
@@ -118,16 +123,19 @@ popd
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Mon Sep 23 2019 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt3
+- E2K: strip UTF-8 BOM for lcc < 1.24 (thanks mike@alt)
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.5-alt2
 - NMU: remove rpm-build-ubt from BR:
 
 * Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt1
 - new version
 
-* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1%ubt
+* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
 - new version
 
-* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt3%ubt
+* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt3
 - move data to common subpackage
 
 * Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2
@@ -137,10 +145,10 @@ popd
 * Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
 - NMU: new version (closes: #33997)
 
-* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2%ubt
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
 - rebuild with new libgsl
 
-* Fri Apr 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1%ubt
+* Fri Apr 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
 - new version
 
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
