@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Data-Compare
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: compare perl data structures
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Data-Compare/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DC/DCANTRELL/Data-Compare-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCANTRELL/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jan 05 2009
 BuildRequires: perl-Clone perl-File-Find-Rule perl-JSON perl-Test-Pod
@@ -40,7 +40,7 @@ A few data types are treated as special cases:
 
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -48,11 +48,15 @@ A few data types are treated as special cases:
 %perl_vendor_install
 
 %files
+%doc GPL2.txt ARTISTIC.txt README CHANGELOG
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
-%doc README TODO CHANGELOG NOTES
+%doc README CHANGELOG NOTES
 
 %changelog
+* Tue Sep 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
 - automated CPAN update
 
