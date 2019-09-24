@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 3.4
+Version: 3.5
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -56,6 +56,9 @@ and caffeine-inspired features.
 %python_sitelibdir/*
 
 %changelog
+* Tue Sep 24 2019 Leontiy Volodin <lvol@altlinux.org> 3.5-alt1
+- 3.5
+
 * Tue Jul 09 2019 Leontiy Volodin <lvol@altlinux.org> 3.4-alt1
 - 3.4
 - changed url
