@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Server-Starter
-Version: 0.34
+Version: 0.35
 Release: alt1
 
 Summary: Server::Starter - a superdaemon for hot-deploying server programs
@@ -32,6 +33,9 @@ BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtil
 %doc Changes README*
 
 %changelog
+* Tue Sep 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- new version
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - automated CPAN update
 
