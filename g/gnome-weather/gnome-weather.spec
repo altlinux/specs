@@ -1,9 +1,9 @@
 %define xdg_name org.gnome.Weather
-%define ver_major 3.32
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -19,23 +19,23 @@ BuildArch: noarch
 Obsoletes: %name-data
 Provides:  %name-data = %version-%release
 
-%define gtk_ver 3.12
+%define gtk_ver 3.20
 %define gi_ver 1.36.0
-%define gjs_ver 1.40.0
-%define gweather_ver 3.26.0
+%define gjs_ver 1.50.0
+%define gweather_ver 3.28.0
 
 Requires: libgweather-gir >= %gweather_ver
 Requires: geoclue2
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(GLib)
-Requires: typelib(GObject)
-Requires: typelib(GWeather)
 Requires: typelib(Gdk)
 Requires: typelib(Geoclue)
 Requires: typelib(Gio)
+Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
+Requires: typelib(GObject)
 Requires: typelib(Gtk)
+Requires: typelib(GWeather)
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
@@ -74,6 +74,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Wed Sep 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 
