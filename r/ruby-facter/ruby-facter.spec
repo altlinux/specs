@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname facter
 
 Name: 	       ruby-%pkgname
-Version:       2.5.2
+Version:       2.5.5
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 Group:         Development/Ruby
@@ -87,21 +88,25 @@ addresses, and SSH keys.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt1
+- update (^) 2.5.2 -> 2.5.5
+- fix (!) spec
+
 * Wed Jul 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt1
-- Bump to 2.5.2 with ALT support
-- Fix spec
+- update (^) 2.5.1 -> 2.5.2 with ALT support
+- fix (!) spec
 
 * Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt3
-- Use Ruby Policy 2.0.
+- update to (^) Ruby Policy 2.0
 
 * Thu Dec 20 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt2
-- Fixed ALT Release detection.
-- Decrease timeout when accessing to EC2 from virtual env.
-- Added facter executable rpm.
-- Closes #35801.
+- remove (-) bug in ALT Release detection.
+- downgrade (v) timeout when accessing to EC2 from virtual env.
+- added (+) facter executable rpm.
+- remove (-) bug (Closes #35801)
 
 * Tue Dec 18 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
-- Bump to 2.5.1.
+- update to (^) 2.0.1 -> 2.5.1
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.2
 - Rebuild with new Ruby autorequirements.

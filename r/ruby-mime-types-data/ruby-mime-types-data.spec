@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname mime-types-data
 
 Name:          ruby-%pkgname
-Version:       3.2019.0331
+Version:       3.2019.0904
 Release:       alt1
 Summary:       MIME Type registry data
 License:       MIT
@@ -57,9 +58,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 3.2019.0904-alt1
+- update (^) 3.2019.0331 -> 3.2019.0904
+- fix (!) spec
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.2019.0331-alt1
-- Bump to 3.2019.0331
-- Use Ruby Policy 2.0
+- ^ v3.2019.0331
+- ^ Ruby Policy 2.0
 
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.2018.0812-alt1
 - New version.

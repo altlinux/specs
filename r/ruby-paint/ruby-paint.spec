@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname paint
 
 Name:          ruby-%pkgname
-Version:       2.1.0
+Version:       2.1.1
 Release:       alt1
 Summary:       Ruby gem for ANSI terminal colors
 License:       MIT
@@ -13,6 +14,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Paint creates terminal colors and effects for you. It combines the
@@ -90,6 +93,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt1
+- update (^) 2.1.0 -> v2.1.1
+- fix (!) spec
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - Bump to 2.1.0
 - Use Ruby Policy 2.0

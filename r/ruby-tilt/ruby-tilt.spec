@@ -1,8 +1,9 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname tilt
 
 Name: 	       ruby-%pkgname
-Version:       2.0.9
-Release:       alt2
+Version:       2.0.10
+Release:       alt1
 Summary:       Generic interface to multiple Ruby template engines
 License:       MIT
 Group:         Development/Ruby
@@ -14,6 +15,8 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(ronn)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Tilt is a thin interface over a bunch of different Ruby template engines in an
@@ -83,8 +86,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.10-alt1
+- updated to (^) v2.0.10
+- fixed (!) spec
+
 * Tue Jul 23 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.9-alt2
-- Use Ruby Policy 2.0
+- updated to (^) Ruby Policy 2.0
 
 * Wed Dec 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.9-alt1
 - New version.

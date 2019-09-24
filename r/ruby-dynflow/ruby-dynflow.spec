@@ -1,8 +1,8 @@
 %define        pkgname dynflow
 
 Name:          ruby-%pkgname
-Version:       1.2.3
-Release:       alt1.1
+Version:       1.3.0
+Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
 Group:         Development/Ruby
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-ruby
 %summary
 
 %description -l ru_RU.UTF8
-Движок для управления динамического рабочего потока.
+Движок для управления динамическим рабочим потоком.
 
 
 %package       doc
@@ -58,6 +58,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
+- v1.2.3-> v1.3.0
+- fix spec
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1.1
 - Fix spec
 

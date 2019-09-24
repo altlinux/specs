@@ -1,8 +1,8 @@
 %define        pkgname rake
 
 Name:          ruby-%pkgname
-Version:       12.3.2
-Release:       alt3
+Version:       12.3.3
+Release:       alt1
 Summary:       Ruby based make-like utility
 Summary(ru_RU.UTF-8): Make-подобная утилита для рубина
 License:       MIT
@@ -59,7 +59,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -81,6 +81,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 12.3.3-alt1
+- update (^) 12.3.2 -> 12.3.3
+- fix (!) spec to allow building
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 12.3.2-alt3
 - Use Ruby Policy 2.0
 
@@ -111,7 +115,7 @@ Documentation files for %gemname gem.
 - Add ruby-module-misc to requires
 
 * Tue May 22 2007 Kirill A. Shutemov <kas@altlinux.ru> 0.7.3-alt1
-- 0.7.3 
+- 0.7.3
 
 * Thu Jul 06 2006 Sir Raorn <raorn@altlinux.ru> 0.7.1-alt1
 - [0.7.1]

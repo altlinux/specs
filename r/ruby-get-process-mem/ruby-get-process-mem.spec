@@ -1,60 +1,66 @@
-%define  pkgname get_process_mem
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname get-process-mem
+%define        gemname get_process_mem
 
-Name:    ruby-get-process-mem
-Version: 0.2.3
-Release: alt1
+Name:          ruby-%pkgname
+Version:       0.2.4
+Release:       alt1
+Summary:       Get memory usage of a process in Ruby
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/schneems/get_process_mem
+%vcs           https://github.com/schneems/get_process_mem.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Summary: Get memory usage of a process in Ruby
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/schneems/get_process_mem
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %pkgname-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary
+%summary.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
-%setup -n %pkgname-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
 %doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
+
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 0.2.4-alt1
+- updated to (^) v0.2.4
+- updated to (^) Ruby Policy 2.0
+
 * Fri Oct 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt1
 - New version.
 
