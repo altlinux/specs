@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable docs
-%def_disable check
+%def_enable docs
+%def_enable check
 
 %define oname sphinx
 %define sphinx3_dir %python3_sitelibdir_noarch/%oname
@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -255,6 +255,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Mon Sep 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.0-alt2
+- Rebuilt with docs and tests.
+
 * Mon Sep 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.0-alt1
 - Updated to upstream version 2.2.0 (Closes: #37252).
 - Disabled build for python-2.
