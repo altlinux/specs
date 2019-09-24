@@ -1,15 +1,14 @@
 Name: tcl-tdom
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: A XML/DOM/XPath/XSLT implementation for Tcl
-License: MPL
+License: MPL-1.1
 Group: Development/Tcl
 Url: http://www.tdom.org
 
 # repacked http://tdom.org/downloads/tdom-%version-src.tgz
 Source: tdom-%version.tar
-Patch1: 0001-ALT-use-external-libexpat.patch
 Patch2: 0002-ALT-install-test-targets-fixed.patch
 Patch3: 0003-ALT-TEA.patch
 
@@ -22,17 +21,23 @@ placed into them in memory, not on disk.
 
 %prep
 %setup -n tdom-%version
-%patch1 -p2
 %patch2 -p2
 %patch3 -p2
+# remove needless stuff
+rm -r macosx/ win/
 
 %build
 %autoreconf
-%configure
+%configure \
+	--disable-rpath \
+	--enable-html5 \
+	--enable-threads \
+	--with-expat=%_prefix \
+	#
 %make_build all
 
 %install
-%makeinstall
+%makeinstall_std
 
 %check
 make test
@@ -44,6 +49,12 @@ make test
 %_mandir/mann/*
 
 %changelog
+* Tue Sep 24 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt2
+- Fixed build with external expat.
+- Built with HTLM5 parser support.
+- Explicitly enabled threads.
+- Fixed license field according SPDX.
+
 * Mon Sep 23 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
 - 0.9.1.
 - Moved pkgIndex.tcl to arch-depended location cause tdom is arch-depended
