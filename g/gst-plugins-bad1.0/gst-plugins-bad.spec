@@ -35,8 +35,8 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.0
-Release: alt1.2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -79,7 +79,7 @@ BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
 BuildRequires: liborc-test-devel
-%{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
+#%{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -166,6 +166,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Wed May 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.2
 - enabled OpenH264 encoder/decoder plugin for x86_64
 
