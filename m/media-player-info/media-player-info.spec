@@ -1,5 +1,5 @@
 Name:	 media-player-info
-Version: 22
+Version: 24
 Release: alt1
 
 License: BSD
@@ -33,12 +33,15 @@ ini-like files), together with udev rules to identify these devices.
 %make DESTDIR=%buildroot install
 
 %files
-%doc ChangeLog COPYING NEWS README
+%doc ChangeLog COPYING NEWS
 %_datadir/%name
 %_udevrulesdir/40-usb-media-players.rules
 %_udevhwdbdir/20-usb-media-players.hwdb
 
 %changelog
+* Wed Sep 25 2019 Sergey V Turchin <zerg@altlinux.org> 24-alt1
+- new version
+
 * Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 22-alt1
 - new version
 
