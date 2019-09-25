@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190909
+Version: 20190916
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,19 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Sep 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20190916-alt1
+- upstream changes (GIT 417a9c6):
+  + amdgpu: add initial navi10 firmware (thx Alex Deucher)
+  + drm/i915/firmware: Add v9.0.0 of HuC for Icelake (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v4.0.0 of HuC for Cometlake (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v4.0.0 of HuC for Geminilake (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v2.0.0 of HuC for Broxton (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v4.0.0 of HuC for Kabylake (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v2.0.0 of HuC for Skylake (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v33 of GuC for CML (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v2.04 of DMC for TGL (thx Anusha Srivatsa)
+  + drm/i915/firmware: Add v1.09 of DMC for ICL (thx Anusha Srivatsa)
+
 * Wed Sep 11 2019 Cronbuild Service <cronbuild@altlinux.org> 20190909-alt1
 - upstream changes (GIT 6c6918a):
   + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
