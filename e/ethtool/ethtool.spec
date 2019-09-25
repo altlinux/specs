@@ -1,5 +1,5 @@
 Name: ethtool
-Version: 5.2
+Version: 5.3
 Release: alt1
 Epoch: 1
 
@@ -50,13 +50,18 @@ install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %preun_service %name
 
 %files
+%doc AUTHORS NEWS README.ALT
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_initdir/*
 %_sbindir/*
 %_man8dir/*
-%doc AUTHORS NEWS README.ALT
+%_datadir/bash-completion
 
 %changelog
+* Wed Sep 25 2019 Anton Farygin <rider@altlinux.ru> 1:5.3-alt1
+- 5.3
+- added bash-completion
+
 * Wed Aug 07 2019 Anton Farygin <rider@altlinux.ru> 1:5.2-alt1
 - 5.2
 
