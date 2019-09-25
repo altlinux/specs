@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-957.27.2.vz7.107.7
-%define orelease 957.27.2.vz7.107.7
+#     rh7-3.10.0-1062.vz7.113.6
+%define orelease 1062.vz7.113.6
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -116,9 +116,9 @@ Requires: startup >= 0.9.8.24.1
 Provides: kernel = %kversion
 Provides: kernel-modules-md-%flavour = %version-%release
 
-PreReq: coreutils
-PreReq: module-init-tools >= 3.1
-PreReq: mkinitrd >= 1:2.9.9-alt1
+Requires(pre): coreutils
+Requires(pre): module-init-tools >= 3.1
+Requires(pre): mkinitrd >= 1:2.9.9-alt1
 AutoProv: no, %kernel_prov
 AutoReq: no, %kernel_req
 
@@ -595,6 +595,12 @@ grep beancounter boot.log
 
 
 %changelog
+* Wed Sep 25 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt1.1062.vz7.113.6
+- Build 3.10.0-alt1.1062.vz7.113.6
+
+* Tue Sep 24 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt1.1062.vz7.113.4
+- Build 3.10.0-alt1.1062.vz7.113.4
+
 * Wed Sep 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt1.957.27.2.vz7.107.7
 - Build 3.10.0-alt1.957.27.2.vz7.107.7
 
