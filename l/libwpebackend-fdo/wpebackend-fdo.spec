@@ -2,7 +2,7 @@
 %define _name wpebackend-fdo
 
 Name: lib%_name
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -50,6 +50,9 @@ This package provides files for developing applications that use %name.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Jun 17 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - first build for Sisyphus
 
