@@ -1,6 +1,6 @@
 Name: catfish
-Version: 1.4.7
-Release: alt2
+Version: 1.4.10
+Release: alt1
 Summary: A handy file search tool
 
 Group: File tools
@@ -8,7 +8,7 @@ License: GPLv2+
 Url: http://www.twotoasts.de/index.php/catfish/
 Source: %name-%version.tar.gz
 BuildArch: noarch
-Patch: catfish-1.4.7-ALT-searchODF.patch
+Patch: catfish-1.4.10-ALT-searchODF.patch
 
 ##BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
 # Automatically added by buildreq on Mon Jun 10 2019
@@ -41,13 +41,12 @@ Supplemental Python3 module for catfish, a handy file search tool
 
 %prep
 %setup -n %name-%version
-%patch -p0
+%patch -p2
 
 %build
 %python3_build
 
 %install
-
 # XXX upstream cant' handle this :)
 install -D build/share/applications/*.desktop %buildroot/%_desktopdir/org.xfce.Catfish.desktop
 
@@ -72,6 +71,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Sep 25 2019 Fr. Br. George <george@altlinux.ru> 1.4.10-alt1
+- Autobuild version bump to 1.4.10
+- Rewrite internal fulltext search; avoid non-files here
+
 * Fri Jun 21 2019 Fr. Br. George <george@altlinux.ru> 1.4.7-alt2
 - Rough ODF search implemented
 
