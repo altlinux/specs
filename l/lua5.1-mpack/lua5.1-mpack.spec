@@ -2,13 +2,13 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #%{!?lua_version: %global lua_version %(lua -e "print(string.sub(_VERSION, 5))")}
-%global lua_version 5.3
+%global lua_version 5.1
 %global lua_libdir %{_libdir}/lua/%{lua_version}
 %global lua_pkgdir %{_datadir}/lua/%{lua_version}
 
-BuildRequires:  lua-devel
+BuildRequires:  lua5.1-devel
 
-Name:           lua-mpack
+Name:           lua5.1-mpack
 Version:        1.0.8
 Release:        alt1
 
@@ -28,7 +28,7 @@ libmpack lua binding
 %setup -q -n libmpack-lua-%{version}
 
 %build
-%make USE_SYSTEM_LUA=1 USE_SYSTEM_MPACK=1 MPACK_LUA_VERSION=5.3 MPACK_LUA_VERSION_NOPATCH=5.3
+%make USE_SYSTEM_LUA=1 USE_SYSTEM_MPACK=1
 
 %install
 install -p -D -m 644 mpack.so %buildroot%{lua_libdir}/mpack.so
@@ -39,8 +39,8 @@ install -p -D -m 644 mpack.so %buildroot%{lua_libdir}/mpack.so
 %{lua_libdir}/mpack.so
 
 %changelog
-* Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.8-alt1
-- new version
+* Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.8-alt1
+- new version for lua5.1
 
 * Tue Jul 10 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.4-alt2_2
 - rebuild for aarch architecture

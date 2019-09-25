@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.3.8
+Version: 0.4.2
 Release: alt2
 
 Summary: heavily refactored vim fork
@@ -22,19 +22,23 @@ BuildRequires: libmsgpack-devel
 BuildRequires: libtermkey-devel
 BuildRequires: libuv-devel
 BuildRequires: libvterm-devel
-BuildRequires: lua lua-devel lua-lpeg lua-mpack
+BuildRequires: luajit libluajit-devel
+BuildRequires: lua5.1-module-lpeg lua5.1-mpack
+BuildRequires: libluv-devel
 BuildRequires: unibilium-devel
 
-BuildRequires(pre): rpm-macros-luajit
-BuildRequires: luajit libluajit-devel
+# @cow: Right now Neovim + Luajit is broken on aarch64 - see
+# https://github.com/neovim/neovim/issues/7879 for details. Some distros
+# workaround this issue using plain Lua on aarch64 platform but right now
+# I am not ready to spend my time trying to fix this issue. If anyone wants
+# to fix it - start with libluv library first because it is compiled with
+# libluajit exclusively.
+ExcludeArch: aarch64
 
 Provides: nvim = %EVR
 Requires: %name-runtime = %EVR
 
-ExclusiveArch: %luajit_arches
-
 %package runtime
-BuildArch: noarch
 Summary: heavily refactored vim fork - runtime files
 Group: Editors
 
@@ -87,6 +91,12 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Fri Sep 20 2019 Vladimir Didenko <cow@altlinux.org> 0.4.2-alt2
+- Don't build on aarch64
+
+* Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.org> 0.4.2-alt1
+- New version
+
 * Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.org> 0.3.8-alt2
 - fix build on ppc64le
 

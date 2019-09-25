@@ -5,7 +5,7 @@
 
 Name: lua%major_version
 Version: %major_version.5
-Release: alt2
+Release: alt3
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -31,7 +31,6 @@ Patch4: %oname-5.3.0-configure-compat-module.patch
 Patch5: CVE-2019-6706-use-after-free-lua_upvaluejoin.patch
 
 BuildRequires: automake-common autoconf-common libtool-common readline-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
-Provides: lua(abi) = %major_version
 Requires: liblua = %version
 Provides: lua = %EVR
 Provides: lua5 = %EVR
@@ -83,6 +82,7 @@ Group: Development/Other
 Summary: Libraries for %oname
 Provides: liblua = %EVR
 Provides: liblua5 = %EVR
+Provides: lua(abi) = %major_version
 
 %description -n lib%name
 %common_descr
@@ -209,6 +209,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Fri Sep 20 2019 Vladimir Didenko <cow@altlinux.org> 5.3.5-alt3
+- Move lua(abi) provides to liblua sub-package
+
 * Fri Aug 16 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.5-alt2
 - Fixed luaconf wrapper for armh arch (thnx Sergey Bolshakov).
 
@@ -259,4 +262,3 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 
 * Wed Oct 05 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt1_3
 - converted for ALT Linux by srpmconvert tools
-

@@ -1,5 +1,5 @@
 Name: libuv
-Version: 1.28.0
+Version: 1.32.0
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -16,7 +16,7 @@ BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel gyp
 %add_python_req_skip TestCommon
 
 %description
-libuv is a new platform layer for Node. Its purpose is to abstract IOCP on Windows 
+libuv is a new platform layer for Node. Its purpose is to abstract IOCP on Windows
 and libev on Unix systems. We intend to eventually contain all platform differences in this library.
 
 %package devel
@@ -57,6 +57,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.ru> 1.32.0-alt1
+- new version 1.32.0
+
 * Thu Jun 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.28.0-alt1
 - new version 1.28.0 (with rpmrb script)
 

@@ -1,8 +1,7 @@
-%define snapshot 726
-
 Name: libvterm
-Version: 0+bzr%snapshot
-Release: alt2
+Version: 0.1.1
+Release: alt1
+Epoch: 1
 
 Summary: an abstract C99 library which implements a VT220 or xterm-like terminal emulator
 
@@ -59,8 +58,7 @@ make test
 
 %files
 %doc LICENSE
-%_libdir/%name.so.0
-%_libdir/%name.so.0.0.0
+%_libdir/%name.so.*
 
 %files devel
 %_includedir/*.h
@@ -71,6 +69,9 @@ make test
 %_bindir/*
 
 %changelog
+* Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.org> 1:0.1.1-alt1
+- Updated to 0.1.1
+
 * Thu Sep 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0+bzr726-alt2
 - Fixes CVE-2018-20786.
 
