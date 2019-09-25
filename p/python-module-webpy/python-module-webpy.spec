@@ -1,5 +1,5 @@
 Name: python-module-webpy
-Version: 0.37
+Version: 0.39
 Release: alt1
 Summary: A simple web framework for Python
 Group: Development/Python
@@ -16,8 +16,9 @@ Group: Development/Python
 #     See http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5
 License: Public Domain and BSD
 
-Url: http://webpy.org/
-Source0: http://webpy.org/static/web.py-%version.tar.gz
+Url: https://github.com/webpy/webpy
+# Repacked %url/archive/webpy-%version/web.py-%version.tar.gz
+Source: web.py-%version.tar
 
 BuildRequires: python-devel
 BuildArch: noarch
@@ -42,6 +43,9 @@ purpose with absolutely no restrictions.
 %python_sitelibdir/web.py-%version-py%_python_version.egg-info
 
 %changelog
+* Wed Sep 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.39-alt1
+- Updated to 0.39.
+
 * Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.37-alt1
 - New version
 
