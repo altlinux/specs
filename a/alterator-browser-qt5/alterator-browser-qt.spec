@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.5
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Wed Sep 25 2019 Sergey V Turchin <zerg at altlinux dot org> 3.1.0-alt1
+- allow to disable virtual keyboard via env or kernel cmdline
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg at altlinux dot org> 3.0.5-alt2
 - don't use ubt macro
 
