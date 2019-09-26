@@ -1,5 +1,5 @@
 Name:     elogind
-Version:  241.2
+Version:  241.3
 Release:  alt1
 Summary:  The systemd project's "logind", extracted to a standalone package
 Group:    System/Configuration/Boot and Init
@@ -227,6 +227,9 @@ fi
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Sep 18 2019 Alexey Gladkov <legion@altlinux.ru> 241.3-alt1
+- New version (241.3).
+
 * Wed Apr 03 2019 Alexey Gladkov <legion@altlinux.ru> 241.2-alt1
 - New version (241.2).
 
