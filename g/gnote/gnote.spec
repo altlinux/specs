@@ -1,9 +1,12 @@
-%define ver_major 3.32
+%def_disable snapshot
+
+%define ver_major 3.34
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
+%def_disable check
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -11,12 +14,16 @@ Group: Graphical desktop/GNOME
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Gnote
 
+%if_disabled snapshot
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 3.20
 %define gtkmm_ver 3.18
 %define glibmm_ver 2.32
-%define gtkspell_ver 3.0.0
+%define gspell_ver 1.8.2
 %define libsecret_ver 0.8
 
 BuildRequires: gcc-c++
@@ -27,12 +34,11 @@ BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(gtkmm-3.0) >= %gtkmm_ver
 BuildRequires: pkgconfig(glib-2.0) >= 2.32
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
-BuildRequires: pkgconfig(gtkspell3-3.0) >= %gtkspell_ver
+BuildRequires: pkgconfig(gspell-1) >= %gspell_ver
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
 BuildRequires: desktop-file-utils
-# for check
-BuildRequires: libunittest-cpp-devel
+%{?_enable_check:BuildRequires: libunittest-cpp-devel}
 
 %description
 Gnote is a desktop note-taking application which is simple and easy to use.
@@ -44,8 +50,6 @@ and consumes fewer resources.
 %setup
 
 %build
-# NOCONFIGURE=1 ./autogen.sh
-#%autoreconf
 %configure \
 	%{?_with_x11_support:--with-x11-support} \
 	--disable-static
@@ -54,11 +58,6 @@ and consumes fewer resources.
 
 %install
 %makeinstall_std
-
-desktop-file-install \
- --dir=%buildroot%_datadir/applications \
-%buildroot/%_datadir/applications/gnote.desktop
-
 %find_lang %name --with-gnome
 
 %check
@@ -83,6 +82,9 @@ desktop-file-install \
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Thu Sep 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Apr 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
