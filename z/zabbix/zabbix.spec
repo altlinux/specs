@@ -16,7 +16,7 @@
 
 Name: zabbix
 Version: 4.2.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -35,7 +35,7 @@ BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
 BuildRequires: libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel python3-base
-BuildRequires: perl-Switch zlib-devel
+BuildRequires: perl-Switch zlib-devel /proc
 %if_with ssh2
 BuildRequires: libssh2-devel
 %endif
@@ -637,6 +637,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Sep 26 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.6-alt2
+- Add BR /proc
+
 * Tue Aug 27 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.6-alt1
 - 4.2.6
 
@@ -651,7 +654,7 @@ fi
 
 * Fri Apr 19 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.7-alt1
 - 4.0.7
-- Change path to traceroute (ALT#36439)
+- Change path to traceroute (ALT #36439)
 
 * Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 1:4.0.6-alt1
 - 4.0.6
