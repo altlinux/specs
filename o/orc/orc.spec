@@ -10,7 +10,7 @@
 
 Name: orc
 Version: %ver_major.30.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -117,6 +117,7 @@ This package contains documentation for Orc.
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -145,6 +146,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Sep 26 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.30.1-alt0.2
+- fixed %%check section for %%e2k
+
 * Wed Sep 25 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.30.1-alt0.1
 - 0.4.30.1 snapshot (0.4.30-12-g5e675de)
 
