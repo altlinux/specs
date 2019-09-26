@@ -1,5 +1,5 @@
 Name: alsa-oss
-Version: 1.1.6
+Version: 1.1.8
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) OSS compatibility library
@@ -64,6 +64,9 @@ e.g. with dmix software multichannel mixer.
 %_man1dir/*
 
 %changelog
+* Thu Sep 26 2019 Michael Shigorin <mike@altlinux.org> 1.1.8-alt1
+- 1.1.8
+
 * Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 1.1.6-alt1
 - 1.1.6
 
