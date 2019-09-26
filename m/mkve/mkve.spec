@@ -1,11 +1,10 @@
 Name: mkve
-Version: 0.21
-Release: alt3
+Version: 0.22
+Release: alt1
 Source: %name-%version.tar
-Packager: Anton Protopopov <aspsk@altlinux.org>
 
 Summary: Package for initial managing of virtual environments
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 
 Requires: su
@@ -19,12 +18,14 @@ environments.
 %package cache
 Summary: A tool to create caches for virtual environments
 Group: System/Configuration/Other
+Requires: hasher >= 1.4.0
+BuildArch: noarch
 
 %description cache
-A tool to create caches for virtual environments
+A tool to create caches for virtual environments.
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -42,6 +43,12 @@ A tool to create caches for virtual environments
 %_man1dir/mkve-cache*
 
 %changelog
+* Wed Aug 28 2019 Dmitry V. Levin <ldv@altlinux.org> 0.22-alt1
+- mkve-cache:
+  + updated for hsh-fakedev removal;
+  + eliminated hard dependencies on which and man;
+  + packaged as noarch again.
+
 * Wed Apr 10 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.21-alt3
 - Removed ExclusiveArch tag.
 
