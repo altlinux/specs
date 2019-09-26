@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        76.0.3809.87
+Version:        77.0.3865.90
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -57,24 +57,27 @@ Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
 Patch003: 0003-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch004: 0004-DEBIAN-manpage-fixes.patch
-Patch005: 0005-DEBIAN-change-icon.patch
-Patch006: 0006-ALT-gcc6-fixes.patch
-Patch007: 0007-DEBIAN-disable-third-party-cookies-by-default.patch
-Patch008: 0008-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch009: 0009-ALT-fix-shrank-by-one-character.patch
-Patch010: 0010-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch011: 0011-FEDORA-path-max.patch
-Patch012: 0012-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch013: 0013-ALT-Fix-last-commit-position-issue.patch
-Patch014: 0014-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch015: 0015-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch016: 0016-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch017: 0017-FEDORA-Fix-gcc-round.patch
-Patch018: 0018-FEDORA-Fix-memcpy.patch
-Patch019: 0019-ALT-openh264-always-pic-on-x86.patch
-Patch020: 0020-ALT-allow-to-override-clang-through-env-variables.patch
-Patch021: 0021-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch022: 0022-ALT-Add-missing-header-on-aarch64.patch
+Patch005: 0005-ALT-gcc6-fixes.patch
+Patch006: 0006-DEBIAN-disable-third-party-cookies-by-default.patch
+Patch007: 0007-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch008: 0008-ALT-fix-shrank-by-one-character.patch
+Patch009: 0009-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch010: 0010-FEDORA-path-max.patch
+Patch011: 0011-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch012: 0012-ALT-Fix-last-commit-position-issue.patch
+Patch013: 0013-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch014: 0014-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch015: 0015-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch016: 0016-FEDORA-Fix-gcc-round.patch
+Patch017: 0017-FEDORA-Fix-memcpy.patch
+Patch018: 0018-ALT-openh264-always-pic-on-x86.patch
+Patch019: 0019-ALT-allow-to-override-clang-through-env-variables.patch
+Patch020: 0020-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch021: 0021-ALT-Add-missing-header-on-aarch64.patch
+Patch022: 0022-IWYU-include-memory-in-one_euro_filter.h-as-it-uses-.patch
+Patch023: 0023-WTF-Make-LinkedHashSet-understand-values-for-which-m.patch
+Patch024: 0024-Fix-build-failure-due-to-missing-include-for-std-num.patch
+Patch025: 0025-GENTOO-Clang-allows-detection-of-these-builtins.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -220,6 +223,9 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
+%patch023 -p1
+%patch024 -p1
+%patch025 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -412,7 +418,7 @@ cp -at %buildroot%_libdir/%name -- \
 popd
 
 # Icons
-for size in 22 24 48 64 128 256; do
+for size in 24 48 64 128 256; do
 	install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
 		"%buildroot/%_iconsdir/hicolor/${size}x${size}/apps/%name.png"
 done
@@ -485,6 +491,54 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Sep 25 2019 Alexey Gladkov <legion@altlinux.ru> 77.0.3865.90-alt1
+- New version (77.0.3865.90).
+- Security fixes:
+  - CVE-2019-13685: Use-after-free in UI.
+  - CVE-2019-13686: Use-after-free in offline pages.
+  - CVE-2019-13687: Use-after-free in media.
+  - CVE-2019-13688: Use-after-free in media.
+
+* Mon Sep 23 2019 Alexey Gladkov <legion@altlinux.ru> 77.0.3865.75-alt1
+- New version (77.0.3865.75).
+- Security fixes:
+  - CVE-2019-13659: URL spoof.
+  - CVE-2019-13660: Full screen notification overlap.
+  - CVE-2019-13661: Full screen notification spoof.
+  - CVE-2019-13662: CSP bypass.
+  - CVE-2019-13663: IDN spoof.
+  - CVE-2019-13664: CSRF bypass.
+  - CVE-2019-13665: Multiple file download protection bypass.
+  - CVE-2019-13666: Side channel using storage size estimate.
+  - CVE-2019-13667: URI bar spoof when using external app URIs.
+  - CVE-2019-13668: Global window leak via console.
+  - CVE-2019-13669: HTTP authentication spoof.
+  - CVE-2019-13670: V8 memory corruption in regex.
+  - CVE-2019-13671: Dialog box fails to show origin.
+  - CVE-2019-13673: Cross-origin information leak using devtools.
+  - CVE-2019-13674: IDN spoofing.
+  - CVE-2019-13675: Extensions can be disabled by trailing slash.
+  - CVE-2019-13676: Google URI shown for certificate warning.
+  - CVE-2019-13677: Chrome web store origin needs to be isolated.
+  - CVE-2019-13678: Download dialog spoofing.
+  - CVE-2019-13679: User gesture needed for printing.
+  - CVE-2019-13680: IP address spoofing to servers.
+  - CVE-2019-13681: Bypass on download restrictions.
+  - CVE-2019-13682: Site isolation bypass.
+  - CVE-2019-13683: Exceptions leaked by devtools.
+  - CVE-2019-5870: Use-after-free in media.
+  - CVE-2019-5871: Heap overflow in Skia.
+  - CVE-2019-5872: Use-after-free in Mojo.
+  - CVE-2019-5873: URL bar spoofing on iOS.
+  - CVE-2019-5874: External URIs may trigger other browsers.
+  - CVE-2019-5875: URL bar spoof via download redirect.
+  - CVE-2019-5876: Use-after-free in media.
+  - CVE-2019-5877: Out-of-bounds access in V8.
+  - CVE-2019-5878: Use-after-free in V8.
+  - CVE-2019-5879: Extensions can read some local files.
+  - CVE-2019-5880: SameSite cookie bypass.
+  - CVE-2019-5881: Arbitrary read in SwiftShader.
+
 * Fri Aug 02 2019 Alexey Gladkov <legion@altlinux.ru> 76.0.3809.87-alt1
 - New version (76.0.3809.87).
 - Security fixes:
