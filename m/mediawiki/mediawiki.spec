@@ -1,8 +1,8 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.32
+%define major 1.33
 
 Name: mediawiki
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -25,7 +25,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-1.31-alt.patch
-Patch1: %name-1.32-config-path.patch
+Patch1: %name-1.33-config-path.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -128,6 +128,9 @@ Provides: mediawiki-extensions-OATHAuth
 Obsoletes: mediawiki-extensions-OATHAuth
 Provides: mediawiki-extensions-ReplaceText
 Obsoletes: mediawiki-extensions-ReplaceText
+
+# since 1.33
+Obsoletes: mediawiki-extensions-StubManager
 
 %description -n %name-common
 %summary
@@ -321,6 +324,9 @@ exit 0
 
 
 %changelog
+* Thu Sep 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.33.0-alt1
+- new version 1.33.0 (with rpmrb script)
+
 * Thu Jun 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.32.2-alt1
 - new version 1.32.2 (with rpmrb script)
 - CVE-2019-12468, CVE-2019-12473, CVE-2019-12471
