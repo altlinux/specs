@@ -1,12 +1,15 @@
 
+%global commit 8bd6804c4cebf455dc1a383574a4bf35a86fdbc8
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 %define oneadmin_home /var/lib/one
 
 %add_findreq_skiplist /var/lib/one/*
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.8.4
-Release: alt3.2
+Version: 5.8.5
+Release: alt1
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -267,7 +270,7 @@ mv -f dist/main.js dist/main-dist.js
 popd
 
 # Compile OpenNebula
-scons -j2 mysql=yes new_xmlrpc=yes sunstone=no systemd=yes rubygems=yes
+scons -j2 mysql=yes new_xmlrpc=yes sunstone=no systemd=yes rubygems=yes gitversion=%shortcommit
 
 %ruby_build --ignore=packethost \
             --use=install_gems --alias=opennebula-common --join=lib:bin \
@@ -676,11 +679,14 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Thu Sep 26 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.5-alt1
+- 5.8.5
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 5.8.4-alt3.2
-- ! spec according to changelog rules
+- spec according to changelog rules
 
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 5.8.4-alt3.1
-- ! spec to fix dependency gem version
+- spec to fix dependency gem version
 
 * Wed Jul 31 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.4-alt3
 - revert "remove support tab"
