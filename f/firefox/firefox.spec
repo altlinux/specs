@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        69.0
+Version:        69.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -394,6 +394,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Sep 27 2019 Alexey Gladkov <legion@altlinux.ru> 69.0.1-alt1
+- New release (69.0.1).
+- Fixed:
+  + CVE-2019-11754: Pointer Lock is enabled with no user notification
+
 * Wed Sep 11 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt1
 - New release (69.0).
 - Fixed:
