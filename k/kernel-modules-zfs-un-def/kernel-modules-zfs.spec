@@ -1,6 +1,6 @@
 %define module_name zfs
-%define module_version 0.8.1
-%define module_release alt3
+%define module_version 0.8.2
+%define module_release alt1
 
 %define flavour un-def
 %define karch %ix86 x86_64
