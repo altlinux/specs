@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL
@@ -181,6 +181,10 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Fri Sep 27 2019 Anton Farygin <rider@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+- added conflicts with fuse-zfs
+
 * Mon Jul 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 
