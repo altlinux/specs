@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.33
+%define ver_major 3.34
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -73,6 +73,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Sep 27 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sun Sep 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.33.90-alt1
 - 3.33.90
 
