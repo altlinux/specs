@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.1.1.1
+Version: 1.0.0
+Release: alt1
 
 Summary: Python wrapper for hiredis
 
@@ -11,20 +11,12 @@ License: BSD
 Group: Development/Python
 Url: https://github.com/redis/hiredis-py
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://pypi.python.org/packages/source/s/sanction/sanction-0.4.tar.gz
 Source: %oname-%version.tar
 
-#BuildPreReq: rpm-build-python
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
 BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
 
-#BuildRequires: python-devel python-module-distribute
-#BuildRequires: libhiredis-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %setup_python_module %oname
@@ -80,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 27 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
