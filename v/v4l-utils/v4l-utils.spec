@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.16.6
+Version: 1.18.0
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -112,6 +112,7 @@ also serve as a generic video/TV viewer application.
 /lib/udev/rc_keymaps
 %_bindir/ir-keytable
 %_man1dir/ir-keytable.1*
+%_man5dir/rc_keymap.5*
 
 %files -n libv4l
 %doc COPYING.libv4l ChangeLog README.libv4l TODO
@@ -142,6 +143,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Fri Sep 27 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.18.0-alt1
+- 1.18.0 released
+
 * Tue May 21 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.6-alt1
 - 1.16.6 released
 
@@ -209,7 +213,7 @@ also serve as a generic video/TV viewer application.
 - Dummy changelog entry to make girar (or whatever) happier.
 
 * Wed Jul 29 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
-- 0.6.0 release (with brain force) 
+- 0.6.0 release (with brain force)
 
 * Thu Nov 27 2008 Pavlov Konstantin <thresh@altlinux.ru> 0.5.6-alt1
 - new version 0.5.6 (with hands only)
