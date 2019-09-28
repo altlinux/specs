@@ -1,17 +1,17 @@
 Name: blogc
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 License: BSD
 Group: Text tools
 Summary: A blog compiler
 Url: https://github.com/blogc/blogc
 
-# Repacked %url/archive/%version/%name-%version.tar.gz
+# Repacked %url/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
 
-# Automatically added by buildreq on Thu Mar 02 2017
-# optimized out: perl pkg-config python-base
-BuildRequires: git-core
+# Automatically added by buildreq on Sat Sep 28 2019
+# optimized out: gem-mustache gem-power-assert gem-rdiscount gem-ronn glibc-kernheaders-generic glibc-kernheaders-x86 perl pkg-config python-base ruby ruby-bundler ruby-hpricot ruby-rake ruby-rdoc ruby-rubygems-update ruby-stdlibs sh4
+BuildRequires: gem-did-you-mean git-core ronn ruby-minitest ruby-net-telnet ruby-test-unit ruby-xmlrpc
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: libcmocka-devel}}
 
@@ -69,6 +69,9 @@ make check
 %_bindir/blogc-runserver
 
 %changelog
+* Sat Sep 28 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.18.0-alt1
+- Updated to 0.18.0.
+
 * Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.17.0-alt1
 - Updated to 0.17.0.
 
