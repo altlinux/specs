@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test/CPAN/Meta.pm) perl(Test/EOL.pm) p
 %define _enable_test 1
 
 Name: perl-HTML-Scrubber
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: HTML-Scrubber - Perl extension for scrubbing/sanitizing html
@@ -57,6 +57,9 @@ that works directly with HTML::Parser.
 %perl_vendor_privlib/HTML/
 
 %changelog
+* Sat Sep 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Tue Sep 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
