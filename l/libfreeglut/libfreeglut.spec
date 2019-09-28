@@ -1,16 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name freeglut
 %define sover 3
 %def_enable replace_glut
-%def_disable wayland
+%def_enable wayland
 %def_disable check
 
 %define glut_version 5:8.0.1
 %define glut_release alt3
 
 Name: lib%_name
-Version: 3.0.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -76,9 +76,13 @@ license.
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%cmake -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
+%cmake \
+       -DCMAKE_BUILD_TYPE="Release" \
+       -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
        %{?_enable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=ON} \
-       %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=OFF}
+       %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=OFF} \
+       %{?_enable_wayland:-DFREEGLUT_WAYLAND=ON}
+%nil
 %cmake_build
 
 %install
@@ -117,6 +121,10 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+- enabled wayland support
+
 * Fri Oct 19 2018 Dmitry V. Levin <ldv@altlinux.org> 3.0.0-alt3
 - Restricted the list of global symbols exported by the library
   to those that are part of the API.
