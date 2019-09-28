@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.34
 %define domain gcampax.github.com
@@ -8,7 +8,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -162,6 +162,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- updated to 3.34.0-4-g6462af3 (fixed classic mode with new g-s-d)
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
