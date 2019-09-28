@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 0.19
 %define api_ver 1
@@ -11,7 +11,7 @@
 
 Name: libsecret
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -96,11 +96,6 @@ GObject introspection devel data for %name.
 %setup
 find . -name "*.py" -print0 | xargs -r0 sed -i 's|\(#\!/usr/bin/env python\)|\13|' --
 
-%build
-%ifarch %valgrind_arches
-%remove_optflags -DWITH_VALGRIND
-%endif
-
 %meson \
 %{?_disable_gtk_doc:-Dgtk_doc=false} \
 %{?_disable_vala:-Dvapi=false}
@@ -118,7 +113,7 @@ dbus-run-session %meson_test
 %_bindir/secret-tool
 %_libdir/%name-%api_ver.so.*
 %_man1dir/secret-tool.1.*
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 %files devel
 %_includedir/%name-%api_ver
@@ -145,6 +140,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.19.1-alt2
+- updated to 0.19.1-2-g67680a6 (fixed build w/o valgrind)
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.19.1-alt1
 - 0.19.1 (ported to Meson build system)
 
