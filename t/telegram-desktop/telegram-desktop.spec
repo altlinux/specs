@@ -9,7 +9,7 @@
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -215,6 +215,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sat Sep 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.9-alt1
+- new version 1.8.9 (with rpmrb script)
+
 * Wed Sep 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.8-alt1
 - new version 1.8.8 (with rpmrb script)
 
