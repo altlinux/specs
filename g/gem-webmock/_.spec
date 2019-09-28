@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname webmock
 
 Name:          gem-%pkgname
-Version:       3.6.0
+Version:       3.7.5
 Release:       alt1
 Summary:       Library for stubbing and setting expectations on HTTP requests in Ruby
 License:       MIT
@@ -13,6 +14,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -64,5 +67,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 3.7.5-alt1
+- updated ti (^) v3.7.5
+- fix (!) spec
+
 * Thu Jul 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt1
-- Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+- ̈added (+) initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0

@@ -1,14 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname fog-openstack
+%define        pkgname http-accept
 
-Name:          ruby-%pkgname
-Version:       1.0.10
+Name:          gem-%pkgname
+Version:       1.7.0
 Release:       alt1
-Summary:       Fog for OpenStack Platform
+Summary:       Parse Accept and Accept-Language HTTP headers in Ruby
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/fog/fog-openstack
-%vcs           https://github.com/fog/fog-openstack.git
+Url:           https://github.com/socketry/http-accept
+%vcs           https://github.com/socketry/http-accept.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -18,7 +18,9 @@ BuildRequires(pre): rpm-build-ruby
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary. This is the plugin Gem to talk to OpenStack clouds via fog.
+%summary. Provides a robust set of parsers for dealing with HTTP Accept,
+Accept-Language, Accept-Encoding, Accept-Charset headers.
+
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -55,17 +57,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.10-alt1
-- update (^) 1.0.8 -> 1.0.10
-- fix (!) spec
-
-* Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.8-alt1
-- Bump to 1.0.8
-- Use Ruby Policy 2.0
-
-* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.24-alt1.1
-- Rebuild with new Ruby autorequirements.
-- Disable tests.
-
-* Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.24-alt1
-- Initial build for Sisyphus
+* Wed Sep 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.7.0-alt1
+- added (+) packaged gem with usage Ruby Policy 2.0

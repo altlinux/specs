@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname regexp_parser
 
 Name:          ruby-%pkgname
-Version:       1.5.1
+Version:       1.6.0
 Release:       alt1
 Summary:       A regular expression parser library for Ruby
 License:       MIT
@@ -14,8 +15,10 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+
 %description
-%summary
+%summary.
 
 %package       -n %pkgname
 Summary:       Executable file for %gemname gem
@@ -65,9 +68,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
+- updated to (^) v1.6.0
+- fix (!) spec
+
 * Thu Jul 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.1-alt1
-- Use Ruby Policy 2.0
-- Bump to 1.5.1
+- updated to (^) Ruby Policy 2.0
+- updated to (^) v1.5.1
 
 * Tue Oct 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
-- Initial build for Sisyphus
+- added (+) initial build for Sisyphus

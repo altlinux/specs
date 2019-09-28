@@ -1,7 +1,8 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname fog-ovirt
 
 Name:          ruby-%pkgname
-Version:       1.2.0
+Version:       1.2.1
 Release:       alt1
 Summary:       fog-ovirt is an ovirt provider for fog
 License:       MIT
@@ -13,6 +14,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -33,13 +36,13 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -48,7 +51,12 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Thu Sep 26 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt1
+- update (^) 1.2.0 -> 1.2.1
+- fix (!) spec
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
 - Bump to 1.2.0
 - Use Ruby Policy 2.0

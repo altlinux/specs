@@ -1,60 +1,61 @@
-Name:    ruby-sassc
-Version: 2.0.0
-Release: alt1
+%define        pkgname sassc
 
-Summary: Use libsass with Ruby!
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/sass/sassc-ruby
+Name:          ruby-%pkgname
+Version:       2.2.1
+Release:       alt1
+Summary:       Use libsass with Ruby!
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/sass/sassc-ruby
+%vcs           https://github.com/sass/sassc-ruby.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+BuildRequires: libsass-devel
 
 %description
 This gem combines the speed of libsass, the Sass C implementation, with
 the ease of use of the original Ruby Sass library.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       doc
+Summary:       Documentation files for %gemname gem
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %{name}.
+%description   doc
+Documentation files for %gemname gem.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
+# TODO: process with setup, by verifying .gitmodules and linking -devel to it without .so
+ln -s /usr/include/ ext/libsass/
+ln -s /usr/lib64/pkgconfig/libsass.pc ext/libsass/
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-# TODO tests require minitest/around/unit
-#%%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
-%doc README*
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         doc
+%ruby_gemdocdir
 
 %changelog
+* Thu Sep 26 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.1-alt1
+- update (^) 2.0.0 -> 2.2.1
+- update (^) Ruby Police 2.0
+
 * Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 

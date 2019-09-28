@@ -1,81 +1,108 @@
-Name:    puma
-Version: 3.12.1
-Release: alt1
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname puma
 
-Summary: A Ruby/Rack web server built for concurrency
-License: BSD 3-Clause
-Group:   Development/Ruby
-Url:     https://github.com/puma/puma
-
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Source:  %name-%version.tar
+Name:          %pkgname
+Version:       4.2.0
+Release:       alt1
+Summary:       A Ruby/Rack web server built for concurrency
+License:       BSD 3-Clause
+Group:         Networking/WWW
+Url:           https://github.com/puma/puma
+%vcs           https://github.com/puma/puma.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel
-BuildRequires: rake-compiler
-# For tests
-#BuildRequires: gem(rack)
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(rack)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
 Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
 for Ruby/Rack applications in development and production.
 
-%package -n gem-puma
-Summary: A Ruby/Rack web server built for concurrency (gem)
-Group:   Development/Ruby
 
-%description -n gem-puma
+%package       -n gem-%pkgname
+Summary:       Code for the %gemname gem
+Group:         Development/Ruby
+
+Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname
+Requires:      %pkgname = %version
+
+%description   -n gem-%pkgname
 Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
 for Ruby/Rack applications in development and production.
 
-This is the gem for puma executable.
+%description   -n gem-%pkgname -l ru_RU.UTF8
+Код для самоцвета %gemname.
 
-%package devel
-Summary: Development files for %name
-Group: Development/Documentation
-BuildArch: noarch
 
-%description devel
-Development files for %name.
+%package       -n gem-%pkgname-doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+Obsoletes:     %pkgname-doc
+Provides:      %pkgname-doc
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
+%description   -n gem-%pkgname-doc
+Documentation files for %gemname gem.
 
-BuildArch: noarch
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
-%description doc
-Documentation files for %{name}.
+
+%package       -n gem-%pkgname-devel
+Summary:       Development headers files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+Obsoletes:     %pkgname-devel
+Provides:      %pkgname-devel
+
+%description   -n gem-%pkgname-devel
+Development headers for %gemname gem.
+
+%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+Файлы заголовков для самоцвета %gemname.
+
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-#gem_test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/%{name}*
+%_bindir/%{pkgname}*
 
-%files -n gem-puma
+%files         -n gem-%pkgname
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files devel
-%ruby_includedir/*
-
-%files doc
+%files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
+%files         -n gem-%pkgname-devel
+%ruby_includedir/*
+
+
 %changelog
+* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 4.2.0-alt1
+- update (^) 3.12.1 -> 4.2.0
+- update (^) Ruby Policy 2.0
+
 * Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
 - New version.
 
