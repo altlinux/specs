@@ -1,6 +1,8 @@
+%def_with eds
+
 Name: lbdb
 Version: 0.39
-Release: alt1
+Release: alt2
 
 Summary: The Little Brother's Database
 License: GPLv2+
@@ -15,8 +17,11 @@ Patch2: lbdb-0.38-evolution.patch
 # Automatically added by buildreq on Fri May 21 2010
 BuildRequires: abook finger gnupg perl-ldap perl-p5-Palm
 
+%if_with eds
 # ... not detectable by buildreq:
 BuildRequires: evolution
+%endif
+
 # We prefer not to depend on mawk...
 BuildConflicts: mawk
 BuildRequires: perl-Pod-Parser perl-Authen-SASL
@@ -35,7 +40,9 @@ something@<various hosts>.
 %patch2 -p1
 
 %build
-%configure --libdir=%_libdir/lbdb --with-evolution-addressbook-export=auto
+%configure \
+	--libdir=%_libdir/lbdb \
+	%{?_with_eds:--with-evolution-addressbook-export=auto}
 %make_build
 
 %install
@@ -49,6 +56,9 @@ something@<various hosts>.
 %_man1dir/*
 
 %changelog
+* Sat Sep 28 2019 Michael Shigorin <mike@altlinux.org> 0.39-alt2
+- introduce eds knob (on by default) for evolution support
+
 * Sun May 11 2014 Michael Shigorin <mike@altlinux.org> 0.39-alt1
 - 0.39
 
