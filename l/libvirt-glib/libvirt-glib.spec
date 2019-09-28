@@ -2,12 +2,13 @@
 
 Name: libvirt-glib
 Version: 2.0.0
-Release: alt2
+Release: alt3
 Summary: libvirt glib integration for events
 Group: System/Libraries
 License: LGPLv2+
 URL: http://libvirt.org/
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 # From configure.ac
 %define libvirt_ver 1.2.5
@@ -134,11 +135,12 @@ GObject introspection devel data for the libvirt-gobject library
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 touch ChangeLog AUTHORS
-mkdir -p build-aux
-intltoolize --force
+aclocal --install
+gtkdocize --copy
 %autoreconf
 %configure \
 	--disable-static \
@@ -210,6 +212,9 @@ intltoolize --force
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Sat Sep 28 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt3
+- fixed build docs
+
 * Mon Mar 11 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt2
 - disable check
 
