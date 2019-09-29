@@ -61,7 +61,7 @@
 Name: systemd
 Epoch: 1
 Version: 243
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1861,6 +1861,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Sun Sep 29 2019 Alexey Shabalin <shaba@altlinux.org> 1:243-alt2
+- merge with v243-stable fab6f010ac6c3bc93a10868de722d7c8c3622eb9
+
 * Tue Sep 03 2019 Alexey Shabalin <shaba@altlinux.org> 1:243-alt1
 - 243
 
