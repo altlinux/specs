@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.1.12
-Release:   alt10
+Release:   alt11
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -249,6 +249,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Sep 30 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt11
+- Improved provision of information about obsoleting and obsoleted packages.
+
 * Tue Sep 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt10
 - Added support for lua scripts.
 - Disabled verbose logging for packagekit service.
