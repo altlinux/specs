@@ -1,14 +1,14 @@
 Name: purple-whatsapp
 Version: 0.9.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
 License: GPLv2+
 Group: Networking/Instant messaging
-URL: https://github.com/davidgfnet/whatsapp-purple
-Packager: Mikhail Kolchin <mvk@altlinux.org>
 
+Url: https://github.com/davidgfnet/whatsapp-purple
 Source: whatsapp-purple-%version.tar.gz
+Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Provides: purple-plugin-whatsapp = %version-%release
 Obsoletes: purple-plugin-whatsapp <= 0.8.6
@@ -24,6 +24,11 @@ separately). Only one client can connect at a time (including your phone).
 
 %prep
 %setup -n whatsapp-purple-%version
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 make -j1
@@ -37,6 +42,9 @@ make -j1
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1.2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Sat Nov 10 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1.1
 - rebuilt with libprotbuf 3.5.2
 - single-tread built
