@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.43
-Release: alt1_5
+Release: alt2_5
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
@@ -30,6 +30,7 @@ for window transparency.
 %build
 # easier than patching configure to read those files from own directory
 # cp /usr/lib/rpm/redhat/config.{guess,sub} .
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 
 cd X11
 %configure
@@ -62,6 +63,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 2.43-alt2_5
+- fix build on newer arches
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1_5
 - update to new release by fcimport
 
