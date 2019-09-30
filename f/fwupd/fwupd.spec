@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -182,7 +182,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/*.conf
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
-%_sysconfdir/dbus-1/system.d/org.freedesktop.fwupd.conf
+%_datadir/dbus-1/system.d/org.freedesktop.fwupd.conf
 %ifarch x86_64
 %_datadir/fwupd/remotes.d/dell-esrt/metadata.xml
 %endif
@@ -229,6 +229,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_superio.so
 %_libdir/fwupd-plugins-3/libfu_plugin_solokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
+%_libdir/fwupd-plugins-3/libfu_plugin_synaptics_cxaudio.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_prometheus.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_synapticsmst.so
@@ -236,6 +237,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %if_enabled dummy
 %_libdir/fwupd-plugins-3/libfu_plugin_test.so
 %endif
+%_libdir/fwupd-plugins-3/libfu_plugin_thelio_io.so
 %_libdir/fwupd-plugins-3/libfu_plugin_thunderbolt.so
 %_libdir/fwupd-plugins-3/libfu_plugin_thunderbolt_power.so
 %_libdir/fwupd-plugins-3/libfu_plugin_udev.so
@@ -276,6 +278,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Sep 30 2019 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Mon Sep 16 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 
