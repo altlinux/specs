@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1062.vz7.113.6
-%define orelease 1062.vz7.113.6
+#     rh7-3.10.0-1062.vz7.113.8
+%define orelease 1062.vz7.113.8
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -34,7 +34,7 @@ Epoch: 1
 %def_enable man
 %def_disable debug
 %def_disable module_sig
-%def_with firmware
+%def_without firmware
 %def_without perf
 
 %def_enable debug_section_mismatch
@@ -595,6 +595,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Mon Sep 30 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt1.1062.vz7.113.8
+- Build 3.10.0-alt1.1062.vz7.113.8
+
 * Wed Sep 25 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt1.1062.vz7.113.6
 - Build 3.10.0-alt1.1062.vz7.113.6
 
