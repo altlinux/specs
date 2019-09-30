@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.31
+%define ver_major 3.34
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.91
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -148,9 +148,12 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Mon Sep 30 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Sat Jun 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.31.91-alt2
 - moved ssh part to separate subpackage
-- fixed busy-loop waiting for the ssh-agent.
+- fixed busy-loop waiting for the ssh-agent (ALT #36911)
   See:
   https://bugzilla.gnome.org/show_bug.cgi?id=794848
   https://gitlab.gnome.org/GNOME/gnome-keyring/issues/25
