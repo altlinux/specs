@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.72
+Version: 0.73
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -54,6 +54,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 0.73-alt1
+- new version (watch file uupdate)
+
 * Sun Jul 21 2019 Michael Shigorin <mike@altlinux.org> 0.72-alt1
 - new version (watch file uupdate)
 
