@@ -1,9 +1,9 @@
 Name: exim
 Version: 4.92.3
-Release: alt1
+Release: alt2
 Summary: Exim MTA
 Group: Networking/Mail
-License: GPL
+License: GPLv2+
 Source: %name-%version.tar.xz
 URL: https://exim.org
 Conflicts: postfix, sendmail
@@ -101,7 +101,7 @@ do
   echo EXIM_COMPILE_NUMBER=1 >> src/version.sh
   export CFLAGS="-I%_includedir/openssl -I%_includedir/pgsql"
   export LDFLAGS="-s -lpq"
-  %make
+  %make_build
   cp -a build-Linux-*/%name ./%name.$buildtype
 done
 
@@ -215,6 +215,9 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Mon Sep 30 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.3-alt2
+- quick fix for the startup script (#38633)
+
 * Mon Sep 30 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.3-alt1
 - update to 4.92.3 (fix CVE-2019-16928)
 
