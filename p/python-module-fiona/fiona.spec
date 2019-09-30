@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.8.6
+Version: 1.8.8
 Release: alt1
 Summary: Fiona reads and writes spatial data files
 License: BSD
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.8-alt1
+- Build new version.
+
 * Tue Mar 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.6-alt1
 - Build new version.
 
