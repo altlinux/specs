@@ -1,9 +1,9 @@
 
 Name: roxterm
 Version: 3.1.4
-Release: alt2
+Release: alt3
 
-Summary: A tabbed, vte- (GTK+) based terminal emulator
+Summary: A tabbed, VTE/GTK+ based terminal emulator
 License: GPL
 Group: Development/Python
 
@@ -13,7 +13,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-lockfile gcc4.7-c++
+BuildPreReq: python-module-lockfile gcc-c++
 BuildPreReq: git-core gnupg
 BuildPreReq: docbook-xsl po4a ImageMagick-tools 
 BuildPreReq: itstool libgtk+3-devel
@@ -23,17 +23,19 @@ BuildPreReq: libdbus-devel libdbus-glib-devel
 BuildPreReq: librsvg
 
 %description
-A tabbed, vte- (GTK+) based terminal emulator providing advanced features such as multiple tabs with a small footprint
+A tabbed, VTE/GTK+ based terminal emulator
+providing advanced features such as multiple tabs
+with a small footprint.
 
 %prep
 %setup
 
 %build
-%__python ./mscript.py configure PREFIX=/usr
-%__python ./mscript.py build
+python ./mscript.py configure PREFIX=/usr
+python ./mscript.py build
 
 %install
-%__python ./mscript.py install DESTDIR=%buildroot
+python ./mscript.py install DESTDIR=%buildroot
 %find_lang %name
 
 %files -f %name.lang
@@ -48,6 +50,10 @@ A tabbed, vte- (GTK+) based terminal emulator providing advanced features such a
 %_datadir/roxterm/*
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 3.1.4-alt3
+- get rid of gcc4.7 BR:
+- minor spec cleanup
+
 * Tue Aug 18 2015 Konstantin Artyushkin <akv@altlinux.org> 3.1.4-alt2
 - initial build for ALT Linux Sisyphus
 
