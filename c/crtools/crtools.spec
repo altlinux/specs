@@ -1,6 +1,6 @@
 Name: crtools
 Version: 3.13
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -13,7 +13,7 @@ Patch1: 0001-FEDORA-aio-fix.patch
 Patch2: 0002-ALT-build-against-python3.patch
 
 Provides: criu = %EVR
-ExclusiveArch: x86_64 aarch64 armh
+ExclusiveArch: x86_64 aarch64 armh ppc64le
 
 BuildRequires: libnet2-devel
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
@@ -59,6 +59,7 @@ BuildRequires: glibc-devel
 BuildRequires: libprotobuf-c-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
+BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
 Provides: crit = %EVR
 Provides: python-module-criu
@@ -122,6 +123,10 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Mon Sep 30 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.13-alt2
+- Built for ppc64le.
+- Built with SELinux support.
+
 * Tue Sep 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.13-alt1
 - 3.13.
 - Made and packaged crtools as symlink to criu.
