@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -19,13 +20,13 @@ BuildRequires: perl-podlators
 %endif
 
 Name:		perl-Test-Warnings
-Version:	0.026
-Release:	alt1_8
+Version:	0.027
+Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		https://metacpan.org/release/Test-Warnings
-Source0:	https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -99,11 +100,14 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc --no-dereference LICENCE
+%doc LICENCE examples
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_8
 - update to new release by fcimport
 
