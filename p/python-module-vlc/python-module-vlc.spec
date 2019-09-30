@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.0.7110
-Release: alt1
+Release: alt2
 
 Summary: Binding for the native libvlc API.
 License: LGPLv2.1+
@@ -36,33 +36,20 @@ video player. Note that it relies on an already present install of VLC.
 %prep
 %setup
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
-
-%files
-%doc COPYING MANIFEST.in README.module examples/
-%python_sitelibdir/*
 
 %files -n python3-module-%oname
 %doc COPYING MANIFEST.in README.module examples/
 %python3_sitelibdir/*
 
-
 %changelog
+* Mon Sep 30 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.7110-alt2
+- drop python2 module
+
 * Thu Aug 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.7110-alt1
 - New version
 
