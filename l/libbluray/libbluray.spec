@@ -1,6 +1,6 @@
 Name: libbluray
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: BD library
 
 Group: System/Libraries
@@ -9,7 +9,7 @@ Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
 
-BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel ant libudfread-devel /proc java java-devel
+BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel libudfread-devel
 
 %description
 %summary
@@ -35,7 +35,7 @@ This package contains various utilities using libbluray library.
 
 %build
 %autoreconf
-%configure --disable-bdjava --disable-static
+%configure --disable-bdjava-jar --disable-static
 %make_build
 
 %install
@@ -53,6 +53,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Mon Sep 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt2
+- fix ftbfs by actually disable bdjava jar build
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
