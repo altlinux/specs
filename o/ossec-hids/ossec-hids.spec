@@ -13,7 +13,7 @@
 Name: ossec-hids
 
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: OSSEC is a full platform to monitor and control your systems
 License: GPLv2
@@ -137,7 +137,11 @@ rm -rf contrib/debian-packages/
 #rm -rf src/external/
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -fpic -fPIE -Wformat -Wformat-security -fstack-protector-all -Wstack-protector --param ssp-buffer-size=4 -D_FORTIFY_SOURCE=2"
+CFLAGS="$RPM_OPT_FLAGS -fpic -fPIE -Wformat -Wformat-security -fstack-protector-all --param ssp-buffer-size=4 -D_FORTIFY_SOURCE=2"
+%ifnarch %e2k
+# unsupported as of lcc 1.23.20
+CFLAGS="$CFLAGS -Wstack-protector"
+%endif
 
 LDFLAGS="-fPIE -pie -Wl,-z,relro"
 SH_LDFLAGS="-fPIE -pie -Wl,-z,relro"
@@ -595,6 +599,9 @@ fi
 %_datadir/ossec/contrib/postgresql.schema
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 3.1.0-alt2
+- E2K: avoid lcc-unsupported option
+
 * Tue Nov 27 2018 Nikolai Kostrigin <nickel@altlinux.org> 3.1.0-alt1
 - new version
 - add missing email setup patch
