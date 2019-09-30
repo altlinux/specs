@@ -1,6 +1,6 @@
 Name: fetchmail
-Version: 6.3.26
-Release: alt6
+Version: 6.4.1
+Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -19,10 +19,9 @@ Source13: fetchmailconf.desktop
 Source100: fetchmail.watch
 
 Patch1: %name-5.6.2-contrib.patch
-Patch2: %name-6.3.0-fetchmailconf.patch
-Patch3: %name-6.3.3-nopermcheck.patch
-Patch4: %name-6.3.26-ssl-backport.patch
-Patch5: %name-9b8b634-sni-hostname.patch
+Patch2: %name-6.4.1-fetchmailconf.patch
+Patch3: %name-6.4.1-nopermcheck.patch
+Patch4: %name-6.4.1-no-libssl-version-sanity-check.patch
 
 Requires: %_sbindir/sendmail
 Requires: setup >= 2.1.9-ipl15mdk
@@ -106,7 +105,7 @@ neccessary.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+
 cp -a %SOURCE3 fetchmailrc.example
 
 %build
@@ -192,6 +191,9 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Mon Sep 30 2019 Alexey Gladkov <legion@altlinux.ru> 6.4.1-alt1
+- New version (6.4.1)
+
 * Tue Apr 16 2019 Michael Shigorin <mike@altlinux.org> 6.3.26-alt6
 - added upstream SNI support patch; thx legion@ (closes: #36608)
 - avoid extra tarball compression (no reason with gear)
