@@ -1,48 +1,70 @@
-Name: libpam-google-authenticator
-Version: 1.0
-Release: alt1
+%define 	projname google-authenticator
+Name:           libpam-%{projname}
+Version:        1.06
+Release:        alt1
+Summary:        One-time passcode support using open standards
+#Summary(ru_RU.UTF8): 
+License:        ASL 2.0
+URL:            https://github.com/google/google-authenticator-libpam
+Packager: 	Alexei Mezin <alexvm@altlinux.org>
+Vendor: 	ALT Linux Team
+Group:		System/Libraries
 
-Summary: The PAM module can add a two-factor authentication step to any PAM-enabled application.
 
-Url: http://code.google.com/p/google-authenticator/
-License: GPL
-Group: System/Libraries
+Source0:        %{name}-%{version}.tar.gz
+# Automatically added by buildreq on Mon Sep 30 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python-base python-modules python3 python3-base python3-dev sh4
+##BuildRequires: glibc-devel-static libdb4-devel libpam-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
 
-Packager: Denis Baranov <baraka@altlinux.ru>
-
-Source: http://google-authenticator.googlecode.com/files/%name-%version-source.tar
-
-Requires: pam
-
-# Automatically added by buildreq on Thu Mar 07 2013 (-bi)
-# optimized out: elfutils python-base
 BuildRequires: libpam-devel
 
+##BuildRequires:  gcc
+##BuildRequires:  pam-devel
+##BuildRequires:  libtool
+
+
 %description
-The PAM module can add a two-factor authentication step to any PAM-enabled application. It supports:
-Per-user secret and status file stored in user's home directory 
-Support for 30-second TOTP codes 
-Support for emergency scratch codes 
-Protection against replay attacks 
-Key provisioning via display of QR code 
-Manual key entry of RFC 3548 base32 key strings
+The Google Authenticator package contains a pluggable authentication
+module (PAM) which allows login using one-time passcodes conforming to
+the open standards developed by the Initiative for Open Authentication
+(OATH) (which is unrelated to OAuth).
+
+Passcode generators are available (separately) for several mobile
+platforms.
+
+These implementations support the HMAC-Based One-time Password (HOTP)
+algorithm specified in RFC 4226 and the Time-based One-time Password
+(TOTP) algorithm specified in RFC 6238.
 
 %prep
-%setup -n %name-%version
+
+%setup -q 
+##-n %{projname}-libpam-%{version}
 
 %build
-%make_build
+%autoreconf -i
+%configure --libdir=/%_lib
+%make 
 
 %install
-install -D pam_google_authenticator.so %buildroot/%_pam_modules_dir/pam_google_authenticator.so
-install -D google-authenticator %buildroot/%_bindir/google-authenticator
+##rm -rf $RPM_BUILD_ROOT
+%makeinstall_std
+rm $RPM_BUILD_ROOT/%{_lib}/security/pam_google_authenticator.la
 
 %files
-%doc README FILEFORMAT
+##%_libdir/security/pam_google_authenticator.so
 %_pam_modules_dir/pam_google_authenticator.so
-%_bindir/google-authenticator
+%_bindir/*
+%_docdir/%{projname}/README.md
+%_docdir/%{projname}/totp.html
+%_docdir/%{projname}/FILEFORMAT
+%_man1dir/*
+%_man8dir/*
+
 
 %changelog
+* Mon Sep 30 2019 Alexei Mezin <alexvm@altlinux.org> 1.06-alt1
+- New initial build
 * Thu Mar 07 2013 Denis Baranov <baraka@altlinux.ru> 1.0-alt1
 - Initial build for ALTLinux
 
