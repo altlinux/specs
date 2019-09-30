@@ -1,32 +1,35 @@
-BuildRequires: desktop-file-utils
 Name: lightlang
 Version: 0.8.6.s
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Dictionary Shell on Qt4
-Summary(ru_RU.UTF-8): Словарь на основе Qt4
-
 License: GPL
 Group: Office
-Url: http://code.google.com/p/lightlang/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+Url: http://code.google.com/p/lightlang/
 # Source-url: http://lightlang.googlecode.com/files/lightlang-0.8.6-20110413.tar.bz2
 Source: http://lightlang.googlecode.com/files/lightlang-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Sun Jun 03 2012
 # optimized out: fontconfig libgst-plugins libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-gui libqt4-help libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns pkg-config python-base python-module-distribute python-module-peak python-module-sip python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json
 BuildRequires: python-module-PyQt4 python-module-mwlib python-module-paste python-module-xlib sox-base
 BuildRequires: python-modules-json
+BuildRequires: desktop-file-utils
+
+Summary(ru_RU.UTF-8): Словарь на основе Qt4
 
 %description
-LightLang is a small and powerfull dictionary shell, writed on qt4 and has a many dictionary (ru-en and en-ru).
+LightLang is a small and powerfull dictionary shell writed in Qt4
+which has several dictionaries (ru-en and en-ru).
 
 %description -l ru_RU.UTF-8
-LightLang это маленькая и быстрая словарная оболочка на Qt4, которая содержит в комплекте множество словарей (ru-en и en-ru).
+LightLang - это маленькая и быстрая словарная оболочка на Qt4,
+которая содержит в комплекте множество словарей (ru-en и en-ru).
 
 %prep
 %setup
+sed -i 's,--pedantic,-pedantic,' configure*
 
 %build
 %configure
@@ -64,9 +67,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 %_mandir/ru/man1/*
 %_docdir/lightlang/
-#%_pkgconfigdir/*.pc
+#%%_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 0.8.6.s-alt1.qa3
+- E2K: pedantically fix build
+
 * Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.6.s-alt1.qa2
 - Use python-modules-json as json module
 
