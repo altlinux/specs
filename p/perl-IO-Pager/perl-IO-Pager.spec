@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 0.42
+Version: 0.43
 Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/J/JP/JPIERCE/%{module}-%{version}.tgz
 
 #BuildRequires: perl(Term/Pager.pm)
-BuildRequires: less perl-devel perl(bignum.pm)
+BuildRequires: less perl-devel perl(bignum.pm) perl(Term/ReadKey.pm) perl(Term/Cap.pm)
 
 %description
 IO::Pager is lightweight and can be used to locate an available pager
@@ -44,6 +44,7 @@ namely
 
 %prep
 %setup -q -n %{module}-%{version}
+sed -i 's,!/bin/env perl,!/usr/bin/perl,' lib/IO/Pager/tp
 
 %build
 %perl_vendor_build
@@ -51,14 +52,14 @@ namely
 %install
 %perl_vendor_install
 
-# https://rt.cpan.org/Ticket/Display.html?id=130565
-[ %version == 0.42 ] && rm %buildroot%perl_vendor_privlib/IO/Pager/Perl.pm
-
 %files
 %doc README CHANGES
 %perl_vendor_privlib/IO/
 
 %changelog
+* Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
+- automated CPAN update
+
 * Tue Sep 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
