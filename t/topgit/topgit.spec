@@ -2,7 +2,7 @@
 
 Name: topgit
 Version: 0.9
-Release: alt5.git20150225
+Release: alt6.git20150225
 
 Summary: A different patch queue manager for Git
 License: GPLv2
@@ -52,17 +52,17 @@ rm -f .topdeps .topmsg # clean up topgit internal files
 # TODO: the problem with topgit internal files should be solved.
 # The problem is like this
 # (http://www.altlinux.org/Git/MergingBranches#.D0.B2.D0.BC.D0.B5.D1.81.D1.82.D0.B5_.D1.81_gear):
-# 
+#
 # `tg export` exports nice patches, but it can't be called from `gear`.
 # Gear is stupid and includes them in the patches.
-# 
+#
 # Possible solutions:
-# 
+#
 # * teach Gear to use topgit (extra dependency?);
 # * modify TopGit not to store the meta-info (.topmsg, .topdeps)
 #   in Git trees (https://github.com/greenrd/topgit/issues/38);
 # * somehow adapt `tg export` to the needs of a Gear-based workflow
-#   (some relevant remarks and objections: 
+#   (some relevant remarks and objections:
 #   https://github.com/greenrd/topgit/issues/42#issuecomment-75389885).
 
 %build
@@ -71,20 +71,26 @@ touch --date=tomorrow precheck
 rm -f precheck
 
 %install
+touch --date=tomorrow precheck
 %makeinstall
+rm -f precheck
 
 %check
+rm -f precheck
 make precheck
 # TODO: it has a check against a hardcoded Git version;
 # we want to automatically add that version to RPM deps.
 
-%files 
+%files
 %_bindir/*
 %_datadir/%name
 %_prefix/libexec/%name
 %doc README COPYING
 
 %changelog
+* Mon Sep 30 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt6.git20150225
+- Fixed build without check.
+
 * Wed Feb 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt5.git20150225
 - (.spec) Corrected the BuildRequires tag name
   to fix build with rpm-build-4.0.4-alt125.
@@ -101,7 +107,7 @@ make precheck
 - tg rename: a simple shortcut, implemented for leaves only
 
 * Mon Jan 26 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt1.git20130407
-- new upstream release+Git changes from a new upstream maintainer: 
+- new upstream release+Git changes from a new upstream maintainer:
   https://github.com/greenrd/topgit/tags
 
 * Fri Jul 24 2009 Maxim Ivanov <redbaron at altlinux.org> 0.7-alt3.git20090527
