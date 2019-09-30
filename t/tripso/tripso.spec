@@ -1,6 +1,6 @@
 Name: tripso
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Translation of IPv4 Security Options (IPSO) Labels
 License: GPLv2
@@ -27,7 +27,7 @@ Translate between CISPO and Astra Linux security labels (source).
 %setup -q
 
 %build
-make libxt_TRIPSO.so VERSION=%version
+make libxt_TRIPSO.so VERSION=%version CFLAGS="%optflags"
 
 %install
 make install-lib DESTDIR=%buildroot
@@ -41,5 +41,10 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 /%_lib/iptables/*.so
 
 %changelog
+
+* Mon Sep 30 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.0-alt2
+- Fix debuginfo which did not contain source code
+- Build with system CFLAGS
+
 * Tue Mar 06 2018 Vitaly Chikunov <vt@altlinux.ru> 1.0-alt1
 - Sisyphus package.
