@@ -1,5 +1,5 @@
 Name: strawberry
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -94,6 +94,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Tue Oct 01 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.5-alt1
+- New version (0.6.5) with rpmgs script.
+
 * Thu Sep 26 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.4-alt1
 - New version (0.6.4) with rpmgs script.
 
