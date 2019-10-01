@@ -1,25 +1,16 @@
 %define oname httpbin
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.1
+Version: 0.7.0
+Release: alt1
 Summary: HTTP Request and Response Service
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/httpbin/
-# https://github.com/kennethreitz/httpbin.git
+# https://github.com/postmanlabs/httpbin
 BuildArch: noarch
 
 Source: %oname-%version.tar
-
-%py_provides %oname
-
-BuildRequires: python-module-gunicorn
-BuildRequires: python-module-flask-common
-BuildRequires: python-module-pytest
-BuildRequires: python-module-flask
-BuildRequires: python-module-six
-BuildRequires: python-module-werkzeug
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-pytest
@@ -52,26 +43,11 @@ All endpoint responses are JSON-encoded.
 %prep
 %setup -n %oname-%version
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
-
-%files
-%doc AUTHORS *.md LICENSE
-%python_sitelibdir/*
 
 %files -n python3-module-%oname
 %doc AUTHORS *.md LICENSE
@@ -79,6 +55,10 @@ popd
 
 
 %changelog
+* Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+- built without python-2.7 support
+
 * Fri Mar 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.2-alt1.1
 - Fixed requires
 
