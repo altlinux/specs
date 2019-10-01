@@ -13,7 +13,7 @@
 
 Name: vztt
 Version: 7.0.65
-Release: alt4
+Release: alt5
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -28,9 +28,9 @@ Requires: lib%name = %version-%release
 Requires: libploop >= 6.1.0
 Requires: attr
 Requires: vztt_checker
-#Requires: vzctl >= 5.0.0
 Requires: lz4 gzip tar
 Requires: e2fsprogs
+Requires: python3-module-configobj
 
 BuildRequires: libattr-devel
 BuildRequires: glibc-devel-static
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Tue Oct 01 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt5
+- convert to python3
+
 * Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt4
 - spec cleanup
 
