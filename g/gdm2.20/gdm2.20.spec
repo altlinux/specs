@@ -15,7 +15,7 @@
 
 Name: gdm2.20
 Version: %ver_major.8
-Release: alt12
+Release: alt13
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -108,7 +108,9 @@ subst 's,libwrap.a,libwrap.so,' configure
 
 %build
 export ac_cv_path_CONSOLE_HELPER=%_bindir/consolehelper
+%autoreconf
 %configure \
+		--enable-compile-warnings=no \
 		--with-sysconfsubdir=X11/gdm \
 		--enable-console-helper \
 		--enable-authentication-scheme=%authentication_scheme \
@@ -120,7 +122,8 @@ export ac_cv_path_CONSOLE_HELPER=%_bindir/consolehelper
 		--disable-scrollkeeper \
 		%{subst_enable static} \
 		%{subst_with tcp_wrappers} \
-		--disable-dependency-tracking
+		--disable-dependency-tracking \
+		#
 
 %make_build
 gzip -9nf ChangeLog
@@ -184,6 +187,9 @@ install -pDm755 %SOURCE4 %buildroot%_sbindir/gdm-termok-command
 %exclude %_libdir/gtk-2.0/modules/lib*.la
 
 %changelog
+* Tue Oct 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.20.8-alt13
+- Fixed build on ppc64le.
+
 * Mon Mar 11 2019 Anton Midyukov <antohami@altlinux.org> 2.20.8-alt12
 - Change theme circles (Closes: 33545)
 
