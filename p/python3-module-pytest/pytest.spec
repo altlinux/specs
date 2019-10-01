@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.1.2
+Version: 5.2.0
 Release: alt1
 
 Summary: Python test framework
@@ -117,6 +117,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest3
 
 %changelog
+* Mon Sep 30 2019 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1
+- 5.1.2 -> 5.2.0.
+
 * Mon Sep 02 2019 Stanislav Levin <slev@altlinux.org> 5.1.2-alt1
 - 5.1.1 -> 5.1.2.
 
