@@ -1,5 +1,5 @@
 Name:		burp
-Version:	2.3.4
+Version:	2.3.14
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -77,6 +77,9 @@ chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 %preun_service burp-server
 
 %changelog
+* Tue Oct 01 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.14-alt1
+- New version 2.3.14
+
 * Wed Apr 03 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.4-alt1
 - New version 2.3.4
 
