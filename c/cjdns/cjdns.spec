@@ -2,7 +2,7 @@
 
 Name: cjdns
 Version: 20.3
-Release: alt1
+Release: alt2
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -222,6 +222,9 @@ done
 %_bindir/graphStats
 
 %changelog
+* Tue Oct 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20.3-alt2
+- Increased fuzz test timeout to 50 seconds to fix build on ppc64le.
+
 * Wed May 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3-alt1
 - Updated to upstream version 20.3.
 
