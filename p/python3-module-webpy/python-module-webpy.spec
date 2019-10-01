@@ -1,6 +1,6 @@
 Name: python3-module-webpy
-Version: 0.37
-Release: alt1.git20130611.1.2
+Version: 0.40
+Release: alt1
 Summary: A simple web framework for Python
 Group: Development/Python3
 
@@ -18,18 +18,14 @@ License: Public Domain and BSD
 
 Url: http://webpy.org/
 # https://github.com/webpy/webpy.git
-Source0: web.py-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
 BuildArch: noarch
 
 %py3_provides web
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-logging python3 python3-base
-BuildRequires: python-modules-compiler python-modules-encodings python-tools-2to3 rpm-build-python3 time
+BuildRequires: rpm-build-python3 
 
 %description
 web.py is a web framework for python that is as simple as it is
@@ -37,10 +33,7 @@ powerful. web.py is in the public domain; you can use it for whatever
 purpose with absolutely no restrictions.
 
 %prep
-%setup -n web.py-%version
-
-find web -type f -name '*.py' -exec 2to3 -w -n '{}' +
-sed -i 's|qhttp|http|g' web/webapi.py web/httpserver.py
+%setup 
 
 %build
 %python3_build
@@ -53,6 +46,9 @@ sed -i 's|qhttp|http|g' web/webapi.py web/httpserver.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.40-alt1
+- updated to 0.40
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.37-alt1.git20130611.1.2
 - (NMU) rebuild with python3.6
 
