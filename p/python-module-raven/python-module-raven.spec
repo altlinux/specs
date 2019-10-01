@@ -1,8 +1,7 @@
-%def_with python3
 %define oname raven
 
 Name: python-module-raven
-Version: 6.9.0
+Version: 6.10.0
 Release: alt1
 Summary: Python client for Sentry
 
@@ -14,13 +13,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
-BuildPreReq: python-devel python-module-setuptools
-%py_provides %oname
-%add_findreq_skiplist %python_sitelibdir/%oname/contrib/zope/*
 
 %description
 Raven is a Python client for Sentry <http://getsentry.com>. It provides full
@@ -28,7 +22,6 @@ out-of-the-box support for many of the popular frameworks, including Django, and
 Flask. Raven also includes drop-in support for any WSGI-compatible web
 application.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 client for Sentry
 Group: Development/Python
@@ -41,16 +34,11 @@ out-of-the-box support for many of the popular frameworks, including Django, and
 Flask. Raven also includes drop-in support for any WSGI-compatible web
 application.
 Python 3 version.
-%endif
 
 %package -n %oname
 Summary: Python client for Sentry
 Group: Development/Python
-%if_with python3
 Requires: python3-module-%oname = %version-%release
-%else
-Requires: python-module-%oname = %version-%release
-%endif
 
 %description -n %oname
 Raven is a Python 3 client for Sentry <http://getsentry.com>. It provides full
@@ -61,47 +49,26 @@ application.
 %prep
 %setup
 
-%if_with python3
-rm -fR ../python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%files
-%doc LICENSE
-%doc README.*
-%python_sitelibdir/%oname
-%python_sitelibdir/*.egg-info
-
-%if_with python3
 %files -n python3-module-%oname
 %doc LICENSE
 %doc README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%endif
 
 %files -n %oname
 %_bindir/%oname
 
 %changelog
+* Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 6.10.0-alt1
+- 6.10.0
+- built without python-2.7 support
+
 * Sun Apr 21 2019 Anton Midyukov <antohami@altlinux.org> 6.9.0-alt1
 - New version 6.9.0
 
