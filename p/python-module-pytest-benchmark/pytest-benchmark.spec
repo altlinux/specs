@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.2.2
-Release: alt3
+Release: alt4
 Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -178,6 +178,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %endif
 
 %changelog
+* Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt4
+- Fixed testing against Pytest 5.2.
+
 * Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt3
 - Fixed testing against Pytest 5.1.
 
