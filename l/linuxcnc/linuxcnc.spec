@@ -6,13 +6,15 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.14
-Release: alt2
+Release: alt3
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
 License: GPLv2+ and LGPLv2
 Group: Engineering
 Url: https://github.com/LinuxCNC/linuxcnc
+
+ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
@@ -93,7 +95,6 @@ Static version of linuxcnc libraries
 
 %package data
 Summary: Data files for %name
-Buildarch: noarch
 Group: Engineering
 Conflicts: linuxcnc-doc < 2.7.12
 
@@ -141,9 +142,8 @@ Spanish documementation for %name
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
 sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
 %ifarch aarch64
-cp %SOURCE1 src/rtapi/io.h
-sed -i 's|<sys/io.h>|"io.h"|' src/rtapi/uspace_rtapi_app.cc \
-  src/rtapi/rtapi_io.h src/rtapi/rtapi_pci.cc src/rtapi/rtai_ulapi.c
+mkdir -p src/rtapi/sys
+cp %SOURCE1 src/rtapi/sys/io.h
 %endif
 
 #fix make install
@@ -278,6 +278,11 @@ popd
 %endif
 
 %changelog
+* Tue Oct 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.14-alt3
+- Added ExclusiveArch tag to limit architectures to aarch64, alpha, %%arm,
+  ia64, %%ix86, and x86_64.
+- Removed noarch from %%name-data subpackage.
+
 * Sat May 25 2019 Anton Midyukov <antohami@altlinux.org> 2.7.14-alt2
 - Add io.h for aarch64 (dummy) instead of without-sys-io.h-for-no-x86.patch
 - Build with libtirpc
