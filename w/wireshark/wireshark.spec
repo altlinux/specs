@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -218,6 +218,9 @@ _EOF_
 
 
 %changelog
+* Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 3.0.5-alt1
+- 3.0.5
+
 * Mon Sep 16 2019 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1
 - 3.0.4
 - fixes:
