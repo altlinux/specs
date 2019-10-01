@@ -1,10 +1,13 @@
 # this is not a relocatable package.
 Name: einstein
 Version: 2.0
-Release: alt7
+Release: alt8
+
+Summary: Open source remake of old DOS game Sherlock which was inspired by Albert Einstein's puzzle.
 License: GPL
 Group: Games/Puzzles
-URL: http://www.babichev.info/ru/projects/einstein/
+
+Url: http://www.babichev.info/ru/projects/einstein/
 Source: http://www.babichev.info/files/einstein/%name-%version-src.tar.gz
 Source1: %name-1.0-html-pages.tgz
 Source2: %name-wrapper
@@ -29,9 +32,8 @@ Patch8: einstein-2.0-alt-fix_mkres_link.patch
 Patch9: einstein-2.0-alt-translation_fix.patch
 Patch10: einstein-2.0-gcc43.patch
 Packager: Fr. Br. George <george@altlinux.ru>
-Summary: Open source remake of old DOS game Sherlock which was inspired by Albert Einstein's puzzle.
 
-Summary(ru_RU.KOI8-R): Логическая головоломка, написанная по мотивам старой игры Sherlock, которая в свою очередь была написана по мотивам задачи Эйнштейна
+Summary(ru_RU.UTF-8): п⌡п╬пЁп╦я┤п╣я│п╨п╟я▐ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╨п╟, п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я│я┌п╟я─п╬п╧ п╦пЁя─я▀ Sherlock, п╨п╬я┌п╬я─п╟я▐ п╡ я│п╡п╬я▌ п╬я┤п╣я─п╣п╢я▄ п╠я▀п╩п╟ п╫п╟п©п╦я│п╟п╫п╟ п©п╬ п╪п╬я┌п╦п╡п╟п╪ п╥п╟п╢п╟я┤п╦ п╜п╧п╫я┬я┌п╣п╧п╫п╟
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: libSDL-devel libstdc++-devel
@@ -48,21 +50,21 @@ Every row of square contains cards of one type only. For example, first row
 contains arabic digits, second - letters, third - rome digits, fouths - dices,
 fifth - geometric figures, sixs - mathematic symbols.
 
-%description -l ru_RU.KOI8-R
-Einstein - это логическая головоломка, написанная по мотивам старой игры
-Sherlock, которая в свою очередь была написана по мотивам задачи Эйнштейна.
-Эйнштейн утверждал, что для её решения необходимо обладать IQ не менее 97
-процентов.
+%description -l ru_RU.UTF-8
+Einstein - я█я┌п╬ п╩п╬пЁп╦я┤п╣я│п╨п╟я▐ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╨п╟, п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я│я┌п╟я─п╬п╧ п╦пЁя─я▀
+Sherlock, п╨п╬я┌п╬я─п╟я▐ п╡ я│п╡п╬я▌ п╬я┤п╣я─п╣п╢я▄ п╠я▀п╩п╟ п╫п╟п©п╦я│п╟п╫п╟ п©п╬ п╪п╬я┌п╦п╡п╟п╪ п╥п╟п╢п╟я┤п╦ п╜п╧п╫я┬я┌п╣п╧п╫п╟.
+п╜п╧п╫я┬я┌п╣п╧п╫ я┐я┌п╡п╣я─п╤п╢п╟п╩, я┤я┌п╬ п╢п╩я▐ п╣я▒ я─п╣я┬п╣п╫п╦я▐ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ п╬п╠п╩п╟п╢п╟я┌я▄ IQ п╫п╣ п╪п╣п╫п╣п╣ 97
+п©я─п╬я├п╣п╫я┌п╬п╡.
 
-Правила игры очень простые: надо открыть все фишки в квадрате 6x6 фишек.
-В каждой строке квадрата находятся фишки одного типа. Например, в первой строке
-квадрата находятся арабские цифры, во второй - латинские буквы, в третьей -
-римские цифры, в четвертой - игральные кости, в пятой - геометрические фигуры,
-в шестой - математические символы. 
+п÷я─п╟п╡п╦п╩п╟ п╦пЁя─я▀ п╬я┤п╣п╫я▄ п©я─п╬я│я┌я▀п╣: п╫п╟п╢п╬ п╬я┌п╨я─я▀я┌я▄ п╡я│п╣ я└п╦я┬п╨п╦ п╡ п╨п╡п╟п╢я─п╟я┌п╣ 6x6 я└п╦я┬п╣п╨.
+п▓ п╨п╟п╤п╢п╬п╧ я│я┌я─п╬п╨п╣ п╨п╡п╟п╢я─п╟я┌п╟ п╫п╟я┘п╬п╢я▐я┌я│я▐ я└п╦я┬п╨п╦ п╬п╢п╫п╬пЁп╬ я┌п╦п©п╟. п²п╟п©я─п╦п╪п╣я─, п╡ п©п╣я─п╡п╬п╧ я│я┌я─п╬п╨п╣
+п╨п╡п╟п╢я─п╟я┌п╟ п╫п╟я┘п╬п╢я▐я┌я│я▐ п╟я─п╟п╠я│п╨п╦п╣ я├п╦я└я─я▀, п╡п╬ п╡я┌п╬я─п╬п╧ - п╩п╟я┌п╦п╫я│п╨п╦п╣ п╠я┐п╨п╡я▀, п╡ я┌я─п╣я┌я▄п╣п╧ -
+я─п╦п╪я│п╨п╦п╣ я├п╦я└я─я▀, п╡ я┤п╣я┌п╡п╣я─я┌п╬п╧ - п╦пЁя─п╟п╩я▄п╫я▀п╣ п╨п╬я│я┌п╦, п╡ п©я▐я┌п╬п╧ - пЁп╣п╬п╪п╣я┌я─п╦я┤п╣я│п╨п╦п╣ я└п╦пЁя┐я─я▀,
+п╡ я┬п╣я│я┌п╬п╧ - п╪п╟я┌п╣п╪п╟я┌п╦я┤п╣я│п╨п╦п╣ я│п╦п╪п╡п╬п╩я▀.
 
 %prep
 %setup
-%setup -q -T -D -a 1
+%setup -T -D -a 1
 install %SOURCE3 res/
 mv %name doc
 #patch
@@ -77,12 +79,18 @@ mv %name doc
 %patch9 -p1
 %patch10 -p1
 
-cp /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf res/
+cp -a /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf res/
+
+%ifarch %e2k
+sed -i 's,-O6,-O%_optlevel,' mkres/Makefile
+%endif
 
 %build
 %make depend
 %make_build -C mkres
-pushd res && ../mkres/mkres --source resources.descr --output ../einstein.res && popd
+pushd res &&
+	../mkres/mkres --source resources.descr --output ../einstein.res &&
+popd
 %make_build PREFIX=/usr
 
 %install
@@ -90,12 +98,12 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot/%_datadir/%name/res
 %makeinstall PREFIX=%buildroot%_usr
 mv %buildroot%_bindir/%name %buildroot%_bindir/%name.bin
-install %SOURCE2 %buildroot%_bindir/%name
+install -p %SOURCE2 %buildroot%_bindir/%name
 chmod 755 %buildroot%_bindir/%name
 mkdir -p %buildroot/%_defaultdocdir/%name-%version
-#install doc/* %buildroot/%_defaultdocdir/%name-%version
-install -Dm 0644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
-install -Dm 0644 %SOURCE5 %buildroot%_niconsdir/%name.png
+#install doc/* %%buildroot/%_defaultdocdir/%name-%version
+install -pDm644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
+install -pDm644 %SOURCE5 %buildroot%_niconsdir/%name.png
 
 %files 
 %_bindir/*
@@ -105,6 +113,10 @@ install -Dm 0644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %_niconsdir/*
 
 %changelog
+* Tue Oct 01 2019 Michael Shigorin <mike@altlinux.org> 2.0-alt8
+- E2K: fix build
+- spec converted to utf-8 and cleaned up a bit
+
 * Tue Apr 05 2011 Fr. Br. George <george@altlinux.ru> 2.0-alt7
 - Forbidden requires eliminated
 
