@@ -1,9 +1,7 @@
 %define oname ws4py
-%def_with python3
-
 Name: python-module-ws4py
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: WebSocket for Python (ws4py)
 
@@ -18,12 +16,8 @@ Source: %name-%version.tar
 Patch1: %oname-async-fix.patch
 
 BuildArch: noarch
-BuildRequires: rpm-build-python python-module-setuptools
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-%endif
 
 %description
 ws4py is a Python package implementing the WebSocket protocol as
@@ -42,44 +36,24 @@ defined in RFC 6455.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
-
 
 %install
-%python_build_install --prefix=/usr
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 
-%files
-%doc CHANGELOG.md LICENSE README.md
-%python_sitelibdir/*
-
-
-%if_with python3
 %files -n python3-module-%oname
 %doc CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/*
-%endif
 
 
 %changelog
+* Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.5.1-alt2
+- removed python2 support
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
 - new version 0.5.1 (with rpmrb script)
 - switch to build from tarball
