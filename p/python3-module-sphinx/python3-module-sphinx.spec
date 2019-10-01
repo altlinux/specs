@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -31,6 +31,7 @@ Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
+Patch2: %oname-2.2.0-Drop-extra-dep-on-Pytest.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -70,9 +71,7 @@ multiple reStructuredText sources)
 Summary: Development package for Sphinx
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-Requires: python3-module-%oname-tests = %EVR
 Requires: rpm-macros-sphinx3 = %EVR
-Requires: python3-module-jinja2-tests
 
 %description devel
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -143,6 +142,7 @@ This packages contains RPM macros for build with Sphinx.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 install -pm644 %SOURCE1 .
 
@@ -255,6 +255,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 1:2.2.0-alt3
+- Dropped extra dep on testing/tests.
+
 * Mon Sep 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.0-alt2
 - Rebuilt with docs and tests.
 
