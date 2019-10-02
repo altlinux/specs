@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 Group: Development/Python
 License: MIT License
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 2 2019 Vladimir Didenko <cow@altlinux.org> 3.3.8-alt1
+- new version
+
 * Fri Sep 27 2019 Vladimir Didenko <cow@altlinux.org> 3.3.7-alt1
 - new version
 
