@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190916
+Version: 20190925
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Oct 02 2019 Cronbuild Service <cronbuild@altlinux.org> 20190925-alt1
+- upstream changes (GIT c0590d8):
+  + amdgpu: update vega20 ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: update vega12 ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: update vega10 ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: update picasso ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: update raven2 ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: update raven ucode for 19.30 (thx Alex Deucher)
+  + amdgpu: add new raven rlc firmware (thx Alex Deucher)
+
 * Wed Sep 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20190916-alt1
 - upstream changes (GIT 417a9c6):
   + amdgpu: add initial navi10 firmware (thx Alex Deucher)
