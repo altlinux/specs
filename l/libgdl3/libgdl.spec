@@ -1,8 +1,10 @@
-%define major 3.28
+%def_disable snapshot
+%define _name gdl
+%define ver_major 3.34
 %define _unpackaged_files_terminate_build 1
 
 Name: libgdl3
-Version: %major.0
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome docking library (GDL)
@@ -11,12 +13,13 @@ License: %gpl2plus
 Group: System/Libraries
 Url: http://www.gnome.org
 
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
-Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
-
-Provides: gdl = %version
+Provides: %_name = %version
 
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome
 # From configure.in
@@ -82,8 +85,7 @@ This package provides development documentation for gdl.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup
-#%patch -p1
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -93,12 +95,12 @@ This package provides development documentation for gdl.
 %install
 %makeinstall_std
 
-%find_lang gdl-3
+%find_lang %_name-3
 
 %check
 %make check
 
-%files -f gdl-3.lang
+%files -f %_name-3.lang
 %doc README
 %_libdir/lib*.so.*
 
@@ -120,6 +122,9 @@ This package provides development documentation for gdl.
 %_gtk_docdir/*
 
 %changelog
+* Wed Oct 02 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Mon Apr 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
