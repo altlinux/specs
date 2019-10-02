@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt1.2.qa1
+Release: alt2
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -71,8 +71,17 @@ samples.
 %setup -n ogre
 %patch -p1
 %patch10 -p1
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake \
 	-DOGRE_LIB_DIRECTORY=%_lib \
@@ -141,6 +150,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 1.9.0-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24; explicit -std=c++11
+
 * Tue Aug 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.9.0-alt1.2.qa1
 - Rebuilt without libcg.
 
