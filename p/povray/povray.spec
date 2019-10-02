@@ -1,7 +1,7 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.8
-Release: alt2
+Release: alt3
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
@@ -81,6 +81,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Wed Oct 02 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.0.8-alt3
+- Fixed build on ppc64le.
+
 * Fri Mar 01 2019 Anton Farygin <rider@altlinux.ru> 3.7.0.8-alt2
 - rebuilt with libpng16
 
