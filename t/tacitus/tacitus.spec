@@ -1,13 +1,14 @@
 %define with_docs 0
 
 Name: tacitus
-Version: 0.1
+Version: 0.2
 Release: alt1
 Group: System/Base
 Summary: Set sort-of-actual time on systems without RTC.
 License: WTFPL
 Source0: %name-%version.tar.xz
-Conflicts: systemd
+# commented out for now; use at your own risk, bwa-ha-ha!
+# Conflicts: systemd
 Requires: chkconfig coreutils grep
 BuildArch: noarch
 # most build environments would safely override this
@@ -64,5 +65,10 @@ rm -rf %buildroot
 
 
 %changelog
+* Wed Oct 02 2019 Gremlin from Kremlin <gremlin@altlinux.org> 0.2-alt1
+- fix running with damned bash
+- enable (though not recommended) use with systemd
+- add license file (does anyone really care of them?)
+
 * Tue Sep 24 2019 Gremlin from Kremlin <gremlin@altlinux.org> 0.1-alt1
 - first release for Sisyphus
