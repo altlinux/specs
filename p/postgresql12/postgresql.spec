@@ -1,13 +1,13 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 # Use ICU
 %def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     11
-%define postgresql_minor     5
-%define postgresql_altrel    2
+%define postgresql_major     12
+%define postgresql_minor     0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -77,10 +77,6 @@ if you're installing the postgresql-server package.
 %package -n %libpq_name
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
-# TODO remove
-Provides: libpq5.11 = %EVR
-Obsoletes: libpq5.11 < %EVR
-#
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
@@ -91,10 +87,6 @@ accessed through TCP/IP.
 Summary: Shared library %libecpg_name for PostgreSQL
 Group: Databases
 Requires: %libpq_name = %EVR
-# TODO remove
-Provides: libecpg6.11 = %EVR
-Obsoletes: libecpg6.11 < %EVR
-#
 
 %description -n %libecpg_name
 %libecpg_name is used by programs built with ecpg (Embedded PostgreSQL for C)
@@ -105,10 +97,6 @@ Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name = %EVR
 Requires: %libecpg_name = %EVR
-# TODO remove
-Provides: libpq-devel, libecpg-devel, libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
-Obsoletes: libpq-devel, libecpg-devel, libpq5-devel, libecpg6-devel, libpq5.11-devel, libecpg6.11-devel, postgresql11-devel
-#
 
 %description -n postgresql-devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -120,10 +108,6 @@ with a PostgreSQL server.
 Summary:  Development static library for postgresql-devel
 Group: Development/Databases
 Requires: postgresql-devel = %EVR
-# TODO remove
-Provides: libpq-devel-static, libecpg-devel-static, libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
-Obsoletes: libpq-devel-static, libecpg-devel-static, libpq5-devel-static, libecpg6-devel-static, libpq5.11-devel-static, libecpg6.11-devel-static, postgresql11-devel-static
-#
 
 %description -n postgresql-devel-static
 Development static library for postgresql-devel
@@ -313,7 +297,7 @@ pushd contrib
 popd
 
 cp -a COPYRIGHT README README.git \
-    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
+    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
     src/tutorial %buildroot%docdir/
 
 %find_lang ecpglib%libecpg_major-%postgresql_major
@@ -322,6 +306,7 @@ cp -a COPYRIGHT README README.git \
 %find_lang libpq%libpq_major-%postgresql_major
 %find_lang pg_archivecleanup-%postgresql_major
 %find_lang pg_basebackup-%postgresql_major
+%find_lang pg_checksums-%postgresql_major
 %find_lang pg_config-%postgresql_major
 %find_lang pg_controldata-%postgresql_major
 %find_lang pg_ctl-%postgresql_major
@@ -331,7 +316,6 @@ cp -a COPYRIGHT README README.git \
 %find_lang pg_test_fsync-%postgresql_major
 %find_lang pg_test_timing-%postgresql_major
 %find_lang pg_upgrade-%postgresql_major
-%find_lang pg_verify_checksums-%postgresql_major
 %find_lang pg_waldump-%postgresql_major
 %find_lang pgscripts-%postgresql_major
 %find_lang plperl-%postgresql_major
@@ -346,11 +330,11 @@ cat psql-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
-    pg_test_timing-%postgresql_major.lang \
-    pg_verify_checksums-%postgresql_major.lang > main.lang
+    pg_test_timing-%postgresql_major.lang > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
+    pg_checksums-%postgresql_major.lang \
     initdb-%postgresql_major.lang \
     pg_ctl-%postgresql_major.lang \
     plpgsql-%postgresql_major.lang \
@@ -455,7 +439,6 @@ fi
 %_bindir/pg_basebackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
-%_bindir/pg_verify_checksums
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
@@ -474,7 +457,6 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
-%_man1dir/pg_verify_checksums.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -483,13 +465,13 @@ fi
 %docdir/COPYRIGHT
 %docdir/README
 %docdir/README.git
-%docdir/bug.template
 
 %files docs
 %dir %docdir
 %dir %docdir/html
 %docdir/html/*.html
 %docdir/html/*.css
+%docdir/html/*.svg
 %dir %docdir/tutorial
 %docdir/tutorial/*
 %docdir/extension
@@ -656,9 +638,6 @@ fi
 %_datadir/%PGSQL/extension/tcn-*.sql
 %_datadir/%PGSQL/extension/tcn.control
 %_libdir/pgsql/test_decoding.so
-%_libdir/pgsql/timetravel.so
-%_datadir/%PGSQL/extension/timetravel-*.sql
-%_datadir/%PGSQL/extension/timetravel.control
 %_libdir/pgsql/tsm_system_rows.so
 %_datadir/%PGSQL/extension/tsm_system_rows-*.sql
 %_datadir/%PGSQL/extension/tsm_system_rows.control
@@ -676,6 +655,7 @@ fi
 %config %_initdir/%prog_name
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
+%_bindir/pg_checksums
 %_bindir/pg_controldata
 %_bindir/pg_ctl
 %_bindir/postgres
@@ -688,6 +668,7 @@ fi
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
+%_man1dir/pg_checksums.1*
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
@@ -718,7 +699,6 @@ fi
 %_datadir/%PGSQL/postgres.description
 %_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
-%_datadir/%PGSQL/conversion_create.sql
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
 %_datadir/%PGSQL/system_views.sql
@@ -789,15 +769,17 @@ fi
 %files -n postgresql-devel-static
 %_libdir/libecpg*.a
 %_libdir/libpgcommon.a
+%_libdir/libpgcommon_shlib.a
 %_libdir/libpgfeutils.a
 %_libdir/libpgtypes.a
 %_libdir/libpgport.a
+%_libdir/libpgport_shlib.a
 %_libdir/libpq*.a
 %endif
 
 %changelog
-* Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt2
-- Disable -devel
+* Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt1
+- 12.0
 
 * Wed Aug 07 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt1
 - 11.5 (Fixes CVE-2019-10208, CVE-2019-10209)
