@@ -10,7 +10,7 @@
 
 Name: clip
 Version: 1.2.0cvs
-Release: alt4
+Release: alt5
 
 Summary: XBASE/Clipper compatible program compiler
 Summary(ru_RU.UTF-8): Совместимый с XBASE/Clipper компилятор программ
@@ -19,7 +19,7 @@ License: GPL
 Group: Development/Other
 Url: http://www.itk.ru
 
-ExclusiveArch: %ix86 x86_64
+ExcludeArch: aarch64
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -175,6 +175,9 @@ subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 
 %changelog
+* Wed Oct 02 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.0cvs-alt5
+- Use ExcludeArch instead of ExclusiveArch for skip build on aarch64.
+
 * Fri Dec 21 2018 Leontiy Volodin <lvol@altlinux.org> 1.2.0cvs-alt4
 - Fix build with bash4
 - Changed charset for descriptions (KOI8-R -> UTF-8)
