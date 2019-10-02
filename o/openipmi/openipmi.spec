@@ -2,17 +2,17 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.25
-Release: alt3
+Version: 2.0.27
+Release: alt1
 License: LGPL
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libpopt-devel python-devel libnet-snmp-devel
+BuildRequires: libpopt-devel python3-devel libnet-snmp-devel
 BuildRequires: libncurses-devel libssl-devel tkinter swig
-BuildRequires: glib2-devel tcl-devel
+BuildRequires: glib2-devel tcl-devel libedit-devel libreadline-devel
 
 %description
 This package contains basic tools used with OpenIPMI.
@@ -41,18 +41,18 @@ Requires: lib%name = %version-%release
 %description perl
 A Perl interface for OpenIPMI.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python interface for OpenIPMI
 Group: System/Configuration/Hardware
 Requires: lib%name = %version-%release
 
-%description -n python-module-%name
+%description -n python3-module-%name
 A Python interface for OpenIPMI.
 
 %package gui
 Summary: GUI (in python) for OpenIPMI
 Group: System/Configuration/Hardware
-Requires: python-module-%name = %version-%release
+Requires: python3-module-%name = %version-%release
 
 %description gui
 A GUI interface for OpenIPMI.  Written in python an requiring wxWidgets.
@@ -79,7 +79,12 @@ This package contains a network IPMI listener.
 %build
 %autoreconf
 export CFLAGS="-fPIC $RPM_OPT_FLAGS"
-%configure --disable-static --with-tcl=yes --with-tk=yes
+%configure --disable-static \
+	   --with-tcl=yes \
+	   --with-tk=yes \
+	   --with-tclcflags='-I/usr/include' \
+	   --with-pythoninstall=%python3_sitelibdir \
+	   --with-python=%__python3
 %make
 
 %install
@@ -112,13 +117,14 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 %perl_vendor_autolib/OpenIPMI
 %doc swig/OpenIPMI.i swig/perl/sample swig/perl/ipmi_powerctl
 
-%files -n python-module-%name
-%_libdir/python*/site-packages/*OpenIPMI.*
+%files -n python3-module-%name
+%python3_sitelibdir/*OpenIPMI.*
+%python3_sitelibdir/__pycache__/*OpenIPMI.*
 %doc swig/OpenIPMI.i
 
 %files gui
-%dir %_libdir/python*/site-packages/openipmigui
-%_libdir/python*/site-packages/openipmigui/*
+%dir %python3_sitelibdir/openipmigui
+%python3_sitelibdir/openipmigui/*
 %_bindir/openipmigui
 
 %files -n lib%name-devel
@@ -160,22 +166,26 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Wed Oct 02 2019 Anton Farygin <rider@altlinux.ru> 2.0.27-alt1
+- 2.0.27
+- build with python3
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.25-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.0.25-alt2
 - rebuilt with libopenssl1.1
 
-* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 2.0.25-alt1%ubt
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 2.0.25-alt1
 - 2.0.25
 
-* Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 2.0.24-alt1%ubt
+* Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 2.0.24-alt1
 - new version
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.23-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.23-alt1
 - new version
 
-* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 2.0.22-alt1%ubt
+* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 2.0.22-alt1
 - new version
 
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.21-alt1.1.1.1.qa1
