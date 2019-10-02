@@ -11,7 +11,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.6
+Version: 1.4.1.8
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -232,7 +232,7 @@ export LDFLAGS='-latomic'
 
 %if_with cockpit
 # cockpit plugin
-%make 389-console
+SKIP_AUDIT_CI=yes %make 389-console
 %endif
 
 # Python3 bindings
@@ -589,6 +589,12 @@ fi
 %endif
 
 %changelog
+* Fri Sep 27 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.8-alt1
+- 1.4.1.7 -> 1.4.1.8.
+
+* Tue Sep 24 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.7-alt1
+- 1.4.1.6 -> 1.4.1.7.
+
 * Mon Aug 05 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.6-alt1
 - 1.4.1.2 -> 1.4.1.6.
 
