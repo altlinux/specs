@@ -8,11 +8,13 @@
 
 Name:    qt-creator
 Version: 4.9.2
-Release: alt1
+Release: alt2
 Summary: Cross-platform IDE for Qt
 
-Group:   Development/Tools
+Summary: Cross-platform IDE for Qt
 License: GPLv3 with exceptions
+Group:   Development/Tools
+
 Url:     http://qt-project.org/wiki/Category:Tools::QtCreator
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -21,7 +23,7 @@ Source:  %name-%version.tar
 Source1: qbs.tar
 Source2: perfparser.tar
 
-Patch:   %name-%version-%release.patch
+Patch0:  %name-%version-%release.patch
 Patch1:  qt-creator_ninja-build.patch
 
 Requires: %name-data = %EVR
@@ -35,7 +37,11 @@ BuildRequires(pre): qt5-base-devel >= 5.9.0
 BuildRequires: gcc-c++
 BuildRequires: qt5-designer >= 5.9.0
 BuildRequires: qt5-script-devel >= 5.9.0
+BuildRequires: qt5-declarative-devel >= 5.9.0
+%ifnarch %e2k
+# NB: there's rpm-macros-qt5-webengine out there
 BuildRequires: qt5-webkit-devel >= 5.9.0
+%endif
 BuildRequires: qt5-x11extras-devel >= 5.9.0
 BuildRequires: qt5-xmlpatterns-devel >= 5.9.0
 BuildRequires: qt5-tools-devel >= 5.9.0
@@ -84,13 +90,14 @@ Data files for %name
 # Unpack submodules content
 tar xf %SOURCE1
 tar xf %SOURCE2
-subst 's,tools\/qdoc3,bin,' doc/doc.pri
+sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 %ifarch %e2k
-# strip UTF-8 BOM
-find src -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+# strip UTF-8 BOM, lcc 1.23 won't ignore it yet
+find src -type f -print0 -name '*.cpp' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
@@ -140,6 +147,13 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 4.9.2-alt2
+- E2K:
+  + fix build with dummy-qt5-webkit-devel dropped
+  + fix BOM oneliner according to Secure Packaging Policy
+- Added explicit BR: qt5-declarative-devel.
+- Minor spec cleanup.
+
 * Mon Jul 01 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt1
 - New version.
 
