@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt5
+Release: alt6
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -26,6 +26,7 @@ BuildRequires: perl(Perl/Critic.pm)
 BuildRequires: perl(Perl/Tidy.pm)
 BuildRequires: perl(Pod/Html.pm)
 BuildRequires: perl(Term/ReadLine.pm)
+BuildRequires: perl(Test/MockObject.pm)
 BuildRequires: pkgconfig
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(fftw3)
@@ -88,7 +89,7 @@ This package contains Open vSwitch support for os-autoinst.
 %prep
 %setup
 %patch0 -p1
-sed  -i 's/ my $thisversion = qx{git rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
+sed  -i 's/ my $thisversion = qx{git -C $dirname rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
 sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
 rm -f t/99-full-stack.t
 sed -i -e 's, 99-full-stack.t,,g' t/Makefile.am
@@ -125,6 +126,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Sep 30 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt6
+- update to current version
+
 * Wed Jul 31 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt5
 - update to current version
 

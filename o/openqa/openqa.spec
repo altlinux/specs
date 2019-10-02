@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/XS.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm)
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt5
+Release: alt6
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -192,9 +192,6 @@ sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' e
 sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
-rm -f t/34-developer_mode-unit.t
-rm -f t/24-worker-overall.t
-rm -f t/24-worker-job.t
 
 %build
 %make_build
@@ -230,17 +227,15 @@ rm -rf %buildroot%_sysconfdir/apparmor.d
 mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
+rm -f t/24-worker-overall.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
-
-# currently broken in OBS and Koji
-rm -f ./t/24-worker.t ./t/api/09-comments.t ./t/ui/07-file.t ./t/ui/13-admin.t ./t/ui/15-comments.t ./t/ui/18-tests-details.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
 ./t/test_postgresql %buildroot/DB
 export TEST_PG="DBI:Pg:dbname=openqa_test;host=%buildroot/DB"
-OBS_RUN=1 prove -r
+OBS_RUN=1 prove -l -r
 pg_ctl -D %buildroot/DB stop
 rm -rf %buildroot/DB
 
@@ -372,6 +367,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Tue Oct 01 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt6
+- update to current version
+
 * Wed Jul 31 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt5
 - update to current version
 
