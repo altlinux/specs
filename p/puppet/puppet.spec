@@ -1,11 +1,11 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.9.0
+%define        core_version   6.10.0
 %define        dm_version     1.0.1
 
 Name:          %pkgname
 Version:       %core_version
-Release:       alt0.2
+Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       ASL 2.0
@@ -196,13 +196,15 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 
 
 %changelog
+* Tue Oct 01 2019 Andrey Cherepanov <cas@altlinux.org> 6.10.0-alt1
+- New version.
+
 * Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.2
-- ! spec according the changelog policy
+- spec according the changelog policy
 
 * Mon Aug 19 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.1
-- ^ v6.9.0
-- + links to required dirs in spec
-- ! spec
+- v6.9.0
+- links to required dirs in spec
 
 * Fri Aug 16 2019 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt1
 - New version.
