@@ -17,11 +17,15 @@
 %define lsb_arch aarch64
 %define lib_suffix ()(64bit)
 %endif
+%ifarch mipsel
+%define lsb_arch mipsel
+%define lib_suffix %nil
+%endif
 
 Name: lsb
 Summary: The skeleton package defining packages needed for LSB compliance
 Version: 4.0
-Release: alt8
+Release: alt9
 License: GPL
 Url: http://www.linuxbase.org/
 Group: System/Base
@@ -37,7 +41,7 @@ Source12: remove_initd
 # XXX:
 Source21: lsbinstall
 
-Exclusivearch: %ix86 x86_64 %e2k aarch64
+Exclusivearch: %ix86 x86_64 %e2k aarch64 mipsel
 
 Requires: lsb-core = %version
 Requires: lsb-cxx = %version
@@ -273,6 +277,9 @@ Requires: ld-linux-x86-64.so.2%lib_suffix
 %ifarch %e2k
 # see %install section Requires: /lib64/ld-lsb.so.3
 Requires: ld-linux.so.2%lib_suffix
+%endif
+%ifarch mipsel
+Requires: ld.so.1%lib_suffix
 %endif
 
 %description core
@@ -587,6 +594,9 @@ ln -sf "/lib64/ld-linux-x86-64.so.2" "%buildroot/lib64/ld-lsb-x86-64.so.3"
 %ifarch %e2k
 ln -sf "/lib64/ld-linux.so.2" "%buildroot/lib64/ld-lsb.so.3"
 %endif
+%ifarch mipsel
+ln -sf "/lib/ld.so.1" "%buildroot/lib/ld-lsb-mipsel.so.3"
+%endif
 
 touch %buildroot%_sysconfdir/lsb-release.d/core-%compat_version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/core-%compat_version-noarch
@@ -635,6 +645,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %ifarch %e2k
 /lib64/ld-lsb.so.3
 %endif
+%ifarch mipsel
+/lib/ld-lsb-mipsel.so.3
+%endif
 %prefix/lib/lsb/install_initd
 %prefix/lib/lsb/remove_initd
 %prefix/lib/lsb/lsbinstall
@@ -671,6 +684,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Wed Oct 02 2019 Ivan A. Melnikov <iv@altlinux.org> 4.0-alt9
+- mipsel support
+
 * Mon Sep 30 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 4.0-alt8
 - added aarch64
 
