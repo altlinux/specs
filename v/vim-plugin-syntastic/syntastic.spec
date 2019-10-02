@@ -1,6 +1,6 @@
 %define plugname syntastic
 Name:		vim-plugin-%plugname
-Version:	3.9.0
+Version:	3.10.0
 Release:	alt1
 Summary:	Syntax checking hacks for vim
 Group:		Editors
@@ -51,7 +51,7 @@ install -p -m644 plugin/syntastic/*.vim %buildroot%vim_plugin_dir/syntastic/
 install -p -m644 autoload/syntastic/*.vim %buildroot%vim_autoload_dir/syntastic/
 for i in syntax_checkers/*; do
   mkdir -p %buildroot/%vim_runtime_dir/$i
-  install -p -m644 $i/*.vim %buildroot%vim_runtime_dir/$i/
+  install -p -m644 $i/* %buildroot%vim_runtime_dir/$i/
 done
 
 %files
@@ -62,5 +62,8 @@ done
 %vim_runtime_dir/syntax_checkers/*
 
 %changelog
+* Wed Oct 02 2019 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1
+- Update to 3.10.0.
+
 * Fri Oct 05 2018 Vitaly Chikunov <vt@altlinux.ru> 3.9.0-alt1
 - First package for ALT
