@@ -5,19 +5,25 @@
 %ifarch %ix86
 %define parch i686
 %else
+%ifarch %e2k
+%define parch e2k
+%else
 %define parch %_arch
+%endif
 %endif
 
 %define a2_version 2.4.18-alt1
 
 %define python_bindir %apache2_htdocsdir/%module_name
+
 Name: apache2-mod_python%__python_package_version
 Version: 3.5.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Python module for Apache2
-Group: System/Servers
 License: Free
+Group: System/Servers
+
 Url: http://www.modpython.org
 Packager: Alexey Morsov <swi@altlinux.ru>
 
@@ -160,6 +166,9 @@ fi
 %_docdir/%modname-%version
 
 %changelog
+* Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 3.5.0-alt2
+- e2kv4+: fix installation
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1.qa1
 - NMU: applied repocop patch
 
