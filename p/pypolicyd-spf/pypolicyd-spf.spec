@@ -2,7 +2,7 @@
 %define pypolicy_owner policyd-spf
 
 Name: pypolicyd-spf
-Version: 1.3.2
+Version: 2.0.2
 Release: alt1
 
 Summary: Postfix policy server for SPF checking
@@ -17,10 +17,8 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 BuildArch: noarch
 
-%setup_python_module %name
-
-BuildRequires: python-module-pyspf
-Requires: python-module-ipaddr
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pyspf
 Provides: postfix-policyd-spf-python
 
 %description
@@ -35,10 +33,10 @@ module.  The SPF web site is http://www.openspf.org/.
 %patch -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python3_install --optimize=2 --record=INSTALLED_FILES
 install -m644 policyd-spf.conf.commented %buildroot%_sysconfdir/postfix-policyd-spf-python/
 
 subst '/\/share\/man/d' INSTALLED_FILES
@@ -54,12 +52,19 @@ subst '/\/share\/man/d' INSTALLED_FILES
 %_man5dir/*
 %dir %_sysconfdir/postfix-policyd-spf-python
 %_sysconfdir/postfix-policyd-spf-python/*.commented
-%exclude %python_sitelibdir/*.egg-info
-%doc README* CHANGES COPYING
+%doc README* CHANGES COPYING PKG-INFO
 
 %changelog
+* Wed Oct 02 2019 L.A. Kostis <lakostis@altlinux.ru> 2.0.2-alt1
+- 2.0.2. (ALT #37262)
+- update patch (tnx to ekorneechev@)
+
 * Mon Aug 31 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3.2-alt1
 - 1.3.2.
+
+* Wed Jan 07 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
+- 1.3.1.
+- Add requires modules: ipaddr.
 
 * Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1
 - 1.1.

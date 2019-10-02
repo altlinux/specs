@@ -1,5 +1,6 @@
-%define version 2.0.12
+%define version 2.0.13
 %define release alt0.1
+%def_with python3
 %setup_python_module pyspf
 
 Name: %{packagename}
@@ -9,8 +10,15 @@ Summary: Python module and programs for SPF (Sender Policy Framework)
 
 Group: Development/Python
 License: Python Software Foundation License
-Url: https://pypi.python.org/pypi/pyspf/
+Url: https://github.com/sdgathman/pyspf/
 Source0: pyspf-%version.tar
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
+
+Requires: python-module-ipaddr python-module-dns
 
 BuildArch: noarch
 
@@ -24,22 +32,65 @@ This SPF client is intended to be installed on the border MTA, checking
 if incoming SMTP clients are permitted to send mail.  The SPF check
 should be done during the MAIL FROM:<...> command.
 
+%package -n python3-module-%modulename
+Summary: Python3 module and programs for SPF (Sender Policy Framework)
+Group: Development/Python3
+Requires: python3-module-ipaddress python3-module-dns
+
+%description -n python3-module-%modulename
+SPF does email sender validation.  For more information about SPF,
+please see http://openspf.org
+
+This SPF client is intended to be installed on the border MTA, checking
+if incoming SMTP clients are permitted to send mail.  The SPF check
+should be done during the MAIL FROM:<...> command.
+
 %prep
 %setup -q -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install --optimize=2 --record=INSTALLED_FILES
 
+%if_with python3
+pushd ../python3
+%python3_install --record=INSTALLED_FILES3
+popd
+%endif
+
 %files -f INSTALLED_FILES
-%exclude %python_sitelibdir/*.egg-info
+%exclude %_bindir/*
 %doc CHANGELOG PKG-INFO README test
 
+%if_with python3
+%files -n python3-module-%modulename -f ../python3/INSTALLED_FILES3
+%doc CHANGELOG PKG-INFO README test
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sat Sep 28 2019 L.A. Kostis <lakostis@altlinux.ru> 2.0.13-alt0.1
+- 2.0.13.
+- build python3 module.
+- move bin/ to python3 module (due upcoming python deprecation).
+- fix requires.
+
 * Mon Aug 31 2015 L.A. Kostis <lakostis@altlinux.ru> 2.0.12-alt0.1
 - 2.0.12.
+
+* Wed Jan 07 2015 L.A. Kostis <lakostis@altlinux.ru> 2.0.11-alt0.1
+- 2.0.11.
 
 * Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 2.0.7-alt0.1
 - 2.0.7.
