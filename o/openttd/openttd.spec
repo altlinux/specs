@@ -1,8 +1,8 @@
-%define daterev 20190707
-%define gitsnapshot a82f21f24df9f42aea38af9fb48da553b30432f4
+%define daterev 20190916
+%define gitsnapshot f6643952ce53b1823c2273964466f785a907ec1a
 
 Name: openttd
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -91,6 +91,9 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
+* Sat Sep 21 2019 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Tue Aug 06 2019 Anton Farygin <rider@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
