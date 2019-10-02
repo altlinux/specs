@@ -1,21 +1,20 @@
 %define _name Louie
 
-Name: python-module-louie
-Version: 1.1
-Release: alt1.1.1
+Name: python3-module-louie
+Version: 2.0
+Release: alt1
 
 Summary: Dispatches signals between Python objects in a wide variety of contexts
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pylouie.org/
-Packager: Yuri N. Sedunov <aris@altlinux.org>
 
 Source: http://cheeseshop.python.org/packages/source/L/Louie/Louie-%version.tar.gz
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python rpm-build-compat
-BuildRequires: python-devel python-module-setuptools
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
 Louie provides Python programmers with a straightforward way to dispatch
@@ -24,20 +23,22 @@ PyDispatcher, which in turn was based on a highly-rated recipe in the
 Python Cookbook.
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/Louie-*.egg-info/
-%python_sitelibdir/louie/
-%doc doc/*
+%python3_sitelibdir/Louie-*.egg-info/
+%python3_sitelibdir/louie/
 
 %changelog
+* Wed Oct 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0 with Python3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.1.1
 - Rebuild with Python-2.7
 
@@ -45,7 +46,7 @@ Python Cookbook.
 - Rebuilt with python 2.6
 
 * Thu Oct 02 2008 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
-- adopted for Sisyphus
+- adapted for Sisyphus
 
 * Tue Aug 28 2007 Matthias Saou <http://freshrpms.net/> 1.1-2
 - Update python-setuptools build requirement to new python-setuptools-devel.
