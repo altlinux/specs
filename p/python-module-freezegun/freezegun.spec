@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.3.11
+Version: 0.3.12
 Release: alt1
 Summary: Let your Python tests travel through time
 License: ASLv2.0
@@ -19,14 +19,15 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-dateutil
-BuildRequires: python-module-mock
-BuildRequires: python-module-nose
-BuildRequires: python-module-tox
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-tox
+BuildRequires: python2.7(dateutil)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(pytest)
+BuildRequires: python2.7(tox)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(mock)
+BuildRequires: python3(pytest)
+BuildRequires: python3(sqlite3)
+BuildRequires: python3(tox)
 %endif
 
 %description
@@ -44,15 +45,13 @@ time by mocking the datetime module.
 %prep
 %setup
 # unnecessary requirements
-sed -i '/coverage==3\.7\.1/d' requirements.txt
-sed -i '/coveralls/d' requirements.txt
-sed -i '/maya/d' requirements.txt
+sed -i -e '/.*cover.*/d' \
+       -e '/maya/d' \
+       -e 's/pytest==.*/pytest/' \
+       requirements.txt
 
 rm -rf ../python3
 cp -fR . ../python3
-
-# asyncio is Python3.4+ only module
-rm freezegun/_async.py
 
 %build
 %python_build
@@ -63,21 +62,22 @@ popd
 
 %install
 %python_install
+# asyncio is Python3.4+ only module
+rm %buildroot%python_sitelibdir/%oname/_async.py
 
 pushd ../python3
 %python3_install
 popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-sed -i 's|nosetests|nosetests -v|' Makefile
-%_bindir/tox --sitepackages -e py%{python_version_nodots python} -v
-
-
-pushd ../python3
-sed -i 's|nosetests|nosetests3 -v|' Makefile
-%_bindir/tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.rst
@@ -90,6 +90,9 @@ popd
 %python3_sitelibdir/freezegun-*.egg-info/
 
 %changelog
+* Wed Oct 02 2019 Stanislav Levin <slev@altlinux.org> 0.3.12-alt1
+- 0.3.11 -> 0.3.12.
+
 * Mon Jan 14 2019 Stanislav Levin <slev@altlinux.org> 0.3.11-alt1
 - 0.3.9 -> 0.3.11.
 
