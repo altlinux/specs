@@ -2,25 +2,28 @@
 # TODO:
 #	- fet doesn't respect locale settings
 #
-Summary: FET is open source free software for automatically scheduling the timetable
-Summary(hu.UTF-8):	FET egy nyílt forrású órarend-készítő program
-Summary(pl.UTF-8):	Narzędzie do automatycznego układania planów dla szkół i uczelni
-Summary(ru_RU.UTF-8):	Программа для составления расписаний учебного заведения
 Name: fet
 Version: 5.37.2
-Release: alt1
+Release: alt2
+
+Summary: FET is open source free software for automatically scheduling the timetable
 License: GPL v2
 Group: Office
+
+Url: http://www.lalescu.ro/liviu/fet
 Source0: http://www.lalescu.ro/liviu/fet/download/%name-%version.tar.bz2
 # TODO fresh documentation
 Source1: http://www.lalescu.ro/liviu/fet/doc/en/faq.html
 Source2: http://www.lalescu.ro/liviu/fet/doc/en/instructions.html
 Source3: http://www.lalescu.ro/liviu/fet/doc/en/tips.html
-Url: http://www.lalescu.ro/liviu/fet
 
 # Automatically added by buildreq on Mon Jul 11 2011
 # optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel
 BuildRequires: gcc-c++ phonon-devel ImageMagick-tools
+
+Summary(hu.UTF-8):	FET egy nyílt forrású órarend-készítő program
+Summary(pl.UTF-8):	Narzędzie do automatycznego układania planów dla szkół i uczelni
+Summary(ru_RU.UTF-8):	Программа для составления расписаний учебного заведения
 
 %description
 FET is open source free software for automatically scheduling the
@@ -107,6 +110,10 @@ for i in 16 32 48 64 92 128; do
 done
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %qmake_qt4 fet.pro
 %make_build
 
@@ -134,6 +141,10 @@ done
 %_datadir/%name/examples
 
 %changelog
+* Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 5.37.2-alt2
+- E2K: explicit -std=c++11
+- Minor spec cleanup
+
 * Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 5.37.2-alt1
 - Autobuild version bump to 5.37.2
 
