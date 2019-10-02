@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/perl gcc-c++ imake libX11-devel libXt-devel libalsa-deve
 Name:		clanlib
 Summary:	The ClanLib Game SDK series 2.3
 Version:	2.3.7
-Release:	alt1_7
+Release:	alt2_7
 License:	BSD-like
 Group:		System/Libraries
 Source0:	http://www.clanlib.org/download/releases-2.0/ClanLib-%version.tgz
@@ -97,6 +97,10 @@ work for game developers. This package contains the documentation.
 %patch9 -p1
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 export CXXFLAGS="%{optflags} -fno-stack-protector"
 autoreconf -fi
 %configure \
@@ -115,7 +119,7 @@ autoreconf -fi
   --enable-clanVorbis    \
 	--disable-static \
 	--enable-docs
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -136,6 +140,10 @@ rm -rf %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 2.3.7-alt2_7
+- E2K: explicit -std=c++11
+- enable parallel build
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_7
 - fixed build
 
