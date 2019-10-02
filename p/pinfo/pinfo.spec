@@ -1,6 +1,6 @@
 Name: pinfo
-Version: 0.6.10
-Release: alt2
+Version: 0.6.13
+Release: alt1
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -8,15 +8,14 @@ License: GPL
 #Url: http://dione.ids.pl/~pborys/software/pinfo
 #Url: http://pinfo.alioth.debian.org/
 Url: https://github.com/baszoetekouw/pinfo
-Source: %name-%version.tar.gz
-Patch1: pinfo-0.6.10-alt.patch
-Patch2: pinfo-0.6.10-xz.patch
+Source: v%version.tar.gz
+Patch1: pinfo-0.6.10-xz.patch
 
 Requires: url_handler
 
-# Automatically added by buildreq on Wed Jan 17 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-mips libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl python-base xz
-BuildRequires: libncursesw-devel makeinfo
+# Automatically added by buildreq on Wed Oct 02 2019
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python-base sh4 xz
+BuildRequires: libncursesw-devel libreadline-devel makeinfo
 
 %description
 Hypertext info file viewer. User interface similar to lynx.
@@ -24,9 +23,8 @@ It is based on ncurses. It can handle now as well info
 pages as man pages. Regexp searching included.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -41,13 +39,16 @@ mkdir -p %buildroot/{%_sysconfdir,%_bindir,%_mandir/man1}
 ln -s %name %buildroot%_bindir/pman
 
 %files -f %name.lang
-%doc ABOUT-NLS AUTHORS ChangeLog* NEWS README*
+%doc ABOUT-NLS AUTHORS NEWS README*
 %config(noreplace) %_sysconfdir/%{name}rc
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
 
 %changelog
+* Wed Oct 02 2019 Fr. Br. George <george@altlinux.ru> 0.6.13-alt1
+- Autobuild version bump to 0.6.13
+
 * Wed Jan 17 2018 Fr. Br. George <george@altlinux.ru> 0.6.10-alt2
 - Optimizing buildreq
 
