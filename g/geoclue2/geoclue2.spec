@@ -12,7 +12,7 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -198,6 +198,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Wed Oct 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.5-alt1
+- updated to 2.5.5-4-g1a00809
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.3-alt1
 - 2.5.3
 
