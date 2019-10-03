@@ -1,6 +1,6 @@
 Name: samsung-tools
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: Tools for Samsung netbooks
 License: GPLv3+
@@ -10,7 +10,7 @@ Source0: https://launchpad.net/samsung-tools/trunk/2.1/+download/%name-%version.
 
 Patch0: samsung-tools-2.2-alt-systemd-path.patch
 
-BuildArch: noarch
+ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Tue May 08 2012 (-bb)
 # optimized out: python-base
@@ -55,6 +55,9 @@ available).
 %_datadir/%name
 
 %changelog
+* Thu Oct 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3-alt2
+- Added ExclusiveArch tag to limit architectures to %%ix86 and x86_64.
+
 * Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 2.3-alt1
 - 2.3
 
