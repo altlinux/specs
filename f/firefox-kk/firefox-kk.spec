@@ -6,12 +6,12 @@
 
 Name:		firefox-kk
 Version:	69.0
-Release:	alt1
+Release:	alt2
 Summary:	Kazakh (KZ) Language Pack for Firefox
 
 License:	MPL/GPL/LGPL
 Group:		Networking/WWW
-URL:		http://www.mozilla-russia.org/products/firefox/
+URL:		https://addons.mozilla.org/en-US/firefox/addon/kazakh-kz-language-pack/
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 BuildArch:	noarch
 
@@ -40,26 +40,20 @@ mkdir -p -- \
 cp -r -- %cid/* %buildroot/%cid_dir
 
 # Install dictionary
-cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
-	<?xml version="1.0"?>
-	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-	  <Description about="urn:mozilla:install-manifest"
-	               em:id="%cid_dict"
-	               em:name="Kazakh (KZ) Dictionary"
-	               em:version="%version"
-	               em:type="64"
-	               em:unpack="true"
-	               em:creator="Mozilla Russia">
-	    <em:targetApplication>
-	      <Description>
-	        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-	        <em:minVersion>%version</em:minVersion>
-	        <em:maxVersion>%version.*</em:maxVersion>
-	      </Description>
-	    </em:targetApplication>
-	  </Description>
-	</RDF>
+cat > %buildroot/%cid_dict_dir/manifest.json <<-EOF
+	{
+	  "dictionaries": {
+	    "kk": "dictionaries/kk.dic"
+	  },
+	  "version": "%version",
+	  "browser_specific_settings": {
+	    "gecko": {
+	      "id": "%cid_dict"
+	    }
+	  },
+	  "name": "Kazakh (KZ) Dictionary",
+	  "manifest_version": 2
+	}
 EOF
 ln -s %_datadir/myspell/kk_KZ.aff %buildroot/%cid_dict_dir/dictionaries/kk.aff
 ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%cid_dict_dir/dictionaries/kk.dic
@@ -70,6 +64,9 @@ ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%cid_dict_dir/dictionaries/kk.dic
 %cid_dict_dir
 
 %changelog
+* Thu Oct 03 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt2
+- Fix dictionary addon.
+
 * Thu Sep 12 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt1
 - New version (69.0).
 

@@ -4,16 +4,16 @@
 %define cid_dict       uk@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
-Name: firefox-uk
+Name:		firefox-uk
 Version:	69.0
-Release: alt1
+Release:	alt2
 
-Summary: Ukrainian (UA) Language Pack for Firefox
-License: %gpl2plus
-Group: Networking/WWW
+Summary:	Ukrainian (UA) Language Pack for Firefox
+License:	%gpl2plus
+Group:		Networking/WWW
+URL:		https://addons.mozilla.org/en-US/firefox/addon/ukrainian-language-pack/
 
-URL: http://www.mozilla.org.ua
-Source: uk.xpi
+Source:		uk.xpi
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -40,26 +40,20 @@ mkdir -p -- \
 cp -r -- %cid/* %buildroot/%cid_dir
 
 # Install dictionary
-cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
-	<?xml version="1.0"?>
-	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-	  <Description about="urn:mozilla:install-manifest"
-	               em:id="%cid_dict"
-	               em:name="Ukrainian (UA) Dictionary"
-	               em:version="%version"
-	               em:type="64"
-	               em:unpack="true"
-	               em:creator="Mozilla Russia">
-	    <em:targetApplication>
-	      <Description>
-	        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-	        <em:minVersion>%version</em:minVersion>
-	        <em:maxVersion>%version.*</em:maxVersion>
-	      </Description>
-	    </em:targetApplication>
-	  </Description>
-	</RDF>
+cat > %buildroot/%cid_dict_dir/manifest.json <<-EOF
+	{
+	  "dictionaries": {
+	    "uk": "dictionaries/uk.dic"
+	  },
+	  "version": "%version",
+	  "browser_specific_settings": {
+	    "gecko": {
+	      "id": "%cid_dict"
+	    }
+	  },
+	  "name": "Ukrainian (UA) Dictionary",
+	  "manifest_version": 2
+	}
 EOF
 ln -s %_datadir/myspell/uk_UA.aff %buildroot/%cid_dict_dir/dictionaries/uk.aff
 ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
@@ -70,6 +64,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %cid_dict_dir
 
 %changelog
+* Thu Oct 03 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt2
+- Fix dictionary addon.
+
 * Thu Sep 12 2019 Alexey Gladkov <legion@altlinux.ru> 69.0-alt1
 - New version (69.0).
 
