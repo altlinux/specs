@@ -1,7 +1,7 @@
 %define modulename cherrypy
 
 Name: python3-module-%modulename
-Version: 18.2.0
+Version: 18.3.0
 Release: alt1
 Summary: CherryPy is a pythonic, object-oriented web development framework
 License: BSD
@@ -14,9 +14,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch0: python3-module-cherrypy-disable-codecov_button.patch
 Patch1: python3-module-cherrypy-python3-shebang.patch
-Patch2: python3-module-cherrypy-disable-test-nullbytes.patch
 
 Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
+Conflicts: python-module-cherrypy <= 14.2.0-alt1.1
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
@@ -86,7 +86,6 @@ This package contains documentation for CherryPy.
 %setup 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 sed -i "s/f'/'/;s/f\"/\"/" docs/conf.py
 
 %prepare_sphinx3 .
@@ -98,7 +97,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 cp ./CherryPy.egg-info/PKG-INFO .
 
 # TODO - enable documentation 
-#PYTHONPATH=. python3 /usr/bin/sphinx-build-3 -b html -d build/doctrees docs/ build/html
+PYTHONPATH=. python3 /usr/bin/sphinx-build-3 -b html -d build/doctrees docs/ build/html
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -115,13 +114,18 @@ LANG=C.utf-8 %{__python3} -m pytest --ignore=build
 
 %files docs
 # TODO - build documentation
-#doc build/html/*
+%doc build/html/*
 %doc cherrypy/tutorial
 
 %files tests
 %python3_sitelibdir/*/test
 
 %changelog
+* Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 18.3.0-alt1
+- 18.3.0
+- added conflicts with python-module-cherrypy for python-2.7 (closes: #37292)
+- enabled build of the documentation
+
 * Sat Sep 21 2019 Anton Farygin <rider@altlinux.ru> 18.2.0-alt1
 - 18.2.0
 - removed python-2.7 support
