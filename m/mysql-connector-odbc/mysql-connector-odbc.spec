@@ -2,8 +2,8 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 8.0.13
-Release: alt2
+Version: 8.0.15
+Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -71,15 +71,19 @@ install -m 0644 %SOURCE1 odbc.ini
 install -m 0644 %SOURCE2 odbcinst.ini
 sed -e 's#@@lib@@#%{_libdir}#g' -i odbcinst.ini
 
-rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt}
+rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 
 %files
-%doc ChangeLog README.txt LICENSE.txt odbcinst.ini odbc.ini
+%doc ChangeLog README.txt LICENSE.txt odbcinst.ini odbc.ini INFO_BIN INFO_SRC
 %_bindir/myodbc-installer
 %_libdir/libmyodbc*
 %exclude %_prefix/test
 
 %changelog
+* Wed Oct 02 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.15-alt1
+- New version
+  + INFO_BIN & INFO_SRC introduced by upstream to provide build environment info
+
 * Fri Dec 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt2
 - Prevent undesired libssl bundling for i586
 
