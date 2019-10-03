@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20190620
-Release: alt2
+Version: 20190924
+Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -51,13 +51,15 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 %_bindir/*
 %_man1dir/*
 %dir %_datadir/menhir
-%_datadir/menhir/*
 %dir %_libdir/ocaml/menhirLib
 %dir %_libdir/ocaml/menhirSdk
 %_libdir/ocaml/menhirLib/*
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 20190924-alt1
+- 20190924 with builtin standart menhir library
+
 * Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 20190620-alt2
 - removed camlp4 build requires
 
