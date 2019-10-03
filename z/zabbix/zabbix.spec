@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d3bb18bbc4
+%define svnrev		624fb7497b
 
 %def_with pgsql
 %def_enable java
@@ -15,8 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 4.2.6
-Release: alt2
+Version: 4.2.7
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -637,6 +637,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Oct 03 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.7-alt1
+- 4.2.7
+
 * Thu Sep 26 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.6-alt2
 - Add BR /proc
 
