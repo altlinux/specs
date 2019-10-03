@@ -1,18 +1,25 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.33
 %def_enable introspection
+%def_enable gtk_doc
 %def_disable check
 
 Name: gcr
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
 License: LGPLv2+
-Url: https://live.gnome.org/CryptoGlue/
+Url: https://wiki.gnome.org/Projects/GnomeKeyring
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: %name-libs = %version-%release
 Requires: libtasn1-utils
@@ -24,7 +31,7 @@ Conflicts: gnome-keyring < 3.3.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
 
-BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver
+BuildRequires: gnome-common gtk-doc python3 glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -105,7 +112,9 @@ This package contains development documentation for GCR libraries.
 
 %build
 %autoreconf
-%configure --disable-update-mime
+%configure --disable-update-mime \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
+%nil
 %make_build
 
 %install
@@ -150,9 +159,11 @@ xvfb-run %make check
 %_libdir/pkgconfig/gcr-base-3.pc
 %_libdir/pkgconfig/gcr-ui-3.pc
 
+%if_enabled gtk_doc
 %files libs-devel-doc
 %_datadir/gtk-doc/html/gck
 %_datadir/gtk-doc/html/gcr-3
+%endif
 
 %if_enabled introspection
 %files libs-gir
@@ -177,6 +188,9 @@ xvfb-run %make check
 
 
 %changelog
+* Tue Oct 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.33.4-alt1
+- updated to 3.33.4-15-ge060252
+
 * Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
