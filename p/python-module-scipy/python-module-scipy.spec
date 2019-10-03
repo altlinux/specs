@@ -8,12 +8,11 @@ BuildRequires(pre): rpm-build-python
 
 %define numpy_version 1.15.4
 
-%def_disable docs
 %def_with python3
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt4
+Release: alt5
 
 Summary: SciPy is the library of scientific codes
 
@@ -36,18 +35,6 @@ Source: %modname-%version.tar
 %endif
 Source1: site.cfg
 Patch1: fix-unicode-use.patch
-
-#BuildPreReq: python-module-sympy python-module-scipy git
-#BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
-#BuildPreReq: libsuitesparse-devel swig /proc rpm-macros-make
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-Pygments
-#BuildPreReq: python-module-matplotlib
-#BuildPreReq: boost-python-devel
-%if_enabled docs
-#BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
-#BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
-%endif
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx
@@ -91,19 +78,6 @@ SciPy is the library of scientific codes built on top of NumPy.
 
 This package contains development files of SciPy.
 
-%package -n python3-module-%modname-tests
-Summary: Tests and examples for SciPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%modname = %version-%release
-Requires: python3-module-numpy-tests
-%add_python3_req_skip ext_tools inline_tools swig2_ext symeig
-%add_python3_req_skip md5 vtk wxPython
-%add_python3_req_skip pylab
-
-%description -n python3-module-%modname-tests
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains tests and examples for SciPy.
 %endif
 
 %package devel
@@ -117,54 +91,30 @@ SciPy is the library of scientific codes built on top of NumPy.
 
 This package contains development files of SciPy.
 
-%package tests
-Summary: Tests and examples for SciPy
-Group: Development/Python
-Requires: %name = %version-%release
-Requires: python-module-numpy-tests
-%add_python_req_skip ext_tools inline_tools swig2_ext symeig vtk weave
-
-%description tests
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains tests and examples for SciPy.
-
-%if_enabled docs
-%package pickles
-Summary: Pickles for SciPy
-Group: Development/Python
-
-%description pickles
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains pickles for SciPy.
-
-%package doc-html
-Summary: Documentation for SciPy in HTML
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc-html
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains development documentation for SciPy in HTML.
-
-%package doc-pdf
-Summary: Documentation for SciPy in PDF
-Group: Development/Documentation
-
-%description doc-pdf
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains development documentation for SciPy in PDF.
-%endif
-
 %prep
 %setup -n %modname-%version
 %patch1 -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
+
+# Find and comment out Pytest imports, since main package should
+# not require test deps
+grep -zPqsr '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' || exit 1
+grep -zPrl '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' | xargs \
+sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^/# /}'
+
+# not used import
+grep -qs '^from numpy.testing import assert_allclose$' \
+scipy/sparse/linalg/eigen/lobpcg/lobpcg.py || exit 1
+sed -i '/^from numpy\.testing import assert_allclose$/d' \
+scipy/sparse/linalg/eigen/lobpcg/lobpcg.py
+
+# _assert_warns is utilized only in tests
+grep -qsF '_assert_warns = np.testing.assert_warns' \
+scipy/_lib/_numpy_compat.py || exit 1
+sed -i 's/\([ ]*\)\(_assert_warns = np\.testing\.assert_warns\)/\1try:\n\1\1\import numpy.testing\n\1\1\2\n\1\except ImportError:\n\1\1pass/' \
+scipy/_lib/_numpy_compat.py
 
 %if_with python3
 rm -rf ../python3
@@ -173,16 +123,6 @@ sed -i 's|@PYSUFF@|3|' ../python3/site.cfg
 %endif
 
 sed -i 's|@PYSUFF@||' site.cfg
-
-# Sphinx
-%if_enabled docs
-sed -i "s|@TOP@|$PWD|" \
-	doc/source/conf.py
-sed -i 's|@SPHINXREL@|%sphinx_rel|' \
-	doc/source/conf.py
-%prepare_sphinx .
-cp conf.py objects.inv doc/
-%endif
 
 mkdir -p ~/.matplotlib
 cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc \
@@ -250,30 +190,21 @@ done
 popd
 %endif
 
-# docs
-%if_enabled docs
-export PYTHONPATH=%buildroot%python_sitelibdir
-%add_optflags -I%buildroot%_includedir -I%_includedir/suitesparse
-PATH=$PATH:%python_sitelibdir/scikits/statsmodels/docs/sphinxext
-export PATH=$PATH:%python_sitelibdir/scikits/statsmodels/docs
-pushd doc
-%make_ext html pickle
-popd
-
-install -d %buildroot%_docdir/%name
-cp -fR doc/build/html %buildroot%_docdir/%name/
-install -p -m644 LICENSE.txt doc/README.txt THANKS.txt HACKING.rst.txt \
-	%buildroot%_docdir/%name/
-
-# pickles
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/%modname/
-%endif
-
-# tests
-for i in $(find ./ -name tests -type d) \
-	$(find ./ -name examples -type d)
+# don't package tests and tests' data
+for i in $(find %buildroot%python_sitelibdir \
+               -name tests -type d \
+               -o -name 'conftest.*' -type f \
+               -o -name '_testutils.*' -type f \
+               -o -name 'gammainc_data.*' -type f \
+               -o -name '_mptestutils.*' -type f) \
+	 $(find %buildroot%python3_sitelibdir \
+               -name tests -type d \
+               -o -name 'conftest.*' -type f \
+               -o -name '_testutils.*' -type f \
+               -o -name 'gammainc_data.*' -type f \
+               -o -name '_mptestutils.*' -type f)
 do
-	touch $i/__init__.py
+	rm -r "$i"
 done
 
 rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discrete-1.py
@@ -289,20 +220,6 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 
 %files -f %name.lang
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%modname/*/tests
-%exclude %python_sitelibdir/%modname/*/*/tests
-%exclude %python_sitelibdir/%modname/*/*/*/tests
-%exclude %python_sitelibdir/%modname/*/*/*/*/tests
-%if_enabled docs
-%exclude %python_sitelibdir/%modname/pickle
-%endif
-
-%files tests
-%python_sitelibdir/%modname/*/tests
-%python_sitelibdir/%modname/*/*/tests
-%python_sitelibdir/%modname/*/*/*/tests
-%python_sitelibdir/%modname/*/*/*/*/tests
-
 %files devel
 %_includedir/*
 %if_with python3
@@ -312,38 +229,15 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %if_with python3
 %files -n python3-module-%modname -f %name.lang
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/%modname/*/examples
-%exclude %python3_sitelibdir/%modname/*/tests
-%exclude %python3_sitelibdir/%modname/*/*/tests
-%exclude %python3_sitelibdir/%modname/*/*/*/tests
-%exclude %python3_sitelibdir/%modname/*/*/*/*/tests
-
-%files -n python3-module-%modname-tests
-#python3_sitelibdir/%modname/*/examples
-%python3_sitelibdir/%modname/*/tests
-%python3_sitelibdir/%modname/*/*/tests
-%python3_sitelibdir/%modname/*/*/*/tests
-%python3_sitelibdir/%modname/*/*/*/*/tests
 
 %files -n python3-module-%modname-devel
 %_includedir/%modname-py3
 %endif
 
-%if_enabled docs
-%files doc-html
-#dir %_docdir/%name
-#_docdir/%name/html
-%_docdir/%name
-
-#files doc-pdf
-#dir %_docdir/%name
-#_docdir/%name/pdf
-
-%files pickles
-%python_sitelibdir/%modname/pickle
-%endif
-
 %changelog
+* Wed Oct 02 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt5
+- Dropped dependency on tests packages.
+
 * Wed Jul 17 2019 Dmitry Terekhin <jqt4@altlinux.org> 1.2.0-alt4
 - Removed dependency from python-module-numdifftools
 
