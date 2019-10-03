@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -9,6 +9,8 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 
 Source0: %name-%version.tar
+
+Patch1: alt-e2k-workaround-for-missing-copy-elision.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
@@ -43,12 +45,12 @@ Requires: cmake
 %package -n python-module-%name
 Summary: %summary
 Group: Development/Python
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %package -n python3-module-%name
 Summary: %summary
 Group: Development/Python3
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %define base_description \
 pybind11 is a lightweight header-only library that exposes C++ types in Python and vice versa, mainly to create Python bindings of existing C++ code. Tutorial and reference documentation is provided at http://pybind11.readthedocs.org/en/master
@@ -74,6 +76,10 @@ This package contains the Python 3 files.
 %prep
 %setup
 
+%ifarch %e2k
+%patch1 -p1
+%endif
+
 %build
 for py in python python3; do
     mkdir $py
@@ -94,6 +100,9 @@ PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdi
 rm -rf %buildroot%_includedir/python*
 
 %check
+%ifarch %e2k
+export SKIP_E2K=1
+%endif
 make -C python/BUILD/tests check -j$NPROCS
 make -C python3/BUILD/tests check -j$NPROCS
 
@@ -111,6 +120,10 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Oct 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt2
+- Added hack for build on e2k.
+- Introduced strong inter-package dependencies.
+
 * Tue Oct 01 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.4.2-alt1
 - New version
 
