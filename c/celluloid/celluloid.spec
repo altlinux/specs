@@ -1,28 +1,32 @@
-%define xdg_name io.github.GnomeMpv
+%define xdg_name io.github.celluloid_player.Celluloid
 
-Name: gnome-mpv
-Version: 0.16
+Name: celluloid
+Version: 0.17
 Release: alt1
 
-Summary: GNOME MPV is a simple GTK+ frontend for mpv
+Summary: Celluloid (formerly GNOME MPV) is a simple GTK+ frontend for mpv.
 License: GPLv3
 Group: Video
 
-Url: https://github.com/gnome-mpv/gnome-mpv.git
+Url: https://github.com/celluloid-player/celluloid
 Source: %name-%version.tar
-Packager: Konstantin Artyushkin <akv@altlinux.org>
+Packager: Vladimir Didenko <cow@altlinux.org>
+
+Provides: gnome-mpv = %version-%release
+Obsoletes: gnome-mpv <= 0.16
 
 BuildRequires: libappstream-glib-devel
 BuildRequires: meson
-BuildRequires: python-devel
+BuildRequires: python3-dev
 BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libmpv-devel
 BuildRequires: libepoxy-devel
 
 %description
-GNOME MPV interacts with mpv via the client API exported by libmpv,
-allowing access to mpv's powerful playback capabilities.
+Celluloid (formerly GNOME MPV) is a simple GTK+ frontend for mpv. Celluloid
+interacts with mpv via the client API exported by libmpv, allowing access
+to mpv's powerful playback capabilities.
 
 %prep
 %setup
@@ -47,6 +51,10 @@ allowing access to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Oct 3 2019 Vladimir Didenko <cow@altlinux.org> 0.17-alt1
+- new version
+- package is renamed following upstream
+
 * Mon Jan 28 2019 Vladimir Didenko <cow@altlinux.org> 0.16-alt1
 - new version
 
