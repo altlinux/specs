@@ -1,9 +1,9 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-#define gitrev .git569bbe7
+#define gitrev .gitcddfd12
 
 Name: %realname
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Epoch:3
 
@@ -34,11 +34,12 @@ Source12: icewm-old-changelog.bz2
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Thu Aug 29 2019
-BuildRequires: asciidoc cmake gcc-c++ libSM-devel libXcomposite-devel
-BuildRequires: libXdamage-devel libXft-devel libXinerama-devel libXrandr-devel
-BuildRequires: libalsa-devel librsvg-devel libsndfile-devel perl-Pod-Usage
-BuildRequires: python-modules-compiler python-modules-encodings time
+
+# Automatically added by buildreq on Thu Oct 03 2019
+BuildRequires: asciidoctor cmake gcc-c++ gem-did-you-mean libSM-devel
+BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel
+BuildRequires: libXinerama-devel libXpm-devel libXrandr-devel libalsa-devel
+BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Usage
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -55,10 +56,18 @@ Recommends: iftop, mutt
 %patch0 -p1
 
 %build
-%cmake	-DCFGDIR=%_sysconfdir/X11/%realname -DPREFIX=%_prefix \
-	-DLIBDIR=%_x11x11dir/%realname -DDOCDIR=%_datadir/doc/%name-%version \
-        -DCONFIG_GUIEVENTS=on  -DICESOUND="ALSA,OSS" -DCONFIG_LIBRSVG=on \
-        -DCONFIG_XPM=off -DCONFIG_LIBPNG=off -DCONFIG_GDK_PIXBUF_XLIB=on
+sed -i 's/ IceWM.jpg//' lib/CMakeLists.txt
+%cmake	-DPREFIX=%_prefix \
+	-DCFGDIR=%_sysconfdir/X11/%realname \
+	-DLIBDIR=%_x11x11dir/%realname \
+	-DDOCDIR=%_datadir/doc/%name-%version \
+	-DCONFIG_GDK_PIXBUF_XLIB=on \
+	-DCONFIG_XPM=on \
+	-DCONFIG_LIBPNG=off \
+	-DCONFIG_LIBRSVG=on \
+	-DCONFIG_GUIEVENTS=on \
+	-DICESOUND="ALSA,OSS" \
+	-DXTERMCMD=xvt
 pushd BUILD
 %make_build
 popd
@@ -100,17 +109,7 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_sysconfdir/X11/wmsession.d/*
 %_bindir/*
 %dir %_x11x11dir/%realname
-%_x11x11dir/%realname/icons
-%_x11x11dir/%realname/ledclock
-%_x11x11dir/%realname/mailbox
-%_x11x11dir/%realname/taskbar
-%_x11x11dir/%realname/themes
-%_x11x11dir/%realname/keys
-%_x11x11dir/%realname/menu
-%_x11x11dir/%realname/preferences
-%_x11x11dir/%realname/programs
-%_x11x11dir/%realname/toolbar
-%_x11x11dir/%realname/winoptions
+%_x11x11dir/%realname/*
 %_niconsdir/*
 %_miconsdir/*
 %_liconsdir/*
@@ -122,6 +121,11 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Thu Oct 03 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.2-alt1
+- 1.6.2
+- asciidoc replaced to asciidoctor
+- buildreq
+
 * Thu Aug 29 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.1-alt1
 - 1.6.1 (ALT #37127)
 - buildreq
