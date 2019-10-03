@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 3.6.0
-Release: alt3
+Release: alt4
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -25,6 +25,7 @@ BuildRequires:  %_bindir/msgmerge
 %if 0%{?with_check}
 BuildRequires:  python3-module-Arcus = %version
 BuildRequires:  python3-module-numpy
+BuildRequires:  python3-module-numpy-testing
 BuildRequires:  python3-module-scipy
 BuildRequires:  python3-module-PyQt5
 BuildRequires:  python3-module-pytest
@@ -96,6 +97,9 @@ python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %doc html LICENSE
 
 %changelog
+* Thu Oct 03 2019 Stanislav Levin <slev@altlinux.org> 3.6.0-alt4
+- Fixed testing.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
