@@ -1,6 +1,10 @@
+%ifarch %ix86
+%define optflags_debug -g1
+%endif
+
 Name:		dero
 Version:	0.11.1.0
-Release:	alt1.2
+Release:	alt1.3
 Summary:	Dero Wallet
 Url:		http://dero.io
 Group:		Office
@@ -27,6 +31,7 @@ introducing smart contracts on to our blockchain.
 %build
 mkdir ./build && cd ./build
 cmake 			../. \
+			-DARCH=default \
 			-DCMAKE_CXX_FLAGS='%optflags' \
 			-DCMAKE_INSTALL_PREFIX=/usr
 %make_build
@@ -40,6 +45,9 @@ make DESTDIR=%buildroot install
 %_bindir/*
 
 %changelog
+* Thu Oct 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.1.0-alt1.3
+- Fixed build on ppc64le and %%ix86.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.1.0-alt1.2
 - NMU: Rebuild with new openssl 1.1.0.
 
