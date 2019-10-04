@@ -2,7 +2,7 @@
 
 Name: merkaartor
 Version: 0.18.3
-Release: alt3
+Release: alt4
 
 Summary: an OpenStreetMap editor
 License: LGPL
@@ -32,6 +32,7 @@ editing environment for free geographical data.
 rm -rf 3rdparty
 
 %build
+%add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %add_optflags -I%_includedir/qt5/QtSolutions
 
 #lupdate-qt5 Merkaartor.pro
@@ -58,6 +59,9 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.18.3-alt4
+- Fix build with libproj 6.2.0 (use DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+
 * Fri Mar 29 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.3-alt3
 - Fixed build with new version of qt5-webkit.
 - Rebuilt with system libraries instead of bundled ones.

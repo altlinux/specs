@@ -1,6 +1,6 @@
 Name: spatialite-gui
 Version: 1.7.1
-Release: alt2
+Release: alt3
 Summary: GUI to manage Spatialite databases
 
 Group: Databases
@@ -60,6 +60,10 @@ desktop-file-install                               \
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.7.1-alt3
+- Rebuild with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+- Fix possible overfull in sprintf
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.7.1-alt2
 - Rebuild with libproj 5.2.0
 

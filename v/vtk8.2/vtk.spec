@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -299,7 +299,7 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DVTK_USE_SYSTEM_ZLIB=ON \
 	-DVTK_USE_SYSTEM_ZOPE=ON \
 	-DVTK_USE_SYSTEM_LIBRARIES=ON \
-	-DVTK_USE_SYSTEM_LIBPROJ4=OFF \
+	-DVTK_USE_SYSTEM_LIBPROJ=OFF \
 	-DVTK_USE_GL2PS=ON \
 	-DVTK_USE_PARALLEL=ON \
 	-DVTK_EXTRA_COMPILER_WARNINGS=ON \
@@ -458,6 +458,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Mon Oct 07 2019 Vladislav Zavjalov <slazav@altlinux.org> 8.2.0-alt3
+- Use internal libproj 4.4 instead of libproj 6.2.0
+
 * Mon Jul 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt2
 - Rebuilt with python-3.
 
