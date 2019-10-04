@@ -1,16 +1,14 @@
 Name: hunalign
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: The hunalign sentence aligner
-
-Group: Text tools
 License: LGPL
+Group: Text tools
+
 Url: http://mokk.bme.hu/resources/hunalign/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: ftp://ftp.mokk.bme.hu/Hunglish/src/hunalign/latest/%name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Mon Apr 16 2012
 # optimized out: libstdc++-devel
@@ -47,6 +45,9 @@ This package contain data files for %name
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's,-O9,-O%_optlevel,' src/hunalign/Makefile
+%endif
 
 %build
 cd src/hunalign
@@ -65,6 +66,9 @@ cp -a data/ %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Fri Oct 04 2019 Michael Shigorin <mike@altlinux.org> 1.2-alt2
+- E2K: avoid superflous optimization level
+
 * Sun Oct 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
 - new version 1.2 (with rpmrb script)
 
