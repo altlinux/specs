@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	alt2_%{rel}
+Release:	alt3_%{rel}
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
@@ -63,6 +63,10 @@ Development files for Pure Data.
 sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
 
+%ifarch %e2k
+sed -i 's,-O6,-O%_optlevel,' src/configure*
+%endif
+
 %build
 pushd src
 autoconf
@@ -105,6 +109,9 @@ install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 
 %changelog
+* Fri Oct 04 2019 Michael Shigorin <mike@altlinux.org> 0.42.6-alt3_10
+- E2K: avoid superfluous optimization level
+
 * Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 0.42.6-alt2_10
 - to Sisyphus as alibaubio 0.4.9 dep
 
