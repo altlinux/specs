@@ -1,6 +1,6 @@
 Name: nvclock
 Version: 0.8b4
-Release: alt5
+Release: alt5.qa1
 
 Summary: An overclocking tool for NVIDIA cards
 License: GPL
@@ -13,6 +13,8 @@ Patch0: nvclock-0.8b-alt-makefile.patch
 Patch1: nvclock-0.8b-alt-DSO.patch
 Patch2: %{name}0.8b4-makefile.patch
 Packager: Vyacheslav Dikonov <slava@altlinux.ru>
+
+ExclusiveArch: %ix86 x86_64
 
 Requires: NVIDIA_GLX
 BuildRequires: fontconfig freetype2 gcc-c++ glib2-devel libatk-devel libgtk+2-devel libpango-devel libqt3-devel libstdc++-devel pkgconfig
@@ -148,6 +150,9 @@ rm -rf %_docdir/%name/
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Fri Oct 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8b4-alt5.qa1
+- Added ExclusiveArch tag to limit architectures to %%ix86 and x86_64.
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.8b4-alt5
 - 0.8b4 rebuilt with gcc5-built qt3
 - added mageia patch
