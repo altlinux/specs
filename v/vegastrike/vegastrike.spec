@@ -7,7 +7,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt7_35.r1
+Release:        alt8_35.r1
 Summary:        3D OpenGL spaceflight simulator
 License:        GPLv2+
 URL:            http://vegastrike.sourceforge.net/
@@ -47,6 +47,7 @@ Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
 Patch35: vegastrike-0.5.1-alt-flags.patch
+Patch36: vegastrike-0.5.1-alt-e2k.patch
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim that allows a player to
@@ -82,6 +83,9 @@ rm objconv/mesher/expat.h
 %patch33 -p2
 %patch34 -p1
 %patch35 -p2
+%ifarch %e2k
+%patch36 -p1
+%endif
 
 
 %build
@@ -132,6 +136,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.5.1-alt8_35.r1
+- e2k build
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt7_35.r1
 - aarch64 build
 
