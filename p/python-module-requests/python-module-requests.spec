@@ -4,7 +4,7 @@
 %def_disable check
 
 Name:           python-module-requests
-Version:        2.21.0
+Version:        2.22.0
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
@@ -104,6 +104,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 05 2019 Anton Farygin <rider@altlinux.ru> 2.22.0-alt1
+- 2.22.0
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2.21.0-alt1
 - 2.21.0
 
