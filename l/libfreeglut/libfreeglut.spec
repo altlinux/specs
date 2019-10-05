@@ -9,7 +9,7 @@
 %define glut_release alt3
 
 Name: lib%_name
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
@@ -23,7 +23,6 @@ Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
 # VCS: https://github.com/dcnieho/FreeGLUT.git
 Source: %_name-%version.tar
 %endif
-Patch: freeglut-3.0.0-alt-fix_cmake_dir.patch
 Patch1: libfreeglut-alt-fix-visibility-hidden.patch
 Patch2: libfreeglut-alt-enable-visibility-hidden.patch
 
@@ -70,7 +69,6 @@ license.
 
 %prep
 %setup -n %_name-%version
-%patch -b .cmake
 %patch1 -p3
 %patch2 -p3
 
@@ -121,6 +119,9 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 - enabled wayland support
