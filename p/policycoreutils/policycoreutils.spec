@@ -6,7 +6,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 2.9
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -114,7 +114,6 @@ develop policy in an SELinux environment.
 Summary: SELinux configuration GUI
 Group: System/Base
 Requires: policycoreutils = %EVR
-Requires: selinux-policy
 
 %description gui
 system-config-selinux is a utility for managing the SELinux environment.
@@ -410,6 +409,10 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sat Oct 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.9-alt3
+- NMU.
+- policycoreutils-gui: removed requirement on selinux-policy (closes: #35687).
+
 * Tue Apr 30 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt2
 - Updated man pages translation by Olesya Gerasimenko.
 
