@@ -1,9 +1,11 @@
 Name: Transcend
 Version: 0.3
-Release: alt4.1
+Release: alt5
+
 Summary: Transcend can best be described as retro-style, abstract, 2D shooter
 License: GPL
 Group: Games/Arcade
+
 Url: http://transcend.sourceforge.net/
 Packager: Fr. Br. George <george@altlinux.ru>
 Source0: %{name}_%{version}_UnixSource.tar.gz
@@ -16,12 +18,25 @@ BuildRequires: gcc-c++ libXi-devel libXmu-devel libfreeglut-devel
 BuildRequires: desktop-file-utils
 
 %description
-Transcend can best be described as retro-style, abstract, 2D shooter. The graphics are geometrical, and the pace is sometimes frenzied.
+Transcend can best be described as retro-style, abstract, 2D shooter.
+The graphics are geometrical, and the pace is sometimes frenzied.
 
-Two features set Transcend apart from other games. First, its dynamic graphical engine, which can smoothly morph from one complex shape to another, produces striking displays. Combining these dynamic shapes with subtle randomizations makes each play through a Transcend level visually different from the last. The second novel feature is Transcend's musical power-up system. As you play through a level, you are simultaneously assembling an abstract visual collage and arranging a unique piece of music. Transcend merges video games with pure art - it can be viewed either as a game or as a multimedia sculpture.
+Two features set Transcend apart from other games. First, its dynamic
+graphical engine, which can smoothly morph from one complex shape to
+another, produces striking displays. Combining these dynamic shapes with
+subtle randomizations makes each play through a Transcend level visually
+different from the last. The second novel feature is Transcend's musical
+power-up system. As you play through a level, you are simultaneously
+assembling an abstract visual collage and arranging a unique piece of
+music. Transcend merges video games with pure art - it can be viewed
+either as a game or as a multimedia sculpture.
 
 %prep
-%setup -q -n %{name}_%{version}_UnixSource
+%setup -n %{name}_%{version}_UnixSource
+cp -at Transcend/portaudio/ -- /usr/share/gnu-config/config.{guess,sub}
+%ifarch %e2k
+sed -i 's,-O9,-O%_optlevel,' Transcend/Makefile.common
+%endif
 
 %build
 mkdir -p Transcend/portaudio/lib
@@ -59,7 +74,7 @@ install -dm 755 %buildroot/%_datadir/applications
 cat > %name.desktop << EOF
 [Desktop Entry]
 Type=Application
-Comment=Cultivation is a game about the interactions within a gardening community
+Comment=Transcend is retro-style abstract 2D shooter
 Terminal=false
 Exec=%name
 Icon=%name
@@ -78,7 +93,15 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %_datadir/applications/*.desktop
 %_datadir/pixmaps/*.png
 
+# TODO: build with system portaudio
+
 %changelog
+* Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.3-alt5
+- Fixed build on newer arches
+- Fixed desktop file
+- Spec cleanup
+- E2K: avoid superfluous optimization level
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4.1
 - Fixed build
 
