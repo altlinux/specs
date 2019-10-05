@@ -1,23 +1,20 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.29.0
+Version: 3.30.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
 URL: http://www.sqlite.org/
 
-Requires: lib%name = %version-%release
-
 Source0: sqlite-%version.tar
 
 Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
-Patch4: 0004-DEBIAN-fix-division-by-zero-in-the-query-planner.patch
-Patch5: 0005-ALT-tcl.patch
-Patch6: 0006-ALT-build-dependencies.patch
+Patch4: 0004-ALT-tcl.patch
+Patch5: 0005-ALT-build-dependencies.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -63,12 +60,13 @@ SQLite is a C library that implements an SQL database engine.
 Programs that link with the SQLite library can have SQL database
 access without running a separate RDBMS process.
 
-%package tcl
+%package -n tcl-sqlite3
 Summary: An Embeddable SQL Database Engine (TCL bindings)
 Group: Development/Tcl
-Requires: lib%name = %version-%release
+Provides: sqlite3-tcl
+Obsoletes: sqlite3-tcl
 
-%description tcl
+%description -n tcl-sqlite3
 SQLite is a C library that implements an SQL database engine.
 Programs that link with the SQLite library can have SQL database
 access without running a separate RDBMS process.
@@ -101,12 +99,7 @@ embedded controllers.
 
 %prep
 %setup -q -n sqlite-%version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
+%autopatch -p2
 
 %build
 export TCLLIBDIR=%_tcllibdir
@@ -118,7 +111,9 @@ export CFLAGS="%optflags \
 	-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
 	-DSQLITE_ENABLE_DESERIALIZE=1 \
 	-DSQLITE_ENABLE_FTS3=1 \
+	-DSQLITE_ENABLE_FTS5=1 \
 	-DSQLITE_ENABLE_JSON1=1 \
+	-DSQLITE_ENABLE_RTREE=1 \
 	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
 	-DSQLITE_SECURE_DELETE=1 \
 	-fno-strict-aliasing "
@@ -130,9 +125,12 @@ autoreconf -i
 %configure \
 	%{subst_enable static} \
 	--disable-amalgamation \
+	--enable-fst3 \
 	--enable-fts5 \
+	--enable-json1 \
 	--enable-load-extension \
 	--enable-readline \
+	--enable-rtree \
 	--enable-threadsafe \
 	#
 
@@ -178,7 +176,7 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_libdir/lib%name.a
 %endif # static
 
-%files tcl
+%files -n tcl-sqlite3
 %_tcllibdir/libtcl%name.so*
 %_tcllibdir/sqlite3
 
@@ -192,6 +190,11 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sat Oct 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.0-alt1
+- 3.30.0.
+- Enabled R*Tree module.
+- Renamed sqlite3-tcl to tcl-sqlite3.
+
 * Tue Sep 03 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.29.0-alt1
 - 3.29.0.
 - Fixed loading of sqlite3 Tcl extension (pointed nbr@).
