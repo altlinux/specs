@@ -9,7 +9,7 @@
 
 Name: courier-authlib
 Version: 0.66.4
-Release: alt0.3%rev
+Release: alt0.3.1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL
 Group: System/Libraries
@@ -31,7 +31,7 @@ Patch3: %name-0.59.1-alt-addlock.patch
 
 # Automatically added by buildreq on Mon May 23 2005
 BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel
-BuildRequires: libpam-devel libpq-devel libstdc++-devel postgresql-devel zlib-devel expect
+BuildRequires: libpam-devel libstdc++-devel postgresql-devel zlib-devel expect
 BuildRequires: libsqlite3-devel courier-unicode-devel libidn-devel
 
 %add_findprov_lib_path %_libdir/%name
@@ -360,6 +360,9 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Sat Oct 05 2019 Alexei Takaseev <taf@altlinux.org> 0.66.4-alt0.3.1
+- Remove unneeded BuildRequires libpq-devel
+
 * Mon Jan 09 2017 L.A. Kostis <lakostis@altlinux.ru> 0.66.4-alt0.3
 - .spec: cleanups:
   + fixed unowned dirs, added *config to -devel.
