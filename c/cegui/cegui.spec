@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake glib2-devel 
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt3_14
+Release:        alt5_14
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
@@ -15,7 +15,9 @@ Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.ta
 Patch0:         cegui-0.8.4-lua53.patch
 
 BuildRequires:  gcc-c++
+%ifnarch %e2k
 BuildRequires:  libdevil-devel
+%endif
 BuildRequires:  libfreeimage-devel
 BuildRequires:  libexpat-devel
 BuildRequires:  libfreetype-devel > 2.0.0
@@ -55,7 +57,9 @@ games, not building GUI sub-systems!
 Group: Development/Other
 Summary:        Development files for cegui
 Requires:       %{name} = %{version}-%{release}
+%ifnarch %e2k
 Requires:       %{name}-DevIL-imagecodec = %{version}-%{release}
+%endif
 Requires:       %{name}-freeimage-imagecodec = %{version}-%{release}
 Requires:       %{name}-irrlicht-renderer = %{version}-%{release}
 Requires:       %{name}-ogre-renderer = %{version}-%{release}
@@ -246,8 +250,10 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %files null-renderer
 %{_libdir}/libCEGUINullRenderer-0.so.*
 
+%ifnarch %e2k
 %files DevIL-imagecodec
 %{_libdir}/cegui-0.8/libCEGUIDevILImageCodec.so
+%endif
 
 %files freeimage-imagecodec
 %{_libdir}/cegui-0.8/libCEGUIFreeImageImageCodec.so
@@ -259,6 +265,12 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.8.7-alt5_14
+- E2K: fix deps without devil
+
+* Fri Oct 04 2019 Michael Shigorin <mike@altlinux.org> 0.8.7-alt4_14
+- E2K: fix build without devil
+
 * Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt3_14
 - rebuild with new ogre
 
