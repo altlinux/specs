@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
@@ -19,10 +19,6 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(gssapi)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(requests)
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(gssapi)
 BuildRequires: python3(mock)
 BuildRequires: python3(requests)
@@ -54,21 +50,11 @@ Group: Development/Python3
 %setup
 %patch -p1
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 cat > tox.ini <<EOF
@@ -77,18 +63,17 @@ deps = -rrequirements.txt
 commands = {envpython} -m pytest {posargs:.}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
-
-%files
-%doc AUTHORS LICENSE *.rst
-%python_sitelibdir/*
 
 %files -n python3-module-%mname
 %doc AUTHORS LICENSE *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 05 2019 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
+- removed python-2.7 support
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.1 -> 1.1.0.
 
