@@ -1,6 +1,6 @@
 Name:     jitterdebugger
 Version:  0.3.0.53.g3a24505
-Release:  alt1
+Release:  alt2
 
 Summary:  Real time response messaurement tool
 License:  MIT
@@ -10,11 +10,7 @@ Url:      https://github.com/igaw/jitterdebugger
 Source:   %name-%version.tar
 BuildRequires: rpm-build-python3
 
-# No HDF5 support for ALT since library is too old.
-# https://support.hdfgroup.org/HDF5/doc/HL/RM_H5PT.html#H5PTcreate
-# error: jd_samples_hdf5.c:93: undefined reference to `H5PTcreate'
-# BuildRequires: libhdf5-devel >= 1.8.17
-# buildRequires: /usr/bin/h5cc
+BuildRequires: libhdf5-devel /usr/bin/h5cc
 
 %description
 jitterdebugger measures wake up latencies. jitterdebugger starts a thread on
@@ -52,5 +48,8 @@ install -D man/jittersamples.1  %buildroot/%_man1dir/jittersamples.1
 %_man1dir/*.1*
 
 %changelog
+* Sun Oct 06 2019 Vitaly Chikunov <vt@altlinux.org> 0.3.0.53.g3a24505-alt2
+- Build with HDF5 (hack to use older API).
+
 * Sun Oct 06 2019 Vitaly Chikunov <vt@altlinux.org> 0.3.0.53.g3a24505-alt1
 - Initial import of 0.3-53-g3a24505 (Without HDF5 support).
