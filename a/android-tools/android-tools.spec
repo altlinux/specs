@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 8.1.0
-Release: alt1.r23
+Release: alt2.r23
 
 Summary: Android Debug CLI tools
 License: APL
@@ -51,6 +51,8 @@ Patch200: alt-libbacktrace-fix-GetErrorString-return.patch
 Patch201: alt-make-ext4fs-fix-fs_config-include.patch
 Patch202: alt-libunwind-fix-ppc64le-build.patch
 #Patch20x: android-tools-5.1.1-boehm-use-stdatomic.patch
+
+Requires: udev-android
 
 BuildRequires: gcc-c++
 BuildRequires: p7zip
@@ -285,6 +287,9 @@ done
 %aprefix
 
 %changelog
+* Sun Oct 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 8.1.0-alt2.r23
+- udev-android added as a requirement (closes #37284)
+
 * Tue Aug 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 8.1.0-alt1.r23
 - updated to 8.1.0_r23
 
