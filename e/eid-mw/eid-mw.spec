@@ -1,4 +1,4 @@
-%define mainline_ver 4.4.13
+%define mainline_ver 4.4.23
 
 Name: eid-mw
 Version: %mainline_ver
@@ -191,6 +191,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sun Oct 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.23-alt1
+- updated to version 4.4.23
+
 * Sun Dec 16 2018 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.13-alt1
 - updated to version 4.4.13
 - switched to webextension firefox addon
