@@ -5,7 +5,7 @@
 
 Name: apache2-%modname
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: A GSSAPI Authentication module for Apache2
 Group: System/Servers
@@ -33,7 +33,7 @@ BuildRequires: openssl
 BuildRequires: apache2-httpd-prefork
 BuildRequires: apache2-mod_cache_disk
 BuildRequires: apache2-suexec
-BuildRequires: python-module-requests-gssapi
+BuildRequires: python3-module-requests-gssapi
 %endif
 
 Provides: %modname = %EVR
@@ -50,6 +50,7 @@ the SPNEGO based HTTP Authentication protocol defined in RFC4559.
 %patch -p1
 
 %build
+sed -si 's,^\(#!.* \)\(python\)$,\1python3,' tests/*.py
 %autoreconf
 %configure
 %make_build
@@ -69,6 +70,9 @@ echo "LoadModule auth_gssapi_module modules/mod_auth_gssapi.so" > %buildroot%apa
 %config(noreplace) %apache2_mods_available/auth_gssapi.load
 
 %changelog
+* Sun Oct 6 2019 Anton Farygin <rider@altlinux.org> 1.6.1-alt3
+- build with python3
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.6.1-alt2
 - Build with new openssl1.1.
 
