@@ -1,12 +1,13 @@
 Name: openfortivpn
 Version: 1.7.1
-Release: alt1.1
-Summary: Client for PPP+SSL VPN tunnel services
+Release: alt1.2
 
-Group: System/Configuration/Networking
+Summary: Client for PPP+SSL VPN tunnel services
 License: GPLv3+
+Group: System/Configuration/Networking
+
 Url: https://github.com/adrienverge/openfortivpn
-Source0: https://github.com/adrienverge/openfortivpn/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: https://github.com/adrienverge/openfortivpn/archive/v%version.tar.gz#/%name-%version.tar.gz
 
 BuildRequires: libssl-devel
 Requires: ppp
@@ -19,6 +20,10 @@ It is compatible with Fortinet VPNs.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.23.20 does -pedantic as documented for gcc either
+sed -i 's,--pedantic,-pedantic,' Makefile.am
+%endif
 
 %build
 %autoreconf
@@ -36,6 +41,9 @@ It is compatible with Fortinet VPNs.
 %doc README.md LICENSE
 
 %changelog
+* Sun Oct 06 2019 Michael Shigorin <mike@altlinux.org> 1.7.1-alt1.2
+- E2K: avoid lcc-unsupported option.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
