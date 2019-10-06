@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # -*- coding: utf-8 -*-
-%define version    18.0.0
+%define version    19.0.0
 %define release    alt1
 
 %define source_version %version
@@ -13,7 +13,7 @@
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
 Name: %packagename
-Version: 18.0.0
+Version: 19.0.0
 Release: alt1
 Source0: %{source_name}-%{version}.tar.gz
 License: LGPL
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 06 2019 Anton Farygin <rider@altlinux.ru> 19.0.0-alt1
+- 19.0.0
+
 * Mon Jul 30 2018 Vladimir Didenko <cow@altlinux.org> 18.0.0-alt1
 - Version 18.0.0 (closes: #35155)
 
