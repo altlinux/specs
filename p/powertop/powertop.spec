@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.10
+Version: 2.11
 Release: alt1
 Serial: 1
 
@@ -57,6 +57,7 @@ touch %cachedir/saved_{parameters,results}.powertop
 
 %files -f %name.lang
 %_sbindir/*
+%_datadir/bash-completion
 %_man8dir/*
 %doc README
 %dir %cachedir
@@ -65,6 +66,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Mon Oct 07 2019 Anton Farygin <rider@altlinux.ru> 1:2.11-alt1
+- 2.11
+
 * Sat Jan 19 2019 Anton Farygin <rider@altlinux.ru> 1:2.10-alt1
 - 2.10
 
