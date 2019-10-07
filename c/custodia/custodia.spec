@@ -3,7 +3,7 @@
 
 Name: custodia
 Version: 0.6.0
-Release: alt4
+Release: alt5
 
 Summary: A tool for managing secrets
 License: %gpl3plus
@@ -46,6 +46,9 @@ authorization, storage and API plugins are combined and exposed.
 %package -n python3-module-%name
 Summary: Subpackage with python3 custodia modules
 Group: Development/Python
+# to break circular dependency, since IPA directly requires python3-custodia
+%filter_from_requires /^python3\(\.[[:digit:]]*\)\?(ipalib\(\..*\)\?)/d
+%filter_from_requires /^python3\(\.[[:digit:]]*\)\?(ipaclient\(\..*\)\?)/d
 # module 'requests' doesn't contain 'urllib3', but imports within
 %add_python3_req_skip requests.packages.urllib3.connection
 %add_python3_req_skip requests.packages.urllib3.connectionpool
@@ -137,6 +140,10 @@ fi
 %_bindir/custodia-cli
 
 %changelog
+* Mon Oct 07 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt5
+- Fixed build against urllib3 1.25+.
+- Broke circular dependency on ipaclient.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.6.0-alt4
 - Fixed testing against Pytest 5.
 
