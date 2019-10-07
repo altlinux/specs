@@ -11,7 +11,7 @@
 %global py3_libbuilddir %(python3 -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
 
 Name: python-module-%oname
-Version: 5.2.0
+Version: 6.2.0
 Release: alt1
 
 Summary: Python image processing library
@@ -214,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt1
+- new version 6.2.0 (with rpmrb script)
+
 * Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
 - new version 5.2.0 (with rpmrb script) with check enabled
 - drop PIL.pth, it was an illusion to support import Image
