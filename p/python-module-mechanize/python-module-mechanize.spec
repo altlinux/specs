@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Stateful programmatic web browsing
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
+- new version 0.4.3 (with rpmrb script)
+
 * Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - new version (0.4.2) with rpmgs script
 
