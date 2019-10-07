@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20190618
-%define orig_rev .1
+%define orig_timestamp 20190918
+%define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 10
+Version: 11
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,24 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Oct 07 2019 L.A. Kostis <lakostis@altlinux.ru> 2:11-alt1.20190918
+- Sync with Debian 3.20190918.1:
+  + New upstream microcode datafile 20190918
+  + SECURITY UPDATE
+    *Might* contain mitigations for INTEL-SA-00247 (RAMBleed), given
+    the set of processors being updated.
+  + Updated Microcodes:
+    sig 0x000306d4, pf_mask 0xc0, 2019-06-13, rev 0x002e, size 19456
+    sig 0x000306f4, pf_mask 0x80, 2019-06-17, rev 0x0016, size 18432
+    sig 0x00040671, pf_mask 0x22, 2019-06-13, rev 0x0021, size 14336
+    sig 0x000406f1, pf_mask 0xef, 2019-06-18, rev 0xb000038, size 30720
+    sig 0x00050654, pf_mask 0xb7, 2019-07-31, rev 0x2000064, size 33792
+    sig 0x00050657, pf_mask 0xbf, 2019-08-12, rev 0x500002b, size 51200
+    sig 0x00050662, pf_mask 0x10, 2019-06-17, rev 0x001c, size 32768
+    sig 0x00050663, pf_mask 0x10, 2019-06-17, rev 0x7000019, size 24576
+    sig 0x00050664, pf_mask 0x10, 2019-06-17, rev 0xf000017, size 24576
+    sig 0x00050665, pf_mask 0x10, 2019-06-17, rev 0xe00000f, size 19456
+
 * Mon Sep 09 2019 L.A. Kostis <lakostis@altlinux.ru> 2:10-alt1.20190618.1
 - Sync with Debian 3.20190618.1:
   + New upstream microcode datafile 20190618
