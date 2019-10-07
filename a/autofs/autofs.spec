@@ -1,5 +1,5 @@
 Name: autofs
-Version: 5.1.5
+Version: 5.1.6
 Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -134,6 +134,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.6-alt1
+- 5.1.6 released
+
 * Tue Oct 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.5-alt1
 - 5.1.5 released
 
