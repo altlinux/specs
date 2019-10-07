@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.10
 %define src_version 9.11.10
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPLv2.0
@@ -209,7 +209,6 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.ac
 	--with-randomdev=/dev/random \
 	--enable-threads \
 	--enable-linux-caps \
-	--enable-fetchlimit \
 	--enable-fixed-rrset \
 	--disable-seccomp \
 	 %{subst_with openssl} \
@@ -218,7 +217,6 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.ac
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
 	--includedir=%{_includedir}/bind9 \
-	--disable-openssl-version-check \
 	--with-libtool \
 	--with-gssapi=yes \
 	--disable-isc-spnego \
@@ -248,7 +246,7 @@ install -pD -m755 addon/lwresd.init %buildroot%_initdir/lwresd
 install -pD -m644 addon/bind.service %buildroot%_unitdir/bind.service
 
 # Install configurations files
-install -pm600 addon/rndc.conf %buildroot%_sysconfdir/
+install -pm640 addon/rndc.conf %buildroot%_sysconfdir/
 install -pD -m644 addon/bind.sysconfig %buildroot%_sysconfdir/sysconfig/bind
 
 # Create a chrooted environment...
@@ -265,7 +263,7 @@ for n in localhost localdomain 127.in-addr.arpa empty; do
 done
 
 install -pm640 addon/rndc.key bind.keys %buildroot%_chrootdir%_sysconfdir/
-ln -snfr %buildroot%_sysconfdir/bind/{named.conf,bind.keys,rndc.key} \
+ln -snfr %buildroot%_sysconfdir/bind/{named.conf,bind.keys} \
 	%buildroot%_sysconfdir/
 
 # Create symlinks for unchrooted bind.
@@ -373,10 +371,9 @@ fi
 %_sysconfdir/bind
 %_sysconfdir/bind.keys
 %_sysconfdir/named.conf
-%_sysconfdir/rndc.key
 %config %_initdir/bind
 %config %_sysconfdir/sysconfig/bind
-%config(noreplace) %_sysconfdir/rndc.conf
+%config(noreplace) %attr(640,root,named) %_sysconfdir/rndc.conf
 %_unitdir/bind.service
 
 %_man1dir/named-rrchecker.1*
@@ -437,6 +434,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Sep 18 2019 Stanislav Levin <slev@altlinux.org> 9.11.10-alt2
+- Fixed integration with ipa-dnskeysync.
+
 * Tue Aug 27 2019 Stanislav Levin <slev@altlinux.org> 9.11.10-alt1
 - 9.11.9 -> 9.11.10.
 
