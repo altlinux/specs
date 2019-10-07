@@ -1,5 +1,5 @@
 Name: dm-secdel
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: dm-linear with secure deletion on discard
@@ -52,6 +52,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Mon Oct 07 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.6-alt1
+- Replace audit record with dmesg message.
+
 * Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.5-alt1
 - Compatibility with kernels up to 5.2.
 - Add audit record.

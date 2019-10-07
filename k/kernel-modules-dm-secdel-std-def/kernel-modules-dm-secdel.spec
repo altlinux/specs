@@ -1,6 +1,6 @@
 %define module_name     dm-secdel
-%define module_version  1.0.5
-%define module_release  alt2
+%define module_version  1.0.6
+%define module_release  alt1
 %define flavour         std-def
 %define karch %ix86 x86_64 aarch64 ppc64le
 
