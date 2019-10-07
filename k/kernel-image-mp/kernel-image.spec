@@ -1,5 +1,5 @@
-%define kernel_base_version	5.2
-%define kernel_sublevel        .16
+%define kernel_base_version	5.3
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -41,11 +41,12 @@ ExclusiveArch: armh aarch64
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: bc flex lzma-utils
+BuildRequires: bc flex kmod lzma-utils
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: libssl-devel
+BuildRequires: rsync
 
 %if_enabled ccache
 BuildRequires: ccache
@@ -256,6 +257,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.3.4-alt1
+- 5.3.4
+
+* Thu Sep 19 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.3.0-alt1
+- 5.3
+
 * Thu Sep 19 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2.16-alt1
 - 5.2.16
 
