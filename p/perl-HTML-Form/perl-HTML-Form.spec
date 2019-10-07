@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Form
-Version:        6.04
-Release:        alt1_1
+Version:        6.05
+Release:        alt1
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-Form
-Source0:        https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTML-Form-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/HTML-Form-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -60,10 +60,13 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc Changes README
+%doc Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 07 2019 Igor Vlasenko <viy@altlinux.ru> 6.05-alt1
+- automated CPAN update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1_1
 - update to new release by fcimport
 
