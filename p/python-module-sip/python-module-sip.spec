@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.19.13
+Version: 4.19.19
 Release: alt1
 
 Summary: Python bindings generator for C++ class libraries
@@ -17,7 +17,8 @@ URL: http://www.riverbankcomputing.com/software/sip/
 
 # hg clone http://www.riverbankcomputing.com/hg/sip
 #Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
-# Source-url: https://prdownloads.sourceforge.net/pyqt/sip/sip-%version/sip-%version.tar.gz
+#Source-url: https://prdownloads.sourceforge.net/pyqt/sip/sip-%version/sip-%version.tar.gz
+# Source-url: https://www.riverbankcomputing.com/static/Downloads/sip/%version/sip-%version.tar.gz
 Source: %name-%version.tar
 
 Provides: %modulename = %version-%release
@@ -231,6 +232,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.19.19-alt1
+- new version 4.19.19 (with rpmrb script)
+
 * Sun Feb 03 2019 Anton Midyukov <antohami@altlinux.org> 4.19.13-alt1
 - new version (4.19.13) with rpmgs script
 - build PyQt4 and PyQt5-sip modules

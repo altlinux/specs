@@ -7,8 +7,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 5.11.3
-Release: alt3
+Version: 5.13.1
+Release: alt1
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -16,11 +16,13 @@ Group: Development/Python
 
 %setup_python_module %oname
 
-# Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
+#Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
+# Source0-url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/%version/PyQt5_gpl-%version.tar.gz
 Source0: PyQt-gpl-%version.tar
 Patch0: PyQt-gpl-5.9-gles.patch
 Patch1: alt-dont-check-for-pyqt.patch
 Patch2: alt-qt-5.11.patch
+Patch3: alt-drop-sip-key.patch
 Url: http://www.riverbankcomputing.co.uk/software/pyqt
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
@@ -33,7 +35,6 @@ Requires: python-module-enum34
 
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils gcc-c++ libGL-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt5-bluetooth libqt5-clucene libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-help libqt5-location libqt5-multimedia libqt5-network libqt5-nfc libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sensors libqt5-serialport libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-websockets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip qt5-base-devel qt5-declarative-devel rpm-build-gir
-BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre):python-module-sip-devel
 %if_with python3
 # %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
@@ -56,6 +57,7 @@ BuildRequires: pkgconfig(Qt5Help)
 BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5MultimediaWidgets)
 BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5NetworkAuth)
 BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5Positioning)
 BuildRequires: pkgconfig(Qt5PrintSupport)
@@ -63,14 +65,12 @@ BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5QuickWidgets)
 BuildRequires: pkgconfig(Qt5Sensors)
+BuildRequires: pkgconfig(Qt5RemoteObjects)
 BuildRequires: pkgconfig(Qt5SerialPort)
 BuildRequires: pkgconfig(Qt5Sql)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5WebChannel)
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: pkgconfig(Qt5WebEngineWidgets)
-%endif
 BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5WebKitWidgets)
 BuildRequires: pkgconfig(Qt5WebSockets)
@@ -139,7 +139,7 @@ This package contains PyQt5 docs
 %setup -n PyQt-gpl-%version
 #patch0 -p1
 #patch1 -p1
-#patch2 -p1
+#patch3 -p1
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst "s|/lib'$|/%_lib'|g" configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -158,10 +158,10 @@ cp -R . ../python3
 %endif
 
 # add missing Qt versions to list of supported
-for v in Qt_5_11_3 Qt_5_11_2
+for v in Qt_5_12_5
 do
     grep -qe "[[:space:]]$v" sip/QtCore/QtCoremod.sip \
-	|| sed -i "s|Qt_5_11_1|Qt_5_11_1 $v|" sip/QtCore/QtCoremod.sip
+	|| sed -i "s|Qt_5_12_4|Qt_5_12_4 $v|" sip/QtCore/QtCoremod.sip
 done
 
 %build
@@ -266,6 +266,13 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt1
+- new version 5.13.1 (with rpmrb script)
+- drop PyQtWebEngine case (standalone package now)
+
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 5.12.3-alt1
+- new version 5.12.3 (with rpmrb script)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 5.11.3-alt3
 - NMU: remove rpm-build-ubt from BR:
 

@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.12.1
-Release: alt5
+Version: 4.12.3
+Release: alt1
 Summary: Python bindings for Qt4
 License: GPL
 Group: Development/Python
 
 %setup_python_module %oname
 
+# Source0-url: http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-%version/PyQt4_gpl_x11-%version.tar.gz
 Source0: PyQt-x11-gpl.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
@@ -233,6 +234,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Tue Oct 08 2019 Vitaly Lipatov <lav@altlinux.ru> 4.12.3-alt1
+- new version 4.12.3 (with rpmrb script)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.12.1-alt5
 - NMU: remove rpm-build-ubt from BR:
 
