@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     0
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -97,6 +97,9 @@ Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name = %EVR
 Requires: %libecpg_name = %EVR
+# TODO remove
+Provides: libpq-devel, libecpg-devel
+Obsoletes: libpq-devel, libecpg-devel
 
 %description -n postgresql-devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -108,6 +111,9 @@ with a PostgreSQL server.
 Summary:  Development static library for postgresql-devel
 Group: Development/Databases
 Requires: postgresql-devel = %EVR
+# TODO remove
+Provides: libpq-devel-static, libecpg-devel-static
+Obsoletes: libpq-devel-static, libecpg-devel-static
 
 %description -n postgresql-devel-static
 Development static library for postgresql-devel
@@ -778,6 +784,10 @@ fi
 %endif
 
 %changelog
+* Mon Oct 07 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt2
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel (ALT #37297)
+
 * Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt1
 - 12.0
 
