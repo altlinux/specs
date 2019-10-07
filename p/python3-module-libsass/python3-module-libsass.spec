@@ -1,7 +1,7 @@
 %define  modulename libsass
 
 Name:    python3-module-%modulename
-Version: 0.19.2
+Version: 0.19.3
 Release: alt1
 
 Summary: A straightforward binding of libsass for Python
@@ -46,6 +46,9 @@ pkg-config --modversion libsass > .libsass-upstream-version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 07 2019 Andrey Cherepanov <cas@altlinux.org> 0.19.3-alt1
+- New version.
+
 * Sun Jun 16 2019 Andrey Cherepanov <cas@altlinux.org> 0.19.2-alt1
 - New version.
 
