@@ -1,7 +1,7 @@
 %define  modulename psycogreen
 
 Name:    python-module-%modulename
-Version: 1.0
+Version: 1.0.1
 Release: alt1
 
 Summary: psycopg2 integration with coroutine libraries
@@ -38,5 +38,8 @@ interface so that regular code can run unmodified.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 07 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version.
+
 * Tue Jan 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
