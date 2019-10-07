@@ -3,8 +3,8 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.9.10
-Release: alt1.qa1
+Version: 0.9.11
+Release: alt1
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -175,6 +175,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Oct 07 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1.qa1
 - NMU: applied repocop patch
 
