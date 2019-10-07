@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -190,6 +190,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -120,6 +120,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.58.1-alt1
+- 1.58.1
+
 * Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
 - 1.58.0
 

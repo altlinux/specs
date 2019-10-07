@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Games
 
 Name: gnome-games
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -71,6 +71,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

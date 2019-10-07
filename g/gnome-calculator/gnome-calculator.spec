@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -117,6 +117,9 @@ GObject introspection devel data for the GNOME Calculator library.
 
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 - new libgcalc* subpackages

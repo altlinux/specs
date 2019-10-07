@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -246,7 +246,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-%patch1 -b .cloudprov
+#%%patch1 -b .cloudprov
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -459,6 +459,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.12-alt1
+- 3.24.12
+
 * Wed Sep 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.11-alt1
 - 3.24.11
 

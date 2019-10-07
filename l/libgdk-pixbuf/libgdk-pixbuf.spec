@@ -3,7 +3,7 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.38
+%define ver_major 2.40
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
@@ -12,10 +12,10 @@
 %def_enable x11
 %def_enable libjasper
 %def_enable installed_tests
-%def_enable check
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -249,6 +249,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt1
 - 2.38.2
 

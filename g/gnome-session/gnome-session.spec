@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -172,6 +172,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

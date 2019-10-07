@@ -7,7 +7,7 @@
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -87,6 +87,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Oct 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
