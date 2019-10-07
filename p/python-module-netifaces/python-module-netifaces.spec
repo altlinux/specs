@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.6
-Release: alt1.1
+Version: 0.10.9
+Release: alt1
 
 %setup_python_module %oname
 
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.10.9-alt1
+- new version 0.10.9 (with rpmrb script)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
