@@ -5,8 +5,8 @@
 
 Name: python-module-%module_name
 Epoch: 1
-Version: 0.999999999
-Release: alt5
+Version: 1.0.1
+Release: alt1
 
 Summary: Library for working with HTML5 documents
 
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 1:0.999999999-alt5
 - Fixed Pytest4.x compatibility error.
 
