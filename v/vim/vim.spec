@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.1
-Version: %branch.2047
+Version: %branch.2120
 Release: alt1
 Epoch: 4
 
@@ -1065,6 +1065,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Oct 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.2120-alt1
+- Updated to 8.1.2120.
+
 * Tue Sep 17 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.2047-alt1
 - Updated to 8.1.2047.
 
