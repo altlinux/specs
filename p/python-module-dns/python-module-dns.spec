@@ -4,7 +4,7 @@
 #def_without check
 
 Name: python-module-%modulename
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: DNS toolkit
@@ -59,10 +59,13 @@ popd
 %endif
 
 %files
-%doc examples/ ChangeLog LICENSE
+%doc examples/ LICENSE
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1.16.0-alt1
+- new version 1.16.0 (with rpmrb script)
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt1
 - back to build from tarball
 - new version (1.15.0) with rpmgs script
