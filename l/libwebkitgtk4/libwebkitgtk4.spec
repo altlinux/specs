@@ -32,7 +32,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -44,6 +44,7 @@ Source1: webkit2gtk.env
 # Source/cmake/BubblewrapSandboxChecks.cmake
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
+Patch10: webkitgtk-2.27.1-up-icu-65.1.patch
 
 %define bwrap_ver 0.3.1
 
@@ -212,6 +213,7 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch -b .bwrap
+%patch10 -p2 -b .icu65
 
 # fix libWPEBackend-fdo soname
 sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
@@ -339,6 +341,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Oct 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt2
+- rebuild against icu-65.1 libraries
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
 - 2.26.1
 
