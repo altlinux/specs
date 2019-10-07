@@ -1,8 +1,8 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.536
-Release: alt3
+Version: 7.0.537
+Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -67,6 +67,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Mon Oct 07 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.537-alt1
+- 7.0.537
+
 * Thu Sep 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.536-alt3
 - fix systemd-networkd discovery
 
