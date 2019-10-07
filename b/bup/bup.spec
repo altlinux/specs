@@ -1,5 +1,5 @@
 Name:     bup
-Version:  0.29.3
+Version:  0.30
 Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
@@ -118,6 +118,9 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Mon Oct 07 2019 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1
+- New version.
+
 * Mon Aug 26 2019 Andrey Cherepanov <cas@altlinux.org> 0.29.3-alt1
 - New version.
 
