@@ -8,14 +8,16 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 %global _xinputconf %{_sysconfdir}/X11/xinit/xinput.d/fcitx.conf
 %{!?gtk2_binary_version: %global gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)}
 %{!?gtk3_binary_version: %global gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)}
+%add_findreq_skiplist %_datadir/cmake/*/fcitx-extract-kde.sh
+
 
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.6
-Release:		alt2_4
+Release:		alt2_4.1
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
-Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
+Source0:		%{name}-%{version}_dict.tar
 Source1:		xinput-%{name}
 BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
@@ -303,6 +305,9 @@ EOF
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Tue Oct 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.2.9.6-alt2_4.1
+- drop requires to kde4
+
 * Mon Apr 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.9.6-alt2_4
 - rebuild (closes: #36598)
 
