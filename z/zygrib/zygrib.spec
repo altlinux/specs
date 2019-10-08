@@ -3,7 +3,7 @@
 
 Name: zygrib
 Version: 8.0.1
-Release: alt4
+Release: alt5
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -13,6 +13,7 @@ Url: http://www.zygrib.org
 Source0: %binname-%version.tgz
 Source1: %binname.png
 Source2: %binname.desktop
+Patch1:  proj6.2.patch
 
 Requires: fonts-ttf-liberation
 Requires: %name-data = %{version}-%{release}
@@ -49,6 +50,7 @@ home page: http://www.geonames.org/
 %prep
 
 %setup -q -n %binname-%version
+%patch1 -p1
 
 # remove system-wide fonts
 rm -rf data/fonts
@@ -116,6 +118,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 8.0.1-alt5
+- rebuild with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+
 * Sat Feb 16 2019 Vladislav Zavjalov <slazav@altlinux.org> 8.0.1-alt4
 - rebuild with libproj 5.2.2
 

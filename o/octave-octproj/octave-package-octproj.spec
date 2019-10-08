@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg octproj
 Name: octave-%octpkg
 Version: 1.1.5
-Release: alt5
+Release: alt6
 Summary: GNU Octave bindings to PROJ.4
 
 Group: Sciences/Mathematics
@@ -13,6 +13,7 @@ License: GPLv3+
 URL: http://trac.osgeo.org/proj/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch1:  proj6.2.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -34,6 +35,7 @@ This package allows to call functions of PROJ.4 library for
 
 %prep
 %setup -q -n %{octpkg}-%{version}
+%patch1 -p1
 
 %build
 %octave_build
@@ -49,6 +51,9 @@ This package allows to call functions of PROJ.4 library for
 %endif
 
 %changelog
+* Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.1.5-alt6
+- Fix build with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt5
 - rebuild with octave 5
 
