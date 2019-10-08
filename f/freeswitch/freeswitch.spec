@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.8.7
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -600,6 +600,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Oct 08 2019 Michael Shigorin <mike@altlinux.org> 1:1.8.7-alt2
+- E2K: fix build (patch proposed upstream)
+
 * Thu Aug 29 2019 Anton Farygin <rider@altlinux.ru> 1:1.8.7-alt1
 - 1.8.7
 - fixed build on ppc64 (thanks to glebfm@)
