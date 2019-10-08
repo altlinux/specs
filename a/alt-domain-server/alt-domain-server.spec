@@ -1,5 +1,5 @@
 Name: alt-domain-server 
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: All needed for alt-domain server
@@ -34,6 +34,9 @@ cp preinstall.d/* %buildroot/usr/share/install2/preinstall.d/
 /usr/share/install2/preinstall.d/*
 
 %changelog
+* Tue Oct 08 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.5.2-alt1
+- move hook for reissue service certificates to first place
+
 * Fri Mar 01 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
 - add hook for reissue service certificates for new domain
 
