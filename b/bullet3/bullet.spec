@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname bullet
 %def_disable demo
 %def_disable static
 
 Name: %{oname}3
-Version: 2.83
-Release: alt1.alpha
+Version: 2.88
+Release: alt1
 
 Summary: Professional 3D collision detection library
 License: Zlib
@@ -84,19 +86,26 @@ Static library for bullet
 
 %prep
 %setup
-subst 's/-L@LIB_DESTINATION@/-L@LIB_INSTALL_DIR@/' %oname.pc.cmake
+sed -i \
+       -e 's|-L@CMAKE_INSTALL_PREFIX@/@LIB_DESTINATION@/|-L@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/|' \
+       -e 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@|' \
+       %oname.pc.cmake
 
 %build
 %cmake \
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 		-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+    -DCLSOCKET_SHARED=ON \
     -DINSTALL_LIBS=ON \
+    -DBUILD_BULLET2_DEMOS=OFF \
+    -DBUILD_OPENGL_DEMOS=OFF \
+    -DBUILD_CPU_DEMOS=OFF \
+    -DBUILD_UNIT_TESTS=OFF \
     -DBUILD_EXTRAS=ON \
 		-DINSTALL_EXTRA_LIBS:BOOL=ON \
 		-DUSE_CUSTOM_VECTOR_MATH:BOOL=ON \
 		-DUSE_DOUBLE_PRECISION:BOOL=ON \
     -DINCLUDE_INSTALL_DIR=%_includedir/%oname \
-		-DBUILD_BULLET2_DEMOS:BOOL=OFF \
     %{?_disable_demo:-DBUILD_DEMOS=OFF} \
     %{?_disable_static:-DBUILD_SHARED_LIBS=ON}
 
@@ -117,9 +126,9 @@ done
 
 %files -n lib%name
 %_libdir/*.so.*
+%doc README.md LICENSE.txt AUTHORS.txt
 
 %files -n lib%name-devel
-%doc readme.txt docs/*
 %_libdir/pkgconfig/%oname.pc
 %_includedir/*
 %_libdir/cmake/%oname
@@ -131,6 +140,9 @@ done
 %endif #static
 
 %changelog
+* Tue Oct 08 2019 Konstantin Rybakov <kastet@altlinux.org> 2.88-alt1
+- Updated to upstream version 2.88
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.83-alt1.alpha
 - Initial build for Sisyphus
 
