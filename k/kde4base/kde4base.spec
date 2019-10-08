@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -28,7 +28,7 @@ Requires: %name-keditbookmarks = %version-%release
 Requires: %name-kfind          = %version-%release
 Requires: %name-konqueror      = %version-%release
 Requires: kde4-konsole
-Requires: kde4-kwrite
+#Requires: kde4-kwrite
 Requires: %name-nsplugins      = %version-%release
 Requires: %name-plasma-applets = %version-%release
 
@@ -65,7 +65,8 @@ provided by KDE 3 because of file and configuration setting conflicts.
 %package devel
 Group: Development/KDE and QT
 Summary: Header files for %name
-Requires: kde4libs-devel kde4pimlibs-devel kde4-kate-devel
+Requires: kde4libs-devel kde4pimlibs-devel
+# kde4-kate-devel
 Requires: %name-common = %version-%release
 %description devel
 Header files for developing applications using %name.
@@ -613,6 +614,9 @@ done
 
 
 %changelog
+* Tue Oct 08 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt5
+- clean requires
+
 * Wed Apr 17 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt4
 - fix provides (ALT#36612)
 
