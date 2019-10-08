@@ -2,29 +2,27 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt1
-Summary: Fast JSON parser and generator for C++
+Release: alt1.1
 
+Summary: Fast JSON parser and generator for C++
 License: MIT
 Group: Development/C++
+
 Url: http://miloyip.github.io/%name
 # URL: https://github.com/miloyip/%name
-
-Packager: Anton Midyukov <antohami@altlinux.org>
-BuildArch: noarch
-
 Source: %name-%version.tar
-
 # Downstream-patch for gtest.
 Patch: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
+Packager: Anton Midyukov <antohami@altlinux.org>
 
-BuildRequires (pre): rpm-macros-cmake
+BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: cmake gcc-c++
 BuildRequires: libgtest-devel
-BuildRequires: valgrind
-%if_with docs
-BuildRequires: doxygen python-module-pydot
-%endif # docs
+%{?_enable_valgrind:BuildRequires: valgrind}
+%{?_with_docs:BuildRequires: doxygen python-module-pydot}
 
 Provides: %name-devel == %version-%release
 
@@ -60,8 +58,6 @@ Summary: Documentation-files for %name
 Group: Documentation
 BuildArch: noarch
 
-BuildRequires: doxygen
-
 %description doc
 This package contains the documentation-files for %name.
 
@@ -70,19 +66,15 @@ This package contains the documentation-files for %name.
 %patch -p1 -b .gtest
 
 # Fix 'W: wrong-file-end-of-line-encoding'.
-for _file in "license.txt" $(%_bindir/find example -type f -name '*.c*')
-do
-  sed -e 's!\r$!!g' < ${_file} > ${_file}.new &&            \
-  /bin/touch -r ${_file} ${_file}.new &&                \
-  mv -f ${_file}.new ${_file}
-done
+find example -type f -name '*.c*' -print0 |
+	xargs -r0 subst -p 's!\r$!!g' license.txt
 
 # Create an uncluttered backup of examples for inclusion in %%doc.
 cp -a example examples
 
 # Disable -Werror.
-%_bindir/find . -type f -name 'CMakeLists.txt' -print0 |            \
-%_bindir/xargs -0 sed -i -e's![ \t]*-march=native!!g' -e's![ \t]*-Werror!!g'
+find . -type f -name 'CMakeLists.txt' -print0 |
+	xargs -r0 sed -i -e's![ \t]*-march=native!!g' -e's![ \t]*-Werror!!g'
 
 %build
 %cmake \
@@ -94,15 +86,16 @@ cp -a example examples
 %install
 %cmakeinstall_std
 
-# Move pkgconfig und CMake-stuff to generic datadir.
+# Move pkgconfig and CMake-stuff to generic datadir.
 mv -f %buildroot%_libdir/* %buildroot%_datadir
 
 # Copy the documentation-files to final location.
-cp -a license.txt CHANGELOG.md readme*.md examples %buildroot%_docdir/%name-%version
+cp -at %buildroot%_docdir/%name-%version -- \
+	license.txt CHANGELOG.md readme*.md examples
 
 # Find and purge build-sys files.
-%_bindir/find %buildroot -type f -name 'CMake*.txt' -print0 |    \
-%_bindir/xargs -0 rm -fv
+find %buildroot -type f -name 'CMake*.txt' -print0 |
+	xargs -r0 rm -fv --
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -121,5 +114,9 @@ cp -a license.txt CHANGELOG.md readme*.md examples %buildroot%_docdir/%name-%ver
 %endif # docs
 
 %changelog
+* Wed Oct 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1
+- Move to rpm-macros-valgrind.
+- Spec cleanup.
+
 * Wed Nov 15 2017 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Sisyphus.
