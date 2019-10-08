@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.7.1
-Release: alt2
+Version: 2.8.1
+Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -19,6 +19,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: /dev/shm
 BuildRequires: python2.7(coverage)
 BuildRequires: python2.7(fields)
 BuildRequires: python2.7(process_tests)
@@ -114,6 +115,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Tue Oct 08 2019 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
+- 2.7.1 -> 2.8.1.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 2.7.1-alt2
 - Fixed testing against Pytest 5.
 
