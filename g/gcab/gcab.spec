@@ -1,10 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 1.2
+%define ver_major 1.3
 %define api_ver 1.0
+%define _libexecdir %_prefix/libexec
 
 %def_enable docs
 %def_enable introspection
+%def_enable vala
+%def_enable check
+%def_enable installed_tests
 
 Name: gcab
 Version: %ver_major
@@ -17,7 +21,7 @@ Url: https://wiki.gnome.org/msitools
 
 #VCS: git://git.gnome.org/gcab
 %if_disabled snapshot
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -77,6 +81,16 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the gcab library
 
+%package -n lib%name-tests
+Summary: Tests for the GCab library
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description -n lib%name-tests
+This package provides tests programs that can be used to verify
+the functionality of the installed M$ Cabinet archive library.
+
+
 
 %prep
 %setup
@@ -84,13 +98,18 @@ GObject introspection devel data for the gcab library
 %build
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
-	%{?_enable_introspection:-Dintrospection=true}
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_disable_vala:-Dvapi=false} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
 %meson_build
 
 %install
 %meson_install
-
 %find_lang %name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -104,19 +123,35 @@ GObject introspection devel data for the gcab library
 %_includedir/lib%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
 %_pkgconfigdir/lib%name-%api_ver.pc
+%if_enabled vala
 %_vapidir/lib%name-%api_ver.vapi
 %_vapidir/lib%name-%api_ver.deps
+%endif
 
+%if_enabled docs
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name/
+%endif
 
+%if_enabled introspection
 %files -n lib%name-gir
 %_typelibdir/GCab-%api_ver.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/GCab-%api_ver.gir
+%endif
+
+%if_enabled installed_tests
+%files -n lib%name-tests
+%_libexecdir/installed-tests/lib%name-%api_ver/
+%_datadir/installed-tests/lib%name-%api_ver/
+%endif
 
 %changelog
+* Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+- %%check section, new libgcab-tests subpackage
+
 * Thu Dec 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
