@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.3.1
+Version: 0.3.1.1
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPLv2+
@@ -40,6 +40,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Tue Oct 08 2019 Anton Midyukov <antohami@altlinux.org> 0.3.1.1-alt1
+- hot-fix for Nvidia Jetson Nano (unmount device)
+
 * Fri Oct 04 2019 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
 - 0.3.1
 - make messages userfriendly more
