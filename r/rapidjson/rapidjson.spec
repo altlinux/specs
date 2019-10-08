@@ -1,8 +1,12 @@
 %def_with docs
 
+%ifarch %valgrind_arches
+%def_enable valgrind
+%endif
+
 Name: rapidjson
 Version: 1.1.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Fast JSON parser and generator for C++
 License: MIT
@@ -114,6 +118,9 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Wed Oct 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1.1
+- Added the missing bit so that valgrind is not simply dropped out.
+
 * Wed Oct 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1
 - Move to rpm-macros-valgrind.
 - Spec cleanup.
