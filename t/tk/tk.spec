@@ -3,16 +3,26 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.9
-Release: alt1
+Version: 8.6.10
+Release: alt0.rc0.1
 
-Summary: A Tk toolkit fot Tcl scripting language
-License: BSD
+Summary: The Tk toolkit fot Tcl scripting language
+License: TCL
 Group: Development/Tcl
 Url: http://www.tcl.tk/
 
-# git://git.altlinux.org/gears/t/tk.git
-Source: %name-%version-%release.tar
+# repacked ftp://ftp.tcl.tk/pub/tcl/tcl8_6/tk%version-src.tar.gz
+Source: %name%version-src.tar
+Patch1: 0001-ALT-extra-headers.patch
+Patch2: 0002-ALT-soname.patch
+Patch3: 0003-ALT-norpath.patch
+Patch4: 0004-ALT-libpath.patch
+Patch5: 0005-ALT-Fedora-configure.in-fix-xft-detection-RH-677692.patch
+Patch6: 0006-Fedora-make.patch
+Patch7: 0007-Fedora-no-fonts-fix.patch
+Patch8: 0008-ALT-removed-XFT_LIBS-from-the-definition-of-TK_LIBS.patch
+Patch9: 0009-ALT-pkgIndex.tcl-location.patch
+Patch10: 0010-Debian-manpages.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
 BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
@@ -21,7 +31,7 @@ Requires: tcl = %version lib%name
 Provides: tcl(Ttk) = %version
 
 %package -n lib%name
-Summary: A Tk toolkit fot Tcl scripting language - shared library
+Summary: The Tk toolkit fot Tcl scripting language - shared library
 Group: System/Libraries
 
 %package devel
@@ -71,7 +81,10 @@ This package contains a collection of programs to demonstrate
 the features of the Tk toolkit.
 
 %prep
-%setup
+%setup -q -n %name%version
+%autopatch -p1
+# remove unneeded stuff
+rm -r macosx win
 
 %build
 pushd unix
@@ -92,12 +105,12 @@ ln -sf lib%name%major.so %buildroot%_libdir/lib%name.so
 ln -s ../unix/tkUnixPort.h %buildroot%_includedir/tk/generic/tkUnixPort.h
 
 mkdir -p %buildroot%docdir
-bzip -9f changes ChangeLog
-install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
+xz changes ChangeLog
+install -pm0644 README.md license.terms changes.xz ChangeLog.xz %buildroot%docdir
 
 %files
 %dir %docdir
-%docdir/README
+%docdir/README.md
 %docdir/license.terms
 %docdir/changes.*
 
@@ -127,9 +140,13 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Tue Oct 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt0.rc0.1
+- Updated to 8.6.10rc0.
+- Fixed license field and summary.
+
 * Mon Apr 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.9-alt1
 - 8.6.9 released
-- explicitly enabled build with threads support 
+- explicitly enabled build with threads support
 - dropped zlib-devel build dependency
 
 * Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt2
