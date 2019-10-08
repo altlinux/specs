@@ -1,9 +1,11 @@
 
 %define engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
 
+%def_with check
+
 Name: libp11
 Version: 0.4.10
-Release: alt1
+Release: alt2
 
 Summary: Library for using PKCS#11 modules
 Group: System/Libraries
@@ -11,6 +13,7 @@ License: LGPLv2+
 
 Url: https://github.com/OpenSC/libp11/wiki
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 Provides: openssl-engine_pkcs11 = %version-%release
 Obsoletes: openssl-engine_pkcs11 < %version-%release
@@ -18,6 +21,11 @@ Obsoletes: openssl-engine_pkcs11 < %version-%release
 BuildRequires: pkgconfig(p11-kit-1)
 BuildRequires: libssl-devel >= 0.9.8
 BuildRequires: doxygen xsltproc
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: openssl
+%endif
 
 # needed for testsuite
 BuildRequires: softhsm opensc
@@ -37,6 +45,7 @@ Development files for %name.
 
 %prep
 %setup
+%patch -p1
 cat > README.ALT <<EOF
 In ALTLinux, the engine file has been placed in the
 %_libdir/openssl/engines directory instead of the default
@@ -82,6 +91,9 @@ rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%engines_dir/*.la
 rm -rf %buildroot%_docdir/%name
 
+%check
+%make check || { cat ./tests/test-suite.log; exit 1; }
+
 %files
 %doc COPYING NEWS README.md README.ALT
 %_libdir/*.so.*
@@ -93,6 +105,11 @@ rm -rf %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Wed Sep 11 2019 Stanislav Levin <slev@altlinux.org> 0.4.10-alt2
+- Set RSA_FLAG_EXT_PKEY flag on priv key stored on HSM.
+- Added pin-source feature for pkcs11 uri.
+- Enabled testing.
+
 * Wed Aug 21 2019 Alexey Shabalin <shaba@altlinux.org> 0.4.10-alt1
 - new version 0.4.10
 
