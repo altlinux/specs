@@ -1,7 +1,7 @@
 
 Name: rkward
 Version: 0.6.5
-Release: alt1
+Release: alt1.1
 Summary: Graphical frontend for R language
 Summary(fr):    Interface graphique pour le langage R
 Summary(ru_RU.UTF-8):    Интерфейс к языку программирования R
@@ -28,7 +28,7 @@ BuildRequires: rpm-macros-kde-common-devel
 BuildRequires: qt4-designer
 Requires: R-base
 Requires: kde4base-runtime
-Requires: kde4-kate-core
+#Requires: kde4-kate-core
 
 %description
 RKWard aims to provide an easily extensible, easy to use IDE/GUI for the
@@ -79,6 +79,9 @@ rm %buildroot/%_kde4_prefix/apps/katepart/syntax/r.xml
 %_K4datadir/locale/x-test/LC_MESSAGES/rkward.mo
 
 %changelog
+* Tue Oct 08 2019 Sergey V Turchin <zerg@altlinux.org> 0.6.5-alt1.1
+- NMU: drop requires to kde4-kate-core (altbug#37312)
+
 * Fri Jun 24 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.5-alt1
 - New 0.6.5 version
 
