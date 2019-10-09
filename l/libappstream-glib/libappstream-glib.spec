@@ -10,9 +10,10 @@
 %def_enable stemmer
 %def_enable installed_tests
 %def_enable gtk_doc
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -36,8 +37,8 @@ Conflicts: libappstream-builder < 0.9.15
 
 BuildRequires(pre): meson
 BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel
-BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
-BuildRequires: libpango-devel libsqlite3-devel
+BuildRequires: libarchive-devel libsoup-devel >= %soup_ver
+BuildRequires: libgdk-pixbuf-devel libpango-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
@@ -116,8 +117,11 @@ the functionality of the installed %_name library.
 
 %install
 %meson_install
-
 %find_lang %_name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %_name.lang
 %_bindir/appstream-util
@@ -158,6 +162,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Tue Oct 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.16-alt1
+- 0.7.16
+
 * Fri Mar 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.15-alt1
 - 0.7.15 (libappstream-builder shared library is no longer installed)
 

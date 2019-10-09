@@ -41,7 +41,7 @@
 
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -402,6 +402,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

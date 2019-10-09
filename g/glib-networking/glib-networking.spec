@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Networking support for GIO
@@ -111,6 +111,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.1-alt1
+- 2.62.1
+
 * Sat Sep 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.0-alt1
 - 2.62.0
 

@@ -10,7 +10,7 @@
 %def_enable gtk
 
 Name: sysprof
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -101,6 +101,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

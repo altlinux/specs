@@ -13,7 +13,7 @@
 %def_with jedi
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -214,6 +214,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

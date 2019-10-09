@@ -9,7 +9,7 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -206,6 +206,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
