@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 41.2.0
+Version: 41.4.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -29,6 +29,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python %py_dependencies distutils
 
 %if_with check
+BuildRequires: /dev/shm
 BuildRequires: python-module-futures
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-cov
@@ -217,6 +218,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Mon Oct 07 2019 Stanislav Levin <slev@altlinux.org> 1:41.4.0-alt1
+- 41.2.0 -> 41.4.0.
+
 * Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 1:41.2.0-alt1
 - 41.0.1 -> 41.2.0.
 
