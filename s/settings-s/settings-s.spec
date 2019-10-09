@@ -1,6 +1,6 @@
 Name:     settings-s
 Version:  0.2
-Release:  alt1
+Release:  alt2
 
 Summary:  settings for custom distro
 License:  GPLv2
@@ -56,6 +56,9 @@ install -Dm 0700 integalert %buildroot/sbin
 
 
 %changelog
+* Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt2
+- integalert wanted, not required for sysinit by default
+
 * Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt1
 - fix integalert behavour, see nagwad package for modified osec.pipe. Also
 disabled interruption of boot by default
