@@ -1,6 +1,6 @@
 Name:     settings-s
 Version:  0.2
-Release:  alt2
+Release:  alt3
 
 Summary:  settings for custom distro
 License:  GPLv2
@@ -56,6 +56,9 @@ install -Dm 0700 integalert %buildroot/sbin
 
 
 %changelog
+* Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt3
+- force plymouth quit on integrity error
+
 * Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt2
 - integalert wanted, not required for sysinit by default
 
