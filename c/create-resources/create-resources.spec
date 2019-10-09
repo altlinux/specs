@@ -1,6 +1,6 @@
 Name: create-resources
 Version: 0.1.3
-Release: alt4
+Release: alt5
 
 Summary: shared resources for use by creative applications
 License: GPLv2
@@ -12,6 +12,7 @@ Conflicts: gimp < 2.6.11-alt4
 
 Source: create-%version.tar.bz2
 Patch1: sconstruct.patch
+Patch2: create-resources-alt-fix-ftbfs-with-py3-scons.patch
 # Debian
 Patch10: 0001-add_name_header_to_GIMP_palettes.patch
 
@@ -30,6 +31,7 @@ The package includes color swatches files
 %prep
 %setup -qn create-%version
 %patch1 -p0
+%patch2 -p0
 %patch10 -p1
 
 %build
@@ -46,6 +48,9 @@ scons install PREFIX=%buildroot/%_prefix
 %_datadir/create/*
 
 %changelog
+* Wed Oct 09 2019 Ivan A. Melnikov <iv@altlinux.org> 0.1.3-alt5
+- fix FTBFS with SCons that uses Python 3
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt4
 - add patch from Debian to add name header to GIMP palettes
 
