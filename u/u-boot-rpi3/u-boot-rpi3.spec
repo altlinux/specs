@@ -1,6 +1,6 @@
 Name: u-boot-rpi3
 Version: 2019.10
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPL
@@ -19,7 +19,7 @@ initialize and test the hardware or to download and run application code.
 This package supports Raspberry Pi 3/4 boards.
 
 %ifarch armh
-%define rpi rpi_3_32b rpi_4_32b
+%define rpi rpi_3_32b rpi_3_b_plus_32b rpi_4_32b
 %define img kernel7.img
 %endif
 %ifarch aarch64
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Oct 09 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.10-alt2
+- added 32-bit 3b+ variant just for completeness
+
 * Tue Oct 08 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.10-alt1
 - 2019.10 released
 
