@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.23
+Version: 1.4.24
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -21,6 +21,13 @@ Source: gcc_wrapper.c
 Summary: Common symlinks for the GNU C++ Compiler
 License: GPL-2.0-or-later
 Group: Development/C++
+BuildArch: noarch
+PreReq: %name = %version-%release
+
+%package -n gcc-gdc-common
+Summary: Common symlinks for the GNU D Compiler
+License: GPL-2.0-or-later
+Group: Development/Other
 BuildArch: noarch
 PreReq: %name = %version-%release
 
@@ -68,6 +75,9 @@ utility for the GNU Compiler Collection.
 %description -n gcc-c++-common
 This package contains common symlinks for the GNU C++ Compiler.
 
+%description -n gcc-gdc-common
+This package contains common symlinks for the GNU D Compiler.
+
 %description -n gcc-go-common
 This package contains common symlinks for the Go Compiler.
 
@@ -103,7 +113,7 @@ install -p -m755 gcc_wrapper %buildroot%_bindir/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
-for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gfortran gnat gtreelang protoize unprotoize; do
+for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gdc gfortran gnat gtreelang protoize unprotoize; do
 	ln -s gcc "%buildroot%_bindir/$n"
 done
 for n in dump tool; do
@@ -184,6 +194,9 @@ cpp --version
 %_bindir/gnat*
 
 %changelog
+* Wed Oct 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.24-alt1
+- Added gcc-gdc-common subpackage.
+
 * Wed Dec 19 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.23-alt1
 - Updated URL and license information.
 - Removed obsolete gccbug.
