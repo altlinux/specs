@@ -5,7 +5,7 @@ Group: Other
 
 Name:           elfio
 Version:        3.4
-Release:        alt1_11
+Release:        alt2_11
 Summary:        C++ library for reading and generating ELF files
 
 License:        MIT
@@ -47,7 +47,10 @@ format is required. Such Information can easily be found on the Web.
 
 %prep
 %setup -q
-
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 
 %build
 %configure
@@ -71,6 +74,9 @@ examples/elfdump/elfdump %{_bindir}/make
 
 
 %changelog
+* Wed Oct 09 2019 Michael Shigorin <mike@altlinux.org> 3.4-alt2_11
+- E2K: explicit -std=c++11
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_11
 - new version
 
