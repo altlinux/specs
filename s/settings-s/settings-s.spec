@@ -1,6 +1,6 @@
 Name:     settings-s
-Version:  0.1
-Release:  alt4
+Version:  0.2
+Release:  alt1
 
 Summary:  settings for custom distro
 License:  GPLv2
@@ -56,6 +56,10 @@ install -Dm 0700 integalert %buildroot/sbin
 
 
 %changelog
+* Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt1
+- fix integalert behavour, see nagwad package for modified osec.pipe. Also
+disabled interruption of boot by default
+
 * Mon Oct 07 2019 Denis Medvedev <nbr@altlinux.org> 0.1-alt4
 - Fixed wrong separator in  Conflicts line. Also fixed permissions on a unit.
 
