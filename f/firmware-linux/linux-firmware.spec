@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20190925
+Version: 20191007
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Oct 10 2019 Cronbuild Service <cronbuild@altlinux.org> 20191007-alt1
+- upstream changes (GIT aa95e90):
+  + amdgpu: add initial navi14 firmware form 19.30 (thx Alex Deucher)
+  + rtlwifi: rtl8821ae: Add firmware for the RTL8812AE variant. (thx Larry Finger)
+  + ice: Fix up WHENCE entry and symlink (thx Josh Boyer)
+  + nvidia: Update Tegra210 XUSB firmware to v50.24 (thx Thierry Reding)
+  + nvidia: Add XUSB firmware for Tegra194 (thx Thierry Reding)
+  + copy-firmware: Create symlinks from WHENCE file (thx Thierry Reding)
+
 * Wed Oct 02 2019 Cronbuild Service <cronbuild@altlinux.org> 20190925-alt1
 - upstream changes (GIT c0590d8):
   + amdgpu: update vega20 ucode for 19.30 (thx Alex Deucher)
