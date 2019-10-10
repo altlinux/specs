@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          0a012df867a2d525f62a146d8ebdf2e6ab8a5ad5
+%global commit          d736ef14f0288d6993a1845745d6756cfc9ddd5a
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt9.rc8
+Release:        alt10.rc9
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -65,6 +65,10 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Thu Oct 10 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt10.rc9
+- New version
+- fixes: CVE-2019-16884
+
 * Thu Jul 4 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt9.rc8
 - New version
 
