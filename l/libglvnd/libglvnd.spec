@@ -1,5 +1,5 @@
 Name: libglvnd
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 Epoch: 7
 Group: System/Libraries
@@ -23,6 +23,7 @@ Summary: Development files for %name
 Group: Development/C
 Provides: libglvnd0-devel = %epoch:%version-%release
 Obsoletes: libglvnd0-devel < %epoch:%version-%release
+Conflicts: libGL-devel < 19.2.2
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -76,7 +77,8 @@ libGL are the common dispatch interface for the GLX API
 
 %build
 %autoreconf
-%configure
+%configure \
+	--disable-gles1
 %make_build
 
 %install
@@ -86,6 +88,7 @@ mkdir -p %buildroot{%_sysconfdir,%_datadir}/glvnd/egl_vendor.d
 mkdir -p %buildroot{%_sysconfdir,%_datadir}/egl/egl_external_platform.d
 
 rm -f %buildroot%_libdir/libGLESv1*
+rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 
 %files
 %doc README.md
@@ -97,7 +100,7 @@ rm -f %buildroot%_libdir/libGLESv1*
 %_libdir/libOpenGL.so.*
 
 %files -n libGLES
-%_libdir/libGLESv2.so.*
+%_libdir/libGLES*.so.*
 
 %files -n libGLX
 %_libdir/libGLX.so.*
@@ -115,11 +118,14 @@ rm -f %buildroot%_libdir/libGLESv1*
 %_libdir/libEGL.so.*
 
 %files devel
-%_includedir/glvnd
+%_includedir/*
 %_libdir/lib*.so
-%_pkgconfigdir/%name.pc
+%_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 10 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt1
+- 1.2.0
+
 * Thu Mar 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.1.1-alt1
 - 1.1.1
 
