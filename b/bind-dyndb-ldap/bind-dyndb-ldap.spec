@@ -3,7 +3,7 @@
 
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt7
+Release: alt8
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -97,6 +97,9 @@ systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Thu Oct 10 2019 Stanislav Levin <slev@altlinux.org> 11.1-alt8
+- Added workaround for LDAP socket error on BIND start.
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 11.1-alt7
 - Fixed upgrade bind 9.9 -> 9.11.
 
