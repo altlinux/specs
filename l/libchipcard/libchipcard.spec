@@ -1,7 +1,6 @@
-
 Name:     libchipcard
-Version:  5.0.4
-Release:  alt3
+Version:  5.1.3
+Release:  alt0.1.beta
 
 Summary:  A library for easy access to smart cards (chipcards)
 License:  LGPL
@@ -10,9 +9,8 @@ Url:      http://www.libchipcard.de/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   http://dl.sourceforge.net/libchipcard/%name-%version.tar.gz
+Source:   %name-%version.tar
 Source1:  %name.init
-Source2:  %name.watch
 
 Patch0:  %name-etc.patch
 Patch1:  %name-am18.patch
@@ -88,7 +86,7 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 
 %files
 # COPYING contains only summary, note *GPL texts themselves
-%doc AUTHORS COPYING ChangeLog README* TODO
+%doc AUTHORS COPYING README* TODO
 %_libdir/*.so.*
 %_sysconfdir/chipcard/
 %_libdir/gwenhywfar/plugins/*/ct/*
@@ -104,8 +102,13 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 %_initrddir/chipcardd
 %attr(754,root,root) %_initrddir/chipcardd
 
-
 %changelog
+* Mon Oct 28 2019 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt0.1.beta
+- New version.
+
+* Thu Oct 10 2019 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt4
+- Rebuild with libgwenhywfar-4.99.22rc6.
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt3
 - Rebuild with libgwenhywfar-4.20.0.
 
