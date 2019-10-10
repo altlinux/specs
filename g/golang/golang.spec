@@ -34,7 +34,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.13
+Version: 1.13.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -287,6 +287,9 @@ mkdir -p -- \
 
 
 %changelog
+* Thu Oct 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.1-alt1
+- 1.13.1
+
 * Thu Sep 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.13-alt1
 - 1.13
 
