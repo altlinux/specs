@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -139,6 +139,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Oct 10 2019 Anton Farygin <rider@altlinux.ru> 5.2.1-alt1
+- 5.2.1
+
 * Tue Oct 08 2019 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
 - 5.2.0
 
