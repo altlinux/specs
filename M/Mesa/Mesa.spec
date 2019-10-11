@@ -66,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.1.7
+Version: 19.2.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -495,6 +495,9 @@ cd -
 %endif
 
 %changelog
+* Thu Oct 10 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.1-alt1
+- 19.2.1
+
 * Wed Sep 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.7-alt1
 - 19.1.7
 
