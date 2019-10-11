@@ -12,8 +12,8 @@
 %define tmp_vztt_conf %vztmp/tmp_vztt_conf
 
 Name: vztt
-Version: 7.0.65
-Release: alt5
+Version: 7.0.66
+Release: alt1
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Fri Oct 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.66-alt1
+- 7.0.66
+
 * Tue Oct 01 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.65-alt5
 - convert to python3
 
