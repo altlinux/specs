@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 6.01
+Version: 6.02
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -63,6 +63,9 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Oct 11 2019 Leontiy Volodin <lvol@altlinux.org> 6.02-alt1
+- new version (6.02) with rpmgs script
+
 * Tue Sep 17 2019 Leontiy Volodin <lvol@altlinux.org> 6.01-alt1
 - new version (6.01) with rpmgs script
 - update buildreqs and reqs
