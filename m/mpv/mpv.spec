@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.29.1
-Release: alt5
+Release: alt6
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-macros-luajit
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -83,6 +83,7 @@ chmod ugo+rx waf
 --enable-libsmbclient \
 --enable-libmpv-shared \
 --enable-tv \
+--enable-jack \
 #
 
 %build
@@ -114,6 +115,9 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri Oct 11 2019 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt6
+- Build with JACK support (ALT#37324)
+
 * Sat Jun 29 2019 Michael Shigorin <mike@altlinux.org> 0.29.1-alt5
 - Fix build with older libEGL, see upstream issue #5599
   (commit taken from NetBSD)
