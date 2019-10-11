@@ -1,6 +1,6 @@
 Name:     settings-s
 Version:  0.2
-Release:  alt3
+Release:  alt4
 
 Summary:  settings for custom distro
 License:  GPLv2
@@ -54,8 +54,17 @@ install -Dm 0700 integalert %buildroot/sbin
 
 %post
 
+%post -n integ
+if [ "$(systemctl is-enabled integalert)" == "enabled" ] ;
+ then
+    systemctl disable integalert
+    systemctl enable integalert
+ fi
 
 %changelog
+* Fri Oct 11 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt4
+- force systemd reconfigure dependencies, fix archiving of osec messages
+
 * Wed Oct 09 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt3
 - force plymouth quit on integrity error
 
