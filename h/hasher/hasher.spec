@@ -1,6 +1,6 @@
 Name: hasher
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Modern safe package building technology
 License: GPLv2+
@@ -33,6 +33,9 @@ Requires: libshell >= 0:0.0.2-alt4
 # due to def_cache_compress
 Requires: lz4
 
+# due to hsh-fakedev removal
+Conflicts: mkimage < 0.2.28
+
 Obsoletes: pkg-build-utils, libbte
 
 BuildPreReq: help2man, libshell >= 0:0.0.2-alt4
@@ -58,6 +61,9 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Fri Oct 11 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt2
+- Added "Conflicts: mkimage < 0.2.28" due to hsh-fakedev removal.
+
 * Sun Aug 18 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
 - Removed hsh-fakedev which became useless with hasher-priv >= 1.6.0.
 - Updated for hasher-priv makedev removal.
