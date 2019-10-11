@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.13.2
-Release: alt2
+Version: 3.14.0
+Release: alt1
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -161,6 +161,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Fri Oct 11 2019 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
+- 3.13.2 -> 3.14.0.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.13.2-alt2
 - Fixed testing against Pytest 5.
 
