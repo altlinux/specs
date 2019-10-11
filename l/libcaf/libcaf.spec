@@ -1,21 +1,24 @@
+%ifarch ppc64le %e2k
+%def_without opencv
+%else
+%def_with opencv
+%endif
+
 Name: libcaf
 Version: 0.16.2
-Release: alt2
+Release: alt3
 
 Summary: An Open Source Implementation of the Actor Model in C++
-
-Group: Networking/Other
 License: BSD / Boost
-Url: http://www.actor-framework.org/
+Group: Networking/Other
 
+Url: http://www.actor-framework.org/
 # Source-url: https://github.com/actor-framework/actor-framework/archive/%version.tar.gz
 Source: %name-%version.tar
 Patch: libcaf-0.16.2-fix-linking.patch
 
 BuildRequires: gcc-c++ libcurl-devel libssl-devel
-%ifnarch ppc64le
-BuildRequires: ocl-icd-devel
-%endif
+%{?_with_opencv:BuildRequires: ocl-icd-devel}
 
 BuildRequires(pre): cmake
 
@@ -37,14 +40,10 @@ This package contains the header files for %name.
 %setup
 %patch -p1
 # TODO: LIB_DESTINATION
-%__subst "s|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|" */CMakeLists.txt
+sed -i "s|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|" */CMakeLists.txt
 
 %build
-%cmake \
-%ifarch ppc64le
-    -DCAF_NO_OPENCL:BOOL=yes
-%endif
-
+%cmake %{?_with_opencv:-DCAF_NO_OPENCL:BOOL=yes}
 %cmake_build
 
 %install
@@ -60,6 +59,10 @@ This package contains the header files for %name.
 
 
 %changelog
+* Fri Oct 11 2019 Michael Shigorin <mike@altlinux.org> 0.16.2-alt3
+- move to opencv knob (on by default except for ppc64le, %%e2k)
+- minor spec cleanup
+
 * Tue Oct 08 2019 Alexey Shabalin <shaba@altlinux.org> 0.16.2-alt2
 - disable build with opencl support for ppc64le
 
