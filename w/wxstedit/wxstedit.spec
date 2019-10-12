@@ -2,10 +2,12 @@
 
 Name: wxstedit
 Version: 1.6.0
-Release: alt5.r3169.2
+Release: alt5.r3169.3
+
 Summary: sample program for the wxWidgets's wxStyledTextCtrl Scintilla wrapper
 License: wxWidgets License
 Group: Editors
+
 Url: http://wxcode.sourceforge.net/showcomp.php?name=wxStEdit
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
@@ -83,6 +85,10 @@ sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 	CMakeLists.txt
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %cmake
 %make_build -C BUILD
 #%%make_build -C BUILD wxStEdit_doxygen
@@ -105,7 +111,7 @@ popd
 %_desktopdir/wxStEdit.desktop
 %_niconsdir/*
 %doc docs/*
-#%%eclude %_datadir/{%name,wxStEdit}
+#%%exclude %_datadir/{%name,wxStEdit}
 
 %files -n lib%name
 %_libdir/lib%{name}*.so
@@ -121,6 +127,10 @@ popd
 %endif
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.6.0-alt5.r3169.3
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Mon Sep 03 2018 Ildar Mulyukov <ildar@altlinux.ru> 1.6.0-alt5.r3169.2
 - Rebuild with updated libwxGTK3.1
 
