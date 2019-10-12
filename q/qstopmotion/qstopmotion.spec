@@ -1,54 +1,60 @@
-Name: 	  qstopmotion
-Version:  2.3.2
-Release:  alt3
+Name: qstopmotion
+Version: 2.3.2
+Release: alt4
 
-Summary:  A program for stopmotion animation
-License:  GPLv2
-Group:    Graphics
-Url: 	  https://sourceforge.net/p/qstopmotion/
+Summary: A program for stopmotion animation
+License: GPLv2
+Group: Graphics
 
+Url: https://sourceforge.net/p/qstopmotion/
+Source: %name-%version.tar
+Patch: %name-g++8.patch
 Packager: Denis Medvedev <nbr@altlinux.org>
 
-Source:   %name-%version.tar
-Patch0:   %name-g++8.patch
-
 BuildPreReq: cmake rpm-macros-cmake
-BuildRequires: libv4l-devel  libexif-devel libavdevice57 v4l-utils qt5-qtbase qt5-imageformats qt5-qtbase-gui qt5-base-devel ffmpeg gstreamer-devel libgphoto2-devel libv4l 
+# Automatically added by buildreq on Sat Oct 12 2019
+# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libgphoto2-6 libgphoto2_port-12 libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 pkg-config python-base
+BuildRequires: gcc-c++ cmake libgphoto2-devel libv4l-devel qt5-base-devel qt5-imageformats
 
+BuildRequires: libexif-devel libavdevice-devel gstreamer-devel
 
 %description
 qStopMotion is a program for stop motion pictures creation.
 Stop motion pictures is a kind of animation where multiple images from camera
 are arranged as a movie.
 
-
 %prep
 %setup
-%patch0 -p2
+%patch -p2
 
 %build
-#%%cmake
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
+
 %cmake_insource
 %make_build # VERBOSE=1
 
 %install
 %makeinstall_std
 
-
 %files
 %_bindir/*
-/usr/share/applications/*.desktop
-/usr/share/doc/qstopmotion*
-/usr/share/icons/hicolor/128x128/apps/*
-/usr/share/icons/hicolor/256x256/apps/*
-/usr/share/icons/hicolor/32x32/apps/*
-/usr/share/icons/hicolor/48x48/apps/*
-/usr/share/icons/hicolor/scalable/apps/*
 %_man1dir/*
-/usr/share/qstopmotion/*
+%_datadir/%name/*
+%_desktopdir/*.desktop
+# FIXME: does it look for help content there?
+%_defaultdocdir/qstopmotion*
+%_iconsdir/hicolor/*/apps/*
 %doc AUTHORS COPYING
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 2.3.2-alt4
+- E2K: explicit -std=c++11
+- spec cleanup
+- buildreq
+
 * Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.2-alt3
 - no return statement in the non-void function fixed (according g++8)
 
