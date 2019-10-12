@@ -1,6 +1,6 @@
 Name: autossh
 Version: 1.4g
-Release: alt1
+Release: alt2
 
 Summary: Automatically restart SSH sessions and tunnels
 License: BSD-style
@@ -9,6 +9,9 @@ Url: http://www.harding.motd.ca/autossh
 
 # %url/autossh-%version.tar.bz2
 Source: autossh-%version.tar
+Source1: autossh_at.service
+Source2: autossh.conf.sample
+Source3: README.ALT
 Patch1: autossh-1.4a-alt-setproctitle.patch
 
 Requires: openssh-clients
@@ -23,6 +26,9 @@ mechanism are from rstunnel (Reliable SSH Tunnel), but implemented in C.
 %setup
 %patch1 -p1
 chmod -x autossh.host rscreen
+cp -a %SOURCE1 autossh@.service
+cp -a %SOURCE2 .
+cp -a %SOURCE3 .
 
 %build
 export LIBS=-lsetproctitle
@@ -34,13 +40,22 @@ export ac_cv_path_ssh=ssh
 %install
 install -pD -m755 autossh %buildroot%_bindir/autossh
 install -pD -m644 autossh.1 %buildroot%_man1dir/autossh.1
+install -pD -m644 autossh@.service %buildroot%_unitdir/autossh@.service
+install -pD -m644 autossh@.service %buildroot%_libexecdir/systemd/user/autossh@.service
+mkdir -pm755 %buildroot%_sysconfdir/autossh
 
 %files
-%doc CHANGES README autossh.host rscreen
+%doc CHANGES README README.ALT autossh.conf.sample autossh.host rscreen
+%dir %_sysconfdir/autossh
 %_bindir/*
 %_man1dir/*
+%_unitdir/*
+%_libexecdir/systemd/user/*
 
 %changelog
+* Sat Oct 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt2
+- Added systemd service file, its config sample and README.ALT.
+
 * Sun Jan 13 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt1
 - Updated to 1.4g.
 
