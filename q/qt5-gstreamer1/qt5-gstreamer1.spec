@@ -2,7 +2,7 @@
 
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt8
+Release: alt9
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -59,6 +59,10 @@ for %name.
 %patch10 -p0
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %Kbuild \
     -DQT_VERSION=5 \
     -DQTGSTREAMER_STATIC=OFF \
@@ -106,6 +110,9 @@ for %name.
 
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.2.0-alt9
+- E2K: explicit -std=c++11
+
 * Mon Jun 10 2019 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt8
 - fix to build with new gstreamer
 
