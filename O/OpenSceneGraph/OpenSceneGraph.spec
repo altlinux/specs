@@ -16,18 +16,16 @@
 
 Name: OpenSceneGraph
 Version: 3.4.1
-Release: alt1
+Release: alt2
 
 Summary: High performance real-time graphics toolkit
-
 License: OSGPL (wxWidgets, clarified LGPL)
 Group: System/Libraries
+
 Url: http://www.openscenegraph.org
-
-Packager: Michael Shigorin <mike@altlinux.org>
-
 # Source-url: https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-%version.tar.gz
 Source: %name-%version.tar
+Packager: Michael Shigorin <mike@altlinux.org>
 
 # thanks, Fedora
 Patch1: 0001-Cmake-fixes.patch
@@ -41,6 +39,11 @@ BuildRequires: rpm-macros-cmake cmake doxygen gcc-c++ gnuplot graphviz libInvent
 #BuildRequires: libpixman-devel
 BuildRequires: libtiff-devel
 Requires: lib%name = %version-%release
+
+%ifarch %e2k
+# error: cpio archive too big - 4321M
+%global __find_debuginfo_files %nil
+%endif
 
 %description
 The OpenSceneGraph is an OpenSource, cross platform graphics
@@ -59,11 +62,17 @@ for rapid development of graphics applications.
 %patch3 -p1
 
 # path to install examples (instead the patch)
-%__subst "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
+sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_OSG_EXAMPLES=ON -DBUILD_OSG_WRAPPERS=ON -DBUILD_DOCUMENTATION=ON
+%ifarch %e2k
+      -DBUILD_OSG_EXAMPLES=OFF \
+%else
+      -DBUILD_OSG_EXAMPLES=ON \
+%endif
+      -DBUILD_OSG_WRAPPERS=ON \
+      -DBUILD_DOCUMENTATION=ON
 %cmake_build
 
 %install
@@ -79,7 +88,6 @@ rm -rf %buildroot/usr/doc/
 %_bindir/osgarchive
 %_bindir/osgconv
 %_bindir/osgviewer
-%_bindir/osgviewerGTK
 %_bindir/osgfilecache
 
 %package -n lib%name
@@ -111,6 +119,7 @@ Development files for OpenSceneGraph
 %_libdir/libosg*.so
 %_bindir/osgversion
 
+%ifnarch %e2k
 %package examples-SDL
 Summary: OSG sample applications using SDL
 Group: Development/Documentation
@@ -132,6 +141,9 @@ OSG sample applications using SDL
 #files examples-fltk
 #_bindir/osgviewerFLTK
 
+# lcc 1.23.12:
+# CMakeFiles/example_osgoscdevice.dir/osgoscdevice.o:(.rodata._ZTIPKN5osgFX6ScribeE[_ZTIPKN5osgFX6ScribeE]+0x18): undefined reference to `typeinfo for osgFX::Scribe'
+# CMakeFiles/example_osgoscdevice.dir/osgoscdevice.o:(.rodata._ZTIPKN5osgFX6EffectE[_ZTIPKN5osgFX6EffectE]+0x18): undefined reference to `typeinfo for osgFX::Effect'
 # OpenSceneGraph-examples
 %package examples
 Summary: Sample applications for OpenSceneGraph
@@ -307,7 +319,12 @@ Sample applications for OpenSceneGraph
 %_bindir/osgtransferfunction
 %_bindir/osgtransformfeedback
 
+%_bindir/osgviewerGTK
+
+%_bindir/present3D
+
 %_datadir/OpenSceneGraph
+%endif
 
 # libOpenThreads
 %package -n libOpenThreads
@@ -342,6 +359,13 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Sun Aug 04 2019 Michael Shigorin <mike@altlinux.org> 3.4.1-alt2
+- E2K:
+  + disable examples build (some of them fail to link)
+  + disable debuginfo (too large files for cpio)
+- moved osgviewerGTK to examples where it belongs
+- added present3D to examples (previously unpackaged)
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
 - cleanup spec
 - disable build with wxWidgets (any reasons?) and Qt
