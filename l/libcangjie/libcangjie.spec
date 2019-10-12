@@ -7,7 +7,7 @@
 Name:             libcangjie
 Summary:          Cangjie Input Method Library
 Version:          1.3
-Release:          alt1_2
+Release:          alt2_2
 License:          LGPLv3+
 Group:            System/Internationalization
 URL:              http://cangjians.github.io/projects/%{name}
@@ -48,8 +48,14 @@ Development files for %{name}.
 
 %prep
 %setup -q
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -79,6 +85,10 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.3-alt2_2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+- autoreconf
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2
 - update by mgaimport
 
