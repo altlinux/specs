@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        5.0.0
-Release:        alt1_2
+Release:        alt2_2
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -70,6 +70,11 @@ for file in tests/teststops.cpp; do
    touch -r $file $file.tmp2
    mv -f $file.tmp2 $file
 done
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 autoreconf -fiv
@@ -92,6 +97,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 5.0.0-alt2_2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_2
 - update to new release by fcimport
 
