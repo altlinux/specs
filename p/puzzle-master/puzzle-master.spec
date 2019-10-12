@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(x11)
 %define _localstatedir %{_var}
 Name:           puzzle-master
 Version:        2.5.3
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Fun jigsaw puzzle game
 
 Group:          Games/Other
@@ -25,6 +25,11 @@ You can decide the size and the difficulty of the puzzle.
 
 %prep
 %setup -q
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 # These flags ensure that the files will be placed to the correct location
@@ -50,6 +55,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %doc LICENSE-DOCS
 
 %changelog
+* Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 2.5.3-alt2_3
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_3
 - update to new release by fcimport
 
