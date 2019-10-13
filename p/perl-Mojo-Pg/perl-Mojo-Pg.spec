@@ -2,7 +2,7 @@
 %define sname mojo-pg
 
 Name: perl-Mojo-Pg
-Version: 4.16
+Version: 4.17
 Release: alt1
 Summary: Mojolicious PostgreSQL
 License: Artistic-2.0
@@ -45,6 +45,9 @@ the publish/subscribe pattern.
 %doc Changes README.md
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 4.17-alt1
+- automated CPAN update
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 4.16-alt1
 - automated CPAN update
 
