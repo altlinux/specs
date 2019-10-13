@@ -1,5 +1,5 @@
-%define git_ver 8862
-%define git_commit 07022fd3b6d05b982b6357e8d331c757cb825f18
+%define git_ver 8871
+%define git_commit 9bcd7b534b7dc9f9c0251c21b15c0ba44d4d1eb6
 
 %define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -121,6 +121,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Oct 13 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8871-alt1
+- Version 0.0.7.8871
+
 * Sat Oct 12 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8862-alt1
 - Version 0.0.7.8862
 - Update asmjit to fc251c9
