@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Usage.pm) perl-podlators
+BuildRequires: perl(Pod/Usage.pm) perl-podlators perl(URI/Escape.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pod-Markdown
-Version:        3.101
-Release:        alt1_1
+Version:        3.200
+Release:        alt1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/Pod-Markdown
-Source0:        https://cpan.metacpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -57,13 +58,15 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 %{_mandir}/man[13]/*
 %{_bindir}/*
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.200-alt1
+- automated CPAN update
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.101-alt1_1
 - update to new release by fcimport
 
