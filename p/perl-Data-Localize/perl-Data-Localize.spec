@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 Name: perl-Data-Localize
-Version: 0.00027
+Version: 0.00028
 Release: alt1
 
 Summary: Data::Localize perl module
@@ -10,7 +11,7 @@ License: Perl
 Url: %CPAN Data-Localize
 Source: %name-%version.tar
 
-BuildRequires: perl-devel perl-Encode perl-Module-Pluggable perl-I18N-LangTags perl-Test-Requires perl-Any-Moose perl-Mouse perl-Config-Any perl-BerkeleyDB perl-Moo perl(Module/Load.pm) perl(Log/Minimal.pm) perl(MooX/Types/MooseLike/Base.pm)
+BuildRequires: perl-devel perl-Encode perl-Module-Pluggable perl-I18N-LangTags perl-Test-Requires perl-Any-Moose perl-Mouse perl-Config-Any perl-BerkeleyDB perl-Moo perl(Module/Load.pm) perl(Log/Minimal.pm) perl(MooX/Types/MooseLike/Base.pm) perl(Module/Build/Tiny.pm)
 
 BuildArch: noarch
 %description
@@ -26,10 +27,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%doc LICENSE README.md Changes
 %perl_vendor_privlib/Data/Localize*
-%doc Changes 
+%doc Changes
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.00028-alt1
+- new version
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.00027-alt1
 - automated CPAN update
 
