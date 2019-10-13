@@ -4,7 +4,7 @@
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 0.56
+Version: 0.57
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -40,6 +40,9 @@ verifying standard for Internet mail.
 #exclude %perl_vendor_privlib/Mail/sample*
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1
+- automated CPAN update
+
 * Thu Aug 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
 - automated CPAN update
 
