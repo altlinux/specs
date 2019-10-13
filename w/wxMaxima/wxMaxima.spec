@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 19.09.1
+Version: 19.10.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -74,6 +74,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Sun Oct 13 2019 Andrey Cherepanov <cas@altlinux.org> 19.10.0-alt1
+- New version.
+
 * Mon Oct 07 2019 Andrey Cherepanov <cas@altlinux.org> 19.09.1-alt1
 - New version.
 
