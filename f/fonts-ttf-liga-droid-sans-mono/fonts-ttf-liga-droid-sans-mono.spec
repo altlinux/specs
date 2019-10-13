@@ -3,7 +3,7 @@
 %define fname liga-droid-sans-mono
 
 Name: fonts-ttf-%fname
-Version: 1.0
+Version: 20180801.8ace00c
 Release: alt1
 Summary: Droid Sans Mono font with programming ligatures
 License: GPLv3
@@ -34,5 +34,8 @@ ln %buildroot%_ttffontsdir/%fname/fonts.scale %buildroot%_ttffontsdir/%fname/fon
 %doc LICENSE
 
 %changelog
+* Sun Oct 13 2019 Alexander Makeenkov <amakeenk@altlinux.org> 20180801.8ace00c-alt1
+- Fixed version
+
 * Sun Oct 13 2019 Alexander Makeenkov <amakeenk@altlinux.org> 1.0-alt1
 - Initial build for ALT
