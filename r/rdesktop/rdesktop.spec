@@ -1,12 +1,14 @@
 Name: rdesktop
-Version: 1.8.3
-Release: alt1.qa1
+Version: 1.8.4
+Release: alt1
 
 Summary: A RDP client for accessing Windows Remote Desktop Services
+
 License: GPLv3+
 Group: Networking/Remote access
-
 Url: http://www.rdesktop.org/
+
+# Source0-url: https://github.com/rdesktop/rdesktop/archive/v%version.tar.gz
 Source0: %name-%version.tar
 Patch0: rdesktop-1.8.3-deb-alt-openssl1.1-support.patch
 
@@ -20,8 +22,8 @@ Windows versions such as NT 4 Terminal Server, 2000, XP, 2003, 2003 R2,
 Vista, 2008, 7, and 2008 R2.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+#patch0 -p1
 
 %build
 %autoreconf
@@ -44,6 +46,14 @@ sed -i 's/slash 0x56 altgr/#slash 0x56 altgr/' %buildroot%_datadir/%name/keymaps
 %_man1dir/*
 
 %changelog
+* Sun Oct 13 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- new version 1.8.4 (with rpmrb script) (ALT bug 36068)
+- CVE-2018-8794, CVE-2018-8795, CVE-2018-8797, CVE-2018-20175
+- CVE-2018-20176, CVE-2018-8791, CVE-2018-8792, CVE-2018-8793
+- CVE-2018-8796, CVE-2018-8798, CVE-2018-8799, CVE-2018-8800
+- CVE-2018-20174, CVE-2018-20177, CVE-2018-20178, CVE-2018-20179
+- CVE-2018-20180, CVE-2018-20181, CVE-2018-20182
+
 * Tue Oct 02 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.3-alt1.qa1
 - Fixed build and rebuilt with openssl 1.1.
 - Disabled ELF strip(1)ping to enable debuginfo subpackage.
