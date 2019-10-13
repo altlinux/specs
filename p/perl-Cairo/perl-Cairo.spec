@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Cairo
 Name: perl-%dist
-Version: 1.106
-Release: alt1.2
+Version: 1.107
+Release: alt1
 
 Summary: Perl interface to the cairo vector graphics library
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/Cairo-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: fonts-ttf-dejavu libcairo-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-devel
@@ -31,7 +31,7 @@ It supports multiple output targets, including PNG, PDF and SVG.
 Cairo produces identical output on all those targets.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,7 +40,7 @@ Cairo produces identical output on all those targets.
 %perl_vendor_install
 
 %files
-%doc NEWS README
+%doc README ChangeLog.pre-git examples
 %perl_vendor_archlib/Cairo.pm
 %perl_vendor_autolib/Cairo
 
@@ -49,6 +49,9 @@ Cairo produces identical output on all those targets.
 %perl_vendor_archlib/Cairo/Install
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.107-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.106-alt1.2
 - rebuild with new perl 5.28.1
 
