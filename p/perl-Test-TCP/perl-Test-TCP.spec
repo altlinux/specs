@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Test-TCP
-Version: 2.21
+Version: 2.22
 Release: alt1
 
 Summary: Test::TCP - testing TCP program
@@ -32,6 +32,9 @@ Test::TCP is test utilities for TCP/IP program.
 %doc Changes README.md
 
 %changelog
+* Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
+- new version
+
 * Mon Oct 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1
 - new version
 
