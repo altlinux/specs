@@ -1,8 +1,8 @@
 %def_with server
 
 Name:       hedgewars
-Version:    0.9.25
-Release:    alt3
+Version:    1.0.0
+Release:    alt1
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -15,6 +15,9 @@ Packager:   Grigory Ustinov <grenka@altlinux.org>
 
 Source:     %name-%version.tar
 Patch:      fix_non_inline_ShiftWorld.patch
+# This patch fixes hGetContents: invalid argument (invalid byte sequence) on i586 arch
+# Should be removed in next version
+Patch1:     15474.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -97,6 +100,7 @@ This package contains all the data files for %name.
 %prep
 %setup
 %patch -p2
+%patch1 -p1
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -132,9 +136,7 @@ chrpath --delete %buildroot%_bindir/hwengine
 %doc README ChangeLog.txt CREDITS
 %_bindir/*
 %_libdir/*.so.*
-%ifarch x86_64
 %_libdir/libavwrapper.so
-%endif
 %_libdir/libphyslayer.so
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
@@ -146,6 +148,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Build new version (with video rendering on %%ix86).
+
 * Mon Sep 02 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt3
 - Build with server support (Closes: #36923).
 
