@@ -1,14 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: sdcc
 Epoch: 1
-Version: 3.6.0
+Version: 3.9.0
 Release: alt1
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
 Summary: Small Device C Compiler
+
 Source: %name-%version.tar
 
+Patch1: %name-%version-alt.patch
+
 BuildRequires: flex gcc-c++ boost-devel gputils /usr/bin/makeinfo
+BuildRequires: zlib-devel
+BuildRequires: /usr/bin/python3
 
 Requires: %name-common = %EVR
 
@@ -24,8 +31,9 @@ microprocessors.
 
 %package common
 License: GPL, LGPL
-Group:         Development/C
-Summary:       Libraries and Header Files for the SDCC C compiler
+Group:   Development/C
+Summary: Libraries and Header Files for the SDCC C compiler
+
 %description common
 SDCC is a free open source, retargettable, optimizing ANSI C compiler
 suite that targets a growing list of processors including the Intel
@@ -37,10 +45,11 @@ the Microchip PIC16 and PIC18 targets. It can be retargeted for other
 microprocessors.
 
 %package doc
-License:       GPL
-Group:         Development/C
-Summary:       Documentation for the SDCC C compiler
-BuildArch:	noarch
+License:   GPL
+Group:     Development/C
+Summary:   Documentation for the SDCC C compiler
+BuildArch: noarch
+
 %description doc
 SDCC is a free open source, retargettable, optimizing ANSI C compiler
 suite that targets a growing list of processors including the Intel
@@ -52,32 +61,34 @@ the Microchip PIC16 and PIC18 targets. It can be retargeted for other
 microprocessors.
 
 %prep
-%setup -q -n %name-%version
+%setup
+%patch1 -p1
 
 %build
-%configure --docdir=%_docdir/%name-%version \
-	--enable-werror=no
+PYTHON=python3 \
+%configure \
+	--docdir=%_docdir/%name-%version \
+	--enable-werror=no \
+	%nil
+
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-#rm -fr /usr/src/tmp/sdcc-buildroot/usr/share/sdcc/lib/src
+%makeinstall_std
 
 %files 
 %_bindir/*
 
 %files common
-%_datadir/%name/*
+%_datadir/%name
 
 %files doc
-%_docdir/%name-%version/*
-
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/%name-%version 
+%_docdir/%name-%version
 
 %changelog
+* Mon Oct 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.9.0-alt1
+- Updated to upstream version 3.9.0 (Closes: #37328).
+
 * Tue Sep 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6.0-alt1
 - Updated to upstream version 3.6.0.
 
