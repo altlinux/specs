@@ -1,12 +1,12 @@
 # TODO: build with external lxqt_wallet, with kwallet support
 Name: sirikali
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: A Qt/C++ GUI front end to ecryptfs-simple,cryfs,gocryptfs,securefs and encfs
-
 License: GPL-2.0+
 Group: File tools
+
 Url: http://mhogomchungu.github.io/sirikali
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -29,25 +29,43 @@ Obsoletes: cryfs-gui
 Requires: xdg-utils
 
 %description
-SiriKali is a Qt/C++ GUI application that manages ecryptfs,cryfs,encfs,gocryptfs and securefs based encrypted folders.
-ecryptfs-simple binary application is required to be installed for SiriKali to gain support for ecryptfs volumes.
+SiriKali is a Qt/C++ GUI application that manages ecryptfs, cryfs,
+encfs, gocryptfs and securefs based encrypted folders.
 
-cryfs binary application is required to be installed for SiriKali to gain support for cryfs volumes.
+ecryptfs-simple binary application is required to be installed for
+SiriKali to gain support for ecryptfs volumes.
 
-gocryptfs binary application is required to be installed for SiriKali to gain support for gocryptfs volumes.
+cryfs binary application is required to be installed for SiriKali
+to gain support for cryfs volumes.
 
-encfs binary application is required to be installed for SiriKali to gain support for encfs volumes.
+gocryptfs binary application is required to be installed for SiriKali
+to gain support for gocryptfs volumes.
 
-securefs binary application is required to be installed for SiriKali to gain support for securefs volumes.
+encfs binary application is required to be installed for SiriKali
+to gain support for encfs volumes.
 
-Encrypted container folders have an advantage over encrypted container files like the ones that are created
-by zuluCrypt,TrueCrypt,VeraCrypt among other projects that use file based encrypted containers.
+securefs binary application is required to be installed for SiriKali
+to gain support for securefs volumes.
+
+Encrypted container folders have an advantage over encrypted
+container files like the ones that are created by zuluCrypt,
+TrueCrypt, VeraCrypt among other projects that use file based
+encrypted containers.
 
 %prep
 %setup
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
-%cmake -DQT5=true -DNOKDESUPPORT=true -DNOSECRETSUPPORT=false -DCMAKE_BUILD_TYPE=RELEASE
+%cmake \
+	-DQT5=true \
+	-DNOKDESUPPORT=true \
+	-DNOSECRETSUPPORT=false \
+	-DCMAKE_BUILD_TYPE=RELEASE
 %make_build -C BUILD
 
 %install
@@ -67,6 +85,10 @@ by zuluCrypt,TrueCrypt,VeraCrypt among other projects that use file based encryp
 %_datadir/metainfo/sirikali.appdata.xml
 
 %changelog
+* Mon Oct 14 2019 Michael Shigorin <mike@altlinux.org> 1.4.0-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+- minor spec cleanup
+
 * Sat Oct 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
