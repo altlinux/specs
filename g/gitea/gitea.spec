@@ -3,7 +3,7 @@
 %def_without crutch
 
 Name:    gitea
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -79,12 +79,16 @@ useradd -r -g %name -d %_localstatedir/%name %name -s /bin/sh ||:
 %dir %_sysconfdir/%name
 %config(noreplace) %attr(0660,root,%name) %_sysconfdir/%name/app.ini
 %config(noreplace) %attr(0660,root,%name) %_sysconfdir/systemd/system/gitea.service.d/port.conf
+%dir %_sysconfdir/systemd/system/gitea.service.d
 %systemd_unitdir/%name.service
 %_docdir/%name/default-app.ini
 %_docdir/%name/README.ALT
 %doc *.md
 
 %changelog
+* Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt1
+- Build new version.
+
 * Wed Sep 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.3-alt1
 - Build new version.
 
