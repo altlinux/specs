@@ -55,8 +55,6 @@
 %def_without esx
 %endif
 %def_without hyperv
-%def_without xenapi
-
 
 # Then the secondary host drivers
 %def_with network
@@ -108,7 +106,6 @@
 %def_without phyp
 %def_without esx
 %def_without hyperv
-%def_without xenapi
 %def_without network
 %def_without storage_fs
 %def_without storage_lvm
@@ -182,7 +179,7 @@
 %endif
 
 Name: libvirt
-Version: 5.7.0
+Version: 5.8.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -794,9 +791,29 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
-LOADERS_OLD="%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd"
-LOADERS_NEW="%_datadir/edk2/ovmf/OVMF_CODE.fd:%_datadir/edk2/ovmf/OVMF_VARS.fd:%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2/aarch64/vars-template-pflash.raw"
-LOADERS="$LOADERS_OLD:$LOADERS_NEW"
+
+# Nightly edk2.git-ovmf-x64
+LOADERS="%_datadir/edk2.git/ovmf-x64/OVMF_CODE-pure-efi.fd:%_datadir/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd"
+# Nightly edk2.git-ovmf-ia32
+LOADERS="$LOADERS:%_datadir/edk2.git/ovmf-ia32/OVMF_CODE-pure-efi.fd:%_datadir/edk2.git/ovmf-ia32/OVMF_VARS-pure-efi.fd"
+# Nightly edk2.git-aarch64
+LOADERS="$LOADERS:%_datadir/edk2.git/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2.git/aarch64/vars-template-pflash.raw"
+# Nightly edk2.git-arm
+LOADERS="$LOADERS:%_datadir/edk2.git/arm/QEMU_EFI-pflash.raw:%_datadir/edk2.git/arm/vars-template-pflash.raw"
+
+# edk2-ovmf, x86_64
+LOADERS="$LOADERS:%_datadir/edk2/ovmf/OVMF_CODE.fd:%_datadir/edk2/ovmf/OVMF_VARS.fd"
+# edk2-ovmf, x86_64, with Secure Boot
+LOADERS="$LOADERS:%_datadir/edk2/ovmf/OVMF_CODE.secboot.fd:%_datadir/edk2/ovmf/OVMF_VARS.secboot.fd"
+# edk2-ovmf-ia32
+LOADERS="$LOADERS:%_datadir/edk2/ovmf-ia32/OVMF_CODE.fd:%_datadir/edk2/ovmf-ia32/OVMF_VARS.fd"
+# edk2-ovmf-ia32, with Secure Boot
+LOADERS="$LOADERS:%_datadir/edk2/ovmf-ia32/OVMF_CODE.secboot.fd:%_datadir/edk2/ovmf-ia32/OVMF_VARS.fd"
+# edk2-aarch64
+LOADERS="$LOADERS:%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2/aarch64/vars-template-pflash.raw"
+# edk2-arm
+LOADERS="$LOADERS:%_datadir/edk2/arm/QEMU_EFI-pflash.raw:%_datadir/edk2/arm/vars-template-pflash.raw"
+
 %define with_loader_nvram $LOADERS
 
 ./bootstrap --no-git --gnulib-srcdir=gnulib-%name-%version
@@ -821,7 +838,6 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with phyp} \
 		%{subst_with esx} \
 		%{subst_with hyperv} \
-		%{subst_with xenapi} \
 		%{subst_with network} \
 		%{subst_with_dash storage_fs} \
 		%{subst_with_dash storage_lvm} \
@@ -862,7 +878,6 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 
 
 %make_build
-gzip -9 ChangeLog
 
 %install
 %makeinstall_std
@@ -948,16 +963,7 @@ rm -rf %buildroot%_man7dir
 %endif
 
 %check
-cd tests
-%make
-# These 1 tests don't current work
-for i in daemon-conf
-do
-  rm -f $i
-  printf "#!/bin/sh\nexit 0\n" > $i
-  chmod +x $i
-done
-%make check ||:
+%make_build check VIR_TEST_DEBUG=1 ||:
 
 %pre login-shell
 %_sbindir/groupadd -r -f virtlogin
@@ -1010,10 +1016,7 @@ fi
 
 %files docs
 %doc docs/*.xml
-%doc %_datadir/gtk-doc/html/libvirt
-
-%doc docs/html docs/devhelp docs/*.gif
-
+%doc docs/html docs/*.gif
 
 %files client
 %_bindir/virsh
@@ -1397,6 +1400,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Oct 14 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.0-alt1
+- 5.8.0
+
 * Mon Sep 09 2019 Alexey Shabalin <shaba@altlinux.org> 5.7.0-alt1
 - 5.7.0
 
