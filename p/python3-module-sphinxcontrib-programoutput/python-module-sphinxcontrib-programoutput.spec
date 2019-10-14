@@ -1,7 +1,7 @@
 %define  modulename sphinxcontrib-programoutput
 
 Name:    python3-module-%modulename
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Sphinx extension for capturing program output
@@ -38,6 +38,9 @@ documents, helping you to keep your command examples up to date.
 %doc *.rst
 
 %changelog
+* Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.15-alt1
+- Build new version.
+
 * Thu Aug 15 2019 Grigory Ustinov <grenka@altlinux.org> 0.14-alt1
 - Build new version.
 - Build for python3.
