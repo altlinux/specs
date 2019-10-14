@@ -5,7 +5,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt24
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt5.%kernel_rt_release
+Release: alt6.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -480,6 +480,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 14 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt6.rt24
+- Add xz support squashfs (for propagator).
+
 * Thu Sep 19 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt5.rt24
 - Enable virtio_scsi module.
 
