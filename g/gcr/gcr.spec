@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.33
+%define ver_major 3.34
 %def_enable introspection
 %def_enable gtk_doc
 %def_disable check
 
 Name: gcr
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -188,6 +188,9 @@ xvfb-run %make check
 
 
 %changelog
+* Mon Oct 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Tue Oct 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.33.4-alt1
 - updated to 3.33.4-15-ge060252
 
