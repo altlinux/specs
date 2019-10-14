@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 3.2p1
-Release: alt1.3
+Release: alt1.4
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -18,8 +18,7 @@ BuildRequires: chrpath
 BuildRequires: service
 
 # Automatically added by buildreq on Tue Jul 25 2017
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcloog-isl4 libusb-devel perl perl-Encode perl-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python3 python3-base ruby-stdlibs swig-data
-BuildRequires: glibc-devel-static groff-base libftdi1-devel libfuse-devel mt-st python-devel python-module-google python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-locale selinux-policy swig
+BuildRequires: glibc-devel-static groff-base libftdi1-devel libfuse-devel mt-st python-dev python-module-google python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-locale swig
 
 %description
 OWFS is a userspace virtual filesystem providing access to 1-Wire
@@ -338,6 +337,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 14 2019 Grigory Milev <week@altlinux.ru> 3.2p1-alt1.4
+- fix build requires
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.2p1-alt1.3
 - rebuild with new perl 5.28.1
 
