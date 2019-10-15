@@ -1,18 +1,21 @@
 Name: fb2edit
-Version: 0.0.9
+Version: 0.1.0
 Release: alt1
 
 Summary: FB2 editor
+
 License: GPLv3
 Group: Editors
+Url: https://github.com/vitlav/fb2edit
 
-Url: https://github.com/lintest/fb2edit
-# Repacked %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/vitlav/fb2edit/archive/%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Jan 20 2017
-# optimized out: cmake-modules fontconfig libgst-plugins1.0 libqt4-core libqt4-devel libqt4-gui libqt4-location libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sensors libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-webkit-devel libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base python-modules
-BuildRequires: cmake gcc-c++ libqt4-sql-mysql phonon-devel qt4-designer
+BuildRequires: qt5-imageformats qt5-tools-devel qt5-translations qt5-wayland-devel qt5-webkit-devel qt5-xmlpatterns-devel
+
+BuildRequires: libxml2-devel
+
+BuildRequires: cmake gcc-c++
 
 %description
 Editor for FB2 (FictionBook) files.
@@ -34,5 +37,9 @@ Editor for FB2 (FictionBook) files.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.0-alt1
+- NMU: new version (0.1.0) with rpmgs script
+- build with Qt5
+
 * Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.0.9-alt1
 - Initial build.
