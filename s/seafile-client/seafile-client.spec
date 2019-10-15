@@ -1,6 +1,6 @@
 Name: seafile-client
 Version: 7.0.2
-Release: alt1
+Release: alt2
 
 Summary: Seafile gui client on QT bassed
 
@@ -12,6 +12,8 @@ Packager: Denis Baranov <baraka@altlinux.ru>
 
 # Source-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Source1: seafile.desktop
 
 Patch: seafile-client-no-return-error.patch
 
@@ -39,6 +41,7 @@ Seafile is a full-fledged document collaboration platform.
 %prep
 %setup
 %patch -p2
+cp %SOURCE1 data/
 
 %build
 PATH=%_qt5_bindir:$PATH %cmake_insource
@@ -58,6 +61,9 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Mon Oct 14 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.2-alt2
+- add russian localization to the desktop file (ALT bug 33772)
+
 * Fri Aug 30 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.2-alt1
 - new version 7.0.2 (with rpmrb script)
 
