@@ -1,7 +1,7 @@
 %define oname tcltls
 
 Name: tcl-tls
-Version: 1.7.18
+Version: 1.7.19
 Release: alt1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
@@ -11,6 +11,7 @@ Url: https://core.tcl.tk/tcltls/
 
 # repacked https://core.tcl-lang.org/tcltls/uv/tcltls-%version.tar.gz
 Source: %oname-%version.tar
+Source1: tcl-tls.watch
 
 # Debian patches
 # hasher chroot
@@ -40,6 +41,7 @@ sed -i 's/@lib@/%_lib/g' pkgIndex.tcl.in
 %autoreconf
 %configure \
 	--disable-rpath \
+	--enable-hardening \
 	--with-openssl-dir="%prefix" \
 	#
 make
@@ -54,9 +56,13 @@ make test AUTO_PATH=%buildroot%_tcllibdir/tcltls%version
 %doc ChangeLog README.txt license.terms tls.htm
 %_tcllibdir/tcltls.so
 %_tcllibdir/tcltls%version
-%_tcldatadir/tcltls%version
 
 %changelog
+* Tue Oct 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.19-alt1
+- 1.7.19.
+- Fixed ALT TEA.
+- Packed watch file from Debian project.
+
 * Sat Aug 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.18-alt1
 - 1.7.18.
 - Enabled tests.
