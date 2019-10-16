@@ -1,10 +1,8 @@
 %define oname isort
 
-%def_with python3
-
 Name:           python-module-%oname
 Version:        4.2.15
-Release:        alt3.qa1
+Release:        alt4
 Summary:        Python utility / library to sort Python imports
 Group:          Development/Python
 License:        MIT
@@ -16,81 +14,32 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-mock
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-pytest python3-module-mock
-%endif
 
 %description
 Python utility / library to sort Python imports
 
-%if_with python3
-%package -n python3-module-%oname
-Group:          Development/Python3
-Summary:        Python utility / library to sort Python imports
-
-%description -n python3-module-%oname
-Python utility / library to sort Python imports
-%endif
-
 %prep
 %setup
-
-%if_with python3
-cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
 %install
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
 %python_install
 
 %check
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
-
 python setup.py test
 
 %files
 %doc README.rst LICENSE
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/%oname
 %python_sitelibdir/%oname-%version-py2*.egg-info
 
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst LICENSE
-%_bindir/*.py3
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py3*.egg-info
-%endif
-
 %changelog
+* Thu Oct 17 2019 Stanislav Levin <slev@altlinux.org> 4.2.15-alt4
+- NMU: moved Python3 out to its own package.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt3.qa1
 - NMU: remove rpm-build-ubt from BR:
 
