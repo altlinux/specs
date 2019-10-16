@@ -1,13 +1,13 @@
 Name: qtsoap
 Version: 2.7
-Release: alt4
+Release: alt5
 
-Group: System/Libraries
 Summary: The Simple Object Access Protocol Qt-based client side library
-Url: http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Utilities/qtsoap/
 License: LGPLv2 with exceptions or GPLv3
+Group: System/Libraries
 
-#http://get.qt.nokia.com/qt/solutions/lgpl/
+Url: http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Utilities/qtsoap/
+# http://get.qt.nokia.com/qt/solutions/lgpl/
 Source: qtsoap-%version.tar.gz
 # FC
 Patch1: qtsoap-2.7_1-opensource-install-pub-headers.patch
@@ -67,6 +67,11 @@ sed -i 's:$$DESTDIR:%_libdir:g' qtsoap-%version/buildlib/buildlib.pro
 cp -a %name-%version qtsoap5-%version
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
+
 pushd %name-%version
 # we want shared library
 echo "SOLUTIONS_LIBRARY = yes" > config.pri
@@ -115,6 +120,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2.7-alt5
+- E2K: explicit -std=c++11
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt4
 - NMU: remove rpm-build-ubt from BR:
 
