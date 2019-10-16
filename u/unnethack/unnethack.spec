@@ -1,10 +1,10 @@
 Name: unnethack
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 Summary: An enhancement to the dungeon exploration game NetHack
-Source: %name-%version.tar.gz
+Source: %version.tar.gz
 Group: Games/Adventure
-Url: http://sourceforge.net/apps/trac/unnethack/
+Url: https://unnethack.wordpress.com
 License: NethackGPL
 
 # Automatically added by buildreq on Sat Nov 26 2011
@@ -19,7 +19,7 @@ than vanilla NetHack.
 
 %prep
 %setup
-sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefile.src 
+sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefile.src
 
 %build
 LIBS=-lgsl %configure --enable-curses-graphics
@@ -41,6 +41,9 @@ mv %buildroot%_datadir/unnethack/unnethack %buildroot%_bindir/unnethack.bin && l
 %attr(664,root,games) %_localstatedir/%name/[^sbl]*
 
 %changelog
+* Wed Oct 16 2019 Fr. Br. George <george@altlinux.ru> 5.2.0-alt1
+- Autobuild version bump to 5.2.0
+
 * Thu Feb 27 2014 Fr. Br. George <george@altlinux.ru> 5.1.0-alt1
 - Autobuild version bump to 5.1.0
 - Fix build
