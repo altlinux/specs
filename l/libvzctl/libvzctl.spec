@@ -1,7 +1,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.538
+Version: 7.0.539
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -67,6 +67,12 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Wed Oct 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.539-alt1
+- 7.0.539
+
+* Wed Oct 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.538-alt2
+- add/remove device for systemd/networkd service
+
 * Mon Oct 14 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.538-alt1
 - 7.0.538
 - fix /sbin/ip path
