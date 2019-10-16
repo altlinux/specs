@@ -1,5 +1,5 @@
 Name: code
-Version: 1.36.0
+Version: 1.39.2
 Release: alt1
 
 Summary: Visual Studio Code
@@ -57,9 +57,13 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Wed Oct 16 2019 Vitaly Lipatov <lav@altlinux.ru> 1.39.2-alt1
+- new version 1.39.2 (with rpmrb script) (ALT bug 37337)
+
 * Mon Jul 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.36.0-alt1
 - new version 1.36.0 (ALT bug 34012)
-- moved to Electron version 4.x, which means that VS Code will no longer run on Linux 32-bi
+- moved to Electron version 4.x, which means that
+  VS Code will no longer run on Linux 32-bit
 
 * Sat Jun 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.35.0-alt1
 - new version 1.35.0 (with rpmrb script)
