@@ -1,17 +1,15 @@
 Name: libmuparser
 Version: 2.2.6.1
-Release: alt1
+Release: alt2
 
 Summary: a fast math parser library
-
 License: MIT
 Group: System/Libraries
+
 Url: http://muparser.beltoforion.de/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # Source-url: https://github.com/beltoforion/muparser/archive/v%version.tar.gz
 Source: %name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Wed Mar 03 2010
 BuildRequires: gcc-c++
@@ -25,12 +23,12 @@ precalculating constant parts of it.
 %package -n %{name}2
 Summary: %summary
 Group: Development/Other
+
 %description -n %{name}2
 The main objective of this project is to provide a fast and easy way
 of doing this. muParser is an extensible high performance math parser
 library. It is based on transforming an expression into a bytecode and
 precalculating constant parts of it.
-
 
 %package devel
 Summary: Header files for %name
@@ -45,6 +43,10 @@ Header files for %name library.
 sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %configure --enable-shared=yes --disable-samples
 %make_build
 
@@ -62,6 +64,9 @@ sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 %_pkgconfigdir/*
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2.2.6.1-alt2
+- E2K: explicit -std=c++11
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.6.1-alt1
 - new version 2.2.6.1 (with rpmrb script)
 
