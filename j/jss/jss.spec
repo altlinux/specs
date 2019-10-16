@@ -4,7 +4,7 @@
 %def_with check
 
 Name: jss
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -123,6 +123,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1
+- 4.6.1 -> 4.6.2 (closes: CVE-2019-14823).
+
 * Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1
 - 4.5.3 -> 4.6.1.
 

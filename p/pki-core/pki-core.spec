@@ -12,7 +12,7 @@
 %define ldapjdk_version     4.21.0
 
 Name: pki-core
-Version: 10.7.3
+Version: 10.7.4
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -59,6 +59,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-nss
 
 %if_with check
+BuildRequires: /dev/shm
 BuildRequires: ctest
 BuildRequires: nss-utils
 BuildRequires: openssl
@@ -719,6 +720,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 10.7.4-alt1
+- 10.7.3 -> 10.7.4.
+
 * Mon Aug 26 2019 Stanislav Levin <slev@altlinux.org> 10.7.3-alt1
 - 10.7.0 -> 10.7.3.
 
