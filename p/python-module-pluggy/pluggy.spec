@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.12.0
-Release: alt2
+Version: 0.13.0
+Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(setuptools_scm)
 BuildRequires: python3(setuptools_scm)
+
+%py_requires importlib_metadata
 
 %if_with check
 BuildRequires: python2.7(importlib_metadata)
@@ -35,6 +37,9 @@ specific details.
 %package -n python3-module-%oname
 Summary: Plugin and hook calling mechanisms for python
 Group: Development/Python3
+
+# should be removed on Python3.8+
+%py3_requires importlib_metadata
 
 %description -n python3-module-%oname
 This is the plugin manager as used by pytest but stripped of pytest
@@ -97,6 +102,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
+- 0.12.0 -> 0.13.0.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.12.0-alt2
 - Fixed testing against Pytest 5.
 
