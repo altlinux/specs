@@ -1,19 +1,19 @@
 Name: libbelle-sip
 Version: 1.6.3
-Release: alt2
-Summary: Linphone sip stack
+Release: alt3
 
+Summary: Linphone SIP stack
+License: GPL
 Group: System/Libraries
 
+Url: http://www.belle-sip.org
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
-License: GPL
-Url: http://www.belle-sip.org
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: antlr3-C bcunit gnu-config java-1.8.0-openjdk-headless libstdc++-devel perl pkg-config python-base python3
-BuildRequires: antlr3-C-devel java-devel libmbedtls-devel libbctoolbox-devel gcc5-c++ zlib-devel
+BuildRequires: antlr3-C-devel java-devel libmbedtls-devel libbctoolbox-devel gcc-c++ zlib-devel
 
 BuildRequires: /proc rpm-build-java
 
@@ -30,24 +30,25 @@ Libraries and headers required to develop software with belle-sip
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
+%ifarch %e2k
+%add_optflags -std=c11
+# -Werror => 'unrecognized character escape sequence' gets fatal
+# NB: src/grammars/belle_sip_message.g is *not* to be changed
+sed -r -i 's,\\(%%[dsu]),\1,g' src/belle_sip_utils.c src/parserutils.h
+# as of lcc-1.23.12; looks like author knows of getTokenNames/freeScope warning
+sed -i 's,-fms-extensions,-Wno-error=unused-function -Wno-error=unused-variable -Wno-error=ignored-qualifiers,' configure*
+%endif
 
 %build
-
-%set_gcc_version 5
-
-./autogen.sh
-
-./configure --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
-            --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share \
-            --includedir=/usr/include --libdir=%_libdir \
-            --libexecdir=/usr/lib --localstatedir=/var/lib \
-            --sharedstatedir=/var/lib --mandir=/usr/share/man \
-            --infodir=/usr/share/info --disable-static --with-antlr=%_builddir/%name-%version
+%autoreconf
+%configure \
+	--disable-static \
+	--with-antlr=%_builddir/%name-%version \
+	--enable-strict=no
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-
-make
+%make_build
 
 %install
 
@@ -63,6 +64,12 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 1.6.3-alt3
+- E2K: fix ftbfs with lcc 1.23.12
+- Build with current compiler version (but without -Werror then)
+- Enable parallel build
+- Spec cleanup
+
 * Wed Feb 21 2018 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt2
 - Add %%set_gcc_version 5 to %%build section
 
