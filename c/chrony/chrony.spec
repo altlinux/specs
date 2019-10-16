@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -131,6 +131,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Oct 16 2019 Anton Farygin <rider@altlinux.ru> 3.5-alt2
+- fixed help in chrony control script (closes: #37340)
+
 * Tue May 21 2019 Anton Farygin <rider@altlinux.ru> 3.5-alt1
 - 3.5
 
