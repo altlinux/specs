@@ -1,8 +1,8 @@
 %define origname libLASi
 
 Name: liblasi
-Version: 1.1.2
-Release: alt1.qa1
+Version: 1.1.3
+Release: alt2
 
 Summary: C++ stream output interface for creating Unicode PostScript documents
 License: LGPL
@@ -11,6 +11,8 @@ Group: System/Libraries
 Url: http://www.unifont.org/lasi
 Source: %origname-%version.tar.gz
 Source100: %name.watch
+Patch0: libLASi-link_gobject2.patch
+Patch1: libLASi-do_not_build_examples.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 28 2014
@@ -68,6 +70,8 @@ This is user and developer documentation for libLASi.
 
 %prep
 %setup -n %origname-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 cmake \
@@ -99,6 +103,13 @@ mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 %doc doc/*
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 1.1.3-alt2
+- fix actual ftbfs with opensuse patches
+  + ...dropping examples along with that
+
+* Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1
+- new version (watch file uupdate)
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.1.2-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
