@@ -22,11 +22,11 @@ O.U.U.O.O. O.U. U.O.O.O.O. O.U.U.O.U. U.U.O. O.U.O.O.U. O.U.U.O.U. O.U.O.O.O.U.U
 O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O.U.U..
 
 Name: fonts-ttf-amiri
-Version: 0.109
-Release: alt1_2
+Version: 0.111
+Release: alt1_1
 License: OFL
 
-Source0: https://github.com/alif-type/amiri/releases/download/%{version}/%{fontname}-%{version}.zip
+Source0: https://github.com/alif-type/amiri/releases/download/%{version}/Amiri-%{version}.zip
 Source1: %{fontname}-quran-fontconfig.conf
 Source2: %{fontname}-fontconfig.conf
 
@@ -77,7 +77,7 @@ This package contains Quran type of Amiri fonts.
 تحتوي هذه الحُزمة على النّمط القرآني من الخط الأميري.
 
 %prep
-%setup -q -n %{fontname}-%{version}
+%setup -q -n Amiri-%{version}
 
 %build
 #Nothing to build
@@ -85,7 +85,12 @@ This package contains Quran type of Amiri fonts.
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p Amiri-Bold.ttf %{buildroot}%{_fontdir}/%{fontname}-bold.ttf
+install -m 0644 -p Amiri-BoldSlanted.ttf %{buildroot}%{_fontdir}/%{fontname}-boldslanted.ttf
+install -m 0644 -p Amiri-Regular.ttf %{buildroot}%{_fontdir}/%{fontname}-regular.ttf
+install -m 0644 -p Amiri-Slanted.ttf %{buildroot}%{_fontdir}/%{fontname}-slanted.ttf
+install -m 0644 -p AmiriQuran.ttf %{buildroot}%{_fontdir}/%{fontname}-quran.ttf
+install -m 0644 -p AmiriQuranColored.ttf %{buildroot}%{_fontdir}/%{fontname}-quran-colored.ttf
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -138,22 +143,27 @@ fi
 %files -n fonts-ttf-amiri-quran
 %{_fontconfig_templatedir}/67-%{fontname}-quran.conf
 %config(noreplace) %{_fontconfig_confdir}/67-%{fontname}-quran.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/amiri-quran.ttf
 %{_fontbasedir}/*/%{_fontstem}/amiri-quran-colored.ttf
 
 %files
 %{_fontconfig_templatedir}/67-%{fontname}.conf
 %config(noreplace) %{_fontconfig_confdir}/67-%{fontname}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/amiri-regular.ttf
 %{_fontbasedir}/*/%{_fontstem}/amiri-slanted.ttf
 %{_fontbasedir}/*/%{_fontstem}/amiri-bold.ttf
 %{_fontbasedir}/*/%{_fontstem}/amiri-boldslanted.ttf
 
 %files -n fonts-ttf-amiri-common
-%doc OFL.txt
-%doc amiri-table.pdf NEWS README README-Arabic NEWS-Arabic documentation-arabic.pdf
+%doc --no-dereference OFL.txt
+%doc FontTable-Amiri.pdf FontTable-AmiriQuran.pdf NEWS README README-Arabic NEWS-Arabic Documentation-Arabic.pdf
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.111-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.109-alt1_2
 - update to new release by fcimport
 
