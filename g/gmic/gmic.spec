@@ -2,19 +2,19 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 %def_enable zart
 
-%define gmic_git_ver v.2.7.1
+%define gmic_git_ver v.2.7.3
 # https://github.com/c-koi/zart
 # no tags
-%define zart_ver ca18ba1
+%define zart_ver 59257a2
 # https://github.com/c-koi/gmic-qt
 # v.2.6.2
-%define gmic_qt_ver v2.7.0-25-gd15d6fc
+%define gmic_qt_ver v.2.7.4-1-g359c554
 # https://github.com/dtschump/gmic-community.git
 # 1.6.3.2-1245-g44ad9cb
-%define gmic_comm_ver 1.6.3.2-1299-g3e81eee
+%define gmic_comm_ver 1.6.3.2-1367-gbb01b4c
 
 Name: gmic
-Version: 2.7.1
+Version: 2.7.4
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -76,6 +76,7 @@ Summary: GREYC's image processing language demo
 Group: Graphics
 Provides: zart = %version-%release
 Requires: lib%name = %version-%release
+Requires: gst-libav
 
 %description zart
 ZArt is a computer program whose purpose is to demonstrate the possibilities of
@@ -129,6 +130,7 @@ popd
 
 %if_enabled zart
 pushd zart
+rm -f .qmake.stash
 %qmake_qt5 CONFIG+=release GMIC_PATH=../src zart.pro
 %make_build
 popd
@@ -184,6 +186,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sat Oct 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Wed Sep 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - 2.7.1
 

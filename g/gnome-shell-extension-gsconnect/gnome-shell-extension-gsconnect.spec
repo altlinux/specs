@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 25
-%define beta -rc2
+%define ver_major 27
+%define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
-Release: alt0.1
+Release: alt1
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -61,6 +61,7 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/nautilus-python/extensions/nautilus-gsconnect.py
 %_datadir/nautilus-python/extensions/__pycache__/*
+%_iconsdir/hicolor/*/*/*.svg
 
 %if_enabled webextension
 %_sysconfdir/chromium/native-messaging-hosts/org.gnome.shell.extensions.gsconnect.json
@@ -71,6 +72,9 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %doc README.md
 
 %changelog
+* Thu Oct 17 2019 Yuri N. Sedunov <aris@altlinux.org> 27-alt1
+- 27
+
 * Mon Jun 24 2019 Yuri N. Sedunov <aris@altlinux.org> 25-alt0.1
 - first build for Sisyphus (0.25-rc2)
 

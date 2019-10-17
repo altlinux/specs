@@ -20,7 +20,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -39,7 +39,7 @@ BuildRequires: libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpac
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
 BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
-BuildRequires: libmpg123-devel liblame-devel
+BuildRequires: libmpg123-devel liblame-devel libtwolame-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: liborc-test-devel
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
@@ -109,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Oct 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
+- enabled twolame mp2 audio encoder plugin 
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
