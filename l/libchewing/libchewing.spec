@@ -1,32 +1,33 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: perl(FileHandle.pm) perl(Text/Wrap.pm) texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%global libchewing_python_dir %{python_sitelibdir}/libchewing
+%global libchewing_python_dir %{python3_sitelibdir_noarch}
 
 %global im_name_zh_TW 新酷音輸入法
 %global name_zh_TW %{im_name_zh_TW}函式庫
 
 Name:           libchewing
 Version:        0.5.1
-Release:        alt1_11
+Release:        alt1_16
 Summary:        Intelligent phonetic input method library for Traditional Chinese
 Summary(zh_TW): %{name_zh_TW}
 
 License:        LGPLv2+
 URL:            http://chewing.csie.net/
 Source0:        https://github.com/chewing/%{name}/archive/v%{version}.tar.gz
-Source1:         https://raw.githubusercontent.com/chewing/%{name}/v%{version}/contrib/python/chewing.py
+# https://github.com/chewing/libchewing/pull/310
+Patch0:         0001-chewing.py-supports-platforms-with-64bit-pointer.patch
 
 BuildRequires:  autoconf automake libtool makeinfo 
 BuildRequires:  libsqlite3-devel
+BuildRequires:  python3-devel
 Requires: sqlite3
-Requires(post): info info-install
-Requires(preun): info info-install
+# since f31
+Obsoletes:      python2-libchewing < 0.5.1-13
 Source44: import.info
 
 %description
@@ -57,29 +58,22 @@ library.
 像是標頭檔(header files)，以及函式庫。
 
 
-%package -n python-module-libchewing
+%package -n python3-module-libchewing
 Group: System/Libraries
 Summary:        Python binding for libchewing
+BuildArch:      noarch
 Summary(zh_TW): %{name_zh_TW} python 綁定
-BuildRequires:  python-devel
 Requires:       %{name} = %{version}-%{release}
-Requires:       python
-%{?python_provide:%python_provide python2-%{name}}
-# Remove before F30
-Provides: %{name}-python = %{version}-%{release}
-Provides: %{name}-python = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
 
-%description -n python-module-libchewing
+%description -n python3-module-libchewing
 Python binding of libchewing.
 
-%description -l zh_TW -n python-module-libchewing
+%description -l zh_TW -n python3-module-libchewing
 %{name_zh_TW} python 綁定
 
 %prep
 %setup -q
-mkdir -p contrib/python
-cp -p %SOURCE1 contrib/python
+%patch0 -p1
 
 %build
 CFLAGS="%{optflags} -g -DLIBINSTDIR='%{_libdir}'"
@@ -94,16 +88,11 @@ rm %{buildroot}%{_libdir}/libchewing.la
 mkdir -p %{buildroot}%{libchewing_python_dir}
 cp -p contrib/python/chewing.py %{buildroot}%{libchewing_python_dir}
 
-mkdir -p %{buildroot}%{_libdir}/chewing
-touch %{buildroot}%{libchewing_python_dir}/__init__.py
-
 rm -f %{buildroot}/%{_infodir}/dir
-
-
 
 %files
 %doc README.md AUTHORS COPYING NEWS TODO
-%{_datadir}/%{name}/*
+%{_datadir}/%{name}/
 %{_libdir}/*.so.*
 %{_infodir}/%{name}.info.*
 
@@ -113,10 +102,14 @@ rm -f %{buildroot}/%{_infodir}/dir
 %{_libdir}/pkgconfig/chewing.pc
 %{_libdir}/*.so
 
-%files -n python-module-libchewing
-%{libchewing_python_dir}
+%files -n python3-module-libchewing
+%{libchewing_python_dir}/chewing.py
+%{libchewing_python_dir}/__pycache__/*
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_16
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_11
 - update to new release by fcimport
 
