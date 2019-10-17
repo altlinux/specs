@@ -10,8 +10,8 @@ BuildRequires: unzip
 %global archivename Mingzat
 
 Name:    fonts-ttf-sil-mingzat
-Version: 0.100
-Release: alt1_7
+Version: 1.000
+Release: alt1_1
 Summary: A font for Lepcha script
 License: OFL
 URL:     http://scripts.sil.org/Mingzat
@@ -34,7 +34,7 @@ and to position arbitrary combinations of Lepcha glyphs and combining marks
 optimally. 
 
 %prep
-%setup -q -n '%{archivename}'
+%setup -q -n %{archivename}-%{version}
 for F in *.txt; do
    sed -i 's/\r//' "$F"
 done
@@ -94,11 +94,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1_7
 - update to new release by fcimport
 
