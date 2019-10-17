@@ -1,22 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/pandoc gcc-c++
+BuildRequires: /usr/bin/pandoc
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global major 1
+%global major 2
 %define libname libipt%{major}
 %define devname libipt-devel
 
 Name: libipt
-Version: 1.4.4
-Release: alt1_2
-Summary: Intel Processor Trace Decoder Library
+Version: 2.0.1
+Release: alt1_1
+SummarY: Intel Processor Trace Decoder Library
 Group:	 Development/Tools
 License: BSD
 URL: https://github.com/01org/processor-trace
 Source0: https://github.com/01org/processor-trace/archive/v%{version}.tar.gz
-BuildRequires: ccmake cmake ctest
+# c++ is required only for -DPTUNIT test "ptunit-cpp".
+# pandoc is for -DMAN.
+BuildRequires: gcc-c++ ccmake cmake ctest
 ExclusiveArch: %{ix86} x86_64
 Source44: import.info
 
@@ -52,13 +54,12 @@ implementation for decoding Intel PT.  It can be used as a standalone library
 or it can be partially or fully integrated into your tool.
 
 %prep
-%setup -q -n processor-trace-%{version}
+%setup -q -n libipt-%{version}
 
 %build
-# -DPTUNIT:BOOL=ON has no effect on ctest.
 %{mageia_cmake} -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-       -DPTUNIT:BOOL=OFF \
-       -DFEATURE_THREADS:BOOL=ON \
+       -DPTUNIT:BOOL=ON \
+       -DMAN:BOOL=OFF \
        -DDEVBUILD:BOOL=ON \
        ..
 make VERBOSE=1 %{?_smp_mflags}
@@ -85,6 +86,9 @@ ctest -V %{?_smp_mflags}
 
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.4-alt1_2
 - new version
 
