@@ -4,7 +4,7 @@
 %def_enable test
 
 Name: python-module-%oname
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 17 2019 Vladimir Didenko <cow@altlinux.ru> 2.8-alt1
+- new version (2.8)
+
 * Tue Jun 04 2019 Vitaly Lipatov <lav@altlinux.ru> 2.7-alt1
 - new version (2.7) with rpmgs script (ALT bug 36848)
 - switch to build from tarball
