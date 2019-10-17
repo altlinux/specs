@@ -1,6 +1,7 @@
+Group: Sound
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-validate libX11-devel libXext-devel lv2-devel pkgconfig(ogg) pkgconfig(zlib)
+BuildRequires: /usr/bin/desktop-file-validate libX11-devel libXext-devel pkgconfig(aubio) pkgconfig(lv2) pkgconfig(ogg) pkgconfig(zlib)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -16,10 +17,9 @@ BuildRequires: /usr/bin/desktop-file-validate libX11-devel libXext-devel lv2-dev
 
 Summary:       Audio/MIDI multi-track sequencer
 Name:          qtractor
-Version:       0.9.2
+Version:       0.9.10
 Release:       alt1_1
 License:       GPLv2+
-Group:         Sound
 URL:           http://qtractor.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
@@ -105,11 +105,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mime/packages/%{name}.xml
 %{_bindir}/%{name}
-%{_bindir}/%{name}_plugin_scan
+%{_libdir}/%{name}
 %{_datadir}/man/man1/%{name}*
 %{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1_1
 - new version
 
