@@ -1,22 +1,16 @@
 Group: Development/C
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit 60ea749837362c226e8501718f505ab138e5c19d
-%global date 20171225
-
 %global with_check 1
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    libb2
 Summary: C library providing BLAKE2b, BLAKE2s, BLAKE2bp, BLAKE2sp
-Version: 0.98
-Release: alt1_2.%{date}git%{shortcommit}
+Version: 0.98.1
+Release: alt1_1
 License: CC0
 URL:     https://blake2.net/
-Source0: https://github.com/BLAKE2/libb2/archive/%{commit}/libb2-%{commit}.tar.gz
+Source0: https://github.com/BLAKE2/libb2/archive/v%{version}/libb2-%{version}.tar.gz
 
 BuildRequires: gcc
 BuildRequires: automake
@@ -38,7 +32,7 @@ Requires:       %{name} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -q -n libb2-%{commit}
+%setup -q -n libb2-%{version}
 
 
 # Force default Fedora cflags
@@ -46,10 +40,8 @@ sed -e 's|CFLAGS=-O3|CFLAGS="%{optflags}"|g' -i configure.ac
 autoreconf -ivf
 
 %build
-# Default Fedora cflags prevents SSE checking
-unset $CFLAGS
 %configure --disable-silent-rules --enable-static=no --enable-native=no
-%make_build LDFLAGS="%{__global_ldflags}"
+%make_build
 
 %if 0%{with_check}
 %check
@@ -58,19 +50,24 @@ make check
 
 %install
 %makeinstall_std
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+rm -f %{buildroot}%{_libdir}/*.la
 
 
 
 %files
-%doc --no-dereference LICENSE
-%{_libdir}/libb2.so.*
+%doc --no-dereference COPYING
+%{_libdir}/libb2.so.1
+%{_libdir}/libb2.so.1.*
 
 %files devel
 %{_libdir}/libb2.so
+%{_libdir}/pkgconfig/libb2.pc
 %{_includedir}/blake2.h
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.98.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_2.20171225git60ea749
 - new version
 
