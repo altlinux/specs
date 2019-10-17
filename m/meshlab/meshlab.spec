@@ -1,13 +1,14 @@
 %global vcglibver 1.0.1
 
-Summary: A system for processing and editing unstructured 3D triangular meshes
 Name: meshlab
 Version: 2016.12
-Release: alt5
-Url: http://meshlab.sourceforge.net/
+Release: alt6
+
+Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
 Group: Graphics
 
+Url: http://meshlab.sourceforge.net/
 Source0: https://github.com/cnr-isti-vclab/meshlab/archive/v%version.tar.gz
 Source1: meshlab-48x48.xpm
 # Matches 2016.12.
@@ -132,6 +133,13 @@ echo "linux-g++:DEFINES += __DISABLE_AUTO_STATS__" >> meshlab-%version/src/gener
 
 sed -i 's|PLUGIN_DIR|QString("%_libdir/%name")|g'  meshlab-%version/src/common/pluginmanager.cpp
 
+%ifarch %e2k
+# lcc 1.23 only got OpenMP 2.5, hope 1.24 will deliver 5.0
+find meshlab-%version/src/meshlabplugins/filter_screened_poisson/ \
+	-type f -print0 -name '*.cpp' -o -name '*.inl' |
+	xargs -r0 sed -i '/^#pragma omp/d' --
+%endif
+
 %build
 # Build instructions from the wiki:
 #   http://meshlab.sourceforge.net/wiki/index.php/Compiling_V122
@@ -255,6 +263,9 @@ install -m 644 meshlab-%version/src/plugins_experimental/filter_segmentation/lic
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2016.12-alt6
+- E2K: ftbfs workaround (partially disable OpenMP)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2016.12-alt5
 - NMU: remove rpm-build-ubt from BR:
 
