@@ -10,15 +10,16 @@
 
 Name: xscreensaver
 Version: 5.43
-Release: alt2
+Release: alt3
 
 Summary: A screen saver and locker for the X window system
+
 License: BSD
 Group: Graphical desktop/Other
-
 Url: http://www.jwz.org/xscreensaver
 
 Source: %name-%version.tar
+
 Patch: %name-%version-%release.patch
 Patch1: xscreensaver-5.40-do-not-claim-on-old-version.patch
 Patch2: xscreensaver-5.43-lcc-is-not-gcc.patch
@@ -47,9 +48,10 @@ Provides: screen-saver-engine
 # NB: gnome-screensaver-3.0.0 doesn't contain migration script
 BuildPrereq: gnome-screensaver-utils
 %endif
-# Automatically added by buildreq on Mon Apr 18 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgtk+2-devel libpango-devel perl-XML-Parser pkg-config xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel libpam-devel libxml2-devel xorg-cf-files xsltproc
+BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel
+BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel
+BuildRequires: libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel
+BuildRequires: libpam-devel libxml2-devel xorg-cf-files xsltproc
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -264,6 +266,9 @@ mkdir -p %buildroot%_datadir/applications/screensavers
 MkModuleFilelists %_sourcedir/xscreensaver-hacks std
 MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 
+# Thanks to Obninsk for detection of really bad animation!
+find %buildroot -name "*handsy*" -delete
+
 %files
 %doc README README.hacking
 %verify(not md5 size mtime) %ghost %config(missingok) %_sysconfdir/X11/app-defaults/XScreenSaver
@@ -324,6 +329,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Thu Oct 17 2019 Grigory Ustinov <grenka@altlinux.org> 5.43-alt3
+- Build without handsy.
+
 * Wed Sep 04 2019 Grigory Ustinov <grenka@altlinux.org> 5.43-alt2
 - Fix build on e2k arches.
 
