@@ -1,7 +1,7 @@
 Name: bind
-Version: 9.11.10
-%define src_version 9.11.10
-Release: alt2
+Version: 9.11.12
+%define src_version 9.11.12
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: MPLv2.0
@@ -175,7 +175,7 @@ rather than the DNS protocol.
 %patch0006 -p2
 %patch0007 -p2
 %patch0008 -p2
-%patch0009 -p2
+#%%patch0009 -p2
 %patch0010 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
@@ -434,6 +434,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 9.11.12-alt1
+- 9.11.10 -> 9.11.12.
+
 * Wed Sep 18 2019 Stanislav Levin <slev@altlinux.org> 9.11.10-alt2
 - Fixed integration with ipa-dnskeysync.
 
