@@ -6,7 +6,7 @@ Group: System/Fonts/True type
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-adobe-source-serif-pro
-Version:        3.000
+Version:        3.001
 Release:        alt1_1
 Summary:        A set of OpenType fonts designed to complement Source Sans Pro
 
@@ -96,6 +96,9 @@ appstream-util --nonet validate-relax \
 %doc --no-dereference LICENSE.md
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_1
 - update to new release by fcimport
 
